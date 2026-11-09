@@ -1,0 +1,28 @@
+FAIL: UI filtering excludes even unqualified host waiters
+FAIL: ordinary host sees deferred waiter explicitly returns broadcast fallback
+FAIL: fallback scenario 2 host executed deferred/ARP candidate is unqualified
+FAIL: fallback scenario 2 host explicitly returns broadcast fallback
+FAIL: fallback scenario 2 host primary bit-exact audio
+FAIL: fallback scenario 2 host primary exact voice telemetry
+FAIL: fallback scenario 2 UI executed deferred/ARP candidate is unqualified
+FAIL: fallback scenario 2 UI explicitly returns broadcast fallback
+FAIL: fallback scenario 2 UI primary bit-exact audio
+FAIL: fallback scenario 2 UI primary exact voice telemetry
+FAIL: overflow distinguishes deferred queue from immediate rejected event
+FAIL: fallback scenario 3 host explicitly returns broadcast fallback
+FAIL: fallback scenario 3 host primary bit-exact audio
+FAIL: fallback scenario 3 host primary exact voice telemetry
+FAIL: overflow distinguishes deferred queue from immediate rejected event
+FAIL: fallback scenario 3 UI explicitly returns broadcast fallback
+FAIL: fallback scenario 3 UI primary bit-exact audio
+FAIL: fallback scenario 3 UI primary exact voice telemetry
+FAIL: promotion executed by scanner remains unqualified
+FAIL: deferred promotion after scan disable explicitly returns broadcast fallback
+FAIL: deferred promotion after scan disable extension bit-exact audio
+FAIL: deferred promotion after scan disable extension exact voice telemetry
+FAIL: deferred waiter remains unknown before promotion
+FAIL: qualified waiter versus deferred held fixture
+FAIL: mixed waiter and deferred held explicitly returns broadcast fallback
+FAIL: mixed waiter and deferred held extension bit-exact audio
+FAIL: mixed waiter and deferred held extension exact voice telemetry
+Immediate sixteen-voice release: 1418 checks, 27 failures

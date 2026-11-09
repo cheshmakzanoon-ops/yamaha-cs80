@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ reuse-waiter-order-on-promotion/src/core/Engine.cpp
+@@ -1461,7 +1461,7 @@
+                 best = i;
+         const auto key = unassignedKeys[(size_t) best];
+         forgetUnassignedKey(key.note, key.midiChannel);
+-        startVoice(voices[(size_t) idx], key.note, 0.0f, key.midiChannel, key.keyboardOrigin, nextReleaseOrder(immediate));
++        startVoice(voices[(size_t) idx], key.note, 0.0f, key.midiChannel, key.keyboardOrigin, key.coordinatedReleaseOrder);
+     }
+ }
+ 

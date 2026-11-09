@@ -1,0 +1,1110 @@
+[
+  {
+    "label": "tracked-inputs",
+    "argv": [
+      "git",
+      "-C",
+      "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+      "ls-files",
+      "src",
+      "tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/tracked-inputs.stdout.log",
+    "stdout_sha256": "ff097d75be8ea9577ec500b3af41a4b48182391d1dccc96d92fc58c984d97fd3",
+    "stderr": "logs/tracked-inputs.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "head",
+    "argv": [
+      "git",
+      "-C",
+      "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/head.stdout.log",
+    "stdout_sha256": "0ce36a094cf3fb3bc946dd7f1f91af5b12eca5f607493422be8a3bc351793f9b",
+    "stderr": "logs/head.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "frozen-source-diff",
+    "argv": [
+      "git",
+      "-C",
+      "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+      "diff",
+      "--exit-code",
+      "1a23a085657a07d9f066f7cc38aaf2572a6fe714",
+      "--",
+      "src",
+      "tests",
+      "CMakeLists.txt"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/frozen-source-diff.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/frozen-source-diff.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "compiler-version",
+    "argv": [
+      "/usr/bin/c++",
+      "--version"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/compiler-version.stdout.log",
+    "stdout_sha256": "00f7e3c3e6a0308d7b60cc02429720ef6000d84c0add523f7dc030058d19961b",
+    "stderr": "logs/compiler-version.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "archive-members",
+    "argv": [
+      "/usr/bin/ar",
+      "t",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/archive-members.stdout.log",
+    "stdout_sha256": "27fe86d84e7a58321eff678e219b9cb8cb7962d2e93d85574dee555120d535f2",
+    "stderr": "logs/archive-members.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "unmutated-control-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/unmutated-control-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/unmutated-control-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "unmutated-control-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/unmutated-control-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/unmutated-control-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "unmutated-control-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/unmutated-control-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/unmutated-control-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "unmutated-control-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/unmutated-control/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/unmutated-control-run.stdout.log",
+    "stdout_sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "stderr": "logs/unmutated-control-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "broadcast-two-engines-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/broadcast-two-engines-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/broadcast-two-engines-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "broadcast-two-engines-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/broadcast-two-engines-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/broadcast-two-engines-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "broadcast-two-engines-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/broadcast-two-engines-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/broadcast-two-engines-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "broadcast-two-engines-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/broadcast-two-engines-run.stdout.log",
+    "stdout_sha256": "b0d7b9453cd301eb20eae7d61bd024cb2b0cf89405769e79b4f6a7a5272adbc7",
+    "stderr": "logs/broadcast-two-engines-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "inverse-global-order-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/inverse-global-order-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/inverse-global-order-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "inverse-global-order-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/inverse-global-order-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/inverse-global-order-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "inverse-global-order-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/inverse-global-order-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/inverse-global-order-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "inverse-global-order-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/inverse-global-order/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/inverse-global-order-run.stdout.log",
+    "stdout_sha256": "872ae9e012a494581c08cde22279b2924c1717d80610f02595920cf2561c8288",
+    "stderr": "logs/inverse-global-order-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lost-waiter-priority-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/lost-waiter-priority-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lost-waiter-priority-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lost-waiter-priority-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/lost-waiter-priority-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lost-waiter-priority-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lost-waiter-priority-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/lost-waiter-priority-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lost-waiter-priority-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lost-waiter-priority-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/lost-waiter-priority/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/lost-waiter-priority-run.stdout.log",
+    "stdout_sha256": "938a28d5a8901e13cc1a1d41052bdb080ba735a7f5d9df1b29160955c72d1499",
+    "stderr": "logs/lost-waiter-priority-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ui-host-protection-omitted-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ui-host-protection-omitted-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ui-host-protection-omitted-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ui-host-protection-omitted-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ui-host-protection-omitted-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ui-host-protection-omitted-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ui-host-protection-omitted-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ui-host-protection-omitted-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ui-host-protection-omitted-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ui-host-protection-omitted-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-host-protection-omitted/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/ui-host-protection-omitted-run.stdout.log",
+    "stdout_sha256": "fd877106d37790ba8d4a53047cc1da98b52fbe56f5cf208bac4e4a67369d755b",
+    "stderr": "logs/ui-host-protection-omitted-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ui-held-source-filter-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ui-held-source-filter-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ui-held-source-filter-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ui-held-source-filter-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ui-held-source-filter-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ui-held-source-filter-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ui-held-source-filter-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ui-held-source-filter-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ui-held-source-filter-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ui-held-source-filter-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ui-held-source-filter/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/ui-held-source-filter-run.stdout.log",
+    "stdout_sha256": "781b06b208954b503ac2bf2570837e82a08cfddffa6a8ce0890efd1bb0f7d5e7",
+    "stderr": "logs/ui-held-source-filter-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "qualify-prior-deferred-candidates-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/qualify-prior-deferred-candidates-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/qualify-prior-deferred-candidates-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "qualify-prior-deferred-candidates-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/qualify-prior-deferred-candidates-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/qualify-prior-deferred-candidates-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "qualify-prior-deferred-candidates-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/qualify-prior-deferred-candidates-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/qualify-prior-deferred-candidates-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "qualify-prior-deferred-candidates-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/qualify-prior-deferred-candidates-run.stdout.log",
+    "stdout_sha256": "dd9604f38df9cf7cdceddf3914caf1787160339ec28d4b0a88bc62d0d0ff623f",
+    "stderr": "logs/qualify-prior-deferred-candidates-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "accept-unqualified-candidate-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/accept-unqualified-candidate-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/accept-unqualified-candidate-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "accept-unqualified-candidate-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/accept-unqualified-candidate-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/accept-unqualified-candidate-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "accept-unqualified-candidate-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/accept-unqualified-candidate-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/accept-unqualified-candidate-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "accept-unqualified-candidate-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/accept-unqualified-candidate-run.stdout.log",
+    "stdout_sha256": "e6dfc23128c2aa70c7c6c2654247b606f9e5283bb0319c85b9ea8628efbc3f1a",
+    "stderr": "logs/accept-unqualified-candidate-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "accept-mismatched-sources-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/accept-mismatched-sources-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/accept-mismatched-sources-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "accept-mismatched-sources-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/accept-mismatched-sources-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/accept-mismatched-sources-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "accept-mismatched-sources-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/accept-mismatched-sources-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/accept-mismatched-sources-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "accept-mismatched-sources-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/accept-mismatched-sources-run.stdout.log",
+    "stdout_sha256": "2f6dae3d3d5ae23f59b5448b2c51677452969f21b1e4bd04446520d1d621b9e9",
+    "stderr": "logs/accept-mismatched-sources-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-exhaustion-guard-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/omit-exhaustion-guard-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-exhaustion-guard-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-exhaustion-guard-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/omit-exhaustion-guard-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-exhaustion-guard-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-exhaustion-guard-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/omit-exhaustion-guard-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-exhaustion-guard-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-exhaustion-guard-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/omit-exhaustion-guard-run.stdout.log",
+    "stdout_sha256": "052f0564361fb46dd9db94f7ecc42da7af112e07bb3bbb47785e95c4e5eaa09b",
+    "stderr": "logs/omit-exhaustion-guard-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ignore-pending-scanner-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ignore-pending-scanner-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ignore-pending-scanner-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ignore-pending-scanner-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ignore-pending-scanner-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ignore-pending-scanner-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ignore-pending-scanner-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/ignore-pending-scanner-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/ignore-pending-scanner-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "ignore-pending-scanner-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/ignore-pending-scanner/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/ignore-pending-scanner-run.stdout.log",
+    "stdout_sha256": "10f543b6a4ed89bca232393cbf027aa3bb5271835e91ea58607911e3ef817059",
+    "stderr": "logs/ignore-pending-scanner-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "reuse-waiter-order-on-promotion-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/reuse-waiter-order-on-promotion-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/reuse-waiter-order-on-promotion-engine-compile.stderr.log",
+    "stderr_sha256": "14c0280122bb2a8fc460a8e5c83c88ced1ac5546f001bd2ecdc671bda1d810d4"
+  },
+  {
+    "label": "reuse-waiter-order-on-promotion-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/reuse-waiter-order-on-promotion-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/reuse-waiter-order-on-promotion-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "reuse-waiter-order-on-promotion-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/reuse-waiter-order-on-promotion-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/reuse-waiter-order-on-promotion-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "reuse-waiter-order-on-promotion-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/reuse-waiter-order-on-promotion/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 1,
+    "stdout": "logs/reuse-waiter-order-on-promotion-run.stdout.log",
+    "stdout_sha256": "442bfa7edbdf6625f6c7a39b389f2ee4dff4e590e8032a8cedd222ff572d5552",
+    "stderr": "logs/reuse-waiter-order-on-promotion-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-router-ui-guard-only-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/omit-router-ui-guard-only-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-router-ui-guard-only-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-router-ui-guard-only-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/omit-router-ui-guard-only-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-router-ui-guard-only-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-router-ui-guard-only-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/tests.o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/Engine.o",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/omit-router-ui-guard-only-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-router-ui-guard-only-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-router-ui-guard-only-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-router-ui-guard-only/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1",
+    "exit_code": 0,
+    "stdout": "logs/omit-router-ui-guard-only-run.stdout.log",
+    "stdout_sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "stderr": "logs/omit-router-ui-guard-only-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

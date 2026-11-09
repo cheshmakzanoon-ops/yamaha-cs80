@@ -1,0 +1,16 @@
+--- baseline/src/core/VoiceModes.h
++++ broadcast-two-engines/src/core/VoiceModes.h
+@@ -35,9 +35,10 @@
+         const auto chosen = chooseSecond ? b : a;
+         if (keyboardOnly && !chosen.keyboardOrigin)
+             return true; // Never fall through to an older UI-owned group.
+-        auto& target = chooseSecond ? second : first;
+-        if (keyboardOnly) target.noteOffFromKeyboard(note, channel);
+-        else target.noteOff(note, channel);
++        if (keyboardOnly)
++        { first.noteOffFromKeyboard(note, channel); second.noteOffFromKeyboard(note, channel); }
++        else
++        { first.noteOff(note, channel); second.noteOff(note, channel); }
+         return true;
+     }
+ 

@@ -1,0 +1,24 @@
+Fixture build start UTC: 2026-11-09T22:52:12+00:00
+Source HEAD: 9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8
+Source status:
+/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake --build /workspace/scratch/ee447c520988/build-sixteen-note-release-native --target CS80Snapshots --parallel 2 
+[0/2] Re-checking globbed directories...
+[1/2] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp:3318:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3318 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp:3319:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3319 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2/2] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots
+Fixture build end UTC: 2026-11-09T22:52:43+00:00
+13c7b913f7fdb55bab4967bb355e71d2d7d54f5a18906709836d354f6c55a3e6  /workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots
+Source HEAD before test: 9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8
+Source status before test:
+Fixture test start UTC: 2026-11-09T22:52:43+00:00
+/workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots --sixteen-voice-release-tests 
+Sixteen voice release host: 768 checks, 0 failures
+Fixture test end UTC: 2026-11-09T22:52:44+00:00
+Source HEAD after test: 9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8
+Source status after test:

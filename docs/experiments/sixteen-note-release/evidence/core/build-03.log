@@ -1,0 +1,29 @@
+[1/6] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+[2/6] Building CXX object CMakeFiles/cs80_sixteen_voice_release_tests.dir/tests/SixteenVoiceReleaseTests.cpp.o
+FAILED: CMakeFiles/cs80_sixteen_voice_release_tests.dir/tests/SixteenVoiceReleaseTests.cpp.o 
+/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -MD -MT CMakeFiles/cs80_sixteen_voice_release_tests.dir/tests/SixteenVoiceReleaseTests.cpp.o -MF CMakeFiles/cs80_sixteen_voice_release_tests.dir/tests/SixteenVoiceReleaseTests.cpp.o.d -o CMakeFiles/cs80_sixteen_voice_release_tests.dir/tests/SixteenVoiceReleaseTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp: In function ‘int {anonymous}::held(const cs80::Engine&, int, int, bool)’:
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp:76:33: error: ‘constexpr const int cs80::Engine::kNumVoices’ is private within this context
+   76 |     for (int i = 0; i < Engine::kNumVoices; ++i)
+      |                                 ^~~~~~~~~~
+In file included from /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp:4:
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/Engine.h:422:26: note: declared private here
+  422 |     static constexpr int kNumVoices = 8;
+      |                          ^~~~~~~~~~
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp: In function ‘void {anonymous}::sameState(const cs80::Engine&, const cs80::Engine&, const std::string&)’:
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp:93:33: error: ‘constexpr const int cs80::Engine::kNumVoices’ is private within this context
+   93 |     for (int i = 0; i < Engine::kNumVoices; ++i)
+      |                                 ^~~~~~~~~~
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/Engine.h:422:26: note: declared private here
+  422 |     static constexpr int kNumVoices = 8;
+      |                          ^~~~~~~~~~
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp: In function ‘void {anonymous}::testWaitersAndPromotion()’:
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp:277:37: error: ‘constexpr const int cs80::Engine::kNumVoices’ is private within this context
+  277 |         for (int i = 0; i < Engine::kNumVoices; ++i)
+      |                                     ^~~~~~~~~~
+/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/Engine.h:422:26: note: declared private here
+  422 |     static constexpr int kNumVoices = 8;
+      |                          ^~~~~~~~~~
+[3/6] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[4/6] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+ninja: build stopped: subcommand failed.

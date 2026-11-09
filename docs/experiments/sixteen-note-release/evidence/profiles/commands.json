@@ -1,0 +1,461 @@
+[
+  {
+    "profile": "gcc-generic",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:53:36.486563+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-generic-configure.log",
+    "sha256": "5557f7d9dfcaa2adf23da9fc206a58a9ef132baec8f50990ede51e470c93b559",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+      "--target",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:53:37.050135+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-generic-build.log",
+    "sha256": "169337375b304aa04afeb107e767b96983a9851e7128b342e8bad701112ec928",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:53:55.292199+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-generic-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:53:58.580322+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-generic-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:54:08.061557+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-generic-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-native",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -march=native"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:54:12.072876+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-native-configure.log",
+    "sha256": "18f7bc8e6942fca4756b61ebf2b9e4c6263bbb31846cf9c70d57527beeff1047",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-native",
+      "--target",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:54:12.589584+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-native-build.log",
+    "sha256": "169337375b304aa04afeb107e767b96983a9851e7128b342e8bad701112ec928",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-native/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:54:28.906233+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-native-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-native/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:54:32.445422+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-native-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-native/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:54:41.993690+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/gcc-native-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {}
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-generic",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG",
+      "-DCMAKE_CXX_COMPILER=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19",
+      "-DCMAKE_C_COMPILER=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang-19"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:54:45.849273+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-generic-configure.log",
+    "sha256": "ae86f8ff623e62c3e450796c87c8be0575fccfb3f7b29638194f65da37480b9b",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-generic",
+      "--target",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:54:46.647712+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-generic-build.log",
+    "sha256": "3a230d13b9a71e621ebd090cb580e701db3a0daa7717311ff3dc660f91a09e15",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-generic/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:00.711128+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-generic-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-generic/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:04.228523+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-generic-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-generic/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:13.190544+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-generic-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-native",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -march=native",
+      "-DCMAKE_CXX_COMPILER=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19",
+      "-DCMAKE_C_COMPILER=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang-19"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:17.501042+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-native-configure.log",
+    "sha256": "be1985d03dcc9fd21a98b426187d740f9b3107b8e1ad292d35c5908a6c71e86c",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-native",
+      "--target",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:18.224733+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-native-build.log",
+    "sha256": "62d78aecea9772dd05eb00e7f64b8c766d3e20d78921d710245f1e484e28ece8",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-native/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:33.106801+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-native-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-native/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:36.662689+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-native-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-clang-native/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:45.716664+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/clang-native-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-sanitizer",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O1 -g1 -fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:49.957666+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/sanitizer-configure.log",
+    "sha256": "aabfd07c038d098dd296ce0de575cb22d03e8ef2c11999eb87925a5f14575d01",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-sanitizer",
+      "--target",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:55:50.491446+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/sanitizer-build.log",
+    "sha256": "ddd57bd60ee3ed719b83bd0348fc37e11138e83fe72ae18ba390ff6714a50ff7",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-sanitizer/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:56:16.965085+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/sanitizer-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-sanitizer/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:56:29.276308+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/sanitizer-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-sanitizer/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/sixteen-note-release-impl",
+    "started_utc": "2026-11-09T22:57:25.501783+00:00",
+    "exit_code": 0,
+    "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/profiles/sanitizer-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  }
+]

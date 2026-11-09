@@ -1,0 +1,55 @@
+{
+  "source_commit": "1a23a085657a07d9f066f7cc38aaf2572a6fe714",
+  "source_tree": "91c8f1d6e609db57479b74d9204402a750bfcb04",
+  "source_clean_at_start": true,
+  "source_inventory_matches": true,
+  "production_unchanged_from": "77dfd74b0e80328a4e0f09c01b7636c65519f191",
+  "native_sources_and_fixture_unchanged_from": "9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8",
+  "binary_path": "/workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+  "binary_sha256_before": "13c7b913f7fdb55bab4967bb355e71d2d7d54f5a18906709836d354f6c55a3e6",
+  "no_rebuild_performed": true,
+  "no_work_provenance_review": "Verified prior actual-build/no-work logs and zero statuses. Same native source tree and exact binary remain present. This reviewer did not execute a build or Ninja command.",
+  "no_work_log_sha256": {
+    "final-1a23a08-build.log": "c2ed93ffd93c840755c0e91392ae593b1b52de9b7aaf6c208123feaceb1dde2e",
+    "final-1a23a08-no-work.log": "c2ed93ffd93c840755c0e91392ae593b1b52de9b7aaf6c208123feaceb1dde2e",
+    "final-1a23a08-no-work-explained.log": "9c91d3ce129a048e93c2f57120d502ccbd01516afa2f2a5cce82da44004dbb9d"
+  },
+  "LD_LIBRARY_PATH": null,
+  "commands": [
+    {
+      "name": "native-direct",
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+        "--sixteen-voice-release-tests"
+      ],
+      "exit": 0,
+      "seconds": 0.6161360740661621,
+      "log_sha256": "40c0f8115f2f87f538d942bfa2648336f0f2ba30ef70e1711f160879959da389",
+      "summary_present": true
+    },
+    {
+      "name": "native-ctest",
+      "argv": [
+        "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest",
+        "--test-dir",
+        "/workspace/scratch/ee447c520988/build-sixteen-note-release-native",
+        "--output-on-failure",
+        "--verbose",
+        "--parallel",
+        "1",
+        "-R",
+        "^cs80_sixteen_voice_release_host_tests$"
+      ],
+      "exit": 0,
+      "seconds": 0.5658807754516602,
+      "log_sha256": "5b2632e055175a3684952e992ee5bad25727b27d02697034a416bd43c800b85f",
+      "summary_present": true
+    }
+  ],
+  "display_dependent_suites_run": false,
+  "binary_sha256_after": "13c7b913f7fdb55bab4967bb355e71d2d7d54f5a18906709836d354f6c55a3e6",
+  "source_clean_at_end": true,
+  "source_head_at_end": "1a23a085657a07d9f066f7cc38aaf2572a6fe714",
+  "registered_ctests_passed": 1,
+  "registered_ctests_failed": 0
+}

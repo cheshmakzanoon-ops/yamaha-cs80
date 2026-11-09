@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ accept-mismatched-sources/src/core/Engine.cpp
+@@ -1917,7 +1917,7 @@
+ 
+ bool Engine::canCoordinateImmediateReleaseWith(const Engine& other) const noexcept
+ {
+-    return releaseOrderClock != nullptr && releaseOrderClock == other.releaseOrderClock
++    return releaseOrderClock != nullptr && other.releaseOrderClock != nullptr
+         && releaseOrderClock->valid() && !global.arpOn && !other.global.arpOn
+         && !scanTimingActive() && !other.scanTimingActive()
+         && scanner.pending() == 0 && other.scanner.pending() == 0;

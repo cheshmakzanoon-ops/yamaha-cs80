@@ -1,0 +1,23 @@
+{
+  "state": "fixture_build_and_test_passed",
+  "candidate_commit": "9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8",
+  "source_clean_at_build_start_test_start_and_test_end": true,
+  "production_sources_unchanged_from": "77dfd74b0e80328a4e0f09c01b7636c65519f191",
+  "target": "CS80Snapshots",
+  "parallel_jobs": 2,
+  "build_exit": 0,
+  "binary_sha256": "13c7b913f7fdb55bab4967bb355e71d2d7d54f5a18906709836d354f6c55a3e6",
+  "test_argv": [
+    "/workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "--sixteen-voice-release-tests"
+  ],
+  "test_exit": 0,
+  "test_checks": 768,
+  "test_failures": 0,
+  "test_log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/native-build/test-fixture-9e3f9a0.log",
+  "test_log_sha256": "40c0f8115f2f87f538d942bfa2648336f0f2ba30ef70e1711f160879959da389",
+  "full_ctest_suite_run": false,
+  "source_or_dependency_edits_or_pushes_by_worker": false,
+  "warnings": "Two pre-existing enum mismatch warnings in ui_snapshot.cpp.",
+  "next_step": "Await further frozen-source qualification assignment."
+}

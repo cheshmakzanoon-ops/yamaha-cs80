@@ -1,0 +1,11 @@
+--- baseline/src/core/VoiceModes.h
++++ accept-unqualified-candidate/src/core/VoiceModes.h
+@@ -23,8 +23,6 @@
+         using Kind = Engine::ReleaseCandidate::Kind;
+         const auto a = first.immediateReleaseCandidate(note, channel, keyboardOnly);
+         const auto b = second.immediateReleaseCandidate(note, channel, keyboardOnly);
+-        if ((a.kind != Kind::none && a.order == 0) || (b.kind != Kind::none && b.order == 0))
+-            return false;
+         if (a.kind == Kind::none && b.kind == Kind::none)
+             return true;
+         if (a.kind == b.kind && a.order == b.order)

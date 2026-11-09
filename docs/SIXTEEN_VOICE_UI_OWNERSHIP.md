@@ -21,8 +21,11 @@ same combined snapshot for UI and host events. Token storage is two fixed
 sixteen-slot arrays, bounded by the existing 1,024-byte compile-time limit.
 No audio allocation, lock, new parameter or state field is added.
 
-No Engine oscillator, envelope, controller law or voice-routing policy changes.
-The correction intentionally changes affected on-screen performances in Legacy
+This original correction changed no Engine oscillator, envelope, controller
+law or voice-routing policy. The later [immediate release coordinator](SIXTEEN_VOICE_NOTE_RELEASE.md)
+selects one comparable onset across the pair while retaining the UI source guard
+and explicitly leaving deferred/ARP release on the old broadcast path.
+The UI ownership correction intentionally changes affected on-screen performances in Legacy
 and Circuit sixteen-voice mode. PURE CS-80 still uses the original eight voices.
 The ownership correction originally left the meter primary-only. The later
 [activity telemetry correction](VOICE_ACTIVITY_TELEMETRY.md) covers both

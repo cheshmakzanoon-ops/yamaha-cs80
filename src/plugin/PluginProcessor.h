@@ -332,6 +332,7 @@ private:
     // storage tests can supply a fresh temporary directory instead.
     juce::File presetDirectoryOverride;
 
+    cs80::ReleaseOrderClock releaseOrderClock; // Outlives both audio-owned instruments.
     cs80::Engine engine;
     juce::UndoManager undoManager;            // [ws8-studio] constructed before the APVTS that uses it
     cs80::UndoableParameterState apvts;

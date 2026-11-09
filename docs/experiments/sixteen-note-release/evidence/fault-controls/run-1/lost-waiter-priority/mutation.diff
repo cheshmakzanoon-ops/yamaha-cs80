@@ -1,0 +1,14 @@
+--- baseline/src/core/VoiceModes.h
++++ lost-waiter-priority/src/core/VoiceModes.h
+@@ -29,9 +29,8 @@
+             return true;
+         if (a.kind == b.kind && a.order == b.order)
+             return false; // An aliased/copied ownership identity is not proof.
+-        const bool chooseSecond = a.kind == Kind::none || (b.kind != Kind::none
+-            && ((b.kind == Kind::waiting && a.kind != Kind::waiting)
+-                || (a.kind == b.kind && b.order > a.order)));
++        const bool chooseSecond = a.kind == Kind::none
++            || (b.kind != Kind::none && b.order > a.order);
+         const auto chosen = chooseSecond ? b : a;
+         if (keyboardOnly && !chosen.keyboardOrigin)
+             return true; // Never fall through to an older UI-owned group.

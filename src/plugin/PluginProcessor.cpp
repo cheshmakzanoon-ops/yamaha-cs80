@@ -73,6 +73,8 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     extensionEngine = std::make_unique<cs80::Engine>();
     extensionEngine->setParams(cached);
     extensionEngine->prepare(48000.0);
+    engine.bindReleaseOrderClock(releaseOrderClock);
+    extensionEngine->bindReleaseOrderClock(releaseOrderClock);
     // Every oversampling factor's decimator delays 63 host samples, so report it
     // as soon as the processor exists. prepareToPlay and any later quality or
     // offline change re-report it for hosts that query only after a change.
@@ -672,6 +674,8 @@ bool Cs80AudioProcessor::routeNoteOn(int note, float velocity, int channel, bool
 
 void Cs80AudioProcessor::routeNoteOff(int note, int channel, bool fromKeyboard)
 {
+    if (extensionActive && cs80::SixteenVoiceRouter::noteOff(engine, *extensionEngine, note, channel, fromKeyboard))
+        return;
     forEachEngine([&](cs80::Engine& e) {
         if (fromKeyboard) e.noteOffFromKeyboard(note, channel);
         else e.noteOff(note, channel);

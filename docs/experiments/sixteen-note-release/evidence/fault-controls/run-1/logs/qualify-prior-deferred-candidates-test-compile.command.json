@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/c++",
+    "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+    "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/src",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIE",
+    "-o",
+    "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/qualify-prior-deferred-candidates/tests.o",
+    "-c",
+    "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/frozen/SixteenVoiceReleaseTests.cpp"
+  ],
+  "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1"
+}

@@ -1,0 +1,16 @@
+{
+  "state": "fixture_build_failed_waiting_for_fixture_correction",
+  "candidate_commit": "920cab9219f500ddc6e7f629f94df7f0a00f6dd7",
+  "target": "CS80Snapshots",
+  "parallel_jobs": 2,
+  "build_exit": 1,
+  "test_run": false,
+  "test_checks": null,
+  "test_failures": null,
+  "failure_file": "tests/SixteenVoiceReleaseHostTests.h",
+  "failure_line": 21,
+  "reason": "Braced range-for list mixes unnamed enum and cs80::GlobalParam; GCC 14.2 cannot deduce std::initializer_list<auto>.",
+  "source_and_tests_edited_by_worker": false,
+  "build_log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/native-build/build-fixture-920cab9.log",
+  "next_step": "Await frozen fixture correction before rebuilding and running the dedicated test."
+}

@@ -1,0 +1,20 @@
++ c++ -std=c++20 -O3 -DNDEBUG -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -Wall -Wextra -Werror -I/workspace/scratch/ee447c520988/next-product-step/src /workspace/scratch/ee447c520988/sixteen-note-release-impl/docs/experiments/mpe-member-onset/CompatibilityCapture.cpp /workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a -o /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/baseline-generic
++ /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/baseline-generic /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/baseline-generic.bin
++ set +x
++ c++ -std=c++20 -O3 -DNDEBUG -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -Wall -Wextra -Werror -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src /workspace/scratch/ee447c520988/sixteen-note-release-impl/docs/experiments/mpe-member-onset/CompatibilityCapture.cpp /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a -o /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/candidate-generic
++ /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/candidate-generic /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/candidate-generic.bin
++ set +x
+14bd9f22ce4eee78aa70b6ea17767553886f1e8184a67ff2e2c6af9842301e68  /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/baseline-generic.bin
+14bd9f22ce4eee78aa70b6ea17767553886f1e8184a67ff2e2c6af9842301e68  /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/candidate-generic.bin
++ c++ -std=c++20 -O3 -DNDEBUG -march=native -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -Wall -Wextra -Werror -I/workspace/scratch/ee447c520988/next-product-step/src /workspace/scratch/ee447c520988/sixteen-note-release-impl/docs/experiments/mpe-member-onset/CompatibilityCapture.cpp /workspace/scratch/ee447c520988/build-mpe-onset-gcc-native/libcs80_core.a -o /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/baseline-native
++ /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/baseline-native /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/baseline-native.bin
++ set +x
++ c++ -std=c++20 -O3 -DNDEBUG -march=native -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -Wall -Wextra -Werror -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src /workspace/scratch/ee447c520988/sixteen-note-release-impl/docs/experiments/mpe-member-onset/CompatibilityCapture.cpp /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-native/libcs80_core.a -o /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/candidate-native
++ /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/candidate-native /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/candidate-native.bin
++ set +x
+5e63f19328e471afdd45cf6f7fcb72d13b41ec61a6296ea7c67f6f2432f272ed  /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/baseline-native.bin
+5e63f19328e471afdd45cf6f7fcb72d13b41ec61a6296ea7c67f6f2432f272ed  /workspace/scratch/ee447c520988/sixteen-release-evidence/compatibility/candidate-native.bin
+legacy default: byte-identical to d56911a
+legacy tails: byte-identical to d56911a
+v1 circuit numerics: byte-identical to 22d6a32
+v2 circuit-engine audio: byte-identical to 00ceccf

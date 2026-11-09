@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/usr/bin/c++",
+    "-O3",
+    "-DNDEBUG",
+    "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/tests.o",
+    "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/Engine.o",
+    "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+    "-Wl,-Map=/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/link.map",
+    "-o",
+    "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/probe"
+  ],
+  "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1"
+}

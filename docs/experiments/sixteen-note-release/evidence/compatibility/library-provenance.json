@@ -1,0 +1,25 @@
+{
+  "baseline_library_identities": {
+    "generic": {
+      "path": "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "record": {
+        "bytes": 914924,
+        "sha256": "e73bba009b2ac20e275443a6ac598ef7b1107cec69661b225e03a33b64f4f6b3"
+      },
+      "prior_record_path": "docs/experiments/mpe-member-onset/external-inputs.json",
+      "matches_prior_record": true
+    },
+    "native": {
+      "path": "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-native/libcs80_core.a",
+      "record": {
+        "bytes": 872058,
+        "sha256": "93843b13165788ad62fa65b8554fe97b706b0291f38c0880cadbce3db1d97e86"
+      },
+      "prior_record_path": "docs/experiments/mpe-member-onset/external-inputs.json",
+      "matches_prior_record": true
+    }
+  },
+  "baseline_header_checkout_head": "d2c37f8d2dcad132339c6f8cd2a1a7864ad1f338",
+  "baseline_and_published_src_tree": "a1ee27dbda98a04703ab01fdf8c6fc39e9ea5536",
+  "scope": "These are retained preceding MPE candidate libraries, not newly rebuilt baseline libraries. Candidate profile libraries were newly built at frozen sixteen-release source."
+}

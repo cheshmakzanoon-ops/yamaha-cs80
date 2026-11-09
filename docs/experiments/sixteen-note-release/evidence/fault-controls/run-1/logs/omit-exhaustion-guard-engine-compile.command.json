@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/usr/bin/c++",
+    "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+    "-I/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/src",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-o",
+    "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/Engine.o",
+    "-c",
+    "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/omit-exhaustion-guard/src/core/Engine.cpp"
+  ],
+  "cwd": "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1"
+}

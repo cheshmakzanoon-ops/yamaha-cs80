@@ -1,0 +1,14 @@
+--- baseline/src/core/ReleaseOrder.h
++++ omit-exhaustion-guard/src/core/ReleaseOrder.h
+@@ -17,11 +17,6 @@
+     bool valid() const noexcept { return !exhausted; }
+     std::uint64_t next() noexcept
+     {
+-        if (serial == std::numeric_limits<std::uint64_t>::max())
+-        {
+-            exhausted = true;
+-            return 0;
+-        }
+         return ++serial;
+     }
+ private:

@@ -1,0 +1,9 @@
+2026-11-09T22:53:37Z
+1a23a085657a07d9f066f7cc38aaf2572a6fe714
+/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake --build /workspace/scratch/ee447c520988/build-sixteen-release-core --parallel 2 
+/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest --test-dir /workspace/scratch/ee447c520988/build-sixteen-release-core --output-on-failure --parallel 2 
+CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++
+CS80_BUILD_PLUGIN:BOOL=OFF
+CS80_BUILD_TESTS:BOOL=ON
+CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=OFF

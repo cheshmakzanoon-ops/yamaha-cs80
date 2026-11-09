@@ -1,0 +1,10 @@
+--- baseline/src/core/Engine.cpp
++++ ui-held-source-filter/src/core/Engine.cpp
+@@ -1935,6 +1935,7 @@
+     const Voice* newest = nullptr;
+     for (const auto& voice : voices)
+         if (voice.active && voice.held && voice.note == note && voice.midiChannel == channel
++            && (!keyboardOnly || voice.keyboardOrigin)
+             && (newest == nullptr || voice.age > newest->age))
+             newest = &voice;
+     return newest != nullptr

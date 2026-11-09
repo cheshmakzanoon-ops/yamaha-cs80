@@ -1,0 +1,85 @@
+{
+  "script": "scripts/check-compat-gates.sh",
+  "script_sha256": "1f2926a5bea75e705f62c49964a9aad70b6e7c6f0c9142080b67f0be9201bb20",
+  "command": "bash scripts/check-compat-gates.sh --strict-v2",
+  "driver_exit": 0,
+  "historical_reference_sources": {
+    "BASELINE": {
+      "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/compat-cache/d56911a7c5f6953cd244457226b126cc567a538b",
+      "commit": "d56911a7c5f6953cd244457226b126cc567a538b",
+      "src_tree": "6aab86d27e40e14c9baf596222edba4be13f351d",
+      "source_clean_at_capture": true
+    },
+    "SOURCE_V1": {
+      "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/compat-cache/22d6a32c48c85f9b813506edcd856f73f4293c2d",
+      "commit": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+      "src_tree": "615c01d291e10acc5d597d1ee9ef2a1e5c17465f",
+      "source_clean_at_capture": true
+    },
+    "SOURCE_AUDIO_V2": {
+      "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/compat-cache/00ceccfacb3cb9845436701da01c4387d53a361a",
+      "commit": "00ceccfacb3cb9845436701da01c4387d53a361a",
+      "src_tree": "7fac02321e636cb270002294500d336180d8fb9a",
+      "source_clean_at_capture": true
+    }
+  },
+  "capture_pairs": {
+    "legacy-default": {
+      "baseline_path": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/build-compat-gates/legacy-default.f32",
+      "candidate_path": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/build-compat-gates/current-default.f32",
+      "baseline": {
+        "bytes": 32863104,
+        "sha256": "4a3483f77c9df9895386b98eaa169358d19b463c21283231f994c5d0f6c523de"
+      },
+      "candidate": {
+        "bytes": 32863104,
+        "sha256": "4a3483f77c9df9895386b98eaa169358d19b463c21283231f994c5d0f6c523de"
+      },
+      "byte_identical_by_size_and_sha256": true,
+      "bundled": false
+    },
+    "legacy-tails": {
+      "baseline_path": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/build-compat-gates/legacy-tails.f32",
+      "candidate_path": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/build-compat-gates/current-tails.f32",
+      "baseline": {
+        "bytes": 98589312,
+        "sha256": "fe447882e3ea3560eefb7b5ae4a474b151efe5ced775b5ab36f2609c5fde0660"
+      },
+      "candidate": {
+        "bytes": 98589312,
+        "sha256": "fe447882e3ea3560eefb7b5ae4a474b151efe5ced775b5ab36f2609c5fde0660"
+      },
+      "byte_identical_by_size_and_sha256": true,
+      "bundled": false
+    },
+    "v1-circuit": {
+      "baseline_path": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/build-compat-gates/circuit-v1.bin",
+      "candidate_path": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/build-compat-gates/circuit-current.bin",
+      "baseline": {
+        "bytes": 133056,
+        "sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+      },
+      "candidate": {
+        "bytes": 133056,
+        "sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+      },
+      "byte_identical_by_size_and_sha256": true,
+      "bundled": false
+    },
+    "v2-audio": {
+      "baseline_path": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/build-compat-gates/audio-v2.bin",
+      "candidate_path": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/build-compat-gates/audio-current.bin",
+      "baseline": {
+        "bytes": 9332176,
+        "sha256": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195"
+      },
+      "candidate": {
+        "bytes": 9332176,
+        "sha256": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195"
+      },
+      "byte_identical_by_size_and_sha256": true,
+      "bundled": false
+    }
+  },
+  "scope": "Retained large strict outputs are external only. Comparisons at archive time are integrity checks, not rerun renders. Full outer driver log/status establishes runtime gate outcomes."
+}

@@ -26,6 +26,7 @@
 #include "TouchCircuit.h"
 #include "Tuning.h"
 #include "MpeZones.h"
+#include "ReleaseOrder.h"
 #include "ControllerCurves.h"
 #include "experimental/ContinuousVoiceCircuit.h"
 #include "ToleranceModel.h"
@@ -234,6 +235,19 @@ public:
     void noteOffFromKeyboard(int midiNote, int midiChannel = 1);
     bool hasDeferredNoteTiming() const noexcept { return scanTimingActive(); }
     void allNotesOff(bool release = true, int midiChannel = 0);
+    // Optional processor-owned ordering for immediate two-engine release only.
+    // Bind once while cold; source must outlive this Engine and any copy of it.
+    // All access is render-thread-only. Reset keeps the binding, not ownership.
+    bool bindReleaseOrderClock(ReleaseOrderClock&) noexcept;
+    bool canCoordinateImmediateReleaseWith(const Engine&) const noexcept;
+    struct ReleaseCandidate
+    {
+        enum class Kind { none, held, waiting };
+        Kind kind = Kind::none;
+        std::uint64_t order = 0; // Zero means deferred/unqualified ownership.
+        bool keyboardOrigin = false;
+    };
+    ReleaseCandidate immediateReleaseCandidate(int note, int channel, bool keyboardOnly) const noexcept;
     // A channel of 0 applies the pressure to every matching note; a positive
     // channel addresses only that channel's note, whether or not MPE is on.
     void polyPressure(int midiNote, float pressure, int midiChannel = 0);
@@ -484,6 +498,7 @@ private:
         // Circuits allocated by one note-on release together, even if the
         // voice mode changes before note-off. Age remains per circuit.
         uint64_t releaseGroup = 0;
+        uint64_t coordinatedReleaseOrder = 0;
         bool keyboardOrigin = false;
         KeyboardContourWeights contour;
         Rank ranks[kNumRanks];
@@ -518,6 +533,7 @@ private:
         uint64_t order = 0;
         bool keyboardOrigin = false;
         uint64_t originOrder = 0;
+        uint64_t coordinatedReleaseOrder = 0;
     };
 
     void applyParams(const ParamValues& values);
@@ -540,7 +556,7 @@ private:
     void processInternalSample(float& outL, float& outR, float externalModulation);
     template<bool BatchFilters>
     void processInternalSampleImpl(float& outL, float& outR, float externalModulation);
-    void startVoice(Voice& voice, int note, float velocity, int midiChannel, bool keyboardOrigin = false);
+    void startVoice(Voice& voice, int note, float velocity, int midiChannel, bool keyboardOrigin = false, uint64_t coordinatedReleaseOrder = 0);
     // Circuit engine: bring a silent free-running circuit exactly up to date
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
     void wakeIdleVoice(Voice& voice) noexcept;
@@ -562,16 +578,18 @@ private:
     // Note events after the optional KAS scan quantisation (Phase 2.2).
     void enqueueNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin);
     void enqueueNoteOff(int midiNote, int midiChannel, bool keyboardOnly);
-    void applyNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder);
-    void applyNoteOff(int midiNote, int midiChannel, bool keyboardOnly = false);
+    void applyNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder, bool immediate = true);
+    void applyNoteOff(int midiNote, int midiChannel, bool keyboardOnly = false, bool immediate = true);
     void flushScanEvents();
     bool scanTimingActive() const noexcept
     { return global.kasScanTiming && usesSourceModels(global.renderPolicy) && ! global.arpOn; }
     // Circuit engine: a still-held key that found no free circuit is assigned
     // when one frees (declared KAS model, KasScanner.h).
-    void rememberUnassignedKey(int note, float velocity, int midiChannel, bool keyboardOrigin);
+    void rememberUnassignedKey(int note, float velocity, int midiChannel, bool keyboardOrigin, bool immediate);
     bool forgetUnassignedKey(int note, int midiChannel, bool keyboardOnly = false);
-    void reconsiderUnassignedKeys();
+    void reconsiderUnassignedKeys(bool immediate = true);
+    uint64_t nextReleaseOrder(bool immediate) noexcept
+    { return immediate && releaseOrderClock != nullptr ? releaseOrderClock->next() : 0; }
     bool noteMapped(int midiNote) const noexcept;
     void retuneSoundingVoices() noexcept;
     int unisonCount() const noexcept
@@ -614,6 +632,7 @@ private:
 
     std::array<Voice, kNumVoices> voices;
     Ig00156Batch::Kernel filterBatchKernel = nullptr;
+    ReleaseOrderClock* releaseOrderClock = nullptr; // Non-owning, lifetime-bound on construction.
     uint64_t voiceCounter = 0;
     uint64_t noteIngressOrder = 0;
     int nextVoice = 0;

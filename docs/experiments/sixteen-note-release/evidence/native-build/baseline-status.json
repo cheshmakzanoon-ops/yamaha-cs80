@@ -1,0 +1,19 @@
+{
+  "state": "baseline_build_complete_awaiting_frozen_candidate",
+  "baseline_product_commit": "e27c34f39320057e09a34005ad2470d1231b4f87",
+  "source_head_at_build_end": "e23931da9a21e5c4480b21a4274d9e994f0669f7",
+  "product_sources_unchanged_by_docs_only_commit": true,
+  "configure_exit": 0,
+  "build_exit": 0,
+  "target": "CS80Snapshots",
+  "parallel_jobs": 2,
+  "source_directory": "/workspace/scratch/ee447c520988/sixteen-note-release",
+  "build_directory": "/workspace/scratch/ee447c520988/build-sixteen-note-release-native",
+  "binary_path": "/workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+  "binary_sha256": "ac2d2d65c9a02092159e5c2c7c7d658fc20ea13f5e3f6b3fc4b70b940c3ef41b",
+  "tests_run": false,
+  "next_step": "Wait for parent to freeze candidate, then rebuild/test only when assigned.",
+  "warnings": "Two existing enum mismatch warnings in src/tools/ui_snapshot.cpp; JUCE splash-screen flag ignored note.",
+  "downloads_or_dependency_edits": false,
+  "source_edits_or_pushes": false
+}

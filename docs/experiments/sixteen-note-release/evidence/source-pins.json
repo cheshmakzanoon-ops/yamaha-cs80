@@ -1,0 +1,31 @@
+{
+  "published_base": "e27c34f39320057e09a34005ad2470d1231b4f87",
+  "qualification_head": "1a23a085657a07d9f066f7cc38aaf2572a6fe714",
+  "qualification_git_tree": "91c8f1d6e609db57479b74d9204402a750bfcb04",
+  "qualification_src_tree": "079e4a5300f257e03d8b7c99dc8d88743c38558d",
+  "published_base_src_tree": "a1ee27dbda98a04703ab01fdf8c6fc39e9ea5536",
+  "production_checkpoint": "77dfd74b0e80328a4e0f09c01b7636c65519f191",
+  "preimplementation_plan_checkpoint": "e23931da9a21e5c4480b21a4274d9e994f0669f7",
+  "native_failed_fixture_checkpoint": "920cab9219f500ddc6e7f629f94df7f0a00f6dd7",
+  "native_fixture_compile_correction": "fb53a73f5e3336d9606566777bc959f36e926a15",
+  "native_passed_fixture_checkpoint": "9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8",
+  "baseline_header_checkout": "/workspace/scratch/ee447c520988/next-product-step",
+  "baseline_header_checkout_head": "d2c37f8d2dcad132339c6f8cd2a1a7864ad1f338",
+  "baseline_header_src_tree": "a1ee27dbda98a04703ab01fdf8c6fc39e9ea5536",
+  "changed_paths": [
+    "CMakeLists.txt",
+    "docs/experiments/sixteen-note-release/PLAN.md",
+    "src/core/Engine.cpp",
+    "src/core/Engine.h",
+    "src/core/ReleaseOrder.h",
+    "src/core/VoiceModes.h",
+    "src/plugin/PluginProcessor.cpp",
+    "src/plugin/PluginProcessor.h",
+    "src/tools/ui_snapshot.cpp",
+    "tests/SixteenVoiceReleaseHostTests.h",
+    "tests/SixteenVoiceReleaseTests.cpp"
+  ],
+  "source_clean_against_pin": true,
+  "archive_capture_utc": "2026-11-09T23:00:41.294749+00:00",
+  "limitations": "Hashes identify retained inputs and observed content; they are not signed provenance or runtime execution. Historical binaries already overwritten are identified by original status/hash files, not represented by current bytes."
+}

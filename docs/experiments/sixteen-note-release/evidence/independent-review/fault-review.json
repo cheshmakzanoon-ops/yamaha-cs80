@@ -1,0 +1,158 @@
+{
+  "historical_driver_sha256": "5c509f1c3585086d68f636409f9a651b72a8f412565ad46c0033c9e8e5c75f47",
+  "current_driver_sha256": "25591c5896e8fab179dc517304e8bba1da568911edd41a4a9c9efaf0e48fbcf3",
+  "historical_current_driver_delta": "Only the descriptive scanner-versus-ARP string was corrected. Mutation definitions and executable logic are identical. An initial strict whole-driver hash check stopped before runs; this exact description-only delta was then verified.",
+  "summary_sha256": "f473943ed58b0703fdf0742a8d45c60148a4c18dff0725c3b5d20c019b16d68f",
+  "parser_self_test": {
+    "valid_cases": 2,
+    "rejected_invalid_cases": [
+      "empty",
+      "missing",
+      "duplicate",
+      "trailing_output",
+      "wrong_count",
+      "crash",
+      "wrong_exit",
+      "successful_mutant",
+      "stderr",
+      "missing_failure_lines",
+      "malformed",
+      "extra_blank_terminal_line"
+    ]
+  },
+  "cases": {
+    "unmutated-control": {
+      "checks": 1418,
+      "failures": 0,
+      "exit": 0,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "broadcast-two-engines": {
+      "checks": 1418,
+      "failures": 154,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "inverse-global-order": {
+      "checks": 1418,
+      "failures": 256,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "lost-waiter-priority": {
+      "checks": 1418,
+      "failures": 3,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "ui-host-protection-omitted": {
+      "checks": 1418,
+      "failures": 18,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "ui-held-source-filter": {
+      "checks": 1418,
+      "failures": 18,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "qualify-prior-deferred-candidates": {
+      "checks": 1418,
+      "failures": 27,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "accept-unqualified-candidate": {
+      "checks": 1418,
+      "failures": 7,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "accept-mismatched-sources": {
+      "checks": 1418,
+      "failures": 1,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "omit-exhaustion-guard": {
+      "checks": 1418,
+      "failures": 4,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "ignore-pending-scanner": {
+      "checks": 1418,
+      "failures": 12,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "reuse-waiter-order-on-promotion": {
+      "checks": 1418,
+      "failures": 21,
+      "exit": 1,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    },
+    "omit-router-ui-guard-only": {
+      "checks": 1418,
+      "failures": 0,
+      "exit": 0,
+      "hashes_commands_private_headers_private_engine_link_verified": true
+    }
+  },
+  "independent_runs": [
+    {
+      "name": "broadcast-two-engines",
+      "argv": [
+        "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/broadcast-two-engines/probe"
+      ],
+      "binary_sha256": "6be138592590f89a5575872063c36c2397250ae139d78d26eed91fda2a067517",
+      "seconds": 3.227997064590454,
+      "checks": 1418,
+      "failures": 154,
+      "exit_code": 1,
+      "stdout_sha256": "b0d7b9453cd301eb20eae7d61bd024cb2b0cf89405769e79b4f6a7a5272adbc7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "accept-unqualified-candidate",
+      "argv": [
+        "/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-unqualified-candidate/probe"
+      ],
+      "binary_sha256": "9f9cd76c821d0646385bfcdbd87f5f33bff7eb06123ff9d4f24d3ee69cd233e1",
+      "seconds": 2.542736768722534,
+      "checks": 1418,
+      "failures": 7,
+      "exit_code": 1,
+      "stdout_sha256": "e6dfc23128c2aa70c7c6c2654247b606f9e5283bb0319c85b9ea8628efbc3f1a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "notes": [
+    "The qualify-prior-deferred-candidates mutation removes the immediate flag check in nextReleaseOrder, affecting scanner allocations and promotions. ARP startVoice still receives default order zero.",
+    "The historical driver gate omits an explicit redundancy_control status conjunction. Its actual redundancy control is nevertheless validated separately here. Final archive verifier must enforce it explicitly."
+  ],
+  "source_test_unchanged_after": true,
+  "result": "Passed independent source/manifest review, all 13 case validations, parser self-tests, and two representative mutant reruns. No builds or source edits.",
+  "frozen_source_matches_production_inputs": true,
+  "parser_optimized_mode": {
+    "exit": 0,
+    "result": {
+      "valid_cases": 2,
+      "rejected_invalid_cases": [
+        "empty",
+        "missing",
+        "duplicate",
+        "trailing_output",
+        "wrong_count",
+        "crash",
+        "wrong_exit",
+        "successful_mutant",
+        "stderr",
+        "missing_failure_lines",
+        "malformed",
+        "extra_blank_terminal_line"
+      ]
+    }
+  }
+}

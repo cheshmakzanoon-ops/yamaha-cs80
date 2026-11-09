@@ -1,0 +1,12 @@
+--- baseline/src/core/Engine.cpp
++++ ignore-pending-scanner/src/core/Engine.cpp
+@@ -1919,8 +1919,7 @@
+ {
+     return releaseOrderClock != nullptr && releaseOrderClock == other.releaseOrderClock
+         && releaseOrderClock->valid() && !global.arpOn && !other.global.arpOn
+-        && !scanTimingActive() && !other.scanTimingActive()
+-        && scanner.pending() == 0 && other.scanner.pending() == 0;
++        && !scanTimingActive() && !other.scanTimingActive();
+ }
+ 
+ Engine::ReleaseCandidate Engine::immediateReleaseCandidate(int note, int channel, bool keyboardOnly) const noexcept

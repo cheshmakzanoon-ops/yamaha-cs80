@@ -1,0 +1,37 @@
+Candidate build start UTC: 2026-11-09T22:46:02+00:00
+Source HEAD: 77dfd74b0e80328a4e0f09c01b7636c65519f191
+Source status:
+/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake --build /workspace/scratch/ee447c520988/build-sixteen-note-release-native --target CS80Snapshots --parallel 2 
+[0/2] Re-checking globbed directories...
+[1/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+[2/21] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[3/21] Linking CXX static library libcs80_core.a
+[4/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+[5/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+[6/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+[7/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+[8/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+[9/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o
+[10/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernLayerState.cpp.o
+[11/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o
+[12/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o
+[13/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o
+[14/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o
+[15/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o
+[16/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o
+[17/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o
+[18/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o
+[19/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o
+[20/21] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp:3309:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3309 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp:3310:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3310 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[21/21] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots
+Candidate build end UTC: 2026-11-09T22:47:49+00:00
+Source HEAD after build: 77dfd74b0e80328a4e0f09c01b7636c65519f191
+Source status after build:
+990ac706b08e4476e4887a48dcf2c1ca90d39a59cd980b795560c202ff1c2f5a  /workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots

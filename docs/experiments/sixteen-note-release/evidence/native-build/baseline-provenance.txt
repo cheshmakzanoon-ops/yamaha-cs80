@@ -1,0 +1,30 @@
+Baseline prepared UTC: 2026-11-09T22:39:35+00:00
+Source: e27c34f39320057e09a34005ad2470d1231b4f87
+Source status:
+JUCE source: c352e2489000ffeb9e397051377d75eef2efe641
+JUCE status:
+cmake version 3.31.6
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+1.11.1.git.kitware.jobserver-1
+c++ (Debian 14.2.0-19) 14.2.0
+Copyright (C) 2024 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Input checksums:
+065d1913747c71d8eedd986fff44122496c046e244b06e58bd2271216481bf69  /workspace/scratch/ee447c520988/mpe-native-tools/configure.sh
+da5062d7ecc21ba02f2f82738d44fe799cb855b9255192e21ba2cd59df90d142  /workspace/scratch/ee447c520988/mpe-native-tools/package-manifest.json
+4d1c2658bbf1a118f5a4fa78bc8f1d4874ee8a5eafbeb3298351ab7b3a4b2d3d  /workspace/scratch/ee447c520988/mpe-native-tools/xvfb-manifest.json
+75c930284bfc7c5091fbcb3b6d1fdb4da0404b048b3de74cd7316ec2b40d0883  /workspace/scratch/ee447c520988/sixteen-release-evidence/native-build/configure.sh
+
+Configure-only adaptation diff:
+--- /workspace/scratch/ee447c520988/mpe-native-tools/configure.sh	2026-11-09 17:30:31.534575699 -0400
++++ /workspace/scratch/ee447c520988/sixteen-release-evidence/native-build/configure.sh	2026-11-09 18:39:35.768026278 -0400
+@@ -10,4 +10,4 @@
+ export LDFLAGS="-L$PREFIX/usr/lib/x86_64-linux-gnu -Wl,-rpath-link,$PREFIX/usr/lib/x86_64-linux-gnu"
+ export PKG_CONFIG_SYSROOT_DIR=$PREFIX
+ export PKG_CONFIG_LIBDIR=$PREFIX/usr/lib/x86_64-linux-gnu/pkgconfig:$PREFIX/usr/lib/pkgconfig:$PREFIX/usr/share/pkgconfig
+-cmake -S "$ROOT/next-product-step" -B "$ROOT/build-mpe-onset-native" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_XVFB_RUN="$PREFIX/usr/bin/xvfb-run" -DFETCHCONTENT_SOURCE_DIR_JUCE="$ROOT/mpe-native-tools/JUCE" -DCMAKE_PREFIX_PATH="$PREFIX/usr" -DCMAKE_C_FLAGS="-idirafter $PREFIX/usr/include -idirafter $PREFIX/usr/include/x86_64-linux-gnu" -DCMAKE_CXX_FLAGS="-idirafter $PREFIX/usr/include -idirafter $PREFIX/usr/include/x86_64-linux-gnu" -DCMAKE_EXE_LINKER_FLAGS="-L$PREFIX/usr/lib/x86_64-linux-gnu -Wl,-rpath-link,$PREFIX/usr/lib/x86_64-linux-gnu" -DCMAKE_MAKE_PROGRAM="$ROOT/pitch-power-recovery/tools/bin/ninja"
++cmake -S "$ROOT/sixteen-note-release" -B "$ROOT/build-sixteen-note-release-native" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_XVFB_RUN="$PREFIX/usr/bin/xvfb-run" -DFETCHCONTENT_SOURCE_DIR_JUCE="$ROOT/mpe-native-tools/JUCE" -DCMAKE_PREFIX_PATH="$PREFIX/usr" -DCMAKE_C_FLAGS="-idirafter $PREFIX/usr/include -idirafter $PREFIX/usr/include/x86_64-linux-gnu" -DCMAKE_CXX_FLAGS="-idirafter $PREFIX/usr/include -idirafter $PREFIX/usr/include/x86_64-linux-gnu" -DCMAKE_EXE_LINKER_FLAGS="-L$PREFIX/usr/lib/x86_64-linux-gnu -Wl,-rpath-link,$PREFIX/usr/lib/x86_64-linux-gnu" -DCMAKE_MAKE_PROGRAM="$ROOT/pitch-power-recovery/tools/bin/ninja"

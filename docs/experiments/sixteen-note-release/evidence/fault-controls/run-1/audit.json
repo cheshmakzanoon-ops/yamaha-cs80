@@ -1,0 +1,1396 @@
+{
+  "passed": true,
+  "check_count": 347,
+  "checks": [
+    {
+      "check": "11 scored behavioral mutants",
+      "passed": true
+    },
+    {
+      "check": "gate and production invariants passed",
+      "passed": true
+    },
+    {
+      "check": "unmutated control passed",
+      "passed": true
+    },
+    {
+      "check": "literal redundant guard deletion disclosed as survivor",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: probe hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: probe hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: probe hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: probe hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: probe hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: probe hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: probe hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: probe hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: probe hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: probe hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: probe hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: probe hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: unique final full summary",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: numerical summary agrees",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: exact failure diagnostics",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: normal expected exit",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: expected numerical outcome",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: no runtime stderr",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: Engine.o hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: tests.o hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: probe hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: link.map hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: mutation.diff hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: no stale archive Engine selected",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: private source hashes",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only: private Engine before unchanged archive",
+      "passed": true
+    },
+    {
+      "check": "tracked-inputs: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "tracked-inputs: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "tracked-inputs: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "head: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "head: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "head: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "frozen-source-diff: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "frozen-source-diff: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "frozen-source-diff: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "compiler-version: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "compiler-version: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "compiler-version: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "archive-members: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "archive-members: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "archive-members: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "unmutated-control-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "broadcast-two-engines-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "inverse-global-order-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "lost-waiter-priority-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ui-host-protection-omitted-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ui-held-source-filter-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "qualify-prior-deferred-candidates-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "accept-unqualified-candidate-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "accept-mismatched-sources-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "omit-exhaustion-guard-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "ignore-pending-scanner-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "reuse-waiter-order-on-promotion-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-engine-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-engine-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-engine-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-test-compile: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-test-compile: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-test-compile: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-link: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-link: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-link: build/inspection succeeded",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-run: stdout hash",
+      "passed": true
+    },
+    {
+      "check": "omit-router-ui-guard-only-run: stderr hash",
+      "passed": true
+    },
+    {
+      "check": "fixture unchanged",
+      "passed": true
+    },
+    {
+      "check": "matching archive still unchanged",
+      "passed": true
+    },
+    {
+      "check": "parser positive and negative controls recorded",
+      "passed": true
+    }
+  ],
+  "executed_reproducer_sha256": "5c509f1c3585086d68f636409f9a651b72a8f412565ad46c0033c9e8e5c75f47",
+  "summary_sha256": "f473943ed58b0703fdf0742a8d45c60148a4c18dff0725c3b5d20c019b16d68f"
+}

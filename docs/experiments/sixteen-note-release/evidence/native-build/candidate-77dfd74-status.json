@@ -1,0 +1,24 @@
+{
+  "state": "candidate_build_and_reproduction_passed_awaiting_fixture_commit",
+  "candidate_commit": "77dfd74b0e80328a4e0f09c01b7636c65519f191",
+  "source_clean_at_build_start_and_end": true,
+  "target": "CS80Snapshots",
+  "parallel_jobs": 2,
+  "build_exit": 0,
+  "binary_sha256": "990ac706b08e4476e4887a48dcf2c1ca90d39a59cd980b795560c202ff1c2f5a",
+  "probe_source": "/workspace/scratch/ee447c520988/sixteen-release-evidence/BaselineReleaseProbe.cpp",
+  "probe_source_sha256": "09596776929701a1202022cbe814a8dff7456026af1454f537b18ee966705d53",
+  "probe_binary_sha256": "734fee0ae7e685b6007c6c4b911c1fc1ebe0630dee09dad126af5d6676b2bcb4",
+  "probe_stage_exits": {
+    "compile": 0,
+    "link": 0,
+    "run": 0
+  },
+  "probe_checks": 4,
+  "probe_failures": 0,
+  "coverage": "Unchanged real-processor reproduction: Legacy/Circuit, zero/32-frame blocks; newer extension repeated-note ownership releases while older primary owner stays held.",
+  "full_test_suite_run": false,
+  "warnings": "Two pre-existing enum mismatch warnings in ui_snapshot.cpp.",
+  "source_or_dependency_edits_or_pushes_by_worker": false,
+  "next_step": "Await test-only frozen candidate before further build/tests."
+}

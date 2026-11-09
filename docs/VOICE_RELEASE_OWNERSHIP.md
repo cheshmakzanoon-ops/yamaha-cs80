@@ -18,8 +18,10 @@ which already allocated circuits belong to a note-off.
   edit cannot leave one member physically held after the key is released.
 - Circuit reuse and reset establish fresh ownership. Per-circuit age remains
   separate and retains its existing modulation/retrigger meaning.
-- The eight/sixteen selector is covered for one engine's ownership. The plugin's
-  existing second-engine routing and teardown are unchanged.
+- This original correction covers the eight/sixteen selector for one engine's
+  ownership. The later [immediate sixteen-voice release coordinator](SIXTEEN_VOICE_NOTE_RELEASE.md)
+  selects one comparable group across the two instruments. Deferred/ARP
+  cross-instrument releases retain their broadcast fallback; teardown is unchanged.
 
 These are MIDI/software lifecycle rules, not claims about Yamaha hardware.
 Ordinary eight-voice allocation, DSP laws, envelope release timing, arpeggiator

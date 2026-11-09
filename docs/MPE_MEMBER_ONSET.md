@@ -49,4 +49,6 @@ termination/zone reset, manager/member pressure and timbre combination,
 inactive-extension state handoff and live active-note range retargeting remain
 separate. No GUI, external DAW, physical controller, plugin-format host,
 performance, filter/memory activation or circuit-fidelity qualification is
-claimed. Same-pitch sixteen-voice Note Off ownership remains separate too.
+claimed. Same-pitch sixteen-voice Note Off ownership is addressed separately by
+the [bounded immediate release coordinator](SIXTEEN_VOICE_NOTE_RELEASE.md);
+deferred-scanner and arpeggiator ownership remain open.

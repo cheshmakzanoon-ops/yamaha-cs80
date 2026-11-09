@@ -1,0 +1,42 @@
+{
+  "state": "neighbor_ctests_passed",
+  "candidate_commit": "9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8",
+  "source_clean_at_test_start_and_end": true,
+  "binary_hash_verified": "13c7b913f7fdb55bab4967bb355e71d2d7d54f5a18906709836d354f6c55a3e6",
+  "ctest_exit": 0,
+  "ctests_run": 5,
+  "ctests_failed": 0,
+  "test_results": [
+    {
+      "name": "cs80_mpe_member_onset_host_tests",
+      "checks": 976,
+      "failures": 0
+    },
+    {
+      "name": "cs80_controller_reset_host_tests",
+      "checks": 1408,
+      "failures": 0
+    },
+    {
+      "name": "cs80_keyboard_handoff_host_tests",
+      "checks": null,
+      "failures": 0
+    },
+    {
+      "name": "cs80_voice_activity_host_tests",
+      "checks": null,
+      "failures": 0
+    },
+    {
+      "name": "cs80_undo_replay_gesture_tests",
+      "checks": 317,
+      "failures": 0
+    }
+  ],
+  "parallel_jobs": 1,
+  "display_dependent_suites_run": false,
+  "test_log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/native-build/test-neighbors-9e3f9a0.log",
+  "test_log_sha256": "5f03b2938566591bd8fc6b77f41311ab84224bc83a4794777f73afda92a1f646",
+  "source_or_dependency_edits_or_pushes_by_worker": false,
+  "next_step": "Await test-only CMake registration commit for regenerated registered gate."
+}

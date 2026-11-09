@@ -1,0 +1,119 @@
+{
+  "scope": "Only integrity/result-structure verification. No product test, build, audio render or timing experiment ran. Temporary copies were mutated, never repository evidence. Rehashed-case checks show semantic validation beyond manifest byte hashes.",
+  "verifier_sha256": "5bbaaa286a3a3bea6897983d0129783975dd1abb922e02404df2cef6ae251438",
+  "cases": [
+    {
+      "case": "unaltered-bundle",
+      "optimized_python": false,
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Verified archived hashes, frozen source inputs and complete recorded qualification coverage. No runtime tests executed.\n",
+      "stderr": ""
+    },
+    {
+      "case": "unaltered-bundle",
+      "optimized_python": true,
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Verified archived hashes, frozen source inputs and complete recorded qualification coverage. No runtime tests executed.\n",
+      "stderr": ""
+    },
+    {
+      "case": "corrupted-raw-capture",
+      "optimized_python": false,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Changed file: evidence/compatibility/candidate-generic.bin\n"
+    },
+    {
+      "case": "corrupted-raw-capture",
+      "optimized_python": true,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Changed file: evidence/compatibility/candidate-generic.bin\n"
+    },
+    {
+      "case": "inherited-screenshot-corrupted-rehashed-primary-inventory",
+      "optimized_python": false,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Screenshot differs from inherited parent: docs/screenshots/main-1600x1000.png\n"
+    },
+    {
+      "case": "inherited-screenshot-corrupted-rehashed-primary-inventory",
+      "optimized_python": true,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Screenshot differs from inherited parent: docs/screenshots/main-1600x1000.png\n"
+    },
+    {
+      "case": "inherited-screenshot-executable-mode",
+      "optimized_python": false,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Screenshot file mode differs: docs/screenshots/main-1600x1000.png\n"
+    },
+    {
+      "case": "inherited-screenshot-executable-mode",
+      "optimized_python": true,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Screenshot file mode differs: docs/screenshots/main-1600x1000.png\n"
+    },
+    {
+      "case": "missing-full-suite-verdict-rehashed",
+      "optimized_python": false,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Missing/duplicate CTest verdict\n"
+    },
+    {
+      "case": "missing-full-suite-verdict-rehashed",
+      "optimized_python": true,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Missing/duplicate CTest verdict\n"
+    },
+    {
+      "case": "false-redundancy-control-rehashed",
+      "optimized_python": false,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Fault failure count differs: omit-router-ui-guard-only\n"
+    },
+    {
+      "case": "false-redundancy-control-rehashed",
+      "optimized_python": true,
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "stdout": "",
+      "stderr": "ERROR: Fault failure count differs: omit-router-ui-guard-only\n"
+    },
+    {
+      "case": "restored-bundle",
+      "optimized_python": false,
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Verified archived hashes, frozen source inputs and complete recorded qualification coverage. No runtime tests executed.\n",
+      "stderr": ""
+    },
+    {
+      "case": "restored-bundle",
+      "optimized_python": true,
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "stdout": "Verified archived hashes, frozen source inputs and complete recorded qualification coverage. No runtime tests executed.\n",
+      "stderr": ""
+    }
+  ],
+  "all_expected_statuses_observed": true
+}

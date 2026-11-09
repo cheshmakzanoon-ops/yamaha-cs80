@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "review_type": "Independent final evidence-bundle integrity and claims review",
+  "verdict": "approved",
+  "reviewed_integration_head": "acee137c0b7f2bb7221ff8344a102f49d015e0cd",
+  "qualified_runtime_source_head": "1a23a085657a07d9f066f7cc38aaf2572a6fe714",
+  "production_checkpoint": "77dfd74b0e80328a4e0f09c01b7636c65519f191",
+  "final_manifest_sha256": "c62fdd39faa33c3f96a45498adec6c00a389d60dfaf4efb5f9394a79fea1d77f",
+  "final_whole_bundle_sha256": "2b6fc230b2a4b8d6e4aeda4d732aa008837a32dbda9e504bd7f93bda72482384",
+  "final_readme_sha256": "9ead96361013a81614cd0e7ff41af83e5f554781eea056b0b3342e82db2a4cc4",
+  "whole_bundle_digest_algorithm": "SHA256 of UTF-8 concatenation, for each lexicographically sorted relative-path string: relative path + NUL + per-file SHA256 lowercase hex + newline; includes manifest.json.",
+  "bundle_files": 413,
+  "indexed_archive_artifacts": 412,
+  "repository_inputs": 586,
+  "unchanged_against_actual_published_base_git_objects": 556,
+  "external_inputs": 178,
+  "two_file_delta_verified": true,
+  "delta_verification": "Only README.md and its size/hash record in manifest.json changed after the initial final-bundle review. Reversing the coverage sentence reconstructs the exact previous manifest hash and previous freeze content digest. Other 411 files are unchanged.",
+  "resolved_finding": "README accurately separates deferred ownership after scan disable, active ARP fallback, and ARP-disable continuity.",
+  "remaining_findings": [],
+  "verifier_commands": [
+    {
+      "label": "normal",
+      "argv": [
+        "python3",
+        "/workspace/scratch/ee447c520988/sixteen-note-release-impl/docs/experiments/sixteen-note-release/verify.py"
+      ],
+      "exit": 0,
+      "seconds": 0.3214545249938965,
+      "stdout": "Verified archived hashes, frozen source inputs and complete recorded qualification coverage. No runtime tests executed.\n",
+      "stderr": ""
+    },
+    {
+      "label": "optimized",
+      "argv": [
+        "python3",
+        "-O",
+        "/workspace/scratch/ee447c520988/sixteen-note-release-impl/docs/experiments/sixteen-note-release/verify.py"
+      ],
+      "exit": 0,
+      "seconds": 0.4309654235839844,
+      "stdout": "Verified archived hashes, frozen source inputs and complete recorded qualification coverage. No runtime tests executed.\n",
+      "stderr": ""
+    },
+    {
+      "label": "external",
+      "argv": [
+        "python3",
+        "/workspace/scratch/ee447c520988/sixteen-note-release-impl/docs/experiments/sixteen-note-release/verify.py",
+        "--external"
+      ],
+      "exit": 0,
+      "seconds": 0.8559596538543701,
+      "stdout": "Verified archived hashes, frozen source inputs and complete recorded qualification coverage. No runtime tests executed.\n",
+      "stderr": ""
+    },
+    {
+      "label": "optimized-external",
+      "argv": [
+        "python3",
+        "-O",
+        "/workspace/scratch/ee447c520988/sixteen-note-release-impl/docs/experiments/sixteen-note-release/verify.py",
+        "--external"
+      ],
+      "exit": 0,
+      "seconds": 1.0584619045257568,
+      "stdout": "Verified archived hashes, frozen source inputs and complete recorded qualification coverage. No runtime tests executed.\n",
+      "stderr": ""
+    }
+  ],
+  "bundle_unchanged_during_final_review": true,
+  "integrity_cases": {
+    "independently_executed": 14,
+    "normal_and_optimized_python": true,
+    "all_expected_statuses_observed": true,
+    "expected_successes": 4,
+    "expected_rejections": 10,
+    "scope": "Temporary copy-only tests of unaltered/restored evidence, raw capture corruption, rehashed inherited screenshot corruption, screenshot executable mode, removed full-suite verdict, and false redundant-mutation result. Executed against the immediately preceding freeze; verifier and all evidence bytes remain unchanged after the verified README-only correction."
+  },
+  "source_scope": {
+    "source_tests_cmake_equal_qualified_head": true,
+    "reviewed_contract_documents_unchanged": 6,
+    "production_changed_files": 6,
+    "harness_changed_files": 4,
+    "ordinary_path_compatibility_claim": "Bounded recorded compatibility witnesses; no claim of exhaustive MIDI/state compatibility."
+  },
+  "screenshot_scope": {
+    "preserved_commit": "b6ab4d37eb8d6c8e8d8c6361d3c9dd4c3db0fee5",
+    "provenance_commit": "e27c34f39320057e09a34005ad2470d1231b4f87",
+    "preserved_paths_modes_and_bytes": 70,
+    "png_hashes_verified": 68,
+    "inherited_changes": 20,
+    "depicts_or_qualifies_release_repair": false,
+    "remote_ci_outcome_inferred": false
+  },
+  "review_execution_limits": {
+    "production_tests_or_builds_during_final_bundle_review": false,
+    "prior_independent_executions": "Fresh GCC generic focused core: 1418/0 direct and 1/1 CTest. Hash-matched native: 768/0 direct and 1/1 CTest. Two representative mutants: 1418/154 and 1418/7, both normal exit 1. Other outcomes reviewed from source/log/provenance records.",
+    "full_core_suite_or_sanitizers_independently_rerun": false,
+    "display_dependent_external_daw_plugin_format_or_hardware_qualification": false,
+    "realtime_performance_qualification": false,
+    "remaining_product_boundary": "Deferred/ARP cross-instrument same-pitch release remains incomplete and explicitly retains broadcast fallback."
+  },
+  "reproduction_claim_review": "Published equivalent source/test/build-input hashes may use a different commit ID. Local qualification IDs are not promised to be remotely reachable. Fresh driver copies may adapt workspace paths and frozen-commit guards only after input-hash verification; archived results remain historical and unchanged."
+}

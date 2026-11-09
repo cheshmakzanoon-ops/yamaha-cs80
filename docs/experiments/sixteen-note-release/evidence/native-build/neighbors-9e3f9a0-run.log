@@ -1,0 +1,69 @@
+Neighbor tests start UTC: 2026-11-09T22:53:41+00:00
+Source HEAD: 9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8
+Source status:
+/workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots: OK
+/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest --test-dir /workspace/scratch/ee447c520988/build-sixteen-note-release-native --output-on-failure --verbose --parallel 1 -R \^cs80_\(mpe_member_onset_host\|controller_reset_host\|keyboard_handoff_host\|voice_activity_host\|undo_replay_gesture\)_tests\$ 
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-sixteen-note-release-native
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-sixteen-note-release-native/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-sixteen-note-release-native/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-sixteen-note-release-native
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 151
+    Start 151: cs80_undo_replay_gesture_tests
+
+151: Test command: /workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots "--undo-replay-gesture-tests"
+151: Working Directory: /workspace/scratch/ee447c520988/build-sixteen-note-release-native
+151: Test timeout computed to be: 120
+151: Undo replay gesture tests: 317 checks, 0 failures
+1/5 Test #151: cs80_undo_replay_gesture_tests .....   Passed    0.54 sec
+test 152
+    Start 152: cs80_mpe_member_onset_host_tests
+
+152: Test command: /workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots "--mpe-member-onset-tests"
+152: Working Directory: /workspace/scratch/ee447c520988/build-sixteen-note-release-native
+152: Test timeout computed to be: 120
+152: MPE member onset host: 976 checks, 0 failures
+2/5 Test #152: cs80_mpe_member_onset_host_tests ...   Passed    2.97 sec
+test 153
+    Start 153: cs80_controller_reset_host_tests
+
+153: Test command: /workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots "--controller-reset-tests"
+153: Working Directory: /workspace/scratch/ee447c520988/build-sixteen-note-release-native
+153: Test timeout computed to be: 120
+153: Controller reset host tests: 1408 checks, 0 failures
+3/5 Test #153: cs80_controller_reset_host_tests ...   Passed    1.02 sec
+test 154
+    Start 154: cs80_voice_activity_host_tests
+
+154: Test command: /workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots "--voice-activity-tests"
+154: Working Directory: /workspace/scratch/ee447c520988/build-sixteen-note-release-native
+154: Test timeout computed to be: 120
+154: Voice activity host tests: 0 failures
+4/5 Test #154: cs80_voice_activity_host_tests .....   Passed    0.19 sec
+test 156
+    Start 156: cs80_keyboard_handoff_host_tests
+
+156: Test command: /workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots "--keyboard-handoff-tests"
+156: Working Directory: /workspace/scratch/ee447c520988/build-sixteen-note-release-native
+156: Test timeout computed to be: 120
+156: Keyboard handoff host tests: 0 failures
+5/5 Test #156: cs80_keyboard_handoff_host_tests ...   Passed    0.62 sec
+
+The following tests passed:
+	cs80_undo_replay_gesture_tests
+	cs80_mpe_member_onset_host_tests
+	cs80_controller_reset_host_tests
+	cs80_voice_activity_host_tests
+	cs80_keyboard_handoff_host_tests
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =   5.35 sec
+Neighbor tests end UTC: 2026-11-09T22:53:46+00:00
+Source HEAD after tests: 9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8
+Source status after tests:

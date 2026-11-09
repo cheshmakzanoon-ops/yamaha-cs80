@@ -1,0 +1,1099 @@
+Archive member included to satisfy reference by file (symbol)
+
+/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a(Ig00156Batch.cpp.o)
+                              /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o (cs80::Ig00156Batch::selectKernel(bool))
+
+Merging program properties
+
+Removed property 0xc0000002 to merge /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o (not found) and /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o (0x3)
+Removed property 0xc0000002 to merge /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o (not found) and /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o (0x3)
+
+As-needed library included to satisfy reference by file (symbol)
+
+libstdc++.so.6                /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o (std::__throw_length_error(char const*)@@GLIBCXX_3.4)
+libm.so.6                     /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o (exp@@GLIBC_2.29)
+libgcc_s.so.1                 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o (_Unwind_Resume@@GCC_3.0)
+libc.so.6                     /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o (memmove@@GLIBC_2.2.5)
+
+Discarded input sections
+
+ .note.gnu.property
+                0x0000000000000000       0x20 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .group         0x0000000000000000       0x14 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000       0x14 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000       0x14 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000       0x14 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000       0x14 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000       0x14 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000       0x14 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000       0x10 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .group         0x0000000000000000        0xc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .data.rel.ro.local._ZN4cs8014kExtensionDefsE
+                0x0000000000000000      0xcc0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .data.rel.ro.local._ZN4cs8012kChannelDefsE
+                0x0000000000000000      0x5a0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .bss._ZZN4cs8023OscillatorBasisRegistry5slotsEvE4pool
+                0x0000000000000000    0x40400 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .data.rel.local.DW.ref.__gxx_personality_v0
+                0x0000000000000000        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .note.gnu.property
+                0x0000000000000000       0x20 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+LOAD /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+LOAD /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+LOAD /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.so
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libm.so
+START GROUP
+LOAD /lib/x86_64-linux-gnu/libm.so.6
+LOAD /lib/x86_64-linux-gnu/libmvec.so.1
+END GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/libgcc_s.so
+START GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libgcc_s.so.1
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/libgcc.a
+END GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/libgcc.a
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libc.so
+START GROUP
+LOAD /lib/x86_64-linux-gnu/libc.so.6
+LOAD /usr/lib/x86_64-linux-gnu/libc_nonshared.a
+LOAD /lib64/ld-linux-x86-64.so.2
+END GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/libgcc_s.so
+START GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libgcc_s.so.1
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/libgcc.a
+END GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/libgcc.a
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+LOAD /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+                [!provide]                        PROVIDE (__executable_start = SEGMENT_START ("text-segment", 0x0))
+                0x0000000000000350                . = (SEGMENT_START ("text-segment", 0x0) + SIZEOF_HEADERS)
+
+.note.gnu.property
+                0x0000000000000350       0x20
+ .note.gnu.property
+                0x0000000000000350       0x20 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.note.gnu.build-id
+                0x0000000000000370       0x24
+ *(.note.gnu.build-id)
+ .note.gnu.build-id
+                0x0000000000000370       0x24 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.interp         0x0000000000000394       0x1c
+ *(.interp)
+ .interp        0x0000000000000394       0x1c /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.hash
+ *(.hash)
+
+.gnu.hash       0x00000000000003b0       0x28
+ *(.gnu.hash)
+ .gnu.hash      0x00000000000003b0       0x28 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.dynsym         0x00000000000003d8      0x5b8
+ *(.dynsym)
+ .dynsym        0x00000000000003d8      0x5b8 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.dynstr         0x0000000000000990      0x423
+ *(.dynstr)
+ .dynstr        0x0000000000000990      0x423 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.gnu.version    0x0000000000000db4       0x7a
+ *(.gnu.version)
+ .gnu.version   0x0000000000000db4       0x7a /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.gnu.version_d  0x0000000000000e30        0x0
+ *(.gnu.version_d)
+ .gnu.version_d
+                0x0000000000000e30        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.gnu.version_r  0x0000000000000e30      0x130
+ *(.gnu.version_r)
+ .gnu.version_r
+                0x0000000000000e30      0x130 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.rela.dyn       0x0000000000000f60     0x4d70
+ *(.rela.init)
+ *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+ *(.rela.fini)
+ *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+ *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+ .rela.data.rel.ro
+                0x0000000000000f60        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.local
+                0x0000000000000f60       0x18 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.ro.local._ZN4cs8014kExtensionDefsE
+                0x0000000000000f78     0x1980 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.ro.local._ZN4cs8012kChannelDefsE
+                0x00000000000028f8      0xb40 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.local.DW.ref.__gxx_personality_v0
+                0x0000000000003438       0x18 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.ro.local._ZN4cs8014source_factory9addressesE
+                0x0000000000003450      0x420 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.ro.local._ZN4cs8018factory_hypotheses5cellsE
+                0x0000000000003870      0x558 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.ro.local._ZN4cs808hardware15verifiedOutputsE
+                0x0000000000003dc8      0x270 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.ro.local._ZN4cs808hardware15verifiedColumnsE
+                0x0000000000004038      0x420 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.ro.local._ZN4cs8011kGlobalDefsE
+                0x0000000000004458     0x1740 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+ *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+ *(.rela.ctors)
+ *(.rela.dtors)
+ *(.rela.got)
+ .rela.got      0x0000000000005b98      0x108 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+ .rela.bss      0x0000000000005ca0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ *(.rela.ldata .rela.ldata.* .rela.gnu.linkonce.l.*)
+ *(.rela.lbss .rela.lbss.* .rela.gnu.linkonce.lb.*)
+ *(.rela.lrodata .rela.lrodata.* .rela.gnu.linkonce.lr.*)
+ *(.rela.ifunc)
+ .rela.ifunc    0x0000000000005ca0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.fini_array
+                0x0000000000005ca0       0x18 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.init_array
+                0x0000000000005cb8       0x18 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.eh_frame
+                0x0000000000005cd0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.rela.plt       0x0000000000005cd0      0x4c8
+ *(.rela.plt)
+ .rela.plt      0x0000000000005cd0      0x4c8 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ *(.rela.iplt)
+
+.relr.dyn
+ *(.relr.dyn)
+                0x0000000000007000                . = ALIGN (CONSTANT (MAXPAGESIZE))
+
+.init           0x0000000000007000       0x17
+ *(SORT_NONE(.init))
+ .init          0x0000000000007000       0x12 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o
+                0x0000000000007000                _init
+ .init          0x0000000000007012        0x5 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+
+.plt            0x0000000000007020      0x340
+ *(.plt)
+ .plt           0x0000000000007020      0x340 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000007030                lround@@GLIBC_2.2.5
+                0x0000000000007040                printf@@GLIBC_2.2.5
+                0x0000000000007050                ceil@@GLIBC_2.2.5
+                0x0000000000007060                expl@@GLIBC_2.2.5
+                0x0000000000007070                sin@@GLIBC_2.2.5
+                0x0000000000007080                tanh@@GLIBC_2.2.5
+                0x0000000000007090                std::__throw_bad_alloc()@@GLIBCXX_3.4
+                0x00000000000070a0                sincosf@@GLIBC_2.2.5
+                0x00000000000070b0                strlen@@GLIBC_2.2.5
+                0x00000000000070c0                memcmp@@GLIBC_2.2.5
+                0x00000000000070d0                __cxa_allocate_exception@@CXXABI_1.3
+                0x00000000000070e0                std::__throw_length_error(char const*)@@GLIBCXX_3.4
+                0x00000000000070f0                memset@@GLIBC_2.2.5
+                0x0000000000007100                tan@@GLIBC_2.2.5
+                0x0000000000007110                sincos@@GLIBC_2.2.5
+                0x0000000000007120                __cxa_guard_release@@CXXABI_1.3
+                0x0000000000007130                std::__throw_system_error(int)@@GLIBCXX_3.4.11
+                0x0000000000007140                std::__throw_logic_error(char const*)@@GLIBCXX_3.4
+                0x0000000000007150                __cxa_free_exception@@CXXABI_1.3
+                0x0000000000007160                pthread_mutex_unlock@@GLIBC_2.2.5
+                0x0000000000007170                sqrt@@GLIBC_2.2.5
+                0x0000000000007180                log@@GLIBC_2.29
+                0x0000000000007190                memcpy@@GLIBC_2.14
+                0x00000000000071a0                sinf@@GLIBC_2.2.5
+                0x00000000000071b0                exp2@@GLIBC_2.29
+                0x00000000000071c0                fmod@@GLIBC_2.38
+                0x00000000000071d0                operator new(unsigned long)@@GLIBCXX_3.4
+                0x00000000000071e0                operator delete(void*, unsigned long)@@CXXABI_1.3.9
+                0x00000000000071f0                roundf@@GLIBC_2.2.5
+                0x0000000000007200                __cxa_call_terminate@@CXXABI_1.3.15
+                0x0000000000007210                log2f@@GLIBC_2.27
+                0x0000000000007220                lroundf@@GLIBC_2.2.5
+                0x0000000000007230                std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_replace_cold(char*, unsigned long, char const*, unsigned long, unsigned long)@@GLIBCXX_3.4.31
+                0x0000000000007240                tanf@@GLIBC_2.2.5
+                0x0000000000007250                pthread_mutex_lock@@GLIBC_2.2.5
+                0x0000000000007260                powf@@GLIBC_2.27
+                0x0000000000007270                tanhf@@GLIBC_2.2.5
+                0x0000000000007280                memmove@@GLIBC_2.2.5
+                0x0000000000007290                expf@@GLIBC_2.27
+                0x00000000000072a0                __cxa_throw@@CXXABI_1.3
+                0x00000000000072b0                pow@@GLIBC_2.29
+                0x00000000000072c0                _Unwind_Resume@@GCC_3.0
+                0x00000000000072d0                exp@@GLIBC_2.29
+                0x00000000000072e0                fmodf@@GLIBC_2.38
+                0x00000000000072f0                __cxa_guard_acquire@@CXXABI_1.3
+                0x0000000000007300                sqrtf@@GLIBC_2.2.5
+                0x0000000000007310                cos@@GLIBC_2.2.5
+                0x0000000000007320                std::invalid_argument::invalid_argument(char const*)@@GLIBCXX_3.4.21
+                0x0000000000007330                log1p@@GLIBC_2.2.5
+                0x0000000000007340                exp2f@@GLIBC_2.27
+                0x0000000000007350                expm1@@GLIBC_2.2.5
+ *(.iplt)
+
+.plt.got        0x0000000000007360        0x8
+ *(.plt.got)
+ .plt.got       0x0000000000007360        0x8 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000007360                __cxa_finalize@@GLIBC_2.2.5
+
+.plt.sec
+ *(.plt.sec)
+
+.text           0x0000000000007380    0x5d473
+ *(.text.unlikely .text.*_unlikely .text.unlikely.*)
+ .text.unlikely
+                0x0000000000007380      0xd76 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .text.unlikely
+                0x00000000000080f6      0x12d /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ *(.text.exit .text.exit.*)
+ *(.text.startup .text.startup.*)
+ *fill*         0x0000000000008223        0xd 
+ .text.startup  0x0000000000008230       0x58 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                0x0000000000008230                main
+ *(.text.hot .text.hot.*)
+ *(SORT_BY_NAME(.text.sorted.*))
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ *fill*         0x0000000000008288        0x8 
+ .text          0x0000000000008290       0x22 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000008290                _start
+ .text          0x00000000000082b2        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o
+ *fill*         0x00000000000082b2        0xe 
+ .text          0x00000000000082c0       0xb9 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+ *fill*         0x0000000000008379        0x7 
+ .text          0x0000000000008380     0xeac3 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ *fill*         0x0000000000016e43        0xd 
+ .text._ZN4cs8018SixteenVoiceRouter7noteOffERNS_6EngineES2_iib
+                0x0000000000016e50      0x133 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                0x0000000000016e50                cs80::SixteenVoiceRouter::noteOff(cs80::Engine&, cs80::Engine&, int, int, bool)
+ *fill*         0x0000000000016f83        0xd 
+ .text._ZN4cs806EngineD2Ev
+                0x0000000000016f90      0x782 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                0x0000000000016f90                cs80::Engine::~Engine()
+                0x0000000000016f90                cs80::Engine::~Engine()
+ *fill*         0x0000000000017712        0xe 
+ .text._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_disposeEv
+                0x0000000000017720       0x21 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                0x0000000000017720                std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_dispose()
+ *fill*         0x0000000000017741       0x3f 
+ .text          0x0000000000017780    0x319c8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000001cea0                cs80::Engine::effectiveOversampling() const
+                0x000000000001cf30                cs80::Engine::refreshToleranceRatios()
+                0x000000000001d670                cs80::Engine::refreshEnvelopeTimes()
+                0x000000000001d950                cs80::Engine::prepareWarmColdOscillators()
+                0x000000000001da30                cs80::Engine::configureInternalRate()
+                0x0000000000021420                cs80::Engine::updateOversampling()
+                0x0000000000021470                cs80::Engine::buildSettings()
+                0x0000000000022e90                cs80::Engine::filterInitialTarget(int) const
+                0x0000000000022f10                cs80::Engine::filterAttackTarget(int) const
+                0x0000000000022f90                cs80::Engine::updateSourceReadouts(float)
+                0x0000000000024b70                cs80::Engine::chooseVoice()
+                0x0000000000024d30                cs80::Engine::rebuildArpSequence()
+                0x0000000000025640                cs80::Engine::rememberHeldKey(int, float, int, bool, unsigned long)
+                0x0000000000025890                cs80::Engine::refreshKeyboardContour()
+                0x0000000000025d20                cs80::Engine::reset()
+                0x0000000000027df0                cs80::Engine::setNonRealtime(bool)
+                0x0000000000027e30                cs80::Engine::releaseVoice(cs80::Engine::Voice&)
+                0x0000000000028140                cs80::Engine::stopArpVoice()
+                0x0000000000028190                cs80::Engine::forgetHeldKey(int, int, bool)
+                0x00000000000282e0                cs80::Engine::rememberUnassignedKey(int, float, int, bool, bool)
+                0x00000000000283c0                cs80::Engine::forgetUnassignedKey(int, int, bool)
+                0x00000000000284b0                cs80::Engine::isSustainPedalDown(int) const
+                0x0000000000028540                cs80::Engine::releaseKey(cs80::Engine::Voice&)
+                0x00000000000285d0                cs80::Engine::cancelSustainTails()
+                0x00000000000286f0                cs80::Engine::findVoiceForNote(int, int)
+                0x0000000000028950                cs80::Engine::polyPressure(int, float, int)
+                0x0000000000029050                cs80::Engine::setExpression(float)
+                0x00000000000290b0                cs80::Engine::setRibbon(float)
+                0x0000000000029110                cs80::Engine::tunedPitch(int) const
+                0x0000000000029160                cs80::Engine::noteMapped(int) const
+                0x00000000000291b0                cs80::Engine::retuneSoundingVoices()
+                0x0000000000029310                cs80::Engine::setScalaTuning(cs80::tuning::TuningTable const&)
+                0x0000000000029340                cs80::Engine::setMtsTuning(cs80::tuning::TuningTable const&)
+                0x0000000000029370                cs80::Engine::handleSysEx(unsigned char const*, int)
+                0x0000000000029cd0                cs80::Engine::bindReleaseOrderClock(cs80::ReleaseOrderClock&)
+                0x0000000000029d20                cs80::Engine::canCoordinateImmediateReleaseWith(cs80::Engine const&) const
+                0x0000000000029db0                cs80::Engine::immediateReleaseCandidate(int, int, bool) const
+                0x000000000002a1e0                cs80::Engine::hasFreeCircuit() const
+                0x000000000002a290                cs80::Engine::hasFreeCircuitForRouting() const
+                0x000000000002c080                cs80::Engine::memberExpressionFor(int)
+                0x000000000002c140                cs80::Engine::pitchBend(int, float)
+                0x000000000002c3f0                cs80::Engine::discardChangedMemberExpression()
+                0x000000000002d0b0                cs80::Engine::isZoneMaster(cs80::Engine::Voice const&, int) const
+                0x000000000002d160                cs80::Engine::channelPressure(int, float)
+                0x000000000002d600                cs80::Engine::retargetSmoothedSettings()
+                0x000000000002d640                cs80::Engine::applyParams(cs80::ParamValues const&)
+                0x000000000002dcf0                cs80::Engine::setParams(cs80::ParamValues const&)
+                0x000000000002dd60                cs80::Engine::Engine()
+                0x000000000002dd60                cs80::Engine::Engine()
+                0x00000000000341f0                cs80::Engine::setControlFrame(cs80::ControlFrame const&)
+                0x0000000000035220                cs80::Engine::prepare(double)
+                0x0000000000036d70                cs80::Engine::beginSmoothedControls()
+                0x0000000000038410                cs80::Engine::endSmoothedControls()
+                0x00000000000385e0                cs80::Engine::activeVoices() const
+                0x0000000000038630                cs80::Engine::getSourceToneInfo(int) const
+                0x0000000000038870                cs80::Engine::getSourceCutoffReadout(int) const
+                0x00000000000388b0                cs80::Engine::getVoiceInfo(int) const
+                0x0000000000038980                cs80::Engine::getRankInfo(int, int) const
+                0x00000000000389e0                cs80::Engine::getRankAudioState(int, int) const
+                0x0000000000038b90                cs80::Engine::getRankEnvelopeState(int, int) const
+                0x0000000000038c10                cs80::Engine::getPraWahState(int) const
+                0x0000000000038cc0                cs80::Engine::getOutputTapState(int) const
+                0x0000000000038d90                cs80::Engine::wakeIdleVoice(cs80::Engine::Voice&)
+                0x00000000000398e0                cs80::Engine::startVoice(cs80::Engine::Voice&, int, float, int, bool, unsigned long)
+                0x000000000003a7a0                cs80::Engine::reconsiderUnassignedKeys(bool)
+                0x000000000003a900                cs80::Engine::setSustainPedal(int, bool)
+                0x000000000003af10                cs80::Engine::applyNoteOff(int, int, bool, bool)
+                0x000000000003b240                cs80::Engine::allNotesOff(bool, int)
+                0x000000000003c4d0                cs80::Engine::controlChange(int, float, int)
+                0x000000000003cde0                cs80::Engine::triggerArpNote()
+                0x000000000003cf10                cs80::Engine::updateArpeggiator(float)
+                0x000000000003d0c0                cs80::Engine::applyNoteOn(int, float, int, bool, unsigned long, bool)
+                0x000000000003dae0                cs80::Engine::flushScanEvents()
+                0x000000000003dfd0                cs80::Engine::enqueueNoteOn(int, float, int, bool)
+                0x000000000003e1d0                cs80::Engine::noteOn(int, float, int)
+                0x000000000003e1e0                cs80::Engine::noteOnFromKeyboard(int, float, int)
+                0x000000000003e240                cs80::Engine::enqueueNoteOff(int, int, bool)
+                0x000000000003e310                cs80::Engine::noteOff(int, int)
+                0x000000000003e320                cs80::Engine::noteOffFromKeyboard(int, int)
+                0x000000000003e330                cs80::Engine::processInternalSample(float&, float&, float)
+                0x00000000000483c0                cs80::Engine::render(float*, int, float const*)
+ *fill*         0x0000000000049148        0x8 
+ .text._ZN4cs8023ReconstructedOscillator11advanceIdleEddRKNS_11WscControlsE.isra.0
+                0x0000000000049150     0x2a95 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ *fill*         0x000000000004bbe5        0xb 
+ .text._ZN4cs804Adsr4tickEfbb
+                0x000000000004bbf0      0x863 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000004bbf0                cs80::Adsr::tick(float, bool, bool)
+ *fill*         0x000000000004c453        0xd 
+ .text._ZN4cs809FilterEnv4tickEfbb
+                0x000000000004c460      0xb14 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000004c460                cs80::FilterEnv::tick(float, bool, bool)
+ *fill*         0x000000000004cf74        0xc 
+ .text._ZNK4cs809DelayLine4readEf
+                0x000000000004cf80       0x9d /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000004cf80                cs80::DelayLine::read(float) const
+ *fill*         0x000000000004d01d        0x3 
+ .text._ZN4cs806Chorus7processEffffbb
+                0x000000000004d020      0x3d1 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000004d020                cs80::Chorus::process(float, float, float, float, bool, bool)
+ *fill*         0x000000000004d3f1        0xf 
+ .text._ZN4cs8021OversamplingDecimator7prepareEi
+                0x000000000004d400      0x48d /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000004d400                cs80::OversamplingDecimator::prepare(int)
+ *fill*         0x000000000004d88d        0x3 
+ .text._ZN4cs806Reverb7processEfi
+                0x000000000004d890      0x36f /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000004d890                cs80::Reverb::process(float, int)
+ *fill*         0x000000000004dbff        0x1 
+ .text._ZN4cs806modern11ModernLayer11beginSampleERKNS0_12GlobalInputsE
+                0x000000000004dc00     0x18ab /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000004dc00                cs80::modern::ModernLayer::beginSample(cs80::modern::GlobalInputs const&)
+ *fill*         0x000000000004f4ab       0x15 
+ .text._ZN4cs806modern11ModernLayer12processVoiceEiRKNS0_11VoiceInputsEb
+                0x000000000004f4c0     0x1862 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000004f4c0                cs80::modern::ModernLayer::processVoice(int, cs80::modern::VoiceInputs const&, bool)
+ *fill*         0x0000000000050d22        0xe 
+ .text._ZNK4cs8023ReconstructedOscillator15nextBranchEventERKNS0_5NodesEdRb
+                0x0000000000050d30     0x153d /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000050d30                cs80::ReconstructedOscillator::nextBranchEvent(cs80::ReconstructedOscillator::Nodes const&, double, bool&) const
+ *fill*         0x000000000005226d       0x13 
+ .text._ZN4cs8023ReconstructedOscillator11recordEventEdjRKNS0_5NodesES3_
+                0x0000000000052280      0xca0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000052280                cs80::ReconstructedOscillator::recordEvent(double, unsigned int, cs80::ReconstructedOscillator::Nodes const&, cs80::ReconstructedOscillator::Nodes const&)
+ .text._ZN4cs8023ReconstructedOscillator4tickEdRKNS_11WscControlsE
+                0x0000000000052f20     0x39fa /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000052f20                cs80::ReconstructedOscillator::tick(double, cs80::WscControls const&)
+ *fill*         0x000000000005691a        0x6 
+ .text._ZN4cs8021OriginalSubOscillator12stepResidualEdd
+                0x0000000000056920      0x14d /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000056920                cs80::OriginalSubOscillator::stepResidual(double, double)
+ *fill*         0x0000000000056a6d        0x3 
+ .text._ZN4cs8013PraWahCircuit7processEd
+                0x0000000000056a70      0x39d /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000056a70                cs80::PraWahCircuit::process(double)
+ *fill*         0x0000000000056e0d       0x33 
+ .text._ZN4cs809BbdChorus7prepareEf
+                0x0000000000056e40      0x694 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000056e40                cs80::BbdChorus::prepare(float)
+ *fill*         0x00000000000574d4       0x2c 
+ .text._ZN4cs809BbdChorus7processEffffbb
+                0x0000000000057500      0xaf6 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000057500                cs80::BbdChorus::process(float, float, float, float, bool, bool)
+ *fill*         0x0000000000057ff6        0xa 
+ .text._ZN4cs802fx13PlateReverbFx7prepareEd
+                0x0000000000058000      0xf2c /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000058000                cs80::fx::PlateReverbFx::prepare(double)
+ *fill*         0x0000000000058f2c        0x4 
+ .text._ZN4cs802fx13PlateReverbFx7processEffff
+                0x0000000000058f30      0xce9 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000058f30                cs80::fx::PlateReverbFx::process(float, float, float, float)
+ *fill*         0x0000000000059c19       0x27 
+ .text._ZN4cs802fx14SpringReverbFx7processEffff
+                0x0000000000059c40      0xabd /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000059c40                cs80::fx::SpringReverbFx::process(float, float, float, float)
+ *fill*         0x000000000005a6fd        0x3 
+ .text._ZN4cs802fx10TapeEchoFx7processEffff
+                0x000000000005a700      0x772 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000005a700                cs80::fx::TapeEchoFx::process(float, float, float, float)
+ *fill*         0x000000000005ae72        0xe 
+ .text._ZN4cs802fx12ModernFxSlot5clearEi
+                0x000000000005ae80      0xab9 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000005ae80                cs80::fx::ModernFxSlot::clear(int)
+ *fill*         0x000000000005b939        0x7 
+ .text._ZN4cs802fx12ModernFxSlot7processEifffffi
+                0x000000000005b940     0x1b99 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000005b940                cs80::fx::ModernFxSlot::process(int, float, float, float, float, float, int)
+ *fill*         0x000000000005d4d9        0x7 
+ .text._ZN4cs802fx6FxSlot7prepareEf
+                0x000000000005d4e0     0x295e /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000005d4e0                cs80::fx::FxSlot::prepare(float)
+ *fill*         0x000000000005fe3e        0x2 
+ .text._ZN4cs8016OutputTapCircuitC2Ev
+                0x000000000005fe40       0xbc /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000005fe40                cs80::OutputTapCircuit::OutputTapCircuit()
+                0x000000000005fe40                cs80::OutputTapCircuit::OutputTapCircuit()
+ *fill*         0x000000000005fefc        0x4 
+ .text._ZN4cs8016OutputTapCircuit12validProfileERKNS0_7ProfileE
+                0x000000000005ff00      0x169 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000005ff00                cs80::OutputTapCircuit::validProfile(cs80::OutputTapCircuit::Profile const&)
+ *fill*         0x0000000000060069        0x7 
+ .text._ZN4cs8016OutputTapCircuit7processEd
+                0x0000000000060070      0x217 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000060070                cs80::OutputTapCircuit::process(double)
+ *fill*         0x0000000000060287        0x9 
+ .text._ZN4cs8013GaussianNoise4nextEv
+                0x0000000000060290      0x15e /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000060290                cs80::GaussianNoise::next()
+ *fill*         0x00000000000603ee        0x2 
+ .text._ZN4cs8019CircuitNoiseSources7prepareEd
+                0x00000000000603f0      0x984 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000603f0                cs80::CircuitNoiseSources::prepare(double)
+ *fill*         0x0000000000060d74        0xc 
+ .text._ZN4cs8014source_factory19decayReleaseSecondsEd
+                0x0000000000060d80       0x57 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000060d80                cs80::source_factory::decayReleaseSeconds(double)
+ *fill*         0x0000000000060dd7        0x9 
+ .text._ZN4cs803kbc11outputVoltsEidd
+                0x0000000000060de0      0x413 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000060de0                cs80::kbc::outputVolts(int, double, double)
+ *fill*         0x00000000000611f3        0xd 
+ .text._ZN4cs8016voice_continuity11clockStagesERNS_12Ig00156StageES2_RNS0_19IdleStageReferencesEfRKNS0_16IdleRankControlsEfb
+                0x0000000000061200     0x15da /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000061200                cs80::voice_continuity::clockStages(cs80::Ig00156Stage&, cs80::Ig00156Stage&, cs80::voice_continuity::IdleStageReferences&, float, cs80::voice_continuity::IdleRankControls const&, float, bool)
+ *fill*         0x00000000000627da        0x6 
+ .text._ZN4cs802fx6FxSlotD2Ev
+                0x00000000000627e0      0x2dd /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000627e0                cs80::fx::FxSlot::~FxSlot()
+                0x00000000000627e0                cs80::fx::FxSlot::~FxSlot()
+ *fill*         0x0000000000062abd        0x3 
+ .text._ZN4cs8016voice_continuity12idleStepRankINS_6Engine4RankEEEvRT_RKNS0_16IdleRankControlsEfii
+                0x0000000000062ac0      0x5a8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000062ac0                void cs80::voice_continuity::idleStepRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, int)
+ *fill*         0x0000000000063068        0x8 
+ .text._ZN4cs8016voice_continuity10replayRankINS_6Engine4RankEEEvRT_RKNS0_16IdleRankControlsEfiffRNS_3RngE
+                0x0000000000063070     0x176a /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000063070                void cs80::voice_continuity::replayRank<cs80::Engine::Rank>(cs80::Engine::Rank&, cs80::voice_continuity::IdleRankControls const&, float, int, float, float, cs80::Rng&)
+ *fill*         0x00000000000647da        0x6 
+ .text          0x00000000000647e0       0x13 /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a(Ig00156Batch.cpp.o)
+                0x00000000000647e0                cs80::Ig00156Batch::selectKernel(bool)
+                0x00000000000647f0                cs80::Ig00156Batch::environmentSupported()
+ .text          0x00000000000647f3        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+ .text          0x00000000000647f3        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+ *(.gnu.warning)
+
+.fini           0x00000000000647f4        0x9
+ *(SORT_NONE(.fini))
+ .fini          0x00000000000647f4        0x4 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o
+                0x00000000000647f4                _fini
+ .fini          0x00000000000647f8        0x5 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+                [!provide]                        PROVIDE (__etext = .)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (etext = .)
+                0x0000000000065000                . = ALIGN (CONSTANT (MAXPAGESIZE))
+                0x0000000000065000                . = SEGMENT_START ("rodata-segment", (ALIGN (CONSTANT (MAXPAGESIZE)) + (. & (CONSTANT (MAXPAGESIZE) - 0x1))))
+
+.rodata         0x0000000000065000     0x46d8
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata.cst4   0x0000000000065000      0x19c /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                                          0x4 (size before relaxing)
+                0x0000000000065000                _IO_stdin_used
+ .rodata.str1.1
+                0x000000000006519c     0x15bd /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                                        0xd94 (size before relaxing)
+ *fill*         0x0000000000066759        0x7 
+ .rodata.str1.8
+                0x0000000000066760      0xd89 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                                        0xa41 (size before relaxing)
+ *fill*         0x00000000000674e9        0x7 
+ .rodata.cst16  0x00000000000674f0     0x12f0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                                        0x890 (size before relaxing)
+ .rodata        0x00000000000687e0       0x2c /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .rodata.cst4   0x000000000006880c       0x24 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ *fill*         0x000000000006880c        0x4 
+ .rodata.cst8   0x0000000000068810      0x948 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                                         0x10 (size before relaxing)
+ .rodata.cst2   0x0000000000069158        0x2 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ *fill*         0x000000000006915a        0x2 
+ .rodata._ZN4cs804Adsr4tickEfbb
+                0x000000000006915c       0x28 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata._ZN4cs809FilterEnv4tickEfbb
+                0x0000000000069184       0x28 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata._ZN4cs806modern11ModernLayer11beginSampleERKNS0_12GlobalInputsE
+                0x00000000000691ac       0x10 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata._ZN4cs806modern11ModernLayer12processVoiceEiRKNS0_11VoiceInputsEb
+                0x00000000000691bc       0x50 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata._ZN4cs809BbdChorus7prepareEf.str1.8
+                0x000000000006920c       0x31 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata._ZN4cs802fx12ModernFxSlot5clearEi
+                0x000000000006920c       0x18 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata._ZN4cs802fx12ModernFxSlot7processEifffffi
+                0x0000000000069224       0x18 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata._ZN4cs803kbc11outputVoltsEidd.str1.8
+                0x000000000006923c       0x2e /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ *fill*         0x000000000006923c        0x4 
+ .rodata        0x0000000000069240      0x104 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ *fill*         0x0000000000069344       0x1c 
+ .rodata._ZN4cs809tolerance16kDriftTauSecondsE
+                0x0000000000069360       0x30 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000069360                cs80::tolerance::kDriftTauSeconds
+ .rodata._ZZN4cs803kbc7keyCodeEiE5codes
+                0x0000000000069390       0x12 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000069390                cs80::kbc::keyCode(int)::codes
+ .rodata.str1.1
+                0x00000000000693a2     0x12a2 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata.str1.8
+                0x00000000000693a2      0x2d9 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ *fill*         0x00000000000693a2       0x1e 
+ .rodata._ZN4cs802fx18kTapeCalibrationDbE
+                0x00000000000693c0       0x64 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000693c0                cs80::fx::kTapeCalibrationDb
+ *fill*         0x0000000000069424       0x1c 
+ .rodata._ZN4cs802fx19kPlateCalibrationDbE
+                0x0000000000069440       0x64 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000069440                cs80::fx::kPlateCalibrationDb
+ *fill*         0x00000000000694a4       0x1c 
+ .rodata._ZN4cs802fx20kSpringCalibrationDbE
+                0x00000000000694c0       0x64 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000694c0                cs80::fx::kSpringCalibrationDb
+ *fill*         0x0000000000069524       0x1c 
+ .rodata._ZN4cs802fx22kEnsembleCalibrationDbE
+                0x0000000000069540       0x64 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000069540                cs80::fx::kEnsembleCalibrationDb
+ *fill*         0x00000000000695a4        0xc 
+ .rodata._ZN4cs802fx14SpringReverbFx15kTransitSecondsE
+                0x00000000000695b0       0x10 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000695b0                cs80::fx::SpringReverbFx::kTransitSeconds
+ .rodata._ZN4cs802fx10EnsembleFx6kSin60E
+                0x00000000000695c0       0x30 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000695c0                cs80::fx::EnsembleFx::kSin60
+ *fill*         0x00000000000695f0       0x10 
+ .rodata._ZN4cs802fx10EnsembleFx6kCos60E
+                0x0000000000069600       0x30 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000069600                cs80::fx::EnsembleFx::kCos60
+ .rodata._ZN4cs8011kFeetRatiosE
+                0x0000000000069630       0x18 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000069630                cs80::kFeetRatios
+ *fill*         0x0000000000069648       0x18 
+ .rodata._ZN4cs8022kIg00156LowPassNetworkE
+                0x0000000000069660       0x38 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000069660                cs80::kIg00156LowPassNetwork
+ *fill*         0x0000000000069698        0x8 
+ .rodata._ZN4cs8023kIg00156HighPassNetworkE
+                0x00000000000696a0       0x38 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000696a0                cs80::kIg00156HighPassNetwork
+ .rodata.cst16  0x00000000000696d8      0xb30 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata.cst8   0x00000000000696d8      0x938 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .rodata.cst4   0x00000000000696d8      0x188 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+
+.rodata1
+ *(.rodata1)
+
+.eh_frame_hdr   0x00000000000696d8      0x584
+ *(.eh_frame_hdr)
+ .eh_frame_hdr  0x00000000000696d8      0x584 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                0x00000000000696d8                __GNU_EH_FRAME_HDR
+ *(.eh_frame_entry .eh_frame_entry.*)
+
+.eh_frame       0x0000000000069c60     0x245c
+ *(.eh_frame)
+ .eh_frame      0x0000000000069c60       0x30 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                                         0x2c (size before relaxing)
+ *fill*         0x0000000000069c90        0x0 
+ .eh_frame      0x0000000000069c90       0x40 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .eh_frame      0x0000000000069cd0       0x18 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                                         0x30 (size before relaxing)
+ .eh_frame      0x0000000000069ce8      0x980 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                                        0x998 (size before relaxing)
+ .eh_frame      0x000000000006a668     0x1a28 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                                       0x1a60 (size before relaxing)
+ .eh_frame      0x000000000006c090       0x28 /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a(Ig00156Batch.cpp.o)
+                                         0x40 (size before relaxing)
+ .eh_frame      0x000000000006c0b8        0x4 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+ *(.eh_frame.*)
+
+.sframe         0x000000000006c0bc        0x0
+ *(.sframe)
+ .sframe        0x000000000006c0bc        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .sframe        0x000000000006c0bc        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ *(.sframe.*)
+
+.gcc_except_table
+                0x000000000006c0bc      0xbb7
+ *(.gcc_except_table .gcc_except_table.*)
+ .gcc_except_table
+                0x000000000006c0bc      0xb6b /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .gcc_except_table._ZN4cs803kbc11outputVoltsEidd
+                0x000000000006cc27       0x10 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .gcc_except_table
+                0x000000000006cc37       0x3c /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+
+.gnu_extab
+ *(.gnu_extab*)
+
+.exception_ranges
+ *(.exception_ranges*)
+
+.note.build-id
+ *(.note.build-id)
+
+.note.GNU-stack
+                0x000000000006cc73        0x0
+ *(.note.GNU-stack)
+ .note.GNU-stack
+                0x000000000006cc73        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .note.GNU-stack
+                0x000000000006cc73        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o
+ .note.GNU-stack
+                0x000000000006cc73        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+ .note.GNU-stack
+                0x000000000006cc73        0x0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .note.GNU-stack
+                0x000000000006cc73        0x0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .note.GNU-stack
+                0x000000000006cc73        0x0 /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a(Ig00156Batch.cpp.o)
+ .note.GNU-stack
+                0x000000000006cc73        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+ .note.GNU-stack
+                0x000000000006cc73        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+
+.note.gnu-property
+ *(.note.gnu-property)
+
+.note.ABI-tag   0x000000000006cc74       0x20
+ *(.note.ABI-tag)
+ .note.ABI-tag  0x000000000006cc74       0x20 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.note.package
+ *(.note.package)
+
+.note.dlopen
+ *(.note.dlopen)
+
+.note.netbsd.ident
+ *(.note.netbsd.ident)
+
+.note.openbsd.ident
+ *(.note.openbsd.ident)
+                0x000000000006dd30                . = DATA_SEGMENT_ALIGN (CONSTANT (MAXPAGESIZE), CONSTANT (COMMONPAGESIZE))
+
+.eh_frame
+ *(.eh_frame)
+ *(.eh_frame.*)
+
+.sframe
+ *(.sframe)
+ *(.sframe.*)
+
+.gnu_extab
+ *(.gnu_extab)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.exception_ranges
+ *(.exception_ranges*)
+
+.tdata          0x000000000006dd30        0x0
+                [!provide]                        PROVIDE (__tdata_start = .)
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array  0x000000000006dd30        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x000000000006dd30        0x8
+                [!provide]                        PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+ .init_array    0x000000000006dd30        0x8 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+                [!provide]                        PROVIDE (__init_array_end = .)
+
+.fini_array     0x000000000006dd38        0x8
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+ .fini_array    0x000000000006dd38        0x8 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.jcr
+ *(.jcr)
+
+.data.rel.ro    0x000000000006dd40     0xa040
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ .data.rel.ro.local._ZN4cs8014kExtensionDefsE
+                0x000000000006dd40      0xcc0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                0x000000000006dd40                cs80::kExtensionDefs
+ .data.rel.ro.local._ZN4cs8012kChannelDefsE
+                0x000000000006ea00      0x5a0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                0x000000000006ea00                cs80::kChannelDefs
+ .data.rel.ro.local._ZN4cs8014source_factory9addressesE
+                0x000000000006efa0      0x420 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000006efa0                cs80::source_factory::addresses
+ .data.rel.ro.local._ZN4cs8018factory_hypotheses5cellsE
+                0x000000000006f3c0     0x40d8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x000000000006f3c0                cs80::factory_hypotheses::cells
+ *fill*         0x0000000000073498        0x8 
+ .data.rel.ro.local._ZN4cs808hardware15verifiedOutputsE
+                0x00000000000734a0     0x39b0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000734a0                cs80::hardware::verifiedOutputs
+ *fill*         0x0000000000076e50       0x10 
+ .data.rel.ro.local._ZN4cs808hardware15verifiedColumnsE
+                0x0000000000076e60      0x370 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x0000000000076e60                cs80::hardware::verifiedColumns
+ *fill*         0x00000000000771d0       0x10 
+ .data.rel.ro.local._ZN4cs8011kGlobalDefsE
+                0x00000000000771e0      0xba0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000771e0                cs80::kGlobalDefs
+ *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
+ .data.rel.ro   0x0000000000077d80        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+
+.dynamic        0x0000000000077d80      0x210
+ *(.dynamic)
+ .dynamic       0x0000000000077d80      0x210 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000077d80                _DYNAMIC
+
+.got            0x0000000000077f90       0x58
+ *(.got)
+ .got           0x0000000000077f90       0x58 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ *(.igot)
+                0x0000000000077fe8                . = DATA_SEGMENT_RELRO_END (., (SIZEOF (.got.plt) >= 0x18)?0x18:0x0)
+
+.got.plt        0x0000000000077fe8      0x1b0
+ *(.got.plt)
+ .got.plt       0x0000000000077fe8      0x1b0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000077fe8                _GLOBAL_OFFSET_TABLE_
+ *(.igot.plt)
+
+.data           0x0000000000078198       0x18
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x0000000000078198        0x4 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000078198                data_start
+                0x0000000000078198                __data_start
+ .data          0x000000000007819c        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o
+ .data          0x000000000007819c        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+ *fill*         0x000000000007819c        0x4 
+ .data.rel.local
+                0x00000000000781a0        0x8 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+                0x00000000000781a0                __dso_handle
+ .data          0x00000000000781a8        0x0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .data.rel.local.DW.ref.__gxx_personality_v0
+                0x00000000000781a8        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                0x00000000000781a8                DW.ref.__gxx_personality_v0
+ .data          0x00000000000781b0        0x0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .data          0x00000000000781b0        0x0 /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a(Ig00156Batch.cpp.o)
+ .data          0x00000000000781b0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+ .data          0x00000000000781b0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+
+.tm_clone_table
+                0x00000000000781b0        0x0
+ .tm_clone_table
+                0x00000000000781b0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+ .tm_clone_table
+                0x00000000000781b0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+
+.data1
+ *(.data1)
+                0x00000000000781b0                _edata = .
+                [!provide]                        PROVIDE (edata = .)
+                0x00000000000781b0                . = ALIGN (ALIGNOF (NEXT_SECTION))
+                0x00000000000781c0                __bss_start = .
+
+.bss            0x00000000000781c0    0x46568
+ *(.dynbss)
+ .dynbss        0x00000000000781c0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x00000000000781c0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o
+ .bss           0x00000000000781c0        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o
+ .bss           0x00000000000781c0        0x1 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+ *fill*         0x00000000000781c1        0x3 
+ .bss           0x00000000000781c4        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ *fill*         0x00000000000781cc       0x14 
+ .bss._ZZN4cs8023OscillatorBasisRegistry5slotsEvE4pool
+                0x00000000000781e0    0x40400 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+                0x00000000000781e0                cs80::OscillatorBasisRegistry::slots()::pool
+ .bss           0x00000000000b85e0        0x0 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .bss._ZGVZN4cs8019CircuitNoiseSources11hissDensityEvE2n0
+                0x00000000000b85e0        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b85e0                guard variable for cs80::CircuitNoiseSources::hissDensity()::n0
+ .bss._ZZN4cs8019CircuitNoiseSources11hissDensityEvE2n0
+                0x00000000000b85e8        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b85e8                cs80::CircuitNoiseSources::hissDensity()::n0
+ .bss._ZGVZN4cs8019CircuitNoiseSources12panelDensityEvE2n0
+                0x00000000000b85f0        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b85f0                guard variable for cs80::CircuitNoiseSources::panelDensity()::n0
+ .bss._ZZN4cs8019CircuitNoiseSources12panelDensityEvE2n0
+                0x00000000000b85f8        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b85f8                cs80::CircuitNoiseSources::panelDensity()::n0
+ .bss._ZGVZN4cs802fx14sharedHalfbandEvE6design
+                0x00000000000b8600        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b8600                guard variable for cs80::fx::sharedHalfband()::design
+ *fill*         0x00000000000b8608       0x18 
+ .bss._ZZN4cs802fx14sharedHalfbandEvE6design
+                0x00000000000b8620       0x88 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b8620                cs80::fx::sharedHalfband()::design
+ *fill*         0x00000000000b86a8       0x18 
+ .bss._ZZN4cs8023OscillatorBasisRegistry5mutexEvE1m
+                0x00000000000b86c0       0x28 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b86c0                cs80::OscillatorBasisRegistry::mutex()::m
+ .bss._ZGVZN4cs8024OscillatorResidualKernel6sharedEvE4bank
+                0x00000000000b86e8        0x8 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b86e8                guard variable for cs80::OscillatorResidualKernel::shared()::bank
+ *fill*         0x00000000000b86f0       0x10 
+ .bss._ZZN4cs8024OscillatorResidualKernel6sharedEvE4bank
+                0x00000000000b8700     0x6028 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+                0x00000000000b8700                cs80::OscillatorResidualKernel::shared()::bank
+ .bss           0x00000000000be728        0x0 /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a(Ig00156Batch.cpp.o)
+ .bss           0x00000000000be728        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+ .bss           0x00000000000be728        0x0 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o
+ *(COMMON)
+                0x00000000000be728                . = ALIGN ((. != 0x0)?0x8:0x1)
+
+.lbss
+ *(.dynlbss)
+ *(.lbss .lbss.* .gnu.linkonce.lb.*)
+ *(LARGE_COMMON)
+                0x00000000000be728                . = ALIGN (0x8)
+                0x00000000000be728                . = SEGMENT_START ("ldata-segment", .)
+
+.lrodata
+ *(.lrodata .lrodata.* .gnu.linkonce.lr.*)
+
+.ldata          0x00000000000c0728        0x0
+ *(.ldata .ldata.* .gnu.linkonce.l.*)
+                0x00000000000c0728                . = ALIGN ((. != 0x0)?0x8:0x1)
+                0x00000000000c0728                . = ALIGN (0x8)
+                0x00000000000be728                _end = .
+                [!provide]                        PROVIDE (end = .)
+                0x00000000000c0728                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x1f
+ *(.comment)
+ .comment       0x0000000000000000       0x1f /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o
+                                         0x20 (size before relaxing)
+ .comment       0x000000000000001f       0x20 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/tests.o
+ .comment       0x000000000000001f       0x20 /workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/Engine.o
+ .comment       0x000000000000001f       0x20 /workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a(Ig00156Batch.cpp.o)
+ .comment       0x000000000000001f       0x20 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o
+
+.gnu.build.attributes
+ *(.gnu.build.attributes .gnu.build.attributes.*)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info .gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line .debug_line.* .debug_line_end)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.debug_addr
+ *(.debug_addr)
+
+.debug_line_str
+ *(.debug_line_str)
+
+.debug_loclists
+ *(.debug_loclists)
+
+.debug_macro
+ *(.debug_macro)
+
+.debug_names
+ *(.debug_names)
+
+.debug_rnglists
+ *(.debug_rnglists)
+
+.debug_str_offsets
+ *(.debug_str_offsets)
+
+.debug_sup
+ *(.debug_sup)
+
+.gnu.attributes
+ *(.gnu.attributes)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+ *(.gnu.lto_*)
+ *(.gnu_object_only)
+OUTPUT(/workspace/scratch/ee447c520988/sixteen-release-evidence/fault-controls/run-1/accept-mismatched-sources/probe elf64-x86-64)

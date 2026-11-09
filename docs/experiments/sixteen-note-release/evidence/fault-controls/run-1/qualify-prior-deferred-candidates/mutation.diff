@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.h
++++ qualify-prior-deferred-candidates/src/core/Engine.h
+@@ -589,7 +589,7 @@
+     bool forgetUnassignedKey(int note, int midiChannel, bool keyboardOnly = false);
+     void reconsiderUnassignedKeys(bool immediate = true);
+     uint64_t nextReleaseOrder(bool immediate) noexcept
+-    { return immediate && releaseOrderClock != nullptr ? releaseOrderClock->next() : 0; }
++    { (void) immediate; return releaseOrderClock != nullptr ? releaseOrderClock->next() : 0; }
+     bool noteMapped(int midiNote) const noexcept;
+     void retuneSoundingVoices() noexcept;
+     int unisonCount() const noexcept

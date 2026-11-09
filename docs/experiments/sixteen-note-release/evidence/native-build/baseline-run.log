@@ -1,0 +1,134 @@
+Configure start UTC: 2026-11-09T22:39:35+00:00
++ set -euo pipefail
++ ROOT=/workspace/scratch/ee447c520988
++ PREFIX=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot
++ export PATH=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin:/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ PATH=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin:/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback
++ export CMAKE_BUILD_PARALLEL_LEVEL=2
++ CMAKE_BUILD_PARALLEL_LEVEL=2
++ export CMAKE_PREFIX_PATH=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr
++ CMAKE_PREFIX_PATH=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr
++ export 'CFLAGS=-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu'
++ CFLAGS='-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu'
++ export 'CXXFLAGS=-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu'
++ CXXFLAGS='-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu'
++ export 'LDFLAGS=-L/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu -Wl,-rpath-link,/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu'
++ LDFLAGS='-L/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu -Wl,-rpath-link,/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu'
++ export PKG_CONFIG_SYSROOT_DIR=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot
++ PKG_CONFIG_SYSROOT_DIR=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot
++ export PKG_CONFIG_LIBDIR=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu/pkgconfig:/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/pkgconfig:/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/share/pkgconfig
++ PKG_CONFIG_LIBDIR=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu/pkgconfig:/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/pkgconfig:/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/share/pkgconfig
++ cmake -S /workspace/scratch/ee447c520988/sixteen-note-release -B /workspace/scratch/ee447c520988/build-sixteen-note-release-native -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_XVFB_RUN=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/bin/xvfb-run -DFETCHCONTENT_SOURCE_DIR_JUCE=/workspace/scratch/ee447c520988/mpe-native-tools/JUCE -DCMAKE_PREFIX_PATH=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr '-DCMAKE_C_FLAGS=-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu' '-DCMAKE_CXX_FLAGS=-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu' '-DCMAKE_EXE_LINKER_FLAGS=-L/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu -Wl,-rpath-link,/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu' -DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found PkgConfig: /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/bin/pkg-config (found version "1.8.1")
+-- Checking for module 'alsa'
+--   Found alsa, version 1.2.14
+-- Checking for modules 'freetype2;fontconfig'
+--   Found freetype2, version 26.2.20
+--   Found fontconfig, version 2.15.0
+-- Checking for module 'gl'
+--   Found gl, version 1.2
+-- Checking for module 'libcurl'
+--   Package 'libcurl', required by 'virtual:world', not found
+-- Checking for modules 'webkit2gtk-4.0;gtk+-x11-3.0'
+--   Package 'webkit2gtk-4.0', required by 'virtual:world', not found
+--   Package 'gtk+-x11-3.0', required by 'virtual:world', not found
+-- Configuring juceaide
+-- Building juceaide
+-- Exporting juceaide
+-- Testing juceaide
+-- Finished setting up juceaide
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found version "3.12.14") found components: Interpreter
+-- Configuring done (49.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /workspace/scratch/ee447c520988/build-sixteen-note-release-native
+Build start UTC: 2026-11-09T22:40:25+00:00
+/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake --build /workspace/scratch/ee447c520988/build-sixteen-note-release-native --target CS80Snapshots --parallel 2 
+[0/2] Re-checking globbed directories...
+[1/50] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[2/50] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+[3/50] Generating juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/PanelFontData.h
+[4/50] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[5/50] Linking CXX static library libcs80_core.a
+[6/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+[7/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+[8/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+[9/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+[10/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+[11/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o
+[12/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+[13/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o
+[14/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernLayerState.cpp.o
+[15/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o
+[16/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o
+[17/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ArtCommon.cpp.o
+[18/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o
+[19/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o
+[20/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o
+[21/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o
+[22/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/EditorPreferences.cpp.o
+[23/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o
+[24/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o
+[25/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o
+[26/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UndoHistory.cpp.o
+[27/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioTour.cpp.o
+[28/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_utils/juce_audio_utils.cpp.o
+[29/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors/juce_audio_processors.cpp.o
+[30/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_extra/juce_gui_extra.cpp.o
+[31/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp:3309:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3309 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/sixteen-note-release/src/tools/ui_snapshot.cpp:3310:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3310 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[32/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_graphics/juce_graphics.cpp.o
+[33/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp.o
+In file included from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/system/juce_StandardHeader.h:95,
+                 from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core.h:215,
+                 from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_graphics/juce_graphics.h:67,
+                 from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.h:68,
+                 from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp:55:
+/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: ‘#pragma message: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored’
+  292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))
+      |                                      ^~~~~~~
+/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: note: in expansion of macro ‘JUCE_COMPILER_WARNING’
+   61 |  JUCE_COMPILER_WARNING ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+      |  ^~~~~~~~~~~~~~~~~~~~~
+[34/50] Building C object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+[35/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_events/juce_events.cpp.o
+[36/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+[37/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o
+[38/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core.cpp.o
+[39/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_data_structures/juce_data_structures.cpp.o
+[40/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+[41/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+[42/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.cpp.o
+[43/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_basics/juce_audio_basics.cpp.o
+[44/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_devices/juce_audio_devices.cpp.o
+[45/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_formats/juce_audio_formats.cpp.o
+[46/50] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp.o
+[47/50] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp.o
+[48/50] Linking CXX static library libcs80_panel_fonts.a
+[49/50] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_dsp/juce_dsp.cpp.o
+[50/50] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots
+Build end UTC: 2026-11-09T22:44:46+00:00
+Source HEAD after build: e23931da9a21e5c4480b21a4274d9e994f0669f7
+Source status after build:
+ac2d2d65c9a02092159e5c2c7c7d658fc20ea13f5e3f6b3fc4b70b940c3ef41b  /workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots

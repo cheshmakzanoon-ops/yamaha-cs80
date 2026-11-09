@@ -1,0 +1,45 @@
+{
+  "state": "registered_and_direct_native_gates_passed_with_no_pending_compile_or_link",
+  "source_commit": "1a23a085657a07d9f066f7cc38aaf2572a6fe714",
+  "source_tree": "91c8f1d6e609db57479b74d9204402a750bfcb04",
+  "source_clean_at_start_and_end": true,
+  "native_sources_and_host_fixture_unchanged_from": "9e3f9a01d5a49a972a9e76e9e5bb36273f6ebdb8",
+  "source_tree_inventory": "/workspace/scratch/ee447c520988/sixteen-release-evidence/native-build/final-1a23a08-source-tree.txt",
+  "source_tree_inventory_sha256": "f60193aed63cedeb8ba721e4c96a47f58a0d7d3a77de0532f7ef25601883ab47",
+  "binary_path": "/workspace/scratch/ee447c520988/build-sixteen-note-release-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+  "binary_sha256": "13c7b913f7fdb55bab4967bb355e71d2d7d54f5a18906709836d354f6c55a3e6",
+  "binary_identical_to_9e3f9a0": true,
+  "stage_exit_statuses": {
+    "configure": 0,
+    "build": 0,
+    "ctest": 0,
+    "direct": 0,
+    "no-work": 0,
+    "dry-run": 0,
+    "no-work-explained": 0
+  },
+  "test_results": {
+    "ctest": {
+      "checks": 768,
+      "failures": 0,
+      "exit": 0,
+      "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/native-build/final-1a23a08-ctest.log",
+      "log_sha256": "8a65eb2b32d7927287dcf01a688a6413ac282934220dd2e6d175381cfedf77ac"
+    },
+    "direct": {
+      "checks": 768,
+      "failures": 0,
+      "exit": 0,
+      "log": "/workspace/scratch/ee447c520988/sixteen-release-evidence/native-build/final-1a23a08-direct.log",
+      "log_sha256": "40c0f8115f2f87f538d942bfa2648336f0f2ba30ef70e1711f160879959da389"
+    }
+  },
+  "registered_ctest": "cs80_sixteen_voice_release_host_tests",
+  "registered_ctests_passed": 1,
+  "registered_ctests_failed": 0,
+  "actual_build_checks": "Initial build and two subsequent actual builds each reported no work to do.",
+  "dry_run_caveat": "Ninja -n shows glob check and CMake regeneration because it cannot execute the always-dirty VerifyGlobs phony edge and observe restat. The subsequent real ninja -d explain executes the glob check and reports no work to do. No pending compile or link exists.",
+  "display_dependent_suites_run": false,
+  "full_suite_run": false,
+  "source_or_dependency_edits_or_pushes_by_worker": false
+}

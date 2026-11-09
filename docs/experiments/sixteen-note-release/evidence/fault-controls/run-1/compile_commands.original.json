@@ -1,0 +1,788 @@
+[
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/Engine.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/Engine.cpp",
+  "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/FactoryPresets.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/FactoryPresets.cpp",
+  "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -ffp-contract=off -o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/Ig00156Batch.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/core/Ig00156Batch.cpp",
+  "output": "CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -o CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/CoreTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/CoreTests.cpp",
+  "output": "CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LegacySubLfoOracleTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LegacySubLfoOracleTests.cpp",
+  "output": "CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_batch_tests.dir/tests/Ig00156BatchTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156BatchTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156BatchTests.cpp",
+  "output": "CMakeFiles/cs80_ig00156_batch_tests.dir/tests/Ig00156BatchTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_filter_batch_engine_tests.dir/tests/FilterBatchEngineTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/FilterBatchEngineTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/FilterBatchEngineTests.cpp",
+  "output": "CMakeFiles/cs80_filter_batch_engine_tests.dir/tests/FilterBatchEngineTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_filter_batch_scheduling_tests.dir/tests/FilterBatchSchedulingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/FilterBatchSchedulingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/FilterBatchSchedulingTests.cpp",
+  "output": "CMakeFiles/cs80_filter_batch_scheduling_tests.dir/tests/FilterBatchSchedulingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00151_zero_ei_tests.dir/tests/Ig00151ZeroEiTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00151ZeroEiTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00151ZeroEiTests.cpp",
+  "output": "CMakeFiles/cs80_ig00151_zero_ei_tests.dir/tests/Ig00151ZeroEiTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_event_timeline_tests.dir/tests/EventTimelineTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EventTimelineTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EventTimelineTests.cpp",
+  "output": "CMakeFiles/cs80_event_timeline_tests.dir/tests/EventTimelineTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pump_until_tests.dir/tests/PumpUntilTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PumpUntilTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PumpUntilTests.cpp",
+  "output": "CMakeFiles/cs80_pump_until_tests.dir/tests/PumpUntilTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ContinuousVoiceCircuitTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ContinuousVoiceCircuitTests.cpp",
+  "output": "CMakeFiles/cs80_continuous_voice_circuit_tests.dir/tests/ContinuousVoiceCircuitTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ContinuousVoiceCircuitAuditTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ContinuousVoiceCircuitAuditTests.cpp",
+  "output": "CMakeFiles/cs80_continuous_voice_circuit_audit_tests.dir/tests/ContinuousVoiceCircuitAuditTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_lfo_scope_preview_tests.dir/tests/LfoScopePreviewTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LfoScopePreviewTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LfoScopePreviewTests.cpp",
+  "output": "CMakeFiles/cs80_lfo_scope_preview_tests.dir/tests/LfoScopePreviewTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_preset_preview_math_tests.dir/tests/PresetPreviewMathTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PresetPreviewMathTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PresetPreviewMathTests.cpp",
+  "output": "CMakeFiles/cs80_preset_preview_math_tests.dir/tests/PresetPreviewMathTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputMeterDisplayTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputMeterDisplayTests.cpp",
+  "output": "CMakeFiles/cs80_output_meter_display_tests.dir/tests/OutputMeterDisplayTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_voice_activity_tests.dir/tests/VoiceActivityTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/VoiceActivityTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/VoiceActivityTests.cpp",
+  "output": "CMakeFiles/cs80_voice_activity_tests.dir/tests/VoiceActivityTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputMeterTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputMeterTests.cpp",
+  "output": "CMakeFiles/cs80_output_meter_tests.dir/tests/OutputMeterTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputMeterAuditTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputMeterAuditTests.cpp",
+  "output": "CMakeFiles/cs80_output_meter_audit_tests.dir/tests/OutputMeterAuditTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KeyboardPressureAuditTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KeyboardPressureAuditTests.cpp",
+  "output": "CMakeFiles/cs80_keyboard_pressure_audit_tests.dir/tests/KeyboardPressureAuditTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KeyboardEventQueueTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KeyboardEventQueueTests.cpp",
+  "output": "CMakeFiles/cs80_keyboard_event_queue_tests.dir/tests/KeyboardEventQueueTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ParityModeTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ParityModeTests.cpp",
+  "output": "CMakeFiles/cs80_parity_mode_tests.dir/tests/ParityModeTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourcePerformanceTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourcePerformanceTests.cpp",
+  "output": "CMakeFiles/cs80_source_performance_tests.dir/tests/SourcePerformanceTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourcePerformanceAuditTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourcePerformanceAuditTests.cpp",
+  "output": "CMakeFiles/cs80_source_performance_audit_tests.dir/tests/SourcePerformanceAuditTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EnvelopePrecisionTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EnvelopePrecisionTests.cpp",
+  "output": "CMakeFiles/cs80_envelope_precision_tests.dir/tests/EnvelopePrecisionTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156CacheTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156CacheTests.cpp",
+  "output": "CMakeFiles/cs80_ig00156_cache_tests.dir/tests/Ig00156CacheTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156FilterTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156FilterTests.cpp",
+  "output": "CMakeFiles/cs80_ig00156_filter_tests.dir/tests/Ig00156FilterTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EnvelopeRcModelTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EnvelopeRcModelTests.cpp",
+  "output": "CMakeFiles/cs80_envelope_rc_model_tests.dir/tests/EnvelopeRcModelTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LiveEnvelopeLevelTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LiveEnvelopeLevelTests.cpp",
+  "output": "CMakeFiles/cs80_live_envelope_level_tests.dir/tests/LiveEnvelopeLevelTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LiveEnvelopeTimingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LiveEnvelopeTimingTests.cpp",
+  "output": "CMakeFiles/cs80_live_envelope_timing_tests.dir/tests/LiveEnvelopeTimingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ActiveTailContinuityTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ActiveTailContinuityTests.cpp",
+  "output": "CMakeFiles/cs80_active_tail_continuity_tests.dir/tests/ActiveTailContinuityTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_voice_release_tests.dir/tests/VoiceReleaseTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/VoiceReleaseTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/VoiceReleaseTests.cpp",
+  "output": "CMakeFiles/cs80_voice_release_tests.dir/tests/VoiceReleaseTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_sixteen_voice_release_tests.dir/tests/SixteenVoiceReleaseTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SixteenVoiceReleaseTests.cpp",
+  "output": "CMakeFiles/cs80_sixteen_voice_release_tests.dir/tests/SixteenVoiceReleaseTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_unison_glide_tests.dir/tests/UnisonGlideTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/UnisonGlideTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/UnisonGlideTests.cpp",
+  "output": "CMakeFiles/cs80_unison_glide_tests.dir/tests/UnisonGlideTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pedal_release_tests.dir/tests/PedalReleaseTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PedalReleaseTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PedalReleaseTests.cpp",
+  "output": "CMakeFiles/cs80_pedal_release_tests.dir/tests/PedalReleaseTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_high_resolution_velocity_tests.dir/tests/HighResolutionVelocityTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/HighResolutionVelocityTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/HighResolutionVelocityTests.cpp",
+  "output": "CMakeFiles/cs80_high_resolution_velocity_tests.dir/tests/HighResolutionVelocityTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_controller_reset_tests.dir/tests/ControllerResetTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ControllerResetTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ControllerResetTests.cpp",
+  "output": "CMakeFiles/cs80_controller_reset_tests.dir/tests/ControllerResetTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ReconstructedOscillatorTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ReconstructedOscillatorTests.cpp",
+  "output": "CMakeFiles/cs80_experimental_oscillator_tests.dir/tests/ReconstructedOscillatorTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourceFactoryIntegrationTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourceFactoryIntegrationTests.cpp",
+  "output": "CMakeFiles/cs80_source_factory_integration_tests.dir/tests/SourceFactoryIntegrationTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourceFactoryToneTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourceFactoryToneTests.cpp",
+  "output": "CMakeFiles/cs80_source_factory_tone_tests.dir/tests/SourceFactoryToneTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/HardwareControlTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/HardwareControlTests.cpp",
+  "output": "CMakeFiles/cs80_hardware_control_tests.dir/tests/HardwareControlTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/IG00156ReferenceTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/IG00156ReferenceTests.cpp",
+  "output": "CMakeFiles/cs80_ig00156_reference_tests.dir/tests/IG00156ReferenceTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KeyboardContourReferenceTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KeyboardContourReferenceTests.cpp",
+  "output": "CMakeFiles/cs80_keyboard_contour_reference_tests.dir/tests/KeyboardContourReferenceTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LoadedControlReferenceTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LoadedControlReferenceTests.cpp",
+  "output": "CMakeFiles/cs80_loaded_control_reference_tests.dir/tests/LoadedControlReferenceTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LoadedControlRankTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LoadedControlRankTests.cpp",
+  "output": "CMakeFiles/cs80_loaded_control_rank_tests.dir/tests/LoadedControlRankTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LoadedControlTransientTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LoadedControlTransientTests.cpp",
+  "output": "CMakeFiles/cs80_loaded_control_transient_tests.dir/tests/LoadedControlTransientTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputTapIntegrationTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputTapIntegrationTests.cpp",
+  "output": "CMakeFiles/cs80_output_tap_integration_tests.dir/tests/OutputTapIntegrationTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputTapCircuitTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputTapCircuitTests.cpp",
+  "output": "CMakeFiles/cs80_output_tap_circuit_tests.dir/tests/OutputTapCircuitTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputTapsTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputTapsTests.cpp",
+  "output": "CMakeFiles/cs80_output_taps_tests.dir/tests/OutputTapsTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LevelControlTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LevelControlTests.cpp",
+  "output": "CMakeFiles/cs80_level_control_tests.dir/tests/LevelControlTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ResonanceControlTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ResonanceControlTests.cpp",
+  "output": "CMakeFiles/cs80_resonance_control_tests.dir/tests/ResonanceControlTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Oe2FiltersTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Oe2FiltersTests.cpp",
+  "output": "CMakeFiles/cs80_oe2_filters_tests.dir/tests/Oe2FiltersTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PraWahIntegrationTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PraWahIntegrationTests.cpp",
+  "output": "CMakeFiles/cs80_pra_wah_integration_tests.dir/tests/PraWahIntegrationTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PraWahCircuitTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PraWahCircuitTests.cpp",
+  "output": "CMakeFiles/cs80_pra_wah_circuit_tests.dir/tests/PraWahCircuitTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PraWahTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PraWahTests.cpp",
+  "output": "CMakeFiles/cs80_pra_wah_tests.dir/tests/PraWahTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/BbdChorusTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/BbdChorusTests.cpp",
+  "output": "CMakeFiles/cs80_bbd_chorus_tests.dir/tests/BbdChorusTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Mn3001PacketTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Mn3001PacketTests.cpp",
+  "output": "CMakeFiles/cs80_mn3001_packet_tests.dir/tests/Mn3001PacketTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PerformanceControlTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PerformanceControlTests.cpp",
+  "output": "CMakeFiles/cs80_performance_control_tests.dir/tests/PerformanceControlTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156NodalTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156NodalTests.cpp",
+  "output": "CMakeFiles/cs80_ig00156_nodal_tests.dir/tests/Ig00156NodalTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_ig00156_top_octave_tests.dir/tests/Ig00156TopOctaveTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156TopOctaveTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00156TopOctaveTests.cpp",
+  "output": "CMakeFiles/cs80_ig00156_top_octave_tests.dir/tests/Ig00156TopOctaveTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OscillatorPromotionTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OscillatorPromotionTests.cpp",
+  "output": "CMakeFiles/cs80_oscillator_promotion_tests.dir/tests/OscillatorPromotionTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00151VcaTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00151VcaTests.cpp",
+  "output": "CMakeFiles/cs80_ig00151_vca_tests.dir/tests/Ig00151VcaTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ToleranceDriftTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ToleranceDriftTests.cpp",
+  "output": "CMakeFiles/cs80_tolerance_drift_tests.dir/tests/ToleranceDriftTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_external_interpolator_tests.dir/tests/ExternalModulationInterpolatorTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ExternalModulationInterpolatorTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ExternalModulationInterpolatorTests.cpp",
+  "output": "CMakeFiles/cs80_external_interpolator_tests.dir/tests/ExternalModulationInterpolatorTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OversamplingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OversamplingTests.cpp",
+  "output": "CMakeFiles/cs80_oversampling_tests.dir/tests/OversamplingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SmoothingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SmoothingTests.cpp",
+  "output": "CMakeFiles/cs80_smoothing_tests.dir/tests/SmoothingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pitch_bend_range_tests.dir/tests/PitchBendRangeTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PitchBendRangeTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PitchBendRangeTests.cpp",
+  "output": "CMakeFiles/cs80_pitch_bend_range_tests.dir/tests/PitchBendRangeTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mpe_member_onset_tests.dir/tests/MpeMemberOnsetTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MpeMemberOnsetTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MpeMemberOnsetTests.cpp",
+  "output": "CMakeFiles/cs80_mpe_member_onset_tests.dir/tests/MpeMemberOnsetTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mpe_master_smoothing_tests.dir/tests/MpeMasterSmoothingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MpeMasterSmoothingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MpeMasterSmoothingTests.cpp",
+  "output": "CMakeFiles/cs80_mpe_master_smoothing_tests.dir/tests/MpeMasterSmoothingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputListeningTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/OutputListeningTests.cpp",
+  "output": "CMakeFiles/cs80_output_listening_tests.dir/tests/OutputListeningTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/NoiseTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/NoiseTests.cpp",
+  "output": "CMakeFiles/cs80_noise_tests.dir/tests/NoiseTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_poly_pressure_routing_tests.dir/tests/PolyPressureRoutingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PolyPressureRoutingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PolyPressureRoutingTests.cpp",
+  "output": "CMakeFiles/cs80_poly_pressure_routing_tests.dir/tests/PolyPressureRoutingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/HostAutomationCurveTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/HostAutomationCurveTests.cpp",
+  "output": "CMakeFiles/cs80_host_automation_curve_tests.dir/tests/HostAutomationCurveTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/FreeRunningVoiceTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/FreeRunningVoiceTests.cpp",
+  "output": "CMakeFiles/cs80_free_running_voice_tests.dir/tests/FreeRunningVoiceTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KasScannerTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KasScannerTests.cpp",
+  "output": "CMakeFiles/cs80_kas_scanner_tests.dir/tests/KasScannerTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_scanner_ordering_tests.dir/tests/ScannerOrderingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ScannerOrderingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ScannerOrderingTests.cpp",
+  "output": "CMakeFiles/cs80_scanner_ordering_tests.dir/tests/ScannerOrderingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_scanner_overflow_tests.dir/tests/ScannerOverflowTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ScannerOverflowTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ScannerOverflowTests.cpp",
+  "output": "CMakeFiles/cs80_scanner_overflow_tests.dir/tests/ScannerOverflowTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KeyboardContourKeyMapTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/KeyboardContourKeyMapTests.cpp",
+  "output": "CMakeFiles/cs80_keyboard_contour_key_map_tests.dir/tests/KeyboardContourKeyMapTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TouchCircuitTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TouchCircuitTests.cpp",
+  "output": "CMakeFiles/cs80_touch_circuit_tests.dir/tests/TouchCircuitTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mpe_master_bend_routing_tests.dir/tests/MpeMasterBendRoutingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MpeMasterBendRoutingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MpeMasterBendRoutingTests.cpp",
+  "output": "CMakeFiles/cs80_mpe_master_bend_routing_tests.dir/tests/MpeMasterBendRoutingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -DCS80_TUNING_DATA_DIR=\\\"/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/data/tuning\\\" -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TuningMidiTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TuningMidiTests.cpp",
+  "output": "CMakeFiles/cs80_tuning_midi_tests.dir/tests/TuningMidiTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tuning_frequency_domain_tests.dir/tests/TuningFrequencyDomainTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TuningFrequencyDomainTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TuningFrequencyDomainTests.cpp",
+  "output": "CMakeFiles/cs80_tuning_frequency_domain_tests.dir/tests/TuningFrequencyDomainTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tuning_robustness_tests.dir/tests/TuningRobustnessTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TuningRobustnessTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TuningRobustnessTests.cpp",
+  "output": "CMakeFiles/cs80_tuning_robustness_tests.dir/tests/TuningRobustnessTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MtsEspNativeTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MtsEspNativeTests.cpp",
+  "output": "CMakeFiles/cs80_mts_esp_native_tests.dir/tests/MtsEspNativeTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/plugin/MtsEspClient.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/plugin/MtsEspClient.cpp",
+  "output": "CMakeFiles/cs80_mts_esp_native_tests.dir/src/plugin/MtsEspClient.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -DCS80_MTS_ESP_TEST_BACKEND=1 -DCS80_WITH_MTS_ESP=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_integration_tests.dir/tests/MtsEspIntegrationTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MtsEspIntegrationTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MtsEspIntegrationTests.cpp",
+  "output": "CMakeFiles/cs80_mts_esp_integration_tests.dir/tests/MtsEspIntegrationTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -DCS80_MTS_ESP_TEST_BACKEND=1 -DCS80_WITH_MTS_ESP=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_integration_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/plugin/MtsEspClient.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/plugin/MtsEspClient.cpp",
+  "output": "CMakeFiles/cs80_mts_esp_integration_tests.dir/src/plugin/MtsEspClient.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_WITH_MTS_ESP=0 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MtsEspFallbackTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MtsEspFallbackTests.cpp",
+  "output": "CMakeFiles/cs80_mts_esp_fallback_tests.dir/tests/MtsEspFallbackTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_WITH_MTS_ESP=0 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/plugin/MtsEspClient.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/plugin/MtsEspClient.cpp",
+  "output": "CMakeFiles/cs80_mts_esp_fallback_tests.dir/src/plugin/MtsEspClient.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_MTS_ESP_TEST_BACKEND=1 -DCS80_WITH_MTS_ESP=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mts_esp_windows_macro_tests.dir/tests/MtsEspWindowsMacroTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MtsEspWindowsMacroTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MtsEspWindowsMacroTests.cpp",
+  "output": "CMakeFiles/cs80_mts_esp_windows_macro_tests.dir/tests/MtsEspWindowsMacroTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00150SubTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Ig00150SubTests.cpp",
+  "output": "CMakeFiles/cs80_ig00150_sub_tests.dir/tests/Ig00150SubTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/RingModulatorCircuitTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/RingModulatorCircuitTests.cpp",
+  "output": "CMakeFiles/cs80_ring_modulator_circuit_tests.dir/tests/RingModulatorCircuitTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Oe2StereoChorusTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/Oe2StereoChorusTests.cpp",
+  "output": "CMakeFiles/cs80_oe2_stereo_chorus_tests.dir/tests/Oe2StereoChorusTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PraOpticalCellTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PraOpticalCellTests.cpp",
+  "output": "CMakeFiles/cs80_pra_optical_cell_tests.dir/tests/PraOpticalCellTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ModernLfoTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ModernLfoTests.cpp",
+  "output": "CMakeFiles/cs80_modern_lfo_tests.dir/tests/ModernLfoTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MsegTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MsegTests.cpp",
+  "output": "CMakeFiles/cs80_mseg_tests.dir/tests/MsegTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mseg_transport_rate_tests.dir/tests/MsegTransportRateTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MsegTransportRateTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MsegTransportRateTests.cpp",
+  "output": "CMakeFiles/cs80_mseg_transport_rate_tests.dir/tests/MsegTransportRateTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mono_mseg_routing_tests.dir/tests/MonoMsegRoutingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MonoMsegRoutingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MonoMsegRoutingTests.cpp",
+  "output": "CMakeFiles/cs80_mono_mseg_routing_tests.dir/tests/MonoMsegRoutingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mseg_retrigger_rate_tests.dir/tests/MsegRetriggerRateTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MsegRetriggerRateTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MsegRetriggerRateTests.cpp",
+  "output": "CMakeFiles/cs80_mseg_retrigger_rate_tests.dir/tests/MsegRetriggerRateTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mseg_combined_interaction_tests.dir/tests/MsegCombinedInteractionTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MsegCombinedInteractionTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MsegCombinedInteractionTests.cpp",
+  "output": "CMakeFiles/cs80_mseg_combined_interaction_tests.dir/tests/MsegCombinedInteractionTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ModMatrixTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ModMatrixTests.cpp",
+  "output": "CMakeFiles/cs80_mod_matrix_tests.dir/tests/ModMatrixTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ModernFxTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ModernFxTests.cpp",
+  "output": "CMakeFiles/cs80_modern_fx_tests.dir/tests/ModernFxTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_delay_line_tests.dir/tests/DelayLineTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/DelayLineTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/DelayLineTests.cpp",
+  "output": "CMakeFiles/cs80_delay_line_tests.dir/tests/DelayLineTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_plate_reverb_rate_tests.dir/tests/PlateReverbRateTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PlateReverbRateTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/PlateReverbRateTests.cpp",
+  "output": "CMakeFiles/cs80_plate_reverb_rate_tests.dir/tests/PlateReverbRateTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tape_echo_time_tests.dir/tests/TapeEchoTimeTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TapeEchoTimeTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TapeEchoTimeTests.cpp",
+  "output": "CMakeFiles/cs80_tape_echo_time_tests.dir/tests/TapeEchoTimeTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_drive_control_cache_tests.dir/tests/DriveControlCacheTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/DriveControlCacheTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/DriveControlCacheTests.cpp",
+  "output": "CMakeFiles/cs80_drive_control_cache_tests.dir/tests/DriveControlCacheTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_ensemble_rate_cache_tests.dir/tests/EnsembleRateCacheTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EnsembleRateCacheTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EnsembleRateCacheTests.cpp",
+  "output": "CMakeFiles/cs80_ensemble_rate_cache_tests.dir/tests/EnsembleRateCacheTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_tape_echo_control_cache_tests.dir/tests/TapeEchoControlCacheTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TapeEchoControlCacheTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/TapeEchoControlCacheTests.cpp",
+  "output": "CMakeFiles/cs80_tape_echo_control_cache_tests.dir/tests/TapeEchoControlCacheTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LibraryAuditTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/LibraryAuditTests.cpp",
+  "output": "CMakeFiles/cs80_library_audit_tests.dir/tests/LibraryAuditTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/RandomiseTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/RandomiseTests.cpp",
+  "output": "CMakeFiles/cs80_randomise_tests.dir/tests/RandomiseTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourceFactoryBoundaryTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/SourceFactoryBoundaryTests.cpp",
+  "output": "CMakeFiles/cs80_source_factory_boundary_tests.dir/tests/SourceFactoryBoundaryTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryPanelTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryPanelTests.cpp",
+  "output": "CMakeFiles/cs80_memory_panel_tests.dir/tests/MemoryPanelTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_memory_panel_ports_tests.dir/tests/MemoryPanelPortsTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryPanelPortsTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryPanelPortsTests.cpp",
+  "output": "CMakeFiles/cs80_memory_panel_ports_tests.dir/tests/MemoryPanelPortsTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_memory_panel_port_map_tests.dir/tests/MemoryPanelPortMapTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryPanelPortMapTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryPanelPortMapTests.cpp",
+  "output": "CMakeFiles/cs80_memory_panel_port_map_tests.dir/tests/MemoryPanelPortMapTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_memory_control_routing_tests.dir/tests/MemoryControlRoutingTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryControlRoutingTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryControlRoutingTests.cpp",
+  "output": "CMakeFiles/cs80_memory_control_routing_tests.dir/tests/MemoryControlRoutingTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_memory_receiver_truth_tests.dir/tests/MemoryReceiverTruthTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryReceiverTruthTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryReceiverTruthTests.cpp",
+  "output": "CMakeFiles/cs80_memory_receiver_truth_tests.dir/tests/MemoryReceiverTruthTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_memory_qualification_probe.dir/tests/MemoryQualificationProbe.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryQualificationProbe.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryQualificationProbe.cpp",
+  "output": "CMakeFiles/cs80_memory_qualification_probe.dir/tests/MemoryQualificationProbe.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -ffp-contract=off -o CMakeFiles/cs80_memory_verified_diode_tests.dir/tests/MemoryVerifiedDiodeTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryVerifiedDiodeTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemoryVerifiedDiodeTests.cpp",
+  "output": "CMakeFiles/cs80_memory_verified_diode_tests.dir/tests/MemoryVerifiedDiodeTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -ffp-contract=off -o CMakeFiles/cs80_memory_sparse_update_tests.dir/tests/MemorySparseUpdateTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemorySparseUpdateTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemorySparseUpdateTests.cpp",
+  "output": "CMakeFiles/cs80_memory_sparse_update_tests.dir/tests/MemorySparseUpdateTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -ffp-contract=off -o CMakeFiles/cs80_memory_sparse_probe.dir/tests/MemorySparseProbe.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemorySparseProbe.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MemorySparseProbe.cpp",
+  "output": "CMakeFiles/cs80_memory_sparse_probe.dir/tests/MemorySparseProbe.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_programmer_control_identity_tests.dir/tests/ProgrammerControlIdentityTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ProgrammerControlIdentityTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/ProgrammerControlIdentityTests.cpp",
+  "output": "CMakeFiles/cs80_programmer_control_identity_tests.dir/tests/ProgrammerControlIdentityTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/FastMathTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/FastMathTests.cpp",
+  "output": "CMakeFiles/cs80_fast_math_tests.dir/tests/FastMathTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EvidenceRegisterTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/EvidenceRegisterTests.cpp",
+  "output": "CMakeFiles/cs80_evidence_register_tests.dir/tests/EvidenceRegisterTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MidiLearnTests.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/tests/MidiLearnTests.cpp",
+  "output": "CMakeFiles/cs80_midi_learn_tests.dir/tests/MidiLearnTests.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/render_cli.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/render_cli.cpp",
+  "output": "CMakeFiles/cs80_render.dir/src/tools/render_cli.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/source_factory_audition.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/source_factory_audition.cpp",
+  "output": "CMakeFiles/cs80_source_factory_audition.dir/src/tools/source_factory_audition.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/voice_continuity_probe.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/voice_continuity_probe.cpp",
+  "output": "CMakeFiles/cs80_voice_continuity_probe.dir/src/tools/voice_continuity_probe.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/source_factory_benchmark.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/source_factory_benchmark.cpp",
+  "output": "CMakeFiles/cs80_source_factory_benchmark.dir/src/tools/source_factory_benchmark.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/dsp_probe.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/dsp_probe.cpp",
+  "output": "CMakeFiles/cs80_dsp_probe.dir/src/tools/dsp_probe.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/engine_audit.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/engine_audit.cpp",
+  "output": "CMakeFiles/cs80_engine_audit.dir/src/tools/engine_audit.cpp.o"
+},
+{
+  "directory": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic",
+  "command": "/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/sixteen-note-release-impl/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o -c /workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/parity_capture.cpp",
+  "file": "/workspace/scratch/ee447c520988/sixteen-note-release-impl/src/tools/parity_capture.cpp",
+  "output": "CMakeFiles/cs80_parity_capture.dir/src/tools/parity_capture.cpp.o"
+}
+]
