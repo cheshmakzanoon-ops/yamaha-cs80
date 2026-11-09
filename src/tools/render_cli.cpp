@@ -3,6 +3,8 @@
 #include "EventTimeline.h"
 
 #include <algorithm>
+#include <array>
+#include <memory>
 #include <cmath>
 #include <cerrno>
 #include <cstdlib>
@@ -31,9 +33,8 @@ void writeU16(std::vector<uint8_t>& b, uint16_t v)
     b.push_back((uint8_t) ((v >> 8) & 0xff));
 }
 
-bool writeWav(const std::string& path, const std::vector<float>& stereo, double sr)
+bool writeWavHeader(FILE* fp, uint32_t frames, double sr)
 {
-    const uint32_t frames = (uint32_t) (stereo.size() / 2);
     const uint32_t dataBytes = frames * 2 * 2;
     std::vector<uint8_t> b;
     b.insert(b.end(), { 'R', 'I', 'F', 'F' });
@@ -48,20 +49,26 @@ bool writeWav(const std::string& path, const std::vector<float>& stereo, double 
     writeU16(b, 16);
     b.insert(b.end(), { 'd', 'a', 't', 'a' });
     writeU32(b, dataBytes);
-    for (float f : stereo)
-    {
-        const float c = clampf(f, -1.0f, 1.0f);
-        const int16_t s = (int16_t) std::lround(c * 32767.0f);
-        writeU16(b, (uint16_t) s);
-    }
-    FILE* fp = std::fopen(path.c_str(), "wb");
-    if (! fp)
-        return false;
-    const size_t n = std::fwrite(b.data(), 1, b.size(), fp);
-    // Buffered-write errors may surface only at fclose (disk full, quota).
-    const int closed = std::fclose(fp);
-    return n == b.size() && closed == 0;
+    return std::fwrite(b.data(), 1, b.size(), fp) == b.size();
 }
+
+// The scheduler never renders more than this many frames at once.
+constexpr int kRenderBlock = 128;
+bool writeWavBlock(FILE* fp, const float* stereo, int frames)
+{
+    std::array<uint8_t, kRenderBlock * 4> bytes {};
+    for (int i = 0; i < frames * 2; ++i)
+    {
+        const float c = clampf(stereo[i], -1.0f, 1.0f);
+        const auto sample = (uint16_t) (int16_t) std::lround(c * 32767.0f);
+        bytes[(size_t) i * 2] = (uint8_t) (sample & 0xff);
+        bytes[(size_t) i * 2 + 1] = (uint8_t) (sample >> 8);
+    }
+    const size_t count = (size_t) frames * 4;
+    return std::fwrite(bytes.data(), 1, count, fp) == count;
+}
+
+struct WavWriteFailure {};
 
 ParamValues makeBrass()
 {
@@ -218,23 +225,39 @@ int main(int argc, char** argv)
         return a.frame < b.frame;
     });
 
-    std::vector<float> buffer((size_t) frames * 2);
-    const int block = 128;
-    tools::renderEventTimeline(frames, block, events,
-        [&](const Event& e) {
-            switch (e.type)
-            {
-                case EventType::NoteOn: engine.noteOn(e.note, e.value, 1); break;
-                case EventType::NoteOff: engine.noteOff(e.note, 1); break;
-                case EventType::Pressure: engine.channelPressure(1, e.value); break;
-                case EventType::Ribbon: engine.setRibbon(e.value); break;
-            }
-        },
-        [&](int frame, int n) {
-            engine.render(buffer.data() + (size_t) frame * 2, n);
-        });
-
-    if (! writeWav(path, buffer, sr))
+    // Own only one audio block and one PCM block regardless of duration.
+    const auto closeFile = [](FILE* file) { std::fclose(file); };
+    std::unique_ptr<FILE, decltype(closeFile)> output(std::fopen(path.c_str(), "wb"), closeFile);
+    bool written = false;
+    if (output && writeWavHeader(output.get(), (uint32_t) frames, sr))
+    {
+        std::array<float, kRenderBlock * 2> buffer {};
+        try
+        {
+            tools::renderEventTimeline(frames, kRenderBlock, events,
+                [&](const Event& e) {
+                    switch (e.type)
+                    {
+                        case EventType::NoteOn: engine.noteOn(e.note, e.value, 1); break;
+                        case EventType::NoteOff: engine.noteOff(e.note, 1); break;
+                        case EventType::Pressure: engine.channelPressure(1, e.value); break;
+                        case EventType::Ribbon: engine.setRibbon(e.value); break;
+                    }
+                },
+                [&](int, int n) {
+                    engine.render(buffer.data(), n);
+                    // Stop the event timeline immediately on a failed write.
+                    if (!writeWavBlock(output.get(), buffer.data(), n))
+                        throw WavWriteFailure {};
+                });
+            written = true;
+        }
+        catch (const WavWriteFailure&) {}
+    }
+    // Buffered errors may surface only when closing the file.
+    if (output && std::fclose(output.release()) != 0)
+        written = false;
+    if (!written)
     {
         std::fprintf(stderr, "Could not write %s\n", path.c_str());
         return 1;
