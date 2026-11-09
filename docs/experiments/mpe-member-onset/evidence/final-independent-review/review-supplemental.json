@@ -1,0 +1,45 @@
+{
+  "reviewed_checkpoint": "fcaf4597f34b8ad0180bbbd1ac3600257b868700",
+  "scope": "Read-only frozen test-only correction and supplemental shared-pressure witness review; final bundle approval remains pending.",
+  "production_unchanged_from": "2970f46496b268a16995802b3be578449d5c47b9",
+  "own_runtime": [
+    {
+      "name": "tuning-corrected-generic",
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/cs80_tuning_midi_tests"
+      ],
+      "exit_code": 0,
+      "log": "tuning-corrected-generic.log",
+      "log_sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+      "binary": "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/cs80_tuning_midi_tests",
+      "binary_sha256": "4e090413a50975e4f61cdef244ab844c4db0298015c06b7b589c9d307fa820df"
+    },
+    {
+      "name": "shared-pressure-native",
+      "argv": [
+        "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/probe-native"
+      ],
+      "exit_code": 0,
+      "log": "shared-pressure-native.log",
+      "log_sha256": "f52d625e53f8126f5ee46c18eaa204987d669ae351a749d671bd2cc3470e923b",
+      "binary": "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/probe-native",
+      "binary_sha256": "46ca98df82a59699c8e8b48fd7b47247db598505f18b4b6b7eaf83061a08c3ee"
+    }
+  ],
+  "inputs": {
+    "/workspace/scratch/ee447c520988/next-product-step/tests/TuningMidiTests.cpp": "3756bf618adb277355d9bd1a28912532423ad207f7e154515234722f8505dbc3",
+    "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/SharedPressureOnsetProbe.cpp": "4200111955f9ada855208d78dd06185f18c0e6b5391467cf6c032b8914042c2c",
+    "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/run.py": "5a3a89f4e9c6864e1eeb7b7def4d169a016f4e889bcfbec4753213d109062bd4",
+    "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/commands.json": "e8722cb4b416e42ee09a570dbf1f236a6cd914e3d815aaf26303896eb358fa12"
+  },
+  "findings": [
+    "The six-line tuning correction adds explicit neutral pressure/CC74 setup and an initial-pressure assertion. Every former routing/layout/tail assertion remains unchanged. All Notes Off correctly preserves controllers, so test-case isolation rather than production reset is necessary.",
+    "Supplemental 32-scenario witness compares finite exact SUB rate and output before allocation and for retained versus explicit ordinary-event onset replay. It requires a held-pressure positive control.",
+    "The release comparison begins with equal TWS histories, then compares stronger retained-channel pressure against explicit zero pressure after physical gate release, including pedal-held sound. This checks force gating without falsely requiring residual Circuit TWS decay to vanish.",
+    "Fresh corrected generic tuning rerun passes 22085 checks. Fresh supplemental native rerun passes 32 scenarios and 1853296 checks. Both exit zero."
+  ],
+  "limits": [
+    "Supplemental witness covers SUB rate/output, not whole-audio equality or all engine state. Its many checks are per-sample checks across 32 scenarios.",
+    "No physical circuitry, external host/controller, complete MPE conformance, realtime timing or publication approval."
+  ]
+}

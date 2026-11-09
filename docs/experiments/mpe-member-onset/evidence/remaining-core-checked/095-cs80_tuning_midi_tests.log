@@ -1,0 +1,46 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic
+Test project /workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic
+    Start 95: cs80_tuning_midi_tests
+1/1 Test #95: cs80_tuning_midi_tests ...........***Failed    4.04 sec
+MTS boundary matrix: 2774 malformed messages
+FAIL: expression policy 1 layout 15/0 note 8 controller 16 per-voice pressure target
+FAIL: expression policy 1 layout 15/0 note 8 controller 16 per-voice pressure matrix route
+FAIL: expression policy 1 layout 15/0 note 8 controller 16 per-voice CC74 matrix route
+FAIL: expression policy 1 layout 15/0 note 16 controller 8 per-voice pressure target
+FAIL: expression policy 1 layout 15/0 note 16 controller 8 per-voice pressure matrix route
+FAIL: expression policy 1 layout 15/0 note 16 controller 8 per-voice CC74 matrix route
+FAIL: expression policy 1 layout 0/15 note 1 controller 8 per-voice pressure target
+FAIL: expression policy 1 layout 0/15 note 1 controller 8 per-voice pressure matrix route
+FAIL: expression policy 1 layout 0/15 note 1 controller 8 per-voice CC74 matrix route
+FAIL: expression policy 1 layout 0/15 note 8 controller 1 per-voice pressure target
+FAIL: expression policy 1 layout 0/15 note 8 controller 1 per-voice pressure matrix route
+FAIL: expression policy 1 layout 0/15 note 8 controller 1 per-voice CC74 matrix route
+FAIL: expression policy 1 layout 7/7 note 8 controller 16 per-voice pressure target
+FAIL: expression policy 1 layout 7/7 note 8 controller 16 per-voice pressure matrix route
+FAIL: expression policy 1 layout 7/7 note 8 controller 16 per-voice CC74 matrix route
+FAIL: expression policy 3 layout 15/0 note 8 controller 16 per-voice pressure target
+FAIL: expression policy 3 layout 15/0 note 8 controller 16 per-voice pressure matrix route
+FAIL: expression policy 3 layout 15/0 note 8 controller 16 per-voice CC74 matrix route
+FAIL: expression policy 3 layout 15/0 note 16 controller 8 per-voice pressure target
+FAIL: expression policy 3 layout 15/0 note 16 controller 8 per-voice pressure matrix route
+FAIL: expression policy 3 layout 15/0 note 16 controller 8 per-voice CC74 matrix route
+FAIL: expression policy 3 layout 0/15 note 1 controller 8 per-voice pressure target
+FAIL: expression policy 3 layout 0/15 note 1 controller 8 per-voice pressure matrix route
+FAIL: expression policy 3 layout 0/15 note 1 controller 8 per-voice CC74 matrix route
+FAIL: expression policy 3 layout 0/15 note 8 controller 1 per-voice pressure target
+FAIL: expression policy 3 layout 0/15 note 8 controller 1 per-voice pressure matrix route
+FAIL: expression policy 3 layout 0/15 note 8 controller 1 per-voice CC74 matrix route
+FAIL: expression policy 3 layout 7/7 note 8 controller 16 per-voice pressure target
+FAIL: expression policy 3 layout 7/7 note 8 controller 16 per-voice pressure matrix route
+FAIL: expression policy 3 layout 7/7 note 8 controller 16 per-voice CC74 matrix route
+Scan routing dispatch oracle: 1152 comparisons, 675 projected-full states, 0 mismatches
+Tuning / MIDI / voice modes: 19811 checks, 30 failures
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   4.04 sec
+
+The following tests FAILED:
+	 95 - cs80_tuning_midi_tests (Failed)
+Errors while running CTest

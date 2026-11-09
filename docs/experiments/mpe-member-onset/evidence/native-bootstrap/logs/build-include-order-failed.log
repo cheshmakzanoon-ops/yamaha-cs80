@@ -1,0 +1,28 @@
+[0/2] Re-checking globbed directories...
+[1/50] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[2/50] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+[3/50] Generating juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp, juce_binarydata_cs80_panel_fonts/JuceLibraryCode/PanelFontData.h
+[4/50] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[5/50] Linking CXX static library libcs80_core.a
+[6/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+[7/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+[8/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+[9/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+[10/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+[11/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o
+FAILED: CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o 
+/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -DCS80_GOLDEN_DIR=\"/workspace/scratch/ee447c520988/next-product-step/tests/golden\" -DJUCE_DISPLAY_SPLASH_SCREEN=0 -DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1 -DJUCE_MODAL_LOOPS_PERMITTED=1 -DJUCE_MODULE_AVAILABLE_juce_audio_basics=1 -DJUCE_MODULE_AVAILABLE_juce_audio_devices=1 -DJUCE_MODULE_AVAILABLE_juce_audio_formats=1 -DJUCE_MODULE_AVAILABLE_juce_audio_processors=1 -DJUCE_MODULE_AVAILABLE_juce_audio_processors_headless=1 -DJUCE_MODULE_AVAILABLE_juce_audio_utils=1 -DJUCE_MODULE_AVAILABLE_juce_core=1 -DJUCE_MODULE_AVAILABLE_juce_data_structures=1 -DJUCE_MODULE_AVAILABLE_juce_dsp=1 -DJUCE_MODULE_AVAILABLE_juce_events=1 -DJUCE_MODULE_AVAILABLE_juce_graphics=1 -DJUCE_MODULE_AVAILABLE_juce_gui_basics=1 -DJUCE_MODULE_AVAILABLE_juce_gui_extra=1 -DJUCE_STANDALONE_APPLICATION=1 -DJUCE_USE_CURL=0 -DJUCE_WEB_BROWSER=0 -DLINUX=1 -DNDEBUG=1 -D_NDEBUG=1 -I/workspace/scratch/ee447c520988/build-mpe-onset-native/CS80Snapshots_artefacts/JuceLibraryCode -I/workspace/scratch/ee447c520988/next-product-step/src -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules -I/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/freetype2 -I/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/libpng16 -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2 -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src -I/workspace/scratch/ee447c520988/build-mpe-onset-native/juce_binarydata_cs80_panel_fonts/JuceLibraryCode -I/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -I/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu -O3 -DNDEBUG -std=gnu++20 -fPIE -MD -MT CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o -MF CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o.d -o CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o -c /workspace/scratch/ee447c520988/next-product-step/src/plugin/MtsEspClient.cpp
+In file included from /workspace/scratch/ee447c520988/next-product-step/src/plugin/MtsEspClient.cpp:15:
+/workspace/scratch/ee447c520988/next-product-step/src/vendor/mts-esp/Client/libMTSClient.cpp: In function ‘char freqToNoteET(double)’:
+/workspace/scratch/ee447c520988/next-product-step/src/vendor/mts-esp/Client/libMTSClient.cpp:875:9: error: ‘isnan’ was not declared in this scope; did you mean ‘std::isnan’?
+  875 |     if (isnan(freq))
+      |         ^~~~~
+      |         std::isnan
+In file included from /workspace/scratch/ee447c520988/next-product-step/src/core/Tuning.h:19,
+                 from /workspace/scratch/ee447c520988/next-product-step/src/plugin/MtsEspClient.h:13,
+                 from /workspace/scratch/ee447c520988/next-product-step/src/plugin/MtsEspClient.cpp:1:
+/usr/include/c++/14/cmath:1196:5: note: ‘std::isnan’ declared here
+ 1196 |     isnan(_Tp)
+      |     ^~~~~
+[12/50] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+ninja: build stopped: subcommand failed.

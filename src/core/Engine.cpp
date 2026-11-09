@@ -307,6 +307,7 @@ void Engine::reset()
     }
     heldCount = 0;
     sustainPedals.fill(false);
+    memberExpression.fill({});
     scanner.reset();
     noteIngressOrder = 0;
     unassignedCount = 0;
@@ -460,6 +461,10 @@ void Engine::applyParams(const ParamValues& values)
     const bool wasArp = arpWasOn;
     const bool hadSustainGate = global.sustainGate;
     buildSettings();
+    // Expression received under an earlier MPE mode must not become the
+    // initial touch of a later note after the mode is re-enabled.
+    if (wasMpe != global.mpe)
+        memberExpression.fill({});
     // A selector event changes the physical load for the next interval, without
     // resetting capacitor voltage, previous source or inferred readout smoothing.
     outputCircuit.setMode(global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
@@ -1165,6 +1170,16 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
     v.pressure = 0.0f;
     v.timbre = 0.0f;
     v.mpeBend = 0.0f;
+    if (const auto* initial = memberExpressionFor(midiChannel))
+    {
+        const float negotiated = mpeZones.memberRange(initial->role == MpeZoneLayout::Role::upperMember);
+        const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;
+        v.mpeBend = initial->bend * range;
+        v.pressure = initial->pressure;
+        if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
+            v.pressure = applyPressureCurve(v.pressure, global.pressureCurve, global.pressureThreshold);
+        v.timbre = initial->timbre;
+    }
     // Phase 6 tuning: exactly (float) note in 12-TET (tuning_mode 0).
     v.targetPitch = tunedPitch(note);
     v.upperZone = global.mpe && mpeZones.inUpperZone(midiChannel);
@@ -1710,6 +1725,8 @@ void Engine::channelPressure(int midiChannel, float pressure)
     if (! std::isfinite(pressure))
         return;
     pressure = clampf(pressure, 0.0f, 1.0f);
+    if (auto* initial = memberExpressionFor(midiChannel))
+        initial->pressure = pressure;
     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
     lastChannelPressure = pressure;
@@ -1725,6 +1742,8 @@ void Engine::pitchBend(int midiChannel, float value)
     if (global.parityMode || ! std::isfinite(value))
         return;
     value = clampf(value, -1.0f, 1.0f);
+    if (auto* initial = memberExpressionFor(midiChannel))
+        initial->bend = value;
     if (global.mpe)
     {
         // MPE zones (Phase 6): a master bends its zone, a member its notes.
@@ -1798,6 +1817,7 @@ void Engine::controlChange(int controller, float value, int midiChannel)
             || controller == 6 || controller == 38))
     {
         mpeZones.controlChange(midiChannel, controller, (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f));
+        discardChangedMemberExpression();
         return;
     }
     if (global.parityMode && (controller == 1 || controller == 11
@@ -1815,6 +1835,8 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         setSustainPedal(midiChannel, value >= 0.5f);
     else if (controller == 74)
     {
+        if (auto* initial = memberExpressionFor(midiChannel))
+            initial->timbre = value;
         for (auto& v : voices)
             if (v.active && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
                 v.timbre = value;
@@ -2014,6 +2036,33 @@ bool Engine::hasFreeCircuitForRouting() const noexcept
     return std::any_of(projected.begin(), projected.end(), [](const Slot& v) {
         return ! v.held && ! v.pedalHeld;
     });
+}
+
+Engine::MemberExpression* Engine::memberExpressionFor(int midiChannel) noexcept
+{
+    if (!global.mpe || midiChannel < 1 || midiChannel > 16)
+        return nullptr;
+    const auto role = mpeZones.role(midiChannel);
+    if (role != MpeZoneLayout::Role::lowerMember && role != MpeZoneLayout::Role::upperMember)
+        return nullptr;
+    auto& state = memberExpression[(size_t) midiChannel];
+    if (state.role != role)
+    {
+        state = {};
+        state.role = role;
+    }
+    return &state;
+}
+
+void Engine::discardChangedMemberExpression() noexcept
+{
+    // RPN selection/data may change the layout. Forget only state whose role
+    // ended, so removing/readding a member cannot revive its previous touch.
+    // A same-role MCM retains raw values; onset uses the new negotiated range.
+    // Existing sounding voices keep their separate historical zone policy.
+    for (int channel = 1; channel <= 16; ++channel)
+        if (memberExpression[(size_t) channel].role != mpeZones.role(channel))
+            memberExpression[(size_t) channel] = {};
 }
 
 bool Engine::isZoneMaster(const Voice& v, int midiChannel) const noexcept

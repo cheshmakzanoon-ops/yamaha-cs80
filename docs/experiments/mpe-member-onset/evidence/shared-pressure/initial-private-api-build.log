@@ -1,0 +1,14 @@
+/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/SharedPressureOnsetProbe.cpp: In function ‘int main()’:
+/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/SharedPressureOnsetProbe.cpp:36:45: error: ‘void cs80::Engine::setSustainPedal(int, bool)’ is private within this context
+   36 |         if(pedal) { retained.setSustainPedal(2,true);replay.setSustainPedal(2,true); }
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+In file included from /workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/SharedPressureOnsetProbe.cpp:2:
+/workspace/scratch/ee447c520988/next-product-step/src/core/Engine.h:559:10: note: declared private here
+  559 |     void setSustainPedal(int midiChannel, bool down);
+      |          ^~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/SharedPressureOnsetProbe.cpp:36:76: error: ‘void cs80::Engine::setSustainPedal(int, bool)’ is private within this context
+   36 |         if(pedal) { retained.setSustainPedal(2,true);replay.setSustainPedal(2,true); }
+      |                                                      ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+/workspace/scratch/ee447c520988/next-product-step/src/core/Engine.h:559:10: note: declared private here
+  559 |     void setSustainPedal(int midiChannel, bool down);
+      |          ^~~~~~~~~~~~~~~

@@ -1,0 +1,24 @@
+[
+  {
+    "profile": "generic",
+    "stage": "build",
+    "argv": [
+      "g++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/next-product-step/src",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/SharedPressureOnsetProbe.cpp",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/probe-generic"
+    ],
+    "status": 1,
+    "log": "generic-build.log",
+    "sha256": "a6469fb7200310096924b8fce1657bbfb21fb8cbc996dbc8ff9f0da4d308b9c9"
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "review": "Independent source/core review of bounded MPE onset retention",
+  "reviewed_commit": "2970f46496b268a16995802b3be578449d5c47b9",
+  "reviewed_tree": "7d939453ba3b9420be99d44c5ad572412909f055",
+  "approval": "Production source and focused core test approved; not full qualification or publication approval",
+  "blockers": [],
+  "source_findings": [
+    "All caches accept only finite clamped events for actual member roles while effective MPE is enabled.",
+    "Pressure stored before curve; bend before range multiplication. Accepted onset maps current configuration once, without replaying global event side effects.",
+    "Engine reset and MPE mode edges clear state; role-changing negotiation invalidates previous role ownership. Same-role MCM retains raw state and onset uses current range.",
+    "Existing active event routes, voice-age smoothing, poly-pressure, manager/gap, PURE and non-MPE paths are not rewritten.",
+    "Cache is fixed size and audio-owned; no new heap allocation, locks, per-sample loop or host/preset state is introduced by the inspected code."
+  ],
+  "independent_execution": {
+    "profile": "GCC 14.2 generic Release, -O3 -DNDEBUG, CS80_DISABLE_AVX2_FILTER_BATCH=1",
+    "build_check": "CMake/Ninja target dry run reported no work to do",
+    "ctest": {
+      "pattern": "^cs80_mpe_member_onset_tests$",
+      "passed": 1,
+      "failed": 0,
+      "reported_seconds": 3.47,
+      "log": "core-ctest.log"
+    },
+    "direct": {
+      "exit_code": 0,
+      "checks": 2501,
+      "failures": 0,
+      "log": "core-direct-verified.log"
+    }
+  },
+  "limits": [
+    "This review did not independently run broader suites, Clang/native profiles, sanitizer or native processor/wrapper tests.",
+    "The paired behavioral reference uses ordinary same-boundary controller events within the candidate; it is not an unchanged-baseline compatibility proof.",
+    "Post-Note-Off tail isolation, full zone-reset behavior, manager/member combination, inactive-extension state handoff and external MIDI/DAW conformance remain outside this increment.",
+    "No cost timing, realtime deadline, circuit-fidelity or full MPE-compliance claim."
+  ],
+  "sha256": {
+    "src/core/Engine.h": "831878ac7c410b8a58fac926ce2ab8d6915e5ca81c41c8b2a7b9598e271b8ff3",
+    "src/core/Engine.cpp": "b38672e7f14955389411b4aa0aa238e4e45760a016123df6c31af7b182d664f9",
+    "tests/MpeMemberOnsetTests.cpp": "78e156a9b724cbfd035d51a598daee0df1d48b68cd1b450e7e28b648ca28e398",
+    "CMakeLists.txt": "191fca74c8c4ac50255b14401d982e604a441866d1e7e77ecea777195682d1e6",
+    "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/cs80_mpe_member_onset_tests": "1a37b3a536adaa0c5de7bbb43d7fd8d104ab9fe4fbcc0cd1a80c5a4eb11d785d",
+    "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a": "e73bba009b2ac20e275443a6ac598ef7b1107cec69661b225e03a33b64f4f6b3",
+    "/workspace/scratch/ee447c520988/mpe-onset-product-review/core-ctest.log": "3e41e3d4f2d5182278eb7b1b9c2044c76d3cc7a961e09fb0ed40e5c8d845f333",
+    "/workspace/scratch/ee447c520988/mpe-onset-product-review/core-direct-verified.log": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b"
+  }
+}

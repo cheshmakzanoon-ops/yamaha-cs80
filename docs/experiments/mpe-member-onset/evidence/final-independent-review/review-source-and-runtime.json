@@ -1,0 +1,90 @@
+{
+  "review_scope": "Independent read-only source, focused runtime and archived-evidence inspection. Final frozen-bundle approval is pending.",
+  "started_head": "9c903f1f66a6349dd2f8b9519dcf559da8dc3b38",
+  "current_head": "fcaf4597f34b8ad0180bbbd1ac3600257b868700",
+  "production_checkpoint": "2970f46496b268a16995802b3be578449d5c47b9",
+  "source_hashes": {
+    "src/core/Engine.cpp": "b38672e7f14955389411b4aa0aa238e4e45760a016123df6c31af7b182d664f9",
+    "src/core/Engine.h": "831878ac7c410b8a58fac926ce2ab8d6915e5ca81c41c8b2a7b9598e271b8ff3",
+    "tests/MpeMemberOnsetTests.cpp": "78e156a9b724cbfd035d51a598daee0df1d48b68cd1b450e7e28b648ca28e398",
+    "tests/MpeMemberOnsetHostTests.h": "e9e1ff54a0d1be0961f128ded4640bedabab82a2cb3c989ede69b3444ca9dcbe",
+    "tests/TuningMidiTests.cpp": "3756bf618adb277355d9bd1a28912532423ad207f7e154515234722f8505dbc3"
+  },
+  "own_runtime": [
+    {
+      "name": "core-gcc-generic",
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/cs80_mpe_member_onset_tests"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "log": "core-gcc-generic.log",
+      "log_sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+      "binary": "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/cs80_mpe_member_onset_tests",
+      "binary_sha256": "1a37b3a536adaa0c5de7bbb43d7fd8d104ab9fe4fbcc0cd1a80c5a4eb11d785d"
+    },
+    {
+      "name": "native-member-onset",
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-mpe-onset-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+        "--mpe-member-onset-tests"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "log": "native-member-onset.log",
+      "log_sha256": "c3f71fcebaeaeb609a5bfd385220bb4aefca3bad3e6b131ab56c42595d716e5b",
+      "binary": "/workspace/scratch/ee447c520988/build-mpe-onset-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "binary_sha256": "af9cb68846886816042c6ddb62907fe3d8dac5dddb4d01b7f8aa2906a3b0d7bd"
+    },
+    {
+      "name": "core-sanitizer",
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-mpe-onset-sanitizer/cs80_mpe_member_onset_tests"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=0",
+        "UBSAN_OPTIONS": "halt_on_error=1"
+      },
+      "exit_code": 0,
+      "log": "core-sanitizer.log",
+      "log_sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+      "binary": "/workspace/scratch/ee447c520988/build-mpe-onset-sanitizer/cs80_mpe_member_onset_tests",
+      "binary_sha256": "11c35ae9b59c4347b5ab460fb37bc905486861658a6a36c1f63b39b07e3141d6"
+    },
+    {
+      "name": "native-focused-ctest",
+      "argv": [
+        "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest",
+        "--test-dir",
+        "/workspace/scratch/ee447c520988/build-mpe-onset-native",
+        "-R",
+        "^cs80_mpe_member_onset_host_tests$",
+        "--output-on-failure"
+      ],
+      "environment": {},
+      "exit_code": 0,
+      "log": "native-focused-ctest.log",
+      "log_sha256": "a5a9f6cd5434652172554747438cad077c62dff25d619e47b66bc3a057333166",
+      "binary": "/workspace/scratch/ee447c520988/build-mpe-onset-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "binary_sha256": "af9cb68846886816042c6ddb62907fe3d8dac5dddb4d01b7f8aa2906a3b0d7bd"
+    }
+  ],
+  "independent_record_inspection": {
+    "profile_command_log_hashes": 20,
+    "negative_outcomes": 10,
+    "negative_process_statuses": 28,
+    "unchanged_path_pairs": 2,
+    "finite_float_values_per_pair": 27552
+  },
+  "source_findings": [
+    "Raw finite clamped member values are mapped at accepted allocation using current range and pressure mapping. Existing active-note event arithmetic remains unchanged.",
+    "Pressure cache does not directly drive the shared bus. Legacy uses active held pressure maximum; Circuit inputs voice pressure only for active held gates and retains existing TWS node decay after force release.",
+    "Member CC121 resets cached bend and pressure but preserves CC74. Manager CC121 retains independent member caches while preserving existing sounding-voice and global matrix routing.",
+    "TuningMidiTests fixture isolation correction is justified: All Notes Off preserves controllers; explicit zero expression before each independent routing case prevents prior member values from contaminating unrelated-controller assertions. Existing routing/layout/tail assertions remain."
+  ],
+  "limits": [
+    "No production edits or builds performed by this reviewer.",
+    "No independent full 143-case suite or archived fault-runtime rerun in this review. Historical independent fault reruns belong to separate review artifacts.",
+    "No publication, remote CI, external host/hardware, realtime deadline or complete MPE-conformance approval."
+  ]
+}

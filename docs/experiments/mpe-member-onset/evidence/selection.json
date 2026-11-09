@@ -1,0 +1,10 @@
+{
+  "base_commit": "eebc94e",
+  "selected_scope": "MPE member-channel onset expression retention",
+  "baseline_probe": "reproduce.cpp",
+  "observed": "Legacy and Circuit both drop pre-note member bend and channel pressure; post-note values at the same render boundary are 12 semitones and 0.7",
+  "primary_source_url": "https://drive.google.com/file/d/1QGjiK2QPPbii8YmES3vDEZlP63OGLiKr/view",
+  "primary_source_sha256": "c5f6727af065e454fe9bc4ff80f66414e8b25ffb6c1019ce7795ab4a89da1f1e",
+  "primary_source_sections": ["2.2.3", "2.2.6", "2.2.7", "2.2.8", "2.4", "A.4"],
+  "separate_findings": ["MPE member messages currently affect released tails", "Sixteen-voice equal-pitch Note Off broadcasts can release both onsets"]
+}

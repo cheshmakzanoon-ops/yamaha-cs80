@@ -592,6 +592,10 @@ void testMpeExpressionZoneBoundaries()
         int start(int channel, bool releaseTail = false)
         {
             engine.allNotesOff(false);
+            // Each routing case starts from explicitly neutral expression.
+            // All Notes Off preserves member controllers, including the raw
+            // pressure/CC74 now inherited by a later accepted onset.
+            send(channel, 0.0f);
             engine.noteOn(60, 0.8f, channel);
             int index = -1;
             for (int i = 0; i < 8; ++i)
@@ -600,6 +604,8 @@ void testMpeExpressionZoneBoundaries()
                 if (v.active && v.held && v.note == 60 && v.channel == channel) index = i;
             }
             check(index >= 0, "expression fixture allocates its requested channel");
+            check(index >= 0 && engine.getVoiceInfo(index).pressure == 0.0f,
+                  "expression routing fixture starts from neutral member pressure");
             if (releaseTail)
             {
                 render(engine, 256);

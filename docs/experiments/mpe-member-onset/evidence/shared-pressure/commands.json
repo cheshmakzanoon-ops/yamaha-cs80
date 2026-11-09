@@ -1,0 +1,67 @@
+[
+  {
+    "profile": "generic",
+    "stage": "build",
+    "argv": [
+      "g++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/next-product-step/src",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/SharedPressureOnsetProbe.cpp",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/probe-generic"
+    ],
+    "status": 0,
+    "log": "generic-build.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "profile": "generic",
+    "stage": "run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/probe-generic"
+    ],
+    "status": 0,
+    "log": "generic-run.log",
+    "sha256": "f52d625e53f8126f5ee46c18eaa204987d669ae351a749d671bd2cc3470e923b"
+  },
+  {
+    "profile": "native",
+    "stage": "build",
+    "argv": [
+      "g++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-march=native",
+      "-I/workspace/scratch/ee447c520988/next-product-step/src",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/SharedPressureOnsetProbe.cpp",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-native/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/probe-native"
+    ],
+    "status": 0,
+    "log": "native-build.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "profile": "native",
+    "stage": "run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/shared-pressure/probe-native"
+    ],
+    "status": 0,
+    "log": "native-run.log",
+    "sha256": "f52d625e53f8126f5ee46c18eaa204987d669ae351a749d671bd2cc3470e923b"
+  }
+]

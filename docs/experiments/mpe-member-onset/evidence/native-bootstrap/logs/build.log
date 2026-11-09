@@ -1,0 +1,68 @@
+[0/2] Re-checking globbed directories...
+[1/49] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+[2/49] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+[3/49] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+[4/49] Linking CXX static library libcs80_core.a
+[5/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+[6/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+[7/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+[8/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+[9/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+[10/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MtsEspClient.cpp.o
+[11/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+[12/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o
+[13/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernLayerState.cpp.o
+[14/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o
+[15/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o
+[16/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ArtCommon.cpp.o
+[17/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o
+[18/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o
+[19/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o
+[20/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o
+[21/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/EditorPreferences.cpp.o
+[22/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o
+[23/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o
+[24/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o
+[25/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UndoHistory.cpp.o
+[26/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioTour.cpp.o
+[27/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_utils/juce_audio_utils.cpp.o
+[28/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors/juce_audio_processors.cpp.o
+[29/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_extra/juce_gui_extra.cpp.o
+[30/49] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+/workspace/scratch/ee447c520988/next-product-step/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/ee447c520988/next-product-step/src/tools/ui_snapshot.cpp:3309:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3309 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/next-product-step/src/tools/ui_snapshot.cpp:3310:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3310 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[31/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_graphics/juce_graphics.cpp.o
+[32/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp.o
+In file included from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/system/juce_StandardHeader.h:95,
+                 from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core.h:215,
+                 from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_graphics/juce_graphics.h:67,
+                 from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.h:68,
+                 from /workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp:55:
+/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/system/juce_PlatformDefs.h:292:38: note: ‘#pragma message: This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored’
+  292 |  #define JUCE_COMPILER_WARNING(msg)  _Pragma (JUCE_STRINGIFY (message (msg)))
+      |                                      ^~~~~~~
+/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_gui_basics/juce_gui_basics.cpp:61:2: note: in expansion of macro ‘JUCE_COMPILER_WARNING’
+   61 |  JUCE_COMPILER_WARNING ("This version of JUCE does not use the splash screen, the flag JUCE_DISPLAY_SPLASH_SCREEN is ignored")
+      |  ^~~~~~~~~~~~~~~~~~~~~
+[33/49] Building C object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_graphics/juce_graphics_Sheenbidi.c.o
+[34/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_events/juce_events.cpp.o
+[35/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_graphics/juce_graphics_Harfbuzz.cpp.o
+[36/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o
+[37/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core.cpp.o
+[38/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_data_structures/juce_data_structures.cpp.o
+[39/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_ara.cpp.o
+[40/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless_lv2_libs.cpp.o
+[41/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/juce_audio_processors_headless.cpp.o
+[42/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_basics/juce_audio_basics.cpp.o
+[43/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_devices/juce_audio_devices.cpp.o
+[44/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_formats/juce_audio_formats.cpp.o
+[45/49] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData1.cpp.o
+[46/49] Building CXX object CMakeFiles/cs80_panel_fonts.dir/juce_binarydata_cs80_panel_fonts/JuceLibraryCode/BinaryData2.cpp.o
+[47/49] Linking CXX static library libcs80_panel_fonts.a
+[48/49] Building CXX object CMakeFiles/CS80Snapshots.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_dsp/juce_dsp.cpp.o
+[49/49] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots

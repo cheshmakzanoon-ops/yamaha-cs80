@@ -7,6 +7,7 @@
 #include "../../tests/OutputMeterHostTests.h"
 #include "../../tests/VoiceActivityHostTests.h"
 #include "../../tests/ControllerResetHostTests.h"
+#include "../../tests/MpeMemberOnsetHostTests.h"
 #include "../../tests/VoiceActivityUiTests.h"
 #include "../../tests/ContextMenuKeyboardTests.h"
 #include "../../tests/SwitchContextTests.h"
@@ -2045,6 +2046,14 @@ int main(int argc, char** argv)
         int checks = 0;
         cs80::tests::testUndoReplayGestures([&](bool condition, const char* what) { ++checks; check(condition, what); });
         std::printf("Undo replay gesture tests: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--mpe-member-onset-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testMpeMemberOnsetHost([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("MPE member onset host: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--controller-reset-tests") == 0)

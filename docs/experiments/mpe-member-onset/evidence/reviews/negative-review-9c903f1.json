@@ -1,0 +1,132 @@
+{
+  "reviewed_commit": "9c903f1f66a6349dd2f8b9519dcf559da8dc3b38",
+  "production_checkpoint": "2970f46496b268a16995802b3be578449d5c47b9",
+  "native_fixture_checkpoint": "c0186b8c60cfc2ac01318716fb6cd9955ad50c35",
+  "approval": "Fault driver and evidence source approved; no blocker. Native fixture hardening source approved, runtime pending.",
+  "parser_cases": {
+    "valid_accepted": [
+      "candidate",
+      "mutant"
+    ],
+    "invalid_rejected": [
+      "empty",
+      "missing",
+      "duplicate",
+      "nonterminal",
+      "short-coverage",
+      "excess-coverage",
+      "mutant-passes",
+      "candidate-fails",
+      "negative-failures",
+      "excess-failures",
+      "unanchored"
+    ]
+  },
+  "recorded_results_independently_checked": {
+    "candidate": {
+      "checks": 2501,
+      "failures": 0
+    },
+    "baseline": {
+      "checks": 2501,
+      "failures": 1004
+    },
+    "omit-bend": {
+      "checks": 2501,
+      "failures": 410
+    },
+    "omit-pressure": {
+      "checks": 2501,
+      "failures": 198
+    },
+    "omit-timbre": {
+      "checks": 2501,
+      "failures": 606
+    },
+    "omit-reset": {
+      "checks": 2501,
+      "failures": 36
+    },
+    "omit-mode-edge": {
+      "checks": 2501,
+      "failures": 8
+    },
+    "omit-role-change": {
+      "checks": 2501,
+      "failures": 16
+    },
+    "broaden-mode-scope": {
+      "checks": 2501,
+      "failures": 9
+    },
+    "cache-curved-pressure": {
+      "checks": 2501,
+      "failures": 16
+    }
+  },
+  "command_count_checked": 28,
+  "source_mutants_checked": [
+    "omit-bend",
+    "omit-pressure",
+    "omit-timbre",
+    "omit-reset",
+    "omit-mode-edge",
+    "omit-role-change",
+    "broaden-mode-scope",
+    "cache-curved-pressure"
+  ],
+  "baseline_src_tree_equals_published_eebc94e": "b76dba2e547c8829a86dda6d2625f330d5548d26",
+  "input_hashes_checked": {
+    "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a": "e73bba009b2ac20e275443a6ac598ef7b1107cec69661b225e03a33b64f4f6b3",
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-generic/libcs80_core.a": "f426f67fb902e07169a6aaada3b7383c3e7b61242be8248038ca9593295eaff2",
+    "/workspace/scratch/ee447c520988/next-product-step/src/core/Engine.cpp": "b38672e7f14955389411b4aa0aa238e4e45760a016123df6c31af7b182d664f9",
+    "/workspace/scratch/ee447c520988/next-product-step/src/core/Engine.h": "831878ac7c410b8a58fac926ce2ab8d6915e5ca81c41c8b2a7b9598e271b8ff3",
+    "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp": "78e156a9b724cbfd035d51a598daee0df1d48b68cd1b450e7e28b648ca28e398",
+    "/workspace/scratch/ee447c520988/next-product-step/tests/test_mpe_member_onset_negative_controls.py": "6def3b93eeba510218eb47a0669fd097ef4a6b0f38377d3adf32ec9bb0706a34"
+  },
+  "independent_reruns": {
+    "baseline": {
+      "returncode": 1,
+      "checks": 2501,
+      "failures": 1004,
+      "binary_sha256": "87cd0499f189c5b1c2f03494d47c9d3ee8fb1aace148fb4c87cc0af418daa595",
+      "log": "/workspace/scratch/ee447c520988/mpe-onset-product-review/baseline-independent-9c903f1.log",
+      "log_sha256": "227b7fc2182232b4ad681293d59b14c1651b06c1ff57de2aa8fc361d03195cba"
+    },
+    "omit-role-change": {
+      "returncode": 1,
+      "checks": 2501,
+      "failures": 16,
+      "binary_sha256": "1866753f401d17464317bebd651153521f964ebfc04cd47b5e7a2fc58c901e02",
+      "log": "/workspace/scratch/ee447c520988/mpe-onset-product-review/omit-role-change-independent-9c903f1.log",
+      "log_sha256": "39bd372779ec5351a53da7886af6c6b2100fed213e97bc0fd4503757bd559c20"
+    },
+    "cache-curved-pressure": {
+      "returncode": 1,
+      "checks": 2501,
+      "failures": 16,
+      "binary_sha256": "1c05ca6e218c48c4231a9002501cb9f66c187a59adce00252daa98b66b120f85",
+      "log": "/workspace/scratch/ee447c520988/mpe-onset-product-review/cache-curved-pressure-independent-9c903f1.log",
+      "log_sha256": "b60afcf483c9e45a06d8a84742e5071b02cb60ab3d84f0b89928c902038d9d99"
+    }
+  },
+  "source_findings": [
+    "Driver requires exact normal process status, unique anchored terminal summary, exact 2501 checks and expected positive/zero behavioral failure outcome. Build errors, crashes and timeouts cannot count as detected faults.",
+    "Each source mutation is unique, private, and CPP-only. Fixture and replaced Engine object use the matching source headers; the generic archive supplies the unchanged objects.",
+    "All ten numerical summaries equal the number of printed FAIL lines and expected counts; all compile/link commands returned zero.",
+    "Native hardening qualifies zero-frame offset collapse, requires a non-silent continuation, and verifies learned CC74 updates the resolved host-volume parameter.",
+    "CompatibilityCapture is a bounded six-scenario unchanged-path witness, not exhaustive state or cross-profile equality proof."
+  ],
+  "limits": [
+    "Only baseline, role-invalidation omission and curved-pressure mutation were independently rerun here. Other complete fault logs were independently parsed and reviewed, not rerun.",
+    "Native runtime, full default suite, and final strict compatibility outcomes remain separate pending work at review time.",
+    "No publication, realtime performance, hardware, DAW or full MPE conformance approval."
+  ],
+  "sha256": {
+    "/workspace/scratch/ee447c520988/next-product-step/tests/test_mpe_member_onset_negative_controls.py": "6def3b93eeba510218eb47a0669fd097ef4a6b0f38377d3adf32ec9bb0706a34",
+    "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetHostTests.h": "e9e1ff54a0d1be0961f128ded4640bedabab82a2cb3c989ede69b3444ca9dcbe",
+    "/workspace/scratch/ee447c520988/next-product-step/docs/experiments/mpe-member-onset/CompatibilityCapture.cpp": "7ef710a4a6f8f5f62251b3f1f69aa46c98f8ca11d3ae69fc3d7d066f1c935fac",
+    "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/summary.json": "2c51691518904d4c1c4a47b4e92a98125eb8da85ff547e979a885ec5f6783923",
+    "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/commands.json": "a93198a3d7185e06a9ba8f3253c039b5df81fed70e70f1eb31129806a4f00254"
+  }
+}

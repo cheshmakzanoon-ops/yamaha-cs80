@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/ee447c520988/mpe-onset-evidence/resume_remaining_core.py", line 9, in <module>
+    if len(completed)!=58: raise RuntimeError(f'Unexpected original completion count {len(completed)}')
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Unexpected original completion count 0

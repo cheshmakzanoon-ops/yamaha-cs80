@@ -49,6 +49,19 @@ readback store and one prefix-slot write. It introduces no allocation, lock,
 file access or new audio-rate computation. This is a source-level statement,
 not a measured whole-callback deadline or allocator-instrumentation result.
 
+## Later member-onset retention
+
+The later [bounded MPE member-onset repair](MPE_MEMBER_ONSET.md) adds raw
+member-channel bend, pressure and CC74 retention for accepted future allocation.
+CC121 uses the existing bend/pressure routes, so an addressed member's retained
+raw bend and pressure are reset while its retained CC74 is preserved. A manager
+reset still affects its existing active-voice/matrix scope, but does not clear
+independent member caches. A later member onset can therefore inherit retained
+member pressure even after a manager CC121. This is not full zone termination,
+a new manager/member pressure-combination model or complete MPE conformance.
+The historical verification results and evidence manifest below remain those of
+the original reset increment, not qualification of this later cache extension.
+
 ## Primary evidence and limits
 
 - MIDI Association [Response to Reset All Controllers (RP-015)](https://midi.org/response-to-reset-all-controllers),
@@ -60,9 +73,10 @@ not a measured whole-callback deadline or allocator-instrumentation result.
   `0b1b75e84ea9ed7429e81a9101afe33683f53914e8161eb6c3dd637b1542e5c5`.
 - MIDI Association [MPE v1.1](https://midi.org/mpe-midi-polyphonic-expression),
   M1-100-UM, 14 April 2022, sections 2.3 and Appendices C through E. These
-  distinguish manager/member expression and list CC121. This increment uses
+  distinguish manager/member expression and list CC121. The original reset increment uses
   the instrument's existing routes; it does not introduce a new complete
-  MPE controller-retention or pressure-combination model. The official linked
+  MPE controller-retention or pressure-combination model. The later bounded
+  onset extension is documented above. The official linked
   [PDF](https://drive.google.com/file/d/1QGjiK2QPPbii8YmES3vDEZlP63OGLiKr/view)
   was retrieved 2026-11-09; SHA-256
   `c5f6727af065e454fe9bc4ff80f66414e8b25ffb6c1019ce7795ab4a89da1f1e`.
@@ -72,7 +86,10 @@ CC1/11, conventional bend, channel-1 pressure broadcast and the shared matrix
 pressure tap are deliberately documented rather than replaced with a new
 per-channel controller architecture. A manager reset does not clear all
 independently bent members or independently held member pedals. Unsupported
-controllers/modes and full initial-note MPE state retention are not added.
+controllers/modes remain outside this reset increment. Later
+[member-onset expression retention](MPE_MEMBER_ONSET.md) adds the bounded
+bend/pressure/CC74 initialization described above, not full initial-note MPE
+state or complete controller conformance.
 Pitch/mod wheel widgets still lack general host-controller readback; only the
 existing expression readback is synchronized here. Hardware, real-DAW,
 wrapper/validator and external-controller qualification are not claimed.

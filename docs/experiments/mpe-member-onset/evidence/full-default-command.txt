@@ -1,0 +1,1 @@
+cmake --build build-mpe-onset-gcc-generic --parallel 2; ctest --test-dir build-mpe-onset-gcc-generic --output-on-failure --parallel 2

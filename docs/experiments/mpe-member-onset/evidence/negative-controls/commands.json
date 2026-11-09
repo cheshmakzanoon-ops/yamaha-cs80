@@ -1,0 +1,422 @@
+[
+  {
+    "name": "candidate-build",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/next-product-step/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/candidate"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "candidate",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/candidate"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "baseline-build",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/pitch-power-recovery/baseline/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/baseline"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "baseline",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/baseline"
+    ],
+    "returncode": 1
+  },
+  {
+    "name": "omit-bend-compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-bend/src",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-bend/src/core/Engine.cpp",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-bend/Engine.o"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-bend-link",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-bend/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-bend/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-bend/probe"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-bend",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-bend/probe"
+    ],
+    "returncode": 1
+  },
+  {
+    "name": "omit-pressure-compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-pressure/src",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-pressure/src/core/Engine.cpp",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-pressure/Engine.o"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-pressure-link",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-pressure/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-pressure/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-pressure/probe"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-pressure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-pressure/probe"
+    ],
+    "returncode": 1
+  },
+  {
+    "name": "omit-timbre-compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-timbre/src",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-timbre/src/core/Engine.cpp",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-timbre/Engine.o"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-timbre-link",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-timbre/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-timbre/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-timbre/probe"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-timbre",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-timbre/probe"
+    ],
+    "returncode": 1
+  },
+  {
+    "name": "omit-reset-compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-reset/src",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-reset/src/core/Engine.cpp",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-reset/Engine.o"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-reset-link",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-reset/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-reset/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-reset/probe"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-reset",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-reset/probe"
+    ],
+    "returncode": 1
+  },
+  {
+    "name": "omit-mode-edge-compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-mode-edge/src",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-mode-edge/src/core/Engine.cpp",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-mode-edge/Engine.o"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-mode-edge-link",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-mode-edge/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-mode-edge/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-mode-edge/probe"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-mode-edge",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-mode-edge/probe"
+    ],
+    "returncode": 1
+  },
+  {
+    "name": "omit-role-change-compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-role-change/src",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-role-change/src/core/Engine.cpp",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-role-change/Engine.o"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-role-change-link",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-role-change/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-role-change/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-role-change/probe"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "omit-role-change",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/omit-role-change/probe"
+    ],
+    "returncode": 1
+  },
+  {
+    "name": "broaden-mode-scope-compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/broaden-mode-scope/src",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/broaden-mode-scope/src/core/Engine.cpp",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/broaden-mode-scope/Engine.o"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "broaden-mode-scope-link",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/broaden-mode-scope/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/broaden-mode-scope/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/broaden-mode-scope/probe"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "broaden-mode-scope",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/broaden-mode-scope/probe"
+    ],
+    "returncode": 1
+  },
+  {
+    "name": "cache-curved-pressure-compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/cache-curved-pressure/src",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/cache-curved-pressure/src/core/Engine.cpp",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/cache-curved-pressure/Engine.o"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "cache-curved-pressure-link",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/cache-curved-pressure/src",
+      "/workspace/scratch/ee447c520988/next-product-step/tests/MpeMemberOnsetTests.cpp",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/cache-curved-pressure/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-onset-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/cache-curved-pressure/probe"
+    ],
+    "returncode": 0
+  },
+  {
+    "name": "cache-curved-pressure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-onset-evidence/negative-controls/cache-curved-pressure/probe"
+    ],
+    "returncode": 1
+  }
+]

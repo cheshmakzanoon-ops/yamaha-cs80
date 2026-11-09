@@ -577,6 +577,15 @@ private:
     int unisonCount() const noexcept
     { return global.voiceMode == 2 ? 2 : global.voiceMode == 3 ? 4 : global.voiceMode == 4 ? 8 : 1; }
     bool isZoneMaster(const Voice& voice, int midiChannel) const noexcept;
+    struct MemberExpression
+    {
+        MpeZoneLayout::Role role = MpeZoneLayout::Role::none;
+        float bend = 0.0f, pressure = 0.0f, timbre = 0.0f;
+    };
+    // Event/allocation time only. Raw targets belong to a member-channel role,
+    // not a voice slot or the global pressure/matrix controller sources.
+    MemberExpression* memberExpressionFor(int midiChannel) noexcept;
+    void discardChangedMemberExpression() noexcept;
 
     // Arpeggiator. It is clocked at the internal rate so a rate change is
     // heard immediately and the pattern does not drift with block size.
@@ -728,6 +737,7 @@ private:
     tuning::TuningTable scalaTable, mtsTable;
     float lastPitch = 60.0f;
     MpeZoneLayout mpeZones;
+    std::array<MemberExpression, 17> memberExpression {}; // Channel 0 unused.
     float upperZoneBend = 0.0f;
     // KAS scan model and still-held keys without a circuit (Phase 2.2).
     kas::Scanner scanner;
