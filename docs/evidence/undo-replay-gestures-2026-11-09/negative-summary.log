@@ -1,0 +1,9 @@
+candidate {'checks': 317, 'failures': 0, 'exit': 0}
+omit-replay-gestures {'checks': 317, 'failures': 49, 'exit': 1}
+omit-replay-listener-guard {'checks': 317, 'failures': 1, 'exit': 1}
+omit-active-edit-guard {'checks': 317, 'failures': 19, 'exit': 1}
+lose-first-coalesced-value {'checks': 317, 'failures': 2, 'exit': 1}
+lose-missing-property {'checks': 317, 'failures': 1, 'exit': 1}
+record-external-automation {'checks': 317, 'failures': 21, 'exit': 1}
+omit-recording-write-guard {'checks': 317, 'failures': 2, 'exit': 1}
+omit-thread-guard {'checks': 317, 'failures': 1, 'exit': 1}

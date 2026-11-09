@@ -527,9 +527,12 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - Parameter-backed illuminated switches now have guarded context menus/MIDI
   learn, including memory SAW/PULSE. Custom Studio switches/segmented selectors,
   combo boxes and memory faders remain open
-  ([scope and local tests](SWITCH_CONTEXT_MENUS.md)). Undo-applied values still
-  reach the host without gestures; the voice monitor illustrates settings
-  rather than tapping the engine.
+  ([scope and local tests](SWITCH_CONTEXT_MENUS.md)). The voice monitor still
+  illustrates settings rather than tapping the engine.
+- Plugin undo/redo now brackets effective recorded parameter replays with host
+  edit gestures and rejects unsafe replay during an active edit
+  ([contract and local tests](UNDO_REPLAY_GESTURES.md)). VST3/AU-wrapper and
+  real-DAW automation-recording qualification remain open.
 - Sample-offset automation is limited to eighteen key VST3 parameters in modern
   circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
   qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).

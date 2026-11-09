@@ -1,0 +1,132 @@
+{
+  "base": "3a743445cfac2734c045d07dafbd091c5ebf2b07",
+  "source_commit": "5740dd4f136113d8ad0481a2d7d93749cf7c141f",
+  "scope": "Recorded parameter replay host-gesture lifecycle and guarded plugin undo/redo entry points; no DSP, host-wrapper, native-window or DAW qualification.",
+  "environment": {
+    "os": "Linux x86_64",
+    "compiler": "GCC 14.2.0",
+    "build": "Release",
+    "JUCE": "8.0.11",
+    "JUCE_commit": "c352e2489000ffeb9e397051377d75eef2efe641"
+  },
+  "commands": [
+    "source /workspace/shared/cs80-build-env.sh; cmake -S . -B /workspace/shared/yamaha-undo-replay-native -G Ninja -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_SOURCE_DIR_JUCE=/workspace/shared/cs80-juce",
+    "cmake --build /workspace/shared/yamaha-undo-replay-native --target CS80Snapshots -j2",
+    "/workspace/shared/yamaha-undo-replay-native/CS80Snapshots_artefacts/Release/CS80Snapshots --undo-replay-gesture-tests",
+    "ctest --test-dir /workspace/shared/yamaha-undo-replay-native -R '^cs80_(undo_replay_gesture_tests|switch_context_tests|controller_reset_host_tests|context_menu_keyboard_tests|typed_value_unit_tests|transient_control_tests|performance_wheel_keyboard_tests|keyboard_tuning_ui_tests)$' --output-on-failure",
+    "python3 tests/test_undo_replay_gesture_negative_controls.py --build /workspace/shared/yamaha-undo-replay-native --output /workspace/shared/undo-replay-negative",
+    "python3 tests/test_undo_replay_gesture_sanitized.py --build /workspace/shared/yamaha-undo-replay-native --output /workspace/shared/undo-replay-sanitized"
+  ],
+  "checks": {
+    "focused": {
+      "checks": 317,
+      "failures": 0
+    },
+    "ctest": {
+      "passed": 8,
+      "failed": 0
+    },
+    "negative": {
+      "candidate": {
+        "checks": 317,
+        "failures": 0,
+        "exit": 0
+      },
+      "omit-replay-gestures": {
+        "checks": 317,
+        "failures": 49,
+        "exit": 1
+      },
+      "omit-replay-listener-guard": {
+        "checks": 317,
+        "failures": 1,
+        "exit": 1
+      },
+      "omit-active-edit-guard": {
+        "checks": 317,
+        "failures": 19,
+        "exit": 1
+      },
+      "lose-first-coalesced-value": {
+        "checks": 317,
+        "failures": 2,
+        "exit": 1
+      },
+      "lose-missing-property": {
+        "checks": 317,
+        "failures": 1,
+        "exit": 1
+      },
+      "record-external-automation": {
+        "checks": 317,
+        "failures": 21,
+        "exit": 1
+      },
+      "omit-recording-write-guard": {
+        "checks": 317,
+        "failures": 2,
+        "exit": 1
+      },
+      "omit-thread-guard": {
+        "checks": 317,
+        "failures": 1,
+        "exit": 1
+      }
+    },
+    "partial_sanitizer": {
+      "checks": 317,
+      "failures": 0
+    }
+  },
+  "preserved_exact_paths_including_modes": [
+    "src/core",
+    "src/vendor",
+    "src/plugin/UiComponents.cpp",
+    "src/plugin/UiComponents.h",
+    "tests/SwitchContextTests.h",
+    "docs/screenshots",
+    "scripts",
+    "tests/ControllerResetTests.cpp",
+    "tests/ControllerResetHostTests.h"
+  ],
+  "preserved_screenshot_file_count": 70,
+  "processor_delta": "PluginProcessor.cpp changes only undo()/redo() delegation; MIDI/CC121 and audio processing code are unchanged.",
+  "qualification_limits": [
+    "Focused fixtures use JUCE parameter/state listeners and actual processor instances without a native peer or popup; this is not a VST3/AU wrapper or DAW recording test.",
+    "Gesture eligibility is an action-time check, not a cross-thread transaction or a guarantee under concurrent automation/state mutation/owner destruction.",
+    "Only UndoHistory.cpp, PluginProcessor.cpp and the focused fixture are ASan/UBSan-instrumented; unchanged native/JUCE objects are reused. Leak detection is disabled. This is not a whole-plugin sanitizer qualification.",
+    "No new full UI smoke, pluginval, remote CI, native-input, audio bit-compatibility, screenshot-refresh or release qualification is claimed.",
+    "Expired parameter actions refuse execution/coalescing; JUCE can report a handled transaction while clearing failed history. Generic metadata-action lifetimes are not expanded."
+  ],
+  "sha256": {
+    "CMakeLists.txt": "7470044927317ba111797f83dbf652595747c94e22ab7bc89922f5f98b3184a1",
+    "src/plugin/PluginProcessor.cpp": "1d600c0e0bd311b2fae96617f3d619d182305a9ea27d48a97ba2c1893cffbaa2",
+    "src/plugin/PluginProcessor.h": "1c29a6e71e03c5314f0b061b527ee0f79872809db1422b66683526223ba88eef",
+    "src/plugin/UndoHistory.cpp": "b220149a464976757f611ad8e8a5ef887dac178526d8a666d4cf50110fe2aa1e",
+    "src/plugin/UndoHistory.h": "ce9e841e186e0027ab7f102ac0dc17dd88ef665c3bd5469f68be7bd5bf85b267",
+    "src/tools/ui_snapshot.cpp": "5ec0c5c54f404ec5df5ff299da02d75e82be5a474d9c45c03e4e09298cce130c",
+    "tests/UndoReplayGestureTests.h": "97941243feaa5b927888d6db004cf4b39a6c89fefc9afc82a1ded49d4d74ff4d",
+    "tests/test_undo_replay_gesture_negative_controls.py": "d7e18a78729a09bb434c38e70f50276cb5996b6c030776890b3e5bf751da1c05",
+    "tests/test_undo_replay_gesture_sanitized.py": "772bdcc7586cec22ec1eaa06f03a7b9cfcc0b5886454cab4195e9f023218694b",
+    "tests/SessionUndoHostTests.h": "d682f4bcb8df0693bd346572908f7418f2699fe7748480644de909b2830131a5",
+    "tests/AbCompareHistoryHostTests.h": "cf2b1455aa36aa1570a8289f383fed176397414923692d43d619e4d1b6baa685",
+    "tests/RandomiseHistoryHostTests.h": "01f27db663c13051cf7af2195bb33432ecf95af34e099bd37b319b5d009db622",
+    "docs/evidence/undo-replay-gestures-2026-11-09/build.log": "ff60a3ec935d4aff1387835598da99a0fbb9b8fadcb760ca03eb35f00840fc73",
+    "docs/evidence/undo-replay-gestures-2026-11-09/ctest.log": "ad5a83874ab8c6c995b1499762e401a9a29e42d7c45916efff453e306722793b",
+    "docs/evidence/undo-replay-gestures-2026-11-09/focused.log": "e693357be74923762f02bda3b7df9c0f55da82026027bbf54c10d60cea431c18",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative-summary.log": "3a106e642b536d5c385759ba97dd644cc815a8a030f896223814c9a24c82e262",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative.json": "8765a87fc24e8c3bd935c810bae8788678f5500ca8698a076a67f1ecb04d6dc8",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/candidate.log": "e693357be74923762f02bda3b7df9c0f55da82026027bbf54c10d60cea431c18",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/lose-first-coalesced-value.log": "da7077c68141372b15748beca37b0c0de5a0d248ea8499e813e1ad57a6de2be4",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/lose-missing-property.log": "b7e65229b3736e4443318222a39ba5a7c1157b7aa58eceeb38af964f7b81d168",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/omit-active-edit-guard.log": "9241a62140ec99642211d128c9f783614fc0cc4f77b8c772e908003cbc4a7e71",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/omit-recording-write-guard.log": "8d4f0ec2e7fd1435e68b0888ad13ebe4b16f26274487ea1384fa323aaa56e227",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/omit-replay-gestures.log": "4a7c3946ee84fc467bf08b2cb13fe9fffc488f63b27e69db5ce4187e4c19fffa",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/omit-replay-listener-guard.log": "df97cdfca40d7c3d2e26f4a5fda71d1e57454f6dd37cb931572ab7561f820ec8",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/omit-thread-guard.log": "e00a8f4f3e623870c1fc5c972d45d5fe8b28683323a85253a237028371609e77",
+    "docs/evidence/undo-replay-gestures-2026-11-09/negative/record-external-automation.log": "10160c10c08ffc7a3bf2ddd05a54c5c77a66e294eceb33c6a249266362a13dfd",
+    "docs/evidence/undo-replay-gestures-2026-11-09/sanitized-run.log": "e693357be74923762f02bda3b7df9c0f55da82026027bbf54c10d60cea431c18",
+    "docs/evidence/undo-replay-gestures-2026-11-09/sanitized-summary.log": "1b0ff6d87e566a5ee4ebabb4d08a084fb597a6b7836dae6c626b94c5a14a9d5e",
+    "docs/evidence/undo-replay-gestures-2026-11-09/sanitized.json": "2b100d292efb6b37a815bdd8615f1e477b2b1052ba22be341a4f63e930a3cc26"
+  }
+}

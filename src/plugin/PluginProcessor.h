@@ -278,6 +278,8 @@ public:
     // automation, MIDI learn, preset loads and state restores are never recorded, and loading a sound
     // starts a fresh history (UndoHistory.h). Message thread.
     juce::UndoManager& getUndoManager() noexcept { return undoManager; }
+    // Replay through these entry points, not directly through the manager: active edits,
+    // background callers and reentrant callbacks are rejected without replaying history.
     bool undo();
     bool redo();
     // Wrap a programmatic edit the player should undo in one step (A/B switch, randomise, copy rank).

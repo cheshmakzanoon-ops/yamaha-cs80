@@ -26,6 +26,7 @@
 #include "../../tests/SessionSchemaHostTests.h"
 #include "../../tests/ModernLayerStateRangeHostTests.h"
 #include "../../tests/SessionUndoHostTests.h"
+#include "../../tests/UndoReplayGestureTests.h"
 #include "../../tests/UiReadinessTests.h"
 #include "../../tests/Ws3KeyboardHostTests.h"
 #include "../../tests/PanelEditorTests.h"
@@ -2036,6 +2037,14 @@ int main(int argc, char** argv)
         juce::ScopedJuceInitialiser_GUI juceInit;
         cs80::tests::testVoiceActivityUi(check, flushGui);
         std::printf("Voice activity UI tests: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--undo-replay-gesture-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testUndoReplayGestures([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Undo replay gesture tests: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--controller-reset-tests") == 0)

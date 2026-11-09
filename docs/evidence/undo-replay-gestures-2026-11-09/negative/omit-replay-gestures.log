@@ -1,0 +1,50 @@
+FAIL: undo orders one parameter begin, value, end
+FAIL: redo orders one parameter begin, value, end
+FAIL: undo orders one parameter begin, value, end
+FAIL: redo orders one parameter begin, value, end
+FAIL: undo orders one parameter begin, value, end
+FAIL: redo orders one parameter begin, value, end
+FAIL: coalesced first undo retains the original value and gesture
+FAIL: coalesced first redo retains the final value and gesture
+FAIL: interleaved undo preserves reverse action order and balanced per-action gestures
+FAIL: interleaved redo preserves forward action order
+FAIL: replay is available once the original gesture ends
+FAIL: reentrant replay from a host gesture callback is rejected
+FAIL: replay did not corrupt subsequent user gesture counters
+FAIL: rejecting a recording-write callback preserves coalescing and the first old value
+FAIL: pending external automation stays outside the undo transaction
+FAIL: redo preserves unrelated external automation
+FAIL: redo after no-op undo remains effective and bracketed
+FAIL: redo after no-op undo remains effective and bracketed
+FAIL: missing old property is removed on undo with the APVTS default fallback
+FAIL: redo recreates an originally missing property with a balanced gesture
+FAIL: undo preserves original property var type, not just its float projection
+FAIL: redo preserves the new property's numeric representation
+FAIL: duplicate-id replay follows the actual changed child, not an invented last-child rule
+FAIL: mixed undo brackets only its parameter action
+FAIL: mixed redo retains metadata and parameter history order
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+FAIL: processor undo brackets only the actual host parameter, including memory IDs
+FAIL: processor redo brackets only the actual host parameter
+Undo replay gesture tests: 317 checks, 49 failures

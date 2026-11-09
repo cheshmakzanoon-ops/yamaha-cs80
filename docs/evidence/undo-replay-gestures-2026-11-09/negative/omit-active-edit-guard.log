@@ -1,0 +1,20 @@
+FAIL: active original gesture rejects undo and redo without nesting
+FAIL: active-gesture rejection leaves history and values intact
+FAIL: original gesture still ends exactly once after rejection
+FAIL: replay is available once the original gesture ends
+FAIL: open ScopedUserEdit rejects both replay directions
+FAIL: off-message-thread replay is rejected without mutation
+FAIL: reentrant replay from a host gesture callback is rejected
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+FAIL: processor entry points reject replay inside an active edit
+Undo replay gesture tests: 317 checks, 19 failures

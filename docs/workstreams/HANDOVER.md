@@ -193,7 +193,8 @@ row: the 23 front-strip levers at 19.3 px and the 3 tremolo/chorus keys at 18 px
 - Wire `StudioToolbar::Actions` to ws6's library and A/B, then delete `CompareSlots`.
 - Wrap randomise in `ScopedUserEdit`.
 - Context menu and MIDI learn for switches, combo boxes and the lid miniatures.
-- Undo-applied values reach the host without begin/end gestures.
+- The original undo-without-host-gestures gap is now addressed for recorded parameter actions
+  ([current contract](../UNDO_REPLAY_GESTURES.md)); real-DAW qualification remains open.
 - The voice monitor illustrates panel settings rather than tapping the engine.
 
 ## ws5-modern — modern modulation and FX layer

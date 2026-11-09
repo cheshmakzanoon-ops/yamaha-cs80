@@ -20,7 +20,9 @@
 //     UndoManager, so the history never sees it. Loading a sound clears the history, as
 //     AudioProcessorValueTreeState::replaceState already does for state restores.
 //
-// Undo and redo write the tree; the APVTS turns that into parameter changes as usual.
+// Undo and redo write the tree; effective parameter replays are bracketed by host edit gestures.
+// The guarded entry points reject replay during a user edit, reentrant replay, or off the message
+// thread. The UndoManager accessor is for queries and recording side-state actions, not replay.
 //
 // Thread safety: the tree is touched on the message thread (timer, gestures) and by the host's
 // state calls; treeLock() serialises them (the processor takes it around copyStateForSave/replaceState).
@@ -48,6 +50,11 @@ public:
     void syncNow();
     juce::CriticalSection& treeLock() noexcept { return lock; }
 
+    // Message thread, outside any gesture/ScopedUserEdit. Unsafe calls are rejected before sync;
+    // safe calls may sync pending tree state even when no undo/redo action is available.
+    bool undo();
+    bool redo();
+
     // Any non-audio thread: snapshot the latest parameter atomics without
     // JUCE copyState() flushing them through the live tree's UndoManager.
     // Reads are per parameter, not a transaction across concurrent automation.
@@ -74,6 +81,8 @@ public:
     bool hasActiveUserEdit() const;
 
 private:
+    struct ParameterValueAction;
+    bool replayHistory(bool redo);
     void beginUserEdit(const juce::String& name);
     void endUserEdit();
     void timerCallback() override;   // replaces the base class's flush (see the file comment)
@@ -90,7 +99,7 @@ private:
     std::vector<juce::RangedAudioParameter*> parameters;   // by host parameter index
     std::unique_ptr<std::atomic<bool>[]> externalPending, userPending;
     int openGestures = 0, userScopes = 0;
-    bool writing = false, groupOpen = false;
+    bool writing = false, groupOpen = false, replayingHistory = false;
     std::shared_ptr<bool> alive = std::make_shared<bool>(true);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(UndoableParameterState)

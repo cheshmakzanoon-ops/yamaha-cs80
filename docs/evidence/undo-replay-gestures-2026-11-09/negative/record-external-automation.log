@@ -1,0 +1,22 @@
+FAIL: pending external automation stays outside the undo transaction
+FAIL: redo preserves unrelated external automation
+FAIL: redo after no-op undo remains effective and bracketed
+FAIL: redo after no-op undo remains effective and bracketed
+FAIL: session save never creates an undo step for host automation
+FAIL: undo after session save leaves unrelated host automation alone
+FAIL: session saving pending automation preserves an existing redo branch
+FAIL: the prior user gesture is still redoable after another save
+FAIL: redo after repeated session saves preserves the newest automation
+FAIL: undo after session save leaves unrelated host automation alone
+FAIL: the prior user gesture is still redoable after another save
+FAIL: redo after repeated session saves preserves the newest automation
+FAIL: session save never creates an undo step for host automation
+FAIL: undo after session save leaves unrelated host automation alone
+FAIL: session saving pending automation preserves an existing redo branch
+FAIL: the prior user gesture is still redoable after another save
+FAIL: redo after repeated session saves preserves the newest automation
+FAIL: undo after session save leaves unrelated host automation alone
+FAIL: the prior user gesture is still redoable after another save
+FAIL: redo after repeated session saves preserves the newest automation
+FAIL: unscoped Randomise keeps its existing non-history behavior
+Undo replay gesture tests: 317 checks, 21 failures

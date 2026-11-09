@@ -935,6 +935,8 @@ if (CS80_BUILD_PLUGIN)
 
     # Real processor/FIFO ownership tests without constructing an editor or
     # native peer. The existing full UI smoke test remains independent.
+    add_test(NAME cs80_undo_replay_gesture_tests COMMAND CS80Snapshots --undo-replay-gesture-tests)
+    set_tests_properties(cs80_undo_replay_gesture_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_controller_reset_host_tests COMMAND CS80Snapshots --controller-reset-tests)
     set_tests_properties(cs80_controller_reset_host_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_voice_activity_host_tests COMMAND CS80Snapshots --voice-activity-tests)

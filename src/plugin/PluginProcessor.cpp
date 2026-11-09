@@ -1676,14 +1676,10 @@ void Cs80AudioProcessor::readStudioState(juce::ValueTree& state)
 // ---------------------------------------------------------------------------
 bool Cs80AudioProcessor::undo()
 {
-    const juce::ScopedLock treeLock(apvts.treeLock());
-    apvts.syncNow();
-    return undoManager.undo();
+    return apvts.undo();
 }
 
 bool Cs80AudioProcessor::redo()
 {
-    const juce::ScopedLock treeLock(apvts.treeLock());
-    apvts.syncNow();
-    return undoManager.redo();
+    return apvts.redo();
 }

@@ -387,8 +387,9 @@ None. MIDI learn and the editor state are plugin-state children (`MIDI_LEARN` ve
 - Context menu, MIDI learn and typed values exist on every `ParamKnob`; switches (`LedButton`, `AdvSwitch`),
   combo boxes, the tone selector and the memory lid's miniature sliders (a plain `juce::Slider` in the editor)
   do not have them yet.
-- Undo-applied changes reach the host without begin/end gestures (JUCE's APVTS writes them through
-  `setValueNotifyingHost`). Arrow-key edits are one step per key press.
+- The original unbracketed undo/redo limitation is now addressed for recorded parameter actions
+  ([current contract and limits](../UNDO_REPLAY_GESTURES.md)). Real-DAW automation recording remains
+  unqualified. Arrow-key edits remain one step per key press.
 - When a host calls `getStateInformation` off the message thread, the pre-save sync is skipped; a non-user
   change made in the preceding ~100 ms could then be flushed by `copyState` into the current transaction. When
   the timer writes a non-user value while the audio thread changes the same parameter, the APVTS may re-apply

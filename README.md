@@ -125,6 +125,8 @@ The toolbar along the top ([toolbar on the first library program](docs/screensho
 
 Parameter-backed illuminated switches, including the eight memory SAW/PULSE switches, offer right-click or Shift+F10 menus for MIDI learn and default reset. Core switches also offer control help. Custom Studio switches, selectors, combo boxes and memory faders remain outside this increment ([scope and tests](docs/SWITCH_CONTEXT_MENUS.md)).
 
+Plugin undo/redo now brackets effective parameter changes with host edit gestures; active edits must finish before replay ([scope and tests](docs/UNDO_REPLAY_GESTURES.md)).
+
 ### Library
 
 ![The program library with filters, patch list and inspector](docs/screenshots/browser-1600x1000.png)
