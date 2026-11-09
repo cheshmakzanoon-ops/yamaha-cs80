@@ -56,6 +56,10 @@ public:
         decayStep=p.opticalDecaySeconds==0.0 ? 1.0 : -std::expm1(-1.0/(p.opticalDecaySeconds*rate));
         heelLog=std::log(p.heelOhms);
         toeLog=std::log(p.toeOhms);
+        aQ=1.0/(1.0+10000.0*g[2]);
+        sourceDenominator=1.0+profile.sourceOhms*g[0];
+        yI=g[0]/sourceDenominator;
+        opticalCoefficientsValid=false;
         setPedal(pedal);
         reset();
         return true;
@@ -80,21 +84,34 @@ public:
             ? std::clamp(input,-maximumInputMagnitude,maximumInputMagnitude) : 0.0;
         // Falling resistance = brightening = attack; rising = darkening = decay.
         opticalLog += (targetLog<opticalLog ? opticalStep : decayStep)*(targetLog-opticalLog);
-        const double optical=std::exp(opticalLog);
-        const double rt=profile.vr1Ohms+optical/(1.0+optical/profile.parallelOhms);
+        // Preserve the optical recurrence even at a fixed point. Only the
+        // algebraic coefficients reuse a previous exactly equal log state.
+        if (!opticalCoefficientsValid || opticalLog!=coefficientLog) {
+            const double optical=std::exp(opticalLog);
+            const double rt=profile.vr1Ohms+optical/(1.0+optical/profile.parallelOhms);
+            const double aP=1.0/(1.0+rt*g[1]);
+            // Keep this original local expression chain intact: storing its
+            // intermediates can change native FMA contraction and last bits.
+            const double bN=1.0-2.0*aP;
+            const double cN=(2.0*aQ-1.0)*bN;
+            const double dN=2.0/10000.0+(1.0-cN)/470.0;
+            const double nX=(1.0/10000.0)/dN;
+            cachedRt=rt; cachedAP=aP; cachedDN=dN; cachedNX=nX;
+            coefficientLog=opticalLog;
+            opticalCoefficientsValid=true;
+        }
         std::array<double,4> j;
         for (std::size_t k=0;k<j.size();++k)
             j[k]=-g[k]*caps[k].voltage-caps[k].current;
 
         constexpr double R=10000.0, r=470.0;
-        const double aP=1.0/(1.0+rt*g[1]), bP=-rt*j[1]*aP;
-        const double aQ=1.0/(1.0+R*g[2]), bQ=-R*j[2]*aQ;
-        const double bN=1.0-2.0*aP, b0=2.0*bP;
-        const double cN=(2.0*aQ-1.0)*bN, c0=(2.0*aQ-1.0)*b0+2.0*bQ;
-        const double dN=2.0/R+(1.0-cN)/r;
-        const double nX=(1.0/R)/dN, n0=(c0/r)/dN;
-        const double sourceDenominator=1.0+profile.sourceOhms*g[0];
-        const double yI=g[0]/sourceDenominator, jSource=j[0]/sourceDenominator;
+        const double rt=cachedRt, aP=cachedAP, dN=cachedDN, nX=cachedNX;
+        const double bP=-rt*j[1]*aP;
+        const double bQ=-R*j[2]*aQ;
+        const double b0=2.0*bP;
+        const double c0=(2.0*aQ-1.0)*b0+2.0*bQ;
+        const double n0=(c0/r)/dN;
+        const double jSource=j[0]/sourceDenominator;
         Nodes out;
         out.x=(yI*u+jSource+n0/R)/(yI+(2.0-nX)/R+profile.dryLoadSiemens);
         out.n=nX*out.x+n0;
@@ -127,5 +144,8 @@ private:
     std::array<double,4> g{};
     double rate=96000.0, opticalStep=1.0, decayStep=1.0, heelLog=0.0, toeLog=0.0;
     double opticalLog=0.0, targetLog=0.0;
+    double aQ=0.0, sourceDenominator=0.0, yI=0.0;
+    double coefficientLog=0.0, cachedRt=0.0, cachedAP=0.0, cachedDN=0.0, cachedNX=0.0;
+    bool opticalCoefficientsValid=false;
 };
 } // namespace cs80
