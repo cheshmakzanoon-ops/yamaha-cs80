@@ -15,6 +15,21 @@
   #define OutDir "..\..\packages"
 #endif
 
+; Compile-time read-only guard, not an installer-time action. A nonempty
+; resources-only VST3 directory must not satisfy the wildcard below. The shared
+; checker also rejects wrong-architecture/role PE images and linked payloads.
+; Python 3.10+ is already required by the project's CMake test configuration.
+#ifndef PythonExe
+  #define PythonExe "python"
+#endif
+#define PreflightScript AddBackslash(SourcePath) + "..\..\scripts\check-windows-installer.py"
+#if !FileExists(PreflightScript)
+  #error Windows installer preflight script is missing from the source checkout
+#endif
+#if Exec(PythonExe, AddQuotes(PreflightScript) + " --build-dir " + AddQuotes(BuildDir), SourcePath, 1) != 0
+  #error Windows installer payload preflight failed; run scripts/check-windows-installer.py with the same BuildDir for details
+#endif
+
 [Setup]
 AppId={{ADABA3BA-3323-4A5C-938E-6DFA14FBD310}
 AppName=CS-80 Reference

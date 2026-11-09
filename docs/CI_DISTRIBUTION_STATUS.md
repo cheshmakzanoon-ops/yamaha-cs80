@@ -48,6 +48,13 @@ Use `macos` or `windows` only on that native runner. The helper requires the
 `build/ci-juce-provenance.txt` PASS record for the current checkout's full commit;
 it fails on missing/empty binaries, missing macOS bundle metadata, unsafe links,
 lost Unix executable bits, wrong JUCE evidence or existing package output.
+For Windows payloads, reparse points (including directory junctions/mount
+points) are rejected at product roots and before walking nested entries or
+opening payload bytes. Ordinary `is_symlink()` checks alone do not cover those
+Windows objects. Linux/macOS safe internal bundle symlinks retain their existing
+policy. Run `python scripts/test-package-binary-identity.py` for inert regression
+fixtures; the real junction case explicitly skips outside Windows.
+
 No copy/truncate fallback overwrites earlier packages. It does not delete the
 build products. Synthetic `--self-test` fixtures are not loadable plug-ins or a
 claim of native host qualification.

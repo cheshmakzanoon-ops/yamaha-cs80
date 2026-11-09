@@ -57,6 +57,12 @@ if (CS80_BUILD_TESTS)
                  COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-deb-runtime-dependencies.py)
         set_tests_properties(cs80_deb_runtime_dependency_tests PROPERTIES TIMEOUT 60 LABELS "packaging")
     endif()
+    add_test(NAME cs80_ci_bundle_verification_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-verify-ci-bundle.py)
+    set_tests_properties(cs80_ci_bundle_verification_tests PROPERTIES TIMEOUT 30)
+    add_test(NAME cs80_windows_installer_preflight_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test-windows-installer-preflight.py)
+    set_tests_properties(cs80_windows_installer_preflight_tests PROPERTIES TIMEOUT 180)
     add_test(NAME cs80_parity_harness_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_parity_harness.py)
     set_tests_properties(cs80_parity_harness_tests PROPERTIES TIMEOUT 60)

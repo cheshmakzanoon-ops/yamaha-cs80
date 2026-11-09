@@ -49,6 +49,35 @@ and emulation layers are not qualified by these runner builds.
 and payload hashes. Checksums detect corruption; they are not a publisher
 signature. `SOURCE.txt` identifies the corresponding repository commit.
 
+### Offline inventory verification (Python 3.10+)
+
+Before unpacking the **inner** archive, a trusted source checkout can also check
+its complete inventory, embedded/sidecar manifest agreement, file hashes, Unix
+tar modes and safe internal bundle-link structure. From that checkout:
+
+```sh
+python3 scripts/verify-ci-bundle.py --archive "/path/to/cs80-reference-linux-x86_64-COMMIT_PREFIX.tar.gz" --expected-commit FULL_40_CHARACTER_COMMIT_SHA
+```
+
+Replace both placeholders with the selected artifact's filename and the full
+source SHA from its trusted workflow. On Windows use `py -3` instead of
+`python3`, and select the inner `.zip`. Keep its matching `.manifest.json` and
+`SHA256SUMS` adjacent, or supply `--manifest` and `--checksums` explicitly. This
+command needs both verifier and packager scripts from the same trusted checkout;
+it does not need a compiler, plug-in host or any installed audio products.
+
+Success reports **integrity and declared source consistency verified**. A
+mismatch exits nonzero with the failed check. No files are extracted, installed
+or executed; no network access or CI reruns occur. ZIP verification does not
+assert Unix executable modes. Unsupported archive variants, resource-limit
+violations and unsafe/ambiguous paths fail closed.
+
+This proves consistency with the supplied checksum/manifest evidence, **not**
+publisher authenticity, that the binary was built from the declared source,
+signing/notarization, a CI pass, or DAW qualification. Obtain the checksum file
+and expected SHA from a source you trust; an attacker can replace an archive
+and its matching metadata together. Keep using the exact-commit CI gates above.
+
 ## Install only the formats you need
 
 Quit the DAW before copying. If replacing an earlier build, first keep a backup
