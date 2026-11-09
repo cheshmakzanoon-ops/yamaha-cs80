@@ -4,6 +4,11 @@
 #
 #   installer/linux/make-deb.sh <build-dir> <out-dir>
 set -euo pipefail
+# Package-generated directories and notices need public read/traverse access,
+# independent of the caller's umask (077 otherwise makes DEBIAN invalid).
+# This applies only to this script; cp -a retains VST3 payload modes and the
+# standalone keeps its explicit install -m 0755 mode.
+umask 022
 
 build="${1:?usage: $0 <build-dir> <out-dir>}"
 out="${2:?usage: $0 <build-dir> <out-dir>}"
