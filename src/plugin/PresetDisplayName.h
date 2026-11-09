@@ -10,7 +10,7 @@ namespace cs80::ui
 inline juce::String presetDisplayName(const juce::XmlElement* xml,
                                       const juce::String& filenameStem)
 {
-    return xml != nullptr && xml->hasTagName("CS80_PARAMS")
+    return xml != nullptr && xml->getTagName() == "CS80_PARAMS"
         ? xml->getStringAttribute("presetName", filenameStem) : filenameStem;
 }
 } // namespace cs80::ui
