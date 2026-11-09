@@ -1,0 +1,90 @@
+{
+  "date_utc": "2026-11-09",
+  "baseline": "6e2c171fa8a7ed6fc91e1a1153f78b226860e71c",
+  "source_heads": {
+    "73": "542674580a1dc9283359e39a1c01434c9ed1712a",
+    "75": "cac8c5440a92da8512d880af34ad1a6f81780769"
+  },
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "source_sha256": {
+    "src/core/FxModels.h": "706c439983d624023f799a3211cfadb8f03e201251679ae3eb407a855ee31b58",
+    "tests/DriveControlCacheTests.cpp": "313dad0c0503811ebadf67f4207162b8bf8e0e9f589f0bd523ede688fd17654a",
+    "tests/TapeEchoControlCacheTests.cpp": "bdda891886b8edcf31ce56569a251ca8765c3b20c765b01e18e01eed82e5a063",
+    "tests/TapeEchoUncachedReference.h": "a6dfb97926a3b41636acaf43dd014fb9788ba1c6ecf7f08c61526978de07c394",
+    "tests/diagnostics/DriveTapeCacheProbe.cpp": "29f04edb28f8546bbc2934e131042cb1b28e901bd43143f6bd96acbeb9779d66"
+  },
+  "fixture_git_blobs": {
+    "tests/DriveControlCacheTests.cpp": "0ba5c929b53db6aa08f4db61dd833c651e41e18b",
+    "tests/TapeEchoControlCacheTests.cpp": "0db1a25ff9b24d6c071e84653110e8d708f1c836",
+    "tests/TapeEchoUncachedReference.h": "b9e9ac82c8b042526daa845431b212f269896f4d"
+  },
+  "ctest": {
+    "passed": 9,
+    "failed": 0,
+    "checks": {
+      "core": 11508,
+      "parity": 128,
+      "source_performance": 485,
+      "mod_matrix": 4239,
+      "modern_fx": 445,
+      "delay_line": 1125,
+      "tape_time": 104,
+      "drive_cache": 396,
+      "tape_cache": 231
+    }
+  },
+  "instrumented": {
+    "flags": "-std=c++20 -O1 -g -fsanitize=address,undefined,float-cast-overflow -fno-sanitize-recover=all -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS",
+    "ASAN_OPTIONS": "detect_leaks=0",
+    "drive_checks": 396,
+    "tape_checks": 231,
+    "tape_stereo_frames": 21845986,
+    "failures": 0
+  },
+  "negative_controls": {
+    "drive_stale_gain": {
+      "failed_checks": 145,
+      "exit_code": 1
+    },
+    "tape_stale_target": {
+      "failed_checks": 31,
+      "exit_code": 1
+    }
+  },
+  "raw_comparison": {
+    "serial_slot_cases": 6,
+    "serial_slot_stereo_frames": 2450784,
+    "engine_cases": 18,
+    "engine_stereo_frames": 294912,
+    "bytes_per_file": 21965568,
+    "profiles": [
+      {
+        "flags": "-std=c++20 -O2 -Wall -Wextra -Werror",
+        "before_after_sha256": "7db4c2948c65cf880f5f54dec7853ebf4f0875a220aca5f13583d7ef2ae769b8"
+      },
+      {
+        "flags": "-std=c++20 -O3 -march=native -ffp-contract=fast",
+        "before_after_sha256": "3132625dab6b23b52eba89dcbd0dcf2af6e938650ef4ff01297c1f9e65cfa0ed"
+      }
+    ]
+  },
+  "strict_compatibility": {
+    "legacy_default": "byte-identical to d56911a",
+    "legacy_tails": "byte-identical to d56911a",
+    "source_v1": "byte-identical to 22d6a32",
+    "source_v2": "byte-identical to 00ceccf"
+  },
+  "historical_ci_failures": [
+    {
+      "pr": 73,
+      "run_id": 42218446793,
+      "step": "Linux Validate VST3 headless"
+    },
+    {
+      "pr": 75,
+      "run_id": 42236308737,
+      "step": "Linux Validate VST3 headless"
+    }
+  ],
+  "scope": "Fresh local combined core checks; not a current native/plugin/GUI/host CI pass or whole-plugin CPU qualification."
+}

@@ -1,0 +1,61 @@
+2026-11-09; combined source; GCC 14.2.0 CMake Release; sequential taskset -c 0; shared host, not isolated-core or whole-plugin qualification.
+
+Drive:
+drive stages=0 controls=held samples=262144 median_ms old=12.315 cached=6.872 saved=44.2% checksum=-0.407892612275
+drive stages=0 controls=per-sample samples=262144 median_ms old=12.264 cached=12.419 saved=-1.3% checksum=32.4590081879
+drive stages=2 controls=held samples=262144 median_ms old=57.661 cached=55.833 saved=3.2% checksum=-0.527172348811
+drive stages=2 controls=per-sample samples=262144 median_ms old=58.317 cached=57.542 saved=1.3% checksum=-21.5979003955
+drive stages=3 controls=held samples=262144 median_ms old=92.970 cached=90.757 saved=2.4% checksum=-0.541214977624
+drive stages=3 controls=per-sample samples=262144 median_ms old=94.181 cached=92.749 saved=1.5% checksum=36.9133147544
+438 checks, 0 failures
+
+Tape:
+trial fs=96000 scenario=0 round=0 old_ms=91.621 cached_ms=79.156
+trial fs=96000 scenario=0 round=1 old_ms=89.814 cached_ms=76.046
+trial fs=96000 scenario=0 round=2 old_ms=88.661 cached_ms=76.511
+trial fs=96000 scenario=0 round=3 old_ms=91.289 cached_ms=76.920
+trial fs=96000 scenario=0 round=4 old_ms=90.873 cached_ms=76.266
+tape fs=96000 scenario=0 samples=524288 median_ms old=90.873 cached=76.511 saved=15.8% checksum=-0.361986322584
+trial fs=96000 scenario=1 round=0 old_ms=89.794 cached_ms=77.137
+trial fs=96000 scenario=1 round=1 old_ms=89.965 cached_ms=76.769
+trial fs=96000 scenario=1 round=2 old_ms=90.897 cached_ms=77.475
+trial fs=96000 scenario=1 round=3 old_ms=93.170 cached_ms=78.244
+trial fs=96000 scenario=1 round=4 old_ms=92.835 cached_ms=78.124
+tape fs=96000 scenario=1 samples=524288 median_ms old=90.897 cached=77.475 saved=14.8% checksum=-0.411679520339
+trial fs=96000 scenario=2 round=0 old_ms=97.464 cached_ms=77.754
+trial fs=96000 scenario=2 round=1 old_ms=90.740 cached_ms=77.516
+trial fs=96000 scenario=2 round=2 old_ms=89.370 cached_ms=76.819
+trial fs=96000 scenario=2 round=3 old_ms=91.995 cached_ms=78.380
+trial fs=96000 scenario=2 round=4 old_ms=98.117 cached_ms=85.532
+tape fs=96000 scenario=2 samples=524288 median_ms old=91.995 cached=77.754 saved=15.5% checksum=-0.76764289905
+trial fs=96000 scenario=3 round=0 old_ms=95.971 cached_ms=91.553
+trial fs=96000 scenario=3 round=1 old_ms=92.363 cached_ms=92.248
+trial fs=96000 scenario=3 round=2 old_ms=92.075 cached_ms=90.709
+trial fs=96000 scenario=3 round=3 old_ms=92.046 cached_ms=92.397
+trial fs=96000 scenario=3 round=4 old_ms=93.383 cached_ms=92.959
+tape fs=96000 scenario=3 samples=524288 median_ms old=92.363 cached=92.248 saved=0.1% checksum=-20.8922606964
+trial fs=384000 scenario=0 round=0 old_ms=93.904 cached_ms=77.801
+trial fs=384000 scenario=0 round=1 old_ms=91.431 cached_ms=77.193
+trial fs=384000 scenario=0 round=2 old_ms=93.504 cached_ms=83.891
+trial fs=384000 scenario=0 round=3 old_ms=92.674 cached_ms=80.235
+trial fs=384000 scenario=0 round=4 old_ms=92.347 cached_ms=77.367
+tape fs=384000 scenario=0 samples=524288 median_ms old=92.674 cached=77.801 saved=16.0% checksum=2.6043345443
+trial fs=384000 scenario=1 round=0 old_ms=91.913 cached_ms=82.105
+trial fs=384000 scenario=1 round=1 old_ms=91.652 cached_ms=81.761
+trial fs=384000 scenario=1 round=2 old_ms=93.561 cached_ms=79.489
+trial fs=384000 scenario=1 round=3 old_ms=88.961 cached_ms=76.316
+trial fs=384000 scenario=1 round=4 old_ms=90.876 cached_ms=77.698
+tape fs=384000 scenario=1 samples=524288 median_ms old=91.652 cached=79.489 saved=13.3% checksum=-4.29179208518
+trial fs=384000 scenario=2 round=0 old_ms=91.720 cached_ms=77.202
+trial fs=384000 scenario=2 round=1 old_ms=95.771 cached_ms=80.647
+trial fs=384000 scenario=2 round=2 old_ms=91.621 cached_ms=77.605
+trial fs=384000 scenario=2 round=3 old_ms=91.440 cached_ms=77.540
+trial fs=384000 scenario=2 round=4 old_ms=91.165 cached_ms=77.982
+tape fs=384000 scenario=2 samples=524288 median_ms old=91.621 cached=77.605 saved=15.3% checksum=0.400983405964
+trial fs=384000 scenario=3 round=0 old_ms=91.409 cached_ms=88.849
+trial fs=384000 scenario=3 round=1 old_ms=90.968 cached_ms=91.914
+trial fs=384000 scenario=3 round=2 old_ms=92.141 cached_ms=96.341
+trial fs=384000 scenario=3 round=3 old_ms=90.332 cached_ms=90.205
+trial fs=384000 scenario=3 round=4 old_ms=91.360 cached_ms=92.476
+tape fs=384000 scenario=3 samples=524288 median_ms old=91.360 cached=91.914 saved=-0.6% checksum=-9.95971262332
+271 checks, 0 failures; 21845986 stereo frames compared by bit pattern

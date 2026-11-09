@@ -8,6 +8,7 @@
 #include <array>
 #include <cmath>
 #include <cstdint>
+#include <limits>
 #include <vector>
 
 // Modern FX models for the three FX slots (IMPROVEMENT_PLAN Phase 6). None of these is a
@@ -554,17 +555,31 @@ public:
             c.flutter = i == 0 ? 0.0 : 0.61;
         }
         time = -1.0;
+        lastTimeControl = lastRepeatControl = std::numeric_limits<float>::quiet_NaN();
     }
 
     StereoSample process(float l, float r, float a, float b) noexcept
     {
-        const double target = delaySeconds(a);
+        // These laws depend only on their controls, not the moving tape state.
+        // Exact-input caches avoid two powers per sample when the controls hold.
+        // Keep double results and the original arithmetic for sample automation.
+        if (!(a == lastTimeControl))
+        {
+            lastTimeControl = a;
+            targetTime = delaySeconds(a);
+        }
+        if (!(b == lastRepeatControl))
+        {
+            lastRepeatControl = b;
+            repeatTail = tailSeconds(b);
+        }
+        const double target = targetTime;
         // A delay tap reads at t - D(t). An unconstrained 250 ms glide can increase D
         // faster than real time (4.56 s/s for 60 ms -> 1.2 s), replaying old audio in
         // reverse. Limit only the positive slope; small changes and faster playback
         // retain the existing one-pole glide, and delay memory is never discarded.
         time = time < 0.0 ? target : time + std::min(glide * (target - time), kMaxDelayIncrease / sr);
-        const float g = (float) std::min(0.95, std::pow(10.0, -3.0 * time / tailSeconds(b)));
+        const float g = (float) std::min(0.95, std::pow(10.0, -3.0 * time / repeatTail));
         const float in[2] = { l, r };
         const float cross[2] = { channels[1].playback, channels[0].playback }; // ping-pong
         StereoSample out;
@@ -606,6 +621,9 @@ private:
     };
     std::array<Channel, 2> channels;
     double sr = 96000.0, glide = 0.0, time = -1.0;
+    double targetTime = 0.0, repeatTail = 1.0;
+    float lastTimeControl = std::numeric_limits<float>::quiet_NaN();
+    float lastRepeatControl = std::numeric_limits<float>::quiet_NaN();
     float trim = 1.0f;
 };
 
@@ -640,6 +658,7 @@ public:
         for (auto& o : oversampler) o.reset();
         dcIn = dcOut = { 0.0f, 0.0f };
         toneState = { 0.0f, 0.0f };
+        controlsReady = false;
     }
 
     // Shaper core only (no DC blocker or tone): one channel through the oversampler.
@@ -650,9 +669,24 @@ public:
 
     StereoSample process(float l, float r, float a, float b, int stages) noexcept
     {
-        const float g = gainFor(a);
-        const float toneHz = 1500.0f * std::pow(12.0f, clampf(b, 0.0f, 1.0f));
-        const float toneCoef = 1.0f - (float) std::exp(-6.283185307179586 * std::min((double) toneHz, 0.45 * sr) / sr);
+        // These laws depend only on their controls and the prepared rate, not
+        // on audio history. Keep their exact arithmetic, but do not repeat
+        // three transcendental calls per sample while the controls are held.
+        // Every control change still takes effect on its first sample; reset
+        // also invalidates the rate-dependent tone coefficient after prepare.
+        if (! controlsReady || a != lastDrive)
+        {
+            lastDrive = a;
+            driveGain = gainFor(a);
+        }
+        if (! controlsReady || b != lastTone)
+        {
+            lastTone = b;
+            const float toneHz = 1500.0f * std::pow(12.0f, clampf(b, 0.0f, 1.0f));
+            toneCoefficient = 1.0f - (float) std::exp(-6.283185307179586 * std::min((double) toneHz, 0.45 * sr) / sr);
+        }
+        controlsReady = true;
+        const float g = driveGain;
         const float in[2] = { l, r };
         float out[2] {};
         for (int c = 0; c < 2; ++c)
@@ -661,7 +695,7 @@ public:
             const float blocked = y - dcIn[(size_t) c] + dcCoef * dcOut[(size_t) c];
             dcIn[(size_t) c] = y;
             dcOut[(size_t) c] = blocked;
-            toneState[(size_t) c] += toneCoef * (blocked - toneState[(size_t) c]);
+            toneState[(size_t) c] += toneCoefficient * (blocked - toneState[(size_t) c]);
             out[c] = toneState[(size_t) c];
         }
         return { out[0], out[1] };
@@ -672,6 +706,9 @@ private:
     std::array<float, 2> dcIn {}, dcOut {}, toneState {};
     double sr = 96000.0;
     float dcCoef = 0.0f;
+    float lastDrive = 0.0f, lastTone = 0.0f;
+    float driveGain = 1.0f, toneCoefficient = 0.0f;
+    bool controlsReady = false;
 };
 
 // Measured static calibration (dB) of each model's wet path; see calibrationDb above.
