@@ -1,0 +1,10 @@
+2026-11-09T07:29:09.0670180Z [command]/usr/local/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6c560f130be649dd4a63cbe146cd5cc54dd057a3:refs/remotes/origin/main
+2026-11-09T07:29:14.0268660Z  * [new ref]         6c560f130be649dd4a63cbe146cd5cc54dd057a3 -> origin/main
+2026-11-09T07:29:15.1503100Z 6c560f130be649dd4a63cbe146cd5cc54dd057a3
+2026-11-09T08:09:55.0522830Z 100% tests passed out of 154
+2026-11-09T08:09:55.0539530Z Total Test time (real) = 1682.14 sec
+2026-11-09T08:10:06.6237660Z curl: (22) The requested URL returned error: 504
+2026-11-09T08:10:08.8361570Z curl: (22) The requested URL returned error: 504
+2026-11-09T08:10:10.8982170Z curl: (22) The requested URL returned error: 504
+2026-11-09T08:10:13.0845460Z curl: (22) The requested URL returned error: 504
+2026-11-09T08:10:13.0941200Z ##[error]Process completed with exit code 22.

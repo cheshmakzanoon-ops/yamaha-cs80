@@ -1,0 +1,22 @@
+test_actual_urllib_redirect_loop_stops_before_sixth_hop (__main__.DownloadTests.test_actual_urllib_redirect_loop_stops_before_sixth_hop) ... ok
+test_bad_worker_metadata_fails_without_publishing_or_retry (__main__.DownloadTests.test_bad_worker_metadata_fails_without_publishing_or_retry) ... ok
+test_canonical_fallback_request (__main__.DownloadTests.test_canonical_fallback_request) ... ok
+test_first_transfer_success (__main__.DownloadTests.test_first_transfer_success) ... ok
+test_integrity_and_permanent_failures_never_retry (__main__.DownloadTests.test_integrity_and_permanent_failures_never_retry) ... ok
+test_local_transfer_write_failure_is_not_retryable (__main__.DownloadTests.test_local_transfer_write_failure_is_not_retryable) ... ok
+test_official_pin_and_attempt_bound (__main__.DownloadTests.test_official_pin_and_attempt_bound) ... ok
+test_one_official_transfer (__main__.DownloadTests.test_one_official_transfer) ... ok
+test_redirect_policy (__main__.DownloadTests.test_redirect_policy) ... ok
+test_required_evidence_failure_cannot_report_success (__main__.DownloadTests.test_required_evidence_failure_cannot_report_success) ... ok
+test_response_shape_and_bounded_size (__main__.DownloadTests.test_response_shape_and_bounded_size) ... ok
+test_three_transfer_limit (__main__.DownloadTests.test_three_transfer_limit) ... ok
+test_timeout_then_success (__main__.DownloadTests.test_timeout_then_success) ... ok
+test_transient_fallback_and_partial_isolation (__main__.DownloadTests.test_transient_fallback_and_partial_isolation) ... ok
+test_transient_http_only (__main__.DownloadTests.test_transient_http_only) ... ok
+test_transport_timeout_and_tls (__main__.DownloadTests.test_transport_timeout_and_tls) ... ok
+test_workflow_gate_unchanged_and_transfer_failure_stops_execution (__main__.DownloadTests.test_workflow_gate_unchanged_and_transfer_failure_stops_execution) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.010s
+
+OK

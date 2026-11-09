@@ -1,0 +1,44 @@
+{
+  "base_commit": "6c560f130be649dd4a63cbe146cd5cc54dd057a3",
+  "source_test_commit": "0128a34f83a0ae3fe8ed0ea012e7cfc1a944774f",
+  "scope": "macOS archive transfer only; validators, registration, package steps, Windows and Linux jobs unchanged from this base",
+  "failure": {
+    "run_id": 42579617910,
+    "attempt": 1,
+    "job_id": 129035005752,
+    "head_sha": "6c560f130be649dd4a63cbe146cd5cc54dd057a3",
+    "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42579617910/job/129035005752",
+    "classification": "four HTTP 504 transfers, curl exit 22, before validator execution"
+  },
+  "commands": [
+    "python3 scripts/test-pluginval-macos-download.py -v",
+    "python3 scripts/test-pluginval-macos-download-negative.py --output /tmp/macos-transfer-faults",
+    "cmake -S . -B build-download -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Release",
+    "ctest --test-dir build-download -R '^cs80_(pluginval_(macos|windows)_download|validator_(exit_classification|retry))_tests$' --output-on-failure",
+    "python3 scripts/download-pluginval-macos.py --output /tmp/pluginval-macos.zip --evidence /tmp/pluginval-macos-download.json"
+  ],
+  "limits": [
+    "Live transfers and offline tests ran on Linux; macOS extraction and validator execution not locally qualified.",
+    "Official upstream metadata digest is null. SHA256 is an observed official-API content pin, not a publisher-signed checksum.",
+    "Canonical browser route returned HTTP 504 locally. No successful browser/API byte comparison is claimed. Two API transfers matched the pin.",
+    "No original failure is reclassified, no workflow/job rerun or validator retry is added.",
+    "Integration atop separately approved Linux diagnostic changes must deliberately refresh the unchanged-Linux-prefix test hash against that new base, preserving the guard and rerunning tests."
+  ],
+  "sha256": {
+    ".github/workflows/build.yml": "83de28513439b745ed1da44182c479c5787e99b4a6f4eb6187f2fe41b36d10da",
+    "CMakeLists.txt": "211cfcaedf037bad43e61d0305a8010932c477172842eb418ce513ef951b328e",
+    "scripts/download-pluginval-macos.py": "e18c5ca4d37a7acabf5290e84792e5ade8a6fb3c778adcd8288c4f1b9d12bb1d",
+    "scripts/test-pluginval-macos-download.py": "dcbba8c55f4aa6e35d0f09ca30c17d96529b4aea8b078942c8808ccfab22f672",
+    "scripts/test-pluginval-macos-download-negative.py": "99d5367a712a7f5713506a03985212665fd90d941e3c4462af700a45c7c7afc5",
+    "docs/evidence/pluginval-macos-download-2026-11-09/api-fetch.json": "c9754b7aa7ba2b31930464f14ebd9f65ce7553930548eceb03c858168f035035",
+    "docs/evidence/pluginval-macos-download-2026-11-09/archive-inspection.json": "094fd2942ba610a48b3a6721b3037e45e01d032038c52e351e92030a8670a557",
+    "docs/evidence/pluginval-macos-download-2026-11-09/browser-fetch.json": "3a6a64a4a87e622b1abec0a843ba17c5498bf2a6b2fe517dba63fafc5d24bb91",
+    "docs/evidence/pluginval-macos-download-2026-11-09/ctest.log": "c541f256cf34c98c9db0d2104b2bc67d9c44587b145bf6c7dc0aa35e6eb80e5f",
+    "docs/evidence/pluginval-macos-download-2026-11-09/helper-provenance.json": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+    "docs/evidence/pluginval-macos-download-2026-11-09/intel-failure-excerpt.log": "c32ed90a156e6dcfdcc3ef38f2dbf800910c3261fa3cc854d12b6a294ef1e0c7",
+    "docs/evidence/pluginval-macos-download-2026-11-09/intel-job.json": "39c18348d777ceb8635aca52964ce044b743fc1e3e5d2a6c003e39c789ac492a",
+    "docs/evidence/pluginval-macos-download-2026-11-09/negative-controls.json": "c20ecc125d50eb1e21297c54a70fabe17b0c2c1aaec8dbdc4cafb43250932c23",
+    "docs/evidence/pluginval-macos-download-2026-11-09/official-metadata.json": "ab8d081f80c30241fb4f6b9c5a81a07542eebb427b9935a007e22898f29c57b5",
+    "docs/evidence/pluginval-macos-download-2026-11-09/offline-tests.log": "9818d4c4a80de322a99b0d1650381f024660c12f4e99bb81f060d2f44ab1614b"
+  }
+}
