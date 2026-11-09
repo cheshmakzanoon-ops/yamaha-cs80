@@ -1,0 +1,36 @@
+{
+  "reviewed_at_utc": "2026-11-09T20:19:33.123932+00:00",
+  "reviewed_driver_commit": "af79529f87d53f15e87b45a834440e704a5a079f",
+  "driver_sha256": "462dcfdd71654889d0dfe2501da5a94ccdb1f73c63d8b362a6c0483442eab3f9",
+  "results": {
+    "coefficient": {
+      "command": [
+        "taskset",
+        "-c",
+        "0-3",
+        "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/coefficient/probe"
+      ],
+      "exit_code": 1,
+      "scenarios": 54,
+      "checks": 1958109,
+      "failures": 1941582,
+      "binary_sha256": "0232e64053ecb2173d69738455712170f9b7332de13689824a5e863916f3d205",
+      "log_sha256": "65ad1b9dbf2e12361860daeb9c51a189df6cbd80a15327ab2b5820f90d8c39e1"
+    },
+    "revive-eligibility": {
+      "command": [
+        "taskset",
+        "-c",
+        "0-3",
+        "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/revive-eligibility/probe"
+      ],
+      "exit_code": 1,
+      "scenarios": 54,
+      "checks": 1958109,
+      "failures": 7396,
+      "binary_sha256": "10929d250b3381170983e18301fa68cf398aeb071ce5709a1491439dd6af6f56",
+      "log_sha256": "fa984885fb8fe0779c30cf679a0cdf80127a4b525c847da723bbbf97a0a076e9"
+    }
+  },
+  "scope": "Independent rerun of the supplied coefficient and revived-eligibility fault binaries. All seven fault source changes and completed logs were reviewed, but the other five binaries were not rerun by this reviewer."
+}

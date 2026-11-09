@@ -1,0 +1,20 @@
+{
+  "captured_at_utc": "2026-11-09T20:55:44.691953+00:00",
+  "source_repository": "/workspace/scratch/ee447c520988/legacy-lfo-oracle",
+  "original_run_root": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence",
+  "original_review_root": "/workspace/scratch/ee447c520988/legacy-lfo-product-review",
+  "artifact_copy_policy": "runs/ and review/ retain source bytes; build excerpts and identity files are new read-only extractions. Source paths in logs and commands are their original execution locations, not relative archive paths. Reproduction uses repository scripts in docs/experiments/legacy-lfo-oracle; no script was relocated into evidence. No tests were rerun while archiving.",
+  "completed_full_suite": {
+    "log": "runs/full-default-ctest-restarted.log",
+    "status": "runs/full-default-ctest-restarted.status",
+    "tests_passed": 142,
+    "tests_failed": 0,
+    "exit_code": 0,
+    "seconds": 907.75,
+    "scope": "Complete configured core-only default CTest suite. This is not plugin, GUI, native-installation or DAW qualification."
+  },
+  "review_scope": "Independent source review and focused GCC native execution; independent coefficient and revived-eligibility binary reruns; final checker parser and seven-log review. No independent rerun of the full compiler/sanitizer/full-suite matrix is attributed.",
+  "original_diagnosis_root": "/workspace/scratch/ee447c520988/lfo-native-review",
+  "diagnosis_scope": "Historical diagnostic copies of baseline CoreTests and speed probes. Their report predates the preregistered repair; its proposed-next-step text is not the final test contract. The noinline probe is a diagnostic control, not a portable fix. The copied source files are not registered or built by the repository. Binaries and disassembly are excluded and separately hashed.",
+  "frozen_at_utc": "2026-11-09T21:07:14.587175+00:00"
+}

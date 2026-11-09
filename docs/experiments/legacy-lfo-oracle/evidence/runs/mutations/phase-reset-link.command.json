@@ -1,0 +1,19 @@
+[
+  "taskset",
+  "-c",
+  "0-3",
+  "c++",
+  "-std=c++20",
+  "-O3",
+  "-DNDEBUG",
+  "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+  "-Wall",
+  "-Wextra",
+  "-Werror",
+  "-I/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/phase-reset/src",
+  "/workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/LegacySubLfoOracleTests.cpp",
+  "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/phase-reset/Engine.o",
+  "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-generic/libcs80_core.a",
+  "-o",
+  "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/phase-reset/probe"
+]

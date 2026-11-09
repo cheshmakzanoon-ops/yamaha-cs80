@@ -1,0 +1,639 @@
+{
+  "schema_version": 1,
+  "scope": "Frozen local Linux test-only legacy SUB oracle evidence. No production arithmetic/tolerance changes, performance claim, native plugin/GUI/install/DAW qualification, or independent full-matrix rerun.",
+  "source_head_before_archive": "c95e1fa8ab547f40026393432bb9a95fb84d55f9",
+  "published_base": "4ef0666e3aa5b6f4157afb403f538b82c5af1f50",
+  "implementation_commit": "1782677471148447f20d171531ff7fcc365aaa09",
+  "preregistration_commit": "3c458473ba6dcfc7801cb192ff7a21fff9549815",
+  "checker_commit": "c95e1fa8ab547f40026393432bb9a95fb84d55f9",
+  "inventory_policy": "SHA-256 and byte sizes cover every file in this experiment directory except this self-referential manifest, plus docs/LEGACY_SUB_LFO_ORACLE.md. The containing Git commit and separately reported SHA-256 identify the manifest itself. Production and test/build inputs are additionally covered by evidence/source-pins.json.",
+  "results": {
+    "profile_scenarios": 54,
+    "profile_checks": 1958109,
+    "core_checks": 11508,
+    "focused_ctests": 2,
+    "full_default_ctests": 142,
+    "original_native_failures": 4,
+    "fault_failures": {
+      "coefficient": 1941582,
+      "extra-rng": 647194,
+      "skipped-wrap-draw": 254455,
+      "phase-reset": 1582342,
+      "missing-wrap": 1272275,
+      "omitted-lfo-tick": 1836797,
+      "revive-eligibility": 7396
+    }
+  },
+  "full_default_ctest_seconds": 907.75,
+  "excluded_local_artifacts": "evidence/excluded-artifacts.json",
+  "artifacts": {
+    "docs/LEGACY_SUB_LFO_ORACLE.md": {
+      "bytes": 6415,
+      "sha256": "d6b805dff2f91e36e1cbd3dbcfcaf271f6ddbf88955177d40a02aa0a0a31b7d1"
+    },
+    "docs/experiments/legacy-lfo-oracle/README.md": {
+      "bytes": 8074,
+      "sha256": "24bf3accfe63cb3443bf18037a598afd3c06c03ca674167a4499667e2ca40cb6"
+    },
+    "docs/experiments/legacy-lfo-oracle/check_mutations.py": {
+      "bytes": 4379,
+      "sha256": "261a31d1edbaf345da6df5d3d0f1ec8bdddc2294f96f134e49b01c51e3002dbc"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/binary-comparisons.json": {
+      "bytes": 1243,
+      "sha256": "e21e80ddff77867fdf0f854d1df764d39e863207d8b077861fbd41b4e0d3e9e5"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/builds/clang-generic.json": {
+      "bytes": 8297,
+      "sha256": "da7e772b0c1467c99e735abee80c5b6ceb3faa7c37255c99b152818f29e95798"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/builds/clang-native.json": {
+      "bytes": 8472,
+      "sha256": "d94ef876573bdd25fe466b81a7d4ac30d019431bd681eb71b62e6895765d71cb"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/builds/gcc-generic.json": {
+      "bytes": 7330,
+      "sha256": "732844e5abdecb600a3fb74aa1ff8e77a5d563b77340b947c881af46a19c6dde"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/builds/gcc-native.json": {
+      "bytes": 7505,
+      "sha256": "f723491085c7190c6430434f03183981e07545b8beac14615c499f2dd784755a"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/builds/sanitizer.json": {
+      "bytes": 8490,
+      "sha256": "0592caefb3e63d66ca20c94a1cc38f769bad7059e4d9b6c8068e1556a6d1c492"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/capture-provenance.json": {
+      "bytes": 1868,
+      "sha256": "8424a8eb1a28808e308f67f9935d691cba3ed1b03c82cc93a55cb12e572e62f9"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/CoreTestsInstrumented.cpp": {
+      "bytes": 92229,
+      "sha256": "531e3908899123cf1cc8337d40324e860d2959adbd3b7d070eb3a5b3730a15ad"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/CoreTestsOutlined.cpp": {
+      "bytes": 92340,
+      "sha256": "d9d5dc72788033a86d1ad7fac8df5b142e654800883645b7e2065e20809c7778"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/REPORT.md": {
+      "bytes": 3384,
+      "sha256": "72a6b4cc08cdad75ba74cf2a158bda2ce2e241b12da5c3614087076af480f63d"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/SpeedModels.cpp": {
+      "bytes": 1013,
+      "sha256": "e198260eb5d7ed18cd4e86e180923dde5719eb1379c56441f7249492df728284"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/core-native.log": {
+      "bytes": 1695,
+      "sha256": "c821299ab9086cbb220620f0a1c2b9df11d0c0a3b0c3dfc69d37ba9be2b9ef10"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/core-outlined-native.log": {
+      "bytes": 846,
+      "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/hashes.json": {
+      "bytes": 1178,
+      "sha256": "70e07eeb82618d14e73de3832e38a050505781d093d35841dad4fc883c77d025"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/speed-generic.log": {
+      "bytes": 690,
+      "sha256": "7ed819ba78105c21c899e37bd153d8e8716a1449f3f457ce1476e3beff3a67eb"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/diagnosis/speed-native.log": {
+      "bytes": 690,
+      "sha256": "4b07f4a0e453de180c262d7e8158cb708c47ed01ea14ace6a5e6d03f7371d78b"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/environment.json": {
+      "bytes": 2204,
+      "sha256": "764687b9b9b85a0cb5eecd594b678be40f420c4efdbae81528746f5577c18a33"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/excluded-artifacts.json": {
+      "bytes": 17131,
+      "sha256": "7f7221433fab9775a33c8713dddb09fe8c882a86e85e48ef975c320bf0ea7e53"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/original-native-reconstructed-command.json": {
+      "bytes": 1549,
+      "sha256": "b93d496047d6ad6bb5b4a484b0a1720c05a5209ce9fd6b1022feff1ab9500c05"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/review/checker-c95e1fa-review.json": {
+      "bytes": 6198,
+      "sha256": "6e9f26b4987ccb6c0078dd53ce458e5f1a32bf4a2fa3cae7744d37d58cb200ba"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/review/checker-c95e1fa-review.log": {
+      "bytes": 298,
+      "sha256": "6bffc1a8ac3d485af75cc38233151abfc6ef024aab1d05d25ff4505128d9eca7"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/review/independent-coefficient.log": {
+      "bytes": 5915,
+      "sha256": "65ad1b9dbf2e12361860daeb9c51a189df6cbd80a15327ab2b5820f90d8c39e1"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/review/independent-revive-eligibility.log": {
+      "bytes": 5656,
+      "sha256": "fa984885fb8fe0779c30cf679a0cdf80127a4b525c847da723bbbf97a0a076e9"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/review/mutation-review.json": {
+      "bytes": 1427,
+      "sha256": "f75103ebe9428a7d0a356fc80d637a5623b89549785e1742f4fe7fd5f24a9e07"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/review/native-focused.log": {
+      "bytes": 4689,
+      "sha256": "af7a8b6fb006ecf02787a0069c08b2aaa85a02c3cd10e207117760640fe862bf"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/review/review.json": {
+      "bytes": 2932,
+      "sha256": "474eae3d734c20630e79838a521bce62d3e3efc9b1575c236b4c49f4b130dace"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/attempts.json": {
+      "bytes": 830,
+      "sha256": "9ba3e9456a7831eb75663c901b6fdd32fd1c5e3e559e9007c4258d8d4d8471e8"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-generic-build.log": {
+      "bytes": 567,
+      "sha256": "a4a6e43de4348110e95e537e08855ea2fa7f710d9c19ed042b0f4682d1055b02"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-generic-configure.log": {
+      "bytes": 1108,
+      "sha256": "fd115d3a0bf264629a69707694f3f7f543f8da37a8251b25e16a595c96e53a7f"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-generic-core.log": {
+      "bytes": 846,
+      "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-generic-ctest.log": {
+      "bytes": 481,
+      "sha256": "ef16253924f8b1eade5ccf3cf3d4e35c7566dce49d4d7dc1d696cad7a0043604"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-generic-oracle.log": {
+      "bytes": 4689,
+      "sha256": "dd4b483684250fcb9b737318d30824ba192506d2377660cce1f384c716f23063"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-native-build.log": {
+      "bytes": 567,
+      "sha256": "a4a6e43de4348110e95e537e08855ea2fa7f710d9c19ed042b0f4682d1055b02"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-native-configure.log": {
+      "bytes": 1107,
+      "sha256": "652b4b511100ef3c07ccaac6fc00eb79ec72c0ef3c7a6a9d89315ee27c28a2d0"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-native-core.log": {
+      "bytes": 846,
+      "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-native-ctest.log": {
+      "bytes": 479,
+      "sha256": "f275d5b03e3b5d13eb7be3301843694eee453a35c7b1b3b0f4c87479311f7fcd"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/clang-native-oracle.log": {
+      "bytes": 4689,
+      "sha256": "af7a8b6fb006ecf02787a0069c08b2aaa85a02c3cd10e207117760640fe862bf"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/full-default-build.log": {
+      "bytes": 20594,
+      "sha256": "50c14c43aaef7b512dc3ce3f28e170844879472bbb41b35e22c9bd6f719a3438"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/full-default-ctest-restarted.log": {
+      "bytes": 19596,
+      "sha256": "768faa26d32bd58a68ed273ca37ced38e04a2f13f70ce527025d291c43d3a9be"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/full-default-ctest-restarted.status": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/full-default-ctest.log": {
+      "bytes": 5042,
+      "sha256": "42249083b4985ae6810d12a94bb90e3ddfce8ca38909ddad5ea852b569e64780"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-generic-build.log": {
+      "bytes": 567,
+      "sha256": "4ad7de96baa4f380bcf48d883a136097cc02f374d7469d2cdd4eedd8cfea6cc4"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-generic-configure.log": {
+      "bytes": 963,
+      "sha256": "4e58cec029d290e32bddede6c2080bdea913e056b252ca214d2e7d870cf7f1ff"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-generic-core.log": {
+      "bytes": 846,
+      "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-generic-ctest.log": {
+      "bytes": 477,
+      "sha256": "e28c7c2e0465d92650a75bbde4769899bc46864a565d84bf126a250c5caf44bd"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-generic-oracle.log": {
+      "bytes": 4689,
+      "sha256": "dd4b483684250fcb9b737318d30824ba192506d2377660cce1f384c716f23063"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-native-build.log": {
+      "bytes": 567,
+      "sha256": "4ad7de96baa4f380bcf48d883a136097cc02f374d7469d2cdd4eedd8cfea6cc4"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-native-configure.log": {
+      "bytes": 962,
+      "sha256": "ca35b0109e2b14da4def31366fdfec6eeac536b2920461a8e0ce71040d84a3b7"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-native-core.log": {
+      "bytes": 846,
+      "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-native-ctest.log": {
+      "bytes": 475,
+      "sha256": "4d9516399ae96d8c96083b000ad8ed409b8b0af0c6628166e7c3a83d6b4dd509"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/gcc-native-oracle.log": {
+      "bytes": 4689,
+      "sha256": "af7a8b6fb006ecf02787a0069c08b2aaa85a02c3cd10e207117760640fe862bf"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutation-driver.log": {
+      "bytes": 531,
+      "sha256": "fa459ac93f3d4dcc50e4534afb2d7bdb3fdc3bf3a4017b881535ba47802646ee"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutation-final-driver.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutation-final-restarted-driver.log": {
+      "bytes": 531,
+      "sha256": "fa459ac93f3d4dcc50e4534afb2d7bdb3fdc3bf3a4017b881535ba47802646ee"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutation-final-restarted.status": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/coefficient-compile.command.json": {
+      "bytes": 515,
+      "sha256": "b1249034ce998341f8bccc3538fbb68a30ba727a7c3abb24207a6666e18dfa36"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/coefficient-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/coefficient-link.command.json": {
+      "bytes": 663,
+      "sha256": "bea8dcfa60c990e952e3f6c806c5d9eb458905fb68800200ff6714f551a87901"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/coefficient-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/coefficient.command.json": {
+      "bytes": 141,
+      "sha256": "9ae57f4c0b54a2c105ede5c5e6303616a8a973c9d25cbb858bb3e1ef2765074e"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/coefficient.log": {
+      "bytes": 5915,
+      "sha256": "65ad1b9dbf2e12361860daeb9c51a189df6cbd80a15327ab2b5820f90d8c39e1"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/extra-rng-compile.command.json": {
+      "bytes": 509,
+      "sha256": "d8e96584429b38cf636a138d6fd7c09067e12518da4a28145e1cbb9d71468ff3"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/extra-rng-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/extra-rng-link.command.json": {
+      "bytes": 657,
+      "sha256": "d51f832cdd9ca29d6ec995759e6294344ad2180952e152641ddd3acddef80a46"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/extra-rng-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/extra-rng.command.json": {
+      "bytes": 139,
+      "sha256": "88b020c34903d9426675c89b9ef8ff785dcdf15148fc4e487eca094689922cb5"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/extra-rng.log": {
+      "bytes": 5914,
+      "sha256": "0df052148414267ae2d61c9b52ec6616097c3537f2b1fa4f86b892bf57a54d03"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/missing-wrap-compile.command.json": {
+      "bytes": 518,
+      "sha256": "c18f8a91e76c7ef1d93d897b97e96e8351773f372fdf57653be3543b5d8fbcf2"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/missing-wrap-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/missing-wrap-link.command.json": {
+      "bytes": 666,
+      "sha256": "a2520a9e25c7936b331660fcd5f5113954dcdc41aa69266e27d9c6460cc52239"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/missing-wrap-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/missing-wrap.command.json": {
+      "bytes": 142,
+      "sha256": "99f60a5dcc5f5a809facf9d81fdc805df4286c1649a5201be0d5ca3a9670890c"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/missing-wrap.log": {
+      "bytes": 5915,
+      "sha256": "c2d3080bb7a0cbfa9fac6f1abbd504be57d6c5dfe2f8e0ba1fad40f37db934e4"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/omitted-lfo-tick-compile.command.json": {
+      "bytes": 530,
+      "sha256": "a68948b2388cd1d2d805b84a55f2a664feff6faff66bd6c0196e292f5750417c"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/omitted-lfo-tick-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/omitted-lfo-tick-link.command.json": {
+      "bytes": 678,
+      "sha256": "04ebb4bf39c7a3a0756daa29dbe8f6d99fd5f4320ea2893c43ca263d0fd84908"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/omitted-lfo-tick-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/omitted-lfo-tick.command.json": {
+      "bytes": 146,
+      "sha256": "93c106c006dcd253a5c42dc67350b99668af118e97fce4dddf4042d0ce71cc0a"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/omitted-lfo-tick.log": {
+      "bytes": 5915,
+      "sha256": "cd19ee5ed02a3be301485b04a34244012d6d6d964c7dfebbb5b085d191697951"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/phase-reset-compile.command.json": {
+      "bytes": 515,
+      "sha256": "3f6eb0c344d11c6e2bf978262ec83dfa4025cc072c9b5afb179ed0bcdf556ee1"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/phase-reset-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/phase-reset-link.command.json": {
+      "bytes": 663,
+      "sha256": "218cd3224cf7229b4aa792a9edfffb5d9df5de81d2e878dff13ae98012d246fb"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/phase-reset-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/phase-reset.command.json": {
+      "bytes": 141,
+      "sha256": "9d7eb9a0222bfa8275e5c3591ddb366d342636ad999c3320978f127572bb88dc"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/phase-reset.log": {
+      "bytes": 5915,
+      "sha256": "a6f48c05d1557e7db1480da0c916f6f083ad1afb62a467fdd18cbb3e250409fc"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/revive-eligibility-build.command.json": {
+      "bytes": 542,
+      "sha256": "004d6624093dfa9a07ee5eab75979c064ffe3028ae9ef4a899c906c109cb98e5"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/revive-eligibility-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/revive-eligibility.command.json": {
+      "bytes": 148,
+      "sha256": "e6370cfa842ea8eb1ade712813f56b398476ded9b327e53ad027235f2cbbb852"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/revive-eligibility.log": {
+      "bytes": 5656,
+      "sha256": "fa984885fb8fe0779c30cf679a0cdf80127a4b525c847da723bbbf97a0a076e9"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/skipped-wrap-draw-compile.command.json": {
+      "bytes": 533,
+      "sha256": "8c7772e2b73da22b3fc42858387589127e7310a45415983a224585b91c76c40b"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/skipped-wrap-draw-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/skipped-wrap-draw-link.command.json": {
+      "bytes": 681,
+      "sha256": "56aa41d0e5d1d213cb031b6299275fc5b6efe28e3c53a8c491fd9ee4a8a479e6"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/skipped-wrap-draw-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/skipped-wrap-draw.command.json": {
+      "bytes": 147,
+      "sha256": "06f6850c8c045ee634241586cab3f4f0ef04d80244d79576f1149ec2ddb3f50a"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/skipped-wrap-draw.log": {
+      "bytes": 5914,
+      "sha256": "f356ab6f36ddf7975a912081f653ecf3248e4689c59f178a76358c5348027e24"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final-restarted/summary.json": {
+      "bytes": 659,
+      "sha256": "fdacd0df0391f5c560aa9563d797bb3d6449ad81d353d268039fd2207086395b"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations-final/coefficient-compile.command.json": {
+      "bytes": 485,
+      "sha256": "9d433abcfd6744300a63dd6bb2f76ab5edd90a8b54db42d0564d9c77730fce97"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/coefficient-compile.command.json": {
+      "bytes": 467,
+      "sha256": "7e698cf7c2b0ed762f2a50d0fe12471fbf7505132bb11a12761005de0043c4eb"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/coefficient-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/coefficient-link.command.json": {
+      "bytes": 615,
+      "sha256": "c9e1f634895ce5351d708e2dc0fe063dcd679f4609480f0032b207289eb4bec5"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/coefficient-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/coefficient.command.json": {
+      "bytes": 125,
+      "sha256": "8ae2566698a493160a3a04e6891f962949ee4a0e117b34ff1b09238aaea8c781"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/coefficient.log": {
+      "bytes": 5915,
+      "sha256": "65ad1b9dbf2e12361860daeb9c51a189df6cbd80a15327ab2b5820f90d8c39e1"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/extra-rng-compile.command.json": {
+      "bytes": 461,
+      "sha256": "7910f49b3d147833efa0a144594d4184ba30555127301b7deadff04c040896a2"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/extra-rng-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/extra-rng-link.command.json": {
+      "bytes": 609,
+      "sha256": "36747e64ea24fcdef8cbf1c2efac3da492421e819db321d2108c774a7404771c"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/extra-rng-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/extra-rng.command.json": {
+      "bytes": 123,
+      "sha256": "ba37a7dc9512315aedfdc40d4eb9e9fc122b85b56d1840f49b7b39bf5301b17a"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/extra-rng.log": {
+      "bytes": 5914,
+      "sha256": "0df052148414267ae2d61c9b52ec6616097c3537f2b1fa4f86b892bf57a54d03"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/missing-wrap-compile.command.json": {
+      "bytes": 470,
+      "sha256": "161ae878a745e7bccbd1ea02881f0dbd97400bc25656b8cc39e15cf3b599f7da"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/missing-wrap-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/missing-wrap-link.command.json": {
+      "bytes": 618,
+      "sha256": "de7a4483251455d6448895bcf2c121c3c1f18cf08cd77ba64f66ac6225b99d52"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/missing-wrap-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/missing-wrap.command.json": {
+      "bytes": 126,
+      "sha256": "79131b3a475fe72f70ea731c0e618234e3b2fd8bb76b2bb38c69173a06e34486"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/missing-wrap.log": {
+      "bytes": 5915,
+      "sha256": "c2d3080bb7a0cbfa9fac6f1abbd504be57d6c5dfe2f8e0ba1fad40f37db934e4"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/omitted-lfo-tick-compile.command.json": {
+      "bytes": 482,
+      "sha256": "047474f802c581097f0b9725d465a33003ff052168dbafc22e78566d6384cfaf"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/omitted-lfo-tick-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/omitted-lfo-tick-link.command.json": {
+      "bytes": 630,
+      "sha256": "fc1d958008f1bcd96b348f7952c7e8cb84bc2904e8e7bb97075c6d423a04cb67"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/omitted-lfo-tick-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/omitted-lfo-tick.command.json": {
+      "bytes": 130,
+      "sha256": "9ad93d4aab1447885bb18ebbdb1a4d448c1c7608b471b7aec9ae0485779430ae"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/omitted-lfo-tick.log": {
+      "bytes": 5915,
+      "sha256": "cd19ee5ed02a3be301485b04a34244012d6d6d964c7dfebbb5b085d191697951"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/phase-reset-compile.command.json": {
+      "bytes": 467,
+      "sha256": "2a4c8db6ed0793b656529d1bdccc4e628fdf090ddd87230215af40645142e781"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/phase-reset-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/phase-reset-link.command.json": {
+      "bytes": 615,
+      "sha256": "8eeccb552313527317733a8d73fc9027416443a4e70c00d97ccc9bf8708c2b52"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/phase-reset-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/phase-reset.command.json": {
+      "bytes": 125,
+      "sha256": "e8269b054b4c00cc3cc2fdeb1f830753426d701df2420c9eeac08fbcda3ec104"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/phase-reset.log": {
+      "bytes": 5915,
+      "sha256": "a6f48c05d1557e7db1480da0c916f6f083ad1afb62a467fdd18cbb3e250409fc"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/revive-eligibility-build.command.json": {
+      "bytes": 510,
+      "sha256": "ff20251a95ee510efbb19ca88a7814b9de873d30a73eaed93574da93d32ba8df"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/revive-eligibility-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/revive-eligibility.command.json": {
+      "bytes": 132,
+      "sha256": "eb9ca55511a0b8ed7cd516bdeda5ab87c29a0f92b325aa2a9c327261642c8439"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/revive-eligibility.log": {
+      "bytes": 5656,
+      "sha256": "fa984885fb8fe0779c30cf679a0cdf80127a4b525c847da723bbbf97a0a076e9"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/skipped-wrap-draw-compile.command.json": {
+      "bytes": 485,
+      "sha256": "94e562536453da8ca8a78704b07570173f12af808b8205293ee7879f14c4e370"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/skipped-wrap-draw-compile.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/skipped-wrap-draw-link.command.json": {
+      "bytes": 633,
+      "sha256": "b6f70efbb9532fa4f31ef47ed434fd8d5da69d6bbc620860cebc901d54d6b13e"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/skipped-wrap-draw-link.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/skipped-wrap-draw.command.json": {
+      "bytes": 131,
+      "sha256": "9ed0c5b59d1de4d0d11b4a1d3e30378626bdf212231cb09f4bfe28be215e302a"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/skipped-wrap-draw.log": {
+      "bytes": 5914,
+      "sha256": "f356ab6f36ddf7975a912081f653ecf3248e4689c59f178a76358c5348027e24"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/mutations/summary.json": {
+      "bytes": 659,
+      "sha256": "fdacd0df0391f5c560aa9563d797bb3d6449ad81d353d268039fd2207086395b"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/original-native-build.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/original-native-command.txt": {
+      "bytes": 183,
+      "sha256": "8d389fb61515e26e56c737a874267841b44c4b388d7ffc9786d38cdfb5b24376"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/original-native-core.log": {
+      "bytes": 1143,
+      "sha256": "ce64549326ed0dc53eb6e18da8de8fd7dc3c3ac6cc142be1b4a766937cd9d36a"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/sanitizer-build.log": {
+      "bytes": 567,
+      "sha256": "14476e46bd9805789a8afd80e7e103a4a8581950e633af4f820850688b430dd6"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/sanitizer-configure.log": {
+      "bytes": 961,
+      "sha256": "325b623aedc8ce9f29494f103aa6ba127a7a5dd9fb35198824086b9466c2e815"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/sanitizer-core.log": {
+      "bytes": 846,
+      "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/runs/sanitizer-oracle.log": {
+      "bytes": 4689,
+      "sha256": "dd4b483684250fcb9b737318d30824ba192506d2377660cce1f384c716f23063"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/source-pins.json": {
+      "bytes": 26157,
+      "sha256": "e22e291218a009c9fd61efd761d45c89036cfddff4f32f7360d17f69b9708ff6"
+    },
+    "docs/experiments/legacy-lfo-oracle/evidence/verifier-self-check.json": {
+      "bytes": 851,
+      "sha256": "ad85a3a927be8ff7b0d4e7a38d6f3cf8cd56f7e5b5a09769e036dd959db7a87e"
+    },
+    "docs/experiments/legacy-lfo-oracle/preregistered.md": {
+      "bytes": 2983,
+      "sha256": "763019782a98497adc59192f819be51d25addf769fb39e726ba7bcbd2ab5d0e0"
+    },
+    "docs/experiments/legacy-lfo-oracle/verify_evidence.py": {
+      "bytes": 13810,
+      "sha256": "f23bc0c59ccf01cfb8a9cd9dd75c393d74f03b589b6f5d5b706518fb4e928d40"
+    }
+  }
+}

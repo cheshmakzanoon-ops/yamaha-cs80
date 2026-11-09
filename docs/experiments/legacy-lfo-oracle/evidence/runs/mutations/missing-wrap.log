@@ -1,0 +1,75 @@
+scenario rate=48000 wave=0 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=1 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=2 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=3 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=4 mode=original frames=512 eligible=1 wraps=0/0 draws=1/1
+scenario rate=48000 wave=5 mode=original frames=512 eligible=1 wraps=0/0 draws=1024/1024
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+FAIL: one entire exact speed-and-waveform reference survives
+scenario rate=44100 wave=0 mode=wrap frames=17640 eligible=0 wraps=11/11 draws=0/0
+scenario rate=44100 wave=0 mode=scheduled frames=19845 eligible=0 wraps=5/5 draws=0/0
+scenario rate=44100 wave=1 mode=wrap frames=17640 eligible=0 wraps=11/11 draws=0/0
+scenario rate=44100 wave=1 mode=scheduled frames=19845 eligible=0 wraps=5/5 draws=0/0
+scenario rate=44100 wave=2 mode=wrap frames=17640 eligible=0 wraps=11/11 draws=0/0
+scenario rate=44100 wave=2 mode=scheduled frames=19845 eligible=0 wraps=5/5 draws=0/0
+scenario rate=44100 wave=3 mode=wrap frames=17640 eligible=0 wraps=11/11 draws=0/0
+scenario rate=44100 wave=3 mode=scheduled frames=19845 eligible=0 wraps=5/5 draws=0/0
+scenario rate=44100 wave=4 mode=wrap frames=17640 eligible=0 wraps=11/11 draws=12/12
+scenario rate=44100 wave=4 mode=scheduled frames=19845 eligible=0 wraps=5/5 draws=6/6
+scenario rate=44100 wave=5 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=35280/35280
+scenario rate=44100 wave=5 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=39690/39690
+scenario rate=48000 wave=0 mode=wrap frames=19200 eligible=0 wraps=11/11 draws=0/0
+scenario rate=48000 wave=0 mode=scheduled frames=21600 eligible=0 wraps=5/5 draws=0/0
+scenario rate=48000 wave=1 mode=wrap frames=19200 eligible=0 wraps=11/11 draws=0/0
+scenario rate=48000 wave=1 mode=scheduled frames=21600 eligible=0 wraps=5/5 draws=0/0
+scenario rate=48000 wave=2 mode=wrap frames=19200 eligible=0 wraps=11/11 draws=0/0
+scenario rate=48000 wave=2 mode=scheduled frames=21600 eligible=0 wraps=5/5 draws=0/0
+scenario rate=48000 wave=3 mode=wrap frames=19200 eligible=0 wraps=11/11 draws=0/0
+scenario rate=48000 wave=3 mode=scheduled frames=21600 eligible=0 wraps=5/5 draws=0/0
+scenario rate=48000 wave=4 mode=wrap frames=19200 eligible=0 wraps=11/11 draws=12/12
+scenario rate=48000 wave=4 mode=scheduled frames=21600 eligible=0 wraps=5/5 draws=6/6
+scenario rate=48000 wave=5 mode=wrap frames=19200 eligible=1 wraps=11/11 draws=38400/38400
+scenario rate=48000 wave=5 mode=scheduled frames=21600 eligible=1 wraps=5/5 draws=43200/43200
+scenario rate=96000 wave=0 mode=wrap frames=38400 eligible=0 wraps=11/11 draws=0/0
+scenario rate=96000 wave=0 mode=scheduled frames=43200 eligible=0 wraps=5/5 draws=0/0
+scenario rate=96000 wave=1 mode=wrap frames=38400 eligible=0 wraps=11/11 draws=0/0
+scenario rate=96000 wave=1 mode=scheduled frames=43200 eligible=0 wraps=5/5 draws=0/0
+scenario rate=96000 wave=2 mode=wrap frames=38400 eligible=0 wraps=11/11 draws=0/0
+scenario rate=96000 wave=2 mode=scheduled frames=43200 eligible=0 wraps=5/5 draws=0/0
+scenario rate=96000 wave=3 mode=wrap frames=38400 eligible=0 wraps=11/11 draws=0/0
+scenario rate=96000 wave=3 mode=scheduled frames=43200 eligible=0 wraps=5/5 draws=0/0
+scenario rate=96000 wave=4 mode=wrap frames=38400 eligible=0 wraps=11/11 draws=12/12
+scenario rate=96000 wave=4 mode=scheduled frames=43200 eligible=0 wraps=5/5 draws=6/6
+scenario rate=96000 wave=5 mode=wrap frames=38400 eligible=1 wraps=11/11 draws=76800/76800
+scenario rate=96000 wave=5 mode=scheduled frames=43200 eligible=1 wraps=5/5 draws=86400/86400
+scenario rate=192000 wave=0 mode=wrap frames=76800 eligible=0 wraps=11/11 draws=0/0
+scenario rate=192000 wave=0 mode=scheduled frames=86400 eligible=0 wraps=5/5 draws=0/0
+scenario rate=192000 wave=1 mode=wrap frames=76800 eligible=0 wraps=11/11 draws=0/0
+scenario rate=192000 wave=1 mode=scheduled frames=86400 eligible=0 wraps=5/5 draws=0/0
+scenario rate=192000 wave=2 mode=wrap frames=76800 eligible=0 wraps=11/11 draws=0/0
+scenario rate=192000 wave=2 mode=scheduled frames=86400 eligible=0 wraps=5/5 draws=0/0
+scenario rate=192000 wave=3 mode=wrap frames=76800 eligible=0 wraps=11/11 draws=0/0
+scenario rate=192000 wave=3 mode=scheduled frames=86400 eligible=0 wraps=5/5 draws=0/0
+scenario rate=192000 wave=4 mode=wrap frames=76800 eligible=0 wraps=11/11 draws=12/12
+scenario rate=192000 wave=4 mode=scheduled frames=86400 eligible=0 wraps=5/5 draws=6/6
+scenario rate=192000 wave=5 mode=wrap frames=76800 eligible=1 wraps=11/11 draws=153600/153600
+scenario rate=192000 wave=5 mode=scheduled frames=86400 eligible=1 wraps=5/5 draws=172800/172800
+54 scenarios, 1958109 checks, 1272275 failures

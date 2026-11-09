@@ -1,0 +1,32 @@
+{
+  "provenance": "Reconstructed exact-path compile command from original-native-command.txt, the baseline checkout, matching native archive and retained executable locations. This is not a contemporaneous shell transcript or a new rerun. The placeholder command is retained unchanged in runs/.",
+  "argv": [
+    "c++",
+    "-std=c++20",
+    "-O3",
+    "-DNDEBUG",
+    "-march=native",
+    "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+    "-I/workspace/scratch/ee447c520988/pitch-power-recovery/baseline/src",
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/baseline/tests/CoreTests.cpp",
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-native/libcs80_core.a",
+    "-o",
+    "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/original-native-core-tests"
+  ],
+  "source_identity": {
+    "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/baseline/tests/CoreTests.cpp",
+    "bytes": 91869,
+    "sha256": "54c6f8e1934e1d6cb4273f33b1938d69ca41f53eedc4af997fcde733fe806640"
+  },
+  "library_identity": {
+    "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-native/libcs80_core.a",
+    "bytes": 866346,
+    "sha256": "02ba607ec0cfb0aca83576f99adc0255e5d41c9c45ad3866bcadf4dec6c95e97"
+  },
+  "binary_identity": {
+    "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/original-native-core-tests",
+    "bytes": 757192,
+    "sha256": "d5b1c1ec91db83ed5ac2caa4a7ea6bdc1746cb78bf5631b8aae4999143be8801"
+  },
+  "expected_terminal_summary": "4 OF 11508 CHECKS FAILED"
+}

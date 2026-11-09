@@ -1,0 +1,33 @@
+{
+  "method": "Read both complete archives and compare bytes; no rebuild or binary execution.",
+  "comparisons": [
+    {
+      "profile": "generic",
+      "current": {
+        "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-generic/libcs80_core.a",
+        "bytes": 909306,
+        "sha256": "f426f67fb902e07169a6aaada3b7383c3e7b61242be8248038ca9593295eaff2"
+      },
+      "published_base": {
+        "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-generic/libcs80_core.a",
+        "bytes": 909306,
+        "sha256": "f426f67fb902e07169a6aaada3b7383c3e7b61242be8248038ca9593295eaff2"
+      },
+      "byte_for_byte_equal": true
+    },
+    {
+      "profile": "native",
+      "current": {
+        "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-native/libcs80_core.a",
+        "bytes": 866346,
+        "sha256": "02ba607ec0cfb0aca83576f99adc0255e5d41c9c45ad3866bcadf4dec6c95e97"
+      },
+      "published_base": {
+        "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-native/libcs80_core.a",
+        "bytes": 866346,
+        "sha256": "02ba607ec0cfb0aca83576f99adc0255e5d41c9c45ad3866bcadf4dec6c95e97"
+      },
+      "byte_for_byte_equal": true
+    }
+  ]
+}

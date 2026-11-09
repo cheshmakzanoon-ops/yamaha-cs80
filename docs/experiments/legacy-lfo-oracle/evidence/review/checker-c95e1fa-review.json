@@ -1,0 +1,167 @@
+{
+  "recorded_at_utc": "2026-11-09T20:57:52.325948+00:00",
+  "reviewed_commit": "c95e1fa8ab547f40026393432bb9a95fb84d55f9",
+  "reviewed_file": "docs/experiments/legacy-lfo-oracle/check_mutations.py",
+  "driver_sha256": "261a31d1edbaf345da6df5d3d0f1ec8bdddc2294f96f134e49b01c51e3002dbc",
+  "review_result": "Approved complete, unique, terminal-summary validation.",
+  "recording_scope": "Records the already completed independent parser and final-log checks. Saving this report did not rerun tests or mutation binaries.",
+  "executed_method": "Parsed the driver with Python ast, extracted only result_summary, compiled and executed that function with re in its namespace; did not execute the driver top level. Passed the listed synthetic inputs, then compared both summary JSON files and passed every final mutation log through the extracted function.",
+  "parser_cases": {
+    "valid": [
+      {
+        "input": "54 scenarios, 1958109 checks, 7396 failures",
+        "observed": "accepted",
+        "returned": {
+          "scenarios": 54,
+          "checks": 1958109,
+          "failures": 7396
+        }
+      },
+      {
+        "input": "FAIL: deliberate mutant\n54 scenarios, 1958109 checks, 7396 failures\n",
+        "observed": "accepted",
+        "returned": {
+          "scenarios": 54,
+          "checks": 1958109,
+          "failures": 7396
+        }
+      }
+    ],
+    "invalid": [
+      {
+        "case": "empty",
+        "input": "",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "no summary",
+        "input": "noise",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "nonterminal summary",
+        "input": "54 scenarios, 1958109 checks, 7396 failures\npostscript",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "duplicate summaries",
+        "input": "54 scenarios, 1958109 checks, 7396 failures\n54 scenarios, 1958109 checks, 7396 failures",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "wrong scenario count",
+        "input": "53 scenarios, 1958109 checks, 7 failures",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "truncated check count",
+        "input": "54 scenarios, 1958108 checks, 7 failures",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "excess check count",
+        "input": "54 scenarios, 1958110 checks, 7 failures",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "zero failures",
+        "input": "54 scenarios, 1958109 checks, 0 failures",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "failures exceed checks",
+        "input": "54 scenarios, 1958109 checks, 1958110 failures",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "prefixed summary",
+        "input": "prefix 54 scenarios, 1958109 checks, 7396 failures",
+        "observed": "RuntimeError rejection"
+      },
+      {
+        "case": "suffixed summary",
+        "input": "54 scenarios, 1958109 checks, 7396 failures suffix",
+        "observed": "RuntimeError rejection"
+      }
+    ],
+    "valid_accepted": 2,
+    "invalid_rejected": 11
+  },
+  "final_mutation_log_checks": {
+    "directory": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted",
+    "summary_sha256": "fdacd0df0391f5c560aa9563d797bb3d6449ad81d353d268039fd2207086395b",
+    "previous_summary": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/summary.json",
+    "summaries_equal": true,
+    "logs": {
+      "coefficient.log": {
+        "scenarios": 54,
+        "checks": 1958109,
+        "failures": 1941582,
+        "accepted_by_hardened_parser": true,
+        "equals_previous_record": true
+      },
+      "extra-rng.log": {
+        "scenarios": 54,
+        "checks": 1958109,
+        "failures": 647194,
+        "accepted_by_hardened_parser": true,
+        "equals_previous_record": true
+      },
+      "skipped-wrap-draw.log": {
+        "scenarios": 54,
+        "checks": 1958109,
+        "failures": 254455,
+        "accepted_by_hardened_parser": true,
+        "equals_previous_record": true
+      },
+      "phase-reset.log": {
+        "scenarios": 54,
+        "checks": 1958109,
+        "failures": 1582342,
+        "accepted_by_hardened_parser": true,
+        "equals_previous_record": true
+      },
+      "missing-wrap.log": {
+        "scenarios": 54,
+        "checks": 1958109,
+        "failures": 1272275,
+        "accepted_by_hardened_parser": true,
+        "equals_previous_record": true
+      },
+      "omitted-lfo-tick.log": {
+        "scenarios": 54,
+        "checks": 1958109,
+        "failures": 1836797,
+        "accepted_by_hardened_parser": true,
+        "equals_previous_record": true
+      },
+      "revive-eligibility.log": {
+        "scenarios": 54,
+        "checks": 1958109,
+        "failures": 7396,
+        "accepted_by_hardened_parser": true,
+        "equals_previous_record": true
+      }
+    },
+    "driver_status_file": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutation-final-restarted.status",
+    "observed_driver_status": 0
+  },
+  "unchanged_scope": {
+    "test_implementation_commit": "1782677471148447f20d171531ff7fcc365aaa09",
+    "published_production_baseline": "4ef0666e3aa5b6f4157afb403f538b82c5af1f50",
+    "production_src_tree": "b76dba2e547c8829a86dda6d2625f330d5548d26",
+    "verified_unchanged_from_test_implementation": [
+      "src",
+      "tests/CoreTests.cpp",
+      "tests/LegacySubLfoOracle.h",
+      "tests/LegacySubLfoOracleTests.cpp",
+      "CMakeLists.txt"
+    ],
+    "checker_commit_changes_only": "docs/experiments/legacy-lfo-oracle/check_mutations.py"
+  },
+  "limitations": [
+    "This artifact verifies parser behavior and recorded complete mutation results, not a new execution of all seven binaries. Independent coefficient and eligibility-revival reruns are recorded separately in mutation-review.json.",
+    "Interrupted attempts are incomplete and distinct from the final restarted run.",
+    "This review does not claim full-suite, sanitizer, performance, production-sound or native-host qualification."
+  ]
+}

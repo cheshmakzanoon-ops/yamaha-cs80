@@ -2,6 +2,7 @@
 #include "core/Engine.h"
 #include "core/FactoryPresets.h"
 #include "core/Params.h"
+#include "LegacySubLfoOracle.h"
 
 #include <algorithm>
 #include <cmath>
@@ -1004,38 +1005,25 @@ void testOriginalSubOscillator()
     }
 
     // Independent shipped LFO oracle, including old RNG consumption and
-    // non-sample-rate-compensated speed smoothing. No voices are needed.
+    // non-sample-rate-compensated speed smoothing. Explicit fused/split whole
+    // trajectories avoid a compiler-dependent oracle. No voices are needed.
     for(int wave=0;wave<6;++wave)
     {
         Engine engine; engine.prepare(48000);
         legacy[P_subWave]=(float)wave; legacy[P_subSpeed]=7;
         engine.setParams(legacy);
-        Rng random(0x9e3779b9u);
-        float phase=0, speed=4.2f, held=0; bool started=false;
+        legacy_sub_oracle::Pair reference;
         bool same=true; float pair[2]{};
         for(int frame=0;frame<512;++frame)
         {
-            float expected=0;
-            for(int os=0;os<2;++os)
-            {
-                speed+=(7-speed)*.0015f;
-                const float before=phase;
-                phase+=speed/96000; phase-=std::floor(phase);
-                switch(wave)
-                {
-                    case 0: expected=std::sin(kTwoPi*phase); break;
-                    case 1: expected=1-4*std::abs(phase-.5f); break;
-                    case 2: expected=2*phase-1; break;
-                    case 3: expected=phase<.5f ? 1.f:-1.f; break;
-                    case 4:
-                        if(!started || phase<before) {held=random.nextBipolar();started=true;}
-                        expected=held; break;
-                    case 5: expected=random.nextBipolar(); break;
-                }
-            }
+            for(int os=0;os<2;++os) reference.tick(7.0f, 96000.0f, wave);
             engine.render(pair,1);
-            same=same&&engine.getSubOscillatorValue()==expected
-                     &&engine.getSubOscillatorRate()==speed;
+            // Preserve one arithmetic trajectory across the ENTIRE scenario.
+            // The compiler may contract the DUT's multiply/add independently
+            // of this test TU; no per-sample either-track choice is permitted.
+            const bool matches = reference.observe({engine.getSubOscillatorRate(),
+                                                     engine.getSubOscillatorValue()});
+            same = matches && same;
         }
         check(same,"legacy LFO sample stream and speed match independent shipped oracle");
     }

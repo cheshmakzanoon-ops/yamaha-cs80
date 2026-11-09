@@ -1,0 +1,61 @@
+{
+  "captured_at_utc": "2026-11-09T20:58:59.970539+00:00",
+  "scope": "Read-only version and machine description at packaging time; not a test rerun or guarantee on another host.",
+  "system": "Linux",
+  "machine": "x86_64",
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/c++",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "c++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "cmake version 3.31.6\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "1.11.1.git.kitware.jobserver-1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "Debian clang version 19.1.7 (3+b1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/llvm-19/bin\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ldd",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "ldd (Debian GLIBC 2.41-12+deb13u4) 2.41\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nWritten by Roland McGrath and Ulrich Drepper.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "lscpu"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "lscpu: failed to determine number of CPUs: /sys/devices/system/cpu/possible: No such file or directory\n"
+    }
+  ]
+}

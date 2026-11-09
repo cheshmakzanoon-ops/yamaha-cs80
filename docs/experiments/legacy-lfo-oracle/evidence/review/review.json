@@ -1,0 +1,38 @@
+{
+  "recorded_at_utc": "2026-11-09T20:15:17.312440+00:00",
+  "reviewed_commit": "1782677471148447f20d171531ff7fcc365aaa09",
+  "preregistration_commit": "3c458473ba6dcfc7801cb192ff7a21fff9549815",
+  "production_source_tree": "b76dba2e547c8829a86dda6d2625f330d5548d26",
+  "unchanged_production_baseline": "4ef0666e3aa5b6f4157afb403f538b82c5af1f50",
+  "source_review": "Approved test-only explicit fused/split arithmetic and sticky same-track two-field matching. No production source or compiler flag changes.",
+  "independent_execution": {
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "flags": "-std=gnu++20 -O3 -DNDEBUG -march=native -Wall -Wextra -Wpedantic -Werror -DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+    "headers": "/workspace/scratch/ee447c520988/pitch-power-recovery/baseline/src",
+    "source": "/workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/LegacySubLfoOracleTests.cpp",
+    "library": "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-native/libcs80_core.a",
+    "cpu_affinity": "0-3",
+    "scenarios": 54,
+    "checks": 1958109,
+    "failures": 0,
+    "eligibility_counts": {
+      "2": 54
+    }
+  },
+  "sha256": {
+    "/workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/LegacySubLfoOracle.h": "8ac2cd8bca527aab736b128fcb4c627e0ec565884249818407e2130cfcaba73e",
+    "/workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/LegacySubLfoOracleTests.cpp": "2f00bde4fde8647dc8eb07e3750f615790f917a43b1ed5dae2739a6091a4298a",
+    "/workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/CoreTests.cpp": "fb117104f634397822e6729d54a02af8581d919d6f8c7b546836b766c6d8aa81",
+    "/workspace/scratch/ee447c520988/legacy-lfo-oracle/CMakeLists.txt": "9f0b60f0b55d66238968ea47358b93cfbf08e9f364341a27cc75c7a9e106bce8",
+    "/workspace/scratch/ee447c520988/legacy-lfo-oracle/docs/experiments/legacy-lfo-oracle/preregistered.md": "763019782a98497adc59192f819be51d25addf769fb39e726ba7bcbd2ab5d0e0",
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-native/libcs80_core.a": "02ba607ec0cfb0aca83576f99adc0255e5d41c9c45ad3866bcadf4dec6c95e97",
+    "/workspace/scratch/ee447c520988/legacy-lfo-product-review/native-focused": "f728aee2025deaa0bdd6ed73efc1d97400b337446b1995f64bfe6c2d70806863",
+    "/workspace/scratch/ee447c520988/legacy-lfo-product-review/native-focused.log": "af7a8b6fb006ecf02787a0069c08b2aaa85a02c3cd10e207117760640fe862bf"
+  },
+  "limitations": [
+    "This reviewer ran the focused GCC native gate, not the complete compiler, sanitizer or mutation matrix.",
+    "DUT rate/value observations occur after each host frame; reference tracks advance both internal samples.",
+    "Fresh Legacy instances with fixed waveform, no voices/arpeggiator/modern routing; reset/reprepare and original circuit SUB are outside this fixture.",
+    "Same-runtime sine libm; no cross-libm golden, runtime sound change, performance or hardware/native-host qualification."
+  ]
+}

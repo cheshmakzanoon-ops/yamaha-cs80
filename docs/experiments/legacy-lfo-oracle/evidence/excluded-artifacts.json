@@ -1,0 +1,369 @@
+{
+  "purpose": "Local binaries, object files and full mutant trees are deliberately excluded from the repository. Identities record observed bytes, not portability or availability on a new checkout. Tree identity includes the binary and object where present.",
+  "files": [
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-generic/libcs80_core.a",
+      "bytes": 909306,
+      "sha256": "f426f67fb902e07169a6aaada3b7383c3e7b61242be8248038ca9593295eaff2"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-generic/cs80_tests",
+      "bytes": 790296,
+      "sha256": "714bb79b36d4e5cd2382cce89178cc3991c0f599a7246582ec33e53fca0bbe24"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-generic/cs80_legacy_sub_lfo_oracle_tests",
+      "bytes": 452464,
+      "sha256": "0999849fb54ee57cd8009360e61c4de421274fe45f493f624fd4964ded0855f2"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-native/libcs80_core.a",
+      "bytes": 866346,
+      "sha256": "02ba607ec0cfb0aca83576f99adc0255e5d41c9c45ad3866bcadf4dec6c95e97"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-native/cs80_tests",
+      "bytes": 761336,
+      "sha256": "706a474fb153a757dfc5d07959213fd96d322efe65e7dbfb16de1f213b79fdaa"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-gcc-native/cs80_legacy_sub_lfo_oracle_tests",
+      "bytes": 427600,
+      "sha256": "f728aee2025deaa0bdd6ed73efc1d97400b337446b1995f64bfe6c2d70806863"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic/libcs80_core.a",
+      "bytes": 1108190,
+      "sha256": "a2f1b4b499b874755d780bf20839c5f255148970d303e839ae37303ca15d47ca"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic/cs80_tests",
+      "bytes": 786824,
+      "sha256": "2e4671c1d1251928d1b3ece96fda093b4bc23ff54bc78a995da6853511e649ae"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic/cs80_legacy_sub_lfo_oracle_tests",
+      "bytes": 392472,
+      "sha256": "424b9a20ecdc4a0c109bb1849f38688b66747a032ff80b9d2d7610534a97ff24"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-native/libcs80_core.a",
+      "bytes": 1163028,
+      "sha256": "5ef93c00dda69dd0b286457e08d4ebde8286b4af47bea0a7b547581598323b5b"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-native/cs80_tests",
+      "bytes": 896952,
+      "sha256": "8a5c9f47377395f2df243dd5923057fd1a7a1095a4fc443f860f997695a79a4c"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-native/cs80_legacy_sub_lfo_oracle_tests",
+      "bytes": 408392,
+      "sha256": "0caf475feea933c7bf581fd320a18963939f2da64b71bf248c6da747448b432b"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-sanitizer/libcs80_core.a",
+      "bytes": 14739256,
+      "sha256": "9af4c23acbf9218c3be89025d319d5dc6a789648bd6cefa043557c7bba57f304"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-sanitizer/cs80_tests",
+      "bytes": 14206224,
+      "sha256": "c3b5b546546da8f5cedb4ae35a243fc77b6b887f1320358e1294d2ee8da96f47"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-sanitizer/cs80_legacy_sub_lfo_oracle_tests",
+      "bytes": 9126952,
+      "sha256": "4421d287bc82bf11450aba78bcafe8a0f87e4e162e4387b45b8c6f71ed9a2295"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-generic/libcs80_core.a",
+      "bytes": 909306,
+      "sha256": "f426f67fb902e07169a6aaada3b7383c3e7b61242be8248038ca9593295eaff2"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/pitch-power-recovery/build-baseline-native/libcs80_core.a",
+      "bytes": 866346,
+      "sha256": "02ba607ec0cfb0aca83576f99adc0255e5d41c9c45ad3866bcadf4dec6c95e97"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/original-native-core-tests",
+      "bytes": 757192,
+      "sha256": "d5b1c1ec91db83ed5ac2caa4a7ea6bdc1746cb78bf5631b8aae4999143be8801"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-product-review/native-focused",
+      "bytes": 427600,
+      "sha256": "f728aee2025deaa0bdd6ed73efc1d97400b337446b1995f64bfe6c2d70806863"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/coefficient/probe",
+      "bytes": 461224,
+      "sha256": "0232e64053ecb2173d69738455712170f9b7332de13689824a5e863916f3d205"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/coefficient/Engine.o",
+      "bytes": 572232,
+      "sha256": "bdbad0c52218573c4ce8293f3720cfd8af977dd97c38df9f6ad0a937fe9a9053"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/extra-rng/probe",
+      "bytes": 457048,
+      "sha256": "1e5b84178c3843762af1103e66762d9f0f2910d938774b827ed4fa0c7184fd3a"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/extra-rng/Engine.o",
+      "bytes": 571776,
+      "sha256": "058fae36fb50b994c2033735ef1aed442518d0bfe31dd9617b840490e298c4f4"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/missing-wrap/probe",
+      "bytes": 457128,
+      "sha256": "5d4e8ac7fc98584e87033ae3f9e4b65dbf0cb5eb4192d95412cadac591134e90"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/missing-wrap/Engine.o",
+      "bytes": 572160,
+      "sha256": "9984c6dc43b1843ac93db9717bf5a0df477c82159e19414f4105f9ddb58468fd"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/omitted-lfo-tick/probe",
+      "bytes": 457128,
+      "sha256": "f4bebec9832d83c281eab0cdd5c42893d47c168998b46e767e5cebea565aaabd"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/omitted-lfo-tick/Engine.o",
+      "bytes": 571808,
+      "sha256": "ad15c13d9e57d05cbb869f306937adbb959f9a0ad778804bb082d5993dbf7948"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/phase-reset/probe",
+      "bytes": 457048,
+      "sha256": "f8cb638a6fd409bec25836705bbc98800a1f67b5cf253b906142c2fe637328a0"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/phase-reset/Engine.o",
+      "bytes": 571624,
+      "sha256": "a5764c501af39a7b877ed7ff657a49a5594c0b20422a3b8ab8dd5ea95babc161"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/revive-eligibility/probe",
+      "bytes": 452480,
+      "sha256": "10929d250b3381170983e18301fa68cf398aeb071ce5709a1491439dd6af6f56"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/skipped-wrap-draw/probe",
+      "bytes": 461224,
+      "sha256": "38f3e3f6417157005c70f24c829bd306c6b0b37532e6b3fad3a7234cd2f465ad"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/skipped-wrap-draw/Engine.o",
+      "bytes": 572344,
+      "sha256": "540dcd4cf36aa6c4adcacfa47bbdc9e8cf27d356bf42f7fae318cdad5678def4"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/coefficient/probe",
+      "bytes": 461224,
+      "sha256": "0232e64053ecb2173d69738455712170f9b7332de13689824a5e863916f3d205"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/coefficient/Engine.o",
+      "bytes": 572232,
+      "sha256": "bdbad0c52218573c4ce8293f3720cfd8af977dd97c38df9f6ad0a937fe9a9053"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/extra-rng/probe",
+      "bytes": 457048,
+      "sha256": "1e5b84178c3843762af1103e66762d9f0f2910d938774b827ed4fa0c7184fd3a"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/extra-rng/Engine.o",
+      "bytes": 571776,
+      "sha256": "058fae36fb50b994c2033735ef1aed442518d0bfe31dd9617b840490e298c4f4"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/missing-wrap/probe",
+      "bytes": 457128,
+      "sha256": "5d4e8ac7fc98584e87033ae3f9e4b65dbf0cb5eb4192d95412cadac591134e90"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/missing-wrap/Engine.o",
+      "bytes": 572160,
+      "sha256": "9984c6dc43b1843ac93db9717bf5a0df477c82159e19414f4105f9ddb58468fd"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/omitted-lfo-tick/probe",
+      "bytes": 457128,
+      "sha256": "f4bebec9832d83c281eab0cdd5c42893d47c168998b46e767e5cebea565aaabd"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/omitted-lfo-tick/Engine.o",
+      "bytes": 571808,
+      "sha256": "ad15c13d9e57d05cbb869f306937adbb959f9a0ad778804bb082d5993dbf7948"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/phase-reset/probe",
+      "bytes": 457048,
+      "sha256": "f8cb638a6fd409bec25836705bbc98800a1f67b5cf253b906142c2fe637328a0"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/phase-reset/Engine.o",
+      "bytes": 571624,
+      "sha256": "a5764c501af39a7b877ed7ff657a49a5594c0b20422a3b8ab8dd5ea95babc161"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/revive-eligibility/probe",
+      "bytes": 452480,
+      "sha256": "10929d250b3381170983e18301fa68cf398aeb071ce5709a1491439dd6af6f56"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/skipped-wrap-draw/probe",
+      "bytes": 461224,
+      "sha256": "38f3e3f6417157005c70f24c829bd306c6b0b37532e6b3fad3a7234cd2f465ad"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/skipped-wrap-draw/Engine.o",
+      "bytes": 572344,
+      "sha256": "540dcd4cf36aa6c4adcacfa47bbdc9e8cf27d356bf42f7fae318cdad5678def4"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/lfo-native-review/core-native",
+      "bytes": 757200,
+      "sha256": "7946d36cbcb72a068b3b4b802a55d5e6ad39e48b9d3d62a6e38370bd23f05567"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/lfo-native-review/core-outlined-native",
+      "bytes": 757240,
+      "sha256": "e1ce9c7d0fcb5f83fb84b020b6431a8b9d6d95af1cfd188c9365ba00336975ee"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/lfo-native-review/speed-generic",
+      "bytes": 423200,
+      "sha256": "973f76de579e340b5823c8efc19990d38a118ad205897c593c36adc973322952"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/lfo-native-review/speed-native",
+      "bytes": 406528,
+      "sha256": "6a58d17007d1b8760df4f741ca127149b64eee2f75c28bfb704ea256f47f7d62"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/lfo-native-review/core-native.asm",
+      "bytes": 7404642,
+      "sha256": "2f0dab5021bf6629609e995251f4e843a10561197d545773c5877b08bbaef802"
+    }
+  ],
+  "trees": [
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/coefficient",
+      "files": 168,
+      "bytes": 3852912,
+      "sha256": "d74d10092ffa21ed6affedf997e61d52b02b879944cacbf12974a02523bb13a7",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/extra-rng",
+      "files": 168,
+      "bytes": 3848314,
+      "sha256": "060e06b9fbf1c39a2c09f49398cce3e971220189620fb504666708001a5c84a1",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/missing-wrap",
+      "files": 168,
+      "bytes": 3848731,
+      "sha256": "d4b86ed45e18a671ce83568dfc89295c448f7f0b8b36ab66d0fb73cd000bc77d",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/omitted-lfo-tick",
+      "files": 168,
+      "bytes": 3848462,
+      "sha256": "658ef8cb301a35d3b5805b359f0ab0e03a61544a4b6d1ebd513e95a85b75f3c2",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/phase-reset",
+      "files": 168,
+      "bytes": 3848152,
+      "sha256": "eaa8b16e5f8ffa613e59da5a73dc0c0ccc129c7f26264ad0f9da1159759c972b",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/revive-eligibility",
+      "files": 3,
+      "bytes": 462755,
+      "sha256": "8e1952dbf093fe987e6ec4e10457828a8cd87ef2f0eaabb43e53486b1ed1a610",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations/skipped-wrap-draw",
+      "files": 168,
+      "bytes": 3853035,
+      "sha256": "b572087a736d8d39f0c6e5f96678684c694d68bf9d413fbdd52aa2de661240b3",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final/coefficient",
+      "files": 166,
+      "bytes": 2819456,
+      "sha256": "96dc5e0f101ca2d8d376df48cb4b4a0b4df6172a4e4af4c85520f6571fe02660",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/coefficient",
+      "files": 168,
+      "bytes": 3852912,
+      "sha256": "d74d10092ffa21ed6affedf997e61d52b02b879944cacbf12974a02523bb13a7",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/extra-rng",
+      "files": 168,
+      "bytes": 3848314,
+      "sha256": "060e06b9fbf1c39a2c09f49398cce3e971220189620fb504666708001a5c84a1",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/missing-wrap",
+      "files": 168,
+      "bytes": 3848731,
+      "sha256": "d4b86ed45e18a671ce83568dfc89295c448f7f0b8b36ab66d0fb73cd000bc77d",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/omitted-lfo-tick",
+      "files": 168,
+      "bytes": 3848462,
+      "sha256": "658ef8cb301a35d3b5805b359f0ab0e03a61544a4b6d1ebd513e95a85b75f3c2",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/phase-reset",
+      "files": 168,
+      "bytes": 3848152,
+      "sha256": "eaa8b16e5f8ffa613e59da5a73dc0c0ccc129c7f26264ad0f9da1159759c972b",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/revive-eligibility",
+      "files": 3,
+      "bytes": 462755,
+      "sha256": "8e1952dbf093fe987e6ec4e10457828a8cd87ef2f0eaabb43e53486b1ed1a610",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/skipped-wrap-draw",
+      "files": 168,
+      "bytes": 3853035,
+      "sha256": "b572087a736d8d39f0c6e5f96678684c694d68bf9d413fbdd52aa2de661240b3",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    },
+    {
+      "files": 3,
+      "bytes": 69250,
+      "sha256": "de510d22cd500d1266b508f6c9783c16c1df86e941d1136a521aa6b3be4a6c62",
+      "path": "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/python-cache-interrupted-suite",
+      "algorithm": "SHA-256 of sorted relative-path TAB byte-size TAB file-SHA-256 LF UTF-8 records"
+    }
+  ]
+}

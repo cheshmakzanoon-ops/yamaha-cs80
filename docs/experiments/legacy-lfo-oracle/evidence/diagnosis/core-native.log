@@ -1,0 +1,18 @@
+FIRST wave=0 frame=398 expected=0x1.1b6a14p-2 actual=0x1.1b6a14p-2 speedExpected=0x1.89e99cp+2 speedActual=0x1.89e99ep+2 phase=0x1.6da0bep-5
+FAIL: legacy LFO sample stream and speed match independent shipped oracle
+FIRST wave=1 frame=398 expected=-0x1.a497dp-1 actual=-0x1.a497dp-1 speedExpected=0x1.89e99cp+2 speedActual=0x1.89e99ep+2 phase=0x1.6da0bep-5
+FAIL: legacy LFO sample stream and speed match independent shipped oracle
+FIRST wave=2 frame=398 expected=-0x1.d24be8p-1 actual=-0x1.d24be8p-1 speedExpected=0x1.89e99cp+2 speedActual=0x1.89e99ep+2 phase=0x1.6da0bep-5
+FAIL: legacy LFO sample stream and speed match independent shipped oracle
+FIRST wave=3 frame=398 expected=0x1p+0 actual=0x1p+0 speedExpected=0x1.89e99cp+2 speedActual=0x1.89e99ep+2 phase=0x1.6da0bep-5
+FAIL: legacy LFO sample stream and speed match independent shipped oracle
+EXT reconstruction sr=44100 tone=21.533Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+EXT reconstruction sr=44100 tone=1001.294Hz gain=-0.000047dB image=-114.60dB delay=63.5host
+EXT reconstruction sr=44100 tone=20004.346Hz gain=0.000378dB image=-108.18dB delay=63.5host
+EXT reconstruction sr=48000 tone=23.438Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+EXT reconstruction sr=48000 tone=996.094Hz gain=-0.000036dB image=-120.37dB delay=63.5host
+EXT reconstruction sr=48000 tone=20003.906Hz gain=0.000097dB image=-106.94dB delay=63.5host
+EXT reconstruction sr=96000 tone=23.438Hz gain=-0.000000dB image=-114.32dB delay=63.5host
+EXT reconstruction sr=96000 tone=1007.812Hz gain=-0.000035dB image=-121.11dB delay=63.5host
+EXT reconstruction sr=96000 tone=19992.188Hz gain=-0.000045dB image=-114.90dB delay=63.5host
+4 OF 11508 CHECKS FAILED

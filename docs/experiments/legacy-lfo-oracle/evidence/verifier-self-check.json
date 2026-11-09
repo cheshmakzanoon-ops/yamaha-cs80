@@ -1,0 +1,18 @@
+{
+  "scope": "Evidence verifier helper checks only, using in-memory synthetic strings under python3 -O. No C++ test, build or fault binary was rerun.",
+  "verifier_sha256": "f23bc0c59ccf01cfb8a9cd9dd75c393d74f03b589b6f5d5b706518fb4e928d40",
+  "optimized_python": true,
+  "valid_terminal_summary_accepted": 1,
+  "invalid_terminal_summaries_rejected": 8,
+  "explicit_false_condition_rejected": true,
+  "invalid_inputs": [
+    "",
+    "54 scenarios, 1958109 checks, 0 failures\npostscript\n",
+    "54 scenarios, 1958109 checks, 0 failures\n54 scenarios, 1958109 checks, 0 failures\n",
+    "53 scenarios, 1958109 checks, 0 failures\n",
+    "54 scenarios, 1958108 checks, 0 failures\n",
+    "54 scenarios, 1958109 checks, 1 failures\n",
+    "prefix 54 scenarios, 1958109 checks, 0 failures\n",
+    "54 scenarios, 1958109 checks, 0 failures suffix\n"
+  ]
+}

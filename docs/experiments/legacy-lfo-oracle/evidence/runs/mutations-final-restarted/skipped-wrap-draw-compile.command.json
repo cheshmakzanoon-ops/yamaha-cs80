@@ -1,0 +1,18 @@
+[
+  "taskset",
+  "-c",
+  "0-3",
+  "c++",
+  "-std=c++20",
+  "-O3",
+  "-DNDEBUG",
+  "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+  "-Wall",
+  "-Wextra",
+  "-Werror",
+  "-I/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/skipped-wrap-draw/src",
+  "-c",
+  "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/skipped-wrap-draw/src/core/Engine.cpp",
+  "-o",
+  "/workspace/scratch/ee447c520988/legacy-lfo-oracle-evidence/mutations-final-restarted/skipped-wrap-draw/Engine.o"
+]

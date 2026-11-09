@@ -1,0 +1,71 @@
+{
+  "provenance": "Read-only extraction from completed build CMake cache and compile_commands.json; not a new build or compiler invocation. All core translation units and both test translation units are retained.",
+  "cache_identity": {
+    "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic/CMakeCache.txt",
+    "bytes": 17226,
+    "sha256": "cfa3071a69040211a04b45be784ac791f90f30e7222cbb44d5721ff74f43c1ba"
+  },
+  "cache_entries": [
+    "CMAKE_BUILD_TYPE:STRING=Release",
+    "CMAKE_CXX_COMPILER:STRING=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19",
+    "CMAKE_CXX_FLAGS:STRING=",
+    "CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG",
+    "CMAKE_C_COMPILER:STRING=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang-19",
+    "CMAKE_C_FLAGS_RELEASE:STRING=-O3 -DNDEBUG",
+    "CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=",
+    "CS80_BUILD_PLUGIN:BOOL=OFF",
+    "CS80_BUILD_TESTS:BOOL=ON",
+    "CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=OFF",
+    "CS80_TEST_TIMEOUT_SCALE:STRING=1",
+    "CMAKE_GENERATOR:INTERNAL=Ninja",
+    "CMAKE_HOME_DIRECTORY:INTERNAL=/workspace/scratch/ee447c520988/legacy-lfo-oracle"
+  ],
+  "compile_commands_identity": {
+    "path": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic/compile_commands.json",
+    "bytes": 82854,
+    "sha256": "e69e8306cf6bfaa2095afb0c9ffd21db82d14100cc14d67d19dfc2a06627b950"
+  },
+  "compile_commands": [
+    {
+      "directory": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic",
+      "command": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/Engine.cpp",
+      "file": "/workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/Engine.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic",
+      "command": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/FactoryPresets.cpp",
+      "file": "/workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/FactoryPresets.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic",
+      "command": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/Ig00156Batch.cpp",
+      "file": "/workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/Ig00156Batch.cpp",
+      "output": "CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic",
+      "command": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -o CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/CoreTests.cpp",
+      "file": "/workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/CoreTests.cpp",
+      "output": "CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o"
+    },
+    {
+      "directory": "/workspace/scratch/ee447c520988/build-legacy-lfo-clang-generic",
+      "command": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -o CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/LegacySubLfoOracleTests.cpp",
+      "file": "/workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/LegacySubLfoOracleTests.cpp",
+      "output": "CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o"
+    }
+  ],
+  "generated_build_commands": [
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -Wall -Wextra -MD -MT CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o -MF CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o.d -o CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/CoreTests.cpp",
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -MF CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o.d -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/Engine.cpp",
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -MF CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o.d -o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/FactoryPresets.cpp",
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -MF CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o.d -o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/src/core/Ig00156Batch.cpp",
+    ": && /workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake -E rm -f libcs80_core.a && /usr/bin/ar qc libcs80_core.a  CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o && /usr/bin/ranlib libcs80_core.a && :",
+    ": && /workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -O3 -DNDEBUG -Xlinker --dependency-file=CMakeFiles/cs80_tests.dir/link.d CMakeFiles/cs80_tests.dir/tests/CoreTests.cpp.o -o cs80_tests  libcs80_core.a && :",
+    "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I/workspace/scratch/ee447c520988/legacy-lfo-oracle/src -O3 -DNDEBUG -std=gnu++20 -fPIE -MD -MT CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o -MF CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o.d -o CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o -c /workspace/scratch/ee447c520988/legacy-lfo-oracle/tests/LegacySubLfoOracleTests.cpp",
+    ": && /workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19 -O3 -DNDEBUG -Xlinker --dependency-file=CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/link.d CMakeFiles/cs80_legacy_sub_lfo_oracle_tests.dir/tests/LegacySubLfoOracleTests.cpp.o -o cs80_legacy_sub_lfo_oracle_tests  libcs80_core.a && :"
+  ],
+  "generated_build_commands_provenance": "Read-only ninja -t commands for both completed test targets, including core and links; not rerun commands."
+}
