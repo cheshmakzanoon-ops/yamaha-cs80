@@ -1,0 +1,52 @@
+name: Experimental OE2 topology checks
+
+on:
+  push:
+    branches:
+      - experiment/oe2-source-topology-20261103
+    paths:
+      - src/core/BbdChorus.h
+      - src/core/Dsp.h
+      - src/experimental/Oe2Topology.h
+      - tests/diagnostics/Oe2*.cpp
+      - tests/diagnostics/run-oe2-topology-experiment.py
+      - tests/diagnostics/analyze-oe2-topology-audio.py
+      - CMakeLists.txt
+      - cmake/RunOe2TopologyExperiment.cmake
+      - .github/workflows/oe2-topology-experiment.yml
+
+permissions:
+  contents: read
+concurrency:
+  group: experimental-oe2-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  topology:
+    name: Source graph and compatibility (experimental only)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - name: Fetch the exact main baseline for the frozen comparison
+        # Read-only fetch: the runner independently verifies the header SHA-256
+        # and unchanged Dsp.h. No arbitrary/latest baseline or shallow-checkout skip.
+        run: git fetch --no-tags --depth=1 origin db24a47170610f81236e8829ef5536af69dfc94d
+      - name: Configure only the opt-in experiment registration
+        run: >-
+          cmake -S . -B "$RUNNER_TEMP/cs80-oe2-build"
+          -DCS80_BUILD_PLUGIN=OFF
+          -DCS80_BUILD_TESTS=ON
+          -DCS80_ENABLE_EXPERIMENTAL_OE2_TESTS=ON
+      - name: Run registered graph, negative-mutation and frozen-main checks
+        run: ctest --test-dir "$RUNNER_TEMP/cs80-oe2-build" --output-on-failure -R '^cs80_experimental_oe2_topology_tests$'
+      - name: Preserve fresh exact-source test receipts
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: experimental-oe2-checks-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/cs80-oe2-build/experimental-oe2/**/*.json
+            ${{ runner.temp }}/cs80-oe2-build/experimental-oe2/**/*.log
+            ${{ runner.temp }}/cs80-oe2-build/Testing/Temporary/LastTest.log
+          if-no-files-found: warn

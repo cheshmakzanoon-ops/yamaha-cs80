@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Dsp.h"
+#include "experimental/Oe2Topology.h"
 
 #include <array>
 #include <cmath>
@@ -9,13 +10,16 @@
 
 // OE1/OE2 chorus and tremolo for the source policies (Source Performance and Isolation).
 // Evidence, assumptions and the audible change are in docs/BBD_CHORUS_MODEL.md and
-// docs/workstreams/ws4-circuits.md (Step 3). In short, following the printed OE2 graph:
+// docs/workstreams/ws4-circuits.md (Step 3). The default historical grouping is:
 //
 //   mono I(53) -> IC3 input low-pass -> MN3001 (two tied-input 512-stage chains, shared
 //   clock; per-transfer loss, two-slot output hold, independent noise per chain, clock
 //   feedthrough) -> per chain: OUT1/OUT2 recombination (2 x 2.2 k) -> 1 uF / 100 k
 //   coupling -> IC5 (upper) / IC6 (lower) low-pass -> 0.1 uF / 10 k interstage -> the
-//   IG00151 VCAs O1,O2 (upper, left) and O3,O4 (lower, right) -> OE1 sum with the dry path.
+//   historical same-chain VCA grouping -> OE1 sum with the dry path.
+// This grouping and its crossed right-hand phase assignment are legacy assumptions,
+// not the printed net trace. A separately named experimental API changes only
+// those connections; see docs/OE2_TOPOLOGY_EXPERIMENT.md for the evidence and limits.
 //
 // OE1 DO1/DO2 move the BBD clock in CHORUS and the four VCA gains in TREMOLO. Every value
 // tagged INFERRED below is an engineering choice, not a recovered CS-80 law. Truth models:
@@ -67,8 +71,9 @@ public:
     // OE1, adjustment procedure printed 21: DO1 56 ms and DO2 0.55 s at maximum SPEED.
     // INFERRED: SPEED (Hz) is DO1's rate and DO2 tracks it at the documented ratio.
     static constexpr double kDo2PerDo1 = 0.056 / 0.55;
-    // Same table: O1..O4 VCA amplitudes 0.65/0.58/0.58/0.65 Vpp. O1,O2 = upper chain (left),
-    // O3,O4 = lower chain (right). INFERRED: trims referenced to a 1 kHz tone.
+    // Same table: O1..O4 VCA amplitudes 0.65/0.58/0.58/0.65 Vpp. These are retained
+    // affine weights in BOTH paths, not established chain-specific gain calibration.
+    // INFERRED: trims referenced to a 1 kHz tone.
     static constexpr std::array<double, 4> kBranchVpp { 0.65, 0.58, 0.58, 0.65 };
     static constexpr double kTrimHz = 1000.0;
 
@@ -173,6 +178,27 @@ public:
     // running while the effect is off, as the OE1/OE2 circuits do.
     Stereo process(float inL, float inR, float speed, float depth, bool on, bool tremolo) noexcept
     {
+        return processImpl<false>(inL, inR, speed, depth, on, tremolo, on && !tremolo);
+    }
+
+    // Core-only experiment: no Engine, parameter, preset or state wiring.
+    // Independent logical paths are test inputs, not a resolved physical tab law.
+    // historicalGrouping permits a controlled comparator for BOTH paths, which
+    // is not an existing main-session state. Existing process() always stays legacy.
+    enum class ExperimentalTopology { historicalGrouping, sourceGraph };
+    Stereo processExperimentalIndependent(float inL, float inR, float speed, float depth,
+                                         bool chorus, bool tremolo, ExperimentalTopology topology) noexcept
+    {
+        if (topology == ExperimentalTopology::sourceGraph)
+            return processImpl<true>(inL, inR, speed, depth, chorus || tremolo, tremolo, chorus);
+        return processImpl<false>(inL, inR, speed, depth, chorus || tremolo, tremolo, chorus);
+    }
+
+private:
+    template <bool experimentalTopology>
+    Stereo processImpl(float inL, float inR, float speed, float depth,
+                       bool on, bool tremolo, bool chorus) noexcept
+    {
         do1Phase += (double) speed / (double) sr;
         do1Phase -= std::floor(do1Phase);
         do2Phase += (double) speed * kDo2PerDo1 / (double) sr;
@@ -184,7 +210,7 @@ public:
         // CHORUS: DO1 and DO2 reach the BA617 clock node through its two equal 100 k feeds.
         // With the tabs off or in TREMOLO the clock stays at its nominal rate.
         double octaves = 0.0;
-        if (on && ! tremolo)
+        if (chorus)
             octaves = d * (double) kClockModulationOctaves * 0.5 * (do1 + do2);
         const double clockHz = kNominalClockHz * std::exp2(octaves);
         clockPeriods += clockHz / (double) sr;
@@ -227,15 +253,27 @@ public:
 
         if (! on)
             return { inL, inR };
-        // IG00151 VCAs. TREMOLO: linear control, LO1 = +DO1, LO2 = +DO2 (left), LO3 = -DO2,
-        // LO4 = -DO1 (right); index 1 at full DEPTH. CHORUS: trimmed static gains.
+        // Existing affine gain/weight assumptions remain unmeasured hypotheses.
         const double m = tremolo ? d : 0.0;
         const double pair = kBranchVpp[0] + kBranchVpp[1];
+        if constexpr (experimentalTopology)
+        {
+            const auto control = experimental::oe2::relativeControls(do1, do2);
+            std::array<double, 4> gain {};
+            for (std::size_t i = 0; i < gain.size(); ++i)
+                gain[i] = kWetGain / pair * kBranchVpp[i] * (1.0 + m * control[i]);
+            const auto mixed = experimental::oe2::sumBranches({ wet[0], wet[1] }, gain);
+            return { inL + kWetPolarity * (float) mixed[0],
+                     inR + kWetPolarity * (float) mixed[1] };
+        }
+        // Historical same-chain grouping and LO3=-DO2 / LO4=-DO1 are kept for
+        // process() compatibility and the explicit historical experiment comparator.
         const double gainL = kWetGain / pair * (kBranchVpp[0] * (1.0 + m * do1) + kBranchVpp[1] * (1.0 + m * do2));
         const double gainR = kWetGain / pair * (kBranchVpp[2] * (1.0 - m * do2) + kBranchVpp[3] * (1.0 - m * do1));
         return { inL + kWetPolarity * (float) gainL * wet[0], inR + kWetPolarity * (float) gainR * wet[1] };
     }
 
+public:
     // Analog response of the declared wet path at the nominal clock, per unit VCA gain,
     // used for the 1 kHz trim. Also the "own specification" oracle for tests.
     static std::complex<double> declaredWetResponse(double hz) noexcept
