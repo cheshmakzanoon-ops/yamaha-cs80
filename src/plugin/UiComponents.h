@@ -5,6 +5,7 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_gui_extra/juce_gui_extra.h>
 
+#include <cstdint>
 #include <functional>
 #include <memory>
 
@@ -411,6 +412,23 @@ class LedButton final : public juce::Button
 public:
     explicit LedButton(const juce::String& text, bool momentary = false);
 
+    // Optional UI-only actions for a real APVTS binding. The processor must
+    // outlive this control, as for its ButtonAttachment. Callers keep this ID
+    // aligned with that attachment; this method does not replace it. Memory controls use
+    // their actual parameter ID; helpIndex is a core parameter or -1.
+    bool bindParameterContext(Cs80AudioProcessor&, const juce::String& parameterId, int helpIndex = -1);
+    bool bindParameterContext(Cs80AudioProcessor&, int coreParameter);
+    void clearParameterContext();
+    int getContextHostParameterIndex() const;
+    juce::PopupMenu buildContextMenu();
+    void showContextMenu();
+    std::function<void()> onContextMenu;
+    juce::String getTooltip() override;
+    void mouseDown(const juce::MouseEvent&) override;
+    void mouseDrag(const juce::MouseEvent&) override;
+    void mouseUp(const juce::MouseEvent&) override;
+    bool keyPressed(const juce::KeyPress&) override;
+
     void paintButton(juce::Graphics&, bool shouldDrawButtonAsHighlighted,
                      bool shouldDrawButtonAsDown) override;
 
@@ -435,6 +453,13 @@ public:
 private:
     void paintRocker(juce::Graphics&, bool hovered, bool down, float physicalScale, bool deckTab);
     void refreshTooltip();
+    juce::RangedAudioParameter* contextParameter() const;
+    bool contextMatches(Cs80AudioProcessor*, const juce::String&, int hostIndex, std::uint64_t generation) const;
+    Cs80AudioProcessor* contextProcessor = nullptr;
+    juce::String contextParameterId;
+    int contextHelpIndex = -1;
+    std::uint64_t contextBindingGeneration = 0;
+    bool contextPointer = false;
     juce::String customTip;
 };
 

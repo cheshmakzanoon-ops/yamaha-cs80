@@ -951,6 +951,8 @@ if (CS80_BUILD_PLUGIN)
     set_tests_properties(cs80_keyboard_handoff_host_tests PROPERTIES TIMEOUT 120)
     # Native components only, with menu callbacks observed rather than opening
     # a popup/native peer. The full UI smoke remains the popup rendering gate.
+    add_test(NAME cs80_switch_context_tests COMMAND CS80Snapshots --switch-context-tests)
+    set_tests_properties(cs80_switch_context_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_context_menu_keyboard_tests COMMAND CS80Snapshots --context-menu-keyboard-tests)
     set_tests_properties(cs80_context_menu_keyboard_tests PROPERTIES TIMEOUT 60)
     add_test(NAME cs80_typed_value_unit_tests COMMAND CS80Snapshots --typed-value-unit-tests)

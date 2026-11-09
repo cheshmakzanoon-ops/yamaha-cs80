@@ -1,0 +1,6 @@
+FAIL: PURE blocks both fresh and previously opened learn actions
+FAIL: a disabled delayed learn action is inert
+FAIL: binding generation rejects old actions even after A-to-B-to-A rebinding
+FAIL: clearing a context invalidates old actions without touching the parameter attachment
+FAIL: actions copied from a destroyed switch cannot learn or edit
+Switch context tests: 171 checks, 5 failures

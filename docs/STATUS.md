@@ -524,9 +524,12 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   propagation, scheduling/fallback and eight-versus-sixteen-voice loading remain
   unqualified. The 25 tone-tab cells remain hypotheses; tremolo/chorus
   both-off/both-on states need an engine parameter.
-- Context menu and MIDI learn for switches, combo boxes and lid miniatures;
-  undo-applied values reach the host without gestures; the voice monitor
-  illustrates settings rather than tapping the engine.
+- Parameter-backed illuminated switches now have guarded context menus/MIDI
+  learn, including memory SAW/PULSE. Custom Studio switches/segmented selectors,
+  combo boxes and memory faders remain open
+  ([scope and local tests](SWITCH_CONTEXT_MENUS.md)). Undo-applied values still
+  reach the host without gestures; the voice monitor illustrates settings
+  rather than tapping the engine.
 - Sample-offset automation is limited to eighteen key VST3 parameters in modern
   circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
   qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).

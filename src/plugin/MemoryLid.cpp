@@ -117,6 +117,7 @@ MemoryLid::MemoryLid(Cs80AudioProcessor& p) : processor(p)
                 toggle->setComponentID(Cs80AudioProcessor::memoryParameterId(bank, local));
                 item.buttonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
                     processor.getAPVTS(), Cs80AudioProcessor::memoryParameterId(bank, local), *toggle);
+                toggle->bindParameterContext(processor, Cs80AudioProcessor::memoryParameterId(bank, local));
                 addAndMakeVisible(*toggle);
             }
             else

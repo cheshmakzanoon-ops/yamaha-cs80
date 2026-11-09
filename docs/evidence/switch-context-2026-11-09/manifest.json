@@ -1,0 +1,54 @@
+{
+  "base": "e82466f3dba50d1d0227f4c8e588bce1bd2ba7de",
+  "source_commit": "5246d11679eefe54aadbe3cabcbb289b6f209373",
+  "scope": "UI-only parameter-backed LedButton context actions; not every switch/selector or native-popup qualification.",
+  "environment": {
+    "os": "Linux x86_64",
+    "compiler": "GCC 14.2.0",
+    "build": "Release",
+    "JUCE": "8.0.11",
+    "JUCE_commit": "c352e2489000ffeb9e397051377d75eef2efe641"
+  },
+  "commands": [
+    "source /workspace/shared/cs80-build-env.sh; cmake -S . -B /workspace/shared/yamaha-product-next-native -G Ninja -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_SOURCE_DIR_JUCE=/workspace/shared/cs80-juce",
+    "cmake --build /workspace/shared/yamaha-product-next-native --target CS80Snapshots -j 2",
+    "/workspace/shared/yamaha-product-next-native/CS80Snapshots_artefacts/Release/CS80Snapshots --switch-context-tests",
+    "ctest --test-dir /workspace/shared/yamaha-product-next-native -R '^cs80_(switch_context_tests|context_menu_keyboard_tests|typed_value_unit_tests|transient_control_tests|performance_wheel_keyboard_tests|keyboard_tuning_ui_tests)$' --output-on-failure",
+    "python3 tests/test_switch_context_negative_controls.py --build /workspace/shared/yamaha-product-next-native --output /workspace/shared/switch-context-evidence/negative"
+  ],
+  "preserved": {
+    "src/core": "byte-identical to base (including file modes)",
+    "src/plugin/PluginProcessor.cpp": "byte-identical to base (including file modes)",
+    "src/plugin/PluginProcessor.h": "byte-identical to base (including file modes)",
+    "docs/screenshots": "byte-identical to base (including file modes)"
+  },
+  "qualification_limits": [
+    "No native peer, popup or help callout is opened by this gate.",
+    "No new sanitizer, full GUI smoke, pluginval, remote CI, DAW, screen-reader or screenshot-refresh claim.",
+    "Six mutants reuse all unchanged native objects except one privately compiled UI object and require expected normal completion plus behavioral failure. Working source and build objects remain unchanged.",
+    "Mapping and PURE checks are action-time snapshots, not cross-thread atomic conditional transactions; concurrent MIDI/state updates after a check retain the existing MidiLearnMap semantics. No thread-sanitizer or stronger concurrency guarantee is claimed."
+  ],
+  "sha256": {
+    "CMakeLists.txt": "e0b58b12871de6a82d09598c85e254b77fcb42614e76cff17aafbb08e7e5bdd7",
+    "src/plugin/AdvancedPanel.cpp": "bd48d5a183d5241588e2d1047ef3258960c9064b0c268c0709685392268e7c18",
+    "src/plugin/MemoryLid.cpp": "4a9d122227a88c0b8fd50985c64f5b0a4c91415030e23ba1520827e626322be1",
+    "src/plugin/PanelWidgets.cpp": "a567212cbf1eb270ce0baf3da93051f6c0b46212ce469f857b974b0dab412519",
+    "src/plugin/PluginEditor.cpp": "40b8c86591e08aa0d3affb2c97c42a4abbadfe9581ce20ec51297be4db9d48e0",
+    "src/plugin/UiComponents.cpp": "e514694a3a5519c0f264fa0d11054f09f2e9e55cbbbbada3cb6b230a016add95",
+    "src/plugin/UiComponents.h": "d424818d07af47cb3326a61f876d14fec6fe3c52bc5d31f66667f41ac1989564",
+    "src/tools/ui_snapshot.cpp": "677fb9ff8673d00afc8e5157cde9f0b14ab96ec8c32617447b72c961d40c8170",
+    "tests/SwitchContextTests.h": "4eecb192446bdbf6f8746fccaf93d853ae837204beab84dd3769dc3bf1aa58f6",
+    "tests/test_switch_context_negative_controls.py": "f15bcf6c6b27cd7abe68ee35b3cc2253f3514e0856c3bcfb1b5177695d552e8b",
+    "docs/evidence/switch-context-2026-11-09/ctest.log": "e874ac246d8321b8a63352c0c0a2dc35f16f497605f8eadec0b7976417ec955a",
+    "docs/evidence/switch-context-2026-11-09/focused.log": "0dd50c310657c8ca81f9a7c4831527054060fbdd1a10b333bd5da64460bebda8",
+    "docs/evidence/switch-context-2026-11-09/negative-summary.log": "5707250676fcf102b69d15a7a07e660628e5f97f7e688d0b2b86479f19ae1534",
+    "docs/evidence/switch-context-2026-11-09/negative.json": "f1101a207070eb2699ba23ff1b92223f629d412324afae0b55a45bf3094bac4b",
+    "docs/evidence/switch-context-2026-11-09/negative/candidate.log": "0dd50c310657c8ca81f9a7c4831527054060fbdd1a10b333bd5da64460bebda8",
+    "docs/evidence/switch-context-2026-11-09/negative/let-blocked-popup-toggle.log": "cd46591cfef2fd2b17d2b10e26f8671edcda28412e395f0f70fac0c461b8e0ec",
+    "docs/evidence/switch-context-2026-11-09/negative/omit-cancel-target-guard.log": "4e1cbe58ccceffa6ece2139a7dcc6cf429fd5db370bdc15a17105e82c229608a",
+    "docs/evidence/switch-context-2026-11-09/negative/omit-forget-mapping-guard.log": "efc73c1790285d739f7bc57bdf2df10140196ac465acac4979e8b6d489f1dfb1",
+    "docs/evidence/switch-context-2026-11-09/negative/omit-generation-guard.log": "b1e3a78743606227006223f5f8992f10efa46ae56d1af3968d835e7314163a0c",
+    "docs/evidence/switch-context-2026-11-09/negative/omit-memory-binding.log": "518c520eb0e5f8a894d487981941dff65f1e00aac81bbbf9115933dbbed5462a",
+    "docs/evidence/switch-context-2026-11-09/negative/omit-pure-guard.log": "8ddd21f72cf8b7d29829e1a546bfd557fb469a0151a1737ec3ef34dc62b72b5f"
+  }
+}

@@ -3513,6 +3513,7 @@ public:
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        raw->bindParameterContext(proc, parameter);
         owned.push_back(std::move(control));
         placed.push_back({ raw, at(r) });
         return raw;

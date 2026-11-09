@@ -4046,6 +4046,181 @@ LedButton::LedButton(const juce::String& text, bool momentary)
     refreshTooltip();
 }
 
+bool LedButton::bindParameterContext(Cs80AudioProcessor& processor, int coreParameter)
+{
+    if (coreParameter < 0 || coreParameter >= cs80::P_numParams) return false;
+    return bindParameterContext(processor, Cs80AudioProcessor::parameterId(coreParameter), coreParameter);
+}
+
+bool LedButton::bindParameterContext(Cs80AudioProcessor& processor, const juce::String& id, int helpIndex)
+{
+    if (processor.getAPVTS().getParameter(id) == nullptr || isDown()) return false;
+    ++contextBindingGeneration;
+    contextProcessor = &processor;
+    contextParameterId = id;
+    contextHelpIndex = helpIndex >= 0 && helpIndex < cs80::P_numParams ? helpIndex : -1;
+    juce::Component::SafePointer<LedButton> safe(this);
+    onContextMenu = [safe, generation = contextBindingGeneration] {
+        if (safe != nullptr && safe->contextBindingGeneration == generation) safe->showContextMenu();
+    };
+    setDescription("Press Space or Return to operate this switch. Right-click or Shift+F10 opens MIDI learn and reset."
+                   + juce::String(contextHelpIndex >= 0 ? " F1 opens control help." : ""));
+    refreshTooltip();
+    return true;
+}
+
+void LedButton::clearParameterContext()
+{
+    ++contextBindingGeneration;
+    contextProcessor = nullptr;
+    contextParameterId.clear();
+    contextHelpIndex = -1;
+    onContextMenu = {};
+    // Retain contextPointer until its matching release: clearing a binding
+    // while its popup is open must not turn that release into a normal click.
+    setDescription("Press Space or Return to operate this switch.");
+    refreshTooltip();
+}
+
+juce::RangedAudioParameter* LedButton::contextParameter() const
+{
+    return contextProcessor != nullptr ? contextProcessor->getAPVTS().getParameter(contextParameterId) : nullptr;
+}
+
+int LedButton::getContextHostParameterIndex() const
+{
+    if (const auto* parameter = contextParameter()) return parameter->getParameterIndex();
+    return -1;
+}
+
+bool LedButton::contextMatches(Cs80AudioProcessor* processor, const juce::String& id, int hostIndex, std::uint64_t generation) const
+{
+    return isEnabled() && !isDown() && contextBindingGeneration == generation
+        && contextProcessor == processor && contextParameterId == id
+        && hostIndex >= 0 && getContextHostParameterIndex() == hostIndex;
+}
+
+juce::String LedButton::getTooltip()
+{
+    auto text = juce::Button::getTooltip();
+    const int host = getContextHostParameterIndex();
+    if (host >= 0)
+    {
+        const auto& learn = contextProcessor->getMidiLearn();
+        const bool pure = contextProcessor->getParamValue(cs80::P_parityMode) >= 0.5f;
+        if (learn.learningParameter() == host && !pure)
+            text << "\nWaiting for a MIDI controller. Shift+F10 to cancel.";
+        const int cc = learn.controllerFor(host);
+        if (cc >= 0) text << "\nMIDI CC " << cc << (pure ? " (inactive in PURE CS-80)" : "");
+    }
+    return text;
+}
+
+void LedButton::mouseDown(const juce::MouseEvent& e)
+{
+    contextPointer = false;
+    if (e.mods.isPopupMenu() && onContextMenu)
+    {
+        // Consume a popup sequence even if a prior activation/flash blocks
+        // opening the menu. Falling through to Button would toggle on release.
+        contextPointer = true;
+        if (isEnabled() && !isDown()) onContextMenu();
+        return;
+    }
+    juce::Button::mouseDown(e);
+}
+
+void LedButton::mouseDrag(const juce::MouseEvent& e)
+{
+    if (!contextPointer) juce::Button::mouseDrag(e);
+}
+
+void LedButton::mouseUp(const juce::MouseEvent& e)
+{
+    if (contextPointer) { contextPointer = false; return; }
+    juce::Button::mouseUp(e);
+}
+
+bool LedButton::keyPressed(const juce::KeyPress& key)
+{
+    const auto mods = key.getModifiers();
+    if (isEnabled() && !isDown() && key.getKeyCode() == juce::KeyPress::F10Key
+        && mods.isShiftDown() && !mods.isCtrlDown() && !mods.isAltDown() && !mods.isCommandDown()
+        && onContextMenu)
+    {
+        onContextMenu();
+        return true;
+    }
+    if (isEnabled() && !isDown() && key.getKeyCode() == juce::KeyPress::F1Key
+        && !mods.isAnyModifierKeyDown() && contextHelpIndex >= 0 && contextParameter() != nullptr)
+    {
+        showControlHelp(*this, contextHelpIndex);
+        return true;
+    }
+    return juce::Button::keyPressed(key);
+}
+
+juce::PopupMenu LedButton::buildContextMenu()
+{
+    juce::PopupMenu menu;
+    const auto* parameter = contextParameter();
+    if (parameter == nullptr) return menu;
+    menu.addSectionHeader(parameter->getName(64) + "   " + parameter->getCurrentValueAsText());
+    const int host = parameter->getParameterIndex();
+    const bool enabled = isEnabled() && !isDown();
+    const bool pure = contextProcessor->getParamValue(cs80::P_parityMode) >= 0.5f;
+    auto& learn = contextProcessor->getMidiLearn();
+    const int cc = learn.controllerFor(host);
+    juce::Component::SafePointer<LedButton> safe(this);
+    // Menus are asynchronous. Neither deletion, rebinding, a new learn target,
+    // nor a later disabled/PURE state may redirect an old action.
+    auto current = [safe, processor = contextProcessor, id = contextParameterId, host, generation = contextBindingGeneration] {
+        return safe != nullptr && safe->contextMatches(processor, id, host, generation);
+    };
+    auto add = [&menu](const juce::String& title, bool available, std::function<void()> action) {
+        juce::PopupMenu::Item item(title); item.isEnabled = available; item.action = std::move(action); menu.addItem(item);
+    };
+    if (pure)
+        add("MIDI learn (off in PURE CS-80)", false, nullptr);
+    else if (learn.learningParameter() == host)
+        add("Cancel MIDI learn (waiting for a controller)", enabled, [safe, current, host] {
+            if (current() && safe->contextProcessor->getMidiLearn().learningParameter() == host)
+                safe->contextProcessor->getMidiLearn().cancelLearn();
+        });
+    else
+        add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", enabled, [safe, current, host] {
+            if (current() && safe->contextProcessor->getParamValue(cs80::P_parityMode) < 0.5f)
+                safe->contextProcessor->getMidiLearn().armLearn(host);
+        });
+    if (cc >= 0)
+        add("Forget MIDI CC " + juce::String(cc), enabled, [safe, current, host, cc] {
+            if (current() && safe->contextProcessor->getMidiLearn().controllerFor(host) == cc)
+                safe->contextProcessor->getMidiLearn().clearParameter(host);
+        });
+    menu.addSeparator();
+    add("Reset to default  (" + parameter->getText(parameter->getDefaultValue(), 64) + ")", enabled,
+        [safe, current] {
+            if (!current()) return;
+            if (auto* target = safe->contextParameter(); target != nullptr && target->getValue() != target->getDefaultValue())
+            {
+                target->beginChangeGesture();
+                target->setValueNotifyingHost(target->getDefaultValue());
+                target->endChangeGesture();
+            }
+        });
+    if (contextHelpIndex >= 0)
+        add("What is this control?", enabled, [safe, current, help = contextHelpIndex] {
+            if (current() && safe->contextHelpIndex == help) showControlHelp(*safe, help);
+        });
+    return menu;
+}
+
+void LedButton::showContextMenu()
+{
+    if (!isEnabled() || isDown() || contextParameter() == nullptr) return;
+    buildContextMenu().showMenuAsync(juce::PopupMenu::Options().withTargetComponent(this).withMinimumWidth(240));
+}
+
 void LedButton::setTooltip(const juce::String& tip)
 {
     customTip = tip.trim();
@@ -4062,7 +4237,10 @@ void LedButton::refreshTooltip()
     // The control's own sentence first, then its state on a last line: hovering (a state change)
     // no longer replaces the explanation with a bare "ON".
     const auto state = getTitle() + (getToggleState() ? ": ON" : ": OFF");
-    juce::SettableTooltipClient::setTooltip(customTip.isEmpty() ? state : customTip + "\n" + state);
+    auto text = customTip.isEmpty() ? state : customTip + "\n" + state;
+    if (contextProcessor != nullptr) text << "\nRight-click or Shift+F10: MIDI learn, reset"
+        << (contextHelpIndex >= 0 ? ", help." : ".");
+    juce::SettableTooltipClient::setTooltip(text);
 }
 
 void LedButton::paintRocker(juce::Graphics& g, bool hovered, bool down, float ps, bool deckTab)
