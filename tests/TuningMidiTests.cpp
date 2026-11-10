@@ -261,6 +261,75 @@ void testMtsMessageBoundaries()
           "valid MTS message retunes the sounding note after rejection");
 }
 
+void testMtsNonRealtimeAdmission()
+{
+    using Bytes = std::vector<std::uint8_t>;
+    for (const int sub : { 7, 8, 9 })
+        for (const bool realtime : { false, true })
+            for (const bool source : { false, true })
+              for (const int lifecycle : { 0, 1, 2 })
+            {
+                auto p = quiet(); p[P_tuningMode] = 2; p[P_keyRelease] = 1.0f; p[P_sourcePerformance] = source ? 1.0f : 0.0f;
+                Engine actual, reference;
+                for (auto* e : { &actual, &reference })
+                {
+                    e->prepare(48000.0); e->setParams(p); e->noteOn(64, 0.8f); render(*e, 256);
+                    if (lifecycle == 1) e->controlChange(64, 1.0f);
+                    if (lifecycle != 0) e->noteOff(64);
+                }
+                Bytes message { 0xF0, static_cast<std::uint8_t>(realtime ? 0x7F : 0x7E), 0x7F, 8,
+                                static_cast<std::uint8_t>(sub) };
+                if (sub == 7) message.insert(message.end(), { 0, 0, 2, 64, 64, 32, 0, 65, 65, 32, 0 });
+                else
+                {
+                    message.insert(message.end(), { 3, 127, 127 });
+                    for (int i = 0; i < 12; ++i)
+                        if (sub == 8) message.push_back(89); // +25 cents
+                        else message.insert(message.end(), { 80, 0 }); // +0.25 semitone
+                }
+                message.push_back(0xF7);
+                check(actual.handleSysEx(message.data(), static_cast<int>(message.size())),
+                      "extended MTS message accepted");
+                check(actual.getMtsTuning().pitch[64] == 64.25f && actual.getMtsTuning().pitch[65] == 65.25f,
+                      "both realtime policies store future-note tuning");
+                if (realtime) reference.setMtsTuning(actual.getMtsTuning());
+                check(render(actual, 512) == render(reference, 512),
+                      realtime ? "real-time message matches existing live-table continuation" : "non-real-time message preserves sounding continuation");
+                // The source model's released key-voltage node is already
+                // latched. Preserve that existing behavior, as the explicit
+                // live-table reference above does; this fix does not bypass it.
+                const float expectedPitch = realtime && !(source && lifecycle == 2) ? 64.25f : 64.0f;
+                check(std::abs(semitonesOf(actual, 0, expectedPitch)) < 1e-3f,
+                      "sounding pitch follows admission and existing release latch");
+                check(actual.getVoiceInfo(0).active, "old held/pedal/release voice still sounds");
+                actual.noteOn(65, 0.8f); render(actual, 64);
+                check(std::abs(semitonesOf(actual, actual.getVoiceInfo(0).note == 65 ? 0 : 1, 65.25f)) < 1e-3f,
+                      "new note uses stored tuning after either message policy");
+            }
+    // An unrelated real-time message cannot activate previously staged tuning.
+    // Conversely an explicit same-value entry must still retune its held key.
+    for (const bool source : { false, true }) for (const int sub : { 2, 7 })
+    {
+        auto p = quiet(); p[P_tuningMode] = 2; p[P_sourcePerformance] = source ? 1.0f : 0.0f;
+        Engine actual, reference;
+        for (auto* e : { &actual, &reference })
+        { e->prepare(48000); e->setParams(p); e->noteOn(64, .8f); render(*e, 256); }
+        const Bytes stage { 0xF0,0x7E,0x7F,8,7,0,0,1,64,64,32,0,0xF7 };
+        check(actual.handleSysEx(stage.data(), static_cast<int>(stage.size())), "stage held key tuning");
+        Bytes update { 0xF0,0x7F,0x7F,8,static_cast<std::uint8_t>(sub),0 };
+        if (sub == 7) update.push_back(0);
+        update.insert(update.end(), { 2,65,65,32,0,64,127,127,127,0xF7 });
+        check(actual.handleSysEx(update.data(), static_cast<int>(update.size())), "unrelated update plus no-change marker");
+        check(render(actual,256) == render(reference,256), "unrelated real-time entry does not activate staged held tuning");
+        const int header = sub == 2 ? 7 : 8;
+        update[header] = 64; update[header+1] = 64;
+        check(actual.handleSysEx(update.data(), static_cast<int>(update.size())), "explicit same-value entry accepted");
+        reference.setMtsTuning(actual.getMtsTuning());
+        check(render(actual,256) == render(reference,256), "explicit same-value entry activates staged held tuning");
+    }
+
+}
+
 void testEngineTuning()
 {
     auto p = quiet();
@@ -1416,6 +1485,7 @@ int main()
     testMtsSysEx();
     testMtsMessageBoundaries();
     testEngineTuning();
+    testMtsNonRealtimeAdmission();
     testArpeggiatorTuningMap();
     testMpe();
     testMpePedalZoneBoundaries();

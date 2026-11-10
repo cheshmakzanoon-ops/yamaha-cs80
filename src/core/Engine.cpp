@@ -1920,7 +1920,33 @@ bool Engine::handleSysEx(const std::uint8_t* data, int size) noexcept
 {
     if (! tuning::applyMtsSysEx(data, size, mtsTable))
         return false;
-    if (global.tuningMode == 2) retuneSoundingVoices();
+    if (global.tuningMode == 2)
+    {
+        // MTS extended non-real-time changes stage tuning for future notes.
+        // Legacy bulk handling is retained; only 07/08/09 define this split.
+        const int sub = data[4]; // Complete message already validated above.
+        if (data[1] == 0x7E && (sub == 0x07 || sub == 0x08 || sub == 0x09))
+            return true;
+        if (sub == 0x02 || sub == 0x07)
+        {
+            // A later single-note update must not activate staged changes on
+            // unrelated sounding keys. Explicit same-value entries still apply;
+            // "no change" entries do not. The bounded bitmap is stack-only.
+            std::array<bool, 128> addressed {};
+            const int header = sub == 0x02 ? 7 : 8;
+            for (int i = 0; i < data[header - 1]; ++i)
+            {
+                const auto* entry = data + header + i * 4;
+                if (entry[1] != 0x7F || entry[2] != 0x7F || entry[3] != 0x7F)
+                    addressed[entry[0]] = true;
+            }
+            for (auto& voice : voices)
+                if (voice.active && addressed[(std::size_t) voice.note])
+                    voice.targetPitch = tunedPitch(voice.note);
+        }
+        else
+            retuneSoundingVoices();
+    }
     return true;
 }
 
