@@ -330,6 +330,43 @@ void testMtsNonRealtimeAdmission()
 
 }
 
+void testUnmappedSustainAdmission()
+{
+    for (bool source : {false, true}) for (bool scan : {false, true})
+        for (int mode : {1, 2})
+        {
+            auto p = quiet();
+            p[P_sourcePerformance] = source ? 1.0f : 0.0f;
+            p[P_kasScanTiming] = scan ? 1.0f : 0.0f;
+            p[P_tuningMode] = static_cast<float>(mode);
+            p[P_sustainMode] = p[P_sustainAssign] = 1.0f;
+            p[P_footswitchPlugged] = p[P_footswitchPressed] = 1.0f;
+            for (int rank = 0; rank < 2; ++rank)
+                p[chParam(rank, CP_vR)] = p[chParam(rank, CP_fR)] = 2.0f;
+            tn::TuningTable mapping; mapping.mapped[61] = false;
+            Engine actual, reference;
+            for (auto* e : {&actual, &reference})
+            {
+                e->prepare(48000); e->setParams(p);
+                if (mode == 1) e->setScalaTuning(mapping); else e->setMtsTuning(mapping);
+                e->noteOn(60, 0.8f); render(*e, 1024);
+                e->noteOff(60); render(*e, 128);
+            }
+            check(actual.getVoiceInfo(0).active && !actual.getVoiceInfo(0).held,
+                  "unmapped sustain fixture has an active release tail");
+            actual.noteOn(61, 0.8f);
+            check(render(actual, 512) == render(reference, 512),
+                  "unmapped onset cannot cancel Sustain-II tail");
+            check(actual.getVoiceInfo(0).active, "unmapped onset retains release voice");
+            actual.noteOn(64, 0.8f); render(actual, 512);
+            bool oldActive = false, newHeld = false;
+            for (int v = 0; v < 8; ++v)
+            { const auto info = actual.getVoiceInfo(v); oldActive |= info.active && info.note == 60;
+              newHeld |= info.active && info.held && info.note == 64; }
+            check(!oldActive && newHeld, "mapped onset still terminates Sustain-II tail");
+        }
+}
+
 void testEngineTuning()
 {
     auto p = quiet();
@@ -1485,6 +1522,7 @@ int main()
     testMtsSysEx();
     testMtsMessageBoundaries();
     testEngineTuning();
+    testUnmappedSustainAdmission();
     testMtsNonRealtimeAdmission();
     testArpeggiatorTuningMap();
     testMpe();

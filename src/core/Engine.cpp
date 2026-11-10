@@ -1348,6 +1348,10 @@ void Engine::flushScanEvents()
 
 void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel, bool keyboardOrigin, uint64_t onsetOrder, bool immediate)
 {
+    // An excluded direct key is not an accepted strike: preserve release tails.
+    // ARP source keys remain admitted because their generated octaves can map.
+    if (! global.arpOn && global.tuningMode != 0 && ! noteMapped(midiNote))
+        return;
     if (global.sustainMode == 1)
     {
         for (auto& v : voices)
@@ -1371,9 +1375,6 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel, bool key
         return;
     }
 
-    // Phase 6: a note a microtuning leaves unmapped does not sound.
-    if (global.tuningMode != 0 && ! noteMapped(midiNote))
-        return;
     // Phase 6 unison extension: N circuits per key, detuned symmetrically.
     if (const int unison = unisonCount(); unison > 1)
     {
@@ -2074,12 +2075,12 @@ bool Engine::hasFreeCircuitForRouting() const noexcept
     pending.flush([&](const kas::Scanner::Event& event) {
         if (event.on)
         {
+            if (global.tuningMode != 0 && ! noteMapped(event.note))
+                return;
             if (global.sustainMode == 1)
                 for (auto& v : projected)
                     if (v.sustained)
                         v.active = v.sustained = v.pedalHeld = false;
-            if (global.tuningMode != 0 && ! noteMapped(event.note))
-                return;
             if (const int i = choose(); i >= 0)
                 start(i, event.note, event.channel, event.keyboardOrigin);
             else
