@@ -30,6 +30,15 @@ zero failures in one uninterrupted serial run (884.83 seconds). See the
 No native-host, sanitizer, hardware-fidelity, release or CPU-target claim follows
 from this result.
 
+## Latest local native processor/component integration
+
+Pinned source `782019d4c507cdf5d872921bdc6902640d6f61de` passed all **13/13 selected
+direct CS80Snapshots suites**, zero failures, in one serial run (15.88 seconds).
+The current Release target had no outstanding rebuild work. This covers
+processor/MPE/16-voice/controller and direct UI callback integration, not a full
+native, wrapper/validator, display-driven smoke or DAW run. See the
+[exact suite list and limits](NATIVE_COMPONENT_INTEGRATION_782019D.md).
+
 ## November 10 bounded correctness updates
 
 These changes correct event/state behavior without changing the declared
@@ -43,6 +52,7 @@ hardware-fidelity or release-qualification limits:
 | MTS empty mask | `af3309d` | [An empty scale/octave channel mask is a no-op](MTS_EMPTY_CHANNEL_MASK.md); partial nonempty masks retain the documented global-table limitation. |
 | MPE panic | `60419bf` | [Active master CC120 clears its current zone](MPE_MASTER_SOUND_OFF.md), with controller state and unrelated channels retained. |
 | Malformed input | `19e771b`, `784f94f`, `d00d8bf0` | [Non-finite channel-mode rejection](CHANNEL_MODE_FINITE_ADMISSION.md), [controller-channel admission](CONTROLLER_CHANNEL_ADMISSION.md), and [note/scanner admission](NOTE_EVENT_ADMISSION.md). |
+| Editor interaction lifecycle | `acda5b9`, `6f6d3fc`, `47acee1`, `782019d` | [Stale knob menu rejection](KNOB_CONTEXT_LIFECYCLE.md), [inline editor ownership](INLINE_VALUE_EDITOR_LIFECYCLE.md), [MIX percentage-pair validation](MIX_PERCENTAGE_PAIR_ADMISSION.md), and [balanced caption reset gestures](CAPTION_RESET_GESTURE.md). |
 
 ## Changes since the October 31 integration
 
