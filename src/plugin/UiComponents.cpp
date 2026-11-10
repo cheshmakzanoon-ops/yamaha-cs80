@@ -3266,6 +3266,7 @@ bool ParamKnob::bindParameter(int index)
     if (slider.isGestureInProgress() || slider.isMouseButtonDown()) return false;
     // Destroy the old attachment before changing the slider range/value.
     ++contextBindingGeneration;
+    valueEditor.reset(); // A typed value belongs to the old parameter binding.
     attachment.reset();
     parameterIndex = index;
     slider.setDoubleClickReturnValue(true, cs80::paramDef(index).def);
@@ -3963,6 +3964,7 @@ bool ParamKnob::pasteValue()
 
 void ParamKnob::showValueEntry()
 {
+    if (!isEnabled() || !slider.isEnabled() || slider.isGestureInProgress()) return;
     auto* top = getTopLevelComponent();
     if (top == nullptr || top == this)
         return;
@@ -3977,22 +3979,33 @@ void ParamKnob::showValueEntry()
     raw->setDescription("Type a value for " + tooltipNameFor(parameterIndex) + " and press Return; Esc cancels. Units as shown: "
                         + formatParamValue(parameterIndex, (float) slider.getValue()));
     juce::Component::SafePointer<ParamKnob> safe(this);
-    auto close = [safe]
+    juce::Component::SafePointer<juce::TextEditor> editorSafe(raw);
+    auto close = [safe, editorSafe]
     {
-        juce::MessageManager::callAsync([safe] { if (safe != nullptr) safe->valueEditor.reset(); });
+        juce::MessageManager::callAsync([safe, editorSafe] {
+            if (safe != nullptr && editorSafe != nullptr && safe->valueEditor.get() == editorSafe.getComponent())
+                safe->valueEditor.reset();
+        });
     };
-    raw->onReturnKey = [safe, raw, close]
+    raw->onReturnKey = [safe, editorSafe, generation = contextBindingGeneration, close]
     {
-        if (safe == nullptr) return;
-        if (safe->applyTypedValue(raw->getText()))
+        if (safe == nullptr || editorSafe == nullptr || safe->valueEditor.get() != editorSafe.getComponent()
+            || safe->contextBindingGeneration != generation || !safe->isEnabled() || !safe->slider.isEnabled()
+            || safe->slider.isGestureInProgress()) return;
+        if (safe->applyTypedValue(editorSafe->getText()))
         {
             close();
-            safe->slider.grabKeyboardFocus();
+            if (safe != nullptr) safe->slider.grabKeyboardFocus();
         }
         else
-            raw->setColour(juce::TextEditor::outlineColourId, juce::Colour(0xffe0604a));   // not a value of this control
+            editorSafe->setColour(juce::TextEditor::outlineColourId, juce::Colour(0xffe0604a));   // not a value of this control
     };
-    raw->onEscapeKey = [safe, close] { close(); if (safe != nullptr) safe->slider.grabKeyboardFocus(); };
+    raw->onEscapeKey = [safe, editorSafe, close] {
+        const bool current = safe != nullptr && editorSafe != nullptr
+            && safe->valueEditor.get() == editorSafe.getComponent();
+        close();
+        if (current && safe->isEnabled() && safe->slider.isEnabled()) safe->slider.grabKeyboardFocus();
+    };
     raw->onFocusLost = close;
     valueEditor = std::move(editor);
     top->addAndMakeVisible(*raw);

@@ -18,8 +18,10 @@ conditional transactions or a MIDI-learn concurrency redesign.
 
 Fresh reset, learn, cancel and forget actions retain their existing behavior.
 The common identity guard also covers menu-launched typing, copy, paste and
-help. This does not change the lifetime policy of an inline value editor that
-was already open before rebinding, or add context menus to uncovered controls.
+help. The original menu-only change did not cover an inline value editor already
+open before rebinding; that is addressed separately by the
+[inline editor lifecycle correction](INLINE_VALUE_EDITOR_LIFECYCLE.md). It does
+not add context menus to uncovered controls.
 DSP, parameter IDs, state formats, drawing and hardware modeling are unchanged.
 
 Tests invoke actual JUCE menu callbacks on real parameter controls and the

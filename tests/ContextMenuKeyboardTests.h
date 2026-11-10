@@ -149,5 +149,40 @@ void testContextMenuKeyboard(Check check)
     if (destroyedLearn) destroyedLearn();
     check(host->getMidiLearn().learningParameter() == -1, "deleted knob rejects delayed actions safely");
 
+    juce::Component top; top.setBounds(0,0,600,300); top.addAndMakeVisible(knob);
+    knob.setBounds(10,10,120,100);
+    const auto editorIn = [&]() -> juce::TextEditor* {
+        for (auto* child : top.getChildren()) if (auto* text=dynamic_cast<juce::TextEditor*>(child)) return text;
+        return nullptr;
+    };
+    knob.showValueEntry(); auto* oldEditor=editorIn();
+    check(oldEditor!=nullptr,"typed editor fixture opens without a native popup");
+    auto oldCommit=oldEditor ? oldEditor->onReturnKey : std::function<void()> {};
+    if (oldEditor) oldEditor->setText(cs80::ui::formatParamValue(cs80::P_volume,.2f),juce::dontSendNotification);
+    knob.bindParameter(cs80::P_ringDepth); host->setParamValue(cs80::P_ringDepth,.7f);
+    const auto targetBeforeTyped=host->getParamValue(cs80::P_ringDepth);
+    check(editorIn()==nullptr,"rebinding cancels the old parameter's inline editor");
+    if(oldCommit) oldCommit();
+    check(host->getParamValue(cs80::P_ringDepth)==targetBeforeTyped,"old inline Return cannot edit a rebound parameter");
+    juce::MessageManager::getInstance()->runDispatchLoopUntil(10);
+    knob.showValueEntry(); auto* closing=editorIn();
+    auto oldClose=closing ? closing->onFocusLost : std::function<void()> {};
+    if(oldClose) oldClose();
+    knob.showValueEntry(); juce::Component::SafePointer<juce::TextEditor> replacement(editorIn());
+    juce::MessageManager::getInstance()->runDispatchLoopUntil(10);
+    check(replacement!=nullptr && editorIn()==replacement.getComponent(),"old queued close cannot dismiss a replacement editor");
+    if(editorIn()==nullptr) knob.showValueEntry();
+    auto* current=editorIn(); auto commit=current ? current->onReturnKey : std::function<void()> {};
+    if(current) current->setText(cs80::ui::formatParamValue(cs80::P_ringDepth,.3f),juce::dontSendNotification);
+    knob.setEnabled(false); if(commit) commit();
+    check(host->getParamValue(cs80::P_ringDepth)==targetBeforeTyped,"disabled inline editor cannot commit a parameter edit");
+    knob.setEnabled(true); juce::MessageManager::getInstance()->runDispatchLoopUntil(10);
+    knob.showValueEntry(); current=editorIn();
+    if(current) {current->setText(cs80::ui::formatParamValue(cs80::P_ringDepth,.3f),juce::dontSendNotification); current->onReturnKey();}
+    check(std::abs(host->getParamValue(cs80::P_ringDepth)-.3f)<1.e-6f,"fresh inline Return still commits the current parameter");
+    juce::MessageManager::getInstance()->runDispatchLoopUntil(10);
+    check(editorIn()==nullptr,"successful current edit closes its own inline editor");
+    top.removeChildComponent(&knob);
+
 }
 } // namespace cs80::tests
