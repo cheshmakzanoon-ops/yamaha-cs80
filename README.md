@@ -151,7 +151,7 @@ The voice monitor and controllers strip open from the toolbar menu:
 
 ![The voice monitor drawer and the controllers strip over the panel](docs/screenshots/studio-drawers-1600x1000.png)
 
-The documentation set of 68 screenshots was rendered by the real editor (`CS80Snapshots`, the JUCE software renderer) from [`c7595a4`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/c7595a4ea5171b4bf710e53c635938aa7d363e27) in successful [run 42574049530](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42574049530), then published in screenshot-only child [`68fcb88`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/68fcb884d49afb2a938dd703328529fca06f331d). [provenance.json](docs/screenshots/provenance.json) matches that source/run; all 68 image hashes and the complete PNG inventory match [SHA256SUMS](docs/screenshots/SHA256SUMS), rechecked November 9. The [screenshot directory](docs/screenshots/) holds the complete set. These are not captures of the retained `0996a15` bundles, and images do not establish interaction, sound, numerical-model or release qualification.
+The [screenshot directory](docs/screenshots/) contains captures rendered by the real plugin editor. Its [provenance.json](docs/screenshots/provenance.json) records the source commit, GitHub Actions run and renderer for the current capture set; [SHA256SUMS](docs/screenshots/SHA256SUMS) records the image hashes. Screenshot-only refresh commits can follow a runtime commit, so use that provenance rather than assuming the images show the current branch tip. These images do not establish interaction, sound, numerical-model or release qualification.
 
 ## PURE CS-80
 
