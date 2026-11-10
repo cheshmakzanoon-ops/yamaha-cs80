@@ -76,6 +76,40 @@ void testContextMenuKeyboard(Check check)
     check(starts == 2 && ends == 2 && !slider.isGestureInProgress(),
           "arrow adjustment still emits exactly one complete host gesture");
 
+    // Pointer commands must obey the same no-nested-edit policy as Shift+F10.
+    {
+        cs80::ui::FocusSlider pointerSlider;
+        pointerSlider.setRange(0., 1.); pointerSlider.setValue(.5);
+        int pointerMenus = 0, editors = 0, begins = 0, finishes = 0;
+        pointerSlider.onContextMenu = [&] { ++pointerMenus; };
+        pointerSlider.onTypeValue = [&] { ++editors; };
+        pointerSlider.onDragStart = [&] { ++begins; };
+        pointerSlider.onDragEnd = [&] { ++finishes; };
+        auto event = [&](int mods) {
+            const juce::Point<float> point(10.f, 10.f);
+            return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(), point,
+                juce::ModifierKeys(mods), 1.f, 0.f, 0.f, 0.f, 0.f, &pointerSlider, &pointerSlider,
+                juce::Time::getCurrentTime(), point, juce::Time::getCurrentTime(), 1, false);
+        };
+        const auto popup = event(juce::ModifierKeys::rightButtonModifier);
+        const auto typed = event(juce::ModifierKeys::leftButtonModifier | juce::ModifierKeys::commandModifier);
+        {
+            juce::Slider::ScopedDragNotification gesture(pointerSlider);
+            pointerSlider.mouseDown(popup);
+            check(pointerMenus == 0 && pointerSlider.isGestureInProgress(),
+                  "pointer context command cannot interrupt an active slider edit");
+            pointerSlider.mouseDown(typed);
+            check(editors == 0 && begins == 1 && finishes == 0,
+                  "pointer value-entry command cannot nest an active slider edit");
+        }
+        check(begins == 1 && finishes == 1 && !pointerSlider.isGestureInProgress(),
+              "rejected pointer commands preserve balanced existing gesture notifications");
+        pointerSlider.mouseDown(popup); pointerSlider.mouseUp(popup);
+        pointerSlider.mouseDown(typed); pointerSlider.mouseUp(typed);
+        check(pointerMenus == 1 && editors == 1 && begins == 1 && finishes == 1,
+              "fresh pointer commands remain available without starting host gestures");
+    }
+
     juce::TemporaryFile fixture("-cs80-context-keyboard");
     auto host = std::make_unique<Cs80AudioProcessor>(fixture.getFile());
     cs80::ui::ParamKnob knob(*host, cs80::P_mix);

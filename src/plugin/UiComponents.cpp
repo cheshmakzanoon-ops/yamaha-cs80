@@ -3135,6 +3135,9 @@ void FocusSlider::updateDragBubble()
 // releasing Shift mid-drag continues from where the value is instead of jumping.
 void FocusSlider::mouseDown(const juce::MouseEvent& e)
 {
+    // A second pointer command must not replace the state of an in-flight edit.
+    // In particular, swallowing its release would leave the original drag open.
+    if (isGestureInProgress()) return;
     swallowPointer = false;
     if (isEnabled() && e.mods.isPopupMenu() && onContextMenu)
     {
