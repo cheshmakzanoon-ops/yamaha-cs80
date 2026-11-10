@@ -262,8 +262,10 @@ public:
         }
         const bool arrow = key == juce::KeyPress::leftKey || key == juce::KeyPress::rightKey
             || key == juce::KeyPress::upKey || key == juce::KeyPress::downKey;
-        if (isEnabled() && arrow && !key.getModifiers().isAnyModifierKeyDown() && !gestureActive)
+        if (arrow && !key.getModifiers().isAnyModifierKeyDown())
         {
+            // JUCE's fallback changes values even when disabled or already editing.
+            if (!isEnabled() || gestureActive) return false;
             // JUCE 8.0.6 arrow keys change values without drag notifications.
             // Attachments need these to bracket host automation, just as for
             // pointer, wheel and accessibility edits.

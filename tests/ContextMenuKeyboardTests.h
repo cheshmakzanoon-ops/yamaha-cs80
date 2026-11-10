@@ -76,6 +76,33 @@ void testContextMenuKeyboard(Check check)
     check(starts == 2 && ends == 2 && !slider.isGestureInProgress(),
           "arrow adjustment still emits exactly one complete host gesture");
 
+    {
+        cs80::ui::FocusSlider arrows;
+        arrows.setRange(0., 1., .1); arrows.setValue(.5);
+        int begin = 0, end = 0;
+        arrows.onDragStart = [&] { ++begin; }; arrows.onDragEnd = [&] { ++end; };
+        const juce::KeyPress right(juce::KeyPress::rightKey);
+        arrows.setEnabled(false);
+        check(!arrows.keyPressed(right) && arrows.getValue() == .5 && begin == 0 && end == 0,
+              "disabled slider rejects arrow edits rather than falling through to JUCE");
+        arrows.setEnabled(true); arrows.setValue(.5);
+        {
+            juce::Component parent; parent.addChildComponent(arrows); parent.setEnabled(false);
+            check(!arrows.keyPressed(right) && arrows.getValue() == .5,
+                  "inherited disabled slider rejects arrow edits");
+            parent.removeChildComponent(&arrows);
+        }
+        arrows.setValue(.5);
+        {
+            juce::Slider::ScopedDragNotification gesture(arrows);
+            check(!arrows.keyPressed(right) && arrows.getValue() == .5 && begin == 1 && end == 0,
+                  "arrow edit cannot alter an in-flight pointer gesture");
+        }
+        arrows.setValue(.5);
+        check(arrows.keyPressed(right) && arrows.getValue() > .5 && begin == 2 && end == 2,
+              "fresh enabled arrow edit retains one balanced host gesture");
+    }
+
     // Pointer commands must obey the same no-nested-edit policy as Shift+F10.
     {
         cs80::ui::FocusSlider pointerSlider;
