@@ -375,6 +375,7 @@ private:
 
     Cs80AudioProcessor& processor;
     int parameterIndex;
+    std::uint64_t contextBindingGeneration = 0;
     juce::String name;
     juce::String captionOverride;
     float minCaption = 0.0f;

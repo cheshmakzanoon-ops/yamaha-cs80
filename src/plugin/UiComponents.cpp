@@ -3265,6 +3265,7 @@ bool ParamKnob::bindParameter(int index)
     if (index == parameterIndex) return true;
     if (slider.isGestureInProgress() || slider.isMouseButtonDown()) return false;
     // Destroy the old attachment before changing the slider range/value.
+    ++contextBindingGeneration;
     attachment.reset();
     parameterIndex = index;
     slider.setDoubleClickReturnValue(true, cs80::paramDef(index).def);
@@ -3886,22 +3887,28 @@ juce::PopupMenu ParamKnob::buildContextMenu()
     const bool pure = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
     const int cc = learn.controllerFor(host);
     juce::Component::SafePointer<ParamKnob> safe(this);
-    auto add = [&menu](const juce::String& text, bool enabled, std::function<void()> action)
+    const auto valid = [safe, parameter = parameterIndex, host, generation = contextBindingGeneration] {
+        return safe != nullptr && safe->isEnabled() && safe->slider.isEnabled()
+            && !safe->slider.isGestureInProgress() && !safe->slider.isMouseButtonDown()
+            && safe->parameterIndex == parameter && safe->getHostParameterIndex() == host
+            && safe->contextBindingGeneration == generation;
+    };
+    auto add = [&menu, valid](const juce::String& text, bool enabled, std::function<void()> action)
     {
         juce::PopupMenu::Item item(text);
         item.isEnabled = enabled;
-        item.action = std::move(action);
+        item.action = [valid, action = std::move(action)] { if (action && valid()) action(); };
         menu.addItem(item);
     };
     if (pure)
         add("MIDI learn (off in PURE CS-80)", false, nullptr);
     else if (learn.learningParameter() == host && host >= 0)
-        add("Cancel MIDI learn (waiting for a controller)", true, [safe] { if (safe != nullptr) { safe->processor.getMidiLearn().cancelLearn(); safe->repaint(); } });
+        add("Cancel MIDI learn (waiting for a controller)", true, [safe, host] { if (safe != nullptr && safe->processor.getMidiLearn().learningParameter() == host) { safe->processor.getMidiLearn().cancelLearn(); safe->repaint(); } });
     else
         add(cc >= 0 ? "MIDI learn a different controller" : "MIDI learn: move a controller", host >= 0,
-            [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().armLearn(host); safe->watchLearning(); } });
+            [safe, host] { if (safe != nullptr && safe->processor.getParamValue(cs80::P_parityMode) < 0.5f) { safe->processor.getMidiLearn().armLearn(host); safe->watchLearning(); } });
     if (cc >= 0)
-        add("Forget MIDI CC " + juce::String(cc), true, [safe, host] { if (safe != nullptr) { safe->processor.getMidiLearn().clearParameter(host); safe->repaint(); } });
+        add("Forget MIDI CC " + juce::String(cc), true, [safe, host, cc] { if (safe != nullptr && safe->processor.getMidiLearn().controllerFor(host) == cc) { safe->processor.getMidiLearn().clearParameter(host); safe->repaint(); } });
     menu.addSeparator();
     add("Reset to default  (" + formatParamValue(parameterIndex, cs80::paramDef(parameterIndex).def) + ")", true,
         [safe] { if (safe != nullptr) safe->resetToDefault(); });

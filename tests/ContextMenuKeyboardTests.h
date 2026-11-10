@@ -86,5 +86,68 @@ void testContextMenuKeyboard(Check check)
     check(boundSlider.getDescription().contains("Shift+F10"), "the accessible description advertises the menu shortcut");
     check(knob.bindParameter(cs80::P_volume) && boundSlider.getDescription().contains("Shift+F10"),
           "rebinding a parameter retains the accessible menu instructions");
+    const auto action = [](const juce::PopupMenu& menu, const juce::String& prefix) -> std::function<void()> {
+        for (juce::PopupMenu::MenuItemIterator it(menu); it.next();)
+            if (it.getItem().isEnabled && it.getItem().text.startsWith(prefix)) return it.getItem().action;
+        return {};
+    };
+    const int volumeHost = host->hostParameterIndex(cs80::P_volume);
+    const int mixHost = host->hostParameterIndex(cs80::P_mix);
+    auto oldReset = action(knob.buildContextMenu(), "Reset to default");
+    auto oldLearn = action(knob.buildContextMenu(), "MIDI learn");
+    knob.bindParameter(cs80::P_mix); host->setParamValue(cs80::P_mix, .2f);
+    const auto mixBefore = host->getParamValue(cs80::P_mix);
+    if (oldReset) oldReset();
+    check(host->getParamValue(cs80::P_mix) == mixBefore, "old knob reset cannot edit a rebound parameter");
+    knob.bindParameter(cs80::P_volume); host->getMidiLearn().cancelLearn();
+    if (oldLearn) oldLearn();
+    check(host->getMidiLearn().learningParameter() == -1, "knob binding generation rejects A-to-B-to-A stale learn");
+    host->getMidiLearn().cancelLearn();
+    auto learn = action(knob.buildContextMenu(), "MIDI learn");
+    host->setParamValue(cs80::P_parityMode, 1.0f);
+    if (learn) learn();
+    check(host->getMidiLearn().learningParameter() == -1, "already-open knob learn rechecks PURE at action time");
+    host->setParamValue(cs80::P_parityMode, 0.0f);
+    host->getMidiLearn().armLearn(volumeHost);
+    auto cancel = action(knob.buildContextMenu(), "Cancel MIDI learn");
+    host->getMidiLearn().armLearn(mixHost); if (cancel) cancel();
+    check(host->getMidiLearn().learningParameter() == mixHost, "stale knob cancel preserves a newer learning target");
+    host->getMidiLearn().cancelLearn(); host->getMidiLearn().assign(42, volumeHost);
+    auto forget = action(knob.buildContextMenu(), "Forget MIDI CC 42");
+    host->getMidiLearn().assign(43, volumeHost); if (forget) forget();
+    check(host->getMidiLearn().controllerFor(volumeHost) == 43, "stale knob forget preserves a replacement mapping");
+    auto reset = action(knob.buildContextMenu(), "Reset to default");
+    host->setParamValue(cs80::P_volume, .2f); const auto before = host->getParamValue(cs80::P_volume);
+    knob.setEnabled(false); if (reset) reset();
+    check(host->getParamValue(cs80::P_volume) == before, "disabled knob rejects an already-open reset");
+    knob.setEnabled(true); host->setParamValue(cs80::P_volume, before);
+    { juce::Slider::ScopedDragNotification gesture(boundSlider); if (reset) reset();
+      check(host->getParamValue(cs80::P_volume) == before, "knob menu reset cannot nest an active edit gesture"); }
+
+    host->setParamValue(cs80::P_volume,before);
+    { juce::Component disabledParent; disabledParent.addChildComponent(knob); disabledParent.setEnabled(false);
+      if (reset) reset();
+      check(host->getParamValue(cs80::P_volume)==before, "inherited disablement rejects delayed knob reset");
+      disabledParent.removeChildComponent(&knob); }
+    host->setParamValue(cs80::P_volume,before); boundSlider.setEnabled(false); if (reset) reset();
+    check(host->getParamValue(cs80::P_volume)==before, "disabled inner slider rejects delayed knob reset");
+    boundSlider.setEnabled(true);
+    auto freshReset = action(knob.buildContextMenu(), "Reset to default");
+    if (freshReset) freshReset();
+    check(host->getParamValue(cs80::P_volume) == cs80::paramDef(cs80::P_volume).def,
+          "fresh enabled knob reset still edits the bound parameter");
+    host->getMidiLearn().clearParameter(volumeHost); host->getMidiLearn().cancelLearn();
+    auto freshLearn = action(knob.buildContextMenu(), "MIDI learn"); if (freshLearn) freshLearn();
+    check(host->getMidiLearn().learningParameter() == volumeHost, "fresh knob learn arms its actual parameter");
+    auto freshCancel = action(knob.buildContextMenu(), "Cancel MIDI learn"); if (freshCancel) freshCancel();
+    check(host->getMidiLearn().learningParameter() == -1, "fresh knob cancellation remains effective");
+    host->getMidiLearn().assign(44,volumeHost);
+    auto freshForget = action(knob.buildContextMenu(), "Forget MIDI CC 44"); if (freshForget) freshForget();
+    check(host->getMidiLearn().controllerFor(volumeHost) == -1, "fresh knob forget remains effective");
+    auto doomed = std::make_unique<cs80::ui::ParamKnob>(*host,cs80::P_volume);
+    auto destroyedLearn = action(doomed->buildContextMenu(), "MIDI learn"); doomed.reset();
+    if (destroyedLearn) destroyedLearn();
+    check(host->getMidiLearn().learningParameter() == -1, "deleted knob rejects delayed actions safely");
+
 }
 } // namespace cs80::tests

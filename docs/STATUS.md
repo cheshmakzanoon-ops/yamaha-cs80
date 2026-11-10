@@ -549,7 +549,7 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
 - CPU and idle targets remain open. The resonance cache, sparse external
   interpolation and zero-EI VCA optimizations are merged, but their focused
   measurements do not replace a new full scorecard for the merged source.
-- Current `c7595a4` native/validator, DSP and screenshot CI passed. The
+- Historical `c7595a4` native/validator, DSP and screenshot CI passed. The
   `4278da7` Windows download failures and `34358cee` Linux GUI failure remain
   unexplained by that pass. Downloads remain at `0996a15`; actual DAW sessions
   and release qualification remain open.
