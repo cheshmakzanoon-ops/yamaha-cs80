@@ -460,6 +460,8 @@ void Engine::applyParams(const ParamValues& values)
     const float previousBendRange = global.pitchBendRange;
     const bool wasMpe = global.mpe;
     const bool wasArp = arpWasOn;
+    const int previousArpMode = global.arpMode;
+    const int previousArpOctaves = global.arpOctaves;
     const bool hadSustainGate = global.sustainGate;
     buildSettings();
     // Expression received under an earlier MPE mode must not become the
@@ -556,6 +558,12 @@ void Engine::applyParams(const ParamValues& values)
             arpClock = 0.0f;
         }
         arpWasOn = global.arpOn;
+    }
+    else if (global.arpOn && (previousArpMode != global.arpMode || previousArpOctaves != global.arpOctaves))
+    {
+        // Rebuild held input at a structural edit, without retriggering the
+        // current gate or resetting the clock. The next step starts the new order.
+        rebuildArpSequence();
     }
 }
 

@@ -399,6 +399,54 @@ void testWaitingTuningAdmission()
         }
 }
 
+void testArpLiveSequenceEdits()
+{
+    const auto heldNote = [](const Engine& e) {
+        for (int v = 0; v < 8; ++v)
+        { const auto info = e.getVoiceInfo(v); if (info.active && info.held) return info.note; }
+        return -1;
+    };
+    for (bool source : {false, true}) for (int edit : {0, 1, 2, 3, 4})
+    {
+        auto p = quiet(); p[P_sourcePerformance] = source ? 1.0f : 0.0f;
+        p[P_arpOn] = 1.0f; p[P_arpRate] = 16.0f; p[P_arpOctaves] = edit == 4 ? 2.0f : 1.0f;
+        Engine e; e.prepare(48000); e.setParams(p);
+        // Played order differs from sorted order, without duplicate pitches.
+        e.noteOn(67, .8f, 2); e.noteOn(60, .7f, 3); e.noteOn(64, .6f, 4);
+        render(e, 1); check(heldNote(e) == 60, "ascending fixture starts at lowest key");
+        std::vector<int> expected;
+        if (edit == 0) { p[P_arpMode] = 1.0f; expected = {67,64,60,67,64,60}; }
+        else if (edit == 1) { p[P_arpMode] = 4.0f; expected = {67,60,64,67,60,64}; }
+        else if (edit == 2) { p[P_arpOctaves] = 2.0f; expected = {60,64,67,72,76,79}; }
+        else if (edit == 3) { p[P_arpMode] = 2.0f; expected = {60,64,67,64,60,64}; }
+        else { p[P_arpOctaves] = 1.0f; expected = {60,64,67,60,64,67}; }
+        e.setParams(p); render(e, 64);
+        check(heldNote(e) == 60, "live sequence edit does not interrupt current gate");
+        for (int note : expected)
+        {
+            render(e, 3004);
+            check(heldNote(e) == note, "held chord follows edited ARP sequence at scheduled steps");
+        }
+    }
+    for (bool source : {false, true})
+    {
+        auto p = quiet(); p[P_sourcePerformance] = source ? 1.0f : 0.0f;
+        p[P_arpOn] = 1.0f; p[P_arpRate] = 16.0f;
+        Engine a, b;
+        for (auto* e : {&a,&b})
+        { e->prepare(48000); e->setParams(p); e->noteOn(60,.8f); e->noteOn(64,.7f); render(*e,3500); }
+        a.setParams(p);
+        check(render(a,9000) == render(b,9000), "unchanged parameters do not restart ARP sequence");
+        for (auto* e : {&a,&b})
+        { e->reset(); e->setParams(p); e->noteOn(60,.8f); e->noteOn(64,.7f); render(*e,1000); }
+        p[P_arpMode] = 1.0f; a.setParams(p);
+        render(a,128); render(b,128);
+        check(heldNote(a) == 60 && heldNote(b) == 60, "mid-gate edit does not retrigger either voice");
+        render(a,1876); render(b,1876);
+        check(heldNote(a) == 64 && heldNote(b) == 64, "edited sequence uses the original next-step deadline");
+    }
+}
+
 void testEngineTuning()
 {
     auto p = quiet();
@@ -1559,6 +1607,7 @@ int main()
     testMtsSysEx();
     testMtsMessageBoundaries();
     testEngineTuning();
+    testArpLiveSequenceEdits();
     testWaitingTuningAdmission();
     testUnmappedSustainAdmission();
     testMtsNonRealtimeAdmission();
