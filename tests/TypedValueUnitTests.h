@@ -69,6 +69,27 @@ void testTypedValueUnits(Check check)
               "an unknown/trailing unit token is rejected without changing the output argument");
     }
 
+    for (int channel : {0, 1})
+    {
+        const int pan = cs80::chParam(channel, cs80::CP_pan);
+        for (float value : {-1.f, -.75f, -.5f, -.01f, 0.f, .01f, .5f, .75f, 1.f})
+        {
+            float parsed = -12345.f;
+            check(cs80::ui::parseParamValue(pan, cs80::ui::formatParamValue(pan, value), 0.f, parsed)
+                      && std::abs(parsed-value) < 1.e-6f,
+                  "each channel pan accepts its own displayed direction and amount");
+        }
+        for (const char* text : {"L", "R-50", "L101", "R50junk", "LNaN", "R1e2", "L50%", "L/50", "R1..2"})
+        {
+            float parsed = -12345.f;
+            check(!cs80::ui::parseParamValue(pan, text, 0.f, parsed) && parsed == -12345.f,
+                  "malformed directional pan values reject without output mutation");
+        }
+        float parsed = -12345.f;
+        check(cs80::ui::parseParamValue(pan, " l 12,5 ", 0.f, parsed) && std::abs(parsed+.125f)<1.e-6f,
+              "directional pan accepts decimal-comma and case-insensitive entry");
+    }
+
     // Record every formatter/parser result at five points per parameter. The
     // pre-fix digest is a compatibility witness, not a cryptographic proof or
     // a claim that all existing formatter strings are parseable/round-trip exact.
@@ -133,5 +154,18 @@ void testTypedValueUnits(Check check)
               && probe.begins==1 && probe.ends==1 && probe.changes==1,
           "valid MIX pair remains one balanced host edit");
     mixParameter->removeListener(&probe);
+    constexpr int panIndex = cs80::chParam(0, cs80::CP_pan);
+    cs80::ui::ParamKnob panKnob(*host, panIndex);
+    auto* panParameter = host->getAPVTS().getParameter(Cs80AudioProcessor::parameterId(panIndex));
+    host->setParamValue(panIndex, 0.f); probe = {}; panParameter->addListener(&probe);
+    check(panKnob.applyTypedValue("R50") && std::abs(host->getParamValue(panIndex)-.5f)<1.e-6f
+              && probe.begins==1 && probe.ends==1 && probe.changes==1,
+          "typed pan reaches its real parameter in one balanced host gesture");
+    probe = {};
+    check(!panKnob.applyTypedValue("R50junk") && host->getParamValue(panIndex)==.5f
+              && probe.begins==0 && probe.ends==0 && probe.changes==0,
+          "malformed pan leaves attached parameter and host gesture stream unchanged");
+    panParameter->removeListener(&probe);
+
 }
 } // namespace cs80::tests

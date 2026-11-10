@@ -3789,6 +3789,27 @@ bool parseParamValue(int parameterIndex, const juce::String& text, float current
     if (typedText.isEmpty())
         return false;
 
+    // Pan prints a direction followed by a percentage, not a linear numeric
+    // unit. Parse it before choice-prefix matching ("L10" is not "L100").
+    const bool pan = parameterIndex == cs80::chParam(0, cs80::CP_pan)
+                  || parameterIndex == cs80::chParam(1, cs80::CP_pan);
+    if (pan && (typedText.startsWithIgnoreCase("L") || typedText.startsWithIgnoreCase("R")))
+    {
+        const auto amount = typedText.substring(1).trim().replace(",", ".");
+        bool digits = false, dot = false;
+        for (auto c : amount)
+        {
+            if (c >= '0' && c <= '9') digits = true;
+            else if (c == '.' && !dot) dot = true;
+            else return false;
+        }
+        if (!digits) return false;
+        const double percentage = amount.getDoubleValue();
+        if (!std::isfinite(percentage) || percentage < 0.0 || percentage > 100.0) return false;
+        physical = (float) (percentage * (typedText.startsWithIgnoreCase("L") ? -0.01 : 0.01));
+        return true;
+    }
+
     // Choice and switch names as the control prints them ("GLISS", "SUS II" -> "II", "8'"), exact or a unique prefix.
     const bool integralRange = d.min == std::round(d.min) && d.max == std::round(d.max) && d.max - d.min <= 16.0f;
     if (integralRange)
