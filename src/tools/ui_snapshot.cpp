@@ -2123,6 +2123,26 @@ int main(int argc, char** argv)
         std::puts("teardown probe: JUCE shut down; static destructors run after main returns");
         return 0;
     }
+    // Validate snapshot-mode arguments before initializing JUCE or running any
+    // fixture. A misspelled direct-test flag must not launch the full UI suite.
+    juce::String outDir = "artifacts/ui";
+    bool selfTest = false;
+    for (int i = 1; i < argc; ++i)
+    {
+        const juce::String option(argv[i]);
+        if (option.equalsIgnoreCase("--out") && i + 1 < argc
+            && juce::String(argv[i + 1]).isNotEmpty() && !juce::String(argv[i + 1]).startsWith("--"))
+            outDir = argv[++i];
+        else if (option.equalsIgnoreCase("--self-test"))
+            selfTest = true;
+        else
+        {
+            std::fprintf(stderr, "Invalid CS80Snapshots argument: %s\n"
+                                 "Snapshot usage: CS80Snapshots [--out DIRECTORY] [--self-test]\n", argv[i]);
+            return 64;
+        }
+    }
+
     // CTest captures stdout through a pipe. Keep phase evidence if a native
     // crash occurs, without changing the isolated locale-smoke entry path.
     std::setvbuf(stdout, nullptr, _IONBF, 0);
@@ -2160,16 +2180,6 @@ int main(int argc, char** argv)
     cs80::tests::testParameterGroupsHost(check);
     phases.begin("editor initial size");
     cs80::tests::testEditorInitialSize(check);
-
-    juce::String outDir = "artifacts/ui";
-    bool selfTest = false;
-    for (int i = 1; i < argc; ++i)
-    {
-        if (! juce::String(argv[i]).compareIgnoreCase("--out") && i + 1 < argc)
-            outDir = argv[++i];
-        else if (! juce::String(argv[i]).compareIgnoreCase("--self-test"))
-            selfTest = true;
-    }
 
     juce::File dir(juce::File::getCurrentWorkingDirectory().getChildFile(outDir));
     dir.createDirectory();
