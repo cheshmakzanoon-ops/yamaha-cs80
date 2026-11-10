@@ -367,6 +367,38 @@ void testUnmappedSustainAdmission()
         }
 }
 
+void testWaitingTuningAdmission()
+{
+    const auto held = [](const Engine& e, int note) {
+        for (int i = 0; i < 8; ++i)
+        { const auto v = e.getVoiceInfo(i); if (v.active && v.held && v.note == note) return true; }
+        return false;
+    };
+    for (bool scan : {false, true}) for (int mode : {1, 2})
+        for (bool cancel : {false, true})
+        {
+            auto p = quiet(); p[P_sourcePerformance] = 1.0f;
+            p[P_kasScanTiming] = scan ? 1.0f : 0.0f;
+            p[P_tuningMode] = static_cast<float>(mode);
+            Engine e; e.prepare(48000); e.setParams(p);
+            tn::TuningTable mapping;
+            const auto load = [&]() { if (mode == 1) e.setScalaTuning(mapping); else e.setMtsTuning(mapping); };
+            load();
+            for (int note = 60; note < 68; ++note) e.noteOn(note, .8f);
+            render(e, 1024);
+            e.noteOn(40, .8f); e.noteOn(41, .8f); render(e, 1024);
+            check(!held(e, 40) && !held(e, 41), "two keys wait behind eight held circuits");
+            mapping.mapped[40] = false; load();
+            e.noteOff(60); render(e, 1024);
+            check(!held(e, 40), "excluded waiting key cannot sound on promotion");
+            check(held(e, 41), "mapped waiter bypasses lower excluded key");
+            if (cancel) { e.noteOff(40); render(e, 1024); }
+            mapping.mapped[40] = true; load();
+            e.noteOff(61); render(e, 1024);
+            check(held(e, 40) == !cancel, "remapped waiter is retained unless its key was released");
+        }
+}
+
 void testEngineTuning()
 {
     auto p = quiet();
@@ -1338,14 +1370,19 @@ void testScanRoutingPedalsAndMapping(const Engine& prototype, Engine& empty)
         e->noteOn(80, 0.8f); render(*e, 48);
         map.mapped[80] = false; setMap();
         e->noteOff(60); render(*e, 48);
-        bool unchangedWaitingRule = false;
+        bool excludedWaiterSounds = false;
         for (int v = 0; v < 8; ++v)
         {
             const auto voice = e->getVoiceInfo(v);
-            unchangedWaitingRule |= voice.held && voice.note == 80 && voice.velocity == 0.0f;
+            excludedWaiterSounds |= voice.held && voice.note == 80;
         }
-        check(unchangedWaitingRule,
-              "waiting promotion retains its existing no-remapping rule in tuning mode " + std::to_string(mode));
+        check(!excludedWaiterSounds && routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+              "excluded waiting key leaves a free circuit in tuning mode " + std::to_string(mode));
+        // A mapped queued strike takes that free circuit; projection must not
+        // let the retained excluded waiter steal it during replay.
+        e->noteOn(81, 0.8f);
+        check(!routesToFirst(*e, empty) && routingMatchesDispatch(*e, empty),
+              "mapped queued strike fills circuit while excluded waiter remains");
     }
 }
 
@@ -1522,6 +1559,7 @@ int main()
     testMtsSysEx();
     testMtsMessageBoundaries();
     testEngineTuning();
+    testWaitingTuningAdmission();
     testUnmappedSustainAdmission();
     testMtsNonRealtimeAdmission();
     testArpeggiatorTuningMap();

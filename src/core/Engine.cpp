@@ -1453,13 +1453,18 @@ void Engine::reconsiderUnassignedKeys(bool immediate)
     // first. It was not struck now, so its initial touch is zero.
     while (unassignedCount > 0 && usesSourceModels(global.renderPolicy))
     {
+        int best = -1;
+        for (int i = 0; i < unassignedCount; ++i)
+            if ((global.tuningMode == 0 || noteMapped(unassignedKeys[(size_t) i].note))
+                && (best < 0 || unassignedKeys[(size_t) i].note < unassignedKeys[(size_t) best].note))
+                best = i;
+        // Retain excluded held keys for later mapping changes or their key-up,
+        // but never let them block a currently mapped waiter.
+        if (best < 0)
+            return;
         const int idx = chooseVoice();
         if (idx < 0)
             return;
-        int best = 0;
-        for (int i = 1; i < unassignedCount; ++i)
-            if (unassignedKeys[(size_t) i].note < unassignedKeys[(size_t) best].note)
-                best = i;
         const auto key = unassignedKeys[(size_t) best];
         forgetUnassignedKey(key.note, key.midiChannel);
         startVoice(voices[(size_t) idx], key.note, 0.0f, key.midiChannel, key.keyboardOrigin, nextReleaseOrder(immediate));
@@ -2058,16 +2063,17 @@ bool Engine::hasFreeCircuitForRouting() const noexcept
     const auto reconsider = [&]() {
         while (waitingCount > 0)
         {
+            int best = -1;
+            for (int j = 0; j < waitingCount; ++j)
+                if ((global.tuningMode == 0 || noteMapped(waiting[(size_t) j].note))
+                    && (best < 0 || waiting[(size_t) j].note < waiting[(size_t) best].note))
+                    best = j;
+            if (best < 0) return;
             const int i = choose();
             if (i < 0) return;
-            int best = 0;
-            for (int j = 1; j < waitingCount; ++j)
-                if (waiting[(size_t) j].note < waiting[(size_t) best].note)
-                    best = j;
             const auto key = waiting[(size_t) best];
             eraseWaiting(best);
-            // Match existing waiting-key promotion, including its mapping
-            // behavior. This query must not introduce another tuning policy.
+            // Match mapped waiting-key promotion without mutating live state.
             start(i, key.note, key.midiChannel, key.keyboardOrigin);
         }
     };
