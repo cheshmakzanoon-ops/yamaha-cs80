@@ -268,6 +268,7 @@ public:
     // Pitch (fractional MIDI semitones) a note plays at under the accepted mode.
     float tunedPitch(int midiNote) const noexcept;
     const MpeZoneLayout& getMpeZones() const noexcept { return mpeZones; }
+    bool isMpeEnabled() const noexcept { return global.mpe; }
     // Voice mode accepted for this frame (0 in PURE CS-80): 0 eight voices,
     // 1 sixteen (two engines, see PluginProcessor), 2/3/4 unison x2/x4/x8.
     int getVoiceMode() const noexcept { return global.voiceMode; }

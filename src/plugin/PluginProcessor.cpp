@@ -153,10 +153,23 @@ void Cs80AudioProcessor::observeHostMidi(const juce::MidiMessage& message) noexc
     else if (message.isAllNotesOff() || message.isAllSoundOff())
     {
         keyPressureOwnership.clear(); // Conservative: channel modes revoke UI pressure attribution.
+        unsigned affected = bit;
+        if (message.isAllSoundOff() && engine.isMpeEnabled())
+        {
+            const auto& zones = engine.getMpeZones();
+            const auto master = zones.role(message.getChannel());
+            for (int channel = 1; channel <= 16; ++channel)
+            {
+                const auto role = zones.role(channel);
+                if ((master == cs80::MpeZoneLayout::Role::lowerMaster && role == cs80::MpeZoneLayout::Role::lowerMember)
+                    || (master == cs80::MpeZoneLayout::Role::upperMaster && role == cs80::MpeZoneLayout::Role::upperMember))
+                    affected |= 1u << (channel - 1);
+            }
+        }
         for (size_t note = 0; note < uiHeldMasks.size(); ++note)
         {
-            hostKeyMasks[note].fetch_and(~bit, std::memory_order_relaxed);
-            uiHeldMasks[note] &= ~bit;
+            hostKeyMasks[note].fetch_and(~affected, std::memory_order_relaxed);
+            uiHeldMasks[note] &= ~affected;
         }
     }
 }
@@ -717,8 +730,9 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
     else if (message.isAllSoundOff())
     {
-        // CC120/123 are controllers too: dispatch before the generic branch.
-        forEachEngine([&](cs80::Engine& e) { e.allNotesOff(false, message.getChannel()); });
+        // Preserve the engine's negotiated MPE master-zone scope. The public
+        // allNotesOff API intentionally retains its channel-local semantics.
+        forEachEngine([&](cs80::Engine& e) { e.controlChange(120, message.getControllerValue() / 127.0f, message.getChannel()); });
     }
     else if (message.isAllNotesOff())
     {

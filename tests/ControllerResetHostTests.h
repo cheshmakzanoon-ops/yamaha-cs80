@@ -48,6 +48,47 @@ void testControllerResetHost(Check check)
                        != std::bit_cast<std::uint32_t>(b.getSample(channel, i))) return false;
         return true;
     };
+    // Real host MIDI must use the engine's negotiated MPE CC120 route,
+    // including processor-owned held-key display/ownership masks.
+    for (bool circuit : {false, true})
+        for (bool sixteen : {false, true})
+            for (int frames : {0, 32})
+                for (int mode : {0, 1, 2, 3, 4})
+    {
+        const bool enabled = mode != 3;
+        const bool pure = mode == 4;
+        auto host = make(circuit, sixteen, pure);
+        host->setParamValue(P_mpeOn, enabled ? 1.f : 0.f);
+        juce::AudioBuffer<float> audio(2, frames);
+        juce::MidiBuffer midi;
+        auto tick = [&] { host->processBlock(audio, midi); midi.clear(); };
+        tick();
+        auto cc = [&](int channel, int controller, int value) {
+            midi.addEvent(juce::MidiMessage::controllerEvent(channel, controller, value), 0);
+        };
+        for (int master : {1, 16}) { cc(master, 101, 0); cc(master, 100, 6); cc(master, 6, 2); }
+        tick();
+        const int channels[] {2, 3, 14, 15, 8};
+        const int count = sixteen && !pure ? 16 : 8;
+        for (int i = 0; i < count; ++i)
+            midi.addEvent(juce::MidiMessage::noteOn(channels[i % 5], 40+i, (juce::uint8) 100), 0);
+        tick();
+        const int target = mode == 1 ? 16 : mode == 2 ? 2 : 1;
+        midi.addEvent(juce::MidiMessage::allSoundOff(target), 0);
+        tick();
+        for (int i = 0; i < count; ++i)
+        {
+            const int channel = channels[i % 5];
+            const bool affected = channel == target || (enabled && !pure
+                && ((target == 1 && (channel == 2 || channel == 3))
+                    || (target == 16 && (channel == 14 || channel == 15))));
+            check(voice(*host,40+i).active != affected,
+                  "host CC120 silences only its active MPE zone or conventional addressed channel");
+            check(host->isHostKeyDown(40+i) != affected,
+                  "host CC120 held-key display masks match the voices it silences");
+        }
+    }
+
     for (bool circuit : {false, true})
         for (bool sixteen : {false, true})
             for (int frames : {0, 32})
