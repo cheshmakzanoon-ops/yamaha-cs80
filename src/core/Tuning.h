@@ -334,6 +334,10 @@ inline bool applyMtsSysEx(const std::uint8_t* data, int size, TuningTable& table
     }
     if (sub == 0x08 || sub == 0x09)
     {
+        // The three mask bytes address no channels when all are zero.
+        // A valid no-recipient message must not rewrite even the stored table.
+        if ((data[5] | data[6] | data[7]) == 0)
+            return false;
         const std::uint8_t* p = data + 8; // after channel mask ff gg hh
         std::array<float, 12> offset {};
         for (int pc = 0; pc < 12; ++pc)

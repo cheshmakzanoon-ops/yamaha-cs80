@@ -261,6 +261,45 @@ void testMtsMessageBoundaries()
           "valid MTS message retunes the sounding note after rejection");
 }
 
+void testMtsEmptyChannelMask()
+{
+    using Bytes = std::vector<std::uint8_t>;
+    for (int sub : {8,9}) for (bool realtime : {false,true})
+    {
+        Bytes message {0xF0, static_cast<std::uint8_t>(realtime ? 0x7F : 0x7E),
+                       0x7F,8,static_cast<std::uint8_t>(sub),0,0,0};
+        for (int pc = 0; pc < 12; ++pc)
+            if (sub == 8) message.push_back(89); // +25 cents
+            else { message.push_back(80); message.push_back(0); }
+        message.push_back(0xF7);
+        tn::TuningTable before; before.pitch[64] = 64.125f; before.mapped[61] = false;
+        auto after = before;
+        check(!tn::applyMtsSysEx(message.data(), static_cast<int>(message.size()), after),
+              "empty MTS channel mask reports no applied change");
+        check(after.pitch == before.pitch && after.mapped == before.mapped,
+              "empty MTS channel mask preserves entire table");
+        for (bool source : {false,true})
+        {
+            auto p = quiet(); p[P_sourcePerformance] = source ? 1.0f : 0.0f; p[P_tuningMode] = 2.0f;
+            Engine actual, reference;
+            for (auto* e : {&actual,&reference})
+            { e->prepare(48000); e->setParams(p); e->setMtsTuning(before); e->noteOn(64,.8f); render(*e,256); }
+            check(!actual.handleSysEx(message.data(), static_cast<int>(message.size())),
+                  "engine treats empty recipient mask as no-op");
+            check(render(actual,1024) == render(reference,1024),
+                  "empty mask preserves held-note audio");
+            for (auto* e : {&actual,&reference}) e->noteOn(65,.7f);
+            check(render(actual,1024) == render(reference,1024),
+                  "empty mask cannot silently change future-note tuning");
+        }
+        message[5] = 3; message[6] = message[7] = 127;
+        check(tn::applyMtsSysEx(message.data(), static_cast<int>(message.size()), after),
+              "nonempty all-channel mask remains accepted");
+        check(after.pitch[64] == 64.25f && after.mapped[61],
+              "all-channel scale update still applies complete table");
+    }
+}
+
 void testMtsNonRealtimeAdmission()
 {
     using Bytes = std::vector<std::uint8_t>;
@@ -1638,6 +1677,7 @@ int main()
     testWaitingTuningAdmission();
     testUnmappedSustainAdmission();
     testMtsNonRealtimeAdmission();
+    testMtsEmptyChannelMask();
     testArpeggiatorTuningMap();
     testMpe();
     testMpePedalZoneBoundaries();
