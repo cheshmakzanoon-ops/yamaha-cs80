@@ -3562,7 +3562,10 @@ void ParamKnob::mouseDoubleClick(const juce::MouseEvent& e)
 {
     if (e.originalComponent == &slider || e.eventComponent == &slider)
         return; // the slider resets itself; this handler is only for the margin around it
-    slider.setValue(cs80::paramDef(parameterIndex).def, juce::sendNotificationSync);
+    if (e.eventComponent != this || e.originalComponent != this || !isEnabled() || !slider.isEnabled()
+        || slider.isGestureInProgress() || !e.mods.isLeftButtonDown() || e.mods.isPopupMenu())
+        return;
+    resetToDefault();
 }
 
 // ---------------------------------------------------------------------------

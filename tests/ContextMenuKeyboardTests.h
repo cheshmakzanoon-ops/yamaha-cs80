@@ -184,5 +184,34 @@ void testContextMenuKeyboard(Check check)
     check(editorIn()==nullptr,"successful current edit closes its own inline editor");
     top.removeChildComponent(&knob);
 
+    struct ResetProbe : juce::AudioProcessorParameter::Listener {
+        std::vector<int> events;
+        void parameterValueChanged(int,float) override { events.push_back(0); }
+        void parameterGestureChanged(int,bool start) override { events.push_back(start?1:-1); }
+    } resetProbe;
+    auto* resetParameter=host->getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_ringDepth));
+    resetParameter->addListener(&resetProbe);
+    const auto mouseDouble = [](juce::Component& c,int modifiers) {
+        const juce::Point<float> point(2.0f,2.0f);
+        return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(),point,juce::ModifierKeys(modifiers),
+            1.0f,0.0f,0.0f,0.0f,0.0f,&c,&c,juce::Time::getCurrentTime(),point,juce::Time::getCurrentTime(),2,false);
+    };
+    const auto resetFixture = [&] {host->setParamValue(cs80::P_ringDepth,.2f);resetProbe.events.clear();};
+    resetFixture(); knob.mouseDoubleClick(mouseDouble(knob,juce::ModifierKeys::leftButtonModifier));
+    check(host->getParamValue(cs80::P_ringDepth)==cs80::paramDef(cs80::P_ringDepth).def
+              && resetProbe.events==std::vector<int>({1,0,-1}),"caption double-click reset is one balanced host edit");
+    resetFixture(); knob.mouseDoubleClick(mouseDouble(knob,juce::ModifierKeys::rightButtonModifier));
+    check(host->getParamValue(cs80::P_ringDepth)==.2f && resetProbe.events.empty(),"popup double-click cannot reset the caption parameter");
+    resetFixture(); knob.setEnabled(false); knob.mouseDoubleClick(mouseDouble(knob,juce::ModifierKeys::leftButtonModifier));
+    check(host->getParamValue(cs80::P_ringDepth)==.2f && resetProbe.events.empty(),"disabled caption cannot reset its parameter");
+    knob.setEnabled(true); resetFixture();
+    {juce::Slider::ScopedDragNotification gesture(boundSlider);
+     knob.mouseDoubleClick(mouseDouble(knob,juce::ModifierKeys::leftButtonModifier));}
+    check(host->getParamValue(cs80::P_ringDepth)==.2f && resetProbe.events==std::vector<int>({1,-1}),
+          "caption reset cannot nest or modify an active edit");
+    resetFixture(); knob.mouseDoubleClick(mouseDouble(boundSlider,juce::ModifierKeys::leftButtonModifier));
+    check(host->getParamValue(cs80::P_ringDepth)==.2f && resetProbe.events.empty(),"slider-origin double-click is not duplicated by its parent");
+    resetParameter->removeListener(&resetProbe);
+
 }
 } // namespace cs80::tests
