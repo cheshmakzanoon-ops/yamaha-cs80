@@ -40,6 +40,37 @@ int held(const Engine& engine, int note = -1, int channel = -1)
     return count;
 }
 
+void testMalformedNoteAdmission()
+{
+    for (bool keyboard : {false, true}) for (int kind : {0,1,2,3})
+    {
+        ParamValues p; p[P_sourcePerformance]=p[P_kasScanTiming]=1.0f;
+        Engine e; e.prepare(48000); e.setParams(p);
+        e.noteOn(60,.8f,1);
+        for (int i=0;i<kas::Scanner::kCapacity+1;++i)
+        {
+            const int note=kind==0 ? -1 : kind==1 ? 128 : 60;
+            const int channel=kind==2 ? -1 : kind==3 ? 17 : 1;
+            if (keyboard) e.noteOffFromKeyboard(note,channel); else e.noteOff(note,channel);
+        }
+        check(held(e)==0, "malformed note-offs cannot overflow-flush a valid queued onset");
+        render(e,128);
+        check(held(e,60,1)==1, "valid queued onset survives malformed releases");
+        e.noteOff(60,1); render(e,128);
+        check(held(e)==0, "valid release remains functional after malformed release batch");
+    }
+    for (bool keyboard : {false,true}) for (bool scan : {false,true})
+        for (bool source : {false,true}) for (bool arp : {false,true}) for (int channel : {-1,17})
+    {
+        ParamValues p; p[P_sourcePerformance]=source?1.0f:0.0f;
+        p[P_kasScanTiming]=scan?1.0f:0.0f; p[P_arpOn]=arp?1.0f:0.0f;
+        Engine e; e.prepare(48000); e.setParams(p);
+        if (keyboard) check(!e.noteOnFromKeyboard(60,.8f,channel), "rejected UI onset cannot claim deferral");
+        else e.noteOn(60,.8f,channel);
+        render(e,128);
+        check(held(e)==0, "out-of-range note channel cannot allocate a voice");
+    }
+}
 void testScannerOrder()
 {
     // Every on/off sequence through eight events must retain its arrival
@@ -231,6 +262,7 @@ void testEngineOrdering()
 }
 int main()
 {
+    testMalformedNoteAdmission();
     testScannerOrder();
     testEngineOrdering();
     testArpTransitionBoundary();

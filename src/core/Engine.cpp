@@ -1321,7 +1321,7 @@ void Engine::noteOn(int midiNote, float velocity, int midiChannel)
 
 bool Engine::noteOnFromKeyboard(int midiNote, float velocity, int midiChannel)
 {
-    if (midiNote < 0 || midiNote > 127 || !std::isfinite(velocity))
+    if (midiNote < 0 || midiNote > 127 || midiChannel < 0 || midiChannel > 16 || !std::isfinite(velocity))
         return false;
     const bool deferred = scanTimingActive() || scanner.pending() > 0;
     enqueueNoteOn(midiNote, velocity, midiChannel, true);
@@ -1332,7 +1332,7 @@ void Engine::enqueueNoteOn(int midiNote, float velocity, int midiChannel, bool k
 {
     // Reject malformed events before curves, scan queuing or voice lifecycle
     // changes. A non-finite velocity is not a new key strike.
-    if (midiNote < 0 || midiNote > 127 || ! std::isfinite(velocity))
+    if (midiNote < 0 || midiNote > 127 || midiChannel < 0 || midiChannel > 16 || ! std::isfinite(velocity))
         return;
     const auto onsetOrder = ++noteIngressOrder;
     // Interface-layer controller curve (Phase 2.4); exact identity at 0.
@@ -1593,6 +1593,9 @@ void Engine::noteOffFromKeyboard(int midiNote, int midiChannel)
 
 void Engine::enqueueNoteOff(int midiNote, int midiChannel, bool keyboardOnly)
 {
+    // Invalid releases must not consume queue capacity or force an early flush.
+    if (midiNote < 0 || midiNote > 127 || midiChannel < 0 || midiChannel > 16)
+        return;
     // A UI release must remain behind its queued onset even if scan timing
     // was disabled between events. Ordinary host dispatch is unchanged.
     if (scanTimingActive() || (keyboardOnly && scanner.pending() > 0))
