@@ -595,6 +595,7 @@ private:
     int unisonCount() const noexcept
     { return global.voiceMode == 2 ? 2 : global.voiceMode == 3 ? 4 : global.voiceMode == 4 ? 8 : 1; }
     bool isZoneMaster(const Voice& voice, int midiChannel) const noexcept;
+    void allNotesOffImpl(bool release, int midiChannel, bool includeMpeZone);
     // CC121 is an explicit reset, not an ordinary per-note expression event.
     void applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices);
     void applyPitchBend(int midiChannel, float value, bool resetReleasedVoices);

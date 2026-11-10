@@ -476,6 +476,72 @@ void testMalformedChannelMode()
                           "finite mode message preserves channel scope");
                 }
 }
+void testMpeMasterSoundOff()
+{
+    const auto activeOn = [](const Engine& e, int channel) {
+        int count = 0; for (int v = 0; v < 8; ++v)
+        { const auto info = e.getVoiceInfo(v); count += info.active && info.channel == channel; }
+        return count;
+    };
+    for (bool circuit : {false,true}) for (bool upper : {false,true})
+        for (int scenario : {0,1,2})
+        {
+            if (!circuit && scenario == 2) continue; // Legacy steals, rather than waits.
+            const int master = upper ? 16 : 1, member = upper ? 15 : 2, other = upper ? 2 : 15;
+            auto p = patch(circuit); p[P_mpeOn] = 1.0f;
+            p[P_kasScanTiming] = scenario == 1 ? 1.0f : 0.0f;
+            Engine e; e.prepare(48000); e.setParams(p); rpn(e,1,6,2); rpn(e,16,6,2);
+            if (scenario == 2)
+            {
+                for (int n = 40; n < 48; ++n) e.noteOn(n,.8f,member);
+                e.noteOn(80,.8f,member); e.noteOn(81,.8f,other);
+                check(activeOn(e,member) == 8 && activeOn(e,other) == 0, "MPE panic waiting fixture");
+            }
+            else
+            {
+                e.noteOn(60,.8f,member); e.noteOn(64,.8f,master);
+                e.noteOn(67,.7f,other); e.noteOn(72,.6f,8);
+                if (scenario == 0) render(e,256);
+            }
+            e.controlChange(120,0.0f,master); render(e,256);
+            check(activeOn(e,member) == 0 && activeOn(e,master) == 0,
+                  "MPE master sound-off clears own zone including queued/waiting keys");
+            check(activeOn(e,other) > 0, "MPE master sound-off preserves other zone and its waiters");
+            if (scenario != 2) check(activeOn(e,8) > 0, "MPE master sound-off preserves non-zone channels");
+            e.controlChange(64,1.0f,master);
+            e.noteOn(75,.8f,member); render(e,128); e.noteOff(75,member); render(e,128);
+            e.controlChange(120,0.0f,master);
+            e.noteOn(76,.8f,member); render(e,128); e.noteOff(76,member); render(e,128);
+            bool retainedPedal = false;
+            for (int v = 0; v < 8; ++v) { const auto info=e.getVoiceInfo(v);
+                retainedPedal |= info.active && info.note==76 && info.channel==member && info.pedalHeld; }
+            check(retainedPedal, "zone sound-off preserves master pedal state for future notes");
+        }
+    for (bool circuit : {false,true}) for (int layout : {0,1,2})
+    {
+        auto p=patch(circuit); p[P_mpeOn]=layout == 0 ? 0.0f : 1.0f;
+        Engine e; e.prepare(48000); e.setParams(p);
+        if (layout != 0) { rpn(e,1,6,layout == 2 ? 0 : 2); rpn(e,16,6,2); }
+        for (int ch : {1,2,3,15}) e.noteOn(60+ch,.8f,ch);
+        const int target=layout == 1 ? 2 : 1;
+        e.controlChange(120,0.0f,target);
+        check(activeOn(e,target)==0 && activeOn(e,3)==1 && activeOn(e,15)==1,
+              "member/conventional/disabled-master panic stays channel-scoped");
+        if (layout != 1) check(activeOn(e,2)==1, "non-master panic preserves nearby conventional note");
+    }
+    for (bool circuit : {false,true})
+    {
+        auto p=patch(circuit); p[P_mpeOn]=p[P_arpOn]=1.0f; p[P_arpRate]=16.0f;
+        Engine e; e.prepare(48000); e.setParams(p); rpn(e,1,6,2); rpn(e,16,6,2);
+        e.noteOn(60,.8f,2); e.noteOn(64,.7f,15); render(e,64);
+        e.controlChange(120,0.0f,1); render(e,3004); render(e,3004);
+        check(activeOn(e,2)==0, "zone panic removes ARP source so it cannot return");
+        bool otherHeld=false; for (int v=0;v<8;++v) { const auto info=e.getVoiceInfo(v);
+            otherHeld |= info.active && info.held && info.channel==15; }
+        check(otherHeld, "other-zone ARP source continues after zone panic");
+    }
+
+}
 void testPrefixChannelReset()
 {
     for (int channel = 1; channel <= 16; ++channel)
@@ -498,7 +564,7 @@ int main()
 {
     testPedalRelease(); testMpePedals(); testSelectors(); testMalformedAndIsolation();
     testHeldKeysAndWaitingCircuit(); testDefaultsAndPreservation(); testMpeExpressionReset();
-    testRibbonAndPurePreservation(); testPrefixChannelReset(); testMalformedChannelMode();
+    testRibbonAndPurePreservation(); testPrefixChannelReset(); testMalformedChannelMode(); testMpeMasterSoundOff();
     std::printf("Controller reset: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }

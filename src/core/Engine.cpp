@@ -1647,25 +1647,40 @@ Engine::Voice* Engine::findVoiceForNote(int note, int midiChannel)
 
 void Engine::allNotesOff(bool release, int midiChannel)
 {
+    allNotesOffImpl(release, midiChannel, false);
+}
+
+void Engine::allNotesOffImpl(bool release, int midiChannel, bool includeMpeZone)
+{
     if (midiChannel < 0 || midiChannel > 16)
         return;
     const bool allChannels = midiChannel == 0;
+    const auto masterRole = includeMpeZone && global.mpe ? mpeZones.role(midiChannel)
+                                                       : MpeZoneLayout::Role::none;
+    const auto affected = [&](int channel) {
+        if (allChannels || channel == midiChannel) return true;
+        const auto role = mpeZones.role(channel);
+        return (masterRole == MpeZoneLayout::Role::lowerMaster && role == MpeZoneLayout::Role::lowerMember)
+            || (masterRole == MpeZoneLayout::Role::upperMaster && role == MpeZoneLayout::Role::upperMember);
+    };
     // Channel0 is the legacy application panic: clear every pedal and key.
     // Channel-mode MIDI messages do not reset controller state.
     if (allChannels)
         sustainPedals.fill(false);
-    scanner.discard(midiChannel);
+    if (allChannels) scanner.discard(0);
+    else for (int channel = 1; channel <= 16; ++channel)
+        if (affected(channel)) scanner.discard(channel);
     {
         int kept = 0;
         for (int i = 0; i < unassignedCount; ++i)
-            if (! allChannels && unassignedKeys[(size_t) i].midiChannel != midiChannel)
+            if (! affected(unassignedKeys[(size_t) i].midiChannel))
                 unassignedKeys[(size_t) kept++] = unassignedKeys[(size_t) i];
         unassignedCount = kept;
     }
 
     int kept = 0;
     for (int i = 0; i < heldKeyCount; ++i)
-        if (! allChannels && heldKeys[(size_t) i].midiChannel != midiChannel)
+        if (! affected(heldKeys[(size_t) i].midiChannel))
             heldKeys[(size_t) kept++] = heldKeys[(size_t) i];
     const bool keysChanged = kept != heldKeyCount;
     heldKeyCount = kept;
@@ -1675,7 +1690,7 @@ void Engine::allNotesOff(bool release, int midiChannel)
         arpClock = 0.0f;
 
     if (arpVoice >= 0 && arpVoice < kNumVoices
-        && (allChannels || voices[(size_t) arpVoice].midiChannel == midiChannel))
+        && affected(voices[(size_t) arpVoice].midiChannel))
     {
         arpVoice = -1;
         arpCurrentNote = -1;
@@ -1685,7 +1700,7 @@ void Engine::allNotesOff(bool release, int midiChannel)
 
     for (auto& voice : voices)
     {
-        if (! allChannels && voice.midiChannel != midiChannel)
+        if (! affected(voice.midiChannel))
             continue;
         if (! release)
         {
@@ -1823,7 +1838,7 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         return;
     if (controller == 120 || controller == 123)
     {
-        allNotesOff(controller == 123, midiChannel);
+        allNotesOffImpl(controller == 123, midiChannel, controller == 120);
         return;
     }
     if (controller == 121)
