@@ -31,7 +31,10 @@ void testTypedValueUnits(Check check)
         { cs80::P_detune, "5 cent", 0.0f, 5.0f }, { cs80::P_detune, "5 cents", 0.0f, 5.0f },
         { cs80::P_brilliance, "0.5 oct", 0.0f, 0.5f }, { cs80::P_brilliance, "0.5 o", 0.0f, 0.5f },
         { cs80::P_brilliance, "0.5 octave", 0.0f, 0.5f }, { cs80::P_brilliance, "0.5 octaves", 0.0f, 0.5f },
-        { cs80::P_mix, "68/32", 0.5f, 0.68f }, { cs80::P_glideMode, "GLISS", 0.0f, 2.0f },
+        { cs80::P_mix, "68/32", 0.5f, 0.68f },
+        { cs80::P_mix, "0/100", .5f, 0.0f }, { cs80::P_mix, "100/0", .5f, 1.0f },
+        { cs80::P_mix, " 68.5 / 31.5 ", .5f, .685f }, { cs80::P_mix, "68,5/31,5", .5f, .685f },
+        { cs80::P_mix, "68", .5f, .68f }, { cs80::P_glideMode, "GLISS", 0.0f, 2.0f },
         { cs80::P_resonance, "5", 0.2f, 0.5f }, { cs80::P_tuningRef, "9999", 440.0f, 465.0f }
     };
     for (const auto& test : valid)
@@ -44,6 +47,12 @@ void testTypedValueUnits(Check check)
 
     struct Invalid { int parameter; const char* text; };
     const Invalid invalid[] {
+        { cs80::P_mix, "68/garbage" }, { cs80::P_mix, "68/" }, { cs80::P_mix, "68//32" },
+        { cs80::P_mix, "68/32 garbage" }, { cs80::P_mix, "68/32/0" },
+        { cs80::P_mix, "68/31" }, { cs80::P_mix, "25/25" }, { cs80::P_mix, "0/0" },
+        { cs80::P_mix, "-1/101" }, { cs80::P_mix, "101/-1" }, { cs80::P_mix, "68/-32" },
+        { cs80::P_mix, "68/NaN" }, { cs80::P_mix, "68/Inf" }, { cs80::P_mix, "68/3.2e1" },
+        { cs80::P_mix, "68/32%" }, { cs80::P_mix, "68/3..2" },
         { cutoff, "3 kittens" }, { cutoff, "3 kHz garbage" }, { cutoff, "1200 HzHz" },
         { cutoff, "3 kHz/ms" }, { cutoff, "3 k hz" }, { cutoff, "3 k.." },
         { attack, "80 ms garbage" }, { attack, "80 msecjunk" }, { attack, "0.8 seconds later" },
@@ -114,5 +123,15 @@ void testTypedValueUnits(Check check)
     check(probe.begins == 1 && probe.ends == 1 && probe.changes == 1,
           "a valid edit remains exactly one balanced host gesture and value change");
     parameter->removeListener(&probe);
+    cs80::ui::ParamKnob mixKnob(*host,cs80::P_mix);
+    auto* mixParameter=host->getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_mix));
+    host->setParamValue(cs80::P_mix,.4f); probe={}; mixParameter->addListener(&probe);
+    check(!mixKnob.applyTypedValue("68/garbage") && host->getParamValue(cs80::P_mix)==.4f
+              && probe.begins==0 && probe.ends==0 && probe.changes==0,
+          "malformed MIX pair neither edits audio state nor creates a host gesture");
+    host->setParamValue(cs80::P_mix,.4f); probe={}; check(mixKnob.applyTypedValue("68/32") && std::abs(host->getParamValue(cs80::P_mix)-.68f)<1.e-6f
+              && probe.begins==1 && probe.ends==1 && probe.changes==1,
+          "valid MIX pair remains one balanced host edit");
+    mixParameter->removeListener(&probe);
 }
 } // namespace cs80::tests

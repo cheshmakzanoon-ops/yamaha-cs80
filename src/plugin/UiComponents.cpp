@@ -3582,7 +3582,7 @@ struct ReadNumber
     bool explicitScale = false;
 };
 
-ReadNumber readNumber(const juce::String& raw)
+ReadNumber readNumber(const juce::String& raw, bool validatePercentagePair = false)
 {
     ReadNumber r;
     auto t = raw.trim().toLowerCase().replace(juce::String::charToString((juce::juce_wchar) 0x2212), "-").replace(",", ".");
@@ -3616,8 +3616,29 @@ ReadNumber readNumber(const juce::String& raw)
     else if (rest == "ct" || rest == "cts" || rest == "cent" || rest == "cents") r.unit = "ct";
     else if (rest == "oct" || rest == "o" || rest == "octave" || rest == "octaves") r.unit = "oct";
     else if (rest == "%") r.unit = "%";
-    // MIX's existing percentage-pair display/parser is separate from unit admission.
-    else if (rest.startsWith("/")) r.unit = "/";
+    // Only MIX input needs the complementary-percentage contract. Keep the
+    // generic formatter/choice classification unchanged for other controls.
+    else if (rest.startsWith("/"))
+    {
+        if (validatePercentagePair)
+        {
+            const auto second = rest.substring(1).trim();
+            bool secondDigits = false, secondDot = false;
+            for (int j = second.startsWithChar('+') ? 1 : 0; j < second.length(); ++j)
+            {
+                const auto c = second[j];
+                if (c >= '0' && c <= '9') secondDigits = true;
+                else if (c == '.' && !secondDot) secondDot = true;
+                else return r;
+            }
+            if (!secondDigits) return r;
+            const double other = second.getDoubleValue();
+            if (!std::isfinite(number) || !std::isfinite(other) || number < 0.0 || number > 100.0
+                || other < 0.0 || other > 100.0 || std::abs(number + other - 100.0) > 1.0e-6)
+                return r;
+        }
+        r.unit = "/";
+    }
     else if (rest == "k") { r.scale = 1000.0; r.explicitScale = true; }
     else if (rest.isNotEmpty()) return r;   // text after the number that is not a unit: not a value
     r.explicitScale = r.explicitScale || r.unit.isNotEmpty();
@@ -3782,7 +3803,7 @@ bool parseParamValue(int parameterIndex, const juce::String& text, float current
         }
     }
 
-    const auto typed = readNumber(typedText);
+    const auto typed = readNumber(typedText, parameterIndex == cs80::P_mix);
     if (! typed.ok)
         return false;
     // Two sample points where the control prints a number give its linear display law (display = a * value + b):
