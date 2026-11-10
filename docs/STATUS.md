@@ -32,12 +32,13 @@ from this result.
 
 ## Latest local native processor/component integration
 
-Pinned source `782019d4c507cdf5d872921bdc6902640d6f61de` passed all **13/13 selected
-direct CS80Snapshots suites**, zero failures, in one serial run (15.88 seconds).
-The current Release target had no outstanding rebuild work. This covers
-processor/MPE/16-voice/controller and direct UI callback integration, not a full
-native, wrapper/validator, display-driven smoke or DAW run. See the
-[exact suite list and limits](NATIVE_COMPONENT_INTEGRATION_782019D.md).
+Pinned source `c8c3dbf44c2aa18ae6719340cc9fef82aefb1015` passed all **13/13 selected
+direct CS80Snapshots suites**, zero failures, in one serial run (15.67 seconds).
+The current Release target had no outstanding rebuild work. Separate attempts
+at display-driven UI smoke and teardown were blocked before application startup
+by local display-socket creation restrictions; neither gate passed. See the
+[exact suite list, blocker and limits](NATIVE_COMPONENT_INTEGRATION_C8C3DBF.md).
+This is not a full native, wrapper/validator, rendered UI or DAW qualification.
 
 ## November 10 bounded correctness updates
 
@@ -53,6 +54,11 @@ hardware-fidelity or release-qualification limits:
 | MPE panic | `60419bf` | [Active master CC120 clears its current zone](MPE_MASTER_SOUND_OFF.md), with controller state and unrelated channels retained. |
 | Malformed input | `19e771b`, `784f94f`, `d00d8bf0` | [Non-finite channel-mode rejection](CHANNEL_MODE_FINITE_ADMISSION.md), [controller-channel admission](CONTROLLER_CHANNEL_ADMISSION.md), and [note/scanner admission](NOTE_EVENT_ADMISSION.md). |
 | Editor interaction lifecycle | `acda5b9`, `6f6d3fc`, `47acee1`, `782019d` | [Stale knob menu rejection](KNOB_CONTEXT_LIFECYCLE.md), [inline editor ownership](INLINE_VALUE_EDITOR_LIFECYCLE.md), [MIX percentage-pair validation](MIX_PERCENTAGE_PAIR_ADMISSION.md), and [balanced caption reset gestures](CAPTION_RESET_GESTURE.md). |
+
+Recent follow-ups: [pointer command admission](POINTER_COMMAND_GESTURE_ADMISSION.md)
+(`f01ff29`), [arrow admission](ARROW_KEY_ADMISSION.md) (`91bd8d4`),
+[slider reset admission](SLIDER_DOUBLE_CLICK_ADMISSION.md) (`4c0999f`), and
+[pan typed-value round trips](PAN_TYPED_VALUE_ROUNDTRIP.md) (`c8c3dbf`).
 
 ## Changes since the October 31 integration
 
