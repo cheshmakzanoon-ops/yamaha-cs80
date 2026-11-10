@@ -240,6 +240,10 @@ int run(const Case& c, int callbacks, std::ostream& csv) {
         const bool tail = measurementPhase == Phase::release;
         const bool sustain = measurementPhase == Phase::sustain;
         Stats stats;
+        // Member expression belongs to the physically held note. Once Note Off
+        // transfers it to the sustain pedal, later member messages seed future
+        // notes instead of changing this released voice's expression.
+        std::array<float, 8> releasedPressure {}, releasedBend {};
         const int maxCallbacks = tail ? static_cast<int>(std::ceil(maximumTailSeconds * c.rate / c.block))
                                : sustain ? static_cast<int>(std::ceil(pedalHoldSeconds * c.rate / c.block)) : callbacks;
         stats.micros.reserve(static_cast<std::size_t>(maxCallbacks));
@@ -279,6 +283,8 @@ int run(const Case& c, int callbacks, std::ostream& csv) {
                     engine.controlChange(64, (i / 64) % 2 == 0 ? 1.0f : 0.0f, 1);
             }
             if (sustain && i == 0) {
+                releasedPressure = memberPressure;
+                releasedBend = memberBend;
                 engine.controlChange(64, 1.0f, 1);
                 for (int member = 0; member < 8; ++member) engine.noteOff(notes[member], member + 2);
             }
@@ -299,10 +305,13 @@ int run(const Case& c, int callbacks, std::ostream& csv) {
                 stats.controllerEvents += 27 + (!sustain && i % 64 == 0 ? 1 : 0) + (sustain && i == 0 ? 1 : 0);
                 for (int member = 0; member < 8; ++member) {
                     const auto voice = engine.getVoiceInfo(member);
+                    const float expectedPressure = sustain ? releasedPressure[member] : memberPressure[member];
+                    const float expectedBend = sustain ? releasedBend[member] : memberBend[member];
                     require(voice.channel == member + 2
-                                && std::abs(voice.pressure - memberPressure[member]) < 1.0e-6f
-                                && std::abs(voice.bend - memberBend[member] * 12.0f) < 1.0e-5f,
-                            "Live MPE member identity/pressure/bend did not reach voice state");
+                                && std::abs(voice.pressure - expectedPressure) < 1.0e-6f
+                                && std::abs(voice.bend - expectedBend * 12.0f) < 1.0e-5f,
+                            sustain ? "Released MPE member expression changed under sustain"
+                                    : "Live MPE member identity/pressure/bend did not reach voice state");
                     if (sustain) require(voice.pedalHeld && !voice.held, "CC64 did not hold released MPE notes");
                     ++stats.memberChecks;
                 }

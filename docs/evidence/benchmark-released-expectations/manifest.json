@@ -1,0 +1,36 @@
+{
+  "core_commit": "215b9006c168f55aad088112b690f73f022fac6c",
+  "checkout_base": "520f0a426fc831742ace26f9f8615ccda7864f4d",
+  "benchmark_sha256": "8703cf126c14bb3090c0dfb18dcc7a3c8647e34ceecd7782a41a52f4fd292a03",
+  "purpose": "integrity only; no performance comparison or real-time qualification",
+  "cases": [
+    {
+      "file": "48000-128-quick.csv",
+      "cases": 15,
+      "rows": 36,
+      "callbacks": 256
+    },
+    {
+      "file": "44100-256-all-selectors.csv",
+      "cases": 39,
+      "rows": 100,
+      "callbacks": 64
+    }
+  ],
+  "negative_controls": [
+    {
+      "change": "expectedPressure = memberPressure[member] in sustain as well as held",
+      "exit_code": 2,
+      "message": "Released MPE member expression changed under sustain"
+    },
+    {
+      "change": "expectedPressure = 0.0f in held phase only",
+      "exit_code": 2,
+      "message": "Live MPE member identity/pressure/bend did not reach voice state"
+    }
+  ],
+  "files": {
+    "44100-256-all-selectors.csv": "68cff36f7f6a95dc09c65ecdefac1c935a768d07595b6e21745389cbf0375203",
+    "48000-128-quick.csv": "d31ea8ecab9363bbc7d6b160a30288cf093a8fee7b11522954b112afa679964c"
+  }
+}
