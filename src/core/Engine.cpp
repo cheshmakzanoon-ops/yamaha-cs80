@@ -1799,6 +1799,9 @@ void Engine::applyPitchBend(int midiChannel, float value, bool resetReleasedVoic
 
 void Engine::controlChange(int controller, float value, int midiChannel)
 {
+    // Reject malformed values before channel-mode commands can release notes.
+    if (! std::isfinite(value))
+        return;
     if (controller == 120 || controller == 123)
     {
         allNotesOff(controller == 123, midiChannel);

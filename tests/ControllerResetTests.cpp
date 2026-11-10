@@ -447,6 +447,35 @@ void testRibbonAndPurePreservation()
               "malformed resets cannot change any primed sound target");
     }
 }
+void testMalformedChannelMode()
+{
+    for (bool circuit : {false, true})
+        for (int controller : {120, 123})
+            for (int channel : {0, 2})
+                for (float invalid : {std::numeric_limits<float>::quiet_NaN(),
+                                      std::numeric_limits<float>::infinity(),
+                                      -std::numeric_limits<float>::infinity()})
+                {
+                    Engine event, reference;
+                    for (auto* e : {&event, &reference})
+                    {
+                        e->prepare(48000.0); e->setParams(patch(circuit));
+                        e->noteOn(60, 0.8f, 2); e->noteOn(64, 0.7f, 3);
+                        render(*e, 128);
+                    }
+                    event.controlChange(controller, invalid, channel);
+                    check(event.getVoiceInfo(0).held && event.getVoiceInfo(1).held,
+                          "non-finite channel-mode message preserves held notes");
+                    check(sameAudio(render(event, 512), render(reference, 512)),
+                          "non-finite channel-mode message is audio inert");
+                    // Finite command payloads retain the explicit channel-zero
+                    // application panic and ordinary channel-selective behavior.
+                    event.controlChange(controller, 0.0f, channel);
+                    check(!event.getVoiceInfo(0).held, "finite mode message releases target");
+                    check(event.getVoiceInfo(1).held == (channel != 0),
+                          "finite mode message preserves channel scope");
+                }
+}
 void testPrefixChannelReset()
 {
     for (int channel = 1; channel <= 16; ++channel)
@@ -469,7 +498,7 @@ int main()
 {
     testPedalRelease(); testMpePedals(); testSelectors(); testMalformedAndIsolation();
     testHeldKeysAndWaitingCircuit(); testDefaultsAndPreservation(); testMpeExpressionReset();
-    testRibbonAndPurePreservation(); testPrefixChannelReset();
+    testRibbonAndPurePreservation(); testPrefixChannelReset(); testMalformedChannelMode();
     std::printf("Controller reset: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }
