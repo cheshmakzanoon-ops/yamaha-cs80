@@ -15,6 +15,7 @@
 
 #include <array>
 #include <memory>
+#include <optional>
 
 class Cs80AudioProcessor;
 
@@ -31,7 +32,8 @@ public:
 
     // Test hooks: the same paths the file buttons take, without a file chooser.
     juce::String loadScalaText(const juce::String& scl, const juce::String& kbm = {});
-    juce::String loadKeyboardMappingText(const juce::String& kbm);
+    juce::String loadKeyboardMappingText(const juce::String& kbm,
+                                         std::optional<unsigned> expectedVersion = std::nullopt);
     void clearTuning();
     juce::String statusText() const { return status.getText(); }
     juce::String tuningText() const { return description.getText(); }

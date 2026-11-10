@@ -166,9 +166,9 @@ juce::String KeyboardTuningPage::loadScalaText(const juce::String& scl, const ju
     return error;
 }
 
-juce::String KeyboardTuningPage::loadKeyboardMappingText(const juce::String& kbm)
+juce::String KeyboardTuningPage::loadKeyboardMappingText(const juce::String& kbm, std::optional<unsigned> expectedVersion)
 {
-    lastError = processor.loadScalaKeyboardMapping(kbm);
+    lastError = processor.loadScalaKeyboardMapping(kbm, expectedVersion);
     refreshStatus();
     return lastError;
 }
@@ -188,11 +188,12 @@ void KeyboardTuningPage::chooseFile(bool keyboardMapping)
         refreshStatus();
         return;
     }
+    const auto sourceRevision = processor.scalaTuningRevision();
     chooser = std::make_unique<juce::FileChooser>(keyboardMapping ? "Load a Scala keyboard mapping" : "Load a Scala scale",
                                                   juce::File(), keyboardMapping ? "*.kbm" : "*.scl");
     juce::Component::SafePointer<KeyboardTuningPage> safe(this);
     chooser->launchAsync(juce::FileBrowserComponent::openMode | juce::FileBrowserComponent::canSelectFiles,
-                         [safe, keyboardMapping](const juce::FileChooser& fc)
+                         [safe, keyboardMapping, sourceRevision](const juce::FileChooser& fc)
                          {
                              if (safe == nullptr)
                                  return;
@@ -201,7 +202,7 @@ void KeyboardTuningPage::chooseFile(bool keyboardMapping)
                                  return;
                              const auto text = file.loadFileAsString();
                              if (keyboardMapping)
-                                 safe->loadKeyboardMappingText(text);
+                                 safe->loadKeyboardMappingText(text, sourceRevision);
                              else
                                  safe->loadScalaText(text, {});
                          });

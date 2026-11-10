@@ -778,14 +778,19 @@ juce::String Cs80AudioProcessor::loadScalaTuning(const juce::String& scl, const 
     return publishScala(scl, kbm);
 }
 
-juce::String Cs80AudioProcessor::loadScalaKeyboardMapping(const juce::String& kbm)
+juce::String Cs80AudioProcessor::loadScalaKeyboardMapping(const juce::String& kbm, std::optional<unsigned> expectedVersion)
 {
     juce::String scl;
     unsigned version;
     {
         const juce::SpinLock::ScopedLockType lock(scalaLock);
-        scl = scalaText;
         version = scalaVersion.load(std::memory_order_relaxed);
+        // A dialog belongs to the tuning session present when it was opened.
+        // Check under the same lock as the source snapshot; publishScala also
+        // rechecks this version after parsing outside the lock.
+        if (expectedVersion.has_value() && version != *expectedVersion)
+            return "Scala tuning changed while choosing its mapping. Please reopen the mapping dialog.";
+        scl = scalaText;
     }
     if (scl.isEmpty())
         return "Load a .scl scale before its .kbm mapping.";

@@ -227,7 +227,9 @@ public:
     // Replaces only the keyboard mapping of the current Scala source, regardless
     // of editor lifetime. A concurrently changed source rejects the publication
     // and leaves the current complete scale/mapping pair untouched.
-    juce::String loadScalaKeyboardMapping(const juce::String& kbm);
+    juce::String loadScalaKeyboardMapping(const juce::String& kbm,
+                                          std::optional<unsigned> expectedVersion = std::nullopt);
+    unsigned scalaTuningRevision() const noexcept { return scalaVersion.load(std::memory_order_acquire); }
     void clearScalaTuning();
     bool hasScalaTuning() const; // a valid Scala description may be empty
     juce::String getScalaDescription() const;

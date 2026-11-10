@@ -188,6 +188,35 @@ void testKeyboardTuningUiState(Check check)
               "an unnamed Scala scale accepts a replacement KBM after editor reopen");
     }
 
+    // Simulate dialog completion after the tuning session changed while it was open.
+    for (int mutation = 0; mutation < 5; ++mutation)
+    {
+        check(host.loadScalaTuning(scale, mapping432).isEmpty(), "dialog fixture loads original tuning");
+        Page page(host);
+        const auto dialogRevision = host.scalaTuningRevision();
+        if (mutation == 0) host.loadScalaTuning(replacementScale, mapping432);
+        if (mutation == 1) host.loadScalaKeyboardMapping(mapping444);
+        if (mutation == 2) { host.clearScalaTuning(); host.loadScalaTuning(scale, mapping432); }
+        if (mutation == 3) host.clearScalaTuning();
+        if (mutation == 4)
+        {
+            juce::MemoryBlock session; host.getStateInformation(session);
+            host.setStateInformation(session.getData(), (int) session.getSize());
+        }
+        const auto changed = ScalaMappingAccess::capture(host);
+        check(page.loadKeyboardMappingText(mapping432, dialogRevision).isNotEmpty()
+                  && ScalaMappingAccess::retained(host, changed),
+              "stale dialog mapping cannot mutate a replaced, remapped, cleared or restored tuning session");
+    }
+    check(host.loadScalaTuning(scale, mapping432).isEmpty(), "fresh dialog fixture loads scale");
+    {
+        Page page(host);
+        const auto revision = host.scalaTuningRevision();
+        check(page.loadKeyboardMappingText(mapping444, revision).isEmpty()
+                  && savedTuning(host).getProperty("kbm").toString() == mapping444,
+              "a mapping dialog for the unchanged current session succeeds");
+    }
+
     // Force the read -> write -> publish ordering of a concurrent session load.
     check(host.loadScalaTuning(scale, mapping432).isEmpty(), "version-guard fixture loads its original source");
     const auto original = ScalaMappingAccess::capture(host);
