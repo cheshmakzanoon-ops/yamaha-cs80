@@ -30,6 +30,11 @@ zero failures in one uninterrupted serial run (884.83 seconds). See the
 No native-host, sanitizer, hardware-fidelity, release or CPU-target claim follows
 from this result.
 
+Focused instrumentation on `ccb812e0` separately passed four core suites under
+ASan+UBSan with leak detection excluded (119.03 s). The leak-enabled attempt
+failed at LeakSanitizer runtime shutdown and remains unqualified. See the
+[configuration, distinct outcomes and limits](CORE_SANITIZER_CHECKPOINT_CCB812E.md).
+
 ## Latest local native processor/component integration
 
 Pinned source `c8c3dbf44c2aa18ae6719340cc9fef82aefb1015` passed all **13/13 selected
