@@ -34,6 +34,9 @@ jobs:
           - lane: gui-inclusive
             seed: '0x63421ca'
             skip_gui: 'false'
+          - lane: gui-current-regression
+            seed: '0x3ca4063'
+            skip_gui: 'false'
     env:
       VALIDATOR_TAG: v2.0.0-beta3
       VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
