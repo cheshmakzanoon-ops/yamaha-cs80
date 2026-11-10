@@ -447,6 +447,32 @@ void testArpLiveSequenceEdits()
     }
 }
 
+void testArpResetParameterSync()
+{
+    for (bool source : {false, true}) for (bool scan : {false, true})
+        for (int mode : {0,1,2,3,4})
+        {
+            auto p = quiet(); p[P_sourcePerformance] = source ? 1.0f : 0.0f;
+            p[P_kasScanTiming] = scan ? 1.0f : 0.0f;
+            p[P_arpOn] = 1.0f; p[P_arpRate] = 16.0f; p[P_arpMode] = static_cast<float>(mode);
+            Engine actual, reference;
+            for (auto* e : {&actual,&reference})
+            {
+                e->prepare(48000); e->setParams(p); e->noteOn(55,.8f); render(*e,64);
+                e->reset();
+                check(e->activeVoices() == 0, "reset still clears previous ARP voices");
+                e->noteOn(60,.8f,2); e->noteOn(64,.7f,3); render(*e,1000);
+            }
+            actual.setParams(p);
+            check(render(actual,9000) == render(reference,9000),
+                  "post-reset unchanged parameter sync preserves new ARP chord and clock");
+            p[P_arpOn] = 0.0f; actual.setParams(p); render(actual,64);
+            bool anyHeld = false;
+            for (int v = 0; v < 8; ++v) anyHeld |= actual.getVoiceInfo(v).held;
+            check(!anyHeld, "real ARP disable still stops post-reset pattern");
+        }
+}
+
 void testEngineTuning()
 {
     auto p = quiet();
@@ -1607,6 +1633,7 @@ int main()
     testMtsSysEx();
     testMtsMessageBoundaries();
     testEngineTuning();
+    testArpResetParameterSync();
     testArpLiveSequenceEdits();
     testWaitingTuningAdmission();
     testUnmappedSustainAdmission();

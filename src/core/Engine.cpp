@@ -362,7 +362,9 @@ void Engine::reset()
     arpCurrentNote = -1;
     arpSourceOrder = 0;
     arpGateOpen = false;
-    arpWasOn = false;
+    // Reset clears performance state, not the effective parameter mode.
+    // A later identical parameter sync must not discard newly played keys.
+    arpWasOn = global.arpOn;
     arpClock = 0.0f;
     arpGateTime = 0.0f;
     dcL = dcR = dcInL = dcInR = 0.0f;
