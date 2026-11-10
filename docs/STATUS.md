@@ -7,9 +7,42 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-09. Latest checked implementation `c7595a4ea5171b4bf710e53c635938aa7d363e27` includes bounded, pinned official Windows validator transfers, the preceding termination diagnostics and offline interval research. Validation commands and failure rules are unchanged. The sparse solver still exceeds the proposed audio-update budget; loaded memory controls/receivers remain outside Engine audio, and rejected one-log span prototypes remain archived outside production source.
+Last updated: 2026-11-10. The latest local core integration checkpoint on this
+page is `d00d8bf0` (note-event admission), with exact scope and results below.
+Native CI, downloaded installers, and hardware/DAW qualification are separate
+checkpoints; the November 9 remote runs retained below do not cover this newer
+source. The sparse solver still exceeds the proposed audio-update budget;
+loaded memory controls/receivers remain outside Engine audio, and rejected
+one-log span prototypes remain archived outside production source.
 
-At the November 9 check, `c7595a4` passed all six build/validator jobs, all five DSP jobs and screenshots. The preceding `4278da7` Windows validator-download failures and `34358cee` Linux GUI validation failure remain failed; a later pass is not a root-cause finding or repair. Native downloads stay pinned to `0996a15af334f9dcfd63ed8c1d574a22b6804f00`. Current screenshots render `c7595a4`, published in screenshot-only child `68fcb884d49afb2a938dd703328529fca06f331d`. These scoped successes are not real-DAW or release qualification.
+Screenshot provenance is recorded in [provenance.json](screenshots/provenance.json)
+and [SHA256SUMS](screenshots/SHA256SUMS). Those files identify the actual captured
+source and images; they are not a claim that every screenshot renders current
+main. Native downloads remain pinned to `0996a15af334f9dcfd63ed8c1d574a22b6804f00`
+at the historical inspection checkpoint. No newer binary is qualified here.
+
+## Latest local core integration
+
+Pinned source `d00d8bf039a8fb658784dabb6a7271d8c8c535e0` completed a fresh
+259-step core-only Release build and all **145/145 registered CTests**, with
+zero failures in one uninterrupted serial run (884.83 seconds). See the
+[configuration, reproduction and qualification limits](CORE_INTEGRATION_D00D8BF.md).
+No native-host, sanitizer, hardware-fidelity, release or CPU-target claim follows
+from this result.
+
+## November 10 bounded correctness updates
+
+These changes correct event/state behavior without changing the declared
+hardware-fidelity or release-qualification limits:
+
+| Area | Published source | Scope |
+| --- | --- | --- |
+| MTS live-note admission | `dc086d2` | [Non-real-time tuning affects future notes; addressed real-time changes retain bounded scope](MTS_NON_REALTIME_ADMISSION.md). |
+| Tuning-map lifecycle | `58aabe6`, `215b900` | [Excluded strikes preserve Sustain-II tails](UNMAPPED_SUSTAIN_ADMISSION.md); [waiting-key promotion rechecks current mapping](WAITING_TUNING_ADMISSION.md). |
+| Arpeggiator state | `03cb6ac`, `cfa9073`, `8d97c92` | [Mode-transition scanner cleanup](ARP_SCANNER_TRANSITIONS.md), [live sequence edits](ARP_LIVE_SEQUENCE_EDITS.md), and [reset/parameter synchronization](ARP_RESET_PARAMETER_SYNC.md). |
+| MTS empty mask | `af3309d` | [An empty scale/octave channel mask is a no-op](MTS_EMPTY_CHANNEL_MASK.md); partial nonempty masks retain the documented global-table limitation. |
+| MPE panic | `60419bf` | [Active master CC120 clears its current zone](MPE_MASTER_SOUND_OFF.md), with controller state and unrelated channels retained. |
+| Malformed input | `19e771b`, `784f94f`, `d00d8bf0` | [Non-finite channel-mode rejection](CHANNEL_MODE_FINITE_ADMISSION.md), [controller-channel admission](CONTROLLER_CHANNEL_ADMISSION.md), and [note/scanner admission](NOTE_EVENT_ADMISSION.md). |
 
 ## Changes since the October 31 integration
 
@@ -62,11 +95,11 @@ handover PDF remain dated evidence, not current-head measurements.
 | Presets and state | A/B and Copy undo history, background-save undo preservation, saved names, metadata limits, malformed-state rejection and precision fixes | `e09ddb2`, `f757909`, `f7d1b75`; [ws6 report](workstreams/ws6-library.md), [BOOLEAN_STATE_RESTORATION.md](BOOLEAN_STATE_RESTORATION.md) |
 | Voice onset | Unison circuits share the event's glide origin | `f921f54`; changes the affected modern voice-mode onset, not the hardware model |
 | OE1 speed endpoint | Reviewed design evidence, source-conflict notes and a standalone diagnostic probe are preserved; shipping audio is unchanged | `fe16f0a` ([PR #9](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/9)); [endpoint design](OE1_SPEED_ENDPOINT_DESIGN.md), [source conflict](OE1_SPEED_SOURCE_CONFLICT.md) |
-| Editor evidence | Selected LFO waveform previews and 68 real-editor screenshots, newer than retained downloads | LFO preview fix `ae3958d`; screenshot source `c7595a4`, run [42574049530](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/42574049530), committed `68fcb88`; [provenance](screenshots/provenance.json). Images do not qualify sound or a release. |
+| Editor evidence | Selected LFO waveform previews and actual-editor screenshots | LFO preview fix `ae3958d`; the current [provenance](screenshots/provenance.json) and [image hashes](screenshots/SHA256SUMS) identify the captured source and artifacts. Images do not qualify sound or a release. |
 
 The optimization and MSEG reports retain draft-stage qualification notes as
-historical evidence. Those changes are now merged; the post-merge status below
-is current. The mono/poly MSEG corrections intentionally change affected routed
+historical evidence. Those changes are now merged; the dated post-merge checkpoints below
+record their tested inputs. The mono/poly MSEG corrections intentionally change affected routed
 performances in Legacy and Circuit, while default/no-route playback and PURE
 CS-80 remain unchanged.
 
@@ -97,7 +130,8 @@ that earlier stage; the verified result above is current.
 
 ### Post-merge CI and download checkpoints
 
-The latest checked implementation is **`c7595a4`**, verified November 9.
+The historical remote CI checkpoint below is **`c7595a4`**, verified November 9.
+It is not verification of the November 10 source checkpoint.
 All three workflows used exact source
 `c7595a4ea5171b4bf710e53c635938aa7d363e27`:
 
