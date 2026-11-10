@@ -476,6 +476,38 @@ void testMalformedChannelMode()
                           "finite mode message preserves channel scope");
                 }
 }
+void testInvalidControllerChannels()
+{
+    for (bool circuit : {false, true}) for (bool mpe : {false, true})
+        for (int channel : {-1, 17, std::numeric_limits<int>::min(), std::numeric_limits<int>::max()})
+            for (int kind : {0, 1, 2, 3})
+            {
+                Engine event, reference;
+                auto p = patch(circuit); p[P_mpeOn] = mpe ? 1.0f : 0.0f;
+                p[P_mod1Amount] = 1.0f; p[P_ribbonCcEnable] = 1.0f; p[P_ribbonCc] = 74.0f;
+                for (auto* e : {&event, &reference})
+                {
+                    e->prepare(48000); e->setParams(p);
+                    if (kind == 1)
+                    {
+                        modern::ModernConfig config;
+                        config.slots[0] = {modern::ModSource::channelPressure, modern::ModSource::none,
+                                          modern::ModDestination::pan, modern::ModTarget::both};
+                        e->setModernConfig(config);
+                    }
+                    e->noteOn(60,.8f,2); render(*e,128);
+                }
+                if (kind == 0) event.pitchBend(channel, 1.0f);
+                if (kind == 1) event.channelPressure(channel, 1.0f);
+                if (kind == 2) event.controlChange(11, 0.0f, channel);
+                if (kind == 3) event.controlChange(74, 1.0f, channel);
+                check(sameAudio(render(event,512),render(reference,512)),
+                      "out-of-range controller channel cannot change audio or ribbon");
+                event.noteOn(64,.7f,3); reference.noteOn(64,.7f,3);
+                check(sameAudio(render(event,512),render(reference,512)),
+                      "out-of-range controller channel cannot poison future note state");
+            }
+}
 void testMpeMasterSoundOff()
 {
     const auto activeOn = [](const Engine& e, int channel) {
@@ -564,7 +596,7 @@ int main()
 {
     testPedalRelease(); testMpePedals(); testSelectors(); testMalformedAndIsolation();
     testHeldKeysAndWaitingCircuit(); testDefaultsAndPreservation(); testMpeExpressionReset();
-    testRibbonAndPurePreservation(); testPrefixChannelReset(); testMalformedChannelMode(); testMpeMasterSoundOff();
+    testRibbonAndPurePreservation(); testPrefixChannelReset(); testMalformedChannelMode(); testMpeMasterSoundOff(); testInvalidControllerChannels();
     std::printf("Controller reset: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }

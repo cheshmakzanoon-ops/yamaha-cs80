@@ -1766,7 +1766,7 @@ void Engine::channelPressure(int midiChannel, float pressure)
 
 void Engine::applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices)
 {
-    if (! std::isfinite(pressure))
+    if (midiChannel < 0 || midiChannel > 16 || ! std::isfinite(pressure))
         return;
     pressure = clampf(pressure, 0.0f, 1.0f);
     auto* initial = memberExpressionFor(midiChannel);
@@ -1793,7 +1793,7 @@ void Engine::applyPitchBend(int midiChannel, float value, bool resetReleasedVoic
 {
     // Ignore malformed float events before they can poison bend smoothers or
     // the independent pitch-wheel modulation source. Keep the last valid target.
-    if (global.parityMode || ! std::isfinite(value))
+    if (midiChannel < 0 || midiChannel > 16 || global.parityMode || ! std::isfinite(value))
         return;
     value = clampf(value, -1.0f, 1.0f);
     auto* initial = memberExpressionFor(midiChannel);
@@ -1833,8 +1833,9 @@ void Engine::applyPitchBend(int midiChannel, float value, bool resetReleasedVoic
 
 void Engine::controlChange(int controller, float value, int midiChannel)
 {
-    // Reject malformed values before channel-mode commands can release notes.
-    if (! std::isfinite(value))
+    // Reject malformed channels/values before global controls or ribbon adapters.
+    // Channel zero retains the existing application-level control semantics.
+    if (midiChannel < 0 || midiChannel > 16 || ! std::isfinite(value))
         return;
     if (controller == 120 || controller == 123)
     {
