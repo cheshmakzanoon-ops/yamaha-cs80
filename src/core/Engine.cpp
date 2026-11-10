@@ -536,6 +536,9 @@ void Engine::applyParams(const ParamValues& values)
     // voices; disabling it stops the running pattern.
     if (global.arpOn != wasArp)
     {
+        // Queued direct gestures belong to the discarded performance mode,
+        // not to fresh ARP input (or a rapid return to direct playing).
+        scanner.discard(0);
         if (global.arpOn)
         {
             for (auto& v : voices)

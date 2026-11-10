@@ -82,6 +82,39 @@ void testScannerOrder()
     check(matches, "different pitches retain low-key priority without reordering a pitch's channels");
 }
 
+void testArpTransitionBoundary()
+{
+    for (double rate : {44100.0, 48000.0, 96000.0})
+        for (bool source : {false, true}) for (bool scan : {false, true})
+            for (bool keyboard : {false, true})
+            {
+                ParamValues p; p[P_sourcePerformance] = source ? 1.0f : 0.0f;
+                p[P_kasScanTiming] = scan ? 1.0f : 0.0f;
+                p[P_arpRate] = 16.0f;
+                Engine e; e.prepare(rate); e.setParams(p);
+                const auto on = [&]() { if (keyboard) e.noteOnFromKeyboard(60, .8f, 2); else e.noteOn(60, .8f, 2); };
+                const auto off = [&]() { if (keyboard) e.noteOffFromKeyboard(60, 2); else e.noteOff(60, 2); };
+                on();
+                p[P_arpOn] = 1.0f; e.setParams(p); render(e, 256);
+                check(held(e) == 0, "pre-toggle direct onset cannot seed ARP");
+                on(); render(e, 256);
+                check(held(e, 60, 2) == 1, "post-toggle fresh onset starts ARP");
+                off(); render(e, 256);
+                check(held(e) == 0, "fresh ARP key releases normally");
+
+                e.reset(); p[P_arpOn] = 0.0f; e.setParams(p);
+                on(); render(e, 256); off(); // release may still be queued
+                p[P_arpOn] = 1.0f; e.setParams(p);
+                on(); render(e, 256);
+                check(held(e, 60, 2) == 1, "pre-toggle release cannot cancel fresh ARP key");
+
+                e.reset(); p[P_arpOn] = 0.0f; e.setParams(p); on();
+                p[P_arpOn] = 1.0f; e.setParams(p);
+                p[P_arpOn] = 0.0f; e.setParams(p); render(e, 256);
+                check(held(e) == 0, "rapid ARP on-off cannot resurrect discarded direct onset");
+            }
+}
+
 void testEngineOrdering()
 {
     for (double rate : {44100.0, 48000.0, 96000.0})
@@ -200,6 +233,7 @@ int main()
 {
     testScannerOrder();
     testEngineOrdering();
+    testArpTransitionBoundary();
     std::printf("Scanner ordering: %d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
 }
