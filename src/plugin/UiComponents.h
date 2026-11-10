@@ -238,6 +238,7 @@ public:
     juce::String getTooltip() override { return tooltipText ? tooltipText() : juce::Slider::getTooltip(); }
     void mouseDown(const juce::MouseEvent&) override;
     void mouseDrag(const juce::MouseEvent&) override;
+    void mouseDoubleClick(const juce::MouseEvent&) override;
     void mouseUp(const juce::MouseEvent&) override;
     // Pixels for a full-range drag: a linear fader uses its own track length, so the cap follows the pointer.
     void matchDragToTrack();

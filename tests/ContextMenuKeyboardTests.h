@@ -103,6 +103,32 @@ void testContextMenuKeyboard(Check check)
               "fresh enabled arrow edit retains one balanced host gesture");
     }
 
+    {
+        cs80::ui::FocusSlider resetSlider;
+        resetSlider.setRange(0., 1.); resetSlider.setDoubleClickReturnValue(true, .8);
+        int begins = 0, ends = 0;
+        resetSlider.onDragStart = [&] { ++begins; }; resetSlider.onDragEnd = [&] { ++ends; };
+        auto event = [&](int mods) {
+            const juce::Point<float> point(10.f, 10.f);
+            return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(), point,
+                juce::ModifierKeys(mods), 1.f, 0.f, 0.f, 0.f, 0.f, &resetSlider, &resetSlider,
+                juce::Time::getCurrentTime(), point, juce::Time::getCurrentTime(), 2, false);
+        };
+        resetSlider.setValue(.2);
+        resetSlider.mouseDoubleClick(event(juce::ModifierKeys::rightButtonModifier));
+        check(resetSlider.getValue() == .2 && begins == 0 && ends == 0,
+              "slider right-button double click does not reset the parameter");
+        resetSlider.setValue(.2); begins = ends = 0;
+        resetSlider.mouseDoubleClick(event(juce::ModifierKeys::leftButtonModifier));
+        check(resetSlider.getValue() == .8 && begins == 1 && ends == 1,
+              "fresh left slider double-click retains JUCE reset and balanced host gesture");
+        resetSlider.setValue(.2);
+        const auto left = event(juce::ModifierKeys::leftButtonModifier);
+        resetSlider.mouseDown(left); resetSlider.mouseDoubleClick(left); resetSlider.mouseUp(left);
+        check(resetSlider.getValue() == .8 && !resetSlider.isGestureInProgress(),
+              "normal left down-double-click-up sequence still resets and ends its edit");
+    }
+
     // Pointer commands must obey the same no-nested-edit policy as Shift+F10.
     {
         cs80::ui::FocusSlider pointerSlider;

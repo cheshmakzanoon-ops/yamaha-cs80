@@ -3155,6 +3155,13 @@ void FocusSlider::mouseDown(const juce::MouseEvent& e)
     juce::Slider::mouseDown(e);
 }
 
+void FocusSlider::mouseDoubleClick(const juce::MouseEvent& e)
+{
+    // Context clicks must not reset values. JUCE owns normal left-click gestures.
+    if (!isEnabled() || e.mods.isPopupMenu() || !e.mods.isLeftButtonDown()) return;
+    juce::Slider::mouseDoubleClick(e);
+}
+
 void FocusSlider::mouseDrag(const juce::MouseEvent& e)
 {
     if (swallowPointer)
