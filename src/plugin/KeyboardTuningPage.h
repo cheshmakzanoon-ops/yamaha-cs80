@@ -45,10 +45,42 @@ private:
     void refreshStatus();
     void chooseFile(bool keyboardMapping);
 
+    // Keep ordinary JUCE pointer/text behavior; add only balanced, guarded
+    // keyboard edits for the page's attached host parameters.
+    class ParameterSlider final : public juce::Slider
+    {
+    public:
+        using juce::Slider::Slider;
+        bool keyPressed(const juce::KeyPress& key) override
+        {
+            const bool arrow = key == juce::KeyPress::leftKey || key == juce::KeyPress::rightKey
+                || key == juce::KeyPress::upKey || key == juce::KeyPress::downKey;
+            if (arrow && !key.getModifiers().isAnyModifierKeyDown())
+            {
+                if (!isEnabled() || gestureActive) return false;
+                juce::Slider::ScopedDragNotification gesture(*this);
+                return juce::Slider::keyPressed(key);
+            }
+            return juce::Slider::keyPressed(key);
+        }
+    private:
+        void startedDragging() override
+        {
+            gestureActive = true;
+            juce::Slider::startedDragging();
+        }
+        void stoppedDragging() override
+        {
+            gestureActive = false;
+            juce::Slider::stoppedDragging();
+        }
+        bool gestureActive = false;
+    };
+
     struct Row
     {
         juce::Label label;
-        juce::Slider slider { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider slider { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         std::unique_ptr<juce::SliderParameterAttachment> attachment;
     };
 

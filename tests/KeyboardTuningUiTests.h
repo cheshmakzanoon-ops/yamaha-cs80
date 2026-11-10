@@ -217,6 +217,51 @@ void testKeyboardTuningUiState(Check check)
               "a mapping dialog for the unchanged current session succeeds");
     }
 
+    {
+        Page page(host);
+        struct Probe final : juce::AudioProcessorParameter::Listener
+        {
+            int begins = 0, changes = 0, ends = 0;
+            void parameterValueChanged(int, float) override { ++changes; }
+            void parameterGestureChanged(int, bool begin) override { begin ? ++begins : ++ends; }
+        };
+        const struct { int id; const char* title; } controls[] {
+            {P_unisonDetune, "Unison detune"}, {P_velocityCurve, "Velocity curve"},
+            {P_pressureCurve, "Aftertouch curve"}, {P_pressureThreshold, "Aftertouch threshold"},
+            {P_ribbonCc, "Ribbon CC number"}
+        };
+        for (const auto& control : controls)
+        {
+            juce::Slider* slider = nullptr;
+            for (auto* child : page.getChildren())
+                if (auto* candidate = dynamic_cast<juce::Slider*>(child); candidate && candidate->getTitle() == control.title)
+                    slider = candidate;
+            check(slider != nullptr, "Keyboard page exposes its attached parameter slider");
+            if (!slider) continue;
+            slider->setValue((slider->getMinimum()+slider->getMaximum())*.5, juce::sendNotificationSync);
+            auto* parameter = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(control.id));
+            Probe probe; parameter->addListener(&probe);
+            const auto before = slider->getValue();
+            check(slider->keyPressed(juce::KeyPress(juce::KeyPress::rightKey)) && slider->getValue() > before
+                      && probe.begins == 1 && probe.changes == 1 && probe.ends == 1,
+                  "Keyboard page arrow edit emits one complete attached host gesture");
+            probe = {}; slider->setEnabled(false); const auto disabledValue = slider->getValue();
+            check(!slider->keyPressed(juce::KeyPress(juce::KeyPress::rightKey)) && slider->getValue() == disabledValue
+                      && probe.begins == 0 && probe.changes == 0 && probe.ends == 0,
+                  "disabled Keyboard page slider rejects arrow edits");
+            slider->setEnabled(true); probe = {};
+            {
+                juce::Slider::ScopedDragNotification gesture(*slider);
+                const auto held = slider->getValue();
+                check(!slider->keyPressed(juce::KeyPress(juce::KeyPress::rightKey)) && slider->getValue() == held
+                          && probe.begins == 1 && probe.changes == 0 && probe.ends == 0,
+                      "Keyboard page arrow cannot alter an already active edit");
+            }
+            check(probe.begins == 1 && probe.ends == 1, "existing Keyboard page edit finishes balanced");
+            parameter->removeListener(&probe);
+        }
+    }
+
     // Force the read -> write -> publish ordering of a concurrent session load.
     check(host.loadScalaTuning(scale, mapping432).isEmpty(), "version-guard fixture loads its original source");
     const auto original = ScalaMappingAccess::capture(host);
