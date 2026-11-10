@@ -1,0 +1,24 @@
+[
+  {
+    "stage": "configure",
+    "argv": [
+      "bash",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/configure-candidate.sh"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988",
+    "status": 0,
+    "log": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/candidate-native-c0219bd-attempt-001/configure.log",
+    "sha256": "506a5b05313087d4f5cae78a3ce17a39f61a43a02bdefcacaa1469824600fdfc"
+  },
+  {
+    "stage": "build",
+    "argv": [
+      "bash",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/build-candidate.sh"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988",
+    "status": 0,
+    "log": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/candidate-native-c0219bd-attempt-001/build.log",
+    "sha256": "4921b3cc445577ace46976476a7406b84ca16e6fcf768dacb57c3f8fe6e67923"
+  }
+]

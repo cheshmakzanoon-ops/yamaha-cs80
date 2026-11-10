@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ lose-member-ribbon-route/src/core/Engine.cpp
+@@ -1827,7 +1827,7 @@
+         return;
+     }
+     // Ribbon from a MIDI CC (interface layer, off by default): 64 is centre.
+-    if (global.ribbonCcEnabled && controller == global.ribbonCc && std::isfinite(value))
++    if (global.ribbonCcEnabled && controller == global.ribbonCc && std::isfinite(value) && memberExpressionFor(midiChannel) == nullptr)
+     {
+         const int cc = (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f);
+         setRibbon(cc >= 64 ? (float) (cc - 64) / 63.0f : (float) (cc - 64) / 64.0f);

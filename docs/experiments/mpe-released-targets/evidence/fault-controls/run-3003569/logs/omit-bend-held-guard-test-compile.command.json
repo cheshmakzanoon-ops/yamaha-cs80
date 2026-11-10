@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/c++",
+    "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+    "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/src",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIE",
+    "-o",
+    "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/tests.o",
+    "-c",
+    "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+  ],
+  "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569"
+}

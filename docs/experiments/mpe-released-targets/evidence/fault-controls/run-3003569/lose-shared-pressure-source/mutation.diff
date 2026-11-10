@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ lose-shared-pressure-source/src/core/Engine.cpp
+@@ -1743,7 +1743,7 @@
+     const bool heldOnly = initial != nullptr && !resetReleasedVoices;
+     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
+         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
+-    lastChannelPressure = pressure;
++    if (!heldOnly) lastChannelPressure = pressure;
+     for (auto& v : voices)
+         if (v.active && (!heldOnly || v.held)
+             && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))

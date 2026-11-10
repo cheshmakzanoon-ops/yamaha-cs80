@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "bash",
+    "scripts/check-compat-gates.sh",
+    "--strict-v2"
+  ],
+  "cwd": "/workspace/scratch/ee447c520988/release-followup",
+  "started_utc": "2026-11-09T23:54:26.602688+00:00",
+  "exit_code": 0,
+  "environment": {
+    "PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin:/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin:/home/agent/.codex/tmp/arg0-linux/codex-arg0PsQclj:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "CS80_COMPAT_CACHE": "/workspace/scratch/ee447c520988/pitch-power-recovery/compat-cache",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "CMAKE_BUILD_PARALLEL_LEVEL": "2"
+  },
+  "log": "run.log",
+  "log_sha256": "293b65e0b7fbc2d9ed8b7fefb681d129be044d67e545d0dcc79039371860033f"
+}

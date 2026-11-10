@@ -39,6 +39,13 @@ from stronger pressure after release. It preserves existing Circuit residual
 decay instead of asserting instantaneous zero. This does not extend the
 historical evidence below or certify analog calibration.
 
+The later [MPE released-target repair](MPE_RELEASED_TARGETS.md) also stops ordinary
+member pressure from retargeting a released voice. It does not change this
+bus's gate or TWS decay: retained cache values alone still supply no force,
+accepted held onsets do, and released/pedal-held gates supply no new force.
+CC121 and manager/global exceptions remain separately documented. Neither
+increment makes Circuit residual node decay vanish at Note Off.
+
 ## Regression coverage and limits (original increment)
 
 At 44.1/48/96/192 kHz, the original ideal-maximum increment's fixtures use paired deterministic audio renders to isolate shared speed -> SUB VCO while all other pressure destinations are zero. They cover event-order independence, nondominant changes, dominant pressure zero/release, unmatched note/channel messages, pedal tails, all-released neutrality, and circuit reuse. An audible pressure-sensitive positive control prevents a silent or disconnected fixture from passing the equality checks.

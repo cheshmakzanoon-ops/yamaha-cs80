@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ omit-pressure-held-guard/src/core/Engine.cpp
+@@ -1745,7 +1745,7 @@
+         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
+     lastChannelPressure = pressure;
+     for (auto& v : voices)
+-        if (v.active && (!heldOnly || v.held)
++        if (v.active
+             && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+             v.pressure = pressure;
+ }

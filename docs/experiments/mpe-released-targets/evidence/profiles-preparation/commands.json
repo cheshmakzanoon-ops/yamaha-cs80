@@ -1,0 +1,186 @@
+[
+  {
+    "profile": "gcc-generic",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:39:29.462615+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-configure.log",
+    "sha256": "5a848d6b017e1af282248d998ad74a84f38b6a8d1f0a50ad2903f614c0352e59",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "build-core",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic",
+      "--target",
+      "cs80_core",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:39:29.969956+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-build-core.log",
+    "sha256": "87c13333b505fe2d7230733ab61c6efb921d19bc1f246e4d2230a6f664cb3558",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -march=native"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:39:38.992509+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-configure.log",
+    "sha256": "3489a3fde39304885dd0358ee0ec89a30f3c5f841db8734c6612dc99ba06504f",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "build-core",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native",
+      "--target",
+      "cs80_core",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:39:39.505692+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-build-core.log",
+    "sha256": "87c13333b505fe2d7230733ab61c6efb921d19bc1f246e4d2230a6f664cb3558",
+    "env": {}
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG",
+      "-DCMAKE_CXX_COMPILER=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19",
+      "-DCMAKE_C_COMPILER=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang-19"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:39:49.058917+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-configure.log",
+    "sha256": "f532f2d3751b1e5fdd034556c0978ff88a768a725df26d47982361dabf8b841c",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "build-core",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic",
+      "--target",
+      "cs80_core",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:39:49.933470+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-build-core.log",
+    "sha256": "87c13333b505fe2d7230733ab61c6efb921d19bc1f246e4d2230a6f664cb3558",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -march=native",
+      "-DCMAKE_CXX_COMPILER=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19",
+      "-DCMAKE_C_COMPILER=/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang-19"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:39:55.946139+00:00",
+    "exit_code": 0,
+    "log": "clang-native-configure.log",
+    "sha256": "5e84cd5a3d616a201cb5448a1c37d683acc335da92750f089e3b07e84b1087b4",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "build-core",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native",
+      "--target",
+      "cs80_core",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:39:56.801084+00:00",
+    "exit_code": 0,
+    "log": "clang-native-build-core.log",
+    "sha256": "87c13333b505fe2d7230733ab61c6efb921d19bc1f246e4d2230a6f664cb3558",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  }
+]

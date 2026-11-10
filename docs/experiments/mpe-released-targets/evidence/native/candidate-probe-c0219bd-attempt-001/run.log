@@ -1,0 +1,289 @@
+SCENARIO 1: Legacy callback=0 member=2 pedal=0
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 2: Legacy callback=0 member=2 pedal=1
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 3: Legacy callback=0 member=15 pedal=0
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 4: Legacy callback=0 member=15 pedal=1
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 5: Legacy callback=32 member=2 pedal=0
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 6: Legacy callback=32 member=2 pedal=1
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 7: Legacy callback=32 member=15 pedal=0
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 8: Legacy callback=32 member=15 pedal=1
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 9: Circuit callback=0 member=2 pedal=0
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 10: Circuit callback=0 member=2 pedal=1
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 11: Circuit callback=0 member=15 pedal=0
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 12: Circuit callback=0 member=15 pedal=1
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 13: Circuit callback=32 member=2 pedal=0
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 14: Circuit callback=32 member=2 pedal=1
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 15: Circuit callback=32 member=15 pedal=0
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+SCENARIO 16: Circuit callback=32 member=15 pedal=1
+  PASS: negotiated current member role
+  PASS: initial continuation is finite and non-silent
+  PASS: initial voice active, physically held, correct note and member
+  PASS: initial bend is 12 semitones
+  PASS: initial pressure is 89/127
+  PASS: initial rank 0 voice timbre-to-pulseWidth
+  PASS: initial rank 1 voice timbre-to-pulseWidth
+  PASS: accepted release leaves active, unheld voice on original note/channel
+  PASS: accepted release has intended pedal-held state
+  PASS: post-release continuation is finite and non-silent
+  PASS: retention witness remains active, unheld and correctly attributed
+  PASS: retention witness preserves intended pedal-held state
+  PASS: released bend target retains old value
+  PASS: released pressure target retains old value
+  PASS: released rank 0 voice timbre target retains old value
+  PASS: released rank 1 voice timbre target retains old value
+  OBSERVED bend=12 (old=12), pressure=0.700787 (old=0.700787), timbrePW=0.31811/0.31811 (old=0.31811/0.31811)
+MPE released-target baseline: 16 scenarios, 256 checks, 0 failures (0 fixture, 0 retention)

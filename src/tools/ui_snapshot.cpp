@@ -8,6 +8,7 @@
 #include "../../tests/VoiceActivityHostTests.h"
 #include "../../tests/ControllerResetHostTests.h"
 #include "../../tests/MpeMemberOnsetHostTests.h"
+#include "../../tests/MpeReleasedTargetHostTests.h"
 #include "../../tests/SixteenVoiceReleaseHostTests.h"
 #include "../../tests/VoiceActivityUiTests.h"
 #include "../../tests/ContextMenuKeyboardTests.h"
@@ -2055,6 +2056,14 @@ int main(int argc, char** argv)
         int checks = 0;
         cs80::tests::testSixteenVoiceReleaseHost([&](bool condition, const char* what) { ++checks; check(condition, what); });
         std::printf("Sixteen voice release host: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--mpe-released-target-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testMpeReleasedTargetHost([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("MPE released target host: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--mpe-member-onset-tests") == 0)

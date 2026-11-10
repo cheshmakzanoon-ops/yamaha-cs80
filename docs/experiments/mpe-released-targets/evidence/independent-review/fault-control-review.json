@@ -1,0 +1,141 @@
+{
+  "review": "Independent fault-control driver, parser, mutation and recorded-outcome review",
+  "reviewed_at_utc": "2026-11-09T23:57:53.749628+00:00",
+  "focused_test_freeze": "300356958b3cde471f8dc14a7b505070a4cffc8c",
+  "production_freeze": "c0219bd0de8559d72fce4194a849414de5ac7e61",
+  "later_neighbor_test_freeze": "04597f5ee87da1f6390a8682298a1a0e656f834c",
+  "evidence_directory": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+  "driver_sha256": "10f07858ee48579becf9cbd7dedd9bd1455c06c0f3d8039b0de5a8f2989e4eaf",
+  "summary_sha256": "136a7a9b5e0b5b3e6721cb785dece34a5d27bd63c5a7b509a641c5cd5f36aaac",
+  "verification_artifact": {
+    "path": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/fault-control-verification.json",
+    "sha256": "7c35f0c35858432af7fe3474478a4a352f744dee9b3c58b5220360d60bed9f33"
+  },
+  "verdict": "Passed within this bounded GCC generic fault-control scope. Recorded detection is normal completed behavioral failure, not compiler/crash/setup failure. Two representative binaries were independently rerun successfully as expected-failure controls.",
+  "driver_and_parser_review": [
+    "The driver pins source/test HEAD and requires a clean tracked source/test/CMake diff against 3003569 before compiling private copies. The focused test fixture remains unchanged for all controls.",
+    "Mutations use checked unique replacements in private Engine.cpp copies. Old-engine control substitutes both exact prior Engine.cpp and Engine.h, with tests compiled against those matching private headers.",
+    "Compile and link stages require successful exit; their failures invalidate the experiment. Each linked probe uses its private Engine.o and the matching archive for other objects. Link maps reject archive Engine.cpp.o selection.",
+    "The parser requires exactly one full terminal 7488-check summary, empty stderr, normal expected exit, valid failure count and exactly one FAIL diagnostic per reported failure. A crash, timeout, missing/truncated/duplicate summary, trailing output or unsuccessful fixture cannot be called detected.",
+    "Independently executed parser self-test accepted two valid records and rejected all 12 invalid cases.",
+    "The gate requires an unmutated pass, all 11 mutant detections, old-engine detection and unchanged production/test/archive/object invariants. All recorded command/log hashes were independently verified."
+  ],
+  "source_and_link_audit": {
+    "frozen_source_files_verified_against_commit_inputs": 167,
+    "case_source_manifests_and_exact_deltas_verified": 13,
+    "all_compile_and_link_exit_codes_zero": true,
+    "all_run_logs_independently_parsed": true,
+    "all_recorded_binary_object_diff_linkmap_hashes_verified": true,
+    "archive_engine_member_absent_from_all_link_maps": true,
+    "frozen_source_tree_matches_all_tracked_source_hashes": true,
+    "source_file_count": 167,
+    "current_archive_matches_recorded": true,
+    "current_build_engine_object_matches_recorded": true,
+    "current_archive_engine_member_matches_recorded": true
+  },
+  "recorded_results": {
+    "unmutated-control": {
+      "checks": 7488,
+      "failures": 0,
+      "exit_code": 0
+    },
+    "omit-pressure-held-guard": {
+      "checks": 7488,
+      "failures": 272,
+      "exit_code": 1
+    },
+    "omit-bend-held-guard": {
+      "checks": 7488,
+      "failures": 364,
+      "exit_code": 1
+    },
+    "omit-timbre-held-guard": {
+      "checks": 7488,
+      "failures": 536,
+      "exit_code": 1
+    },
+    "pedal-counts-as-held": {
+      "checks": 7488,
+      "failures": 336,
+      "exit_code": 1
+    },
+    "lose-cc121-exception": {
+      "checks": 7488,
+      "failures": 64,
+      "exit_code": 1
+    },
+    "filter-manager-pressure-timbre": {
+      "checks": 7488,
+      "failures": 52,
+      "exit_code": 1
+    },
+    "lose-shared-pressure-source": {
+      "checks": 7488,
+      "failures": 12,
+      "exit_code": 1
+    },
+    "lose-member-ribbon-route": {
+      "checks": 7488,
+      "failures": 12,
+      "exit_code": 1
+    },
+    "lose-released-pressure-cache": {
+      "checks": 7488,
+      "failures": 132,
+      "exit_code": 1
+    },
+    "lose-released-bend-cache": {
+      "checks": 7488,
+      "failures": 132,
+      "exit_code": 1
+    },
+    "lose-released-timbre-cache": {
+      "checks": 7488,
+      "failures": 232,
+      "exit_code": 1
+    },
+    "old-engine-control": {
+      "checks": 7488,
+      "failures": 1076,
+      "exit_code": 1
+    }
+  },
+  "behavioral_failure_scope": [
+    "Per-field guard omissions fail corresponding recipient, cache/onset continuity, tail, smoothing and accepted-gate expectations.",
+    "Pedal-as-held failures are confined to pedal recipient and continuation contexts. CC121 exception removal fails the CC121 contexts.",
+    "Filtering all MPE pressure/timbre incorrectly fails manager, gap and role-transition contexts. Suppressing global pressure or ribbon routes fails global-exception contexts.",
+    "Cache-loss controls leave pre-onset no-tail writes intact and prevent writes only when an active released matching voice exists; later onset, changed-law, ARP/KAS and relevant reset cases detect them."
+  ],
+  "independent_representative_execution": {
+    "omit-pressure-held-guard": {
+      "checks": 7488,
+      "failures": 272,
+      "exit_code": 1,
+      "binary_sha256": "007c7a00fa06a807caff8dde11b77ae40bf41d7521d343ce15d7894d62568675",
+      "stdout": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/omit-pressure-held-guard-independent.stdout.log",
+      "stdout_sha256": "f4188ce6e2890cd53abee44b2e708e59853a16ceee7ad72f8cfea3bf662199bb",
+      "stderr": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/omit-pressure-held-guard-independent.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "binary_unchanged": true
+    },
+    "lose-cc121-exception": {
+      "checks": 7488,
+      "failures": 64,
+      "exit_code": 1,
+      "binary_sha256": "a05ab7f2f3385dd74f94b12936c08f1fcea961181875f014c15f04b4ac64590b",
+      "stdout": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/lose-cc121-exception-independent.stdout.log",
+      "stdout_sha256": "9814c1aed85959d5ebecde73d843845ec1b07dcfd8d370fb7fca51f84bf5e997",
+      "stderr": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/lose-cc121-exception-independent.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "binary_unchanged": true
+    }
+  },
+  "limits": [
+    "Only the omitted-pressure-guard and CC121-exception binaries were rerun during this audit. Other results were independently validated from archived source, build/link records, hashes and complete logs.",
+    "No full driver or compiler was rerun and no production/test source file was edited.",
+    "The old-engine control is exact prior Engine.cpp/h plus the unchanged current focused fixture and matching remaining core archive objects. It is not a complete original historical binary build.",
+    "Fault detection is not exhaustive correctness, performance, native-host, sanitizer or broad compiler-profile qualification.",
+    "The reported corrected neighboring Tuning/PolyPressure runtime passes and broader active runs were not independently executed here.",
+    "After-invariants refer to the recorded fault-driver run. Later approved neighbor-fixture changes are separate; production and this focused fixture were previously verified unchanged across 04597f5."
+  ]
+}

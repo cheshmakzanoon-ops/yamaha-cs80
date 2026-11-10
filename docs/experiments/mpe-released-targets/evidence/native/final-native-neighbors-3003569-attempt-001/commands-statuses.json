@@ -1,0 +1,19 @@
+[
+  {
+    "stage": "focused-native-neighbors",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest",
+      "--test-dir",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+      "-R",
+      "^cs80_(mpe_released_target_host|mpe_member_onset_host|sixteen_voice_release_host|controller_reset_host|keyboard_handoff_host|undo_replay_gesture)_tests$",
+      "--verbose",
+      "--output-on-failure",
+      "--no-tests=error"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+    "status": 0,
+    "log": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/final-native-neighbors-3003569-attempt-001/ctest.log",
+    "sha256": "a4fde3a746fceaf5dd2f4915c0412dc3816996abef14392e2e00b2cb6f33158f"
+  }
+]

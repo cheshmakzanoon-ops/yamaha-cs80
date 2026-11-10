@@ -1,0 +1,1142 @@
+[
+  {
+    "label": "tracked-inputs",
+    "argv": [
+      "git",
+      "-C",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "ls-files",
+      "src",
+      "tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/tracked-inputs.stdout.log",
+    "stdout_sha256": "7ee4605ca7715b1a2edff22c8e9f828fb6c697232fcfdb9cb0c88e05c7275e62",
+    "stderr": "logs/tracked-inputs.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "head",
+    "argv": [
+      "git",
+      "-C",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/head.stdout.log",
+    "stdout_sha256": "0ef7e0826a54fc307e2c0042d3f4c33f9f33195730f5ee7202f8c9e5555969bf",
+    "stderr": "logs/head.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "frozen-source-diff",
+    "argv": [
+      "git",
+      "-C",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "diff",
+      "--exit-code",
+      "300356958b3cde471f8dc14a7b505070a4cffc8c",
+      "--",
+      "src",
+      "tests",
+      "CMakeLists.txt"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/frozen-source-diff.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/frozen-source-diff.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "compiler-version",
+    "argv": [
+      "/usr/bin/c++",
+      "--version"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/compiler-version.stdout.log",
+    "stdout_sha256": "00f7e3c3e6a0308d7b60cc02429720ef6000d84c0add523f7dc030058d19961b",
+    "stderr": "logs/compiler-version.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "archive-members",
+    "argv": [
+      "/usr/bin/ar",
+      "t",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/archive-members.stdout.log",
+    "stdout_sha256": "27fe86d84e7a58321eff678e219b9cb8cb7962d2e93d85574dee555120d535f2",
+    "stderr": "logs/archive-members.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "baseline-Engine.cpp",
+    "argv": [
+      "git",
+      "-C",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "show",
+      "2ade213:src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/baseline-Engine.cpp.stdout.log",
+    "stdout_sha256": "3f894a776beaa85ae4f7ba65444a0b24d56f5228a01d63495a6eaa21fe22d8b7",
+    "stderr": "logs/baseline-Engine.cpp.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "baseline-Engine.h",
+    "argv": [
+      "git",
+      "-C",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "show",
+      "2ade213:src/core/Engine.h"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/baseline-Engine.h.stdout.log",
+    "stdout_sha256": "f802523cc971866f4a060c64e088f7a709cef361503d83df8862bb3d02e4b755",
+    "stderr": "logs/baseline-Engine.h.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "unmutated-control-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/unmutated-control-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/unmutated-control-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "unmutated-control-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/unmutated-control-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/unmutated-control-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "unmutated-control-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/unmutated-control-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/unmutated-control-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "unmutated-control-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/unmutated-control/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/unmutated-control-run.stdout.log",
+    "stdout_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+    "stderr": "logs/unmutated-control-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-pressure-held-guard-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-pressure-held-guard-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-pressure-held-guard-engine-compile.stderr.log",
+    "stderr_sha256": "188d2ade37edfff66284101c692acc412f86f91958b769adf9a9a7e9019c392a"
+  },
+  {
+    "label": "omit-pressure-held-guard-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-pressure-held-guard-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-pressure-held-guard-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-pressure-held-guard-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-pressure-held-guard-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-pressure-held-guard-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-pressure-held-guard-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-pressure-held-guard/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/omit-pressure-held-guard-run.stdout.log",
+    "stdout_sha256": "f4188ce6e2890cd53abee44b2e708e59853a16ceee7ad72f8cfea3bf662199bb",
+    "stderr": "logs/omit-pressure-held-guard-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-bend-held-guard-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-bend-held-guard-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-bend-held-guard-engine-compile.stderr.log",
+    "stderr_sha256": "92a0fb6a30b1f917b3257ecde6099b4142ca7e0275699ee2964a73240a883dff"
+  },
+  {
+    "label": "omit-bend-held-guard-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-bend-held-guard-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-bend-held-guard-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-bend-held-guard-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-bend-held-guard-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-bend-held-guard-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-bend-held-guard-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/omit-bend-held-guard-run.stdout.log",
+    "stdout_sha256": "9f1aa738e01598f63a4996a170310e1d3b3acd2510a88bfd6b456381e595219b",
+    "stderr": "logs/omit-bend-held-guard-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-timbre-held-guard-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-timbre-held-guard-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-timbre-held-guard-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-timbre-held-guard-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-timbre-held-guard-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-timbre-held-guard-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-timbre-held-guard-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/omit-timbre-held-guard-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/omit-timbre-held-guard-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "omit-timbre-held-guard-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-timbre-held-guard/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/omit-timbre-held-guard-run.stdout.log",
+    "stdout_sha256": "9556ef836ba652c1aa14c1744fed43da569491087af73333c7c81d6d1a2ccff9",
+    "stderr": "logs/omit-timbre-held-guard-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "pedal-counts-as-held-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/pedal-counts-as-held-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/pedal-counts-as-held-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "pedal-counts-as-held-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/pedal-counts-as-held-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/pedal-counts-as-held-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "pedal-counts-as-held-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/pedal-counts-as-held-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/pedal-counts-as-held-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "pedal-counts-as-held-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/pedal-counts-as-held/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/pedal-counts-as-held-run.stdout.log",
+    "stdout_sha256": "785e448491f396174302d4073ae2125728f4fb1cb2518064b4dd561ada12fa1b",
+    "stderr": "logs/pedal-counts-as-held-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-cc121-exception-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-cc121-exception-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-cc121-exception-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-cc121-exception-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-cc121-exception-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-cc121-exception-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-cc121-exception-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-cc121-exception-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-cc121-exception-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-cc121-exception-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-cc121-exception/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/lose-cc121-exception-run.stdout.log",
+    "stdout_sha256": "9814c1aed85959d5ebecde73d843845ec1b07dcfd8d370fb7fca51f84bf5e997",
+    "stderr": "logs/lose-cc121-exception-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "filter-manager-pressure-timbre-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/filter-manager-pressure-timbre-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/filter-manager-pressure-timbre-engine-compile.stderr.log",
+    "stderr_sha256": "398ccc0c358644c8cfd90565e110f78162be55767bfe0ac29829e9f51168e52d"
+  },
+  {
+    "label": "filter-manager-pressure-timbre-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/filter-manager-pressure-timbre-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/filter-manager-pressure-timbre-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "filter-manager-pressure-timbre-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/filter-manager-pressure-timbre-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/filter-manager-pressure-timbre-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "filter-manager-pressure-timbre-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/filter-manager-pressure-timbre/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/filter-manager-pressure-timbre-run.stdout.log",
+    "stdout_sha256": "29a93f80da0309b698ed9c92056e020443a45aaa082b41ab0bc96e0d3da8e1eb",
+    "stderr": "logs/filter-manager-pressure-timbre-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-shared-pressure-source-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-shared-pressure-source-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-shared-pressure-source-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-shared-pressure-source-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-shared-pressure-source-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-shared-pressure-source-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-shared-pressure-source-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-shared-pressure-source-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-shared-pressure-source-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-shared-pressure-source-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-shared-pressure-source/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/lose-shared-pressure-source-run.stdout.log",
+    "stdout_sha256": "3dd4546623e603fdce568f9ca85e27069ef01540f65bc73487323d6ebb5115d2",
+    "stderr": "logs/lose-shared-pressure-source-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-member-ribbon-route-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-member-ribbon-route-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-member-ribbon-route-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-member-ribbon-route-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-member-ribbon-route-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-member-ribbon-route-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-member-ribbon-route-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-member-ribbon-route-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-member-ribbon-route-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-member-ribbon-route-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-member-ribbon-route/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/lose-member-ribbon-route-run.stdout.log",
+    "stdout_sha256": "31a072df8b1c87963d6bc1a52f6f843d6ff8767a2191cbb914f36b06307bdc46",
+    "stderr": "logs/lose-member-ribbon-route-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-pressure-cache-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-pressure-cache-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-pressure-cache-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-pressure-cache-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-pressure-cache-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-pressure-cache-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-pressure-cache-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-pressure-cache-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-pressure-cache-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-pressure-cache-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-pressure-cache/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/lose-released-pressure-cache-run.stdout.log",
+    "stdout_sha256": "c291508cde8cb29c97d479dafdb1b9c498338d1013b07844b2208072e31db746",
+    "stderr": "logs/lose-released-pressure-cache-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-bend-cache-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-bend-cache-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-bend-cache-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-bend-cache-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-bend-cache-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-bend-cache-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-bend-cache-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-bend-cache-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-bend-cache-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-bend-cache-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-bend-cache/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/lose-released-bend-cache-run.stdout.log",
+    "stdout_sha256": "a83eab7457ef314e92c754377a5d95df8931384ce907782732e020e96a5f6d80",
+    "stderr": "logs/lose-released-bend-cache-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-timbre-cache-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-timbre-cache-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-timbre-cache-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-timbre-cache-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-timbre-cache-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-timbre-cache-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-timbre-cache-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/lose-released-timbre-cache-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/lose-released-timbre-cache-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "lose-released-timbre-cache-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/lose-released-timbre-cache/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/lose-released-timbre-cache-run.stdout.log",
+    "stdout_sha256": "ad4c8e5e8be390460edcbf35abbb4e3b82925013593f682085351815b59e3f41",
+    "stderr": "logs/lose-released-timbre-cache-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "old-engine-control-engine-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/Engine.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/src/core/Engine.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/old-engine-control-engine-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/old-engine-control-engine-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "old-engine-control-test-compile",
+    "argv": [
+      "/usr/bin/c++",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/src",
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIE",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/tests.o",
+      "-c",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/frozen/MpeReleasedTargetTests.cpp"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/old-engine-control-test-compile.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/old-engine-control-test-compile.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "old-engine-control-link",
+    "argv": [
+      "/usr/bin/c++",
+      "-O3",
+      "-DNDEBUG",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/tests.o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/Engine.o",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/libcs80_core.a",
+      "-Wl,-Map=/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/link.map",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 0,
+    "stdout": "logs/old-engine-control-link.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "logs/old-engine-control-link.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "old-engine-control-run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/old-engine-control/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569",
+    "exit_code": 1,
+    "stdout": "logs/old-engine-control-run.stdout.log",
+    "stdout_sha256": "295bef1fda6bf1ae448d85376e6f8c89b85501aa21d1268020237e498046b109",
+    "stderr": "logs/old-engine-control-run.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

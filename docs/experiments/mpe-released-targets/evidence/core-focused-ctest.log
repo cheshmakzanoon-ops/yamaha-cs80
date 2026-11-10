@@ -1,0 +1,98 @@
+Start testing: Nov 09 19:42 AST
+----------------------------------------------------------
+49/145 Testing: cs80_controller_reset_tests
+49/145 Test: cs80_controller_reset_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_controller_reset_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_controller_reset_tests" start time: Nov 09 19:42 AST
+Output:
+----------------------------------------------------------
+Controller reset: 3513 checks, 0 failures
+<end of output>
+Test time =   5.79 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_controller_reset_tests" end time: Nov 09 19:42 AST
+"cs80_controller_reset_tests" time elapsed: 00:00:05
+----------------------------------------------------------
+
+83/145 Testing: cs80_mpe_member_onset_tests
+83/145 Test: cs80_mpe_member_onset_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_member_onset_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mpe_member_onset_tests" start time: Nov 09 19:42 AST
+Output:
+----------------------------------------------------------
+MPE member onset: 2501 checks, 0 failures
+<end of output>
+Test time =   3.26 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mpe_member_onset_tests" end time: Nov 09 19:43 AST
+"cs80_mpe_member_onset_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+84/145 Testing: cs80_mpe_released_target_tests
+84/145 Test: cs80_mpe_released_target_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_released_target_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mpe_released_target_tests" start time: Nov 09 19:43 AST
+Output:
+----------------------------------------------------------
+MPE released targets: 7488 checks, 0 failures
+<end of output>
+Test time =   3.53 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mpe_released_target_tests" end time: Nov 09 19:43 AST
+"cs80_mpe_released_target_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+85/145 Testing: cs80_mpe_master_smoothing_tests
+85/145 Test: cs80_mpe_master_smoothing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_master_smoothing_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mpe_master_smoothing_tests" start time: Nov 09 19:43 AST
+Output:
+----------------------------------------------------------
+master bend circuit 44100 Hz q0 -> (0,12): max pitch error 0 / 5.48509758e-06 semitones
+master bend circuit 44100 Hz q0 -> (-6,-12): max pitch error 4.06687279e-06 / 5.14402248e-06 semitones
+master bend circuit 44100 Hz q0 -> (6,6): max pitch error 6.004343e-06 / 6.0842854e-06 semitones
+master bend circuit 48000 Hz q1 -> (0,12): max pitch error 0 / 4.90366197e-06 semitones
+master bend circuit 48000 Hz q1 -> (-6,-12): max pitch error 3.98718211e-06 / 4.83127449e-06 semitones
+master bend circuit 48000 Hz q1 -> (6,6): max pitch error 6.05188971e-06 / 6.22960419e-06 semitones
+master bend circuit 48000 Hz q2 -> (0,12): max pitch error 0 / 4.90366197e-06 semitones
+master bend circuit 48000 Hz q2 -> (-6,-12): max pitch error 3.98718211e-06 / 4.83127449e-06 semitones
+master bend circuit 48000 Hz q2 -> (6,6): max pitch error 6.05188971e-06 / 6.22960419e-06 semitones
+master bend circuit 96000 Hz q0 -> (0,12): max pitch error 0 / 4.90366196e-06 semitones
+master bend circuit 96000 Hz q0 -> (-6,-12): max pitch error 4.11990576e-06 / 4.83127449e-06 semitones
+master bend circuit 96000 Hz q0 -> (6,6): max pitch error 6.07863804e-06 / 6.26916941e-06 semitones
+master bend legacy 48000 Hz q1 -> (0,12): max pitch error 0 / 0 semitones
+master bend legacy 48000 Hz q1 -> (-6,-12): max pitch error 7.1012693e-07 / 0 semitones
+master bend legacy 48000 Hz q1 -> (6,6): max pitch error 7.1012693e-07 / 7.1012693e-07 semitones
+35 checks, 0 failures
+<end of output>
+Test time =   0.30 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mpe_master_smoothing_tests" end time: Nov 09 19:43 AST
+"cs80_mpe_master_smoothing_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+96/145 Testing: cs80_mpe_master_bend_routing_tests
+96/145 Test: cs80_mpe_master_bend_routing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_master_bend_routing_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mpe_master_bend_routing_tests" start time: Nov 09 19:43 AST
+Output:
+----------------------------------------------------------
+MPE master bend routing: 1152 checks, 0 failures
+<end of output>
+Test time =   3.68 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mpe_master_bend_routing_tests" end time: Nov 09 19:43 AST
+"cs80_mpe_master_bend_routing_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+End testing: Nov 09 19:43 AST

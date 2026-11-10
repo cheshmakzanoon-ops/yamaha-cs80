@@ -4,9 +4,12 @@
 
 #include <algorithm>
 #include <array>
+#include <bit>
+#include <cstdint>
 #include <cmath>
 #include <cstdio>
 #include <limits>
+#include <utility>
 
 using namespace cs80;
 
@@ -124,37 +127,75 @@ void testUnison(int policy, bool mpe)
 void testAudioRouting(int policy, bool mpe, bool curved)
 {
     Engine actual, reference;
-    const auto p = controls(policy, mpe, curved);
+    auto p = controls(policy, mpe, curved);
+    p[P_keyRelease] = 2.0f;
+    // PURE ignores the modern key-release extension. Long rank releases also
+    // keep its target note active throughout the complete tail comparison.
+    for (int rank = 0; rank < 2; ++rank)
+        p[chParam(rank, CP_vR)] = p[chParam(rank, CP_fR)] = 2.0f;
+    const bool effectiveMpe = mpe && policy != 2;
     for (Engine* e : { &actual, &reference })
     {
         e->prepare(48000.0);
         e->setParams(p);
+        if (effectiveMpe)
+        {
+            // A sole lower member makes the existing manager-pressure route
+            // an independent one-recipient oracle even after that note is
+            // released. Ordinary member pressure intentionally stops there.
+            for (const auto& [channel, members] : { std::pair{16, 0}, std::pair{1, 1} })
+            {
+                e->controlChange(101, 0.0f, channel);
+                e->controlChange(100, 6.0f / 127.0f, channel);
+                e->controlChange(6, members / 127.0f, channel);
+            }
+            check(e->getMpeZones().role(2) == MpeZoneLayout::Role::lowerMember
+                      && e->getMpeZones().role(3) == MpeZoneLayout::Role::none,
+                  "audio oracle has one lower member and a distinct conventional gap");
+        }
         e->noteOn(60, 0.8f, 2);
         e->noteOn(60, 0.8f, 3);
     }
     std::array<float, 256> a {}, b {};
-    bool hasSound = false;
-    // With exactly one note per member channel and no channel-pressure matrix
-    // routing, its existing channel-pressure path is an independent oracle.
-    // Exercise onset, later smoothing, pressure release, and release tails.
+    bool hasSound = false, held = true;
+    // With one note per addressed recipient and no channel-pressure matrix
+    // routing, independent channel/manager pressure supplies the same per-voice
+    // value. Direct poly-pressure remains eligible on active release tails.
     for (const float pressure : { 0.6f, 0.9f, 0.0f, 0.4f })
     {
         actual.polyPressure(60, pressure, 2);
-        reference.channelPressure(2, pressure);
+        reference.channelPressure(effectiveMpe ? 1 : 2, pressure);
         for (int block = 0; block < 12; ++block)
         {
+            a.fill(std::numeric_limits<float>::quiet_NaN());
+            b.fill(std::numeric_limits<float>::quiet_NaN());
             actual.render(a.data(), 128);
             reference.render(b.data(), 128);
-            check(a == b, "poly pressure audio matches the channel-scoped reference exactly");
-            check(std::all_of(a.begin(), a.end(), [](float value) { return std::isfinite(value); }),
-                  "pressure routing produces finite audio");
+            const bool bitsMatch = std::equal(a.begin(), a.end(), b.begin(), [](float x, float y) {
+                return std::isfinite(x) && std::isfinite(y)
+                    && std::bit_cast<std::uint32_t>(x) == std::bit_cast<std::uint32_t>(y);
+            });
+            check(bitsMatch, "poly pressure audio matches the independently scoped reference by finite bits");
+            for (const Engine* e : { &actual, &reference })
+            {
+                const auto target = e->getVoiceInfo(0), unrelated = e->getVoiceInfo(1);
+                check(target.active && target.note == 60 && target.channel == 2 && target.held == held,
+                      "pressure audio witness retains the intended active held or released target");
+                check(std::abs(target.pressure - mapped(pressure, curved)) < 1.0e-6f,
+                      "pressure audio witness has independently mapped per-voice target");
+                check(unrelated.active && unrelated.held && unrelated.note == 60 && unrelated.channel == 3
+                          && unrelated.pressure == 0.0f,
+                      "pressure audio oracle leaves the other same-pitch channel untouched");
+            }
             hasSound = hasSound || std::any_of(a.begin(), a.end(), [](float value) { return value != 0.0f; });
         }
         actual.noteOff(60, 2);
         reference.noteOff(60, 2);
+        held = false;
     }
-    check(hasSound, "audio comparison covers sounding voices, not silence");
+    check(hasSound, "audio comparison covers non-silent combined output, not isolated target audibility");
 }
+
 } // namespace
 
 int main()

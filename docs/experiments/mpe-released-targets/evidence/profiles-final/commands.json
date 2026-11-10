@@ -1,0 +1,665 @@
+[
+  {
+    "profile": "gcc-generic",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic",
+      "--target",
+      "cs80_mpe_released_target_tests",
+      "cs80_mpe_member_onset_tests",
+      "cs80_controller_reset_tests",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "cs80_poly_pressure_routing_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:16.660478+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-build.log",
+    "sha256": "5558af70c9653a2eb863461201344c8c36d78098d7e76d31075c5b4a471b885e",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_mpe_released_target_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_mpe_released_target_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:21.806612+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_mpe_released_target_tests.log",
+    "sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_mpe_member_onset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_mpe_member_onset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:25.632075+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_mpe_member_onset_tests.log",
+    "sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_controller_reset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_controller_reset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:28.766243+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_controller_reset_tests.log",
+    "sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:34.396349+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:37.508303+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:45.563616+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_poly_pressure_routing_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_poly_pressure_routing_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:49.621742+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_poly_pressure_routing_tests.log",
+    "sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native",
+      "--target",
+      "cs80_mpe_released_target_tests",
+      "cs80_mpe_member_onset_tests",
+      "cs80_controller_reset_tests",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "cs80_poly_pressure_routing_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:53:50.906001+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-build.log",
+    "sha256": "fda7eb98a25a768b0c723554db9005676e78efea03e8c2cfccdb67f105da8917",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_mpe_released_target_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native/cs80_mpe_released_target_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:05.201217+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-cs80_mpe_released_target_tests.log",
+    "sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_mpe_member_onset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native/cs80_mpe_member_onset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:09.403842+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-cs80_mpe_member_onset_tests.log",
+    "sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_controller_reset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native/cs80_controller_reset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:13.189692+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-cs80_controller_reset_tests.log",
+    "sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:20.009255+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:23.336774+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:32.507351+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {}
+  },
+  {
+    "profile": "gcc-native",
+    "stage": "cs80_poly_pressure_routing_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-native/cs80_poly_pressure_routing_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:36.302906+00:00",
+    "exit_code": 0,
+    "log": "gcc-native-cs80_poly_pressure_routing_tests.log",
+    "sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+    "env": {}
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic",
+      "--target",
+      "cs80_mpe_released_target_tests",
+      "cs80_mpe_member_onset_tests",
+      "cs80_controller_reset_tests",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "cs80_poly_pressure_routing_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:37.314359+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-build.log",
+    "sha256": "fda7eb98a25a768b0c723554db9005676e78efea03e8c2cfccdb67f105da8917",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_mpe_released_target_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic/cs80_mpe_released_target_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:51.431835+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-cs80_mpe_released_target_tests.log",
+    "sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_mpe_member_onset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic/cs80_mpe_member_onset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:55.799434+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-cs80_mpe_member_onset_tests.log",
+    "sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_controller_reset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic/cs80_controller_reset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:54:59.186967+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-cs80_controller_reset_tests.log",
+    "sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:04.930105+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:08.078499+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:16.880990+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-generic",
+    "stage": "cs80_poly_pressure_routing_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-generic/cs80_poly_pressure_routing_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:21.038012+00:00",
+    "exit_code": 0,
+    "log": "clang-generic-cs80_poly_pressure_routing_tests.log",
+    "sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native",
+      "--target",
+      "cs80_mpe_released_target_tests",
+      "cs80_mpe_member_onset_tests",
+      "cs80_controller_reset_tests",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "cs80_poly_pressure_routing_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:22.119837+00:00",
+    "exit_code": 0,
+    "log": "clang-native-build.log",
+    "sha256": "fda7eb98a25a768b0c723554db9005676e78efea03e8c2cfccdb67f105da8917",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_mpe_released_target_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native/cs80_mpe_released_target_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:36.051874+00:00",
+    "exit_code": 0,
+    "log": "clang-native-cs80_mpe_released_target_tests.log",
+    "sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_mpe_member_onset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native/cs80_mpe_member_onset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:39.642812+00:00",
+    "exit_code": 0,
+    "log": "clang-native-cs80_mpe_member_onset_tests.log",
+    "sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_controller_reset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native/cs80_controller_reset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:43.077560+00:00",
+    "exit_code": 0,
+    "log": "clang-native-cs80_controller_reset_tests.log",
+    "sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:49.197986+00:00",
+    "exit_code": 0,
+    "log": "clang-native-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:55:52.378703+00:00",
+    "exit_code": 0,
+    "log": "clang-native-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:56:01.500399+00:00",
+    "exit_code": 0,
+    "log": "clang-native-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "clang-native",
+    "stage": "cs80_poly_pressure_routing_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-clang-native/cs80_poly_pressure_routing_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:56:05.402783+00:00",
+    "exit_code": 0,
+    "log": "clang-native-cs80_poly_pressure_routing_tests.log",
+    "sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+    "env": {
+      "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/lib/x86_64-linux-gnu"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "configure",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "-S",
+      "/workspace/scratch/ee447c520988/release-followup",
+      "-B",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer",
+      "-G",
+      "Ninja",
+      "-DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCS80_BUILD_PLUGIN=OFF",
+      "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+      "-DCMAKE_CXX_FLAGS_RELEASE=-O1 -g1 -fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:56:06.404451+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-configure.log",
+    "sha256": "cd9c65f65dfc2a688681005ee1c2fd899b63da85559d2d0c4c7e5ec4df3ba5e1",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer",
+      "--target",
+      "cs80_mpe_released_target_tests",
+      "cs80_mpe_member_onset_tests",
+      "cs80_controller_reset_tests",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "cs80_poly_pressure_routing_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:56:06.913304+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-build.log",
+    "sha256": "84c01d7004bad7e109272b00aa62a0e626ac020fb7923f2c6e99259688636049",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_mpe_released_target_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_mpe_released_target_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:56:39.140479+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-cs80_mpe_released_target_tests.log",
+    "sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_mpe_member_onset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_mpe_member_onset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:56:57.308051+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-cs80_mpe_member_onset_tests.log",
+    "sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_controller_reset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_controller_reset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:57:10.511844+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-cs80_controller_reset_tests.log",
+    "sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:57:34.597212+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:57:46.575773+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:58:41.565248+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-cs80_tuning_midi_tests.log",
+    "sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  },
+  {
+    "profile": "sanitizer",
+    "stage": "cs80_poly_pressure_routing_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_poly_pressure_routing_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:59:06.976581+00:00",
+    "exit_code": 0,
+    "log": "sanitizer-cs80_poly_pressure_routing_tests.log",
+    "sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+    "env": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    }
+  }
+]

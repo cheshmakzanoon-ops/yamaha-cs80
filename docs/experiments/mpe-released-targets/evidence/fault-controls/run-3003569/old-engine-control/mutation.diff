@@ -1,0 +1,98 @@
+--- baseline/src/core/Engine.cpp
++++ old-engine-control/src/core/Engine.cpp
+@@ -1727,45 +1727,28 @@
+ 
+ void Engine::channelPressure(int midiChannel, float pressure)
+ {
+-    applyChannelPressure(midiChannel, pressure, false);
+-}
+-
+-void Engine::applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices)
+-{
+     if (! std::isfinite(pressure))
+         return;
+     pressure = clampf(pressure, 0.0f, 1.0f);
+-    auto* initial = memberExpressionFor(midiChannel);
+-    if (initial != nullptr)
++    if (auto* initial = memberExpressionFor(midiChannel))
+         initial->pressure = pressure;
+-    // Retain the raw channel state for later onsets, but ordinary member
+-    // expression no longer changes targets after accepted voice release.
+-    const bool heldOnly = initial != nullptr && !resetReleasedVoices;
+     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
+         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
+     lastChannelPressure = pressure;
+     for (auto& v : voices)
+-        if (v.active && (!heldOnly || v.held)
+-            && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
++        if (v.active && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+             v.pressure = pressure;
+ }
+ 
+ void Engine::pitchBend(int midiChannel, float value)
+-{
+-    applyPitchBend(midiChannel, value, false);
+-}
+-
+-void Engine::applyPitchBend(int midiChannel, float value, bool resetReleasedVoices)
+ {
+     // Ignore malformed float events before they can poison bend smoothers or
+     // the independent pitch-wheel modulation source. Keep the last valid target.
+     if (global.parityMode || ! std::isfinite(value))
+         return;
+     value = clampf(value, -1.0f, 1.0f);
+-    auto* initial = memberExpressionFor(midiChannel);
+-    if (initial != nullptr)
++    if (auto* initial = memberExpressionFor(midiChannel))
+         initial->bend = value;
+-    const bool heldOnly = initial != nullptr && !resetReleasedVoices;
+     if (global.mpe)
+     {
+         // MPE zones (Phase 6): a master bends its zone, a member its notes.
+@@ -1787,7 +1770,7 @@
+         const float negotiated = mpeZones.memberRange(role == MpeZoneLayout::Role::upperMember);
+         const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;
+         for (auto& v : voices)
+-            if (v.active && v.midiChannel == midiChannel && (!heldOnly || v.held))
++            if (v.active && v.midiChannel == midiChannel)
+                 v.mpeBend = value * range;
+     }
+     else
+@@ -1820,8 +1803,8 @@
+             // CC1/11/64 ribbon mapping must not move the independent ribbon.
+             modWheel = 0.0f;
+             expression = 1.0f;
+-            applyPitchBend(midiChannel, 0.0f, true);
+-            applyChannelPressure(midiChannel, 0.0f, true);
++            pitchBend(midiChannel, 0.0f);
++            channelPressure(midiChannel, 0.0f);
+             setSustainPedal(midiChannel, false);
+         }
+         return;
+@@ -1857,12 +1840,10 @@
+         setSustainPedal(midiChannel, value >= 0.5f);
+     else if (controller == 74)
+     {
+-        auto* initial = memberExpressionFor(midiChannel);
+-        if (initial != nullptr)
++        if (auto* initial = memberExpressionFor(midiChannel))
+             initial->timbre = value;
+         for (auto& v : voices)
+-            if (v.active && (initial == nullptr || v.held)
+-                && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
++            if (v.active && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+                 v.timbre = value;
+     }
+ }
+--- baseline/src/core/Engine.h
++++ old-engine-control/src/core/Engine.h
+@@ -595,9 +595,6 @@
+     int unisonCount() const noexcept
+     { return global.voiceMode == 2 ? 2 : global.voiceMode == 3 ? 4 : global.voiceMode == 4 ? 8 : 1; }
+     bool isZoneMaster(const Voice& voice, int midiChannel) const noexcept;
+-    // CC121 is an explicit reset, not an ordinary per-note expression event.
+-    void applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices);
+-    void applyPitchBend(int midiChannel, float value, bool resetReleasedVoices);
+     struct MemberExpression
+     {
+         MpeZoneLayout::Role role = MpeZoneLayout::Role::none;

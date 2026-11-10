@@ -1,0 +1,6 @@
+PolyPressureRoutingTests 4504 checks, 0 failures
+Traceback (most recent call last):
+  File "/workspace/scratch/ee447c520988/release-followup/../mpe-released-target-evidence/superseded-oracles/check_baseline_oracles.py", line 11, in <module>
+    if p.returncode!=expected:raise RuntimeError((name,stage,p.returncode))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ('TuningMidiTests', 'compile', 1)

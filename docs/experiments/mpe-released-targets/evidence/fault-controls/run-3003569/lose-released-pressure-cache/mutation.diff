@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ lose-released-pressure-cache/src/core/Engine.cpp
+@@ -1736,7 +1736,7 @@
+         return;
+     pressure = clampf(pressure, 0.0f, 1.0f);
+     auto* initial = memberExpressionFor(midiChannel);
+-    if (initial != nullptr)
++    if (initial != nullptr && !std::any_of(voices.begin(), voices.end(), [&](const Voice& v) { return v.active && !v.held && v.midiChannel == midiChannel; }))
+         initial->pressure = pressure;
+     // Retain the raw channel state for later onsets, but ordinary member
+     // expression no longer changes targets after accepted voice release.

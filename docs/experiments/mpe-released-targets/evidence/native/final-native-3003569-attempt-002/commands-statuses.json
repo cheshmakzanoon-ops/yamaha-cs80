@@ -1,0 +1,76 @@
+[
+  {
+    "stage": "configure",
+    "argv": [
+      "bash",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/configure-candidate.sh"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+    "timeout_seconds": 240,
+    "status": 0,
+    "log": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/final-native-3003569-attempt-002/configure.log",
+    "sha256": "d61709d5f8a95c3233eacd925fbe16fba2aa0c4c10078840505e3c48fb69695f",
+    "binary_sha256": "11fbae61a11d603c50e0f8d915e50d3731c42eacdd19e0378e79d36884130cf4"
+  },
+  {
+    "stage": "build",
+    "argv": [
+      "bash",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/build-candidate.sh"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+    "timeout_seconds": 240,
+    "status": 0,
+    "log": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/final-native-3003569-attempt-002/build.log",
+    "sha256": "c2ed93ffd93c840755c0e91392ae593b1b52de9b7aaf6c208123feaceb1dde2e",
+    "binary_sha256": "11fbae61a11d603c50e0f8d915e50d3731c42eacdd19e0378e79d36884130cf4"
+  },
+  {
+    "stage": "no-work",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin/ninja",
+      "-C",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+      "-d",
+      "explain",
+      "CS80Snapshots"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+    "timeout_seconds": 240,
+    "status": 0,
+    "log": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/final-native-3003569-attempt-002/no-work.log",
+    "sha256": "658b9bc9471ccc09b439ef3a2f8a9b6354bcc60bd43c26f9fea5c21e85959363",
+    "binary_sha256": "11fbae61a11d603c50e0f8d915e50d3731c42eacdd19e0378e79d36884130cf4"
+  },
+  {
+    "stage": "direct",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--mpe-released-target-tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+    "timeout_seconds": 240,
+    "status": 0,
+    "log": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/final-native-3003569-attempt-002/direct.log",
+    "sha256": "eb44496f2e2214d72a68cb538cafed44f403a908e16614c03ca1780b28c4eb7b",
+    "binary_sha256": "11fbae61a11d603c50e0f8d915e50d3731c42eacdd19e0378e79d36884130cf4"
+  },
+  {
+    "stage": "ctest",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest",
+      "--test-dir",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+      "-R",
+      "^cs80_mpe_released_target_host_tests$",
+      "--output-on-failure",
+      "--no-tests=error"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/build-mpe-released-target-native",
+    "timeout_seconds": 240,
+    "status": 0,
+    "log": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/native/final-native-3003569-attempt-002/ctest.log",
+    "sha256": "726c82c0b8427ae8c707ad2b61d3600e2ae37dab589b9aae3b702b089c56496a",
+    "binary_sha256": "11fbae61a11d603c50e0f8d915e50d3731c42eacdd19e0378e79d36884130cf4"
+  }
+]

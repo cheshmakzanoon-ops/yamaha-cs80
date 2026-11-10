@@ -1,0 +1,7 @@
+/workspace/scratch/ee447c520988/mpe-released-target-evidence/compatibility/CompatibilityCapture-v1.cpp: In function ‘int main(int, char**)’:
+/workspace/scratch/ee447c520988/mpe-released-target-evidence/compatibility/CompatibilityCapture-v1.cpp:225:5: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  225 |     if(argc!=3)return 2; const int partition=std::atoi(argv[2]); if(partition<0||partition>1)return 2;
+      |     ^~
+/workspace/scratch/ee447c520988/mpe-released-target-evidence/compatibility/CompatibilityCapture-v1.cpp:225:26: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  225 |     if(argc!=3)return 2; const int partition=std::atoi(argv[2]); if(partition<0||partition>1)return 2;
+      |                          ^~~~~

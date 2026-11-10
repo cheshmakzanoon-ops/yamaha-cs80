@@ -1,0 +1,33 @@
+[
+  {
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-core",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "start": "2026-11-09T23:55:51.000589+00:00",
+    "exit_code": 0,
+    "log": "build.log",
+    "sha256": "5558af70c9653a2eb863461201344c8c36d78098d7e76d31075c5b4a471b885e"
+  },
+  {
+    "stage": "ctest",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest",
+      "--test-dir",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-core",
+      "--output-on-failure",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "start": "2026-11-09T23:55:56.139310+00:00",
+    "exit_code": 0,
+    "log": "ctest.log",
+    "sha256": "dbc29fb35402ca564fcb84144ead863c704caaf2e4ba8f87d0cc9e8ecd534927"
+  }
+]

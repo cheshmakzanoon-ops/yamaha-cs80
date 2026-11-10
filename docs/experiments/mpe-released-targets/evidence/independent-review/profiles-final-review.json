@@ -1,0 +1,434 @@
+{
+  "review": "Independent final compiler-profile, focused full-core sanitizer and strict-compatibility evidence audit",
+  "reviewed_at_utc": "2026-11-10T00:03:10.119409+00:00",
+  "test_freeze": "04597f5ee87da1f6390a8682298a1a0e656f834c",
+  "production_review_freeze": "c0219bd0de8559d72fce4194a849414de5ac7e61",
+  "verdict": "Passed within the recorded and independently checked scopes. Full-suite qualification remains outside this review and pending separately.",
+  "verification_artifact": {
+    "path": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/profiles-final-verification.json",
+    "sha256": "417140e58ea4da51ea11b3eb8c5a5014bebc73c6bdff59880e3136cad34907f4"
+  },
+  "attribution": {
+    "tracked_source_test_cmake_files_verified_against_freeze_and_current_files": 411,
+    "final_driver_status": 0,
+    "final_source_unchanged_marker": true,
+    "final_commands_sha256": "11ea07b4697376eb7eae211508ab8bfd1956f607d64a9dd123d16c709e48415b",
+    "input_manifest_sha256": "fc7126cd7532263d15e519569f15010d26649ebc1b5cda83b5b5a8fe6114756c",
+    "all_35_test_logs_binary_hashes_and_expected_counts_verified": true,
+    "preparation_and_final_build_command_logs_hashes_verified": true
+  },
+  "profiles": {
+    "gcc-generic": {
+      "compiler": "/usr/bin/c++",
+      "compiler_version": "14.2.0",
+      "release_flags": "-O3 -DNDEBUG",
+      "archive_sha256": "dc223b22b54af300633025b1109d8cb0eea54691faea0518ee9d6cf844d1629b",
+      "results": {
+        "cs80_mpe_released_target_tests": {
+          "checks": 7488,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+          "binary_sha256": "f880ab8c8ea7e5a92a9a0c05347b8db633dbf0857920bcb499dfeec1fa933318"
+        },
+        "cs80_mpe_member_onset_tests": {
+          "checks": 2501,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+          "binary_sha256": "0517e3e24c11cb2a6bd90c903cf2cef383a551dbc49e3548160d8a4be2eed6df"
+        },
+        "cs80_controller_reset_tests": {
+          "checks": 3513,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+          "binary_sha256": "5b749b2776b1906bacfb4e971a2aaa834b1b44309189f8bec832febc0f706f9f"
+        },
+        "cs80_sixteen_voice_release_tests": {
+          "checks": 1418,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+          "binary_sha256": "dc904924884f3066373d169cd289c6c57a6afe8c93692c357c6d355e3f60587a"
+        },
+        "cs80_tests": {
+          "checks": 11508,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+          "binary_sha256": "86bc589895d5bd433da83952490873d2bc521d7dc84caf758dab54fa4d765ddb"
+        },
+        "cs80_tuning_midi_tests": {
+          "checks": 22085,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+          "binary_sha256": "05529ea3d39f9f71ea55b6315f3a7fe8c436f6c98b88f2021340e25ef4b12463"
+        },
+        "cs80_poly_pressure_routing_tests": {
+          "checks": 4504,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+          "binary_sha256": "bf8c49695514843a9dd8dcf72f996998481ecc1da589745a7e043a3977b8fafc"
+        }
+      }
+    },
+    "gcc-native": {
+      "compiler": "/usr/bin/c++",
+      "compiler_version": "14.2.0",
+      "release_flags": "-O3 -DNDEBUG -march=native",
+      "archive_sha256": "6543bf186babed028fe18e9a049457c15df75810422447ca151ffa44f47f0cfa",
+      "results": {
+        "cs80_mpe_released_target_tests": {
+          "checks": 7488,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+          "binary_sha256": "ec0158f219d99084257af4059f526a813463322f9c28065036942b29977fe7ec"
+        },
+        "cs80_mpe_member_onset_tests": {
+          "checks": 2501,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+          "binary_sha256": "c64067efecc77f2b4cea65b2fe9399e4ba415d064bac228f4a43d44dd50379c3"
+        },
+        "cs80_controller_reset_tests": {
+          "checks": 3513,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+          "binary_sha256": "9d643c6449f90c85b145c9b076d67d18398c12c0197ccd4d8a869480ac87871f"
+        },
+        "cs80_sixteen_voice_release_tests": {
+          "checks": 1418,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+          "binary_sha256": "7b2115f853197b51ffa3171a0a5601d71001864c3bb0d4a3083a9ff65c2767f4"
+        },
+        "cs80_tests": {
+          "checks": 11508,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+          "binary_sha256": "c3d308cb5c734b0b621de3b1369dab098a2a6f58b431ff5ccc163d690d42db33"
+        },
+        "cs80_tuning_midi_tests": {
+          "checks": 22085,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+          "binary_sha256": "a92cb10bc2772a8529462ecccfae437f2ee3097839da18722570e1b8ccf4017b"
+        },
+        "cs80_poly_pressure_routing_tests": {
+          "checks": 4504,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+          "binary_sha256": "b3c9f46941c8da0955ee046d2f53496c2caed2575a0ad4f3d4998466e54ce135"
+        }
+      }
+    },
+    "clang-generic": {
+      "compiler": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19",
+      "compiler_version": "19.1.7",
+      "release_flags": "-O3 -DNDEBUG",
+      "archive_sha256": "dae0b2ac66a043371a368cb75d93bc04c176af654251e386a8ad1834cd470d0e",
+      "results": {
+        "cs80_mpe_released_target_tests": {
+          "checks": 7488,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+          "binary_sha256": "e7bae069bae0bfdf588ac6ac09aaef9ddda49e535f82a14a005ee2c7981347ac"
+        },
+        "cs80_mpe_member_onset_tests": {
+          "checks": 2501,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+          "binary_sha256": "e15321847b95c2d6f8100803afe3a9af5b5b170f0c7c82eb7c672409025ed76e"
+        },
+        "cs80_controller_reset_tests": {
+          "checks": 3513,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+          "binary_sha256": "410d617663ac9f01f94c17e1859435c594dd463a377e619cfff5589cc34c6aec"
+        },
+        "cs80_sixteen_voice_release_tests": {
+          "checks": 1418,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+          "binary_sha256": "d67786806ddbfddaf0ce3253b802af0a7c0b502775a4fe1de6490f6455d4da1b"
+        },
+        "cs80_tests": {
+          "checks": 11508,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+          "binary_sha256": "e12c8b054360ef57359d4ad5fce5afe25107984a92c98d00348d3498146422f7"
+        },
+        "cs80_tuning_midi_tests": {
+          "checks": 22085,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+          "binary_sha256": "1bd088715c151c0966730caf0a78d316a869cd9cadd717a8b24c05606c5a8538"
+        },
+        "cs80_poly_pressure_routing_tests": {
+          "checks": 4504,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+          "binary_sha256": "b27fef266a000a3e80087b711a825d260ddd946848edf0410f4023bddc0d4f8e"
+        }
+      }
+    },
+    "clang-native": {
+      "compiler": "/workspace/scratch/ee447c520988/pitch-power-recovery/clang-root/usr/bin/clang++-19",
+      "compiler_version": "19.1.7",
+      "release_flags": "-O3 -DNDEBUG -march=native",
+      "archive_sha256": "991a68bed843e8aee78d43b300b370e5c2c9448a799ef468a4c63d6b343afcec",
+      "results": {
+        "cs80_mpe_released_target_tests": {
+          "checks": 7488,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+          "binary_sha256": "1b904f38f31b497e6443267f0a5110c0eb1639d7bbe7c81c25266072782c6dfd"
+        },
+        "cs80_mpe_member_onset_tests": {
+          "checks": 2501,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+          "binary_sha256": "aa0c32caf3b1ca654a77a74a550c0c8e364c5de9c4f83158cfa1fa98d7ad4579"
+        },
+        "cs80_controller_reset_tests": {
+          "checks": 3513,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+          "binary_sha256": "2d4e10265744a221c947a88c02fa65b7c4f56216b5e6d9d12a1d9721b7ed19e7"
+        },
+        "cs80_sixteen_voice_release_tests": {
+          "checks": 1418,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+          "binary_sha256": "dfd782e485de5e4db0f14f3edfb163c02c1b379418fcc4ec2f80ce69cc0b5fd5"
+        },
+        "cs80_tests": {
+          "checks": 11508,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+          "binary_sha256": "942aaa776aaa01be57d1e72fc4cec2bf50e266e615c9218d3bc4666fba580c50"
+        },
+        "cs80_tuning_midi_tests": {
+          "checks": 22085,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+          "binary_sha256": "31b57b4717bc6015cb632334d43b42ba5615bdccefd50d46848c0a77a1f46ac9"
+        },
+        "cs80_poly_pressure_routing_tests": {
+          "checks": 4504,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+          "binary_sha256": "8232ffe6996af8ef2ae7824d7e0cd05a4e88d5e60768caad83ab1f528811586c"
+        }
+      }
+    },
+    "sanitizer": {
+      "compiler": "/usr/bin/c++",
+      "compiler_version": "14.2.0",
+      "release_flags": "-O1 -g1 -fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS",
+      "archive_sha256": "55913b1540607d411f609f07ee1dc2cf020f3de2d2bcaaca758d9d4d5d825255",
+      "results": {
+        "cs80_mpe_released_target_tests": {
+          "checks": 7488,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+          "binary_sha256": "4717598bbdb951f202650b41cf61a6c7c8834aea960d4a70ada67157f25608c9"
+        },
+        "cs80_mpe_member_onset_tests": {
+          "checks": 2501,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+          "binary_sha256": "c531d88356b2d110d30fecca3d66cafca7cc11bd55b0de545695bce6b55a58ea"
+        },
+        "cs80_controller_reset_tests": {
+          "checks": 3513,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+          "binary_sha256": "2a9f82ed20ca1d97fc8a16e086beaf317c0db64c030e4612483e614a36d4dcc7"
+        },
+        "cs80_sixteen_voice_release_tests": {
+          "checks": 1418,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+          "binary_sha256": "3ca9cef21fd51544bc6485585693987e8b74bc6a716e75ab8fe753acba3ea52e"
+        },
+        "cs80_tests": {
+          "checks": 11508,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+          "binary_sha256": "ab8f04446067a13b9c26d519338c4467b4392a17464352d6bdd2167b0a05d89a"
+        },
+        "cs80_tuning_midi_tests": {
+          "checks": 22085,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "8199d981eaee5d14a574c509037c480deb075d77e460468762bb2ffcc4e751df",
+          "binary_sha256": "4b072fd80e5c1af52d009429e04642c0cbf1bf841e2d5ca4cf532390b43c4d87"
+        },
+        "cs80_poly_pressure_routing_tests": {
+          "checks": 4504,
+          "failures": 0,
+          "exit_code": 0,
+          "log_sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+          "binary_sha256": "c2ed724b20996a3945da2dd498b23dbddb5047c526f289439b932e3c49e0ba10"
+        }
+      }
+    }
+  },
+  "sanitizer_scope": {
+    "compiler": "GCC 14.2.0",
+    "flags": "-O1 -g1 -fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer -D_GLIBCXX_ASSERTIONS",
+    "environment": {
+      "ASAN_OPTIONS": "detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1"
+    },
+    "all_linked_core_translation_units_instrumented": [
+      "Engine.cpp",
+      "FactoryPresets.cpp",
+      "Ig00156Batch.cpp"
+    ],
+    "executed_target_count": 7,
+    "executed_targets": [
+      "cs80_mpe_released_target_tests",
+      "cs80_mpe_member_onset_tests",
+      "cs80_controller_reset_tests",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "cs80_poly_pressure_routing_tests"
+    ],
+    "verification": "Compile databases show instrumentation on all three cs80_core translation units and all seven executed target translation units. Archive undefined symbols include ASan/UBSan references; readelf confirms the released-target binary depends on libasan.so.8 and libubsan.so.1.",
+    "excluded_claims": [
+      "Leak checking",
+      "All 145 CTest entries under sanitizers",
+      "Native processor/plugin/GUI sanitizer qualification"
+    ]
+  },
+  "independent_sanitizer_reruns": {
+    "cs80_mpe_released_target_tests": {
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_mpe_released_target_tests"
+      ],
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0",
+        "UBSAN_OPTIONS": "halt_on_error=1"
+      },
+      "binary_sha256": "4717598bbdb951f202650b41cf61a6c7c8834aea960d4a70ada67157f25608c9",
+      "exit_code": 0,
+      "checks": 7488,
+      "failures": 0,
+      "stdout": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/sanitizer-independent-cs80_mpe_released_target_tests.stdout.log",
+      "stdout_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+      "stderr": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/sanitizer-independent-cs80_mpe_released_target_tests.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cs80_poly_pressure_routing_tests": {
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-sanitizer/cs80_poly_pressure_routing_tests"
+      ],
+      "env": {
+        "ASAN_OPTIONS": "detect_leaks=0",
+        "UBSAN_OPTIONS": "halt_on_error=1"
+      },
+      "binary_sha256": "c2ed724b20996a3945da2dd498b23dbddb5047c526f289439b932e3c49e0ba10",
+      "exit_code": 0,
+      "checks": 4504,
+      "failures": 0,
+      "stdout": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/sanitizer-independent-cs80_poly_pressure_routing_tests.stdout.log",
+      "stdout_sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+      "stderr": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/sanitizer-independent-cs80_poly_pressure_routing_tests.stderr.log",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "strict_compatibility": {
+    "recorded_strict_command": {
+      "argv": [
+        "bash",
+        "scripts/check-compat-gates.sh",
+        "--strict-v2"
+      ],
+      "cwd": "/workspace/scratch/ee447c520988/release-followup",
+      "started_utc": "2026-11-09T23:54:26.602688+00:00",
+      "exit_code": 0,
+      "environment": {
+        "PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin:/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin:/home/agent/.codex/tmp/arg0-linux/codex-arg0PsQclj:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "CS80_COMPAT_CACHE": "/workspace/scratch/ee447c520988/pitch-power-recovery/compat-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "CMAKE_BUILD_PARALLEL_LEVEL": "2"
+      },
+      "log": "run.log",
+      "log_sha256": "293b65e0b7fbc2d9ed8b7fefb681d129be044d67e545d0dcc79039371860033f"
+    },
+    "raw_pairs_independently_compared": [
+      {
+        "baseline": "legacy-default.f32",
+        "current": "current-default.f32",
+        "bytes": 32863104,
+        "sha256": "4a3483f77c9df9895386b98eaa169358d19b463c21283231f994c5d0f6c523de"
+      },
+      {
+        "baseline": "legacy-tails.f32",
+        "current": "current-tails.f32",
+        "bytes": 98589312,
+        "sha256": "fe447882e3ea3560eefb7b5ae4a474b151efe5ced775b5ab36f2609c5fde0660"
+      },
+      {
+        "baseline": "circuit-v1.bin",
+        "current": "circuit-current.bin",
+        "bytes": 133056,
+        "sha256": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+      },
+      {
+        "baseline": "audio-v2.bin",
+        "current": "audio-current.bin",
+        "bytes": 9332176,
+        "sha256": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195"
+      }
+    ],
+    "cached_checkout_pins_verified": {
+      "legacy": "d56911a7c5f6953cd244457226b126cc567a538b",
+      "v1_circuit": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+      "v2_circuit_audio": "00ceccfacb3cb9845436701da01c4387d53a361a"
+    },
+    "cached_checkouts_tracked_source_and_cmake_clean": true,
+    "artifact_hashes_and_sizes_verified": true,
+    "limit": "The four existing output pairs were independently byte-compared; this reviewer did not rebuild baselines or regenerate their captures. The script may reuse previously built baseline libraries."
+  },
+  "limits": [
+    "No builds or source edits were performed by this reviewer.",
+    "Only the sanitizer released-target and corrected PolyPressure binaries were independently rerun in this review; other profile passes were audited from complete recorded outcomes and identities.",
+    "Generic/native describe compiler code-generation profiles; native here is not native processor/plugin-host qualification.",
+    "All profiles disable the optional AVX2 filter-batch path and plugin builds. No acceleration/performance or callback deadline result is claimed.",
+    "Full-suite final execution is not reviewed or promoted here. Historical 3003569 failures remain separate from corrected 04597f5 neighbor results.",
+    "Production source approval remains the earlier c0219bd review; this report qualifies frozen tests/build records rather than expanding the behavior contract."
+  ]
+}

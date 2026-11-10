@@ -1,0 +1,3011 @@
+Start testing: Nov 09 19:55 AST
+----------------------------------------------------------
+88/145 Testing: cs80_poly_pressure_routing_tests
+88/145 Test: cs80_poly_pressure_routing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_poly_pressure_routing_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_poly_pressure_routing_tests" start time: Nov 09 19:55 AST
+Output:
+----------------------------------------------------------
+pressure routing: policy 0, MPE 0, curve 0
+pressure routing: policy 0, MPE 0, curve 1
+pressure routing: policy 0, MPE 1, curve 0
+pressure routing: policy 0, MPE 1, curve 1
+pressure routing: policy 1, MPE 0, curve 0
+pressure routing: policy 1, MPE 0, curve 1
+pressure routing: policy 1, MPE 1, curve 0
+pressure routing: policy 1, MPE 1, curve 1
+pressure routing: policy 2, MPE 0, curve 0
+pressure routing: policy 2, MPE 0, curve 1
+pressure routing: policy 2, MPE 1, curve 0
+pressure routing: policy 2, MPE 1, curve 1
+4504 checks, 0 failures
+<end of output>
+Test time =   0.97 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_poly_pressure_routing_tests" end time: Nov 09 19:55 AST
+"cs80_poly_pressure_routing_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+97/145 Testing: cs80_tuning_midi_tests
+97/145 Test: cs80_tuning_midi_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_tuning_midi_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_tuning_midi_tests" start time: Nov 09 19:55 AST
+Output:
+----------------------------------------------------------
+MTS boundary matrix: 2774 malformed messages
+Scan routing dispatch oracle: 1152 comparisons, 675 projected-full states, 0 mismatches
+Tuning / MIDI / voice modes: 22085 checks, 0 failures
+<end of output>
+Test time =   4.27 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_tuning_midi_tests" end time: Nov 09 19:56 AST
+"cs80_tuning_midi_tests" time elapsed: 00:00:04
+----------------------------------------------------------
+
+122/145 Testing: cs80_library_audit_tests
+122/145 Test: cs80_library_audit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_library_audit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_library_audit_tests" start time: Nov 09 19:56 AST
+Output:
+----------------------------------------------------------
+closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.097)
+phrase peak max -4.3 dBFS, loudest-window RMS -29.6..-18.0 dBFS, stress peak max -1.5 dBFS
+library audit passed: 301 curated + 222 legacy programs
+<end of output>
+Test time = 189.80 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_library_audit_tests" end time: Nov 09 19:59 AST
+"cs80_library_audit_tests" time elapsed: 00:03:09
+----------------------------------------------------------
+
+51/145 Testing: cs80_source_factory_integration_tests
+51/145 Test: cs80_source_factory_integration_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_source_factory_integration_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_source_factory_integration_tests" start time: Nov 09 19:55 AST
+Output:
+----------------------------------------------------------
+135739 checks, 0 failures
+<end of output>
+Test time = 205.10 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_source_factory_integration_tests" end time: Nov 09 19:59 AST
+"cs80_source_factory_integration_tests" time elapsed: 00:03:25
+----------------------------------------------------------
+
+36/145 Testing: cs80_envelope_precision_tests
+36/145 Test: cs80_envelope_precision_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_envelope_precision_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_envelope_precision_tests" start time: Nov 09 19:59 AST
+Output:
+----------------------------------------------------------
+22732 checks, 0 failures
+<end of output>
+Test time =  56.77 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_envelope_precision_tests" end time: Nov 09 20:00 AST
+"cs80_envelope_precision_tests" time elapsed: 00:00:56
+----------------------------------------------------------
+
+115/145 Testing: cs80_modern_fx_tests
+115/145 Test: cs80_modern_fx_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_modern_fx_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_modern_fx_tests" start time: Nov 09 19:59 AST
+Output:
+----------------------------------------------------------
+drive alias ratio (dB): 1x -26.5  2x -47.1  4x -87.6  8x -112.0
+harmonic 1: truth -27.57 dB, realtime 4x -27.57 dB
+harmonic 2: truth -65.56 dB, realtime 4x -65.56 dB
+harmonic 3: truth -37.23 dB, realtime 4x -37.23 dB
+harmonic 4: truth -65.73 dB, realtime 4x -65.73 dB
+static loudness BBD ensemble a=0.1 b=0.1: -0.12 dB
+static loudness BBD ensemble a=0.1 b=0.5: -0.02 dB
+static loudness BBD ensemble a=0.1 b=0.9: -0.04 dB
+static loudness BBD ensemble a=0.5 b=0.1: -0.08 dB
+static loudness BBD ensemble a=0.5 b=0.5: -0.00 dB
+static loudness BBD ensemble a=0.5 b=0.9: -0.01 dB
+static loudness BBD ensemble a=0.9 b=0.1: -0.11 dB
+static loudness BBD ensemble a=0.9 b=0.5: -0.00 dB
+static loudness BBD ensemble a=0.9 b=0.9: -0.02 dB
+static loudness Spring reverb a=0.1 b=0.1: +0.01 dB
+static loudness Spring reverb a=0.1 b=0.5: -0.02 dB
+static loudness Spring reverb a=0.1 b=0.9: -0.01 dB
+static loudness Spring reverb a=0.5 b=0.1: +0.03 dB
+static loudness Spring reverb a=0.5 b=0.5: +0.00 dB
+static loudness Spring reverb a=0.5 b=0.9: +0.01 dB
+static loudness Spring reverb a=0.9 b=0.1: +0.05 dB
+static loudness Spring reverb a=0.9 b=0.5: +0.00 dB
+static loudness Spring reverb a=0.9 b=0.9: +0.01 dB
+static loudness Plate reverb a=0.1 b=0.1: +0.01 dB
+static loudness Plate reverb a=0.1 b=0.5: -0.02 dB
+static loudness Plate reverb a=0.1 b=0.9: -0.02 dB
+static loudness Plate reverb a=0.5 b=0.1: +0.02 dB
+static loudness Plate reverb a=0.5 b=0.5: +0.00 dB
+static loudness Plate reverb a=0.5 b=0.9: -0.01 dB
+static loudness Plate reverb a=0.9 b=0.1: +0.03 dB
+static loudness Plate reverb a=0.9 b=0.5: +0.01 dB
+static loudness Plate reverb a=0.9 b=0.9: -0.00 dB
+static loudness Tape echo a=0.1 b=0.1: -0.17 dB
+static loudness Tape echo a=0.1 b=0.5: -0.07 dB
+static loudness Tape echo a=0.1 b=0.9: +0.01 dB
+static loudness Tape echo a=0.5 b=0.1: -0.00 dB
+static loudness Tape echo a=0.5 b=0.5: -0.00 dB
+static loudness Tape echo a=0.5 b=0.9: -0.03 dB
+static loudness Tape echo a=0.9 b=0.1: -0.00 dB
+static loudness Tape echo a=0.9 b=0.5: -0.01 dB
+static loudness Tape echo a=0.9 b=0.9: -0.22 dB
+static loudness Drive a=0.1 b=0.1: -0.01 dB
+static loudness Drive a=0.1 b=0.5: -0.01 dB
+static loudness Drive a=0.1 b=0.9: -0.01 dB
+static loudness Drive a=0.5 b=0.1: -0.01 dB
+static loudness Drive a=0.5 b=0.5: -0.02 dB
+static loudness Drive a=0.5 b=0.9: -0.02 dB
+static loudness Drive a=0.9 b=0.1: -0.01 dB
+static loudness Drive a=0.9 b=0.5: -0.01 dB
+static loudness Drive a=0.9 b=0.9: -0.01 dB
+matched loudness classic chorus mix 0.5 level -30 dBFS: -0.00 dB
+matched loudness classic chorus mix 0.5 level -18 dBFS: -0.00 dB
+matched loudness classic chorus mix 0.5 level -6 dBFS: -0.00 dB
+matched loudness classic chorus mix 1.0 level -30 dBFS: -0.00 dB
+matched loudness classic chorus mix 1.0 level -18 dBFS: -0.00 dB
+matched loudness classic chorus mix 1.0 level -6 dBFS: -0.00 dB
+matched loudness classic phaser mix 0.5 level -30 dBFS: +0.02 dB
+matched loudness classic phaser mix 0.5 level -18 dBFS: +0.02 dB
+matched loudness classic phaser mix 0.5 level -6 dBFS: +0.02 dB
+matched loudness classic phaser mix 1.0 level -30 dBFS: +0.01 dB
+matched loudness classic phaser mix 1.0 level -18 dBFS: +0.01 dB
+matched loudness classic phaser mix 1.0 level -6 dBFS: +0.01 dB
+matched loudness classic tape mix 0.5 level -30 dBFS: -0.01 dB
+matched loudness classic tape mix 0.5 level -18 dBFS: -0.01 dB
+matched loudness classic tape mix 0.5 level -6 dBFS: -0.01 dB
+matched loudness classic tape mix 1.0 level -30 dBFS: -0.01 dB
+matched loudness classic tape mix 1.0 level -18 dBFS: -0.01 dB
+matched loudness classic tape mix 1.0 level -6 dBFS: -0.01 dB
+matched loudness classic plate mix 0.5 level -30 dBFS: +0.00 dB
+matched loudness classic plate mix 0.5 level -18 dBFS: +0.00 dB
+matched loudness classic plate mix 0.5 level -6 dBFS: +0.00 dB
+matched loudness classic plate mix 1.0 level -30 dBFS: +0.01 dB
+matched loudness classic plate mix 1.0 level -18 dBFS: +0.01 dB
+matched loudness classic plate mix 1.0 level -6 dBFS: +0.01 dB
+matched loudness classic drive mix 0.5 level -30 dBFS: -0.00 dB
+matched loudness classic drive mix 0.5 level -18 dBFS: -0.00 dB
+matched loudness classic drive mix 0.5 level -6 dBFS: -0.02 dB
+matched loudness classic drive mix 1.0 level -30 dBFS: -0.00 dB
+matched loudness classic drive mix 1.0 level -18 dBFS: -0.01 dB
+matched loudness classic drive mix 1.0 level -6 dBFS: -0.03 dB
+matched loudness BBD ensemble mix 0.5 level -30 dBFS: +0.01 dB
+matched loudness BBD ensemble mix 0.5 level -18 dBFS: +0.01 dB
+matched loudness BBD ensemble mix 0.5 level -6 dBFS: -0.00 dB
+matched loudness BBD ensemble mix 1.0 level -30 dBFS: +0.05 dB
+matched loudness BBD ensemble mix 1.0 level -18 dBFS: +0.05 dB
+matched loudness BBD ensemble mix 1.0 level -6 dBFS: +0.03 dB
+matched loudness Spring reverb mix 0.5 level -30 dBFS: +0.03 dB
+matched loudness Spring reverb mix 0.5 level -18 dBFS: +0.03 dB
+matched loudness Spring reverb mix 0.5 level -6 dBFS: +0.03 dB
+matched loudness Spring reverb mix 1.0 level -30 dBFS: +0.04 dB
+matched loudness Spring reverb mix 1.0 level -18 dBFS: +0.04 dB
+matched loudness Spring reverb mix 1.0 level -6 dBFS: +0.05 dB
+matched loudness Plate reverb mix 0.5 level -30 dBFS: +0.01 dB
+matched loudness Plate reverb mix 0.5 level -18 dBFS: +0.01 dB
+matched loudness Plate reverb mix 0.5 level -6 dBFS: +0.01 dB
+matched loudness Plate reverb mix 1.0 level -30 dBFS: +0.01 dB
+matched loudness Plate reverb mix 1.0 level -18 dBFS: +0.01 dB
+matched loudness Plate reverb mix 1.0 level -6 dBFS: +0.01 dB
+matched loudness Tape echo mix 0.5 level -30 dBFS: -0.00 dB
+matched loudness Tape echo mix 0.5 level -18 dBFS: -0.00 dB
+matched loudness Tape echo mix 0.5 level -6 dBFS: -0.00 dB
+matched loudness Tape echo mix 1.0 level -30 dBFS: +0.00 dB
+matched loudness Tape echo mix 1.0 level -18 dBFS: +0.00 dB
+matched loudness Tape echo mix 1.0 level -6 dBFS: +0.00 dB
+matched loudness Drive mix 0.5 level -30 dBFS: +0.01 dB
+matched loudness Drive mix 0.5 level -18 dBFS: +0.00 dB
+matched loudness Drive mix 0.5 level -6 dBFS: +0.00 dB
+matched loudness Drive mix 1.0 level -30 dBFS: +0.01 dB
+matched loudness Drive mix 1.0 level -18 dBFS: -0.00 dB
+matched loudness Drive mix 1.0 level -6 dBFS: -0.00 dB
+RT60 fs 88200 a 0.1: plate 1.11 / 1.01 s, spring 0.94 / 0.96 s
+RT60 fs 88200 a 0.5: plate 2.65 / 2.53 s, spring 1.87 / 1.96 s
+RT60 fs 88200 a 0.9: plate 6.46 / 6.35 s, spring 3.69 / 4.01 s
+RT60 fs 96000 a 0.1: plate 1.11 / 1.01 s, spring 0.95 / 0.96 s
+RT60 fs 96000 a 0.5: plate 2.65 / 2.53 s, spring 1.86 / 1.96 s
+RT60 fs 96000 a 0.9: plate 6.45 / 6.35 s, spring 3.66 / 4.01 s
+RT60 fs 192000 a 0.1: plate 1.11 / 1.01 s, spring 0.94 / 0.96 s
+RT60 fs 192000 a 0.5: plate 2.65 / 2.53 s, spring 1.87 / 1.96 s
+RT60 fs 192000 a 0.9: plate 6.47 / 6.35 s, spring 3.67 / 4.01 s
+stability BBD ensemble at 44100 Hz host: peak 2.65, tail -880.2 dB
+stability Spring reverb at 44100 Hz host: peak 3.85, tail -159.8 dB
+stability Plate reverb at 44100 Hz host: peak 4.69, tail -91.7 dB
+stability Tape echo at 44100 Hz host: peak 3.67, tail -93.2 dB
+stability Drive at 44100 Hz host: peak 2.09, tail -805.4 dB
+stability BBD ensemble at 48000 Hz host: peak 2.53, tail -3000.0 dB
+stability Spring reverb at 48000 Hz host: peak 3.36, tail -159.4 dB
+stability Plate reverb at 48000 Hz host: peak 4.66, tail -91.3 dB
+stability Tape echo at 48000 Hz host: peak 3.62, tail -93.4 dB
+stability Drive at 48000 Hz host: peak 2.05, tail -804.3 dB
+stability BBD ensemble at 96000 Hz host: peak 2.93, tail -878.7 dB
+stability Spring reverb at 96000 Hz host: peak 3.24, tail -158.3 dB
+stability Plate reverb at 96000 Hz host: peak 4.99, tail -92.0 dB
+stability Tape echo at 96000 Hz host: peak 3.79, tail -93.3 dB
+stability Drive at 96000 Hz host: peak 1.85, tail -795.7 dB
+stability BBD ensemble at 192000 Hz host: peak 2.92, tail -872.2 dB
+stability Spring reverb at 192000 Hz host: peak 3.15, tail -159.1 dB
+stability Plate reverb at 192000 Hz host: peak 5.39, tail -91.5 dB
+stability Tape echo at 192000 Hz host: peak 3.35, tail -93.2 dB
+stability Drive at 192000 Hz host: peak 2.20, tail -786.9 dB
+445 checks, 0 failures
+<end of output>
+Test time =  53.19 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_modern_fx_tests" end time: Nov 09 20:00 AST
+"cs80_modern_fx_tests" time elapsed: 00:00:53
+----------------------------------------------------------
+
+114/145 Testing: cs80_mod_matrix_tests
+114/145 Test: cs80_mod_matrix_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mod_matrix_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mod_matrix_tests" start time: Nov 09 20:00 AST
+Output:
+----------------------------------------------------------
+4239 checks, 0 failures
+<end of output>
+Test time =  26.89 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mod_matrix_tests" end time: Nov 09 20:00 AST
+"cs80_mod_matrix_tests" time elapsed: 00:00:26
+----------------------------------------------------------
+
+123/145 Testing: cs80_randomise_tests
+123/145 Test: cs80_randomise_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_randomise_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_randomise_tests" start time: Nov 09 20:00 AST
+Output:
+----------------------------------------------------------
+randomise rules passed: 400 seeds checked, 64 rendered
+<end of output>
+Test time =  46.80 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_randomise_tests" end time: Nov 09 20:00 AST
+"cs80_randomise_tests" time elapsed: 00:00:46
+----------------------------------------------------------
+
+74/145 Testing: cs80_ig00156_nodal_tests
+74/145 Test: cs80_ig00156_nodal_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00156_nodal_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/ws1-voice.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00156_nodal_tests" start time: Nov 09 20:00 AST
+Output:
+----------------------------------------------------------
+equivalence: worst 1.9e-07 of output peak (limit 2e-06)
+small signal vs continuous truth at 88200 Hz:  fc 60 core 0.0000 band 0.0561  fc 250 core 0.0001 band 0.0588  fc 1000 core 0.0010 band 0.0699  fc 4000 core 0.0198 band 0.1129 (over)  fc 12000 core 0.0479 band 0.1403 (over)
+small signal vs continuous truth at 96000 Hz:  fc 60 core 0.0000 band 0.0580  fc 250 core 0.0001 band 0.0605  fc 1000 core 0.0009 band 0.0705  fc 4000 core 0.0167 band 0.1105 (over)  fc 12000 core 0.0403 band 0.1371 (over)
+small signal vs continuous truth at 192000 Hz:  fc 60 core 0.0000 band 0.0145  fc 250 core 0.0000 band 0.0152  fc 1000 core 0.0002 band 0.0177  fc 4000 core 0.0041 band 0.0280 (over)  fc 12000 core 0.0349 band 0.0349 (over)
+small signal vs continuous truth at 384000 Hz:  fc 60 core 0.0000 band 0.0035  fc 250 core 0.0000 band 0.0037  fc 1000 core 0.0001 band 0.0043  fc 4000 core 0.0010 band 0.0069  fc 12000 core 0.0086 band 0.0086
+pre-registered small-signal gate over the whole grid: NOT MET (top-octave bilinear warp at 88.2-192 kHz, see doc)
+direct lock-in vs continuous truth: 0.0031 (core limit 0.030)
+Q anchor HP VQ=0: pole Q 5.0226 (target 5)
+Q anchor HP VQ=10: pole Q 0.5016 (target 0.5)
+cutoff anchor HP 0.25V/5V: law 1000.000 Hz, pole 1025.134 Hz (law + feedforward 1022.575; uncompensated alternative 999.415)
+cutoff anchor HP 0.5V/5V: law 2000.000 Hz, pole 2031.919 Hz (law + feedforward 2022.575; uncompensated alternative 1934.447)
+cutoff anchor HP 0.25V/6V: law 2000.000 Hz, pole 2031.919 Hz (law + feedforward 2022.575; uncompensated alternative 1934.447)
+frequency-dependent resonance HP: Q setting 5 at 200 Hz -> pole Q 5.023 at 200.2 Hz (uncompensated 5.023 at 199.2 Hz)
+frequency-dependent resonance HP: Q setting 5 at 1000 Hz -> pole Q 5.086 at 1002.5 Hz (uncompensated 5.085 at 977.8 Hz)
+frequency-dependent resonance HP: Q setting 5 at 4000 Hz -> pole Q 5.008 at 4033.9 Hz (uncompensated 5.042 at 3674.7 Hz)
+frequency-dependent resonance HP: Q setting 5 at 12000 Hz -> pole Q 3.516 at 12304.0 Hz (uncompensated 4.038 at 9639.7 Hz)
+Q anchor LP VQ=0: pole Q 5.0256 (target 5)
+Q anchor LP VQ=10: pole Q 0.5005 (target 0.5)
+cutoff anchor LP 0.25V/5V: law 1000.000 Hz, pole 1025.501 Hz (law + feedforward 1022.575; uncompensated alternative 995.421)
+cutoff anchor LP 0.5V/5V: law 2000.000 Hz, pole 2033.342 Hz (law + feedforward 2022.575; uncompensated alternative 1919.944)
+cutoff anchor LP 0.25V/6V: law 2000.000 Hz, pole 2033.342 Hz (law + feedforward 2022.575; uncompensated alternative 1919.944)
+frequency-dependent resonance LP: Q setting 5 at 200 Hz -> pole Q 5.026 at 200.1 Hz (uncompensated 5.026 at 198.9 Hz)
+frequency-dependent resonance LP: Q setting 5 at 1000 Hz -> pole Q 5.096 at 1002.8 Hz (uncompensated 5.094 at 974.0 Hz)
+frequency-dependent resonance LP: Q setting 5 at 4000 Hz -> pole Q 4.925 at 4039.2 Hz (uncompensated 4.984 at 3625.0 Hz)
+frequency-dependent resonance LP: Q setting 5 at 12000 Hz -> pole Q 3.120 at 12368.5 Hz (uncompensated 3.764 at 9360.1 Hz)
+service HP setup (FH 4.0 V): 1.692 Vpp, documented 3.3..5.3
+service LP setup (FL 3.3 V): 1.648 Vpp, documented 1.2..3.2
+physical passband gains: HP 0.5997, LP 0.3527 (normalized to 1 in audio)
+ADJ p11 HP point: MISS; LP point: within band
+LP resonant gain at 1 kHz, Q 5: quiet 5.105, loud 1.109
+nonlinear q=5 f=500 amp=1: rms rel 0.0009
+nonlinear q=5 f=500 amp=2.5: rms rel 0.0013
+nonlinear q=5 f=1000 amp=1: rms rel 0.0000
+nonlinear q=5 f=1000 amp=2.5: rms rel 0.0001
+nonlinear q=1 f=500 amp=1: rms rel 0.0008
+nonlinear q=1 f=500 amp=2.5: rms rel 0.0008
+nonlinear q=1 f=1000 amp=1: rms rel 0.0000
+nonlinear q=1 f=1000 amp=2.5: rms rel 0.0000
+117 checks, 0 failures
+<end of output>
+Test time =  19.54 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00156_nodal_tests" end time: Nov 09 20:01 AST
+"cs80_ig00156_nodal_tests" time elapsed: 00:00:19
+----------------------------------------------------------
+
+94/145 Testing: cs80_keyboard_contour_key_map_tests
+94/145 Test: cs80_keyboard_contour_key_map_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_keyboard_contour_key_map_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_keyboard_contour_key_map_tests" start time: Nov 09 20:00 AST
+Output:
+----------------------------------------------------------
+contour gate: 1525 key/lever cases, worst 8.4e-07 V
+C2 anchor: declared map -2.7600 V, literal KAS6 code 100 -4.0179 V (target -2.76 +/- 0.14)
+contour O1 volts, LOW min | HIGH max, keys C1..C6:
+
+  -4.018|+0.000 -4.018|+0.000 -3.904|+0.000 -3.789|+0.000 -3.675|+0.000 -3.560|+0.000 -3.446|+0.000 -3.332|+0.000 -3.217|+0.000 -3.103|+0.000 -2.989|+0.000 -2.874|+0.000
+  -2.760|+0.000 -2.679|+0.000 -2.435|+0.000 -2.192|+0.000 -1.948|+0.000 -1.705|+0.000 -1.461|+0.000 -1.218|+0.000 -0.974|+0.000 -0.731|+0.000 -0.487|+0.000 -0.244|+0.000
+  +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000
+  +0.000|+0.000 +0.000|+0.000 +0.000|+0.244 +0.000|+0.487 +0.000|+0.731 +0.000|+0.974 +0.000|+1.218 +0.000|+1.461 +0.000|+1.705 +0.000|+1.948 +0.000|+2.192 +0.000|+2.435
+  +0.000|+2.679 +0.000|+2.760 +0.000|+2.874 +0.000|+2.989 +0.000|+3.103 +0.000|+3.217 +0.000|+3.332 +0.000|+3.446 +0.000|+3.560 +0.000|+3.675 +0.000|+3.789 +0.000|+3.904
+  +0.000|+4.018
+Keyboard contour key map: 77 checks, 0 failures
+<end of output>
+Test time =  15.54 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_keyboard_contour_key_map_tests" end time: Nov 09 20:01 AST
+"cs80_keyboard_contour_key_map_tests" time elapsed: 00:00:15
+----------------------------------------------------------
+
+18/145 Testing: cs80_ui_environment_tests
+18/145 Test: cs80_ui_environment_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_ui_smoke_environment.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ui_environment_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 15.461s
+
+OK
+<end of output>
+Test time =  15.55 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ui_environment_tests" end time: Nov 09 20:01 AST
+"cs80_ui_environment_tests" time elapsed: 00:00:15
+----------------------------------------------------------
+
+42/145 Testing: cs80_active_tail_continuity_tests
+42/145 Test: cs80_active_tail_continuity_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_active_tail_continuity_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_active_tail_continuity_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+Active-tail continuity: 49732 checks, 0 failures
+<end of output>
+Test time =  11.68 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_active_tail_continuity_tests" end time: Nov 09 20:01 AST
+"cs80_active_tail_continuity_tests" time elapsed: 00:00:11
+----------------------------------------------------------
+
+34/145 Testing: cs80_source_performance_tests
+34/145 Test: cs80_source_performance_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_source_performance_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_source_performance_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+Source performance: 485 checks, 0 failures
+<end of output>
+Test time =  10.03 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_source_performance_tests" end time: Nov 09 20:01 AST
+"cs80_source_performance_tests" time elapsed: 00:00:10
+----------------------------------------------------------
+
+104/145 Testing: cs80_ig00150_sub_tests
+104/145 Test: cs80_ig00150_sub_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00150_sub_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00150_sub_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+IG00150: full touch = 2.7049 V on the 0-10 V SPEED scale, +1.7370 octaves
+SUB anchor source performance 44100: 199.999991 Hz rendered (reference 200.000000)
+SUB anchor isolation 44100: 199.999991 Hz rendered (reference 200.000000)
+SUB anchor source performance 96000: 199.999992 Hz rendered (reference 200.000000)
+SUB anchor isolation 96000: 199.999992 Hz rendered (reference 200.000000)
+SUB alias function 1 at 173.300000 Hz, 88200: naive -28.2 dB -> band-limited -84.0 dB
+SUB alias function 2 at 173.300000 Hz, 88200: naive -28.2 dB -> band-limited -84.0 dB
+SUB alias function 3 at 173.300000 Hz, 88200: naive -31.2 dB -> band-limited -85.5 dB
+SUB alias function 1 at 173.300000 Hz, 96000: naive -29.0 dB -> band-limited -85.8 dB
+SUB alias function 2 at 173.300000 Hz, 96000: naive -29.0 dB -> band-limited -85.8 dB
+SUB alias function 3 at 173.300000 Hz, 96000: naive -31.9 dB -> band-limited -87.1 dB
+327 checks, 0 failures
+<end of output>
+Test time =  10.09 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00150_sub_tests" end time: Nov 09 20:01 AST
+"cs80_ig00150_sub_tests" time elapsed: 00:00:10
+----------------------------------------------------------
+
+8/145 Testing: cs80_filter_batch_admission_tests
+8/145 Test: cs80_filter_batch_admission_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_filter_batch_admission.py" "--compiler" "/usr/bin/c++"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_filter_batch_admission_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+gcc strict admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+gcc associative-alone admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+gcc associative-effective admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc reciprocal admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc no-signed-zero admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc unsafe admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc fast admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc finite-only admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc ofast admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc fma admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc no-trapping-only admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+<end of output>
+Test time =  10.18 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_filter_batch_admission_tests" end time: Nov 09 20:01 AST
+"cs80_filter_batch_admission_tests" time elapsed: 00:00:10
+----------------------------------------------------------
+
+137/145 Testing: cs80_memory_routing_negative_controls
+137/145 Test: cs80_memory_routing_negative_controls
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_memory_routing_negative_controls.py" "--compiler" "/usr/bin/c++"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_routing_negative_controls" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+baseline: Memory routing: 36 points, 216 frames, 48376 checks, 0 failures; semantic 414 realizable / 90 clipped
+frozen-touch-feedback: Memory routing: 36 points, 72 frames, 26488 checks, 150 failures; semantic 414 realizable / 90 clipped
+duplicate-loads: Memory routing: 36 points, 216 frames, 48376 checks, 18390 failures; semantic 414 realizable / 90 clipped
+Memory receiver baseline passed; frozen-feedback and duplicate-loading mutants detected
+<end of output>
+Test time =  10.40 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_routing_negative_controls" end time: Nov 09 20:01 AST
+"cs80_memory_routing_negative_controls" time elapsed: 00:00:10
+----------------------------------------------------------
+
+78/145 Testing: cs80_tolerance_drift_tests
+78/145 Test: cs80_tolerance_drift_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_tolerance_drift_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/ws1-voice.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_tolerance_drift_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+draw hp C1        mean -0.00060  sd 0.04333 (declared sigma 0.050, truncated 0.04398)  max 0.1000
+draw hp C2        mean +0.00009  sd 0.04494 (declared sigma 0.050, truncated 0.04398)  max 0.0997
+draw lp C1        mean -0.00089  sd 0.04322 (declared sigma 0.050, truncated 0.04398)  max 0.0999
+draw lp C2        mean -0.00044  sd 0.04399 (declared sigma 0.050, truncated 0.04398)  max 0.0999
+draw level Rf     mean -0.00014  sd 0.02197 (declared sigma 0.025, truncated 0.02199)  max 0.0500
+draw level Rin    mean -0.00008  sd 0.02215 (declared sigma 0.025, truncated 0.02199)  max 0.0500
+draw filter EG R  mean -0.00026  sd 0.02181 (declared sigma 0.025, truncated 0.02199)  max 0.0499
+draw filter EG C  mean +0.00099  sd 0.04426 (declared sigma 0.050, truncated 0.04398)  max 0.1000
+draw amp EG R     mean +0.00014  sd 0.02167 (declared sigma 0.025, truncated 0.02199)  max 0.0500
+draw amp EG C     mean -0.00058  sd 0.04403 (declared sigma 0.050, truncated 0.04398)  max 0.1000
+mapping laws: worst relative error 5.93e-08
+engine trims at 44100 Hz: worst relative error 2.02e-07
+engine trims at 96000 Hz: worst relative error 2.02e-07
+thermal drift PSD slope -1.097 over 0.003..0.3 Hz (195 bins)
+thermal drift RMS 1.955 cents at the default amount
+warm-up after 120 s: 0.36788 of its start (1/e = 0.36788)
+worn-unit drift: worst deviation from the Legacy sine 0 cents (largest offset 22.49 cents)
+thermal drift at the default amount: largest offset 7.23 cents over 8 voices
+Tolerance and drift: 1119 checks, 0 failures
+<end of output>
+Test time =   8.24 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_tolerance_drift_tests" end time: Nov 09 20:01 AST
+"cs80_tolerance_drift_tests" time elapsed: 00:00:08
+----------------------------------------------------------
+
+136/145 Testing: cs80_memory_sparse_negative_controls
+136/145 Test: cs80_memory_sparse_negative_controls
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_memory_sparse_negative_controls.py" "--compiler" "/usr/bin/c++"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_sparse_negative_controls" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+baseline: Sparse update: 4 cases; 1476 checks, 0 failures; max cold/warm steps 27/4; max node error 5.56141799279e-11 V; max bound 5.08701705654e-09 V; max error/two-bound 0.00904584914; allocations 0
+erase_full_node_residual: Sparse update: 4 cases; 1476 checks, 650 failures; max cold/warm steps 27/4; max node error 5.56141799279e-11 V; max bound 4.94065645841e-324 V; max error/two-bound inf; allocations 0
+omit_newton_receiver_feedback: Sparse update: 1 cases; 248 checks, 9 failures; max cold/warm steps 27/0; max node error 8.881784197e-16 V; max bound 1.06212737433e-09 V; max error/two-bound 4.1811295e-07; allocations 0
+Both sparse negative controls detected by named assertions.
+<end of output>
+Test time =   8.68 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_sparse_negative_controls" end time: Nov 09 20:01 AST
+"cs80_memory_sparse_negative_controls" time elapsed: 00:00:08
+----------------------------------------------------------
+
+20/145 Testing: cs80_preset_signature_math_tests
+20/145 Test: cs80_preset_signature_math_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-preset-signature-math.py" "--compiler" "/usr/bin/c++"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_preset_signature_math_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+Extracted signature math: 2905 cases, 894740 finite checks, 0 failures
+<end of output>
+Test time =   6.42 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_signature_math_tests" end time: Nov 09 20:01 AST
+"cs80_preset_signature_math_tests" time elapsed: 00:00:06
+----------------------------------------------------------
+
+128/145 Testing: cs80_memory_port_map_negative_controls
+128/145 Test: cs80_memory_port_map_negative_controls
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_memory_port_map_negative_controls.py" "--compiler" "/usr/bin/c++"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_port_map_negative_controls" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+baseline: Memory port map: 90 points, 51840 derivatives, 66171 checks, 0 failures
+no-shared-rails: Memory port map: 90 points, 51840 derivatives, 66171 checks, 44264 failures
+reciprocal-followers: Memory port map: 90 points, 51840 derivatives, 66171 checks, 5736 failures
+Memory port map baseline passed; omitted-rail and reciprocal-follower mutants detected
+<end of output>
+Test time =   9.78 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_port_map_negative_controls" end time: Nov 09 20:01 AST
+"cs80_memory_port_map_negative_controls" time elapsed: 00:00:09
+----------------------------------------------------------
+
+135/145 Testing: cs80_memory_sparse_update_tests
+135/145 Test: cs80_memory_sparse_update_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_sparse_update_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/memory-sparse-update.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_sparse_update_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+Prior affine counterexample 0.00115896256089 V; sparse bus error 7.53804130227e-10 V; certified full-node bound 3.16182125512e-09 V
+Sparse update: 2016 cases; 533518 checks, 0 failures; max cold/warm steps 28/6; max node error 1.56922851392e-09 V; max bound 6.01681084334e-09 V; max error/two-bound 0.997179581; allocations 0
+<end of output>
+Test time =   9.32 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_sparse_update_tests" end time: Nov 09 20:02 AST
+"cs80_memory_sparse_update_tests" time elapsed: 00:00:09
+----------------------------------------------------------
+
+50/145 Testing: cs80_experimental_oscillator_tests
+50/145 Test: cs80_experimental_oscillator_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_experimental_oscillator_tests" "no-benchmark"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_experimental_oscillator_tests" start time: Nov 09 20:01 AST
+Output:
+----------------------------------------------------------
+Independent host-band complex residual worst -83.6268 dB; sampled off-harmonic probes -116.673 dB relative selected in-band power (sparse probes, not exhaustive alias energy)
+Actual255tap 2x chain ideal-hostband residual worst -83.0731 dB; total off-harmonic energy -92.3188 dBc
+1418466 checks, 0 failures
+<end of output>
+Test time =   8.80 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_experimental_oscillator_tests" end time: Nov 09 20:02 AST
+"cs80_experimental_oscillator_tests" time elapsed: 00:00:08
+----------------------------------------------------------
+
+70/145 Testing: cs80_performance_control_tests
+70/145 Test: cs80_performance_control_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_performance_control_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_performance_control_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+ALL 1805 PERFORMANCE CONTROL CHECKS PASSED
+<end of output>
+Test time =   9.27 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_performance_control_tests" end time: Nov 09 20:02 AST
+"cs80_performance_control_tests" time elapsed: 00:00:09
+----------------------------------------------------------
+
+43/145 Testing: cs80_core_tests
+43/145 Test: cs80_core_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_core_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+EXT reconstruction sr=44100 tone=21.533Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+EXT reconstruction sr=44100 tone=1001.294Hz gain=-0.000047dB image=-114.60dB delay=63.5host
+EXT reconstruction sr=44100 tone=20004.346Hz gain=0.000378dB image=-108.18dB delay=63.5host
+EXT reconstruction sr=48000 tone=23.438Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+EXT reconstruction sr=48000 tone=996.094Hz gain=-0.000036dB image=-120.37dB delay=63.5host
+EXT reconstruction sr=48000 tone=20003.906Hz gain=0.000097dB image=-106.94dB delay=63.5host
+EXT reconstruction sr=96000 tone=23.438Hz gain=-0.000000dB image=-114.32dB delay=63.5host
+EXT reconstruction sr=96000 tone=1007.812Hz gain=-0.000035dB image=-121.11dB delay=63.5host
+EXT reconstruction sr=96000 tone=19992.188Hz gain=-0.000045dB image=-114.90dB delay=63.5host
+ALL 11508 CHECKS PASSED
+<end of output>
+Test time =   8.51 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_core_tests" end time: Nov 09 20:02 AST
+"cs80_core_tests" time elapsed: 00:00:08
+----------------------------------------------------------
+
+121/145 Testing: cs80_tape_echo_control_cache_tests
+121/145 Test: cs80_tape_echo_control_cache_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_tape_echo_control_cache_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_tape_echo_control_cache_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+231 checks, 0 failures; 21845986 stereo frames compared by bit pattern
+<end of output>
+Test time =   7.25 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_tape_echo_control_cache_tests" end time: Nov 09 20:02 AST
+"cs80_tape_echo_control_cache_tests" time elapsed: 00:00:07
+----------------------------------------------------------
+
+126/145 Testing: cs80_memory_panel_ports_tests
+126/145 Test: cs80_memory_panel_ports_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_panel_ports_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_panel_ports_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+36 operating points, 20736 derivatives, worst absolute error 0.00600101867 ohms, failures 0
+<end of output>
+Test time =   7.36 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_panel_ports_tests" end time: Nov 09 20:02 AST
+"cs80_memory_panel_ports_tests" time elapsed: 00:00:07
+----------------------------------------------------------
+
+132/145 Testing: cs80_memory_verified_diode_tests
+132/145 Test: cs80_memory_verified_diode_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_memory_verified_diode.py" "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_verified_diode_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_verified_diode_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+Self checks: 56, failures: 0
+Exact rational log(2) constant proof passed (32 terms + analytic tail)
+Executable: /workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_verified_diode_tests
+Independent vectors: 7374 {'add': 825, 'sub': 825, 'mul': 826, 'div': 826, 'log': 1768, 'diode': 2304}
+Largest log interval width: 6.821210263296962e-13 ; diode width A: 9.964923469387759e-12
+Additional 1e-15 A availability probes: accepted 860 ; safely rejected 4
+Failures: 0
+<end of output>
+Test time =   7.76 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_verified_diode_tests" end time: Nov 09 20:02 AST
+"cs80_memory_verified_diode_tests" time elapsed: 00:00:07
+----------------------------------------------------------
+
+46/145 Testing: cs80_unison_glide_tests
+46/145 Test: cs80_unison_glide_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_unison_glide_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_unison_glide_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+Unison glide: 10046 checks, 0 failures
+<end of output>
+Test time =   6.69 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_unison_glide_tests" end time: Nov 09 20:02 AST
+"cs80_unison_glide_tests" time elapsed: 00:00:06
+----------------------------------------------------------
+
+3/145 Testing: cs80_filter_batch_engine_tests
+3/145 Test: cs80_filter_batch_engine_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_filter_batch_engine_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_filter_batch_engine_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+FilterBatchEngine: 4135998 checks, 285328 stereo frames, 0 failures
+<end of output>
+Test time =   6.04 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_filter_batch_engine_tests" end time: Nov 09 20:02 AST
+"cs80_filter_batch_engine_tests" time elapsed: 00:00:06
+----------------------------------------------------------
+
+49/145 Testing: cs80_controller_reset_tests
+49/145 Test: cs80_controller_reset_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_controller_reset_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_controller_reset_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+Controller reset: 3513 checks, 0 failures
+<end of output>
+Test time =   5.52 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_controller_reset_tests" end time: Nov 09 20:02 AST
+"cs80_controller_reset_tests" time elapsed: 00:00:05
+----------------------------------------------------------
+
+107/145 Testing: cs80_pra_optical_cell_tests
+107/145 Test: cs80_pra_optical_cell_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_pra_optical_cell_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pra_optical_cell_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+PRA optical 90% traverse: brighten 27.6 ms, darken 138.2 ms
+PRA 0.5 Hz sweep: ODE error 5.08e-05 Np, cycle-mean bias -0.148 Np, resonance 333-3413 Hz
+PRA 3.0 Hz sweep: ODE error 2.95e-04 Np, cycle-mean bias -0.726 Np, resonance 422-3328 Hz
+PRA 8.0 Hz sweep: ODE error 5.61e-04 Np, cycle-mean bias -1.206 Np, resonance 750-2948 Hz
+PRA 3 Hz sweep before (symmetric 12 ms): bias -0.000 Np, resonance 334-3328 Hz; after: bias -0.726 Np, resonance 422-3328 Hz
+35 checks, 0 failures
+<end of output>
+Test time =   5.56 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pra_optical_cell_tests" end time: Nov 09 20:02 AST
+"cs80_pra_optical_cell_tests" time elapsed: 00:00:05
+----------------------------------------------------------
+
+90/145 Testing: cs80_free_running_voice_tests
+90/145 Test: cs80_free_running_voice_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_free_running_voice_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_free_running_voice_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+free-running gate: worst wake residual -43.15 dB, worst idle phase 4.36e-05 cycles
+Free-running voices: 73918 checks, 0 failures
+<end of output>
+Test time =   5.15 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_free_running_voice_tests" end time: Nov 09 20:02 AST
+"cs80_free_running_voice_tests" time elapsed: 00:00:05
+----------------------------------------------------------
+
+76/145 Testing: cs80_oscillator_promotion_tests
+76/145 Test: cs80_oscillator_promotion_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_oscillator_promotion_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/ws1-voice.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_oscillator_promotion_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+pins at 88200 Hz: pin7 3.4997 Vpp, sine 3.0000 Vpp
+pins at 96000 Hz: pin7 3.5000 Vpp, sine 3.0000 Vpp
+pins at 192000 Hz: pin7 3.4998 Vpp, sine 3.0000 Vpp
+sizeof(ReconstructedOscillator) = 5984 bytes, basis 16440 bytes shared
+third harmonic / fundamental: legacy 0.0353, circuit 0.0032
+alias 48 kHz circuit engine: worst saw -88.31 dB, worst pulse -88.84 dB (limit -70.0)
+34 checks, 0 failures
+<end of output>
+Test time =   5.15 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_oscillator_promotion_tests" end time: Nov 09 20:02 AST
+"cs80_oscillator_promotion_tests" time elapsed: 00:00:05
+----------------------------------------------------------
+
+33/145 Testing: cs80_parity_mode_tests
+33/145 Test: cs80_parity_mode_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_parity_mode_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_parity_mode_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+Parity mode: 128 checks, 0 failures (feature isolation, not calibrated parity)
+<end of output>
+Test time =   4.04 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_parity_mode_tests" end time: Nov 09 20:02 AST
+"cs80_parity_mode_tests" time elapsed: 00:00:04
+----------------------------------------------------------
+
+87/145 Testing: cs80_noise_tests
+87/145 Test: cs80_noise_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_noise_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_noise_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+noise  88200 Hz: panel PSD worst +0.47 dB @  126 Hz, rms 0.3748, kurtosis 3.010 | hiss PSD worst -0.23 dB @  800 Hz, rms 0.5523, kurtosis 3.007, L/R rho +0.0007
+noise  96000 Hz: panel PSD worst +0.43 dB @   63 Hz, rms 0.3755, kurtosis 3.004 | hiss PSD worst +0.20 dB @  159 Hz, rms 0.5761, kurtosis 3.003, L/R rho +0.0006
+noise 176400 Hz: panel PSD worst +0.31 dB @   79 Hz, rms 0.3756, kurtosis 3.006 | hiss PSD worst +0.46 dB @   63 Hz, rms 0.7786, kurtosis 3.003, L/R rho +0.0004
+noise 192000 Hz: panel PSD worst +0.26 dB @  318 Hz, rms 0.3751, kurtosis 2.999 | hiss PSD worst +0.40 dB @   63 Hz, rms 0.8123, kurtosis 3.003, L/R rho +0.0006
+noise 352800 Hz: panel PSD worst +0.55 dB @   63 Hz, rms 0.3752, kurtosis 2.996 | hiss PSD worst +0.57 dB @   63 Hz, rms 1.0995, kurtosis 3.003, L/R rho +0.0005
+noise 384000 Hz: panel PSD worst +0.24 dB @   63 Hz, rms 0.3748, kurtosis 3.000 | hiss PSD worst +0.34 dB @   63 Hz, rms 1.1468, kurtosis 3.003, L/R rho +0.0001
+white generator: mean +0.00151 sigma 0.99945 kurtosis 3.0041
+two-voice/one-voice noise rms: circuit 2.00000, legacy 1.4193
+39 checks, 0 failures
+<end of output>
+Test time =   5.21 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_noise_tests" end time: Nov 09 20:02 AST
+"cs80_noise_tests" time elapsed: 00:00:05
+----------------------------------------------------------
+
+40/145 Testing: cs80_live_envelope_level_tests
+40/145 Test: cs80_live_envelope_level_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_live_envelope_level_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_live_envelope_level_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+221594 checks, 0 failures
+<end of output>
+Test time =   4.40 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_live_envelope_level_tests" end time: Nov 09 20:02 AST
+"cs80_live_envelope_level_tests" time elapsed: 00:00:04
+----------------------------------------------------------
+
+120/145 Testing: cs80_ensemble_rate_cache_tests
+120/145 Test: cs80_ensemble_rate_cache_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ensemble_rate_cache_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ensemble_rate_cache_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+3160 checks, 0 failures, 14566394 compared stereo frames
+<end of output>
+Test time =   4.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ensemble_rate_cache_tests" end time: Nov 09 20:02 AST
+"cs80_ensemble_rate_cache_tests" time elapsed: 00:00:04
+----------------------------------------------------------
+
+96/145 Testing: cs80_mpe_master_bend_routing_tests
+96/145 Test: cs80_mpe_master_bend_routing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_master_bend_routing_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mpe_master_bend_routing_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+MPE master bend routing: 1152 checks, 0 failures
+<end of output>
+Test time =   3.61 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mpe_master_bend_routing_tests" end time: Nov 09 20:02 AST
+"cs80_mpe_master_bend_routing_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+72/145 Testing: cs80_validator_retry_tests
+72/145 Test: cs80_validator_retry_tests
+Command: "/usr/bin/bash" "/workspace/scratch/ee447c520988/release-followup/scripts/test-pluginval-retry.sh" "/workspace/scratch/ee447c520988/release-followup/scripts/run-pluginval-linux.sh"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_validator_retry_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+Checked success
+Checked no_success
+Checked false_success
+Checked ordinary_failure
+Checked timeout
+Checked crash_success
+Checked crash_failed
+Checked crash_during_test
+Checked crash_no_phase
+Checked crash_orphan_completion
+Checked recover
+Checked retry_no_success
+Checked always_crash
+All 13 pluginval wrapper cases passed
+<end of output>
+Test time =   4.14 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_validator_retry_tests" end time: Nov 09 20:02 AST
+"cs80_validator_retry_tests" time elapsed: 00:00:04
+----------------------------------------------------------
+
+14/145 Testing: cs80_deb_runtime_dependency_tests
+14/145 Test: cs80_deb_runtime_dependency_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-deb-runtime-dependencies.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_deb_runtime_dependency_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+test_empty_scanner_output_fails_without_package (__main__.DependencyTests.test_empty_scanner_output_fails_without_package) ... ok
+test_external_plugin_directory_symlink_fails_without_package (__main__.DependencyTests.test_external_plugin_directory_symlink_fails_without_package) ... ok
+test_external_plugin_symlink_fails_without_package (__main__.DependencyTests.test_external_plugin_symlink_fails_without_package) ... ok
+test_foreign_machine_products_rejected (__main__.DependencyTests.test_foreign_machine_products_rejected) ... ok
+test_internal_relative_plugin_directory_symlink_is_delivered (__main__.DependencyTests.test_internal_relative_plugin_directory_symlink_is_delivered) ... ok
+test_internal_relative_plugin_symlink_is_delivered (__main__.DependencyTests.test_internal_relative_plugin_symlink_is_delivered) ... ok
+test_missing_dependency_metadata_fails_without_package (__main__.DependencyTests.test_missing_dependency_metadata_fails_without_package) ... ok
+test_missing_scanner_fails_without_package (__main__.DependencyTests.test_missing_scanner_fails_without_package) ... ok
+test_non_amd64_packaging_host_rejected (__main__.DependencyTests.test_non_amd64_packaging_host_rejected) ... ok
+test_non_elf_plugin_fails_without_package (__main__.DependencyTests.test_non_elf_plugin_fails_without_package) ... ok
+test_non_elf_products_fail_without_package (__main__.DependencyTests.test_non_elf_products_fail_without_package) ... ok
+test_non_elf_standalone_fails_without_package (__main__.DependencyTests.test_non_elf_standalone_fails_without_package) ... ok
+test_non_pie_executable_plugin_fails_without_package (__main__.DependencyTests.test_non_pie_executable_plugin_fails_without_package) ... ok
+test_non_pie_standalone_is_accepted (__main__.DependencyTests.test_non_pie_standalone_is_accepted) ... ok
+test_relocatable_plugin_fails_without_package (__main__.DependencyTests.test_relocatable_plugin_fails_without_package) ... ok
+test_relocatable_standalone_fails_without_package (__main__.DependencyTests.test_relocatable_standalone_fails_without_package) ... ok
+test_restrictive_caller_umask_preserves_package_modes (__main__.DependencyTests.test_restrictive_caller_umask_preserves_package_modes) ... ok
+test_symlinked_temporary_directory_is_accepted (__main__.DependencyTests.test_symlinked_temporary_directory_is_accepted) ... ok
+test_versioned_dependencies_from_both_payloads (__main__.DependencyTests.test_versioned_dependencies_from_both_payloads) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 3.253s
+
+OK
+<end of output>
+Test time =   3.32 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_deb_runtime_dependency_tests" end time: Nov 09 20:02 AST
+"cs80_deb_runtime_dependency_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+95/145 Testing: cs80_touch_circuit_tests
+95/145 Test: cs80_touch_circuit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_touch_circuit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_touch_circuit_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+touch gate: b 8.58e-13, C 0.000488, a 3.26e-07, pole 2.78e-13
+TRG5: full-scale 4.5222 V, one key at 0.8 -> 3.5333 V, worst realtime error 4.33e-06 V
+Touch circuit: 35 checks, 0 failures
+<end of output>
+Test time =   3.52 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_touch_circuit_tests" end time: Nov 09 20:02 AST
+"cs80_touch_circuit_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+79/145 Testing: cs80_external_interpolator_tests
+79/145 Test: cs80_external_interpolator_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_external_interpolator_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_external_interpolator_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+337 checks, 0 failures; 1331712 complete frames compared bit-for-bit
+<end of output>
+Test time =   2.73 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_external_interpolator_tests" end time: Nov 09 20:03 AST
+"cs80_external_interpolator_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+81/145 Testing: cs80_smoothing_tests
+81/145 Test: cs80_smoothing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_smoothing_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_smoothing_tests" start time: Nov 09 20:02 AST
+Output:
+----------------------------------------------------------
+tau  44100 Hz q0: cutoff 5.0113 ms, bend 5.0113 ms
+tau  48000 Hz q1: cutoff 5.0000 ms, bend 5.0000 ms
+tau  48000 Hz q2: cutoff 5.0000 ms, bend 5.0000 ms
+tau  96000 Hz q1: cutoff 5.0000 ms, bend 5.0000 ms
+legacy LEVEL step (unsmoothed by design): HF fraction -39.3 dB
+zipper LEVEL               48000 Hz q0: HF fraction   -68.3 dB
+zipper VOLUME              48000 Hz q0: HF fraction   -67.6 dB
+zipper SINE                48000 Hz q0: HF fraction   -67.6 dB
+zipper PAN                 48000 Hz q0: HF fraction   -67.5 dB
+zipper MIX                 48000 Hz q0: HF fraction   -67.9 dB
+zipper CC11 expression     48000 Hz q0: HF fraction   -67.7 dB
+zipper after-touch LEVEL   48000 Hz q0: HF fraction   -67.6 dB
+zipper LEVEL               48000 Hz q1: HF fraction   -68.3 dB
+zipper VOLUME              48000 Hz q1: HF fraction   -67.6 dB
+zipper SINE                48000 Hz q1: HF fraction   -67.6 dB
+zipper PAN                 48000 Hz q1: HF fraction   -67.5 dB
+zipper MIX                 48000 Hz q1: HF fraction   -67.9 dB
+zipper CC11 expression     48000 Hz q1: HF fraction   -67.7 dB
+zipper after-touch LEVEL   48000 Hz q1: HF fraction   -67.6 dB
+zipper LEVEL               96000 Hz q0: HF fraction   -68.6 dB
+zipper VOLUME              96000 Hz q0: HF fraction   -66.4 dB
+zipper SINE                96000 Hz q0: HF fraction   -66.2 dB
+zipper PAN                 96000 Hz q0: HF fraction   -65.8 dB
+zipper MIX                 96000 Hz q0: HF fraction   -67.0 dB
+zipper CC11 expression     96000 Hz q0: HF fraction   -68.1 dB
+zipper after-touch LEVEL   96000 Hz q0: HF fraction   -68.9 dB
+zipper LEVEL               96000 Hz q1: HF fraction   -68.6 dB
+zipper VOLUME              96000 Hz q1: HF fraction   -66.4 dB
+zipper SINE                96000 Hz q1: HF fraction   -66.2 dB
+zipper PAN                 96000 Hz q1: HF fraction   -65.8 dB
+zipper MIX                 96000 Hz q1: HF fraction   -67.0 dB
+zipper CC11 expression     96000 Hz q1: HF fraction   -68.1 dB
+zipper after-touch LEVEL   96000 Hz q1: HF fraction   -68.9 dB
+84 checks, 0 failures
+<end of output>
+Test time =   2.65 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_smoothing_tests" end time: Nov 09 20:03 AST
+"cs80_smoothing_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+83/145 Testing: cs80_mpe_member_onset_tests
+83/145 Test: cs80_mpe_member_onset_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_member_onset_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mpe_member_onset_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+MPE member onset: 2501 checks, 0 failures
+<end of output>
+Test time =   2.91 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mpe_member_onset_tests" end time: Nov 09 20:03 AST
+"cs80_mpe_member_onset_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+144/145 Testing: cs80_parity_capture_tests
+144/145 Test: cs80_parity_capture_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_parity_capture.py" "--capture" "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_parity_capture"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_parity_capture_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 2.701s
+
+OK
+<end of output>
+Test time =   2.78 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_parity_capture_tests" end time: Nov 09 20:03 AST
+"cs80_parity_capture_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+117/145 Testing: cs80_plate_reverb_rate_tests
+117/145 Test: cs80_plate_reverb_rate_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_plate_reverb_rate_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_plate_reverb_rate_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+plate brightness 0.0 rate 88200 band 0: 4.05916 / 4.06227 s
+plate brightness 0.0 rate 88200 band 1: 3.53308 / 3.53415 s
+plate brightness 0.0 rate 88200 band 2: 2.47184 / 2.48096 s
+plate brightness 0.0 rate 192000 band 0: 4.06165 / 4.06227 s
+plate brightness 0.0 rate 192000 band 1: 3.52432 / 3.53415 s
+plate brightness 0.0 rate 192000 band 2: 2.48349 / 2.48096 s
+plate brightness 0.0 rate 384000 band 0: 4.06067 / 4.06227 s
+plate brightness 0.0 rate 384000 band 1: 3.51786 / 3.53415 s
+plate brightness 0.0 rate 384000 band 2: 2.48329 / 2.48096 s
+plate brightness 0.5 rate 88200 band 0: 4.11857 / 4.11960 s
+plate brightness 0.5 rate 88200 band 1: 3.98925 / 3.99369 s
+plate brightness 0.5 rate 88200 band 2: 3.40238 / 3.39942 s
+plate brightness 0.5 rate 192000 band 0: 4.11902 / 4.11960 s
+plate brightness 0.5 rate 192000 band 1: 3.98859 / 3.99369 s
+plate brightness 0.5 rate 192000 band 2: 3.36948 / 3.39942 s
+plate brightness 0.5 rate 384000 band 0: 4.11833 / 4.11960 s
+plate brightness 0.5 rate 384000 band 1: 3.97936 / 3.99369 s
+plate brightness 0.5 rate 384000 band 2: 3.37046 / 3.39942 s
+plate brightness 1.0 rate 88200 band 0: 4.12982 / 4.13117 s
+plate brightness 1.0 rate 88200 band 1: 4.15571 / 4.17283 s
+plate brightness 1.0 rate 88200 band 2: 4.08898 / 4.10735 s
+plate brightness 1.0 rate 192000 band 0: 4.13150 / 4.13117 s
+plate brightness 1.0 rate 192000 band 1: 4.16969 / 4.17283 s
+plate brightness 1.0 rate 192000 band 2: 4.15131 / 4.10735 s
+plate brightness 1.0 rate 384000 band 0: 4.13070 / 4.13117 s
+plate brightness 1.0 rate 384000 band 1: 4.16548 / 4.17283 s
+plate brightness 1.0 rate 384000 band 2: 4.15917 / 4.10735 s
+45 checks, 0 failures
+<end of output>
+Test time =   2.89 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_plate_reverb_rate_tests" end time: Nov 09 20:03 AST
+"cs80_plate_reverb_rate_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+105/145 Testing: cs80_ring_modulator_circuit_tests
+105/145 Test: cs80_ring_modulator_circuit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ring_modulator_circuit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ring_modulator_circuit_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Ring converter: 0.9814 oct/V, full depth +4.907 octaves
+Ring ADJ p19 anchors at 44100 Hz: 150.0122 ms (150 +/- 7.5), 4.99998 ms (5 +/- 0.25)
+Ring ADJ p19 anchors at 96000 Hz: 149.9457 ms (150 +/- 7.5), 5.00002 ms (5 +/- 0.25)
+Engine ring lines re upper sideband: signal -40.0 dB, carrier -38.5 dB, lower -0.00 dB
+203 checks, 0 failures
+<end of output>
+Test time =   3.09 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ring_modulator_circuit_tests" end time: Nov 09 20:03 AST
+"cs80_ring_modulator_circuit_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+21/145 Testing: cs80_macos_installer_architecture_tests
+21/145 Test: cs80_macos_installer_architecture_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-macos-installer-architectures.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_macos_installer_architecture_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+......
+----------------------------------------------------------------------
+Ran 6 tests in 2.254s
+
+OK
+<end of output>
+Test time =   2.32 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_macos_installer_architecture_tests" end time: Nov 09 20:03 AST
+"cs80_macos_installer_architecture_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+45/145 Testing: cs80_sixteen_voice_release_tests
+45/145 Test: cs80_sixteen_voice_release_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_sixteen_voice_release_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_sixteen_voice_release_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Immediate sixteen-voice release: 1418 checks, 0 failures
+<end of output>
+Test time =   3.38 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_sixteen_voice_release_tests" end time: Nov 09 20:03 AST
+"cs80_sixteen_voice_release_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+35/145 Testing: cs80_source_performance_audit_tests
+35/145 Test: cs80_source_performance_audit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_source_performance_audit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_source_performance_audit_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Independent source-performance audit: 2711 checks, 0 failures
+<end of output>
+Test time =   2.63 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_source_performance_audit_tests" end time: Nov 09 20:03 AST
+"cs80_source_performance_audit_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+118/145 Testing: cs80_tape_echo_time_tests
+118/145 Test: cs80_tape_echo_time_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_tape_echo_time_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_tape_echo_time_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+replay fs=88200 channel=0 jump=0.5 ratio=4.4571458e-09
+replay fs=88200 channel=0 jump=1.3 ratio=4.42477263e-09
+replay fs=88200 channel=0 jump=3.7 ratio=4.45084683e-09
+replay fs=88200 channel=1 jump=0.5 ratio=4.43662405e-09
+replay fs=88200 channel=1 jump=1.3 ratio=4.46080257e-09
+replay fs=88200 channel=1 jump=3.7 ratio=4.42525209e-09
+replay fs=96000 channel=0 jump=0.5 ratio=4.47867032e-09
+replay fs=96000 channel=0 jump=1.3 ratio=4.4873657e-09
+replay fs=96000 channel=0 jump=3.7 ratio=4.44776019e-09
+replay fs=96000 channel=1 jump=0.5 ratio=4.47430133e-09
+replay fs=96000 channel=1 jump=1.3 ratio=4.45014748e-09
+replay fs=96000 channel=1 jump=3.7 ratio=4.45551964e-09
+replay fs=192000 channel=0 jump=0.5 ratio=5.58246043e-09
+replay fs=192000 channel=0 jump=1.3 ratio=5.67264746e-09
+replay fs=192000 channel=0 jump=3.7 ratio=5.58266983e-09
+replay fs=192000 channel=1 jump=0.5 ratio=5.63691106e-09
+replay fs=192000 channel=1 jump=1.3 ratio=5.73719293e-09
+replay fs=192000 channel=1 jump=3.7 ratio=5.57339986e-09
+replay fs=384000 channel=0 jump=0.5 ratio=3.17045756e-09
+replay fs=384000 channel=0 jump=1.3 ratio=3.30952693e-09
+replay fs=384000 channel=0 jump=3.7 ratio=3.44994043e-09
+replay fs=384000 channel=1 jump=0.5 ratio=3.28596223e-09
+replay fs=384000 channel=1 jump=1.3 ratio=3.25840153e-09
+replay fs=384000 channel=1 jump=3.7 ratio=3.17648241e-09
+104 checks, 0 failures
+<end of output>
+Test time =   2.85 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_tape_echo_time_tests" end time: Nov 09 20:03 AST
+"cs80_tape_echo_time_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+91/145 Testing: cs80_kas_scanner_tests
+91/145 Test: cs80_kas_scanner_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_kas_scanner_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_kas_scanner_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+held-K droop sensitivity (cents flat after 1 s / 5 s):
+  C=0.020 uF I=   1 pA:  MIDI24 1.39/6.94  MIDI36 0.69/3.47  MIDI60 0.17/0.87
+  C=0.020 uF I=  10 pA:  MIDI24 13.91/70.67  MIDI36 6.94/34.98  MIDI60 1.73/8.68
+  C=0.020 uF I=  50 pA:  MIDI24 70.67/386.31  MIDI36 34.98/182.40  MIDI60 8.68/43.83
+  C=0.033 uF I=   1 pA:  MIDI24 0.84/4.20  MIDI36 0.42/2.10  MIDI60 0.10/0.52
+  C=0.033 uF I=  10 pA:  MIDI24 8.41/42.49  MIDI36 4.20/21.11  MIDI60 1.05/5.25
+  C=0.033 uF I=  50 pA:  MIDI24 42.49/223.70  MIDI36 21.11/108.24  MIDI60 5.25/26.43
+  C=0.220 uF I=   1 pA:  MIDI24 0.13/0.63  MIDI36 0.06/0.31  MIDI60 0.02/0.08
+  C=0.220 uF I=  10 pA:  MIDI24 1.26/6.31  MIDI36 0.63/3.15  MIDI60 0.16/0.79
+  C=0.220 uF I=  50 pA:  MIDI24 6.31/31.77  MIDI36 3.15/15.81  MIDI60 0.79/3.94
+KAS scan / sample-hold: 435 checks, 0 failures
+<end of output>
+Test time =   2.61 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_kas_scanner_tests" end time: Nov 09 20:03 AST
+"cs80_kas_scanner_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+84/145 Testing: cs80_mpe_released_target_tests
+84/145 Test: cs80_mpe_released_target_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_released_target_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mpe_released_target_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+MPE released targets: 7488 checks, 0 failures
+<end of output>
+Test time =   3.69 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mpe_released_target_tests" end time: Nov 09 20:03 AST
+"cs80_mpe_released_target_tests" time elapsed: 00:00:03
+----------------------------------------------------------
+
+80/145 Testing: cs80_oversampling_tests
+80/145 Test: cs80_oversampling_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_oversampling_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_oversampling_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+decimator 2x: taps 255 passband -0.0004/+0.0004 dB stopband -87.1 dB latency 63
+decimator 4x: taps 511 passband -0.0004/+0.0003 dB stopband -87.6 dB latency 63
+decimator 8x: taps 1023 passband -0.0004/+0.0003 dB stopband -87.8 dB latency 63
+sine render Standard vs Eco: lag +0.0381 host samples, level ratio 1.00000
+sine render HQ vs Eco: lag +0.4139 host samples, level ratio 1.00004
+186 checks, 0 failures
+<end of output>
+Test time =   1.79 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_oversampling_tests" end time: Nov 09 20:03 AST
+"cs80_oversampling_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+32/145 Testing: cs80_keyboard_epoch_interleaving_tests
+32/145 Test: cs80_keyboard_epoch_interleaving_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_keyboard_epoch_interleaving.py" "--compiler" "/usr/bin/c++"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_keyboard_epoch_interleaving_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Keyboard epoch interleave: note and pressure baselines passed; both stale-filter mutants detected
+<end of output>
+Test time =   1.79 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_keyboard_epoch_interleaving_tests" end time: Nov 09 20:03 AST
+"cs80_keyboard_epoch_interleaving_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+4/145 Testing: cs80_filter_batch_scheduling_tests
+4/145 Test: cs80_filter_batch_scheduling_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_filter_batch_scheduling_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_filter_batch_scheduling_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+FilterBatchScheduling: 869465 checks, 0 failures, 135454 timeline frames (four engine variants)
+<end of output>
+Test time =   1.95 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_filter_batch_scheduling_tests" end time: Nov 09 20:03 AST
+"cs80_filter_batch_scheduling_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+82/145 Testing: cs80_pitch_bend_range_tests
+82/145 Test: cs80_pitch_bend_range_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_pitch_bend_range_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pitch_bend_range_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+legacy 48000 Hz q0 range 2.00: pitch error 7.83592935e-07, wheel error 0
+legacy 48000 Hz q0 range 12.00: pitch error 1.05328543e-06, wheel error 0
+legacy 48000 Hz q0 range 1.00: pitch error 1.23031927e-06, wheel error 0
+legacy 48000 Hz q0 range 48.00: pitch error 1.3477982e-06, wheel error 0
+legacy 48000 Hz q0 range 7.25: pitch error 2.26702877e-06, wheel error 0
+legacy 48000 Hz q0 range 7.25: pitch error 1.12079513e-06, wheel error 0
+legacy 48000 Hz q0 range 24.00: pitch error 0, wheel error 0
+legacy 48000 Hz q0 range 1.00: pitch error 0, wheel error 0
+circuit 44100 Hz q0 range 2.00: pitch error 4.56329616e-06, wheel error 5.13391063e-09
+circuit 44100 Hz q0 range 12.00: pitch error 4.32676155e-06, wheel error 1.48353788e-08
+circuit 44100 Hz q0 range 1.00: pitch error 4.02926284e-06, wheel error 2.93315279e-08
+circuit 44100 Hz q0 range 48.00: pitch error 4.86670763e-06, wheel error 2.95881795e-08
+circuit 44100 Hz q0 range 7.25: pitch error 5.07890533e-06, wheel error 2.97590459e-08
+circuit 44100 Hz q0 range 7.25: pitch error 4.06942762e-06, wheel error 2.87267707e-08
+circuit 44100 Hz q0 range 24.00: pitch error 6.89765433e-06, wheel error 1.4900084e-08
+circuit 44100 Hz q0 range 1.00: pitch error 6.52154315e-06, wheel error 1.54509383e-08
+circuit 48000 Hz q1 range 2.00: pitch error 5.00486096e-06, wheel error 7.11190051e-09
+circuit 48000 Hz q1 range 12.00: pitch error 5.28392278e-06, wheel error 1.45895824e-08
+circuit 48000 Hz q1 range 1.00: pitch error 3.64860318e-06, wheel error 2.85491208e-08
+circuit 48000 Hz q1 range 48.00: pitch error 5.14709279e-06, wheel error 2.97594354e-08
+circuit 48000 Hz q1 range 7.25: pitch error 4.59581013e-06, wheel error 2.97984717e-08
+circuit 48000 Hz q1 range 7.25: pitch error 4.76421832e-06, wheel error 2.92681455e-08
+circuit 48000 Hz q1 range 24.00: pitch error 6.87327303e-06, wheel error 1.48971812e-08
+circuit 48000 Hz q1 range 1.00: pitch error 6.16223153e-06, wheel error 1.50132722e-08
+circuit 48000 Hz q2 range 2.00: pitch error 5.00486096e-06, wheel error 7.11190051e-09
+circuit 48000 Hz q2 range 12.00: pitch error 5.28392278e-06, wheel error 1.45895824e-08
+circuit 48000 Hz q2 range 1.00: pitch error 3.64860318e-06, wheel error 2.85491208e-08
+circuit 48000 Hz q2 range 48.00: pitch error 5.14709279e-06, wheel error 2.97594354e-08
+circuit 48000 Hz q2 range 7.25: pitch error 4.59581013e-06, wheel error 2.97984717e-08
+circuit 48000 Hz q2 range 7.25: pitch error 4.76421832e-06, wheel error 2.92681455e-08
+circuit 48000 Hz q2 range 24.00: pitch error 6.87327303e-06, wheel error 1.48971812e-08
+circuit 48000 Hz q2 range 1.00: pitch error 6.16223153e-06, wheel error 1.50132722e-08
+circuit 96000 Hz q0 range 2.00: pitch error 5.00486096e-06, wheel error 7.11190018e-09
+circuit 96000 Hz q0 range 12.00: pitch error 5.28392278e-06, wheel error 1.48787689e-08
+circuit 96000 Hz q0 range 1.00: pitch error 3.70560043e-06, wheel error 2.85491214e-08
+circuit 96000 Hz q0 range 48.00: pitch error 5.14709281e-06, wheel error 2.97594359e-08
+circuit 96000 Hz q0 range 7.25: pitch error 4.72855214e-06, wheel error 2.97984715e-08
+circuit 96000 Hz q0 range 7.25: pitch error 4.76421832e-06, wheel error 2.96513409e-08
+circuit 96000 Hz q0 range 24.00: pitch error 6.87327302e-06, wheel error 1.48971808e-08
+circuit 96000 Hz q0 range 1.00: pitch error 6.16223154e-06, wheel error 1.53855361e-08
+Pitch bend range: 129 checks, 0 failures
+<end of output>
+Test time =   1.65 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pitch_bend_range_tests" end time: Nov 09 20:03 AST
+"cs80_pitch_bend_range_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+41/145 Testing: cs80_live_envelope_timing_tests
+41/145 Test: cs80_live_envelope_timing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_live_envelope_timing_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_live_envelope_timing_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+91672 checks, 0 failures
+<end of output>
+Test time =   1.76 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_live_envelope_timing_tests" end time: Nov 09 20:03 AST
+"cs80_live_envelope_timing_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+109/145 Testing: cs80_mseg_tests
+109/145 Test: cs80_mseg_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mseg_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mseg_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+875 checks, 0 failures
+<end of output>
+Test time =   2.30 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mseg_tests" end time: Nov 09 20:03 AST
+"cs80_mseg_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+86/145 Testing: cs80_output_listening_tests
+86/145 Test: cs80_output_listening_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_output_listening_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_output_listening_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+phones direct     32 ohm @ 88200: |H(1k)| 0.8889 (-1.02 dB), worst 0.0000 dB 0.000 deg
+phones direct     32 ohm @192000: |H(1k)| 0.8889 (-1.02 dB), worst 0.0000 dB 0.000 deg
+phones direct     32 ohm @384000: |H(1k)| 0.8889 (-1.02 dB), worst 0.0000 dB 0.000 deg
+phones capacitor  32 ohm @ 88200: |H(1k)| 0.8877 (-1.03 dB), worst 0.0000 dB 0.003 deg
+phones capacitor  32 ohm @192000: |H(1k)| 0.8877 (-1.03 dB), worst 0.0000 dB 0.001 deg
+phones capacitor  32 ohm @384000: |H(1k)| 0.8877 (-1.03 dB), worst 0.0000 dB 0.000 deg
+circuit   : GENERAL -0.537 dB, PHONES -0.802 dB relative to LEFT
+PURE CS-80: GENERAL -0.537 dB, PHONES -0.802 dB relative to LEFT
+40 checks, 0 failures
+<end of output>
+Test time =   1.65 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_output_listening_tests" end time: Nov 09 20:03 AST
+"cs80_output_listening_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+77/145 Testing: cs80_ig00151_vca_tests
+77/145 Test: cs80_ig00151_vca_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00151_vca_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/ws1-voice.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00151_vca_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+LI step at 88200 Hz: 1-1/e after 0.5420 ms (declared 0.5419 ms)
+LI step at 96000 Hz: 1-1/e after 0.5419 ms (declared 0.5419 ms)
+LI step at 192000 Hz: 1-1/e after 0.5419 ms (declared 0.5419 ms)
+offset + feedthrough pedestal at full LI: -52.04 dB re a unit signal
+SUB VCA tremolo max/min: circuit 1.413 (d 0.25) 1.998 (d 0.5); legacy 1.461 2.196
+44 checks, 0 failures
+<end of output>
+Test time =   1.58 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00151_vca_tests" end time: Nov 09 20:03 AST
+"cs80_ig00151_vca_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+17/145 Testing: cs80_parity_harness_tests
+17/145 Test: cs80_parity_harness_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_parity_harness.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_parity_harness_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+......................
+----------------------------------------------------------------------
+Ran 22 tests in 1.394s
+
+OK
+<end of output>
+Test time =   1.48 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_parity_harness_tests" end time: Nov 09 20:03 AST
+"cs80_parity_harness_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+1/145 Testing: cs80_legacy_sub_lfo_oracle_tests
+1/145 Test: cs80_legacy_sub_lfo_oracle_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_legacy_sub_lfo_oracle_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_legacy_sub_lfo_oracle_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+scenario rate=48000 wave=0 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=1 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=2 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=3 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=4 mode=original frames=512 eligible=1 wraps=0/0 draws=1/1
+scenario rate=48000 wave=5 mode=original frames=512 eligible=1 wraps=0/0 draws=1024/1024
+scenario rate=44100 wave=0 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=0/0
+scenario rate=44100 wave=0 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=0/0
+scenario rate=44100 wave=1 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=0/0
+scenario rate=44100 wave=1 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=0/0
+scenario rate=44100 wave=2 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=0/0
+scenario rate=44100 wave=2 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=0/0
+scenario rate=44100 wave=3 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=0/0
+scenario rate=44100 wave=3 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=0/0
+scenario rate=44100 wave=4 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=12/12
+scenario rate=44100 wave=4 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=6/6
+scenario rate=44100 wave=5 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=35280/35280
+scenario rate=44100 wave=5 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=39690/39690
+scenario rate=48000 wave=0 mode=wrap frames=19200 eligible=1 wraps=11/11 draws=0/0
+scenario rate=48000 wave=0 mode=scheduled frames=21600 eligible=1 wraps=5/5 draws=0/0
+scenario rate=48000 wave=1 mode=wrap frames=19200 eligible=1 wraps=11/11 draws=0/0
+scenario rate=48000 wave=1 mode=scheduled frames=21600 eligible=1 wraps=5/5 draws=0/0
+scenario rate=48000 wave=2 mode=wrap frames=19200 eligible=1 wraps=11/11 draws=0/0
+scenario rate=48000 wave=2 mode=scheduled frames=21600 eligible=1 wraps=5/5 draws=0/0
+scenario rate=48000 wave=3 mode=wrap frames=19200 eligible=1 wraps=11/11 draws=0/0
+scenario rate=48000 wave=3 mode=scheduled frames=21600 eligible=1 wraps=5/5 draws=0/0
+scenario rate=48000 wave=4 mode=wrap frames=19200 eligible=1 wraps=11/11 draws=12/12
+scenario rate=48000 wave=4 mode=scheduled frames=21600 eligible=1 wraps=5/5 draws=6/6
+scenario rate=48000 wave=5 mode=wrap frames=19200 eligible=1 wraps=11/11 draws=38400/38400
+scenario rate=48000 wave=5 mode=scheduled frames=21600 eligible=1 wraps=5/5 draws=43200/43200
+scenario rate=96000 wave=0 mode=wrap frames=38400 eligible=1 wraps=11/11 draws=0/0
+scenario rate=96000 wave=0 mode=scheduled frames=43200 eligible=1 wraps=5/5 draws=0/0
+scenario rate=96000 wave=1 mode=wrap frames=38400 eligible=1 wraps=11/11 draws=0/0
+scenario rate=96000 wave=1 mode=scheduled frames=43200 eligible=1 wraps=5/5 draws=0/0
+scenario rate=96000 wave=2 mode=wrap frames=38400 eligible=1 wraps=11/11 draws=0/0
+scenario rate=96000 wave=2 mode=scheduled frames=43200 eligible=1 wraps=5/5 draws=0/0
+scenario rate=96000 wave=3 mode=wrap frames=38400 eligible=1 wraps=11/11 draws=0/0
+scenario rate=96000 wave=3 mode=scheduled frames=43200 eligible=1 wraps=5/5 draws=0/0
+scenario rate=96000 wave=4 mode=wrap frames=38400 eligible=1 wraps=11/11 draws=12/12
+scenario rate=96000 wave=4 mode=scheduled frames=43200 eligible=1 wraps=5/5 draws=6/6
+scenario rate=96000 wave=5 mode=wrap frames=38400 eligible=1 wraps=11/11 draws=76800/76800
+scenario rate=96000 wave=5 mode=scheduled frames=43200 eligible=1 wraps=5/5 draws=86400/86400
+scenario rate=192000 wave=0 mode=wrap frames=76800 eligible=1 wraps=11/11 draws=0/0
+scenario rate=192000 wave=0 mode=scheduled frames=86400 eligible=1 wraps=5/5 draws=0/0
+scenario rate=192000 wave=1 mode=wrap frames=76800 eligible=1 wraps=11/11 draws=0/0
+scenario rate=192000 wave=1 mode=scheduled frames=86400 eligible=1 wraps=5/5 draws=0/0
+scenario rate=192000 wave=2 mode=wrap frames=76800 eligible=1 wraps=11/11 draws=0/0
+scenario rate=192000 wave=2 mode=scheduled frames=86400 eligible=1 wraps=5/5 draws=0/0
+scenario rate=192000 wave=3 mode=wrap frames=76800 eligible=1 wraps=11/11 draws=0/0
+scenario rate=192000 wave=3 mode=scheduled frames=86400 eligible=1 wraps=5/5 draws=0/0
+scenario rate=192000 wave=4 mode=wrap frames=76800 eligible=1 wraps=11/11 draws=12/12
+scenario rate=192000 wave=4 mode=scheduled frames=86400 eligible=1 wraps=5/5 draws=6/6
+scenario rate=192000 wave=5 mode=wrap frames=76800 eligible=1 wraps=11/11 draws=153600/153600
+scenario rate=192000 wave=5 mode=scheduled frames=86400 eligible=1 wraps=5/5 draws=172800/172800
+54 scenarios, 1958109 checks, 0 failures
+<end of output>
+Test time =   1.53 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_legacy_sub_lfo_oracle_tests" end time: Nov 09 20:03 AST
+"cs80_legacy_sub_lfo_oracle_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+59/145 Testing: cs80_output_tap_integration_tests
+59/145 Test: cs80_output_tap_integration_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_output_tap_integration_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_output_tap_integration_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Polyphonic output fixture peak 0.116077885 (not a universal synth headroom bound)
+Output pipeline max sample error 0; capacitor voltage error 9.84889253e-16
+184745 checks, 0 failures
+<end of output>
+Test time =   1.61 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_output_tap_integration_tests" end time: Nov 09 20:03 AST
+"cs80_output_tap_integration_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+108/145 Testing: cs80_modern_lfo_tests
+108/145 Test: cs80_modern_lfo_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_modern_lfo_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_modern_lfo_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+132 checks, 0 failures
+<end of output>
+Test time =   1.35 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_modern_lfo_tests" end time: Nov 09 20:03 AST
+"cs80_modern_lfo_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+65/145 Testing: cs80_pra_wah_integration_tests
+65/145 Test: cs80_pra_wah_integration_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_pra_wah_integration_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pra_wah_integration_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Polyphonic fixture peak 0.0576540641 (fixture bound, not universal analog headroom)
+Independent pipeline maximum output error 0; PRA capacitor voltage error 3.31982705e-15; output capacitor voltage error 4.33680869e-19
+226798 checks, 0 failures
+<end of output>
+Test time =   1.48 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pra_wah_integration_tests" end time: Nov 09 20:03 AST
+"cs80_pra_wah_integration_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+47/145 Testing: cs80_pedal_release_tests
+47/145 Test: cs80_pedal_release_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_pedal_release_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pedal_release_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Pedal release: 1065 checks, 0 failures
+<end of output>
+Test time =   1.12 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pedal_release_tests" end time: Nov 09 20:03 AST
+"cs80_pedal_release_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+60/145 Testing: cs80_output_tap_circuit_tests
+60/145 Test: cs80_output_tap_circuit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_output_tap_circuit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_output_tap_circuit_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+max independent transient port error 1.5099e-14
+1000 independent active matrices, max reduced-relation residual 4.44089e-16
+domain max b=0.405405, alternating-input peak=1.26016e+06
+140 measured AC fixtures, max complex port error 2.56964e-12
+fixed physical-time linear/step/decay RMS errors 6.35771e-08 1.58943e-08 3.97357e-09 9.93391e-10
+switched physical-time linear/step/decay RMS errors 4.95449e-08 1.23862e-08 3.09656e-09 7.74139e-10
+fixed physical-time sine RMS errors 1.49334e-05 3.73269e-06 9.33133e-07 2.33281e-07
+switched physical-time sine RMS errors 1.42206e-05 3.55452e-06 8.88592e-07 2.22146e-07
+same-frequency 3 Hz complex errors 6.25948e-09 1.56486e-09 3.91212e-10 9.77852e-11
+same-frequency 1000 Hz complex errors 4.34672e-06 1.08645e-06 2.71598e-07 6.78985e-08
+same-frequency 12000 Hz complex errors 5.4425e-05 1.31726e-05 3.26755e-06 8.1531e-07
+6506434 checks, 0 failures
+<end of output>
+Test time =   1.56 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_output_tap_circuit_tests" end time: Nov 09 20:03 AST
+"cs80_output_tap_circuit_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+44/145 Testing: cs80_voice_release_tests
+44/145 Test: cs80_voice_release_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_voice_release_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_voice_release_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Voice release: 1086 checks, 0 failures
+<end of output>
+Test time =   1.57 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_voice_release_tests" end time: Nov 09 20:03 AST
+"cs80_voice_release_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+75/145 Testing: cs80_ig00156_top_octave_tests
+75/145 Test: cs80_ig00156_top_octave_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00156_top_octave_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/known-deviations/ig00156-top-octave.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00156_top_octave_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+known deviation fs=88200 fc=4000 core=0.0198416974 band=0.112860136 direct-band=0.112918499 ceilings=0.03/0.119
+known deviation fs=88200 fc=12000 core=0.0479225082 band=0.140322783 direct-band=0.140402732 ceilings=0.0505/0.148
+known deviation fs=96000 fc=4000 core=0.0166882672 band=0.110509617 direct-band=0.110559583 ceilings=0.03/0.117
+known deviation fs=96000 fc=12000 core=0.0402999603 band=0.137092652 direct-band=0.137145792 ceilings=0.0425/0.145
+known deviation fs=192000 fc=4000 core=0.00411193031 band=0.0279702754 direct-band=0.0279434362 ceilings=0.03/0.0295
+known deviation fs=192000 fc=12000 core=0.0349480134 band=0.0349480134 direct-band=0.034919731 ceilings=0.0367/0.0367
+known deviation fs=384000 fc=4000 core=0.00102428073 band=0.00687750756 direct-band=0.00688653424 ceilings=0.03/0.02
+known deviation fs=384000 fc=12000 core=0.00863178126 band=0.00863178126 direct-band=0.00864151837 ceilings=0.03/0.02
+direct high-cutoff discrete-equivalence worst=1.14604308e-07, limit=5e-06
+common-band refinement base=88200 fc=4000 multiplier=1 error=0.112860136 ratio=1
+common-band refinement base=88200 fc=4000 multiplier=2 error=0.0264381624 ratio=0.234255986
+common-band refinement base=88200 fc=4000 multiplier=4 error=0.0065072977 ratio=0.246132754
+refined high-cutoff full 20 kHz band fs=352800 fc=4000 error=0.0081559841 limit=0.02
+common-band refinement base=88200 fc=12000 multiplier=1 error=0.140322783 ratio=1
+common-band refinement base=88200 fc=12000 multiplier=2 error=0.0329800958 ratio=0.235030229
+common-band refinement base=88200 fc=12000 multiplier=4 error=0.00811518099 ratio=0.24606299
+refined high-cutoff full 20 kHz band fs=352800 fc=12000 error=0.0102336721 limit=0.02
+common-band refinement base=96000 fc=4000 multiplier=1 error=0.110509617 ratio=1
+common-band refinement base=96000 fc=4000 multiplier=2 error=0.0259156633 ratio=0.23451048
+common-band refinement base=96000 fc=4000 multiplier=4 error=0.00638025591 ratio=0.246193039
+refined high-cutoff full 20 kHz band fs=384000 fc=4000 error=0.00687750756 limit=0.02
+common-band refinement base=96000 fc=12000 multiplier=1 error=0.137092652 ratio=1
+common-band refinement base=96000 fc=12000 multiplier=2 error=0.0326620937 ratio=0.238248317
+common-band refinement base=96000 fc=12000 multiplier=4 error=0.0080647438 ratio=0.246914478
+refined high-cutoff full 20 kHz band fs=384000 fc=12000 error=0.00863178126 limit=0.02
+508 checks, 0 failures. Known-deviation guards are NOT a full-grid parity pass.
+<end of output>
+Test time =   1.40 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00156_top_octave_tests" end time: Nov 09 20:03 AST
+"cs80_ig00156_top_octave_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+93/145 Testing: cs80_scanner_overflow_tests
+93/145 Test: cs80_scanner_overflow_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_scanner_overflow_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_scanner_overflow_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+KAS queue overflow: 1221 checks, 0 failures
+<end of output>
+Test time =   1.17 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_scanner_overflow_tests" end time: Nov 09 20:03 AST
+"cs80_scanner_overflow_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+66/145 Testing: cs80_pra_wah_circuit_tests
+66/145 Test: cs80_pra_wah_circuit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_pra_wah_circuit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pra_wah_circuit_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+maximum measured complex AC error 2.28437e-10
+dynamic fixture peaks nominal=0.0480148 sensitivity=1.69783
+dynamic trajectory RMS errors 0.000100399 2.55198e-05 6.57044e-06 1.68458e-06
+8759744 checks, 0 failures
+<end of output>
+Test time =   1.04 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pra_wah_circuit_tests" end time: Nov 09 20:03 AST
+"cs80_pra_wah_circuit_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+16/145 Testing: cs80_windows_installer_preflight_tests
+16/145 Test: cs80_windows_installer_preflight_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-windows-installer-preflight.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_windows_installer_preflight_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+...ss.......
+----------------------------------------------------------------------
+Ran 12 tests in 0.802s
+
+OK (skipped=2)
+<end of output>
+Test time =   0.93 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_windows_installer_preflight_tests" end time: Nov 09 20:03 AST
+"cs80_windows_installer_preflight_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+130/145 Testing: cs80_memory_receiver_truth_tests
+130/145 Test: cs80_memory_receiver_truth_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_receiver_truth_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/memory-nonlinear-study.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_receiver_truth_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Memory receiver truth: 48 cases, 1396 checks, 0 failures; worst 1.77635684e-15 V, KCL 7.67951241e-15 A, fixed-point solves <= 4
+Reachable memory counterexample: row8 error 0.00115896256 V at 4.54545455e-06 A, affine closure 2.43521972e-21 A
+<end of output>
+Test time =   0.92 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_receiver_truth_tests" end time: Nov 09 20:03 AST
+"cs80_memory_receiver_truth_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+145/145 Testing: cs80_dsp_probe_tests
+145/145 Test: cs80_dsp_probe_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_dsp_probe" "/workspace/scratch/ee447c520988/build-mpe-released-target-core/dsp-probe"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_dsp_probe_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+DSP probes: 0 failures; output "/workspace/scratch/ee447c520988/build-mpe-released-target-core/dsp-probe"
+<end of output>
+Test time =   0.80 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_dsp_probe_tests" end time: Nov 09 20:03 AST
+"cs80_dsp_probe_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+19/145 Testing: cs80_preset_trash_safety_tests
+19/145 Test: cs80_preset_trash_safety_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-preset-trash-safety.py" "--compiler" "/usr/bin/c++"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_preset_trash_safety_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Preset trash safety: 23 checks, 0 failures; inert doubles only.
+<end of output>
+Test time =   0.60 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_trash_safety_tests" end time: Nov 09 20:03 AST
+"cs80_preset_trash_safety_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+127/145 Testing: cs80_memory_panel_port_map_tests
+127/145 Test: cs80_memory_panel_port_map_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_panel_port_map_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/memory-port-map.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_panel_port_map_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Memory port map: 90 points, 51840 derivatives, 66171 checks, 0 failures
+worst matrix 1.43700163e-10 ohms; linear prediction 1.74305015e-14 V; coupling 19.5892279 ohms; asymmetry 19.5892279 ohms
+prepared bytes=1888; local evaluation 79.171 ns (shared machine, not whole-instrument qualification)
+<end of output>
+Test time =   0.83 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_panel_port_map_tests" end time: Nov 09 20:03 AST
+"cs80_memory_panel_port_map_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+106/145 Testing: cs80_oe2_stereo_chorus_tests
+106/145 Test: cs80_oe2_stereo_chorus_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_oe2_stereo_chorus_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_oe2_stereo_chorus_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+OE2 wet 1000 Hz at 96000: -0.049 dB, +0.0129 rad versus truth
+OE2 wet 10000 Hz at 96000: +0.113 dB, +0.0983 rad versus truth
+OE2 wet noise 4.15e-05 / 4.13e-05 rms (truth 4.2e-05), L/R correlation -0.0014
+OE2 clock feedthrough at 1.536 MHz internal: 0.000102 (truth 0.000105)
+OE1 tremolo worst error L 0.004007 R 0.004164 (input amplitude 0.50)
+97 checks, 0 failures
+<end of output>
+Test time =   0.99 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_oe2_stereo_chorus_tests" end time: Nov 09 20:03 AST
+"cs80_oe2_stereo_chorus_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+68/145 Testing: cs80_bbd_chorus_tests
+68/145 Test: cs80_bbd_chorus_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_bbd_chorus_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_bbd_chorus_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+70 checks, 0 failures
+<end of output>
+Test time =   0.87 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_bbd_chorus_tests" end time: Nov 09 20:03 AST
+"cs80_bbd_chorus_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+71/145 Testing: cs80_validator_diagnostic_selection_tests
+71/145 Test: cs80_validator_diagnostic_selection_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-pluginval-diagnostic-log.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_validator_diagnostic_selection_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.788s
+
+OK
+<end of output>
+Test time =   0.86 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_validator_diagnostic_selection_tests" end time: Nov 09 20:03 AST
+"cs80_validator_diagnostic_selection_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+112/145 Testing: cs80_mseg_retrigger_rate_tests
+112/145 Test: cs80_mseg_retrigger_rate_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mseg_retrigger_rate_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mseg_retrigger_rate_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+MSEG retrigger rate: 1442/1442 checks passed
+<end of output>
+Test time =   0.77 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mseg_retrigger_rate_tests" end time: Nov 09 20:03 AST
+"cs80_mseg_retrigger_rate_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/145 Testing: cs80_continuous_voice_circuit_audit_tests
+23/145 Test: cs80_continuous_voice_circuit_audit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_continuous_voice_circuit_audit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_continuous_voice_circuit_audit_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Continuous voice circuit audit: 33962 checks, 0 failures
+<end of output>
+Test time =   0.58 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_continuous_voice_circuit_audit_tests" end time: Nov 09 20:03 AST
+"cs80_continuous_voice_circuit_audit_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+111/145 Testing: cs80_mono_mseg_routing_tests
+111/145 Test: cs80_mono_mseg_routing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mono_mseg_routing_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mono_mseg_routing_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+206 checks, 0 failures
+<end of output>
+Test time =   0.52 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mono_mseg_routing_tests" end time: Nov 09 20:03 AST
+"cs80_mono_mseg_routing_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+124/145 Testing: cs80_source_factory_boundary_tests
+124/145 Test: cs80_source_factory_boundary_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_source_factory_boundary_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/ws6-library.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_source_factory_boundary_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+worst reference-point error 1.78e-15 V, drive-range error 0.000274 V, Newton residual 3.83e-14 A, largest emitter sag 0.310 V
+BA/diode boundary refinement passed for 22 tones
+<end of output>
+Test time =   0.43 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_source_factory_boundary_tests" end time: Nov 09 20:03 AST
+"cs80_source_factory_boundary_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+38/145 Testing: cs80_ig00156_filter_tests
+38/145 Test: cs80_ig00156_filter_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00156_filter_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00156_filter_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+47 checks, 0 failures
+<end of output>
+Test time =   0.43 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00156_filter_tests" end time: Nov 09 20:03 AST
+"cs80_ig00156_filter_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/145 Testing: cs80_packaging_notice_tests
+10/145 Test: cs80_packaging_notice_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-packaging-notices.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_packaging_notice_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok
+test_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok
+test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.317s
+
+OK
+<end of output>
+Test time =   0.42 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_packaging_notice_tests" end time: Nov 09 20:03 AST
+"cs80_packaging_notice_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+89/145 Testing: cs80_host_automation_curve_tests
+89/145 Test: cs80_host_automation_curve_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_host_automation_curve_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/host-automation.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_host_automation_curve_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+endpoint publication checks=950, failures=0
+maximum normalized curve error=2.22045e-16
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_host_automation_curve_tests" end time: Nov 09 20:03 AST
+"cs80_host_automation_curve_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+125/145 Testing: cs80_memory_panel_tests
+125/145 Test: cs80_memory_panel_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_panel_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/ws6-library.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_panel_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+source-nominal 10k memory: 28 cases, worst compiled-vs-truth bus error 0.000296602719 V
+legacy 50k compiled-vs-truth bus error 0.000283 V, inactive source current 2.52e-09 A, Newton residual 6.54e-15 A
+memory/PANEL switch and loading model passed
+<end of output>
+Test time =   0.40 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_panel_tests" end time: Nov 09 20:03 AST
+"cs80_memory_panel_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+73/145 Testing: cs80_validator_exit_classification_tests
+73/145 Test: cs80_validator_exit_classification_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-pluginval-exit-classification.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_validator_exit_classification_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.210s
+
+OK
+<end of output>
+Test time =   0.31 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_validator_exit_classification_tests" end time: Nov 09 20:03 AST
+"cs80_validator_exit_classification_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/145 Testing: cs80_ci_juce_provenance_tests
+11/145 Test: cs80_ci_juce_provenance_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-ci-juce-provenance.py" "--cmake" "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ci_juce_provenance_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+test_every_release_job_checks_before_build_and_retains_evidence (__main__.ReleaseWorkflowTests.test_every_release_job_checks_before_build_and_retains_evidence) ... ok
+test_clean_exact_checkout_records_identity (__main__.SourceGateTests.test_clean_exact_checkout_records_identity) ... ok
+test_explicit_override (__main__.SourceGateTests.test_explicit_override) ... ok
+test_failed_recheck_replaces_previous_pass (__main__.SourceGateTests.test_failed_recheck_replaces_previous_pass) ... ok
+test_local_source_path (__main__.SourceGateTests.test_local_source_path) ... ok
+test_missing_configured_source (__main__.SourceGateTests.test_missing_configured_source) ... ok
+test_missing_git_metadata (__main__.SourceGateTests.test_missing_git_metadata) ... ok
+test_tracked_modification (__main__.SourceGateTests.test_tracked_modification) ... ok
+test_untracked_source (__main__.SourceGateTests.test_untracked_source) ... ok
+test_wrong_commit (__main__.SourceGateTests.test_wrong_commit) ... ok
+test_wrong_version (__main__.SourceGateTests.test_wrong_version) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.268s
+
+OK
+<end of output>
+Test time =   0.34 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ci_juce_provenance_tests" end time: Nov 09 20:03 AST
+"cs80_ci_juce_provenance_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+92/145 Testing: cs80_scanner_ordering_tests
+92/145 Test: cs80_scanner_ordering_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_scanner_ordering_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_scanner_ordering_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Scanner ordering: 691 checks, 0 failures
+<end of output>
+Test time =   0.36 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_scanner_ordering_tests" end time: Nov 09 20:03 AST
+"cs80_scanner_ordering_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+133/145 Testing: cs80_memory_centered_log_rational
+133/145 Test: cs80_memory_centered_log_rational
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_memory_centered_log_rational.py" "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_verified_diode_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_centered_log_rational" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Independent exact-rational log enclosure checks: 457 failures: 0
+Both excluded mantissa-neighbor bounds rejected
+Exact worst series-tail upper bound at |z|=1/5: 2.7962026666666665e-19
+<end of output>
+Test time =   0.41 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_centered_log_rational" end time: Nov 09 20:03 AST
+"cs80_memory_centered_log_rational" time elapsed: 00:00:00
+----------------------------------------------------------
+
+129/145 Testing: cs80_memory_control_routing_tests
+129/145 Test: cs80_memory_control_routing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_control_routing_tests" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/memory-control-routing.json"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_control_routing_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Memory routing: 36 points, 216 frames, 48376 checks, 0 failures; semantic 414 realizable / 90 clipped
+worst comparison 7.99360578e-15; residual 2.71050543e-20 A; max feedback norm 3.28394118e-05; 631.981 ns/evaluation (shared machine, not instrument qualification)
+<end of output>
+Test time =   0.37 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_control_routing_tests" end time: Nov 09 20:03 AST
+"cs80_memory_control_routing_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+85/145 Testing: cs80_mpe_master_smoothing_tests
+85/145 Test: cs80_mpe_master_smoothing_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_master_smoothing_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mpe_master_smoothing_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+master bend circuit 44100 Hz q0 -> (0,12): max pitch error 0 / 5.48509758e-06 semitones
+master bend circuit 44100 Hz q0 -> (-6,-12): max pitch error 4.06687279e-06 / 5.14402248e-06 semitones
+master bend circuit 44100 Hz q0 -> (6,6): max pitch error 6.004343e-06 / 6.0842854e-06 semitones
+master bend circuit 48000 Hz q1 -> (0,12): max pitch error 0 / 4.90366197e-06 semitones
+master bend circuit 48000 Hz q1 -> (-6,-12): max pitch error 3.98718211e-06 / 4.83127449e-06 semitones
+master bend circuit 48000 Hz q1 -> (6,6): max pitch error 6.05188971e-06 / 6.22960419e-06 semitones
+master bend circuit 48000 Hz q2 -> (0,12): max pitch error 0 / 4.90366197e-06 semitones
+master bend circuit 48000 Hz q2 -> (-6,-12): max pitch error 3.98718211e-06 / 4.83127449e-06 semitones
+master bend circuit 48000 Hz q2 -> (6,6): max pitch error 6.05188971e-06 / 6.22960419e-06 semitones
+master bend circuit 96000 Hz q0 -> (0,12): max pitch error 0 / 4.90366196e-06 semitones
+master bend circuit 96000 Hz q0 -> (-6,-12): max pitch error 4.11990576e-06 / 4.83127449e-06 semitones
+master bend circuit 96000 Hz q0 -> (6,6): max pitch error 6.07863804e-06 / 6.26916941e-06 semitones
+master bend legacy 48000 Hz q1 -> (0,12): max pitch error 0 / 0 semitones
+master bend legacy 48000 Hz q1 -> (-6,-12): max pitch error 7.1012693e-07 / 0 semitones
+master bend legacy 48000 Hz q1 -> (6,6): max pitch error 7.1012693e-07 / 7.1012693e-07 semitones
+35 checks, 0 failures
+<end of output>
+Test time =   0.33 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mpe_master_smoothing_tests" end time: Nov 09 20:03 AST
+"cs80_mpe_master_smoothing_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+119/145 Testing: cs80_drive_control_cache_tests
+119/145 Test: cs80_drive_control_cache_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_drive_control_cache_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_drive_control_cache_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+396 checks, 0 failures
+<end of output>
+Test time =   0.31 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_drive_control_cache_tests" end time: Nov 09 20:03 AST
+"cs80_drive_control_cache_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+101/145 Testing: cs80_mts_esp_integration_tests
+101/145 Test: cs80_mts_esp_integration_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mts_esp_integration_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mts_esp_integration_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+MTS-ESP integration: 98 checks, 0 failures
+<end of output>
+Test time =   0.27 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mts_esp_integration_tests" end time: Nov 09 20:03 AST
+"cs80_mts_esp_integration_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+142/145 Testing: cs80_render_cli_tests
+142/145 Test: cs80_render_cli_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_render_cli.py" "--render" "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_render"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_render_cli_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.203s
+
+OK
+<end of output>
+Test time =   0.27 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_render_cli_tests" end time: Nov 09 20:03 AST
+"cs80_render_cli_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+134/145 Testing: cs80_memory_interval_extrema
+134/145 Test: cs80_memory_interval_extrema
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_memory_interval_extrema.py" "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_verified_diode_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_interval_extrema" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Executable: /workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_verified_diode_tests
+Exact-Fraction extrema cases: 12228 accepted: 7243 required rejections: 4985 failures: 0
+Serialized SHA256: 539957645c95cfb50c0f4100d92a4564bd6dfc4840f2dba75e017a97bd0c14b5
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_interval_extrema" end time: Nov 09 20:03 AST
+"cs80_memory_interval_extrema" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/145 Testing: cs80_ci_bundle_verification_tests
+15/145 Test: cs80_ci_bundle_verification_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-verify-ci-bundle.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ci_bundle_verification_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+........................
+----------------------------------------------------------------------
+Ran 24 tests in 0.111s
+
+OK
+<end of output>
+Test time =   0.23 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ci_bundle_verification_tests" end time: Nov 09 20:03 AST
+"cs80_ci_bundle_verification_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+39/145 Testing: cs80_envelope_rc_model_tests
+39/145 Test: cs80_envelope_rc_model_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_envelope_rc_model_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_envelope_rc_model_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+48 checks, 0 failures
+<end of output>
+Test time =   0.19 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_envelope_rc_model_tests" end time: Nov 09 20:03 AST
+"cs80_envelope_rc_model_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/145 Testing: cs80_package_binary_identity_tests
+9/145 Test: cs80_package_binary_identity_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-package-binary-identity.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_package_binary_identity_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+...s.........
+----------------------------------------------------------------------
+Ran 13 tests in 0.048s
+
+OK (skipped=1)
+<end of output>
+Test time =   0.17 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_package_binary_identity_tests" end time: Nov 09 20:03 AST
+"cs80_package_binary_identity_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/145 Testing: cs80_pluginval_windows_download_tests
+12/145 Test: cs80_pluginval_windows_download_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-pluginval-windows-download.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pluginval_windows_download_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.008s
+
+OK
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pluginval_windows_download_tests" end time: Nov 09 20:03 AST
+"cs80_pluginval_windows_download_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/145 Testing: cs80_pluginval_macos_download_tests
+13/145 Test: cs80_pluginval_macos_download_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/scripts/test-pluginval-macos-download.py"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pluginval_macos_download_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+......................
+----------------------------------------------------------------------
+Ran 22 tests in 0.012s
+
+OK
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pluginval_macos_download_tests" end time: Nov 09 20:03 AST
+"cs80_pluginval_macos_download_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+62/145 Testing: cs80_level_control_tests
+62/145 Test: cs80_level_control_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_level_control_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_level_control_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+54272 checks, 0 failures
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_level_control_tests" end time: Nov 09 20:03 AST
+"cs80_level_control_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+143/145 Testing: cs80_benchmark_preflight_tests
+143/145 Test: cs80_benchmark_preflight_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/release-followup/tests/test_benchmark_preflight.py" "--benchmark" "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_source_factory_benchmark"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_benchmark_preflight_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.034s
+
+OK
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_benchmark_preflight_tests" end time: Nov 09 20:03 AST
+"cs80_benchmark_preflight_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+141/145 Testing: cs80_midi_learn_tests
+141/145 Test: cs80_midi_learn_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_midi_learn_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_midi_learn_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+47 checks, 0 failures
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_midi_learn_tests" end time: Nov 09 20:03 AST
+"cs80_midi_learn_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+37/145 Testing: cs80_ig00156_cache_tests
+37/145 Test: cs80_ig00156_cache_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00156_cache_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00156_cache_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+20364865 exact scalar comparisons across 385223 samples, 96654 exceptional both-NaN checks; 0 failures
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00156_cache_tests" end time: Nov 09 20:03 AST
+"cs80_ig00156_cache_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+110/145 Testing: cs80_mseg_transport_rate_tests
+110/145 Test: cs80_mseg_transport_rate_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mseg_transport_rate_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mseg_transport_rate_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+MSEG transport/rate tests: 0 failures
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mseg_transport_rate_tests" end time: Nov 09 20:03 AST
+"cs80_mseg_transport_rate_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+52/145 Testing: cs80_source_factory_tone_tests
+52/145 Test: cs80_source_factory_tone_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_source_factory_tone_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_source_factory_tone_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+373977 source factory nominal-model checks; 0 failures
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_source_factory_tone_tests" end time: Nov 09 20:03 AST
+"cs80_source_factory_tone_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+116/145 Testing: cs80_delay_line_tests
+116/145 Test: cs80_delay_line_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_delay_line_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_delay_line_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Delay line: 1125 checks, 0 failures
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_delay_line_tests" end time: Nov 09 20:03 AST
+"cs80_delay_line_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+139/145 Testing: cs80_fast_math_tests
+139/145 Test: cs80_fast_math_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_fast_math_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_fast_math_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+fast tan on (0, 1.45]: worst relative error 3.13e-11 (bound 1e-10)
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_fast_math_tests" end time: Nov 09 20:03 AST
+"cs80_fast_math_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+63/145 Testing: cs80_resonance_control_tests
+63/145 Test: cs80_resonance_control_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_resonance_control_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_resonance_control_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+28059 checks, 0 failures
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_resonance_control_tests" end time: Nov 09 20:03 AST
+"cs80_resonance_control_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+54/145 Testing: cs80_ig00156_reference_tests
+54/145 Test: cs80_ig00156_reference_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00156_reference_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00156_reference_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Trapezoid errors: 6.18922533e-05 1.54761149e-05 3.86921946e-06
+Conditional IG00156 reference: 112 checks, 0 failures
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00156_reference_tests" end time: Nov 09 20:03 AST
+"cs80_ig00156_reference_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+22/145 Testing: cs80_continuous_voice_circuit_tests
+22/145 Test: cs80_continuous_voice_circuit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_continuous_voice_circuit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_continuous_voice_circuit_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Continuous voice circuit: 151578 checks, 0 failures
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_continuous_voice_circuit_tests" end time: Nov 09 20:03 AST
+"cs80_continuous_voice_circuit_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+67/145 Testing: cs80_pra_wah_tests
+67/145 Test: cs80_pra_wah_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_pra_wah_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pra_wah_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+28686 checks, 0 failures
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pra_wah_tests" end time: Nov 09 20:03 AST
+"cs80_pra_wah_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/145 Testing: cs80_ig00151_zero_ei_tests
+5/145 Test: cs80_ig00151_zero_ei_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00151_zero_ei_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00151_zero_ei_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+1200054 checks, 0 failures
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00151_zero_ei_tests" end time: Nov 09 20:03 AST
+"cs80_ig00151_zero_ei_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+69/145 Testing: cs80_mn3001_packet_tests
+69/145 Test: cs80_mn3001_packet_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mn3001_packet_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mn3001_packet_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+97650 checks, 0 failures (normalized signal packets; not analog voltage)
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mn3001_packet_tests" end time: Nov 09 20:03 AST
+"cs80_mn3001_packet_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+113/145 Testing: cs80_mseg_combined_interaction_tests
+113/145 Test: cs80_mseg_combined_interaction_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mseg_combined_interaction_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mseg_combined_interaction_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Combined MSEG interactions: 2304/2304 checks passed
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mseg_combined_interaction_tests" end time: Nov 09 20:03 AST
+"cs80_mseg_combined_interaction_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+58/145 Testing: cs80_loaded_control_transient_tests
+58/145 Test: cs80_loaded_control_transient_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_loaded_control_transient_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_loaded_control_transient_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+1882 loaded-control transient checks passed (conditional RC only)
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_loaded_control_transient_tests" end time: Nov 09 20:03 AST
+"cs80_loaded_control_transient_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+57/145 Testing: cs80_loaded_control_rank_tests
+57/145 Test: cs80_loaded_control_rank_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_loaded_control_rank_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_loaded_control_rank_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+14012 loaded-rank checks passed (synthetic boundaries only)
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_loaded_control_rank_tests" end time: Nov 09 20:03 AST
+"cs80_loaded_control_rank_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/145 Testing: cs80_ig00156_batch_tests
+2/145 Test: cs80_ig00156_batch_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_ig00156_batch_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_ig00156_batch_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Ig00156Batch: 1142908 checks, 0 failures, 0 accelerated groups
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_ig00156_batch_tests" end time: Nov 09 20:03 AST
+"cs80_ig00156_batch_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+61/145 Testing: cs80_output_taps_tests
+61/145 Test: cs80_output_taps_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_output_taps_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_output_taps_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+11016 checks, 0 failures
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_output_taps_tests" end time: Nov 09 20:03 AST
+"cs80_output_taps_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+64/145 Testing: cs80_oe2_filters_tests
+64/145 Test: cs80_oe2_filters_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_oe2_filters_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_oe2_filters_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+10190 checks, 0 failures
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_oe2_filters_tests" end time: Nov 09 20:03 AST
+"cs80_oe2_filters_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/145 Testing: cs80_keyboard_event_queue_tests
+31/145 Test: cs80_keyboard_event_queue_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_keyboard_event_queue_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_keyboard_event_queue_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Keyboard event queue tests passed
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_keyboard_event_queue_tests" end time: Nov 09 20:03 AST
+"cs80_keyboard_event_queue_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/145 Testing: cs80_voice_activity_tests
+27/145 Test: cs80_voice_activity_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_voice_activity_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_voice_activity_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Voice activity: 131332 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_voice_activity_tests" end time: Nov 09 20:03 AST
+"cs80_voice_activity_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/145 Testing: cs80_lfo_scope_preview_tests
+24/145 Test: cs80_lfo_scope_preview_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_lfo_scope_preview_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_lfo_scope_preview_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+LFO scope preview: 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_lfo_scope_preview_tests" end time: Nov 09 20:03 AST
+"cs80_lfo_scope_preview_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+55/145 Testing: cs80_keyboard_contour_reference_tests
+55/145 Test: cs80_keyboard_contour_reference_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_keyboard_contour_reference_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_keyboard_contour_reference_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+160459 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_keyboard_contour_reference_tests" end time: Nov 09 20:03 AST
+"cs80_keyboard_contour_reference_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+98/145 Testing: cs80_tuning_frequency_domain_tests
+98/145 Test: cs80_tuning_frequency_domain_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_tuning_frequency_domain_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_tuning_frequency_domain_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Nominal accepted pitch edges: -1730.99988 (6.16571324e-43 Hz), 1499.62366 (3.40281231e+38 Hz)
+Tuning frequency domain: 826 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_tuning_frequency_domain_tests" end time: Nov 09 20:03 AST
+"cs80_tuning_frequency_domain_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/145 Testing: cs80_output_meter_audit_tests
+29/145 Test: cs80_output_meter_audit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_output_meter_audit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_output_meter_audit_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Independent output-meter audit: 6348 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_output_meter_audit_tests" end time: Nov 09 20:03 AST
+"cs80_output_meter_audit_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+99/145 Testing: cs80_tuning_robustness_tests
+99/145 Test: cs80_tuning_robustness_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_tuning_robustness_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_tuning_robustness_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Tuning robustness: 2785 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_tuning_robustness_tests" end time: Nov 09 20:03 AST
+"cs80_tuning_robustness_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/145 Testing: cs80_event_timeline_tests
+6/145 Test: cs80_event_timeline_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_event_timeline_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_event_timeline_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+offline event timeline: exact timestamps and sample-reference output passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_event_timeline_tests" end time: Nov 09 20:03 AST
+"cs80_event_timeline_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+131/145 Testing: cs80_memory_qualification_probe_self_tests
+131/145 Test: cs80_memory_qualification_probe_self_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_memory_qualification_probe" "/workspace/scratch/ee447c520988/release-followup/tests/parity/tolerances-v2/memory-nonlinear-study.json" "/workspace/scratch/ee447c520988/build-mpe-released-target-core" "check"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_memory_qualification_probe_self_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Comparison self-tests: finite baseline passed; 12 invalid readouts rejected
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_memory_qualification_probe_self_tests" end time: Nov 09 20:03 AST
+"cs80_memory_qualification_probe_self_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+53/145 Testing: cs80_hardware_control_tests
+53/145 Test: cs80_hardware_control_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_hardware_control_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_hardware_control_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Hardware control: 4702 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_hardware_control_tests" end time: Nov 09 20:03 AST
+"cs80_hardware_control_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+56/145 Testing: cs80_loaded_control_reference_tests
+56/145 Test: cs80_loaded_control_reference_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_loaded_control_reference_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_loaded_control_reference_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+8132 loaded-control checks passed (synthetic boundaries, no hardware validation)
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_loaded_control_reference_tests" end time: Nov 09 20:03 AST
+"cs80_loaded_control_reference_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/145 Testing: cs80_preset_preview_math_tests
+25/145 Test: cs80_preset_preview_math_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_preset_preview_math_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_preset_preview_math_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Preset preview math: 65543 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_preview_math_tests" end time: Nov 09 20:03 AST
+"cs80_preset_preview_math_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+102/145 Testing: cs80_mts_esp_fallback_tests
+102/145 Test: cs80_mts_esp_fallback_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mts_esp_fallback_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mts_esp_fallback_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mts_esp_fallback_tests" end time: Nov 09 20:03 AST
+"cs80_mts_esp_fallback_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+100/145 Testing: cs80_mts_esp_native_tests
+100/145 Test: cs80_mts_esp_native_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mts_esp_native_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mts_esp_native_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Real MTS-ESP client: 32 lifecycles, 32 without a master
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mts_esp_native_tests" end time: Nov 09 20:03 AST
+"cs80_mts_esp_native_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+140/145 Testing: cs80_evidence_register_tests
+140/145 Test: cs80_evidence_register_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_evidence_register_tests" "/workspace/scratch/ee447c520988/release-followup/docs"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_evidence_register_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+1016 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_evidence_register_tests" end time: Nov 09 20:03 AST
+"cs80_evidence_register_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/145 Testing: cs80_keyboard_pressure_audit_tests
+30/145 Test: cs80_keyboard_pressure_audit_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_keyboard_pressure_audit_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_keyboard_pressure_audit_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Keyboard pressure independent audit: 235 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_keyboard_pressure_audit_tests" end time: Nov 09 20:03 AST
+"cs80_keyboard_pressure_audit_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/145 Testing: cs80_pump_until_tests
+7/145 Test: cs80_pump_until_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_pump_until_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_pump_until_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_pump_until_tests" end time: Nov 09 20:03 AST
+"cs80_pump_until_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+48/145 Testing: cs80_high_resolution_velocity_tests
+48/145 Test: cs80_high_resolution_velocity_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_high_resolution_velocity_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_high_resolution_velocity_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+High-resolution velocity: 780656 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_high_resolution_velocity_tests" end time: Nov 09 20:03 AST
+"cs80_high_resolution_velocity_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+138/145 Testing: cs80_programmer_control_identity_tests
+138/145 Test: cs80_programmer_control_identity_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_programmer_control_identity_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_programmer_control_identity_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+26 physical row identities and exclusions: 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_programmer_control_identity_tests" end time: Nov 09 20:03 AST
+"cs80_programmer_control_identity_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/145 Testing: cs80_output_meter_tests
+28/145 Test: cs80_output_meter_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_output_meter_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_output_meter_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Output meter: 20 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_output_meter_tests" end time: Nov 09 20:03 AST
+"cs80_output_meter_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/145 Testing: cs80_output_meter_display_tests
+26/145 Test: cs80_output_meter_display_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_output_meter_display_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_output_meter_display_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+Output meter display: PASS
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_output_meter_display_tests" end time: Nov 09 20:03 AST
+"cs80_output_meter_display_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+103/145 Testing: cs80_mts_esp_windows_macro_tests
+103/145 Test: cs80_mts_esp_windows_macro_tests
+Command: "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mts_esp_windows_macro_tests"
+Directory: /workspace/scratch/ee447c520988/build-mpe-released-target-core
+"cs80_mts_esp_windows_macro_tests" start time: Nov 09 20:03 AST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mts_esp_windows_macro_tests" end time: Nov 09 20:03 AST
+"cs80_mts_esp_windows_macro_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 09 20:03 AST
+
+packaging =   4.26 sec*proc
+

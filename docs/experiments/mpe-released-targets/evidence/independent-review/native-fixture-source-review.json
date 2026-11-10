@@ -1,0 +1,65 @@
+{
+  "review": "Independent read-only native fixture and registration source review",
+  "reviewed_at_utc": "2026-11-09T23:42:19.634421+00:00",
+  "repository": "/workspace/scratch/ee447c520988/release-followup",
+  "production_head": "c0219bd0de8559d72fce4194a849414de5ac7e61",
+  "production_base": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+  "fixture_state": "Uncommitted working-tree files reviewed by exact SHA-256; no native execution performed by this reviewer.",
+  "reviewed_sha256": {
+    "tests/MpeReleasedTargetHostTests.h": "966d7ef15b12ed087facca684d898cbb176bc56fa8ab8dc5b2f6cd30d1113f66",
+    "src/tools/ui_snapshot.cpp": "38ce760824e64a3cafa09807caa3c59f361c623283df53dce1bf47f59bbae00e",
+    "CMakeLists.txt": "a6674c06f2e055066d46180b8bdbd913435a05b7454c5994793d8de8105c0144",
+    "docs/experiments/mpe-released-targets/PLAN.md": "a5a2434d8b3fceee10b586bec7834ac33d475f0c37eebb4b0e2355dddb41a9fa",
+    "src/core/Engine.cpp": "9547427a7495d11a5911bcd474658fc1c0bb252b2c624bff83d11992cbcaa42d",
+    "src/core/Engine.h": "6f9913232d8c3a9b2b285169bb933cfb8779515325f1e354514102d6c4a44a0e"
+  },
+  "original_fixture": {
+    "path": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/review-inputs/native-fixture-initial.h",
+    "sha256": "ef9959ca22f1e6779968af7ee841cb2f9d7f4993b94c2ebd5c1ed9c25148aa42"
+  },
+  "verdict": "No outstanding source-level fixture or registration blocker within the stated bounded scope. The two initial review findings were addressed: adequate settling before exact moved-target checks, and explicit combined-output audibility scope.",
+  "scope": [
+    "Main 128 paired scenarios by static loop inspection: Legacy/Circuit, 8/16 voices, 0/32 callback frames, lower/upper members 2/15, pedal/no pedal, Note Off/zero-velocity Note On, same/separate offsets.",
+    "Eight before-release ordering scenarios and eight held-primary/released-extension composition scenarios by static loop inspection.",
+    "Actual processBlock dispatch, finite exact-bit continuation comparison against a no-later-event reference, original voice identity and intended engine checks, later cache-initialized onset and explicit CC121 tail reset.",
+    "Corresponding native CMake test registration and ui_snapshot command-line dispatch.",
+    "Delta against the preserved initial fixture, unchanged frozen production hashes and corrected accepted-engine-gate plan wording."
+  ],
+  "resolved_findings": [
+    {
+      "issue": "Two Circuit moved-timbre cases required final target bits after only 256 host frames, while the 5 ms smoother would still be moving.",
+      "resolution": "Both now render 6144 host frames at 48000 Hz (128 ms) before exact final-target assertions. At 25.6 time constants the declared one-pole residual is below its 1e-9 snap threshold. The main unchanged-tail paired continuation remains short.",
+      "verification": "Source/delta review only; runtime success not claimed."
+    },
+    {
+      "issue": "Sixteen-voice non-silence checks could be satisfied by held primary filler notes without proving extension audibility.",
+      "resolution": "Labels explicitly state non-silent combined processor output. Evidence must distinguish a single-voice audible witness in eight-voice mode from combined output plus exact intended-extension state in sixteen-voice mode.",
+      "remaining_limit": "This fixture does not isolate the extension audio contribution."
+    }
+  ],
+  "positive_observations": [
+    "The intended target Engine is selected explicitly, its current member role is checked, and eight held primary notes force extension allocation in sixteen-voice cases.",
+    "The original voice slot is checked for active/released state, note and channel after expression events and again after the later onset before CC121 assertions. A reclaimed slot containing the later different note cannot silently pass.",
+    "All audio equality comparisons require finite floats and exact bits. Main cases compare only before the fresh-note divergence; subsequent state checks deliberately disable audio comparison.",
+    "Zero-frame events preserve ordering while offsets clamp to the same boundary; only the 32-frame separated cases claim elapsed time.",
+    "CC74 timbre is checked independently through both rank offsets; cached bend and pressure through exact target telemetry.",
+    "The native test entrypoint returns failure when checks fail and the CMake registration uses the same command-line selector.",
+    "Production Engine.cpp and Engine.h hashes still match the frozen source review."
+  ],
+  "execution": {
+    "source_reads": true,
+    "diff_check": "git diff --check completed without diagnostics",
+    "builds": false,
+    "behavioral_tests": false,
+    "native_runs": false,
+    "fault_controls": false,
+    "benchmarks_or_timing": false
+  },
+  "limits": [
+    "This report is source review, not a native pass or permission to execute the test.",
+    "No independent runtime verification, baseline reproduction or fault-control execution occurred.",
+    "No editor, GUI interaction, external DAW, plugin-format host, physical controller or isolated extension audibility coverage is claimed.",
+    "Core fixture completeness and its qualification evidence are outside this native-fixture review.",
+    "Only this review artifact was written; production and fixture files were not edited by this reviewer."
+  ]
+}

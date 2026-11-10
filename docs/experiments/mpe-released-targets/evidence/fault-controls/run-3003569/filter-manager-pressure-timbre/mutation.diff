@@ -1,0 +1,22 @@
+--- baseline/src/core/Engine.cpp
++++ filter-manager-pressure-timbre/src/core/Engine.cpp
+@@ -1745,7 +1745,7 @@
+         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
+     lastChannelPressure = pressure;
+     for (auto& v : voices)
+-        if (v.active && (!heldOnly || v.held)
++        if (v.active && (!global.mpe || resetReleasedVoices || v.held)
+             && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+             v.pressure = pressure;
+ }
+--- baseline/src/core/Engine.cpp
++++ filter-manager-pressure-timbre/src/core/Engine.cpp
+@@ -1861,7 +1861,7 @@
+         if (initial != nullptr)
+             initial->timbre = value;
+         for (auto& v : voices)
+-            if (v.active && (initial == nullptr || v.held)
++            if (v.active && (!global.mpe || v.held)
+                 && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+                 v.timbre = value;
+     }

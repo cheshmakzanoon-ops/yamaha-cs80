@@ -1,0 +1,12 @@
+[0/2] Re-checking globbed directories...
+[1/2] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+/workspace/scratch/ee447c520988/release-followup/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/ee447c520988/release-followup/src/tools/ui_snapshot.cpp:3327:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3327 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/release-followup/src/tools/ui_snapshot.cpp:3328:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3328 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[2/2] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots
+
+build status: 0

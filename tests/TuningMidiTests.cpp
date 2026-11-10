@@ -713,7 +713,10 @@ void testMpeExpressionZoneBoundaries()
                 f.send(16, 0.25f); f.verify(index, 0.25f, 3000, "captured upper initial control");
                 f.layout(14, 0); // Channel 14 is assigned lower, still captured upper.
                 f.send(1, 0.75f); f.verify(index, 0.25f, 3000, "assigned voice is not live-retagged");
-                f.send(14, 0.5f); f.verify(index, 0.5f, 3000, "retained upper own channel");
+                // Channel 14 is currently a lower member despite its captured
+                // upper routing. Ordinary own-channel expression now retains
+                // released targets; held recipients still take the new value.
+                f.send(14, 0.5f); f.verify(index, tail ? 0.25f : 0.5f, 3000, "retained upper own channel");
             }
             {
                 Fixture f(policy); f.layout(2, 2);

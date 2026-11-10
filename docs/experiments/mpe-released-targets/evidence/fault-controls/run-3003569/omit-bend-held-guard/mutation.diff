@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ omit-bend-held-guard/src/core/Engine.cpp
+@@ -1787,7 +1787,7 @@
+         const float negotiated = mpeZones.memberRange(role == MpeZoneLayout::Role::upperMember);
+         const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;
+         for (auto& v : voices)
+-            if (v.active && v.midiChannel == midiChannel && (!heldOnly || v.held))
++            if (v.active && v.midiChannel == midiChannel)
+                 v.mpeBend = value * range;
+     }
+     else

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "PolyPressureRoutingTests",
+    "stage": "compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-note-release/src",
+      "/workspace/scratch/ee447c520988/release-followup/tests/PolyPressureRoutingTests.cpp",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/superseded-oracles/PolyPressureRoutingTests-baseline-final-oracle"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "exit_code": 0,
+    "log": "PolyPressureRoutingTests-baseline-final-compile.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_sha256": "bab9362044aabdf480621b52dd5d44d8d4bfb86f5189597a920a757152a241d5",
+    "baseline_head": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+    "library_sha256": "677e346d891d38b261c6a30f6c9cba26d7dfb23a43ffea8ff62c0f8f7e9838f8"
+  },
+  {
+    "name": "PolyPressureRoutingTests",
+    "stage": "run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/superseded-oracles/PolyPressureRoutingTests-baseline-final-oracle"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "exit_code": 0,
+    "log": "PolyPressureRoutingTests-baseline-final-run.log",
+    "log_sha256": "50b1391ef8bb7aa95401624a4a0a52323fe592e26daaa7d41ae90b5893405046",
+    "source_sha256": "bab9362044aabdf480621b52dd5d44d8d4bfb86f5189597a920a757152a241d5",
+    "baseline_head": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+    "library_sha256": "677e346d891d38b261c6a30f6c9cba26d7dfb23a43ffea8ff62c0f8f7e9838f8"
+  },
+  {
+    "name": "TuningMidiTests",
+    "stage": "compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-I/workspace/scratch/ee447c520988/sixteen-note-release/src",
+      "/workspace/scratch/ee447c520988/release-followup/tests/TuningMidiTests.cpp",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/superseded-oracles/TuningMidiTests-baseline-final-oracle"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "exit_code": 1,
+    "log": "TuningMidiTests-baseline-final-compile.log",
+    "log_sha256": "99ff94484a430cd20ef959bc4215f83dbe03c99999d2f100b992f7e81be5ec3a",
+    "source_sha256": "85fe508613b9046e03e0b238a3332c668bd820a340bb45a6d98ffdda2c3e9941",
+    "baseline_head": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+    "library_sha256": "677e346d891d38b261c6a30f6c9cba26d7dfb23a43ffea8ff62c0f8f7e9838f8"
+  }
+]

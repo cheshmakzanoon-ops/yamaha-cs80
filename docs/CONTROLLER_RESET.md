@@ -21,8 +21,8 @@ smoother/envelope reset.
 | --- | --- |
 | Modulation (CC1) | Zero. This instrument's modulation target is global. |
 | Expression (CC11) | Full (1). The target is global, including the processor's expression readback and value reapplied after prepare or extension activation. |
-| Pitch bend | Centre through the existing `pitchBend(channel, 0)` route. Conventional bend is global. An MPE manager resets only its zone-wide component, retaining independent member bends; a member resets only its own bend, retaining the manager component. Unassigned channels keep the existing routing. The lower manager (and historical channel-1 fallback) also resets the shared normalized pitch-wheel matrix source; upper-manager and member resets leave that shared source unchanged. |
-| Pressure | Zero through the existing `channelPressure(channel, 0)` route. Own-channel voices and the addressed MPE manager's voices are affected. Conventional channel 1 retains its historical pressure broadcast; other conventional channels affect their own voices. The shared channel-pressure matrix source is global and is also reset. Poly and channel pressure use the same per-voice target, so both clear in that scope. |
+| Pitch bend | Centre through the existing bend-target route, with the later released-target reset exception described below. Conventional bend is global. An MPE manager resets only its zone-wide component, retaining independent member bends; a member resets only its own bend, retaining the manager component. Unassigned channels keep the existing routing. The lower manager (and historical channel-1 fallback) also resets the shared normalized pitch-wheel matrix source; upper-manager and member resets leave that shared source unchanged. |
+| Pressure | Zero through the existing pressure-target route, with the later released-target reset exception described below. Own-channel voices and the addressed MPE manager's voices are affected. Conventional channel 1 retains its historical pressure broadcast; other conventional channels affect their own voices. The shared channel-pressure matrix source is global and is also reset. Poly and channel pressure use the same per-voice target, so both clear in that scope. |
 | MIDI sustain (CC64) | The addressed pedal is released through the existing pedal-up path. Held keys are not released. MPE members still inherit their manager's pedal; an independently down member pedal remains down when its manager is reset. Other pedals stay unchanged. |
 | CC88 velocity prefix | Discard the addressed channel's pending prefix, returning its next strike to ordinary 7-bit velocity. Other channels' prefixes remain pending. This is an explicit device policy, not a claim that RP-015 specifies this later-added prefix. A prefix after CC121 still applies to the next note. |
 | RPN/NRPN selection | Null the addressed selector and Data Entry latch, even while MPE is disabled or PURE is enabled. Retain negotiated zones and bend-range values; other selectors stay unchanged. |
@@ -61,6 +61,18 @@ member pressure even after a manager CC121. This is not full zone termination,
 a new manager/member pressure-combination model or complete MPE conformance.
 The historical verification results and evidence manifest below remain those of
 the original reset increment, not qualification of this later cache extension.
+
+## Later released-target exception
+
+The later [MPE released-target repair](MPE_RELEASED_TARGETS.md) restricts ordinary
+member Pitch Bend and Channel Pressure to active accepted held gates. CC121
+explicitly bypasses that new held-only guard through private routing helpers:
+it still resets its existing active released/pedal-held recipients and raw
+member defaults. CC74 remains retained, manager scope and shared matrix sources
+are unchanged, and PURE still performs only selector/latch nulling. This is a
+preserved reset exception, not ordinary member-event replay or a whole-zone
+reset. Its separate evidence is linked from the later repair; the historical
+counts below remain those of the original reset increment.
 
 ## Primary evidence and limits
 

@@ -19,9 +19,11 @@ enabled and the channel must currently belong to a lower or upper member role.
   CC74. Manager resets do not rewrite independent member state.
 - No retention is added for conventional, PURE, gap or manager channels, or for
   polyphonic pressure. No-message defaults remain zero, including CC74.
-- The existing active-voice event arithmetic, smoothing, manager routing,
-  parameter/preset state and UI are unchanged. No replay of global controller
-  side effects is used to initialize a note.
+- This onset increment preserves event arithmetic, smoothing, manager routing,
+  parameter/preset state and UI. No replay of global controller side effects
+  is used to initialize a note. The later [released-target repair](MPE_RELEASED_TARGETS.md)
+  narrows ordinary member-event recipients to accepted held gates while keeping
+  this raw cache available for subsequent onsets.
 - Sixteen-voice coverage applies when both instruments are already active.
   Inactive-extension activation is deliberately not a partial controller-state
   handoff. MIDI-learn consumption still takes precedence over learned CC74.
@@ -44,7 +46,9 @@ The downloaded PDF SHA-256 is
 `c5f6727af065e454fe9bc4ff80f66414e8b25ffb6c1019ce7795ab4a89da1f1e`.
 The PDF is not redistributed in this bundle.
 
-This is **not full MPE conformance**. Released-tail isolation, full MCM note
+This is **not full MPE conformance**. The later [released-target repair](MPE_RELEASED_TARGETS.md)
+retains per-voice targets after accepted release, with explicit reset/global
+exceptions; it does not provide whole-audio isolation. Full MCM note
 termination/zone reset, manager/member pressure and timbre combination,
 inactive-extension state handoff and live active-note range retargeting remain
 separate. No GUI, external DAW, physical controller, plugin-format host,

@@ -1,0 +1,104 @@
+[
+  {
+    "profile": "gcc-generic",
+    "stage": "build",
+    "argv": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/cmake",
+      "--build",
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic",
+      "--target",
+      "cs80_mpe_released_target_tests",
+      "cs80_mpe_member_onset_tests",
+      "cs80_controller_reset_tests",
+      "cs80_sixteen_voice_release_tests",
+      "cs80_tests",
+      "cs80_tuning_midi_tests",
+      "--parallel",
+      "2"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:44:31.565766+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-build.log",
+    "sha256": "4de7689d2310ef565219c62df2ac75a462821a4528c71cd1fe972b5ce776a4c1",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_mpe_released_target_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_mpe_released_target_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:44:43.727164+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_mpe_released_target_tests.log",
+    "sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_mpe_member_onset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_mpe_member_onset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:44:47.340285+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_mpe_member_onset_tests.log",
+    "sha256": "b905d257f5f764f7c669efbb0fcce5e7c6dee86e27aced338e0f9ccf05fa112b",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_controller_reset_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_controller_reset_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:44:50.418984+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_controller_reset_tests.log",
+    "sha256": "124278d4ef5c0081f644ba8da63ce88243963c1e9baf3cc0deecabe7fa850e8f",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_sixteen_voice_release_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_sixteen_voice_release_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:44:56.138433+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_sixteen_voice_release_tests.log",
+    "sha256": "cd2557f73c7bdd447b1de33337140ccd67018301d3ea5d207b97a7f4d9b68a8b",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:44:59.548190+00:00",
+    "exit_code": 0,
+    "log": "gcc-generic-cs80_tests.log",
+    "sha256": "dadcb5b802ab83e36c81eaa26ff59eecc316dd64447e75806d36b0f6ce2951ab",
+    "env": {}
+  },
+  {
+    "profile": "gcc-generic",
+    "stage": "cs80_tuning_midi_tests",
+    "argv": [
+      "/workspace/scratch/ee447c520988/build-mpe-released-target-profile-gcc-generic/cs80_tuning_midi_tests"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "started_utc": "2026-11-09T23:45:08.513630+00:00",
+    "exit_code": 1,
+    "log": "gcc-generic-cs80_tuning_midi_tests.log",
+    "sha256": "4100b9b8afff2e7524185efe81a011fd5fa02e3b62e96e5511bd0efada8ce623",
+    "env": {}
+  }
+]

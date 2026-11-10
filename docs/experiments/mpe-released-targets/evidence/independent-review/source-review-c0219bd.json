@@ -1,0 +1,71 @@
+{
+  "review": "Independent source-only review of bounded MPE released per-voice target repair",
+  "reviewed_at_utc": "2026-11-09T23:36:06.138433+00:00",
+  "repository": "/workspace/scratch/ee447c520988/release-followup",
+  "reviewed_head": "c0219bd0de8559d72fce4194a849414de5ac7e61",
+  "reviewed_base": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+  "production_sha256": {
+    "src/core/Engine.cpp": {
+      "head": "9547427a7495d11a5911bcd474658fc1c0bb252b2c624bff83d11992cbcaa42d",
+      "base": "3f894a776beaa85ae4f7ba65444a0b24d56f5228a01d63495a6eaa21fe22d8b7"
+    },
+    "src/core/Engine.h": {
+      "head": "6f9913232d8c3a9b2b285169bb933cfb8779515325f1e354514102d6c4a44a0e",
+      "base": "f802523cc971866f4a060c64e088f7a709cef361503d83df8862bb3d02e4b755"
+    }
+  },
+  "plan_at_review": {
+    "path": "docs/experiments/mpe-released-targets/PLAN.md",
+    "sha256": "49cb78c50758870f135568509f184c66d2956a9816623d4ef1155f3a69bcda50"
+  },
+  "verdict": "No source correctness blocker found. One scope wording nit should be corrected. Behavioral, native, compatibility and performance qualification are not established by this review.",
+  "inspected_scope": [
+    "Exact production diff from the reviewed base to head; wrappers and private helpers for channel pressure and pitch bend; CC74 and CC121 call paths.",
+    "Current effective MPE and actual member-role classification, including channel 1 in a full upper zone and channel 16 in a full lower zone.",
+    "Raw member retention before target eligibility filtering, retained-state reset and role invalidation, accepted onset initialization, held versus pedal-held eligibility.",
+    "Accepted release lifetime, ARP generated gate close and future allocation, deferred KAS release timing, current role and enable transitions.",
+    "Preserved manager, gap, conventional and PURE routing; unchanged captured-zone policy, polyphonic-pressure path, global pressure source and optional CC74 ribbon adapter.",
+    "CC121 private reset exception, finite rejection, clamping, curve/range expressions, pedal order, smoothing targets and unchanged DSP/sample loop."
+  ],
+  "findings": [
+    {
+      "severity": "info",
+      "result": "Raw caches still update before filtering. Ordinary expression applies held-only eligibility solely to actual current effective MPE member events."
+    },
+    {
+      "severity": "info",
+      "result": "Released and pedal-held voices are excluded from ordinary member target updates. Voice::held follows accepted engine gates, including ARP synthetic gates; queued KAS release does not freeze targets before dispatch."
+    },
+    {
+      "severity": "info",
+      "result": "Only the CC121 call sites pass true to the private reset helpers. They preserve existing active-tail target resets, raw bend/pressure defaults, shared pressure reset, retained timbre and pedal order.",
+      "source": "src/core/Engine.cpp:1823-1825"
+    },
+    {
+      "severity": "info",
+      "result": "No source-level DSP arithmetic, sample-loop, smoothing, allocation, voice layout, scheduler or public API changes were found. This does not prove compiled-bit equivalence or performance."
+    },
+    {
+      "severity": "minor_documentation",
+      "result": "The plan says physically held, while Voice::held also represents generated ARP gates. Prefer active with its accepted engine gate held (held=true); pedal hold alone does not qualify. Later KAS/ARP and shared-global caveats are accurate.",
+      "source": "docs/experiments/mpe-released-targets/PLAN.md:20-22"
+    }
+  ],
+  "read_only_checks": [
+    "git diff --check 2ade213 c0219bd completed without diagnostics.",
+    "All private helper call sites were inspected at the frozen commit."
+  ],
+  "independent_execution": {
+    "builds": false,
+    "behavioral_tests": false,
+    "native_processor_tests": false,
+    "benchmarks_or_timing": false,
+    "baseline_reproduction": false
+  },
+  "limits": [
+    "This review independently inspected source only. Baseline failure counts communicated by the parent were not rerun or independently qualified here.",
+    "Comprehensive fixtures, fault controls, compiler profiles, sanitizer coverage, native host qualification and compatibility evidence remain separate.",
+    "No claim of whole-audio isolation, complete MIDI/MPE conformance or hardware fidelity is made.",
+    "No source changes or publication were performed by this reviewer."
+  ]
+}

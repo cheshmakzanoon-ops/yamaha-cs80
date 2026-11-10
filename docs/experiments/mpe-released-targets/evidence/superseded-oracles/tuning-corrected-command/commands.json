@@ -1,0 +1,32 @@
+[
+  {
+    "stage": "compile",
+    "argv": [
+      "c++",
+      "-std=c++20",
+      "-O3",
+      "-DNDEBUG",
+      "-DCS80_DISABLE_AVX2_FILTER_BATCH=1",
+      "-DCS80_TUNING_DATA_DIR=\"/workspace/scratch/ee447c520988/sixteen-note-release/tests/data/tuning\"",
+      "-I/workspace/scratch/ee447c520988/sixteen-note-release/src",
+      "/workspace/scratch/ee447c520988/release-followup/tests/TuningMidiTests.cpp",
+      "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+      "-o",
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/superseded-oracles/tuning-corrected-command/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "exit_code": 0,
+    "log": "compile.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "stage": "run",
+    "argv": [
+      "/workspace/scratch/ee447c520988/mpe-released-target-evidence/superseded-oracles/tuning-corrected-command/probe"
+    ],
+    "cwd": "/workspace/scratch/ee447c520988/release-followup",
+    "exit_code": 1,
+    "log": "run.log",
+    "sha256": "4100b9b8afff2e7524185efe81a011fd5fa02e3b62e96e5511bd0efada8ce623"
+  }
+]

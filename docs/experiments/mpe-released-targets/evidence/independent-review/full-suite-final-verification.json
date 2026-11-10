@@ -1,0 +1,95 @@
+{
+  "reviewed_at_utc": "2026-11-10T00:07:07.009201+00:00",
+  "test_freeze": "04597f5ee87da1f6390a8682298a1a0e656f834c",
+  "source_record_sha256": "63eab4a815b85dca72351b38942ad3b91f509db135148dffc14ceed9c37a53a8",
+  "driver_sha256": "88c95acda9d1711b854372412701b1510a0865f5f6613331e12e041a27f32588",
+  "recorder_sha256": "79b18f1b7e118a672e1c6eebfd78dd9fa900202c2848179db7ed4682dce1350a",
+  "driver_status": 0,
+  "record_status": 0,
+  "verified_source_snapshot_count": 411,
+  "snapshots_equal_current_and_commit": true,
+  "profile_start_utc": "2026-11-09T23:53:16.660478+00:00",
+  "full_build_start_utc": "2026-11-09T23:55:51.000589+00:00",
+  "ctest_start_utc": "2026-11-09T23:55:56.139310+00:00",
+  "post_run_recorded_utc": "2026-11-10T00:04:35.897037+00:00",
+  "build_artifact_count": 131,
+  "all_recorded_artifact_hashes_and_sizes_match": true,
+  "console_pass_count": 145,
+  "last_test_pass_count": 145,
+  "registration_count": 145,
+  "registration_and_recorded_command_match": true,
+  "expected_focused_results": {
+    "cs80_mpe_released_target_tests": {
+      "ctest_name": "cs80_mpe_released_target_tests",
+      "checks": 7488,
+      "failures": 0,
+      "binary_sha256": "f880ab8c8ea7e5a92a9a0c05347b8db633dbf0857920bcb499dfeec1fa933318"
+    },
+    "cs80_mpe_member_onset_tests": {
+      "ctest_name": "cs80_mpe_member_onset_tests",
+      "checks": 2501,
+      "failures": 0,
+      "binary_sha256": "0517e3e24c11cb2a6bd90c903cf2cef383a551dbc49e3548160d8a4be2eed6df"
+    },
+    "cs80_controller_reset_tests": {
+      "ctest_name": "cs80_controller_reset_tests",
+      "checks": 3513,
+      "failures": 0,
+      "binary_sha256": "5b749b2776b1906bacfb4e971a2aaa834b1b44309189f8bec832febc0f706f9f"
+    },
+    "cs80_sixteen_voice_release_tests": {
+      "ctest_name": "cs80_sixteen_voice_release_tests",
+      "checks": 1418,
+      "failures": 0,
+      "binary_sha256": "dc904924884f3066373d169cd289c6c57a6afe8c93692c357c6d355e3f60587a"
+    },
+    "cs80_tests": {
+      "ctest_name": "cs80_core_tests",
+      "checks": 11508,
+      "failures": 0,
+      "binary_sha256": "86bc589895d5bd433da83952490873d2bc521d7dc84caf758dab54fa4d765ddb"
+    },
+    "cs80_tuning_midi_tests": {
+      "ctest_name": "cs80_tuning_midi_tests",
+      "checks": 22085,
+      "failures": 0,
+      "binary_sha256": "05529ea3d39f9f71ea55b6315f3a7fe8c436f6c98b88f2021340e25ef4b12463"
+    },
+    "cs80_poly_pressure_routing_tests": {
+      "ctest_name": "cs80_poly_pressure_routing_tests",
+      "checks": 4504,
+      "failures": 0,
+      "binary_sha256": "bf8c49695514843a9dd8dcf72f996998481ecc1da589745a7e043a3977b8fafc"
+    }
+  },
+  "build_flags": {
+    "CMAKE_BUILD_TYPE": "Release",
+    "CMAKE_CXX_COMPILER": "/usr/bin/c++",
+    "CMAKE_CXX_FLAGS_RELEASE": "-O3 -DNDEBUG",
+    "CS80_BUILD_PLUGIN": "OFF",
+    "CS80_ENABLE_AVX2_FILTER_BATCH": "OFF"
+  },
+  "console_sha256": "dbc29fb35402ca564fcb84144ead863c704caaf2e4ba8f87d0cc9e8ecd534927",
+  "last_test_sha256": "9b2d6c99b2824416052f2e15d190868a66f1ed764cd503ebfd3c9836e96ed5ff",
+  "commands_sha256": "185ae666589ae2eccd431fa6ada7804abb8fa4f58e3eba0684336d09e1529537",
+  "current_ctest_registration_sha256": "60a27734710f1ff844c722226077e9bc1a822c2919b5cb3d17c049dc129efa26",
+  "directly_invoked_repo_scripts_outside_snapshot_currently_match_commit": {
+    "scripts/run-pluginval-linux.sh": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+    "scripts/test-ci-juce-provenance.py": "6b192e39f0d77cbda7143498222ed420e1432d0c48efc1b7b66a2119bc825542",
+    "scripts/test-deb-runtime-dependencies.py": "3558023e56f2eb4e2aaaa3d7dfae3f1693a060e456fad575df7f2bbb0fd8026f",
+    "scripts/test-macos-installer-architectures.py": "e1aa2cb01de73602f37a3af94efb166d67f16c3abf1c5a25fb888d1736ab7064",
+    "scripts/test-package-binary-identity.py": "3b9cbba51ca8322f487269a9f069890aeb5bd0d4a6c0953978f0e254167bb480",
+    "scripts/test-packaging-notices.py": "3d61c918b97399a7d8938e0540fd48cd3181b7ede90acc337001f8230cf3fb56",
+    "scripts/test-pluginval-diagnostic-log.py": "387d7f08779732c682d41939597ab0fd19393074546ef776293df994e4e7a239",
+    "scripts/test-pluginval-exit-classification.py": "ae466f90899b0a09615886458eff7b8dceb6120d8b7989dd0cee77a0d5448d18",
+    "scripts/test-pluginval-macos-download.py": "a0a0c9763006c7339fd45fab2bc812cb2bc5c9f2f405227ae1d5899a6bbe6c74",
+    "scripts/test-pluginval-retry.sh": "162e246d24559d144ea82312aaf07557bb5b2be0c4a0e265b0a1d2f7312550e4",
+    "scripts/test-pluginval-windows-download.py": "6afd7e813fd1509dd1c747e9f04c6b5d2f35874a318a450f33ba60658b998ce8",
+    "scripts/test-preset-signature-math.py": "39e0563a3d6fa7d69e44f60d301d721a62aa91e4aeafd9d76c22de0c4a05220f",
+    "scripts/test-preset-trash-safety.py": "4a535be61def4a119c5d3cd6c9b5fb0fc43b5b43d9d7cb4c801d8ce3b8217178",
+    "scripts/test-verify-ci-bundle.py": "4f8d8bdaaa7066164ba0a340fa8a23381326f87833fa081bed4ac70c15f9895b",
+    "scripts/test-windows-installer-preflight.py": "501e95c68874c53f664693c9a086c905e159e0282e59b250b312b95ddc1fbb9d"
+  },
+  "independent_tests_executed_for_this_review": 0,
+  "independent_builds_performed_for_this_review": 0
+}

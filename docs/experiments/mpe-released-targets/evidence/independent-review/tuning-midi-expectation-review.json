@@ -1,0 +1,41 @@
+{
+  "review": "Independent review of intentional neighboring TuningMidi expectation supersession",
+  "reviewed_at_utc": "2026-11-09T23:47:02.720662+00:00",
+  "reviewed_freeze": "300356958b3cde471f8dc14a7b505070a4cffc8c",
+  "production_head": "c0219bd0de8559d72fce4194a849414de5ac7e61",
+  "reviewed_sha256": {
+    "tests/TuningMidiTests.cpp": "3756bf618adb277355d9bd1a28912532423ad207f7e154515234722f8505dbc3",
+    "src/core/Engine.cpp": "9547427a7495d11a5911bcd474658fc1c0bb252b2c624bff83d11992cbcaa42d",
+    "src/core/Engine.h": "6f9913232d8c3a9b2b285169bb933cfb8779515325f1e354514102d6c4a44a0e",
+    "src/core/MpeZones.h": "328fa2dbe5a7c7349d6a60aa81761a9c833b6dfa5960cbf3bcac98ef34d4a1d5",
+    "docs/experiments/mpe-released-targets/PLAN.md": "a5a2434d8b3fceee10b586bec7834ac33d475f0c37eebb4b0e2355dddb41a9fa"
+  },
+  "verdict": "Approve changing only the final retained-upper/current-lower own-channel expected value from 0.5f to tail ? 0.25f : 0.5f, with a scope comment. This is intentional supersession by the frozen current-role accepted-release contract, not weakening unrelated compatibility behavior.",
+  "location": "tests/TuningMidiTests.cpp:708-716 at reviewed freeze",
+  "reasoning": [
+    "The surrounding loop tests policy 1 and 3, which Fixture maps to effective MPE Legacy and Circuit, respectively. It independently tests held and released-tail states.",
+    "The voice begins on channel 14 in upper zone (layout 2/2). Manager 16 sets its pressure and CC74 targets to 0.25 even in the released-tail case; manager behavior remains preserved.",
+    "layout(14,0) makes current channel 14 a lowerMember. The existing voice retains upperZone=true, so lower manager 1 remains ineligible for its inherited manager route. The preceding 0.25 assertion must remain unchanged.",
+    "The subsequent event is ordinary pressure and CC74 on channel 14 itself, not a manager event or CC121. memberExpressionFor(14) returns current lower-member state, so the new accepted-gate filter permits a held voice and excludes a released tail.",
+    "Therefore the held branch must still update to 0.5 and the released branch must retain its prior 0.25 targets. This expectation separately protects the new eligibility rule and the unchanged captured-upper master routing.",
+    "The fixture independently checks exact pressure target, active voice/tail, per-voice pressure matrix pitch and CC74 timbre matrix pan. The reported six failures are structurally consistent with two policy tail cases times the three target/readout expectations; the active-tail witness remains intact.",
+    "The latest global channel-pressure source may still advance to 0.5, but it is routed to fx1Mix rather than the inspected per-voice pitch/pan slots. It does not justify updating the released per-voice targets."
+  ],
+  "recommended_comment": "Captured upper ownership still determines manager routing. Ordinary own-channel expression follows current member-role accepted-gate eligibility, so released tails retain their last targets.",
+  "preserve": [
+    "All manager, gap, conventional, PURE and other role-transition expectations.",
+    "The held branch expectation of 0.5 and existing tail-active checks.",
+    "The untouched 3003569 full-suite results and six original failures as historical evidence.",
+    "Production hashes and scope; no production change is needed."
+  ],
+  "execution": {
+    "source_inspection": true,
+    "source_or_fixture_edits": false,
+    "builds": false,
+    "test_runs": false
+  },
+  "limits": [
+    "The six failures were reported by the parent; this review established their expected source-level cause without independently rerunning the neighboring executable.",
+    "A later updated-fixture pass must be recorded separately from the untouched-freeze failure result."
+  ]
+}

@@ -1727,28 +1727,45 @@ void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 
 void Engine::channelPressure(int midiChannel, float pressure)
 {
+    applyChannelPressure(midiChannel, pressure, false);
+}
+
+void Engine::applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices)
+{
     if (! std::isfinite(pressure))
         return;
     pressure = clampf(pressure, 0.0f, 1.0f);
-    if (auto* initial = memberExpressionFor(midiChannel))
+    auto* initial = memberExpressionFor(midiChannel);
+    if (initial != nullptr)
         initial->pressure = pressure;
+    // Retain the raw channel state for later onsets, but ordinary member
+    // expression no longer changes targets after accepted voice release.
+    const bool heldOnly = initial != nullptr && !resetReleasedVoices;
     if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
     lastChannelPressure = pressure;
     for (auto& v : voices)
-        if (v.active && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+        if (v.active && (!heldOnly || v.held)
+            && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
             v.pressure = pressure;
 }
 
 void Engine::pitchBend(int midiChannel, float value)
+{
+    applyPitchBend(midiChannel, value, false);
+}
+
+void Engine::applyPitchBend(int midiChannel, float value, bool resetReleasedVoices)
 {
     // Ignore malformed float events before they can poison bend smoothers or
     // the independent pitch-wheel modulation source. Keep the last valid target.
     if (global.parityMode || ! std::isfinite(value))
         return;
     value = clampf(value, -1.0f, 1.0f);
-    if (auto* initial = memberExpressionFor(midiChannel))
+    auto* initial = memberExpressionFor(midiChannel);
+    if (initial != nullptr)
         initial->bend = value;
+    const bool heldOnly = initial != nullptr && !resetReleasedVoices;
     if (global.mpe)
     {
         // MPE zones (Phase 6): a master bends its zone, a member its notes.
@@ -1770,7 +1787,7 @@ void Engine::pitchBend(int midiChannel, float value)
         const float negotiated = mpeZones.memberRange(role == MpeZoneLayout::Role::upperMember);
         const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;
         for (auto& v : voices)
-            if (v.active && v.midiChannel == midiChannel)
+            if (v.active && v.midiChannel == midiChannel && (!heldOnly || v.held))
                 v.mpeBend = value * range;
     }
     else
@@ -1803,8 +1820,8 @@ void Engine::controlChange(int controller, float value, int midiChannel)
             // CC1/11/64 ribbon mapping must not move the independent ribbon.
             modWheel = 0.0f;
             expression = 1.0f;
-            pitchBend(midiChannel, 0.0f);
-            channelPressure(midiChannel, 0.0f);
+            applyPitchBend(midiChannel, 0.0f, true);
+            applyChannelPressure(midiChannel, 0.0f, true);
             setSustainPedal(midiChannel, false);
         }
         return;
@@ -1840,10 +1857,12 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         setSustainPedal(midiChannel, value >= 0.5f);
     else if (controller == 74)
     {
-        if (auto* initial = memberExpressionFor(midiChannel))
+        auto* initial = memberExpressionFor(midiChannel);
+        if (initial != nullptr)
             initial->timbre = value;
         for (auto& v : voices)
-            if (v.active && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+            if (v.active && (initial == nullptr || v.held)
+                && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
                 v.timbre = value;
     }
 }

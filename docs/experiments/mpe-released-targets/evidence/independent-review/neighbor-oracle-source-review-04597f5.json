@@ -1,0 +1,70 @@
+{
+  "review": "Independent exact-source review of both neighboring oracle corrections",
+  "reviewed_at_utc": "2026-11-09T23:54:12.974089+00:00",
+  "reviewed_head": "04597f5ee87da1f6390a8682298a1a0e656f834c",
+  "reviewed_base": "300356958b3cde471f8dc14a7b505070a4cffc8c",
+  "production_reviewed_head": "c0219bd0de8559d72fce4194a849414de5ac7e61",
+  "changed_files": [
+    "tests/PolyPressureRoutingTests.cpp",
+    "tests/TuningMidiTests.cpp"
+  ],
+  "sha256": {
+    "tests/TuningMidiTests.cpp": {
+      "head": "85fe508613b9046e03e0b238a3332c668bd820a340bb45a6d98ffdda2c3e9941",
+      "base": "3756bf618adb277355d9bd1a28912532423ad207f7e154515234722f8505dbc3"
+    },
+    "tests/PolyPressureRoutingTests.cpp": {
+      "head": "bab9362044aabdf480621b52dd5d44d8d4bfb86f5189597a920a757152a241d5",
+      "base": "e7fb2f7f654ba07c407a30030aafae4fdde9faa717c1130d7900fe34ca4b78e9"
+    },
+    "src/core/Engine.cpp": {
+      "head": "9547427a7495d11a5911bcd474658fc1c0bb252b2c624bff83d11992cbcaa42d",
+      "base": "9547427a7495d11a5911bcd474658fc1c0bb252b2c624bff83d11992cbcaa42d"
+    },
+    "src/core/Engine.h": {
+      "head": "6f9913232d8c3a9b2b285169bb933cfb8779515325f1e354514102d6c4a44a0e",
+      "base": "6f9913232d8c3a9b2b285169bb933cfb8779515325f1e354514102d6c4a44a0e"
+    },
+    "tests/MpeReleasedTargetTests.cpp": {
+      "head": "a685ccc9ab59fa2ca55f034a11b332cdb7e122a39f499015ec687b96b709d924",
+      "base": "a685ccc9ab59fa2ca55f034a11b332cdb7e122a39f499015ec687b96b709d924"
+    },
+    "tests/MpeReleasedTargetHostTests.h": {
+      "head": "966d7ef15b12ed087facca684d898cbb176bc56fa8ab8dc5b2f6cd30d1113f66",
+      "base": "966d7ef15b12ed087facca684d898cbb176bc56fa8ab8dc5b2f6cd30d1113f66"
+    }
+  },
+  "verdict": "Approved at source level. Both corrections implement the independently reviewed oracle contracts without weakening unrelated behavior. No production or focused-fixture changes are present. Runtime qualification of this neighboring-test freeze remains separate.",
+  "tuning_review": [
+    "Only the final retained-upper/current-lower own-channel expected value becomes tail ? 0.25f : 0.5f, with the accepted-release/current-role explanation.",
+    "The preceding manager16 acceptance and manager1 rejection expectations are unchanged, retaining captured-upper routing coverage.",
+    "The held branch must still accept 0.5, while the active tail must retain 0.25. Existing active-state and per-voice pressure/CC74 readout assertions remain."
+  ],
+  "poly_pressure_review": [
+    "Only testAudioRouting changes behavior. testIdentity and testUnison are preserved.",
+    "Both engines receive long keyRelease and rank CP_vR/CP_fR values. The rank settings cover PURE, which ignores the keyRelease extension.",
+    "effectiveMpe is mpe && policy != 2. Only that branch negotiates upperMembers=0/lowerMembers=1 before note allocation, and asserts channel2 lowerMember/channel3 none.",
+    "The unchanged direct polyPressure route is compared against manager1 pressure for effective MPE and channel2 pressure otherwise. With one lower member and no note on manager1, this reaches the same sole channel2 recipient while still allowing released tails and excluding the same-pitch gap-channel3 voice.",
+    "Every block NaN-prefills both audio arrays and checks every sample is finite and bit-identical. This replaces numeric array equality and protects against unwritten output, NaNs and signed-zero mismatches.",
+    "Every block checks both engines target voice is active, note60/channel2, with the expected accepted held state; checks independently mapped pressure with the original analytic square-law oracle; and checks active held note60/channel3 remains zero pressure.",
+    "The held expectation changes only after matching Note Off calls. Repeated later Note Off calls do not erase the active-tail witness.",
+    "Global latest channel pressure differs between actual/reference, but no channel-pressure matrix route is configured, as required for the independent audio oracle.",
+    "Non-silence is explicitly described as combined output, not isolated target audibility. The unrelated held voice therefore cannot support a stronger claim."
+  ],
+  "checks": {
+    "git_diff_check": "Passed without diagnostics",
+    "production_and_focused_fixture_hashes_unchanged": true
+  },
+  "execution": {
+    "source_review": true,
+    "builds": false,
+    "test_runs": false,
+    "source_edits": false
+  },
+  "limits": [
+    "The untouched 3003569 full-suite failures must remain separate historical evidence: the parent reported six TuningMidi failures and 72 old PolyPressure audio-equality failures.",
+    "This source review does not independently reproduce those failures or establish the corrected tests runtime result.",
+    "Previous 7488-check core execution remains tied to its recorded binary/source identity. Any native 6048-check or profile/sanitizer qualification is outside this review.",
+    "No performance, whole-audio MPE isolation, external host or hardware fidelity claim is made."
+  ]
+}

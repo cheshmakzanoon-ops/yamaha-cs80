@@ -1,0 +1,111 @@
+{
+  "source": "/workspace/scratch/ee447c520988/mpe-released-target-evidence/compatibility/CompatibilityCapture-v2.cpp",
+  "source_sha256": "bfd0a0c09d4a1a9af7defcaa1b3413c595b938aea66062de4aea8b8a8b9f4bae",
+  "profiles": [
+    {
+      "profile": "gcc-generic",
+      "source_matches_frozen": true,
+      "compiler_versions_match": true,
+      "compile_flags_match": true,
+      "compile_exits": [
+        0,
+        0
+      ],
+      "run_exits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baseline_partition_equal": true,
+      "candidate_partition_equal": true,
+      "partition_0_baseline_candidate_equal": true,
+      "partition_1_baseline_candidate_equal": true,
+      "capture_bytes": 57339584,
+      "capture_sha256": "6e4bf61d4644590adbe9455ca9319a80e056a99b4d9febad78771102ada38ed0",
+      "baseline_archive_sha256": "677e346d891d38b261c6a30f6c9cba26d7dfb23a43ffea8ff62c0f8f7e9838f8",
+      "candidate_archive_sha256": "dc223b22b54af300633025b1109d8cb0eea54691faea0518ee9d6cf844d1629b",
+      "passed": true
+    },
+    {
+      "profile": "gcc-native",
+      "source_matches_frozen": true,
+      "compiler_versions_match": true,
+      "compile_flags_match": true,
+      "compile_exits": [
+        0,
+        0
+      ],
+      "run_exits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baseline_partition_equal": true,
+      "candidate_partition_equal": true,
+      "partition_0_baseline_candidate_equal": true,
+      "partition_1_baseline_candidate_equal": true,
+      "capture_bytes": 57339584,
+      "capture_sha256": "69e0b87192cbd2263075184dffd6ba56ed65956e519e508cfbef1e3917795ad3",
+      "baseline_archive_sha256": "b0890444493160c5f553e636ca65276f6068dfacdd45c35dcbe70f4e50f554dc",
+      "candidate_archive_sha256": "6543bf186babed028fe18e9a049457c15df75810422447ca151ffa44f47f0cfa",
+      "passed": true
+    },
+    {
+      "profile": "clang-generic",
+      "source_matches_frozen": true,
+      "compiler_versions_match": true,
+      "compile_flags_match": true,
+      "compile_exits": [
+        0,
+        0
+      ],
+      "run_exits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baseline_partition_equal": true,
+      "candidate_partition_equal": true,
+      "partition_0_baseline_candidate_equal": true,
+      "partition_1_baseline_candidate_equal": true,
+      "capture_bytes": 57339584,
+      "capture_sha256": "6e4bf61d4644590adbe9455ca9319a80e056a99b4d9febad78771102ada38ed0",
+      "baseline_archive_sha256": "0213ac960d3cd2a1f7bd21b84097392329267e473a68e93be26cfbe13725c985",
+      "candidate_archive_sha256": "dae0b2ac66a043371a368cb75d93bc04c176af654251e386a8ad1834cd470d0e",
+      "passed": true
+    },
+    {
+      "profile": "clang-native",
+      "source_matches_frozen": true,
+      "compiler_versions_match": true,
+      "compile_flags_match": true,
+      "compile_exits": [
+        0,
+        0
+      ],
+      "run_exits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "baseline_partition_equal": true,
+      "candidate_partition_equal": true,
+      "partition_0_baseline_candidate_equal": true,
+      "partition_1_baseline_candidate_equal": true,
+      "capture_bytes": 57339584,
+      "capture_sha256": "fbf4ec03309a87d01bea432c6a1b2be2eb9460f474c78547b48e63ed31582de7",
+      "baseline_archive_sha256": "91314468e883faec052fdeee48cbe961136749df5e849e499cb5cb366e54d9b2",
+      "candidate_archive_sha256": "991a68bed843e8aee78d43b300b370e5c2c9448a799ef468a4c63d6b343afcec",
+      "passed": true
+    }
+  ],
+  "baseline_header_archive_source_tree_equal": true,
+  "baseline_header_revision": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+  "baseline_archive_source_revision": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+  "candidate_core_matches_c0219bd": true,
+  "all_passed": true
+}

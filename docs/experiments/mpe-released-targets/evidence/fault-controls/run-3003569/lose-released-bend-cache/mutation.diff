@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ lose-released-bend-cache/src/core/Engine.cpp
+@@ -1763,7 +1763,7 @@
+         return;
+     value = clampf(value, -1.0f, 1.0f);
+     auto* initial = memberExpressionFor(midiChannel);
+-    if (initial != nullptr)
++    if (initial != nullptr && !std::any_of(voices.begin(), voices.end(), [&](const Voice& v) { return v.active && !v.held && v.midiChannel == midiChannel; }))
+         initial->bend = value;
+     const bool heldOnly = initial != nullptr && !resetReleasedVoices;
+     if (global.mpe)

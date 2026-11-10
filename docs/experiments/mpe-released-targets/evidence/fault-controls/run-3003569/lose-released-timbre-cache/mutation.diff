@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ lose-released-timbre-cache/src/core/Engine.cpp
+@@ -1858,7 +1858,7 @@
+     else if (controller == 74)
+     {
+         auto* initial = memberExpressionFor(midiChannel);
+-        if (initial != nullptr)
++        if (initial != nullptr && !std::any_of(voices.begin(), voices.end(), [&](const Voice& v) { return v.active && !v.held && v.midiChannel == midiChannel; }))
+             initial->timbre = value;
+         for (auto& v : voices)
+             if (v.active && (initial == nullptr || v.held)

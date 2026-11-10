@@ -1,0 +1,4 @@
+/workspace/scratch/ee447c520988/release-followup/tests/TuningMidiTests.cpp: In function ‘std::string {anonymous}::readFile(const std::string&)’:
+/workspace/scratch/ee447c520988/release-followup/tests/TuningMidiTests.cpp:33:34: error: ‘CS80_TUNING_DATA_DIR’ was not declared in this scope
+   33 |     std::ifstream in(std::string(CS80_TUNING_DATA_DIR) + "/" + name, std::ios::binary);
+      |                                  ^~~~~~~~~~~~~~~~~~~~

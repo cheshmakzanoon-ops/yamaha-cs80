@@ -1,0 +1,56 @@
+{
+  "production_commit": "c0219bd",
+  "test_source": "release-followup/tests/MpeReleasedTargetTests.cpp",
+  "test_sha256": "a685ccc9ab59fa2ca55f034a11b332cdb7e122a39f499015ec687b96b709d924",
+  "candidate_library": "/workspace/scratch/ee447c520988/build-mpe-released-target-core/libcs80_core.a",
+  "candidate_library_sha256": "dc223b22b54af300633025b1109d8cb0eea54691faea0518ee9d6cf844d1629b",
+  "baseline_commit": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+  "baseline_include": "/workspace/scratch/ee447c520988/sixteen-note-release/src",
+  "baseline_library": "/workspace/scratch/ee447c520988/build-sixteen-release-profile-gcc-generic/libcs80_core.a",
+  "baseline_library_sha256": "677e346d891d38b261c6a30f6c9cba26d7dfb23a43ffea8ff62c0f8f7e9838f8",
+  "baseline_compile_command": "c++ -std=c++20 -O3 -DNDEBUG -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -I../sixteen-note-release/src tests/MpeReleasedTargetTests.cpp ../build-sixteen-release-profile-gcc-generic/libcs80_core.a -o ../mpe-released-target-evidence/core-baseline-full",
+  "working_directory": "/workspace/scratch/ee447c520988/release-followup",
+  "results": [
+    {
+      "command": "../build-mpe-released-target-core/cs80_mpe_released_target_tests",
+      "checks": 7488,
+      "failures": 0,
+      "exit_code": 0,
+      "log": "core-second-run.log",
+      "log_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707"
+    },
+    {
+      "command": "../mpe-released-target-evidence/core-baseline-full --unchanged",
+      "checks": 842,
+      "failures": 0,
+      "exit_code": 0,
+      "log": "core-baseline-unchanged.log",
+      "log_sha256": "9972d43d2ddb127ee8fb85a31533e04b2bbb153a6f841da1d0d010f3fce5d73b"
+    },
+    {
+      "command": "../mpe-released-target-evidence/core-baseline-full",
+      "checks": 7488,
+      "failures": 1076,
+      "exit_code": 1,
+      "fixture_failures": 0,
+      "log": "core-baseline-full.log",
+      "log_sha256": "295bef1fda6bf1ae448d85376e6f8c89b85501aa21d1268020237e498046b109"
+    },
+    {
+      "command": "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest --test-dir ../build-mpe-released-target-core -R 'cs80_(mpe_released_target|mpe_member_onset|controller_reset|mpe_master_smoothing|mpe_master_bend_routing)_tests' --output-on-failure",
+      "tests": 5,
+      "failures": 0,
+      "exit_code": 0,
+      "log": "core-focused-ctest.log",
+      "log_sha256": "e360b73983df202d5d360d323bc0a914b96db6e48f4c6dfd0a898ba47550b746"
+    }
+  ],
+  "first_attempt": {
+    "log": "core-first-run.log",
+    "checks": 7474,
+    "failures": 40,
+    "classification": "ARP fixture timing, not production or retention failure",
+    "cause": "Fixture requested ARP 20 Hz, but parameter maximum clamps it to 16 Hz. Assumed 1392-frame gate and 2400-frame interval were premature; actual gate is approximately 1740 frames and interval 3000 frames at 48 kHz. Corrected requested rate to supported 16 Hz and observes tail at 2000 frames, next active step at 3201 frames. No production arithmetic or contract changed. Also strengthened current-role timbre check to exact first-interval one-pole oracle for both ranks.",
+    "log_sha256": "726b803714631432b8af0f5f0c9885d462542e4ac3101c25b0445f5e8a487fd9"
+  }
+}

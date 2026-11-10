@@ -1,0 +1,73 @@
+{
+  "review": "Independent core fixture source review and focused existing-binary execution",
+  "reviewed_at_utc": "2026-11-09T23:45:34.795250+00:00",
+  "repository": "/workspace/scratch/ee447c520988/release-followup",
+  "test_freeze_head": "300356958b3cde471f8dc14a7b505070a4cffc8c",
+  "production_reviewed_head": "c0219bd0de8559d72fce4194a849414de5ac7e61",
+  "production_reviewed_base": "2ade213bc4dec34b04352063a72e97dac4cc5667",
+  "reviewed_sha256": {
+    "tests/MpeReleasedTargetTests.cpp": "a685ccc9ab59fa2ca55f034a11b332cdb7e122a39f499015ec687b96b709d924",
+    "src/core/Engine.cpp": "9547427a7495d11a5911bcd474658fc1c0bb252b2c624bff83d11992cbcaa42d",
+    "src/core/Engine.h": "6f9913232d8c3a9b2b285169bb933cfb8779515325f1e354514102d6c4a44a0e",
+    "docs/experiments/mpe-released-targets/PLAN.md": "a5a2434d8b3fceee10b586bec7834ac33d475f0c37eebb4b0e2355dddb41a9fa",
+    "CMakeLists.txt": "a6674c06f2e055066d46180b8bdbd913435a05b7454c5994793d8de8105c0144"
+  },
+  "binary_sha256": "f880ab8c8ea7e5a92a9a0c05347b8db633dbf0857920bcb499dfeec1fa933318",
+  "verdict": "No source-level core-fixture blocker found. Independent direct main, unchanged-subset and focused CTest executions passed. Production source approval remains separately documented in source-review-c0219bd.json.",
+  "source_findings": [
+    "Each of the three expression fields is exercised independently across held, released and pedal-held recipients, held same-channel sibling, unrelated channel, later cache-initialized onset and original-tail identity. Lower/upper and full-zone endpoint members are included.",
+    "Reset exception fixtures begin with nonzero bend/pressure, include held/released/pedal-held states in both sustain modes, verify repeated CC121, retain timbre and prove the later onset reads reset bend/pressure defaults.",
+    "The first-interval oracle independently computes the declared 5 ms one-pole trajectory using public sample rate/oversampling; it does not invoke ControlSmoother. It is an engineering-law check, not hardware identification.",
+    "Paired continuation tests construct independent one-voice engines with identical histories up to the late event, catch genuinely moving smoothing, require audible finite output from each and compare exact audio bits across different render partitions. Tail target and identity checks remain live during continuation.",
+    "KAS witnesses distinguish a queued onset/release from an accepted gate change and prove pre-dispatch control admission plus post-dispatch target retention and future cache consumption.",
+    "ARP uses the supported 16 Hz parameter. It asserts generated gate opening/closing while the physical source remains held, retains the old active tail and requires the later generated step to occupy a different circuit and read the new cache.",
+    "Manager routes, conventional/gap/PURE paths and direct polyphonic pressure have explicit unchanged expectations. Current effective mode/role transitions, malformed/clamped input, new ranges/pressure curves and global matrix/ribbon exceptions are separately exercised.",
+    "The --unchanged subset selects reset, manager, conventional/gap/PURE/polyphonic pressure and malformed-no-valid-late-event cases. No baseline regression result is inferred from its candidate pass."
+  ],
+  "runtime_results": {
+    "main": {
+      "checks": 7488,
+      "failures": 0,
+      "exit_code": 0,
+      "log": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/core-direct.log",
+      "sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707"
+    },
+    "unchanged_subset": {
+      "checks": 842,
+      "failures": 0,
+      "exit_code": 0,
+      "log": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/core-unchanged-direct.log",
+      "sha256": "9972d43d2ddb127ee8fb85a31533e04b2bbb153a6f841da1d0d010f3fce5d73b"
+    },
+    "focused_ctest": {
+      "tests": 1,
+      "failed": 0,
+      "exit_code": 0,
+      "argv": [
+        "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest",
+        "--test-dir",
+        "/workspace/scratch/ee447c520988/build-mpe-released-target-core",
+        "-R",
+        "^cs80_mpe_released_target_tests$",
+        "--output-on-failure",
+        "--output-log",
+        "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/core-focused-ctest.log"
+      ],
+      "log": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/core-focused-ctest.log",
+      "sha256": "71158eccdcdc1dfdc9cdce7c7015714911459ccd28e8b249c8602813e7d6de64"
+    },
+    "execution_identity": {
+      "path": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/core-execution.json",
+      "sha256": "8959c12010180787d8e575d0a31dca8de9925fed530525513284a9670f8050d6"
+    },
+    "binary_unchanged_across_direct_runs": true
+  },
+  "coordination_and_limits": [
+    "The core fixture owner confirmed its fixture/build sessions were complete. The parent subsequently started a full target build but explicitly confirmed this already-built focused executable was unchanged and direct/focused runs were safe. No Ninja or other build command was invoked by this reviewer.",
+    "The initial focused CTest launch through PATH failed because ctest was absent from this shell PATH. The subsequent successful invocation used CMAKE_CTEST_COMMAND from the build cache; no installation or build was needed.",
+    "No independent baseline fixture, fault-control, broad-suite, compiler-profile, sanitizer or native-processor execution is included in this report.",
+    "No performance measurement, hardware fidelity or full MIDI/MPE conformance claim is made.",
+    "Only review reports and external logs were written. Production and fixture source files were not edited.",
+    "No final no-work build check was attempted while the parent full build was active."
+  ]
+}

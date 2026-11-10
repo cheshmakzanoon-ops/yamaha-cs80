@@ -1,0 +1,30 @@
+{
+  "started_utc": "2026-11-09T23:44:10.934483+00:00",
+  "head": "300356958b3cde471f8dc14a7b505070a4cffc8c",
+  "source_sha256": "a685ccc9ab59fa2ca55f034a11b332cdb7e122a39f499015ec687b96b709d924",
+  "binary_before_sha256": "f880ab8c8ea7e5a92a9a0c05347b8db633dbf0857920bcb499dfeec1fa933318",
+  "runs": [
+    {
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_released_target_tests"
+      ],
+      "exit_code": 0,
+      "log": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/core-direct.log",
+      "log_sha256": "56e89178128678c9b2ff8752c9e65909a20c711c428ce7830c42eed3512aa707",
+      "stdout": "MPE released targets: 7488 checks, 0 failures\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/workspace/scratch/ee447c520988/build-mpe-released-target-core/cs80_mpe_released_target_tests",
+        "--unchanged"
+      ],
+      "exit_code": 0,
+      "log": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/core-unchanged-direct.log",
+      "log_sha256": "9972d43d2ddb127ee8fb85a31533e04b2bbb153a6f841da1d0d010f3fce5d73b",
+      "stdout": "MPE released targets unchanged paths: 842 checks, 0 failures\n",
+      "stderr": ""
+    }
+  ],
+  "binary_after_sha256": "f880ab8c8ea7e5a92a9a0c05347b8db633dbf0857920bcb499dfeec1fa933318"
+}

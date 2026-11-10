@@ -1,0 +1,11 @@
+--- baseline/src/core/Engine.cpp
++++ omit-timbre-held-guard/src/core/Engine.cpp
+@@ -1861,7 +1861,7 @@
+         if (initial != nullptr)
+             initial->timbre = value;
+         for (auto& v : voices)
+-            if (v.active && (initial == nullptr || v.held)
++            if (v.active
+                 && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+                 v.timbre = value;
+     }

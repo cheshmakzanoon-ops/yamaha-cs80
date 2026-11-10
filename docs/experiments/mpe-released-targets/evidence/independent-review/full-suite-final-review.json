@@ -1,0 +1,92 @@
+{
+  "review": "Independent final default core CTest evidence and source-bracket audit",
+  "reviewed_at_utc": "2026-11-10T00:07:33.571647+00:00",
+  "test_freeze": "04597f5ee87da1f6390a8682298a1a0e656f834c",
+  "production_review_freeze": "c0219bd0de8559d72fce4194a849414de5ac7e61",
+  "verdict": "Pass within the stated default core-suite scope. The final 145/145 result is supported by complete matching console and per-test logs, command statuses, registrations, source snapshots and artifact identities. No blockers found.",
+  "verification_artifact": {
+    "path": "/workspace/scratch/ee447c520988/mpe-released-target-independent-review/full-suite-final-verification.json",
+    "sha256": "74bf11276a58b228152f847bd6577d06670732382a767750240d45e10d864c36"
+  },
+  "audited_results": {
+    "console_passes": 145,
+    "complete_last_test_passes": 145,
+    "distinct_registered_tests": 145,
+    "failed_skipped_or_not_run_tests": 0,
+    "full_suite_driver_status": 0,
+    "post_run_source_recorder_status": 0,
+    "source_snapshot_files_identical_before_after_current_and_commit": 411,
+    "post_run_build_artifacts_verified": 131,
+    "focused_check_counts": {
+      "cs80_mpe_released_target_tests": {
+        "ctest_name": "cs80_mpe_released_target_tests",
+        "checks": 7488,
+        "failures": 0,
+        "binary_sha256": "f880ab8c8ea7e5a92a9a0c05347b8db633dbf0857920bcb499dfeec1fa933318"
+      },
+      "cs80_mpe_member_onset_tests": {
+        "ctest_name": "cs80_mpe_member_onset_tests",
+        "checks": 2501,
+        "failures": 0,
+        "binary_sha256": "0517e3e24c11cb2a6bd90c903cf2cef383a551dbc49e3548160d8a4be2eed6df"
+      },
+      "cs80_controller_reset_tests": {
+        "ctest_name": "cs80_controller_reset_tests",
+        "checks": 3513,
+        "failures": 0,
+        "binary_sha256": "5b749b2776b1906bacfb4e971a2aaa834b1b44309189f8bec832febc0f706f9f"
+      },
+      "cs80_sixteen_voice_release_tests": {
+        "ctest_name": "cs80_sixteen_voice_release_tests",
+        "checks": 1418,
+        "failures": 0,
+        "binary_sha256": "dc904924884f3066373d169cd289c6c57a6afe8c93692c357c6d355e3f60587a"
+      },
+      "cs80_tests": {
+        "ctest_name": "cs80_core_tests",
+        "checks": 11508,
+        "failures": 0,
+        "binary_sha256": "86bc589895d5bd433da83952490873d2bc521d7dc84caf758dab54fa4d765ddb"
+      },
+      "cs80_tuning_midi_tests": {
+        "ctest_name": "cs80_tuning_midi_tests",
+        "checks": 22085,
+        "failures": 0,
+        "binary_sha256": "05529ea3d39f9f71ea55b6315f3a7fe8c436f6c98b88f2021340e25ef4b12463"
+      },
+      "cs80_poly_pressure_routing_tests": {
+        "ctest_name": "cs80_poly_pressure_routing_tests",
+        "checks": 4504,
+        "failures": 0,
+        "binary_sha256": "bf8c49695514843a9dd8dcf72f996998481ecc1da589745a7e043a3977b8fafc"
+      }
+    }
+  },
+  "source_and_execution_attribution": [
+    "The source inventory saved by qualify_profiles_final.py precedes the final full-suite build. Its 411 tracked src/tests/CMake hashes equal the post-run record, current files and frozen 04597f5 file content. The source diff command is empty with exit 0.",
+    "The suite driver records two commands, build and CTest, with start times, log hashes and exit statuses. Both succeeded. It does not itself enforce source immutability.",
+    "record_full_suite_final.py separately checks completion and snapshot ordering/equality, checks the tracked source diff, copies LastTest.log and hashes current build artifacts. This is a before/after source bracket and post-run artifact inventory, not continuous filesystem enforcement or an immutable build sandbox.",
+    "All 145 LastTest entries contain one normal Test Passed marker and complete output terminator. IDs and names match the 145 console results and current CTest registration. Recorded commands match registration after resolving the bash executable path.",
+    "The final build log rebuilds only the two corrected neighboring fixtures and relinks them. The existing released-target executable remains byte-identical to the previously independently rerun focused binary.",
+    "The 411-file bracket covers src, tests and CMakeLists.txt, not all runtime inputs. Fifteen directly referenced repository scripts outside that bracket currently match 04597f5; this is a current check, not a new retrospective temporal bracket."
+  ],
+  "scope": {
+    "configuration": {
+      "CMAKE_BUILD_TYPE": "Release",
+      "CMAKE_CXX_COMPILER": "/usr/bin/c++",
+      "CMAKE_CXX_FLAGS_RELEASE": "-O3 -DNDEBUG",
+      "CS80_BUILD_PLUGIN": "OFF",
+      "CS80_ENABLE_AVX2_FILTER_BATCH": "OFF"
+    },
+    "claim": "145 default core-build CTest entries pass. This includes registered source/tooling checks; it is not 145 native processor tests.",
+    "source_bracket_record_sha256": "63eab4a815b85dca72351b38942ad3b91f509db135148dffc14ceed9c37a53a8",
+    "ctest_console_sha256": "dbc29fb35402ca564fcb84144ead863c704caaf2e4ba8f87d0cc9e8ecd534927",
+    "ctest_last_test_sha256": "9b2d6c99b2824416052f2e15d190868a66f1ed764cd503ebfd3c9836e96ed5ff"
+  },
+  "limits": [
+    "No full-suite rerun, build or source edit was performed by this reviewer. This is independent review of recorded final-suite execution, separate from earlier independent focused and sanitizer reruns.",
+    "No full native/JUCE suite or full sanitizer-suite result is claimed. The separately reviewed sanitizer coverage remains seven executed targets with the linked core instrumented and leak detection disabled.",
+    "The 131 post-run artifacts comprise recorded build metadata, archive and ELF files; the number is not a count of tests or proof every recorded file was executed.",
+    "Historical 3003569 full-suite failures remain separate evidence. The final corrected neighbor results belong to 04597f5 and do not expand production behavior beyond the approved c0219bd contract."
+  ]
+}

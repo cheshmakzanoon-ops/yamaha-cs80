@@ -1,0 +1,22 @@
+--- baseline/src/core/Engine.cpp
++++ lose-cc121-exception/src/core/Engine.cpp
+@@ -1820,7 +1820,7 @@
+             // CC1/11/64 ribbon mapping must not move the independent ribbon.
+             modWheel = 0.0f;
+             expression = 1.0f;
+-            applyPitchBend(midiChannel, 0.0f, true);
++            applyPitchBend(midiChannel, 0.0f, false);
+             applyChannelPressure(midiChannel, 0.0f, true);
+             setSustainPedal(midiChannel, false);
+         }
+--- baseline/src/core/Engine.cpp
++++ lose-cc121-exception/src/core/Engine.cpp
+@@ -1821,7 +1821,7 @@
+             modWheel = 0.0f;
+             expression = 1.0f;
+             applyPitchBend(midiChannel, 0.0f, false);
+-            applyChannelPressure(midiChannel, 0.0f, true);
++            applyChannelPressure(midiChannel, 0.0f, false);
+             setSustainPedal(midiChannel, false);
+         }
+         return;

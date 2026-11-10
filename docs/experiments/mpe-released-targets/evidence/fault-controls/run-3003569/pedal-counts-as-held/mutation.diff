@@ -1,0 +1,33 @@
+--- baseline/src/core/Engine.cpp
++++ pedal-counts-as-held/src/core/Engine.cpp
+@@ -1745,7 +1745,7 @@
+         pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
+     lastChannelPressure = pressure;
+     for (auto& v : voices)
+-        if (v.active && (!heldOnly || v.held)
++        if (v.active && (!heldOnly || v.held || v.pedalHeld)
+             && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+             v.pressure = pressure;
+ }
+--- baseline/src/core/Engine.cpp
++++ pedal-counts-as-held/src/core/Engine.cpp
+@@ -1787,7 +1787,7 @@
+         const float negotiated = mpeZones.memberRange(role == MpeZoneLayout::Role::upperMember);
+         const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;
+         for (auto& v : voices)
+-            if (v.active && v.midiChannel == midiChannel && (!heldOnly || v.held))
++            if (v.active && v.midiChannel == midiChannel && (!heldOnly || v.held || v.pedalHeld))
+                 v.mpeBend = value * range;
+     }
+     else
+--- baseline/src/core/Engine.cpp
++++ pedal-counts-as-held/src/core/Engine.cpp
+@@ -1861,7 +1861,7 @@
+         if (initial != nullptr)
+             initial->timbre = value;
+         for (auto& v : voices)
+-            if (v.active && (initial == nullptr || v.held)
++            if (v.active && (initial == nullptr || v.held || v.pedalHeld)
+                 && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
+                 v.timbre = value;
+     }

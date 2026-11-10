@@ -1,0 +1,4 @@
+/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/src/core/Engine.cpp: In member function ‘void cs80::Engine::applyPitchBend(int, float, bool)’:
+/workspace/scratch/ee447c520988/mpe-released-target-evidence/fault-controls/run-3003569/omit-bend-held-guard/src/core/Engine.cpp:1768:16: warning: unused variable ‘heldOnly’ [-Wunused-variable]
+ 1768 |     const bool heldOnly = initial != nullptr && !resetReleasedVoices;
+      |                ^~~~~~~~

@@ -1,0 +1,175 @@
+{
+  "all_passed": true,
+  "cases": [
+    {
+      "case": "valid-bundle",
+      "expected_exit": 0,
+      "normal_exit": 0,
+      "optimized_exit": 0
+    },
+    {
+      "case": "changed-byte",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "missing-file",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "extra-file",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "unsafe-manifest-path",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "duplicate-core-summary",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "truncated-core-summary",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "wrong-core-count",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "missing-compiler-profile",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "failed-compatibility-run",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "failed-native-command",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "changed-repository-source-pin",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "missing-preserved-path",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "misattributed-source-freeze",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "missing-fault-case",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "crashing-fault-counted",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "missing-final-profile-stage",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "disabled-sanitizer-instrumentation",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "missing-ctest-case",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "duplicate-ctest-case",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "integration-valid-schema",
+      "expected_exit": 0,
+      "normal_exit": 0,
+      "optimized_exit": 0
+    },
+    {
+      "case": "integration-outside-screenshots",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "integration-missing-screenshot",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "integration-extra-screenshot",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "integration-wrong-historical-delta",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "integration-parent-runtime-change",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "integration-different-baseline-tree",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    },
+    {
+      "case": "integration-modified-runtime-input",
+      "expected_exit": 1,
+      "normal_exit": 1,
+      "optimized_exit": 1
+    }
+  ],
+  "integration_schema_fixture": "synthetic; no screenshot rendering or real integration claim",
+  "product_tests_repeated": false
+}
