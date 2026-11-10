@@ -1,0 +1,80 @@
+{
+  "base": "830f1d4aeae97eedf67363e98a95352198598458",
+  "fix": "88a53fe",
+  "compiler": "GCC 14.2.0",
+  "raw_record_sha256": "b7ee1882c22f63f99fc46587847e0b60b8de18e4d52860ed05620190daa8cafb",
+  "path_mapping": "Machine-local prefixes replaced by logical placeholders. Commands are recorded invocation templates.",
+  "sanitizer_scope": "ASan/UBSan/float-cast-overflow; LeakSanitizer disabled under ptrace.",
+  "runs": {
+    "baseline": {
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O2",
+        "-I${EVIDENCE}/baseline",
+        "${REPO}/tests/TuningRobustnessTests.cpp",
+        "-o",
+        "${EVIDENCE}/integer-baseline"
+      ],
+      "build_exit": 0,
+      "build_stderr": "",
+      "run_exit": 1,
+      "stdout": "FAIL: KBM sign without digits 0 rejected\nFAIL: KBM sign without digits 0 leaves destination unchanged\nFAIL: KBM sign without digits 1 rejected\nFAIL: KBM sign without digits 1 leaves destination unchanged\nFAIL: KBM sign without digits 3 rejected\nFAIL: KBM sign without digits 3 leaves destination unchanged\nFAIL: KBM sign without digits 4 rejected\nFAIL: KBM sign without digits 4 leaves destination unchanged\nFAIL: KBM sign without digits 6 rejected\nFAIL: KBM sign without digits 6 leaves destination unchanged\nFAIL: KBM sign without digits 0 rejected\nFAIL: KBM sign without digits 0 leaves destination unchanged\nFAIL: KBM sign without digits 1 rejected\nFAIL: KBM sign without digits 1 leaves destination unchanged\nFAIL: KBM sign without digits 3 rejected\nFAIL: KBM sign without digits 3 leaves destination unchanged\nFAIL: KBM sign without digits 4 rejected\nFAIL: KBM sign without digits 4 leaves destination unchanged\nFAIL: KBM sign without digits 6 rejected\nFAIL: KBM sign without digits 6 leaves destination unchanged\nTuning robustness: 2818 checks, 20 failures\n",
+      "stderr": "",
+      "binary_sha256": "e1b1469aee8fdcd671f323c88cb520801cfda8308340b7798c2ee3dfe647d8d9",
+      "header_sha256": "8f8ea96c44df3e2e76853573423397bc7dd2fb710bf6a58ef5e61ede9583b973",
+      "test_sha256": "5ed1da9271e9b82730ab9e869d2f551f6892eedac77d496ceb2d22adb7fad962"
+    },
+    "fixed": {
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O2",
+        "-I${REPO}/src",
+        "${REPO}/tests/TuningRobustnessTests.cpp",
+        "-o",
+        "${EVIDENCE}/integer-fixed"
+      ],
+      "build_exit": 0,
+      "build_stderr": "",
+      "run_exit": 0,
+      "stdout": "Tuning robustness: 2818 checks, 0 failures\n",
+      "stderr": "",
+      "binary_sha256": "29c9a20b28adae5215e6cb0b450ec9a29948daab50dab8bd79c696d9b0f6565d",
+      "header_sha256": "7f7524c9e6a2e770b810c69e5c2d5174676392d372e8b670f9a846b6eaa5c71c",
+      "test_sha256": "5ed1da9271e9b82730ab9e869d2f551f6892eedac77d496ceb2d22adb7fad962"
+    },
+    "sanitizer": {
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined,float-cast-overflow",
+        "-fno-omit-frame-pointer",
+        "-D_GLIBCXX_ASSERTIONS",
+        "-I${REPO}/src",
+        "${REPO}/tests/TuningRobustnessTests.cpp",
+        "-o",
+        "${EVIDENCE}/integer-sanitizer"
+      ],
+      "build_exit": 0,
+      "build_stderr": "",
+      "run_exit": 0,
+      "stdout": "Tuning robustness: 2818 checks, 0 failures\n",
+      "stderr": "",
+      "binary_sha256": "51d41fa0ae1f8b9f69fbe178a78231f7f42c4a2363f5fb59ffc34356dad9cc73",
+      "header_sha256": "7f7524c9e6a2e770b810c69e5c2d5174676392d372e8b670f9a846b6eaa5c71c",
+      "test_sha256": "5ed1da9271e9b82730ab9e869d2f551f6892eedac77d496ceb2d22adb7fad962"
+    }
+  }
+}

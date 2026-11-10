@@ -110,6 +110,36 @@ void testMapping()
           "KBM upper header bounds accepted");
 }
 
+void testNumericTokens()
+{
+    // SCL permits text after a valid pitch value. Do not tighten this existing
+    // decimal-prefix policy while fixing integer fields with no digits.
+    for (const std::string token : { "700.0oops", "700.0/2", "700.0.5", "700.0e2", "700.0!comment" })
+    {
+        tn::Scale scale;
+        check(tn::parseScale("test\n2\n" + token + "\n1200.0\n", scale).empty()
+              && scale.cents == std::vector<double>({ 700.0, 1200.0 }),
+              "SCL decimal-prefix behavior retained: " + token);
+    }
+    for (const std::string token : { "+ comment", "- comment" })
+        for (std::size_t field : { 0u, 1u, 3u, 4u, 6u })
+        {
+            auto header = mappingHeader; header[field] = token;
+            rejectMapping(header, "0\nx\n", "KBM sign without digits " + std::to_string(field));
+        }
+    for (const std::string token : { "700.0", "+700.0", "700.", ".5", "-3.5", "700.0 annotation", "700.0\tannotation" })
+    {
+        tn::Scale scale;
+        check(tn::parseScale("test\n2\n" + token + "\n1200.0 period\n", scale).empty(),
+              "SCL valid decimal and separated annotation retained: " + token);
+    }
+    auto header = mappingHeader; header[3] = "+60 middle"; header[5] = "440.0 reference";
+    tn::KeyboardMapping mapping;
+    check(tn::parseKeyboardMapping(mappingText(header), mapping).empty()
+          && mapping.middle == 60 && mapping.referenceHz == 440.0,
+          "KBM valid signed integer and separated annotations retained");
+}
+
 using Bytes = std::vector<std::uint8_t>;
 Bytes counted(int sub, int count, int realtime = 0x7F)
 {
@@ -271,6 +301,7 @@ void testInvalidMts()
 int main()
 {
     testMapping();
+    testNumericTokens();
     testValidMts();
     testInvalidMts();
     std::printf("Tuning robustness: %d checks, %d failures\n", checks, failures);

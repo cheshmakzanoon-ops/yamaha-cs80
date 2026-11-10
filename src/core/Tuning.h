@@ -85,12 +85,14 @@ inline bool parseInt(const std::string& token, long long& out)
     bool negative = false;
     if (t[0] == '-' || t[0] == '+') { negative = t[0] == '-'; i = 1; }
     if (i >= t.size()) return false;
+    const std::size_t digitsBegin = i;
     long long v = 0;
     for (; i < t.size() && t[i] >= '0' && t[i] <= '9'; ++i)
     {
         v = v * 10 + (t[i] - '0');
         if (v > 1000000000000LL) return false;
     }
+    if (i == digitsBegin) return false;
     if (i < t.size() && t[i] != ' ' && t[i] != '\t') return false;
     out = negative ? -v : v;
     return true;
