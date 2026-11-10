@@ -10,6 +10,8 @@
 // It owns no state of its own: the Scala/KBM texts live in the session
 // (WS3_TUNING) and every control is a parameter attachment.
 
+#include "ParameterSlider.h"
+
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 
@@ -44,38 +46,6 @@ private:
     void timerCallback() override;
     void refreshStatus();
     void chooseFile(bool keyboardMapping);
-
-    // Keep ordinary JUCE pointer/text behavior; add only balanced, guarded
-    // keyboard edits for the page's attached host parameters.
-    class ParameterSlider final : public juce::Slider
-    {
-    public:
-        using juce::Slider::Slider;
-        bool keyPressed(const juce::KeyPress& key) override
-        {
-            const bool arrow = key == juce::KeyPress::leftKey || key == juce::KeyPress::rightKey
-                || key == juce::KeyPress::upKey || key == juce::KeyPress::downKey;
-            if (arrow && !key.getModifiers().isAnyModifierKeyDown())
-            {
-                if (!isEnabled() || gestureActive) return false;
-                juce::Slider::ScopedDragNotification gesture(*this);
-                return juce::Slider::keyPressed(key);
-            }
-            return juce::Slider::keyPressed(key);
-        }
-    private:
-        void startedDragging() override
-        {
-            gestureActive = true;
-            juce::Slider::startedDragging();
-        }
-        void stoppedDragging() override
-        {
-            gestureActive = false;
-            juce::Slider::stoppedDragging();
-        }
-        bool gestureActive = false;
-    };
 
     struct Row
     {

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ParameterSlider.h"
+
 #include "core/ModernLayer.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -95,7 +97,7 @@ private:
     MsegEditor editor;
     juce::ComboBox loopBox, triggerBox, presetBox;
     juce::ToggleButton syncButton { "Sync" }, bipolarButton { "Bipolar" };
-    juce::Slider rate { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+    ParameterSlider rate { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
     juce::Label rateLabel;
     std::unique_ptr<juce::SliderParameterAttachment> rateAttachment;
     bool refreshing = false;
@@ -114,8 +116,8 @@ private:
     {
         juce::Label title;
         juce::ComboBox wave, destination;
-        juce::Slider rate { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
-        juce::Slider depth { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider rate { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider depth { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         std::unique_ptr<juce::ComboBoxParameterAttachment> waveAttachment, destinationAttachment;
         std::unique_ptr<juce::SliderParameterAttachment> rateAttachment, depthAttachment;
     };
@@ -145,7 +147,7 @@ private:
     {
         juce::Label index;
         juce::ComboBox source, via, destination, target;
-        juce::Slider amount { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider amount { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         std::unique_ptr<juce::SliderParameterAttachment> amountAttachment;
     };
     Cs80AudioProcessor& processor;
@@ -166,7 +168,7 @@ private:
     struct Curve
     {
         juce::Label title;
-        juce::Slider slider { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider slider { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         std::unique_ptr<juce::SliderParameterAttachment> attachment;
         juce::Rectangle<int> plot;
         bool bipolar = false;
@@ -193,9 +195,9 @@ private:
     {
         juce::Label title, mixLabel, aLabel, bLabel;
         juce::ComboBox model, type, oversampling;
-        juce::Slider mix { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
-        juce::Slider a { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
-        juce::Slider b { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider mix { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider a { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
+        ParameterSlider b { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         std::unique_ptr<juce::ComboBoxParameterAttachment> modelAttachment, typeAttachment, oversamplingAttachment;
         std::unique_ptr<juce::SliderParameterAttachment> mixAttachment, aAttachment, bAttachment;
         int shownModel = -1;

@@ -959,6 +959,8 @@ if (CS80_BUILD_PLUGIN)
     set_tests_properties(cs80_mpe_member_onset_host_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_sixteen_voice_release_host_tests COMMAND CS80Snapshots --sixteen-voice-release-tests)
     set_tests_properties(cs80_sixteen_voice_release_host_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_modern_slider_gesture_tests COMMAND CS80Snapshots --modern-slider-gesture-tests)
+    set_tests_properties(cs80_modern_slider_gesture_tests PROPERTIES TIMEOUT 60)
     add_test(NAME cs80_snapshot_cli_tests COMMAND "${Python3_EXECUTABLE}"
              "${CMAKE_CURRENT_SOURCE_DIR}/tests/SnapshotCliTests.py"
              "$<TARGET_FILE:CS80Snapshots>")
