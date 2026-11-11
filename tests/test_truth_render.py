@@ -252,6 +252,99 @@ class RenderTests(unittest.TestCase):
         self.assertFalse(out.exists())
         self.assertEqual(path.read_bytes(), original)
 
+    def comparison_rows(self, out):
+        with (out / 'realtime.csv').open() as f:
+            rows = [{k: float(v) for k, v in row.items()} for row in csv.DictReader(f)]
+        self.assertTrue(all(math.isfinite(v) for r in rows for v in r.values()))
+        return rows
+
+    def test_realtime_metrics_and_provenance(self):
+        import struct
+        def f32(x):
+            return struct.unpack('f', struct.pack('f', x))[0]
+        fixtures = {'zero': [0.]*65,
+                    'driven': [2.5*math.sin(i*.3)+.25*math.sin(i*.07) for i in range(257)]}
+        for name, values in fixtures.items():
+            path = self.write_input(name+'.csv', values)
+            args = ['--input', path, '--input-rate', 96000, '--input-samples', len(values),
+                    '--hp-hz', 1000.123456, '--lp-hz', 1700.234567, '--q', 1.23456789]
+            plain = self.run_tool(name+'-plain', *args)
+            out = self.run_tool(name+'-rt', *args, '--compare-realtime', 'true', '--realtime-rate', 96000)
+            again = self.run_tool(name+'-again', *args, '--compare-realtime', 'true', '--realtime-rate', 96000)
+            m, reference = self.read(out)
+            rt = self.comparison_rows(out)
+            self.assertEqual((plain/'trace.csv').read_bytes(), (out/'trace.csv').read_bytes())
+            plain_m, _ = self.read(plain)
+            c = m.pop('realtime_comparison')
+            self.assertEqual(plain_m, m)
+            self.assertFalse((plain/'realtime.csv').exists())
+            for file in ['trace.csv', 'manifest.json', 'stimulus.csv', 'realtime.csv']:
+                self.assertEqual((out/file).read_bytes(), (again/file).read_bytes())
+            self.assertEqual(len(rt), len(reference))
+            self.assertEqual(c['sample_count'], len(rt))
+            self.assertEqual(c['internal_rate_hz'], 96000)
+            self.assertEqual(c['q_float'], f32(1.23456789))
+            self.assertEqual(c['ota_level'], 2.5)
+            source = Path(__file__).resolve().parent.parent
+            paths = {'filter': 'Ig00156Filter.h', 'dsp': 'Dsp.h', 'fast_math': 'FastMath.h'}
+            self.assertEqual(c['source_sha256'], {k: hashlib.sha256((source/'src/core'/p).read_bytes()).hexdigest()
+                                                for k, p in paths.items()})
+            self.assertEqual([r['input_float'] for r in rt], [f32(v) for v in values])
+            self.assertEqual([r['sample'] for r in rt], [r['sample'] for r in reference])
+            self.assertEqual([r['time_s'] for r in rt], [r['time_s'] for r in reference])
+            ff = 1/(2*math.pi*4.7e6*1.5e-9)
+            for stage, cutoff in [('hp', 1000.123456), ('lp', 1700.234567)]:
+                self.assertEqual(c[stage+'_gm_cutoff_hz_float'], f32(cutoff-ff))
+                self.assertEqual(c[stage+'_effective_total_hz'], f32(cutoff-ff)+ff)
+                n = m[stage]
+                g = 1/n['source_ohms'] + 1/n['ground_ohms'] + 1/n['feedback_ohms']
+                self.assertEqual(c[stage+'_q_siemens'], max(0, g/(2*f32(1.23456789))-1/n['feedback_ohms']))
+                diffs = [r[stage+'_realtime']-ref[stage] for r, ref in zip(rt, reference)]
+                self.assertEqual(diffs, [r[stage+'_difference'] for r in rt])
+                energy = sum(r[stage]**2 for r in reference)
+                error = sum(d*d for d in diffs)
+                self.assertAlmostEqual(c[stage]['absolute_rms'], math.sqrt(error/len(rt)), delta=1e-15)
+                self.assertEqual(c[stage]['absolute_max'], max(map(abs, diffs)))
+                self.assertAlmostEqual(c[stage]['reference_rms'], math.sqrt(energy/len(rt)), delta=1e-15)
+                if energy == 0:
+                    self.assertIsNone(c[stage]['relative_rms'])
+                    self.assertEqual(error, 0)
+                else:
+                    self.assertAlmostEqual(c[stage]['relative_rms'], math.sqrt(error/energy), delta=1e-15)
+                    self.assertGreater(error, 0)  # non-vacuous: outputs are not copied from the reference
+                    self.assertGreater(max(abs(r[stage+'_realtime']) for r in rt), .01)
+
+    def test_realtime_options_and_clamp_boundaries(self):
+        base = ['--duration', '.001', '--compare-realtime', 'true', '--realtime-rate', 48000]
+        for i, args in enumerate([['--compare-realtime', 'true'], ['--realtime-rate', 48000],
+                                 ['--compare-realtime', 'false', '--realtime-rate', 48000],
+                                 ['--compare-realtime', 'true', '--realtime-rate', 96000],
+                                 ['--compare-realtime', 'true', '--realtime-rate', 'nan'],
+                                 base+['--gain', 'physical'], base+['--ota-level', 0],
+                                 base+['--ota-level', 2.50000001], base+['--stimulus', 'impulse'],
+                                 base+['--compare-realtime', 'true']]):
+            self.run_tool('rt-invalid'+str(i), *args, success=False)
+        nonzero = self.write_input('nonzero.csv', [1e-20, .2, 0])
+        self.run_tool('rt-nonzero', '--input', nonzero, '--input-rate', 48000, '--input-samples', 3,
+                      '--compare-realtime', 'true', '--realtime-rate', 48000, success=False)
+        # Float gm control is checked before production's clamp, not only the requested double total.
+        for stage in ['hp', 'lp']:
+            for cutoff, ok in [(3599.999, True), (3600.001, False), (20000, False), (25, True)]:
+                self.run_tool('boundary-'+stage+str(cutoff), '--rate', 8000, '--duration', '.001',
+                              '--amplitude', 0, '--'+stage+'-hz', cutoff, '--compare-realtime', 'true',
+                              '--realtime-rate', 8000, success=ok)
+        # All supported endpoint clocks can also be declared as the internal clock.
+        for rate in [8000, 8001, 44100, 384000]:
+            self.run_tool('rt-rate'+str(rate), '--rate', rate, '--duration', '.001', '--amplitude', 0,
+                          '--compare-realtime', 'true', '--realtime-rate', rate)
+
+    def test_realtime_synthetic_reference_unchanged(self):
+        args = ['--duration', '.005', '--amplitude', 2.5, '--q', 5]
+        plain = self.run_tool('sine-plain', *args)
+        out = self.run_tool('sine-compare', *args, '--compare-realtime', 'true', '--realtime-rate', 48000)
+        self.assertEqual((plain/'trace.csv').read_bytes(), (out/'trace.csv').read_bytes())
+        self.assertGreater(self.read(out)[0]['realtime_comparison']['lp']['absolute_rms'], 0)
+
     def test_zero_and_failures(self):
         m, rows = self.read(self.run_tool('zero', '--duration', '.001', '--amplitude', 0))
         self.assertEqual(m['time_refinement_relative_max'], 0)

@@ -31,6 +31,8 @@ struct Options {
     double rate = 48000, duration = .1, frequency = 440, amplitude = 1;
     double hp = 200, lp = 2000, q = 1, ota = 2.5, tolerance = .001;
     int steps = 16;
+    bool compareRealtime = false;
+    double realtimeRate = 0;
 };
 double number(const std::string& s) {
     std::size_t end = 0; double v = std::stod(s, &end);
@@ -110,6 +112,11 @@ Options parse(int argc, char** argv) {
             require(n >= 2 && n <= 3840001 && n == std::floor(n), "input-samples must be integer 2..3840001");
             o.inputCount = static_cast<int>(n);
         }
+        else if (k == "--compare-realtime") {
+            require(v == "true", "compare-realtime accepts only true; omit to disable");
+            o.compareRealtime = true;
+        }
+        else if (k == "--realtime-rate") o.realtimeRate = number(v);
         else if (k == "--stimulus") o.stimulus = v;
         else if (k == "--gain") o.gain = v;
         else if (k == "--rate") o.rate = number(v);
@@ -146,6 +153,21 @@ Options parse(int argc, char** argv) {
     require((o.inputPath.empty() ? std::floor(o.duration * o.rate) : o.inputCount-1) * o.steps * 3 <= 10000000, "Render exceeds 10 million integration steps");
     require(!fs::exists(o.out) && !fs::is_symlink(o.out), "Output must be a new directory");
     if (!o.inputPath.empty()) loadInput(o);
+    require(o.compareRealtime == seen["--realtime-rate"], "Comparison requires --compare-realtime true and --realtime-rate together");
+    if (o.compareRealtime) {
+        require(o.realtimeRate == o.rate, "realtime-rate must equal endpoint rate; no resampling is performed");
+        require(o.gain == "unity" && o.ota == cs80::kIg00156OtaLevel,
+                "Comparison requires unity gain and production ota-level 2.5");
+        require(o.stimulus != "impulse", "Comparison does not support discontinuous synthetic impulse; supply zero-start samples");
+        require(o.samples.empty() || o.samples.front() == 0.0, "Comparison requires exact zero initial source for zero-state alignment");
+        for (const auto* n : {&cs80::kIg00156HighPassNetwork, &cs80::kIg00156LowPassNetwork}) {
+            cs80::Ig00156Stage stage(*n);
+            double total = n == &cs80::kIg00156HighPassNetwork ? o.hp : o.lp;
+            const float gmHz = static_cast<float>(total - stage.feedforwardCutoffHz());
+            require(gmHz >= 0 && gmHz <= .45 * static_cast<float>(o.realtimeRate) - stage.feedforwardCutoffHz(),
+                    "Comparison cutoff would be clamped by production stage at 0.45 * realtime-rate");
+        }
+    }
     return o;
 }
 ref::StageNetwork network(const cs80::Ig00156Network& n) {
@@ -167,6 +189,24 @@ void stageJson(std::ostream& f, const ref::StageNetwork& n, const ref::StageCont
       << ",\"gm2_siemens\":" << c.gm2Siemens << ",\"q_siemens\":" << c.qSiemens
       << ",\"ota_level\":" << c.otaVolts << ",\"source_gain\":" << gain << "}";
 }
+struct RealtimeRow { float input, hp, lp; double hpDifference, lpDifference; };
+struct Metrics {
+    double squaredError = 0, referenceEnergy = 0, maximum = 0;
+    void add(double reference, double difference) {
+        squaredError += difference * difference;
+        referenceEnergy += reference * reference;
+        maximum = std::max(maximum, std::abs(difference));
+    }
+    void json(std::ostream& f, std::size_t count) const {
+        f << "{\"absolute_rms\":" << std::sqrt(squaredError / count)
+          << ",\"absolute_max\":" << maximum
+          << ",\"reference_rms\":" << std::sqrt(referenceEnergy / count)
+          << ",\"relative_rms\":";
+        if (referenceEnergy == 0) f << "null";
+        else f << std::sqrt(squaredError / referenceEnergy);
+        f << '}';
+    }
+};
 void render(const Options& o) {
     auto hn = network(cs80::kIg00156HighPassNetwork), ln = network(cs80::kIg00156LowPassNetwork);
     auto hc = control(cs80::kIg00156HighPassNetwork, o.hp, o), lc = control(cs80::kIg00156LowPassNetwork, o.lp, o);
@@ -215,6 +255,28 @@ void render(const Options& o) {
     }
     double error = difference / std::max(peak, 1e-30);
     require(error <= o.tolerance, "Time-refinement estimate exceeds tolerance; increase --substeps");
+    std::vector<RealtimeRow> realtime;
+    Metrics hpMetrics, lpMetrics;
+    cs80::Ig00156Stage realtimeHp(cs80::kIg00156HighPassNetwork), realtimeLp(cs80::kIg00156LowPassNetwork);
+    const float hpGmHz = static_cast<float>(o.hp - realtimeHp.feedforwardCutoffHz());
+    const float lpGmHz = static_cast<float>(o.lp - realtimeLp.feedforwardCutoffHz());
+    if (o.compareRealtime) {
+        realtimeHp.set(hpGmHz, static_cast<float>(o.q), static_cast<float>(o.realtimeRate));
+        realtimeLp.set(lpGmHz, static_cast<float>(o.q), static_cast<float>(o.realtimeRate));
+        realtimeHp.reset(); realtimeLp.reset();
+        realtime.reserve(fine.size());
+        // Source at t=0 is required to be zero, so processing it preserves zero
+        // histories. Subsequent samples correspond directly to reference endpoints.
+        for (const auto& row : fine) {
+            const float input = static_cast<float>(row.input);
+            const float hp = realtimeHp.process(input).hp;
+            const float lp = realtimeLp.process(hp).lp;
+            require(std::isfinite(hp) && std::isfinite(lp), "Nonfinite realtime output");
+            const double dh = double(hp) - row.hp, dl = double(lp) - row.lp;
+            realtime.push_back({input, hp, lp, dh, dl});
+            hpMetrics.add(row.hp, dh); lpMetrics.add(row.lp, dl);
+        }
+    }
     // No artifacts before numerical success. Never remove pre-existing content.
     require(fs::create_directory(o.out), "Cannot create new output directory");
     try {
@@ -250,6 +312,34 @@ void render(const Options& o) {
                  << ",\"units\":\"declared model input volts; not calibrated hardware volts\""
                  << ",\"interpolation\":\"piecewise linear endpoints; no resampling or extrapolation\"}";
         }
+        if (o.compareRealtime) {
+            std::ofstream comparison(o.out / "realtime.csv");
+            comparison.exceptions(std::ios::failbit | std::ios::badbit);
+            comparison.imbue(std::locale::classic()); comparison << std::setprecision(17);
+            comparison << "sample,time_s,input_float,hp_realtime,lp_realtime,hp_difference,lp_difference\n";
+            for (std::size_t i = 0; i < realtime.size(); ++i) {
+                const auto& r = realtime[i];
+                comparison << i << ',' << i / o.rate << ',' << r.input << ',' << r.hp << ',' << r.lp
+                           << ',' << r.hpDifference << ',' << r.lpDifference << '\n';
+            }
+            comparison.close();
+            json << ",\n\"realtime_comparison\":{\"file\":\"realtime.csv\",\"internal_rate_hz\":" << static_cast<float>(o.realtimeRate)
+                 << ",\"hp_gm_cutoff_hz_float\":" << hpGmHz << ",\"lp_gm_cutoff_hz_float\":" << lpGmHz
+                 << ",\"hp_effective_total_hz\":" << double(hpGmHz) + realtimeHp.feedforwardCutoffHz()
+                 << ",\"lp_effective_total_hz\":" << double(lpGmHz) + realtimeLp.feedforwardCutoffHz()
+                 << ",\"q_float\":" << static_cast<float>(o.q)
+                 << ",\"hp_q_siemens\":" << realtimeHp.qSiemens() << ",\"lp_q_siemens\":" << realtimeLp.qSiemens()
+                 << ",\"ota_level\":" << cs80::kIg00156OtaLevel
+                 << ",\"sample_count\":" << realtime.size()
+                 << ",\"metric_definition\":\"All endpoint rows including initial zero; difference=realtime-reference; absolute RMS=sqrt(sum(difference^2)/N); absolute max=max(abs(difference)); relative RMS=sqrt(sum(difference^2)/sum(reference^2)), null for zero reference energy; no acceptance gate\""
+                 << ",\"alignment\":\"Zero state and zero initial source; same endpoint times; no warmup, resampling, trimming, delay, phase or gain alignment\""
+                 << ",\"implementation\":\"Production Ig00156Stage HP then LP at fixed controls; not full engine/oversampler/decimator\""
+                 << ",\"differences\":\"Production cutoff prewarp and bounded tan/tanh approximations, capped scalar Newton, float controls/input/interstage/output versus unwarped double reference with certified Newton. Reference forcing is analytic sine or piecewise linear double sample endpoints. Differences include discretization and quantization, not measured hardware error\""
+                 << ",\"source_sha256\":{\"filter\":\"" << TRUTH_CONTROL_SHA
+                 << "\",\"dsp\":\"" << TRUTH_DSP_SHA << "\",\"fast_math\":\"" << TRUTH_FAST_MATH_SHA << "\"}"
+                 << ",\"hp\":";
+            hpMetrics.json(json, realtime.size()); json << ",\"lp\":"; lpMetrics.json(json, realtime.size()); json << '}';
+        }
         json << ",\n\"source_sha256\":{\"renderer\":\"" << TRUTH_RENDER_SHA
              << "\",\"input_sha256_helper\":\"" << TRUTH_INPUT_SHA
              << "\",\"network\":\"" << TRUTH_NETWORK_SHA << "\",\"linear\":\"" << TRUTH_LINEAR_SHA
@@ -271,6 +361,7 @@ void render(const Options& o) {
         std::error_code ignored;
         fs::remove(o.out / "trace.csv", ignored);
         fs::remove(o.out / "manifest.json", ignored);
+        if (o.compareRealtime) fs::remove(o.out / "realtime.csv", ignored);
         if (!o.samples.empty()) fs::remove(o.out / "stimulus.csv", ignored);
         fs::remove(o.out, ignored); // succeeds only if still empty
         throw;
@@ -284,6 +375,7 @@ int main(int argc, char** argv) {
                      "Or: --out NEW_DIR --input CSV --input-rate RATE --input-samples N (N endpoint values, N-1 intervals)\n"
                      "[--frequency 440] [--amplitude 1] [--hp-hz 200] [--lp-hz 2000] [--q 1]\n"
                      "[--ota-level 2.5 (0=linear)] [--gain unity|physical] [--substeps 16] [--tolerance .001]\n"
+                     "[--compare-realtime true --realtime-rate RATE (must match endpoint rate)]\n"
                      "Offline conditional filter only; not whole-instrument or measured hardware truth.\n"; return 0;
     }
     try { render(parse(argc, argv)); return 0; }

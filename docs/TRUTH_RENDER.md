@@ -4,7 +4,8 @@
 HP-to-LP reference model. This is **filter-stage research infrastructure**, not a
 whole-note renderer, hardware measurement, or claim of instrument parity. The
 whole-note renderer in IMPROVEMENT_PLAN.md remains open. Unlike `cs80_dsp_probe`
-and `cs80_engine_audit`, this tool does not run the realtime engine.
+and `cs80_engine_audit`, this tool does not run the realtime engine. Its opt-in
+comparison runs only the production filter stages (see below).
 
 Build the `cs80_truth_render` target (also available with CS80_BUILD_PLUGIN=OFF).
 Example:
@@ -174,3 +175,89 @@ at 48 kHz, 95,999 intervals, exact input snapshot and SHA-256 verified, and
 relative refinement estimate 1.3156733609106375e-05 (default tolerance .001).
 This demonstrates reusable conditional filter input, not hardware fidelity,
 whole-note reference synthesis, a full-plugin regression run, or a speed claim.
+
+## Opt-in production filter comparison
+
+To compare the reference against the actual production `Ig00156Stage` HP network
+followed by its LP network at fixed controls:
+
+```sh
+cs80_truth_render --out NEW_COMPARISON --rate 96000 --duration .1 \
+  --frequency 500 --amplitude 2.5 --hp-hz 1000 --lp-hz 1000 --q 5 \
+  --compare-realtime true --realtime-rate 96000
+```
+
+The explicit `--realtime-rate` is the **internal filter clock**, not a host audio
+rate. It must equal the reference endpoint rate. There is no hidden oversampling,
+resampling, engine voice, decimator or latency compensation. Use the actual
+internal filter rate for an engine-stage experiment. Sample input works with the
+same comparison options, provided its first value is exactly zero. This ensures
+that processing sample zero from reset leaves both production histories and the
+reference capacitor states zero at time zero. Subsequent production samples are
+compared to reference outputs at the same endpoint times. There is no automatic
+warmup, trimming, delay/phase alignment, gain fitting or normalization.
+
+Comparison requires unity-passband adapters and the production OTA level (2.5).
+Synthetic impulse is rejected because its initial nonzero source and rectangular
+jump are not this endpoint-alignment contract. To study a sampled pulse, provide
+an explicit zero-start CSV; its reference forcing is piecewise linear rather than
+the synthetic rectangular pulse. A total cutoff whose **float-cast gm control**
+would be clamped by production at 0.45 times the internal rate is rejected. Small
+float quantization of an otherwise legal cutoff is retained and reported, not
+silently corrected. The original reference controls and forcing are unchanged.
+
+`trace.csv` remains the original fine-reference trace. Comparison adds:
+
+- `realtime.csv`: endpoint index/time, actual float-cast input, production HP and
+  cascade LP float outputs, and signed production-minus-reference HP/LP differences.
+  The HP float output is passed directly to the LP stage, as in production.
+- `manifest.json` gains `realtime_comparison`: actual float rate, gm-cutoff and Q
+  controls, effective total cutoffs and Q conductances, production OTA level,
+  source hashes of `Ig00156Filter.h`, `Dsp.h` and `FastMath.h`, and HP/LP metrics.
+  For each stage, absolute RMS is sqrt(sum(difference²)/N), absolute maximum is
+  max(abs(difference)), reference RMS is sqrt(sum(reference²)/N), and relative RMS
+  is sqrt(sum(difference²)/sum(reference²)). All N exported rows, including initial
+  zero and startup transient, contribute. Relative RMS is JSON null when reference
+  energy is zero, including an all-zero run, rather than a misleading zero or an
+  arbitrary denominator floor. There is **no acceptance threshold** for these metrics.
+
+Production uses cutoff prewarp, bounded tan/tanh approximations and a capped
+scalar Newton iteration with its own stopping rule. The reference is unwarped,
+uses double-precision forcing/state with refined integration and certified
+Newton residuals. Production controls, input, interstage signal and output are
+floats. Reference forcing remains analytic sine or piecewise linear supplied
+double endpoints. Consequently this diagnostic includes discretization,
+approximation and quantization differences. It is useful for locating differences
+between these two conditional software implementations; it does not isolate a
+single error source or establish hardware fidelity or whole-instrument parity.
+
+Without the comparison options, no production processing or comparison file is
+performed. Existing stdout and exit conventions and reference numerical checks
+remain unchanged. Comparison outputs must be finite before publication. File
+failure cleanup also removes this run's `realtime.csv`. Production source files,
+existing nodal thresholds, and the parity harness are unchanged.
+
+### Comparison verification checkpoint
+
+Developed against `498d2481`. The renderer contract/oracle, input SHA-256,
+checked-step diagnostics and existing nodal suites passed together (20.55 s).
+Short sine and impulse reference traces match the preserved pre-increment
+executable byte for byte on this platform. Comparison tests independently
+recompute exported metrics from both CSVs, check exact float conversions and
+header hashes, compare reference-only and comparison trace bytes, exercise zero
+and driven inputs, and reject incompatible options and clamped cutoff controls.
+
+One exact existing nonlinear nodal fixture was also replayed: 144,000 endpoints
+at 96 kHz, 500 Hz analytic sine, amplitude 2.5, Q=5, both total cutoffs 1 kHz,
+16 fine reference substeps. Its final 9,600 rows yielded relative LP RMS
+0.001320787 (within that existing fixture's 0.03 threshold). The new untrimmed,
+all-row diagnostic yielded relative LP RMS 0.003707358, absolute RMS 0.003493139
+and absolute maximum 0.117630850. This illustrates why the time window must be
+specified; the fixture threshold is **not** applied to arbitrary renderer runs.
+These focused checks do not qualify the full plugin or hardware fidelity.
+
+Independent source review and a repeat of all four affected suites passed in
+19.93 seconds with process exit 0. The reviewer also recomputed exported CSV
+metrics and verified preserved synthetic trace bytes. Their separate diagnostic
+render used 144,001 endpoints; it corroborates the metric calculation, not an
+additional exact replay of the 144,000-endpoint frozen fixture above.

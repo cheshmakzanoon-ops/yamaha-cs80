@@ -1337,7 +1337,8 @@ add_executable(cs80_truth_render src/tools/truth_render.cpp)
 target_include_directories(cs80_truth_render PRIVATE src)
 # Configure reruns when a provenance input changes, including dirty local edits.
 foreach(input IN ITEMS src/tools/truth_render.cpp src/tools/TruthInputSha256.h src/reference/IG00156Network.h
-                       src/reference/IG00156Linear.h src/core/Ig00156Filter.h docs/IG00156_NODAL_MODEL.md)
+                       src/reference/IG00156Linear.h src/core/Ig00156Filter.h src/core/Dsp.h src/core/FastMath.h
+                       docs/IG00156_NODAL_MODEL.md)
     set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
 endforeach()
 file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/tools/truth_render.cpp" TRUTH_RENDER_SHA)
@@ -1346,10 +1347,13 @@ file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/reference/IG00156Network.h" TRUTH_N
 file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/reference/IG00156Linear.h" TRUTH_LINEAR_SHA)
 file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/core/Ig00156Filter.h" TRUTH_CONTROL_SHA)
 file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/docs/IG00156_NODAL_MODEL.md" TRUTH_DOCUMENT_SHA)
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/core/Dsp.h" TRUTH_DSP_SHA)
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/core/FastMath.h" TRUTH_FAST_MATH_SHA)
 target_compile_definitions(cs80_truth_render PRIVATE
     TRUTH_RENDER_SHA="${TRUTH_RENDER_SHA}" TRUTH_INPUT_SHA="${TRUTH_INPUT_SHA}" TRUTH_NETWORK_SHA="${TRUTH_NETWORK_SHA}"
     TRUTH_LINEAR_SHA="${TRUTH_LINEAR_SHA}" TRUTH_CONTROL_SHA="${TRUTH_CONTROL_SHA}"
-    TRUTH_DOCUMENT_SHA="${TRUTH_DOCUMENT_SHA}")
+    TRUTH_DOCUMENT_SHA="${TRUTH_DOCUMENT_SHA}"
+    TRUTH_DSP_SHA="${TRUTH_DSP_SHA}" TRUTH_FAST_MATH_SHA="${TRUTH_FAST_MATH_SHA}")
 if (CS80_BUILD_TESTS)
     add_test(NAME cs80_truth_render_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_truth_render.py
