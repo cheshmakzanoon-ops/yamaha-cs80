@@ -1371,3 +1371,26 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_truth_input_sha256_tests PRIVATE src)
     add_test(NAME cs80_truth_input_sha256_tests COMMAND cs80_truth_input_sha256_tests)
 endif()
+
+# Independent offline conditional IG00151 reference; no audio-path changes.
+add_executable(cs80_vca_reference src/tools/vca_reference.cpp)
+target_include_directories(cs80_vca_reference PRIVATE src)
+foreach(pair IN ITEMS "RENDER|src/tools/vca_reference.cpp"
+                      "REFERENCE|src/reference/IG00151Reference.h"
+                      "HASH|src/tools/TruthInputSha256.h"
+                      "CORE|src/core/Vca.h"
+                      "MODEL|docs/IG00151_VCA_MODEL.md"
+                      "DOCUMENT|docs/VCA_REFERENCE.md")
+    string(REPLACE "|" ";" parts "${pair}")
+    list(GET parts 0 key)
+    list(GET parts 1 input)
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
+    file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/${input}" hash)
+    target_compile_definitions(cs80_vca_reference PRIVATE "VCA_${key}_SHA=\"${hash}\"")
+endforeach()
+if (CS80_BUILD_TESTS)
+    add_test(NAME cs80_vca_reference_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_vca_reference.py
+                --renderer $<TARGET_FILE:cs80_vca_reference>)
+    set_tests_properties(cs80_vca_reference_tests PROPERTIES TIMEOUT 120)
+endif()

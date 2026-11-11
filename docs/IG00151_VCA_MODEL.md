@@ -76,3 +76,14 @@ SUB tremolo now acts in decibels (exponential input); LC changes are smoothed
 by the 0.54 ms LI node; an envelope-shaped -52 dB pedestal follows each note
 and is AC-coupled away; off-centre rank pans are constant-power. Historical
 renders: use the commits before the ws1 merge (`ea391d7`).
+
+## Offline conditional reference
+
+[`cs80_vca_reference`](VCA_REFERENCE.md) exports an independent double ODE
+reference for these same declared laws, with bounded piecewise-linear input,
+LC, EI and envelope endpoints, an explicit initial LI state, and zero initial
+coupling. It exports LI/gain/coupling/output, numerical time-refinement
+diagnostics, an exact input snapshot and source-content provenance. Its
+optional production comparison observes only public LI/output under an
+explicit endpoint clock. It does not change the production audio path, the
+existing gates above, or the evidence class of any inference.

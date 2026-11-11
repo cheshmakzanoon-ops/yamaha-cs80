@@ -89,7 +89,11 @@ become real stage gates instead of synthetic-only checks.
 
 A bounded first exporter now exists: [cs80_truth_render](TRUTH_RENDER.md) renders
 the conditional IG00156 HP-to-LP filter pair with numerical certification and
-CSV/JSON provenance. Whole-note truth rendering and the other stages remain open.
+CSV/JSON provenance. [cs80_vca_reference](VCA_REFERENCE.md) now adds an
+independent double conditional IG00151 ODE reference with explicit endpoint
+drives, refinement diagnostics and an optional production VCA comparison.
+These are stage research tools, not new hardware acceptance gates. Whole-note
+truth rendering and the remaining stage references remain open.
 
 Public recordings are used **only** for blind, level-matched listening reviews. They are
 never treated as calibration data, as `docs/ANALOG_FIDELITY_REQUIREMENT.md` already requires.
