@@ -17,7 +17,9 @@ production policies; this first reference deliberately excludes live edits.
 
 This advances the offline envelope reference only. Runtime DSP, patches, host
 parameters, UI, and existing audio/performance/parity acceptance gates are unchanged.
-No production-envelope comparison or joint whole-voice solver is supplied.
+An optional [actual-production comparison](AMPLITUDE_PRODUCTION_COMPARISON.md)
+uses a separate command without changing this renderer or its exact event clock.
+No joint whole-voice solver is supplied.
 
 ## Reproducible render and filter-to-VCA example
 
