@@ -46,6 +46,21 @@ public:
         const auto r = role(channel);
         return r == Role::upperMaster || r == Role::upperMember;
     }
+    std::array<Role, 16> channelRoles() const noexcept
+    {
+        std::array<Role, 16> result {};
+        for (int channel = 1; channel <= 16; ++channel)
+            result[(std::size_t) channel - 1] = role(channel);
+        return result;
+    }
+    unsigned changedRoleMask(const std::array<Role, 16>& previous) const noexcept
+    {
+        unsigned mask = 0;
+        for (int channel = 1; channel <= 16; ++channel)
+            if (previous[(std::size_t) channel - 1] != role(channel))
+                mask |= 1u << (channel - 1);
+        return mask;
+    }
     unsigned activeChannelMask() const noexcept
     {
         unsigned mask = 0;

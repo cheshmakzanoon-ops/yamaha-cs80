@@ -125,14 +125,19 @@ void testLifecycle()
             check(fresh >= 0, "fresh gap note owns an allocated voice after cancellation");
             if (fresh >= 0) expectPitch(e, lowerReference, 0.0f, "fresh gap note does not retain master inheritance", fresh);
 
-            // Assigned voices retain the existing captured-upper convention.
-            // This fix deliberately does not introduce live zone retagging.
+            // Role transfers cancel instead of live-retagging the old voice.
+            // Fresh notes use the current lower-manager route.
             e.reset(); layout(e, 2, 2); e.noteOn(60, 0.8f, 14); render(e, 64);
             const auto upperReference = frequencies(e);
             e.pitchBend(1, 0.5f); e.pitchBend(16, -0.5f); render(e);
             zone(e, 1, 14); render(e);
-            check(e.getVoiceInfo(0).active, "direct still-MPE transfer preserves captured voice");
-            expectPitch(e, upperReference, -1.0f, "assigned voice keeps captured-upper bend policy");
+            check(!e.getVoiceInfo(0).active, "direct still-MPE transfer cancels the captured voice");
+            e.noteOn(60, 0.8f, 14); render(e);
+            int transferred = -1;
+            for (int i = 0; i < 8; ++i)
+                if (e.getVoiceInfo(i).active && e.getVoiceInfo(i).note == 60 && e.getVoiceInfo(i).channel == 14) transferred = i;
+            check(transferred >= 0, "fresh transferred note owns an allocated voice");
+            if (transferred >= 0) expectPitch(e, upperReference, 1.0f, "fresh transferred note inherits current lower-manager bend", transferred);
         }
 }
 void testModeCompatibility()

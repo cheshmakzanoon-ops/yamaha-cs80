@@ -346,9 +346,9 @@ void testNonMembershipChanges(const juce::File& fixture)
         for (int channel : {1, 2, 15, 16}) on(moved.midi, channel, 60 + channel);
         moved.tick(); rpn(moved.midi, 16, 6, 15); moved.tick();
         for (int channel : {1, 2, 15, 16})
-            check(find(*moved.processor, 60 + channel, channel).info.held
-                      && moved.processor->isHostKeyDown(60 + channel),
-                  "still-MPE role/zone changes are outside the membership-reset kill boundary");
+            check(!find(*moved.processor, 60 + channel, channel).info.active
+                      && !moved.processor->isHostKeyDown(60 + channel),
+                  "later role-transfer policy also cancels still-MPE reassigned channels");
 
         Host shared(fixture, circuit, sixteen); shared.layout(4, 2);
         on(shared.midi, 4, 60); on(shared.midi, 15, 60); shared.tick();

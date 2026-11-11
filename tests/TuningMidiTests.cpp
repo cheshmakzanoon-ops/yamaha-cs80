@@ -1254,18 +1254,17 @@ void testMpeExpressionZoneBoundaries()
                 f.send(1, 0.25f); f.verify(index, 0.5f, 3000, "MPE on excludes gap again");
                 f.send(8, 0.25f); f.verify(index, 0.25f, 3000, "gap own channel after MPE toggles");
             }
-            // Preserve existing captured-upper semantics outside Role::none.
-            // This is compatibility coverage, not a new live-retag policy.
+            // The later role-transfer policy stops captured-upper notes;
+            // a fresh lower member uses the new role without live retagging.
             {
                 Fixture f(policy); f.layout(2, 2);
                 const int index = f.start(14, tail);
                 f.send(16, 0.25f); f.verify(index, 0.25f, 3000, "captured upper initial control");
-                f.zone(1, 14); // Direct transition: channel 14 stays MPE, still captured upper.
-                f.send(1, 0.75f); f.verify(index, 0.25f, 3000, "assigned voice is not live-retagged");
-                // Channel 14 is currently a lower member despite its captured
-                // upper routing. Ordinary own-channel expression now retains
-                // released targets; held recipients still take the new value.
-                f.send(14, 0.5f); f.verify(index, tail ? 0.25f : 0.5f, 3000, "retained upper own channel");
+                f.zone(1, 14); // Direct still-MPE role transfer now cancels the captured-upper voice.
+                check(!f.engine.getVoiceInfo(index).active, "role transfer stops the captured-upper voice");
+                const int fresh = f.start(14, tail);
+                f.send(1, 0.75f); f.verify(fresh, 0.75f, 3000, "fresh transferred voice uses lower manager");
+                f.send(14, 0.5f); f.verify(fresh, tail ? 0.75f : 0.5f, 3000, "fresh transferred own-channel release boundary");
             }
             {
                 Fixture f(policy); f.layout(2, 2);

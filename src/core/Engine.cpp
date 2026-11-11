@@ -1981,22 +1981,22 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         const std::array<float, 2> previousRanges { effectiveManagerBendRange(false), effectiveManagerBendRange(true) };
         const std::array<float, 2> previousMemberRanges { effectiveMemberBendRange(false), effectiveMemberBendRange(true) };
         const std::array<MpeZoneLayout::Role, 2> previousRoles { mpeZones.role(1), mpeZones.role(16) };
-        const unsigned previousMembers = mpeZones.activeChannelMask();
+        const auto previousChannelRoles = mpeZones.channelRoles();
         mpeZones.controlChange(midiChannel, controller, (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f));
-        const unsigned membershipChanged = previousMembers ^ mpeZones.activeChannelMask();
-        if (membershipChanged != 0)
+        const unsigned rolesChanged = mpeZones.changedRoleMask(previousChannelRoles);
+        if (rolesChanged != 0)
         {
-            // MPE v1.1 2.2.3: entering/leaving channels must not carry old
-            // sounding notes into their new mode. Clear obligations as one
+            // Extend membership cancellation to every changed MPE role as a
+            // bounded product policy. Clear old note obligations as one
             // batch before reconsidering any unaffected waiting keys.
             for (int channel = 1; channel <= 16; ++channel)
-                if ((membershipChanged & (1u << (channel - 1))) != 0)
+                if ((rolesChanged & (1u << (channel - 1))) != 0)
                 {
                     sustainPedals[(size_t) channel] = false;
                     memberExpression[(size_t) channel] = {};
                     mpeZones.resetChannelSelector(channel);
                 }
-            allNotesOffMask(false, membershipChanged, false);
+            allNotesOffMask(false, rolesChanged, false);
         }
         discardChangedMemberExpression();
         for (int zone = 0; zone < 2; ++zone)

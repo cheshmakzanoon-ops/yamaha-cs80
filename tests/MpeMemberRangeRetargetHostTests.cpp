@@ -64,13 +64,14 @@ int main(){
   check(find(e,61,3)<0,"membership loss stops the old voice rather than reviving its target");
   e.noteOn(65,.8f,3);check(bend(65,3)==0,"re-entering member starts with cleared raw expression");
  }
- // A held voice can change member zones without leaving MPE membership.
+ // The later role-transfer policy cancels old held voices before retargeting.
  for(int policy:{0,1}) {
   cs80::Engine e;cs80::ParamValues p;p[cs80::P_sourcePerformance]=policy;p[cs80::P_parityMode]=0;p[cs80::P_mpeOn]=1;p[cs80::P_kasScanTiming]=0;p[cs80::P_arpOn]=0;p[cs80::P_mpeBendRange]=48;
   e.prepare(48000);e.setParams(p);e.pitchBend(2,.5f);e.noteOn(60,.8f,2);
   auto change=[&](int ch,int number,int value){e.controlChange(101,0,ch);e.controlChange(100,number/127.0f,ch);e.controlChange(6,value/127.0f,ch);};
   change(16,6,15);change(2,0,7);
-  int i=find(e,60,2);check(i>=0&&e.getVoiceInfo(i).held&&e.getVoiceInfo(i).bend==24,"still-MPE zone transfer must not initialize invalidated raw input during retarget");
+  check(find(e,60,2)<0,"still-MPE zone transfer stops the old held voice before retarget");
+  e.noteOn(61,.8f,2);int i=find(e,61,2);check(i>=0&&e.getVoiceInfo(i).bend==0,"fresh transferred member does not inherit invalidated raw input");
  }
  // Equal-offset event order uses accepted NoteOff, not event-block membership.
  for(int policy:{0,1})for(bool releaseFirst:{false,true}) {
