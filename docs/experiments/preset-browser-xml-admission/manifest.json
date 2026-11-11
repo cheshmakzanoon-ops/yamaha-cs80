@@ -1,0 +1,123 @@
+{
+  "base_commit": "321eb7052f5bd737693d7c55aafb43dd792610e4",
+  "configuration": "Linux Release, GCC 14.2, isolated build cache; FetchContent fully disconnected",
+  "build_directory": "/workspace/scratch/ee447c520988/build-preset-browser-admission",
+  "sources": {
+    "src/plugin/PresetBrowser.cpp": "ef8353bf3611cd80f9a25208a436bfe66f222345f7bd32053ebfbff90e76f299",
+    "src/plugin/PresetBrowser.h": "86be1bfd821ed269ca26fdafce8246d917661b893e897b65391c023c8a7a623b",
+    "src/tools/ui_snapshot.cpp": "7cbaec603be9a10835ed69c455dde1598250831e8bc614f7c65111595d6498c0",
+    "tests/PresetBrowserXmlTests.h": "f9406f29fbfcc6fbae80866f19ed483f68cd6d6955518cba7194186397430d4d",
+    "src/plugin/PresetXml.h": "9f94b218a353605bb90ffc0b2ba53c38414d08683f3be0c105b4cebe43aa670d",
+    "src/plugin/PresetFileValues.h": "d93ff91e511bea76e32b8541a7c214a8d90bd9e12d4e8075c1dfa5d428d1dcd0",
+    "src/plugin/PresetDisplayName.h": "266b968ac395e6d2f44982eccbaa352e31ffabd4e62aefbed5ccec6f1b016e0c",
+    "CMakeLists.txt": "3ada8601b3eb4be654e0bdda475d67d6fba023e61f7761fbeae62e530e6e2f2e",
+    "cmake/PresetXml.cmake": "0e30d2cbcff21e66ab7269ef8c71b555e40f32891c2c30cf97589f190cd32c9f"
+  },
+  "binary": {
+    "path": "/workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "13ba4910e482c5ee104b6c2e1804d49a6d7b6841c11f630174bf9d56a12902c9"
+  },
+  "dependencies": {
+    "JUCE": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "libxml2": "96498992efa48d52b0e8b83058bd88dbdaf153c1",
+    "source_worktrees_clean": true,
+    "source_overrides": [
+      "/workspace/scratch/ee447c520988/mpe-native-tools/JUCE",
+      "/workspace/scratch/ee447c520988/preset-xml-libxml2"
+    ]
+  },
+  "baseline": {
+    "checks": 193,
+    "failures": 20,
+    "ctest_exit_code": 8,
+    "binary_sha256": "4841003570d85c7dd87bac199a8278742b71d4ef082e3afd3b3bd2c6a38feb02",
+    "test_patch_sha256": "922ee7660e8f9e27891310a5d1966c3e2ec32b75f94a87870b0eb5d7a49d61ce",
+    "log": "baseline.log",
+    "external_SYSTEM_and_parameter_entity_witness": {
+      "name": "Flute_CS80_OWNED_SENTINEL",
+      "styles": 38,
+      "default_styles": 6,
+      "dirty_brilliance": 1,
+      "dirty_used": 1
+    }
+  },
+  "final": {
+    "ctests_passed": 13,
+    "ctests_failed": 0,
+    "exit_code": 0,
+    "checks": {
+      "Preset trash safety": {
+        "checks": 23,
+        "failures": 0
+      },
+      "Preset preview math": {
+        "checks": 65543,
+        "failures": 0
+      },
+      "Preset file values": {
+        "checks": 4629,
+        "failures": 0
+      },
+      "Preset opening sound REVERT": {
+        "checks": 1387,
+        "failures": 0
+      },
+      "Modern/session/preset/A-B recall": {
+        "checks": 2354,
+        "failures": 0
+      },
+      "User-preset file/recall host": {
+        "checks": 2784,
+        "failures": 0
+      },
+      "Preset XML admission": {
+        "checks": 77,
+        "failures": 0
+      },
+      "Preset load failure/retry": {
+        "checks": 639,
+        "failures": 0
+      },
+      "Preset save storage": {
+        "checks": 608,
+        "failures": 0
+      },
+      "Preset loaded identity": {
+        "checks": 79,
+        "failures": 0
+      },
+      "Preset catalogue refresh": {
+        "checks": 193,
+        "failures": 0
+      }
+    },
+    "log": "final-focused.log",
+    "repeat_build": "no work to do"
+  },
+  "review": {
+    "result": "approved without blockers",
+    "source_hashes_verified": 9,
+    "binary_sha256_verified": "13ba4910e482c5ee104b6c2e1804d49a6d7b6841c11f630174bf9d56a12902c9",
+    "independent_refresh": {
+      "checks": 193,
+      "failures": 0,
+      "exit_code": 0,
+      "log": "independent-refresh.log",
+      "exit_status": "independent-refresh.exit"
+    },
+    "notes": "review.md"
+  },
+  "scope": "Only browser file admission; no parser/policy/cache/dependency/CMake/DSP/fader/parameter-order changes.",
+  "limits": [
+    "No filesystem trace or ptrace attempted. External content sentinel is behavioral evidence only.",
+    "No native-peer UI, macOS/Windows build, DAW/pluginval or sanitizer qualification.",
+    "Existing timestamp-based reference cache and refresh behavior unchanged."
+  ],
+  "harness_diagnostics": "baseline-initial-harness.log is superseded: 1ms timestamps truncated in JUCE Linux setter; DTD whitespace/tokenization corrected. Final tests use verified 2-second timestamp steps and unique sentinel token.",
+  "verification_commands": {
+    "build": "cmake --build /workspace/scratch/ee447c520988/build-preset-browser-admission --target CS80Snapshots cs80_preset_file_values_tests cs80_preset_display_name_tests cs80_preset_preview_math_tests -j 2",
+    "focused_ctest_regex": "^cs80_(preset_(display_name|file_values|refresh|load|xml|file_recall|save_storage|identity|revert|signature_math|preview_math|trash_safety)|modern_recall_host)_tests$",
+    "runtime_environment": "LD_LIBRARY_PATH=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu",
+    "whitespace": "Source/tests/document prose diff passes git diff --check. Raw CTest logs retain whitespace in XML payloads; the raw baseline patch retains blank context lines."
+  }
+}

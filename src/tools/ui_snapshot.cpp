@@ -34,6 +34,7 @@
 #include "../../tests/PresetXmlTests.h"
 #include "../../tests/PresetIdentityTests.h"
 #include "../../tests/PresetRefreshTests.h"
+#include "../../tests/PresetBrowserXmlTests.h"
 #include "../../tests/PresetRevertTests.h"
 #include "../../tests/PresetRecallHostTests.h"
 #include "../../tests/PresetFileHostTests.h"
@@ -2064,6 +2065,7 @@ int main(int argc, char** argv)
         juce::ScopedJuceInitialiser_GUI juceInit;
         int checks = 0;
         cs80::tests::PresetRefreshAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        cs80::tests::PresetBrowserXmlAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
         std::printf("Preset catalogue refresh: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
@@ -3874,6 +3876,7 @@ int main(int argc, char** argv)
     cs80::tests::testPresetXml(check);
     cs80::tests::PresetIdentityAccess::run(check);
     cs80::tests::PresetRefreshAccess::run(check);
+    cs80::tests::PresetBrowserXmlAccess::run(check);
     cs80::tests::PresetRevertAccess::run(check);
     cs80::tests::testPluginPanic(check, flushGui);
     phases.begin("program library, Program Change, A/B and randomise");

@@ -1,0 +1,243 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-preset-browser-admission/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-preset-browser-admission/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-preset-browser-admission
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 19
+      Start  19: cs80_preset_trash_safety_tests
+
+19: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/preset-browser-admission/scripts/test-preset-trash-safety.py" "--compiler" "/usr/bin/c++"
+19: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+19: Test timeout computed to be: 60
+19: Preset trash safety: 23 checks, 0 failures; inert doubles only.
+ 1/13 Test  #19: cs80_preset_trash_safety_tests .....   Passed    0.63 sec
+test 20
+      Start  20: cs80_preset_signature_math_tests
+
+20: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/preset-browser-admission/scripts/test-preset-signature-math.py" "--compiler" "/usr/bin/c++"
+20: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+20: Test timeout computed to be: 120
+20: Extracted signature math: 2905 cases, 894740 finite checks, 0 failures
+ 2/13 Test  #20: cs80_preset_signature_math_tests ...   Passed    6.14 sec
+test 25
+      Start  25: cs80_preset_preview_math_tests
+
+25: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/cs80_preset_preview_math_tests
+25: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+25: Test timeout computed to be: 30
+25: Preset preview math: 65543 checks, 0 failures
+ 3/13 Test  #25: cs80_preset_preview_math_tests .....   Passed    0.00 sec
+test 150
+      Start 150: cs80_preset_display_name_tests
+
+150: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/cs80_preset_display_name_tests_artefacts/Release/cs80_preset_display_name_tests
+150: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+150: Test timeout computed to be: 30
+ 4/13 Test #150: cs80_preset_display_name_tests .....   Passed    0.00 sec
+test 151
+      Start 151: cs80_preset_file_values_tests
+
+151: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/cs80_preset_file_values_tests_artefacts/Release/cs80_preset_file_values_tests
+151: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+151: Test timeout computed to be: 30
+151: Preset file values: 4629 checks, 0 failures
+ 5/13 Test #151: cs80_preset_file_values_tests ......   Passed    0.01 sec
+test 182
+      Start 182: cs80_preset_revert_tests
+
+182: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-revert-tests"
+182: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+182: Test timeout computed to be: 120
+182: Preset opening sound REVERT: 1387 checks, 0 failures
+ 6/13 Test #182: cs80_preset_revert_tests ...........   Passed    1.40 sec
+test 183
+      Start 183: cs80_modern_recall_host_tests
+
+183: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots "--modern-recall-host-tests"
+183: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+183: Test timeout computed to be: 120
+183: UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.064041 copy=0.001312 xml=0.003798 session_text=0.000495 fixture_write=0.001532 preset_load=0.012481 session_load=0.009058 audio=0.000884 save=0.012879 round_trip_load=0.018523
+183: UI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.124584 copy=0.002617 xml=0.007419 session_text=0.000961 fixture_write=0.002904 preset_load=0.024200 session_load=0.017956 audio=0.001743 save=0.025261 round_trip_load=0.036246
+183: UI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.185581 copy=0.003586 xml=0.011384 session_text=0.001493 fixture_write=0.004325 preset_load=0.036214 session_load=0.026279 audio=0.002671 save=0.037613 round_trip_load=0.054387
+183: UI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.245555 copy=0.004208 xml=0.015086 session_text=0.001970 fixture_write=0.005653 preset_load=0.047730 session_load=0.034747 audio=0.003634 save=0.049681 round_trip_load=0.072829
+183: UI SMOKE TIMING: modern_state_ranges cases=60 paths=120 total_seconds=0.311962 copy=0.005127 xml=0.019602 session_text=0.002521 fixture_write=0.007195 preset_load=0.061683 session_load=0.043758 audio=0.004727 save=0.062654 round_trip_load=0.091735
+183: UI SMOKE TIMING: modern_state_ranges cases=72 paths=144 total_seconds=0.374216 copy=0.005837 xml=0.023633 session_text=0.003041 fixture_write=0.008625 preset_load=0.073926 session_load=0.052659 audio=0.005717 save=0.075177 round_trip_load=0.110057
+183: UI SMOKE TIMING: modern_state_ranges cases=84 paths=168 total_seconds=0.437890 copy=0.006559 xml=0.027977 session_text=0.003657 fixture_write=0.010367 preset_load=0.086245 session_load=0.061562 audio=0.006720 save=0.088116 round_trip_load=0.128480
+183: UI SMOKE TIMING: modern_state_ranges cases=96 paths=192 total_seconds=0.505122 copy=0.007334 xml=0.031933 session_text=0.004171 fixture_write=0.012143 preset_load=0.098203 session_load=0.070649 audio=0.007598 save=0.102336 round_trip_load=0.149253
+183: UI SMOKE TIMING: modern_state_ranges cases=108 paths=216 total_seconds=0.567267 copy=0.008038 xml=0.035875 session_text=0.004650 fixture_write=0.013544 preset_load=0.110206 session_load=0.079251 audio=0.008468 save=0.115718 round_trip_load=0.167774
+183: UI SMOKE TIMING: modern_state_ranges cases=120 paths=240 total_seconds=0.628420 copy=0.008678 xml=0.039869 session_text=0.005133 fixture_write=0.015263 preset_load=0.121896 session_load=0.087876 audio=0.009392 save=0.128106 round_trip_load=0.185985
+183: UI SMOKE TIMING: modern_state_ranges cases=132 paths=264 total_seconds=0.689796 copy=0.009348 xml=0.043740 session_text=0.005663 fixture_write=0.017073 preset_load=0.133871 session_load=0.096730 audio=0.010351 save=0.140034 round_trip_load=0.204267
+183: UI SMOKE TIMING: modern_state_ranges cases=144 paths=288 total_seconds=0.753666 copy=0.009971 xml=0.047673 session_text=0.006142 fixture_write=0.018612 preset_load=0.146595 session_load=0.105778 audio=0.011283 save=0.153274 round_trip_load=0.223079
+183: UI SMOKE TIMING: modern_state_ranges cases=156 paths=312 total_seconds=0.815947 copy=0.010596 xml=0.051633 session_text=0.006623 fixture_write=0.020000 preset_load=0.158742 session_load=0.114481 audio=0.012217 save=0.166004 round_trip_load=0.241737
+183: UI SMOKE TIMING: modern_state_ranges cases=168 paths=336 total_seconds=0.877938 copy=0.011309 xml=0.055395 session_text=0.007098 fixture_write=0.021567 preset_load=0.170754 session_load=0.123270 audio=0.013226 save=0.177959 round_trip_load=0.260933
+183: UI SMOKE TIMING: modern_state_ranges cases=180 paths=360 total_seconds=0.942060 copy=0.012099 xml=0.059316 session_text=0.007604 fixture_write=0.023125 preset_load=0.183076 session_load=0.133087 audio=0.014166 save=0.190482 round_trip_load=0.279892
+183: UI SMOKE TIMING: modern_state_ranges cases=192 paths=384 total_seconds=1.005265 copy=0.012765 xml=0.063193 session_text=0.008166 fixture_write=0.024648 preset_load=0.195311 session_load=0.142302 audio=0.015101 save=0.203499 round_trip_load=0.298305
+183: UI SMOKE TIMING: modern_state_ranges cases=204 paths=408 total_seconds=1.067545 copy=0.013396 xml=0.067211 session_text=0.008642 fixture_write=0.026045 preset_load=0.207576 session_load=0.151075 audio=0.016004 save=0.215755 round_trip_load=0.317334
+183: UI SMOKE TIMING: modern_state_ranges cases=216 paths=432 total_seconds=1.132751 copy=0.014060 xml=0.071251 session_text=0.009150 fixture_write=0.027459 preset_load=0.219870 session_load=0.160146 audio=0.017201 save=0.229681 round_trip_load=0.336337
+183: UI SMOKE TIMING: modern_state_ranges cases=228 paths=456 total_seconds=1.194351 copy=0.014760 xml=0.075258 session_text=0.009631 fixture_write=0.028878 preset_load=0.231778 session_load=0.168981 audio=0.018165 save=0.242062 round_trip_load=0.354644
+183: UI SMOKE TIMING: modern_state_ranges cases=240 paths=480 total_seconds=1.255684 copy=0.015744 xml=0.079209 session_text=0.010109 fixture_write=0.030293 preset_load=0.243956 session_load=0.177964 audio=0.019204 save=0.254262 round_trip_load=0.372367
+183: UI SMOKE TIMING: modern_state_ranges cases=252 paths=504 total_seconds=1.318368 copy=0.016445 xml=0.082993 session_text=0.010582 fixture_write=0.031671 preset_load=0.256336 session_load=0.186957 audio=0.020187 save=0.266928 round_trip_load=0.390917
+183: UI SMOKE TIMING: modern_state_ranges cases=263 paths=526 total_seconds=1.376192 copy=0.017071 xml=0.086729 session_text=0.011020 fixture_write=0.033000 preset_load=0.267443 session_load=0.195286 audio=0.021038 save=0.278294 round_trip_load=0.408334
+183: Modern/session/preset/A-B recall: 2354 checks, 0 failures
+ 7/13 Test #183: cs80_modern_recall_host_tests ......   Passed    2.19 sec
+test 184
+      Start 184: cs80_preset_file_recall_tests
+
+184: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-file-recall-tests"
+184: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+184: Test timeout computed to be: 120
+184: User-preset file/recall host: 2784 checks, 0 failures
+ 8/13 Test #184: cs80_preset_file_recall_tests ......   Passed    0.50 sec
+test 185
+      Start 185: cs80_preset_xml_tests
+
+185: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-xml-tests"
+185: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+185: Test timeout computed to be: 60
+185: XXE sentinel path: /tmp/temp_18b12804-cs80-xml-admission/cs80-xml-xxe-sentinel.txt
+185: XML valid case 0: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 1: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 2: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 3: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 4: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 5: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 6: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 7: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 8: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 9: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: XML valid case 10: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+185: Preset XML admission: 77 checks, 0 failures
+ 9/13 Test #185: cs80_preset_xml_tests ..............   Passed    0.07 sec
+test 186
+      Start 186: cs80_preset_load_tests
+
+186: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-load-tests"
+186: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+186: Test timeout computed to be: 60
+186: Preset rejection case 0, audition=0: missing file
+186: Preset rejection case 0, audition=1: missing file
+186: Preset rejection case 1, audition=0: <CS80_PARAMS><
+186: Preset rejection case 1, audition=1: <CS80_PARAMS><
+186: Preset rejection case 2, audition=0: <NOT_A_PRESET/>
+186: Preset rejection case 2, audition=1: <NOT_A_PRESET/>
+186: Preset rejection case 3, audition=0: <cs80_params/>
+186: Preset rejection case 3, audition=1: <cs80_params/>
+186: Preset rejection case 4, audition=0: 
+186: Preset rejection case 4, audition=1: 
+186: Preset rejection case 5, audition=0: <CS80_PARAMS
+186: Preset rejection case 5, audition=1: <CS80_PARAMS
+186: Preset rejection case 6, audition=0: <CS80_PARAMS 
+186: Preset rejection case 6, audition=1: <CS80_PARAMS 
+186: Preset rejection case 7, audition=0: <CS80_PARAMS presetName='truncated'
+186: Preset rejection case 7, audition=1: <CS80_PARAMS presetName='truncated'
+186: Preset rejection case 8, audition=0: <CS80_PARAMS>
+186: Preset rejection case 8, audition=1: <CS80_PARAMS>
+186: Preset rejection case 9, audition=0: <CS80_PARAMS></CS80_PARAMS
+186: Preset rejection case 9, audition=1: <CS80_PARAMS></CS80_PARAMS
+186: Preset rejection case 10, audition=0: <CS80_PARAMS></OTHER>
+186: Preset rejection case 10, audition=1: <CS80_PARAMS></OTHER>
+186: Preset rejection case 11, audition=0: <CS80_PARAMS><PARAM/></OTHER>
+186: Preset rejection case 11, audition=1: <CS80_PARAMS><PARAM/></OTHER>
+186: Preset rejection case 12, audition=0: <CS80_PARAMS><PARAM></CS80_PARAMS>
+186: Preset rejection case 12, audition=1: <CS80_PARAMS><PARAM></CS80_PARAMS>
+186: Preset rejection case 13, audition=0: <CS80_PARAMS/><CS80_PARAMS/>
+186: Preset rejection case 13, audition=1: <CS80_PARAMS/><CS80_PARAMS/>
+186: Preset rejection case 14, audition=0: <CS80_PARAMS/>junk
+186: Preset rejection case 14, audition=1: <CS80_PARAMS/>junk
+186: Preset rejection case 15, audition=0: <CS80_PARAMS/><!--
+186: Preset rejection case 15, audition=1: <CS80_PARAMS/><!--
+186: Preset rejection case 16, audition=0: <CS80_PARAMS/><?unfinished
+186: Preset rejection case 16, audition=1: <CS80_PARAMS/><?unfinished
+186: Preset rejection case 17, audition=0: <CS80_PARAMS/> <
+186: Preset rejection case 17, audition=1: <CS80_PARAMS/> <
+186: Preset rejection case 18, audition=0: <CS80_PARAMS/> </CS80_PARAMS>
+186: Preset rejection case 18, audition=1: <CS80_PARAMS/> </CS80_PARAMS>
+186: Preset rejection case 19, audition=0: <CS80_PARAMS presetName='unclosed>
+186: Preset rejection case 19, audition=1: <CS80_PARAMS presetName='unclosed>
+186: Preset rejection case 20, audition=0: <CS80_PARAMS presetName=bare/>
+186: Preset rejection case 20, audition=1: <CS80_PARAMS presetName=bare/>
+186: Preset rejection case 21, audition=0: <CS80_PARAMS presetName='a' presetName='b'/>
+186: Preset rejection case 21, audition=1: <CS80_PARAMS presetName='a' presetName='b'/>
+186: Preset rejection case 22, audition=0: <CS80_PARAMS presetName='&unknown;'/>
+186: Preset rejection case 22, audition=1: <CS80_PARAMS presetName='&unknown;'/>
+186: Preset rejection case 23, audition=0: <CS80_PARAMS presetName='&#0;'/>
+186: Preset rejection case 23, audition=1: <CS80_PARAMS presetName='&#0;'/>
+186: Preset rejection case 24, audition=0: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+186: Preset rejection case 24, audition=1: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+186: Preset rejection case 25, audition=0: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+186: Preset rejection case 25, audition=1: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+186: Preset rejection case 26, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+186: Preset rejection case 26, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+186: Preset rejection case 27, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+186: Preset rejection case 27, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+186: Preset load failure/retry: 639 checks, 0 failures
+10/13 Test #186: cs80_preset_load_tests .............   Passed    0.27 sec
+test 187
+      Start 187: cs80_preset_save_storage_tests
+
+187: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-save-storage-tests"
+187: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+187: Test timeout computed to be: 60
+187: Preset save storage: 608 checks, 0 failures
+11/13 Test #187: cs80_preset_save_storage_tests .....   Passed    0.06 sec
+test 188
+      Start 188: cs80_preset_identity_tests
+
+188: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-identity-tests"
+188: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+188: Test timeout computed to be: 60
+188: Preset loaded identity: 79 checks, 0 failures
+12/13 Test #188: cs80_preset_identity_tests .........   Passed    0.17 sec
+test 189
+      Start 189: cs80_preset_refresh_tests
+
+189: Test command: /workspace/scratch/ee447c520988/build-preset-browser-admission/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-refresh-tests"
+189: Working Directory: /workspace/scratch/ee447c520988/build-preset-browser-admission
+189: Test timeout computed to be: 60
+189: Browser XML case 0, audition=0: name=Admission, styles=6, fallback=6
+189: Browser XML case 0, audition=1: name=Admission, styles=6, fallback=6
+189: Browser XML case 1, audition=0: name=Admission, styles=6, fallback=6
+189: Browser XML case 1, audition=1: name=Admission, styles=6, fallback=6
+189: Browser XML case 2, audition=0: name=Admission, styles=6, fallback=6
+189: Browser XML case 2, audition=1: name=Admission, styles=6, fallback=6
+189: Browser XML case 3, audition=0: name=Admission, styles=6, fallback=6
+189: Browser XML case 3, audition=1: name=Admission, styles=6, fallback=6
+189: Browser XML case 4, audition=0: name=Admission, styles=6, fallback=6
+189: Browser XML case 4, audition=1: name=Admission, styles=6, fallback=6
+189: Browser XML case 5, audition=0: name=Admission, styles=6, fallback=6
+189: Browser XML case 5, audition=1: name=Admission, styles=6, fallback=6
+189: Browser XML case 6, audition=0: name=Admission, styles=6, fallback=6
+189: Browser XML case 6, audition=1: name=Admission, styles=6, fallback=6
+189: Browser dirty XML case 0: brilliance=0, used=0, edited=0
+189: Browser dirty XML case 1: brilliance=0, used=0, edited=0
+189: Browser dirty XML case 2: brilliance=0, used=0, edited=0
+189: Browser dirty XML case 3: brilliance=0, used=0, edited=0
+189: Browser dirty XML case 4: brilliance=0, used=0, edited=0
+189: Browser dirty XML case 5: brilliance=0, used=0, edited=0
+189: Browser dirty XML case 6: brilliance=0, used=0, edited=0
+189: Preset catalogue refresh: 193 checks, 0 failures
+13/13 Test #189: cs80_preset_refresh_tests ..........   Passed    0.19 sec
+
+The following tests passed:
+	cs80_preset_trash_safety_tests
+	cs80_preset_signature_math_tests
+	cs80_preset_preview_math_tests
+	cs80_preset_display_name_tests
+	cs80_preset_file_values_tests
+	cs80_preset_revert_tests
+	cs80_modern_recall_host_tests
+	cs80_preset_file_recall_tests
+	cs80_preset_xml_tests
+	cs80_preset_load_tests
+	cs80_preset_save_storage_tests
+	cs80_preset_identity_tests
+	cs80_preset_refresh_tests
+
+100% tests passed, 0 tests failed out of 13
+
+Total Test time (real) =  11.64 sec

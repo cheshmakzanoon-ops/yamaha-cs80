@@ -9,7 +9,7 @@
 #include <vector>
 
 class Cs80AudioProcessor;
-namespace cs80::tests { struct PresetSaveAccess; struct PresetLoadAccess; struct PresetIdentityAccess; struct PresetRefreshAccess; struct PresetRevertAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct PresetLoadAccess; struct PresetIdentityAccess; struct PresetRefreshAccess; struct PresetBrowserXmlAccess; struct PresetRevertAccess; }
 
 namespace cs80::ui
 {
@@ -138,6 +138,7 @@ private:
     friend struct cs80::tests::PresetLoadAccess;
     friend struct cs80::tests::PresetIdentityAccess;
     friend struct cs80::tests::PresetRefreshAccess;
+    friend struct cs80::tests::PresetBrowserXmlAccess;
     friend struct cs80::tests::PresetRevertAccess;
 
     struct Entry

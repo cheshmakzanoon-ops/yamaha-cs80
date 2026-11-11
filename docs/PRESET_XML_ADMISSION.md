@@ -21,10 +21,12 @@ browser error/retry path keeps the selected row, old sound and provenance,
 shows `Not loaded:`, and emits no success callback. Repairing the same file and
 retrying succeeds without rebuilding the catalogue.
 
-This change is limited to `loadUserPreset`. Session restore, browser catalogue
-metadata/preview parsing, factory sounds, the preset schema, parameter order,
-DSP and controls are not changed. A malformed file may still appear in the
-catalogue; its LOAD/AUDITION is rejected. Existing missing/duplicate/non-finite
+The initial change covered `loadUserPreset`. The follow-up described in
+[Preset browser XML admission](PRESET_BROWSER_XML_ADMISSION.md) applies the
+same boundary to catalogue metadata/previews and dirty-reference reads. Session
+restore, factory sounds, the preset schema, parameter order, DSP and controls
+are unchanged. A malformed file remains visible with filename/default preview
+metadata; its LOAD/AUDITION is rejected. Existing missing/duplicate/non-finite
 parameter normalization and legacy migrations remain permissive *within a
 complete admitted document*. PURE, oversampling, output jack and tuning source
 retain their live-session recall policy.
@@ -54,7 +56,7 @@ are installed, which matters when the plugin shares a host with other software.
 
 The file read is capped at 16 MiB plus one rejection-detection byte. Admission
 allows at most 65,536 elements and retains libxml2's default depth limit (256),
-name and text limits. All allocation/parsing occurs on the user-file load path,
+name and text limits. All allocation/parsing occurs on user-file load or browser paths,
 not the audio callback. These bound input/tree resources; they are not a
 wall-clock or universal security guarantee.
 

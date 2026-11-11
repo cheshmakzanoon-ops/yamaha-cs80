@@ -5,6 +5,7 @@
 #include "PresetDisplayName.h"
 #include "PresetFileValues.h"
 #include "PresetPreviewMath.h"
+#include "PresetXml.h"
 #include "core/FactoryPresets.h"
 
 #include <algorithm>
@@ -248,10 +249,13 @@ PresetSignature computeSignature(const cs80::ParamValues& v)
     return s;
 }
 
+// Catalogue previews and dirty references use the same bounded, complete-file
+// admission as LOAD. Rejected files keep filename/default previews and no used
+// values; never let JUCE resolve a file-based DTD before the user chooses LOAD.
 // The values stored in a saved user patch; `used[i]` says whether the file names parameter i.
 void readUserFileValues(const juce::File& file, cs80::ParamValues& values, std::vector<char>& used)
 {
-    const auto xml = juce::XmlDocument::parse(file);
+    const auto xml = presetXml::readCompleteDocument(file);
     readPresetFileValues(xml.get(), values, &used);
 }
 
@@ -260,7 +264,7 @@ void readUserFileValues(const juce::File& file, cs80::ParamValues& values, std::
 std::shared_ptr<const PresetSignature> signatureForUserFile(const juce::File& file, juce::String& displayName)
 {
     cs80::ParamValues values;
-    auto xml = juce::XmlDocument::parse(file);
+    const auto xml = presetXml::readCompleteDocument(file);
     displayName = presetDisplayName(xml.get(), file.getFileNameWithoutExtension());
     readPresetFileValues(xml.get(), values);
     return std::make_shared<const PresetSignature>(computeSignature(values));
