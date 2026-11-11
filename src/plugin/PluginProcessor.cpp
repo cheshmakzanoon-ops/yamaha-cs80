@@ -543,6 +543,11 @@ bool Cs80AudioProcessor::isPhysicalSetupParameter(int index) noexcept
 
 void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
 {
+    // Validate the recalled sound before changing sources or publishing any
+    // parameters. Setup/policy fields are deliberately outside preset recall.
+    for (int i = 0; i < cs80::P_numParams; ++i)
+        if (!isPhysicalSetupParameter(i) && i != cs80::P_parityMode && !std::isfinite(values[i]))
+            return;
     resetHardwareSources();
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
