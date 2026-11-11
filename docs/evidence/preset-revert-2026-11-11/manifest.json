@@ -1,0 +1,72 @@
+{
+  "base_commit": "ce5896c660aa85ab875d853db323d966add59917",
+  "baseline": {
+    "production": "unchanged published source; only test friendship/entry point/registration added",
+    "test_source": "baseline-PresetRevertTests.h",
+    "test_sha256": "d9f55ae9c37a05b4e3d880fc01aec2d7e80e1b4dee23592bc8c07ca4821d39fa",
+    "executable_sha256": "addd721441ab430d91878bca05016749f6ac2d554d7b5ab068610067582b5cf7",
+    "checks": 426,
+    "failures": 263,
+    "exit_code": 1,
+    "log": "baseline.log"
+  },
+  "initial_expanded_run": {
+    "checks": 599,
+    "failures": 1,
+    "log": "focused-first.log",
+    "cause": "Fixture expected the pre-audition program index after AUDITION was enabled; corrected to capture the actual reopened metadata. No production code change was needed."
+  },
+  "final": {
+    "checks": 736,
+    "failures": 0,
+    "focused_exit_code": 0,
+    "adjacent_ctests_passed": 13,
+    "adjacent_exit_code": 0,
+    "executable_sha256": "9e02363504427c0755929386209814ff4cb90a1964279c2a7dd78563a2512341",
+    "source_sha256": {
+      "src/plugin/PluginProcessor.cpp": "3af8fe04d79389c79a0836d4c5d2e7d2db34a9b4a46a207e8cea6920eae08cd3",
+      "src/plugin/PluginProcessor.h": "aa81175e970281418e8fc9d5388985343fe5eecab87ec522743cfde17834e600",
+      "src/plugin/PresetBrowser.cpp": "b4b42d605383e289e95ea1f53a08887ba3a02a9ed1ee958048814e6427eabf8e",
+      "src/plugin/PresetBrowser.h": "5ba263d6781de66a7a3a400a37957e34487ca9e91fb74615cca75eb3ffcfd269",
+      "src/plugin/PresetBrowserSound.h": "57b31d27ebc01ccdf756945ddb2999cded5ff14254c090fcf79206b45a6c5ab8",
+      "tests/PresetRevertTests.h": "51bb0011b0acbcba1d32e5a342bc5387d949f17ae03c8ba20fe1903b7be67862",
+      "src/tools/ui_snapshot.cpp": "deff74e8992d43da250955aa8e4e73db5f5233ba0e001d079dcc267079e03a71",
+      "CMakeLists.txt": "0eb5db493eb442518bb524e6b1056d58ed46f5805a754eee146dd3afe1bfa44c"
+    }
+  },
+  "qualification": "Offscreen real JUCE browser/processor and deterministic fresh-note offline audio; no native peer, full suite, sanitizer, pluginval, DAW, concurrent automation, macOS/Windows or remote CI claim.",
+  "scope": "Core recall-eligible values, both hardware selectors, all 104 valid MEMORY values, name and program index. Existing REVERT setup/PURE exclusions and distinct ordinary user-file recall policy unchanged. MSEG/matrix side-state omission remains a separate limitation.",
+  "toolchain": {
+    "compiler": "Debian GCC 14.2.0",
+    "build_type": "Release",
+    "cmake": "3.31.6",
+    "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "juce_worktree_clean": true,
+    "isolated_build": "build-preset-revert-native"
+  },
+  "logs_sha256": {
+    "adjacent-build.log": "ee47adf445b45da09c301eb2362690ac65e92ef8c49b10c12a2526ba58571211",
+    "adjacent-ctest.log": "7947068780ef730364982a61b8307cc4e1660c7b8b3211b44b856df90e7cc450",
+    "baseline-build.log": "24fc05deb768dcf91fb2d2152e0488417096d8a7b576e19613a082dffa88365b",
+    "baseline.log": "6d909a973a9f9007deb8021e122b7be71c97a21efebb05347dbcaa75d68587ef",
+    "configure.log": "55293388a056aa266385631056c8cb650e83bc572ebb5e29c32509ad7cc5bc7d",
+    "final-build.log": "5dd364f6c739a91dcb00a4aa92ff2e2b01097d37f6cc41de126a5f2ecb417b95",
+    "fixed-build.log": "3bb8d7baed60f60ebb28040b3f591a963436b61b859cdeef4c7af9c7721bfb53",
+    "focused-final.log": "bb31585e3f2e1a78bc8f36cfaa38d2ff152c13bcb201036fda1165e85f5c12f8",
+    "focused-first.log": "9c55a5ed97090e3ee007cf75c96173450db31577535889666aa70fd174cc391c",
+    "independent-LastTest.log": "afde44c053cef13eefc91530e6177f8108e17ef00d313d1f186403ed7b131091",
+    "independent-adjacent.log": "42b30b0ca0780ee3a4bf2cb89a7d7d2cfbb8c01a2edeffebb78cd21331a4b241",
+    "independent-focused.log": "bb31585e3f2e1a78bc8f36cfaa38d2ff152c13bcb201036fda1165e85f5c12f8"
+  },
+  "independent_review": {
+    "approved_for_local_commit": true,
+    "executable_sha256_verified": true,
+    "all_8_source_sha256_verified": true,
+    "focused_checks": 736,
+    "focused_failures": 0,
+    "focused_exit_code": 0,
+    "adjacent_ctests_passed": 13,
+    "adjacent_exit_code": 0,
+    "source_findings": "No blocker: preflight before writes, no intermediate PANEL/factory publication, final name/index once, fresh undo boundary, physical/PURE/session exclusions and explicit MSEG/matrix/non-atomic boundaries."
+  }
+}

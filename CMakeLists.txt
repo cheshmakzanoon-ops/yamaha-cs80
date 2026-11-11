@@ -1170,6 +1170,9 @@ if (CS80_BUILD_PLUGIN)
     # [ws7-panel] Golden images of the main view (tests/PanelEditorTests.h; refresh with CS80_REFRESH_GOLDENS=1).
     target_compile_definitions(CS80Snapshots PRIVATE CS80_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/golden")
 
+    # Opening sound recall through the real browser and processor, without a native peer.
+    add_test(NAME cs80_preset_revert_tests COMMAND CS80Snapshots --preset-revert-tests)
+    set_tests_properties(cs80_preset_revert_tests PROPERTIES TIMEOUT 120)
     # Real browser components and a temporary catalogue, without a native peer.
     add_test(NAME cs80_preset_refresh_tests COMMAND CS80Snapshots --preset-refresh-tests)
     set_tests_properties(cs80_preset_refresh_tests PROPERTIES TIMEOUT 60)

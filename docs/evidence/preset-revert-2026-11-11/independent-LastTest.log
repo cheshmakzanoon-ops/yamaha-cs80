@@ -1,0 +1,211 @@
+Start testing: Nov 11 15:12 AST
+----------------------------------------------------------
+25/223 Testing: cs80_preset_preview_math_tests
+25/223 Test: cs80_preset_preview_math_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/cs80_preset_preview_math_tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_preset_preview_math_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Preset preview math: 65543 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_preview_math_tests" end time: Nov 11 15:12 AST
+"cs80_preset_preview_math_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+150/223 Testing: cs80_preset_display_name_tests
+150/223 Test: cs80_preset_display_name_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/cs80_preset_display_name_tests_artefacts/Release/cs80_preset_display_name_tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_preset_display_name_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_display_name_tests" end time: Nov 11 15:12 AST
+"cs80_preset_display_name_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+151/223 Testing: cs80_preset_file_values_tests
+151/223 Test: cs80_preset_file_values_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/cs80_preset_file_values_tests_artefacts/Release/cs80_preset_file_values_tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_preset_file_values_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Preset file values: 4629 checks, 0 failures
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_file_values_tests" end time: Nov 11 15:12 AST
+"cs80_preset_file_values_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+182/223 Testing: cs80_preset_revert_tests
+182/223 Test: cs80_preset_revert_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-revert-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_preset_revert_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Preset opening sound REVERT: 736 checks, 0 failures
+<end of output>
+Test time =   0.59 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_revert_tests" end time: Nov 11 15:12 AST
+"cs80_preset_revert_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+183/223 Testing: cs80_preset_refresh_tests
+183/223 Test: cs80_preset_refresh_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-refresh-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_preset_refresh_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Preset catalogue refresh: 40 checks, 0 failures
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_refresh_tests" end time: Nov 11 15:12 AST
+"cs80_preset_refresh_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+184/223 Testing: cs80_undo_replay_gesture_tests
+184/223 Test: cs80_undo_replay_gesture_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--undo-replay-gesture-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_undo_replay_gesture_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Undo replay gesture tests: 317 checks, 0 failures
+<end of output>
+Test time =   0.40 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_undo_replay_gesture_tests" end time: Nov 11 15:12 AST
+"cs80_undo_replay_gesture_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+188/223 Testing: cs80_mseg_editor_lifecycle_tests
+188/223 Test: cs80_mseg_editor_lifecycle_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--mseg-editor-lifecycle-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_mseg_editor_lifecycle_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+MSEG editor lifecycle: 31 checks, 0 failures
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_mseg_editor_lifecycle_tests" end time: Nov 11 15:12 AST
+"cs80_mseg_editor_lifecycle_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+189/223 Testing: cs80_modern_slider_gesture_tests
+189/223 Test: cs80_modern_slider_gesture_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--modern-slider-gesture-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_modern_slider_gesture_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Modern slider gestures: 145 checks, 0 failures
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_modern_slider_gesture_tests" end time: Nov 11 15:12 AST
+"cs80_modern_slider_gesture_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+190/223 Testing: cs80_snapshot_cli_tests
+190/223 Test: cs80_snapshot_cli_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/preset-revert-current/tests/SnapshotCliTests.py" "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_snapshot_cli_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Snapshot CLI admission: 8 invalid invocations rejected before UI execution
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_snapshot_cli_tests" end time: Nov 11 15:12 AST
+"cs80_snapshot_cli_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+192/223 Testing: cs80_controller_reset_host_tests
+192/223 Test: cs80_controller_reset_host_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--controller-reset-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_controller_reset_host_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Controller reset host tests: 2304 checks, 0 failures
+<end of output>
+Test time =   2.14 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_controller_reset_host_tests" end time: Nov 11 15:12 AST
+"cs80_controller_reset_host_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+195/223 Testing: cs80_keyboard_handoff_host_tests
+195/223 Test: cs80_keyboard_handoff_host_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--keyboard-handoff-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_keyboard_handoff_host_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Keyboard handoff host tests: 0 failures
+<end of output>
+Test time =   0.48 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_keyboard_handoff_host_tests" end time: Nov 11 15:12 AST
+"cs80_keyboard_handoff_host_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+200/223 Testing: cs80_context_menu_keyboard_tests
+200/223 Test: cs80_context_menu_keyboard_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--context-menu-keyboard-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_context_menu_keyboard_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Context menu keyboard tests: 62 checks, 0 failures
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_context_menu_keyboard_tests" end time: Nov 11 15:12 AST
+"cs80_context_menu_keyboard_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+201/223 Testing: cs80_typed_value_unit_tests
+201/223 Test: cs80_typed_value_unit_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-revert-native/CS80Snapshots_artefacts/Release/CS80Snapshots" "--typed-value-unit-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-revert-native
+"cs80_typed_value_unit_tests" start time: Nov 11 15:12 AST
+Output:
+----------------------------------------------------------
+Typed-value formatter compatibility: 950 cases, 950 accepted, digest 8d7e609da2f21897
+Typed-value unit tests: 116 checks, 0 failures
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_typed_value_unit_tests" end time: Nov 11 15:12 AST
+"cs80_typed_value_unit_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 11 15:12 AST

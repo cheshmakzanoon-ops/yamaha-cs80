@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UiComponents.h"
+#include "PresetBrowserSound.h"
 
 #include <cstdint>
 #include <functional>
@@ -8,7 +9,7 @@
 #include <vector>
 
 class Cs80AudioProcessor;
-namespace cs80::tests { struct PresetSaveAccess; struct PresetRefreshAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct PresetRefreshAccess; struct PresetRevertAccess; }
 
 namespace cs80::ui
 {
@@ -135,6 +136,7 @@ public:
 private:
     friend struct cs80::tests::PresetSaveAccess;
     friend struct cs80::tests::PresetRefreshAccess;
+    friend struct cs80::tests::PresetRevertAccess;
 
     struct Entry
     {
@@ -263,9 +265,7 @@ private:
     cs80::ParamValues editFileValues;
     std::vector<char> editFileUsed;
     bool hasOpening = false;
-    juce::String openingName;
-    int openingIndex = -1;
-    cs80::ParamValues openingValues;
+    cs80::PresetBrowserSound openingSound;
 
     // Scroll animation.
     double scrollTarget = 0.0;

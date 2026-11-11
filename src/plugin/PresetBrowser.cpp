@@ -3658,16 +3658,12 @@ void PresetBrowser::loadEntry(int entryIndex)
         onPresetLoaded();
 }
 
-// The sound the library found loaded when it opened. REVERT puts exactly that
-// back: the bank slot, the name and the parameter values as they were, which
-// also restores unsaved edits. Physical setup parameters (pedal, jack, output
-// switch) are never part of a preset, so they are left alone.
+// Opening core parameters, hardware selectors and all MEMORY controls. This
+// restores unsaved parameter edits, not the session's modulation shapes/routes
+// or unrelated setup, tuning, MIDI and UI state.
 void PresetBrowser::captureOpening()
 {
-    const auto meta = processor.getPresetMetadata();
-    openingName = meta.name;
-    openingIndex = meta.factoryIndex;
-    openingValues = processor.currentValues();
+    openingSound = processor.capturePresetBrowserSound();
     hasOpening = true;
 }
 
@@ -3676,37 +3672,35 @@ bool PresetBrowser::canRevert() const
     if (! hasOpening)
         return false;
     const auto meta = processor.getPresetMetadata();
-    if (meta.name != openingName || meta.factoryIndex != openingIndex)
+    if (meta.name != openingSound.name || meta.factoryIndex != openingSound.factoryIndex)
         return true;
+    const auto differs = [](float now, float opening)
+    { return std::abs(now - opening) > 1.0e-4f * std::max(1.0f, std::abs(opening)); };
     const auto now = processor.currentValues();
     for (int i = 0; i < cs80::P_numParams; ++i)
-    {
-        if (Cs80AudioProcessor::isPhysicalSetupParameter(i) || i == cs80::P_parityMode)
-            continue;
-        const float a = now[i], b = openingValues[i];
-        if (std::abs(a - b) > 1.0e-4f * std::max(1.0f, std::abs(b)))
+        if (!Cs80AudioProcessor::isPhysicalSetupParameter(i) && i != cs80::P_parityMode
+            && differs(now[i], openingSound.values[i]))
             return true;
-    }
+    for (int channel = 0; channel < 2; ++channel)
+        if (processor.getHardwareSource(channel) != openingSound.sources[(size_t) channel])
+            return true;
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+            if (Cs80AudioProcessor::isMemoryControl(local)
+                && differs(processor.getMemoryValue(bank, local), openingSound.memories[(size_t) bank][(size_t) local]))
+                return true;
     return false;
 }
 
 void PresetBrowser::revertToOpening()
 {
-    if (! hasOpening)
+    if (!canRevert() || !processor.restorePresetBrowserSound(openingSound))
         return;
-    // Loading the opening slot restores the bank index; the saved values and
-    // name then put back whatever was really loaded (an edit, a user patch).
-    const auto& bank = processor.getFactoryPresets();
-    if (openingIndex >= 0 && openingIndex < (int) bank.size())
-        processor.loadFactoryPreset(openingIndex);
-    processor.applyParameterValues(openingValues);
-    if (processor.getPresetName() != openingName)
-        processor.setPresetName(openingName);
 
     syncLoaded();
     list->repaint();
     updateSelectionWidgets();
-    setStatus("Back to \"" + openingName + "\", the sound loaded when the library opened.", 0);
+    setStatus("Back to \"" + openingSound.name + "\", the sound loaded when the library opened.", 0);
     if (onPresetLoaded)
         onPresetLoaded();
 }
@@ -3826,7 +3820,7 @@ void PresetBrowser::updateActionTips()
 {
     const auto* e = selectedEntry();
     revertButton.setTooltip(revertButton.isEnabled()
-                                ? "Return to the sound that was loaded when the library opened (" + openingName + ")"
+                                ? "Return to the sound that was loaded when the library opened (" + openingSound.name + ")"
                                 : "Nothing to revert: the sound is still the one loaded when the library opened");
     juce::String deleteTip = "Move the selected user patch to the trash. Press once to arm, again to confirm (Delete key)";
     if (e == nullptr)

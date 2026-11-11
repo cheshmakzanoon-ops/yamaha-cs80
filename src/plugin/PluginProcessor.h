@@ -16,6 +16,7 @@
 #include "TuningInspection.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
+#include "PresetBrowserSound.h"
 #include "HostAutomationBridge.h"
 
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -210,6 +211,11 @@ public:
     void setParamValue(int index, float physicalValue);
     cs80::ParamValues currentValues() const;
     void applyParameterValues(const cs80::ParamValues& values);
+    // Message-thread library opening/REVERT boundary. Per-parameter snapshots,
+    // not an atomic transaction against concurrent host automation. Recall
+    // notifies the host without user gestures and starts a fresh undo history.
+    cs80::PresetBrowserSound capturePresetBrowserSound() const;
+    bool restorePresetBrowserSound(const cs80::PresetBrowserSound& sound);
 
     // User-facing engine concepts (plan 1.7) over the unchanged host IDs.
     // ENGINE is source_performance: on = Circuit, off = Legacy (compat), which
@@ -332,7 +338,7 @@ private:
     template <class F> void forEachEngine(F&& f) { f(engine); if (extensionActive) f(*extensionEngine); }
     juce::String publishScala(const juce::String& scl, const juce::String& kbm,
                               std::optional<unsigned> expectedVersion = std::nullopt);
-    void applyValues(const cs80::ParamValues& values);
+    void applyValues(const cs80::ParamValues& values, bool resetSources = true);
     // [ws8-studio] MIDI learn on the audio thread; studio state in and out of the saved tree.
     void applyMidiLearn(const juce::MidiBuffer& midi) noexcept;
     bool midiLearnConsumes(int cc) const noexcept { return midiLearnLive && midiLearn.parameterFor(cc) >= 0; }

@@ -529,6 +529,67 @@ void Cs80AudioProcessor::applyParameterValues(const cs80::ParamValues& values)
     applyValues(values);
 }
 
+cs80::PresetBrowserSound Cs80AudioProcessor::capturePresetBrowserSound() const
+{
+    cs80::PresetBrowserSound sound;
+    const auto meta = getPresetMetadata();
+    sound.name = meta.name;
+    sound.factoryIndex = meta.factoryIndex;
+    sound.values = currentValues();
+    for (int channel = 0; channel < 2; ++channel)
+        sound.sources[(size_t) channel] = getHardwareSource(channel);
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+            if (isMemoryControl(local))
+                sound.memories[(size_t) bank][(size_t) local] = getMemoryValue(bank, local);
+    return sound;
+}
+
+bool Cs80AudioProcessor::restorePresetBrowserSound(const cs80::PresetBrowserSound& sound)
+{
+    // Preflight the whole recalled domain before sending any parameter or
+    // metadata notification. Excluded setup values and unused MEMORY cells
+    // have no authority and are deliberately not validated or applied.
+    const auto valid = [](float value, const auto& def)
+    { return std::isfinite(value) && value >= def.min && value <= def.max; };
+    if (sound.factoryIndex < 0 || sound.factoryIndex >= (int) getFactoryPresets().size())
+        return false;
+    for (int source : sound.sources)
+        if (source < 0 || source > 13)
+            return false;
+    for (int i = 0; i < cs80::P_numParams; ++i)
+        if (!isPhysicalSetupParameter(i) && i != cs80::P_parityMode
+            && !valid(sound.values[i], cs80::paramDef(i)))
+            return false;
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+            if (isMemoryControl(local)
+                && !valid(sound.memories[(size_t) bank][(size_t) local], cs80::kChannelDefs[local]))
+                return false;
+
+    // No intermediate factory program or PANEL selection: publish each final
+    // value once. Ordinary preset recall still uses applyValues' PANEL reset.
+    applyValues(sound.values, false);
+    for (int bank = 0; bank < 4; ++bank)
+        for (int local = 0; local < cs80::CP_count; ++local)
+            if (isMemoryControl(local))
+                if (auto* p = apvts.getParameter(memoryParameterId(bank, local)))
+                    p->setValueNotifyingHost(p->convertTo0to1(sound.memories[(size_t) bank][(size_t) local]));
+    for (int channel = 0; channel < 2; ++channel)
+        if (auto* p = apvts.getParameter(hardwareSourceParameterId(channel)))
+            p->setValueNotifyingHost(p->convertTo0to1((float) sound.sources[(size_t) channel]));
+    setPresetMetadata(sound.name, sound.factoryIndex);
+    // Match the existing preset-load boundary without manufacturing MEMORY
+    // or source user gestures, or retaining edits from the auditioned sound.
+    if (auto* mm = juce::MessageManager::getInstanceWithoutCreating(); mm != nullptr && mm->isThisTheMessageThread())
+    {
+        apvts.syncNow();
+        undoManager.clearUndoHistory();
+    }
+    updateHostDisplay();
+    return true;
+}
+
 bool Cs80AudioProcessor::isPhysicalSetupParameter(int index) noexcept
 {
     // ws3: controller curves, the ribbon CC, the KAS scan option and the tuning
@@ -545,14 +606,15 @@ bool Cs80AudioProcessor::isPhysicalSetupParameter(int index) noexcept
         || index == cs80::P_driftModel;   // plan 2.5: the unit's condition survives program recall
 }
 
-void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values)
+void Cs80AudioProcessor::applyValues(const cs80::ParamValues& values, bool resetSources)
 {
     // Validate the recalled sound before changing sources or publishing any
     // parameters. Setup/policy fields are deliberately outside preset recall.
     for (int i = 0; i < cs80::P_numParams; ++i)
         if (!isPhysicalSetupParameter(i) && i != cs80::P_parityMode && !std::isfinite(values[i]))
             return;
-    resetHardwareSources();
+    if (resetSources)
+        resetHardwareSources();
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
         // A preset recalls the sound, not what is plugged into the jack, the

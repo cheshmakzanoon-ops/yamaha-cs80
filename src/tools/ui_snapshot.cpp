@@ -31,6 +31,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/PresetRefreshTests.h"
+#include "../../tests/PresetRevertTests.h"
 #include "../../tests/PresetRecallHostTests.h"
 #include "../../tests/PresetFileHostTests.h"
 #include "../../tests/SessionSchemaHostTests.h"
@@ -1994,6 +1995,14 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--preset-revert-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::PresetRevertAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Preset opening sound REVERT: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--preset-refresh-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -3806,6 +3815,7 @@ int main(int argc, char** argv)
     phases.begin("preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
     cs80::tests::PresetRefreshAccess::run(check);
+    cs80::tests::PresetRevertAccess::run(check);
     cs80::tests::testPluginPanic(check, flushGui);
     phases.begin("program library, Program Change, A/B and randomise");
     cs80::tests::testProgramLibraryHost(check);
