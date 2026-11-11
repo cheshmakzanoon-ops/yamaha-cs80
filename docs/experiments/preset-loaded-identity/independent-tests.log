@@ -1,0 +1,200 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-preset-loaded-identity/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-preset-loaded-identity/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-preset-loaded-identity
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 150
+      Start 150: cs80_preset_display_name_tests
+
+150: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/cs80_preset_display_name_tests_artefacts/Release/cs80_preset_display_name_tests
+150: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+150: Test timeout computed to be: 30
+ 1/18 Test #150: cs80_preset_display_name_tests .........   Passed    0.00 sec
+test 151
+      Start 151: cs80_preset_file_values_tests
+
+151: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/cs80_preset_file_values_tests_artefacts/Release/cs80_preset_file_values_tests
+151: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+151: Test timeout computed to be: 30
+151: Preset file values: 4629 checks, 0 failures
+ 2/18 Test #151: cs80_preset_file_values_tests ..........   Passed    0.01 sec
+test 180
+      Start 180: cs80_audio_callback_allocation_tests
+
+180: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/cs80_audio_callback_allocation_tests
+180: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+180: Test timeout computed to be: 120
+180: Audio callback allocation: 228 checks, 0 failures
+ 3/18 Test #180: cs80_audio_callback_allocation_tests ...   Passed    1.47 sec
+test 182
+      Start 182: cs80_preset_revert_tests
+
+182: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-revert-tests"
+182: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+182: Test timeout computed to be: 120
+182: Preset opening sound REVERT: 1387 checks, 0 failures
+ 4/18 Test #182: cs80_preset_revert_tests ...............   Passed    1.38 sec
+test 183
+      Start 183: cs80_modern_recall_host_tests
+
+183: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--modern-recall-host-tests"
+183: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+183: Test timeout computed to be: 120
+183: UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.059477 copy=0.001419 xml=0.003827 session_text=0.000474 fixture_write=0.001540 preset_load=0.008845 session_load=0.008639 audio=0.000904 save=0.012504 round_trip_load=0.018297
+183: UI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.118166 copy=0.002683 xml=0.007936 session_text=0.000965 fixture_write=0.002915 preset_load=0.017831 session_load=0.017520 audio=0.001847 save=0.024997 round_trip_load=0.036161
+183: UI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.176063 copy=0.004045 xml=0.011874 session_text=0.001570 fixture_write=0.004301 preset_load=0.026529 session_load=0.026317 audio=0.002719 save=0.037286 round_trip_load=0.054062
+183: UI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.236291 copy=0.005539 xml=0.016275 session_text=0.002053 fixture_write=0.005716 preset_load=0.035744 session_load=0.035155 audio=0.003633 save=0.050333 round_trip_load=0.072117
+183: UI SMOKE TIMING: modern_state_ranges cases=60 paths=120 total_seconds=0.297640 copy=0.006828 xml=0.020341 session_text=0.002538 fixture_write=0.007198 preset_load=0.045109 session_load=0.044119 audio=0.004555 save=0.064177 round_trip_load=0.090724
+183: UI SMOKE TIMING: modern_state_ranges cases=72 paths=144 total_seconds=0.357440 copy=0.008092 xml=0.024378 session_text=0.003018 fixture_write=0.008773 preset_load=0.054346 session_load=0.053357 audio=0.005416 save=0.076916 round_trip_load=0.108743
+183: UI SMOKE TIMING: modern_state_ranges cases=84 paths=168 total_seconds=0.419851 copy=0.009480 xml=0.028446 session_text=0.003565 fixture_write=0.010218 preset_load=0.063171 session_load=0.064063 audio=0.006447 save=0.091078 round_trip_load=0.126543
+183: UI SMOKE TIMING: modern_state_ranges cases=96 paths=192 total_seconds=0.479003 copy=0.010886 xml=0.032347 session_text=0.004032 fixture_write=0.011724 preset_load=0.072432 session_load=0.072941 audio=0.007367 save=0.103392 round_trip_load=0.144536
+183: UI SMOKE TIMING: modern_state_ranges cases=108 paths=216 total_seconds=0.537145 copy=0.012354 xml=0.036127 session_text=0.004533 fixture_write=0.013154 preset_load=0.081551 session_load=0.081444 audio=0.008213 save=0.115749 round_trip_load=0.162175
+183: UI SMOKE TIMING: modern_state_ranges cases=120 paths=240 total_seconds=0.595124 copy=0.013641 xml=0.039966 session_text=0.004993 fixture_write=0.014535 preset_load=0.090668 session_load=0.090189 audio=0.009126 save=0.127879 round_trip_load=0.179885
+183: UI SMOKE TIMING: modern_state_ranges cases=132 paths=264 total_seconds=0.653874 copy=0.014946 xml=0.043817 session_text=0.005488 fixture_write=0.015891 preset_load=0.099837 session_load=0.099022 audio=0.010054 save=0.140055 round_trip_load=0.198089
+183: UI SMOKE TIMING: modern_state_ranges cases=144 paths=288 total_seconds=0.711760 copy=0.015748 xml=0.047642 session_text=0.005987 fixture_write=0.017283 preset_load=0.108593 session_load=0.107900 audio=0.011095 save=0.152046 round_trip_load=0.216204
+183: UI SMOKE TIMING: modern_state_ranges cases=156 paths=312 total_seconds=0.770281 copy=0.016352 xml=0.051496 session_text=0.006552 fixture_write=0.018818 preset_load=0.117908 session_load=0.116612 audio=0.011968 save=0.164299 round_trip_load=0.234519
+183: UI SMOKE TIMING: modern_state_ranges cases=168 paths=336 total_seconds=0.832757 copy=0.016973 xml=0.055721 session_text=0.007120 fixture_write=0.020343 preset_load=0.127962 session_load=0.126206 audio=0.012906 save=0.177278 round_trip_load=0.253551
+183: UI SMOKE TIMING: modern_state_ranges cases=180 paths=360 total_seconds=0.893725 copy=0.017659 xml=0.059728 session_text=0.007591 fixture_write=0.021826 preset_load=0.137811 session_load=0.135036 audio=0.014059 save=0.189897 round_trip_load=0.272467
+183: UI SMOKE TIMING: modern_state_ranges cases=192 paths=384 total_seconds=0.955353 copy=0.018345 xml=0.064387 session_text=0.008158 fixture_write=0.023648 preset_load=0.147625 session_load=0.143544 audio=0.015218 save=0.202626 round_trip_load=0.291472
+183: UI SMOKE TIMING: modern_state_ranges cases=204 paths=408 total_seconds=1.025748 copy=0.019183 xml=0.068553 session_text=0.008631 fixture_write=0.025156 preset_load=0.156638 session_load=0.158782 audio=0.016180 save=0.218837 round_trip_load=0.310711
+183: UI SMOKE TIMING: modern_state_ranges cases=216 paths=432 total_seconds=1.085091 copy=0.019839 xml=0.072471 session_text=0.009104 fixture_write=0.026700 preset_load=0.165699 session_load=0.167662 audio=0.017106 save=0.231760 round_trip_load=0.328843
+183: UI SMOKE TIMING: modern_state_ranges cases=228 paths=456 total_seconds=1.144258 copy=0.020471 xml=0.076453 session_text=0.009587 fixture_write=0.028441 preset_load=0.174992 session_load=0.176512 audio=0.018001 save=0.243834 round_trip_load=0.347502
+183: UI SMOKE TIMING: modern_state_ranges cases=240 paths=480 total_seconds=1.202007 copy=0.021090 xml=0.080273 session_text=0.010054 fixture_write=0.029883 preset_load=0.183850 session_load=0.185434 audio=0.018926 save=0.255847 round_trip_load=0.365438
+183: UI SMOKE TIMING: modern_state_ranges cases=252 paths=504 total_seconds=1.271565 copy=0.021937 xml=0.084129 session_text=0.010529 fixture_write=0.031238 preset_load=0.195336 session_load=0.195587 audio=0.019836 save=0.272045 round_trip_load=0.385436
+183: UI SMOKE TIMING: modern_state_ranges cases=263 paths=526 total_seconds=1.322733 copy=0.022505 xml=0.087543 session_text=0.010954 fixture_write=0.032518 preset_load=0.203222 session_load=0.203195 audio=0.020615 save=0.282728 round_trip_load=0.401723
+183: Modern/session/preset/A-B recall: 2354 checks, 0 failures
+ 5/18 Test #183: cs80_modern_recall_host_tests ..........   Passed    2.10 sec
+test 184
+      Start 184: cs80_preset_file_recall_tests
+
+184: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-file-recall-tests"
+184: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+184: Test timeout computed to be: 120
+184: User-preset file/recall host: 2784 checks, 0 failures
+ 6/18 Test #184: cs80_preset_file_recall_tests ..........   Passed    0.43 sec
+test 185
+      Start 185: cs80_preset_load_tests
+
+185: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-load-tests"
+185: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+185: Test timeout computed to be: 60
+185: Preset load failure/retry: 112 checks, 0 failures
+ 7/18 Test #185: cs80_preset_load_tests .................   Passed    0.08 sec
+test 186
+      Start 186: cs80_preset_save_storage_tests
+
+186: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-save-storage-tests"
+186: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+186: Test timeout computed to be: 60
+186: Preset save storage: 608 checks, 0 failures
+ 8/18 Test #186: cs80_preset_save_storage_tests .........   Passed    0.06 sec
+test 187
+      Start 187: cs80_preset_identity_tests
+
+187: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-identity-tests"
+187: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+187: Test timeout computed to be: 60
+187: Preset loaded identity: 79 checks, 0 failures
+ 9/18 Test #187: cs80_preset_identity_tests .............   Passed    0.14 sec
+test 188
+      Start 188: cs80_preset_refresh_tests
+
+188: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-refresh-tests"
+188: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+188: Test timeout computed to be: 60
+188: Preset catalogue refresh: 40 checks, 0 failures
+10/18 Test #188: cs80_preset_refresh_tests ..............   Passed    0.10 sec
+test 189
+      Start 189: cs80_undo_replay_gesture_tests
+
+189: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--undo-replay-gesture-tests"
+189: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+189: Test timeout computed to be: 120
+189: Undo replay gesture tests: 317 checks, 0 failures
+11/18 Test #189: cs80_undo_replay_gesture_tests .........   Passed    0.41 sec
+test 193
+      Start 193: cs80_mseg_editor_lifecycle_tests
+
+193: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--mseg-editor-lifecycle-tests"
+193: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+193: Test timeout computed to be: 60
+193: MSEG editor lifecycle: 31 checks, 0 failures
+12/18 Test #193: cs80_mseg_editor_lifecycle_tests .......   Passed    0.04 sec
+test 194
+      Start 194: cs80_modern_slider_gesture_tests
+
+194: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--modern-slider-gesture-tests"
+194: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+194: Test timeout computed to be: 60
+194: Modern slider gestures: 145 checks, 0 failures
+13/18 Test #194: cs80_modern_slider_gesture_tests .......   Passed    0.05 sec
+test 195
+      Start 195: cs80_snapshot_cli_tests
+
+195: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/preset-loaded-identity/tests/SnapshotCliTests.py" "/workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots"
+195: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+195: Test timeout computed to be: 30
+195: Snapshot CLI admission: 8 invalid invocations rejected before UI execution
+14/18 Test #195: cs80_snapshot_cli_tests ................   Passed    0.05 sec
+test 197
+      Start 197: cs80_controller_reset_host_tests
+
+197: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--controller-reset-tests"
+197: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+197: Test timeout computed to be: 120
+197: Controller reset host tests: 2304 checks, 0 failures
+15/18 Test #197: cs80_controller_reset_host_tests .......   Passed    2.02 sec
+test 200
+      Start 200: cs80_keyboard_handoff_host_tests
+
+200: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--keyboard-handoff-tests"
+200: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+200: Test timeout computed to be: 120
+200: Keyboard handoff host tests: 0 failures
+16/18 Test #200: cs80_keyboard_handoff_host_tests .......   Passed    0.46 sec
+test 205
+      Start 205: cs80_context_menu_keyboard_tests
+
+205: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--context-menu-keyboard-tests"
+205: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+205: Test timeout computed to be: 60
+205: Context menu keyboard tests: 62 checks, 0 failures
+17/18 Test #205: cs80_context_menu_keyboard_tests .......   Passed    0.09 sec
+test 206
+      Start 206: cs80_typed_value_unit_tests
+
+206: Test command: /workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots "--typed-value-unit-tests"
+206: Working Directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+206: Test timeout computed to be: 60
+206: Typed-value formatter compatibility: 950 cases, 950 accepted, digest 8d7e609da2f21897
+206: Typed-value unit tests: 116 checks, 0 failures
+18/18 Test #206: cs80_typed_value_unit_tests ............   Passed    0.05 sec
+
+The following tests passed:
+	cs80_preset_display_name_tests
+	cs80_preset_file_values_tests
+	cs80_audio_callback_allocation_tests
+	cs80_preset_revert_tests
+	cs80_modern_recall_host_tests
+	cs80_preset_file_recall_tests
+	cs80_preset_load_tests
+	cs80_preset_save_storage_tests
+	cs80_preset_identity_tests
+	cs80_preset_refresh_tests
+	cs80_undo_replay_gesture_tests
+	cs80_mseg_editor_lifecycle_tests
+	cs80_modern_slider_gesture_tests
+	cs80_snapshot_cli_tests
+	cs80_controller_reset_host_tests
+	cs80_keyboard_handoff_host_tests
+	cs80_context_menu_keyboard_tests
+	cs80_typed_value_unit_tests
+
+100% tests passed, 0 tests failed out of 18
+
+Total Test time (real) =   8.95 sec

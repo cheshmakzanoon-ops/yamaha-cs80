@@ -91,7 +91,17 @@ int main() {
         auto malformed=mts; malformed[8]=0xff;
         midi.addEvent(malformed.data(),int(malformed.size()),64); tick("malformed MTS callback");
         check(host->getEngine().getMtsTuning(2).pitch[60]==60.25f, "malformed MTS preserves table");
-        midi.addEvent(juce::MidiMessage::programChange(1,1),32); tick("program change callback");
+        // A real file origin owns a path string. MIDI must override it without
+        // allocating or releasing that string from the audio callback.
+        {
+            const auto saved = host->saveUserPreset("Callback origin");
+            check(saved.wasSaved() && host->getPresetMetadata().origin.kind == cs80::PresetOrigin::Kind::userFile,
+                  "program-change allocation fixture owns a real saved file origin");
+        } // Drop the result's path reference before arming the free probe.
+        midi.addEvent(juce::MidiMessage::programChange(1,1),32); tick("program change callback from user-file origin");
+        const auto origin = host->getPresetMetadata().origin;
+        check(origin.kind == cs80::PresetOrigin::Kind::factory && origin.file == juce::File(),
+              "allocation-free MIDI override publishes factory rather than prior file origin");
         host->setParamValue(cs80::P_voiceMode,sixteen ? 0.f : 1.f); tick("voice mode transition");
         const auto priorPolicy=host->getEngine().getRenderPolicy();
         host->setEngineMode(host->getEffectiveEngineMode()==Cs80AudioProcessor::EngineMode::circuit

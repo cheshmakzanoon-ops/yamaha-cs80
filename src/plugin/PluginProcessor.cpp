@@ -535,6 +535,7 @@ cs80::PresetBrowserSound Cs80AudioProcessor::capturePresetBrowserSound() const
     const auto meta = getPresetMetadata();
     sound.name = meta.name;
     sound.factoryIndex = meta.factoryIndex;
+    sound.origin = meta.origin;
     sound.values = currentValues();
     sound.modern = modernLayer.getConfig();
     for (int channel = 0; channel < 2; ++channel)
@@ -601,7 +602,7 @@ bool Cs80AudioProcessor::restorePresetBrowserSound(const cs80::PresetBrowserSoun
         const juce::ScopedLock treeLock(apvts.treeLock());
         modernLayer.setConfig(modern);
     }
-    setPresetMetadata(sound.name, sound.factoryIndex);
+    setPresetMetadata(sound.name, sound.factoryIndex, sound.origin);
     // Match the existing preset-load boundary without manufacturing MEMORY
     // or source user gestures, or retaining edits from the auditioned sound.
     if (auto* mm = juce::MessageManager::getInstanceWithoutCreating(); mm != nullptr && mm->isThisTheMessageThread())
@@ -658,14 +659,15 @@ Cs80AudioProcessor::PresetMetadata Cs80AudioProcessor::getPresetMetadata() const
     const int fromMidi = library != nullptr ? library->midiProgram.load(std::memory_order_acquire) : -1;
     const auto& programs = getFactoryPresets();
     if (fromMidi >= 0 && fromMidi < (int) programs.size())
-        return { juce::String(programs[(size_t) fromMidi].name), fromMidi };
-    return { presetName, currentProgram.load(std::memory_order_relaxed) };
+        return { juce::String(programs[(size_t) fromMidi].name), fromMidi, cs80::PresetOrigin::factory() };
+    return { presetName, currentProgram.load(std::memory_order_relaxed), presetOrigin };
 }
 
-void Cs80AudioProcessor::setPresetMetadata(const juce::String& name, int index)
+void Cs80AudioProcessor::setPresetMetadata(const juce::String& name, int index, const cs80::PresetOrigin& origin)
 {
     const juce::ScopedLock lock(presetMetadataLock);
     presetName = name;
+    presetOrigin = origin;
     // Session/preset metadata is external input. Keep the host program valid
     // without recalling a factory sound over the restored custom parameters.
     currentProgram.store(juce::jlimit(0, juce::jmax(0, (int) getFactoryPresets().size() - 1), index),
@@ -677,8 +679,11 @@ void Cs80AudioProcessor::setPresetName(const juce::String& name)
 {
     {
         const juce::ScopedLock lock(presetMetadataLock);
-        // A rename of a MIDI-recalled program keeps its index, not its old name.
-        if (library != nullptr) library->midiProgram.store(-1, std::memory_order_release);
+        // Renaming edits the current sound; it does not identify a different file.
+        // Consume pending MIDI provenance before clearing its name override, so
+        // a file loaded before that MIDI program cannot reappear as the origin.
+        if (library != nullptr && library->midiProgram.exchange(-1, std::memory_order_acq_rel) >= 0)
+            presetOrigin = cs80::PresetOrigin::factory();
         presetName = name;
     }
     // Host callbacks may reenter metadata getters; never hold the lock here.
@@ -749,7 +754,7 @@ void Cs80AudioProcessor::loadInitPatch()
     setParamValue(cs80::P_sourcePerformance, 1.0f);
     if (!bank.empty())
     {
-        setPresetMetadata(juce::String(bank[(size_t) index].name) + " / Original SUB", index);
+        setPresetMetadata(juce::String(bank[(size_t) index].name) + " / Original SUB", index, cs80::PresetOrigin::factory());
         updateHostDisplay();
     }
 }
@@ -761,7 +766,7 @@ void Cs80AudioProcessor::loadFactoryPreset(int index)
         return;
     index = juce::jlimit(0, (int) bank.size() - 1, index);
     applyValues(bank[(size_t) index].values);
-    setPresetMetadata(juce::String(bank[(size_t) index].name), index);
+    setPresetMetadata(juce::String(bank[(size_t) index].name), index, cs80::PresetOrigin::factory());
     // [ws8-studio] A program load is not an undo step and starts a fresh history (as replaceState does).
     if (auto* mm = juce::MessageManager::getInstanceWithoutCreating(); mm != nullptr && mm->isThisTheMessageThread())
     {
@@ -1661,7 +1666,17 @@ Cs80AudioProcessor::PresetSaveResult Cs80AudioProcessor::writeUserPreset(
         return failure("Could not publish the preset: " + juce::String(error.message()));
     }
 
-    setPresetName(savedName);
+    // Publish the completed file and its display metadata together, before a
+    // reentrant host display callback. A failed write never reaches this point.
+    {
+        const juce::ScopedLock lock(presetMetadataLock);
+        presetName = savedName;
+        presetOrigin = cs80::PresetOrigin::userFile(file);
+        // Saving previously renamed without rewriting the live program index.
+        // Do not add a read-then-write race with audio-thread MIDI publication.
+        if (library != nullptr) library->midiProgram.store(-1, std::memory_order_release);
+    }
+    updateHostDisplay();
     return { PresetSaveStatus::saved, file, {} };
 }
 
@@ -1705,7 +1720,7 @@ juce::Result Cs80AudioProcessor::loadUserPreset(const juce::File& file)
     const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
     apvts.replaceState(restored);
     setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
-                      (int) tree.getProperty("factoryIndex", 0));
+                      (int) tree.getProperty("factoryIndex", 0), cs80::PresetOrigin::userFile(file));
     // DSP state is updated by the next audio block, not the state-loading thread.
     return juce::Result::ok();
 }

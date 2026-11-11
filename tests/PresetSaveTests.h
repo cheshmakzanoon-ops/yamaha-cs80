@@ -17,7 +17,7 @@ namespace cs80::tests
 struct PresetSaveAccess
 {
     template <typename Check, typename Flush>
-    static void run(Check check, Flush flush)
+    static void run(Check check, Flush flush, bool includeBrowserWorkflow = true)
     {
         using Status = Cs80AudioProcessor::PresetSaveStatus;
         using Overwrite = Cs80AudioProcessor::PresetOverwrite;
@@ -102,11 +102,13 @@ struct PresetSaveAccess
         // All failure paths must leave both bytes and displayed metadata intact.
         const auto originalBytes = saved.file.loadFileAsString();
         host.setPresetName("Unsaved edit");
+        const auto originalOrigin = host.getPresetMetadata().origin;
         const auto unchanged = [&]
         {
             return saved.file.loadFileAsString() == originalBytes
                 && host.getPresetName() == "Unsaved edit"
-                && host.getCurrentPresetIndex() == beforeIndex;
+                && host.getCurrentPresetIndex() == beforeIndex
+                && host.getPresetMetadata().origin == originalOrigin;
         };
         const auto duplicate = host.saveUserPreset("Round trip");
         check(duplicate.status == Status::alreadyExists && unchanged(),
@@ -158,6 +160,9 @@ struct PresetSaveAccess
         check(raced.status == Status::alreadyExists && racedFile.loadFileAsString() == "other instance"
                   && host.getPresetName() == "Unsaved edit",
               "no-replace publication preserves a concurrent instance's new preset");
+
+        if (!includeBrowserWorkflow)
+            return; // Storage-only gate needs no native peer or modal dialog.
 
         // Exercise the actual browser callbacks and asynchronous confirmation,
         // including cancel, repeated Save, overwrite and closing while pending.

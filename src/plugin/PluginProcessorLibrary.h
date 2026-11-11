@@ -38,6 +38,7 @@ struct Cs80AudioProcessor::LibraryState final
         std::array<std::array<float, cs80::CP_count>, 4> memories {};
         juce::String name;
         int program = 0;
+        cs80::PresetOrigin origin; // In-process only, omitted from AB_COMPARE.
     };
     struct CompareHistoryState
     {

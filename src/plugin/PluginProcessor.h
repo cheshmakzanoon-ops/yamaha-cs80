@@ -162,6 +162,7 @@ public:
     {
         juce::String name;
         int factoryIndex = 0;
+        cs80::PresetOrigin origin;
     };
     PresetMetadata getPresetMetadata() const;
     juce::String getPresetName() const { return getPresetMetadata().name; }
@@ -321,7 +322,7 @@ private:
     void readLibraryState(const juce::ValueTree& state);
     void captureAbSnapshot(int slot);
     void recallAbSnapshot(int slot);
-    void setPresetMetadata(const juce::String& name, int index);
+    void setPresetMetadata(const juce::String& name, int index, const cs80::PresetOrigin& origin = {});
     void applyFreshInstancePatch();
     void setParameterGesture(int index, float physicalValue);
     void readParameters();
@@ -418,6 +419,7 @@ private:
     // work; this short metadata lock does not make those APIs realtime-safe.
     mutable juce::CriticalSection presetMetadataLock;
     juce::String presetName { "Init Patch" };
+    cs80::PresetOrigin presetOrigin = cs80::PresetOrigin::factory();
     std::atomic<int> currentProgram { 0 };
 
     // [ws8-studio]

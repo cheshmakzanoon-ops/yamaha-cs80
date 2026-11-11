@@ -1,0 +1,184 @@
+[0/2] Re-checking globbed directories...
+[1/2] Re-running CMake...
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter
+-- Checking for modules 'webkit2gtk-4.0;gtk+-x11-3.0'
+--   Package 'webkit2gtk-4.0', required by 'virtual:world', not found
+--   Package 'gtk+-x11-3.0', required by 'virtual:world', not found
+-- Configuring juceaide
+-- Building juceaide
+-- Exporting juceaide
+-- Testing juceaide
+-- Finished setting up juceaide
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found version "3.12.14") found components: Interpreter
+-- Configuring done (0.9s)
+-- Generating done (0.2s)
+-- Build files have been written to: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+[0/2] Re-checking globbed directories...
+[1/4] Building CXX object CMakeFiles/cs80_audio_callback_allocation_tests.dir/tests/AudioCallbackAllocationTests.cpp.o
+[2/4] Linking CXX executable cs80_audio_callback_allocation_tests
+[3/4] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+FAILED: CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+/usr/bin/c++ -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -DCS80_GOLDEN_DIR=\"/workspace/scratch/ee447c520988/preset-loaded-identity/tests/golden\" -DJUCE_DISPLAY_SPLASH_SCREEN=0 -DJUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1 -DJUCE_MODAL_LOOPS_PERMITTED=1 -DJUCE_MODULE_AVAILABLE_juce_audio_basics=1 -DJUCE_MODULE_AVAILABLE_juce_audio_devices=1 -DJUCE_MODULE_AVAILABLE_juce_audio_formats=1 -DJUCE_MODULE_AVAILABLE_juce_audio_processors=1 -DJUCE_MODULE_AVAILABLE_juce_audio_processors_headless=1 -DJUCE_MODULE_AVAILABLE_juce_audio_utils=1 -DJUCE_MODULE_AVAILABLE_juce_core=1 -DJUCE_MODULE_AVAILABLE_juce_data_structures=1 -DJUCE_MODULE_AVAILABLE_juce_dsp=1 -DJUCE_MODULE_AVAILABLE_juce_events=1 -DJUCE_MODULE_AVAILABLE_juce_graphics=1 -DJUCE_MODULE_AVAILABLE_juce_gui_basics=1 -DJUCE_MODULE_AVAILABLE_juce_gui_extra=1 -DJUCE_STANDALONE_APPLICATION=1 -DJUCE_USE_CURL=0 -DJUCE_WEB_BROWSER=0 -DLINUX=1 -DNDEBUG=1 -D_NDEBUG=1 -I/workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/JuceLibraryCode -I/workspace/scratch/ee447c520988/preset-loaded-identity/src -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors -I/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/freetype2 -I/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/libpng16 -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2 -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv -I/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src -I/workspace/scratch/ee447c520988/build-preset-loaded-identity/juce_binarydata_cs80_panel_fonts/JuceLibraryCode -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu -O3 -DNDEBUG -std=gnu++20 -fPIE -MD -MT CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o -MF CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o.d -o CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o -c /workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:3465:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3465 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:3466:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3466 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:5,
+                 from /workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:32:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h: In instantiation of ‘bool cs80::tests::pumpUntil(Ready, Pump, Now, int) [with Ready = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>; Pump = main(int, char**)::<lambda()>; Now = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)>::<lambda()>]’:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:191:45:   required from ‘cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)> [with auto:100 = cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>]’
+  191 |             const bool completed = pumpUntil(ready, flush,
+      |                                    ~~~~~~~~~^~~~~~~~~~~~~~
+  192 |                 [] { return std::chrono::steady_clock::now(); });
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:207:22:   required from ‘static void cs80::tests::PresetSaveAccess::run(Check, Flush, bool) [with Check = main(int, char**)::<lambda(bool, const char*)>; Flush = main(int, char**)::<lambda()>]’
+  207 |         if (! waitFor("first overwrite dialog becomes modal", [&] { return findAlert() != nullptr; }))
+      |               ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:43:   required from here
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: error: no match for call to ‘(main(int, char**)::<lambda()>) (int)’
+   17 |         pump(10);
+      |         ~~~~^~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note: candidate: ‘void (*)()’ (conversion)
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note:   candidate expects 1 argument, 2 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note: candidate: ‘main(int, char**)::<lambda()>’
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |                                                                                                                         ^
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note:   candidate expects 0 arguments, 1 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h: In instantiation of ‘bool cs80::tests::pumpUntil(Ready, Pump, Now, int) [with Ready = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>; Pump = main(int, char**)::<lambda()>; Now = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)>::<lambda()>]’:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:191:45:   required from ‘cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)> [with auto:100 = cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>]’
+  191 |             const bool completed = pumpUntil(ready, flush,
+      |                                    ~~~~~~~~~^~~~~~~~~~~~~~
+  192 |                 [] { return std::chrono::steady_clock::now(); });
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:219:26:   required from ‘static void cs80::tests::PresetSaveAccess::run(Check, Flush, bool) [with Check = main(int, char**)::<lambda(bool, const char*)>; Flush = main(int, char**)::<lambda()>]’
+  219 |             if (! waitFor("cancel callback completes", [&]
+      |                   ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  220 |                 { return ! browser.overwriteConfirmationPending && findAlert() == nullptr; }))
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:43:   required from here
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: error: no match for call to ‘(main(int, char**)::<lambda()>) (int)’
+   17 |         pump(10);
+      |         ~~~~^~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note: candidate: ‘void (*)()’ (conversion)
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note:   candidate expects 1 argument, 2 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note: candidate: ‘main(int, char**)::<lambda()>’
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |                                                                                                                         ^
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note:   candidate expects 0 arguments, 1 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h: In instantiation of ‘bool cs80::tests::pumpUntil(Ready, Pump, Now, int) [with Ready = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>; Pump = main(int, char**)::<lambda()>; Now = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)>::<lambda()>]’:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:191:45:   required from ‘cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)> [with auto:100 = cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>]’
+  191 |             const bool completed = pumpUntil(ready, flush,
+      |                                    ~~~~~~~~~^~~~~~~~~~~~~~
+  192 |                 [] { return std::chrono::steady_clock::now(); });
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:231:22:   required from ‘static void cs80::tests::PresetSaveAccess::run(Check, Flush, bool) [with Check = main(int, char**)::<lambda(bool, const char*)>; Flush = main(int, char**)::<lambda()>]’
+  231 |         if (! waitFor("sanitized-name overwrite dialog becomes modal", [&] { return findAlert() != nullptr; }))
+      |               ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:43:   required from here
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: error: no match for call to ‘(main(int, char**)::<lambda()>) (int)’
+   17 |         pump(10);
+      |         ~~~~^~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note: candidate: ‘void (*)()’ (conversion)
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note:   candidate expects 1 argument, 2 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note: candidate: ‘main(int, char**)::<lambda()>’
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |                                                                                                                         ^
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note:   candidate expects 0 arguments, 1 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h: In instantiation of ‘bool cs80::tests::pumpUntil(Ready, Pump, Now, int) [with Ready = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>; Pump = main(int, char**)::<lambda()>; Now = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)>::<lambda()>]’:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:191:45:   required from ‘cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)> [with auto:100 = cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>]’
+  191 |             const bool completed = pumpUntil(ready, flush,
+      |                                    ~~~~~~~~~^~~~~~~~~~~~~~
+  192 |                 [] { return std::chrono::steady_clock::now(); });
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:238:26:   required from ‘static void cs80::tests::PresetSaveAccess::run(Check, Flush, bool) [with Check = main(int, char**)::<lambda(bool, const char*)>; Flush = main(int, char**)::<lambda()>]’
+  238 |             if (! waitFor("overwrite callback completes", [&]
+      |                   ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  239 |                 { return ! browser.overwriteConfirmationPending && findAlert() == nullptr; }))
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:43:   required from here
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: error: no match for call to ‘(main(int, char**)::<lambda()>) (int)’
+   17 |         pump(10);
+      |         ~~~~^~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note: candidate: ‘void (*)()’ (conversion)
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note:   candidate expects 1 argument, 2 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note: candidate: ‘main(int, char**)::<lambda()>’
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |                                                                                                                         ^
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note:   candidate expects 0 arguments, 1 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h: In instantiation of ‘bool cs80::tests::pumpUntil(Ready, Pump, Now, int) [with Ready = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>; Pump = main(int, char**)::<lambda()>; Now = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)>::<lambda()>]’:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:191:45:   required from ‘cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)> [with auto:100 = cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>]’
+  191 |             const bool completed = pumpUntil(ready, flush,
+      |                                    ~~~~~~~~~^~~~~~~~~~~~~~
+  192 |                 [] { return std::chrono::steady_clock::now(); });
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:324:22:   required from ‘static void cs80::tests::PresetSaveAccess::run(Check, Flush, bool) [with Check = main(int, char**)::<lambda(bool, const char*)>; Flush = main(int, char**)::<lambda()>]’
+  324 |         if (! waitFor("closing-browser overwrite dialog becomes modal", [&] { return findAlert() != nullptr; }))
+      |               ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:43:   required from here
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: error: no match for call to ‘(main(int, char**)::<lambda()>) (int)’
+   17 |         pump(10);
+      |         ~~~~^~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note: candidate: ‘void (*)()’ (conversion)
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note:   candidate expects 1 argument, 2 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note: candidate: ‘main(int, char**)::<lambda()>’
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |                                                                                                                         ^
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note:   candidate expects 0 arguments, 1 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h: In instantiation of ‘bool cs80::tests::pumpUntil(Ready, Pump, Now, int) [with Ready = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>; Pump = main(int, char**)::<lambda()>; Now = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)>::<lambda()>]’:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:191:45:   required from ‘cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)> [with auto:100 = cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>]’
+  191 |             const bool completed = pumpUntil(ready, flush,
+      |                                    ~~~~~~~~~^~~~~~~~~~~~~~
+  192 |                 [] { return std::chrono::steady_clock::now(); });
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:329:22:   required from ‘static void cs80::tests::PresetSaveAccess::run(Check, Flush, bool) [with Check = main(int, char**)::<lambda(bool, const char*)>; Flush = main(int, char**)::<lambda()>]’
+  329 |         if (! waitFor("closing browser destroys its dialog", [&]
+      |               ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  330 |             { return closingAlert == nullptr && findAlert() == nullptr; }))
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:43:   required from here
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: error: no match for call to ‘(main(int, char**)::<lambda()>) (int)’
+   17 |         pump(10);
+      |         ~~~~^~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note: candidate: ‘void (*)()’ (conversion)
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note:   candidate expects 1 argument, 2 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note: candidate: ‘main(int, char**)::<lambda()>’
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |                                                                                                                         ^
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note:   candidate expects 0 arguments, 1 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h: In instantiation of ‘bool cs80::tests::pumpUntil(Ready, Pump, Now, int) [with Ready = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>; Pump = main(int, char**)::<lambda()>; Now = PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)>::<lambda()>]’:
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:191:45:   required from ‘cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda(const char*, auto:100)> [with auto:100 = cs80::tests::PresetSaveAccess::run<main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()> >(main(int, char**)::<lambda(bool, const char*)>, main(int, char**)::<lambda()>, bool)::<lambda()>]’
+  191 |             const bool completed = pumpUntil(ready, flush,
+      |                                    ~~~~~~~~~^~~~~~~~~~~~~~
+  192 |                 [] { return std::chrono::steady_clock::now(); });
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PresetSaveTests.h:345:34:   required from ‘static void cs80::tests::PresetSaveAccess::run(Check, Flush, bool) [with Check = main(int, char**)::<lambda(bool, const char*)>; Flush = main(int, char**)::<lambda()>]’
+  345 |         if (! posted || ! waitFor("close-before-creation event-loop marker runs", [&] { return *dispatched; }))
+      |                           ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:43:   required from here
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: error: no match for call to ‘(main(int, char**)::<lambda()>) (int)’
+   17 |         pump(10);
+      |         ~~~~^~~~
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note: candidate: ‘void (*)()’ (conversion)
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/../../tests/PumpUntil.h:17:13: note:   candidate expects 1 argument, 2 provided
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note: candidate: ‘main(int, char**)::<lambda()>’
+ 2041 |         cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [] {}, false);
+      |                                                                                                                         ^
+/workspace/scratch/ee447c520988/preset-loaded-identity/src/tools/ui_snapshot.cpp:2041:121: note:   candidate expects 0 arguments, 1 provided
+ninja: build stopped: subcommand failed.

@@ -75,6 +75,7 @@ struct PresetLoadAccess
                 {
                     const auto now = host->getPresetMetadata();
                     return now.name == metadata.name && now.factoryIndex == metadata.factoryIndex
+                        && now.origin == metadata.origin
                         && host->getAPVTS().copyState().isEquivalentTo(before);
                 };
                 check(unchanged(), "failed LOAD or audition preserves the entire live parameter state and metadata");

@@ -1372,26 +1372,19 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         // Nothing below can change unless the program metadata or a parameter changed: skip the bank lookup
         // and the full-parameter comparison on the ordinary idle tick.
         const auto displayKey = metadata.name + "|" + juce::String(metadata.factoryIndex);
-        if (! parameterWatch.consume() && displayKey == shownDisplayKey)
+        if (! parameterWatch.consume() && displayKey == shownDisplayKey && metadata.origin == shownOrigin)
             return;
         shownDisplayKey = displayKey;
+        shownOrigin = metadata.origin;
         if (presetLabel.getText() != metadata.name)
             presetLabel.setText(metadata.name, juce::dontSendNotification);
         const auto& bank = processor.getFactoryPresets();
-        // Provenance: the program is a factory program when its slot and name still agree (a fresh instance
-        // adds a " / Original SUB" suffix), or when its name is a factory program's name. The library resolves
-        // it the same way, so the toolbar and the library inspector always name the same slot.
-        int slot = -1;
-        bool exactName = false;
-        if (metadata.factoryIndex >= 0 && metadata.factoryIndex < (int) bank.size())
-        {
-            const juce::String factoryName(bank[(size_t) metadata.factoryIndex].name);
-            if (metadata.name == factoryName) { slot = metadata.factoryIndex; exactName = true; }
-            else if (metadata.name.startsWith(factoryName + " / ")) slot = metadata.factoryIndex;
-        }
-        if (slot < 0)
-            for (int i = 0; i < (int) bank.size(); ++i)
-                if (juce::String(bank[(size_t) i].name).equalsIgnoreCase(metadata.name)) { slot = i; exactName = true; break; }
+        // A user file may use any display name, including a factory program's.
+        // Only the processor's runtime provenance identifies the factory slot.
+        const int slot = metadata.origin.kind == cs80::PresetOrigin::Kind::factory
+            && metadata.factoryIndex >= 0 && metadata.factoryIndex < (int) bank.size()
+                ? metadata.factoryIndex : -1;
+        const bool exactName = slot >= 0 && metadata.name == juce::String(bank[(size_t) slot].name);
         const bool isFactory = slot >= 0;
         const juce::String category = isFactory ? juce::String(bank[(size_t) slot].category).toUpperCase() : juce::String();
         const juce::String tag = isFactory ? category : juce::String("USER PATCH");
@@ -1433,9 +1426,10 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
         if (compareToFactory && slot >= 0)
             return differs(processor.getFactoryPresets()[(size_t) slot].values);
         const auto key = metadata.name + "|" + juce::String(metadata.factoryIndex);
-        if (key != baselineKey)
+        if (key != baselineKey || metadata.origin != baselineOrigin)
         {
             baselineKey = key;
+            baselineOrigin = metadata.origin;
             baseline = current;
             return false;
         }
@@ -2261,6 +2255,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     panel::ParameterChangeWatch parameterWatch { processor };
     juce::String shownDisplayKey;
     juce::String baselineKey;
+    cs80::PresetOrigin shownOrigin, baselineOrigin;
     cs80::ParamValues baseline;
     bool presetDirty = false;
     KeyButton* armedKey = nullptr;

@@ -3681,7 +3681,8 @@ bool PresetBrowser::canRevert() const
     if (! hasOpening)
         return false;
     const auto meta = processor.getPresetMetadata();
-    if (meta.name != openingSound.name || meta.factoryIndex != openingSound.factoryIndex)
+    if (meta.name != openingSound.name || meta.factoryIndex != openingSound.factoryIndex
+        || meta.origin != openingSound.origin)
         return true;
     const auto differs = [](float now, float opening)
     { return std::abs(now - opening) > 1.0e-4f * std::max(1.0f, std::abs(opening)); };
@@ -3714,35 +3715,22 @@ void PresetBrowser::revertToOpening()
         onPresetLoaded();
 }
 
-// Works out which library entry is the loaded sound. A factory program counts
-// when the name still matches it (a fresh instance appends " / Original SUB");
-// a saved user patch counts when its display name matches the preset name; a
-// factory program with the same name is the last resort.
+// Resolve runtime provenance, never a display-name guess. The file may have
+// been renamed, removed or loaded from outside this catalogue; in those cases
+// no row is marked, even when another row has the same name or basename.
 void PresetBrowser::syncLoaded()
 {
     const auto meta = processor.getPresetMetadata();
-    const auto& bank = processor.getFactoryPresets();
     juce::String key;
-    if (meta.factoryIndex >= 0 && meta.factoryIndex < (int) bank.size())
-    {
-        const juce::String factoryName(bank[(size_t) meta.factoryIndex].name);
-        if (meta.name == factoryName || meta.name.startsWith(factoryName + " / "))
-            key = "F:" + factoryName;
-    }
-    if (key.isEmpty())
-        for (const auto& e : entries)
-            if (e.isUser && e.name.equalsIgnoreCase(meta.name))
-            {
-                key = e.key;
-                break;
-            }
-    if (key.isEmpty())
-        for (const auto& e : entries)
-            if (! e.isUser && e.name.equalsIgnoreCase(meta.name))
-            {
-                key = e.key;     // renamed or re-slotted, but still that program by name
-                break;
-            }
+    for (const auto& e : entries)
+        if ((meta.origin.kind == cs80::PresetOrigin::Kind::userFile && e.isUser
+             && e.userFile == meta.origin.file)
+            || (meta.origin.kind == cs80::PresetOrigin::Kind::factory && !e.isUser
+                && e.factoryIndex == meta.factoryIndex))
+        {
+            key = e.key;
+            break;
+        }
     loadedKey = key;
     loadedEdited = key.isNotEmpty() && patchEdited();
 }
@@ -3782,7 +3770,7 @@ bool PresetBrowser::patchEdited()
     };
 
     bool edited = false;
-    if (loaded != nullptr && meta.name == loaded->name)
+    if (loaded != nullptr && (loaded->isUser || meta.name == loaded->name))
     {
         const auto& bank = processor.getFactoryPresets();
         if (! loaded->isUser && loaded->factoryIndex >= 0 && loaded->factoryIndex < (int) bank.size())
@@ -3800,7 +3788,7 @@ bool PresetBrowser::patchEdited()
         }
     }
 
-    const auto key = meta.name + "|" + juce::String(meta.factoryIndex);
+    const auto key = loadedKey + "|" + meta.name + "|" + juce::String(meta.factoryIndex);
     if (key != editBaselineKey)
     {
         editBaselineKey = key;

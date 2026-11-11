@@ -171,9 +171,9 @@ struct Cs80AudioProcessor::LibraryState::ToggleAction final : juce::UndoableActi
         size_t bytes = sizeof(*this);
         for (const auto* state : { &before, &after })
         {
-            bytes += state->metadata.name.getNumBytesAsUTF8() + 1;
+            bytes += state->metadata.name.getNumBytesAsUTF8() + state->metadata.origin.file.getFullPathName().getNumBytesAsUTF8() + 2;
             for (const auto& snapshot : state->slots)
-                bytes += snapshot.name.getNumBytesAsUTF8() + 1;
+                bytes += snapshot.name.getNumBytesAsUTF8() + snapshot.origin.file.getFullPathName().getNumBytesAsUTF8() + 2;
         }
         return (int) std::min(bytes, (size_t) std::numeric_limits<int>::max());
     }
@@ -186,7 +186,7 @@ struct Cs80AudioProcessor::LibraryState::ToggleAction final : juce::UndoableActi
             library.ab = state.slots;
             library.abActive = state.active;
         }
-        library.owner.setPresetMetadata(state.metadata.name, state.metadata.factoryIndex);
+        library.owner.setPresetMetadata(state.metadata.name, state.metadata.factoryIndex, state.metadata.origin);
         // Redo applies this action before the sound's tree actions. The existing
         // async notifier must wait until the whole transaction has completed.
         library.notifyProgramChanged();
@@ -215,7 +215,9 @@ struct Cs80AudioProcessor::LibraryState::CopyAction final : juce::UndoableAction
     int getSizeInUnits() override
     {
         const size_t bytes = sizeof(*this) + before.name.getNumBytesAsUTF8()
-                             + after.name.getNumBytesAsUTF8() + 2;
+                             + after.name.getNumBytesAsUTF8()
+                             + before.origin.file.getFullPathName().getNumBytesAsUTF8()
+                             + after.origin.file.getFullPathName().getNumBytesAsUTF8() + 4;
         return (int) std::min(bytes, (size_t) std::numeric_limits<int>::max());
     }
 
@@ -247,6 +249,7 @@ void Cs80AudioProcessor::captureAbSnapshot(int slot)
     const auto metadata = getPresetMetadata();
     s.name = metadata.name;
     s.program = metadata.factoryIndex;
+    s.origin = metadata.origin;
     const juce::ScopedLock lock(library->abLock);
     library->ab[(size_t) slot] = s;
 }
@@ -281,7 +284,7 @@ void Cs80AudioProcessor::recallAbSnapshot(int slot)
         const juce::ScopedLock treeLock(apvts.treeLock());
         modernLayer.setConfig(s.modern);
     }
-    setPresetMetadata(s.name, s.program);
+    setPresetMetadata(s.name, s.program, s.origin);
     updateHostDisplay();
 }
 
@@ -308,7 +311,7 @@ void Cs80AudioProcessor::abToggle()
     {
         auto after = library->captureCompareHistoryState();
         const auto& destination = after.slots[(size_t) target];
-        after.metadata = { destination.name, destination.program };
+        after.metadata = { destination.name, destination.program, destination.origin };
         undoManager.perform(new LibraryState::ToggleAction(*library, before, std::move(after)));
     }
     recallAbSnapshot(target);
@@ -459,14 +462,16 @@ struct Cs80AudioProcessor::LibraryState::RandomiseMetadataAction final : juce::U
     int getSizeInUnits() override
     {
         const size_t bytes = sizeof(*this) + before.name.getNumBytesAsUTF8()
-                             + after.name.getNumBytesAsUTF8() + 2;
+                             + after.name.getNumBytesAsUTF8()
+                             + before.origin.file.getFullPathName().getNumBytesAsUTF8()
+                             + after.origin.file.getFullPathName().getNumBytesAsUTF8() + 4;
         return (int) std::min(bytes, (size_t) std::numeric_limits<int>::max());
     }
 
     void apply(const PresetMetadata& metadata)
     {
         const juce::ScopedLock treeLock(library.owner.apvts.treeLock());
-        library.owner.setPresetMetadata(metadata.name, metadata.factoryIndex);
+        library.owner.setPresetMetadata(metadata.name, metadata.factoryIndex, metadata.origin);
         // Redo runs this before the parameter actions. Defer the display
         // notification instead of reporting a partly replayed sound.
         library.notifyProgramChanged();
@@ -489,7 +494,7 @@ void Cs80AudioProcessor::randomiseWithinOriginalRanges(juce::uint32 seed)
         // MIDI recall. Register before parameter callbacks can flush history.
         if (before.name != name)
             undoManager.perform(new LibraryState::RandomiseMetadataAction(
-                *library, before, PresetMetadata { name, before.factoryIndex }));
+                *library, before, PresetMetadata { name, before.factoryIndex, before.origin }));
     }
     // A randomised patch is a PANEL sound; physical setup and isolation stay.
     applyValues(next);

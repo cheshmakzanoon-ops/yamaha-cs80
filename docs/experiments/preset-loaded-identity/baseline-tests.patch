@@ -1,0 +1,87 @@
+diff --git a/src/tools/ui_snapshot.cpp b/src/tools/ui_snapshot.cpp
+index 3c74d08d..466e8457 100644
+--- a/src/tools/ui_snapshot.cpp
++++ b/src/tools/ui_snapshot.cpp
+@@ -2030,6 +2030,7 @@ int main(int argc, char** argv)
+         juce::ScopedJuceInitialiser_GUI juceInit;
+         int checks = 0;
+         cs80::tests::PresetLoadAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
++        cs80::tests::PresetLoadAccess::identity([&](bool condition, const char* what) { ++checks; check(condition, what); });
+         std::printf("Preset load failure/retry: %d checks, %d failures\n", checks, failures);
+         return failures == 0 ? 0 : 1;
+     }
+@@ -3845,6 +3846,7 @@ int main(int argc, char** argv)
+     phases.begin("preset save and panic");
+     cs80::tests::PresetSaveAccess::run(check, flushGui);
+     cs80::tests::PresetLoadAccess::run(check);
++    cs80::tests::PresetLoadAccess::identity(check);
+     cs80::tests::PresetRefreshAccess::run(check);
+     cs80::tests::PresetRevertAccess::run(check);
+     cs80::tests::testPluginPanic(check, flushGui);
+diff --git a/tests/PresetLoadTests.h b/tests/PresetLoadTests.h
+index 69af2df5..1b40a124 100644
+--- a/tests/PresetLoadTests.h
++++ b/tests/PresetLoadTests.h
+@@ -113,5 +113,62 @@ struct PresetLoadAccess
+                       "successful retry preserves existing live PURE and physical-setup recall policy");
+             }
+     }
++    // Baseline witness uses the real writer, XML files, list handlers and toolbar
++    // navigation. Equal display names are intentional; filenames stay distinct.
++    template <typename Check>
++    static void identity(Check check)
++    {
++        juce::TemporaryFile fixture("-cs80-preset-identity");
++        const auto root = fixture.getFile();
++        auto host = std::make_unique<Cs80AudioProcessor>(root.getChildFile("presets"));
++        host->setParamValue(P_brilliance, 0.125f);
++        const auto first = host->saveUserPreset("A Identity");
++        host->setParamValue(P_brilliance, 0.875f);
++        const auto second = host->saveUserPreset("B Identity");
++        check(first.wasSaved() && second.wasSaved(), "identity fixture saves distinct real files");
++        if (!first.wasSaved() || !second.wasSaved()) return;
++        for (const auto& file : {first.file, second.file})
++        {
++            auto xml = juce::XmlDocument::parse(file);
++            if (!xml) { check(false, "identity fixture parses"); return; }
++            xml->setAttribute("presetName", "Shared display name");
++            check(xml->writeTo(file), "identity fixture writes duplicate display names");
++        }
++        host->loadInitPatch();
++        ui::PresetBrowser browser(*host);
++        const bool oldAudition = browser.isAuditioning();
++        struct RestoreAudition
++        {
++            ui::PresetBrowser& browser; bool old;
++            ~RestoreAudition() { browser.setAudition(old); }
++        } restore { browser, oldAudition };
++        browser.setAudition(false);
++        browser.scopeFilter = 4;
++        browser.sortMode = 1;
++        browser.sortReverse = false;
++        browser.rebuildFilter();
++        juce::ListBox* list = nullptr;
++        for (auto* child : browser.getChildren())
++            if (auto* candidate = dynamic_cast<juce::ListBox*>(child)) list = candidate;
++        check(list != nullptr && browser.getNumRows() == 2,
++              "identity witness reaches two duplicate-name browser rows");
++        if (list == nullptr || browser.getNumRows() != 2) return;
++        list->selectRow(1);
++        browser.loadButton.onClick();
++        check(host->getParamValue(P_brilliance) == 0.875f,
++              "duplicate-name LOAD recalls the selected second file's sound");
++        check(browser.loadedKey == "U:B Identity.cs80xml"
++                  && browser.loadButton.getButtonText() == "RELOAD",
++              "duplicate-name LOAD marks the actual second file, not the first name match");
++        browser.loadAdjacent(1);
++        check(host->getParamValue(P_brilliance) == 0.125f
++                  && browser.loadedKey == "U:A Identity.cs80xml",
++              "NEXT wraps from the actual second file to the first duplicate");
++        browser.loadAdjacent(-1);
++        check(host->getParamValue(P_brilliance) == 0.875f
++                  && browser.loadedKey == "U:B Identity.cs80xml",
++              "PREV wraps from the actual first file to the second duplicate");
++    }
++
+ };
+ } // namespace cs80::tests

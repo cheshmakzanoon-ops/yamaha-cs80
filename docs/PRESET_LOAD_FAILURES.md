@@ -94,3 +94,6 @@ all seven changed source hashes, and reproduced all **12/12 CTests**, including
 [Independent review](experiments/preset-load-failures/independent-review.json).
 
 [Exact source/binary hashes and results](experiments/preset-load-failures/manifest.json).
+
+A subsequent [loaded-identity fix](PRESET_LOADED_IDENTITY.md) distinguishes
+same-name user files while preserving the failure/retry contract described here.

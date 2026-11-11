@@ -1182,6 +1182,12 @@ if (CS80_BUILD_PLUGIN)
     # Missing/corrupt user-file LOAD and audition, through real browser handlers.
     add_test(NAME cs80_preset_load_tests COMMAND CS80Snapshots --preset-load-tests)
     set_tests_properties(cs80_preset_load_tests PROPERTIES TIMEOUT 60)
+    # Atomic save/failure storage checks, without modal overwrite dialogs.
+    add_test(NAME cs80_preset_save_storage_tests COMMAND CS80Snapshots --preset-save-storage-tests)
+    set_tests_properties(cs80_preset_save_storage_tests PROPERTIES TIMEOUT 60)
+    # Duplicate-name file provenance through actual browser/processor workflows.
+    add_test(NAME cs80_preset_identity_tests COMMAND CS80Snapshots --preset-identity-tests)
+    set_tests_properties(cs80_preset_identity_tests PROPERTIES TIMEOUT 60)
     # Real browser components and a temporary catalogue, without a native peer.
     add_test(NAME cs80_preset_refresh_tests COMMAND CS80Snapshots --preset-refresh-tests)
     set_tests_properties(cs80_preset_refresh_tests PROPERTIES TIMEOUT 60)

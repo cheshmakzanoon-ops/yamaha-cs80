@@ -1,0 +1,30 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-preset-loaded-identity
+Test project /workspace/scratch/ee447c520988/build-preset-loaded-identity
+    Start 182: cs80_preset_revert_tests
+1/9 Test #182: cs80_preset_revert_tests .........   Passed    1.41 sec
+    Start 183: cs80_modern_recall_host_tests
+2/9 Test #183: cs80_modern_recall_host_tests ....   Passed    2.20 sec
+    Start 184: cs80_preset_file_recall_tests
+3/9 Test #184: cs80_preset_file_recall_tests ....   Passed    0.42 sec
+    Start 185: cs80_preset_load_tests
+4/9 Test #185: cs80_preset_load_tests ...........   Passed    0.09 sec
+    Start 186: cs80_preset_identity_tests
+5/9 Test #186: cs80_preset_identity_tests .......   Passed    0.14 sec
+    Start 187: cs80_preset_refresh_tests
+6/9 Test #187: cs80_preset_refresh_tests ........   Passed    0.10 sec
+    Start 188: cs80_undo_replay_gesture_tests
+7/9 Test #188: cs80_undo_replay_gesture_tests ...   Passed    0.42 sec
+    Start 194: cs80_snapshot_cli_tests
+8/9 Test #194: cs80_snapshot_cli_tests ..........   Passed    0.05 sec
+    Start 209: cs80_ui_smoke
+9/9 Test #209: cs80_ui_smoke ....................***Failed    0.06 sec
+xlsatoms:  unable to open display ":109"
+
+
+89% tests passed, 1 tests failed out of 9
+
+Total Test time (real) =   4.89 sec
+
+The following tests FAILED:
+	209 - cs80_ui_smoke (Failed)
+Errors while running CTest

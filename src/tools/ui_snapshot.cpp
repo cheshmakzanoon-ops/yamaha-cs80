@@ -31,6 +31,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/PresetLoadTests.h"
+#include "../../tests/PresetIdentityTests.h"
 #include "../../tests/PresetRefreshTests.h"
 #include "../../tests/PresetRevertTests.h"
 #include "../../tests/PresetRecallHostTests.h"
@@ -2033,6 +2034,22 @@ int main(int argc, char** argv)
         std::printf("Preset load failure/retry: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--preset-save-storage-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::PresetSaveAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); }, [](int) {}, false);
+        std::printf("Preset save storage: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--preset-identity-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::PresetIdentityAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Preset loaded identity: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--preset-refresh-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -3845,6 +3862,7 @@ int main(int argc, char** argv)
     phases.begin("preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
     cs80::tests::PresetLoadAccess::run(check);
+    cs80::tests::PresetIdentityAccess::run(check);
     cs80::tests::PresetRefreshAccess::run(check);
     cs80::tests::PresetRevertAccess::run(check);
     cs80::tests::testPluginPanic(check, flushGui);

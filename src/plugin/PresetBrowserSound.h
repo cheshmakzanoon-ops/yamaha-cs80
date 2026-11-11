@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Params.h"
+#include "PresetOrigin.h"
 #include "core/ModernLayer.h"
 #include <juce_core/juce_core.h>
 #include <array>
@@ -18,5 +19,6 @@ struct PresetBrowserSound
     std::array<std::array<float, CP_count>, 4> memories {};
     juce::String name;
     int factoryIndex = 0;
+    PresetOrigin origin; // Owned runtime provenance; never serialized.
 };
 } // namespace cs80

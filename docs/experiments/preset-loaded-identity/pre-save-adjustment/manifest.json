@@ -1,0 +1,73 @@
+{
+  "recorded_utc": "2026-11-11T20:19:53.788515+00:00",
+  "base_commit": "d5ed3ce34fd8e9ce4590cbd82ef39cff29ce7684",
+  "configuration": "Linux Release, GCC 14.2.0, pinned JUCE 8.0.11 c352e2489000ffeb9e397051377d75eef2efe641",
+  "build_directory": "/workspace/scratch/ee447c520988/build-preset-loaded-identity",
+  "sources": {
+    "CMakeLists.txt": "393fb57adafe90e74104fbf26053f471263ea2a07eb4ec1f9a2fd411f598866d",
+    "src/plugin/PluginEditor.cpp": "8405e39729c7f90a57cf2706b62ff9f363b537933ab015dd73b0a99c14f5d566",
+    "src/plugin/PluginProcessor.cpp": "3bcf2e2b7908daeead89d864a0c7c903ad9fa54e8c4827a7ff3252982f391859",
+    "src/plugin/PluginProcessor.h": "1df56c8f515aefefec08a8d614d3b9df54c88ff5e719661bebe18d2b9bbcd5e7",
+    "src/plugin/PluginProcessorLibrary.cpp": "31eda6b993666af7ad059559f37bdac6ea4ebd2de11daf5c6d1164fcb5862811",
+    "src/plugin/PluginProcessorLibrary.h": "cfd03606bbbb4a08b98e56b801676c2fa88dd56d2d6e19a072e81cd55af298f9",
+    "src/plugin/PresetBrowser.cpp": "01a9532686ad3eb4088a34d7031a703d1d0dc1a5cc6a686d67b476a668c16c60",
+    "src/plugin/PresetBrowser.h": "7d52176eb579638a66f2de67069108b2a2d2c4bb661e0a7c063e476a392cb1ee",
+    "src/plugin/PresetBrowserSound.h": "26da5535bff1723db4965b0c6b6ab3a2250405baefcf5ac3a0fe79cd2658e864",
+    "src/plugin/PresetOrigin.h": "f1021eeeaed1bfa4a1f84ffff706d0e6a28c0ab16730668b4475ec6a7199003a",
+    "src/tools/ui_snapshot.cpp": "d038f32ee92f0e6d3e020bc8976973ab987aef44dca8c464cf9881f2c985c96e",
+    "tests/AudioCallbackAllocationTests.cpp": "13de7f5b839b3e97606ebf8b238413a5138d491cded40aa86ec87f119620b4d3",
+    "tests/PresetIdentityTests.h": "b87302ce5028db7ee4ace5c3c2df16b7416070c4af5e3795c1535c8d7036f3b9",
+    "tests/PresetLoadTests.h": "61207aee18d83ec15666c556eaf35d3dc76cb4dfb6647a9be7f0a1b2ef6f960e",
+    "tests/PresetSaveTests.h": "1c2c3485b224e1f8fe12dc5b5bdc39c191292446772ce46f8ae927bc9ceedc51"
+  },
+  "binaries": {
+    "snapshot": {
+      "path": "/workspace/scratch/ee447c520988/build-preset-loaded-identity/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "sha256": "859564f0875d7f65a745653dbbf43e70d9ae55fcb7d8aebbe8a1d06b8e5a69b9"
+    },
+    "allocation": {
+      "path": "/workspace/scratch/ee447c520988/build-preset-loaded-identity/cs80_audio_callback_allocation_tests",
+      "sha256": "1e6012cb7897843a80bb63f5fc7df377d0531fb62595753c67a892d85d74de3e"
+    },
+    "display_name": {
+      "path": "/workspace/scratch/ee447c520988/build-preset-loaded-identity/cs80_preset_display_name_tests_artefacts/Release/cs80_preset_display_name_tests",
+      "sha256": "587f2713ba3c396b2ab3574bd4a0003715c5f1f097386930e239371bdf373ce4"
+    },
+    "file_values": {
+      "path": "/workspace/scratch/ee447c520988/build-preset-loaded-identity/cs80_preset_file_values_tests_artefacts/Release/cs80_preset_file_values_tests",
+      "sha256": "2ec05f50ece20ac05dc888952c6f58746db485e4d44f220293dbf5ec03fd3bd7"
+    }
+  },
+  "baseline": {
+    "checks": 120,
+    "failures": 3,
+    "exit_code": 1,
+    "test_patch": "baseline-tests.patch",
+    "test_patch_sha256": "cb7da24ffe20dda447fc1b2e6cef384312a0b48704f5b3524e9ac73d80289737",
+    "binary_sha256": "88c0bdd375d573585916b0e44bc92e8a1b47cfb4fbac4d9dd200e757b08b9ee4"
+  },
+  "final": {
+    "ctests_passed": 18,
+    "ctests_failed": 0,
+    "exit_code": 0,
+    "checks": {
+      "identity": 79,
+      "save_storage": 608,
+      "load_failure_retry": 112,
+      "revert": 1387,
+      "modern_recall": 2354,
+      "file_recall": 2784,
+      "callback_allocation": 228
+    },
+    "source_recompile_on_repeat_build": false,
+    "allocation_relinked_on_repeat_build": true,
+    "post_relink_allocation_checks": 228,
+    "post_relink_allocation_failures": 0
+  },
+  "limits": [
+    "Full native-peer UI smoke did not start: Xvfb could not create listening sockets.",
+    "No full registered-suite, sanitizer, pluginval, macOS/Windows, real-DAW or remote-CI qualification.",
+    "Origin tracks full JUCE file paths in process, not file contents, inode ownership or a persistent external rename link."
+  ],
+  "harness_correction": "Storage-only no-op pump initially lacked its int argument and failed compilation; corrected before final tests. Production code did not change."
+}

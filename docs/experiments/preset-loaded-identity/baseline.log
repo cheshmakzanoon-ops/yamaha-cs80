@@ -1,0 +1,4 @@
+FAIL: duplicate-name LOAD marks the actual second file, not the first name match
+FAIL: NEXT wraps from the actual second file to the first duplicate
+FAIL: PREV wraps from the actual first file to the second duplicate
+Preset load failure/retry: 120 checks, 3 failures
