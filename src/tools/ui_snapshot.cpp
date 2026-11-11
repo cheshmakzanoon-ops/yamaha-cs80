@@ -3299,11 +3299,20 @@ int main(int argc, char** argv)
         check(processor.getParamValue(cs80::P_kbdBrillianceHigh) > 0.2f && probe.begins == 1 && probe.ends == 1
                   && probe.unbracketedChanges == 0 && probe.malformedGestures == 0,
               "contour lever keyboard edit sends one balanced host gesture");
+        GestureProbe resetProbe;
+        parameter->addListener(&resetProbe);
+        // A real reset is a left-button event. A buttonless synthetic event is
+        // intentionally rejected by ParamKnob's pointer-admission guard.
         lever->mouseDoubleClick(juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(),
-            juce::Point<float>(5.0f, 5.0f), juce::ModifierKeys(), 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, lever, lever,
+            juce::Point<float>(5.0f, 5.0f), juce::ModifierKeys(juce::ModifierKeys::leftButtonModifier),
+            1.0f, 0.0f, 0.0f, 0.0f, 0.0f, lever, lever,
             juce::Time::getCurrentTime(), juce::Point<float>(5.0f, 5.0f), juce::Time::getCurrentTime(), 2, false));
         flushGui(30);
         check(processor.getParamValue(cs80::P_kbdBrillianceHigh) == 0.0f, "double-click re-centres a contour lever");
+        check(resetProbe.changes > 0 && resetProbe.begins == 1 && resetProbe.ends == 1
+                  && resetProbe.depth == 0 && resetProbe.unbracketedChanges == 0 && resetProbe.malformedGestures == 0,
+              "contour lever double-click reset sends one balanced host gesture");
+        parameter->removeListener(&resetProbe);
     }
     struct Toggle { const char* title; int parameter; };
     for (const auto& toggle : { Toggle { "FOOTSWITCH PLUGGED", cs80::P_footswitchPlugged },
@@ -3673,29 +3682,41 @@ int main(int argc, char** argv)
             flushGui(30);
             check(std::abs(slider->getValue() - 2456.0) < 0.02, "host automation updates miniature slider");
             memoryParameter->removeListener(&probe);
-            for (bool duringDrag : { false, true })
+            // An arrow is a complete edit only when no pointer gesture is in
+            // flight. Repeat it after the rejected case to prove recovery.
+            for (bool duringDrag : { false, true, false })
             {
                 GestureProbe keyboardProbe;
                 memoryParameter->addListener(&keyboardProbe);
                 const double beforeKey = slider->getValue();
+                const float beforeParameter = processor.getMemoryValue(0, cs80::CP_lpfCutoff);
                 if (duringDrag)
                 {
-                    // The key must join the existing drag, not start a nested
-                    // host gesture. This exercises FocusSlider's guard.
+                    // FocusSlider must leave the existing edit untouched: no
+                    // nested transaction, value change or premature drag end.
                     juce::Slider::ScopedDragNotification drag(*slider);
-                    check(slider->keyPressed(juce::KeyPress(juce::KeyPress::upKey)),
-                          "miniature slider handles arrow during drag");
+                    check(!slider->keyPressed(juce::KeyPress(juce::KeyPress::upKey)),
+                          "miniature slider rejects arrow during drag");
+                    check(keyboardProbe.begins == 1 && keyboardProbe.ends == 0 && keyboardProbe.depth == 1,
+                          "rejected miniature arrow preserves the existing open host gesture");
                 }
                 else
                     check(slider->keyPressed(juce::KeyPress(juce::KeyPress::upKey)),
                           "miniature slider handles arrow keyboard edit");
-                check(slider->getValue() > beforeKey
-                      && std::abs(processor.getMemoryValue(0, cs80::CP_lpfCutoff) - slider->getValue()) < 0.02,
-                      "actual arrow key changes miniature APVTS value");
-                check(keyboardProbe.changes > 0 && keyboardProbe.begins == 1 && keyboardProbe.ends == 1
+                if (duringDrag)
+                    check(slider->getValue() == beforeKey
+                              && processor.getMemoryValue(0, cs80::CP_lpfCutoff) == beforeParameter
+                              && keyboardProbe.changes == 0,
+                          "rejected miniature arrow leaves slider and APVTS values unchanged");
+                else
+                    check(slider->getValue() > beforeKey
+                              && std::abs(processor.getMemoryValue(0, cs80::CP_lpfCutoff) - slider->getValue()) < 0.02
+                              && keyboardProbe.changes > 0,
+                          "actual arrow key changes miniature APVTS value");
+                check(keyboardProbe.begins == 1 && keyboardProbe.ends == 1
                       && keyboardProbe.depth == 0 && keyboardProbe.unbracketedChanges == 0
                       && keyboardProbe.malformedGestures == 0,
-                      "arrow edit has one nonnested balanced host gesture");
+                      "miniature arrow admission preserves one nonnested balanced host gesture");
                 memoryParameter->removeListener(&keyboardProbe);
             }
             memoryParameter->setValueNotifyingHost(memoryParameter->convertTo0to1((float) original));
