@@ -99,4 +99,6 @@ routing helpers: no new voice fields, heap allocation, locks, audio-rate loops,
 parameter IDs, saved-state format, UI or circuit equations. No performance,
 callback-deadline, external DAW/controller, GUI, hardware-fidelity or full-native
 sanitizer qualification is claimed. Full MCM note termination, complete zone
-reset, manager/member pressure and timbre combination and live active-note range retargeting remain open.
+reset, manager/member pressure and timbre combination and live member active-note range retargeting remain open. The later
+[manager range retargeting](MPE_MANAGER_RANGE_RETARGET.md) changes eligible
+manager targets while preserving released member targets.

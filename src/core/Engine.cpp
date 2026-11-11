@@ -309,6 +309,7 @@ void Engine::reset()
     heldCount = 0;
     sustainPedals.fill(false);
     memberExpression.fill({});
+    managerBend.fill({});
     scanner.reset();
     noteIngressOrder = 0;
     unassignedCount = 0;
@@ -382,6 +383,7 @@ void Engine::inheritControllerStateFrom(const Engine& source) noexcept
 {
     mpeZones = source.mpeZones;
     memberExpression = source.memberExpression;
+    managerBend = source.managerBend;
     sustainPedals = source.sustainPedals;
     globalBend = source.globalBend;
     upperZoneBend = source.upperZoneBend;
@@ -477,6 +479,7 @@ void Engine::applyParams(const ParamValues& values)
     const int previousTuning = global.tuningMode;
     const float previousBendRange = global.pitchBendRange;
     const bool wasMpe = global.mpe;
+    const std::array<float, 2> previousManagerRanges { effectiveManagerBendRange(false), effectiveManagerBendRange(true) };
     const bool wasArp = arpWasOn;
     const int previousArpMode = global.arpMode;
     const int previousArpOctaves = global.arpOctaves;
@@ -485,7 +488,10 @@ void Engine::applyParams(const ParamValues& values)
     // Expression received under an earlier MPE mode must not become the
     // initial touch of a later note after the mode is re-enabled.
     if (wasMpe != global.mpe)
+    {
         memberExpression.fill({});
+        managerBend.fill({});
+    }
     // A selector event changes the physical load for the next interval, without
     // resetting capacitor voltage, previous source or inferred readout smoothing.
     outputCircuit.setMode(global.outputHigh ? OutputTapCircuit::Mode::high : OutputTapCircuit::Mode::low);
@@ -507,9 +513,11 @@ void Engine::applyParams(const ParamValues& values)
     // A conventional MIDI wheel remains held when its range is edited. Retarget
     // from its normalized event value, not the previous semitone bend or the
     // in-flight smoother. Reset transitions above have already cleared it.
-    // MPE ranges and mode transitions keep their separate event-driven policy.
+    // MPE managers retain separate role-bound normalized inputs.
     if (!wasMpe && !global.mpe && previousBendRange != global.pitchBendRange)
         globalBend = globalPitchWheel * global.pitchBendRange;
+    if (wasMpe && global.mpe)
+        retargetManagerBends(previousManagerRanges);
     // Circuit engine: the new settings become smoothing targets; the fields keep
     // the running values (exactly the targets until audio has been rendered).
     if (usesSourceModels(global.renderPolicy))
@@ -1808,6 +1816,32 @@ void Engine::pitchBend(int midiChannel, float value)
     applyPitchBend(midiChannel, value, false);
 }
 
+float Engine::effectiveManagerBendRange(bool upper) const noexcept
+{
+    const float range = mpeZones.masterRange(upper);
+    return range >= 0.0f ? range : global.pitchBendRange;
+}
+
+void Engine::retargetManagerBends(const std::array<float, 2>& previousRanges) noexcept
+{
+    if (!global.mpe) return;
+    for (int zone = 0; zone < 2; ++zone)
+    {
+        const bool upper = zone != 0;
+        const auto role = upper ? MpeZoneLayout::Role::upperMaster : MpeZoneLayout::Role::lowerMaster;
+        const auto& input = managerBend[(size_t) zone];
+        const float range = effectiveManagerBendRange(upper);
+        if (input.valid && mpeZones.role(upper ? 16 : 1) == role
+            && range != previousRanges[(size_t) zone])
+        {
+            // Set the target, not the dezipper or independent matrix wheel.
+            // Keeping raw input also makes zero-range recovery well-defined.
+            if (upper) upperZoneBend = input.raw * range;
+            else globalBend = input.raw * range;
+        }
+    }
+}
+
 void Engine::applyPitchBend(int midiChannel, float value, bool resetReleasedVoices)
 {
     // Ignore malformed float events before they can poison bend smoothers or
@@ -1826,13 +1860,18 @@ void Engine::applyPitchBend(int midiChannel, float value, bool resetReleasedVoic
         const auto role = mpeZones.role(midiChannel);
         if (role == MpeZoneLayout::Role::lowerMaster || (role == MpeZoneLayout::Role::none && midiChannel == 1))
         {
-            const float range = mpeZones.masterRange(false);
+            if (role == MpeZoneLayout::Role::lowerMaster)
+                managerBend[0] = { value, true };
+            // With no lower zone, channel 1 keeps its conventional own-channel
+            // fallback; inactive MCM defaults are not an active manager range.
+            const float range = role == MpeZoneLayout::Role::lowerMaster ? mpeZones.masterRange(false) : -1.0f;
             globalBend = value * (range >= 0.0f ? range : global.pitchBendRange);
             globalPitchWheel = value;
             return;
         }
         if (role == MpeZoneLayout::Role::upperMaster)
         {
+            managerBend[1] = { value, true };
             const float range = mpeZones.masterRange(true);
             upperZoneBend = value * (range >= 0.0f ? range : global.pitchBendRange);
             return;
@@ -1895,8 +1934,14 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         && (controller == 101 || controller == 100 || controller == 99 || controller == 98
             || controller == 6 || controller == 38))
     {
+        const std::array<float, 2> previousRanges { effectiveManagerBendRange(false), effectiveManagerBendRange(true) };
+        const std::array<MpeZoneLayout::Role, 2> previousRoles { mpeZones.role(1), mpeZones.role(16) };
         mpeZones.controlChange(midiChannel, controller, (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f));
         discardChangedMemberExpression();
+        for (int zone = 0; zone < 2; ++zone)
+            if (previousRoles[(size_t) zone] != mpeZones.role(zone == 0 ? 1 : 16))
+                managerBend[(size_t) zone] = {};
+        retargetManagerBends(previousRanges);
         return;
     }
     if (global.parityMode && (controller == 1 || controller == 11

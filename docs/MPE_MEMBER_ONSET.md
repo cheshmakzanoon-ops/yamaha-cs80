@@ -51,8 +51,9 @@ This is **not full MPE conformance**. The later [released-target repair](MPE_REL
 retains per-voice targets after accepted release, with explicit reset/global
 exceptions; it does not provide whole-audio isolation. Full MCM note
 termination/zone reset, manager/member pressure and timbre combination,
-live active-note range retargeting remain
-separate. No GUI, external DAW, physical controller, plugin-format host,
+live member active-note range retargeting remain
+separate. The later [manager range retargeting](MPE_MANAGER_RANGE_RETARGET.md)
+handles eligible retained manager inputs without rewriting member targets. No GUI, external DAW, physical controller, plugin-format host,
 performance, filter/memory activation or circuit-fidelity qualification is
 claimed. Same-pitch sixteen-voice Note Off ownership is addressed separately by
 the [bounded immediate release coordinator](SIXTEEN_VOICE_NOTE_RELEASE.md);

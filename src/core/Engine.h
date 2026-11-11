@@ -612,6 +612,9 @@ private:
         MpeZoneLayout::Role role = MpeZoneLayout::Role::none;
         float bend = 0.0f, pressure = 0.0f, timbre = 0.0f;
     };
+    struct ManagerBend { float raw = 0.0f; bool valid = false; };
+    float effectiveManagerBendRange(bool upper) const noexcept;
+    void retargetManagerBends(const std::array<float, 2>& previousRanges) noexcept;
     // Event/allocation time only. Raw targets belong to a member-channel role,
     // not a voice slot or the global pressure/matrix controller sources.
     MemberExpression* memberExpressionFor(int midiChannel) noexcept;
@@ -770,6 +773,7 @@ private:
     float lastPitch = 60.0f;
     MpeZoneLayout mpeZones;
     std::array<MemberExpression, 17> memberExpression {}; // Channel 0 unused.
+    std::array<ManagerBend, 2> managerBend {}; // Lower/upper normalized inputs, never inferred from semitones.
     float upperZoneBend = 0.0f;
     // KAS scan model and still-held keys without a circuit (Phase 2.2).
     kas::Scanner scanner;

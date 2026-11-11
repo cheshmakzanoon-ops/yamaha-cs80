@@ -14,7 +14,7 @@ A valid MCM now stores explicit manager/member ranges 2/48 in its addressed zone
 
 Manual/startup MPE without a received MCM retains its existing parameter-fallback behavior. Later parameter edits cannot override ranges already installed by an MCM or RPN 0. Later RPN 0, including the existing fractional Data Entry LSB support, still works. Member-channel RPN 6, NRPN/null selection and non-MCM CC38 traffic do not install defaults. MPE-off and PURE admission policies are unchanged.
 
-This intentionally changes pitch for workflows that receive an MCM while depending on non-default fallback parameters. It is not a compatibility-only optimization. Already-scaled manager bend targets are not recomputed by the MCM itself; the pitch witness sends a new bend after configuration. Existing target/active-note retargeting and full MCM note/controller reset semantics are separate work; this correction does not claim full MPE conformance.
+This intentionally changes pitch for workflows that receive an MCM while depending on non-default fallback parameters. It is not a compatibility-only optimization. At this checkpoint already-scaled manager bend targets were not recomputed by the MCM itself; its pitch witness sends a new bend after configuration. The later [manager retargeting correction](MPE_MANAGER_RANGE_RETARGET.md) rescales eligible retained manager input and repairs the disabled-lower channel 1 fallback boundary. Member target retargeting and full MCM note/controller reset semantics remain separate work; this correction does not claim full MPE conformance.
 
 ## Evidence
 
