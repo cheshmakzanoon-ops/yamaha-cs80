@@ -195,17 +195,30 @@ class VcaReferenceTests(unittest.TestCase):
         self.assertEqual(m['stimulus_bytes'],len(original))
         self.assertEqual(m['stimulus_sha256'],hashlib.sha256(original).hexdigest())
         files = {'renderer':'src/tools/vca_reference.cpp','reference':'src/reference/IG00151Reference.h',
+                 'decimal_conversion':'src/tools/DecimalConversion.h',
                  'hash_helper':'src/tools/TruthInputSha256.h','declared_core_model':'src/core/Vca.h',
                  'model_document':'docs/IG00151_VCA_MODEL.md','workflow_document':'docs/VCA_REFERENCE.md'}
         for key,path in files.items():
             self.assertEqual(m['source_sha256'][key],hashlib.sha256((ROOT/path).read_bytes()).hexdigest())
+
+    def test_decimal_portability(self):
+        tokens = ['+0.5', '-0', '1.', '-.25E+1', '5e-324', '-5e-324', '0e999999', '0e-999999']
+        self.source.write_text('sample,input,lc,ei,envelope\n' + ''.join(
+            f'{i},{v},0,0,0\n' for i, v in enumerate(tokens)))
+        p = subprocess.run(self.command(len(tokens)), capture_output=True, text=True)
+        self.assertEqual(p.returncode, 0, p.stderr)
+        rows = list(csv.DictReader(io.StringIO((self.out / 'trace.csv').read_text())))
+        for token, row in zip(tokens, rows):
+            value = float(row['input'])
+            self.assertEqual(value, float(token))
+            self.assertEqual(math.copysign(1, value), math.copysign(1, float(token)))
 
     def test_malformed_csv(self):
         good = 'sample,input,lc,ei,envelope\n0,0,1,0,0\n1,0,1,0,1\n'
         bad = [good[:-1],good+'\n',good.replace('1,0,1,0,1','2,0,1,0,1'),good.replace('0,0,1,0,0','00,0,1,0,0'),
                good.replace('sample,','index,'),good.replace('1,0,1,0,1','1,0,1,0'),good.replace('1,0,1,0,1','1,0,1,0,1,0'),
                good.replace('1,0,1,0,1','1,0,1,0,1\x00'),good.replace('0,0,1,0,0\n','')]
-        for token in ('nan','inf','-inf','0x1p0',' 0','0 ','1e9999','1e-9999','+','1e','.', '9','-9','"0"'):
+        for token in ('nan','inf','-inf','0x1p0',' 0','0 ','1e9999','1e-9999','2.4e-324','-2.4e-324','+','1e','.', '9','-9','"0"'):
             bad.append(good.replace('1,0,1,0,1',f'1,{token},1,0,1'))
         for column in (2,3,4):
             parts=['1','0','1','0','1']; parts[column]='9'

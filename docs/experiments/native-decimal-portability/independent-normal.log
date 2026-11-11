@@ -1,0 +1,127 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-native-decimal-check/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-native-decimal-check/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-native-decimal-check
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 149
+    Start 149: cs80_truth_render_tests
+
+149: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/native-dependency-check/tests/test_truth_render.py" "--renderer" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_truth_render"
+149: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+149: Test timeout computed to be: 120
+149: ................
+149: ----------------------------------------------------------------------
+149: Ran 16 tests in 1.151s
+149: 
+149: OK
+1/9 Test #149: cs80_truth_render_tests ...................   Passed    1.24 sec
+test 154
+    Start 154: cs80_vca_reference_tests
+
+154: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/native-dependency-check/tests/test_vca_reference.py" "--renderer" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_vca_reference"
+154: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+154: Test timeout computed to be: 120
+154: ............
+154: ----------------------------------------------------------------------
+154: Ran 12 tests in 0.254s
+154: 
+154: OK
+2/9 Test #154: cs80_vca_reference_tests ..................   Passed    0.33 sec
+test 155
+    Start 155: cs80_decimal_conversion_tests
+
+155: Test command: /workspace/scratch/ee447c520988/build-native-decimal-check/cs80_decimal_conversion_tests
+155: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+155: Test timeout computed to be: 30
+155: Decimal conversion: 18301 checks, 0 failures
+3/9 Test #155: cs80_decimal_conversion_tests .............   Passed    0.00 sec
+test 156
+    Start 156: cs80_decimal_conversion_locale_tests
+
+156: Test command: /workspace/scratch/ee447c520988/build-native-decimal-check/cs80_decimal_conversion_locale_tests
+156: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+156: Test timeout computed to be: 30
+156: Decimal conversion: 18301 checks, 0 failures
+4/9 Test #156: cs80_decimal_conversion_locale_tests ......   Passed    0.01 sec
+test 157
+    Start 157: cs80_float_wav_tests
+
+157: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/native-dependency-check/tests/test_float_wav.py" "--filter" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_vca_reference" "--fixture" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_float_wav_fixture"
+157: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+157: Test timeout computed to be: 120
+157: ....
+157: ----------------------------------------------------------------------
+157: Ran 4 tests in 0.138s
+157: 
+157: OK
+5/9 Test #157: cs80_float_wav_tests ......................   Passed    0.21 sec
+test 158
+    Start 158: cs80_reference_chain_tests
+
+158: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/native-dependency-check/tests/test_reference_chain.py" "--filter" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_vca_reference"
+158: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+158: Test timeout computed to be: 120
+158: .render_reference_chain: Stage timeout after 0.02 seconds
+158: ............render_reference_chain: injected publication failure
+158: ...
+158: ----------------------------------------------------------------------
+158: Ran 16 tests in 7.336s
+158: 
+158: OK
+6/9 Test #158: cs80_reference_chain_tests ................   Passed    7.45 sec
+test 159
+    Start 159: cs80_reference_chain_clock_tests
+
+159: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/native-dependency-check/tests/test_reference_chain_clock.py" "--filter" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_vca_reference"
+159: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+159: Test timeout computed to be: 120
+159: .................
+159: ----------------------------------------------------------------------
+159: Ran 17 tests in 6.311s
+159: 
+159: OK
+7/9 Test #159: cs80_reference_chain_clock_tests ..........   Passed    6.47 sec
+test 160
+    Start 160: cs80_amplitude_envelope_reference_tests
+
+160: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/native-dependency-check/tests/test_amplitude_envelope_reference.py" "--filter" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_vca_reference"
+160: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+160: Test timeout computed to be: 120
+160: ..................
+160: ----------------------------------------------------------------------
+160: Ran 18 tests in 3.882s
+160: 
+160: OK
+8/9 Test #160: cs80_amplitude_envelope_reference_tests ...   Passed    4.00 sec
+test 161
+    Start 161: cs80_filter_envelope_reference_tests
+
+161: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/native-dependency-check/tests/test_filter_envelope_reference.py" "--filter" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-native-decimal-check/cs80_vca_reference"
+161: Working Directory: /workspace/scratch/ee447c520988/build-native-decimal-check
+161: Test timeout computed to be: 120
+161: ..................
+161: ----------------------------------------------------------------------
+161: Ran 18 tests in 4.851s
+161: 
+161: OK
+9/9 Test #161: cs80_filter_envelope_reference_tests ......   Passed    4.98 sec
+
+The following tests passed:
+	cs80_truth_render_tests
+	cs80_vca_reference_tests
+	cs80_decimal_conversion_tests
+	cs80_decimal_conversion_locale_tests
+	cs80_float_wav_tests
+	cs80_reference_chain_tests
+	cs80_reference_chain_clock_tests
+	cs80_amplitude_envelope_reference_tests
+	cs80_filter_envelope_reference_tests
+
+100% tests passed, 0 tests failed out of 9
+
+Total Test time (real) =  24.71 sec

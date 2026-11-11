@@ -59,7 +59,7 @@ class RenderTests(unittest.TestCase):
         self.assertEqual(len(rows), 241)
         self.assertEqual(m['export_substeps'], 32)
         source = Path(__file__).resolve().parent.parent
-        paths = {'wav_helper': 'src/tools/FloatWav.h', 'renderer': 'src/tools/truth_render.cpp', 'input_sha256_helper': 'src/tools/TruthInputSha256.h', 'network': 'src/reference/IG00156Network.h',
+        paths = {'wav_helper': 'src/tools/FloatWav.h', 'decimal_conversion': 'src/tools/DecimalConversion.h', 'renderer': 'src/tools/truth_render.cpp', 'input_sha256_helper': 'src/tools/TruthInputSha256.h', 'network': 'src/reference/IG00156Network.h',
                  'linear': 'src/reference/IG00156Linear.h', 'control': 'src/core/Ig00156Filter.h',
                  'model_document': 'docs/IG00156_NODAL_MODEL.md'}
         self.assertEqual(m['source_sha256'], {k: hashlib.sha256((source / p).read_bytes()).hexdigest()
@@ -182,6 +182,16 @@ class RenderTests(unittest.TestCase):
             self.assertEqual(m['rate_hz'], rate)
             self.assertEqual(m['actual_duration_s'], 1/rate)
 
+    def test_sample_decimal_portability(self):
+        tokens = ['+0.5', '-0', '1.', '-.25E+1', '5e-324', '-5e-324', '0e999999', '0e-999999']
+        path = self.root / 'decimal.csv'
+        path.write_text('sample,value\n' + ''.join(f'{i},{v}\n' for i, v in enumerate(tokens)))
+        _, rows = self.read(self.run_tool('decimal', '--input', path, '--input-rate', 48000,
+                          '--input-samples', len(tokens), '--ota-level', 0, '--substeps', 128))
+        for token, row in zip(tokens, rows):
+            self.assertEqual(row['input'], float(token))
+            self.assertEqual(math.copysign(1, row['input']), math.copysign(1, float(token)))
+
     def test_sample_invalid_inputs_and_options(self):
         path = self.write_input('bad.csv', [0, .1, -.1])
         args = ['--input', path, '--input-rate', 48000, '--input-samples', 3]
@@ -189,7 +199,7 @@ class RenderTests(unittest.TestCase):
                      b'sample,value\n0,0\n1,.1\n', b'sample,value\n0,0\n1,.1\n2,-.1',
                      b'sample,value\n0,0\n1,.1\n2,-.1\n3,0\n',
                      b'sample,value\n0,0\n1,.1\n2,-.1\n\n']
-        for value in ['nan', 'inf', '-inf', '1e999', '1e-999', '8.01', '-8.01', '0x1p0',
+        for value in ['nan', 'inf', '-inf', '1e999', '1e-999', '2.4e-324', '-2.4e-324', '8.01', '-8.01', '0x1p0',
                       '', '1,2', ' 1', '1 ', '.', '+', '1e+', '1x', '\x00']:
             malformed.append(f'sample,value\n0,0\n1,{value}\n2,0\n'.encode())
         for index in ['-1', '+1', '01', '2', '99999999999999999999999999']:

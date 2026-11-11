@@ -3,6 +3,7 @@
 #include "core/Vca.h"
 #include "tools/TruthInputSha256.h"
 #include "tools/FloatWav.h"
+#include "tools/DecimalConversion.h"
 #include <array>
 #include <charconv>
 #include <filesystem>
@@ -34,8 +35,7 @@ double decimal(std::string_view s) {
     require(i==s.size(),"Invalid decimal");
     if (s.front()=='+') s.remove_prefix(1);
     double result=0;
-    auto parsed=std::from_chars(s.data(),s.data()+s.size(),result,std::chars_format::general);
-    require(parsed.ec==std::errc{} && parsed.ptr==s.data()+s.size() && std::isfinite(result),"Unrepresentable decimal");
+    require(cs80::tools::convertValidatedDecimal(s,result),"Unrepresentable decimal");
     return result;
 }
 int integer(std::string_view s, int low, int high) {
@@ -198,6 +198,7 @@ int main(int argc,char** argv) {
                 <<"  \"stimulus_bytes\": "<<bytes.size()<<", \"stimulus_sha256\": \""<<cs80::tools::inputSha256(bytes)<<"\",\n"
                 <<"  \"source_sha256\": {\"renderer\": \""<<VCA_RENDER_SHA<<"\", \"reference\": \""<<VCA_REFERENCE_SHA
                 <<"\", \"wav_helper\": \""<<WAV_HELPER_SHA
+                <<"\", \"decimal_conversion\": \""<<DECIMAL_CONVERSION_SHA
                 <<"\", \"hash_helper\": \""<<VCA_HASH_SHA<<"\", \"declared_core_model\": \""<<VCA_CORE_SHA
                 <<"\", \"model_document\": \""<<VCA_MODEL_SHA<<"\", \"workflow_document\": \""<<VCA_DOCUMENT_SHA<<"\"}";
         if(wav) {

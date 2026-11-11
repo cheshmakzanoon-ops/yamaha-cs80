@@ -1,0 +1,46 @@
+{
+  "baseline_source_sha": "321eb7052f5bd737693d7c55aafb43dd792610e4",
+  "original_failures": [
+    {
+      "platform": "macOS arm64",
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/43100308340/job/130789484870",
+      "step": "Build",
+      "failure": "truth_render.cpp:66:19: no matching function for call to 'from_chars'",
+      "libxml2_archive_built": true
+    },
+    {
+      "platform": "macOS Intel",
+      "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/43100308340/job/130789484458",
+      "step": "Build",
+      "failure": "truth_render.cpp:66:19: no matching function for call to 'from_chars'",
+      "libxml2_archive_built": true
+    }
+  ],
+  "independent_review": "independent-review.json",
+  "normal_ctest": {
+    "passed": 9,
+    "total": 9,
+    "exit": 0,
+    "seconds": 24.71,
+    "log": "independent-normal.log"
+  },
+  "forced_fallback_ctest": {
+    "passed": 9,
+    "total": 9,
+    "exit": 0,
+    "seconds": 24.29,
+    "log": "independent-fallback.log"
+  },
+  "helper_checks_per_executable": 18301,
+  "differential_decimal_cases": 17940,
+  "compilers": [
+    "GCC 14.2.0 with libstdc++",
+    "Clang 19.1.7 with libstdc++"
+  ],
+  "sanitizer": "ASan and UBSan forced-fallback helper passed with leak detection disabled; initial LeakSanitizer environment ptrace error retained",
+  "limits": [
+    "Local Linux testing does not establish corrected native Darwin or Windows success.",
+    "No full errno or floating-point exception environment preservation claim.",
+    "The helper expects the existing caller grammar to validate the token."
+  ]
+}

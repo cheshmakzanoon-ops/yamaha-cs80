@@ -3,8 +3,8 @@
 #include "core/Ig00156Filter.h"
 #include "tools/TruthInputSha256.h"
 #include "tools/FloatWav.h"
+#include "tools/DecimalConversion.h"
 #include <array>
-#include <charconv>
 #include <cmath>
 #include <stdexcept>
 #include <string_view>
@@ -63,8 +63,7 @@ double sampleNumber(std::string_view s, double maximum = 8) {
     require(i == s.size(), "Invalid decimal sample");
     if (s.front() == '+') s.remove_prefix(1);
     double v = 0;
-    auto result = std::from_chars(s.data(), s.data()+s.size(), v, std::chars_format::general);
-    require(result.ec == std::errc{} && result.ptr == s.data()+s.size() && std::isfinite(v)
+    require(cs80::tools::convertValidatedDecimal(s, v)
             && std::abs(v) <= maximum, "Decimal must be representable and within declared bounds");
     return v;
 }
@@ -459,6 +458,7 @@ void render(const Options& o) {
         }
         json << ",\n\"source_sha256\":{\"renderer\":\"" << TRUTH_RENDER_SHA
              << "\",\"wav_helper\":\"" << WAV_HELPER_SHA
+             << "\",\"decimal_conversion\":\"" << DECIMAL_CONVERSION_SHA
              << "\",\"input_sha256_helper\":\"" << TRUTH_INPUT_SHA
              << "\",\"network\":\"" << TRUTH_NETWORK_SHA << "\",\"linear\":\"" << TRUTH_LINEAR_SHA
              << "\",\"control\":\"" << TRUTH_CONTROL_SHA << "\",\"model_document\":\"" << TRUTH_DOCUMENT_SHA << "\"}"

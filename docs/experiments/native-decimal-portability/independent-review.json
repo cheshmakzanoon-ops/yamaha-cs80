@@ -1,0 +1,26 @@
+{
+  "sources": {
+    "CMakeLists.txt": "5e1aa9713bbd60fe1e170360a37e1646f1c795febb4689f34d452b3a7e8fc86e",
+    "src/tools/DecimalConversion.h": "aef769691efaae998e64ce46c01c1d2c5673b9a17c7740965faa646a3da48f0f",
+    "src/tools/truth_render.cpp": "bbafb300486f7453e2aad8c37f1f2e82f89ca6cb65afa72769655669f482b49f",
+    "src/tools/vca_reference.cpp": "450b2fd76db2feb0276586c69b619afbd3bced85952d2781e1f140750cca238e",
+    "tests/DecimalConversionTests.cpp": "693e167b0e8d3139491d84625754d82fff5e93bfed96cbb96b366a492dc6a473",
+    "tests/test_truth_render.py": "4506c62089fb278cffc001e5a0858158a7e2d700f32d2ef35962d8fbf0ce7d47",
+    "tests/test_vca_reference.py": "a7e7cdfcee124658de398d6e92b83101a392631e7dd7b8bd0f710b5e12e14562",
+    "docs/NATIVE_DECIMAL_PORTABILITY.md": "b9bd85c851b432a0b5bf144ffd32076acd8f48439fd54cfd857c7e29d9c24631"
+  },
+  "binaries": {
+    "build-native-decimal-check/cs80_truth_render": "a2f124f19a8db0ce52df4a35b89a31bf9d77fba10712c377c17e370c1fa82be8",
+    "build-native-decimal-check/cs80_vca_reference": "ce86b3b1105520757b8bbf5f77fc41b4a90730d9ef603b206585c7122287c6d8",
+    "build-native-decimal-check/cs80_decimal_conversion_tests": "87d732194c513576b6af34e7b80c70e92cc98be0386408b9a17c49eac308f3d8",
+    "build-native-decimal-check/cs80_decimal_conversion_locale_tests": "b2474937c282db6ab99da16a8d36bf1f57740ee838dde4250c99a2306e8c8ef4",
+    "build-native-decimal-locale/cs80_truth_render": "c111c7ddf17ea1da6ebcc46016f583c6a586b82b7ee3a479f5b69389571c6428",
+    "build-native-decimal-locale/cs80_vca_reference": "c4bf24be621bcd63e81b61d9ed8e1ce1ec0479b68d622acd6b36f976946a631e",
+    "build-native-decimal-locale/cs80_decimal_conversion_tests": "b2474937c282db6ab99da16a8d36bf1f57740ee838dde4250c99a2306e8c8ef4",
+    "build-native-decimal-locale/cs80_decimal_conversion_locale_tests": "b2474937c282db6ab99da16a8d36bf1f57740ee838dde4250c99a2306e8c8ef4"
+  },
+  "results": {
+    "normal": "9/9, exit0, 24.71s",
+    "forced_fallback": "9/9, exit0, 24.29s"
+  }
+}

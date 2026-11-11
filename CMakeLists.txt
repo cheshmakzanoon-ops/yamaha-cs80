@@ -1500,13 +1500,29 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_vca_reference_tests PROPERTIES TIMEOUT 120)
 endif()
 
-# Shared offline WAV artifact helper provenance.
+# Shared offline artifact helper provenance.
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/tools/FloatWav.h")
 file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/tools/FloatWav.h" WAV_HELPER_SHA)
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/tools/DecimalConversion.h")
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/tools/DecimalConversion.h" DECIMAL_CONVERSION_SHA)
 foreach(target IN ITEMS cs80_truth_render cs80_vca_reference)
-    target_compile_definitions(${target} PRIVATE WAV_HELPER_SHA="${WAV_HELPER_SHA}")
+    target_compile_definitions(${target} PRIVATE WAV_HELPER_SHA="${WAV_HELPER_SHA}"
+        DECIMAL_CONVERSION_SHA="${DECIMAL_CONVERSION_SHA}")
 endforeach()
 if (CS80_BUILD_TESTS)
+    add_executable(cs80_decimal_conversion_tests tests/DecimalConversionTests.cpp)
+    target_include_directories(cs80_decimal_conversion_tests PRIVATE src)
+    add_test(NAME cs80_decimal_conversion_tests COMMAND cs80_decimal_conversion_tests)
+    set_tests_properties(cs80_decimal_conversion_tests PROPERTIES TIMEOUT 30)
+    if (UNIX)
+        # Exercise the exact Apple fallback on Linux too, without requiring an
+        # unavailable floating-point from_chars overload in the native tests.
+        add_executable(cs80_decimal_conversion_locale_tests tests/DecimalConversionTests.cpp)
+        target_include_directories(cs80_decimal_conversion_locale_tests PRIVATE src)
+        target_compile_definitions(cs80_decimal_conversion_locale_tests PRIVATE CS80_FORCE_C_LOCALE_DECIMAL=1)
+        add_test(NAME cs80_decimal_conversion_locale_tests COMMAND cs80_decimal_conversion_locale_tests)
+        set_tests_properties(cs80_decimal_conversion_locale_tests PROPERTIES TIMEOUT 30)
+    endif()
     add_executable(cs80_float_wav_fixture tests/float_wav_fixture.cpp)
     target_include_directories(cs80_float_wav_fixture PRIVATE src)
     add_test(NAME cs80_float_wav_tests
