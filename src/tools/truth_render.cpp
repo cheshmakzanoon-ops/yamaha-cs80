@@ -1,6 +1,12 @@
 // Offline conditional filter reference only, never measured hardware truth.
 #include "reference/IG00156Network.h"
 #include "core/Ig00156Filter.h"
+#include "tools/TruthInputSha256.h"
+#include <array>
+#include <charconv>
+#include <cmath>
+#include <stdexcept>
+#include <string_view>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -17,7 +23,10 @@ namespace {
 constexpr double pi = std::numbers::pi;
 void require(bool ok, const std::string& message) { if (!ok) throw std::runtime_error(message); }
 struct Options {
-    fs::path out;
+    fs::path out, inputPath;
+    std::string inputBytes, inputHash;
+    std::vector<double> samples;
+    int inputCount = 0;
     std::string stimulus = "sine", gain = "unity";
     double rate = 48000, duration = .1, frequency = 440, amplitude = 1;
     double hp = 200, lp = 2000, q = 1, ota = 2.5, tolerance = .001;
@@ -27,6 +36,66 @@ double number(const std::string& s) {
     std::size_t end = 0; double v = std::stod(s, &end);
     require(end == s.size() && std::isfinite(v), "Expected a finite number: " + s); return v;
 }
+// Strict ASCII decimal grammar, independent of locale; no whitespace/hex/special values.
+double sampleNumber(std::string_view s) {
+    std::size_t i = 0;
+    if (i < s.size() && (s[i] == '+' || s[i] == '-')) ++i;
+    auto digit = [&](std::size_t j) { return j < s.size() && s[j] >= '0' && s[j] <= '9'; };
+    std::size_t digits = 0;
+    while (digit(i)) { ++i; ++digits; }
+    if (i < s.size() && s[i] == '.') { ++i; while (digit(i)) { ++i; ++digits; } }
+    require(digits > 0, "Invalid decimal sample");
+    if (i < s.size() && (s[i] == 'e' || s[i] == 'E')) {
+        ++i;
+        if (i < s.size() && (s[i] == '+' || s[i] == '-')) ++i;
+        auto start = i;
+        while (digit(i)) ++i;
+        require(i > start, "Invalid sample exponent");
+    }
+    require(i == s.size(), "Invalid decimal sample");
+    if (s.front() == '+') s.remove_prefix(1);
+    double v = 0;
+    auto result = std::from_chars(s.data(), s.data()+s.size(), v, std::chars_format::general);
+    require(result.ec == std::errc{} && result.ptr == s.data()+s.size() && std::isfinite(v)
+            && std::abs(v) <= 8, "Sample must be representable and within -8..8 model volts");
+    return v;
+}
+void loadInput(Options& o) {
+    constexpr std::size_t maxBytes = 64 * 1024 * 1024;
+    require(fs::is_regular_file(o.inputPath), "Input must be a regular file");
+    require(fs::file_size(o.inputPath) <= maxBytes, "Input exceeds 64 MiB");
+    std::ifstream file(o.inputPath, std::ios::binary);
+    require(bool(file), "Cannot open input");
+    // Bound actual bytes read, even when the file grows after the size check.
+    std::array<char, 8192> buffer{};
+    while (file) {
+        file.read(buffer.data(), buffer.size());
+        auto n = static_cast<std::size_t>(file.gcount());
+        require(o.inputBytes.size() + n <= maxBytes, "Input exceeds 64 MiB");
+        o.inputBytes.append(buffer.data(), n);
+    }
+    require(file.eof() && !file.bad(), "Input read failed");
+    std::size_t pos = 0;
+    auto line = [&]() {
+        auto end = o.inputBytes.find('\n', pos);
+        require(end != std::string::npos && end-pos <= 128, "Missing newline or input line exceeds 128 bytes");
+        std::string_view value(o.inputBytes.data()+pos, end-pos);
+        pos = end+1;
+        if (!value.empty() && value.back() == '\r') value.remove_suffix(1);
+        return value;
+    };
+    require(line() == "sample,value", "Expected CSV header sample,value");
+    o.samples.reserve(static_cast<std::size_t>(o.inputCount));
+    for (int i=0; i<o.inputCount; ++i) {
+        auto row = line();
+        auto comma = row.find(',');
+        require(comma != std::string_view::npos && row.substr(0,comma) == std::to_string(i),
+                "Expected contiguous sample index");
+        o.samples.push_back(sampleNumber(row.substr(comma+1)));
+    }
+    require(pos == o.inputBytes.size(), "Extra input rows or bytes");
+    o.inputHash = cs80::tools::inputSha256(o.inputBytes);
+}
 Options parse(int argc, char** argv) {
     Options o; std::map<std::string, bool> seen;
     for (int i = 1; i < argc; i += 2) {
@@ -34,6 +103,13 @@ Options parse(int argc, char** argv) {
         require(i + 1 < argc && !seen[k], "Missing value or duplicate option: " + k); seen[k] = true;
         std::string v = argv[i + 1];
         if (k == "--out") o.out = v;
+        else if (k == "--input") { require(!v.empty(), "Input path must not be empty"); o.inputPath = v; }
+        else if (k == "--input-rate") o.rate = number(v);
+        else if (k == "--input-samples") {
+            double n = number(v);
+            require(n >= 2 && n <= 3840001 && n == std::floor(n), "input-samples must be integer 2..3840001");
+            o.inputCount = static_cast<int>(n);
+        }
         else if (k == "--stimulus") o.stimulus = v;
         else if (k == "--gain") o.gain = v;
         else if (k == "--rate") o.rate = number(v);
@@ -49,17 +125,27 @@ Options parse(int argc, char** argv) {
         else throw std::runtime_error("Unknown option: " + k);
     }
     require(!o.out.empty(), "--out NEW_DIR is required");
-    require(o.stimulus == "sine" || o.stimulus == "impulse", "stimulus must be sine or impulse");
+    if (seen["--input"] || seen["--input-rate"] || seen["--input-samples"]) {
+        require(seen["--input"] && seen["--input-rate"] && seen["--input-samples"], "Input requires --input, --input-rate and --input-samples");
+        for (const auto* k : {"--stimulus", "--frequency", "--amplitude", "--duration", "--rate"})
+            require(!seen[k], std::string("Input conflicts with ") + k);
+        o.stimulus = "samples";
+    }
+    require(o.stimulus == "samples" || o.stimulus == "sine" || o.stimulus == "impulse", "stimulus must be sine or impulse (samples selected by --input)");
+    require(o.stimulus != "samples" || !o.inputPath.empty(), "Samples require --input");
     require(o.gain == "unity" || o.gain == "physical", "gain must be unity or physical");
     require(o.rate >= 8000 && o.rate <= 384000 && o.rate == std::floor(o.rate), "rate must be integer 8000..384000");
-    require(o.duration > 0 && o.duration <= 10 && o.duration * o.rate >= 1, "duration must yield 1 sample through 10 seconds");
+    if (!o.inputPath.empty()) o.duration = (o.inputCount-1) / o.rate;
+    require(o.inputPath.empty() ? (o.duration > 0 && o.duration <= 10 && o.duration * o.rate >= 1)
+                                : (o.inputCount-1 <= 10 * o.rate), "duration must yield 1 sample through 10 seconds");
     require(o.frequency > 0 && o.frequency < o.rate / 2, "frequency must be below Nyquist and positive");
     require(o.amplitude >= 0 && o.amplitude <= 8, "amplitude must be 0..8");
     require(o.hp >= 25 && o.hp <= 20000 && o.lp >= 25 && o.lp <= 20000, "cutoffs must be 25..20000 Hz (total)");
     require(o.q >= .35 && o.q <= 9 && o.ota >= 0 && o.ota <= 10, "q must be .35..9 and ota-level 0..10");
     require(o.tolerance > 0 && o.tolerance <= .1, "tolerance must be >0 and <=.1");
-    require(std::floor(o.duration * o.rate) * o.steps * 3 <= 10000000, "Render exceeds 10 million integration steps");
+    require((o.inputPath.empty() ? std::floor(o.duration * o.rate) : o.inputCount-1) * o.steps * 3 <= 10000000, "Render exceeds 10 million integration steps");
     require(!fs::exists(o.out) && !fs::is_symlink(o.out), "Output must be a new directory");
+    if (!o.inputPath.empty()) loadInput(o);
     return o;
 }
 ref::StageNetwork network(const cs80::Ig00156Network& n) {
@@ -86,27 +172,34 @@ void render(const Options& o) {
     auto hc = control(cs80::kIg00156HighPassNetwork, o.hp, o), lc = control(cs80::kIg00156LowPassNetwork, o.lp, o);
     double hg = o.gain == "unity" ? 1 / ref::passbandGain(hn) : 1;
     double lg = o.gain == "unity" ? 1 / ref::passbandGain(ln) : 1;
-    const int count = static_cast<int>(std::floor(o.duration * o.rate));
+    const int count = o.samples.empty() ? static_cast<int>(std::floor(o.duration * o.rate)) : o.inputCount-1;
     int maxIterations = 0; double maxResidualRatio = 0;
     auto run = [&](int steps) {
         ref::NonlinearPair pair(hn, hc, ln, lc, hg, lg); std::vector<Row> rows;
         rows.reserve(static_cast<std::size_t>(count) + 1);
         auto input = [&](double t) { return o.amplitude * std::sin(2 * pi * o.frequency * t); };
-        rows.push_back({o.stimulus == "impulse" ? o.amplitude : 0., 0, 0, pair.state()});
+        rows.push_back({o.samples.empty() ? (o.stimulus == "impulse" ? o.amplitude : 0.) : o.samples.front(), 0, 0, pair.state()});
         for (int i = 0; i < count; ++i) {
             for (int j = 0; j < steps; ++j) {
-                double t0 = (i + double(j) / steps) / o.rate, t1 = (i + double(j + 1) / steps) / o.rate;
-                // Rectangular pulse, width one output interval. At its jump,
-                // integrate each side separately; do not smear the discontinuity.
-                double u0 = o.stimulus == "impulse" ? (i == 0 ? o.amplitude : 0.) : input(t0);
-                double u1 = o.stimulus == "impulse" ? u0 : input(t1);
+                double u0, u1;
+                if (!o.samples.empty()) {
+                    // Evaluate within the same exact source interval at both refinements.
+                    u0 = std::lerp(o.samples[i], o.samples[i+1], double(j) / steps);
+                    u1 = std::lerp(o.samples[i], o.samples[i+1], double(j+1) / steps);
+                } else {
+                    double t0 = (i + double(j) / steps) / o.rate, t1 = (i + double(j + 1) / steps) / o.rate;
+                    // Rectangular pulse, width one output interval. At its jump,
+                    // integrate each side separately; do not smear the discontinuity.
+                    u0 = o.stimulus == "impulse" ? (i == 0 ? o.amplitude : 0.) : input(t0);
+                    u1 = o.stimulus == "impulse" ? u0 : input(t1);
+                }
                 auto status = pair.stepChecked(u0, u1, 1 / (o.rate * steps));
                 require(status.finite && status.converged, "Newton solve not certified; increase --substeps");
                 maxIterations = std::max(maxIterations, status.iterations);
                 maxResidualRatio = std::max(maxResidualRatio, status.residual / status.scale);
                 require(std::isfinite(pair.hp()) && std::isfinite(pair.lp()), "Nonfinite output");
             }
-            rows.push_back({o.stimulus == "impulse" ? 0. : input((i + 1) / o.rate), pair.hp(), pair.lp(), pair.state()});
+            rows.push_back({o.samples.empty() ? (o.stimulus == "impulse" ? 0. : input((i + 1) / o.rate)) : o.samples[i+1], pair.hp(), pair.lp(), pair.state()});
         }
         return rows;
     };
@@ -140,13 +233,25 @@ void render(const Options& o) {
              << "\"model_document\":\"docs/IG00156_NODAL_MODEL.md\",\n"
              << "\"assumptions\":\"Ideal amplifiers; inferred 75k/150k source resistances; unilateral linear Q; inferred cutoff compensation; declared gm*L*tanh(v/L) integrator OTA (L=0 selects linear); no prewarp; zero initial state\",\n"
              << "\"solver\":\"double precision implicit trapezoid, Newton max 50 evaluations, relative residual 1e-14\",\n"
-             << "\"stimulus\":\"" << o.stimulus << "\",\"impulse_definition\":\"rectangular amplitude pulse on [0,1/rate); not unit-area Dirac\",\n"
+             << "\"stimulus\":\"" << o.stimulus << "\",\"impulse_definition\":"
+             << (o.samples.empty() ? "\"rectangular amplitude pulse on [0,1/rate); not unit-area Dirac\"" : "null") << ",\n"
              << "\"rate_hz\":" << o.rate << ",\"requested_duration_s\":" << o.duration << ",\"intervals\":" << count
-             << ",\"actual_duration_s\":" << count / o.rate << ",\"frequency_hz\":" << o.frequency
-             << ",\"amplitude\":" << o.amplitude << ",\"hp_total_hz\":" << o.hp << ",\"lp_total_hz\":" << o.lp
+             << ",\"actual_duration_s\":" << count / o.rate << ",\"frequency_hz\":";
+        if (o.samples.empty()) json << o.frequency; else json << "null";
+        json << ",\"amplitude\":";
+        if (o.samples.empty()) json << o.amplitude; else json << "null";
+        json << ",\"hp_total_hz\":" << o.hp << ",\"lp_total_hz\":" << o.lp
              << ",\"low_frequency_q\":" << o.q << ",\"gain_mode\":\"" << o.gain << "\",\n\"hp\":";
         stageJson(json, hn, hc, hg); json << ",\n\"lp\":"; stageJson(json, ln, lc, lg);
+        if (!o.samples.empty()) {
+            json << ",\n\"input\":{\"file\":\"stimulus.csv\",\"sha256\":\"" << o.inputHash
+                 << "\",\"bytes\":" << o.inputBytes.size() << ",\"sample_count\":" << o.inputCount
+                 << ",\"rate_hz\":" << o.rate
+                 << ",\"units\":\"declared model input volts; not calibrated hardware volts\""
+                 << ",\"interpolation\":\"piecewise linear endpoints; no resampling or extrapolation\"}";
+        }
         json << ",\n\"source_sha256\":{\"renderer\":\"" << TRUTH_RENDER_SHA
+             << "\",\"input_sha256_helper\":\"" << TRUTH_INPUT_SHA
              << "\",\"network\":\"" << TRUTH_NETWORK_SHA << "\",\"linear\":\"" << TRUTH_LINEAR_SHA
              << "\",\"control\":\"" << TRUTH_CONTROL_SHA << "\",\"model_document\":\"" << TRUTH_DOCUMENT_SHA << "\"}"
              << ",\n\"export_substeps\":" << 2 * o.steps << ",\"comparison_substeps\":" << o.steps
@@ -154,12 +259,19 @@ void render(const Options& o) {
              << ",\"max_relative_residual\":" << maxResidualRatio << ",\"time_refinement_relative_max\":" << error
              << ",\"time_refinement_tolerance\":" << o.tolerance
              << ",\"refinement_definition\":\"max absolute difference across all states and HP at output times divided by fine-run global peak; estimate, not rigorous error bound\"\n}\n";
+        if (!o.samples.empty()) {
+            std::ofstream stimulus(o.out / "stimulus.csv", std::ios::binary);
+            stimulus.exceptions(std::ios::failbit | std::ios::badbit);
+            stimulus.write(o.inputBytes.data(), static_cast<std::streamsize>(o.inputBytes.size()));
+            stimulus.close();
+        }
         csv.close(); json.close();
     } catch (...) {
         // Remove only this run's files. Preserve unrelated concurrent additions.
         std::error_code ignored;
         fs::remove(o.out / "trace.csv", ignored);
         fs::remove(o.out / "manifest.json", ignored);
+        if (!o.samples.empty()) fs::remove(o.out / "stimulus.csv", ignored);
         fs::remove(o.out, ignored); // succeeds only if still empty
         throw;
     }
@@ -169,6 +281,7 @@ void render(const Options& o) {
 int main(int argc, char** argv) {
     if (argc == 2 && std::string(argv[1]) == "--help") {
         std::cout << "cs80_truth_render --out NEW_DIR [--stimulus sine|impulse] [--rate 48000] [--duration .1]\n"
+                     "Or: --out NEW_DIR --input CSV --input-rate RATE --input-samples N (N endpoint values, N-1 intervals)\n"
                      "[--frequency 440] [--amplitude 1] [--hp-hz 200] [--lp-hz 2000] [--q 1]\n"
                      "[--ota-level 2.5 (0=linear)] [--gain unity|physical] [--substeps 16] [--tolerance .001]\n"
                      "Offline conditional filter only; not whole-instrument or measured hardware truth.\n"; return 0;
