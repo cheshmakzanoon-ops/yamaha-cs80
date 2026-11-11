@@ -3658,9 +3658,8 @@ void PresetBrowser::loadEntry(int entryIndex)
         onPresetLoaded();
 }
 
-// Opening core parameters, hardware selectors and all MEMORY controls. This
-// restores unsaved parameter edits, not the session's modulation shapes/routes
-// or unrelated setup, tuning, MIDI and UI state.
+// Opening core parameters, hardware selectors, MEMORY and modern shapes/routes.
+// Value-owned sound data only; unrelated setup, tuning, MIDI and UI stay live.
 void PresetBrowser::captureOpening()
 {
     openingSound = processor.capturePresetBrowserSound();
@@ -3689,7 +3688,7 @@ bool PresetBrowser::canRevert() const
             if (Cs80AudioProcessor::isMemoryControl(local)
                 && differs(processor.getMemoryValue(bank, local), openingSound.memories[(size_t) bank][(size_t) local]))
                 return true;
-    return false;
+    return processor.getModernLayer().getConfig() != openingSound.modern;
 }
 
 void PresetBrowser::revertToOpening()

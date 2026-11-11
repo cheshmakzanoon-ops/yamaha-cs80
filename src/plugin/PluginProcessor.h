@@ -211,8 +211,8 @@ public:
     void setParamValue(int index, float physicalValue);
     cs80::ParamValues currentValues() const;
     void applyParameterValues(const cs80::ParamValues& values);
-    // Message-thread library opening/REVERT boundary. Per-parameter snapshots,
-    // not an atomic transaction against concurrent host automation. Recall
+    // Message-thread library opening/REVERT boundary. Owned sound values and
+    // modern shapes/routes, not an atomic transaction against host automation. Recall
     // notifies the host without user gestures and starts a fresh undo history.
     cs80::PresetBrowserSound capturePresetBrowserSound() const;
     bool restorePresetBrowserSound(const cs80::PresetBrowserSound& sound);

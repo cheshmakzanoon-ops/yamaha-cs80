@@ -1,0 +1,45 @@
+[0/2] Re-checking globbed directories...
+[1/2] Re-running CMake...
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter
+-- Checking for module 'libcurl'
+--   Found libcurl, version 8.14.1
+-- Checking for modules 'webkit2gtk-4.0;gtk+-x11-3.0'
+--   Package 'webkit2gtk-4.0', required by 'virtual:world', not found
+--   Package 'gtk+-x11-3.0', required by 'virtual:world', not found
+-- Configuring juceaide
+-- Building juceaide
+-- Exporting juceaide
+-- Testing juceaide
+-- Finished setting up juceaide
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found version "3.12.14") found components: Interpreter
+-- Configuring done (1.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /workspace/scratch/ee447c520988/build-preset-revert-modern
+[0/2] Re-checking globbed directories...
+[1/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+[2/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+[3/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+[4/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+[5/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterComboBox.cpp.o
+[6/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+[7/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterContextButton.cpp.o
+[8/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o
+[9/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+[10/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o
+[11/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o
+[12/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o
+[13/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o
+[14/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o
+[15/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o
+[16/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o
+[17/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o
+[18/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o
+[19/20] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+/workspace/scratch/ee447c520988/preset-revert-modern/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/ee447c520988/preset-revert-modern/src/tools/ui_snapshot.cpp:3429:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3429 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-revert-modern/src/tools/ui_snapshot.cpp:3430:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3430 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[20/20] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots

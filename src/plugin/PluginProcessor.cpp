@@ -536,6 +536,7 @@ cs80::PresetBrowserSound Cs80AudioProcessor::capturePresetBrowserSound() const
     sound.name = meta.name;
     sound.factoryIndex = meta.factoryIndex;
     sound.values = currentValues();
+    sound.modern = modernLayer.getConfig();
     for (int channel = 0; channel < 2; ++channel)
         sound.sources[(size_t) channel] = getHardwareSource(channel);
     for (int bank = 0; bank < 4; ++bank)
@@ -567,6 +568,20 @@ bool Cs80AudioProcessor::restorePresetBrowserSound(const cs80::PresetBrowserSoun
                 && !valid(sound.memories[(size_t) bank][(size_t) local], cs80::kChannelDefs[local]))
                 return false;
 
+    // The live modern config is canonical. Reject any repair to active sound
+    // fields, rather than silently changing the opening sound during recall.
+    // Inactive point padding is not serialized or evaluated and has no authority.
+    auto modern = sound.modern;
+    for (auto& shape : modern.msegs)
+    {
+        if (shape.count < 2 || shape.count > cs80::modern::kMsegMaxPoints)
+            return false;
+        for (int i = shape.count; i < cs80::modern::kMsegMaxPoints; ++i)
+            shape.points[(size_t) i] = {};
+    }
+    if (cs80::modern::sanitizeConfig(modern) != modern)
+        return false;
+
     // No intermediate factory program or PANEL selection: publish each final
     // value once. Ordinary preset recall still uses applyValues' PANEL reset.
     applyValues(sound.values, false);
@@ -578,6 +593,14 @@ bool Cs80AudioProcessor::restorePresetBrowserSound(const cs80::PresetBrowserSoun
     for (int channel = 0; channel < 2; ++channel)
         if (auto* p = apvts.getParameter(hardwareSourceParameterId(channel)))
             p->setValueNotifyingHost(p->convertTo0to1((float) sound.sources[(size_t) channel]));
+    {
+        // Match A/B recall's tree-lock order, serializing this child write with
+        // host state save/replace. The existing mailbox publishes one complete
+        // config; audio consumes it by try-lock on a later block. This is not a
+        // transaction with the separately notified APVTS parameter values.
+        const juce::ScopedLock treeLock(apvts.treeLock());
+        modernLayer.setConfig(modern);
+    }
     setPresetMetadata(sound.name, sound.factoryIndex);
     // Match the existing preset-load boundary without manufacturing MEMORY
     // or source user gestures, or retaining edits from the auditioned sound.

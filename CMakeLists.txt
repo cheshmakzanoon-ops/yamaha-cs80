@@ -1173,6 +1173,9 @@ if (CS80_BUILD_PLUGIN)
     # Opening sound recall through the real browser and processor, without a native peer.
     add_test(NAME cs80_preset_revert_tests COMMAND CS80Snapshots --preset-revert-tests)
     set_tests_properties(cs80_preset_revert_tests PROPERTIES TIMEOUT 120)
+    # Existing modern state/recall and A/B suites, independently of the full UI smoke.
+    add_test(NAME cs80_modern_recall_host_tests COMMAND CS80Snapshots --modern-recall-host-tests)
+    set_tests_properties(cs80_modern_recall_host_tests PROPERTIES TIMEOUT 120)
     # Real browser components and a temporary catalogue, without a native peer.
     add_test(NAME cs80_preset_refresh_tests COMMAND CS80Snapshots --preset-refresh-tests)
     set_tests_properties(cs80_preset_refresh_tests PROPERTIES TIMEOUT 60)

@@ -1,0 +1,46 @@
+[0/2] Re-checking globbed directories...
+[1/38] Building CXX object CMakeFiles/cs80_preset_preview_math_tests.dir/tests/PresetPreviewMathTests.cpp.o
+[2/38] Linking CXX executable cs80_preset_preview_math_tests
+[3/38] Building CXX object CMakeFiles/cs80_modern_state_integer_tests.dir/tests/ModernStateIntegerTests.cpp.o
+[4/38] Building CXX object CMakeFiles/cs80_modern_state_integer_tests.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o
+[5/38] Building CXX object CMakeFiles/cs80_preset_display_name_tests.dir/tests/PresetDisplayNameTests.cpp.o
+[6/38] Building CXX object CMakeFiles/cs80_modern_state_integer_tests.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core.cpp.o
+[7/38] Linking CXX executable cs80_modern_state_integer_tests_artefacts/Release/cs80_modern_state_integer_tests
+[8/38] Building CXX object CMakeFiles/cs80_preset_display_name_tests.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o
+[9/38] Building CXX object CMakeFiles/cs80_preset_display_name_tests.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core.cpp.o
+[10/38] Building CXX object CMakeFiles/cs80_preset_file_values_tests.dir/tests/PresetFileValuesTests.cpp.o
+[11/38] Linking CXX executable cs80_preset_display_name_tests_artefacts/Release/cs80_preset_display_name_tests
+[12/38] Building CXX object CMakeFiles/cs80_preset_file_values_tests.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o
+[13/38] Building CXX object CMakeFiles/cs80_mseg_state_text_tests.dir/tests/MsegStateTextTests.cpp.o
+[14/38] Building CXX object CMakeFiles/cs80_preset_file_values_tests.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core.cpp.o
+[15/38] Linking CXX executable cs80_preset_file_values_tests_artefacts/Release/cs80_preset_file_values_tests
+[16/38] Building CXX object CMakeFiles/cs80_mseg_state_text_tests.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core_CompilationTime.cpp.o
+[17/38] Building CXX object CMakeFiles/cs80_mseg_state_text_tests.dir/workspace/scratch/ee447c520988/mpe-native-tools/JUCE/modules/juce_core/juce_core.cpp.o
+[18/38] Linking CXX executable cs80_mseg_state_text_tests_artefacts/Release/cs80_mseg_state_text_tests
+[19/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorAutomation.cpp.o
+[20/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessor.cpp.o
+[21/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginEditor.cpp.o
+[22/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/UiComponents.cpp.o
+[23/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterComboBox.cpp.o
+[24/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ParameterContextButton.cpp.o
+[25/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/AdvancedPanel.cpp.o
+[26/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/KeyboardTuningPage.cpp.o
+[27/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PresetBrowser.cpp.o
+[28/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ModernModulationUi.cpp.o
+[29/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PluginProcessorLibrary.cpp.o
+[30/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PanelWidgets.cpp.o
+[31/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/ChannelRow.cpp.o
+[32/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/CentreRow.cpp.o
+[33/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/PerformanceDeck.cpp.o
+[34/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/MemoryLid.cpp.o
+[35/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioToolbar.cpp.o
+[36/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/plugin/StudioDrawers.cpp.o
+[37/38] Building CXX object CMakeFiles/CS80Snapshots.dir/src/tools/ui_snapshot.cpp.o
+/workspace/scratch/ee447c520988/preset-revert-modern/src/tools/ui_snapshot.cpp: In lambda function:
+/workspace/scratch/ee447c520988/preset-revert-modern/src/tools/ui_snapshot.cpp:3429:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3429 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/preset-revert-modern/src/tools/ui_snapshot.cpp:3430:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3430 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[38/38] Linking CXX executable CS80Snapshots_artefacts/Release/CS80Snapshots

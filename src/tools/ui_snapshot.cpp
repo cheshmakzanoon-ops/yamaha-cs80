@@ -2003,6 +2003,17 @@ int main(int argc, char** argv)
         std::printf("Preset opening sound REVERT: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--modern-recall-host-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        const auto checked = [&](bool condition, const char* what) { ++checks; check(condition, what); };
+        cs80::tests::testModernLayerHost(checked);
+        cs80::tests::testModernLayerStateRangeHost(checked);
+        cs80::tests::testProgramLibraryHost(checked);
+        std::printf("Modern/session/preset/A-B recall: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--preset-refresh-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;

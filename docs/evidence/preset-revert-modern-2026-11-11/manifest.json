@@ -1,0 +1,93 @@
+{
+  "base_commit": "3a22dc458df68d2e6cb77197ebf614159a47af68",
+  "baseline": {
+    "production": "unchanged production source at base_commit; existing regression extended only in tests/PresetRevertTests.h",
+    "test_source": "baseline-PresetRevertTests.h",
+    "test_sha256": "da4ca8a348c3fd6b6bb74b9c88ced3918ff237e476555d1e6a41243ff76fd66f",
+    "executable_sha256": "d25a4be55b6a36eb6c50bd71b7142f1aafccf3ac0098848e5018576a0dd0e913",
+    "checks": 958,
+    "failures": 219,
+    "exit_code": 1,
+    "log": "baseline.log"
+  },
+  "first_fixed": {
+    "checks": 1384,
+    "failures": 0,
+    "exit_code": 0,
+    "log": "focused-first.log",
+    "executable_sha256": "8a42cb97e4fd5f5f55593108e27799625518e304a3efb8922aa68d838810a847",
+    "note": "Final tests add modern editor/final display observations and post-recall modern undo/redo; no production behavior change after this run."
+  },
+  "final": {
+    "checks": 1387,
+    "failures": 0,
+    "focused_exit_code": 0,
+    "modern_recall_checks": 2354,
+    "modern_recall_failures": 0,
+    "modern_recall_exit_code": 0,
+    "adjacent_ctests_passed": 16,
+    "adjacent_exit_code": 0,
+    "executable_sha256": "a5fbe200fbe45f6a341b4e16351e4c5e136970dccb1fbc1d55f1bc89ee9f8998",
+    "source_sha256": {
+      "CMakeLists.txt": "d6e63c60cc695fec82c0409080f187aa80db4e4cadbdfba1c5bde5fba1f016c1",
+      "src/plugin/PluginProcessor.cpp": "dc90b77854f94b89fd571417a696f87dcd26dd80c71f73ba833edc5ac25e3f72",
+      "src/plugin/PluginProcessor.h": "52e090796c3f01f38d68773be4457c67190b81d4ea3bab87e0872d5dd18a341c",
+      "src/plugin/PresetBrowser.cpp": "bdf3f03f227c4f69f54aa4d3b4bf5d585f039a50ca753e73656e5ef8043ed1fb",
+      "src/plugin/PresetBrowserSound.h": "793ecbf9d69a179754c1bb17a5d63cf8474ee6e034f9699ab7f9943eba0ca9f5",
+      "tests/PresetRevertTests.h": "f4315738e264c3366a6121ef48090ec75e4398f4d5138c65953d887c7d02e5df",
+      "src/tools/ui_snapshot.cpp": "2a70216c64e86ee7f1f89307729b9d021a74d9866289a8c05f6e3fb11f3b9755"
+    },
+    "unchanged_modern_publication_and_validation_sha256": {
+      "src/plugin/ModernLayerState.cpp": "1119f063591601d42136a35e610c44797448d97cc5bd77862c110b033dcf29bb",
+      "src/plugin/ModernLayerState.h": "8bf58db1263909c3dbc83c50fd8f27e04b2c045999af11ee0fb7bffd2968ba88",
+      "src/core/Mseg.h": "d8769094216200673a8a029c1691ec25778a2e69b834cbbcc5e2c36400a4a27f",
+      "src/core/ModernLayer.h": "8bba54f736e0215d3ce8c7be457990ffe0242c1322ba47faf6beae3d36a808d8",
+      "src/core/ModMatrix.h": "2ac2a9e1099a851103d9bd7c9dce1f957d930d50fddbf034a92628e91d077e15"
+    }
+  },
+  "scope": "Extend bounded browser opening sound with all three MSEG shapes and all 16 routes. Validate exact active fields before any mutation; unused point padding has no authority. Physical/setup/PURE, tuning, MIDI maps, UI, A/B storage and ordinary preset/session recall policies unchanged.",
+  "qualification": "Real offscreen JUCE browser and processor; temporary user files, isolated build and test home. Six deterministic fresh-note modern audio positive/negative controls plus the existing three source/MEMORY controls. No full suite, native peer, sanitizer, pluginval, DAW, concurrent host automation/session race, macOS/Windows or remote CI claim.",
+  "toolchain": {
+    "compiler": "Debian GCC 14.2.0",
+    "build_type": "Release",
+    "cmake": "3.31.6",
+    "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "juce_worktree_clean": true,
+    "isolated_build": "build-preset-revert-modern",
+    "build_jobs": 2,
+    "test_jobs": 1
+  },
+  "commands": {
+    "focused": "CS80Snapshots --preset-revert-tests",
+    "modern_recall": "CS80Snapshots --modern-recall-host-tests",
+    "ctest_regex": "^cs80_(preset_revert_tests|modern_recall_host_tests|preset_preview_math_tests|preset_display_name_tests|preset_file_values_tests|mseg_state_text_tests|modern_state_integer_tests|preset_refresh_tests|undo_replay_gesture_tests|mseg_editor_lifecycle_tests|modern_slider_gesture_tests|snapshot_cli_tests|controller_reset_host_tests|keyboard_handoff_host_tests|context_menu_keyboard_tests|typed_value_unit_tests)$"
+  },
+  "logs_sha256": {
+    "adjacent-ctest.log": "eab413dadb17fb797f3755b3a7dd791bbb399de9ec39c5b4b7713344c89f2e86",
+    "baseline-build.log": "1b36e9b838c152c770d892ba2fa669a42f0118bb84f7b1b1a5f0bc3d63ee3396",
+    "baseline.log": "c29919523563f59cf4fa0d5ae2fa7a771d08feb224b3e1e6ee0a4c240a6239f0",
+    "configure.log": "5c25dcbd6bd2d4bbc510b08d81b419e70c60af24d486acd340fbadfcd3413705",
+    "final-build.log": "3a5673dbc4d6daecb53db75744ad000454bde3c7dbfeb8fa522c7debb574115c",
+    "fixed-build.log": "6f1e759f1574138b397cc88e848e35f3bc7851ce20399bbd74446de00beae833",
+    "focused-final.log": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28",
+    "focused-first.log": "34426c00420fbf97b61ffaac6f62e0fbe8e617b313810af54adbec8958f7e57a",
+    "independent-LastTest.log": "1b0c1762426d015785819eab6d525023960b144cf5674d3caa56959d45471ab5",
+    "independent-adjacent.log": "ded3692cdd32433b443a24c78c41b2da265b78571889a22509b85016e935ebf3",
+    "independent-focused.log": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28",
+    "modern-recall-final.log": "bfcf4c4dce292cdee2d8ccf93e20db257770c24577e658bf3b443d987ba19d16"
+  },
+  "independent_review": {
+    "approved_for_local_commit": true,
+    "executable_sha256_verified": true,
+    "changed_source_hashes_verified": 7,
+    "unchanged_dependency_hashes_verified": 5,
+    "original_log_hashes_verified": 9,
+    "focused_checks": 1387,
+    "focused_failures": 0,
+    "focused_exit_code": 0,
+    "adjacent_ctests_passed": 16,
+    "adjacent_exit_code": 0,
+    "isolated_home_and_xdg": true,
+    "source_findings": "No blocker: active-field preflight before mutation, inactive padding excluded, value-owned snapshot, tree-locked publication before final metadata/history/display; ordinary recall and PURE remain unchanged; no whole-recall atomicity or DSP-history claim."
+  }
+}

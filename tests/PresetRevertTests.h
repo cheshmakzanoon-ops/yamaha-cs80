@@ -36,12 +36,13 @@ struct PresetRevertAccess
         void parameterGestureChanged(int, bool) override { ++gestures; }
         void audioProcessorParameterChanged(juce::AudioProcessor*, int, float) override {}
         void audioProcessorChanged(juce::AudioProcessor*, const ChangeDetails&) override
-        { ++displays; reported = host.getPresetMetadata(); } // Reentrant metadata access must be safe.
+        { ++displays; reported = host.getPresetMetadata(); reportedModern = host.getModernLayer().getConfig(); } // Reentrant access must be safe.
         Cs80AudioProcessor& host;
         std::vector<float> values;
         std::vector<int> counts;
         int gestures = 0, displays = 0;
         Cs80AudioProcessor::PresetMetadata reported;
+        modern::ModernConfig reportedModern;
     };
     static std::vector<float> render(Cs80AudioProcessor& host)
     {
@@ -120,6 +121,361 @@ struct PresetRevertAccess
             check(reference == actual, "REVERT restores sample-identical fresh-note factory/MEMORY audio");
             check(!browser.canRevert(), "audio prepare/release does not invalidate the restored opening snapshot");
         }
+    }
+    static modern::ModernConfig openingModern()
+    {
+        modern::ModernConfig result;
+        for (int m = 0; m < modern::kMsegCount; ++m)
+        {
+            auto& shape = result.msegs[(size_t) m];
+            shape.count = modern::kMsegMaxPoints;
+            for (int point = 0; point < shape.count; ++point)
+                shape.points[(size_t) point] = { (float) point * 0.125f,
+                    (float) ((point + m) % 9) * 0.125f, (float) ((point + m) % 5 - 2) * 0.5f };
+            shape.loopStart = m + 1;
+            shape.loopEnd = 29 - m;
+            shape.loop = (modern::MsegLoop) m;
+            shape.trigger = (modern::MsegTrigger) m;
+            shape.sync = m != 0;
+            shape.bipolar = m != 1;
+        }
+        for (int i = 0; i < modern::kModSlots; ++i)
+            result.slots[(size_t) i] = {
+                (modern::ModSource) (1 + i % (modern::kModSourceCount - 1)),
+                (modern::ModSource) ((i + 7) % modern::kModSourceCount),
+                (modern::ModDestination) (1 + i % (modern::kModDestinationCount - 1)),
+                (modern::ModTarget) (i % 3) };
+        return result;
+    }
+    template <typename Check>
+    static void modernControls(Check check, const juce::File& directory)
+    {
+        auto host = std::make_unique<Cs80AudioProcessor>(directory);
+        host->loadInitPatch();
+        const auto opening = openingModern();
+        host->getModernLayer().setConfig(opening);
+        ui::PresetBrowser browser(*host);
+        const bool audition = browser.isAuditioning();
+        browser.setAudition(false);
+        // No name, parameter or source mutation can accidentally mask a missed
+        // side-state change. Each field is independently the sole difference.
+        for (int m = 0; m < modern::kMsegCount; ++m)
+            for (int field = 0; field < 10; ++field)
+            {
+                host->getModernLayer().setConfig(opening);
+                browser.captureOpening();
+                auto changed = opening.msegs[(size_t) m];
+                if (field == 0) changed.points[1].time += 0.03125f;
+                if (field == 1) changed.points[2].level = 0.9375f;
+                if (field == 2) changed.points[3].curve = 0.25f;
+                if (field == 3) --changed.count;
+                if (field == 4) ++changed.loopStart;
+                if (field == 5) --changed.loopEnd;
+                if (field == 6) changed.loop = (modern::MsegLoop) ((m + 1) % 3);
+                if (field == 7) changed.trigger = (modern::MsegTrigger) ((m + 1) % 3);
+                if (field == 8) changed.sync = !changed.sync;
+                if (field == 9) changed.bipolar = !changed.bipolar;
+                host->getModernLayer().setShape(m, changed);
+                check(browser.canRevert(), "each MSEG-only shape/option edit enables REVERT in all three envelopes");
+                browser.pollLoaded();
+                check(browser.revertButton.isEnabled(), "MSEG-only change reaches live REVERT button");
+                browser.revertToOpening();
+                check(host->getModernLayer().getConfig() == opening && !browser.canRevert(),
+                      "REVERT restores each MSEG shape and option from value-owned opening data");
+            }
+        for (int i = 0; i < modern::kModSlots; ++i)
+            for (int field = 0; field < 4; ++field)
+            {
+                host->getModernLayer().setConfig(opening);
+                browser.captureOpening();
+                auto changed = opening.slots[(size_t) i];
+                if (field == 0) changed.source = modern::ModSource::constant;
+                if (field == 1) changed.via = modern::ModSource::none;
+                if (field == 2) changed.destination = modern::ModDestination::none;
+                if (field == 3) changed.target = (modern::ModTarget) ((i + 1) % 3);
+                host->getModernLayer().setSlot(i, changed);
+                check(browser.canRevert(), "each route-only field edit enables REVERT in all 16 zero-amount slots");
+                browser.revertToOpening();
+                check(host->getModernLayer().getConfig() == opening && !browser.canRevert(),
+                      "REVERT restores source/via/destination/target in each matrix slot");
+            }
+        host->getModernLayer().setConfig(opening);
+        browser.captureOpening();
+        host->getModernLayer().resetToDefaults();
+        const auto saved = host->saveUserPreset("Modern audition fixture");
+        check(saved.wasSaved(), "modern user audition fixture saved into disposable storage");
+        host->getModernLayer().setConfig(opening);
+        browser.refresh();
+        int entry = -1;
+        for (size_t i = 0; i < browser.entries.size(); ++i)
+            if (browser.entries[i].userFile == saved.file) entry = (int) i;
+        check(entry >= 0, "real browser catalogue finds modern audition fixture");
+        browser.loadEntry(entry);
+        check(host->getModernLayer().getConfig() == modern::ModernConfig {},
+              "actual user-file audition replaces all MSEGs and routes");
+        browser.revertToOpening();
+        check(host->getModernLayer().getConfig() == opening && !browser.canRevert(),
+              "actual user-file audition then REVERT restores all opening MSEGs and routes");
+        browser.setAudition(audition);
+    }
+    template <typename Check>
+    static void modernAdmissionControls(Check check, const juce::File& directory)
+    {
+        auto host = std::make_unique<Cs80AudioProcessor>(directory);
+        host->getModernLayer().setConfig(openingModern());
+        host->getUndoManager().clearUndoHistory();
+        for (float value : { 0.125f, 0.25f })
+        {
+            Cs80AudioProcessor::ScopedUserEdit edit(host->getUndoableState(), "Admission history");
+            host->setParamValue(P_brilliance, value);
+        }
+        check(host->undo() && host->getUndoManager().canUndo() && host->getUndoManager().canRedo(),
+              "modern admission control has both undo and redo history");
+        const auto valid = host->capturePresetBrowserSound();
+        const auto treeHandle = host->getAPVTS().state;
+        const auto layerHandle = treeHandle.getChildWithName(ModernLayerState::treeType);
+        const auto beforeTree = host->getAPVTS().copyState();
+        const auto undoDescription = host->getUndoManager().getUndoDescription();
+        const auto redoDescription = host->getUndoManager().getRedoDescription();
+        const auto reject = [&](PresetBrowserSound invalid)
+        {
+            invalid.values[P_brilliance] = 0.875f;
+            invalid.sources[1] = 12;
+            invalid.memories[3][CP_afterLevel] = 0.75f;
+            invalid.name = "Must not publish";
+            Probe probe(*host);
+            check(!host->restorePresetBrowserSound(invalid), "invalid modern snapshot is rejected, never silently repaired");
+            const auto actual = host->capturePresetBrowserSound();
+            check(actual.values.v == valid.values.v && actual.sources == valid.sources
+                      && actual.memories == valid.memories && actual.modern == valid.modern
+                      && actual.name == valid.name && actual.factoryIndex == valid.factoryIndex
+                      && treeHandle == host->getAPVTS().state
+                      && layerHandle == host->getAPVTS().state.getChildWithName(ModernLayerState::treeType)
+                      && beforeTree.isEquivalentTo(host->getAPVTS().copyState())
+                      && probe.displays == 0 && probe.gestures == 0
+                      && std::all_of(probe.counts.begin(), probe.counts.end(), [](int count) { return count == 0; })
+                      && host->getUndoManager().canUndo() && host->getUndoManager().canRedo()
+                      && host->getUndoManager().getUndoDescription() == undoDescription
+                      && host->getUndoManager().getRedoDescription() == redoDescription,
+                  "modern rejection leaves all values, metadata, tree identities, notifications and history unchanged");
+        };
+        for (int m = 0; m < modern::kMsegCount; ++m)
+            for (int fault = 0; fault < 21; ++fault)
+            {
+                auto invalid = valid;
+                auto& shape = invalid.modern.msegs[(size_t) m];
+                if (fault == 0) shape.count = 1;
+                if (fault == 1) shape.count = modern::kMsegMaxPoints + 1;
+                if (fault == 2) shape.points[0].time = 0.125f;
+                if (fault == 3) shape.points[1].time = std::numeric_limits<float>::quiet_NaN();
+                if (fault == 4) shape.points[1].level = std::numeric_limits<float>::infinity();
+                if (fault == 5) shape.points[1].curve = std::numeric_limits<float>::quiet_NaN();
+                if (fault == 6) shape.points[1].time = -0.125f;
+                if (fault == 7) shape.points[2].time = 0.0f;
+                if (fault == 8) shape.points.back().time = modern::kMsegMaxTime + 1.0f;
+                if (fault == 9) shape.points[1].level = -0.125f;
+                if (fault == 10) shape.points[1].level = 1.125f;
+                if (fault == 11) shape.points[1].curve = -1.125f;
+                if (fault == 12) shape.points[1].curve = 1.125f;
+                if (fault == 13) shape.loopStart = -1;
+                if (fault == 14) shape.loopStart = shape.count;
+                if (fault == 15) shape.loopEnd = shape.loopStart - 1;
+                if (fault == 16) shape.loopEnd = shape.count;
+                if (fault == 17) shape.loop = (modern::MsegLoop) -1;
+                if (fault == 18) shape.loop = (modern::MsegLoop) 3;
+                if (fault == 19) shape.trigger = (modern::MsegTrigger) -1;
+                if (fault == 20) shape.trigger = (modern::MsegTrigger) 3;
+                reject(invalid);
+            }
+        for (int i = 0; i < modern::kModSlots; ++i)
+            for (int fault = 0; fault < 8; ++fault)
+            {
+                auto invalid = valid;
+                auto& slot = invalid.modern.slots[(size_t) i];
+                if (fault < 2) slot.source = (modern::ModSource) (fault == 0 ? -1 : modern::kModSourceCount);
+                else if (fault < 4) slot.via = (modern::ModSource) (fault == 2 ? -1 : modern::kModSourceCount);
+                else if (fault < 6) slot.destination = (modern::ModDestination) (fault == 4 ? -1 : modern::kModDestinationCount);
+                else slot.target = (modern::ModTarget) (fault == 6 ? -1 : 3);
+                reject(invalid);
+            }
+        // Exact valid boundaries, including coincident points, must not be
+        // tightened by the browser's admission check. Unused cells have no authority.
+        auto edge = valid;
+        edge.modern = {};
+        auto& shape = edge.modern.msegs[0];
+        shape = {};
+        shape.count = 3;
+        shape.points[0] = { 0.0f, 0.0f, -1.0f };
+        shape.points[1] = { 0.0f, 1.0f, 1.0f };
+        shape.points[2] = { modern::kMsegMaxTime, 0.0f, 0.0f };
+        shape.loopStart = shape.loopEnd = 2;
+        shape.loop = modern::MsegLoop::always;
+        shape.trigger = modern::MsegTrigger::free;
+        shape.sync = shape.bipolar = true;
+        shape.points.back() = { std::numeric_limits<float>::quiet_NaN(),
+                                std::numeric_limits<float>::infinity(), -9.0f };
+        edge.modern.slots.back() = { modern::ModSource::constant, modern::ModSource::constant,
+                                    modern::ModDestination::mseg3Rate, modern::ModTarget::rankII };
+        check(host->restorePresetBrowserSound(edge)
+                  && host->getModernLayer().getConfig() == modern::sanitizeConfig(edge.modern),
+              "valid boundary values restore exactly and unused point padding has no recall authority");
+    }
+    template <typename Check>
+    static void modernLifecycleControls(Check check, const juce::File& directory)
+    {
+        auto host = std::make_unique<Cs80AudioProcessor>(directory);
+        ui::PresetBrowser browser(*host);
+        const bool audition = browser.isAuditioning();
+        browser.setAudition(false);
+        browser.captureOpening();
+        check(!host->getAPVTS().state.getChildWithName(ModernLayerState::treeType).isValid()
+                  && !browser.canRevert(), "missing modern child is the clean default opening sound");
+        host->getModernLayer().setConfig(openingModern());
+        browser.revertToOpening();
+        check(host->getModernLayer().getConfig() == modern::ModernConfig {} && !browser.canRevert(),
+              "default opening restores after route edits without depending on tree presence");
+        host->getModernLayer().setConfig(openingModern());
+        browser.captureOpening();
+        const auto owned = host->capturePresetBrowserSound();
+        auto copied = owned;
+        copied.modern.msegs[0].points[1].level = 0.9375f;
+        copied.modern.slots.back().source = modern::ModSource::none;
+        check(owned.modern == openingModern(), "copying and editing a snapshot cannot alias its opening shapes or routes");
+        // Keep root and sibling handles, and unrelated properties, live across recall.
+        auto root = host->getAPVTS().state;
+        juce::ValueTree unrelated("REVERT_UNRELATED");
+        unrelated.setProperty("live", 42, nullptr);
+        root.addChild(unrelated, -1, nullptr);
+        root.setProperty("liveSessionProperty", "retain", nullptr);
+        auto layer = root.getChildWithName(ModernLayerState::treeType);
+        host->getModernLayer().resetToDefaults();
+        host->abCopyCurrentTo(1); // The inactive slot must keep this different sound.
+        const auto copySlot = host->getAbSlot();
+        int callbacks = 0;
+        browser.onPresetLoaded = [&] { ++callbacks; };
+        {
+            struct ModernProbe final : juce::ChangeListener
+            {
+                explicit ModernProbe(ModernLayerState& state) : layer(state) { layer.addChangeListener(this); }
+                ~ModernProbe() override { layer.removeChangeListener(this); }
+                void changeListenerCallback(juce::ChangeBroadcaster*) override { ++calls; reported = layer.getConfig(); }
+                ModernLayerState& layer;
+                int calls = 0;
+                modern::ModernConfig reported;
+            };
+            host->getModernLayer().dispatchPendingMessages();
+            ModernProbe modernProbe(host->getModernLayer());
+            Probe probe(*host);
+            browser.revertToOpening();
+            check(probe.displays == 1 && probe.gestures == 0 && callbacks == 1
+                      && probe.reportedModern == openingModern(),
+                  "modern-only REVERT publishes one final display/callback with complete modern data and no user gestures");
+            host->getModernLayer().dispatchPendingMessages();
+            check(modernProbe.calls == 1 && modernProbe.reported == openingModern(),
+                  "modern editor notification observes one complete restored configuration");
+        }
+        check(host->getAPVTS().state == root && root.getChildWithName(ModernLayerState::treeType) == layer
+                  && root.getChildWithName("REVERT_UNRELATED") == unrelated
+                  && (int) unrelated.getProperty("live") == 42
+                  && root.getProperty("liveSessionProperty").toString() == "retain"
+                  && host->getAbSlot() == copySlot && host->isAbSlotStored(1),
+              "modern recall preserves root/layer identity, unrelated sibling state and A/B storage");
+        check(ModernLayerState::fromTree(layer) == openingModern()
+                  && !host->getUndoManager().canUndo() && !host->getUndoManager().canRedo(),
+              "modern-only recall serializes opening config and starts a fresh undo boundary");
+        {
+            Cs80AudioProcessor::ScopedUserEdit edit(host->getUndoableState(), "Modern after REVERT");
+            host->getModernLayer().setConfig(copied.modern);
+        }
+        check(host->undo() && host->getModernLayer().getConfig() == owned.modern,
+              "new modern edit after REVERT undoes to the restored opening sound");
+        check(host->redo() && host->getModernLayer().getConfig() == copied.modern,
+              "new modern edit after REVERT redoes independently of the previous sound");
+        host->getModernLayer().setConfig(owned.modern);
+        check(host->getUndoManager().canUndo() && !browser.canRevert(),
+              "editing modern state back to baseline remains a no-op for REVERT");
+        {
+            Probe probe(*host);
+            browser.revertToOpening();
+            check(callbacks == 1 && probe.displays == 0 && host->getUndoManager().canUndo(),
+                  "modern no-op preserves undo and emits no duplicate notification");
+        }
+        // Ordinary session replacement must not mutate a captured by-value opening.
+        juce::MemoryBlock state;
+        host->getStateInformation(state);
+        host->getModernLayer().resetToDefaults();
+        browser.setVisible(false);
+        browser.setVisible(true);
+        check(!browser.canRevert(), "reopening captures changed modern-only state as the new baseline");
+        host->setStateInformation(state.getData(), (int) state.getSize());
+        check(browser.canRevert(), "session replacement cannot alias the newly reopened snapshot");
+        browser.refresh();
+        browser.revertToOpening();
+        check(host->getModernLayer().getConfig() == modern::ModernConfig {} && !browser.canRevert(),
+              "refresh and session replacement retain the independently owned reopened baseline");
+        // Inactive A/B content itself was never overwritten by REVERT.
+        host->abToggle();
+        check(host->getModernLayer().getConfig() == modern::ModernConfig {},
+              "inactive A/B slot retains its independent modern configuration after REVERT");
+        browser.setAudition(audition);
+    }
+    template <typename Check>
+    static void modernRenderControls(Check check, const juce::File& directory)
+    {
+        for (int m = 0; m < modern::kMsegCount; ++m)
+            for (bool shapeChange : { false, true })
+            {
+                auto expected = std::make_unique<Cs80AudioProcessor>(directory);
+                auto reverted = std::make_unique<Cs80AudioProcessor>(directory);
+                auto negative = std::make_unique<Cs80AudioProcessor>(directory);
+                const int slot = m == 0 ? 0 : m == 1 ? 7 : 15;
+                const auto configure = [&](Cs80AudioProcessor& p)
+                {
+                    p.loadInitPatch();
+                    p.setPure(false);
+                    p.setParamValue(P_drift, 0.0f);
+                    p.setParamValue(P_voiceDispersion, 0.0f);
+                    p.setParamValue(P_analogNoise, 0.0f);
+                    p.setParamValue(P_volume, 0.2f);
+                    p.setParamValue(P_mod1Amount + slot, 0.25f);
+                    modern::ModernConfig c;
+                    auto& shape = c.msegs[(size_t) m];
+                    shape = {};
+                    shape.points[0] = { 0.0f, 0.25f, 0.0f };
+                    shape.points[1] = { 1.0f, 0.25f, 0.0f };
+                    c.slots[(size_t) slot] = { (modern::ModSource) ((int) modern::ModSource::mseg1 + m), modern::ModSource::none,
+                                              modern::ModDestination::pitch, (modern::ModTarget) m };
+                    p.getModernLayer().setConfig(c);
+                };
+                configure(*expected); configure(*reverted); configure(*negative);
+                ui::PresetBrowser browser(*reverted);
+                const auto mutate = [&](Cs80AudioProcessor& p)
+                {
+                    auto c = p.getModernLayer().getConfig();
+                    if (shapeChange)
+                        c.msegs[(size_t) m].points[0].level = c.msegs[(size_t) m].points[1].level = 0.75f;
+                    else c.slots[(size_t) slot].source = modern::ModSource::constant;
+                    p.getModernLayer().setConfig(c);
+                };
+                mutate(*reverted); mutate(*negative);
+                check(browser.canRevert(), "audible modern-only shape/route change enables REVERT");
+                browser.revertToOpening();
+                const auto reference = render(*expected), actual = render(*reverted), changed = render(*negative);
+                double energy = 0.0, difference = 0.0;
+                bool finite = true;
+                for (size_t i = 0; i < reference.size(); ++i)
+                {
+                    finite = finite && std::isfinite(reference[i]) && std::isfinite(actual[i]) && std::isfinite(changed[i]);
+                    energy += (double) reference[i] * reference[i];
+                    difference += std::abs((double) reference[i] - changed[i]);
+                }
+                check(finite && energy > 1.0e-8, "modern opening render is finite and non-silent for each MSEG and rank target");
+                check(difference > 1.0e-6, "unreverted MSEG/route negative control audibly differs");
+                check(reference == actual && !browser.canRevert(),
+                      "REVERT publishes each MSEG/route to sample-identical fresh-note audio");
+                check(reverted->getEngine().getModernConfig() == expected->getModernLayer().getConfig(),
+                      "audio thread consumes the recalled modern mailbox on the next block");
+            }
     }
     template <typename Check>
     static void run(Check check)
@@ -259,10 +615,7 @@ struct PresetRevertAccess
         host->setExpressionFromUI(0.42f);
         check(host->loadScalaTuning("Live setup scale\n1\n2/1\n").isEmpty(), "isolated Scala fixture loads");
         const auto tuningRevision = host->scalaTuningRevision();
-        auto modern = host->getModernLayer().getConfig();
-        modern.slots[0].source = modern::ModSource::velocity;
-        modern.slots[0].destination = modern::ModDestination::pitch;
-        host->getModernLayer().setConfig(modern);
+        const auto modern = host->getModernLayer().getConfig();
         host->abCopyCurrentTo(1);
         const int liveAb = host->getAbSlot();
         check(!browser.canRevert(), "setup/PURE and unrelated session-only changes do not enable REVERT");
@@ -311,7 +664,7 @@ struct PresetRevertAccess
                   && host->hasScalaTuning() && host->scalaTuningRevision() == tuningRevision
                   && host->getModernLayer().getConfig() == modern
                   && host->getAbSlot() == liveAb && host->isAbSlotStored(1),
-              "bounded REVERT leaves MIDI/UI/pedal/tuning/modulation/A-B session side-state live");
+              "bounded REVERT preserves MIDI/UI/pedal/tuning/A-B and the unchanged opening modulation");
 
         // A fresh user edit still records and replays after the recall boundary.
         const float before = host->getParamValue(P_brilliance);
@@ -381,6 +734,10 @@ struct PresetRevertAccess
             }
 
         renderControls(check, fixture.getFile().getChildFile("render-presets"));
+        modernControls(check, fixture.getFile().getChildFile("modern-presets"));
+        modernAdmissionControls(check, fixture.getFile().getChildFile("modern-admission"));
+        modernLifecycleControls(check, fixture.getFile().getChildFile("modern-lifecycle"));
+        modernRenderControls(check, fixture.getFile().getChildFile("modern-render"));
     }
 };
 } // namespace cs80::tests
