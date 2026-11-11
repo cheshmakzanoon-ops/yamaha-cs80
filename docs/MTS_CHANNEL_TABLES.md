@@ -51,5 +51,6 @@ This is a memory measurement, not a throughput or whole-instrument CPU claim.
 - The core checkpoint left dormant host-engine synchronization untested. The
   subsequent [host follow-up](MTS_DORMANT_ENGINE_HOST.md) fixes that dispatch gap
   and records its separate real-processor transition tests and live-master limits.
-- An active MTS-ESP master globally replaces engine tables each block,
-  intentionally taking precedence over previously received local channel scales.
+- The later [channel-master integration](MTS_ESP_CHANNEL_MASTER.md) replaces each
+  conventional MIDI channel from its master table each block. MPE uses a global
+  table. Master polling retains precedence over earlier local channel scales.

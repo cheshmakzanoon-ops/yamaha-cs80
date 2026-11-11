@@ -7,7 +7,7 @@
 // be installed separately. The adapter does not install or configure either.
 //
 // Register/deregister off the audio thread, then query a channel-independent
-// tuning table on the audio thread. MIDI Tuning Standard SysEx stays in the
+// or channel-aware tuning tables on the audio thread. MIDI Tuning Standard SysEx stays in the
 // existing validated Engine::handleSysEx path, not the client's second parser.
 
 #include "core/Tuning.h"
@@ -30,6 +30,10 @@ public:
     // or unsafe mapped Hz leaves the table unchanged. Source reads are not an
     // atomic snapshot of concurrent master edits or rapid reconnects.
     bool fillTable(tuning::TuningTable& table) const noexcept;
+    using ChannelTables = std::array<tuning::TuningTable, 16>;
+    // Complete transactional bank. Independent mode preserves upstream's
+    // recommended global tuning while MPE is enabled.
+    bool fillChannelTables(ChannelTables& tables, bool channelIndependent = false) const noexcept;
 
 private:
     void* client = nullptr;

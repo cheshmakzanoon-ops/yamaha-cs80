@@ -69,11 +69,70 @@ bool MtsEspClient::fillTable(tuning::TuningTable& table) const noexcept
     table = next;
     return true;
 }
+
+bool MtsEspClient::fillChannelTables(ChannelTables& tables, bool channelIndependent) const noexcept
+{
+    if (channelIndependent)
+    {
+        auto table = tables[0];
+        if (!fillTable(table)) return false;
+        tables.fill(table);
+        return true;
+    }
+    if (!hasMaster()) return false;
+    auto* c = static_cast<MTSClient*>(client);
+    auto next = tables;
+    // The pinned client remembers channel-filter capability. Prime it before
+    // the first frequency after a prior global/MPE query; discard this result.
+    (void) MTS_ShouldFilterNote(c, 0, 0);
+    for (int n = 0; n < 128; ++n)
+    {
+        bool havePitch = false;
+        double previousHz = 0.0;
+        float previousPitch = 0.0f;
+        for (int channel = 0; channel < 16; ++channel)
+        {
+            const auto note = static_cast<char>(n);
+            const auto ch = static_cast<signed char>(channel);
+            const double hz = MTS_NoteToFrequency(c, note, ch);
+            const bool mapped = !MTS_ShouldFilterNote(c, note, ch);
+            constexpr double dspHeadroom = 65536.0;
+            const bool safeHz = std::isfinite(hz) && hz > 0.0
+                && hz >= static_cast<double>(std::numeric_limits<float>::denorm_min())
+                && hz <= static_cast<double>((std::numeric_limits<float>::max)()) / dspHeadroom;
+            float pitch = static_cast<float>(n);
+            if (safeHz)
+            {
+                // Global masters commonly return the same Hz on all channels.
+                // Reuse only this pure conversion, never a mapping or query.
+                if (havePitch && hz == previousHz) pitch = previousPitch;
+                else pitch = tuning::TuningTable::pitchFromHz(hz);
+            }
+            if (!safeHz || !std::isfinite(pitch))
+            {
+                if (mapped) return false;
+                next[(size_t) channel].pitch[(size_t) n] = static_cast<float>(n);
+                next[(size_t) channel].mapped[(size_t) n] = false;
+            }
+            else
+            {
+                havePitch = true; previousHz = hz; previousPitch = pitch;
+                next[(size_t) channel].pitch[(size_t) n] = pitch;
+                next[(size_t) channel].mapped[(size_t) n] = mapped;
+            }
+        }
+    }
+    if (!hasMaster()) return false;
+    tables = next;
+    return true;
+}
+
 #else
 MtsEspClient::MtsEspClient() = default;
 MtsEspClient::~MtsEspClient() = default;
 bool MtsEspClient::available() noexcept { return false; }
 bool MtsEspClient::hasMaster() const noexcept { return false; }
 bool MtsEspClient::fillTable(tuning::TuningTable&) const noexcept { return false; }
+bool MtsEspClient::fillChannelTables(ChannelTables&, bool) const noexcept { return false; }
 #endif
 } // namespace cs80

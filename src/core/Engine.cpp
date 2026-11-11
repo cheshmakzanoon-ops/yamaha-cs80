@@ -1957,6 +1957,12 @@ void Engine::setMtsTuning(const tuning::TuningTable& table) noexcept
     if (global.tuningMode == 2) retuneSoundingVoices();
 }
 
+void Engine::setMtsChannelTunings(const std::array<tuning::TuningTable, 16>& tables) noexcept
+{
+    mtsTables = tables;
+    if (global.tuningMode == 2) retuneSoundingVoices();
+}
+
 bool Engine::handleSysEx(const std::uint8_t* data, int size) noexcept
 {
     // Validate transactionally before changing any channel. Scale/octave

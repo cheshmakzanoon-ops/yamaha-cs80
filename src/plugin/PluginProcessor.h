@@ -390,7 +390,7 @@ private:
     unsigned scalaAppliedVersion = 0; // audio thread
     juce::String scalaText, kbmText, scalaDescription; // guarded by scalaLock
     cs80::MtsEspClient mtsEsp;
-    cs80::tuning::TuningTable mtsEspTable; // audio thread
+    cs80::MtsEspClient::ChannelTables mtsEspTables; // audio thread
     std::atomic<bool> mtsEspConnected { false };
     std::vector<float> interleaved;
     std::vector<float> externalScratch;

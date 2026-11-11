@@ -949,13 +949,17 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         }
     }
     // MTS-ESP master (tuning_mode 2), when the client is compiled in.
-    const bool mtsMaster = cached[cs80::P_tuningMode] >= 1.5f && mtsEsp.fillTable(mtsEspTable);
+    // MPE follows the upstream recommendation to use global tuning. PURE
+    // retains the prior global polling path; tuning is inert in that policy.
+    const bool channelIndependent = engine.isMpeEnabled() || cached[cs80::P_parityMode] >= 0.5f;
+    const bool mtsMaster = cached[cs80::P_tuningMode] >= 1.5f
+        && mtsEsp.fillChannelTables(mtsEspTables, channelIndependent);
     mtsEspConnected.store(mtsMaster, std::memory_order_relaxed);
     if (mtsMaster)
     {
-        forEachEngine([this](cs80::Engine& e) { e.setMtsTuning(mtsEspTable); });
+        forEachEngine([this](cs80::Engine& e) { e.setMtsChannelTunings(mtsEspTables); });
         // Retain the last master table even if it disconnects before 16-voice activation.
-        if (!extensionActive) extensionEngine->setMtsTuning(mtsEspTable);
+        if (!extensionActive) extensionEngine->setMtsChannelTunings(mtsEspTables);
     }
 
     // 63 at every factor today; report any change rather than assume it.

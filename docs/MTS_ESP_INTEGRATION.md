@@ -70,8 +70,7 @@ ctest --test-dir build-mts --output-on-failure \
 
 This work does not claim a live external-master DAW test, native Windows or
 macOS qualification, whole-project aggregate gates,
-or measured CS-80 fidelity. Per-channel master tables and scale-name display
-are not implemented. Simultaneous live-master and local SysEx precedence needs
+or measured CS-80 fidelity. A later [channel-master integration](MTS_ESP_CHANNEL_MASTER.md) adds per-channel tables; scale-name display remains unimplemented. Simultaneous live-master and local SysEx precedence needs
 host-level qualification; the existing block-start-master/sample-position-SysEx
 ordering is unchanged.
 

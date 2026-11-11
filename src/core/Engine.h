@@ -261,6 +261,7 @@ public:
     void setScalaTuning(const tuning::TuningTable& table) noexcept;
     // Global replacement of all channel tables when tuning_mode = 2 (MTS-ESP).
     void setMtsTuning(const tuning::TuningTable& table) noexcept;
+    void setMtsChannelTunings(const std::array<tuning::TuningTable, 16>& tables) noexcept;
     // A complete MIDI Tuning Standard SysEx message (F0..F7) updates the
     // tuning_mode 2 tables. Scale/octave masks select channels; other supported
     // messages retain global addressing. Allocation-free. Returns true when applied.
