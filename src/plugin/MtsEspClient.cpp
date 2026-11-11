@@ -29,6 +29,20 @@ bool MtsEspClient::hasMaster() const noexcept
 {
     return client != nullptr && MTS_HasMaster(static_cast<MTSClient*>(client));
 }
+std::string MtsEspClient::masterScaleName() const
+{
+    if (!hasMaster()) return {};
+    const char* source = MTS_GetScaleName(static_cast<MTSClient*>(client));
+    if (source == nullptr) return {};
+    std::string name;
+    for (std::size_t i = 0; i < 255 && source[i] != '\0'; ++i)
+    {
+        const auto ch = static_cast<unsigned char>(source[i]);
+        name.push_back(ch < 32 || ch == 127 ? ' ' : source[i]);
+    }
+    return hasMaster() ? name : std::string{};
+}
+
 bool MtsEspClient::fillTable(tuning::TuningTable& table) const noexcept
 {
     if (!hasMaster()) return false;
@@ -130,6 +144,7 @@ MtsEspClient::~MtsEspClient() = default;
 bool MtsEspClient::available() noexcept { return false; }
 bool MtsEspClient::hasMaster() const noexcept { return false; }
 bool MtsEspClient::fillTable(tuning::TuningTable&) const noexcept { return false; }
+std::string MtsEspClient::masterScaleName() const { return {}; }
 bool MtsEspClient::fillChannelTables(ChannelTables&, bool) const noexcept { return false; }
 #endif
 } // namespace cs80

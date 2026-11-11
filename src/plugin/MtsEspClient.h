@@ -30,6 +30,8 @@ public:
     // or unsafe mapped Hz leaves the table unchanged. Source reads are not an
     // atomic snapshot of concurrent master edits or rapid reconnects.
     bool fillTable(tuning::TuningTable& table) const noexcept;
+    // Message thread only: bounded display copy, never called by audio polling.
+    std::string masterScaleName() const;
     using ChannelTables = std::array<tuning::TuningTable, 16>;
     // Complete transactional bank. Independent mode preserves upstream's
     // recommended global tuning while MPE is enabled.

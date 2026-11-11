@@ -62,7 +62,8 @@ by 9,600 bytes and staging uses an approximately 10 KiB bank on the stack.
 The microbenchmark excludes real external-library calls, engine publication,
 wrapper processing and master contention. It does not establish deadline safety,
 lock freedom, CPU-target compliance or live-service performance. Missing-master
-polls do not populate a bank. Existing bank/program and scale-name limits remain.
+polls do not populate a bank. Existing bank/program limits remain. [Scale-name display](MTS_ESP_SCALE_NAME.md)
+is implemented separately on the message thread.
 
 A later [within-poll validation reuse](MTS_ESP_VALIDATION_REUSE.md) reduces the
 common-frequency mock-backend cost while preserving all external queries. The

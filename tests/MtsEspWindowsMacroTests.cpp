@@ -14,6 +14,7 @@ namespace { MTSClient registeredClient; }
 extern "C" {
 MTSClient* MTS_RegisterClient() { return &registeredClient; }
 void MTS_DeregisterClient(MTSClient*) {}
+const char* MTS_GetScaleName(MTSClient*) { return ""; }
 bool MTS_HasMaster(MTSClient*) { return true; }
 double MTS_NoteToFrequency(MTSClient*, char note, signed char)
 {

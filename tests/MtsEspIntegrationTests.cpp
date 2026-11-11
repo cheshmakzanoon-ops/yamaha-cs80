@@ -64,6 +64,7 @@ MTSClient* MTS_RegisterClient()
     return new MTSClient;
 }
 void MTS_DeregisterClient(MTSClient* client) { ++deregistered; delete client; }
+const char* MTS_GetScaleName(MTSClient*) { return ""; }
 bool MTS_HasMaster(MTSClient* client) { return client != nullptr && master; }
 double MTS_NoteToFrequency(MTSClient*, char note, signed char channel)
 {

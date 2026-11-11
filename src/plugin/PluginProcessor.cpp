@@ -1727,3 +1727,35 @@ bool Cs80AudioProcessor::redo()
 {
     return apvts.redo();
 }
+
+// Display-only query. No name allocation or external name call occurs in processBlock.
+juce::String Cs80AudioProcessor::getMtsEspScaleName() const
+{
+    if (!isMtsEspConnected()) return {};
+    auto name = mtsEsp.masterScaleName();
+    const auto validUtf8 = [&] {
+        for (std::size_t i = 0; i < name.size();)
+        {
+            const auto first = static_cast<unsigned char>(name[i++]);
+            if (first < 128) continue;
+            const int extra = first >= 0xc2 && first <= 0xdf ? 1
+                : first >= 0xe0 && first <= 0xef ? 2
+                : first >= 0xf0 && first <= 0xf4 ? 3 : 0;
+            if (extra == 0 || i + static_cast<std::size_t>(extra) > name.size()) return false;
+            unsigned value = first & (0x7fu >> extra);
+            for (int n = 0; n < extra; ++n)
+            {
+                const auto next = static_cast<unsigned char>(name[i++]);
+                if ((next & 0xc0u) != 0x80u) return false;
+                value = (value << 6) | (next & 0x3fu);
+            }
+            const unsigned minimum = extra == 1 ? 0x80u : extra == 2 ? 0x800u : 0x10000u;
+            if (value < minimum || value > 0x10ffffu || (value >= 0xd800u && value <= 0xdfffu)) return false;
+        }
+        return true;
+    };
+    if (!validUtf8())
+        for (auto& ch : name)
+            if (static_cast<unsigned char>(ch) >= 128) ch = '?';
+    return juce::String::fromUTF8(name.c_str(), static_cast<int>(name.size())).trim();
+}

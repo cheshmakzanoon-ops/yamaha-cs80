@@ -25,6 +25,7 @@ void resetCounts(){frequencyCalls=filterCalls=0;}
 extern "C" {
 MTSClient* MTS_RegisterClient(){return new MTSClient;}
 void MTS_DeregisterClient(MTSClient*c){delete c;}
+const char* MTS_GetScaleName(MTSClient*) { return ""; }
 bool MTS_HasMaster(MTSClient*){return master;}
 double MTS_NoteToFrequency(MTSClient*c,char note,signed char channel){
  const int n=static_cast<unsigned char>(note);++frequencyCalls;

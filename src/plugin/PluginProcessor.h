@@ -237,6 +237,7 @@ public:
     // MTS-ESP (tuning_mode 2): client compiled in, and a master connected.
     static bool isMtsEspAvailable() noexcept { return cs80::MtsEspClient::available(); }
     bool isMtsEspConnected() const noexcept { return mtsEspConnected.load(std::memory_order_relaxed); }
+    juce::String getMtsEspScaleName() const; // Message thread only.
     // Sixteen-voice mode runs a second, identical eight-voice instrument.
     // Render thread diagnostics only, like getEngine().
     const cs80::Engine& getExtensionEngine() const noexcept { return *extensionEngine; }

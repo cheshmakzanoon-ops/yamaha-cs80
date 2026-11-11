@@ -106,6 +106,7 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
 
     styleLabel(description, {}, 13.5f);
     styleLabel(status, {}, 13.0f, ivoryDim);
+    status.setInterceptsMouseClicks(true, false); // TooltipWindow must hit this label.
     description.setJustificationType(juce::Justification::topLeft);
     status.setJustificationType(juce::Justification::topLeft);
 
@@ -221,9 +222,12 @@ void KeyboardTuningPage::refreshStatus()
         mts = "MTS-ESP: the client library is not compiled into this build; MIDI Tuning Standard SysEx still works.";
     else
         mts = processor.isMtsEspConnected() ? "MTS-ESP: master connected." : "MTS-ESP: no master connected.";
+    const auto masterScale = processor.getMtsEspScaleName();
+    if (masterScale.isNotEmpty()) mts += " Scale: " + masterScale;
     const auto line = lastError.isNotEmpty() ? lastError + "\n" + mts : mts;
     if (status.getText() != line)
         status.setText(line, juce::dontSendNotification);
+    status.setTooltip(line);
     loadKbm.setEnabled(hasScale);
 }
 

@@ -7,7 +7,7 @@ int main()
     table.pitch[69] = 72.125f;
     table.mapped[23] = false;
     const auto before = table;
-    if (client.available() || client.hasMaster() || client.fillTable(table)
+    if (client.available() || client.hasMaster() || !client.masterScaleName().empty() || client.fillTable(table)
         || table.pitch != before.pitch || table.mapped != before.mapped)
     {
         std::cerr << "no-client build must preserve local tuning\n";
