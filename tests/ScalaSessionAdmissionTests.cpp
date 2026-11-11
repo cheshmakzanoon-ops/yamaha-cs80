@@ -82,6 +82,20 @@ int main()
         for(auto* midi : {&ma,&mb}) {midi->addEvent(juce::MidiMessage::allSoundOff(1),0);midi->addEvent(juce::MidiMessage::noteOn(1,69,.8f),0);}
         full->processBlock(a,ma);limited->processBlock(b,mb);
         check(full->getEngine().activeVoices()>0 && limited->getEngine().activeVoices()==0 && limited->getExtensionEngine().activeVoices()==0,"out-of-range reference remains unplayable after anchoring tuning");
+        for(auto* host : {full.get(),limited.get()}) {
+            check(host->loadScalaTuning("Nonuniform\n5\n100.0\n300.0\n500.0\n800.0\n1200.0\n",
+                "2\n0\n127\n60\n60\n440.0\n3\n0\n1\n").isEmpty(),"nonuniform formal octave loads in processor");
+            host->setParamValue(cs80::P_detune,0);host->prepareToPlay(48000,256);
+            juce::MidiBuffer events;events.addEvent(juce::MidiMessage::noteOn(1,63,.8f),0);
+            for(int block=0;block<8;++block) {host->processBlock(a,events);events.clear();}
+            int active=0;
+            for(int voice=0;voice<8;++voice) if(host->getEngine().getVoiceInfo(voice).active) {
+                ++active;
+                const double error=12.*std::log2(host->getEngine().getRankInfo(voice,0).oscillatorHz/698.456463);
+                check(std::isfinite(error) && std::abs(error)<1e-3,"actual processor oscillator matches official nonuniform Scala oracle");
+            }
+            check(active==1,"formal octave oscillator fixture has one sounding note");
+        }
     }
     std::cout<<"Scala session admission: "<<checks<<" checks, "<<failures<<" failures\n";
     return failures ? 1 : 0;

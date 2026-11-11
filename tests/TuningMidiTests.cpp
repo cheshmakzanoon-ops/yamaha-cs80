@@ -114,6 +114,34 @@ void testScala()
             }
         }
     }
+    // Official Scala 1.88e oracle: formal octave advances scale degrees.
+    {
+        tn::Scale scale; tn::KeyboardMapping map;
+        check(tn::parseScale("Nonuniform\n5\n100.0\n300.0\n500.0\n800.0\n1200.0\n",scale).empty(),"formal octave oracle scale parses");
+        check(tn::parseKeyboardMapping("2\n0\n127\n60\n60\n440.0\n3\n0\n1\n",map).empty(),"formal octave oracle mapping parses");
+        tn::TuningTable tuned;
+        check(tn::buildTable(scale,map,tuned).empty(),"formal octave oracle table builds");
+        const double oracleHz[]{174.614116,220.,261.625565,293.664768,440.,466.163762,587.329536,698.456463,932.327523,1046.502261};
+        for(int n=56;n<=65;++n)
+            check(std::abs(tuned.pitch[n]-tn::TuningTable::pitchFromHz(oracleHz[n-56]))<1e-4f,"nonuniform formal octave matches official Scala frequencies");
+        for(int formal : {0,1,3,5,7,10}) for(int reference : {45,60,69,93})
+        {
+            map.octaveDegree=formal;map.reference=reference;
+            check(tn::buildTable(scale,map,tuned).empty(),"formal octave/reference combination builds");
+            const long long step=formal ? formal : 5;
+            auto degree=[&](int note) {const long long d=note-60;const long long rep=d>=0?d/2:-((-d+1)/2);return rep*step+(d-rep*2);};
+            const auto anchor=tn::degreeCents(scale,degree(reference));
+            for(int n=0;n<128;++n) {
+                const auto hz=440.*std::exp2((tn::degreeCents(scale,degree(n))-anchor)/1200.);
+                check(std::abs(tuned.pitch[n]-tn::TuningTable::pitchFromHz(hz))<1e-4f,"formal octave maps degree before pitch including negative repetitions");
+                if(step%5==0) {
+                    auto oldCents=[&](int note) {const long long d=note-60;const long long rep=d>=0?d/2:-((-d+1)/2);return rep*tn::degreeCents(scale,step)+tn::degreeCents(scale,d-rep*2);};
+                    const auto oldHz=440.*std::exp2((oldCents(n)-oldCents(reference))/1200.);
+                    check(tuned.pitch[n]==tn::TuningTable::pitchFromHz(oldHz),"whole-scale formal periods retain exact previous arithmetic");
+                }
+            }
+        }
+    }
     // Malformed input is rejected with a reason, never half-applied.
     tn::Scale s;
     check(!tn::parseScale("only a description\n", s).empty(), "too-short scale rejected");

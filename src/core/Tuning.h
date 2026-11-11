@@ -218,7 +218,11 @@ inline bool mappedNoteCents(const Scale& s, const KeyboardMapping& m, int note, 
     const int degree = m.map[(std::size_t) index];
     if (degree < 0) return false;
     const long long octaveDegree = m.octaveDegree > 0 ? m.octaveDegree : (long long) s.cents.size();
-    cents = rep * degreeCents(s, octaveDegree) + degreeCents(s, degree);
+    // A mapping repeats in scale degrees, not by multiplying the pitch of
+    // its formal octave. Preserve the old arithmetic for whole scale periods.
+    cents = octaveDegree % static_cast<long long>(s.cents.size()) == 0
+        ? rep * degreeCents(s, octaveDegree) + degreeCents(s, degree)
+        : degreeCents(s, rep * octaveDegree + degree);
     return true;
 }
 
