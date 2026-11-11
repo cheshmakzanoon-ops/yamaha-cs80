@@ -2,6 +2,7 @@
 #include "reference/IG00151Reference.h"
 #include "core/Vca.h"
 #include "tools/TruthInputSha256.h"
+#include "tools/FloatWav.h"
 #include <array>
 #include <charconv>
 #include <filesystem>
@@ -95,12 +96,15 @@ void close(std::ofstream& file) { file.flush(); require(bool(file),"Output write
 }
 int main(int argc,char** argv) {
     fs::path owned;
+    std::vector<fs::path> wavOwned;
+    bool wav = false, compare = false;
     try {
         if(argc==2 && std::string_view(argv[1])=="--help") {
             std::cout<<"Conditional IG00151 model, not hardware truth.\n"
                      <<"Required: --input FILE --rate HZ --samples N --out NEW_DIR\n"
                      <<"Optional: --steps N (1..128, default 8), --initial-li X (default first LC)\n"
                      <<"--tolerance X (absolute h/h2 guard, default .001); --compare-realtime true\n"
+                     <<"--wav-gain G (0<=G<=1000000): float32 WAV at shared explicit gain; start playback at low volume.\n"
                      <<"CSV: sample,input,lc,ei,envelope; N endpoints / N-1 piecewise-linear intervals.\n"
                      <<"Rate 8000..384000; duration <=10s; combined steps <=10000000.\n"
                      <<"Input/LC/EI/initial LI [-8,8], envelope [0,1]. Coupling starts at zero.\n";
@@ -109,7 +113,7 @@ int main(int argc,char** argv) {
         std::map<std::string,std::string> args;
         for(int i=1;i<argc;i+=2) {
             const std::string key=argv[i];
-            require(key=="--input" || key=="--rate" || key=="--samples" || key=="--out" || key=="--steps" || key=="--initial-li" || key=="--tolerance" || key=="--compare-realtime","Unknown option");
+            require(key=="--input" || key=="--rate" || key=="--samples" || key=="--out" || key=="--steps" || key=="--initial-li" || key=="--tolerance" || key=="--compare-realtime" || key=="--wav-gain","Unknown option");
             require(i+1<argc,"Missing option value"); require(args.emplace(key,argv[i+1]).second,"Duplicate option");
         }
         for(auto key:{"--input","--rate","--samples","--out"}) require(args.contains(key) && !args[key].empty(),"Missing required option");
@@ -119,7 +123,10 @@ int main(int argc,char** argv) {
         require(static_cast<long long>(count-1)*steps*3<=10000000,"Combined step budget exceeds ten million");
         const double tolerance=args.contains("--tolerance") ? decimal(args.at("--tolerance")) : .001;
         require(tolerance>0 && tolerance<=1,"Tolerance must be in (0,1]");
-        const bool compare=args.contains("--compare-realtime");
+        compare=args.contains("--compare-realtime");
+        wav=args.contains("--wav-gain");
+        const double wavGain=wav ? decimal(args.at("--wav-gain")) : 0;
+        if(wav) cs80::tools::validateWavGain(wavGain);
         require(!compare || args.at("--compare-realtime")=="true","Comparison flag value must be true");
         fs::path out=args.at("--out");
         require(!fs::exists(fs::symlink_status(out)),"Output already exists (including symlink)");
@@ -190,13 +197,25 @@ int main(int argc,char** argv) {
                 <<"  \"max_abs_h_h2_difference\": {\"li\": "<<liDifference<<", \"coupling\": "<<couplingDifference<<", \"output\": "<<outputDifference<<"},\n"
                 <<"  \"stimulus_bytes\": "<<bytes.size()<<", \"stimulus_sha256\": \""<<cs80::tools::inputSha256(bytes)<<"\",\n"
                 <<"  \"source_sha256\": {\"renderer\": \""<<VCA_RENDER_SHA<<"\", \"reference\": \""<<VCA_REFERENCE_SHA
+                <<"\", \"wav_helper\": \""<<WAV_HELPER_SHA
                 <<"\", \"hash_helper\": \""<<VCA_HASH_SHA<<"\", \"declared_core_model\": \""<<VCA_CORE_SHA
-                <<"\", \"model_document\": \""<<VCA_MODEL_SHA<<"\", \"workflow_document\": \""<<VCA_DOCUMENT_SHA<<"\"}\n}\n";
+                <<"\", \"model_document\": \""<<VCA_MODEL_SHA<<"\", \"workflow_document\": \""<<VCA_DOCUMENT_SHA<<"\"}";
+        if(wav) {
+            const auto reference=cs80::tools::writeFloatWav(out/"reference.wav",count,rate,wavGain,wavOwned,
+                [&](std::size_t i) { return ref::output(fine[i],drives[i]); });
+            cs80::tools::WavStats actual;
+            if(compare) actual=cs80::tools::writeFloatWav(out/"realtime.wav",count,rate,wavGain,wavOwned,
+                [&](std::size_t i) { return realtime[i][1]; });
+            cs80::tools::wavManifest(manifest,wavGain,count,rate,"VCA output",reference,compare ? &actual : nullptr);
+        }
+        manifest<<"\n}\n";
         close(manifest);
+        if(wav) std::cout<<"Diagnostic WAV: start playback at low volume; players/devices may clip above-full-scale values.\n";
         std::cout<<"Wrote conditional VCA reference; h/h2 output difference "<<outputDifference<<"\n";
         return 0;
     } catch(const std::exception& e) {
         if(!owned.empty()) { std::error_code ignored;
+            for(const auto& path : wavOwned) fs::remove(path,ignored);
             for(auto name:{"stimulus.csv","trace.csv","manifest.json"}) fs::remove(owned/name,ignored);
             fs::remove(owned,ignored); }
         std::cerr<<"vca_reference: "<<e.what()<<'\n'; return 1;

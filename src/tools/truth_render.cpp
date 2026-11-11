@@ -2,6 +2,7 @@
 #include "reference/IG00156Network.h"
 #include "core/Ig00156Filter.h"
 #include "tools/TruthInputSha256.h"
+#include "tools/FloatWav.h"
 #include <array>
 #include <charconv>
 #include <cmath>
@@ -36,6 +37,8 @@ struct Options {
     int steps = 16;
     bool compareRealtime = false;
     double realtimeRate = 0;
+    double wavGain = 0;
+    bool wav = false;
 };
 double number(const std::string& s) {
     std::size_t end = 0; double v = std::stod(s, &end);
@@ -166,6 +169,7 @@ Options parse(int argc, char** argv) {
             require(v == "true", "compare-realtime accepts only true; omit to disable");
             o.compareRealtime = true;
         }
+        else if (k == "--wav-gain") { o.wav = true; o.wavGain = number(v); cs80::tools::validateWavGain(o.wavGain); }
         else if (k == "--realtime-rate") o.realtimeRate = number(v);
         else if (k == "--stimulus") o.stimulus = v;
         else if (k == "--gain") o.gain = v;
@@ -352,6 +356,7 @@ void render(const Options& o) {
     }
     // No artifacts before numerical success. Never remove pre-existing content.
     require(fs::create_directory(o.out), "Cannot create new output directory");
+    std::vector<fs::path> wavOwned;
     try {
         std::ofstream csv(o.out / "trace.csv"), json(o.out / "manifest.json");
         csv.exceptions(std::ios::failbit | std::ios::badbit); json.exceptions(std::ios::failbit | std::ios::badbit);
@@ -444,7 +449,16 @@ void render(const Options& o) {
                  << ",\"hp\":";
             hpMetrics.json(json, realtime.size()); json << ",\"lp\":"; lpMetrics.json(json, realtime.size()); json << '}';
         }
+        if (o.wav) {
+            const auto reference = cs80::tools::writeFloatWav(o.out/"reference.wav", fine.size(), static_cast<std::uint32_t>(o.rate), o.wavGain, wavOwned,
+                                                            [&](std::size_t i) { return fine[i].lp; });
+            cs80::tools::WavStats actual;
+            if (o.compareRealtime) actual = cs80::tools::writeFloatWav(o.out/"realtime.wav", realtime.size(), static_cast<std::uint32_t>(o.rate), o.wavGain, wavOwned,
+                                                                     [&](std::size_t i) { return realtime[i].lp; });
+            cs80::tools::wavManifest(json, o.wavGain, fine.size(), o.rate, "filter LP", reference, o.compareRealtime ? &actual : nullptr);
+        }
         json << ",\n\"source_sha256\":{\"renderer\":\"" << TRUTH_RENDER_SHA
+             << "\",\"wav_helper\":\"" << WAV_HELPER_SHA
              << "\",\"input_sha256_helper\":\"" << TRUTH_INPUT_SHA
              << "\",\"network\":\"" << TRUTH_NETWORK_SHA << "\",\"linear\":\"" << TRUTH_LINEAR_SHA
              << "\",\"control\":\"" << TRUTH_CONTROL_SHA << "\",\"model_document\":\"" << TRUTH_DOCUMENT_SHA << "\"}"
@@ -463,6 +477,7 @@ void render(const Options& o) {
     } catch (...) {
         // Remove only this run's files. Preserve unrelated concurrent additions.
         std::error_code ignored;
+        for (const auto& path : wavOwned) fs::remove(path, ignored);
         fs::remove(o.out / "trace.csv", ignored);
         fs::remove(o.out / "manifest.json", ignored);
         if (!o.controls.empty()) {
@@ -474,6 +489,7 @@ void render(const Options& o) {
         fs::remove(o.out, ignored); // succeeds only if still empty
         throw;
     }
+    if (o.wav) std::cout << "Diagnostic WAV: start playback at low volume; players/devices may clip above-full-scale values.\n";
     std::cout << "Filter reference exported: " << count + 1 << " rows; refinement=" << error << '\n';
 }
 }
@@ -485,6 +501,8 @@ int main(int argc, char** argv) {
                      "[--ota-level 2.5 (0=linear)] [--gain unity|physical] [--substeps 16] [--tolerance .001]\n"
                      "[--controls CSV (sample,hp_hz,lp_hz,q; exactly N endpoint rows; replaces scalar controls)]\n"
                      "[--compare-realtime true --realtime-rate RATE (must match endpoint rate)]\n"
+                     "[--wav-gain G (0<=G<=1000000; opt-in float32 WAV, same gain for both outputs)]\n"
+                     "Start playback at low volume; above-full-scale values are retained.\n"
                      "Offline conditional filter only; not whole-instrument or measured hardware truth.\n"; return 0;
     }
     try { render(parse(argc, argv)); return 0; }

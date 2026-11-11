@@ -346,3 +346,25 @@ The documented 4,801-endpoint sweep completed with the default numerical setting
 and a refinement estimate of 3.40844e-06. This verifies the specified diagnostic
 workflow, not a recovered hardware modulation law or general production error
 threshold. Realtime DSP source files are unchanged.
+
+## Optional diagnostic listening export
+
+Add `--wav-gain 0.1` to explicitly enable `reference.wav` (fine reference LP output)
+and, when `--compare-realtime true` is enabled, `realtime.wav` (production diagnostic
+LP output). Both receive exactly the same supplied linear gain. Gain must be finite
+and in [0,1000000]; zero explicitly mutes. Omit the option to produce no WAV files.
+The gain applies only to these files, never to CSV traces or numerical metrics.
+
+Start playback at low volume. These are uncalibrated diagnostic signals, not a
+finished instrument, measured hardware truth, or perceptual proof. Float samples
+above full scale are retained; players and audio devices may clip them. There is no
+clipping, limiting, normalization, auto-level, latency shift, trimming or resampling.
+
+Files use little-endian mono IEEE float32 WAV (format 3, fmt extension size 0,
+`fact` sample count). Each double endpoint is multiplied by the explicit gain and
+rounded once to float32. There are N samples including t=0: sample i occurs at
+i/rate; the endpoint span is (N-1)/rate, while WAV playback lasts N/rate. The
+manifest `audio_export` records both durations, shared gain, and each exported
+float32 peak and count of samples strictly above absolute 1. Metadata and output
+bytes are deterministic. Invalid/nonfinite/out-of-float-range values or write
+failures reject the export and clean up files owned by the run.

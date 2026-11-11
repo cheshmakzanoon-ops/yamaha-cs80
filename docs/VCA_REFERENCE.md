@@ -107,6 +107,27 @@ Outputs omit source paths and wall clocks; the same executable/input/options
 produce deterministic bytes. Cross-platform libm last bits may differ.
 Existing output paths, including dangling symlinks, are rejected. The parent
 output directory must already exist. Computation completes before directory
-creation. Write/flush/close failures return nonzero and remove this run's three
-files and its directory if empty. Crashes or concurrent external mutations can
+creation. Write/flush/close failures return nonzero and remove this run's owned output
+files (including optional WAVs) and its directory if empty. Crashes or concurrent external mutations can
 still leave partial outputs; consumers must require successful process exit.
+
+## Optional diagnostic listening export
+
+Use `--wav-gain 0.1` to export `reference.wav` from the fine reference `output`
+column, plus `realtime.wav` from `realtime_output` if comparison is enabled.
+The supplied finite linear gain in [0,1000000] applies equally to both; zero mutes.
+Without this option no WAV is written. CSV values and numerical metrics are
+unchanged. This is the isolated VCA output, not a complete instrument.
+
+Start playback at low volume. These uncalibrated diagnostics are not hardware or
+perceptual proof. Values above full scale are retained and may clip in players or
+audio devices. No normalization, auto-level, clipping, limiting, latency shift,
+trimming or resampling is performed. Each double output times the shared gain is
+rounded once to float32.
+
+Mono little-endian IEEE float32 WAV uses format 3, fmt extension size 0 and a
+`fact` sample count. N samples include t=0 at i/rate: endpoint span (N-1)/rate
+and playback duration N/rate are distinct. The manifest `audio_export` records
+these, shared gain, exported float32 peak and count strictly above absolute 1.
+Output is deterministic. Invalid sample range or write failure fails the run and
+cleans up owned files. The shared helper hash is included in source provenance.

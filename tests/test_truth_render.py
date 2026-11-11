@@ -59,7 +59,7 @@ class RenderTests(unittest.TestCase):
         self.assertEqual(len(rows), 241)
         self.assertEqual(m['export_substeps'], 32)
         source = Path(__file__).resolve().parent.parent
-        paths = {'renderer': 'src/tools/truth_render.cpp', 'input_sha256_helper': 'src/tools/TruthInputSha256.h', 'network': 'src/reference/IG00156Network.h',
+        paths = {'wav_helper': 'src/tools/FloatWav.h', 'renderer': 'src/tools/truth_render.cpp', 'input_sha256_helper': 'src/tools/TruthInputSha256.h', 'network': 'src/reference/IG00156Network.h',
                  'linear': 'src/reference/IG00156Linear.h', 'control': 'src/core/Ig00156Filter.h',
                  'model_document': 'docs/IG00156_NODAL_MODEL.md'}
         self.assertEqual(m['source_sha256'], {k: hashlib.sha256((source / p).read_bytes()).hexdigest()

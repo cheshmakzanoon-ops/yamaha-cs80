@@ -1394,3 +1394,19 @@ if (CS80_BUILD_TESTS)
                 --renderer $<TARGET_FILE:cs80_vca_reference>)
     set_tests_properties(cs80_vca_reference_tests PROPERTIES TIMEOUT 120)
 endif()
+
+# Shared offline WAV artifact helper provenance.
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/tools/FloatWav.h")
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/tools/FloatWav.h" WAV_HELPER_SHA)
+foreach(target IN ITEMS cs80_truth_render cs80_vca_reference)
+    target_compile_definitions(${target} PRIVATE WAV_HELPER_SHA="${WAV_HELPER_SHA}")
+endforeach()
+if (CS80_BUILD_TESTS)
+    add_executable(cs80_float_wav_fixture tests/float_wav_fixture.cpp)
+    target_include_directories(cs80_float_wav_fixture PRIVATE src)
+    add_test(NAME cs80_float_wav_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_float_wav.py
+            --filter $<TARGET_FILE:cs80_truth_render> --vca $<TARGET_FILE:cs80_vca_reference>
+            --fixture $<TARGET_FILE:cs80_float_wav_fixture>)
+    set_tests_properties(cs80_float_wav_tests PROPERTIES TIMEOUT 120)
+endif()
