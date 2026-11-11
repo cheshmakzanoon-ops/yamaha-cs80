@@ -342,6 +342,8 @@ void MsegEditor::paint(juce::Graphics& g)
 
 void MsegEditor::mouseDown(const juce::MouseEvent& e)
 {
+    if (!e.mods.isLeftButtonDown() || e.mods.isPopupMenu())
+        return;
     grabKeyboardFocus();
     frozenViewLength = viewLength();
     dragStart = e.position;
@@ -428,6 +430,8 @@ void MsegEditor::mouseMove(const juce::MouseEvent& e)
 
 void MsegEditor::mouseDoubleClick(const juce::MouseEvent& e)
 {
+    if (!e.mods.isLeftButtonDown() || e.mods.isPopupMenu())
+        return;
     drag = Drag::none;
     if (const int i = hitPoint(e.position); i > 0 && shape.count > 2)
     {

@@ -72,5 +72,33 @@ void testMsegEditorLifecycle(Check check)
               "Delete and Backspace still remove the selected point after drag completion");
     }
 
+    for (int buttons : {juce::ModifierKeys::rightButtonModifier, juce::ModifierKeys::middleButtonModifier,
+                        juce::ModifierKeys::leftButtonModifier})
+    {
+        cs80::modern::MsegShape source;
+        source.count = 4;
+        source.points[0] = {0.f, 0.f, 0.f}; source.points[1] = {.25f, .7f, 0.f};
+        source.points[2] = {.6f, .3f, 0.f}; source.points[3] = {1.f, 0.f, 0.f};
+        host->getModernLayer().setShape(0, source);
+        MsegEditor editor(*host); editor.setSize(500, 240); editor.setMsegIndex(0);
+        auto event = [&](juce::Point<float> position) {
+            return juce::MouseEvent(juce::Desktop::getInstance().getMainMouseSource(), position,
+                juce::ModifierKeys(buttons), 1.f,0.f,0.f,0.f,0.f,
+                &editor,&editor,juce::Time::getCurrentTime(),position,juce::Time::getCurrentTime(),1,false);
+        };
+        const bool left = buttons == juce::ModifierKeys::leftButtonModifier;
+        const auto start = editor.pointPosition(1), moved = start + juce::Point<float>(0.f, -20.f);
+        editor.mouseDown(event(start)); editor.mouseDrag(event(moved)); editor.mouseUp(event(moved));
+        check((host->getModernLayer().getShape(0) != source) == left,
+              "only left-button gestures move envelope points");
+        editor.mouseDoubleClick(event(editor.pointPosition(1)));
+        check(editor.getShape().count == (left ? 3 : 4),
+              "only left-button double clicks delete envelope points");
+        const auto beforeInsert = editor.getShape();
+        editor.mouseDoubleClick(event(editor.toScreen(.45, .9)));
+        check(editor.getShape().count == beforeInsert.count + (left ? 1 : 0),
+              "only left-button double clicks insert envelope points");
+    }
+
 }
 }
