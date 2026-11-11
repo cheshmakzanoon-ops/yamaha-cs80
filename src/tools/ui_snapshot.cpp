@@ -9,6 +9,7 @@
 #include "../../tests/OutputMeterHostTests.h"
 #include "../../tests/VoiceActivityHostTests.h"
 #include "../../tests/ControllerResetHostTests.h"
+#include "../../tests/MtsDormantEngineHostTests.h"
 #include "../../tests/MpeMemberOnsetHostTests.h"
 #include "../../tests/MpeReleasedTargetHostTests.h"
 #include "../../tests/SixteenVoiceReleaseHostTests.h"
@@ -2090,6 +2091,14 @@ int main(int argc, char** argv)
         int checks = 0;
         cs80::tests::testMpeMemberOnsetHost([&](bool condition, const char* what) { ++checks; check(condition, what); });
         std::printf("MPE member onset host: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--mts-dormant-engine-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testMtsDormantEngineHost([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("MTS dormant engine host: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--controller-reset-tests") == 0)

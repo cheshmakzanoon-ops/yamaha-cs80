@@ -48,9 +48,8 @@ This is a memory measurement, not a throughput or whole-instrument CPU claim.
   updating logical pitch targets does not bypass that physical-model policy.
 - Host SysEx dispatch source already calls the Engine parser at event positions,
   but this patch's tests are core-only. No new host integration pass is claimed.
-- A preexisting host gap remains: SysEx reaches only active engines, so a dormant
-  sixteen-voice extension can miss tuning sent before it is enabled. A bounded
-  follow-up should synchronize tuning to that dormant engine and exercise real
-  processor8→16-voice transitions. Do not infer that case is fixed here.
-- An active MTS-ESP master globally replaces active-engine tables each block,
+- The core checkpoint left dormant host-engine synchronization untested. The
+  subsequent [host follow-up](MTS_DORMANT_ENGINE_HOST.md) fixes that dispatch gap
+  and records its separate real-processor transition tests and live-master limits.
+- An active MTS-ESP master globally replaces engine tables each block,
   intentionally taking precedence over previously received local channel scales.

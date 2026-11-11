@@ -945,7 +945,12 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     // MTS-ESP master (tuning_mode 2), when the client is compiled in.
     const bool mtsMaster = cached[cs80::P_tuningMode] >= 1.5f && mtsEsp.fillTable(mtsEspTable);
     mtsEspConnected.store(mtsMaster, std::memory_order_relaxed);
-    if (mtsMaster) forEachEngine([this](cs80::Engine& e) { e.setMtsTuning(mtsEspTable); });
+    if (mtsMaster)
+    {
+        forEachEngine([this](cs80::Engine& e) { e.setMtsTuning(mtsEspTable); });
+        // Retain the last master table even if it disconnects before 16-voice activation.
+        if (!extensionActive) extensionEngine->setMtsTuning(mtsEspTable);
+    }
 
     // 63 at every factor today; report any change rather than assume it.
     if (engine.getLatencySamples() != getLatencySamples())
@@ -1074,6 +1079,9 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
             // Keep SysEx on the existing validated Engine path. The MTS-ESP
             // adapter is used only for live-master tuning, not local parsing.
             forEachEngine([&](cs80::Engine& e) { e.handleSysEx(metadata.data, metadata.numBytes); });
+            // Tuning is persistent configuration, unlike active voice events.
+            // A later 8-to-16 transition must not resurrect an older table.
+            if (!extensionActive) extensionEngine->handleSysEx(metadata.data, metadata.numBytes);
             continue;
         }
         // Filter BEFORE getMessage(): long/system messages otherwise own heap data.
