@@ -1331,3 +1331,32 @@ if (CS80_BUILD_TESTS AND NOT CS80_TEST_TIMEOUT_SCALE EQUAL 1)
         endif()
     endforeach()
 endif()
+
+# Offline conditional IG00156 filter reference (not whole-instrument truth).
+add_executable(cs80_truth_render src/tools/truth_render.cpp)
+target_include_directories(cs80_truth_render PRIVATE src)
+# Configure reruns when a provenance input changes, including dirty local edits.
+foreach(input IN ITEMS src/tools/truth_render.cpp src/reference/IG00156Network.h
+                       src/reference/IG00156Linear.h src/core/Ig00156Filter.h docs/IG00156_NODAL_MODEL.md)
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${input}")
+endforeach()
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/tools/truth_render.cpp" TRUTH_RENDER_SHA)
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/reference/IG00156Network.h" TRUTH_NETWORK_SHA)
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/reference/IG00156Linear.h" TRUTH_LINEAR_SHA)
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/core/Ig00156Filter.h" TRUTH_CONTROL_SHA)
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/docs/IG00156_NODAL_MODEL.md" TRUTH_DOCUMENT_SHA)
+target_compile_definitions(cs80_truth_render PRIVATE
+    TRUTH_RENDER_SHA="${TRUTH_RENDER_SHA}" TRUTH_NETWORK_SHA="${TRUTH_NETWORK_SHA}"
+    TRUTH_LINEAR_SHA="${TRUTH_LINEAR_SHA}" TRUTH_CONTROL_SHA="${TRUTH_CONTROL_SHA}"
+    TRUTH_DOCUMENT_SHA="${TRUTH_DOCUMENT_SHA}")
+if (CS80_BUILD_TESTS)
+    add_test(NAME cs80_truth_render_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_truth_render.py
+                     --renderer $<TARGET_FILE:cs80_truth_render>)
+    set_tests_properties(cs80_truth_render_tests PROPERTIES TIMEOUT 120)
+endif()
+if (CS80_BUILD_TESTS)
+    add_executable(cs80_ig00156_step_diagnostics_tests tests/Ig00156StepDiagnosticsTests.cpp)
+    target_include_directories(cs80_ig00156_step_diagnostics_tests PRIVATE src)
+    add_test(NAME cs80_ig00156_step_diagnostics_tests COMMAND cs80_ig00156_step_diagnostics_tests)
+endif()

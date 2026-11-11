@@ -232,14 +232,26 @@ public:
     const Vector<8>& state() const noexcept { return z; }
     double hp() const noexcept { return 2.0 * (z[1] + z[2]) - z[3]; }
     double lp() const noexcept { return z[7]; }
-    // Advances by seconds with the input at both endpoints.
-    void step(double u0, double u1, double seconds)
+    struct StepResult
     {
+        bool converged = false, finite = true;
+        int iterations = 0;
+        double residual = 0.0, scale = 1e-30;
+    };
+    // Original unchecked API and arithmetic retained for existing offline gates.
+    void step(double u0, double u1, double seconds) { stepImpl(u0, u1, seconds, false); }
+    StepResult stepChecked(double u0, double u1, double seconds) { return stepImpl(u0, u1, seconds, true); }
+
+private:
+    StepResult stepImpl(double u0, double u1, double seconds, bool checked)
+    {
+        StepResult result;
         const auto f0 = derivative(z, u0, nullptr);
         Vector<8> next = z;
         for (std::size_t j = 0; j < 8; ++j) next[j] += seconds * f0[j];
         for (int it = 0; it < 50; ++it)
         {
+            result.iterations = it + 1;
             Matrix<8> jac {};
             const auto f1 = derivative(next, u1, &jac);
             Vector<8> r {};
@@ -256,7 +268,18 @@ public:
             const auto d = solve(m, r).value;
             for (std::size_t j = 0; j < 8; ++j) next[j] += d[j];
         }
+        if (!checked) { z = next; return result; }
+        const auto finalDerivative = derivative(next, u1, nullptr);
+        for (std::size_t i = 0; i < 8; ++i)
+        {
+            const double r = next[i] - z[i] - 0.5 * seconds * (f0[i] + finalDerivative[i]);
+            result.finite = result.finite && std::isfinite(next[i]) && std::isfinite(r);
+            result.residual = std::max(result.residual, std::abs(r));
+            result.scale = std::max(result.scale, std::abs(next[i]));
+        }
+        result.converged = result.finite && result.residual <= 1e-14 * result.scale;
         z = next;
+        return result;
     }
 
 private:

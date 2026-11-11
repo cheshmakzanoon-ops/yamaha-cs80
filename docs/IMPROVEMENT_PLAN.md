@@ -87,6 +87,10 @@ a `cs80_truth_render` tool beside `src/tools/parity_capture.cpp` that renders wh
 through truth models. `scripts/parity_harness.py` and `tests/parity/tolerances-v1.json`
 become real stage gates instead of synthetic-only checks.
 
+A bounded first exporter now exists: [cs80_truth_render](TRUTH_RENDER.md) renders
+the conditional IG00156 HP-to-LP filter pair with numerical certification and
+CSV/JSON provenance. Whole-note truth rendering and the other stages remain open.
+
 Public recordings are used **only** for blind, level-matched listening reviews. They are
 never treated as calibration data, as `docs/ANALOG_FIDELITY_REQUIREMENT.md` already requires.
 
