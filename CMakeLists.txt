@@ -955,6 +955,24 @@ if (CS80_BUILD_PLUGIN)
         target_link_libraries(cs80_mts_esp_processor_tests PRIVATE CS80Reference)
         add_test(NAME cs80_mts_esp_processor_tests COMMAND cs80_mts_esp_processor_tests)
         set_tests_properties(cs80_mts_esp_processor_tests PROPERTIES TIMEOUT 120)
+        # Explicit opt-in, namespace-dependent qualification. Never a default build/CTest.
+        # Only the copied official client changes its library loader path; shipping
+        # CS80Reference and its production MtsEspClient.cpp remain unchanged.
+        set(CS80_MTS_REAL_CLIENT_SOURCE "" CACHE FILEPATH "Isolated generated official libMTSClient.cpp")
+        set(CS80_MTS_REAL_BUILD_RPATH "" CACHE STRING "Optional verified dependency RUNPATH for real MTS processor qualification")
+        if(CS80_MTS_REAL_CLIENT_SOURCE)
+            if(NOT IS_ABSOLUTE "${CS80_MTS_REAL_CLIENT_SOURCE}" OR NOT EXISTS "${CS80_MTS_REAL_CLIENT_SOURCE}")
+                message(FATAL_ERROR "CS80_MTS_REAL_CLIENT_SOURCE must be an existing absolute generated client path")
+            endif()
+            add_executable(cs80_mts_real_processor EXCLUDE_FROM_ALL
+                tests/mts_real_library/processor.cpp src/plugin/MtsEspClient.cpp "${CS80_MTS_REAL_CLIENT_SOURCE}")
+            target_include_directories(cs80_mts_real_processor PRIVATE src
+                "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+            target_compile_definitions(cs80_mts_real_processor PRIVATE CS80_MTS_ESP_TEST_BACKEND=1
+                "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+            target_link_libraries(cs80_mts_real_processor PRIVATE CS80Reference ${CMAKE_DL_LIBS})
+            set_target_properties(cs80_mts_real_processor PROPERTIES BUILD_RPATH "${CS80_MTS_REAL_BUILD_RPATH}")
+        endif()
         add_executable(cs80_parameter_admission_tests tests/ParameterValueAdmissionTests.cpp)
         target_include_directories(cs80_parameter_admission_tests PRIVATE src
             "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")

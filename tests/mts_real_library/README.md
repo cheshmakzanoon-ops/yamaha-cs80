@@ -48,3 +48,71 @@ Only normal owned master/client deregistration is performed. No MTS_Reinitialize
 This validates the production adapter with the real official binary and separate-process IPC using adapted loader paths. It does NOT qualify the unchanged shipping loader/system installation, a native plug-in build, a real DAW, audio thread performance, or an external master application UI. It does NOT establish atomic/coherent snapshots during concurrent master mutation or rapid disconnect/reconnect. Updates are deliberately serialized with pipe handshakes. It does not exhaust every malformed frequency; the existing contract tests cover the wider adversarial input matrix.
 
 Evidence: build.log, run.log, initial-run logs, source-hashes.txt, loader patches, and complete harness source/scripts. The production working tree remained clean after qualification.
+
+## Optional direct production processor qualification
+
+The separate `prepare_processor.py`, `build_processor.py`, `run_processor.py` and
+`processor.cpp` extend this qualification through actual `Cs80AudioProcessor`
+`processBlock` calls. The original adapter harness remains unchanged. This is
+explicitly opt-in, excluded from default builds, and not registered with CTest
+because it uses the host's shared MTS namespace.
+
+Prepare a **new** evidence directory, build against an already configured native
+JUCE build of this repository, then run both engines serially:
+
+```sh
+python tests/mts_real_library/prepare_processor.py \
+  --repo /path/to/yamaha-cs80 --upstream /path/to/MTS-ESP \
+  --evidence /path/to/new-processor-evidence
+python /path/to/new-processor-evidence/build_processor.py \
+  --evidence /path/to/new-processor-evidence \
+  --native-build /path/to/existing-native-build
+python /path/to/new-processor-evidence/run_processor.py --engine legacy
+python /path/to/new-processor-evidence/run_processor.py --engine circuit
+```
+
+If CMake is not on PATH, pass `--cmake /path/to/cmake`. If retained verified native
+libraries require an explicit runtime location, pass `--runpath /verified/lib/path`
+to the build script. This sets only the optional executable's RUNPATH; do not
+weaken the runner's `LD_LIBRARY_PATH`/`LD_PRELOAD`/`LD_AUDIT` refusal. No system
+library installation or configuration change occurs.
+
+The optional target links an executable-local unchanged production adapter and
+the generated official upstream client before the production `CS80Reference`
+static archive. Symbol inspection requires exactly one adapter `fillTable`
+implementation and one `MTS_RegisterClient`. The postbuild processor manifest
+records the archive, executable, fixture, production sources and resolved runtime
+dependencies. The runner verifies it before either process can initialize MTS.
+
+Coverage: complete primary and dormant-extension 16-channel tables and filters,
+filtered-note allocation, real IPC updates, MPE/PURE global-table switching,
+late-channel invalid bank rejection with retained tuning, disconnect, and dormant
+8-to-16 activation. Sixteen fresh voices must use their retained channel pitches;
+4096 output frames must be finite and have nonzero energy. Legacy and circuit
+engines are separate serial runs, with normal deregistration and shared-memory
+cleanup checked after each.
+
+This exercises the production processor directly, **not** a hosted VST3, standalone
+application, real DAW or shipping system loader. It is a functional audio positive
+control, not spectral pitch extraction, reference-parity certification or a timing
+benchmark. Master edits remain pipe-serialized; no concurrent snapshot-coherence
+claim is made. Native JUCE/toolchain dependencies must already be configured by
+the caller; this harness does not install them.
+
+### Recorded processor result
+
+On 2026-11-11, Linux x86_64 qualification passed for both legacy and circuit
+engines against production source baseline `de6fd4a54098ef22dbe83f6094d8a2faca77dfa5`
+and the pinned official library above. All processor stages passed, including
+mode-transition table behavior and sixteen fresh correctly pitched voices after
+disconnect. Finite audio output had summed squared energy 92.1583 (legacy) and
+2.987 (circuit) over 4096 frames. Both processes exited with code 0 and shared
+memory was absent after each run. The original adapter qualification also passed
+unchanged afterward. These observations do not establish PURE audible bypass,
+retuning of already-sounding notes, or hosted VST3/DAW behavior.
+
+An independent reviewer inspected the optional linkage and fixture, then replayed
+both engine runs serially on the same verified artifacts. Both independently
+passed every stage with exit code 0, client count returning to zero and shared
+memory absent after each run. The linked static archive is hash-pinned; the
+manifest does not claim to enumerate every core `.cpp` source file.
