@@ -310,6 +310,8 @@ public:
 
     int activeVoices() const noexcept;
     bool isParityMode() const noexcept { return global.parityMode; }
+    // Render-thread accepted state, including PURE masking.
+    bool isArpeggiatorEnabled() const noexcept { return global.arpOn; }
     // Render-thread diagnostic. UI should derive the requested policy from its
     // APVTS snapshot instead of reading this audio-owned accepted state.
     RenderPolicy getRenderPolicy() const noexcept { return global.renderPolicy; }

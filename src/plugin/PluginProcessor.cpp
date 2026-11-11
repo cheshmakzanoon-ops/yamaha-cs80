@@ -995,9 +995,23 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     // 63 at every factor today; report any change rather than assume it.
     if (engine.getLatencySamples() != getLatencySamples())
         setLatencySamples(engine.getLatencySamples());
-    const bool pressureArpOn = !engine.isParityMode() && cached[cs80::P_arpOn] >= 0.5f;
+    bool pressureArpOn = engine.isArpeggiatorEnabled();
     if (pressureArpOn || pressureArpOn != pressureArpWasOn) keyPressureOwnership.clear();
     pressureArpWasOn = pressureArpOn;
+    auto refreshPressureArpMode = [&]
+    {
+        const bool current = engine.isArpeggiatorEnabled();
+        if (current != pressureArpOn)
+        {
+            // Program recalls can change ARP within a block. The supported
+            // sample-accurate lanes are continuous controls, not ARP or PURE.
+            // Revoke pressure proofs on the edge, but retain accepted UI
+            // release ownership until its actual note-off is dispatched.
+            keyPressureOwnership.clear();
+            pressureArpOn = current;
+            pressureArpWasOn = current;
+        }
+    };
 
     const float ribbon = pendingRibbon.exchange(noPendingControl, std::memory_order_relaxed);
     const float pitch = pendingPitch.exchange(noPendingControl, std::memory_order_relaxed);
@@ -1139,6 +1153,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         {
             if (handleProgramChange((metadata.data[0] & 0x0f) + 1, metadata.data[1]))
                 uiIndex = uiCount; // a policy transition discards the pre-transition UI batch
+            refreshPressureArpMode();
             continue;
         }
         const auto message = metadata.getMessage();

@@ -133,3 +133,10 @@ coverage or TSAN cleanliness.
 ## Verified executable checkpoint
 
 Commit `9b860b1ca6c5cf554261ccc23f7db5ffe4f8771f` passed [all platform builds, host smoke tests and strict validators](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40953422398), [DSP, sanitizer and raw baseline compatibility](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40953422266), and [screenshots](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/40953422502). GNU/Clang CTest includes the controlled epoch-interleaving script; MSVC retains the native queue and host tests. This verifies the stated software contract, not a whole-plugin hard-realtime guarantee or hardware equivalence. Historical validator failures remain recorded separately.
+
+## Sample-position ARP recall follow-up
+
+[Program ARP keyboard handoff](PROGRAM_ARP_KEYBOARD_HANDOFF.md) refreshes accepted
+ARP mode after same-policy MIDI Program Change, preserving conditional UI release
+ownership while revoking per-key pressure proofs on actual ARP edges. Existing
+cross-policy batch discard and MIDI-first equal-offset ordering are unchanged.

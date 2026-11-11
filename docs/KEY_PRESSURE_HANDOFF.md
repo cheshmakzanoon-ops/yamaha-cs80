@@ -85,3 +85,10 @@ audio-thread allocation or DSP-law change. The focused
 `CS80Snapshots --keyboard-handoff-tests` mode runs the processor/FIFO tests
 without constructing an editor or native peer; the full UI smoke gate still
 runs independently.
+
+## Program Change ARP edge follow-up
+
+[Program ARP keyboard handoff](PROGRAM_ARP_KEYBOARD_HANDOFF.md) applies the existing
+ARP pressure-ownership rule at each accepted sample-position recall rather than
+using a stale callback-start ARP flag. It also preserves UI release ownership for
+ARP source keys. The current automation lanes do not include an ARP switch.
