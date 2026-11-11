@@ -95,6 +95,23 @@ int main()
                 check(std::isfinite(error) && std::abs(error)<1e-3,"actual processor oscillator matches official nonuniform Scala oracle");
             }
             check(active==1,"formal octave oscillator fixture has one sounding note");
+            const auto signedError=host->loadScalaTuning("Signed mapping\n5\n100.0\n300.0\n500.0\n800.0\n1200.0\n",
+                "2\n0\n127\n60\n60\n440.0\n3\n-1\n0\n");
+            check(signedError.isEmpty(),"negative explicit map degree loads through real processor");
+            if(signedError.isEmpty()) {
+                const auto signedState=stateText(*host);restore(*host,signedState);
+                check(stateText(*host)==signedState,"negative mapping survives session roundtrip");
+                host->prepareToPlay(48000,256);
+                events.addEvent(juce::MidiMessage::noteOn(1,61,.8f),0);
+                for(int block=0;block<8;++block) {host->processBlock(a,events);events.clear();}
+                int signedActive=0;
+                for(int voice=0;voice<8;++voice) if(host->getEngine().getVoiceInfo(voice).active) {
+                    ++signedActive;
+                    const double error=12.*std::log2(host->getEngine().getRankInfo(voice,0).oscillatorHz/554.365262);
+                    check(std::isfinite(error) && std::abs(error)<1e-3,"negative mapping oscillator matches official Scala reference");
+                }
+                check(signedActive==1,"negative mapping has one sounding primary voice");
+            }
         }
     }
     std::cout<<"Scala session admission: "<<checks<<" checks, "<<failures<<" failures\n";

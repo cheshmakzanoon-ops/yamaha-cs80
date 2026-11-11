@@ -9,13 +9,12 @@
 #include <array>
 #include <atomic>
 
-struct Cs80AudioProcessor::LibraryState final : private juce::AsyncUpdater
+struct Cs80AudioProcessor::LibraryState final
 {
     explicit LibraryState(Cs80AudioProcessor& p) : owner(p) {}
-    ~LibraryState() override { cancelPendingUpdate(); }
 
     // Program change: notify the host (program list/name) from the message thread.
-    void notifyProgramChanged() { triggerAsyncUpdate(); }
+    void notifyProgramChanged() noexcept { owner.apvts.requestProgramDisplayUpdate(); }
 
     Cs80AudioProcessor& owner;
 
@@ -56,9 +55,4 @@ struct Cs80AudioProcessor::LibraryState final : private juce::AsyncUpdater
     std::array<Snapshot, 2> ab;
     int abActive = 0;
 
-private:
-    void handleAsyncUpdate() override
-    {
-        owner.updateHostDisplay(juce::AudioProcessor::ChangeDetails().withProgramChanged(true));
-    }
 };

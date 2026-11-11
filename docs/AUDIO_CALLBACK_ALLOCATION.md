@@ -1,6 +1,13 @@
 # Direct processor callback allocation regression
 
-## Purpose and result
+## Later finding
+
+A later independent run exposed an intermittent program-change allocation in
+JUCE message-queue posting. See [the reproduced cause and notifier correction](PROGRAM_DISPLAY_NOTIFICATION.md).
+The original passes below are historical bounded observations, not a guarantee
+that this path could never allocate.
+
+## Original purpose and result
 
 The Linux-only `cs80_audio_callback_allocation_tests` target adds an automated
 heap-activity regression around the real `Cs80AudioProcessor::processBlock`, not

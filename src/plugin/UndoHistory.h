@@ -48,6 +48,13 @@ public:
     // Brings the tree up to date now: pending non-user changes without the UndoManager, pending
     // user edits into the current transaction. Message thread.
     void syncNow();
+    // Audio-safe publication only. The existing message-thread timer delivers
+    // the coalesced host-display notification after synchronising parameters.
+    void requestProgramDisplayUpdate() noexcept
+    {
+        static_assert(std::atomic<bool>::is_always_lock_free);
+        programDisplayPending.store(true, std::memory_order_release);
+    }
     juce::CriticalSection& treeLock() noexcept { return lock; }
 
     // Message thread, outside any gesture/ScopedUserEdit. Unsafe calls are rejected before sync;
@@ -93,6 +100,7 @@ private:
     void syncExternal();
     void write(int index, juce::UndoManager* undoManager);
 
+    std::atomic<bool> programDisplayPending { false };
     juce::AudioProcessor& owner;
     juce::UndoManager& history;
     juce::CriticalSection lock;

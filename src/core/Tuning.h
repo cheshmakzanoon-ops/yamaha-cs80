@@ -20,6 +20,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <limits>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -50,7 +51,7 @@ struct KeyboardMapping
     int size = 0, first = 0, last = 127, middle = 60, reference = 69;
     double referenceHz = 440.0;
     int octaveDegree = 0;            // 0 = the scale's period
-    std::vector<int> map;            // -1 = unmapped ("x")
+    std::vector<std::optional<int>> map; // nullopt = unmapped ("x"); signed degrees are playable
 };
 
 namespace detail
@@ -187,9 +188,9 @@ inline std::string parseKeyboardMapping(const std::string& text, KeyboardMapping
         const std::size_t at = 7 + (std::size_t) i;
         const std::string t = at < lines.size() ? detail::trim(lines[at]) : std::string("x");
         long long degree = 0;
-        if (!t.empty() && (t[0] == 'x' || t[0] == 'X')) m.map.push_back(-1);
+        if (!t.empty() && (t[0] == 'x' || t[0] == 'X')) m.map.push_back(std::nullopt);
         else if (detail::parseInt(t.substr(0, t.find_first_of(" \t")), degree)
-                 && degree >= 0 && degree <= (std::numeric_limits<int>::max)()) m.map.push_back((int) degree);
+                 && degree >= (std::numeric_limits<int>::min)() && degree <= (std::numeric_limits<int>::max)()) m.map.push_back((int) degree);
         else return "invalid mapping entry " + std::to_string(i + 1);
     }
     out = m;
@@ -215,8 +216,9 @@ inline bool mappedNoteCents(const Scale& s, const KeyboardMapping& m, int note, 
     const long long size = m.size;
     const long long rep = d >= 0 ? d / size : -((-d + size - 1) / size);
     const long long index = d - rep * size;
-    const int degree = m.map[(std::size_t) index];
-    if (degree < 0) return false;
+    const auto entry = m.map[(std::size_t) index];
+    if (!entry) return false;
+    const long long degree = *entry;
     const long long octaveDegree = m.octaveDegree > 0 ? m.octaveDegree : (long long) s.cents.size();
     // A mapping repeats in scale degrees, not by multiplying the pitch of
     // its formal octave. Preserve the old arithmetic for whole scale periods.

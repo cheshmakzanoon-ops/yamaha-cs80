@@ -823,6 +823,12 @@ if (CS80_BUILD_PLUGIN)
     # This main-based feature is VST3-only. Keep the shipping AU wrapper intact.
     set(CS80_HOST_AUTOMATION_FORMATS VST3)
     include(cmake/HostAutomation.cmake)
+    include(cmake/ParameterStateMirror.cmake)
+    if(CS80_BUILD_TESTS)
+        add_test(NAME cs80_state_mirror_bridge_tests COMMAND "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/StateMirrorBridgeTests.py" "${_cs80_module_dir}")
+        set_tests_properties(cs80_state_mirror_bridge_tests PROPERTIES TIMEOUT 30)
+    endif()
 
     set(CS80_PLUGIN_FORMATS VST3 Standalone)
     if (APPLE)
@@ -947,6 +953,14 @@ if (CS80_BUILD_PLUGIN)
         target_link_libraries(cs80_parameter_admission_tests PRIVATE CS80Reference)
         add_test(NAME cs80_parameter_admission_tests COMMAND cs80_parameter_admission_tests)
         set_tests_properties(cs80_parameter_admission_tests PROPERTIES TIMEOUT 120)
+        add_executable(cs80_state_mirror_host_tests tests/StateMirrorHostTests.cpp)
+        target_include_directories(cs80_state_mirror_host_tests PRIVATE src
+            "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_state_mirror_host_tests PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_state_mirror_host_tests PRIVATE CS80Reference)
+        add_test(NAME cs80_state_mirror_host_tests COMMAND cs80_state_mirror_host_tests)
+        set_tests_properties(cs80_state_mirror_host_tests PROPERTIES TIMEOUT 120)
         add_executable(cs80_scala_session_admission_tests tests/ScalaSessionAdmissionTests.cpp)
         target_include_directories(cs80_scala_session_admission_tests PRIVATE src
             "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")

@@ -103,6 +103,54 @@ int main() {
         midi.addEvent(juce::MidiMessage::allSoundOff(1),0); tick("panic callback");
         audio.setSize(2,0); tick("zero frame callback");
     }
+    // Exercise the real processor notifier without posting from the audio scope.
+    // Timer servicing and host listeners are deliberately outside that scope.
+    {
+        struct DisplayListener final : juce::AudioProcessorListener {
+            int programs=0;bool wrongThread=false;
+            cs80::UndoableParameterState* requestDuringDelivery=nullptr;
+            void audioProcessorParameterChanged(juce::AudioProcessor*,int,float) override {}
+            void audioProcessorChanged(juce::AudioProcessor*,const ChangeDetails& details) override {
+                if(!details.programChanged)return;
+                ++programs;
+                wrongThread=wrongThread || !juce::MessageManager::getInstance()->isThisTheMessageThread();
+                if(auto* state=requestDuringDelivery) {
+                    requestDuringDelivery=nullptr;
+                    state->requestProgramDisplayUpdate();
+                }
+            }
+        } listener;
+        juce::TemporaryFile fixture("-program-display");
+        auto host=std::make_unique<Cs80AudioProcessor>(fixture.getFile());
+        host->prepareToPlay(48000,256);
+        auto serviceTimers=[] {
+            juce::Thread::sleep(120);
+            juce::Timer::callPendingTimersSynchronously();
+        };
+        serviceTimers();host->addListener(&listener);
+        juce::AudioBuffer<float> audio(2,256);juce::MidiBuffer midi;midi.ensureSize(4096);
+        for(int program : {1,2}) {
+            midi.clear();midi.addEvent(juce::MidiMessage::programChange(1,program),0);
+            probe::calls=probe::frees=0;probe::armed=true;host->processBlock(audio,midi);probe::armed=false;
+            check(probe::calls==0 && probe::frees==0,"program display request has no callback allocation or free");
+        }
+        check(listener.programs==0,"program display delivery stays deferred");
+        check(host->getCurrentProgram()==cs80::programIndexForMidi(0,0,2),"latest program selection is immediate before display notification");
+        serviceTimers();
+        check(listener.programs==1 && !listener.wrongThread,"timer coalesces program changes on message thread");
+        serviceTimers();check(listener.programs==1,"serviced program display request is not repeated");
+        listener.requestDuringDelivery=&host->getUndoableState();
+        probe::calls=probe::frees=0;probe::armed=true;
+        for(int i=0;i<256;++i)host->getUndoableState().requestProgramDisplayUpdate();
+        probe::armed=false;
+        check(probe::calls==0 && probe::frees==0,"repeated notifier publication is allocation-free");
+        serviceTimers();check(listener.programs==2,"repeated requests coalesce into one further notification");
+        serviceTimers();check(listener.programs==3,"request during delivery survives for the next timer");
+        serviceTimers();check(listener.programs==3 && !listener.wrongThread,"last notification is consumed exactly once");
+        // Listener outlives the processor and remains registered through teardown.
+        host->getUndoableState().requestProgramDisplayUpdate();host.reset();
+        serviceTimers();check(listener.programs==3,"pending destruction does not deliver to surviving listener");
+    }
     std::cout<<"Audio callback allocation: "<<checks<<" checks, "<<failures<<" failures\n";
     return failures ? 1 : 0;
 }

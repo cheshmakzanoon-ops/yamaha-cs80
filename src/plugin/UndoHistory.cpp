@@ -1,5 +1,6 @@
 #include "UndoHistory.h"
 #include "ParameterStateChildIndex.h"
+#include "ParameterStateMirror.h"
 
 namespace cs80
 {
@@ -119,8 +120,15 @@ void UndoableParameterState::parameterValueChanged(int index, float)
         return;
     if (onMessageThread())
     {
-        if (writing || history.isPerformingUndoRedo())
-            return;   // our own tree writes, or undo/redo replaying the tree: nothing new to record
+        if (history.isPerformingUndoRedo())
+            return;   // replay already changed the tree itself
+        if (writing)
+        {
+            // Mirror feedback is suppressed separately. This is a genuine
+            // reentrant parameter edit; let the next sync catch the tree up.
+            externalPending[(size_t) index].store(true, std::memory_order_release);
+            return;
+        }
         if (openGestures > 0 || userScopes > 0)
         {
             userPending[(size_t) index].store(true, std::memory_order_relaxed);
@@ -198,6 +206,7 @@ void UndoableParameterState::write(int index, juce::UndoManager* undoManager)
     if (const auto* current = child.getPropertyPointer("value"); current != nullptr && (float) *current == value)
         return;
     const juce::ScopedValueSetter<bool> guard(writing, true);
+    const ParameterStateMirrorScope mirror(this, child, value);
     if (undoManager != nullptr)
         undoManager->perform(new ParameterValueAction(*this, child, child.getProperty("value"),
                                                        value, child.hasProperty("value")));
@@ -208,6 +217,7 @@ void UndoableParameterState::write(int index, juce::UndoManager* undoManager)
 void UndoableParameterState::syncExternal()
 {
     const juce::ScopedLock scoped(lock);
+    if (writing) return; // preserve pending work rather than recursively mirror the same child
     for (int i = 0; i < (int) parameters.size(); ++i)
         if (externalPending[(size_t) i].exchange(false, std::memory_order_acq_rel))
             write(i, nullptr);
@@ -216,6 +226,7 @@ void UndoableParameterState::syncExternal()
 void UndoableParameterState::flushUser()
 {
     const juce::ScopedLock scoped(lock);
+    if (writing) return;
     for (int i = 0; i < (int) parameters.size(); ++i)
         if (userPending[(size_t) i].exchange(false, std::memory_order_acq_rel))
             write(i, &history);
@@ -288,6 +299,10 @@ void UndoableParameterState::timerCallback()
     syncExternal();
     if (openGestures > 0 || userScopes > 0)
         flushUser();   // a long drag keeps the tree current; the steps coalesce into its transaction
+    // No OS message-queue posting or queue growth on the audio thread.
+    // Keep external listener notification last to tolerate listener reentrancy.
+    if (programDisplayPending.exchange(false, std::memory_order_acq_rel))
+        owner.updateHostDisplay(juce::AudioProcessor::ChangeDetails().withProgramChanged(true));
 }
 
 } // namespace cs80

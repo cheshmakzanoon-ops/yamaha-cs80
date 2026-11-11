@@ -95,7 +95,7 @@ void testScala()
         for (int reference : {45,69,93}) for (int mappingKind = 0; mappingKind < 3; ++mappingKind)
         {
             auto map = fullMap; map.reference = reference;
-            if (mappingKind == 1) map.map[9] = -1; // Preserve existing unmapped-reference policy.
+            if (mappingKind == 1) map.map[9] = std::nullopt; // Preserve existing unmapped-reference policy.
             if (mappingKind == 2) { map.size = 0; map.map.clear(); }
             tn::TuningTable full;
             check(tn::buildTable(scale, map, full).empty(), "full-range reference builds");
@@ -144,6 +144,40 @@ void testScala()
     }
     // Malformed input is rejected with a reason, never half-applied.
     tn::Scale s;
+    // Observed official Scala 1.88e frequencies, not computed by our mapper.
+    for(int variant=0;variant<2;++variant) {
+        const double hz[2][8]={{293.664768,329.627557,440.,554.365262,659.255114,739.988845,1108.730524,1174.659072},
+                              {329.627557,391.995436,440.,659.255114,698.456463,880.,1046.502261,1396.912926}};
+        tn::Scale scale;tn::KeyboardMapping map;tn::TuningTable actual;
+        tn::parseScale("Nonuniform\n5\n100.0\n300.0\n500.0\n800.0\n1200.0\n",scale);
+        const auto error=tn::parseKeyboardMapping("2\n0\n127\n60\n60\n440.0\n3\n"+std::to_string(-1-variant)+"\n0\n",map);
+        check(error.empty(),"official negative mapping fixture parses");
+        if(!error.empty())continue;
+        check(tn::buildTable(scale,map,actual).empty(),"official negative mapping fixture builds");
+        for(int i=0;i<8;++i)check(actual.mapped[58+i] && std::abs(actual.pitch[58+i]-tn::TuningTable::pitchFromHz(hz[variant][i]))<1e-5f,
+                               "negative degree table matches official Scala frequency");
+    }
+    // Signed explicit map degrees are distinct from the literal unmapped x.
+    for (int degree : {-1,-2,-7}) for (int formal : {0,3,5,7})
+    {
+        tn::Scale scale; tn::KeyboardMapping map;
+        tn::parseScale("Nonuniform\n5\n100.0\n300.0\n500.0\n800.0\n1200.0\n",scale);
+        const auto error=tn::parseKeyboardMapping("3\n0\n127\n60\n60\n440.0\n"+std::to_string(formal)+"\n"+std::to_string(degree)+"\n0\nx\n",map);
+        check(error.empty(),"signed map degree accepted distinctly from x");
+        if(!error.empty()) continue;
+        tn::TuningTable actual;
+        check(tn::buildTable(scale,map,actual).empty(),"signed map degree table builds");
+        for(int note=0;note<128;++note) {
+            const int delta=note-60;
+            const int rep=delta>=0 ? delta/3 : -((-delta+2)/3);
+            const int index=delta-rep*3;
+            check(actual.mapped[(std::size_t)note]==(index!=2),"negative degree admits a note while x remains unmapped");
+            if(index==2)continue;
+            const long long mapped=rep*(formal ? formal:5)+(index==0 ? degree:0);
+            const float expected=(float)(69.+(tn::degreeCents(scale,mapped)-tn::degreeCents(scale,degree))/100.);
+            check(std::abs(actual.pitch[(std::size_t)note]-expected)<1e-5f,"signed mapping pitch follows relative scale degrees");
+        }
+    }
     check(!tn::parseScale("only a description\n", s).empty(), "too-short scale rejected");
     check(!tn::parseScale("d\n2\n100.0\nabc\n", s).empty(), "non-numeric pitch rejected");
     check(!tn::parseScale("d\n1\n0/1\n", s).empty(), "non-positive ratio rejected");

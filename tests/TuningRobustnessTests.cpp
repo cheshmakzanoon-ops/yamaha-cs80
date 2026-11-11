@@ -58,7 +58,7 @@ void rejectMapping(const Header& header, const std::string& entries, const std::
     tn::KeyboardMapping before;
     before.size = 3; before.first = 4; before.last = 110; before.middle = 55;
     before.reference = 70; before.referenceHz = 432.0; before.octaveDegree = 19;
-    before.map = { 1, -1, 4 };
+    before.map = { 1, -1, std::nullopt };
     auto actual = before;
     check(!tn::parseKeyboardMapping(mappingText(header, entries), actual).empty(), label + " rejected");
     check(same(actual, before), label + " leaves destination unchanged");
@@ -89,23 +89,27 @@ void testMapping()
     auto reversed = mappingHeader; reversed[1] = "61"; reversed[2] = "60";
     rejectMapping(reversed, "0\nx\n", "KBM reversed range");
     for (const auto& value : { std::to_string(static_cast<long long>((std::numeric_limits<int>::max)()) + 1),
-                             std::string("4294967296"), std::string("4294967297"), std::string("-1") })
+                             std::string("4294967296"), std::string("4294967297"), std::string("-2147483649") })
         rejectMapping(mappingHeader, "0\n" + value + '\n', "KBM invalid later degree " + value);
 
     tn::KeyboardMapping m;
     check(tn::parseKeyboardMapping(mappingText(mappingHeader), m).empty()
-              && m.size == 2 && m.map == std::vector<int>({ 0, -1 }), "KBM ordinary mapping accepted");
+              && m.size == 2 && m.map == std::vector<std::optional<int>>({ 0, std::nullopt }), "KBM ordinary mapping accepted");
     check(tn::parseKeyboardMapping(mappingText(mappingHeader, "0\n"), m).empty()
-              && m.map == std::vector<int>({ 0, -1 }), "KBM omitted entries remain unmapped");
+              && m.map == std::vector<std::optional<int>>({ 0, std::nullopt }), "KBM omitted entries remain unmapped");
     const auto intMax = (std::numeric_limits<int>::max)();
     check(tn::parseKeyboardMapping(mappingText(mappingHeader, std::to_string(intMax) + "\nX\n"), m).empty()
-              && m.map == std::vector<int>({ intMax, -1 }), "KBM largest stored degree remains representable");
+              && m.map == std::vector<std::optional<int>>({ intMax, std::nullopt }), "KBM largest stored degree remains representable");
+    for(int degree : {-1,-2,(std::numeric_limits<int>::min)()})
+        check(tn::parseKeyboardMapping(mappingText(mappingHeader,std::to_string(degree)+"\nx\n"),m).empty()
+              && m.map[0].has_value() && *m.map[0]==degree && !m.map[1],
+              "KBM negative signed degree remains distinct from unmapped x");
     const Header low { "0", "0", "0", "0", "0", "440", "0" };
     check(tn::parseKeyboardMapping(mappingText(low, ""), m).empty()
               && m.size == 0 && m.first == 0 && m.last == 0 && m.map.empty(), "KBM lower header bounds accepted");
     const Header high { "1024", "127", "127", "127", "127", "440", "1024" };
     check(tn::parseKeyboardMapping(mappingText(high, ""), m).empty()
-              && m.size == 1024 && m.map.size() == 1024 && m.map.back() == -1
+              && m.size == 1024 && m.map.size() == 1024 && !m.map.back()
               && m.first == 127 && m.middle == 127 && m.reference == 127 && m.octaveDegree == 1024,
           "KBM upper header bounds accepted");
 }

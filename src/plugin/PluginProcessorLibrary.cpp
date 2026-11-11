@@ -80,7 +80,7 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
     }
     currentProgram.store(index, std::memory_order_relaxed);
     library->midiProgram.store(index, std::memory_order_release);
-    // Host program display on the message thread (JUCE AsyncUpdater).
+    // Host program display is coalesced by the existing message-thread state timer.
     library->notifyProgramChanged();
 
     // The new sound starts at the Program Change's sample position.
