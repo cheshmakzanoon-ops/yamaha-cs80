@@ -41,15 +41,16 @@ void installMap(Instance& instance, int parameter, bool keyCC = false, bool mixe
         && restored.bytes.find(std::string("param=\"") + cs80::paramId(parameter) + "\"") != std::string::npos,
         "restored mapping accepted and serialized");
 }
-ParamID midiParameter(Instance& instance, int cc = 20)
+ParamID midiParameter(Instance& instance, int cc = 20, int zeroBasedChannel = 0)
 {
+    require(zeroBasedChannel >= 0 && zeroBasedChannel < 16, "valid native MIDI mapping channel");
     IMidiMapping* mapping = nullptr;
     require(instance.controller->queryInterface(IMidiMapping::iid,
         reinterpret_cast<void**>(&mapping)) == kResultOk, "native IMidiMapping");
     ParamID id = 0;
-    const auto result = mapping->getMidiControllerAssignment(0, 0, cc, id);
+    const auto result = mapping->getMidiControllerAssignment(0, static_cast<int16>(zeroBasedChannel), cc, id);
     mapping->release();
-    require(result == kResultOk, "native MIDI CC20 assignment");
+    require(result == kResultOk, "native MIDI controller assignment");
     return id;
 }
 double readSelector(Instance& instance, int parameter)
