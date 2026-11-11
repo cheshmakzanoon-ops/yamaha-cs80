@@ -250,6 +250,7 @@ Plugin outputs are under `build/CS80Reference_artefacts/Release/` (`VST3/`, `Sta
 | [HOST_AUTOMATION.md](docs/HOST_AUTOMATION.md), [MTS_ESP_INTEGRATION.md](docs/MTS_ESP_INTEGRATION.md) | current VST3 automation scope and embedded tuning client |
 | [CONTROLLER_RESET.md](docs/CONTROLLER_RESET.md), [MSEG_TRANSPORT_RATE.md](docs/MSEG_TRANSPORT_RATE.md) | recent MIDI reset and modulation timing corrections |
 | [MSEG_SHAPE_COPY.md](docs/MSEG_SHAPE_COPY.md) | copy an edited MSEG shape to another slot, with one-step undo |
+| [MSEG_POINT_VALUES.md](docs/MSEG_POINT_VALUES.md) | exact point time, level and outgoing curve editing, with one-step undo |
 | [PRESET_CATALOGUE_REFRESH.md](docs/PRESET_CATALOGUE_REFRESH.md) | stable preset selection, removed-file safety and refresh without unintended audition |
 | [MSEG_COMBINED_INTEGRATION.md](docs/MSEG_COMBINED_INTEGRATION.md), [MONO_MSEG_ROUTING.md](docs/MONO_MSEG_ROUTING.md), [MSEG_RETRIGGER_RATE.md](docs/MSEG_RETRIGGER_RATE.md) | merged mono/poly MSEG corrections, compatibility scope and review evidence |
 | [IMPROVEMENT_PLAN.md](docs/IMPROVEMENT_PLAN.md), [workstreams/HANDOVER.md](docs/workstreams/HANDOVER.md) | the plan and how the eight workstreams were merged |

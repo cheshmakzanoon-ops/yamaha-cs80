@@ -81,6 +81,8 @@ private:
 };
 
 // MSEG page: envelope selector, editor, loop/trigger/sync/bipolar, rate, presets and shape reuse.
+class MsegPointValues;
+
 class MsegPage final : public juce::Component, private juce::ChangeListener
 {
 public:
@@ -90,6 +92,8 @@ public:
     MsegEditor& getEditor() noexcept { return editor; }
     // Captures this slot and its shape now; delayed callbacks reject intervening edits.
     juce::PopupMenu buildShapeCopyMenu();
+    void showPointValues();
+    juce::Component* getPointValuesEditor() noexcept;
     void paint(juce::Graphics&) override;
     void resized() override;
 
@@ -97,6 +101,7 @@ private:
     void changeListenerCallback(juce::ChangeBroadcaster*) override;
     void refreshControls();
     bool canCopyShape() const;
+    bool canEditPointValues() const;
     void writeShape(const std::function<void(cs80::modern::MsegShape&)>& edit);
 
     Cs80AudioProcessor& processor;
@@ -104,6 +109,9 @@ private:
     MsegEditor editor;
     juce::ComboBox loopBox, triggerBox, presetBox;
     juce::TextButton copyShape { "Copy shape to..." };
+    juce::TextButton pointValues { "Point values..." };
+    std::unique_ptr<MsegPointValues> pointValuesEditor;
+    std::uint64_t pointValuesGeneration = 0;
     std::uint64_t copyMenuGeneration = 0;
     bool rateGestureActive = false;
     juce::ToggleButton syncButton { "Sync" }, bipolarButton { "Bipolar" };

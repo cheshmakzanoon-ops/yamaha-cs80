@@ -1,4 +1,5 @@
 #include "ModernModulationUi.h"
+#include "MsegPointValues.h"
 
 #include "ArtCommon.h"
 #include "PluginProcessor.h"
@@ -504,6 +505,131 @@ void MsegEditor::timerCallback()
     }
 }
 
+// An inline, non-modal editor: no desktop peer or nested message loop is needed.
+// Its callbacks use SafePointers because UI actions can outlive either component.
+class MsegPointValues final : public juce::Component
+{
+public:
+    using Submit = std::function<juce::String(int, float, float, float)>;
+    MsegPointValues(const MsegShape& captured, int initialPoint, Submit submit,
+                    std::function<void()> dismiss) : shape(captured)
+    {
+        setTitle("MSEG point values");
+        styleLabel(title, "Point values");
+        styleCombo(point, "MSEG point number");
+        for (int i = 0; i < shape.count; ++i) point.addItem("Point " + juce::String(i + 1), i + 1);
+        point.onChange = [this] { loadPoint(); };
+        for (int i = 0; i < 3; ++i)
+        {
+            auto& field = fields[(std::size_t) i];
+            field.setTitle(i == 0 ? "Point time" : i == 1 ? "Point normalized level" : "Point outgoing curve");
+            field.setFont(uiFont(14));
+            field.setColour(juce::TextEditor::backgroundColourId, charcoal);
+            field.setColour(juce::TextEditor::textColourId, ivory);
+            field.setSelectAllWhenFocused(true);
+            addAndMakeVisible(field);
+            addAndMakeVisible(labels[(std::size_t) i]);
+        }
+        styleLabel(labels[0], shape.sync ? "Time (quarter-note beats)" : "Time (seconds)", 12);
+        styleLabel(labels[1], "Level (normalized 0..1)", 12);
+        styleLabel(labels[2], "Outgoing curve (-1..1)", 12);
+        styleLabel(hint, "", 12);
+        styleLabel(error, "", 12);
+        error.setColour(juce::Label::textColourId, amberBright);
+        apply.setTitle("Apply MSEG point values");
+        cancel.setTitle("Cancel MSEG point values");
+        juce::Component::SafePointer<MsegPointValues> safe(this);
+        apply.onClick = [safe, submit]
+        {
+            if (safe == nullptr || !safe->isVisible() || !safe->isEnabled() || !safe->apply.isEnabled()) return;
+            const auto t = parseMsegPointValue(safe->fields[0].getText());
+            const auto l = parseMsegPointValue(safe->fields[1].getText());
+            const auto c = parseMsegPointValue(safe->fields[2].getText());
+            juce::String message = "Enter finite decimal numbers (use a decimal point).";
+            if (t && l && c)
+            {
+                const int index = safe->point.getSelectedId() - 1;
+                message = validateMsegPointValues(safe->shape, index, *t, *l, *c);
+                if (message.isEmpty()) message = submit(index, *t, *l, *c);
+            }
+            if (safe != nullptr) safe->error.setText(message, juce::dontSendNotification);
+        };
+        cancel.onClick = [safe, dismiss] { if (safe != nullptr) dismiss(); };
+        for (auto& field : fields)
+        {
+            field.onReturnKey = apply.onClick;
+            field.onEscapeKey = cancel.onClick;
+        }
+        for (auto* child : std::initializer_list<juce::Component*> { &title, &point, &hint, &error, &apply, &cancel })
+            addAndMakeVisible(child);
+        point.setSelectedId(juce::jlimit(0, shape.count - 1, initialPoint) + 1, juce::dontSendNotification);
+        loadPoint();
+    }
+    void paint(juce::Graphics& g) override
+    {
+        g.setColour(panelDark);
+        g.fillAll();
+        g.setColour(amber);
+        g.drawRect(getLocalBounds(), 1);
+    }
+    void resized() override
+    {
+        auto area = getLocalBounds().reduced(12);
+        auto top = area.removeFromTop(26);
+        title.setBounds(top.removeFromLeft(140));
+        point.setBounds(top.removeFromLeft(140));
+        area.removeFromTop(6);
+        auto columns = area.removeFromTop(50);
+        const int width = columns.getWidth() / 3;
+        for (int i = 0; i < 3; ++i)
+        {
+            auto column = columns.removeFromLeft(width).reduced(3, 0);
+            labels[(std::size_t) i].setBounds(column.removeFromTop(22));
+            fields[(std::size_t) i].setBounds(column);
+        }
+        area.removeFromTop(4);
+        hint.setBounds(area.removeFromTop(22));
+        error.setBounds(area.removeFromTop(22));
+        auto buttons = area.removeFromBottom(26);
+        cancel.setBounds(buttons.removeFromRight(80));
+        buttons.removeFromRight(6);
+        apply.setBounds(buttons.removeFromRight(80));
+    }
+private:
+    void loadPoint()
+    {
+        const int index = point.getSelectedId() - 1;
+        if (index < 0 || index >= shape.count) return;
+        const auto& p = shape.points[(std::size_t) index];
+        fields[0].setText(formatMsegPointValue(p.time), false);
+        fields[1].setText(formatMsegPointValue(p.level), false);
+        fields[2].setText(formatMsegPointValue(p.curve), false);
+        fields[0].setReadOnly(index == 0);
+        fields[2].setReadOnly(index == shape.count - 1);
+        fields[0].setColour(juce::TextEditor::textColourId, index == 0 ? ivoryDim : ivory);
+        fields[2].setColour(juce::TextEditor::textColourId, index == shape.count - 1 ? ivoryDim : ivory);
+        const auto lo = index == 0 ? 0.0f : shape.points[(std::size_t) index - 1].time;
+        const auto hi = index == 0 ? 0.0f : index + 1 < shape.count
+            ? shape.points[(std::size_t) index + 1].time : kMsegMaxTime;
+        fields[0].setTooltip(index == 0 ? "First point stays at time zero." :
+            "Absolute time: " + formatMsegPointValue(lo) + " to " + formatMsegPointValue(hi)
+                + (shape.sync ? " beats. Equal times make steps." : " seconds. Equal times make steps."));
+        fields[1].setTooltip(shape.bipolar ? "Normalized level 0..1. Bipolar output = 2 x level - 1." : "Normalized level 0..1.");
+        fields[2].setTooltip(index == shape.count - 1 ? "Last point: no outgoing segment; curve is preserved."
+            : "Curve of the segment starting here: positive = fast start, negative = slow start, zero = straight.");
+        hint.setText((shape.bipolar ? "Bipolar output = 2 x level - 1.  " : "")
+            + juce::String(index == shape.count - 1 ? "Last point has no outgoing curve."
+                                                    : "Curve: + fast start, - slow start, 0 straight."), juce::dontSendNotification);
+        error.setText({}, juce::dontSendNotification);
+    }
+    MsegShape shape;
+    juce::Label title, hint, error;
+    juce::ComboBox point;
+    std::array<juce::Label, 3> labels;
+    std::array<juce::TextEditor, 3> fields;
+    juce::TextButton apply { "Apply" }, cancel { "Cancel" };
+};
+
 // ---- MsegPage ---------------------------------------------------------------------------
 
 MsegPage::MsegPage(Cs80AudioProcessor& p) : processor(p), editor(p)
@@ -541,6 +667,12 @@ MsegPage::MsegPage(Cs80AudioProcessor& p) : processor(p), editor(p)
         buildShapeCopyMenu().showMenuAsync(juce::PopupMenu::Options().withTargetComponent(&copyShape));
     };
     addAndMakeVisible(copyShape);
+    pointValues.setTitle("Edit MSEG point values");
+    pointValues.setTooltip("Type exact point time, normalized level and outgoing curve. Select a point in the graph or in the editor.");
+    pointValues.setColour(juce::TextButton::buttonColourId, panelDark.brighter(0.1f));
+    pointValues.setColour(juce::TextButton::textColourOffId, ivory);
+    pointValues.onClick = [this] { showPointValues(); };
+    addAndMakeVisible(pointValues);
     for (auto* t : { &syncButton, &bipolarButton })
     {
         t->setColour(juce::ToggleButton::textColourId, ivory);
@@ -564,7 +696,7 @@ MsegPage::MsegPage(Cs80AudioProcessor& p) : processor(p), editor(p)
     for (auto* c : { &loopBox, &triggerBox, &presetBox })
         addAndMakeVisible(*c);
     styleSlider(rate, "MSEG rate");
-    rate.onDragStart = [this] { rateGestureActive = true; ++copyMenuGeneration; };
+    rate.onDragStart = [this] { rateGestureActive = true; ++copyMenuGeneration; ++pointValuesGeneration; };
     rate.onDragEnd = [this] { rateGestureActive = false; };
     styleLabel(rateLabel, "Rate");
     addAndMakeVisible(rate);
@@ -592,6 +724,66 @@ void MsegPage::selectMseg(int index)
     { return juce::jlimit(-3.0, 3.0, std::log2(juce::jmax(0.125, text.getDoubleValue()))); };
     rate.updateText();
     refreshControls();
+}
+
+juce::Component* MsegPage::getPointValuesEditor() noexcept { return pointValuesEditor.get(); }
+
+bool MsegPage::canEditPointValues() const
+{
+    return isEnabled() && pointValues.isEnabled() && editor.isEnabled() && !processor.isPure()
+        && editor.drag == MsegEditor::Drag::none && !rateGestureActive;
+}
+
+void MsegPage::showPointValues()
+{
+    const auto generation = ++pointValuesGeneration;
+    if (!canEditPointValues())
+    {
+        if (pointValuesEditor) pointValuesEditor->setVisible(false);
+        return;
+    }
+    const int slot = editor.getMsegIndex();
+    const auto [config, revision] = processor.getModernLayer().getEditSnapshot();
+    const auto captured = config.msegs[(std::size_t) slot];
+    const auto editorGeneration = editor.editGeneration;
+    juce::Component::SafePointer<MsegPage> safe(this);
+    auto submit = [safe, captured, slot, revision, generation, editorGeneration](int point, float time, float level, float curve) -> juce::String
+    {
+        if (safe == nullptr) return {};
+        if (!safe->canEditPointValues() || safe->pointValuesGeneration != generation
+            || safe->editor.editGeneration != editorGeneration || safe->editor.getMsegIndex() != slot
+            || safe->processor.getModernLayer().getRevision() != revision)
+        {
+            ++safe->pointValuesGeneration; // A rejected context cannot later revive.
+            return "State changed. Cancel and reopen Point values.";
+        }
+        auto edited = captured;
+        edited.points[(std::size_t) point] = { time, level, curve };
+        ++safe->pointValuesGeneration; // single use, even after undo
+        ++safe->editor.editGeneration;
+        safe->editor.selected = point; // Keep the applied point selected for the next edit.
+        safe->editor.repaint();
+        if (edited != captured)
+        {
+            auto& undo = safe->processor.getUndoManager();
+            undo.beginNewTransaction("Edit MSEG " + juce::String(slot + 1) + " point " + juce::String(point + 1));
+            safe->processor.getModernLayer().setShape(slot, edited);
+            undo.beginNewTransaction();
+            safe->editor.reload();
+        }
+        safe->pointValuesEditor->setVisible(false);
+        return {};
+    };
+    auto dismiss = [safe]
+    {
+        if (safe == nullptr) return;
+        ++safe->pointValuesGeneration;
+        safe->pointValuesEditor->setVisible(false);
+    };
+    pointValuesEditor = std::make_unique<MsegPointValues>(captured, editor.selected, submit, dismiss);
+    addAndMakeVisible(*pointValuesEditor);
+    resized();
+    pointValuesEditor->toFront(false);
 }
 
 bool MsegPage::canCopyShape() const
@@ -674,12 +866,15 @@ void MsegPage::resized()
     for (auto& b : selectors)
         b.setBounds(top.removeFromLeft(78).reduced(2, 0));
     top.removeFromLeft(10);
+    pointValues.setBounds(top.removeFromLeft(118).reduced(2, 0));
     presetBox.setBounds(top.removeFromRight(190).reduced(2, 0));
     copyShape.setBounds(top.removeFromRight(138).reduced(2, 0));
     area.removeFromTop(6);
     auto controls = area.removeFromBottom(28);
     area.removeFromBottom(6);
     editor.setBounds(area);
+    if (pointValuesEditor)
+        pointValuesEditor->setBounds(getLocalBounds().withSizeKeepingCentre(std::min(620, getWidth() - 24), 196));
     loopBox.setBounds(controls.removeFromLeft(140).reduced(2, 2));
     triggerBox.setBounds(controls.removeFromLeft(150).reduced(2, 2));
     syncButton.setBounds(controls.removeFromLeft(70).reduced(2, 2));
