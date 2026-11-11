@@ -95,9 +95,11 @@ private:
                 if (upperMembers > 0 && lowerMembers + upperMembers > 14) lowerMembers = 14 - upperMembers > 0 ? 14 - upperMembers : 0;
                 if (upperMembers == 15) lowerMembers = 0;
             }
-            // MPE: an MCM resets the zone's bend ranges to their defaults.
-            if (channel == 1) { lowerMasterRange = -1.0f; lowerMemberRange = -1.0f; }
-            if (channel == 16) { upperMasterRange = -1.0f; upperMemberRange = -1.0f; }
+            // MPE v1.1 section 2.2.5: a received MCM installs protocol defaults,
+            // not the optional manual-mode parameter fallback. Other zones
+            // retain their ranges even when this MCM shrinks their membership.
+            if (channel == 1) { lowerMasterRange = 2.0f; lowerMemberRange = 48.0f; }
+            if (channel == 16) { upperMasterRange = 2.0f; upperMemberRange = 48.0f; }
             return;
         }
         if (s.msb == 0 && s.lsb == 0)

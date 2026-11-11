@@ -178,9 +178,9 @@ void ratesCurvesAndRanges()
         // checks isolate the new note rather than pretending whole audio agrees.
         render(a, 1); render(b, 1);
         expected(a, find(a, 61, 2), x, 12.5f, .7f, .15f);
-        rpn(a, 1, 6, 15); // Same member role; clears negotiated range only.
+        rpn(a, 1, 6, 15); // Same role retains raw expression; MCM reinstates 48 semitones.
         a.noteOn(62, .8f, 2); render(a, 1);
-        expected(a, find(a, 62, 2), x, 7.5f, .7f, .15f);
+        expected(a, find(a, 62, 2), x, 48.0f, .7f, .15f);
     }
 }
 void isolationAndDefaults()

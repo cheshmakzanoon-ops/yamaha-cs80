@@ -292,7 +292,8 @@ void cacheWithChangedLaw()
         e.noteOn(64, .8f, channel); render(e, 1);
         const int v = find(e, 64, channel, true);
         witness(e, v, 64, channel, true);
-        targets(e, v, later, negotiated ? 12.5f : 7.5f, -.6f, .15f); timbre(e, v, later.timbre);
+        // layout() received MCMs: parameter edits cannot replace their 48-semitone default.
+        targets(e, v, later, negotiated ? 12.5f : 48.0f, -.6f, .15f); timbre(e, v, later.timbre);
         targets(e, 0, initial); timbre(e, 0, initial.timbre);
     }
 }
