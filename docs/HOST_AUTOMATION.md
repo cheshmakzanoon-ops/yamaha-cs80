@@ -35,9 +35,12 @@ ramps are not enabled or qualified by this change. Standalone has no VST3 queue.
 
 The intended recall contract for a process call that actually carried supported
 VST3 curves is coherent publication to already-active instruments, while keeping
-main's historical active-extension lifetime. Ordinary no-queue, AU and Standalone
-recall behavior remains a separate baseline-preservation requirement; this work
-must not silently replace it with the newer composed branch's behavior.
+main's historical active-extension lifetime. For that integration, ordinary
+no-queue, AU and Standalone recall was a separate baseline-preservation requirement.
+The later [active-extension program correction](PROGRAM_EXTENSION_RECALL.md)
+explicitly supersedes this requirement only for control-frame publication after
+a valid ordinary Program Change with an already-active extension. It retains
+block-boundary activation/retirement and the existing VST3-curve path.
 
 ## Verification
 
@@ -50,6 +53,10 @@ AU source paths, ordering, properties or bytes, including invalid AU shapes.
 clean exact-main module and candidate. Complete audio, all controller parameter IDs in order, and normalized-state
 captures must be byte-identical for no-queue, ordinary non-key and protected-key
 paths, including eight/sixteen-note inputs, program events and block partitions.
+This is the historical integration gate, not a claim that the later intentional
+active-extension program correction preserves every old baseline byte. Its
+changed valid-program cases need their own corrected reference; the frozen
+contract is retained rather than silently relaxed.
 Modern supported-key trajectories are a new behavior and are covered by the
 unchanged scalar/partition native gates instead of baseline byte equality.
 

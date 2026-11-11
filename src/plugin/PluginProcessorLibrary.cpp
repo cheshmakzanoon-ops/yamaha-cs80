@@ -64,8 +64,8 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
     // parameter writes from the audio thread are the same path as host
     // automation write-back.
     const auto& values = programs[(size_t) index].values;
-    // Scope the new two-engine publication to a real VST3 curve block. Main's
-    // ordinary no-queue, AU and Standalone recall paths remain unchanged.
+    // Curve recalls retain their existing queue/aggregate handling. Ordinary
+    // recalls also publish the frame to an already-active extension below.
     const bool vst3CurveRecall = vst3CurveRecallInProcess
         || (hostAutomationVst3 && hostAutomationBlock
             && std::any_of(automationCurves.begin(), automationCurves.end(),
@@ -110,7 +110,16 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
         });
     }
     else
+    {
         engine.setControlFrame({ cached, cachedHardwareSources });
+        if (extensionActive)
+        {
+            const auto prior = extensionEngine->getRenderPolicy();
+            extensionEngine->setControlFrame({ cached, cachedHardwareSources });
+            if (extensionEngine->getRenderPolicy() != prior)
+                extensionEngine->setExpression(expressionValue.load(std::memory_order_relaxed));
+        }
+    }
     if (engine.getRenderPolicy() == previousPolicy)
         return false;
     // A program on the other engine is a policy transition, exactly as at a

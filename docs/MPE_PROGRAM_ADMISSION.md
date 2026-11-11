@@ -6,7 +6,7 @@ MPE v1.1 section 2.3.3 requires a Mode-3 receiver to ignore Program Change on me
 
 The adapter now shares one admission predicate for Bank Select and Program Change. PURE continues to reject both. With effective MPE disabled, existing all-channel acceptance remains. With MPE enabled, current lower and upper managers are accepted; channel 1 with no assigned role retains its conventional compatibility fallback. Members and other unassigned channels are rejected. Roles are read at event dispatch, including after a preceding same-offset MCM.
 
-The instrument still has one shared bank pair and one global program. This is not independent per-zone multitimbrality. Recall remains unchanged: it can replace MPE and voice-mode parameter values, and later events follow that new effective state. The existing distinction between ordinary and VST3-curve recall/extension synchronization is not expanded into a new simultaneous two-engine recall guarantee.
+The instrument still has one shared bank pair and one global program. This is not independent per-zone multitimbrality. Recall remains unchanged: it can replace MPE and voice-mode parameter values, and later events follow that new effective state. The existing distinction between ordinary and VST3-curve recall/extension synchronization is not expanded into a new simultaneous two-engine recall guarantee. The later [active-extension recall correction](PROGRAM_EXTENSION_RECALL.md) separately changes ordinary control-frame publication; it is not part of this admission-only checkpoint.
 
 ## Evidence
 
