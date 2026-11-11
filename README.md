@@ -266,6 +266,14 @@ Plugin outputs are under `build/CS80Reference_artefacts/Release/` (`VST3/`, `Sta
 - Legacy audio must stay byte-identical. Record every intentional circuit-engine sound change and the commit that reproduces earlier renders.
 - Do not weaken or skip a gate to get a green run.
 
+## Conditional filter-to-VCA experiments
+
+The [fixed-filter to VCA endpoint workflow](docs/REFERENCE_CHAIN.md) composes the
+offline stage exporters with explicit LC/EI/envelope controls, exact input and
+binary snapshots, optional all-production stage comparison and shared-gain WAVs.
+It preserves individual stage diagnostics; its piecewise-linear interstage
+approximation is not a jointly integrated whole-note or hardware reference.
+
 ## Licence
 
 CS-80 Reference is licensed under the [GNU Affero General Public License v3](LICENSE). JUCE is used under its AGPLv3 option; every package carries JUCE's licence as `licenses/JUCE-LICENSE.md`. The editor artwork, code and programs are independent work; no Yamaha or Arturia artwork, code or preset banks are copied. Yamaha manuals and schematics are cited as hardware evidence. This project is not affiliated with or endorsed by Yamaha; "CS-80" is used to identify the instrument being modelled.

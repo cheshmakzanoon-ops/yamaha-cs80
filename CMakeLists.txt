@@ -1410,3 +1410,11 @@ if (CS80_BUILD_TESTS)
             --fixture $<TARGET_FILE:cs80_float_wav_fixture>)
     set_tests_properties(cs80_float_wav_tests PROPERTIES TIMEOUT 120)
 endif()
+
+# Bounded POSIX endpoint orchestration; preserves both existing stage exporters.
+if (CS80_BUILD_TESTS AND UNIX)
+    add_test(NAME cs80_reference_chain_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_reference_chain.py
+            --filter $<TARGET_FILE:cs80_truth_render> --vca $<TARGET_FILE:cs80_vca_reference>)
+    set_tests_properties(cs80_reference_chain_tests PROPERTIES TIMEOUT 120)
+endif()
