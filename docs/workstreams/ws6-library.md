@@ -301,9 +301,12 @@ opposite (original SUB on the circuit engine) for 222+. Intentional change, comm
   128 programs; MIDI 1.0 semantics (each byte holds until sent again). So bank 0/0 PC 0
   is the first curated program, bank 1/0 PC 22 the old program 22, bank 0/1 PC 5 curated
   133. Unassigned numbers change nothing.
-- MPE: only the master channel (1) selects banks and programs. PURE CS-80 ignores bank
-  select and Program Change (an interface extension; the original has no MIDI), like
-  MPE and CC11.
+- MPE: bank/program admission follows the current active lower or upper manager role.
+  Channel 1 with no assigned role retains its conventional compatibility fallback;
+  member channels are rejected, including channel 1 when assigned to the upper zone.
+  The bank pair and program remain shared across the instrument, not independent
+  per-zone sounds. PURE CS-80 ignores bank select and Program Change. See
+  [role-aware program admission](../MPE_PROGRAM_ADMISSION.md) for scope and tests.
 - Host tests (`tests/ProgramLibraryHostTests.h`, run in the UI smoke): program list,
   legacy recall by old index/name (including a pre-library state), PC in bank 0, bank
   MSB/LSB paging, persistence of bank select, unassigned numbers, same-engine PC keeping

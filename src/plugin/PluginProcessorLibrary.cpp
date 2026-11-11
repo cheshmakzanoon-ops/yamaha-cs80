@@ -24,12 +24,24 @@ void Cs80AudioProcessor::initialiseLibrary()
 // ---------------------------------------------------------------------------
 // Addressing (cs80::programIndexForMidi): bank MSB 0 = curated library, MSB 1 =
 // Legacy Library, bank LSB = page of 128, Program Change = program on the page.
-// In MPE mode only the master channel (1) selects banks and programs. PURE CS-80
-// ignores both, like MPE and CC11: the original instrument has no MIDI.
+// MPE Program Change follows negotiated manager roles. Bank Select uses the
+// same shared-bank product policy; channel 1 without a zone keeps its existing
+// conventional fallback. PURE ignores both: the original has no MIDI.
+namespace
+{
+bool acceptsMidiProgramChannel(const cs80::Engine& engine, int channel) noexcept
+{
+    if (cs80::isPureCs80(engine.getRenderPolicy())) return false;
+    if (!engine.isMpeEnabled()) return true;
+    const auto role = engine.getMpeZones().role(channel);
+    return role == cs80::MpeZoneLayout::Role::lowerMaster
+        || role == cs80::MpeZoneLayout::Role::upperMaster
+        || (channel == 1 && role == cs80::MpeZoneLayout::Role::none);
+}
+}
 void Cs80AudioProcessor::handleBankSelect(int controller, int value, int midiChannel) noexcept
 {
-    if (library == nullptr || (cached[cs80::P_mpeOn] >= 0.5f && midiChannel != 1)
-        || cs80::isPureCs80(engine.getRenderPolicy()))
+    if (library == nullptr || !acceptsMidiProgramChannel(engine, midiChannel))
         return;
     if (controller == 0)
         library->bankMsb = value;
@@ -39,8 +51,7 @@ void Cs80AudioProcessor::handleBankSelect(int controller, int value, int midiCha
 
 bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
 {
-    if (library == nullptr || cs80::isPureCs80(engine.getRenderPolicy())
-        || (cached[cs80::P_mpeOn] >= 0.5f && midiChannel != 1))
+    if (library == nullptr || !acceptsMidiProgramChannel(engine, midiChannel))
         return false;
     const int index = cs80::programIndexForMidi(library->bankMsb, library->bankLsb, program);
     const auto& programs = getFactoryPresets();
