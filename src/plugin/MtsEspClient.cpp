@@ -96,18 +96,15 @@ bool MtsEspClient::fillChannelTables(ChannelTables& tables, bool channelIndepend
             const auto ch = static_cast<signed char>(channel);
             const double hz = MTS_NoteToFrequency(c, note, ch);
             const bool mapped = !MTS_ShouldFilterNote(c, note, ch);
+            // The cached conversion is admitted only after safe, finite validation.
+            // Equal Hz therefore needs neither repeated range checks nor log2.
+            const bool reuse = havePitch && hz == previousHz;
             constexpr double dspHeadroom = 65536.0;
-            const bool safeHz = std::isfinite(hz) && hz > 0.0
+            const bool safeHz = reuse || (std::isfinite(hz) && hz > 0.0
                 && hz >= static_cast<double>(std::numeric_limits<float>::denorm_min())
-                && hz <= static_cast<double>((std::numeric_limits<float>::max)()) / dspHeadroom;
-            float pitch = static_cast<float>(n);
-            if (safeHz)
-            {
-                // Global masters commonly return the same Hz on all channels.
-                // Reuse only this pure conversion, never a mapping or query.
-                if (havePitch && hz == previousHz) pitch = previousPitch;
-                else pitch = tuning::TuningTable::pitchFromHz(hz);
-            }
+                && hz <= static_cast<double>((std::numeric_limits<float>::max)()) / dspHeadroom);
+            const float pitch = reuse ? previousPitch
+                : (safeHz ? tuning::TuningTable::pitchFromHz(hz) : static_cast<float>(n));
             if (!safeHz || !std::isfinite(pitch))
             {
                 if (mapped) return false;

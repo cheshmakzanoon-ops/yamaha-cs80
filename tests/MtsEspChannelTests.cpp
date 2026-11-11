@@ -2,6 +2,7 @@
 #include "plugin/MtsEspClient.h"
 #include "vendor/mts-esp/Client/libMTSClient.h"
 #include <cmath>
+#include <cfenv>
 #include <bit>
 #include <cstdint>
 #include <cstring>
@@ -78,6 +79,31 @@ int main(int argc,char**argv){
  check(frequencyCalls==128 && filterCalls==128,"MPE retains global query cost");
  for(int c=1;c<16;++c)check(bank[c].pitch==bank[0].pitch && bank[c].mapped==bank[0].mapped,"global result broadcasts to every channel");
  check(client.fillChannelTables(bank) && std::abs(bank[15].pitch[64]-64.5f)<1e-4f,"return from MPE reestablishes channel-aware capability");
+ const int originalRounding=std::fegetround();
+ for(int rounding : {FE_TONEAREST,FE_DOWNWARD,FE_UPWARD,FE_TOWARDZERO}) {
+  check(std::fesetround(rounding)==0,"rounding mode selected");
+  for(int trial=0;trial<16;++trial) {
+   for(int n=0;n<128;++n)for(int c=0;c<16;++c)
+    frequencies[c][n]=(c>0 && (c+trial)%3!=0) ? frequencies[c-1][n]
+       : std::ldexp(1.0+double((n*17+c*31+trial*13)%1024)/1024.,(n*7+c*11+trial)%180-90);
+   check(client.fillChannelTables(bank),"mixed repeated frequencies accepted");
+   for(int c=0;c<16;++c)for(int n=0;n<128;++n) {
+    volatile double hz=frequencies[c][n];
+    check(std::bit_cast<std::uint32_t>(bank[c].pitch[n])==std::bit_cast<std::uint32_t>(cs80::tuning::TuningTable::pitchFromHz(hz)),"mixed repeated conversion remains bit exact");
+   }
+  }
+ }
+ check(std::fesetround(originalRounding)==0,"rounding mode restored");
+ for(double hz : {double(std::numeric_limits<float>::denorm_min()),double((std::numeric_limits<float>::max)())/65536.}) {
+  for(auto& channel:frequencies)for(double& value:channel)value=hz;
+  check(client.fillChannelTables(bank),"equal accepted boundary frequencies admitted");
+  for(int c=0;c<16;++c)for(int n=0;n<128;++n)
+   check(std::bit_cast<std::uint32_t>(bank[c].pitch[n])==std::bit_cast<std::uint32_t>(cs80::tuning::TuningTable::pitchFromHz(hz)),"boundary reuse remains bit exact");
+  badChannel=1;badNote=64;badHz=std::numeric_limits<double>::quiet_NaN();filterBad=true;
+  check(client.fillChannelTables(bank),"filtered invalid between equal valid frequencies accepted");
+  check(bank[1].pitch[64]==64.f && !bank[1].mapped[64] && bank[0].pitch[64]==bank[2].pitch[64],"filtered invalid neither poisons nor clears safe reuse");
+  badChannel=-2;filterBad=false;
+ }
  std::cout<<"MTS-ESP channel adapter: "<<checks<<" checks, "<<failures<<" failures\n";
  return failures?1:0;
 }
