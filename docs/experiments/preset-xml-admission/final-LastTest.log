@@ -1,0 +1,253 @@
+Start testing: Nov 11 16:56 AST
+----------------------------------------------------------
+182/229 Testing: cs80_preset_revert_tests
+182/229 Test: cs80_preset_revert_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-revert-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_preset_revert_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+Preset opening sound REVERT: 1387 checks, 0 failures
+<end of output>
+Test time =   1.34 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_revert_tests" end time: Nov 11 16:56 AST
+"cs80_preset_revert_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+183/229 Testing: cs80_modern_recall_host_tests
+183/229 Test: cs80_modern_recall_host_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--modern-recall-host-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_modern_recall_host_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+UI SMOKE TIMING: modern_state_ranges cases=12 paths=24 total_seconds=0.061203 copy=0.001291 xml=0.003971 session_text=0.000555 fixture_write=0.001444 preset_load=0.012310 session_load=0.008533 audio=0.001079 save=0.012228 round_trip_load=0.017144
+UI SMOKE TIMING: modern_state_ranges cases=24 paths=48 total_seconds=0.127732 copy=0.002624 xml=0.008074 session_text=0.001027 fixture_write=0.002888 preset_load=0.028155 session_load=0.017864 audio=0.002193 save=0.024862 round_trip_load=0.035065
+UI SMOKE TIMING: modern_state_ranges cases=36 paths=72 total_seconds=0.192369 copy=0.003623 xml=0.012121 session_text=0.001517 fixture_write=0.004405 preset_load=0.040344 session_load=0.026771 audio=0.003184 save=0.037818 round_trip_load=0.054994
+UI SMOKE TIMING: modern_state_ranges cases=48 paths=96 total_seconds=0.254499 copy=0.004267 xml=0.016271 session_text=0.002078 fixture_write=0.005889 preset_load=0.051967 session_load=0.035896 audio=0.004168 save=0.049969 round_trip_load=0.073809
+UI SMOKE TIMING: modern_state_ranges cases=60 paths=120 total_seconds=0.317048 copy=0.005175 xml=0.020267 session_text=0.002625 fixture_write=0.007307 preset_load=0.063537 session_load=0.045532 audio=0.005086 save=0.062420 round_trip_load=0.092423
+UI SMOKE TIMING: modern_state_ranges cases=72 paths=144 total_seconds=0.382053 copy=0.005915 xml=0.024510 session_text=0.003124 fixture_write=0.008816 preset_load=0.078309 session_load=0.054519 audio=0.005993 save=0.074721 round_trip_load=0.111018
+UI SMOKE TIMING: modern_state_ranges cases=84 paths=168 total_seconds=0.446669 copy=0.006703 xml=0.028352 session_text=0.003672 fixture_write=0.010358 preset_load=0.090459 session_load=0.063930 audio=0.006968 save=0.089274 round_trip_load=0.129272
+UI SMOKE TIMING: modern_state_ranges cases=96 paths=192 total_seconds=0.510580 copy=0.007547 xml=0.032234 session_text=0.004219 fixture_write=0.011826 preset_load=0.102739 session_load=0.073441 audio=0.007861 save=0.102162 round_trip_load=0.148462
+UI SMOKE TIMING: modern_state_ranges cases=108 paths=216 total_seconds=0.572941 copy=0.008196 xml=0.036358 session_text=0.004719 fixture_write=0.013219 preset_load=0.114802 session_load=0.082372 audio=0.008824 save=0.114549 round_trip_load=0.167497
+UI SMOKE TIMING: modern_state_ranges cases=120 paths=240 total_seconds=0.634304 copy=0.008822 xml=0.040184 session_text=0.005227 fixture_write=0.014654 preset_load=0.126832 session_load=0.091134 audio=0.009792 save=0.126539 round_trip_load=0.186095
+UI SMOKE TIMING: modern_state_ranges cases=132 paths=264 total_seconds=0.695772 copy=0.009433 xml=0.044144 session_text=0.005737 fixture_write=0.016096 preset_load=0.138645 session_load=0.099968 audio=0.010830 save=0.139081 round_trip_load=0.204418
+UI SMOKE TIMING: modern_state_ranges cases=144 paths=288 total_seconds=0.759108 copy=0.010013 xml=0.047960 session_text=0.006338 fixture_write=0.017555 preset_load=0.151060 session_load=0.108391 audio=0.011711 save=0.153303 round_trip_load=0.222879
+UI SMOKE TIMING: modern_state_ranges cases=156 paths=312 total_seconds=0.820994 copy=0.010667 xml=0.051738 session_text=0.006862 fixture_write=0.019064 preset_load=0.162991 session_load=0.117119 audio=0.012622 save=0.165902 round_trip_load=0.241466
+UI SMOKE TIMING: modern_state_ranges cases=168 paths=336 total_seconds=0.885332 copy=0.011719 xml=0.056172 session_text=0.007394 fixture_write=0.020593 preset_load=0.174957 session_load=0.125812 audio=0.013920 save=0.179703 round_trip_load=0.259878
+UI SMOKE TIMING: modern_state_ranges cases=180 paths=360 total_seconds=0.948166 copy=0.012499 xml=0.060156 session_text=0.007911 fixture_write=0.022046 preset_load=0.187254 session_load=0.134746 audio=0.014824 save=0.192555 round_trip_load=0.278325
+UI SMOKE TIMING: modern_state_ranges cases=192 paths=384 total_seconds=1.010311 copy=0.013176 xml=0.064013 session_text=0.008401 fixture_write=0.023586 preset_load=0.199526 session_load=0.143690 audio=0.015749 save=0.204869 round_trip_load=0.296749
+UI SMOKE TIMING: modern_state_ranges cases=204 paths=408 total_seconds=1.076539 copy=0.013878 xml=0.068810 session_text=0.008927 fixture_write=0.025488 preset_load=0.211530 session_load=0.153474 audio=0.016749 save=0.217877 round_trip_load=0.316446
+UI SMOKE TIMING: modern_state_ranges cases=216 paths=432 total_seconds=1.140818 copy=0.014520 xml=0.073101 session_text=0.009488 fixture_write=0.026979 preset_load=0.223680 session_load=0.162169 audio=0.017785 save=0.230498 round_trip_load=0.336436
+UI SMOKE TIMING: modern_state_ranges cases=228 paths=456 total_seconds=1.202512 copy=0.015263 xml=0.076966 session_text=0.009987 fixture_write=0.028571 preset_load=0.235874 session_load=0.170945 audio=0.018841 save=0.242584 round_trip_load=0.354870
+UI SMOKE TIMING: modern_state_ranges cases=240 paths=480 total_seconds=1.264004 copy=0.016313 xml=0.080799 session_text=0.010466 fixture_write=0.030055 preset_load=0.248053 session_load=0.179512 audio=0.019767 save=0.254877 round_trip_load=0.373084
+UI SMOKE TIMING: modern_state_ranges cases=252 paths=504 total_seconds=1.326730 copy=0.016999 xml=0.084957 session_text=0.010969 fixture_write=0.031481 preset_load=0.260198 session_load=0.188141 audio=0.020653 save=0.267629 round_trip_load=0.391851
+UI SMOKE TIMING: modern_state_ranges cases=263 paths=526 total_seconds=1.384662 copy=0.017640 xml=0.088684 session_text=0.011424 fixture_write=0.032817 preset_load=0.271007 session_load=0.196451 audio=0.021475 save=0.278940 round_trip_load=0.409874
+Modern/session/preset/A-B recall: 2354 checks, 0 failures
+<end of output>
+Test time =   2.18 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_modern_recall_host_tests" end time: Nov 11 16:56 AST
+"cs80_modern_recall_host_tests" time elapsed: 00:00:02
+----------------------------------------------------------
+
+184/229 Testing: cs80_preset_file_recall_tests
+184/229 Test: cs80_preset_file_recall_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-file-recall-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_preset_file_recall_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+User-preset file/recall host: 2784 checks, 0 failures
+<end of output>
+Test time =   0.47 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_file_recall_tests" end time: Nov 11 16:56 AST
+"cs80_preset_file_recall_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+185/229 Testing: cs80_preset_xml_tests
+185/229 Test: cs80_preset_xml_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-xml-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_preset_xml_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+XXE sentinel path: /tmp/temp_83910723-cs80-xml-admission/cs80-xml-xxe-sentinel.txt
+XML valid case 0: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 1: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 2: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 3: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 4: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 5: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 6: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 7: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 8: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 9: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+XML valid case 10: admitted=1 brilliance=0.375 name=UTF é 🎹 error=
+Preset XML admission: 77 checks, 0 failures
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_xml_tests" end time: Nov 11 16:56 AST
+"cs80_preset_xml_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+186/229 Testing: cs80_preset_load_tests
+186/229 Test: cs80_preset_load_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-load-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_preset_load_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+Preset rejection case 0, audition=0: missing file
+Preset rejection case 0, audition=1: missing file
+Preset rejection case 1, audition=0: <CS80_PARAMS><
+Preset rejection case 1, audition=1: <CS80_PARAMS><
+Preset rejection case 2, audition=0: <NOT_A_PRESET/>
+Preset rejection case 2, audition=1: <NOT_A_PRESET/>
+Preset rejection case 3, audition=0: <cs80_params/>
+Preset rejection case 3, audition=1: <cs80_params/>
+Preset rejection case 4, audition=0: 
+Preset rejection case 4, audition=1: 
+Preset rejection case 5, audition=0: <CS80_PARAMS
+Preset rejection case 5, audition=1: <CS80_PARAMS
+Preset rejection case 6, audition=0: <CS80_PARAMS 
+Preset rejection case 6, audition=1: <CS80_PARAMS 
+Preset rejection case 7, audition=0: <CS80_PARAMS presetName='truncated'
+Preset rejection case 7, audition=1: <CS80_PARAMS presetName='truncated'
+Preset rejection case 8, audition=0: <CS80_PARAMS>
+Preset rejection case 8, audition=1: <CS80_PARAMS>
+Preset rejection case 9, audition=0: <CS80_PARAMS></CS80_PARAMS
+Preset rejection case 9, audition=1: <CS80_PARAMS></CS80_PARAMS
+Preset rejection case 10, audition=0: <CS80_PARAMS></OTHER>
+Preset rejection case 10, audition=1: <CS80_PARAMS></OTHER>
+Preset rejection case 11, audition=0: <CS80_PARAMS><PARAM/></OTHER>
+Preset rejection case 11, audition=1: <CS80_PARAMS><PARAM/></OTHER>
+Preset rejection case 12, audition=0: <CS80_PARAMS><PARAM></CS80_PARAMS>
+Preset rejection case 12, audition=1: <CS80_PARAMS><PARAM></CS80_PARAMS>
+Preset rejection case 13, audition=0: <CS80_PARAMS/><CS80_PARAMS/>
+Preset rejection case 13, audition=1: <CS80_PARAMS/><CS80_PARAMS/>
+Preset rejection case 14, audition=0: <CS80_PARAMS/>junk
+Preset rejection case 14, audition=1: <CS80_PARAMS/>junk
+Preset rejection case 15, audition=0: <CS80_PARAMS/><!--
+Preset rejection case 15, audition=1: <CS80_PARAMS/><!--
+Preset rejection case 16, audition=0: <CS80_PARAMS/><?unfinished
+Preset rejection case 16, audition=1: <CS80_PARAMS/><?unfinished
+Preset rejection case 17, audition=0: <CS80_PARAMS/> <
+Preset rejection case 17, audition=1: <CS80_PARAMS/> <
+Preset rejection case 18, audition=0: <CS80_PARAMS/> </CS80_PARAMS>
+Preset rejection case 18, audition=1: <CS80_PARAMS/> </CS80_PARAMS>
+Preset rejection case 19, audition=0: <CS80_PARAMS presetName='unclosed>
+Preset rejection case 19, audition=1: <CS80_PARAMS presetName='unclosed>
+Preset rejection case 20, audition=0: <CS80_PARAMS presetName=bare/>
+Preset rejection case 20, audition=1: <CS80_PARAMS presetName=bare/>
+Preset rejection case 21, audition=0: <CS80_PARAMS presetName='a' presetName='b'/>
+Preset rejection case 21, audition=1: <CS80_PARAMS presetName='a' presetName='b'/>
+Preset rejection case 22, audition=0: <CS80_PARAMS presetName='&unknown;'/>
+Preset rejection case 22, audition=1: <CS80_PARAMS presetName='&unknown;'/>
+Preset rejection case 23, audition=0: <CS80_PARAMS presetName='&#0;'/>
+Preset rejection case 23, audition=1: <CS80_PARAMS presetName='&#0;'/>
+Preset rejection case 24, audition=0: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+Preset rejection case 24, audition=1: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+Preset rejection case 25, audition=0: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+Preset rejection case 25, audition=1: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+Preset rejection case 26, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+Preset rejection case 26, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+Preset rejection case 27, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+Preset rejection case 27, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+Preset load failure/retry: 639 checks, 0 failures
+<end of output>
+Test time =   0.25 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_load_tests" end time: Nov 11 16:56 AST
+"cs80_preset_load_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+187/229 Testing: cs80_preset_save_storage_tests
+187/229 Test: cs80_preset_save_storage_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-save-storage-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_preset_save_storage_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+Preset save storage: 608 checks, 0 failures
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_save_storage_tests" end time: Nov 11 16:56 AST
+"cs80_preset_save_storage_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+188/229 Testing: cs80_preset_identity_tests
+188/229 Test: cs80_preset_identity_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-identity-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_preset_identity_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+Preset loaded identity: 79 checks, 0 failures
+<end of output>
+Test time =   0.15 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_identity_tests" end time: Nov 11 16:56 AST
+"cs80_preset_identity_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+189/229 Testing: cs80_preset_refresh_tests
+189/229 Test: cs80_preset_refresh_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--preset-refresh-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_preset_refresh_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+Preset catalogue refresh: 40 checks, 0 failures
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_preset_refresh_tests" end time: Nov 11 16:56 AST
+"cs80_preset_refresh_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+190/229 Testing: cs80_undo_replay_gesture_tests
+190/229 Test: cs80_undo_replay_gesture_tests
+Command: "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots" "--undo-replay-gesture-tests"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_undo_replay_gesture_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+Undo replay gesture tests: 317 checks, 0 failures
+<end of output>
+Test time =   0.41 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_undo_replay_gesture_tests" end time: Nov 11 16:56 AST
+"cs80_undo_replay_gesture_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+196/229 Testing: cs80_snapshot_cli_tests
+196/229 Test: cs80_snapshot_cli_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/preset-xml-admission/tests/SnapshotCliTests.py" "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots"
+Directory: /workspace/scratch/ee447c520988/build-preset-xml-admission
+"cs80_snapshot_cli_tests" start time: Nov 11 16:56 AST
+Output:
+----------------------------------------------------------
+Snapshot CLI admission: 8 invalid invocations rejected before UI execution
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_snapshot_cli_tests" end time: Nov 11 16:56 AST
+"cs80_snapshot_cli_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 11 16:56 AST

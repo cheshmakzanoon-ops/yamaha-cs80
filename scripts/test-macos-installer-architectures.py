@@ -11,7 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PRODUCT = 'CS-80 Reference'
 NOTICE_FIXTURES = ('assets/fonts/barlow-condensed/OFL.txt',
                    'assets/fonts/barlow-condensed/SOURCE.txt',
-                   'src/vendor/mts-esp/LICENSE')
+                   'src/vendor/mts-esp/LICENSE', 'src/vendor/libxml2/Copyright',
+                   'src/vendor/libxml2/SOURCE.txt', 'src/vendor/libxml2/ADDITIONAL-NOTICES.txt')
 
 class Architectures(unittest.TestCase):
     def run_fixture(self, architectures, missing=None, nonexecutable=None, missing_notice=None, caller_umask=-1, inspect_modes=False):
@@ -53,7 +54,7 @@ elif name == 'pkgbuild':
         assert stage.stat().st_mode & 0o777 == 0o755, 'staging root is not publicly traversable'
         if stage.name == 'root-docs':
             notices = list(stage.iterdir())
-            assert len(notices) == 6
+            assert len(notices) == 9
             assert all(p.stat().st_mode & 0o777 == 0o644 for p in notices), 'notices are not publicly readable'
         else:
             binary, = stage.glob('*/Contents/MacOS/*')

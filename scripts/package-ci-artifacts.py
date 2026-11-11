@@ -340,6 +340,9 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
         "licenses/BarlowCondensed-OFL.txt": (ROOT / "assets/fonts/barlow-condensed/OFL.txt").read_bytes(),
         "licenses/BarlowCondensed-SOURCE.txt": (ROOT / "assets/fonts/barlow-condensed/SOURCE.txt").read_bytes(),
         "licenses/MTS-ESP-LICENSE.txt": (ROOT / "src/vendor/mts-esp/LICENSE").read_bytes(),
+        "licenses/libxml2-Copyright.txt": (ROOT / "src/vendor/libxml2/Copyright").read_bytes(),
+        "licenses/libxml2-SOURCE.txt": (ROOT / "src/vendor/libxml2/SOURCE.txt").read_bytes(),
+        "licenses/libxml2-ADDITIONAL-NOTICES.txt": (ROOT / "src/vendor/libxml2/ADDITIONAL-NOTICES.txt").read_bytes(),
         "evidence/juce-provenance.txt": report_data,
         "SOURCE.txt": (f"Source commit: {commit}\n"
                        f"https://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/{commit}\n"

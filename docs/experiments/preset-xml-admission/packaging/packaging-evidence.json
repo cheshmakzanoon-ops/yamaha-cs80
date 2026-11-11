@@ -1,0 +1,56 @@
+{
+  "scope": "Offline packaging tests with synthetic payloads; no product builds or native macOS/Windows installer qualification.",
+  "commands": [
+    {
+      "command": "python scripts/test-packaging-notices.py",
+      "exit_code": 0,
+      "tests": 3,
+      "passed": 3,
+      "skipped": 0
+    },
+    {
+      "command": "python scripts/test-macos-installer-architectures.py",
+      "exit_code": 0,
+      "tests": 6,
+      "passed": 6,
+      "skipped": 0
+    },
+    {
+      "command": "python scripts/test-windows-installer-preflight.py",
+      "exit_code": 0,
+      "tests": 12,
+      "passed": 10,
+      "skipped": 2
+    },
+    {
+      "command": "python scripts/test-deb-runtime-dependencies.py",
+      "exit_code": 0,
+      "tests": 19,
+      "passed": 19,
+      "skipped": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "notice_sha256": {
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+    "src/vendor/libxml2/Copyright": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+    "src/vendor/libxml2/SOURCE.txt": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0"
+  },
+  "upstream_comparison": {
+    "upstream_commit": "96498992efa48d52b0e8b83058bd88dbdaf153c1",
+    "expected_commit": "96498992efa48d52b0e8b83058bd88dbdaf153c1",
+    "commit_matches": true,
+    "copyright_bytes_identical": true,
+    "upstream_copyright_sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+    "supplementary_headers": {
+      "dict.c": true,
+      "list.c": true
+    }
+  },
+  "historical_qualifier": "Unchanged: qualify-linux-deb.py is pinned to a historical packager and artifact predating these notice payloads.",
+  "test_output": "packaging-test-output.txt",
+  "license_completeness_review": "libxml2-license-scope.json"
+}

@@ -1,0 +1,24 @@
+{
+  "verdict": "approved for bounded user-preset admission",
+  "ctests_passed": 10,
+  "seconds": 5.12,
+  "exit": 0,
+  "xml_checks": 77,
+  "browser_checks": 639,
+  "snapshot_sha256": "aa179ebfc60576bf210112a47fcd7333055ff17f36604cc1b83d181639aa30a7",
+  "source_sha256": {
+    "cmake/PresetXml.cmake": "0e30d2cbcff21e66ab7269ef8c71b555e40f32891c2c30cf97589f190cd32c9f",
+    "src/plugin/PresetXml.h": "9f94b218a353605bb90ffc0b2ba53c38414d08683f3be0c105b4cebe43aa670d",
+    "src/plugin/PluginProcessor.cpp": "4723f5462dec0f3f68464be68f17c674efae4cec0e87af4957f5dc4ccdcee3df",
+    "tests/PresetXmlTests.h": "8d7a8c8d4563fc55c78fa1bf21b0877ab34900b18e0c05e5d10779822ff862ce",
+    "tests/PresetLoadTests.h": "7eb6d32303b2be7e9b9179774176663308c8b7891451a233c25bc3f6b32ff7a9",
+    "src/tools/ui_snapshot.cpp": "643bb973f3aa8b91d28ece40b82b0c1329f98a9ea68762a0f5df8cf8c9e40ad8",
+    "CMakeLists.txt": "3ada8601b3eb4be654e0bdda475d67d6fba023e61f7761fbeae62e530e6e2f2e"
+  },
+  "dependency_commit": "96498992efa48d52b0e8b83058bd88dbdaf153c1",
+  "xml_global_defined_symbols": 733,
+  "nonhidden_xml_globals": 0,
+  "snapshot_dynamic_libxml_dependency": false,
+  "snapshot_exported_xml_symbols": false,
+  "limits": "Linux offscreen focused qualification. No parser-time bound, comprehensive external-read trace, full suite, native peer or cross-platform execution claim. Packaging license audit separately owned."
+}

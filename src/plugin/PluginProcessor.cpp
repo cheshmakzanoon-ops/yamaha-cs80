@@ -1,3 +1,4 @@
+#include "PresetXml.h"
 #include "PluginProcessor.h"
 
 #include "PluginEditor.h"
@@ -1700,7 +1701,7 @@ juce::Result Cs80AudioProcessor::loadUserPreset(const juce::File& file)
 {
     if (! file.existsAsFile())
         return juce::Result::fail("The preset file is missing or is not a file.");
-    auto xml = juce::XmlDocument::parse(file);
+    auto xml = cs80::presetXml::readCompleteDocument(file);
     if (xml == nullptr)
         return juce::Result::fail("The preset file could not be read as valid XML.");
     auto tree = juce::ValueTree::fromXml(*xml);

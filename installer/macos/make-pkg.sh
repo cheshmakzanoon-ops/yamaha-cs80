@@ -62,6 +62,9 @@ cp "$root/LICENSE" "$work/root-docs/LICENSE.txt"
 cp "$root/assets/fonts/barlow-condensed/OFL.txt" "$work/root-docs/BarlowCondensed-OFL.txt"
 cp "$root/assets/fonts/barlow-condensed/SOURCE.txt" "$work/root-docs/BarlowCondensed-SOURCE.txt"
 cp "$root/src/vendor/mts-esp/LICENSE" "$work/root-docs/MTS-ESP-LICENSE.txt"
+cp "$root/src/vendor/libxml2/Copyright" "$work/root-docs/libxml2-Copyright.txt"
+cp "$root/src/vendor/libxml2/SOURCE.txt" "$work/root-docs/libxml2-SOURCE.txt"
+cp "$root/src/vendor/libxml2/ADDITIONAL-NOTICES.txt" "$work/root-docs/libxml2-ADDITIONAL-NOTICES.txt"
 pkgbuild --root "$work/root-docs" --install-location "/Library/Application Support/Reference Instruments/$product" \
     --identifier "$bundle_id.docs" --version "$version" "$work/components/docs.pkg"
 

@@ -151,7 +151,8 @@ class PreflightTests(unittest.TestCase):
         for relative in ('installer/windows/cs80-reference.iss', 'scripts/check-windows-installer.py',
                          'scripts/package-ci-artifacts.py', 'LICENSE',
                          'assets/fonts/barlow-condensed/OFL.txt', 'assets/fonts/barlow-condensed/SOURCE.txt',
-                         'src/vendor/mts-esp/LICENSE'):
+                         'src/vendor/mts-esp/LICENSE', 'src/vendor/libxml2/Copyright',
+                         'src/vendor/libxml2/SOURCE.txt', 'src/vendor/libxml2/ADDITIONAL-NOTICES.txt'):
             destination = source / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, destination)

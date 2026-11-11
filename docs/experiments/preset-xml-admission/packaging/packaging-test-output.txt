@@ -1,0 +1,61 @@
+$ python scripts/test-packaging-notices.py
+test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok
+test_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok
+test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.354s
+
+OK
+
+Exit code: 0
+
+$ python scripts/test-macos-installer-architectures.py
+......
+----------------------------------------------------------------------
+Ran 6 tests in 2.935s
+
+OK
+
+Exit code: 0
+
+$ python scripts/test-windows-installer-preflight.py
+...ss.......
+----------------------------------------------------------------------
+Ran 12 tests in 0.730s
+
+OK (skipped=2)
+
+Exit code: 0
+
+$ python scripts/test-deb-runtime-dependencies.py
+test_empty_scanner_output_fails_without_package (__main__.DependencyTests.test_empty_scanner_output_fails_without_package) ... ok
+test_external_plugin_directory_symlink_fails_without_package (__main__.DependencyTests.test_external_plugin_directory_symlink_fails_without_package) ... ok
+test_external_plugin_symlink_fails_without_package (__main__.DependencyTests.test_external_plugin_symlink_fails_without_package) ... ok
+test_foreign_machine_products_rejected (__main__.DependencyTests.test_foreign_machine_products_rejected) ... ok
+test_internal_relative_plugin_directory_symlink_is_delivered (__main__.DependencyTests.test_internal_relative_plugin_directory_symlink_is_delivered) ... ok
+test_internal_relative_plugin_symlink_is_delivered (__main__.DependencyTests.test_internal_relative_plugin_symlink_is_delivered) ... ok
+test_missing_dependency_metadata_fails_without_package (__main__.DependencyTests.test_missing_dependency_metadata_fails_without_package) ... ok
+test_missing_scanner_fails_without_package (__main__.DependencyTests.test_missing_scanner_fails_without_package) ... ok
+test_non_amd64_packaging_host_rejected (__main__.DependencyTests.test_non_amd64_packaging_host_rejected) ... ok
+test_non_elf_plugin_fails_without_package (__main__.DependencyTests.test_non_elf_plugin_fails_without_package) ... ok
+test_non_elf_products_fail_without_package (__main__.DependencyTests.test_non_elf_products_fail_without_package) ... ok
+test_non_elf_standalone_fails_without_package (__main__.DependencyTests.test_non_elf_standalone_fails_without_package) ... ok
+test_non_pie_executable_plugin_fails_without_package (__main__.DependencyTests.test_non_pie_executable_plugin_fails_without_package) ... ok
+test_non_pie_standalone_is_accepted (__main__.DependencyTests.test_non_pie_standalone_is_accepted) ... ok
+test_relocatable_plugin_fails_without_package (__main__.DependencyTests.test_relocatable_plugin_fails_without_package) ... ok
+test_relocatable_standalone_fails_without_package (__main__.DependencyTests.test_relocatable_standalone_fails_without_package) ... ok
+test_restrictive_caller_umask_preserves_package_modes (__main__.DependencyTests.test_restrictive_caller_umask_preserves_package_modes) ... ok
+test_symlinked_temporary_directory_is_accepted (__main__.DependencyTests.test_symlinked_temporary_directory_is_accepted) ... ok
+test_versioned_dependencies_from_both_payloads (__main__.DependencyTests.test_versioned_dependencies_from_both_payloads) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 3.495s
+
+OK
+
+Exit code: 0
+
+$ git diff --check
+
+Exit code: 0

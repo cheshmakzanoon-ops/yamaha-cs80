@@ -37,6 +37,9 @@ cp "$root/LICENSE" "$stage/usr/share/doc/cs80-reference/copyright"
 cp "$root/assets/fonts/barlow-condensed/OFL.txt" "$stage/usr/share/doc/cs80-reference/BarlowCondensed-OFL.txt"
 cp "$root/assets/fonts/barlow-condensed/SOURCE.txt" "$stage/usr/share/doc/cs80-reference/BarlowCondensed-SOURCE.txt"
 cp "$root/src/vendor/mts-esp/LICENSE" "$stage/usr/share/doc/cs80-reference/MTS-ESP-LICENSE.txt"
+cp "$root/src/vendor/libxml2/Copyright" "$stage/usr/share/doc/cs80-reference/libxml2-Copyright.txt"
+cp "$root/src/vendor/libxml2/SOURCE.txt" "$stage/usr/share/doc/cs80-reference/libxml2-SOURCE.txt"
+cp "$root/src/vendor/libxml2/ADDITIONAL-NOTICES.txt" "$stage/usr/share/doc/cs80-reference/libxml2-ADDITIONAL-NOTICES.txt"
 for juce_license in "$build/_deps/juce-src/LICENSE.md" "$root/deps/juce/LICENSE.md"; do
     if [ -f "$juce_license" ]; then
         cp "$juce_license" "$stage/usr/share/doc/cs80-reference/JUCE-LICENSE.md"

@@ -1,0 +1,246 @@
+Preset rejection case 0, audition=0: missing file
+Preset rejection case 0, audition=1: missing file
+Preset rejection case 1, audition=0: <CS80_PARAMS><
+Preset rejection case 1, audition=1: <CS80_PARAMS><
+Preset rejection case 2, audition=0: <NOT_A_PRESET/>
+Preset rejection case 2, audition=1: <NOT_A_PRESET/>
+Preset rejection case 3, audition=0: <cs80_params/>
+Preset rejection case 3, audition=1: <cs80_params/>
+Preset rejection case 4, audition=0: 
+Preset rejection case 4, audition=1: 
+Preset rejection case 5, audition=0: <CS80_PARAMS
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 5, audition=1: <CS80_PARAMS
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 6, audition=0: <CS80_PARAMS 
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 6, audition=1: <CS80_PARAMS 
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 7, audition=0: <CS80_PARAMS presetName='truncated'
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 7, audition=1: <CS80_PARAMS presetName='truncated'
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 8, audition=0: <CS80_PARAMS>
+Preset rejection case 8, audition=1: <CS80_PARAMS>
+Preset rejection case 9, audition=0: <CS80_PARAMS></CS80_PARAMS
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 9, audition=1: <CS80_PARAMS></CS80_PARAMS
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 10, audition=0: <CS80_PARAMS></OTHER>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 10, audition=1: <CS80_PARAMS></OTHER>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 11, audition=0: <CS80_PARAMS><PARAM/></OTHER>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 11, audition=1: <CS80_PARAMS><PARAM/></OTHER>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 12, audition=0: <CS80_PARAMS><PARAM></CS80_PARAMS>
+Preset rejection case 12, audition=1: <CS80_PARAMS><PARAM></CS80_PARAMS>
+Preset rejection case 13, audition=0: <CS80_PARAMS/><CS80_PARAMS/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 13, audition=1: <CS80_PARAMS/><CS80_PARAMS/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 14, audition=0: <CS80_PARAMS/>junk
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 14, audition=1: <CS80_PARAMS/>junk
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 15, audition=0: <CS80_PARAMS/><!--
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 15, audition=1: <CS80_PARAMS/><!--
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 16, audition=0: <CS80_PARAMS/><?unfinished
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 16, audition=1: <CS80_PARAMS/><?unfinished
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 17, audition=0: <CS80_PARAMS/> <
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 17, audition=1: <CS80_PARAMS/> <
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 18, audition=0: <CS80_PARAMS/> </CS80_PARAMS>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 18, audition=1: <CS80_PARAMS/> </CS80_PARAMS>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 19, audition=0: <CS80_PARAMS presetName='unclosed>
+Preset rejection case 19, audition=1: <CS80_PARAMS presetName='unclosed>
+Preset rejection case 20, audition=0: <CS80_PARAMS presetName=bare/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 20, audition=1: <CS80_PARAMS presetName=bare/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 21, audition=0: <CS80_PARAMS presetName='a' presetName='b'/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 21, audition=1: <CS80_PARAMS presetName='a' presetName='b'/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 22, audition=0: <CS80_PARAMS presetName='&unknown;'/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 22, audition=1: <CS80_PARAMS presetName='&unknown;'/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 23, audition=0: <CS80_PARAMS presetName='&#0;'/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 23, audition=1: <CS80_PARAMS presetName='&#0;'/>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 24, audition=0: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+Preset rejection case 24, audition=1: <CS80_PARAMS><!--unfinished</CS80_PARAMS>
+Preset rejection case 25, audition=0: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+Preset rejection case 25, audition=1: <CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>
+Preset rejection case 26, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 26, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 27, audition=0: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+Preset rejection case 27, audition=1: <CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing
+FAIL: failed LOAD or audition preserves the entire live parameter state and metadata
+FAIL: failed LOAD or audition does not emit a success callback
+FAIL: failed LOAD or audition identifies the rejected patch and exact file
+FAIL: failed load keeps its selected row, old loaded identity and retry action
+FAIL: repeated keyboard and double-click loads cannot announce success or alter sound
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+FAIL: valid declarations, comments, PI, CDATA, entities and whitespace preserve recall
+Preset load failure/retry: 639 checks, 189 failures

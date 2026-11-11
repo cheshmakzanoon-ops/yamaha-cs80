@@ -95,5 +95,8 @@ all seven changed source hashes, and reproduced all **12/12 CTests**, including
 
 [Exact source/binary hashes and results](experiments/preset-load-failures/manifest.json).
 
+The separate [complete XML admission change](PRESET_XML_ADMISSION.md) now closes
+the truncated/mismatched-document issue described above at user-file LOAD.
+
 A subsequent [loaded-identity fix](PRESET_LOADED_IDENTITY.md) distinguishes
 same-name user files while preserving the failure/retry contract described here.

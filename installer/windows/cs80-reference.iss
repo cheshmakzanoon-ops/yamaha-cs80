@@ -64,6 +64,9 @@ Source: "{#JuceLicense}"; DestDir: "{app}\licenses"; DestName: "JUCE-LICENSE.md"
 Source: "..\..\assets\fonts\barlow-condensed\OFL.txt"; DestDir: "{app}\licenses"; DestName: "BarlowCondensed-OFL.txt"; Flags: ignoreversion
 Source: "..\..\assets\fonts\barlow-condensed\SOURCE.txt"; DestDir: "{app}\licenses"; DestName: "BarlowCondensed-SOURCE.txt"; Flags: ignoreversion
 Source: "..\..\src\vendor\mts-esp\LICENSE"; DestDir: "{app}\licenses"; DestName: "MTS-ESP-LICENSE.txt"; Flags: ignoreversion
+Source: "..\..\src\vendor\libxml2\Copyright"; DestDir: "{app}\licenses"; DestName: "libxml2-Copyright.txt"; Flags: ignoreversion
+Source: "..\..\src\vendor\libxml2\SOURCE.txt"; DestDir: "{app}\licenses"; DestName: "libxml2-SOURCE.txt"; Flags: ignoreversion
+Source: "..\..\src\vendor\libxml2\ADDITIONAL-NOTICES.txt"; DestDir: "{app}\licenses"; DestName: "libxml2-ADDITIONAL-NOTICES.txt"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\CS-80 Reference"; Filename: "{app}\CS-80 Reference.exe"; Components: standalone

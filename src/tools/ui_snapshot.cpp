@@ -31,6 +31,7 @@
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
 #include "../../tests/PresetLoadTests.h"
+#include "../../tests/PresetXmlTests.h"
 #include "../../tests/PresetIdentityTests.h"
 #include "../../tests/PresetRefreshTests.h"
 #include "../../tests/PresetRevertTests.h"
@@ -2026,6 +2027,14 @@ int main(int argc, char** argv)
         std::printf("User-preset file/recall host: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--preset-xml-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testPresetXml([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Preset XML admission: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--preset-load-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -3862,6 +3871,7 @@ int main(int argc, char** argv)
     phases.begin("preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
     cs80::tests::PresetLoadAccess::run(check);
+    cs80::tests::testPresetXml(check);
     cs80::tests::PresetIdentityAccess::run(check);
     cs80::tests::PresetRefreshAccess::run(check);
     cs80::tests::PresetRevertAccess::run(check);

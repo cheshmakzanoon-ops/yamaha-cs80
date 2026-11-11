@@ -768,6 +768,7 @@ endif()
 # JUCE plugin / standalone
 # ---------------------------------------------------------------------------
 if (CS80_BUILD_PLUGIN)
+    include(cmake/PresetXml.cmake)
     if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/deps/juce/CMakeLists.txt")
         add_subdirectory(deps/juce)
     else()
@@ -907,6 +908,7 @@ if (CS80_BUILD_PLUGIN)
     target_sources(CS80Reference PRIVATE ${CS80_PLUGIN_SOURCES})
     target_include_directories(CS80Reference PRIVATE src)
     target_link_libraries(CS80Reference PRIVATE
+        LibXml2::LibXml2
         cs80_core
         ${CMAKE_DL_LIBS}
         juce::juce_audio_utils
@@ -1144,6 +1146,7 @@ if (CS80_BUILD_PLUGIN)
     )
     target_include_directories(CS80Snapshots PRIVATE src)
     target_link_libraries(CS80Snapshots PRIVATE
+        LibXml2::LibXml2
         cs80_core
         ${CMAKE_DL_LIBS}
         juce::juce_audio_utils
@@ -1179,6 +1182,9 @@ if (CS80_BUILD_PLUGIN)
     # Existing successful/normalized user-file recall suites, without native UI.
     add_test(NAME cs80_preset_file_recall_tests COMMAND CS80Snapshots --preset-file-recall-tests)
     set_tests_properties(cs80_preset_file_recall_tests PROPERTIES TIMEOUT 120)
+    # Complete-document and security admission of the exact user-file snapshot.
+    add_test(NAME cs80_preset_xml_tests COMMAND CS80Snapshots --preset-xml-tests)
+    set_tests_properties(cs80_preset_xml_tests PROPERTIES TIMEOUT 60)
     # Missing/corrupt user-file LOAD and audition, through real browser handlers.
     add_test(NAME cs80_preset_load_tests COMMAND CS80Snapshots --preset-load-tests)
     set_tests_properties(cs80_preset_load_tests PROPERTIES TIMEOUT 60)

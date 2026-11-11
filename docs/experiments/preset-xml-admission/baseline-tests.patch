@@ -1,0 +1,82 @@
+diff --git a/tests/PresetLoadTests.h b/tests/PresetLoadTests.h
+index c9120f2f..f266f050 100644
+--- a/tests/PresetLoadTests.h
++++ b/tests/PresetLoadTests.h
+@@ -41,7 +41,22 @@ struct PresetLoadAccess
+ 
+         // The catalogue was built from a valid file. It can disappear or be
+         // replaced externally while the browser remains open, before LOAD.
+-        for (int failure = 0; failure < 5; ++failure)
++        const char* malformed[] = {
++            "<CS80_PARAMS><", "<NOT_A_PRESET/>", "<cs80_params/>", "",
++            "<CS80_PARAMS", "<CS80_PARAMS ", "<CS80_PARAMS presetName='truncated'",
++            "<CS80_PARAMS>", "<CS80_PARAMS></CS80_PARAMS", "<CS80_PARAMS></OTHER>",
++            "<CS80_PARAMS><PARAM/></OTHER>", "<CS80_PARAMS><PARAM></CS80_PARAMS>",
++            "<CS80_PARAMS/><CS80_PARAMS/>", "<CS80_PARAMS/>junk", "<CS80_PARAMS/><!--",
++            "<CS80_PARAMS/><?unfinished", "<CS80_PARAMS/> <", "<CS80_PARAMS/> </CS80_PARAMS>",
++            "<CS80_PARAMS presetName='unclosed>", "<CS80_PARAMS presetName=bare/>",
++            "<CS80_PARAMS presetName='a' presetName='b'/>",
++            "<CS80_PARAMS presetName='&unknown;'/>", "<CS80_PARAMS presetName='&#0;'/>",
++            "<CS80_PARAMS><!--unfinished</CS80_PARAMS>",
++            "<CS80_PARAMS><![CDATA[unfinished</CS80_PARAMS>",
++            "<CS80_PARAMS><PARAM id='volume' value='0.2'></OTHER></CS80_PARAMS>",
++            "<CS80_PARAMS><PARAM id='volume' value='0.2'/></CS80_PARAMS>trailing",
++        };
++        for (int failure = 0; failure <= (int) std::size(malformed); ++failure)
+             for (bool audition : { false, true })
+             {
+                 browser.setAudition(false);
+@@ -64,10 +79,10 @@ struct PresetLoadAccess
+                     check(saved.file.moveFileTo(root.getChildFile("missing.cs80xml")),
+                           "move fixture out of catalogue without refreshing its stale row");
+                 else
+-                    check(saved.file.replaceWithText(failure == 1 ? "<CS80_PARAMS><"
+-                        : failure == 2 ? "<NOT_A_PRESET/>"
+-                        : failure == 3 ? "<cs80_params/>" : ""),
++                    check(saved.file.replaceWithText(malformed[failure - 1]),
+                           "replace fixture with malformed, wrong-root, wrong-case or empty content");
++                std::printf("Preset rejection case %d, audition=%d: %s\n", failure, (int) audition,
++                            failure == 0 ? "missing file" : malformed[failure - 1]);
+                 if (audition) browser.setAudition(true);
+                 list->selectRow(0); // AUDITION goes through selectedRowsChanged.
+                 if (! audition) browser.loadButton.onClick();
+@@ -113,6 +128,39 @@ struct PresetLoadAccess
+                           && host->getParamValue(P_tuningMode) == 1.0f,
+                       "successful retry preserves existing live PURE and physical-setup recall policy");
+             }
++
++        // Complete documents stay schema-permissive. XML syntax admission must
++        // not become a new preset schema or reject ordinary XML decorations.
++        const juce::String canonical = "<CS80_PARAMS presetName=\"XML &amp; valid\">"
++            "<PARAM id=\"" + juce::String(paramId(P_brilliance)) + "\" value=\"0.375\"/>"
++            "</CS80_PARAMS>";
++        check(saved.file.replaceWithText(canonical) && host->loadUserPreset(saved.file).wasOk(),
++              "canonical complete user document loads");
++        const juce::String valid[] = {
++            canonical,
++            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + canonical,
++            " \r\n\t<!-- before --><?application test?>" + canonical + "\n<!-- after --><?after ok?> ",
++            canonical.replace("XML &amp; valid", "XML &#38; valid"),
++            canonical.replace("XML &amp; valid", "XML &#x26; valid"),
++            canonical.replace("<PARAM", "<!-- quoted > < markers --><?inner ok?><PARAM"),
++            canonical.replace("</CS80_PARAMS>", "<![CDATA[ignored <tag> & literal]]></CS80_PARAMS>"),
++            canonical.replace(" value=\"0.375\"/>", " value='0.375'></PARAM >"),
++            "<!DOCTYPE CS80_PARAMS>" + canonical,
++        };
++        for (const auto& text : valid)
++        {
++            host->setParamValue(P_brilliance, 0.8125f);
++            check(saved.file.replaceWithText(text), "write complete decorated XML fixture");
++            check(host->loadUserPreset(saved.file).wasOk()
++                      && host->getParamValue(P_brilliance) == 0.375f
++                      && host->getPresetName() == "XML & valid",
++                  "valid declarations, comments, PI, CDATA, entities and whitespace preserve recall");
++        }
++        for (const char* text : { "<CS80_PARAMS/>", "<CS80_PARAMS></CS80_PARAMS>" })
++        {
++            check(saved.file.replaceWithText(text) && host->loadUserPreset(saved.file).wasOk(),
++                  "complete empty parameter documents retain existing default normalization");
++        }
+     }
+ };
+ } // namespace cs80::tests

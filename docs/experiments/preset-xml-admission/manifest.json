@@ -1,0 +1,126 @@
+{
+  "recorded_utc": "2026-11-11T20:57:13.467426+00:00",
+  "base_commit": "1726b935108ffa3b8ac3e53fd5701cef55aae1f2",
+  "configuration": "Linux Release, GCC 14.2, repository-pinned JUCE 8.0.11, minimal static libxml2 2.15.4",
+  "build_directory": "/workspace/scratch/ee447c520988/build-preset-xml-admission",
+  "sources": {
+    "CMakeLists.txt": "3ada8601b3eb4be654e0bdda475d67d6fba023e61f7761fbeae62e530e6e2f2e",
+    "cmake/PresetXml.cmake": "0e30d2cbcff21e66ab7269ef8c71b555e40f32891c2c30cf97589f190cd32c9f",
+    "installer/linux/make-deb.sh": "96ed56c4346a00a46fafaa5ef687b42d9afc4c85d4eaace22af1150fc04de97c",
+    "installer/macos/make-pkg.sh": "0497b763e6034a88fff5a5ca780dd2a6f5505ff51a864a888086323ec27b3d71",
+    "installer/windows/cs80-reference.iss": "c88eac54b34643ba55e5a964dc76c0dea11ecdbd508c806790d580b05591e0bc",
+    "scripts/__pycache__/check-windows-installer.cpython-312.pyc": "ece270aa5d8ccf28e0f0d9f04f20e8a1593d08f44b9c14880f4ccee26d5bf0ae",
+    "scripts/__pycache__/package-ci-artifacts.cpython-312.pyc": "78398c70b9ee1bf11bedf1dc89a2c284ba814fd096b0f4a572dc7bf661611e29",
+    "scripts/package-ci-artifacts.py": "f9495b2f6763cdd89def860d4154c295d70ddc402515dd5381a2ab8bbbce49d9",
+    "scripts/test-macos-installer-architectures.py": "162872874a2aa510f5d4f4ab90b3de95aa07cd598e4ce4947a1cb2f199b0125d",
+    "scripts/test-packaging-notices.py": "3783ac61dea3b702caf3b3cf6d6001734b3f62fabcb5881b414d692957da1b11",
+    "scripts/test-windows-installer-preflight.py": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4",
+    "src/plugin/PluginProcessor.cpp": "4723f5462dec0f3f68464be68f17c674efae4cec0e87af4957f5dc4ccdcee3df",
+    "src/plugin/PresetXml.h": "9f94b218a353605bb90ffc0b2ba53c38414d08683f3be0c105b4cebe43aa670d",
+    "src/tools/ui_snapshot.cpp": "643bb973f3aa8b91d28ece40b82b0c1329f98a9ea68762a0f5df8cf8c9e40ad8",
+    "src/vendor/libxml2/ADDITIONAL-NOTICES.txt": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+    "src/vendor/libxml2/Copyright": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+    "src/vendor/libxml2/SOURCE.txt": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+    "tests/PresetLoadTests.h": "7eb6d32303b2be7e9b9179774176663308c8b7891451a233c25bc3f6b32ff7a9",
+    "tests/PresetXmlTests.h": "8d7a8c8d4563fc55c78fa1bf21b0877ab34900b18e0c05e5d10779822ff862ce"
+  },
+  "binary": {
+    "path": "/workspace/scratch/ee447c520988/build-preset-xml-admission/CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "aa179ebfc60576bf210112a47fcd7333055ff17f36604cc1b83d181639aa30a7"
+  },
+  "dependency": {
+    "repository": "https://github.com/GNOME/libxml2.git",
+    "commit": "96498992efa48d52b0e8b83058bd88dbdaf153c1",
+    "source_clean": true,
+    "static_archive_sha256": "0f17c3f6df8eba3bc43766838c41441a87d1bc2b8c94a09489b6a1fd0a2ac3f5",
+    "check": "dependency-check.json"
+  },
+  "baseline": {
+    "checks": 639,
+    "failures": 180,
+    "exit_code": 1,
+    "test_patch_sha256": "ba19160d49c6f7f18714ed8245a215d29b625cb32861495efac2cb03bfd00bf2",
+    "binary_sha256": "5af548e5a2ac3acd1334cb0d55ed8a643156b6e2c03e3829b7c858aa396cc249"
+  },
+  "final": {
+    "ctests_passed": 10,
+    "ctests_failed": 0,
+    "exit_code": 0,
+    "checks": {
+      "Preset opening sound REVERT": {
+        "checks": 1387,
+        "failures": 0
+      },
+      "Modern/session/preset/A-B recall": {
+        "checks": 2354,
+        "failures": 0
+      },
+      "User-preset file/recall host": {
+        "checks": 2784,
+        "failures": 0
+      },
+      "Preset XML admission": {
+        "checks": 77,
+        "failures": 0
+      },
+      "Preset load failure/retry": {
+        "checks": 639,
+        "failures": 0
+      },
+      "Preset save storage": {
+        "checks": 608,
+        "failures": 0
+      },
+      "Preset loaded identity": {
+        "checks": 79,
+        "failures": 0
+      },
+      "Preset catalogue refresh": {
+        "checks": 40,
+        "failures": 0
+      },
+      "Undo replay gesture tests": {
+        "checks": 317,
+        "failures": 0
+      }
+    },
+    "repeat_build": "no work to do",
+    "offline_configure_exit": 0,
+    "core_only_configure_and_build_exit": 0,
+    "core_only_dependency_configured": false,
+    "fifo_behavioral_check": "POSIX tests passed without a blocking read-open in external DTD/entity paths; not a syscall trace"
+  },
+  "packaging": "packaging/packaging-evidence.json",
+  "ptrace_observation": {
+    "status": "blocked before tracing",
+    "reason": "PTRACE_TRACEME/PTRACE_SETOPTIONS: Operation not permitted",
+    "retried": false,
+    "claim": "No syscall-level filesystem-access proof. Owned FIFO behavioral checks only exclude a blocking read-open in tested external DTD/entity paths."
+  },
+  "limits": [
+    "No native-peer UI smoke",
+    "No VST3/pluginval or DAW validation",
+    "No sanitizer run",
+    "No macOS or Windows native build",
+    "No remote CI or remote writes"
+  ],
+  "independent_review": {
+    "verdict": "approved for bounded user-preset admission",
+    "ctests_passed": 10,
+    "ctests_failed": 0,
+    "exit_code": 0,
+    "file": "independent-review.json",
+    "review_sha256": "b02387df318f70344cfadac892f39d475441c56f7680b447fedf03cc99ba91db"
+  },
+  "packaging_summary": {
+    "passed": 38,
+    "skipped": 2,
+    "all_command_exit_codes": 0,
+    "license_scope": "19 compiled C sources and 45 included upstream files; required supplemental notices verified",
+    "scope_evidence": "packaging/libxml2-license-scope.json"
+  },
+  "whitespace_check": {
+    "product_source": "passed",
+    "raw_evidence": "Preserved exact trailing whitespace in malformed XML logs/unified patch; evidence and notice directories excluded from source-only diff check."
+  }
+}

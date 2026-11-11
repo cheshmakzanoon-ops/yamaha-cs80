@@ -27,6 +27,9 @@ NOTICES = {
     "BarlowCondensed-OFL.txt": "assets/fonts/barlow-condensed/OFL.txt",
     "BarlowCondensed-SOURCE.txt": "assets/fonts/barlow-condensed/SOURCE.txt",
     "MTS-ESP-LICENSE.txt": "src/vendor/mts-esp/LICENSE",
+    "libxml2-Copyright.txt": "src/vendor/libxml2/Copyright",
+    "libxml2-SOURCE.txt": "src/vendor/libxml2/SOURCE.txt",
+    "libxml2-ADDITIONAL-NOTICES.txt": "src/vendor/libxml2/ADDITIONAL-NOTICES.txt",
 }
 spec = importlib.util.spec_from_file_location("packaging", ROOT / "scripts/package-ci-artifacts.py")
 packaging = importlib.util.module_from_spec(spec)
