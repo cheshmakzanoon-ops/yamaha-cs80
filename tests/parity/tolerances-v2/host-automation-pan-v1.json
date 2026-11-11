@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-11",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append the two independent rank pan lanes to the original eighteen modern VST3 sample-accurate lanes. The original host-automation.json contract and all its numeric tolerances remain unchanged.",
+  "host_automation_pan": {
+    "key_parameter_count": 20,
+    "keys": "Original eighteen in original order, followed by rank 1 CP_pan and rank 2 CP_pan.",
+    "authority": "Rank pan remains independent of PANEL, factory tabs and MEMORY, matching existing readParameters source resolution; ordinary preset recall still recalls pan. Other selected programmer controls remain protected.",
+    "timing": "Modern VST3 normalized piecewise-linear sample offsets. Legacy/PURE retain final-point-at-block-start, no queue remains unchanged, AU remains block-rate. Existing interpolation/audio thresholds apply without relaxation.",
+    "verification": "Actual built VST3 module, each rank separately, selected source controls, finite nonzero stereo response, scalar and partition references, both instruments, zero-frame and program boundaries. No physical DAW or perceptual listening qualification."
+  }
+}

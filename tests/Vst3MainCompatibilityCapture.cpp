@@ -77,7 +77,9 @@ int main(int argc,char** argv) {
                         changes.add(parameterId(cs80::paramId(key)),{{0,.2},{block-1,.8}});
                     }
                     if(start==0 && kind==2)
-                        for(size_t lane=0;lane<cs80::kSampleAccurateParameters.size();++lane) {
+                        // Freeze this historical witness to its original eighteen
+                        // lanes; new pan trajectories have a separate capability gate.
+                        for(size_t lane=0;lane<18;++lane) {
                             const auto key=cs80::kSampleAccurateParameters[lane];
                             changes.add(parameterId(cs80::paramId(key)),{{0,.7},{block-1,.31+double(lane)*.008}});
                         }

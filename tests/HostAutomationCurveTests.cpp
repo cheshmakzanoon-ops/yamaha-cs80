@@ -50,7 +50,28 @@ int main(int argc, char** argv)
     {
         const ws1::Tolerances limits(argc > 1 ? argv[1] : "tests/parity/tolerances-v2/host-automation.json",
                                      "host_automation");
-        check(cs80::kSampleAccurateParameters.size() == limits["key_parameter_count"], "registered key roster");
+        // Keep the frozen eighteen-lane contract intact; the separately
+        // versioned pan capability appends lanes rather than rewriting it.
+        constexpr std::array original {
+            int(cs80::P_volume), int(cs80::P_mix), int(cs80::P_brilliance), int(cs80::P_resonance),
+            int(cs80::P_masterTune), int(cs80::P_detune),
+            cs80::chParam(0, cs80::CP_hpfCutoff), cs80::chParam(0, cs80::CP_hpfRes),
+            cs80::chParam(0, cs80::CP_lpfCutoff), cs80::chParam(0, cs80::CP_lpfRes),
+            cs80::chParam(0, cs80::CP_vLevel), cs80::chParam(0, cs80::CP_pw),
+            cs80::chParam(1, cs80::CP_hpfCutoff), cs80::chParam(1, cs80::CP_hpfRes),
+            cs80::chParam(1, cs80::CP_lpfCutoff), cs80::chParam(1, cs80::CP_lpfRes),
+            cs80::chParam(1, cs80::CP_vLevel), cs80::chParam(1, cs80::CP_pw) };
+        const ws1::Tolerances panLimits(argc > 2 ? argv[2]
+            : "tests/parity/tolerances-v2/host-automation-pan-v1.json", "host_automation_pan");
+        check(original.size() == limits["key_parameter_count"], "frozen registered key roster size");
+        check(cs80::kSampleAccurateParameters.size() == panLimits["key_parameter_count"], "expanded pan roster size");
+        check(cs80::kSampleAccurateParameters.size() >= original.size()
+            && std::equal(original.begin(), original.end(), cs80::kSampleAccurateParameters.begin()),
+            "original eighteen lanes retain their order");
+        check(cs80::kSampleAccurateParameters.size() == original.size() + 2
+            && cs80::kSampleAccurateParameters[original.size()] == cs80::chParam(0, cs80::CP_pan)
+            && cs80::kSampleAccurateParameters[original.size() + 1] == cs80::chParam(1, cs80::CP_pan),
+            "only the two rank pan lanes are appended");
         const std::vector<Points> cases {
             {{2047, 0.2}},
             {{2047, 0.9}},

@@ -464,6 +464,7 @@ std::vector<float> renderAfterFlush(Module& module, const cs80::ParamValues& par
 
 #include "Vst3AutomationPolicyBoundaryTests.h"
 #include "Vst3AutomationProgramBoundaryTests.h"
+#include "Vst3PanAutomationTests.h"
 
 #include "Vst3MtsSysExTests.h"
 
@@ -508,7 +509,13 @@ int main(int argc, char** argv)
               "Legacy retains final-point-at-block-start behavior byte-for-byte");
         Curves rankOnly = curves;
         for (size_t i = 0; i < rankOnly.size(); ++i)
-            if (cs80::kSampleAccurateParameters[i] < cs80::P_ch1Start) rankOnly[i].clear();
+        {
+            const int parameter = cs80::kSampleAccurateParameters[i];
+            // Pan is a live extension outside the programmer and MEMORY.
+            // Keep the selected-source exclusion for every original rank key.
+            if (parameter < cs80::P_ch1Start || parameter == cs80::chParam(0, cs80::CP_pan)
+                || parameter == cs80::chParam(1, cs80::CP_pan)) rankOnly[i].clear();
+        }
         for (int source : {0, 11, 12})
             check(render(module, parameters, rankOnly, 256, true, false, source)
                     == render(module, parameters, rankOnly, 256, false, false, source),
@@ -539,6 +546,7 @@ int main(int argc, char** argv)
                   << " reader observation error=" << readerError << '\n';
         testVst3PolicyBoundaries(module, limits["audio_max_abs_error"]);
         testVst3ProgramBoundaries(module, limits["audio_max_abs_error"], limits["normalized_curve_error"]);
+        testVst3PanAutomation(module, limits["audio_max_abs_error"]);
         testVst3MtsSysEx(module);
     }
     catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }

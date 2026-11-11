@@ -34,6 +34,10 @@ struct PresetSaveAccess
 
 namespace
 {
+// Keep this frozen pre-extension witness at its original eighteen lanes.
+// New pan lanes are covered by the actual-module dynamic boundary fixtures.
+constexpr size_t frozenParameterCount = 18;
+static_assert(cs80::kSampleAccurateParameters.size() >= frozenParameterCount);
 int checks = 0, failures = 0;
 void check(bool condition, const std::string& message)
 {
@@ -136,7 +140,7 @@ struct Result
 {
     State warm, insideScope, afterScope, nextBlock;
     std::vector<float> audio;
-    std::array<int, cs80::kSampleAccurateParameters.size()> commitsInside {}, commitsAfter {};
+    std::array<int, frozenParameterCount> commitsInside {}, commitsAfter {};
 };
 Result run(int first, int second, Mode mode, int frames, int notes)
 {
@@ -151,7 +155,7 @@ Result run(int first, int second, Mode mode, int frames, int notes)
         warm.addEvent(juce::MidiMessage::noteOn(1, 36 + i, static_cast<juce::uint8>(96)), i);
     process(host, 128, warm, result.audio);
     result.warm = inspect(host);
-    std::array<Queue, cs80::kSampleAccurateParameters.size()> queues;
+    std::array<Queue, frozenParameterCount> queues;
     for (size_t lane = 0; lane < queues.size(); ++lane)
     {
         auto& queue = queues[lane];
@@ -194,7 +198,7 @@ int main(int argc, char** argv)
         const ws1::Tolerances limits(argv[1], "main_vst3_multirecall_state");
         require(limits["allowed_failures"] == 0 && limits["maximum_physical_parameter_error"] == 0
                 && limits["maximum_stored_parameter_error"] == 0, "state contract must retain exact comparisons");
-        require(limits["key_parameter_count"] == cs80::kSampleAccurateParameters.size(), "frozen parameter roster");
+        require(limits["key_parameter_count"] == frozenParameterCount, "frozen parameter roster");
         const int frames = static_cast<int>(limits["block_frames"]);
         const int notes = static_cast<int>(limits["warm_note_count"]);
         require(frames == 1024 && notes == 16, "frozen block and warm-note shape");

@@ -2,10 +2,12 @@
 
 ## Scope
 
-This integration preserves host sample offsets for eighteen VST3 parameters in
+This integration preserves host sample offsets for twenty VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width. It does not replace DSP smoothing or change a parameter law.
+pulse width, plus both rank pan controls. The [pan extension](VST3_PAN_AUTOMATION.md)
+appends two lanes to the original eighteen without moving their indices. It does
+not replace DSP smoothing or change a parameter law.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's
@@ -24,7 +26,8 @@ ramps are not enabled or qualified by this change. Standalone has no VST3 queue.
 - Current main's physical-unit `ControlFrame { cached, cachedHardwareSources }`
   is retained. No programmer circuit, factory-tone revision or CPU/phase branch
   change is imported. Hidden panel trajectories cannot override selected factory
-  or memory controls.
+  or memory controls. Pan is independent of the programmer and remains live
+  with every source selection, matching its existing block-rate authority.
 - External state/UI/zero-frame changes refresh the next implicit starting value.
   Endpoint publication preserves full curve precision until externally changed.
 - Learned ENGINE/PURE controls determine timing before ordinary learned controls,
@@ -44,8 +47,9 @@ block-boundary activation/retirement and the existing VST3-curve path.
 
 ## Verification
 
-The original curve, native VST3, learned-policy, program and wrapper contracts
-are imported unchanged. The additive `MainVst3OnlyAutomationTests.py` verifies
+The original eighteen-lane curve contract and all numerical tolerances remain
+unchanged. A separately versioned pan roster appends two lanes; the native
+VST3, learned-policy, program and wrapper gates retain their existing criteria. The additive `MainVst3OnlyAutomationTests.py` verifies
 that the actual product selector patches VST3 .cpp/.mm sources and never touches
 AU source paths, ordering, properties or bytes, including invalid AU shapes.
 

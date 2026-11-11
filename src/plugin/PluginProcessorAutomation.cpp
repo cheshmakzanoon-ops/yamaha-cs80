@@ -128,11 +128,13 @@ void Cs80AudioProcessor::applyHostAutomationAt(int position, bool publish) noexc
         const int parameter = cs80::kSampleAccurateParameters[i];
         // The programmer, including MEMORY, remains the source of effective
         // rank controls. Hidden panel automation may update its stored value
-        // but cannot override a selected factory tab or memory bank.
+        // but cannot override a selected factory tab or memory bank. Rank pan
+        // is an independent software control, as in readParameters().
         if (parameter >= cs80::P_ch1Start && parameter < cs80::P_legacyNumParams)
         {
             const int rank = parameter >= cs80::P_ch2Start ? 1 : 0;
-            if (cachedHardwareSources[(size_t) rank] != 13) continue;
+            if (cachedHardwareSources[(size_t) rank] != 13
+                && parameter != cs80::chParam(rank, cs80::CP_pan)) continue;
         }
         const float physical = automationParameters[i]->convertFrom0to1(static_cast<float>(normalized));
         changed = changed || cached[parameter] != physical;

@@ -451,7 +451,8 @@ if (CS80_BUILD_TESTS)
     add_executable(cs80_host_automation_curve_tests tests/HostAutomationCurveTests.cpp)
     target_include_directories(cs80_host_automation_curve_tests PRIVATE src)
     add_test(NAME cs80_host_automation_curve_tests COMMAND cs80_host_automation_curve_tests
-        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json")
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation-pan-v1.json")
     set_tests_properties(cs80_host_automation_curve_tests PROPERTIES TIMEOUT 30)
     add_executable(cs80_free_running_voice_tests tests/FreeRunningVoiceTests.cpp)
     target_link_libraries(cs80_free_running_voice_tests PRIVATE cs80_core)
