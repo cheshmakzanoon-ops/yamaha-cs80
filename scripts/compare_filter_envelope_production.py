@@ -29,7 +29,7 @@ NAMES = ('envelope.csv', 'events.json', 'transitions.json', 'input_events.csv',
          'renderer.py', 'render_amplitude_envelope_reference.py', 'manifest.json')
 OPTIONAL_NAMES = ('filter_controls.csv',)
 SOURCES = ('src/tools/filter_production_trace.cpp', 'src/core/Dsp.h',
-           'src/tools/TruthInputSha256.h', 'CMakeLists.txt')
+           'src/tools/TruthInputSha256.h', 'src/tools/DecimalConversion.h', 'CMakeLists.txt')
 HEADER = 'sample,time_s,envelope,stage,elapsed,gate,last_event'
 STAGES = ('idle', 'attack', 'decay', 'sustain', 'release')
 IO = REF.io

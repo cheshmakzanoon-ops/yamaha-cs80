@@ -304,13 +304,14 @@ class ComparisonTests(unittest.TestCase):
             meta, trace = data.split(b'\n', 1)
             value = json.loads(meta)
             if mode == 'source': value['source_sha256']['src/core/Dsp.h'] = '0'*64
+            if mode == 'decimal': value['source_sha256']['src/tools/DecimalConversion.h'] = '0'*64
             if mode == 'input': value['input_sha256'] = '0'*64
             if mode == 'float': value['parameters']['attack'] = .5
             if mode == 'nonfinite': value['parameters']['attack'] = float('nan')
             if mode == 'trace': trace = trace.replace(b'0,0,0,', b'0,0,nan,', 1)
             if mode == 'partial': trace = trace[:-3]
             return json.dumps(value).encode() + b'\n' + trace
-        for mode in ('source', 'input', 'float', 'nonfinite', 'trace', 'partial'):
+        for mode in ('source', 'decimal', 'input', 'float', 'nonfinite', 'trace', 'partial'):
             with patch.object(C, 'execute', tamper), self.assertRaises(ValueError): self.render()
             self.assertFalse(self.out.exists())
 

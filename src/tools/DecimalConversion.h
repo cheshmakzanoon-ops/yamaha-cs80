@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <string_view>
+#include <type_traits>
 
 #if defined(__APPLE__) || defined(CS80_FORCE_C_LOCALE_DECIMAL)
  #include <cfenv>
@@ -20,7 +21,9 @@ namespace cs80::tools {
 // Offline tools only. Callers first enforce their strict ASCII decimal grammar
 // and remove an optional leading '+'. No whitespace, hex or special values are
 // admitted by that grammar. Leave output unchanged when conversion fails.
-inline bool convertValidatedDecimal(std::string_view token, double& output) {
+template <typename Float>
+inline bool convertValidatedDecimal(std::string_view token, Float& output) {
+    static_assert(std::is_same_v<Float, float> || std::is_same_v<Float, double>);
     if (token.empty()) return false;
 #if defined(__APPLE__) || defined(CS80_FORCE_C_LOCALE_DECIMAL)
     // The libc++ shipped with Xcode 16.4 has no floating-point from_chars.
@@ -33,13 +36,20 @@ inline bool convertValidatedDecimal(std::string_view token, double& output) {
     if (!locale.value) return false;
     const std::string terminated(token);
     char* end = nullptr;
-    // strtod_l observes the calling thread's rounding mode; from_chars does
+    // strtof_l/strtod_l observe the calling thread's rounding mode; from_chars does
     // not. Restore it before returning, including on out-of-range input.
     const int rounding = std::fegetround();
     if (rounding == -1) return false;
     const bool changed = rounding != FE_TONEAREST;
     if (changed && std::fesetround(FE_TONEAREST) != 0) return false;
-    const double value = strtod_l(terminated.c_str(), &end, locale.value);
+    // Parse directly into the destination type. Converting through double can
+    // double-round a decimal just above a binary32 halfway point to the tie.
+    const Float value = [&] {
+        if constexpr (std::is_same_v<Float, float>)
+            return strtof_l(terminated.c_str(), &end, locale.value);
+        else
+            return strtod_l(terminated.c_str(), &end, locale.value);
+    }();
     if (changed && std::fesetround(rounding) != 0) return false;
     if (end != terminated.c_str() + terminated.size() || !std::isfinite(value)) return false;
     // ERANGE also denotes a *representable* subnormal, which from_chars
@@ -51,7 +61,7 @@ inline bool convertValidatedDecimal(std::string_view token, double& output) {
         }
     }
 #else
-    double value = 0;
+    Float value = 0;
     const auto parsed = std::from_chars(token.data(), token.data() + token.size(),
                                         value, std::chars_format::general);
     if (parsed.ec != std::errc{} || parsed.ptr != token.data() + token.size()

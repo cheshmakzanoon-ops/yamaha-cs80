@@ -60,3 +60,40 @@ The forced fallback is a Linux test of the same conversion path, not execution
 of Darwin's C library or SDK. Native macOS/Windows success for the correction
 must be established by the subsequent exact-commit CI run. The failed original
 jobs are never replaced by the local passes described here.
+
+## Production trace follow-up
+
+The next native arm64 build, at
+[`6eeda885d00ac5447723177250b6d178f1469968`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/6eeda885d00ac5447723177250b6d178f1469968),
+passed the earlier double-conversion compilation point but failed in the offline
+amplitude production observer. [Job 130803854371, run 43104414461](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/43104414461/job/130803854371)
+reports `amplitude_production_trace.cpp:125:25: error: no matching function for
+call to 'from_chars'`. Tests and plugin validation were skipped for that job.
+The first correction was therefore incomplete, not a verified native build.
+
+A repository-wide source audit found the two remaining direct floating-point
+calls in `amplitude_production_trace.cpp` and `filter_production_trace.cpp`.
+Both parse directly to `float`. The shared helper now selects `strtof_l` for
+`float` and `strtod_l` for `double` on Apple. Converting through double and then
+casting to float would incorrectly double-round some decimals near binary32
+halfway points. Non-Apple builds continue to use the typed `from_chars`
+overload. Integer calls and the other existing `strtod`/`stod` parsers remain
+unchanged.
+
+Both observers retain exact decimal domain checks, leading-plus handling,
+finite and nonzero-underflow checks, diagnostics, and direct binary32 output.
+Their compile-bound source manifests and the comparison tools' frozen source
+sets now include the conversion helper. Tampering with that hash is rejected.
+The DSP models, envelope thresholds, UI, faders and runtime plugin are not
+modified.
+
+Local verification covers both ordinary and forced-C-locale builds of all
+four affected tools. The eleven focused CTests include both whole production
+comparison suites, the double reference exporters, float WAV, reference-chain
+and envelope-reference regressions. The helper fixture adds 19,695 float
+differential cases and explicit midpoint neighbors, signed zero, normal and
+subnormal limits, overflow/underflow, four rounding modes, bounded views,
+embedded NULs and locale isolation. With a non-C system locale available, it
+reports 38,353 checks. These Linux results do not prove execution against the
+Darwin SDK or C library. The follow-up still requires its own exact-commit
+native CI build and test results.

@@ -1411,6 +1411,7 @@ endif()
 add_executable(cs80_amplitude_production_trace src/tools/amplitude_production_trace.cpp)
 target_include_directories(cs80_amplitude_production_trace PRIVATE src)
 foreach(pair IN ITEMS "TRACE|src/tools/amplitude_production_trace.cpp"
+                      "DECIMAL|src/tools/DecimalConversion.h"
                       "DSP|src/core/Dsp.h"
                       "HASH|src/tools/TruthInputSha256.h"
                       "CMAKE|CMakeLists.txt")
@@ -1446,6 +1447,7 @@ endif()
 add_executable(cs80_filter_production_trace src/tools/filter_production_trace.cpp)
 target_include_directories(cs80_filter_production_trace PRIVATE src)
 foreach(pair IN ITEMS "TRACE|src/tools/filter_production_trace.cpp"
+                      "DECIMAL|src/tools/DecimalConversion.h"
                       "DSP|src/core/Dsp.h"
                       "HASH|src/tools/TruthInputSha256.h"
                       "CMAKE|CMakeLists.txt")

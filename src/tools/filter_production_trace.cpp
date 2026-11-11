@@ -2,6 +2,7 @@
 // The source-bound identity deliberately covers dirty local edits at configure.
 #include "core/Dsp.h"
 #include "tools/TruthInputSha256.h"
+#include "tools/DecimalConversion.h"
 
 #include <array>
 #include <charconv>
@@ -122,10 +123,8 @@ float parameter(std::string_view text, bool zeroAllowed, int minimumPower, int m
     if (text.front() == '+')
         text.remove_prefix(1);
     float value = 0.0f;
-    const auto parsed = std::from_chars(text.data(), text.data() + text.size(), value,
-                                        std::chars_format::general);
-    require(parsed.ec == std::errc{} && parsed.ptr == text.data() + text.size()
-                && std::isfinite(value) && (value != 0.0f || decimal.digits.empty()),
+    require(cs80::tools::convertValidatedDecimal(text, value)
+                && (value != 0.0f || decimal.digits.empty()),
             "Unrepresentable float parameter (overflow or underflow)");
     return value;
 }
@@ -264,6 +263,7 @@ int main(int argc, char** argv)
                << ",\"input_sha256\":\"" << cs80::tools::inputSha256(input)
                << "\",\"source_sha256\":{"
                << "\"src/tools/filter_production_trace.cpp\":\"" << FILTER_PRODUCTION_TRACE_SHA
+               << "\",\"src/tools/DecimalConversion.h\":\"" << FILTER_PRODUCTION_DECIMAL_SHA
                << "\",\"src/core/Dsp.h\":\"" << FILTER_PRODUCTION_DSP_SHA
                << "\",\"src/tools/TruthInputSha256.h\":\"" << FILTER_PRODUCTION_HASH_SHA
                << "\",\"CMakeLists.txt\":\"" << FILTER_PRODUCTION_CMAKE_SHA
