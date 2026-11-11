@@ -1473,3 +1473,11 @@ if (CS80_BUILD_TESTS AND UNIX)
             --filter $<TARGET_FILE:cs80_truth_render> --vca $<TARGET_FILE:cs80_vca_reference>)
     set_tests_properties(cs80_amplitude_envelope_reference_tests PROPERTIES TIMEOUT 120)
 endif()
+
+# Independent signed filter EG and its dynamic-filter/amplitude chain composition.
+if (CS80_BUILD_TESTS AND UNIX)
+    add_test(NAME cs80_filter_envelope_reference_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_filter_envelope_reference.py
+            --filter $<TARGET_FILE:cs80_truth_render> --vca $<TARGET_FILE:cs80_vca_reference>)
+    set_tests_properties(cs80_filter_envelope_reference_tests PROPERTIES TIMEOUT 120)
+endif()
