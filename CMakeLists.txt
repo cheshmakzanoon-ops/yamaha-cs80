@@ -1417,4 +1417,8 @@ if (CS80_BUILD_TESTS AND UNIX)
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_reference_chain.py
             --filter $<TARGET_FILE:cs80_truth_render> --vca $<TARGET_FILE:cs80_vca_reference>)
     set_tests_properties(cs80_reference_chain_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_reference_chain_clock_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_reference_chain_clock.py
+            --filter $<TARGET_FILE:cs80_truth_render> --vca $<TARGET_FILE:cs80_vca_reference>)
+    set_tests_properties(cs80_reference_chain_clock_tests PROPERTIES TIMEOUT 120)
 endif()

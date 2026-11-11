@@ -133,8 +133,11 @@ them as a new piecewise-linear input. The filter's continuous trajectory between
 endpoints is **not** supplied to the VCA solver. This interstage approximation is
 not jointly integrated and has no chain-wide refinement bound. Increasing solver
 substeps improves each conditional component calculation but does not refine
-the LP endpoint clock. A clock-refinement study needs separately supplied inputs
-and controls at each new rate/count; the workflow never invents those values.
+the LP endpoint clock. This workflow never inserts new source/control endpoints.
+The separate [endpoint-clock sensitivity study](REFERENCE_CHAIN_CLOCK_STUDY.md)
+inserts declared PWL midpoints and compares three reference-only paths at their
+common original endpoints. It is a sensitivity diagnostic, not an interstage
+error bound or a jointly integrated chain.
 
 If either reference or production LP exceeds the VCA input bound [-8,8], the
 entire chain is rejected. There is no auto-level adjustment. Choose a smaller
