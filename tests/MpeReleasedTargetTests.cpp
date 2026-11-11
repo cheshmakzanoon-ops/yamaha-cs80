@@ -449,10 +449,11 @@ void currentModeAndRole()
         e.noteOn(64, .8f, channel); render(e, 1);
         const int fresh = find(e, 64, channel, true);
         witness(e, fresh, 64, channel, true);
-        // Newly active managers inherit their own retained pressure floor.
+        // Newly active managers inherit their own retained pressure and CC74 floors.
         const float managerPressure = transition == 2 || transition == 3 ? later.pressure : 0.0f;
-        targets(e, fresh, transition == 4 ? later : Expression{0, managerPressure, 0});
-        timbre(e, fresh, transition == 4 ? later.timbre : 0.0f);
+        const float managerTimbre = transition == 2 || transition == 3 ? later.timbre : 0.0f;
+        targets(e, fresh, transition == 4 ? later : Expression{0, managerPressure, managerTimbre});
+        timbre(e, fresh, transition == 4 ? later.timbre : managerTimbre);
     }
 }
 void malformedInputs(bool clampLate)

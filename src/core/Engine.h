@@ -365,6 +365,7 @@ public:
         // Circuit engine TWS nodes (Phase 2.4): smoothed aftertouch a, held
         // initial touch b, pitch transient C. Zero in Legacy.
         float touchA = 0.0f, touchB = 0.0f, touchC = 0.0f;
+        float timbre = 0.0f;
     };
     VoiceInfo getVoiceInfo(int index) const;
     struct RankInfo
@@ -497,6 +498,7 @@ private:
         float velocity = 0.8f;
         float pressure = 0.0f;
         float notePressureRaw = 0.0f; // Frozen note-local component after accepted release.
+        float noteTimbreRaw = 0.0f; // Member updates stop after accepted release.
         float timbre = 0.0f;
         float mpeBend = 0.0f;
         double glidePitch = 60.0;
@@ -609,6 +611,7 @@ private:
     // CC121 is an explicit reset, not an ordinary per-note expression event.
     void applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices);
     float pressureTarget(const Voice& voice) const noexcept;
+    float timbreTarget(const Voice& voice) const noexcept;
     void applyPitchBend(int midiChannel, float value, bool resetReleasedVoices);
     struct MemberExpression
     {
@@ -779,6 +782,7 @@ private:
     MpeZoneLayout mpeZones;
     std::array<MemberExpression, 17> memberExpression {}; // Channel 0 unused.
     std::array<float, 2> managerPressure {}; // Raw lower/upper manager components.
+    std::array<float, 2> managerTimbre {};
     std::array<ManagerBend, 2> managerBend {}; // Lower/upper normalized inputs, never inferred from semitones.
     float upperZoneBend = 0.0f;
     // KAS scan model and still-held keys without a circuit (Phase 2.2).

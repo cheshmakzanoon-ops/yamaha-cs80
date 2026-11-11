@@ -268,6 +268,7 @@ void Engine::reset()
         v.coordinatedReleaseOrder = 0;
         v.initialPitchTransient = 0.0;
         v.notePressureRaw = 0.0f;
+        v.noteTimbreRaw = 0.0f;
         for (auto& r : v.ranks)
         {
             // Circuit engine (Phase 2.1): declared distinct cold phases, so a
@@ -312,6 +313,7 @@ void Engine::reset()
     memberExpression.fill({});
     managerBend.fill({});
     managerPressure.fill(0.0f);
+    managerTimbre.fill(0.0f);
     scanner.reset();
     noteIngressOrder = 0;
     unassignedCount = 0;
@@ -387,6 +389,7 @@ void Engine::inheritControllerStateFrom(const Engine& source) noexcept
     memberExpression = source.memberExpression;
     managerBend = source.managerBend;
     managerPressure = source.managerPressure;
+    managerTimbre = source.managerTimbre;
     sustainPedals = source.sustainPedals;
     globalBend = source.globalBend;
     upperZoneBend = source.upperZoneBend;
@@ -496,6 +499,7 @@ void Engine::applyParams(const ParamValues& values)
         memberExpression.fill({});
         managerBend.fill({});
         managerPressure.fill(0.0f);
+        managerTimbre.fill(0.0f);
     }
     // A selector event changes the physical load for the next interval, without
     // resetting capacitor voltage, previous source or inferred readout smoothing.
@@ -1215,6 +1219,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
     v.velocity = clampf(velocity, 0.0f, 1.0f);
     v.pressure = 0.0f;
     v.notePressureRaw = 0.0f;
+    v.noteTimbreRaw = 0.0f;
     v.timbre = 0.0f;
     v.mpeBend = 0.0f;
     if (const auto* initial = memberExpressionFor(midiChannel))
@@ -1223,12 +1228,13 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
         const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;
         v.mpeBend = initial->bend * range;
         v.notePressureRaw = initial->pressure;
-        v.timbre = initial->timbre;
+        v.noteTimbreRaw = initial->timbre;
     }
     // Phase 6 tuning: exactly (float) note in 12-TET (tuning_mode 0).
     v.targetPitch = tunedPitch(note, midiChannel);
     v.upperZone = global.mpe && mpeZones.inUpperZone(midiChannel);
     v.pressure = pressureTarget(v);
+    v.timbre = timbreTarget(v);
     v.unisonOffset = 0.0f;
     v.contour = keyboardContourWeights(note);
     v.kbcKey = kbc::physicalKey(note);
@@ -1812,6 +1818,26 @@ float Engine::pressureTarget(const Voice& voice) const noexcept
     return raw;
 }
 
+float Engine::timbreTarget(const Voice& voice) const noexcept
+{
+    float raw = voice.noteTimbreRaw;
+    if (global.mpe && mpeZones.role(voice.midiChannel) != MpeZoneLayout::Role::none)
+    {
+        // Match event routing, including an own-channel manager distinct
+        // from a conventional-origin voice's captured manager identity.
+        for (int zone = 0; zone < 2; ++zone)
+        {
+            const int channel = zone == 0 ? 1 : 16;
+            const auto expected = zone == 0 ? MpeZoneLayout::Role::lowerMaster
+                                           : MpeZoneLayout::Role::upperMaster;
+            if (mpeZones.role(channel) == expected
+                && (isZoneMaster(voice, channel) || voice.midiChannel == channel))
+                raw = std::max(raw, managerTimbre[(size_t) zone]);
+        }
+    }
+    return raw;
+}
+
 void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 {
     if (! std::isfinite(pressure)) return;
@@ -2032,6 +2058,7 @@ void Engine::controlChange(int controller, float value, int midiChannel)
             {
                 managerBend[(size_t) zone] = {};
                 managerPressure[(size_t) zone] = 0.0f;
+                managerTimbre[(size_t) zone] = 0.0f;
             }
         retargetManagerBends(previousRanges);
         retargetMemberBends(previousMemberRanges);
@@ -2055,10 +2082,18 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         auto* initial = memberExpressionFor(midiChannel);
         if (initial != nullptr)
             initial->timbre = value;
+        const auto role = mpeZones.role(midiChannel);
+        const bool manager = global.mpe && (role == MpeZoneLayout::Role::lowerMaster
+                                         || role == MpeZoneLayout::Role::upperMaster);
+        if (manager)
+            managerTimbre[role == MpeZoneLayout::Role::upperMaster ? 1 : 0] = value;
         for (auto& v : voices)
             if (v.active && (initial == nullptr || v.held)
                 && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
-                v.timbre = value;
+            {
+                if (!manager) v.noteTimbreRaw = value;
+                v.timbre = timbreTarget(v);
+            }
     }
 }
 
@@ -3358,7 +3393,7 @@ Engine::VoiceInfo Engine::getVoiceInfo(int index) const
         return {};
     const auto& v = voices[(size_t) index];
     return { v.active, v.note, v.midiChannel, v.velocity, v.pressure, v.mpeBend, v.ribbonRatio, v.held, v.pedalHeld,
-             v.touchA, v.touchB, v.touchC };
+             v.touchA, v.touchB, v.touchC, v.timbre };
 }
 
 Engine::RankInfo Engine::getRankInfo(int voice, int rank) const

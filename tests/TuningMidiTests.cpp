@@ -1141,15 +1141,15 @@ void testMpeExpressionZoneBoundaries()
             // All Notes Off preserves member controllers, including the raw
             // pressure/CC74 now inherited by a later accepted onset.
             send(channel, 0.0f);
-            // Retained manager pressure also survives All Notes Off. Clear the
+            // Retained manager pressure/CC74 survives All Notes Off. Clear the
             // actual active manager, including full-zone endpoint members.
             if (mpe)
             {
                 const auto role = engine.getMpeZones().role(channel);
                 if (role == MpeZoneLayout::Role::lowerMember || role == MpeZoneLayout::Role::lowerMaster)
-                    engine.channelPressure(1, 0.0f);
+                    send(1, 0.0f);
                 if (role == MpeZoneLayout::Role::upperMember || role == MpeZoneLayout::Role::upperMaster)
-                    engine.channelPressure(16, 0.0f);
+                    send(16, 0.0f);
             }
             engine.noteOn(60, 0.8f, channel);
             int index = -1;
@@ -1161,6 +1161,8 @@ void testMpeExpressionZoneBoundaries()
             check(index >= 0, "expression fixture allocates its requested channel");
             check(index >= 0 && engine.getVoiceInfo(index).pressure == 0.0f,
                   "expression routing fixture starts from neutral member pressure");
+            check(index >= 0 && engine.getVoiceInfo(index).timbre == 0.0f,
+                  "expression routing fixture starts from neutral member CC74");
             if (releaseTail)
             {
                 render(engine, 256);
@@ -1278,7 +1280,13 @@ void testMpeExpressionZoneBoundaries()
                 check(!f.engine.getVoiceInfo(index).active, "role transfer stops the captured-upper voice");
                 const int fresh = f.start(14, tail);
                 f.send(1, 0.75f); f.verify(fresh, 0.75f, 3000, "fresh transferred voice uses lower manager");
-                f.send(14, 0.5f); f.verify(fresh, 0.75f, tail ? 0.75f : 0.5f, 3000, "fresh transferred own-channel release boundary");
+                f.send(14, 0.5f); f.verify(fresh, 0.75f, 0.75f, 3000, "fresh transferred own-channel release boundary");
+                // Change CC74 alone: pressure keeps its manager floor. A held
+                // note retains local .5; a released note froze its neutral local.
+                f.engine.controlChange(74, 0.25f, 1);
+                f.verify(fresh, 0.75f, tail ? 0.25f : 0.5f, 3000, "falling manager CC74 reveals retained local");
+                f.engine.controlChange(74, 0.0f, 1);
+                f.verify(fresh, 0.75f, tail ? 0.0f : 0.5f, 3000, "zero manager CC74 preserves independent pressure");
             }
             {
                 Fixture f(policy); f.layout(2, 2);
@@ -1288,7 +1296,7 @@ void testMpeExpressionZoneBoundaries()
                 f.send(1, 0.75f); f.verify(index, 0.25f, 3000, "MPE off preserves captured upper branch");
                 f.send(16, 0.5f); f.verify(index, 0.5f, 3000, "MPE off retains existing upper master");
                 f.params[P_mpeOn] = 1.0f; f.engine.setParams(f.params);
-                f.send(16, 0.25f); f.verify(index, 0.5f, 0.25f, 3000, "MPE on resumes same upper ownership");
+                f.send(16, 0.25f); f.verify(index, 0.5f, 0.5f, 3000, "MPE on resumes same upper ownership");
             }
         }
 
