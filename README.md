@@ -249,6 +249,7 @@ Plugin outputs are under `build/CS80Reference_artefacts/Release/` (`VST3/`, `Sta
 | [IG00156_RESONANCE_CACHE.md](docs/IG00156_RESONANCE_CACHE.md), [EXTERNAL_INTERPOLATOR_SPARSE.md](docs/EXTERNAL_INTERPOLATOR_SPARSE.md), [DELAY_LINE_WRAP_SAFETY.md](docs/DELAY_LINE_WRAP_SAFETY.md) | merged numerical optimizations, their scope and the delay-reader safety correction |
 | [HOST_AUTOMATION.md](docs/HOST_AUTOMATION.md), [MTS_ESP_INTEGRATION.md](docs/MTS_ESP_INTEGRATION.md) | current VST3 automation scope and embedded tuning client |
 | [CONTROLLER_RESET.md](docs/CONTROLLER_RESET.md), [MSEG_TRANSPORT_RATE.md](docs/MSEG_TRANSPORT_RATE.md) | recent MIDI reset and modulation timing corrections |
+| [MSEG_SHAPE_COPY.md](docs/MSEG_SHAPE_COPY.md) | copy an edited MSEG shape to another slot, with one-step undo |
 | [PRESET_CATALOGUE_REFRESH.md](docs/PRESET_CATALOGUE_REFRESH.md) | stable preset selection, removed-file safety and refresh without unintended audition |
 | [MSEG_COMBINED_INTEGRATION.md](docs/MSEG_COMBINED_INTEGRATION.md), [MONO_MSEG_ROUTING.md](docs/MONO_MSEG_ROUTING.md), [MSEG_RETRIGGER_RATE.md](docs/MSEG_RETRIGGER_RATE.md) | merged mono/poly MSEG corrections, compatibility scope and review evidence |
 | [IMPROVEMENT_PLAN.md](docs/IMPROVEMENT_PLAN.md), [workstreams/HANDOVER.md](docs/workstreams/HANDOVER.md) | the plan and how the eight workstreams were merged |

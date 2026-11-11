@@ -8,6 +8,7 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 #include <array>
+#include <cstdint>
 #include <memory>
 #include <vector>
 
@@ -48,6 +49,7 @@ public:
 
     void paint(juce::Graphics&) override;
     void resized() override {}
+    void enablementChanged() override;
     void mouseDown(const juce::MouseEvent&) override;
     void mouseDrag(const juce::MouseEvent&) override;
     void mouseUp(const juce::MouseEvent&) override;
@@ -56,6 +58,7 @@ public:
     bool keyPressed(const juce::KeyPress&) override;
 
 private:
+    friend class MsegPage;
     enum class Drag { none, point, curve, loopStart, loopEnd };
     void changeListenerCallback(juce::ChangeBroadcaster*) override;
     void timerCallback() override;
@@ -67,6 +70,7 @@ private:
 
     Cs80AudioProcessor& processor;
     int msegIndex = 0;
+    std::uint64_t editGeneration = 0;
     cs80::modern::MsegShape shape;
     Drag drag = Drag::none;
     int dragIndex = -1, selected = -1, hovered = -1;
@@ -76,7 +80,7 @@ private:
     double playhead = -1.0;
 };
 
-// MSEG page: envelope selector, editor, loop/trigger/sync/bipolar, rate and shape presets.
+// MSEG page: envelope selector, editor, loop/trigger/sync/bipolar, rate, presets and shape reuse.
 class MsegPage final : public juce::Component, private juce::ChangeListener
 {
 public:
@@ -84,18 +88,24 @@ public:
     ~MsegPage() override;
     void selectMseg(int index);
     MsegEditor& getEditor() noexcept { return editor; }
+    // Captures this slot and its shape now; delayed callbacks reject intervening edits.
+    juce::PopupMenu buildShapeCopyMenu();
     void paint(juce::Graphics&) override;
     void resized() override;
 
 private:
     void changeListenerCallback(juce::ChangeBroadcaster*) override;
     void refreshControls();
+    bool canCopyShape() const;
     void writeShape(const std::function<void(cs80::modern::MsegShape&)>& edit);
 
     Cs80AudioProcessor& processor;
     std::array<juce::TextButton, cs80::modern::kMsegCount> selectors;
     MsegEditor editor;
     juce::ComboBox loopBox, triggerBox, presetBox;
+    juce::TextButton copyShape { "Copy shape to..." };
+    std::uint64_t copyMenuGeneration = 0;
+    bool rateGestureActive = false;
     juce::ToggleButton syncButton { "Sync" }, bipolarButton { "Bipolar" };
     ParameterSlider rate { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
     juce::Label rateLabel;

@@ -39,6 +39,10 @@ public:
     ~ModernLayerState() override;
 
     modern::ModernConfig getConfig() const;
+    // Coherent non-audio snapshot/token for delayed UI actions, including edit-and-restore.
+    struct EditSnapshot { modern::ModernConfig config; std::uint64_t revision; };
+    EditSnapshot getEditSnapshot() const;
+    std::uint64_t getRevision() const;
     modern::MsegShape getShape(int index) const;
     modern::ModSlot getSlot(int index) const;
     void setShape(int index, const modern::MsegShape& shape);
@@ -73,6 +77,7 @@ private:
     juce::AudioProcessorValueTreeState& apvts;
     mutable juce::CriticalSection lock;
     modern::ModernConfig config;
+    std::uint64_t revision = 0;
     bool writing = false;
 
     juce::SpinLock mailboxLock;

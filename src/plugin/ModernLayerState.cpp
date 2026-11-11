@@ -116,6 +116,18 @@ modern::ModernConfig ModernLayerState::getConfig() const
     return config;
 }
 
+ModernLayerState::EditSnapshot ModernLayerState::getEditSnapshot() const
+{
+    const juce::ScopedLock sl(lock);
+    return { config, revision };
+}
+
+std::uint64_t ModernLayerState::getRevision() const
+{
+    const juce::ScopedLock sl(lock);
+    return revision;
+}
+
 modern::MsegShape ModernLayerState::getShape(int index) const
 {
     const juce::ScopedLock sl(lock);
@@ -159,6 +171,7 @@ void ModernLayerState::store(const modern::ModernConfig& newConfig, bool writeTr
         if (clean == config) // a tree without the child already means the defaults
             return;
         config = clean;
+        ++revision;
     }
     if (writeTree)
     {

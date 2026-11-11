@@ -145,8 +145,14 @@ MsegEditor::~MsegEditor()
     processor.getModernLayer().removeChangeListener(this);
 }
 
+void MsegEditor::enablementChanged()
+{
+    ++editGeneration;
+}
+
 void MsegEditor::setMsegIndex(int index)
 {
+    ++editGeneration;
     // A pointer gesture belongs to its original envelope, even across A-B-A selection.
     drag = Drag::none;
     dragIndex = -1;
@@ -344,6 +350,7 @@ void MsegEditor::mouseDown(const juce::MouseEvent& e)
 {
     if (!e.mods.isLeftButtonDown() || e.mods.isPopupMenu())
         return;
+    ++editGeneration;
     grabKeyboardFocus();
     frozenViewLength = viewLength();
     dragStart = e.position;
@@ -432,6 +439,7 @@ void MsegEditor::mouseDoubleClick(const juce::MouseEvent& e)
 {
     if (!e.mods.isLeftButtonDown() || e.mods.isPopupMenu())
         return;
+    ++editGeneration;
     drag = Drag::none;
     if (const int i = hitPoint(e.position); i > 0 && shape.count > 2)
     {
@@ -467,6 +475,7 @@ bool MsegEditor::keyPressed(const juce::KeyPress& key)
         return false;
     if ((key == juce::KeyPress::deleteKey || key == juce::KeyPress::backspaceKey) && selected > 0 && shape.count > 2)
     {
+        ++editGeneration;
         for (int k = selected; k + 1 < shape.count; ++k)
             shape.points[(std::size_t) k] = shape.points[(std::size_t) k + 1];
         --shape.count;
@@ -521,6 +530,17 @@ MsegPage::MsegPage(Cs80AudioProcessor& p) : processor(p), editor(p)
     styleCombo(loopBox, "MSEG loop mode");
     styleCombo(triggerBox, "MSEG trigger mode");
     styleCombo(presetBox, "MSEG shape preset");
+    copyShape.setTitle("Copy MSEG shape to another slot");
+    copyShape.setTooltip("Replace another MSEG's points, curves, loop, trigger, Sync and Bipolar settings. "
+                         "Its rate and matrix routing/amounts stay unchanged. Undo restores the previous shape.");
+    copyShape.setColour(juce::TextButton::buttonColourId, panelDark.brighter(0.1f));
+    copyShape.setColour(juce::TextButton::textColourOffId, ivory);
+    copyShape.onClick = [this]
+    {
+        if (!canCopyShape()) return;
+        buildShapeCopyMenu().showMenuAsync(juce::PopupMenu::Options().withTargetComponent(&copyShape));
+    };
+    addAndMakeVisible(copyShape);
     for (auto* t : { &syncButton, &bipolarButton })
     {
         t->setColour(juce::ToggleButton::textColourId, ivory);
@@ -544,6 +564,8 @@ MsegPage::MsegPage(Cs80AudioProcessor& p) : processor(p), editor(p)
     for (auto* c : { &loopBox, &triggerBox, &presetBox })
         addAndMakeVisible(*c);
     styleSlider(rate, "MSEG rate");
+    rate.onDragStart = [this] { rateGestureActive = true; ++copyMenuGeneration; };
+    rate.onDragEnd = [this] { rateGestureActive = false; };
     styleLabel(rateLabel, "Rate");
     addAndMakeVisible(rate);
     addAndMakeVisible(rateLabel);
@@ -570,6 +592,51 @@ void MsegPage::selectMseg(int index)
     { return juce::jlimit(-3.0, 3.0, std::log2(juce::jmax(0.125, text.getDoubleValue()))); };
     rate.updateText();
     refreshControls();
+}
+
+bool MsegPage::canCopyShape() const
+{
+    return isEnabled() && copyShape.isEnabled() && editor.isEnabled() && !processor.isPure()
+        && editor.drag == MsegEditor::Drag::none && !rateGestureActive;
+}
+
+juce::PopupMenu MsegPage::buildShapeCopyMenu()
+{
+    juce::PopupMenu menu;
+    const int source = editor.getMsegIndex();
+    const auto [config, revision] = processor.getModernLayer().getEditSnapshot();
+    const auto sourceShape = config.msegs[(std::size_t) source];
+    const auto editorGeneration = editor.editGeneration;
+    const auto menuGeneration = ++copyMenuGeneration;
+    const bool admitted = canCopyShape();
+    juce::Component::SafePointer<MsegPage> safe(this);
+    menu.addSectionHeader("Copy MSEG " + juce::String(source + 1) + " shape");
+    for (int destination = 0; destination < kMsegCount; ++destination)
+    {
+        if (destination == source) continue;
+        juce::PopupMenu::Item item("Copy shape to MSEG " + juce::String(destination + 1));
+        const bool different = sourceShape != config.msegs[(std::size_t) destination];
+        item.isEnabled = admitted && different;
+        item.action = [safe, source, destination, sourceShape, revision, editorGeneration, menuGeneration,
+                       admitted, different]
+        {
+            // Remember admission as well as checking delivery: disabled/drag-time menus must
+            // never become live later. Revisions also reject source/destination edit-and-undo.
+            if (!admitted || !different || safe == nullptr || !safe->canCopyShape()
+                || safe->editor.getMsegIndex() != source || safe->editor.editGeneration != editorGeneration
+                || safe->copyMenuGeneration != menuGeneration
+                || safe->processor.getModernLayer().getRevision() != revision)
+                return;
+            ++safe->copyMenuGeneration; // the request is single-use, even across undo
+            auto& undo = safe->processor.getUndoManager();
+            undo.beginNewTransaction("Copy MSEG " + juce::String(source + 1) + " shape to MSEG "
+                                     + juce::String(destination + 1));
+            safe->processor.getModernLayer().setShape(destination, sourceShape);
+            undo.beginNewTransaction(); // a later direct shape edit cannot join this copy
+        };
+        menu.addItem(item);
+    }
+    return menu;
 }
 
 void MsegPage::refreshControls()
@@ -608,6 +675,7 @@ void MsegPage::resized()
         b.setBounds(top.removeFromLeft(78).reduced(2, 0));
     top.removeFromLeft(10);
     presetBox.setBounds(top.removeFromRight(190).reduced(2, 0));
+    copyShape.setBounds(top.removeFromRight(138).reduced(2, 0));
     area.removeFromTop(6);
     auto controls = area.removeFromBottom(28);
     area.removeFromBottom(6);
