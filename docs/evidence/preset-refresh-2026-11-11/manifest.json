@@ -1,0 +1,52 @@
+{
+  "base_commit": "3d71f110f344493d38d3f1122848a6d5cf22a854",
+  "baseline": {
+    "production_browser_git_blob": "79d6babb6e8463d58f1e584e8d3dc1f7283f2784",
+    "test_git_blob": "25c754ae5ca2eae119f19d95a0b18fe6b2dbc5bb",
+    "executable_sha256": "5f5426457be36665911b55a272b11e0e57c4b0543a3bc6910991df9d350f6533",
+    "exit_code": 1,
+    "checks": 8,
+    "failures": 2,
+    "log": "baseline-expanded.log",
+    "test_source": "baseline-PresetRefreshTests.h",
+    "test_sha256": "1fdfb95dea7b3c5072b5dcd1782790710927d16e30817cf9d72d9778e5b80935"
+  },
+  "final": {
+    "executable_sha256": "797af7d960e8fa8d6a6568efaba7f3cb11ef9255f9e08893e9b4bb65b1036e2b",
+    "checks": 39,
+    "failures": 0,
+    "adjacent_ctests_passed": 12,
+    "source_sha256": {
+      "src/plugin/PresetBrowser.cpp": "a32cd33a5e84aff02c1d39bbc8a1b6752e94d27b86f815c185dd52e2e4b2b586",
+      "src/plugin/PresetBrowser.h": "ad6e1385b20c301452204e4843cc8ea270ee7c2d4917b6419f7490c245daa91b",
+      "tests/PresetRefreshTests.h": "5cfc505f387674cdd1a6efdb5bd7f283e2ce96b31658bf42516662c6015fc6c4",
+      "src/tools/ui_snapshot.cpp": "7774045fe661fb1edace6ef4bedb788c848c180ea3dc1d26dd90f8c78201f30c",
+      "CMakeLists.txt": "d1d16990dbde6904260daffe613b1744b613163f221480580a518d99271bacf8"
+    }
+  },
+  "scope": "Direct offscreen JUCE component and processor regressions. No native peer, full UI suite, sanitizer, DAW, macOS/Windows or remote CI claim.",
+  "environment_observation": "Xvfb cannot establish local listening sockets; wrapper observation is not a product-test failure. No escalation or workaround used.",
+  "logs_sha256": {
+    "adjacent-ctest.log": "85c6d48a56f14ce2fd5830b0dc59c0261cc2d8338bd05c2aecc48f74f1579ec1",
+    "baseline-expanded.log": "0b494c1a1dc1d793a5f4761492f7ec3633603962e0741181b1474fe818255b1c",
+    "build-final-verified.log": "c2ed93ffd93c840755c0e91392ae593b1b52de9b7aaf6c208123feaceb1dde2e",
+    "focused-final.log": "eb4e5e840948c78b52e402d9b5aa1a8880c5ec475782f2cbc6f6713a920b7601",
+    "independent-adjacent.log": "e94d434fda431bb10045684968ca2fed4afd71bf2353c51c80d155c7816c8c09",
+    "independent-focused.log": "eb4e5e840948c78b52e402d9b5aa1a8880c5ec475782f2cbc6f6713a920b7601",
+    "xvfb-error.log": "d0cc019629f6a860def53f907e944f49881c5cf1aec45dbec68547eee48922fb",
+    "xvfb-wrapper.log": "82dda508b8d42013eeaf8b3c6a7e68ec3ce1ee93eadef9fc788aa91f812e66a8"
+  },
+  "environment_log_format": "Trailing whitespace and the extra final blank line removed from xvfb-error.log for repository whitespace checks; content otherwise unchanged.",
+  "environment_log_original_sha256": "78204dc5f788ee7fa12fd7dcfa7b61707ac536c296a68a4b6d7ebc4d86622d74",
+  "independent_review": {
+    "approved_for_local_commit": true,
+    "production_and_test_source_sha256_verified": true,
+    "exact_binary_sha256_verified": true,
+    "focused_checks": 39,
+    "focused_failures": 0,
+    "focused_exit_code": 0,
+    "adjacent_ctests_passed": 12,
+    "adjacent_exit_code": 0,
+    "source_findings": "No blocking finding in refresh ordering, stable identity, nesting-safe restoration, audition suppression or save-name continuity."
+  }
+}

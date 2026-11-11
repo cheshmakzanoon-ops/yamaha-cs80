@@ -2850,6 +2850,19 @@ void PresetBrowser::layoutDescription()
 // ---------------------------------------------------------------------------
 void PresetBrowser::refresh()
 {
+    // Row indices belong to the old catalogue. Save its stable identity before
+    // replacing entries, and retire the mapping while those entries still live.
+    // In particular, deleting the final saved patch must never leave a row
+    // pointing at a destroyed entry during layout or selection restoration.
+    const auto previousKey = selectedEntry() != nullptr ? selectedEntry()->key : juce::String();
+    {
+        const juce::ScopedValueSetter<bool> restoring(restoringSelection, true);
+        selectedFilteredRow = -1;
+        hoveredRow = -1;
+        filtered.clear();
+        list->deselectAllRows();
+        list->updateContent();
+    }
     loadFavourites();
     compactRows = compactPreference();
     auditionOn = auditionPreference();
@@ -2957,7 +2970,7 @@ void PresetBrowser::refresh()
         styleChips[(size_t) t]->setToggleState((styleFilter & (1u << (unsigned) t)) != 0, juce::dontSendNotification);
 
     layoutAll();
-    rebuildFilter();
+    rebuildFilter(previousKey);
     selectCurrentPreset();
 }
 
@@ -2968,7 +2981,10 @@ bool PresetBrowser::isFavourite(const Entry& e) const
 
 int PresetBrowser::entryIndexForRow(int row) const
 {
-    return row >= 0 && row < (int) filtered.size() ? filtered[(size_t) row] : -1;
+    if (row < 0 || row >= (int) filtered.size())
+        return -1;
+    const int index = filtered[(size_t) row];
+    return index >= 0 && index < (int) entries.size() ? index : -1;
 }
 
 const PresetBrowser::Entry* PresetBrowser::selectedEntry() const
@@ -3039,7 +3055,11 @@ bool scopeAccepts(int scope, bool favourite, bool isUser, bool legacy)
 void PresetBrowser::rebuildFilter()
 {
     const juce::String previousKey = selectedEntry() != nullptr ? selectedEntry()->key : juce::String();
+    rebuildFilter(previousKey);
+}
 
+void PresetBrowser::rebuildFilter(const juce::String& previousKey)
+{
     juce::StringArray tokens;
     tokens.addTokens(search.getText().trim().toLowerCase(), " ", "");
     tokens.removeEmptyStrings();
@@ -3153,25 +3173,26 @@ void PresetBrowser::rebuildFilter()
 
     // Keep the selection across filtering when the patch is still listed;
     // while searching, the top hit is selected so Enter loads it.
-    restoringSelection = true;
-    selectedFilteredRow = -1;
-    hoveredRow = -1;
-    list->updateContent();
-    list->deselectAllRows();
-    int restore = -1;
-    for (int row = 0; row < (int) filtered.size() && previousKey.isNotEmpty(); ++row)
-        if (entries[(size_t) filtered[(size_t) row]].key == previousKey)
-        {
-            restore = row;
-            break;
-        }
-    if (restore < 0 && ! tokens.isEmpty() && ! filtered.empty())
-        restore = 0;
-    if (restore >= 0)
-        list->selectRow(restore, false, true);
-    else
-        list->getViewport()->setViewPosition(0, 0);
-    restoringSelection = false;
+    {
+        const juce::ScopedValueSetter<bool> restoring(restoringSelection, true);
+        selectedFilteredRow = -1;
+        hoveredRow = -1;
+        list->updateContent();
+        list->deselectAllRows();
+        int restore = -1;
+        for (int row = 0; row < (int) filtered.size() && previousKey.isNotEmpty(); ++row)
+            if (entries[(size_t) filtered[(size_t) row]].key == previousKey)
+            {
+                restore = row;
+                break;
+            }
+        if (restore < 0 && ! tokens.isEmpty() && ! filtered.empty())
+            restore = 0;
+        if (restore >= 0)
+            list->selectRow(restore, false, true);
+        else
+            list->getViewport()->setViewPosition(0, 0);
+    }
     selectedFilteredRow = list->getSelectedRow();
 
     list->repaint();
@@ -4032,6 +4053,15 @@ void PresetBrowser::selectCurrentPreset()
         return;
     }
 
+    if (! restoringSelection && list->getSelectedRow() != target)
+    {
+        saveName.setText(entries[(size_t) filtered[(size_t) target]].name, false);
+        saveName.setCaretPosition(0);
+    }
+    // A displayed fallback slot is not necessarily the sounding patch (for
+    // example, an unsaved named edit). Programmatic selection must not audition
+    // that slot over the live sound. Preserve any enclosing restoration guard.
+    const juce::ScopedValueSetter<bool> restoring(restoringSelection, true);
     selectedFilteredRow = target;
     list->selectRow(target, true, true);
     auto* viewport = list->getViewport();

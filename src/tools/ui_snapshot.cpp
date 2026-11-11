@@ -30,6 +30,7 @@
 #include "../../tests/EngineHostTests.h"
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
+#include "../../tests/PresetRefreshTests.h"
 #include "../../tests/PresetRecallHostTests.h"
 #include "../../tests/PresetFileHostTests.h"
 #include "../../tests/SessionSchemaHostTests.h"
@@ -1993,6 +1994,14 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--preset-refresh-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::PresetRefreshAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Preset catalogue refresh: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--mseg-editor-lifecycle-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -3796,6 +3805,7 @@ int main(int argc, char** argv)
     // All preset-save I/O is confined to fresh temporary fixtures.
     phases.begin("preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
+    cs80::tests::PresetRefreshAccess::run(check);
     cs80::tests::testPluginPanic(check, flushGui);
     phases.begin("program library, Program Change, A/B and randomise");
     cs80::tests::testProgramLibraryHost(check);

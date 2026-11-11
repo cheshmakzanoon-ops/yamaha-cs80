@@ -8,7 +8,7 @@
 #include <vector>
 
 class Cs80AudioProcessor;
-namespace cs80::tests { struct PresetSaveAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct PresetRefreshAccess; }
 
 namespace cs80::ui
 {
@@ -134,6 +134,7 @@ public:
 
 private:
     friend struct cs80::tests::PresetSaveAccess;
+    friend struct cs80::tests::PresetRefreshAccess;
 
     struct Entry
     {
@@ -196,6 +197,7 @@ private:
     void layoutAll();
     void layoutDescription();
     void rebuildFilter();
+    void rebuildFilter(const juce::String& previousKey);
     void updateSelectionWidgets();
     void clearFilters();
     bool anyFilterActive() const;
