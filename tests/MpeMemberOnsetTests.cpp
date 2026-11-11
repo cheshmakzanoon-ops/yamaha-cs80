@@ -171,11 +171,10 @@ void ratesCurvesAndRanges()
         sameAudio(render(a, 64), render(b, 64));
         expected(a, find(a, 60, 2), x, 7.5f, .7f, .15f);
         rpn(a, 2, 0, 12, 50); rpn(b, 2, 0, 12, 50);
-        check(exact(a.getVoiceInfo(find(a, 60, 2)).bend, -.25f * 7.5f),
-              "range negotiation does not silently retarget an existing voice");
+        check(exact(a.getVoiceInfo(find(a, 60, 2)).bend, -.25f * 12.5f),
+              "range negotiation rescales the held member from its retained raw bend");
         a.noteOn(61, .8f, 2); b.noteOn(61, .8f, 2); send(b, 2, x);
-        // The explicit reference event also changes its older note; target
-        // checks isolate the new note rather than pretending whole audio agrees.
+        // The held older note and new onset now share the updated range.
         render(a, 1); render(b, 1);
         expected(a, find(a, 61, 2), x, 12.5f, .7f, .15f);
         rpn(a, 1, 6, 15); // Same role retains raw expression; MCM reinstates 48 semitones.

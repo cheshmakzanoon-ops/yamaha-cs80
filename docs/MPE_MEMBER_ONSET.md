@@ -58,3 +58,5 @@ performance, filter/memory activation or circuit-fidelity qualification is
 claimed. Same-pitch sixteen-voice Note Off ownership is addressed separately by
 the [bounded immediate release coordinator](SIXTEEN_VOICE_NOTE_RELEASE.md);
 deferred-scanner and arpeggiator ownership remain open.
+
+The subsequent [held member range retargeting](MPE_MEMBER_RANGE_RETARGET.md) implements live sensitivity rescaling for eligible held member voices while preserving accepted-release targets. The earlier remaining-work statements above describe their original checkpoint.

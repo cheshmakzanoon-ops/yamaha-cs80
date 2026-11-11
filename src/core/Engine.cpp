@@ -480,6 +480,7 @@ void Engine::applyParams(const ParamValues& values)
     const float previousBendRange = global.pitchBendRange;
     const bool wasMpe = global.mpe;
     const std::array<float, 2> previousManagerRanges { effectiveManagerBendRange(false), effectiveManagerBendRange(true) };
+    const std::array<float, 2> previousMemberRanges { effectiveMemberBendRange(false), effectiveMemberBendRange(true) };
     const bool wasArp = arpWasOn;
     const int previousArpMode = global.arpMode;
     const int previousArpOctaves = global.arpOctaves;
@@ -517,7 +518,10 @@ void Engine::applyParams(const ParamValues& values)
     if (!wasMpe && !global.mpe && previousBendRange != global.pitchBendRange)
         globalBend = globalPitchWheel * global.pitchBendRange;
     if (wasMpe && global.mpe)
+    {
         retargetManagerBends(previousManagerRanges);
+        retargetMemberBends(previousMemberRanges);
+    }
     // Circuit engine: the new settings become smoothing targets; the fields keep
     // the running values (exactly the targets until audio has been rendered).
     if (usesSourceModels(global.renderPolicy))
@@ -1842,6 +1846,34 @@ void Engine::retargetManagerBends(const std::array<float, 2>& previousRanges) no
     }
 }
 
+float Engine::effectiveMemberBendRange(bool upper) const noexcept
+{
+    const float range = mpeZones.memberRange(upper);
+    return range >= 0.0f ? range : global.mpeBendRange;
+}
+
+void Engine::retargetMemberBends(const std::array<float, 2>& previousRanges) noexcept
+{
+    if (!global.mpe) return;
+    const std::array<float, 2> ranges { effectiveMemberBendRange(false), effectiveMemberBendRange(true) };
+    if (ranges == previousRanges) return;
+    for (auto& voice : voices)
+    {
+        if (!voice.active || !voice.held || voice.midiChannel < 1 || voice.midiChannel > 16)
+            continue;
+        const auto role = mpeZones.role(voice.midiChannel);
+        if (role != MpeZoneLayout::Role::lowerMember && role != MpeZoneLayout::Role::upperMember)
+            continue;
+        const auto& input = memberExpression[(size_t) voice.midiChannel];
+        const bool upper = role == MpeZoneLayout::Role::upperMember;
+        const float range = ranges[upper ? 1 : 0];
+        // Do not initialize an invalidated role, replay a channel event, or
+        // rewrite accepted-release targets. Only held same-role inputs follow.
+        if (input.role == role && range != previousRanges[upper ? 1 : 0])
+            voice.mpeBend = input.bend * range;
+    }
+}
+
 void Engine::applyPitchBend(int midiChannel, float value, bool resetReleasedVoices)
 {
     // Ignore malformed float events before they can poison bend smoothers or
@@ -1935,6 +1967,7 @@ void Engine::controlChange(int controller, float value, int midiChannel)
             || controller == 6 || controller == 38))
     {
         const std::array<float, 2> previousRanges { effectiveManagerBendRange(false), effectiveManagerBendRange(true) };
+        const std::array<float, 2> previousMemberRanges { effectiveMemberBendRange(false), effectiveMemberBendRange(true) };
         const std::array<MpeZoneLayout::Role, 2> previousRoles { mpeZones.role(1), mpeZones.role(16) };
         mpeZones.controlChange(midiChannel, controller, (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f));
         discardChangedMemberExpression();
@@ -1942,6 +1975,7 @@ void Engine::controlChange(int controller, float value, int midiChannel)
             if (previousRoles[(size_t) zone] != mpeZones.role(zone == 0 ? 1 : 16))
                 managerBend[(size_t) zone] = {};
         retargetManagerBends(previousRanges);
+        retargetMemberBends(previousMemberRanges);
         return;
     }
     if (global.parityMode && (controller == 1 || controller == 11

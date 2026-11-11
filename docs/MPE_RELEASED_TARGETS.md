@@ -102,3 +102,5 @@ sanitizer qualification is claimed. Full MCM note termination, complete zone
 reset, manager/member pressure and timbre combination and live member active-note range retargeting remain open. The later
 [manager range retargeting](MPE_MANAGER_RANGE_RETARGET.md) changes eligible
 manager targets while preserving released member targets.
+
+The subsequent [held member range retargeting](MPE_MEMBER_RANGE_RETARGET.md) implements live sensitivity rescaling for eligible held member voices while preserving accepted-release targets. The earlier remaining-work statements above describe their original checkpoint.

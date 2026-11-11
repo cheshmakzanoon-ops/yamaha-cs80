@@ -615,6 +615,8 @@ private:
     struct ManagerBend { float raw = 0.0f; bool valid = false; };
     float effectiveManagerBendRange(bool upper) const noexcept;
     void retargetManagerBends(const std::array<float, 2>& previousRanges) noexcept;
+    float effectiveMemberBendRange(bool upper) const noexcept;
+    void retargetMemberBends(const std::array<float, 2>& previousRanges) noexcept;
     // Event/allocation time only. Raw targets belong to a member-channel role,
     // not a voice slot or the global pressure/matrix controller sources.
     MemberExpression* memberExpressionFor(int midiChannel) noexcept;
