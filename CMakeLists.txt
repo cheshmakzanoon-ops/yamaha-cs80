@@ -1051,6 +1051,14 @@ if (CS80_BUILD_PLUGIN)
         target_link_libraries(cs80_controller_handoff_host_tests PRIVATE CS80Reference)
         add_test(NAME cs80_controller_handoff_host_tests COMMAND cs80_controller_handoff_host_tests)
         set_tests_properties(cs80_controller_handoff_host_tests PROPERTIES TIMEOUT 120)
+        add_executable(cs80_mpe_status_host_tests tests/MpeStatusHostTests.cpp)
+        target_include_directories(cs80_mpe_status_host_tests PRIVATE src
+            "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_mpe_status_host_tests PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_mpe_status_host_tests PRIVATE CS80Reference)
+        add_test(NAME cs80_mpe_status_host_tests COMMAND cs80_mpe_status_host_tests)
+        set_tests_properties(cs80_mpe_status_host_tests PROPERTIES TIMEOUT 120)
         add_executable(cs80_program_extension_recall_host_tests tests/ProgramExtensionRecallHostTests.cpp)
         target_include_directories(cs80_program_extension_recall_host_tests PRIVATE src
             "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")

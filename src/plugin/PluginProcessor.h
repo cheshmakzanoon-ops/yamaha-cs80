@@ -12,6 +12,7 @@
 #include "core/Tuning.h"
 #include "OutputMeter.h"
 #include "VoiceActivity.h"
+#include "MpeStatus.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
 #include "HostAutomationBridge.h"
@@ -104,6 +105,7 @@ public:
     // the curated circuit-engine library (cs80::programLibrary()).
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
+    cs80::MpeStatusReading getMpeStatus() const noexcept { return mpeStatus.read(); }
     cs80::VoiceActivityReading getVoiceActivity() const noexcept { return voiceActivity.read(); }
     int getActiveVoiceCount() const noexcept { return getVoiceActivity().count(); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
@@ -379,6 +381,7 @@ private:
     std::atomic<float> expressionValue { 1.0f };
     std::atomic<unsigned> hostMidiEvents { 0 };
     cs80::VoiceActivity voiceActivity;
+    cs80::MpeStatus mpeStatus;
     cs80::OutputMeter outputMeter;
     // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
     cs80::HighResolutionVelocity highResolutionVelocity; // audio thread

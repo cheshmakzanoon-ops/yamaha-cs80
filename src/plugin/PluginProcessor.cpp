@@ -422,6 +422,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     outputMeter.reset();
     voiceActivity.reset();
+    mpeStatus.reset();
     // Offline bounces render the circuit engine at HQ (Oversampling.h).
     engine.setNonRealtime(isNonRealtime());
     engine.prepare(sampleRate);
@@ -452,6 +453,7 @@ void Cs80AudioProcessor::releaseResources()
     resetHostAutomationState();
     outputMeter.reset();
     voiceActivity.reset();
+    mpeStatus.reset();
     engine.reset();
     extensionEngine->reset();
     extensionActive = false;
@@ -1181,6 +1183,10 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         if (extensionActive && extensionEngine->getVoiceInfo(i).active) extensionMask |= 1u << i;
     }
     voiceActivity.publish(primaryMask, extensionMask, extensionActive);
+    const auto& mpeZones = engine.getMpeZones();
+    mpeStatus.publish(engine.isMpeEnabled(), mpeZones.lowerMemberCount(), mpeZones.upperMemberCount(),
+                      engine.effectiveManagerBendRange(false), engine.effectiveMemberBendRange(false),
+                      engine.effectiveManagerBendRange(true), engine.effectiveMemberBendRange(true));
 
     // Inspect the completed host buffer, not pre-decimator/internal stereo
     // values: mono mapping/cancellation and its arithmetic are already applied.

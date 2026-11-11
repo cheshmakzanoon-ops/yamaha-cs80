@@ -276,6 +276,9 @@ public:
     float tunedPitch(int midiNote, int midiChannel = 1) const noexcept;
     const MpeZoneLayout& getMpeZones() const noexcept { return mpeZones; }
     bool isMpeEnabled() const noexcept { return global.mpe; }
+    // Audio-thread queries of the same negotiated/fallback ranges used by DSP.
+    float effectiveManagerBendRange(bool upper) const noexcept;
+    float effectiveMemberBendRange(bool upper) const noexcept;
     // Voice mode accepted for this frame (0 in PURE CS-80): 0 eight voices,
     // 1 sixteen (two engines, see PluginProcessor), 2/3/4 unison x2/x4/x8.
     int getVoiceMode() const noexcept { return global.voiceMode; }
@@ -621,9 +624,7 @@ private:
         float bend = 0.0f, pressure = 0.0f, timbre = 0.0f;
     };
     struct ManagerBend { float raw = 0.0f; bool valid = false; };
-    float effectiveManagerBendRange(bool upper) const noexcept;
     void retargetManagerBends(const std::array<float, 2>& previousRanges) noexcept;
-    float effectiveMemberBendRange(bool upper) const noexcept;
     void retargetMemberBends(const std::array<float, 2>& previousRanges) noexcept;
     // Event/allocation time only. Raw targets belong to a member-channel role,
     // not a voice slot or the global pressure/matrix controller sources.

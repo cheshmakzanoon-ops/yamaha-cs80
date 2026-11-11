@@ -109,6 +109,11 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     status.setInterceptsMouseClicks(true, false); // TooltipWindow must hit this label.
     description.setJustificationType(juce::Justification::topLeft);
     status.setJustificationType(juce::Justification::topLeft);
+    styleLabel(mpeStatus, {}, 13.0f, ivoryDim);
+    mpeStatus.setJustificationType(juce::Justification::topLeft);
+    mpeStatus.setTitle("Applied MPE zones and bend ranges");
+    mpeStatus.setInterceptsMouseClicks(true, false);
+    mpeStatus.setTooltip("Read-only state from the last completed audio callback, refreshed four times per second. Incoming MCM/RPN messages can override the stored bend knobs. Ranges are displayed rounded to 0.01 semitone; DSP values are unchanged. MPE is masked in PURE CS-80. Changes wait for an audio callback.");
 
     styleToggle(scanTiming, "Declared KAS scanner model: key events act at 1 ms scan instants, lowest key first. "
                             "Adds at most 1 ms of note latency. Circuit engine only.");
@@ -148,7 +153,7 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
 
     for (auto* c : std::initializer_list<juce::Component*> { &tuningTitle, &keyboardTitle, &tuningModeLabel, &voiceModeLabel,
                                                              &tuningMode, &voiceMode, &loadScl, &loadKbm, &clear, &description,
-                                                             &status, &scanTiming, &ribbonCcEnable, &note })
+                                                             &status, &mpeStatus, &scanTiming, &ribbonCcEnable, &note })
         addAndMakeVisible(*c);
     refreshStatus();
     startTimerHz(4);
@@ -228,6 +233,29 @@ void KeyboardTuningPage::refreshStatus()
     if (status.getText() != line)
         status.setText(line, juce::dontSendNotification);
     status.setTooltip(line);
+    const auto applied = processor.getMpeStatus();
+    juce::String mpe;
+    if (! applied.ready) mpe = "MPE: waiting for an audio callback.";
+    else if (! applied.enabled) mpe = "MPE: off in the last audio callback (including PURE masking).";
+    else
+    {
+        const auto zone = [](bool upper, int members, float managerRange, float memberRange)
+        {
+            const juce::String name = upper ? "Upper" : "Lower";
+            if (members == 0) return name + ": zone disabled";
+            const int manager = upper ? 16 : 1;
+            const int first = upper ? 16 - members : 2;
+            const int last = upper ? 15 : 1 + members;
+            return name + ": manager " + juce::String(manager) + ", members " + juce::String(first)
+                + (first == last ? juce::String() : "-" + juce::String(last))
+                + "\nBend: manager " + juce::String(managerRange, 2) + " st, members "
+                + juce::String(memberRange, 2) + " st";
+        };
+        mpe = "MPE: last completed audio callback\n"
+            + zone(false, applied.lowerMembers, applied.lowerManagerRange, applied.lowerMemberRange) + "\n"
+            + zone(true, applied.upperMembers, applied.upperManagerRange, applied.upperMemberRange);
+    }
+    if (mpeStatus.getText() != mpe) mpeStatus.setText(mpe, juce::dontSendNotification);
     loadKbm.setEnabled(hasScale);
 }
 
@@ -271,6 +299,8 @@ void KeyboardTuningPage::resized()
         a.removeFromTop(10);
         description.setBounds(a.removeFromTop(48));
         status.setBounds(a.removeFromTop(64));
+        a.removeFromTop(8);
+        mpeStatus.setBounds(a.removeFromTop(112));
     }
     {
         auto a = keyboardPanel.reduced(12, 8);
