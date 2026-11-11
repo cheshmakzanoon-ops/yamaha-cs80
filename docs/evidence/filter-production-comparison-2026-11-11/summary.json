@@ -1,0 +1,521 @@
+{
+  "base_commit": "34a8edc9ff2dd6458725f2ee46bb57c30da044ff",
+  "date_utc": "2026-11-11",
+  "event_input": "event,time_s,action\n0,0,fresh_on\n1,.025,note_off\n2,.035,retained_retrigger\n3,.075,note_off\n",
+  "runs": [
+    {
+      "artifacts": {
+        "comparison.csv": {
+          "bytes": 95690,
+          "sha256": "397cb0b3311d0eb4f9a79a8b4714b40302213fa7e4eef6521420960a1d856916"
+        },
+        "comparison_renderer.py": {
+          "bytes": 18236,
+          "sha256": "178e7b851c8d88087f556311c1284665723ebd47c7c36a7db33491b3a876389d"
+        },
+        "input_events.csv": {
+          "bytes": 91,
+          "sha256": "53284fc7784260eb221300c3e615f794ac9e780b51698ceca1c85b348e781e4d"
+        },
+        "production.csv": {
+          "bytes": 60005,
+          "sha256": "1825b0858a34e661c5df1010e32f04ac51fdf5e21fec64fbcb200095a7862cb1"
+        },
+        "production_events.csv": {
+          "bytes": 88,
+          "sha256": "3011c8c70ef68f23189cfc6f2e5fd95d805c90ced0519bd61055a0055588cff7"
+        },
+        "production_executable": {
+          "bytes": 44856,
+          "sha256": "02b65f94a8b74bf90a8969b795268336728c0450fc7b50bb1f591fc03423f083"
+        },
+        "production_metadata.json": {
+          "bytes": 903,
+          "sha256": "500d3e919dc9c82284ab7f1851f216ff584c93f4a996384dec905139e9f8e962"
+        },
+        "reference/envelope.csv": {
+          "bytes": 42799,
+          "sha256": "81babf9150bc68d98a1b79f9b6addceb5175e3d0b9c787f74649888840e4bf2e"
+        },
+        "reference/events.json": {
+          "bytes": 3124,
+          "sha256": "c3927ce9fe6398c528d30784f7863c5b981a5be9e8e5df80a1d084c01c9a6efa"
+        },
+        "reference/input_events.csv": {
+          "bytes": 91,
+          "sha256": "53284fc7784260eb221300c3e615f794ac9e780b51698ceca1c85b348e781e4d"
+        },
+        "reference/manifest.json": {
+          "bytes": 3715,
+          "sha256": "503587714be1f5bfd279a7d5bc87f40ca16f4d853131b50bbeb8bd8d01d90ba4"
+        },
+        "reference/render_amplitude_envelope_reference.py": {
+          "bytes": 14530,
+          "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+        },
+        "reference/renderer.py": {
+          "bytes": 14876,
+          "sha256": "8a1f6b5810b9c1a953b5b9b45ea5e03a2065047a576f899a2f2f1f617d23a083"
+        },
+        "reference/transitions.json": {
+          "bytes": 704,
+          "sha256": "517562cadca0f32b35a1cee928f0993b3e0b8c3b57eb9f845ac8e71344de879e"
+        },
+        "reference_renderer.py": {
+          "bytes": 14876,
+          "sha256": "8a1f6b5810b9c1a953b5b9b45ea5e03a2065047a576f899a2f2f1f617d23a083"
+        },
+        "render_amplitude_envelope_reference.py": {
+          "bytes": 14530,
+          "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+        },
+        "sources/CMakeLists.txt": {
+          "bytes": 102636,
+          "sha256": "ae61f99d4678524310dd0bcbd319383797375a2396f803b21c8ff5405f963d4f"
+        },
+        "sources/src/core/Dsp.h": {
+          "bytes": 52471,
+          "sha256": "8a217f1ac7800eacb4f2691e34cab99694e873fef446d3292a3a10d030d03dd2"
+        },
+        "sources/src/tools/TruthInputSha256.h": {
+          "bytes": 3028,
+          "sha256": "14c3b9c139dfbd7dd00b45a5627c808cc07c57a53d0d680852e7e298fc045271"
+        },
+        "sources/src/tools/filter_production_trace.cpp": {
+          "bytes": 14187,
+          "sha256": "526704e564991c438d82ec4504a985e78d9ce7742dc4e78e49d045ed4323e75a"
+        }
+      },
+      "case": "signed_up",
+      "manifest_sha256": "4b7bfacd139513c90c8a446d32b80d563cf2e6240853da7cbace7df4d73db618",
+      "metrics": {
+        "definition": "All N rows including t=0, events, snaps, and final endpoint; difference=production-reference. No alignment, exclusions, fitted tolerance, or pass/fail.",
+        "maximum_absolute_error": 0.02225741741624221,
+        "reference_rms": 0.5602122180702918,
+        "relative_rms_error": 0.006903014411204269,
+        "rms_error": 0.003867153014671933,
+        "rows": 801,
+        "stage_mismatch_rows": 1
+      },
+      "parameters": {
+        "al": {
+          "decimal": "1.3",
+          "decimal_rational": "13/10",
+          "production_float": 1.2999999523162842,
+          "reference_binary64": 1.3
+        },
+        "attack": {
+          "decimal": ".0137",
+          "decimal_rational": "137/10000",
+          "production_float": 0.013700000010430813,
+          "reference_binary64": 0.0137
+        },
+        "decay": {
+          "decimal": ".02",
+          "decimal_rational": "1/50",
+          "production_float": 0.019999999552965164,
+          "reference_binary64": 0.02
+        },
+        "il": {
+          "decimal": "-.7",
+          "decimal_rational": "-7/10",
+          "production_float": -0.699999988079071,
+          "reference_binary64": -0.7
+        },
+        "release": {
+          "decimal": ".03",
+          "decimal_rational": "3/100",
+          "production_float": 0.029999999329447746,
+          "reference_binary64": 0.03
+        }
+      }
+    },
+    {
+      "artifacts": {
+        "comparison.csv": {
+          "bytes": 95330,
+          "sha256": "b4b724d56166eb0b1e5dc671084167459b73e7fc5ab959367bd5bf2ff1c9ebd5"
+        },
+        "comparison_renderer.py": {
+          "bytes": 18236,
+          "sha256": "178e7b851c8d88087f556311c1284665723ebd47c7c36a7db33491b3a876389d"
+        },
+        "input_events.csv": {
+          "bytes": 91,
+          "sha256": "53284fc7784260eb221300c3e615f794ac9e780b51698ceca1c85b348e781e4d"
+        },
+        "production.csv": {
+          "bytes": 59672,
+          "sha256": "92fffceb8aed75e2a3018add81c26b41efe679c764d4d800b85723a0b946bf09"
+        },
+        "production_events.csv": {
+          "bytes": 88,
+          "sha256": "3011c8c70ef68f23189cfc6f2e5fd95d805c90ced0519bd61055a0055588cff7"
+        },
+        "production_executable": {
+          "bytes": 44856,
+          "sha256": "02b65f94a8b74bf90a8969b795268336728c0450fc7b50bb1f591fc03423f083"
+        },
+        "production_metadata.json": {
+          "bytes": 903,
+          "sha256": "d4cbc1d84f0b3e72520b33abb03eb955350c5207bdb04bbfcacc8f23abf8fa62"
+        },
+        "reference/envelope.csv": {
+          "bytes": 42514,
+          "sha256": "ec57e1c6068f15be5453872a9bcbc6538abfce81e99ce64bc051005b6223d235"
+        },
+        "reference/events.json": {
+          "bytes": 3124,
+          "sha256": "ff951acc5154ae75a6d9f741c5309e5960bb04f40c65fd766192786fdabb078b"
+        },
+        "reference/input_events.csv": {
+          "bytes": 91,
+          "sha256": "53284fc7784260eb221300c3e615f794ac9e780b51698ceca1c85b348e781e4d"
+        },
+        "reference/manifest.json": {
+          "bytes": 3715,
+          "sha256": "203a3765ee33893afd4a2fe35fdda1f86110530991f788065e74a152b950826f"
+        },
+        "reference/render_amplitude_envelope_reference.py": {
+          "bytes": 14530,
+          "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+        },
+        "reference/renderer.py": {
+          "bytes": 14876,
+          "sha256": "8a1f6b5810b9c1a953b5b9b45ea5e03a2065047a576f899a2f2f1f617d23a083"
+        },
+        "reference/transitions.json": {
+          "bytes": 706,
+          "sha256": "93e8ea08725039d3206159067080e64b2813c4b23e77b685b3dfafd32b668c34"
+        },
+        "reference_renderer.py": {
+          "bytes": 14876,
+          "sha256": "8a1f6b5810b9c1a953b5b9b45ea5e03a2065047a576f899a2f2f1f617d23a083"
+        },
+        "render_amplitude_envelope_reference.py": {
+          "bytes": 14530,
+          "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+        },
+        "sources/CMakeLists.txt": {
+          "bytes": 102636,
+          "sha256": "ae61f99d4678524310dd0bcbd319383797375a2396f803b21c8ff5405f963d4f"
+        },
+        "sources/src/core/Dsp.h": {
+          "bytes": 52471,
+          "sha256": "8a217f1ac7800eacb4f2691e34cab99694e873fef446d3292a3a10d030d03dd2"
+        },
+        "sources/src/tools/TruthInputSha256.h": {
+          "bytes": 3028,
+          "sha256": "14c3b9c139dfbd7dd00b45a5627c808cc07c57a53d0d680852e7e298fc045271"
+        },
+        "sources/src/tools/filter_production_trace.cpp": {
+          "bytes": 14187,
+          "sha256": "526704e564991c438d82ec4504a985e78d9ce7742dc4e78e49d045ed4323e75a"
+        }
+      },
+      "case": "signed_down",
+      "manifest_sha256": "c2200ff5e0594ae11822d12e026e232f35abae6e04b157976ea2cee0bb088297",
+      "metrics": {
+        "definition": "All N rows including t=0, events, snaps, and final endpoint; difference=production-reference. No alignment, exclusions, fitted tolerance, or pass/fail.",
+        "maximum_absolute_error": 0.01198477697904854,
+        "reference_rms": 0.6982768881882764,
+        "relative_rms_error": 0.002981995117761173,
+        "rms_error": 0.0020822582714229046,
+        "rows": 801,
+        "stage_mismatch_rows": 0
+      },
+      "parameters": {
+        "al": {
+          "decimal": "-.7",
+          "decimal_rational": "-7/10",
+          "production_float": -0.699999988079071,
+          "reference_binary64": -0.7
+        },
+        "attack": {
+          "decimal": ".0137",
+          "decimal_rational": "137/10000",
+          "production_float": 0.013700000010430813,
+          "reference_binary64": 0.0137
+        },
+        "decay": {
+          "decimal": ".02",
+          "decimal_rational": "1/50",
+          "production_float": 0.019999999552965164,
+          "reference_binary64": 0.02
+        },
+        "il": {
+          "decimal": "1.3",
+          "decimal_rational": "13/10",
+          "production_float": 1.2999999523162842,
+          "reference_binary64": 1.3
+        },
+        "release": {
+          "decimal": ".03",
+          "decimal_rational": "3/100",
+          "production_float": 0.029999999329447746,
+          "reference_binary64": 0.03
+        }
+      }
+    },
+    {
+      "artifacts": {
+        "comparison.csv": {
+          "bytes": 51182,
+          "sha256": "8f59c98159181cfa8a6f03f5e56e4d488c9e670303f9dd9fb66ced6a987d4e61"
+        },
+        "comparison_renderer.py": {
+          "bytes": 18236,
+          "sha256": "178e7b851c8d88087f556311c1284665723ebd47c7c36a7db33491b3a876389d"
+        },
+        "input_events.csv": {
+          "bytes": 91,
+          "sha256": "53284fc7784260eb221300c3e615f794ac9e780b51698ceca1c85b348e781e4d"
+        },
+        "production.csv": {
+          "bytes": 45572,
+          "sha256": "836a88ac8377c788ce0dba7836b205606e433aa69199263e34917dd3334910f0"
+        },
+        "production_events.csv": {
+          "bytes": 88,
+          "sha256": "3011c8c70ef68f23189cfc6f2e5fd95d805c90ced0519bd61055a0055588cff7"
+        },
+        "production_executable": {
+          "bytes": 44856,
+          "sha256": "02b65f94a8b74bf90a8969b795268336728c0450fc7b50bb1f591fc03423f083"
+        },
+        "production_metadata.json": {
+          "bytes": 869,
+          "sha256": "6064d7e93b118e5f808e854997f667509bc310c23cb974815f36cea9c6826fef"
+        },
+        "reference/envelope.csv": {
+          "bytes": 28628,
+          "sha256": "3a11b330a6b0f55553c6e977fba6ba967b5c5a7cf061d258610d3395f114f614"
+        },
+        "reference/events.json": {
+          "bytes": 2966,
+          "sha256": "252b86612e8e0305aa276d54b78118010f5fcca1e58de64e008662955777bc90"
+        },
+        "reference/input_events.csv": {
+          "bytes": 91,
+          "sha256": "53284fc7784260eb221300c3e615f794ac9e780b51698ceca1c85b348e781e4d"
+        },
+        "reference/manifest.json": {
+          "bytes": 3707,
+          "sha256": "e4137dfe9f8d5b82097c25ee7bfd9f4510c2fb4f4678ee7a4a68acf487915fa4"
+        },
+        "reference/render_amplitude_envelope_reference.py": {
+          "bytes": 14530,
+          "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+        },
+        "reference/renderer.py": {
+          "bytes": 14876,
+          "sha256": "8a1f6b5810b9c1a953b5b9b45ea5e03a2065047a576f899a2f2f1f617d23a083"
+        },
+        "reference/transitions.json": {
+          "bytes": 1237,
+          "sha256": "dae585ad5f1b25ee98bb5fdeceedd60aced167d5f1a326568dfffcf5fbe3d316"
+        },
+        "reference_renderer.py": {
+          "bytes": 14876,
+          "sha256": "8a1f6b5810b9c1a953b5b9b45ea5e03a2065047a576f899a2f2f1f617d23a083"
+        },
+        "render_amplitude_envelope_reference.py": {
+          "bytes": 14530,
+          "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+        },
+        "sources/CMakeLists.txt": {
+          "bytes": 102636,
+          "sha256": "ae61f99d4678524310dd0bcbd319383797375a2396f803b21c8ff5405f963d4f"
+        },
+        "sources/src/core/Dsp.h": {
+          "bytes": 52471,
+          "sha256": "8a217f1ac7800eacb4f2691e34cab99694e873fef446d3292a3a10d030d03dd2"
+        },
+        "sources/src/tools/TruthInputSha256.h": {
+          "bytes": 3028,
+          "sha256": "14c3b9c139dfbd7dd00b45a5627c808cc07c57a53d0d680852e7e298fc045271"
+        },
+        "sources/src/tools/filter_production_trace.cpp": {
+          "bytes": 14187,
+          "sha256": "526704e564991c438d82ec4504a985e78d9ce7742dc4e78e49d045ed4323e75a"
+        }
+      },
+      "case": "zero_span",
+      "manifest_sha256": "a4028c9b572affa982ef9755707cd4089c06f91b4e5e80bc1d17828ba4438b71",
+      "metrics": {
+        "definition": "All N rows including t=0, events, snaps, and final endpoint; difference=production-reference. No alignment, exclusions, fitted tolerance, or pass/fail.",
+        "maximum_absolute_error": 0.0,
+        "reference_rms": 0.0,
+        "relative_rms_error": null,
+        "rms_error": 0.0,
+        "rows": 801,
+        "stage_mismatch_rows": 6
+      },
+      "parameters": {
+        "al": {
+          "decimal": "0",
+          "decimal_rational": "0",
+          "production_float": 0,
+          "reference_binary64": 0.0
+        },
+        "attack": {
+          "decimal": ".0137",
+          "decimal_rational": "137/10000",
+          "production_float": 0.013700000010430813,
+          "reference_binary64": 0.0137
+        },
+        "decay": {
+          "decimal": ".02",
+          "decimal_rational": "1/50",
+          "production_float": 0.019999999552965164,
+          "reference_binary64": 0.02
+        },
+        "il": {
+          "decimal": "0",
+          "decimal_rational": "0",
+          "production_float": 0,
+          "reference_binary64": 0.0
+        },
+        "release": {
+          "decimal": ".03",
+          "decimal_rational": "3/100",
+          "production_float": 0.029999999329447746,
+          "reference_binary64": 0.03
+        }
+      }
+    },
+    {
+      "artifacts": {
+        "comparison.csv": {
+          "bytes": 95604,
+          "sha256": "0b6bcfd2d4c42684e9d095c6129ae48134d6d19cc8e6cd5abefa8e4ed83d150b"
+        },
+        "comparison_renderer.py": {
+          "bytes": 18236,
+          "sha256": "178e7b851c8d88087f556311c1284665723ebd47c7c36a7db33491b3a876389d"
+        },
+        "input_events.csv": {
+          "bytes": 91,
+          "sha256": "53284fc7784260eb221300c3e615f794ac9e780b51698ceca1c85b348e781e4d"
+        },
+        "production.csv": {
+          "bytes": 59865,
+          "sha256": "d7c5758aaf4340cc74d1fa0579e751718266d0d5866590ce81e16e6209df1888"
+        },
+        "production_events.csv": {
+          "bytes": 88,
+          "sha256": "3011c8c70ef68f23189cfc6f2e5fd95d805c90ced0519bd61055a0055588cff7"
+        },
+        "production_executable": {
+          "bytes": 44856,
+          "sha256": "02b65f94a8b74bf90a8969b795268336728c0450fc7b50bb1f591fc03423f083"
+        },
+        "production_metadata.json": {
+          "bytes": 871,
+          "sha256": "769455805130c43aa6d52a8e5f5f5f9875f1253129aa30f8d3a1a6158137b9cd"
+        },
+        "reference/envelope.csv": {
+          "bytes": 42766,
+          "sha256": "fcea8bf1112217331e8ae084f6871d9db665dbc2b9857d386d8f6c437cfeb299"
+        },
+        "reference/events.json": {
+          "bytes": 3077,
+          "sha256": "d7c8cb264df76099573f967e7289fb8bcbff53f1940726f349281ffa6ef9621f"
+        },
+        "reference/input_events.csv": {
+          "bytes": 91,
+          "sha256": "53284fc7784260eb221300c3e615f794ac9e780b51698ceca1c85b348e781e4d"
+        },
+        "reference/manifest.json": {
+          "bytes": 3710,
+          "sha256": "953fa32a4655ae831905cb49cb7345e9cba776eb8c3d6192b937e72fb0af1e31"
+        },
+        "reference/render_amplitude_envelope_reference.py": {
+          "bytes": 14530,
+          "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+        },
+        "reference/renderer.py": {
+          "bytes": 14876,
+          "sha256": "8a1f6b5810b9c1a953b5b9b45ea5e03a2065047a576f899a2f2f1f617d23a083"
+        },
+        "reference/transitions.json": {
+          "bytes": 972,
+          "sha256": "d28633e24d879292e6f3f6d57b0ba10649c0eb71f683be313b6f5b1383cb3e0a"
+        },
+        "reference_renderer.py": {
+          "bytes": 14876,
+          "sha256": "8a1f6b5810b9c1a953b5b9b45ea5e03a2065047a576f899a2f2f1f617d23a083"
+        },
+        "render_amplitude_envelope_reference.py": {
+          "bytes": 14530,
+          "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+        },
+        "sources/CMakeLists.txt": {
+          "bytes": 102636,
+          "sha256": "ae61f99d4678524310dd0bcbd319383797375a2396f803b21c8ff5405f963d4f"
+        },
+        "sources/src/core/Dsp.h": {
+          "bytes": 52471,
+          "sha256": "8a217f1ac7800eacb4f2691e34cab99694e873fef446d3292a3a10d030d03dd2"
+        },
+        "sources/src/tools/TruthInputSha256.h": {
+          "bytes": 3028,
+          "sha256": "14c3b9c139dfbd7dd00b45a5627c808cc07c57a53d0d680852e7e298fc045271"
+        },
+        "sources/src/tools/filter_production_trace.cpp": {
+          "bytes": 14187,
+          "sha256": "526704e564991c438d82ec4504a985e78d9ce7742dc4e78e49d045ed4323e75a"
+        }
+      },
+      "case": "equal_nonzero",
+      "manifest_sha256": "af9d019ddbe8c4ea41914972b676d7fc36a41459594302bbf30f1b621e40d737",
+      "metrics": {
+        "definition": "All N rows including t=0, events, snaps, and final endpoint; difference=production-reference. No alignment, exclusions, fitted tolerance, or pass/fail.",
+        "maximum_absolute_error": 0.08450952976551762,
+        "reference_rms": 1.2398075506511073,
+        "relative_rms_error": 0.009035068149315338,
+        "rms_error": 0.011201745712168483,
+        "rows": 801,
+        "stage_mismatch_rows": 3
+      },
+      "parameters": {
+        "al": {
+          "decimal": "-2",
+          "decimal_rational": "-2",
+          "production_float": -2,
+          "reference_binary64": -2.0
+        },
+        "attack": {
+          "decimal": ".0137",
+          "decimal_rational": "137/10000",
+          "production_float": 0.013700000010430813,
+          "reference_binary64": 0.0137
+        },
+        "decay": {
+          "decimal": ".02",
+          "decimal_rational": "1/50",
+          "production_float": 0.019999999552965164,
+          "reference_binary64": 0.02
+        },
+        "il": {
+          "decimal": "-2",
+          "decimal_rational": "-2",
+          "production_float": -2,
+          "reference_binary64": -2.0
+        },
+        "release": {
+          "decimal": ".03",
+          "decimal_rational": "3/100",
+          "production_float": 0.029999999329447746,
+          "reference_binary64": 0.03
+        }
+      }
+    }
+  ],
+  "scope": "Descriptive offline fixed FilterEnv reconstruction versus analytic reference; not hardware, legacy, whole voice, performance, or release qualification. Six selected CTest targets, not the whole repository suite.",
+  "source_identity": {
+    "scripts/compare_filter_envelope_production.py": "178e7b851c8d88087f556311c1284665723ebd47c7c36a7db33491b3a876389d",
+    "tests/FilterProductionOracle.cpp": "1d244316b61b76029706eb68c614787e2920c7e3845a517431593815890ccfb5",
+    "tests/test_filter_production_comparison.py": "d2c5703eb68beffbdadd82608ebdc7ef763b0c60eec270fb636a20ed52db6d04"
+  }
+}

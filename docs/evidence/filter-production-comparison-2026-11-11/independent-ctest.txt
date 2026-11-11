@@ -1,0 +1,96 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-filter-envelope-comparison
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-filter-envelope-comparison/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-filter-envelope-comparison/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-filter-envelope-comparison
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 152
+    Start 152: cs80_amplitude_production_comparison_tests
+
+152: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/filter-envelope-comparison/tests/test_amplitude_production_comparison.py" "--renderer" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_amplitude_production_trace" "--oracle" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_amplitude_production_oracle"
+152: Working Directory: /workspace/scratch/ee447c520988/build-filter-envelope-comparison
+152: Test timeout computed to be: 180
+152: ....................
+152: ----------------------------------------------------------------------
+152: Ran 20 tests in 1.156s
+152: 
+152: OK
+1/6 Test #152: cs80_amplitude_production_comparison_tests ...   Passed    1.28 sec
+test 153
+    Start 153: cs80_filter_production_comparison_tests
+
+153: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/filter-envelope-comparison/tests/test_filter_production_comparison.py" "--renderer" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_filter_production_trace" "--oracle" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_filter_production_oracle"
+153: Working Directory: /workspace/scratch/ee447c520988/build-filter-envelope-comparison
+153: Test timeout computed to be: 180
+153: ........................
+153: ----------------------------------------------------------------------
+153: Ran 24 tests in 1.569s
+153: 
+153: OK
+2/6 Test #153: cs80_filter_production_comparison_tests ......   Passed    1.69 sec
+test 156
+    Start 156: cs80_reference_chain_tests
+
+156: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/filter-envelope-comparison/tests/test_reference_chain.py" "--filter" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_vca_reference"
+156: Working Directory: /workspace/scratch/ee447c520988/build-filter-envelope-comparison
+156: Test timeout computed to be: 120
+156: .render_reference_chain: Stage timeout after 0.02 seconds
+156: ............render_reference_chain: injected publication failure
+156: ...
+156: ----------------------------------------------------------------------
+156: Ran 16 tests in 7.162s
+156: 
+156: OK
+3/6 Test #156: cs80_reference_chain_tests ...................   Passed    7.31 sec
+test 157
+    Start 157: cs80_reference_chain_clock_tests
+
+157: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/filter-envelope-comparison/tests/test_reference_chain_clock.py" "--filter" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_vca_reference"
+157: Working Directory: /workspace/scratch/ee447c520988/build-filter-envelope-comparison
+157: Test timeout computed to be: 120
+157: .................
+157: ----------------------------------------------------------------------
+157: Ran 17 tests in 6.038s
+157: 
+157: OK
+4/6 Test #157: cs80_reference_chain_clock_tests .............   Passed    6.19 sec
+test 158
+    Start 158: cs80_amplitude_envelope_reference_tests
+
+158: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/filter-envelope-comparison/tests/test_amplitude_envelope_reference.py" "--filter" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_vca_reference"
+158: Working Directory: /workspace/scratch/ee447c520988/build-filter-envelope-comparison
+158: Test timeout computed to be: 120
+158: ..................
+158: ----------------------------------------------------------------------
+158: Ran 18 tests in 3.745s
+158: 
+158: OK
+5/6 Test #158: cs80_amplitude_envelope_reference_tests ......   Passed    3.88 sec
+test 159
+    Start 159: cs80_filter_envelope_reference_tests
+
+159: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/filter-envelope-comparison/tests/test_filter_envelope_reference.py" "--filter" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_truth_render" "--vca" "/workspace/scratch/ee447c520988/build-filter-envelope-comparison/cs80_vca_reference"
+159: Working Directory: /workspace/scratch/ee447c520988/build-filter-envelope-comparison
+159: Test timeout computed to be: 120
+159: ..................
+159: ----------------------------------------------------------------------
+159: Ran 18 tests in 4.805s
+159: 
+159: OK
+6/6 Test #159: cs80_filter_envelope_reference_tests .........   Passed    4.93 sec
+
+The following tests passed:
+	cs80_amplitude_production_comparison_tests
+	cs80_filter_production_comparison_tests
+	cs80_reference_chain_tests
+	cs80_reference_chain_clock_tests
+	cs80_amplitude_envelope_reference_tests
+	cs80_filter_envelope_reference_tests
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =  25.28 sec
