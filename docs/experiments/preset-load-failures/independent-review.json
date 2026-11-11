@@ -1,0 +1,22 @@
+{
+  "result": "approved",
+  "independent_ctests": {
+    "passed": 12,
+    "failed": 0,
+    "seconds": 4.87,
+    "exit": 0
+  },
+  "focused_checks": 112,
+  "file_recall_checks": 2784,
+  "binary_sha256": "48f281ee92f48b8f3c203b4e32d1ddd0bdd0727623343918773300ad8f09a617",
+  "source_sha256": {
+    "CMakeLists.txt": "b45bf0337cebb91192789e09b5c7b0c4437ea0149a520be547a7c78fe1a40435",
+    "src/plugin/PluginProcessor.cpp": "071741a88e5bca581136b9b05e278831cf23a354a6ef4c0f1af2b81ffba61aba",
+    "src/plugin/PluginProcessor.h": "5f6a9c87637a6ff6e57634f77c6e36434ef1776dbf4e47819f5505bca623f967",
+    "src/plugin/PresetBrowser.cpp": "9403556a83c0b598255de105120d78a7d5a1904ee24869ade95f8fe95c9f5947",
+    "src/plugin/PresetBrowser.h": "56144b262b7b4befc882512a4c8e3bd4c8f5d308b179b079537d75141b4336a1",
+    "src/tools/ui_snapshot.cpp": "3512bde8952e278be78a6e52fc9576a02b777646f0b9167b98e29ebde8ded07e",
+    "tests/PresetLoadTests.h": "d770f2e3f0a1454fb0a64d183df817b2740574818e01f117f312f1972d2ddf0b"
+  },
+  "scope": "Direct offscreen components and existing processor recall gates; no native-peer, parser-strictness, DAW or permission-denied-file claim."
+}

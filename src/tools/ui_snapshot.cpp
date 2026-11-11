@@ -30,6 +30,7 @@
 #include "../../tests/EngineHostTests.h"
 #include "../../tests/EditorInitialSizeTests.h"
 #include "../../tests/PresetSaveTests.h"
+#include "../../tests/PresetLoadTests.h"
 #include "../../tests/PresetRefreshTests.h"
 #include "../../tests/PresetRevertTests.h"
 #include "../../tests/PresetRecallHostTests.h"
@@ -2014,6 +2015,24 @@ int main(int argc, char** argv)
         std::printf("Modern/session/preset/A-B recall: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--preset-file-recall-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        const auto checked = [&](bool condition, const char* what) { ++checks; check(condition, what); };
+        cs80::tests::testPresetRecallHost(checked);
+        cs80::tests::testPresetFileHost(checked);
+        std::printf("User-preset file/recall host: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--preset-load-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::PresetLoadAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Preset load failure/retry: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--preset-refresh-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -3825,6 +3844,7 @@ int main(int argc, char** argv)
     // All preset-save I/O is confined to fresh temporary fixtures.
     phases.begin("preset save and panic");
     cs80::tests::PresetSaveAccess::run(check, flushGui);
+    cs80::tests::PresetLoadAccess::run(check);
     cs80::tests::PresetRefreshAccess::run(check);
     cs80::tests::PresetRevertAccess::run(check);
     cs80::tests::testPluginPanic(check, flushGui);

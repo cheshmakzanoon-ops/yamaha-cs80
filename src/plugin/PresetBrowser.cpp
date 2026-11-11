@@ -3646,14 +3646,24 @@ void PresetBrowser::loadEntry(int entryIndex)
         return;
     const auto* entry = &entries[(size_t) entryIndex];
 
+    auto result = juce::Result::ok();
     if (entry->isUser)
-        processor.loadUserPreset(entry->userFile);
+        result = processor.loadUserPreset(entry->userFile);
     else if (entry->factoryIndex >= 0)
         processor.loadFactoryPreset(entry->factoryIndex);
+    else
+        return;
 
     syncLoaded();
     list->repaint();
     updateSelectionWidgets();
+    saveStatus.setTooltip(entry->isUser ? entry->userFile.getFullPathName() : juce::String());
+    if (result.failed())
+    {
+        setStatus("Not loaded: \"" + entry->name + "\". " + result.getErrorMessage(), -1);
+        return;
+    }
+    setStatus("Loaded \"" + processor.getPresetName() + "\".", 1);
     if (onPresetLoaded)
         onPresetLoaded();
 }

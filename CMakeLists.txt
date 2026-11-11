@@ -1176,6 +1176,12 @@ if (CS80_BUILD_PLUGIN)
     # Existing modern state/recall and A/B suites, independently of the full UI smoke.
     add_test(NAME cs80_modern_recall_host_tests COMMAND CS80Snapshots --modern-recall-host-tests)
     set_tests_properties(cs80_modern_recall_host_tests PROPERTIES TIMEOUT 120)
+    # Existing successful/normalized user-file recall suites, without native UI.
+    add_test(NAME cs80_preset_file_recall_tests COMMAND CS80Snapshots --preset-file-recall-tests)
+    set_tests_properties(cs80_preset_file_recall_tests PROPERTIES TIMEOUT 120)
+    # Missing/corrupt user-file LOAD and audition, through real browser handlers.
+    add_test(NAME cs80_preset_load_tests COMMAND CS80Snapshots --preset-load-tests)
+    set_tests_properties(cs80_preset_load_tests PROPERTIES TIMEOUT 60)
     # Real browser components and a temporary catalogue, without a native peer.
     add_test(NAME cs80_preset_refresh_tests COMMAND CS80Snapshots --preset-refresh-tests)
     set_tests_properties(cs80_preset_refresh_tests PROPERTIES TIMEOUT 60)

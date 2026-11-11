@@ -167,7 +167,8 @@ public:
     juce::String getPresetName() const { return getPresetMetadata().name; }
     void setPresetName(const juce::String& name);
     void loadFactoryPreset(int index);
-    void loadUserPreset(const juce::File& file);
+    // Failed reads/parses leave live state and metadata untouched.
+    juce::Result loadUserPreset(const juce::File& file);
     enum class PresetSaveStatus { saved, alreadyExists, error };
     enum class PresetOverwrite { no, yes };
     struct PresetSaveResult

@@ -1681,32 +1681,33 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new Cs80AudioProcessor();
 }
 
-void Cs80AudioProcessor::loadUserPreset(const juce::File& file)
+juce::Result Cs80AudioProcessor::loadUserPreset(const juce::File& file)
 {
     if (! file.existsAsFile())
-        return;
-    if (auto xml = juce::XmlDocument::parse(file))
-    {
-        auto tree = juce::ValueTree::fromXml(*xml);
-        if (tree.isValid() && tree.hasType(stateType))
-        {
-            for (const char* child : { "MIDI_LEARN", "UI_STATE" })   // [ws8-studio] a preset never replaces session state
-                tree.removeChild(tree.getChildWithName(child), nullptr);
-            auto restored = normaliseRestoredState(tree);
-            // Session settings, not sounds: a user preset keeps the live values.
-            // Scala/KBM and MTS data are not recalled here, so their source must
-            // stay with the live session rather than the preset writer's setup.
-            for (int index : { (int) cs80::P_parityMode, (int) cs80::P_oversampling,
-                               (int) cs80::P_outputJack, (int) cs80::P_tuningMode })
-                restored.getChildWithProperty("id", parameterId(index))
-                    .setProperty("value", getParamValue(index), nullptr);
-            const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
-            apvts.replaceState(restored);
-            setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
-                              (int) tree.getProperty("factoryIndex", 0));
-            // DSP state is updated by the next audio block, not the state-loading thread.
-        }
-    }
+        return juce::Result::fail("The preset file is missing or is not a file.");
+    auto xml = juce::XmlDocument::parse(file);
+    if (xml == nullptr)
+        return juce::Result::fail("The preset file could not be read as valid XML.");
+    auto tree = juce::ValueTree::fromXml(*xml);
+    if (! tree.isValid() || ! tree.hasType(stateType))
+        return juce::Result::fail("The file is not a CS-80 user preset.");
+
+    for (const char* child : { "MIDI_LEARN", "UI_STATE" })   // [ws8-studio] a preset never replaces session state
+        tree.removeChild(tree.getChildWithName(child), nullptr);
+    auto restored = normaliseRestoredState(tree);
+    // Session settings, not sounds: a user preset keeps the live values.
+    // Scala/KBM and MTS data are not recalled here, so their source must
+    // stay with the live session rather than the preset writer's setup.
+    for (int index : { (int) cs80::P_parityMode, (int) cs80::P_oversampling,
+                       (int) cs80::P_outputJack, (int) cs80::P_tuningMode })
+        restored.getChildWithProperty("id", parameterId(index))
+            .setProperty("value", getParamValue(index), nullptr);
+    const juce::ScopedLock treeLock(apvts.treeLock());   // [ws8-studio]
+    apvts.replaceState(restored);
+    setPresetMetadata(tree.getProperty("presetName", file.getFileNameWithoutExtension()).toString(),
+                      (int) tree.getProperty("factoryIndex", 0));
+    // DSP state is updated by the next audio block, not the state-loading thread.
+    return juce::Result::ok();
 }
 
 // ---------------------------------------------------------------------------

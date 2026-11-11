@@ -1,0 +1,66 @@
+{
+  "recorded_utc": "2026-11-11T19:53:37.872621+00:00",
+  "base_commit": "fc9c1ef7aa4ef2b9df8fce1ce51d1b55e325db21",
+  "build": {
+    "directory": "/workspace/scratch/ee447c520988/build-preset-load-failure",
+    "configuration": "Linux Release, GCC 14.2.0, JUCE 8.0.11",
+    "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "no_op_final_rebuild": true
+  },
+  "baseline": {
+    "checks": 112,
+    "failures": 40,
+    "exit_code": 1,
+    "test_sha256": "d770f2e3f0a1454fb0a64d183df817b2740574818e01f117f312f1972d2ddf0b",
+    "binary_sha256": "14901ab47f5685b40d427d5821e7cbd5182f3a1a465721d9639466c41e04418e",
+    "log": "baseline.log"
+  },
+  "initial_parser_probe": {
+    "checks": 112,
+    "failures": 44,
+    "exit_code": 1,
+    "input": "<CS80_PARAMS",
+    "observation": "JUCE accepts root with empty parse error; normalized defaults change state. Separate unchanged admission issue.",
+    "log": "initial-parser-probe.log",
+    "direct_probe": "parser-probe.cpp",
+    "direct_probe_log": "parser-observation.log"
+  },
+  "final": {
+    "regression_checks": 112,
+    "regression_failures": 0,
+    "existing_file_recall_checks": 2784,
+    "existing_file_recall_failures": 0,
+    "adjacent_ctests_passed": 12,
+    "adjacent_ctests_total": 12,
+    "exit_code": 0,
+    "binary_sha256": "48f281ee92f48b8f3c203b4e32d1ddd0bdd0727623343918773300ad8f09a617",
+    "logs": [
+      "fixed.log",
+      "file-recall.log",
+      "adjacent.log"
+    ]
+  },
+  "intermediate_verification": {
+    "log": "stale-harness.log",
+    "result": "11/12 passed; new CLI rejected by stale executable because harness was edited during an in-flight compile. Explicitly recompiled translation unit, then reran all final checks. Not a product-failure attribution."
+  },
+  "source_sha256": {
+    "CMakeLists.txt": "b45bf0337cebb91192789e09b5c7b0c4437ea0149a520be547a7c78fe1a40435",
+    "src/plugin/PluginProcessor.cpp": "071741a88e5bca581136b9b05e278831cf23a354a6ef4c0f1af2b81ffba61aba",
+    "src/plugin/PluginProcessor.h": "5f6a9c87637a6ff6e57634f77c6e36434ef1776dbf4e47819f5505bca623f967",
+    "src/plugin/PresetBrowser.cpp": "9403556a83c0b598255de105120d78a7d5a1904ee24869ade95f8fe95c9f5947",
+    "src/plugin/PresetBrowser.h": "56144b262b7b4befc882512a4c8e3bd4c8f5d308b179b079537d75141b4336a1",
+    "src/tools/ui_snapshot.cpp": "3512bde8952e278be78a6e52fc9576a02b777646f0b9167b98e29ebde8ded07e",
+    "tests/PresetLoadTests.h": "d770f2e3f0a1454fb0a64d183df817b2740574818e01f117f312f1972d2ddf0b"
+  },
+  "scope": "Result propagation/status only; successful user-preset normalization and replacement statements identical ignoring whitespace.",
+  "not_run": [
+    "full UI smoke/native peer interaction",
+    "sanitizer",
+    "pluginval",
+    "macOS",
+    "Windows",
+    "DAW validation",
+    "remote CI"
+  ]
+}
