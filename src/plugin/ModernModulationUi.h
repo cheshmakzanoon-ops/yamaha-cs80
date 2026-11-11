@@ -159,7 +159,8 @@ public:
 private:
     void changeListenerCallback(juce::ChangeBroadcaster*) override;
     void refresh();
-    void write(int slot);
+    enum class RouteField { source, via, destination, target };
+    void write(int slot, RouteField field);
 
     struct Row
     {

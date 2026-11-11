@@ -962,8 +962,10 @@ ModMatrixPage::ModMatrixPage(Cs80AudioProcessor& p) : processor(p)
             r.amountAttachment = std::make_unique<juce::SliderParameterAttachment>(*q, r.amount);
         compactText(r.amount, 2, {}, true);
         r.amount.setTextBoxStyle(juce::Slider::TextBoxRight, true, 48, 20);
-        for (auto* c : { &r.source, &r.via, &r.destination, &r.target })
-            c->onChange = [this, i] { write(i); };
+        r.source.onChange = [this, i] { write(i, RouteField::source); };
+        r.via.onChange = [this, i] { write(i, RouteField::via); };
+        r.destination.onChange = [this, i] { write(i, RouteField::destination); };
+        r.target.onChange = [this, i] { write(i, RouteField::target); };
         for (juce::Component* c : { (juce::Component*) &r.index, (juce::Component*) &r.source, (juce::Component*) &r.via,
                                     (juce::Component*) &r.destination, (juce::Component*) &r.target, (juce::Component*) &r.amount })
             addAndMakeVisible(*c);
@@ -995,16 +997,41 @@ void ModMatrixPage::refresh()
     }
 }
 
-void ModMatrixPage::write(int slot)
+void ModMatrixPage::write(int slot, RouteField field)
 {
     if (refreshing) return;
     auto& r = rows[(size_t) slot];
-    ModSlot s;
-    s.source = (ModSource) juce::jmax(0, r.source.getSelectedId() - 1);
-    s.via = (ModSource) juce::jmax(0, r.via.getSelectedId() - 1);
-    s.destination = (ModDestination) juce::jmax(0, r.destination.getSelectedId() - 1);
-    s.target = (ModTarget) juce::jmax(0, r.target.getSelectedId() - 1);
-    processor.getModernLayer().setSlot(slot, s);
+    // Layer notifications are asynchronous. A restored or undone route can be
+    // newer than these widgets: only the chosen field belongs to this edit.
+    const auto current = processor.getModernLayer().getSlot(slot);
+    auto edited = current;
+    juce::String name;
+    switch (field)
+    {
+        case RouteField::source:
+            edited.source = (ModSource) juce::jmax(0, r.source.getSelectedId() - 1);
+            name = "source";
+            break;
+        case RouteField::via:
+            edited.via = (ModSource) juce::jmax(0, r.via.getSelectedId() - 1);
+            name = "via";
+            break;
+        case RouteField::destination:
+            edited.destination = (ModDestination) juce::jmax(0, r.destination.getSelectedId() - 1);
+            name = "destination";
+            break;
+        case RouteField::target:
+            edited.target = (ModTarget) juce::jmax(0, r.target.getSelectedId() - 1);
+            name = "rank";
+            break;
+    }
+    if (edited != current)
+    {
+        auto& undo = processor.getUndoManager();
+        undo.beginNewTransaction("Matrix slot " + juce::String(slot + 1) + " " + name);
+        processor.getModernLayer().setSlot(slot, edited);
+        undo.beginNewTransaction(); // later routing choices must not join this action
+    }
     refresh();
 }
 
