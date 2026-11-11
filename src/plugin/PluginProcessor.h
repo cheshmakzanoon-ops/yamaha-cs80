@@ -117,9 +117,10 @@ public:
         return getVoiceActivity().active(i);
     }
     // Single-value mailboxes: only the audio callback mutates the DSP engine.
-    void setRibbonFromUI(float v) noexcept { pendingRibbon.store(v, std::memory_order_relaxed); }
-    void setPitchWheelFromUI(float v) noexcept { pendingPitch.store(v, std::memory_order_relaxed); }
-    void setModWheelFromUI(float v) noexcept { pendingMod.store(v, std::memory_order_relaxed); }
+    // Reject malformed input before it can erase a valid pending command.
+    void setRibbonFromUI(float v) noexcept { if (std::isfinite(v)) pendingRibbon.store(v, std::memory_order_relaxed); }
+    void setPitchWheelFromUI(float v) noexcept { if (std::isfinite(v)) pendingPitch.store(v, std::memory_order_relaxed); }
+    void setModWheelFromUI(float v) noexcept { if (std::isfinite(v)) pendingMod.store(v, std::memory_order_relaxed); }
     // On-screen foot controller: direct physical-expression API, independent of MIDI CC11.
     void setExpressionFromUI(float v) noexcept
     {
