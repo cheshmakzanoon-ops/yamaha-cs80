@@ -1694,6 +1694,18 @@ void Engine::allNotesOffImpl(bool release, int midiChannel, bool includeMpeZone)
         return (masterRole == MpeZoneLayout::Role::lowerMaster && role == MpeZoneLayout::Role::lowerMember)
             || (masterRole == MpeZoneLayout::Role::upperMaster && role == MpeZoneLayout::Role::upperMember);
     };
+    unsigned channelMask = 0;
+    for (int channel = 1; channel <= 16; ++channel)
+        if (affected(channel)) channelMask |= 1u << (channel - 1);
+    allNotesOffMask(release, channelMask, allChannels);
+}
+
+void Engine::allNotesOffMask(bool release, unsigned channelMask, bool allChannels)
+{
+    const auto affected = [&](int channel) {
+        return allChannels || (channel >= 1 && channel <= 16
+            && (channelMask & (1u << (channel - 1))) != 0);
+    };
     // Channel0 is the legacy application panic: clear every pedal and key.
     // Channel-mode MIDI messages do not reset controller state.
     if (allChannels)
@@ -1969,7 +1981,23 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         const std::array<float, 2> previousRanges { effectiveManagerBendRange(false), effectiveManagerBendRange(true) };
         const std::array<float, 2> previousMemberRanges { effectiveMemberBendRange(false), effectiveMemberBendRange(true) };
         const std::array<MpeZoneLayout::Role, 2> previousRoles { mpeZones.role(1), mpeZones.role(16) };
+        const unsigned previousMembers = mpeZones.activeChannelMask();
         mpeZones.controlChange(midiChannel, controller, (int) std::lround(clampf(value, 0.0f, 1.0f) * 127.0f));
+        const unsigned membershipChanged = previousMembers ^ mpeZones.activeChannelMask();
+        if (membershipChanged != 0)
+        {
+            // MPE v1.1 2.2.3: entering/leaving channels must not carry old
+            // sounding notes into their new mode. Clear obligations as one
+            // batch before reconsidering any unaffected waiting keys.
+            for (int channel = 1; channel <= 16; ++channel)
+                if ((membershipChanged & (1u << (channel - 1))) != 0)
+                {
+                    sustainPedals[(size_t) channel] = false;
+                    memberExpression[(size_t) channel] = {};
+                    mpeZones.resetChannelSelector(channel);
+                }
+            allNotesOffMask(false, membershipChanged, false);
+        }
         discardChangedMemberExpression();
         for (int zone = 0; zone < 2; ++zone)
             if (previousRoles[(size_t) zone] != mpeZones.role(zone == 0 ? 1 : 16))

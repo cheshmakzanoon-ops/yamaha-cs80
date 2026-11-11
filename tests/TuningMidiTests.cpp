@@ -1211,8 +1211,8 @@ void testMpeExpressionZoneBoundaries()
     for (int policy : {1, 3})
         for (bool tail : {false, true})
         {
-            // Live shrink/disable can make a retained voice unassigned. Stop
-            // only its master inheritance; its own channel still controls it.
+            // Membership loss stops the old note/tail. A fresh gap note
+            // still receives only its own channel expression.
             for (const auto change : {std::array<int, 4>{3, 1, 1, 2},
                                       std::array<int, 4>{14, 16, 2, 1},
                                       std::array<int, 4>{2, 1, 0, 2},
@@ -1225,17 +1225,21 @@ void testMpeExpressionZoneBoundaries()
                 f.layout(change[2], change[3]);
                 check(f.engine.getMpeZones().role(channel) == MpeZoneLayout::Role::none,
                       "reconfiguration makes the retained channel unassigned");
-                f.send(master, 0.75f); f.verify(index, 0.25f, 3000, "unassigned voice ignores old master");
-                f.send(channel, 0.5f); f.verify(index, 0.5f, 3000, "unassigned voice keeps own channel");
+                check(!f.engine.getVoiceInfo(index).active, "membership loss stops the retained expression voice");
+                const int fresh = f.start(channel, tail);
+                f.send(master, 0.75f); f.verify(fresh, 0.0f, 3000, "fresh gap voice ignores old master");
+                f.send(channel, 0.5f); f.verify(fresh, 0.5f, 3000, "fresh gap voice keeps own channel");
             }
-            // A formerly unassigned voice can enter the lower zone without
-            // changing its captured non-upper ownership classification.
+            // Entry stops a formerly unassigned voice; a fresh lower member
+            // receives the currently configured manager route.
             {
                 Fixture f(policy); f.layout(2, 2);
                 const int index = f.start(8, tail);
                 f.send(1, 0.75f); f.verify(index, 0.0f, 3000, "gap before lower expansion");
                 f.zone(1, 7);
-                f.send(1, 0.5f); f.verify(index, 0.5f, 3000, "lower expansion enables its master");
+                check(!f.engine.getVoiceInfo(index).active, "lower expansion stops the entering gap note");
+                const int fresh = f.start(8, tail);
+                f.send(1, 0.5f); f.verify(fresh, 0.5f, 3000, "fresh lower member receives its master");
             }
             // The MPE condition is essential: a gap channel carried into
             // non-MPE retains the historical channel-1 broadcast, then loses
@@ -1256,7 +1260,7 @@ void testMpeExpressionZoneBoundaries()
                 Fixture f(policy); f.layout(2, 2);
                 const int index = f.start(14, tail);
                 f.send(16, 0.25f); f.verify(index, 0.25f, 3000, "captured upper initial control");
-                f.layout(14, 0); // Channel 14 is assigned lower, still captured upper.
+                f.zone(1, 14); // Direct transition: channel 14 stays MPE, still captured upper.
                 f.send(1, 0.75f); f.verify(index, 0.25f, 3000, "assigned voice is not live-retagged");
                 // Channel 14 is currently a lower member despite its captured
                 // upper routing. Ordinary own-channel expression now retains

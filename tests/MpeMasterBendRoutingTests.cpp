@@ -48,11 +48,11 @@ std::array<float, 2> frequencies(const Engine& e)
     return {e.getRankInfo(0, 0).oscillatorHz, e.getRankInfo(0, 1).oscillatorHz};
 }
 void expectPitch(const Engine& e, const std::array<float, 2>& reference,
-                 float semitones, const std::string& label)
+                 float semitones, const std::string& label, int voice = 0)
 {
     for (int rank = 0; rank < 2; ++rank)
     {
-        const float actual = 12.0f * std::log2(e.getRankInfo(0, rank).oscillatorHz / reference[rank]);
+        const float actual = 12.0f * std::log2(e.getRankInfo(voice, rank).oscillatorHz / reference[rank]);
         check(std::isfinite(actual) && std::abs(actual - semitones) < 0.001f, label);
     }
 }
@@ -116,15 +116,22 @@ void testLifecycle()
             const auto lowerReference = frequencies(e);
             e.pitchBend(1, 0.5f); render(e);
             expectPitch(e, lowerReference, 1.0f, "assigned lower note initially inherits master");
-            layout(e, 1, 2); render(e);
-            expectPitch(e, lowerReference, 0.0f, "removed member does not retain master inheritance");
+            zone(e, 1, 1); render(e);
+            check(!e.getVoiceInfo(0).active, "removed member is stopped at its membership boundary");
+            e.noteOn(60, 0.8f, 3); render(e);
+            int fresh = -1;
+            for (int i = 0; i < 8; ++i)
+                if (e.getVoiceInfo(i).active && e.getVoiceInfo(i).note == 60 && e.getVoiceInfo(i).channel == 3) fresh = i;
+            check(fresh >= 0, "fresh gap note owns an allocated voice after cancellation");
+            if (fresh >= 0) expectPitch(e, lowerReference, 0.0f, "fresh gap note does not retain master inheritance", fresh);
 
             // Assigned voices retain the existing captured-upper convention.
             // This fix deliberately does not introduce live zone retagging.
             e.reset(); layout(e, 2, 2); e.noteOn(60, 0.8f, 14); render(e, 64);
             const auto upperReference = frequencies(e);
             e.pitchBend(1, 0.5f); e.pitchBend(16, -0.5f); render(e);
-            layout(e, 14, 0); render(e);
+            zone(e, 1, 14); render(e);
+            check(e.getVoiceInfo(0).active, "direct still-MPE transfer preserves captured voice");
             expectPitch(e, upperReference, -1.0f, "assigned voice keeps captured-upper bend policy");
         }
 }

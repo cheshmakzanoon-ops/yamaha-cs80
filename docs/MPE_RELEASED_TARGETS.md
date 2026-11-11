@@ -104,3 +104,5 @@ reset, manager/member pressure and timbre combination and live member active-not
 manager targets while preserving released member targets.
 
 The subsequent [held member range retargeting](MPE_MEMBER_RANGE_RETARGET.md) implements live sensitivity rescaling for eligible held member voices while preserving accepted-release targets. The earlier remaining-work statements above describe their original checkpoint.
+
+The later [MCM membership reset](MPE_MEMBERSHIP_RESET.md) stops notes when channels enter or leave MPE control. The historical target-retention guarantees at this checkpoint do not exempt those later membership crossings; unchanged membership and still-MPE role-transfer boundaries remain distinguished.

@@ -60,8 +60,17 @@ int main(){
   e.noteOn(63,.8f,2);check(bend(63,2)==-3.125f,"future note uses latest raw input and fractional sensitivity");
   e.controlChange(121,0,2);erpn(3,0,4);check(bend(63,2)==0,"CC121 zero remains zero after sensitivity change");
   // Role invalidation must not initialize a new zero cache into a surviving voice.
-  e.pitchBend(3,.5f);const float old=bend(61,3);erpn(1,6,0);erpn(1,6,3);erpn(2,0,7);
-  check(bend(61,3)==old,"role invalidation leaves surviving old targets untouched");
+  e.pitchBend(3,.5f);erpn(1,6,0);erpn(1,6,3);erpn(2,0,7);
+  check(find(e,61,3)<0,"membership loss stops the old voice rather than reviving its target");
+  e.noteOn(65,.8f,3);check(bend(65,3)==0,"re-entering member starts with cleared raw expression");
+ }
+ // A held voice can change member zones without leaving MPE membership.
+ for(int policy:{0,1}) {
+  cs80::Engine e;cs80::ParamValues p;p[cs80::P_sourcePerformance]=policy;p[cs80::P_parityMode]=0;p[cs80::P_mpeOn]=1;p[cs80::P_kasScanTiming]=0;p[cs80::P_arpOn]=0;p[cs80::P_mpeBendRange]=48;
+  e.prepare(48000);e.setParams(p);e.pitchBend(2,.5f);e.noteOn(60,.8f,2);
+  auto change=[&](int ch,int number,int value){e.controlChange(101,0,ch);e.controlChange(100,number/127.0f,ch);e.controlChange(6,value/127.0f,ch);};
+  change(16,6,15);change(2,0,7);
+  int i=find(e,60,2);check(i>=0&&e.getVoiceInfo(i).held&&e.getVoiceInfo(i).bend==24,"still-MPE zone transfer must not initialize invalidated raw input during retarget");
  }
  // Equal-offset event order uses accepted NoteOff, not event-block membership.
  for(int policy:{0,1})for(bool releaseFirst:{false,true}) {

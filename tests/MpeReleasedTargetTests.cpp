@@ -418,10 +418,11 @@ void currentModeAndRole()
         else if (transition == 4) layout(e, 0, 0);
         else layout(e);
         e.noteOn(60, .8f, channel); send(e, channel, initial); render(e, 192); e.noteOff(60, channel);
-        // No voice retagging: only current member eligibility changes.
+        // Membership crossings now stop notes. Direct still-MPE role changes
+        // retain this historical-route witness without an intermediate all-off.
         if (transition <= 1) layout(e, 0, 0);       // member -> gap
-        if (transition == 2) layout(e, 2, 0);      // upper member ch1 -> lower manager
-        if (transition == 3) layout(e, 0, 2);      // lower member ch16 -> upper manager
+        if (transition == 2) rpn(e, 1, 6, 2);      // upper member ch1 -> lower manager
+        if (transition == 3) rpn(e, 16, 6, 2);      // lower member ch16 -> upper manager
         if (transition == 4) layout(e, 2, 2);      // gap -> member
         const auto role = e.getMpeZones().role(channel);
         check(transition == 4 ? role == MpeZoneLayout::Role::lowerMember
@@ -431,9 +432,17 @@ void currentModeAndRole()
         send(e, channel, later);
         const Expression wanted = transition == 4 ? initial
             : Expression{transition <= 1 ? later.bend : initial.bend, later.pressure, later.timbre};
-        targets(e, 0, wanted); witness(e, 0, 60, channel, false);
-        render(e, 64);
-        timbre(e, 0, firstInterval(e, initial.timbre, wanted.timbre, 64, policy));
+        if (transition == 2 || transition == 3)
+        {
+            targets(e, 0, wanted); witness(e, 0, 60, channel, false);
+            render(e, 64);
+            timbre(e, 0, firstInterval(e, initial.timbre, wanted.timbre, 64, policy));
+        }
+        else
+        {
+            check(!e.getVoiceInfo(0).active, "MCM membership crossing stops the historical release tail");
+            render(e, 64);
+        }
         e.noteOn(64, .8f, channel); render(e, 1);
         const int fresh = find(e, 64, channel, true);
         witness(e, fresh, 64, channel, true);

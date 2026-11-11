@@ -761,9 +761,27 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
             highResolutionVelocity.controlChange(message.getChannel(), message.getControllerValue());
         if (message.getControllerNumber() == 0 || message.getControllerNumber() == 32)
             handleBankSelect(message.getControllerNumber(), message.getControllerValue(), message.getChannel());
+        const bool mayChangeMembership = message.getControllerNumber() == 6 && engine.isMpeEnabled();
+        const unsigned previousMembers = mayChangeMembership ? engine.getMpeZones().activeChannelMask() : 0;
         forEachEngine([&](cs80::Engine& e) {
             e.controlChange(message.getControllerNumber(), message.getControllerValue() / 127.0f, message.getChannel());
         });
+        const unsigned currentMembers = mayChangeMembership ? engine.getMpeZones().activeChannelMask() : 0;
+        const unsigned membershipChanged = previousMembers ^ currentMembers;
+        if (membershipChanged != 0)
+        {
+            // Match the engine's entering/leaving-channel cancellation without
+            // disturbing the display or pending velocity of unchanged channels.
+            keyPressureOwnership.clear();
+            for (size_t note = 0; note < uiHeldMasks.size(); ++note)
+            {
+                hostKeyMasks[note].fetch_and(~membershipChanged, std::memory_order_relaxed);
+                uiHeldMasks[note] &= ~membershipChanged;
+            }
+            for (int channel = 1; channel <= 16; ++channel)
+                if ((membershipChanged & (1u << (channel - 1))) != 0)
+                    highResolutionVelocity.resetChannel(channel);
+        }
     }
 }
 

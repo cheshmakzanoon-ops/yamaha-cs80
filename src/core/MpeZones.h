@@ -46,6 +46,17 @@ public:
         const auto r = role(channel);
         return r == Role::upperMaster || r == Role::upperMember;
     }
+    unsigned activeChannelMask() const noexcept
+    {
+        unsigned mask = 0;
+        for (int channel = 1; channel <= 16; ++channel)
+            if (role(channel) != Role::none) mask |= 1u << (channel - 1);
+        return mask;
+    }
+    void resetChannelSelector(int channel) noexcept
+    {
+        if (channel >= 1 && channel <= 16) rpn[(std::size_t) channel] = {};
+    }
     int lowerMemberCount() const noexcept { return lowerMembers; }
     int upperMemberCount() const noexcept { return upperMembers; }
     // Negotiated ranges in semitones; negative = not negotiated (use the parameter).
