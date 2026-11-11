@@ -8,8 +8,8 @@ Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN
 lands. Record exact commits; do not restate test counts without one.
 
 Last updated: 2026-11-11. The latest local core integration checkpoint on this
-page tests `d5ffae4c`, tree-equivalent to published `ace89dfd` (channel-aware MTS
-and dormant host tuning), with exact scope and results below.
+page tests published `863e6c5b` (retained MPE manager/note pressure and CC74),
+with exact scope and results below.
 Native CI, downloaded installers, and hardware/DAW qualification are separate
 checkpoints; the November 9 remote runs retained below do not cover this newer
 source. The sparse solver still exceeds the proposed audio-update budget;
@@ -24,13 +24,14 @@ at the historical inspection checkpoint. No newer binary is qualified here.
 
 ## Latest local core integration
 
-Tested source `d5ffae4c46c7652ea825d9a2d7576f8406020442`, whose complete tree is
-identical to published `ace89dfd0eab21531cbff27d145053de223ce67c`, completed a fresh
-259-step core-only Release build and all **145/145 registered CTests**, with
-zero failures in one uninterrupted serial run (893.08 seconds). See the
-[exact source, reproduction and qualification limits](CORE_INTEGRATION_ACE89DFD.md).
-The earlier [note-admission integration checkpoint](CORE_INTEGRATION_D00D8BF.md)
-remains a historical result on its own pinned input.
+Tested published source `863e6c5b63d2fc0a2af90cc051fa1387286e065f` completed a
+fresh 266-step core-only Release build and all **148/148 registered CTests**,
+with zero failures in one serial run (876.07 seconds, explicit exit 0). There
+were no CTest-level skips; three Windows-only Python subtests were skipped on Linux.
+See the [exact source, reproduction and qualification limits](CORE_INTEGRATION_863E6C5B.md).
+The earlier [MTS integration](CORE_INTEGRATION_ACE89DFD.md) and
+[note-admission checkpoint](CORE_INTEGRATION_D00D8BF.md) remain historical
+results on their own pinned inputs.
 No native-host, sanitizer, hardware-fidelity, release or CPU-target claim follows
 from this result.
 
