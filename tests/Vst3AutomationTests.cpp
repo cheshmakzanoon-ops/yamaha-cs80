@@ -465,6 +465,8 @@ std::vector<float> renderAfterFlush(Module& module, const cs80::ParamValues& par
 #include "Vst3AutomationPolicyBoundaryTests.h"
 #include "Vst3AutomationProgramBoundaryTests.h"
 
+#include "Vst3MtsSysExTests.h"
+
 int main(int argc, char** argv)
 {
     try
@@ -537,6 +539,7 @@ int main(int argc, char** argv)
                   << " reader observation error=" << readerError << '\n';
         testVst3PolicyBoundaries(module, limits["audio_max_abs_error"]);
         testVst3ProgramBoundaries(module, limits["audio_max_abs_error"], limits["normalized_curve_error"]);
+        testVst3MtsSysEx(module);
     }
     catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }
     return failures == 0 ? 0 : 1;
