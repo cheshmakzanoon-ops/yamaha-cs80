@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded, fixed-control HP→LP→VCA endpoint diagnostic; Python 3.10+, stdlib only."""
+"""Bounded HP→LP→VCA endpoint diagnostic; Python 3.10+, stdlib only."""
 import argparse
 from array import array
 import csv
@@ -24,6 +24,8 @@ CHILD_TIMEOUT = 120
 DECIMAL = re.compile(r'[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[eE][+-]?[0-9]+)?\Z')
 FILTER_HEADER = 'sample,time_s,input,hp,lp,hp_vin,hp_x,hp_bp,hp_lp,lp_vin,lp_x,lp_bp,lp_lp'
 REALTIME_HEADER = 'sample,time_s,input_float,hp_realtime,lp_realtime,hp_difference,lp_difference'
+FILTER_CONTROL_HEADER = 'sample,time_s,hp_hz,lp_hz,q,hp_gm_siemens,lp_gm_siemens,hp_q_siemens,lp_q_siemens'
+REALTIME_CONTROL_COLUMNS = ',hp_gm_cutoff_hz_float,lp_gm_cutoff_hz_float,hp_effective_total_hz,lp_effective_total_hz,q_float,hp_q_siemens_realtime,lp_q_siemens_realtime'
 VCA_HEADER = 'sample,time,input,lc,ei,envelope,li,gain,coupling,output'
 
 
@@ -134,9 +136,11 @@ class Owned:
 def parse(argv):
     p = argparse.ArgumentParser(description=__doc__, allow_abbrev=False,
         epilog='N endpoints / N-1 intervals. No resampling, normalization, engine or jointly integrated whole-note reference.')
-    for name in ('filter', 'vca', 'input', 'controls', 'rate', 'samples', 'out',
-                 'hp-hz', 'lp-hz', 'q', 'ota-level', 'gain'):
+    for name in ('filter', 'vca', 'input', 'controls', 'rate', 'samples', 'out', 'ota-level', 'gain'):
         p.add_argument('--' + name, required=True)
+    p.add_argument('--filter-controls', help='sample,hp_hz,lp_hz,q endpoints; replaces all three scalar filter controls')
+    for name in ('hp-hz', 'lp-hz', 'q'):
+        p.add_argument('--' + name)
     for name, default in [('filter-substeps', '16'), ('vca-steps', '8'),
                           ('filter-tolerance', '.001'), ('vca-tolerance', '.001')]:
         p.add_argument('--' + name, default=default)
@@ -147,6 +151,10 @@ def parse(argv):
     options = [arg.split('=', 1)[0] for arg in argv if arg.startswith('--')]
     require(len(options) == len(set(options)), 'Duplicate option')
     a = p.parse_args(argv)
+    scalars = (a.hp_hz, a.lp_hz, a.q)
+    require(all(v is None for v in scalars) if a.filter_controls is not None
+            else all(v is not None for v in scalars),
+            'Supply either --filter-controls or all of --hp-hz, --lp-hz and --q; never combine them')
     a.rate = integer(a.rate, 8000, 384000)
     a.samples = integer(a.samples, 2, MAX_SAMPLES)
     a.filter_substeps = integer(a.filter_substeps, 1, 256)
@@ -226,9 +234,11 @@ def execute(command, root):
         return code, tail.decode('utf-8', errors='replace').strip()
 
 
-def run_stage(root, owned, name, command, compare, wav):
+def run_stage(root, owned, name, command, compare, wav, filter_controls=False):
     output = root / name
     names = ['manifest.json', 'stimulus.csv', 'trace.csv']
+    if name == 'filter' and filter_controls:
+        names += ['controls.csv', 'control_endpoints.csv']
     if name == 'filter' and compare:
         names.append('realtime.csv')
     if wav:
@@ -279,12 +289,18 @@ def render(a):
     control_bytes = snapshot(a.controls)
     source = endpoints(signal, 'sample,value', a.samples, [(-8, 8)], 128)[0]
     controls = endpoints(control_bytes, 'sample,lc,ei,envelope', a.samples, [(-8, 8), (-8, 8), (0, 1)])
+    filter_bytes = snapshot(a.filter_controls) if a.filter_controls is not None else None
+    filter_controls = (endpoints(filter_bytes, 'sample,hp_hz,lp_hz,q', a.samples,
+                                [(25, 20000), (25, 20000), (.35, 9)], 128)
+                       if filter_bytes is not None else None)
     initial = controls[0][0] if a.initial_li is None else a.initial_li
     require(not a.compare_realtime or (source[0] == 0 and controls[2][0] == 0 and initial == controls[0][0]),
             'Comparison requires first input/envelope zero and initial LI equal first LC')
     snapshots = {'inputs/signal.csv': signal, 'inputs/controls.csv': control_bytes,
                  'tools/filter': snapshot(a.filter), 'tools/vca': snapshot(a.vca),
                  'tools/workflow.py': snapshot(__file__)}
+    if filter_bytes is not None:
+        snapshots['inputs/filter_controls.csv'] = filter_bytes
     owned, published = Owned(), Owned()
     root = Path(tempfile.mkdtemp(prefix='.cs80-chain-', dir=out.parent))
     owned.dirs[root] = identity(root)
@@ -294,19 +310,30 @@ def render(a):
         for name, data in snapshots.items():
             owned.write(root / name, data, executable=name in ('tools/filter', 'tools/vca'))
         commands = {}
+        filter_options = (['--controls', 'inputs/filter_controls.csv'] if filter_bytes is not None else
+                          ['--hp-hz', str(a.hp_hz), '--lp-hz', str(a.lp_hz), '--q', str(a.q)])
         commands['filter'] = ['./tools/filter', '--input', 'inputs/signal.csv', '--input-rate', str(a.rate),
-            '--input-samples', str(a.samples), '--hp-hz', str(a.hp_hz), '--lp-hz', str(a.lp_hz), '--q', str(a.q),
+            '--input-samples', str(a.samples)] + filter_options + [
             '--ota-level', str(a.ota_level), '--gain', a.gain, '--substeps', str(a.filter_substeps),
             '--tolerance', str(a.filter_tolerance)]
         comparison = ['--compare-realtime', 'true'] if a.compare_realtime else []
         audio = ['--wav-gain', str(a.wav_gain)] if a.wav_gain is not None else []
         commands['filter'] += comparison + (['--realtime-rate', str(a.rate)] if a.compare_realtime else []) + audio
-        fm = run_stage(root, owned, 'filter', commands['filter'], a.compare_realtime, bool(audio))
+        fm = run_stage(root, owned, 'filter', commands['filter'], a.compare_realtime, bool(audio), filter_bytes is not None)
         require(fm['schema'] == 1 and fm['model'] == 'IG00156 conditional HP-to-LP filter reference'
                 and fm['rate_hz'] == a.rate and fm['intervals'] == a.samples - 1 and fm['newton_certified'] is True,
                 'Filter schema/clock/solver mismatch')
         check_input(fm['input'], signal, a.samples, a.rate)
         require(snapshot(root / 'filter/stimulus.csv') == signal, 'Filter input snapshot mismatch')
+        if filter_bytes is not None:
+            check_input(fm['controls'], filter_bytes, a.samples, a.rate)
+            require(fm['controls']['file'] == 'controls.csv'
+                    and fm['controls']['endpoint_file'] == 'control_endpoints.csv', 'Filter control artifact names mismatch')
+            require(snapshot(root / 'filter/controls.csv') == filter_bytes, 'Filter control snapshot mismatch')
+            header = FILTER_CONTROL_HEADER + (REALTIME_CONTROL_COLUMNS if a.compare_realtime else '')
+            requested = trace(root / 'filter/control_endpoints.csv', header, a.samples, a.rate, ['hp_hz', 'lp_hz', 'q'])
+            require(all(requested[key] == series for key, series in zip(('hp_hz', 'lp_hz', 'q'), filter_controls)),
+                    'Filter requested-control trace mismatch')
         lp = trace(root / 'filter/trace.csv', FILTER_HEADER, a.samples, a.rate, ['input', 'lp'])
         require(lp['input'] == source, 'Filter input trace mismatch')
         productions = None
@@ -366,7 +393,7 @@ def render(a):
         artifacts = {str(path.relative_to(root)): metadata(snapshot(path)) for path in sorted(owned.files)}
         manifest = {
             'schema': 'cs80-filter-vca-chain-v1', 'complete': True,
-            'scope': 'Fixed-control filter to externally controlled VCA diagnostic; not engine, hardware or whole-note truth',
+            'scope': ('Endpoint-controlled' if filter_bytes is not None else 'Fixed-control') + ' filter to externally controlled VCA diagnostic; not engine, hardware or whole-note truth',
             'clock': 'One declared endpoint/internal stage rate; no oversampling, decimator, lifecycle, resampling or alignment',
             'interstage': 'Fine reference filter LP endpoints reconstructed piecewise linearly for the VCA; not jointly integrated; no interstage error bound',
             'units': 'Direct numeric LP to VCA input in uncalibrated engine units; no conversion, normalization or implicit gain',
@@ -381,6 +408,14 @@ def render(a):
             'commands': {name: command + ['--out', name] for name, command in commands.items()},
             'wav_gain': a.wav_gain, 'artifacts': artifacts,
             'provenance': 'Hashes describe exact snapshots, executed binary bytes and artifacts, not source-path assumptions. Component source hashes are retained, not reinterpreted. Dynamic libraries and runtime are not bundled.'}
+        if filter_bytes is not None:
+            manifest['filter_controls'] = {
+                'input': 'inputs/filter_controls.csv', 'snapshot': 'filter/controls.csv',
+                'endpoints': 'filter/control_endpoints.csv', **metadata(filter_bytes),
+                'sample_count': a.samples, 'rate_hz': a.rate,
+                'interpolation': fm['controls']['interpolation'],
+                'scalar_metadata_scope': fm['controls']['scalar_metadata_scope'],
+                'scope': fm['controls']['scope']}
         owned.write(root / 'manifest.json', (json.dumps(manifest, sort_keys=True, indent=2, allow_nan=False) + '\n').encode('utf-8'))
         # Exclusive final path creation after every child/check/export succeeds.
         # Hard links never overwrite; manifest is installed last as a completion marker.
@@ -403,7 +438,8 @@ def main(argv=None):
     try:
         a = parse(sys.argv[1:] if argv is None else argv)
         render(a)
-        print('Wrote fixed-filter to VCA endpoint diagnostic. Not a jointly integrated whole-note reference.')
+        print('Wrote ' + ('endpoint-controlled filter' if a.filter_controls is not None else 'fixed-filter')
+              + ' to VCA endpoint diagnostic. Not a jointly integrated whole-note reference.')
         if a.wav_gain is not None:
             print('Start playback at low volume; above-full-scale samples are retained and players may clip.')
         return 0

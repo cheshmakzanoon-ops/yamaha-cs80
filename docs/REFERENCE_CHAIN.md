@@ -1,16 +1,16 @@
-# Fixed-filter to VCA endpoint diagnostic
+# Filter to VCA endpoint diagnostic
 
 `scripts/render_reference_chain.py` composes the existing conditional IG00156
 HP→LP reference exporter and IG00151 VCA reference exporter, without changing
 either solver or any realtime source. It requires Python 3.10+ on a POSIX host
 and locally built `cs80_truth_render` / `cs80_vca_reference` executables.
 
-This is a **fixed-filter-control, externally driven VCA experiment**, not a
+This is an **externally controlled filter/VCA experiment**, not a
 whole-instrument renderer, a hardware measurement, or a perceptual/CPU/parity
 qualification. LC, EI and envelope are user-supplied endpoint values, not an
-envelope-generator or voice lifecycle model. The standalone filter exporter's
-time-varying cutoff/Q controls remain available through its own interface;
-this first chain workflow deliberately supports scalar filter controls only.
+envelope-generator or voice lifecycle model. Filter controls may be either
+explicit fixed scalars or an explicit cutoff/Q trajectory. The latter uses the
+existing standalone filter exporter's `--controls` semantics unchanged.
 
 ## Build and reproducible example
 
@@ -42,8 +42,12 @@ python3 scripts/render_reference_chain.py \
   --compare-realtime true --wav-gain .1 --out NEW_CHAIN
 ```
 
-All input paths, executable paths, rate/count, scalar filter controls, gain mode
-and output path are required. Optional numeric controls:
+All signal/VCA-control paths, executable paths, rate/count, OTA level, gain mode
+and output path are required. Supply either all three scalar filter options
+(`--hp-hz`, `--lp-hz`, `--q`) or `--filter-controls FILE.csv`. Combining either
+source with the other, even when values match, is rejected. `--controls` always
+means the VCA-control file; `--filter-controls` is a separate schema and input.
+Optional numeric controls:
 
 - `--filter-substeps 16` and `--vca-steps 8`: each stage reruns at twice this
   value and exports its fine reference trace. Bounds are 1..256 and 1..128.
@@ -55,7 +59,8 @@ and output path are required. Optional numeric controls:
   reference output from the declared VCA offset/feedthrough.
 - `--compare-realtime true`: omit to disable. Requires unity filter adapters,
   OTA level 2.5, first input and envelope exactly zero, initial LI equal first
-  LC, and cutoffs accepted by the existing production filter comparison.
+  LC, and every cutoff endpoint accepted by the existing production filter
+  comparison. A final-endpoint cutoff that would be clamped also fails.
 - `--wav-gain G`: omit to disable. Explicit finite linear gain in [0,1000000]
   is applied equally to all component WAVs and both selected chain WAVs. Zero
   mutes. CSVs and metrics do not change.
@@ -65,6 +70,46 @@ may clip in a player/device. No normalization, implicit gain, limiting, clipping
 resampling, trimming, delay shift or gain/phase fitting occurs. The selected WAVs
 are exact copies of the correctly selected VCA-stage WAVs, checked against the
 selected double output times gain, rounded once to float32.
+
+## Cutoff/Q sweep with external VCA attack/release
+
+The preceding signal and VCA files can be used unchanged. Supply the following
+4,801-endpoint filter trajectory instead of scalar HP/LP/Q arguments:
+
+```sh
+python3 - <<'PY'
+count = 4801
+with open('chain-filter-controls.csv', 'x') as control:
+    control.write('sample,hp_hz,lp_hz,q\n')
+    for i in range(count):
+        phase = i / (count - 1)
+        control.write(f'{i},200,{500 + 4500 * phase:.17g},{1 + 3 * phase:.17g}\n')
+PY
+
+python3 scripts/render_reference_chain.py \
+  --filter build/reference/cs80_truth_render \
+  --vca build/reference/cs80_vca_reference \
+  --input chain-signal.csv --controls chain-controls.csv \
+  --filter-controls chain-filter-controls.csv \
+  --rate 48000 --samples 4801 --ota-level 2.5 --gain unity \
+  --compare-realtime true --wav-gain .1 --out NEW_SWEEP_CHAIN
+```
+
+The filter-control header is exactly `sample,hp_hz,lp_hz,q`. It has the same N
+canonical endpoint indices and implicit rate as both other files, with total
+HP/LP cutoffs in [25,20000] Hz and low-frequency Q in [.35,9]. Strict ASCII,
+newline and numeric rules below also apply, with a 128-byte line limit. No rate
+is inferred, no source is resampled and no endpoint is clamped or normalized.
+
+The requested Hz and Q are piecewise linear between endpoints; the native
+filter maps them to conductances at each integration substep endpoint. It does
+not interpolate already-mapped conductances. The optional production stages set
+float-cast controls before processing each endpoint, retaining their histories.
+These distinct control/forcing/discretization semantics are unchanged and are
+not isolated by the root difference metrics. The VCA still receives only the
+selected filter LP endpoints, reconstructed piecewise linearly. This sweep and
+external attack/release are a software fixture, not a recovered hardware
+modulation law, voice model or jointly integrated whole-note reference.
 
 ## Endpoint, clock and unit contract
 
@@ -99,7 +144,10 @@ experiment. LP-to-VCA unit identity is an explicit uncalibrated assumption.
 ## Routing and preserved diagnostics
 
 - `filter/` is the unchanged filter run, including its original reference trace,
-  manifest, input snapshot and optional production comparison/WAVs.
+  manifest, input snapshot and optional production comparison/WAVs. Dynamic
+  runs retain the exact `controls.csv` snapshot and `control_endpoints.csv`
+  requested/mapped endpoint audit. Their scalar manifest controls describe only
+  the initial endpoint, not the complete trajectory.
 - `vca_reference_input/` receives reference LP. Its `output` column is the selected
   **reference-filter → reference-VCA** chain. Optional `realtime_output` here is
   only a hybrid diagnostic and is not selected as full production.
@@ -124,12 +172,18 @@ arithmetic, forcing and discretization. This wrapper changes none of them.
 ## Provenance, bounds and safe output
 
 The workflow reads each source once into a bounded snapshot. `inputs/` preserves
-exact source/control bytes and the generated 17-digit VCA endpoint files.
+exact source/VCA-control bytes, optional `filter_controls.csv`, and the generated
+17-digit VCA endpoint files. The filter receives this exact optional snapshot,
+never a reserialized trajectory or a later read of its original source path.
 `tools/` preserves the exact filter/VCA binary snapshots that are actually
 executed, plus a workflow-source snapshot. The root manifest records their
 SHA-256 and byte counts, every component output's SHA-256/size, deterministic
 relative command arguments and selected signal paths. It checks component schema,
-clock/count, input snapshot hashes and trace drives before publication. The
+clock/count, input snapshot hashes and trace drives before publication. Dynamic
+filter runs also verify the control snapshot, count/rate/hash, artifact names,
+audit schema and requested Hz/Q at every endpoint. The root `filter_controls`
+metadata identifies the exact snapshot and endpoint audit, preserving native
+interpolation and initial-only scalar metadata semantics. The
 root manifest itself is the completion marker and is not self-hashed.
 
 These are binary-byte hashes, not guesses based on matching source paths or a
@@ -142,8 +196,9 @@ on the same runtime produce deterministic bundle bytes; cross-platform math last
 bits can differ.
 
 Bounds: integer rate 8000..384000 Hz, 2..100001 endpoints, endpoint span <=10 s,
-64 MiB per input/binary/artifact, original 128-byte signal and 256-byte control
-line limits, and at most ten million aggregate coarse+fine integration steps:
+64 MiB per input/binary/artifact, original 128-byte signal/filter-control and
+256-byte VCA-control line limits, and at most ten million aggregate coarse+fine
+integration steps (unchanged for dynamic controls):
 
 ```
 3 * (N-1) * (filter_substeps + vca_steps * (2 if comparing else 1))
@@ -171,10 +226,14 @@ matching artifact hashes. The publication is not a crash-durable transaction.
 
 `cs80_reference_chain_tests` exercises an independent 8-state linear filter
 matrix plus exact exponential convolution for constant-gain VCA, including DC,
-signed and zero sources; actual production LP routing and a deliberately mutated
-production-only LP fixture; exact snapshots/binary/artifact hashes; determinism;
-explicit-gain WAV selection; unchanged component output bytes; argument, input,
-range, child failure/schema/hash/count and timeout rejection; existing output
+signed and zero sources; an independent time-varying nodal matrix plus
+integrating-factor convolution with an external attack/release envelope;
+constant-trajectory/fixed-control byte equality; actual production LP routing
+and deliberately mutated production-only LP fixtures in both control modes;
+exact snapshots/binary/artifact hashes; determinism; a 4,801-endpoint sweep with
+shared explicit-gain WAV selection; unchanged component output bytes; argument,
+input, scalar/trajectory conflict, range, final-endpoint production clamp, child
+failure/schema/hash/count/control-audit and timeout rejection; existing output
 protection; and injected publication failure retaining an unrelated file.
 
 ```sh
