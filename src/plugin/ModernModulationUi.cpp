@@ -147,6 +147,10 @@ MsegEditor::~MsegEditor()
 
 void MsegEditor::setMsegIndex(int index)
 {
+    // A pointer gesture belongs to its original envelope, even across A-B-A selection.
+    drag = Drag::none;
+    dragIndex = -1;
+    frozenViewLength = 0.0f;
     msegIndex = juce::jlimit(0, kMsegCount - 1, index);
     selected = hovered = -1;
     reload();

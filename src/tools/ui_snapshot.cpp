@@ -1,3 +1,4 @@
+#include "../../tests/MsegEditorLifecycleTests.h"
 #include "../../tests/ModernSliderGestureTests.h"
 #include "plugin/PluginEditor.h"
 #include "plugin/PluginProcessor.h"
@@ -1988,6 +1989,14 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--mseg-editor-lifecycle-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testMsegEditorLifecycle([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("MSEG editor lifecycle: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--modern-slider-gesture-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
