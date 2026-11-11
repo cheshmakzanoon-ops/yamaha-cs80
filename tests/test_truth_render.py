@@ -240,17 +240,41 @@ class RenderTests(unittest.TestCase):
         import signal
         path = self.write_input('source.csv', [.1*math.sin(i) for i in range(65)])
         original = path.read_bytes()
+        cp = self.write_controls('controls.csv', [(200+i,2000+i,1+i*.01) for i in range(65)])
+        control_original = cp.read_bytes()
         out = self.root/'failed-write'
         def limit_file_size():
             signal.signal(signal.SIGXFSZ, signal.SIG_IGN)
             resource.setrlimit(resource.RLIMIT_FSIZE, (1024, 1024))
         result = subprocess.run([RENDERER, '--out', str(out), '--input', str(path),
-                                 '--input-rate', '48000', '--input-samples', '65'],
+                                 '--input-rate', '48000', '--input-samples', '65', '--controls', str(cp)],
                                 capture_output=True, text=True, preexec_fn=limit_file_size)
         self.assertNotEqual(result.returncode, 0)
         self.assertNotIn('Filter reference exported', result.stdout)
         self.assertFalse(out.exists())
         self.assertEqual(path.read_bytes(), original)
+        self.assertEqual(cp.read_bytes(), control_original)
+
+    @unittest.skipUnless(__import__('os').name == 'posix', 'POSIX file-size failure injection')
+    def test_control_artifact_write_failures(self):
+        import resource
+        import signal
+        for name,count,limit in [('snapshot',3,256),('endpoints',17,2048)]:
+            cp = self.write_controls(name+'.csv', [(200,2000,1)]*count)
+            if name == 'snapshot':
+                cp.write_bytes(cp.read_bytes().replace(b',1\n',b',1.'+b'0'*90+b'\n'))
+            original=cp.read_bytes()
+            out=self.root/(name+'-failed')
+            def limit_file_size():
+                signal.signal(signal.SIGXFSZ,signal.SIG_IGN)
+                resource.setrlimit(resource.RLIMIT_FSIZE,(limit,limit))
+            result=subprocess.run([RENDERER,'--out',str(out),'--rate','8000','--duration',str((count-1)/8000),
+                                   '--amplitude','0','--controls',str(cp),'--compare-realtime','true','--realtime-rate','8000'],
+                                  capture_output=True,text=True,preexec_fn=limit_file_size)
+            self.assertNotEqual(result.returncode,0)
+            self.assertNotIn('Filter reference exported',result.stdout)
+            self.assertFalse(out.exists())
+            self.assertEqual(cp.read_bytes(),original)
 
     def comparison_rows(self, out):
         with (out / 'realtime.csv').open() as f:
@@ -344,6 +368,145 @@ class RenderTests(unittest.TestCase):
         out = self.run_tool('sine-compare', *args, '--compare-realtime', 'true', '--realtime-rate', 48000)
         self.assertEqual((plain/'trace.csv').read_bytes(), (out/'trace.csv').read_bytes())
         self.assertGreater(self.read(out)[0]['realtime_comparison']['lp']['absolute_rms'], 0)
+
+    def write_controls(self, name, values):
+        path = self.root/name
+        path.write_text('sample,hp_hz,lp_hz,q\n'+''.join(
+            f'{i},{h:.17g},{l:.17g},{q:.17g}\n' for i, (h, l, q) in enumerate(values)))
+        return path
+
+    def test_dynamic_independent_linear_oracle(self):
+        # Independent time-varying nodal matrices: endpoint Hz is interpolated
+        # BEFORE the nonlinear Hz->gm map, and Q BEFORE its reciprocal map.
+        controls = [(200+75*i, 2800-90*i, .6+.2*i) for i in range(17)]
+        values = [.4*math.sin(i*.31) for i in range(len(controls))]
+        cp = self.write_controls('envelope.csv', controls)
+        wp = self.write_input('wave.csv', values)
+        for gain in ['physical', 'unity']:
+            out = self.run_tool('dynamic-'+gain, '--input', wp, '--input-rate', 48000,
+                                '--input-samples', len(values), '--controls', cp, '--ota-level', 0,
+                                '--gain', gain, '--substeps', 32)
+            m, rows = self.read(out)
+            def derivative(z, u, ctl):
+                d = []
+                for offset, name, hz, src in [(0, 'hp', ctl[0], u),
+                                              (4, 'lp', ctl[1], 2*(z[1]+z[2])-z[3])]:
+                    n = m[name]
+                    g = 1/n['source_ohms']+1/n['ground_ohms']+1/n['feedback_ohms']
+                    w = 2*math.pi*hz
+                    beta = w*w*n['feedback_farads']/g
+                    gm = max(0, (beta+math.sqrt(beta*beta+w*w))*n['c1_farads']-1/n['feedforward1_ohms'])
+                    gq = max(0, g/(2*ctl[2])-1/n['feedback_ohms'])
+                    vin, x, bp, lp = z[offset:offset+4]
+                    ai, hp = x+bp, 2*(x+bp)-lp
+                    current = (src*n['source_gain']-vin-ai)/n['source_ohms']
+                    d.extend([current/n['input_farads'],
+                              (current-ai/n['ground_ohms']-x/n['feedback_ohms']+gq*bp)/n['feedback_farads'],
+                              -(gm+1/n['feedforward1_ohms'])*hp/n['c1_farads'],
+                              -(gm+1/n['feedforward2_ohms'])*bp/n['c2_farads']])
+                return d
+            steps = m['export_substeps']
+            dt = 1/(48000*steps)
+            state = [0.]*8
+            for i, row in enumerate(rows[1:]):
+                for j in range(steps):
+                    cs = [[a+(b-a)*t/steps for a,b in zip(controls[i], controls[i+1])] for t in [j,j+1]]
+                    us = [values[i]+(values[i+1]-values[i])*t/steps for t in [j,j+1]]
+                    d0 = derivative(state, us[0], cs[0])
+                    # Construct A(end), B(end) independently and solve the full
+                    # LTV trapezoid, not a constant midpoint matrix shortcut.
+                    cols = [derivative([float(k==l) for k in range(8)], 0, cs[1]) for l in range(8)]
+                    a1 = list(zip(*cols))
+                    forcing = derivative([0.]*8, us[1], cs[1])
+                    lhs = [[float(k==l)-dt*.5*a1[k][l] for l in range(8)] for k in range(8)]
+                    state = solve(lhs, [state[k]+dt*.5*(d0[k]+forcing[k]) for k in range(8)])
+                for k,name in enumerate(['hp_vin','hp_x','hp_bp','hp_lp','lp_vin','lp_x','lp_bp','lp_lp']):
+                    self.assertAlmostEqual(row[name], state[k], delta=3e-12)
+            self.assertEqual((out/'controls.csv').read_bytes(), cp.read_bytes())
+            self.assertEqual(m['controls']['sha256'], hashlib.sha256(cp.read_bytes()).hexdigest())
+            self.assertEqual(m['controls']['sample_count'], len(values))
+            self.assertEqual(m['controls']['bytes'], cp.stat().st_size)
+            self.assertEqual(m['controls']['rate_hz'], 48000)
+            self.assertIn('not hardware', m['controls']['scope'])
+
+    def test_constant_controls_preserve_fixed_trace(self):
+        for ota in [0, 2.5]:
+            args = ['--rate', 48000, '--duration', .003, '--ota-level', ota, '--amplitude', 2.5]
+            compare = ['--compare-realtime', 'true', '--realtime-rate', 48000] if ota else []
+            fixed = self.run_tool('fixed'+str(ota), *args, '--hp-hz', 300, '--lp-hz', 2400, '--q', 3, *compare)
+            cp = self.write_controls('constant.csv', [(300,2400,3)]*145)
+            dynamic = self.run_tool('constant'+str(ota), *args, '--controls', cp, *compare)
+            self.assertEqual((fixed/'trace.csv').read_bytes(), (dynamic/'trace.csv').read_bytes())
+            if compare:
+                self.assertEqual((fixed/'realtime.csv').read_bytes(), (dynamic/'realtime.csv').read_bytes())
+
+    def test_dynamic_comparison_provenance(self):
+        import struct
+        def f32(x): return struct.unpack('f', struct.pack('f',x))[0]
+        controls = [(200+i*7.1234567, 2500-i*11.234567, .6+i*.0256789) for i in range(97)]
+        cp = self.write_controls('trajectory.csv', controls)
+        args = ['--rate', 48000, '--duration', .002, '--controls', cp]
+        plain = self.run_tool('dynamic-plain', *args)
+        compared = self.run_tool('dynamic-compare', *args, '--compare-realtime', 'true', '--realtime-rate', 48000)
+        again = self.run_tool('dynamic-again', *args, '--compare-realtime', 'true', '--realtime-rate', 48000)
+        m, rows = self.read(compared)
+        rt = self.comparison_rows(compared)
+        self.assertEqual((plain/'trace.csv').read_bytes(), (compared/'trace.csv').read_bytes())
+        for filename in ['trace.csv','realtime.csv','manifest.json','controls.csv','control_endpoints.csv']:
+            self.assertEqual((compared/filename).read_bytes(), (again/filename).read_bytes())
+        with (compared/'control_endpoints.csv').open() as f:
+            audit = [{k:float(v) for k,v in row.items()} for row in csv.DictReader(f)]
+        self.assertEqual(len(audit),len(controls))
+        for i,(r,c) in enumerate(zip(audit,controls)):
+            self.assertEqual(r['sample'],i)
+            self.assertEqual(r['time_s'],i/48000)
+            self.assertEqual([r[k] for k in ['hp_hz','lp_hz','q']],list(c))
+            self.assertEqual(r['q_float'], f32(c[2]))
+            for stage,hz in [('hp',c[0]),('lp',c[1])]:
+                n=m[stage]
+                ff=1/(2*math.pi*n['feedforward1_ohms']*n['c1_farads'])
+                self.assertEqual(r[stage+'_gm_cutoff_hz_float'],f32(hz-ff))
+                self.assertEqual(r[stage+'_effective_total_hz'],f32(hz-ff)+ff)
+                g=1/n['source_ohms']+1/n['ground_ohms']+1/n['feedback_ohms']
+                self.assertEqual(r[stage+'_q_siemens_realtime'],max(0,g/(2*f32(c[2]))-1/n['feedback_ohms']))
+        for stage in ['hp','lp']:
+            ds=[r[stage+'_realtime']-ref[stage] for r,ref in zip(rt,rows)]
+            self.assertEqual(ds,[r[stage+'_difference'] for r in rt])
+            self.assertAlmostEqual(m['realtime_comparison'][stage]['absolute_rms'],math.sqrt(sum(d*d for d in ds)/len(ds)),delta=1e-15)
+            self.assertGreater(max(map(abs,ds)),0)
+        self.assertEqual(m['hp_total_hz'],controls[0][0])
+        self.assertEqual(m['realtime_comparison']['q_float'],f32(controls[0][2]))
+        self.assertIn('Initial endpoint only',m['controls']['scalar_metadata_scope'])
+
+    def test_controls_rejections_and_endpoint_clamps(self):
+        cp = self.write_controls('bad-controls.csv', [(200,2000,1)]*3)
+        base=['--rate',8000,'--duration',.00025,'--controls',cp,'--amplitude',0]
+        valid=cp.read_bytes()
+        invalid=[b'', b'sample,hp_hz,lp_hz,q\n', valid[:-1], valid+b'3,200,2000,1\n',
+                 valid.replace(b'1,200',b'01,200'),valid.replace(b'1,200',b'2,200'),
+                 valid.replace(b'lp_hz',b'lp'), valid.replace(b'1,200,2000,1',b'1,200,2000'),
+                 valid.replace(b'1,200,2000,1',b'1,200,2000,1,2'),
+                 valid.replace(b'1,200',b'1,'+b'0'*129)]
+        for field, bad_values in [(1,['24.9','20000.1','nan','inf','0x1p8','1e999','1e-999',' 200','200 ','']),
+                                  (2,['-100','nan','20001']), (3,['.34999','9.001','nan','inf','0'])]:
+            for value in bad_values:
+                row=['1','200','2000','1']; row[field]=value
+                invalid.append(valid.replace(b'1,200,2000,1',','.join(row).encode()))
+        for i,raw in enumerate(invalid):
+            cp.write_bytes(raw)
+            self.run_tool('bad-controls'+str(i),*base,success=False)
+            self.assertEqual(cp.read_bytes(),raw)
+        cp.write_bytes(valid)
+        for i,args in enumerate([['--hp-hz',200],['--lp-hz',2000],['--q',1],['--controls',cp]]):
+            self.run_tool('controls-conflict'+str(i),*base,*args,success=False)
+        for stage in [0,1]:
+            for cutoff,ok in [(3599.999,True),(3600.001,False),(20000,False)]:
+                cs=[[200,2000,1] for _ in range(3)]
+                cs[-1][stage]=cutoff  # final endpoint must be checked too
+                self.write_controls('bad-controls.csv',cs)
+                self.run_tool('late-clamp'+str(stage)+str(cutoff),*base,'--compare-realtime','true','--realtime-rate',8000,success=ok)
+        with cp.open('wb') as f: f.truncate(64*1024*1024+1)
+        self.run_tool('controls-oversize',*base,success=False)
 
     def test_zero_and_failures(self):
         m, rows = self.read(self.run_tool('zero', '--duration', '.001', '--amplitude', 0))

@@ -481,6 +481,29 @@ void saturationInLoop()
     check(loud > 0.0, "resonance does not collapse at high level");
 }
 
+// Regression for the original unchecked/checked arithmetic and the new
+// explicit interval controls. No production coefficient/state semantics change.
+void controlledReferenceApi()
+{
+    for (double ota : {0.0, 2.5}) {
+        const auto hc = control(hpNet, 300, 3, ota), lc = control(lpNet, 2400, 3, ota);
+        const double hg = 1/ref::passbandGain(hpNet), lg = 1/ref::passbandGain(lpNet);
+        ref::NonlinearPair unchecked(hpNet,hc,lpNet,lc,hg,lg), checked(hpNet,hc,lpNet,lc,hg,lg), explicitControls(hpNet,hc,lpNet,lc,hg,lg);
+        const ref::NonlinearPair::Controls controls{hc,lc};
+        bool exact = true, certified = true;
+        for (int i=0; i<500; ++i) {
+            const double u0 = 2.5*std::sin(i*.017), u1 = 2.5*std::sin((i+1)*.017), dt = 1.0/768000;
+            unchecked.step(u0,u1,dt);
+            const auto a = checked.stepChecked(u0,u1,dt);
+            const auto b = explicitControls.stepCheckedControlled(u0,u1,dt,controls,controls);
+            certified = certified && a.finite && a.converged && b.finite && b.converged;
+            exact = exact && unchecked.state() == checked.state() && checked.state() == explicitControls.state();
+        }
+        check(certified, "constant explicit controls retain checked Newton certification");
+        check(exact, "unchecked, checked and explicit constant controls retain exact arithmetic");
+    }
+}
+
 void engineSelection()
 {
     auto render = [](float source) {
@@ -506,6 +529,7 @@ int main(int argc, char** argv)
     try
     {
         const ws1::Tolerances tol(argc > 1 ? argv[1] : "tests/parity/tolerances-v2/ws1-voice.json", "ig00156_nodal");
+        controlledReferenceApi();
         equivalence(tol);
         smallSignal(tol);
         anchors(tol);

@@ -22,8 +22,11 @@ namespace fs = std::filesystem;
 namespace {
 constexpr double pi = std::numbers::pi;
 void require(bool ok, const std::string& message) { if (!ok) throw std::runtime_error(message); }
+struct RequestedControls { double hp, lp, q; };
 struct Options {
-    fs::path out, inputPath;
+    fs::path out, inputPath, controlsPath;
+    std::string controlsBytes, controlsHash;
+    std::vector<RequestedControls> controls;
     std::string inputBytes, inputHash;
     std::vector<double> samples;
     int inputCount = 0;
@@ -39,7 +42,7 @@ double number(const std::string& s) {
     require(end == s.size() && std::isfinite(v), "Expected a finite number: " + s); return v;
 }
 // Strict ASCII decimal grammar, independent of locale; no whitespace/hex/special values.
-double sampleNumber(std::string_view s) {
+double sampleNumber(std::string_view s, double maximum = 8) {
     std::size_t i = 0;
     if (i < s.size() && (s[i] == '+' || s[i] == '-')) ++i;
     auto digit = [&](std::size_t j) { return j < s.size() && s[j] >= '0' && s[j] <= '9'; };
@@ -59,7 +62,7 @@ double sampleNumber(std::string_view s) {
     double v = 0;
     auto result = std::from_chars(s.data(), s.data()+s.size(), v, std::chars_format::general);
     require(result.ec == std::errc{} && result.ptr == s.data()+s.size() && std::isfinite(v)
-            && std::abs(v) <= 8, "Sample must be representable and within -8..8 model volts");
+            && std::abs(v) <= maximum, "Decimal must be representable and within declared bounds");
     return v;
 }
 void loadInput(Options& o) {
@@ -98,6 +101,52 @@ void loadInput(Options& o) {
     require(pos == o.inputBytes.size(), "Extra input rows or bytes");
     o.inputHash = cs80::tools::inputSha256(o.inputBytes);
 }
+// Same bounded, exact-byte contract as the waveform input.
+void loadControls(Options& o) {
+    constexpr std::size_t maxBytes = 64 * 1024 * 1024;
+    require(fs::is_regular_file(o.controlsPath), "Controls must be a regular file");
+    require(fs::file_size(o.controlsPath) <= maxBytes, "Controls exceed 64 MiB");
+    std::ifstream file(o.controlsPath, std::ios::binary);
+    require(bool(file), "Cannot open controls");
+    std::array<char, 8192> buffer{};
+    while (file) {
+        file.read(buffer.data(), buffer.size());
+        const auto n = static_cast<std::size_t>(file.gcount());
+        require(o.controlsBytes.size()+n <= maxBytes, "Controls exceed 64 MiB");
+        o.controlsBytes.append(buffer.data(), n);
+    }
+    require(file.eof() && !file.bad(), "Controls read failed");
+    std::size_t pos = 0;
+    auto line = [&]() {
+        const auto end = o.controlsBytes.find('\n', pos);
+        require(end != std::string::npos && end-pos <= 128, "Missing newline or controls line exceeds 128 bytes");
+        std::string_view row(o.controlsBytes.data()+pos, end-pos);
+        pos = end+1;
+        if (!row.empty() && row.back() == '\r') row.remove_suffix(1);
+        return row;
+    };
+    require(line() == "sample,hp_hz,lp_hz,q", "Expected CSV header sample,hp_hz,lp_hz,q");
+    const int count = o.inputPath.empty() ? static_cast<int>(std::floor(o.duration*o.rate))+1 : o.inputCount;
+    o.controls.reserve(count);
+    for (int i=0; i<count; ++i) {
+        auto row = line();
+        auto field = [&]() {
+            auto comma = row.find(',');
+            require(comma != std::string_view::npos, "Missing controls field");
+            auto value = row.substr(0,comma); row.remove_prefix(comma+1); return value;
+        };
+        require(field() == std::to_string(i), "Expected contiguous controls index");
+        const double hp = sampleNumber(field(), 20000), lp = sampleNumber(field(), 20000), q = sampleNumber(row, 9);
+        require(hp >= 25 && lp >= 25 && q >= .35, "Controls cutoffs must be 25..20000 Hz and Q .35..9");
+        o.controls.push_back({hp, lp, q});
+    }
+    require(pos == o.controlsBytes.size(), "Extra controls rows or bytes");
+    o.controlsHash = cs80::tools::inputSha256(o.controlsBytes);
+    o.hp = o.controls.front().hp; o.lp = o.controls.front().lp; o.q = o.controls.front().q;
+}
+RequestedControls requested(const Options& o, std::size_t i) {
+    return o.controls.empty() ? RequestedControls{o.hp, o.lp, o.q} : o.controls.at(i);
+}
 Options parse(int argc, char** argv) {
     Options o; std::map<std::string, bool> seen;
     for (int i = 1; i < argc; i += 2) {
@@ -106,6 +155,7 @@ Options parse(int argc, char** argv) {
         std::string v = argv[i + 1];
         if (k == "--out") o.out = v;
         else if (k == "--input") { require(!v.empty(), "Input path must not be empty"); o.inputPath = v; }
+        else if (k == "--controls") { require(!v.empty(), "Controls path must not be empty"); o.controlsPath = v; }
         else if (k == "--input-rate") o.rate = number(v);
         else if (k == "--input-samples") {
             double n = number(v);
@@ -153,6 +203,10 @@ Options parse(int argc, char** argv) {
     require((o.inputPath.empty() ? std::floor(o.duration * o.rate) : o.inputCount-1) * o.steps * 3 <= 10000000, "Render exceeds 10 million integration steps");
     require(!fs::exists(o.out) && !fs::is_symlink(o.out), "Output must be a new directory");
     if (!o.inputPath.empty()) loadInput(o);
+    if (!o.controlsPath.empty()) {
+        for (const auto* k : {"--hp-hz", "--lp-hz", "--q"}) require(!seen[k], std::string("Controls conflict with ")+k);
+        loadControls(o);
+    }
     require(o.compareRealtime == seen["--realtime-rate"], "Comparison requires --compare-realtime true and --realtime-rate together");
     if (o.compareRealtime) {
         require(o.realtimeRate == o.rate, "realtime-rate must equal endpoint rate; no resampling is performed");
@@ -160,9 +214,11 @@ Options parse(int argc, char** argv) {
                 "Comparison requires unity gain and production ota-level 2.5");
         require(o.stimulus != "impulse", "Comparison does not support discontinuous synthetic impulse; supply zero-start samples");
         require(o.samples.empty() || o.samples.front() == 0.0, "Comparison requires exact zero initial source for zero-state alignment");
+        for (std::size_t i=0; i<std::max(std::size_t{1}, o.controls.size()); ++i)
         for (const auto* n : {&cs80::kIg00156HighPassNetwork, &cs80::kIg00156LowPassNetwork}) {
             cs80::Ig00156Stage stage(*n);
-            double total = n == &cs80::kIg00156HighPassNetwork ? o.hp : o.lp;
+            const auto r = requested(o, i);
+            double total = n == &cs80::kIg00156HighPassNetwork ? r.hp : r.lp;
             const float gmHz = static_cast<float>(total - stage.feedforwardCutoffHz());
             require(gmHz >= 0 && gmHz <= .45 * static_cast<float>(o.realtimeRate) - stage.feedforwardCutoffHz(),
                     "Comparison cutoff would be clamped by production stage at 0.45 * realtime-rate");
@@ -174,8 +230,8 @@ ref::StageNetwork network(const cs80::Ig00156Network& n) {
     return {n.sourceOhms, n.groundOhms, n.inputFarads, n.feedbackOhms, n.feedbackFarads,
             n.integratorFarads, n.integratorFarads, n.feedforwardOhms, n.feedforwardOhms};
 }
-ref::StageControl control(const cs80::Ig00156Network& n, double hz, const Options& o) {
-    double q = ref::qSiemensForLowFrequencyQ(network(n), o.q);
+ref::StageControl control(const cs80::Ig00156Network& n, double hz, const Options& o, double requestedQ) {
+    double q = ref::qSiemensForLowFrequencyQ(network(n), requestedQ);
     double gm = std::max(0., cs80::ig00156IntegratorRate(n, hz, q) * n.integratorFarads - 1 / n.feedforwardOhms);
     return {gm, gm, q, o.ota};
 }
@@ -209,7 +265,7 @@ struct Metrics {
 };
 void render(const Options& o) {
     auto hn = network(cs80::kIg00156HighPassNetwork), ln = network(cs80::kIg00156LowPassNetwork);
-    auto hc = control(cs80::kIg00156HighPassNetwork, o.hp, o), lc = control(cs80::kIg00156LowPassNetwork, o.lp, o);
+    auto hc = control(cs80::kIg00156HighPassNetwork, o.hp, o, o.q), lc = control(cs80::kIg00156LowPassNetwork, o.lp, o, o.q);
     double hg = o.gain == "unity" ? 1 / ref::passbandGain(hn) : 1;
     double lg = o.gain == "unity" ? 1 / ref::passbandGain(ln) : 1;
     const int count = o.samples.empty() ? static_cast<int>(std::floor(o.duration * o.rate)) : o.inputCount-1;
@@ -233,7 +289,18 @@ void render(const Options& o) {
                     u0 = o.stimulus == "impulse" ? (i == 0 ? o.amplitude : 0.) : input(t0);
                     u1 = o.stimulus == "impulse" ? u0 : input(t1);
                 }
-                auto status = pair.stepChecked(u0, u1, 1 / (o.rate * steps));
+                ref::NonlinearPair::StepResult status;
+                if (o.controls.empty()) status = pair.stepChecked(u0, u1, 1 / (o.rate * steps));
+                else {
+                    const auto a = requested(o, i), b = requested(o, i+1);
+                    auto mapped = [&](double t) -> ref::NonlinearPair::Controls {
+                        const double q = std::lerp(a.q, b.q, t);
+                        return {control(cs80::kIg00156HighPassNetwork, std::lerp(a.hp, b.hp, t), o, q),
+                                control(cs80::kIg00156LowPassNetwork, std::lerp(a.lp, b.lp, t), o, q)};
+                    };
+                    status = pair.stepCheckedControlled(u0, u1, 1 / (o.rate * steps),
+                                                       mapped(double(j)/steps), mapped(double(j+1)/steps));
+                }
                 require(status.finite && status.converged, "Newton solve not certified; increase --substeps");
                 maxIterations = std::max(maxIterations, status.iterations);
                 maxResidualRatio = std::max(maxResidualRatio, status.residual / status.scale);
@@ -267,7 +334,13 @@ void render(const Options& o) {
         realtime.reserve(fine.size());
         // Source at t=0 is required to be zero, so processing it preserves zero
         // histories. Subsequent samples correspond directly to reference endpoints.
-        for (const auto& row : fine) {
+        for (std::size_t i=0; i<fine.size(); ++i) {
+            const auto& row = fine[i];
+            if (!o.controls.empty()) {
+                const auto c = requested(o, i);
+                realtimeHp.set(static_cast<float>(c.hp-realtimeHp.feedforwardCutoffHz()), static_cast<float>(c.q), static_cast<float>(o.rate));
+                realtimeLp.set(static_cast<float>(c.lp-realtimeLp.feedforwardCutoffHz()), static_cast<float>(c.q), static_cast<float>(o.rate));
+            }
             const float input = static_cast<float>(row.input);
             const float hp = realtimeHp.process(input).hp;
             const float lp = realtimeLp.process(hp).lp;
@@ -305,6 +378,37 @@ void render(const Options& o) {
         json << ",\"hp_total_hz\":" << o.hp << ",\"lp_total_hz\":" << o.lp
              << ",\"low_frequency_q\":" << o.q << ",\"gain_mode\":\"" << o.gain << "\",\n\"hp\":";
         stageJson(json, hn, hc, hg); json << ",\n\"lp\":"; stageJson(json, ln, lc, lg);
+        if (!o.controls.empty()) {
+            json << ",\n\"controls\":{\"file\":\"controls.csv\",\"endpoint_file\":\"control_endpoints.csv\",\"sha256\":\"" << o.controlsHash
+                 << "\",\"bytes\":" << o.controlsBytes.size() << ",\"sample_count\":" << o.controls.size()
+                 << ",\"rate_hz\":" << o.rate
+                 << ",\"scalar_metadata_scope\":\"Initial endpoint only, including stage controls and realtime scalar controls\""
+                 << ",\"interpolation\":\"Requested total Hz and low-frequency Q piecewise linear at waveform endpoint times, mapped to gm and Q conductance separately at each integration substep endpoint; no extrapolation\""
+                 << ",\"scope\":\"Engineering time-varying control fixture, not hardware envelope or control-capacitor law; not a modulation parity gate\"}";
+            std::ofstream snapshot(o.out / "controls.csv", std::ios::binary), endpoints(o.out / "control_endpoints.csv");
+            snapshot.exceptions(std::ios::failbit | std::ios::badbit);
+            endpoints.exceptions(std::ios::failbit | std::ios::badbit);
+            snapshot.write(o.controlsBytes.data(), static_cast<std::streamsize>(o.controlsBytes.size()));
+            snapshot.close();
+            endpoints.imbue(std::locale::classic()); endpoints << std::setprecision(17);
+            endpoints << "sample,time_s,hp_hz,lp_hz,q,hp_gm_siemens,lp_gm_siemens,hp_q_siemens,lp_q_siemens";
+            if (o.compareRealtime) endpoints << ",hp_gm_cutoff_hz_float,lp_gm_cutoff_hz_float,hp_effective_total_hz,lp_effective_total_hz,q_float,hp_q_siemens_realtime,lp_q_siemens_realtime";
+            endpoints << '\n';
+            for (std::size_t i=0; i<o.controls.size(); ++i) {
+                const auto c = requested(o, i);
+                const auto h = control(cs80::kIg00156HighPassNetwork, c.hp, o, c.q), l = control(cs80::kIg00156LowPassNetwork, c.lp, o, c.q);
+                endpoints << i << ',' << i/o.rate << ',' << c.hp << ',' << c.lp << ',' << c.q
+                          << ',' << h.gm1Siemens << ',' << l.gm1Siemens << ',' << h.qSiemens << ',' << l.qSiemens;
+                if (o.compareRealtime) {
+                    const float rh = static_cast<float>(c.hp-realtimeHp.feedforwardCutoffHz()), rl = static_cast<float>(c.lp-realtimeLp.feedforwardCutoffHz()), rq = static_cast<float>(c.q);
+                    endpoints << ',' << rh << ',' << rl << ',' << double(rh)+realtimeHp.feedforwardCutoffHz()
+                              << ',' << double(rl)+realtimeLp.feedforwardCutoffHz() << ',' << rq
+                              << ',' << ref::qSiemensForLowFrequencyQ(hn, rq) << ',' << ref::qSiemensForLowFrequencyQ(ln, rq);
+                }
+                endpoints << '\n';
+            }
+            endpoints.close();
+        }
         if (!o.samples.empty()) {
             json << ",\n\"input\":{\"file\":\"stimulus.csv\",\"sha256\":\"" << o.inputHash
                  << "\",\"bytes\":" << o.inputBytes.size() << ",\"sample_count\":" << o.inputCount
@@ -328,12 +432,12 @@ void render(const Options& o) {
                  << ",\"hp_effective_total_hz\":" << double(hpGmHz) + realtimeHp.feedforwardCutoffHz()
                  << ",\"lp_effective_total_hz\":" << double(lpGmHz) + realtimeLp.feedforwardCutoffHz()
                  << ",\"q_float\":" << static_cast<float>(o.q)
-                 << ",\"hp_q_siemens\":" << realtimeHp.qSiemens() << ",\"lp_q_siemens\":" << realtimeLp.qSiemens()
+                 << ",\"hp_q_siemens\":" << ref::qSiemensForLowFrequencyQ(hn, static_cast<float>(o.q)) << ",\"lp_q_siemens\":" << ref::qSiemensForLowFrequencyQ(ln, static_cast<float>(o.q))
                  << ",\"ota_level\":" << cs80::kIg00156OtaLevel
                  << ",\"sample_count\":" << realtime.size()
                  << ",\"metric_definition\":\"All endpoint rows including initial zero; difference=realtime-reference; absolute RMS=sqrt(sum(difference^2)/N); absolute max=max(abs(difference)); relative RMS=sqrt(sum(difference^2)/sum(reference^2)), null for zero reference energy; no acceptance gate\""
                  << ",\"alignment\":\"Zero state and zero initial source; same endpoint times; no warmup, resampling, trimming, delay, phase or gain alignment\""
-                 << ",\"implementation\":\"Production Ig00156Stage HP then LP at fixed controls; not full engine/oversampler/decimator\""
+                 << ",\"implementation\":\"Production Ig00156Stage HP then LP; controls set at each endpoint when supplied, existing companion histories retained without reset or rebasing; not full engine/oversampler/decimator\""
                  << ",\"differences\":\"Production cutoff prewarp and bounded tan/tanh approximations, capped scalar Newton, float controls/input/interstage/output versus unwarped double reference with certified Newton. Reference forcing is analytic sine or piecewise linear double sample endpoints. Differences include discretization and quantization, not measured hardware error\""
                  << ",\"source_sha256\":{\"filter\":\"" << TRUTH_CONTROL_SHA
                  << "\",\"dsp\":\"" << TRUTH_DSP_SHA << "\",\"fast_math\":\"" << TRUTH_FAST_MATH_SHA << "\"}"
@@ -361,6 +465,10 @@ void render(const Options& o) {
         std::error_code ignored;
         fs::remove(o.out / "trace.csv", ignored);
         fs::remove(o.out / "manifest.json", ignored);
+        if (!o.controls.empty()) {
+            fs::remove(o.out / "controls.csv", ignored);
+            fs::remove(o.out / "control_endpoints.csv", ignored);
+        }
         if (o.compareRealtime) fs::remove(o.out / "realtime.csv", ignored);
         if (!o.samples.empty()) fs::remove(o.out / "stimulus.csv", ignored);
         fs::remove(o.out, ignored); // succeeds only if still empty
@@ -375,6 +483,7 @@ int main(int argc, char** argv) {
                      "Or: --out NEW_DIR --input CSV --input-rate RATE --input-samples N (N endpoint values, N-1 intervals)\n"
                      "[--frequency 440] [--amplitude 1] [--hp-hz 200] [--lp-hz 2000] [--q 1]\n"
                      "[--ota-level 2.5 (0=linear)] [--gain unity|physical] [--substeps 16] [--tolerance .001]\n"
+                     "[--controls CSV (sample,hp_hz,lp_hz,q; exactly N endpoint rows; replaces scalar controls)]\n"
                      "[--compare-realtime true --realtime-rate RATE (must match endpoint rate)]\n"
                      "Offline conditional filter only; not whole-instrument or measured hardware truth.\n"; return 0;
     }

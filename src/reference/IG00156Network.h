@@ -239,21 +239,29 @@ public:
         double residual = 0.0, scale = 1e-30;
     };
     // Original unchecked API and arithmetic retained for existing offline gates.
-    void step(double u0, double u1, double seconds) { stepImpl(u0, u1, seconds, false); }
-    StepResult stepChecked(double u0, double u1, double seconds) { return stepImpl(u0, u1, seconds, true); }
+    void step(double u0, double u1, double seconds) { stepImpl(u0, u1, seconds, false, ctl, ctl); }
+    StepResult stepChecked(double u0, double u1, double seconds) { return stepImpl(u0, u1, seconds, true, ctl, ctl); }
+
+    // Controls describe the two ends of this integration interval. They do not
+    // mutate the fixed controls used by the original APIs or reset any state.
+    using Controls = std::array<StageControl, 2>;
+    StepResult stepCheckedControlled(double u0, double u1, double seconds,
+                                     const Controls& start, const Controls& end)
+    { return stepImpl(u0, u1, seconds, true, start, end); }
 
 private:
-    StepResult stepImpl(double u0, double u1, double seconds, bool checked)
+    StepResult stepImpl(double u0, double u1, double seconds, bool checked,
+                        const Controls& start, const Controls& end)
     {
         StepResult result;
-        const auto f0 = derivative(z, u0, nullptr);
+        const auto f0 = derivative(z, u0, nullptr, start);
         Vector<8> next = z;
         for (std::size_t j = 0; j < 8; ++j) next[j] += seconds * f0[j];
         for (int it = 0; it < 50; ++it)
         {
             result.iterations = it + 1;
             Matrix<8> jac {};
-            const auto f1 = derivative(next, u1, &jac);
+            const auto f1 = derivative(next, u1, &jac, end);
             Vector<8> r {};
             Matrix<8> m {};
             double size = 0.0, scale = 1e-30;
@@ -269,7 +277,7 @@ private:
             for (std::size_t j = 0; j < 8; ++j) next[j] += d[j];
         }
         if (!checked) { z = next; return result; }
-        const auto finalDerivative = derivative(next, u1, nullptr);
+        const auto finalDerivative = derivative(next, u1, nullptr, end);
         for (std::size_t i = 0; i < 8; ++i)
         {
             const double r = next[i] - z[i] - 0.5 * seconds * (f0[i] + finalDerivative[i]);
@@ -283,13 +291,13 @@ private:
     }
 
 private:
-    Vector<8> derivative(const Vector<8>& s, double u, Matrix<8>* jac) const
+    Vector<8> derivative(const Vector<8>& s, double u, Matrix<8>* jac, const Controls& controls) const
     {
         Vector<8> d {};
         for (std::size_t k = 0; k < 2; ++k)
         {
             const auto& n = net[k];
-            const auto& c = ctl[k];
+            const auto& c = controls[k];
             const std::size_t o = 4 * k;
             const double gs = 1.0 / n.sourceOhms, gg = 1.0 / n.groundOhms, gf = 1.0 / n.feedbackOhms;
             const double gff1 = 1.0 / n.feedforward1Ohms, gff2 = 1.0 / n.feedforward2Ohms;

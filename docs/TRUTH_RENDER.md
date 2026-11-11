@@ -261,3 +261,88 @@ Independent source review and a repeat of all four affected suites passed in
 metrics and verified preserved synthetic trace bytes. Their separate diagnostic
 render used 144,001 endpoints; it corroborates the metric calculation, not an
 additional exact replay of the 144,000-endpoint frozen fixture above.
+
+## Time-varying cutoff and resonance diagnostics
+
+An optional `--controls FILE.csv` supplies a filter-control trajectory at the
+same endpoint clock as the stimulus. Its exact header is
+`sample,hp_hz,lp_hz,q`. Rows must start at sample 0, use consecutive indices, and
+contain exactly as many endpoints as the waveform. With synthetic input this is
+`floor(duration * rate) + 1`; with sample input it is `--input-samples`.
+The trajectory replaces the scalar HP cutoff, LP cutoff and Q options, so
+combining it with `--hp-hz`, `--lp-hz` or `--q` is rejected rather than silently
+choosing one source.
+
+For example, prepare a short rising-cutoff trajectory, then inspect both
+reference and production-stage responses:
+
+```sh
+python - <<'PY'
+import csv
+rate, intervals = 48000, 4800
+with open('filter-sweep.csv', 'w', newline='') as f:
+    out = csv.writer(f)
+    out.writerow(['sample', 'hp_hz', 'lp_hz', 'q'])
+    for i in range(intervals + 1):
+        phase = i / intervals
+        out.writerow([i, 200, 500 + 4500 * phase, 1 + 3 * phase])
+PY
+./cs80_truth_render --out new-sweep-reference --rate 48000 --duration .1 \
+  --frequency 440 --controls filter-sweep.csv \
+  --compare-realtime true --realtime-rate 48000
+```
+
+This is a declared **software control stimulus**, not a recovered CS-80 envelope
+law. Inside each waveform interval, the requested HP/LP total cutoff frequencies
+and Q are linearly interpolated. The existing declared cutoff and Q mappings are
+then evaluated at each integration substep endpoint. The renderer does not
+interpolate already-mapped transconductances. Network topology, source adapters,
+OTA level and capacitor states retain their existing meanings.
+
+The checked reference step uses the start controls for its old-state derivative
+and the end controls for its new-state derivative and Newton Jacobian. Its
+residual check uses those same endpoints. Both numerical refinement runs follow
+the same continuous requested-control trajectory. Fine/coarse agreement is still
+an estimate, not an error bound or a hardware acceptance test.
+
+Optional production comparison instead calls the actual stage setters with each
+float-cast endpoint control before processing that endpoint sample, retaining
+the stages' existing histories. No reset or artificial state correction is
+inserted. This differs from the fine-step reference's control interpolation as
+well as its forcing, precision and prewarp. Reported differences cannot be
+attributed to a single cause or called a production defect merely because they
+are nonzero. No universal modulation acceptance threshold is introduced.
+
+Control values must be finite and within the same declared cutoff/Q bounds as
+scalar options. Comparison additionally rejects every endpoint whose effective
+float cutoff would trigger the production clamp. Endpoint bounds also bound the
+linearly interpolated requested values between them. The exact consumed control
+bytes are retained and hashed, so the file used for the experiment can be
+recovered without relying on a later read of its original pathname.
+
+Dynamic runs add `controls.csv` (the exact input snapshot) and
+`control_endpoints.csv` (requested Hz/Q and mapped reference gm/Q conductances at
+each waveform endpoint). In comparison mode the latter also records production
+float controls, effective total cutoffs and Q conductances. The manifest's
+`controls` object records filenames, SHA-256, consumed byte count, endpoint
+count/rate and interpolation semantics. Scalar control metadata describes only
+the initial endpoint in this mode; it must not be mistaken for the entire
+trajectory. Output-time endpoint values do not enumerate every fine integration
+substep, which is defined by the interpolation rule above.
+
+The control file has a 64 MiB read limit and 128-byte line limit. It uses strict
+ASCII decimal values, no blank or extra rows, and a terminating newline on every
+line; LF and CRLF are accepted. Indices must be contiguous integers. These are
+input-format constraints, not tolerances on the modeled control values.
+
+### Dynamic-control verification checkpoint
+
+Developed against `646dda88`. The final four affected registered suites passed
+in 20.29 seconds; independent source review and a repeat passed in 19.93 seconds,
+both with exit 0. The renderer suite contains 15 tests, including an independent
+linear time-varying matrix oracle, constant-control trace equality, malformed
+trajectories, final-endpoint clamp rejection and artifact-write cleanup.
+The documented 4,801-endpoint sweep completed with the default numerical settings
+and a refinement estimate of 3.40844e-06. This verifies the specified diagnostic
+workflow, not a recovered hardware modulation law or general production error
+threshold. Realtime DSP source files are unchanged.
