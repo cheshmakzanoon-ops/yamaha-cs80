@@ -389,6 +389,83 @@ void testMtsChannelMappingRoutes()
     }
 }
 
+void testMtsChannelLifecycle()
+{
+    const auto scale = [](int sub, bool realtime) {
+        std::vector<std::uint8_t> bytes {0xF0, static_cast<std::uint8_t>(realtime ? 0x7F : 0x7E),
+            0x7F, 8, static_cast<std::uint8_t>(sub), 0, 0, 2}; // channel 2 only
+        for (int pc = 0; pc < 12; ++pc)
+            if (sub == 8) bytes.push_back(89);
+            else bytes.insert(bytes.end(), {80, 0});
+        bytes.push_back(0xF7); return bytes;
+    };
+    for (int sub : {8, 9}) for (bool realtime : {false, true})
+    for (bool source : {false, true}) for (int lifecycle : {0, 1, 2})
+    {
+        auto p = quiet(); p[P_tuningMode] = 2; p[P_keyRelease] = 1;
+        p[P_sourcePerformance] = source ? 1.f : 0.f;
+        Engine actual, reference;
+        for (auto* e : {&actual, &reference})
+        {
+            e->prepare(48000); e->setParams(p);
+            for (int ch : {1, 2}) e->noteOn(64, .8f, ch);
+            render(*e, 256);
+            for (int ch : {1, 2})
+            {
+                if (lifecycle == 1) e->controlChange(64, 1.f, ch);
+                if (lifecycle != 0) e->noteOff(64, ch);
+            }
+        }
+        const auto message = scale(sub, realtime);
+        check(actual.handleSysEx(message.data(), int(message.size())), "lifecycle channel scale accepted");
+        const auto audio = render(actual, 512);
+        check(actual.getVoiceInfo(0).channel == 1 && actual.getVoiceInfo(1).channel == 2,
+              "lifecycle pair retains distinct source channels");
+        if (!realtime)
+            check(audio == render(reference, 512), "NRT channel scale preserves mixed-channel lifecycle audio");
+        for (int v = 0; v < 2; ++v)
+        {
+            const auto info = actual.getVoiceInfo(v);
+            const bool retuned = realtime && info.channel == 2 && !(source && lifecycle == 2);
+            check(info.active && info.held == (lifecycle == 0) && info.pedalHeld == (lifecycle == 1),
+                  "channel tuning preserves held, pedal-held and released voice ownership");
+            check(std::abs(semitonesOf(actual, v, retuned ? 64.25f : 64.f)) < 1e-3f,
+                  "channel lifecycle retunes only recipient and respects circuit release latch");
+        }
+        for (int ch : {1, 2}) actual.noteOn(65, .8f, ch);
+        render(actual, 256);
+        int fresh = 0; unsigned freshChannels = 0;
+        for (int v = 0; v < 8; ++v)
+        {
+            const auto info = actual.getVoiceInfo(v);
+            if (info.active && info.held && info.note == 65)
+            {
+                ++fresh; freshChannels |= 1u << info.channel;
+                check(std::abs(semitonesOf(actual, v, info.channel == 2 ? 65.25f : 65.f)) < 1e-3f,
+                      "future notes retain per-channel tuning after each lifecycle update");
+            }
+        }
+        check(fresh == 2 && freshChannels == 6, "one future note on each channel sounds");
+    }
+    for (int sub : {8, 9}) for (bool realtime : {false, true})
+    {
+        auto p = quiet(); p[P_tuningMode] = 2; p[P_sourcePerformance] = p[P_kasScanTiming] = 1;
+        Engine e; e.prepare(48000); e.setParams(p);
+        render(e, 1); // advance away from initial dispatch boundary
+        for (int ch : {1, 2}) e.noteOn(64, .8f, ch);
+        check(e.activeVoices() == 0, "scanner lifecycle fixture has pending onsets, not sounding voices");
+        const auto message = scale(sub, realtime);
+        check(e.handleSysEx(message.data(), int(message.size())), "tuning update between enqueue and dispatch accepted");
+        render(e, 1024);
+        check(e.activeVoices() == 2, "both queued channels dispatch after tuning change");
+        check(e.getVoiceInfo(0).channel == 1 && e.getVoiceInfo(1).channel == 2,
+              "scanner dispatch preserves both source channels");
+        for (int v = 0; v < 2; ++v)
+            check(std::abs(semitonesOf(e, v, e.getVoiceInfo(v).channel == 2 ? 64.25f : 64.f)) < 1e-3f,
+                  "queued onset uses dispatch-time channel tuning for RT and NRT messages");
+    }
+}
+
 void testMtsEmptyChannelMask()
 {
     using Bytes = std::vector<std::uint8_t>;
@@ -1808,6 +1885,7 @@ int main()
     testMtsEmptyChannelMask();
     testMtsChannelRecipients();
     testMtsChannelState();
+    testMtsChannelLifecycle();
     testMtsChannelMappingRoutes();
     testArpeggiatorTuningMap();
     testMpe();
