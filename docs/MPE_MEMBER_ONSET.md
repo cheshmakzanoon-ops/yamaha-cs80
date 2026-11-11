@@ -25,8 +25,9 @@ enabled and the channel must currently belong to a lower or upper member role.
   narrows ordinary member-event recipients to accepted held gates while keeping
   this raw cache available for subsequent onsets.
 - Sixteen-voice coverage applies when both instruments are already active.
-  Inactive-extension activation is deliberately not a partial controller-state
-  handoff. MIDI-learn consumption still takes precedence over learned CC74.
+  The later [controller activation handoff](CONTROLLER_ACTIVATION_HANDOFF.md)
+  transfers the primary's complete retained controller/protocol state when the
+  extension activates. MIDI-learn consumption still takes precedence over learned CC74.
 
 The change is a fixed-size, audio-owned cache used at event/allocation time.
 Source inspection found no added heap allocation, locks or per-sample loop;
@@ -50,7 +51,7 @@ This is **not full MPE conformance**. The later [released-target repair](MPE_REL
 retains per-voice targets after accepted release, with explicit reset/global
 exceptions; it does not provide whole-audio isolation. Full MCM note
 termination/zone reset, manager/member pressure and timbre combination,
-inactive-extension state handoff and live active-note range retargeting remain
+live active-note range retargeting remain
 separate. No GUI, external DAW, physical controller, plugin-format host,
 performance, filter/memory activation or circuit-fidelity qualification is
 claimed. Same-pitch sixteen-voice Note Off ownership is addressed separately by

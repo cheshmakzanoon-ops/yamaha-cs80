@@ -255,6 +255,11 @@ public:
     void pitchBend(int midiChannel, float value); // -1..1
     void controlChange(int controller, float value, int midiChannel = 1);
     void setRibbon(float value);
+    // Audio thread, between renders: initialize a freshly reset second instrument
+    // with matching effective parameters. Copies controller/protocol targets only,
+    // never voices, note queues, smoothing/optical history, or oscillator/FX state.
+    void inheritControllerStateFrom(const Engine& source) noexcept;
+
 
     // ---- Phase 6 modern layer (inert in PURE CS-80) ----------------------
     // Render thread only. Scala/KBM table used when tuning_mode = 1.

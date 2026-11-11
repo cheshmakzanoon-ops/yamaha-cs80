@@ -66,7 +66,7 @@ The two already-active instruments apply the rule independently in sixteen-voice
 mode. It composes with [immediate repeated-note release ownership](SIXTEEN_VOICE_NOTE_RELEASE.md):
 a later member message can update an older still-held primary onset without
 retargeting a newer released extension onset on the same channel. No coherent
-zone/expression handoff is added when an inactive extension is activated.
+zone/expression handoff was added by this historical released-target change. The later [controller activation handoff](CONTROLLER_ACTIVATION_HANDOFF.md) now transfers the primary's retained controller/protocol state at activation.
 
 Deferred/scanner and arpeggiated cross-instrument Note Off ownership remain
 separate work. The local accepted-gate rule does not repair their broadcast
@@ -99,5 +99,4 @@ routing helpers: no new voice fields, heap allocation, locks, audio-rate loops,
 parameter IDs, saved-state format, UI or circuit equations. No performance,
 callback-deadline, external DAW/controller, GUI, hardware-fidelity or full-native
 sanitizer qualification is claimed. Full MCM note termination, complete zone
-reset, manager/member pressure and timbre combination, inactive-extension
-handoff and live active-note range retargeting remain open.
+reset, manager/member pressure and timbre combination and live active-note range retargeting remain open.

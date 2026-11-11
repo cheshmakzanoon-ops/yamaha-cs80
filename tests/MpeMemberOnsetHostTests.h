@@ -134,11 +134,11 @@ void testMpeMemberOnsetHost(Check check)
         check(index >= 0, "activation-boundary witness actually uses the new extension");
         if (index >= 0)
         {
-            check(extension.getVoiceInfo(index).bend == 0 && extension.getVoiceInfo(index).pressure == 0,
-                  "inactive extension receives no invented partial controller-state handoff");
+            check(extension.getVoiceInfo(index).bend == 12.0f && extension.getVoiceInfo(index).pressure == 89.0f / 127.0f,
+                  "new extension inherits the primary controller state at activation");
             for (int rank = 0; rank < 2; ++rank)
-                check(extension.getModernRankOffsets(index, rank).pulseWidth == 0,
-                      "inactive extension does not resurrect pre-activation CC74");
+                check(extension.getModernRankOffsets(index, rank).pulseWidth == (101.0f / 127.0f) * modern::kPulseWidthRange,
+                      "new extension inherits current retained CC74 at activation");
         }
         // Existing MIDI-learn consumption still owns learned CC74 events.
         host = make(circuit, false); tick();

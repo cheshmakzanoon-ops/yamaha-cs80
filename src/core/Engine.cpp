@@ -378,6 +378,22 @@ void Engine::reset()
     listeningSample = {};
 }
 
+void Engine::inheritControllerStateFrom(const Engine& source) noexcept
+{
+    mpeZones = source.mpeZones;
+    memberExpression = source.memberExpression;
+    sustainPedals = source.sustainPedals;
+    globalBend = source.globalBend;
+    upperZoneBend = source.upperZoneBend;
+    globalPitchWheel = source.globalPitchWheel;
+    modWheel = source.modWheel;
+    lastChannelPressure = source.lastChannelPressure;
+    expression = source.expression;
+    ribbon = source.ribbon;
+    // The destination's reset already requested a snap. Do not import the
+    // primary's in-flight dezipper or physical optical-cell trajectory.
+}
+
 void Engine::setParams(const ParamValues& values)
 {
     hardwareSources = {13, 13};

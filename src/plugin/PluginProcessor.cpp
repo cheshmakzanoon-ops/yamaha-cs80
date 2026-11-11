@@ -925,6 +925,10 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         if (!extensionActive)
         {
             extensionEngine->reset();
+            // Dormant engines do not receive MIDI. Start the new instrument
+            // from the primary's current post-reset controller/protocol state,
+            // before this callback's fresh MIDI and UI events are dispatched.
+            extensionEngine->inheritControllerStateFrom(engine);
             extensionActive = true;
         }
         // Retain the physical pedal after every lifecycle reset, not just
