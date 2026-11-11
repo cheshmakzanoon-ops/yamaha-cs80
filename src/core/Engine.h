@@ -274,6 +274,9 @@ public:
     const tuning::TuningTable& getMtsTuning(int midiChannel = 1) const noexcept { return mtsTables[(size_t) std::clamp(midiChannel, 1, 16) - 1]; }
     // Pitch (fractional MIDI semitones) a note plays at under the accepted mode.
     float tunedPitch(int midiNote, int midiChannel = 1) const noexcept;
+    // Render-thread inspection of effective table admission and mode, not audio pitch.
+    bool noteMapped(int midiNote, int midiChannel) const noexcept;
+    int getTuningMode() const noexcept { return global.tuningMode; }
     const MpeZoneLayout& getMpeZones() const noexcept { return mpeZones; }
     bool isMpeEnabled() const noexcept { return global.mpe; }
     // Audio-thread queries of the same negotiated/fallback ranges used by DSP.
@@ -606,7 +609,6 @@ private:
     void reconsiderUnassignedKeys(bool immediate = true);
     uint64_t nextReleaseOrder(bool immediate) noexcept
     { return immediate && releaseOrderClock != nullptr ? releaseOrderClock->next() : 0; }
-    bool noteMapped(int midiNote, int midiChannel) const noexcept;
     void retuneSoundingVoices() noexcept;
     int unisonCount() const noexcept
     { return global.voiceMode == 2 ? 2 : global.voiceMode == 3 ? 4 : global.voiceMode == 4 ? 8 : 1; }

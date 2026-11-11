@@ -631,9 +631,9 @@ private:
         const float mt = v(cs80::P_masterTune);
         const float a4 = ref * std::pow(2.0f, mt / 12.0f);
         const bool off = std::abs(a4 - 440.0f) > 0.005f;
-        text(g, "SOUNDING A4", { 20.0f, 10.0f, 220.0f, 16.0f }, 11.0f, true, ivoryDim, Just::centredLeft, 0.1f);
+        text(g, "12-TET A4 REFERENCE", { 20.0f, 10.0f, 220.0f, 16.0f }, 11.0f, true, ivoryDim, Just::centredLeft, 0.1f);
         text(g, juce::String(a4, 2) + " Hz", { 20.0f, 30.0f, 300.0f, 52.0f }, 38.0f, true, off ? amberBright : ivory, Just::centredLeft, 0.01f);
-        text(g, off ? signedString(1200.0f * std::log2(a4 / 440.0f), 1, " ct from 440 Hz") : juce::String("CONCERT PITCH"),
+        text(g, off ? signedString(1200.0f * std::log2(a4 / 440.0f), 1, " ct from 440 Hz") : juce::String("CONCERT REFERENCE"),
              { 20.0f, 84.0f, 300.0f, 18.0f }, 11.0f, true, off ? amber : axisInk(), Just::centredLeft, 0.04f);
 
         vline(g, 336.0f, 14.0f, designH - 14.0f, 0.22f, gold);
@@ -645,7 +645,7 @@ private:
         };
         row(356.0f, 10.0f, "A4 REFERENCE", iso ? "440.0 Hz (ISOLATION)" : juce::String(ref, 1) + " Hz", ref != 440.0f && ! iso);
         row(356.0f, 38.0f, "PITCH KNOB", signedString(mt, 2, " st") + " = " + signedString(mt * 100.0f, 0, " ct"), std::abs(mt) > 0.001f);
-        row(356.0f, 66.0f, "TEMPERAMENT", "12-TONE EQUAL", false);
+        row(356.0f, 66.0f, "CALCULATION", "12-TET REFERENCE", false);
         vline(g, split2, 14.0f, designH - 14.0f, 0.22f, gold);
         for (int i = 0; i < 3; ++i)
         {
@@ -4400,8 +4400,8 @@ void buildPitchTuning(AdvancedPage& page)
 {
     page.module({ 560.0f, 564.0f, 976.0f, 332.0f }, "Pitch, bend and tuning", true, juce::Colours::transparentBlack,
                 "PLAY RANGE: 61-key panel, MIDI notes 0-127. WHEEL BEND is the range of the spring-loaded pitch lever and MIDI pitch bend. With MPE on, "
-                "each note's own channel bends by MPE BEND instead; PURE CS-80 disables MPE. A4 sets the reference frequency for twelve-tone equal "
-                "temperament; MIDI Tuning Standard and tuning-table import are not implemented here. The ribbon is a separate continuous controller and "
+                "MPE BEND is the member-range fallback until negotiation overrides it; see Keyboard and Tuning for applied zones and ranges. PURE CS-80 disables MPE. A4 sets the reference frequency for twelve-tone equal "
+                "temperament. This display calculates an equal-tempered reference, not sounding pitch; inspect applied Scala/MTS table entries in Keyboard and Tuning. The ribbon is a separate continuous controller and "
                 "returns to centre. The main-panel PITCH knob adds a fine offset, included in the readout.");
     page.knob({ 620.0f, 604.0f, 160.0f, 140.0f }, cs80::P_pitchBendRange, "WHEEL BEND")->setBipolar(true);
     page.custom([](juce::Graphics& g) { etchRect(g, { 878.0f, 598.0f, 340.0f, 152.0f }, 6.0f, 0.5f); });

@@ -14,6 +14,7 @@ Latest checked implementation [`c7595a4`](https://github.com/cheshmakzanoon-ops/
 
 Since the October 31 integration:
 
+- **Tuning-table inspection:** inspect an [applied note/channel table entry](docs/TUNING_NOTE_INSPECTION.md), including unmapped Scala keys and channel-specific MTS pitches. This is table state before performance offsets, not measured sounding audio.
 - **Applied MPE status:** the Keyboard and Tuning page shows [negotiated zones and effective bend ranges](docs/MPE_STATUS_DISPLAY.md) from the last completed audio callback, rather than assuming the stored fallback knobs still apply.
 - **MPE initial expression:** member-channel bend, pressure and CC74 received before a note now initialize its accepted onset using the current range and pressure curve. [The bounded contract and evidence](docs/MPE_MEMBER_ONSET.md) cover both active instruments. [Released member targets](docs/MPE_RELEASED_TARGETS.md) now retain bend/pressure/timbre after accepted release while later onsets receive fresh cached values; reset/global exceptions and inactive-extension handoff limits remain explicit.
 - **Repeated-note release:** [Immediate sixteen-voice Note Off](docs/SIXTEEN_VOICE_NOTE_RELEASE.md) cancels one matching waiter or releases the newest comparable held group across the two instruments, preserving unison groups and UI source guards. Deferred-scanner and arpeggiator releases still use the existing broadcast fallback.

@@ -39,6 +39,9 @@ public:
     void clearTuning();
     juce::String statusText() const { return status.getText(); }
     juce::String mpeStatusText() const { return mpeStatus.getText(); }
+    juce::String tuningInspectionText() const { return inspectionStatus.getText(); }
+    juce::ComboBox& inspectionNoteBox() noexcept { return inspectionNote; }
+    juce::ComboBox& inspectionChannelBox() noexcept { return inspectionChannel; }
     juce::String tuningText() const { return description.getText(); }
     juce::ComboBox& tuningModeBox() noexcept { return tuningMode; }
     juce::ComboBox& voiceModeBox() noexcept { return voiceMode; }
@@ -56,8 +59,8 @@ private:
     };
 
     Cs80AudioProcessor& processor;
-    juce::Label tuningTitle, keyboardTitle, tuningModeLabel, voiceModeLabel, description, status, mpeStatus, note;
-    juce::ComboBox tuningMode, voiceMode;
+    juce::Label tuningTitle, keyboardTitle, tuningModeLabel, voiceModeLabel, description, status, mpeStatus, inspectionStatus, note;
+    juce::ComboBox tuningMode, voiceMode, inspectionNote, inspectionChannel;
     std::unique_ptr<juce::ComboBoxParameterAttachment> tuningModeAttachment, voiceModeAttachment;
     juce::TextButton loadScl { "LOAD .SCL" }, loadKbm { "LOAD .KBM" }, clear { "CLEAR" };
     juce::ToggleButton scanTiming { "KAS scan timing (1 ms scan instants)" };

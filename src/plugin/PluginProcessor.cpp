@@ -423,6 +423,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     outputMeter.reset();
     voiceActivity.reset();
     mpeStatus.reset();
+    tuningInspection.reset();
     // Offline bounces render the circuit engine at HQ (Oversampling.h).
     engine.setNonRealtime(isNonRealtime());
     engine.prepare(sampleRate);
@@ -454,6 +455,7 @@ void Cs80AudioProcessor::releaseResources()
     outputMeter.reset();
     voiceActivity.reset();
     mpeStatus.reset();
+    tuningInspection.reset();
     engine.reset();
     extensionEngine->reset();
     extensionActive = false;
@@ -1187,6 +1189,11 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     mpeStatus.publish(engine.isMpeEnabled(), mpeZones.lowerMemberCount(), mpeZones.upperMemberCount(),
                       engine.effectiveManagerBendRange(false), engine.effectiveMemberBendRange(false),
                       engine.effectiveManagerBendRange(true), engine.effectiveMemberBendRange(true));
+
+    const auto inspected = tuningInspection.requested();
+    tuningInspection.publish(inspected.note, inspected.channel, engine.getTuningMode(),
+                             engine.noteMapped(inspected.note, inspected.channel),
+                             engine.tunedPitch(inspected.note, inspected.channel));
 
     // Inspect the completed host buffer, not pre-decimator/internal stereo
     // values: mono mapping/cancellation and its arithmetic are already applied.

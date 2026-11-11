@@ -107,6 +107,24 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
     styleLabel(description, {}, 13.5f);
     styleLabel(status, {}, 13.0f, ivoryDim);
     status.setInterceptsMouseClicks(true, false); // TooltipWindow must hit this label.
+    styleCombo(inspectionNote, "Inspect MIDI note");
+    styleCombo(inspectionChannel, "Inspect MIDI channel");
+    for (int n = 0; n < 128; ++n) inspectionNote.addItem("MIDI note " + juce::String(n), n + 1);
+    for (int ch = 1; ch <= 16; ++ch) inspectionChannel.addItem("Channel " + juce::String(ch), ch);
+    const auto requested = processor.getTuningInspectionRequest();
+    inspectionNote.setSelectedId(requested.note + 1, juce::dontSendNotification);
+    inspectionChannel.setSelectedId(requested.channel, juce::dontSendNotification);
+    const auto inspect = [this] {
+        processor.requestTuningInspection(inspectionNote.getSelectedId() - 1, inspectionChannel.getSelectedId());
+        refreshStatus();
+    };
+    inspectionNote.onChange = inspect;
+    inspectionChannel.onChange = inspect;
+    styleLabel(inspectionStatus, {}, 13.0f, ivoryDim);
+    inspectionStatus.setJustificationType(juce::Justification::topLeft);
+    inspectionStatus.setTitle("Applied tuning table lookup");
+    inspectionStatus.setInterceptsMouseClicks(true, false);
+    inspectionStatus.setTooltip("Read-only current tuning-table lookup for MIDI channels 1-16, published at the end of an audio callback. Before master tuning, rank offsets, pitch bend and modulation. Non-real-time tuning can change this table without retuning held voices. Unmapped keys do not admit new notes. A selected Scala or MTS slot can still contain the default equal-tempered table; the mode label does not prove a file/master was loaded. This is not a measurement of sounding audio.");
     description.setJustificationType(juce::Justification::topLeft);
     status.setJustificationType(juce::Justification::topLeft);
     styleLabel(mpeStatus, {}, 13.0f, ivoryDim);
@@ -153,7 +171,7 @@ KeyboardTuningPage::KeyboardTuningPage(Cs80AudioProcessor& p) : processor(p)
 
     for (auto* c : std::initializer_list<juce::Component*> { &tuningTitle, &keyboardTitle, &tuningModeLabel, &voiceModeLabel,
                                                              &tuningMode, &voiceMode, &loadScl, &loadKbm, &clear, &description,
-                                                             &status, &mpeStatus, &scanTiming, &ribbonCcEnable, &note })
+                                                             &status, &mpeStatus, &inspectionNote, &inspectionChannel, &inspectionStatus, &scanTiming, &ribbonCcEnable, &note })
         addAndMakeVisible(*c);
     refreshStatus();
     startTimerHz(4);
@@ -256,6 +274,23 @@ void KeyboardTuningPage::refreshStatus()
             + zone(true, applied.upperMembers, applied.upperManagerRange, applied.upperMemberRange);
     }
     if (mpeStatus.getText() != mpe) mpeStatus.setText(mpe, juce::dontSendNotification);
+    const auto request = processor.getTuningInspectionRequest();
+    inspectionNote.setSelectedId(request.note + 1, juce::dontSendNotification);
+    inspectionChannel.setSelectedId(request.channel, juce::dontSendNotification);
+    const auto lookup = processor.getTuningInspection();
+    juce::String inspected;
+    if (!lookup.ready || lookup.note != request.note || lookup.channel != request.channel)
+        inspected = "Table lookup: waiting for an audio callback.";
+    else
+    {
+        const juce::String source = lookup.mode == 1 ? "Scala/KBM" : lookup.mode == 2 ? "MTS/MTS-ESP" : "12-TET";
+        inspected = source + " table, note " + juce::String(lookup.note) + ", channel " + juce::String(lookup.channel) + ": ";
+        if (!lookup.mapped) inspected += "unmapped";
+        else if (!std::isfinite(lookup.pitch)) inspected += "pitch unavailable";
+        else inspected += "MIDI pitch " + juce::String(lookup.pitch, 4);
+        inspected += "\nBefore master/rank offsets; not sounding-note pitch.";
+    }
+    if (inspectionStatus.getText() != inspected) inspectionStatus.setText(inspected, juce::dontSendNotification);
     loadKbm.setEnabled(hasScale);
 }
 
@@ -300,7 +335,12 @@ void KeyboardTuningPage::resized()
         description.setBounds(a.removeFromTop(48));
         status.setBounds(a.removeFromTop(64));
         a.removeFromTop(8);
-        mpeStatus.setBounds(a.removeFromTop(112));
+        mpeStatus.setBounds(a.removeFromTop(96));
+        auto inspectRow = a.removeFromTop(30);
+        inspectionNote.setBounds(inspectRow.removeFromLeft(inspectRow.getWidth() / 2).reduced(0, 2));
+        inspectRow.removeFromLeft(6);
+        inspectionChannel.setBounds(inspectRow.reduced(0, 2));
+        inspectionStatus.setBounds(a.removeFromTop(58));
     }
     {
         auto a = keyboardPanel.reduced(12, 8);

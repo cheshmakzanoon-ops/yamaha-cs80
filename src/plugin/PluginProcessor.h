@@ -13,6 +13,7 @@
 #include "OutputMeter.h"
 #include "VoiceActivity.h"
 #include "MpeStatus.h"
+#include "TuningInspection.h"
 #include "MidiLearn.h"
 #include "UndoHistory.h"
 #include "HostAutomationBridge.h"
@@ -105,6 +106,12 @@ public:
     // the curated circuit-engine library (cs80::programLibrary()).
     const std::vector<cs80::FactoryPreset>& getFactoryPresets() const { return cs80::programLibrary(); }
     int getCurrentPresetIndex() const noexcept { return currentProgram.load(std::memory_order_relaxed); }
+    // Read-only completed-block table telemetry. The echoed note/channel may
+    // still describe the preceding request until another callback completes.
+    bool requestTuningInspection(int note, int channel) noexcept
+    { return tuningInspection.request(note, channel); }
+    cs80::TuningInspection::Selection getTuningInspectionRequest() const noexcept { return tuningInspection.requested(); }
+    cs80::TuningInspectionReading getTuningInspection() const noexcept { return tuningInspection.read(); }
     cs80::MpeStatusReading getMpeStatus() const noexcept { return mpeStatus.read(); }
     cs80::VoiceActivityReading getVoiceActivity() const noexcept { return voiceActivity.read(); }
     int getActiveVoiceCount() const noexcept { return getVoiceActivity().count(); }
@@ -382,6 +389,7 @@ private:
     std::atomic<unsigned> hostMidiEvents { 0 };
     cs80::VoiceActivity voiceActivity;
     cs80::MpeStatus mpeStatus;
+    cs80::TuningInspection tuningInspection;
     cs80::OutputMeter outputMeter;
     // ws3-keyboard: CC88 prefixes, second instrument, tuning hand-over.
     cs80::HighResolutionVelocity highResolutionVelocity; // audio thread
