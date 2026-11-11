@@ -261,6 +261,134 @@ void testMtsMessageBoundaries()
           "valid MTS message retunes the sounding note after rejection");
 }
 
+void testMtsChannelRecipients()
+{
+    using Bytes = std::vector<std::uint8_t>;
+    for (int sub : {8, 9}) for (bool realtime : {false, true})
+    for (bool source : {false, true}) for (int target = 1; target <= 16; ++target)
+    for (bool addressed : {false, true})
+    {
+        const unsigned mask = 1u << (target - 1);
+        Bytes message {0xF0, static_cast<std::uint8_t>(realtime ? 0x7F : 0x7E), 0x7F, 8,
+                       static_cast<std::uint8_t>(sub), static_cast<std::uint8_t>(mask >> 14),
+                       static_cast<std::uint8_t>((mask >> 7) & 127), static_cast<std::uint8_t>(mask & 127)};
+        for (int pc = 0; pc < 12; ++pc)
+            if (sub == 8) message.push_back(89);
+            else { message.push_back(80); message.push_back(0); }
+        message.push_back(0xF7);
+        const int channel = addressed ? target : (target == 16 ? 1 : target + 1);
+        auto p = quiet(); p[P_tuningMode] = 2; p[P_sourcePerformance] = source ? 1.f : 0.f;
+        Engine actual, reference;
+        for (auto* e : {&actual, &reference})
+        { e->prepare(48000); e->setParams(p); e->noteOn(64, .8f, channel); render(*e, 128); }
+        check(actual.handleSysEx(message.data(), static_cast<int>(message.size())),
+              "channel-addressed scale message is accepted");
+        tn::TuningTable shifted;
+        for (auto& pitch : shifted.pitch) pitch += .25f;
+        if (addressed && realtime) reference.setMtsTuning(shifted);
+        check(render(actual, 256) == render(reference, 256),
+              "scale message retunes held audio only for addressed channels in real time");
+        for (auto* e : {&actual, &reference}) e->allNotesOff(false);
+        if (addressed) reference.setMtsTuning(shifted);
+        for (auto* e : {&actual, &reference}) e->noteOn(67, .7f, channel);
+        check(render(actual, 256) == render(reference, 256),
+              "scale message changes future-note tuning only on addressed channels");
+    }
+}
+
+void testMtsChannelState()
+{
+    using Bytes = std::vector<std::uint8_t>;
+    const auto scale = [](unsigned mask, bool realtime) {
+        Bytes bytes {0xF0, static_cast<std::uint8_t>(realtime ? 0x7F : 0x7E), 0x7F, 8, 8,
+                     static_cast<std::uint8_t>(mask >> 14), static_cast<std::uint8_t>((mask >> 7) & 127),
+                     static_cast<std::uint8_t>(mask & 127)};
+        bytes.insert(bytes.end(), 12, 89); bytes.push_back(0xF7); return bytes;
+    };
+    for (bool source : {false, true})
+    {
+        Engine e; auto p = quiet(); p[P_tuningMode] = 2; p[P_sourcePerformance] = source ? 1.f : 0.f;
+        e.prepare(48000); e.setParams(p);
+        for (int ch : {1, 2, 16}) e.noteOn(64, .8f, ch);
+        render(e, 256);
+        const auto staged = scale(1, false), live = scale(1u << 15, true);
+        check(e.handleSysEx(staged.data(), int(staged.size())) && e.handleSysEx(live.data(), int(live.size())),
+              "independent staged and live channel tables accepted");
+        render(e, 256);
+        for (int voice = 0; voice < 3; ++voice)
+            check(std::abs(semitonesOf(e, voice, voice == 2 ? 64.25f : 64.f)) < 1e-3f,
+                  "unrelated real-time channel update cannot activate staged held-note tuning");
+        const Bytes note {0xF0, 0x7F, 0x7F, 8, 2, 0, 1, 64, 64, 64, 0, 0xF7};
+        check(e.handleSysEx(note.data(), int(note.size())), "global single-note update accepted after channel scales");
+        render(e, 256);
+        for (int voice = 0; voice < 3; ++voice)
+            check(std::abs(semitonesOf(e, voice, 64.5f)) < 1e-3f,
+                  "global single-note update reaches each addressed sounding key");
+        check(e.getMtsTuning(1).pitch[65] == 65.25f && e.getMtsTuning(16).pitch[65] == 65.25f
+              && e.getMtsTuning(2).pitch[65] == 65.f,
+              "global single-note edits preserve other pitches in independent channel tables");
+        e.reset(); e.prepare(96000);
+        check(e.getMtsTuning(1).pitch[65] == 65.25f && e.getMtsTuning(2).pitch[65] == 65.f,
+              "reset and prepare retain per-channel tuning as before for global tuning");
+        tn::TuningTable replacement;
+        for (auto& pitch : replacement.pitch) pitch += .125f;
+        e.setMtsTuning(replacement);
+        for (int ch = 1; ch <= 16; ++ch)
+            check(e.getMtsTuning(ch).pitch == replacement.pitch, "MTS-ESP global table replaces every channel");
+        const auto mixed = scale((1u << 6) | (1u << 7) | (1u << 14), true);
+        e.handleSysEx(mixed.data(), int(mixed.size()));
+        for (int ch = 1; ch <= 16; ++ch)
+            check(e.getMtsTuning(ch).pitch[60] == ((ch == 7 || ch == 8 || ch == 15) ? 60.25f : 60.125f),
+                  "mixed mask independently selects channels across mask byte boundaries");
+        auto malformed = mixed; malformed[5] |= 4;
+        const auto before = e.getMtsTuning(7);
+        check(!e.handleSysEx(malformed.data(), int(malformed.size())) && e.getMtsTuning(7).pitch == before.pitch,
+              "reserved mask bits reject atomically before updating any channel");
+    }
+}
+
+void testMtsChannelMappingRoutes()
+{
+    std::vector<std::uint8_t> scale {0xF0, 0x7F, 0x7F, 8, 8, 0, 0, 2};
+    scale.insert(scale.end(), 12, 89); scale.push_back(0xF7); // only channel 2
+    for (bool source : {false, true}) for (bool scan : {false, true})
+    for (bool arp : {false, true}) for (int channel : {1, 2})
+    {
+        auto p = quiet(); p[P_tuningMode] = 2; p[P_sourcePerformance] = source ? 1.f : 0.f;
+        p[P_kasScanTiming] = scan ? 1.f : 0.f; p[P_arpOn] = arp ? 1.f : 0.f; p[P_arpRate] = 16;
+        p[P_arpOctaves] = 1;
+        Engine e; e.prepare(48000); e.setParams(p);
+        tn::TuningTable mapping; mapping.mapped[61] = false; e.setMtsTuning(mapping);
+        e.handleSysEx(scale.data(), int(scale.size()));
+        e.noteOn(61, .8f, channel); render(e, 1024);
+        check((e.activeVoices() > 0) == (channel == 2),
+              "direct, scanner and ARP generated notes use source-channel mapped flags");
+        for (int v = 0; v < 8; ++v)
+            if (e.getVoiceInfo(v).active)
+                check(std::abs(semitonesOf(e, v, 61.25f)) < 1e-3f,
+                      "admitted channel-specific note uses its own table pitch");
+    }
+    for (bool scan : {false, true})
+    {
+        auto p = quiet(); p[P_sourcePerformance] = 1; p[P_tuningMode] = 2;
+        p[P_kasScanTiming] = scan ? 1.f : 0.f;
+        Engine e; e.prepare(48000); e.setParams(p);
+        for (int note = 60; note < 68; ++note) e.noteOn(note, .8f, 1);
+        render(e, 1024); e.noteOn(40, .8f, 1); e.noteOn(41, .8f, 2); render(e, 1024);
+        tn::TuningTable mapping; mapping.mapped[40] = mapping.mapped[41] = false; e.setMtsTuning(mapping);
+        e.handleSysEx(scale.data(), int(scale.size()));
+        e.noteOff(60, 1); render(e, 1024);
+        bool promoted = false, excluded = false;
+        for (int v = 0; v < 8; ++v)
+        {
+            const auto info = e.getVoiceInfo(v);
+            promoted |= info.active && info.held && info.note == 41 && info.channel == 2;
+            excluded |= info.active && info.held && info.note == 40;
+        }
+        check(promoted && !excluded, "waiting-key promotion uses each waiter's current channel mapping");
+    }
+}
+
 void testMtsEmptyChannelMask()
 {
     using Bytes = std::vector<std::uint8_t>;
@@ -1678,6 +1806,9 @@ int main()
     testUnmappedSustainAdmission();
     testMtsNonRealtimeAdmission();
     testMtsEmptyChannelMask();
+    testMtsChannelRecipients();
+    testMtsChannelState();
+    testMtsChannelMappingRoutes();
     testArpeggiatorTuningMap();
     testMpe();
     testMpePedalZoneBoundaries();

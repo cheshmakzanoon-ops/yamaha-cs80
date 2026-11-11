@@ -259,14 +259,15 @@ public:
     // ---- Phase 6 modern layer (inert in PURE CS-80) ----------------------
     // Render thread only. Scala/KBM table used when tuning_mode = 1.
     void setScalaTuning(const tuning::TuningTable& table) noexcept;
-    // Table used when tuning_mode = 2, e.g. built from an MTS-ESP master.
+    // Global replacement of all channel tables when tuning_mode = 2 (MTS-ESP).
     void setMtsTuning(const tuning::TuningTable& table) noexcept;
     // A complete MIDI Tuning Standard SysEx message (F0..F7) updates the
-    // tuning_mode 2 table. Allocation-free. Returns true when it applied.
+    // tuning_mode 2 tables. Scale/octave masks select channels; other supported
+    // messages retain global addressing. Allocation-free. Returns true when applied.
     bool handleSysEx(const std::uint8_t* data, int size) noexcept;
-    const tuning::TuningTable& getMtsTuning() const noexcept { return mtsTable; }
+    const tuning::TuningTable& getMtsTuning(int midiChannel = 1) const noexcept { return mtsTables[(size_t) std::clamp(midiChannel, 1, 16) - 1]; }
     // Pitch (fractional MIDI semitones) a note plays at under the accepted mode.
-    float tunedPitch(int midiNote) const noexcept;
+    float tunedPitch(int midiNote, int midiChannel = 1) const noexcept;
     const MpeZoneLayout& getMpeZones() const noexcept { return mpeZones; }
     bool isMpeEnabled() const noexcept { return global.mpe; }
     // Voice mode accepted for this frame (0 in PURE CS-80): 0 eight voices,
@@ -591,7 +592,7 @@ private:
     void reconsiderUnassignedKeys(bool immediate = true);
     uint64_t nextReleaseOrder(bool immediate) noexcept
     { return immediate && releaseOrderClock != nullptr ? releaseOrderClock->next() : 0; }
-    bool noteMapped(int midiNote) const noexcept;
+    bool noteMapped(int midiNote, int midiChannel) const noexcept;
     void retuneSoundingVoices() noexcept;
     int unisonCount() const noexcept
     { return global.voiceMode == 2 ? 2 : global.voiceMode == 3 ? 4 : global.voiceMode == 4 ? 8 : 1; }
@@ -758,7 +759,8 @@ private:
 
     std::array<HeldKey, kMaxHeldKeys> heldKeys {};
     // Phase 6 tuning tables, last played pitch (glide start), MPE zones.
-    tuning::TuningTable scalaTable, mtsTable;
+    tuning::TuningTable scalaTable;
+    std::array<tuning::TuningTable, 16> mtsTables;
     float lastPitch = 60.0f;
     MpeZoneLayout mpeZones;
     std::array<MemberExpression, 17> memberExpression {}; // Channel 0 unused.

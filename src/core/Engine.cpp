@@ -1027,7 +1027,7 @@ void Engine::triggerArpNote()
     // Admit the generated pitch using the current table, as for direct notes.
     // An excluded step is a timed rest, not a removed source key: another
     // octave can be mapped, and remapping must work without a new key strike.
-    if (global.tuningMode != 0 && ! noteMapped(step.note))
+    if (global.tuningMode != 0 && ! noteMapped(step.note, step.midiChannel))
         return;
     const int voice = chooseVoice();
     if (voice < 0)
@@ -1195,7 +1195,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
         v.timbre = initial->timbre;
     }
     // Phase 6 tuning: exactly (float) note in 12-TET (tuning_mode 0).
-    v.targetPitch = tunedPitch(note);
+    v.targetPitch = tunedPitch(note, midiChannel);
     v.upperZone = global.mpe && mpeZones.inUpperZone(midiChannel);
     v.unisonOffset = 0.0f;
     v.contour = keyboardContourWeights(note);
@@ -1363,7 +1363,7 @@ void Engine::applyNoteOn(int midiNote, float velocity, int midiChannel, bool key
 {
     // An excluded direct key is not an accepted strike: preserve release tails.
     // ARP source keys remain admitted because their generated octaves can map.
-    if (! global.arpOn && global.tuningMode != 0 && ! noteMapped(midiNote))
+    if (! global.arpOn && global.tuningMode != 0 && ! noteMapped(midiNote, midiChannel))
         return;
     if (global.sustainMode == 1)
     {
@@ -1468,7 +1468,7 @@ void Engine::reconsiderUnassignedKeys(bool immediate)
     {
         int best = -1;
         for (int i = 0; i < unassignedCount; ++i)
-            if ((global.tuningMode == 0 || noteMapped(unassignedKeys[(size_t) i].note))
+            if ((global.tuningMode == 0 || noteMapped(unassignedKeys[(size_t) i].note, unassignedKeys[(size_t) i].midiChannel))
                 && (best < 0 || unassignedKeys[(size_t) i].note < unassignedKeys[(size_t) best].note))
                 best = i;
         // Retain excluded held keys for later mapping changes or their key-up,
@@ -1920,19 +1920,19 @@ void Engine::setRibbon(float value)
         ribbon = clampf(value, -1.0f, 1.0f);
 }
 
-float Engine::tunedPitch(int midiNote) const noexcept
+float Engine::tunedPitch(int midiNote, int midiChannel) const noexcept
 {
     const int n = std::clamp(midiNote, 0, 127);
     if (global.tuningMode == 1) return scalaTable.pitch[(size_t) n];
-    if (global.tuningMode == 2) return mtsTable.pitch[(size_t) n];
+    if (global.tuningMode == 2) return getMtsTuning(midiChannel).pitch[(size_t) n];
     return (float) midiNote;
 }
 
-bool Engine::noteMapped(int midiNote) const noexcept
+bool Engine::noteMapped(int midiNote, int midiChannel) const noexcept
 {
     const int n = std::clamp(midiNote, 0, 127);
     if (global.tuningMode == 1) return scalaTable.mapped[(size_t) n];
-    if (global.tuningMode == 2) return mtsTable.mapped[(size_t) n];
+    if (global.tuningMode == 2) return getMtsTuning(midiChannel).mapped[(size_t) n];
     return true;
 }
 
@@ -1942,7 +1942,7 @@ void Engine::retuneSoundingVoices() noexcept
     // carries them to the new target.
     for (auto& v : voices)
         if (v.active)
-            v.targetPitch = tunedPitch(v.note);
+            v.targetPitch = tunedPitch(v.note, v.midiChannel);
 }
 
 void Engine::setScalaTuning(const tuning::TuningTable& table) noexcept
@@ -1953,19 +1953,35 @@ void Engine::setScalaTuning(const tuning::TuningTable& table) noexcept
 
 void Engine::setMtsTuning(const tuning::TuningTable& table) noexcept
 {
-    mtsTable = table;
+    mtsTables.fill(table);
     if (global.tuningMode == 2) retuneSoundingVoices();
 }
 
 bool Engine::handleSysEx(const std::uint8_t* data, int size) noexcept
 {
-    if (! tuning::applyMtsSysEx(data, size, mtsTable))
+    // Validate transactionally before changing any channel. Scale/octave
+    // payloads replace all pitches, while global note updates preserve each
+    // channel's unrelated pitches independently.
+    auto validated = mtsTables[0];
+    if (! tuning::applyMtsSysEx(data, size, validated))
         return false;
+    const int sub = data[4];
+    const bool scale = sub == 0x08 || sub == 0x09;
+    const unsigned recipients = scale
+        ? (unsigned(data[5]) << 14) | (unsigned(data[6]) << 7) | unsigned(data[7])
+        : 0xFFFFu;
+    for (int channel = 0; channel < 16; ++channel)
+        if ((recipients & (1u << channel)) != 0)
+        {
+            if (scale || channel == 0)
+                mtsTables[(size_t) channel] = validated;
+            else
+                tuning::applyMtsSysEx(data, size, mtsTables[(size_t) channel]);
+        }
     if (global.tuningMode == 2)
     {
         // MTS extended non-real-time changes stage tuning for future notes.
         // Legacy bulk handling is retained; only 07/08/09 define this split.
-        const int sub = data[4]; // Complete message already validated above.
         if (data[1] == 0x7E && (sub == 0x07 || sub == 0x08 || sub == 0x09))
             return true;
         if (sub == 0x02 || sub == 0x07)
@@ -1983,10 +1999,12 @@ bool Engine::handleSysEx(const std::uint8_t* data, int size) noexcept
             }
             for (auto& voice : voices)
                 if (voice.active && addressed[(std::size_t) voice.note])
-                    voice.targetPitch = tunedPitch(voice.note);
+                    voice.targetPitch = tunedPitch(voice.note, voice.midiChannel);
         }
         else
-            retuneSoundingVoices();
+            for (auto& voice : voices)
+                if (voice.active && (recipients & (1u << (std::clamp(voice.midiChannel, 1, 16) - 1))) != 0)
+                    voice.targetPitch = tunedPitch(voice.note, voice.midiChannel);
     }
     return true;
 }
@@ -2097,7 +2115,7 @@ bool Engine::hasFreeCircuitForRouting() const noexcept
         {
             int best = -1;
             for (int j = 0; j < waitingCount; ++j)
-                if ((global.tuningMode == 0 || noteMapped(waiting[(size_t) j].note))
+                if ((global.tuningMode == 0 || noteMapped(waiting[(size_t) j].note, waiting[(size_t) j].midiChannel))
                     && (best < 0 || waiting[(size_t) j].note < waiting[(size_t) best].note))
                     best = j;
             if (best < 0) return;
@@ -2113,7 +2131,7 @@ bool Engine::hasFreeCircuitForRouting() const noexcept
     pending.flush([&](const kas::Scanner::Event& event) {
         if (event.on)
         {
-            if (global.tuningMode != 0 && ! noteMapped(event.note))
+            if (global.tuningMode != 0 && ! noteMapped(event.note, event.channel))
                 return;
             if (global.sustainMode == 1)
                 for (auto& v : projected)
