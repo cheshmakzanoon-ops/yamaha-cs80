@@ -94,7 +94,7 @@ The ring modulator is global and has a dedicated AD envelope retriggered by the 
 
 ### Ribbon and wheels
 
-The ribbon uses first-touch-relative displacement, a provisional linear frequency ratio with octave-up and zero-frequency downward endpoints, and neutral on release. Sustain I freezes the released voice ratio; Sustain II tracks subsequent motion. It is independent of the pitch wheel. The pitch wheel uses the host-visible `pitch_bend_range`; MPE member channels use `mpe_bend_range`, which defaults to the 48-semitone MPE convention. The modulation wheel is CC1, CC64 is the sustain pedal, and polyphonic pressure is scoped to the member channel when MPE is active.
+The ribbon uses first-touch-relative displacement, a provisional linear frequency ratio with octave-up and zero-frequency downward endpoints, and neutral on release. Sustain I freezes the released voice ratio; Sustain II tracks subsequent motion. It is independent of the pitch wheel. The pitch wheel uses the host-visible `pitch_bend_range`; MPE member channels use `mpe_bend_range`, which defaults to the 48-semitone MPE convention. The modulation wheel is CC1, CC64 is the sustain pedal, and the internal per-key pressure API is channel-scoped. Native MIDI Polyphonic Key Pressure is ignored on active MPE member channels, as required by MPE v1.1; manager, unassigned-channel and conventional MIDI behavior is retained. On-screen per-key pressure uses its separate internal path (see [MPE polyphonic pressure admission](MPE_POLY_PRESSURE_ADMISSION.md)).
 
 ## Voice dispersion and drift
 

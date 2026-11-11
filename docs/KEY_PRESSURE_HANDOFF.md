@@ -4,7 +4,7 @@ The pointer gesture is intentionally limited: no direct-pointer pressure while
 the effective arp runs, and no pressure when any active same-pitch voice has an
 unknown/host origin. The latter includes other channels, pedal holds and release
 tails, even with MPE on. This is conservative isolation, not unrestricted
-on-screen pressure support. Host MIDI aftertouch remains unchanged.
+on-screen pressure support. This handoff change did not alter host MIDI aftertouch. The later [MPE polyphonic pressure admission](MPE_POLY_PRESSURE_ADMISSION.md) separately excludes native MIDI Polyphonic Key Pressure on active MPE member channels; on-screen per-key pressure remains available.
 
 ## Publication and timing
 

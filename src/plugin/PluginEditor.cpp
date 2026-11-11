@@ -1320,7 +1320,7 @@ struct Cs80AudioProcessorEditor::Impl final : public juce::Component
     void buildKeyboard()
     {
         processor.serviceKeyboardUI();
-        keyboard.setTooltip("Drag down a held key for pressure; slide sideways for a new strike. Pointer pressure is disabled while the arpeggiator runs and when an active host voice shares the pitch (including other channels and release tails). After a mode change or PANIC, lift and strike again. MIDI aftertouch is unchanged.");
+        keyboard.setTooltip("Drag down a held key for pressure; slide sideways for a new strike. Pointer pressure is disabled while the arpeggiator runs and when an active host voice shares the pitch (including other channels and release tails). After a mode change or PANIC, lift and strike again. In MPE mode, member-channel MIDI pressure uses Channel Pressure, not Polyphonic Key Pressure.");
         keyboard.hostKeyDown = [this](int note) { return processor.isHostKeyDown(note); };
         keyboard.setAvailableRange(24, 84);
         keyboard.setLowestVisibleKey(24);

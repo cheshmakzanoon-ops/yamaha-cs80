@@ -719,6 +719,14 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
     }
     else if (message.isAftertouch())
     {
+        // MPE v1.1 Table 7 prohibits Polyphonic Key Pressure on member
+        // channels. Keep this native-MIDI boundary separate from the UI's
+        // token-authorized per-key pressure and the public core API.
+        const auto role = engine.getMpeZones().role(message.getChannel());
+        if (engine.isMpeEnabled()
+            && (role == cs80::MpeZoneLayout::Role::lowerMember
+                || role == cs80::MpeZoneLayout::Role::upperMember))
+            return;
         forEachEngine([&](cs80::Engine& e) {
             e.polyPressure(message.getNoteNumber(), message.getAfterTouchValue() / 127.0f, message.getChannel());
         });
