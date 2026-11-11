@@ -92,3 +92,8 @@ embedded client.
 No local GUI/socket retry or external validator run was performed. Native UI
 runtime validation remains for ordinary CI; a successful compile and focused
 suite do not constitute release qualification or a live-master DAW test.
+
+
+## Real upstream library IPC follow-up
+
+A [controlled optional harness](../tests/mts_real_library/README.md) now qualifies the unchanged production adapter against the official pinned Linux x86-64 libMTS 1.03 binary, using separate master/client processes. Independent replay passed global/channel updates, filtering, safe transactional rejection, disconnect/reconnect and owned cleanup. System installation was blocked by a read-only standard library path; isolated source copies change only that loader path. This evidence therefore does not qualify the unchanged shipping loader, native plug-in/DAW integration, concurrent master edits or callback performance. No shared library is bundled or installed by the project.
