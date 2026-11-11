@@ -87,6 +87,33 @@ void testScala()
     check(std::abs(white.pitch[60] - tn::TuningTable::pitchFromHz(440.0 * 3.0 / 5.0)) < 1e-4f, "white-key map: C is the tonic");
     check(!white.mapped[61] && !white.mapped[63] && white.mapped[62] && white.mapped[64], "black keys unmapped (x)");
     check(std::abs(white.pitch[72] - tn::TuningTable::pitchFromHz(528.0)) < 1e-4f, "white-key map: formal octave degree 7");
+    // Playable-key bounds must not redefine the tuning reference's map slot.
+    {
+        tn::Scale scale; tn::KeyboardMapping fullMap;
+        check(tn::parseScale(readFile("diatonic7.scl"), scale).empty(), "range reference scale parses");
+        check(tn::parseKeyboardMapping(readFile("white-keys.kbm"), fullMap).empty(), "range reference KBM parses");
+        for (int reference : {45,69,93}) for (int mappingKind = 0; mappingKind < 3; ++mappingKind)
+        {
+            auto map = fullMap; map.reference = reference;
+            if (mappingKind == 1) map.map[9] = -1; // Preserve existing unmapped-reference policy.
+            if (mappingKind == 2) { map.size = 0; map.map.clear(); }
+            tn::TuningTable full;
+            check(tn::buildTable(scale, map, full).empty(), "full-range reference builds");
+            for (auto bounds : {std::pair{60,64}, std::pair{72,84}, std::pair{48,59},
+                                std::pair{0,127}, std::pair{60,69}, std::pair{69,100}})
+            {
+                auto restricted = map; restricted.first = bounds.first; restricted.last = bounds.second;
+                tn::TuningTable limited;
+                check(tn::buildTable(scale, restricted, limited).empty(), "restricted playable range builds");
+                for (int n = 0; n < 128; ++n)
+                {
+                    const bool playable = n >= bounds.first && n <= bounds.second && full.mapped[n];
+                    check(limited.mapped[n] == playable, "range restricts admission without changing map holes");
+                    if (playable) check(limited.pitch[n] == full.pitch[n], "range restriction preserves mapped-reference pitch");
+                }
+            }
+        }
+    }
     // Malformed input is rejected with a reason, never half-applied.
     tn::Scale s;
     check(!tn::parseScale("only a description\n", s).empty(), "too-short scale rejected");

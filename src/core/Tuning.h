@@ -208,9 +208,8 @@ inline double degreeCents(const Scale& s, long long k)
 
 // Scala keyboard mapping: cents of MIDI note relative to the middle note;
 // false if the note is unmapped.
-inline bool noteCents(const Scale& s, const KeyboardMapping& m, int note, double& cents)
+inline bool mappedNoteCents(const Scale& s, const KeyboardMapping& m, int note, double& cents)
 {
-    if (note < m.first || note > m.last) return false;
     const long long d = note - m.middle;
     if (m.size == 0) { cents = degreeCents(s, d); return true; }
     const long long size = m.size;
@@ -221,6 +220,12 @@ inline bool noteCents(const Scale& s, const KeyboardMapping& m, int note, double
     const long long octaveDegree = m.octaveDegree > 0 ? m.octaveDegree : (long long) s.cents.size();
     cents = rep * degreeCents(s, octaveDegree) + degreeCents(s, degree);
     return true;
+}
+
+// Playable bounds control note admission, not the reference's tuning anchor.
+inline bool noteCents(const Scale& s, const KeyboardMapping& m, int note, double& cents)
+{
+    return note >= m.first && note <= m.last && mappedNoteCents(s, m, note, cents);
 }
 
 // Default keyboard mapping: linear, middle C 60, A4 69 = 440 Hz.
@@ -239,10 +244,11 @@ inline KeyboardMapping defaultMapping(const Scale& s)
 inline std::string buildTable(const Scale& s, const KeyboardMapping& m, TuningTable& out)
 {
     double refCents = 0.0;
-    if (!noteCents(s, m, m.reference, refCents))
+    if (!mappedNoteCents(s, m, m.reference, refCents))
     {
-        // The reference may be unmapped: Scala then uses the unmapped key's
-        // position in the linear degree sequence.
+        // Preserve this implementation's existing compatibility fallback for
+        // an unmapped reference. Scala flags that case as an error; this is
+        // a local policy rather than a Scala format guarantee.
         refCents = degreeCents(s, m.reference - m.middle);
     }
     TuningTable t;
