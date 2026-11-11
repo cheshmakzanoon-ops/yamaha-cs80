@@ -509,7 +509,8 @@ float Cs80AudioProcessor::getParamValue(int index) const
 
 void Cs80AudioProcessor::setParamValue(int index, float physicalValue)
 {
-    if (index < 0 || index >= cs80::P_numParams)
+    // Reject malformed control input before normalisation or host notification.
+    if (index < 0 || index >= cs80::P_numParams || !std::isfinite(physicalValue))
         return;
     if (auto* p = apvts.getParameter(parameterId(index)))
     {
