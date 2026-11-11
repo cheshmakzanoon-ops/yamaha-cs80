@@ -27,8 +27,8 @@ void processProgram(Instance& instance,int start,int count,Changes* changes,std:
     note(17,48,true);note(18,52,true);note(pc+1,60,true);note(pc+2,64,true);
     for(int pitch:{48,52,60,64})note(1536,pitch,false);
     std::stable_sort(events.events.begin(),events.events.end(),[](auto& a,auto& b){return a.sampleOffset<b.sampleOffset;});
-    ProcessContext context{};context.sampleRate=48000;context.projectTimeSamples=start;
-    ProcessData data{};data.processMode=kRealtime;data.symbolicSampleSize=kSample32;data.numSamples=count;
+    ProcessContext context{};context.sampleRate=testSampleRate;context.projectTimeSamples=start;
+    ProcessData data{};data.processMode=testProcessMode;data.symbolicSampleSize=kSample32;data.numSamples=count;
     data.numOutputs=1;data.outputs=&bus;data.inputEvents=&events;data.inputParameterChanges=changes;data.processContext=&context;
     require(instance.audio->process(data)==kResultOk,"native program audio process");
     for(int i=0;i<count;++i){output.push_back(left[i]);output.push_back(right[i]);}

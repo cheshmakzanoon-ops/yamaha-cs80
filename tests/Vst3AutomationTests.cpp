@@ -33,6 +33,8 @@ using namespace Steinberg::Vst;
 using Point = std::pair<int, double>;
 using Curve = std::vector<Point>;
 int failures = 0;
+double testSampleRate = 48000.0;
+int32 testProcessMode = kRealtime;
 void check(bool pass, const char* message)
 {
     if (!pass) { ++failures; std::cerr << "FAIL: " << message << '\n'; }
@@ -216,7 +218,7 @@ struct Instance
         require(component->initialize(nullptr) == kResultOk, "VST3 initialize");
         require(component->queryInterface(IAudioProcessor::iid, reinterpret_cast<void**>(&audio)) == kResultOk,
                 "VST3 IAudioProcessor");
-        ProcessSetup setup { kRealtime, kSample32, 4096, 48000.0 };
+        ProcessSetup setup { testProcessMode, kSample32, 4096, testSampleRate };
         require(audio->setupProcessing(setup) == kResultOk, "VST3 setupProcessing");
         component->activateBus(kAudio, kOutput, 0, true);
         component->activateBus(kEvent, kInput, 0, true);
@@ -227,7 +229,7 @@ struct Instance
             initial.add(parameterId("hardware_source_" + std::to_string(rank + 1)), {{0, double(source) / 13.0}});
         ProcessData flush {};
         flush.symbolicSampleSize = kSample32;
-        flush.processMode = kRealtime;
+        flush.processMode = testProcessMode;
         flush.inputParameterChanges = &initial;
         require(audio->process(flush) == kResultOk, "VST3 parameter-only flush");
         require(component->setActive(true) == kResultOk, "VST3 activate");
@@ -261,7 +263,7 @@ struct Instance
     {
         ProcessData data {};
         data.symbolicSampleSize = kSample32;
-        data.processMode = kRealtime;
+        data.processMode = testProcessMode;
         data.inputParameterChanges = &changes;
         require(audio->process(data) == kResultOk, "active VST3 zero-frame parameter flush");
     }
@@ -333,10 +335,10 @@ struct Instance
         std::stable_sort(events.events.begin(), events.events.end(),
                          [](const Event& a, const Event& b) { return a.sampleOffset < b.sampleOffset; });
         ProcessContext context {};
-        context.sampleRate = 48000.0;
+        context.sampleRate = testSampleRate;
         context.projectTimeSamples = start;
         ProcessData data {};
-        data.processMode = kRealtime;
+        data.processMode = testProcessMode;
         data.symbolicSampleSize = kSample32;
         data.numSamples = count;
         data.numOutputs = 1;
@@ -467,7 +469,17 @@ int main(int argc, char** argv)
 {
     try
     {
-        require(argc == 3, "usage: cs80_vst3_automation_tests MODULE TOLERANCES");
+        require(argc == 3 || argc == 5, "usage: cs80_vst3_automation_tests MODULE TOLERANCES [44100|48000|96000 realtime|offline]");
+        if (argc == 5)
+        {
+            const std::string rate(argv[3]), mode(argv[4]);
+            require(rate == "44100" || rate == "48000" || rate == "96000", "unsupported test sample rate");
+            require(mode == "realtime" || mode == "offline", "unsupported test process mode");
+            testSampleRate = std::stod(rate);
+            testProcessMode = mode == "offline" ? kOffline : kRealtime;
+        }
+        std::cout << "VST3 protocol configuration: rate=" << testSampleRate
+                  << " mode=" << (testProcessMode == kOffline ? "offline" : "realtime") << '\n';
         const ws1::Tolerances limits(argv[2], "host_automation");
         const ws1::Tolerances boundaryLimits((std::filesystem::path(argv[2]).parent_path()
             / "host-automation-state-boundary.json").string(), "host_automation_state_boundary");
