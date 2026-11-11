@@ -18,6 +18,7 @@
 #include "../../tests/SwitchContextTests.h"
 #include "../../tests/ParameterComboContextTests.h"
 #include "../../tests/StudioSwitchContextTests.h"
+#include "../../tests/StudioLfoContextTests.h"
 #include "../../tests/TypedValueUnitTests.h"
 #include "../../tests/KeyboardTuningUiTests.h"
 #include "../../tests/TransientControlLifecycleTests.h"
@@ -2030,6 +2031,14 @@ int main(int argc, char** argv)
         int checks = 0;
         cs80::tests::testKeyboardTuningUiState([&](bool condition, const char* what) { ++checks; check(condition, what); });
         std::printf("Keyboard tuning UI state: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--studio-lfo-context-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testStudioLfoContext([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Studio LFO context tests: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--studio-switch-context-tests") == 0)

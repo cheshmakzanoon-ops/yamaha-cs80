@@ -2775,11 +2775,11 @@ public:
 // swing the engine applies; clicking it again switches the LFO off.
 // ---------------------------------------------------------------------------
 
-class AdvLfoChip final : public juce::Button
+class AdvLfoChip final : public ParameterContextButton
 {
 public:
     AdvLfoChip(Cs80AudioProcessor& p, int lfo, int dest)
-        : juce::Button(kDestinations[dest]), proc(p), lfoIndex(lfo), destination(dest)
+        : ParameterContextButton(kDestinations[dest]), proc(p), lfoIndex(lfo), destination(dest)
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
@@ -2787,8 +2787,10 @@ public:
         setTitle(lfoName + " destination " + kDestinations[dest]);
         const juce::String tip = dest == 0 ? "Switch " + lfoName + " off: no destination."
                                            : "Send " + lfoName + " to " + kDestinations[dest] + ". Click the lit chip again to switch the LFO off.";
-        setTooltip(tip);
-        setDescription(tip);
+        const auto contextTip = tip + " Reset and MIDI learn apply to the whole " + lfoName + " destination, shared by all six chips.";
+        setTooltip(contextTip);
+        setDescription(contextTip);
+        bindParameterContext(proc, Cs80AudioProcessor::parameterId(cs80::P_lfo1Dest + lfoIndex * 3));
         onClick = [this]
         {
             const int param = cs80::P_lfo1Dest + lfoIndex * 3;

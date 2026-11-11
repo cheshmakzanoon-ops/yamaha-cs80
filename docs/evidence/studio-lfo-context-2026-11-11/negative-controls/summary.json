@@ -1,0 +1,27 @@
+{
+  "candidate": {
+    "checks": 511,
+    "failures": 0,
+    "exit": 0
+  },
+  "omit-chip-binding": {
+    "checks": 511,
+    "failures": 234,
+    "exit": 1
+  },
+  "misbind-chip-group": {
+    "checks": 511,
+    "failures": 108,
+    "exit": 1
+  },
+  "dispatch-context-as-click": {
+    "checks": 511,
+    "failures": 90,
+    "exit": 1
+  },
+  "omit-lit-click-off": {
+    "checks": 511,
+    "failures": 30,
+    "exit": 1
+  }
+}

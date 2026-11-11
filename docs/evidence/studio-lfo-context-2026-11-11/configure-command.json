@@ -1,0 +1,29 @@
+{
+  "command": [
+    "cmake",
+    "-S",
+    "/workspace/scratch/ee447c520988/studio-segments-work",
+    "-B",
+    "/workspace/scratch/ee447c520988/build-studio-lfo-context",
+    "-G",
+    "Ninja",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DCMAKE_CXX_COMPILER=/usr/bin/c++",
+    "-DCMAKE_CXX_FLAGS=-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/freetype2",
+    "-DCMAKE_C_COMPILER=/usr/bin/cc",
+    "-DCMAKE_C_FLAGS=-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu",
+    "-DCMAKE_EXE_LINKER_FLAGS=-L/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu -Wl,-rpath-link,/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu",
+    "-DCS80_BUILD_PLUGIN=ON",
+    "-DCS80_BUILD_TESTS=ON",
+    "-DCS80_ENABLE_AVX2_FILTER_BATCH=OFF",
+    "-DFETCHCONTENT_SOURCE_DIR_JUCE=/workspace/scratch/ee447c520988/mpe-native-tools/JUCE",
+    "-DPKG_CONFIG_EXECUTABLE=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/bin/pkg-config",
+    "-DCMAKE_PREFIX_PATH=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr",
+    "-DCS80_XVFB_RUN=/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/bin/xvfb-run"
+  ],
+  "env": {
+    "PKG_CONFIG_SYSROOT_DIR": "/workspace/scratch/ee447c520988/mpe-native-tools/sysroot",
+    "PKG_CONFIG_LIBDIR": "/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu/pkgconfig:/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/pkgconfig:/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/share/pkgconfig",
+    "PATH": "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin:/workspace/scratch/ee447c520988/pitch-power-recovery/tools/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback"
+  }
+}

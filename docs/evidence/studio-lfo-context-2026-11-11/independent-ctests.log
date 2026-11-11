@@ -1,0 +1,107 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-studio-lfo-context/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-studio-lfo-context/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-studio-lfo-context
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 182
+      Start 182: cs80_undo_replay_gesture_tests
+
+182: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--undo-replay-gesture-tests"
+182: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+182: Test timeout computed to be: 120
+182: Undo replay gesture tests: 317 checks, 0 failures
+ 1/10 Test #182: cs80_undo_replay_gesture_tests .......   Passed    0.42 sec
+test 187
+      Start 187: cs80_modern_slider_gesture_tests
+
+187: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--modern-slider-gesture-tests"
+187: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+187: Test timeout computed to be: 60
+187: Modern slider gestures: 145 checks, 0 failures
+ 2/10 Test #187: cs80_modern_slider_gesture_tests .....   Passed    0.05 sec
+test 188
+      Start 188: cs80_snapshot_cli_tests
+
+188: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/studio-segments-work/tests/SnapshotCliTests.py" "/workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots"
+188: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+188: Test timeout computed to be: 30
+188: Snapshot CLI admission: 8 invalid invocations rejected before UI execution
+ 3/10 Test #188: cs80_snapshot_cli_tests ..............   Passed    0.04 sec
+test 194
+      Start 194: cs80_switch_context_tests
+
+194: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--switch-context-tests"
+194: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+194: Test timeout computed to be: 120
+194: Switch context tests: 171 checks, 0 failures
+ 4/10 Test #194: cs80_switch_context_tests ............   Passed    1.05 sec
+test 195
+      Start 195: cs80_studio_lfo_context_tests
+
+195: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--studio-lfo-context-tests"
+195: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+195: Test timeout computed to be: 120
+195: Studio LFO context tests: 511 checks, 0 failures
+ 5/10 Test #195: cs80_studio_lfo_context_tests ........   Passed    3.06 sec
+test 196
+      Start 196: cs80_studio_switch_context_tests
+
+196: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--studio-switch-context-tests"
+196: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+196: Test timeout computed to be: 120
+196: Studio switch context tests: 122 checks, 0 failures
+ 6/10 Test #196: cs80_studio_switch_context_tests .....   Passed    0.42 sec
+test 197
+      Start 197: cs80_parameter_combo_context_tests
+
+197: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--parameter-combo-context-tests"
+197: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+197: Test timeout computed to be: 120
+197: Parameter combo context tests: 119 checks, 0 failures
+ 7/10 Test #197: cs80_parameter_combo_context_tests ...   Passed    0.14 sec
+test 198
+      Start 198: cs80_context_menu_keyboard_tests
+
+198: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--context-menu-keyboard-tests"
+198: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+198: Test timeout computed to be: 60
+198: Context menu keyboard tests: 62 checks, 0 failures
+ 8/10 Test #198: cs80_context_menu_keyboard_tests .....   Passed    0.11 sec
+test 199
+      Start 199: cs80_typed_value_unit_tests
+
+199: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--typed-value-unit-tests"
+199: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+199: Test timeout computed to be: 60
+199: Typed-value formatter compatibility: 950 cases, 950 accepted, digest 8d7e609da2f21897
+199: Typed-value unit tests: 116 checks, 0 failures
+ 9/10 Test #199: cs80_typed_value_unit_tests ..........   Passed    0.06 sec
+test 201
+      Start 201: cs80_transient_control_tests
+
+201: Test command: /workspace/scratch/ee447c520988/build-studio-lfo-context/CS80Snapshots_artefacts/Release/CS80Snapshots "--transient-control-tests"
+201: Working Directory: /workspace/scratch/ee447c520988/build-studio-lfo-context
+201: Test timeout computed to be: 120
+201: Transient control lifecycle: 30 checks, 0 failures
+10/10 Test #201: cs80_transient_control_tests .........   Passed    0.30 sec
+
+The following tests passed:
+	cs80_undo_replay_gesture_tests
+	cs80_modern_slider_gesture_tests
+	cs80_snapshot_cli_tests
+	cs80_switch_context_tests
+	cs80_studio_lfo_context_tests
+	cs80_studio_switch_context_tests
+	cs80_parameter_combo_context_tests
+	cs80_context_menu_keyboard_tests
+	cs80_typed_value_unit_tests
+	cs80_transient_control_tests
+
+100% tests passed, 0 tests failed out of 10
+
+Total Test time (real) =   5.67 sec

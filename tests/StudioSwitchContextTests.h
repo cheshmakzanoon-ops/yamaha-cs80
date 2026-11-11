@@ -262,7 +262,9 @@ void testStudioSwitchContext(Check check)
     std::function<void(juce::Component&)> collect = [&](juce::Component& parent) {
         for (auto* child : parent.getChildren())
         {
-            if (auto* control = dynamic_cast<ui::ParameterContextButton*>(child)) actual.push_back(control);
+            if (auto* control = dynamic_cast<ui::ParameterContextButton*>(child))
+                if (control->getName() == "Output mode" || control->getName() == "STORED ORIGINAL MODE")
+                    actual.push_back(control);
             collect(*child);
         }
     };

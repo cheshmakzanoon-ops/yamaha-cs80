@@ -1,0 +1,56 @@
+{
+  "base_commit": "6648035dfc019723f246d6b212e0890948171f19",
+  "scope": "18 Studio LFO destination chips, six chips sharing each of three APVTS enum parameters. Shared helper unchanged.",
+  "qualification": "Headless direct callbacks, queued messages, real processor MIDI and offscreen component painting. Input ownership is per component. No native popup, physical input, DAW, hardware, cross-sibling simultaneous arbitration or full-suite qualification.",
+  "results": {
+    "focused_checks": 511,
+    "focused_failures": 0,
+    "inherited_studio_switch_checks": 122,
+    "inherited_studio_switch_failures": 0,
+    "focused_adjacent_ctests_passed": 10,
+    "focused_adjacent_ctests_total": 10,
+    "independent_exact_binary_checks": 511,
+    "independent_exact_binary_ctests_passed": 10,
+    "source_faults_detected": 4,
+    "source_faults_total": 4,
+    "source_faults_all_normal_completion": true,
+    "independent_final_source_review": "approved"
+  },
+  "artifact": {
+    "name": "CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "be9670cff3f6a536534fe02786705d0d8ee43aac2d66c392a68c504403e1fa82"
+  },
+  "source_sha256": {
+    "CMakeLists.txt": "9f952f2e683ba0162a81d50fb2f2f1748186e5ff565ba92daa0862345ff7ea1d",
+    "src/plugin/AdvancedPanel.cpp": "1e609e9deb8a04e6a6b3b3f7ae12d98fd7f7e4f8bc08efc9f1be738b81315df3",
+    "src/plugin/ParameterContextButton.h": "6af912df4d54a19c57876ca57441765524e7f0a90f536bc9d5b66c1413a093d2",
+    "src/plugin/ParameterContextButton.cpp": "d03c42175d51513eb3a725614a2b40d45b803137808fb1a4cbd9c825210567b0",
+    "src/tools/ui_snapshot.cpp": "32c52e3cfc874fc71dd6d4f5233333bc6ce2832c006b05fbf658cb12e5f2f807",
+    "tests/StudioLfoContextTests.h": "75e63119ae964ee4e065b1f82f210e7c6b0cec527a5f06b6f6cbc534e3a0a80f",
+    "tests/StudioSwitchContextTests.h": "0aeaf6503dee8cf3c733c06b59c6442d2e0acc9eee166bd887d242e33679647f",
+    "tests/test_studio_lfo_context_negative_controls.py": "4530524c33a273d1333490a550a7c83cf0c6c316bef6be8abcb2f801c54be33d",
+    "docs/STUDIO_LFO_CONTEXT_MENUS.md": "de71acd0305cb81028e5eeaae9f38f0390a746635de75b345665a2ddc5d847fa"
+  },
+  "evidence_sha256": {
+    "LastTest.log": "663618723a615a1893ea335baa505dd94f8ea46c98ba7f8a6012138b8b3d6f0c",
+    "build.log": "0af0027c994ef47aba5338b535f15b7a8fedbe376e4e0a47f10b09b033f6ee2d",
+    "configure-command.json": "7756ac922946f5a303704d719c164f5b28478e4fb2e0a0030b5e39c10c00e7ae",
+    "configure.log": "231bd67abdc72106710b1000ef5242333c6d576a74d2af2879be5d629c7c55e7",
+    "final-build.log": "c2ed93ffd93c840755c0e91392ae593b1b52de9b7aaf6c208123feaceb1dde2e",
+    "focused-ctests.log": "1abea09e53897168e872833c19ab0f281ec0849a29aa810062296a3728d67b96",
+    "focused.log": "8b079197ff3cc0d6cc96f7d9e2bcad6337b9182b06d132d902e61ad4318f1952",
+    "independent-LastTest.log": "1de1247f301c780bc62095bcf5fbfd191bfe4d6205671355fa578973bc754e16",
+    "independent-ctests.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "independent-ctests.log": "2cccab3968b94e3c4706d50cd93f353220d65cd1a2001858dda3fde0b3553fe9",
+    "independent-focused.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "independent-focused.log": "8b079197ff3cc0d6cc96f7d9e2bcad6337b9182b06d132d902e61ad4318f1952",
+    "native-configuration.json": "53de6a72e8cd5c70814cc613b8adb5cff24f4d9f76f9b2c90f822d89b4c84304",
+    "negative-controls/candidate.log": "8b079197ff3cc0d6cc96f7d9e2bcad6337b9182b06d132d902e61ad4318f1952",
+    "negative-controls/dispatch-context-as-click.log": "79dbcc158a604ef2ac58caa0f9730a2bbec15e7b804a4edd702110595e61f167",
+    "negative-controls/misbind-chip-group.log": "302106d4ab25230b1de23f40a5ebebf3af63bb29dace5ca57335f47d874dcd50",
+    "negative-controls/omit-chip-binding.log": "3ea92ceafacca60084445258c2d302690b0f4c54a375551db9f13dd33dce8867",
+    "negative-controls/omit-lit-click-off.log": "9b0a7abfe49825ace8cb6b3335b6bf5d74059cf2ce21b0e1762951e59d9ca951",
+    "negative-controls/summary.json": "41216c996f306b6a49241c677c85a4991e1d5809de74c423495a6d39080973d9",
+    "negative-controls.log": "5cf1608f1d06a9665b555526fc66a14b891571143b60169e0a293497fa6b4ff4"
+  }
+}

@@ -1208,6 +1208,8 @@ if (CS80_BUILD_PLUGIN)
     # a popup/native peer. The full UI smoke remains the popup rendering gate.
     add_test(NAME cs80_switch_context_tests COMMAND CS80Snapshots --switch-context-tests)
     set_tests_properties(cs80_switch_context_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_studio_lfo_context_tests COMMAND CS80Snapshots --studio-lfo-context-tests)
+    set_tests_properties(cs80_studio_lfo_context_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_studio_switch_context_tests COMMAND CS80Snapshots --studio-switch-context-tests)
     set_tests_properties(cs80_studio_switch_context_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_parameter_combo_context_tests COMMAND CS80Snapshots --parameter-combo-context-tests)
