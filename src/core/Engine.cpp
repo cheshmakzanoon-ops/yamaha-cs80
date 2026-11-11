@@ -267,6 +267,7 @@ void Engine::reset()
         v.releaseGroup = 0;
         v.coordinatedReleaseOrder = 0;
         v.initialPitchTransient = 0.0;
+        v.notePressureRaw = 0.0f;
         for (auto& r : v.ranks)
         {
             // Circuit engine (Phase 2.1): declared distinct cold phases, so a
@@ -310,6 +311,7 @@ void Engine::reset()
     sustainPedals.fill(false);
     memberExpression.fill({});
     managerBend.fill({});
+    managerPressure.fill(0.0f);
     scanner.reset();
     noteIngressOrder = 0;
     unassignedCount = 0;
@@ -384,6 +386,7 @@ void Engine::inheritControllerStateFrom(const Engine& source) noexcept
     mpeZones = source.mpeZones;
     memberExpression = source.memberExpression;
     managerBend = source.managerBend;
+    managerPressure = source.managerPressure;
     sustainPedals = source.sustainPedals;
     globalBend = source.globalBend;
     upperZoneBend = source.upperZoneBend;
@@ -492,6 +495,7 @@ void Engine::applyParams(const ParamValues& values)
     {
         memberExpression.fill({});
         managerBend.fill({});
+        managerPressure.fill(0.0f);
     }
     // A selector event changes the physical load for the next interval, without
     // resetting capacitor voltage, previous source or inferred readout smoothing.
@@ -1210,6 +1214,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
     v.midiChannel = midiChannel;
     v.velocity = clampf(velocity, 0.0f, 1.0f);
     v.pressure = 0.0f;
+    v.notePressureRaw = 0.0f;
     v.timbre = 0.0f;
     v.mpeBend = 0.0f;
     if (const auto* initial = memberExpressionFor(midiChannel))
@@ -1217,14 +1222,13 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
         const float negotiated = mpeZones.memberRange(initial->role == MpeZoneLayout::Role::upperMember);
         const float range = negotiated >= 0.0f ? negotiated : global.mpeBendRange;
         v.mpeBend = initial->bend * range;
-        v.pressure = initial->pressure;
-        if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
-            v.pressure = applyPressureCurve(v.pressure, global.pressureCurve, global.pressureThreshold);
+        v.notePressureRaw = initial->pressure;
         v.timbre = initial->timbre;
     }
     // Phase 6 tuning: exactly (float) note in 12-TET (tuning_mode 0).
     v.targetPitch = tunedPitch(note, midiChannel);
     v.upperZone = global.mpe && mpeZones.inUpperZone(midiChannel);
+    v.pressure = pressureTarget(v);
     v.unisonOffset = 0.0f;
     v.contour = keyboardContourWeights(note);
     v.kbcKey = kbc::physicalKey(note);
@@ -1786,19 +1790,39 @@ void Engine::allNotesOffMask(bool release, unsigned channelMask, bool allChannel
         reconsiderUnassignedKeys();
 }
 
+float Engine::pressureTarget(const Voice& voice) const noexcept
+{
+    float raw = voice.notePressureRaw;
+    if (global.mpe && mpeZones.role(voice.midiChannel) != MpeZoneLayout::Role::none)
+    {
+        // Match event routing, including an own-channel manager distinct
+        // from a conventional-origin voice's captured manager identity.
+        for (int zone = 0; zone < 2; ++zone)
+        {
+            const int channel = zone == 0 ? 1 : 16;
+            const auto expected = zone == 0 ? MpeZoneLayout::Role::lowerMaster
+                                           : MpeZoneLayout::Role::upperMaster;
+            if (mpeZones.role(channel) == expected
+                && (isZoneMaster(voice, channel) || voice.midiChannel == channel))
+                raw = std::max(raw, managerPressure[(size_t) zone]);
+        }
+    }
+    if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
+        raw = applyPressureCurve(raw, global.pressureCurve, global.pressureThreshold);
+    return raw;
+}
+
 void Engine::polyPressure(int midiNote, float pressure, int midiChannel)
 {
-    if (! std::isfinite(pressure))
-        return;
+    if (! std::isfinite(pressure)) return;
     pressure = clampf(pressure, 0.0f, 1.0f);
-    // Interface-layer controller curve (Phase 2.4); exact identity at default.
-    if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
-        pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
     for (auto& v : voices)
         if (v.active && v.note == midiNote
             && (midiChannel <= 0 || v.midiChannel == midiChannel))
         {
-            v.pressure = pressure;
+            // The authorized per-key/UI API supplies this note's local input.
+            v.notePressureRaw = pressure;
+            v.pressure = pressureTarget(v);
         }
 }
 
@@ -1809,22 +1833,26 @@ void Engine::channelPressure(int midiChannel, float pressure)
 
 void Engine::applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices)
 {
-    if (midiChannel < 0 || midiChannel > 16 || ! std::isfinite(pressure))
-        return;
+    if (midiChannel < 0 || midiChannel > 16 || ! std::isfinite(pressure)) return;
     pressure = clampf(pressure, 0.0f, 1.0f);
     auto* initial = memberExpressionFor(midiChannel);
-    if (initial != nullptr)
-        initial->pressure = pressure;
-    // Retain the raw channel state for later onsets, but ordinary member
-    // expression no longer changes targets after accepted voice release.
+    if (initial != nullptr) initial->pressure = pressure;
+    const auto role = mpeZones.role(midiChannel);
+    const bool manager = global.mpe && (role == MpeZoneLayout::Role::lowerMaster
+                                     || role == MpeZoneLayout::Role::upperMaster);
+    if (manager)
+        managerPressure[role == MpeZoneLayout::Role::upperMaster ? 1 : 0] = pressure;
     const bool heldOnly = initial != nullptr && !resetReleasedVoices;
-    if (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
-        pressure = applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold);
-    lastChannelPressure = pressure;
+    // Preserve the existing shared matrix tap, independent of note combination.
+    lastChannelPressure = (global.pressureCurve != 0.0f || global.pressureThreshold > 0.0f)
+        ? applyPressureCurve(pressure, global.pressureCurve, global.pressureThreshold) : pressure;
     for (auto& v : voices)
         if (v.active && (!heldOnly || v.held)
             && (isZoneMaster(v, midiChannel) || v.midiChannel == midiChannel))
-            v.pressure = pressure;
+        {
+            if (!manager) v.notePressureRaw = pressure;
+            v.pressure = pressureTarget(v);
+        }
 }
 
 void Engine::pitchBend(int midiChannel, float value)
@@ -2001,7 +2029,10 @@ void Engine::controlChange(int controller, float value, int midiChannel)
         discardChangedMemberExpression();
         for (int zone = 0; zone < 2; ++zone)
             if (previousRoles[(size_t) zone] != mpeZones.role(zone == 0 ? 1 : 16))
+            {
                 managerBend[(size_t) zone] = {};
+                managerPressure[(size_t) zone] = 0.0f;
+            }
         retargetManagerBends(previousRanges);
         retargetMemberBends(previousMemberRanges);
         return;

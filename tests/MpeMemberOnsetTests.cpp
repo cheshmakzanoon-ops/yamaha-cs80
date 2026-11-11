@@ -195,10 +195,11 @@ void isolationAndDefaults()
         expected(e, find(e, 62, 3), {0, 0, 0});
         e.polyPressure(64, .9f, 3); e.noteOn(64, .8f, 3); render(e, 1);
         expected(e, find(e, 64, 3), {0, 0, 0});
-        // Managers and gap channels retain their historical onset defaults.
+        // An active manager inherits its own retained pressure floor on onset;
+        // gap pressure and both channels' bend/timbre onset defaults stay neutral.
         send(e, 1, {.25f, .9f, .9f}); send(e, 8, {.25f, .9f, .9f});
         e.noteOn(65, .8f, 1); e.noteOn(66, .8f, 8); render(e, 1);
-        expected(e, find(e, 65, 1), {0, 0, 0}); expected(e, find(e, 66, 8), {0, 0, 0});
+        expected(e, find(e, 65, 1), {0, .9f, 0}); expected(e, find(e, 66, 8), {0, 0, 0});
     }
     for (int policy : {0, 1, 2})
     {

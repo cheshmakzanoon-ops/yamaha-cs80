@@ -1141,6 +1141,16 @@ void testMpeExpressionZoneBoundaries()
             // All Notes Off preserves member controllers, including the raw
             // pressure/CC74 now inherited by a later accepted onset.
             send(channel, 0.0f);
+            // Retained manager pressure also survives All Notes Off. Clear the
+            // actual active manager, including full-zone endpoint members.
+            if (mpe)
+            {
+                const auto role = engine.getMpeZones().role(channel);
+                if (role == MpeZoneLayout::Role::lowerMember || role == MpeZoneLayout::Role::lowerMaster)
+                    engine.channelPressure(1, 0.0f);
+                if (role == MpeZoneLayout::Role::upperMember || role == MpeZoneLayout::Role::upperMaster)
+                    engine.channelPressure(16, 0.0f);
+            }
             engine.noteOn(60, 0.8f, channel);
             int index = -1;
             for (int i = 0; i < 8; ++i)
@@ -1167,15 +1177,19 @@ void testMpeExpressionZoneBoundaries()
         }
         void verify(int index, float expected, int frames, const std::string& label)
         {
-            check(index >= 0 && engine.getVoiceInfo(index).pressure == expected,
+            verify(index, expected, expected, frames, label);
+        }
+        void verify(int index, float expectedPressure, float expectedTimbre, int frames, const std::string& label)
+        {
+            check(index >= 0 && engine.getVoiceInfo(index).pressure == expectedPressure,
                   label + " per-voice pressure target");
             render(engine, frames);
             check(engine.getVoiceInfo(index).active, label + " note or tail remains active");
             const auto& rank = engine.getModernRankOffsets(index, 0);
-            const float modernExpected = pure ? 0.0f : expected;
+            const float modernExpected = pure ? 0.0f : expectedPressure;
             check(std::abs(rank.pitch - 12.0f * modernExpected) < 0.001f,
                   label + " per-voice pressure matrix route");
-            check(std::abs(rank.pan - modernExpected) < 0.0001f,
+            check(std::abs(rank.pan - (pure ? 0.0f : expectedTimbre)) < 0.0001f,
                   label + " per-voice CC74 matrix route");
         }
     };
@@ -1264,7 +1278,7 @@ void testMpeExpressionZoneBoundaries()
                 check(!f.engine.getVoiceInfo(index).active, "role transfer stops the captured-upper voice");
                 const int fresh = f.start(14, tail);
                 f.send(1, 0.75f); f.verify(fresh, 0.75f, 3000, "fresh transferred voice uses lower manager");
-                f.send(14, 0.5f); f.verify(fresh, tail ? 0.75f : 0.5f, 3000, "fresh transferred own-channel release boundary");
+                f.send(14, 0.5f); f.verify(fresh, 0.75f, tail ? 0.75f : 0.5f, 3000, "fresh transferred own-channel release boundary");
             }
             {
                 Fixture f(policy); f.layout(2, 2);
@@ -1274,7 +1288,7 @@ void testMpeExpressionZoneBoundaries()
                 f.send(1, 0.75f); f.verify(index, 0.25f, 3000, "MPE off preserves captured upper branch");
                 f.send(16, 0.5f); f.verify(index, 0.5f, 3000, "MPE off retains existing upper master");
                 f.params[P_mpeOn] = 1.0f; f.engine.setParams(f.params);
-                f.send(16, 0.25f); f.verify(index, 0.25f, 3000, "MPE on resumes same upper ownership");
+                f.send(16, 0.25f); f.verify(index, 0.5f, 0.25f, 3000, "MPE on resumes same upper ownership");
             }
         }
 

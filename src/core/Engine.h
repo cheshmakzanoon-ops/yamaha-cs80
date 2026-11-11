@@ -496,6 +496,7 @@ private:
         int midiChannel = 1;
         float velocity = 0.8f;
         float pressure = 0.0f;
+        float notePressureRaw = 0.0f; // Frozen note-local component after accepted release.
         float timbre = 0.0f;
         float mpeBend = 0.0f;
         double glidePitch = 60.0;
@@ -607,6 +608,7 @@ private:
     void allNotesOffMask(bool release, unsigned channelMask, bool allChannels);
     // CC121 is an explicit reset, not an ordinary per-note expression event.
     void applyChannelPressure(int midiChannel, float pressure, bool resetReleasedVoices);
+    float pressureTarget(const Voice& voice) const noexcept;
     void applyPitchBend(int midiChannel, float value, bool resetReleasedVoices);
     struct MemberExpression
     {
@@ -776,6 +778,7 @@ private:
     float lastPitch = 60.0f;
     MpeZoneLayout mpeZones;
     std::array<MemberExpression, 17> memberExpression {}; // Channel 0 unused.
+    std::array<float, 2> managerPressure {}; // Raw lower/upper manager components.
     std::array<ManagerBend, 2> managerBend {}; // Lower/upper normalized inputs, never inferred from semitones.
     float upperZoneBend = 0.0f;
     // KAS scan model and still-held keys without a circuit (Phase 2.2).

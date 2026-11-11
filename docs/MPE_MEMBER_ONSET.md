@@ -60,3 +60,5 @@ the [bounded immediate release coordinator](SIXTEEN_VOICE_NOTE_RELEASE.md);
 deferred-scanner and arpeggiator ownership remain open.
 
 The subsequent [held member range retargeting](MPE_MEMBER_RANGE_RETARGET.md) implements live sensitivity rescaling for eligible held member voices while preserving accepted-release targets. The earlier remaining-work statements above describe their original checkpoint.
+
+The later [MPE pressure combination policy](MPE_PRESSURE_COMBINATION.md) separates note-local and manager pressure and applies their maximum before the existing curve. Its MPE CC121 pressure reset is component-wise; historical absolute pressure-target statements above describe this earlier checkpoint. Non-pressure reset paths and accepted-release local retention remain unchanged.

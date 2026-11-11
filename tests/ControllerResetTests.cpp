@@ -357,47 +357,51 @@ void testDefaultsAndPreservation()
 void testMpeExpressionReset()
 {
     for (bool circuit : {false, true})
-        for (int channel : {1, 2, 3, 8, 14, 15, 16})
-        {
-            Engine reset, reference; auto p = patch(circuit); p[P_mpeOn] = 1.0f;
-            p[P_modWheelSub] = p[P_modWheelVcf] = 0.7f;
-            constexpr std::array<int, 5> channels {2, 3, 8, 14, 15};
-            for (auto* e : {&reset, &reference})
+        for (float managerPressure : {0.0f, 0.7f})
+            for (int channel : {1, 2, 3, 8, 14, 15, 16})
             {
-                e->prepare(48000.0); e->setParams(p);
-                rpn(*e, 1, 6, 3); rpn(*e, 16, 6, 3);
-                rpn(*e, 1, 0, 12); rpn(*e, 16, 0, 7);
-                rpn(*e, 2, 0, 24); rpn(*e, 15, 0, 36);
+                Engine reset, reference; auto p = patch(circuit); p[P_mpeOn] = 1.0f;
+                p[P_modWheelSub] = p[P_modWheelVcf] = 0.7f;
+                constexpr std::array<int, 5> channels {2, 3, 8, 14, 15};
+                for (auto* e : {&reset, &reference})
+                {
+                    e->prepare(48000.0); e->setParams(p);
+                    rpn(*e, 1, 6, 3); rpn(*e, 16, 6, 3);
+                    rpn(*e, 1, 0, 12); rpn(*e, 16, 0, 7);
+                    rpn(*e, 2, 0, 24); rpn(*e, 15, 0, 36);
+                    for (int i = 0; i < 5; ++i)
+                    {
+                        e->noteOn(48 + i * 3, 0.8f, channels[i]);
+                        primeControls(*e, channels[i]);
+                    }
+                    e->channelPressure(1, managerPressure); e->channelPressure(16, managerPressure);
+                    e->pitchBend(1, 0.5f); e->pitchBend(16, -0.5f);
+                    render(*e, 511);
+                }
+                reset.controlChange(121, 0.0f, channel); ordinaryDefaults(reference, channel);
                 for (int i = 0; i < 5; ++i)
                 {
-                    e->noteOn(48 + i * 3, 0.8f, channels[i]);
-                    primeControls(*e, channels[i]);
+                    const int vc = channels[i];
+                    const bool own = vc == channel;
+                    const bool managed = (channel == 1 && vc < 5) || (channel == 16 && vc > 12);
+                    const float range = vc < 5 ? 24.0f : 36.0f; // gap retains existing lower-range routing below
+                    const float initialBend = vc == 8 ? 6.0f : range * 0.25f;
+                    check(reset.getVoiceInfo(i).bend == (own ? 0.0f : initialBend),
+                          "MPE reset clears only addressed member bend, retaining independently bent members");
+                    const float local = own ? 0.0f : 0.4f;
+                    const float floor = vc != 8 && !managed ? managerPressure : 0.0f;
+                    check(reset.getVoiceInfo(i).pressure == std::max(local, floor),
+                          "MPE reset clears only addressed pressure component without crossing zone or gap");
                 }
-                e->pitchBend(1, 0.5f); e->pitchBend(16, -0.5f);
-                render(*e, 511);
+                check(reset.getMpeZones().lowerMemberCount() == 3 && reset.getMpeZones().upperMemberCount() == 3
+                          && reset.getMpeZones().memberRange(false) == 24.0f
+                          && reset.getMpeZones().memberRange(true) == 36.0f
+                          && reset.getMpeZones().masterRange(false) == 12.0f
+                          && reset.getMpeZones().masterRange(true) == 7.0f,
+                      "controller defaults preserve both negotiated layouts and all bend ranges");
+                check(sameAudio(render(reset, 2049, 31), render(reference, 2049, 127)),
+                      "MPE reset audio matches existing master/member bend and smoothed pressure routes");
             }
-            reset.controlChange(121, 0.0f, channel); ordinaryDefaults(reference, channel);
-            for (int i = 0; i < 5; ++i)
-            {
-                const int vc = channels[i];
-                const bool own = vc == channel;
-                const bool managed = (channel == 1 && vc < 5) || (channel == 16 && vc > 12);
-                const float range = vc < 5 ? 24.0f : 36.0f; // gap retains existing lower-range routing below
-                const float initialBend = vc == 8 ? 6.0f : range * 0.25f;
-                check(reset.getVoiceInfo(i).bend == (own ? 0.0f : initialBend),
-                      "MPE reset clears only addressed member bend, retaining independently bent members");
-                check(reset.getVoiceInfo(i).pressure == (own || managed ? 0.0f : 0.4f),
-                      "MPE reset pressure follows own/manager scope without crossing zone or gap");
-            }
-            check(reset.getMpeZones().lowerMemberCount() == 3 && reset.getMpeZones().upperMemberCount() == 3
-                      && reset.getMpeZones().memberRange(false) == 24.0f
-                      && reset.getMpeZones().memberRange(true) == 36.0f
-                      && reset.getMpeZones().masterRange(false) == 12.0f
-                      && reset.getMpeZones().masterRange(true) == 7.0f,
-                  "controller defaults preserve both negotiated layouts and all bend ranges");
-            check(sameAudio(render(reset, 2049, 31), render(reference, 2049, 127)),
-                  "MPE reset audio matches existing master/member bend and smoothed pressure routes");
-        }
 }
 void testRibbonAndPurePreservation()
 {

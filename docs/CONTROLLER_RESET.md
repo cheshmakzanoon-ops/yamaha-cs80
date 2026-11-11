@@ -163,3 +163,5 @@ ctest --test-dir build-native -R '^cs80_controller_reset_host_tests$' --output-o
 python3 tests/test_controller_reset_host_negative_controls.py \
   --build build-native --output /tmp/reset-host-negative
 ```
+
+The later [MPE pressure combination policy](MPE_PRESSURE_COMBINATION.md) separates note-local and manager pressure and applies their maximum before the existing curve. Its MPE CC121 pressure reset is component-wise; historical absolute pressure-target statements above describe this earlier checkpoint. Non-pressure reset paths and accepted-release local retention remain unchanged.

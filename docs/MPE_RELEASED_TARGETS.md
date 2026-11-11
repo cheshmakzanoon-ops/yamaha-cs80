@@ -108,3 +108,5 @@ The subsequent [held member range retargeting](MPE_MEMBER_RANGE_RETARGET.md) imp
 The later [MCM membership reset](MPE_MEMBERSHIP_RESET.md) stops notes when channels enter or leave MPE control. The historical target-retention guarantees at this checkpoint do not exempt those later membership crossings; unchanged membership and still-MPE role-transfer boundaries remain distinguished.
 
 The subsequent [MCM role-transfer policy](MPE_ROLE_TRANSITION_RESET.md) extends note cancellation to every changed member/manager/zone role, including still-MPE transfers. Same-role voices and shared controller buses remain outside that cancellation mask.
+
+The later [MPE pressure combination policy](MPE_PRESSURE_COMBINATION.md) separates note-local and manager pressure and applies their maximum before the existing curve. Its MPE CC121 pressure reset is component-wise; historical absolute pressure-target statements above describe this earlier checkpoint. Non-pressure reset paths and accepted-release local retention remain unchanged.

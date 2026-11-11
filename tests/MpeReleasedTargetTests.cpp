@@ -316,7 +316,7 @@ void resetException()
             witness(e, fresh, 64, channel, true); targets(e, fresh, {0, 0, later.timbre}); timbre(e, fresh, later.timbre);
         }
 }
-void managerRoutes()
+void managerRoutes(bool pressureCombination)
 {
     for (int policy : {0, 1}) for (int manager : {1, 16}) for (int state : {1, 2})
     {
@@ -344,6 +344,20 @@ void managerRoutes()
         targets(e, 2, {0, 0, 0}); render(e, 1);
         timbre(e, 0, firstInterval(e, initial.timbre, later.timbre, 1, policy));
         timbre(e, 1, other.timbre); timbre(e, 2, 0);
+        if (pressureCombination)
+        {
+            // A falling manager reveals the frozen note-local component, not the
+            // last late member event, and cannot affect the other zone or gap.
+            e.channelPressure(member, .95f);
+            e.channelPressure(manager, .1f);
+            targets(e, 0, {initial.bend, initial.pressure, later.timbre});
+            targets(e, 1, other); targets(e, 2, {0, 0, 0});
+            witness(e, 0, 60, member, false, state == 2);
+            e.channelPressure(manager, .6f);
+            targets(e, 0, {initial.bend, .6f, later.timbre});
+            e.channelPressure(manager, 0.0f);
+            targets(e, 0, {initial.bend, initial.pressure, later.timbre});
+        }
     }
 }
 void unchangedRoutes()
@@ -435,7 +449,9 @@ void currentModeAndRole()
         e.noteOn(64, .8f, channel); render(e, 1);
         const int fresh = find(e, 64, channel, true);
         witness(e, fresh, 64, channel, true);
-        targets(e, fresh, transition == 4 ? later : Expression{0, 0, 0});
+        // Newly active managers inherit their own retained pressure floor.
+        const float managerPressure = transition == 2 || transition == 3 ? later.pressure : 0.0f;
+        targets(e, fresh, transition == 4 ? later : Expression{0, managerPressure, 0});
         timbre(e, fresh, transition == 4 ? later.timbre : 0.0f);
     }
 }
@@ -548,7 +564,7 @@ int main(int argc, char** argv)
     const bool unchangedOnly = argc == 2 && std::string(argv[1]) == "--unchanged";
     if (argc > 1 && !unchangedOnly) { std::fprintf(stderr, "usage: %s [--unchanged]\n", argv[0]); return 2; }
     // This subset must also pass with matching baseline headers and library.
-    resetException(); managerRoutes(); unchangedRoutes(); malformedInputs(false);
+    resetException(); managerRoutes(!unchangedOnly); unchangedRoutes(); malformedInputs(false);
     if (!unchangedOnly)
     {
         memberRecipientMatrix(); repeatedPitchAndUnison(); smoothingContinuation(); cacheWithChangedLaw();

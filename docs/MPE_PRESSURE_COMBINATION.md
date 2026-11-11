@@ -1,0 +1,23 @@
+# Separate MPE manager and note pressure
+
+## Product policy
+
+MPE v1.1 sections 2.2.7 and Appendix D describe meaningful separate manager/member pressure handling. Appendix D explicitly offers addition or maximum and discourages contention, leaving the exact rule to the manufacturer. This instrument chooses the maximum of retained normalized note-local pressure and eligible active manager pressure, then applies its existing pressure curve once.
+
+Previously a manager event directly overwrote each recipient's pressure. Lowering the manager could erase a finger's still-held pressure; future notes did not inherit the manager input. The new rule is an intentional expression behavior change, not a bit-identical optimization or a claim that Max is mandatory.
+
+Per-voice raw local state is separate from the channel onset cache. An accepted release freezes that note's local component even if the channel is reused, while manager events continue to affect routed sounding tails. Direct per-key/UI pressure supplies a note-local component; it does not bypass a retained manager floor. Native member Polyphonic Key Pressure remains rejected by its separate ingress rule.
+
+The existing pressure curve and smoothers remain in use. Combination occurs at onsets and controller events, not through an added per-sample pass. The shared modern matrix channel-pressure tap retains its existing last-event behavior and is not changed into zone-local modulation. CC74 timbre is unchanged.
+
+## Reset and routing boundaries
+
+CC121 in MPE resets the addressed pressure component: resetting a manager reveals retained note pressure; resetting a member clears its local pressure/cache within the existing explicit reset recipient scope while retaining a manager floor. Conventional/PURE behavior and non-pressure reset paths are unchanged. This intentionally differs from former absolute MPE pressure-reset targets, and is not full reset/MPE conformance.
+
+Manager records clear on reset, MPE-mode edges and manager-role changes, and are copied during existing extension activation controller handoff. Current unassigned channels do not inherit manager pressure. Existing captured-zone and own-channel recipient routing is retained. A conventional-origin channel-16 note can therefore retain its captured lower-manager route while also accepting its own upper-manager channel; eligible manager components combine independently rather than replacing its local pressure. Mode changes preserve already-written voice targets until subsequent eligible input, rather than adding a new voice reset. No new activation/retirement policy is introduced.
+
+## Evidence
+
+The initial core fixture failed 210 of 800 checks on the old implementation and passed 800/800 with separate components. Review then found a conventional-origin endpoint routing edge. Its corrected regression failed four of 844 checks before the eligibility correction; an earlier draft accidentally configured MCM while MPE was disabled and was discarded as invalid evidence. The first broader integration passed 31/35 in 129.37 seconds; four older suites asserted the former overwrite/reset policy. Their explicit expectations were updated without changing tolerances or discarding independent routing controls. The corrected focused six-suite run passed in 35.11 seconds: core combination 844/0, actual-processor combination 2,418/0, controller reset 4,555/0, member onset 2,501/0, released targets 7,536/0 and tuning/MIDI 39,299/0. The native fixture initially required an enum initializer-list type correction before it could build; that failed build log was retained. The final affected native build completed 20 steps after the earlier 80-step rebuild and fixture corrections. The selected final core/native integration passed 36/36 tests in 132.86 seconds, including all six VST3 rate/mode configurations. Independent source/test review found no remaining blocker. A separate completed repeat passed the same 36/36 tests in 133.36 seconds, confirming core combination 844/0, native combination 2,418/0 and allocation 204/0 with the other focused counts unchanged. External DAW/controller use, complete MPE/reset semantics, CPU deadlines and historical offline-render failure absence are not implied.
+
+The native fixture covers ordered manager/member MIDI, both zones, configured eight/sixteen voices with extension ownership, dormant extension activation, real token-authorized UI pressure, channel reuse with released tails, nonlinear mapping, global matrix controls, PURE/conventional controls and the conventional-origin dual-manager endpoint. It does not substitute for a real external controller or DAW.
