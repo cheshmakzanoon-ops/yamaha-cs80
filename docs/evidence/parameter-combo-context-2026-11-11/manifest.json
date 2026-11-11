@@ -1,0 +1,116 @@
+{
+  "base_commit": "020b1193a89205678b8df7305005a63c4743050e",
+  "date": "2026-11-11",
+  "scope": "Four actual Studio parameter choices; UI context actions and focused headless component/callback tests only.",
+  "binary": {
+    "path": "/workspace/scratch/ee447c520988/build-studio-combo-context/CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "d80408c1c0edfc5514806dade187b866aea592a44f69a379c689ec0705836f7d"
+  },
+  "build": {
+    "compiler": "GCC 14.2.0",
+    "configuration": "Release",
+    "juce_tag": "8.0.11",
+    "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "source": "Existing official JUCE checkout and native sysroot; untouched, reused from build-vst3-mpe-audit configuration."
+  },
+  "results": {
+    "focused_checks": 119,
+    "focused_failures": 0,
+    "registered_tests_passed": 8,
+    "registered_tests_failed": 0,
+    "independent_registered_tests_passed": 8,
+    "independent_focused_checks": 119,
+    "independent_focused_failures": 0,
+    "private_source_faults_detected": 10
+  },
+  "qualification_limits": [
+    "No native OS popup or editor peer",
+    "No physical keyboard/mouse capture or screen-reader testing",
+    "No DAW forwarding qualification",
+    "No full project suite, sanitizer, pluginval, GUI smoke, remote CI or screenshot refresh"
+  ],
+  "source_faults": {
+    "candidate": {
+      "checks": 119,
+      "failures": 0,
+      "exit": 0
+    },
+    "omit-factory-binding": {
+      "checks": 55,
+      "failures": 4,
+      "exit": 1
+    },
+    "omit-binding-generation": {
+      "checks": 119,
+      "failures": 5,
+      "exit": 1
+    },
+    "omit-pure-guard": {
+      "checks": 119,
+      "failures": 2,
+      "exit": 1
+    },
+    "omit-map-generation": {
+      "checks": 119,
+      "failures": 3,
+      "exit": 1
+    },
+    "omit-popup-action-guard": {
+      "checks": 119,
+      "failures": 2,
+      "exit": 1
+    },
+    "omit-delayed-disable-guard": {
+      "checks": 119,
+      "failures": 5,
+      "exit": 1
+    },
+    "omit-reset-noop": {
+      "checks": 119,
+      "failures": 5,
+      "exit": 1
+    },
+    "hardcode-first-item-default": {
+      "checks": 119,
+      "failures": 2,
+      "exit": 1
+    },
+    "omit-right-click-routing": {
+      "checks": 119,
+      "failures": 12,
+      "exit": 1
+    },
+    "omit-label-hover-routing": {
+      "checks": 119,
+      "failures": 5,
+      "exit": 1
+    }
+  },
+  "files_sha256": {
+    "CMakeLists.txt": "b2a76dc9d655d74f166d6294db2fdcd962853f3ae75eeceb56fdbd6778970f2a",
+    "src/plugin/AdvancedPanel.cpp": "4bc7068b63b09e7c011d308ceab1c901eda2574bd60130567e5ef58945de14fb",
+    "src/plugin/ParameterComboBox.h": "e09e49d7235037c292dfaa1d98bb366ddd2d6dbb32fe3e3a084f0262ba5da474",
+    "src/plugin/ParameterComboBox.cpp": "00aad8f7a04b65e9c05c9e287945ae253a03bc93559482e6e7a94bfdd69ab2ee",
+    "src/tools/ui_snapshot.cpp": "d284eb56ea75df24fff4787c60b22f1f108ee8d5cba702d246db1fbbf17d1b4e",
+    "tests/ParameterComboContextTests.h": "4a0e2d7e99e7cc3d9c60bb0992d0e1adc1d5b06502b739c4265e59f7173616f6",
+    "tests/test_parameter_combo_context_negative_controls.py": "8ee47f7d124758d527658be7cf82f38687d3cbf5df98da74ee3c73d52af1cb13",
+    "docs/PARAMETER_COMBO_CONTEXT_MENUS.md": "febfc01d700f867af280ca7563417a7e07975bad32a1e34e2f77ddf111769a53",
+    "docs/evidence/parameter-combo-context-2026-11-11/candidate.log": "a94781f66d19807414511fa59ebc50f696e16a4e452b23fc6bf532b25585597c",
+    "docs/evidence/parameter-combo-context-2026-11-11/ctest.log": "f2e8482f74fae17f57f82150b64c019c6880064b07ff7f5d6074ceb5569cffc3",
+    "docs/evidence/parameter-combo-context-2026-11-11/final-build.log": "ca56cd10d9c9a206c39a7813b82196c7ff88c62cda3150124a86050276f8d6c1",
+    "docs/evidence/parameter-combo-context-2026-11-11/focused.log": "a94781f66d19807414511fa59ebc50f696e16a4e452b23fc6bf532b25585597c",
+    "docs/evidence/parameter-combo-context-2026-11-11/hardcode-first-item-default.log": "7bf35f0dc2727b1be9dd38bad4b09b3b8d9fa343068b231df8524f0515fbf4a4",
+    "docs/evidence/parameter-combo-context-2026-11-11/independent-LastTest.log": "86a31992a3a4bcc6ba1243be9b56b32a400591180133b794e0fd0a51f2eea9a3",
+    "docs/evidence/parameter-combo-context-2026-11-11/independent-review.log": "987f2c13c03ccd2d09e35a50cc6131347471eca85ab5ad3a46676f914a79119e",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-binding-generation.log": "a212ee2e3a037607532a8683f437f4f709b45e9a4b0233f17033e9795acbb456",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-delayed-disable-guard.log": "615662bf0ad24d9ec0b18b5592ea6740c8765d9c8b8085bb3f0d31a9d08830c0",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-factory-binding.log": "b467551cf49ee3142d15f2366bc5eca660a6225ef17a96c1de73cf5f0df30e5c",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-label-hover-routing.log": "43a0560d9bbec0ea8ff730e33eb770fa79051eaa7319718b3202b5e42bc6242e",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-map-generation.log": "e1f724b3921d5482401baad90b490ea6a05889491e77b4750924bc3b9b6848cf",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-popup-action-guard.log": "54d00c752f7ee3a34725049a6a7ee1163288190899e69fb4827690b9275ccf24",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-pure-guard.log": "1fde0c881f1831ba05733277d45a09d456d9d08ddd2bdc989453f4790105f088",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-reset-noop.log": "76acdbbda108b6b9ce2dfd0a8b9460c04019a09edaf29f0e7d8275f5dea0396b",
+    "docs/evidence/parameter-combo-context-2026-11-11/omit-right-click-routing.log": "da6db48aaa1af4f0da7ab6ca3e9c42851111c6fcbc3bd798aaa8cedc5279bdfe",
+    "docs/evidence/parameter-combo-context-2026-11-11/summary.json": "e6699917a4af7ce8516520ad39d8167f271b41f2eae431254e47aadea3c67212"
+  }
+}

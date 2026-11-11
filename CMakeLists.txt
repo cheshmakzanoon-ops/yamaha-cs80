@@ -867,6 +867,7 @@ if (CS80_BUILD_PLUGIN)
         src/plugin/PluginEditor.cpp
         src/plugin/UiComponents.cpp
         src/plugin/AdvancedPanel.cpp
+        src/plugin/ParameterComboBox.cpp
         src/plugin/PresetBrowser.cpp
 
         # [ws1-voice] add this workstream's plugin sources below this line.
@@ -1206,6 +1207,8 @@ if (CS80_BUILD_PLUGIN)
     # a popup/native peer. The full UI smoke remains the popup rendering gate.
     add_test(NAME cs80_switch_context_tests COMMAND CS80Snapshots --switch-context-tests)
     set_tests_properties(cs80_switch_context_tests PROPERTIES TIMEOUT 120)
+    add_test(NAME cs80_parameter_combo_context_tests COMMAND CS80Snapshots --parameter-combo-context-tests)
+    set_tests_properties(cs80_parameter_combo_context_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_context_menu_keyboard_tests COMMAND CS80Snapshots --context-menu-keyboard-tests)
     set_tests_properties(cs80_context_menu_keyboard_tests PROPERTIES TIMEOUT 60)
     add_test(NAME cs80_typed_value_unit_tests COMMAND CS80Snapshots --typed-value-unit-tests)

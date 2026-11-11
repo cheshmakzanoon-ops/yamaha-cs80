@@ -1,0 +1,6 @@
+FAIL: a disabled delayed learn is inert
+FAIL: inherited disablement blocks dispatch and already-built actions
+FAIL: clearing context invalidates actions without redirecting its live attachment
+FAIL: clear during a context sequence keeps its release swallowed and old action inert
+FAIL: destroyed combo actions and presentation completion are safe and inert
+Parameter combo context tests: 119 checks, 5 failures

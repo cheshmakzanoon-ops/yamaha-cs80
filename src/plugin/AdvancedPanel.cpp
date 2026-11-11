@@ -5,6 +5,7 @@
 #include "HardwareKeyboard.h"
 #include "LfoScopePreview.h"
 #include "PluginProcessor.h"
+#include "ParameterComboBox.h"
 #include "core/Dsp.h"
 
 #include <algorithm>
@@ -3562,16 +3563,16 @@ public:
 
     juce::ComboBox* choice(Rect r, int parameter, const juce::StringArray& items)
     {
-        auto control = std::make_unique<juce::ComboBox>();
+        auto control = std::make_unique<ParameterComboBox>();
         control->addItemList(items, 1);
         control->setJustificationType(juce::Justification::centredLeft);
-        control->setWantsKeyboardFocus(false);
         control->setTitle(cs80::paramDef(parameter).name);
         control->setExplicitFocusOrder(++focusCounter);
         auto* raw = control.get();
         addAndMakeVisible(*raw);
         comboAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        raw->bindParameterContext(proc, Cs80AudioProcessor::parameterId(parameter));
         owned.push_back(std::move(control));
         const Rect a = at(r);
         placed.push_back({ raw, a });
