@@ -463,7 +463,9 @@ The retrigger outlier ws1 traced to two same-pitch voices (Funky 3+4 at
 44.1 kHz, 1.26) no longer appears: with free-running voices the circuit is never
 reset at assignment and the VCA output is AC-coupled. The full audit finds a new
 one, "Bass Stack" (a legacy-bank program rendered on the circuit engine by the
-audit) at 1.51 against 0.63 in Legacy; not investigated to a cause yet (open). Note-off click scores (not part
+audit) at 1.51 against 0.63 in Legacy; a [November 11 targeted replay](analysis/bass-stack-retrigger-replay.md)
+reproduces the failure and finds a late attack slope, without establishing a
+causal DSP fix (open). Note-off click scores (not part
 of the plan's criterion) reach 1.65 (Funky 1 + 2, 48 kHz; 16 of 283 rows above 1, Legacy has 25 rows above 1) on percussive programs; open.
 
 A November 9 [prepared-value cache experiment](analysis/oscillator-profile-cache.md)
