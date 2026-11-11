@@ -923,6 +923,16 @@ if (CS80_BUILD_PLUGIN)
                 endif()
             endforeach()
         endforeach()
+        # Only this executable substitutes the external MTS C API. The shipping
+        # static library's client object is not pulled when these symbols resolve.
+        add_executable(cs80_mts_esp_processor_tests tests/MtsEspProcessorTests.cpp src/plugin/MtsEspClient.cpp)
+        target_include_directories(cs80_mts_esp_processor_tests PRIVATE src
+            "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_mts_esp_processor_tests PRIVATE CS80_MTS_ESP_TEST_BACKEND=1
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_mts_esp_processor_tests PRIVATE CS80Reference)
+        add_test(NAME cs80_mts_esp_processor_tests COMMAND cs80_mts_esp_processor_tests)
+        set_tests_properties(cs80_mts_esp_processor_tests PROPERTIES TIMEOUT 120)
         include(cmake/HostAutomationTests.cmake)
         cs80_add_main_automation_witnesses("${CMAKE_CURRENT_SOURCE_DIR}" "${CS80_VST3_SDK}")
     endif()
