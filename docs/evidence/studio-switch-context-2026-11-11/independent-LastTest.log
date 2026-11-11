@@ -1,0 +1,148 @@
+Start testing: Nov 11 12:53 AST
+----------------------------------------------------------
+182/216 Testing: cs80_undo_replay_gesture_tests
+182/216 Test: cs80_undo_replay_gesture_tests
+Command: "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots" "--undo-replay-gesture-tests"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_undo_replay_gesture_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Undo replay gesture tests: 317 checks, 0 failures
+<end of output>
+Test time =   0.43 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_undo_replay_gesture_tests" end time: Nov 11 12:53 AST
+"cs80_undo_replay_gesture_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+187/216 Testing: cs80_modern_slider_gesture_tests
+187/216 Test: cs80_modern_slider_gesture_tests
+Command: "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots" "--modern-slider-gesture-tests"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_modern_slider_gesture_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Modern slider gestures: 145 checks, 0 failures
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_modern_slider_gesture_tests" end time: Nov 11 12:53 AST
+"cs80_modern_slider_gesture_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+188/216 Testing: cs80_snapshot_cli_tests
+188/216 Test: cs80_snapshot_cli_tests
+Command: "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/studio-selector-work/tests/SnapshotCliTests.py" "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_snapshot_cli_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Snapshot CLI admission: 8 invalid invocations rejected before UI execution
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_snapshot_cli_tests" end time: Nov 11 12:53 AST
+"cs80_snapshot_cli_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+194/216 Testing: cs80_switch_context_tests
+194/216 Test: cs80_switch_context_tests
+Command: "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots" "--switch-context-tests"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_switch_context_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Switch context tests: 171 checks, 0 failures
+<end of output>
+Test time =   1.11 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_switch_context_tests" end time: Nov 11 12:53 AST
+"cs80_switch_context_tests" time elapsed: 00:00:01
+----------------------------------------------------------
+
+195/216 Testing: cs80_studio_switch_context_tests
+195/216 Test: cs80_studio_switch_context_tests
+Command: "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots" "--studio-switch-context-tests"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_studio_switch_context_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Studio switch context tests: 122 checks, 0 failures
+<end of output>
+Test time =   0.46 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_studio_switch_context_tests" end time: Nov 11 12:53 AST
+"cs80_studio_switch_context_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+196/216 Testing: cs80_parameter_combo_context_tests
+196/216 Test: cs80_parameter_combo_context_tests
+Command: "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots" "--parameter-combo-context-tests"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_parameter_combo_context_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Parameter combo context tests: 119 checks, 0 failures
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_parameter_combo_context_tests" end time: Nov 11 12:53 AST
+"cs80_parameter_combo_context_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+197/216 Testing: cs80_context_menu_keyboard_tests
+197/216 Test: cs80_context_menu_keyboard_tests
+Command: "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots" "--context-menu-keyboard-tests"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_context_menu_keyboard_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Context menu keyboard tests: 62 checks, 0 failures
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_context_menu_keyboard_tests" end time: Nov 11 12:53 AST
+"cs80_context_menu_keyboard_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+198/216 Testing: cs80_typed_value_unit_tests
+198/216 Test: cs80_typed_value_unit_tests
+Command: "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots" "--typed-value-unit-tests"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_typed_value_unit_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Typed-value formatter compatibility: 950 cases, 950 accepted, digest 8d7e609da2f21897
+Typed-value unit tests: 116 checks, 0 failures
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_typed_value_unit_tests" end time: Nov 11 12:53 AST
+"cs80_typed_value_unit_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+200/216 Testing: cs80_transient_control_tests
+200/216 Test: cs80_transient_control_tests
+Command: "/workspace/scratch/ee447c520988/build-studio-selector-context/CS80Snapshots_artefacts/Release/CS80Snapshots" "--transient-control-tests"
+Directory: /workspace/scratch/ee447c520988/build-studio-selector-context
+"cs80_transient_control_tests" start time: Nov 11 12:53 AST
+Output:
+----------------------------------------------------------
+Transient control lifecycle: 30 checks, 0 failures
+<end of output>
+Test time =   0.29 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_transient_control_tests" end time: Nov 11 12:53 AST
+"cs80_transient_control_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 11 12:53 AST

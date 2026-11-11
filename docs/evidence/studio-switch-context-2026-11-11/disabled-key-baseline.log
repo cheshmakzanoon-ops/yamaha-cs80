@@ -1,0 +1,8 @@
+/workspace/scratch/ee447c520988/studio-selector-work/src/tools/_studio_disabled_baseline.cpp: In lambda function:
+/workspace/scratch/ee447c520988/studio-selector-work/src/tools/_studio_disabled_baseline.cpp:3405:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3405 |         return findParameterControl(editor, original ? cs80::P_subOriginalFunction : cs80::P_subWave) != nullptr
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/scratch/ee447c520988/studio-selector-work/src/tools/_studio_disabled_baseline.cpp:3406:54: warning: enumerated mismatch in conditional expression: ‘cs80::<unnamed enum>’ vs ‘cs80::GlobalParam’ [-Wenum-compare]
+ 3406 |             && findParameterControl(editor, original ? cs80::P_subOriginalSpeed : cs80::P_subSpeed) != nullptr;
+      |                                             ~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Baseline disabled Output: direct handled=1, ancestor handled=1; before=1 direct=1 ancestor=1

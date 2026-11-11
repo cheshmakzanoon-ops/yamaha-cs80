@@ -1,0 +1,9 @@
+FAIL: delayed actions cannot edit while ordinary activation is held
+FAIL: held JUCE activation state blocks menus, rebind and delayed actions
+FAIL: queued Return owns its pending activation before JUCE dispatch
+FAIL: context becomes available after queued activation settles
+FAIL: disabled component blocks keyboard dispatch and delayed actions
+FAIL: ancestor disabled state blocks context routing and delayed edits
+FAIL: modified output Return also owns its queued interval against context and delayed edits
+FAIL: modified output Return finishes without inventing a selector half or gesture
+Studio switch context tests: 122 checks, 8 failures

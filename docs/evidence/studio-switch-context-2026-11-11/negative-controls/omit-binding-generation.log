@@ -1,0 +1,5 @@
+FAIL: binding ABA invalidates stale reset, learn and opener callbacks
+FAIL: clear invalidates callbacks but preserves live presentation ownership until dismissal
+FAIL: ordinary release after clear still completes the existing attachment
+FAIL: destroyed control makes delayed actions, opener and dismissal harmless
+Studio switch context tests: 122 checks, 4 failures

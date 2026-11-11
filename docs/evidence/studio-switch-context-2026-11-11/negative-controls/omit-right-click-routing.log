@@ -1,0 +1,10 @@
+FAIL: explicit right sequence opens one context without ordinary activation or gesture
+FAIL: active context blocks ordinary input, duplicate contexts and rebinding
+FAIL: blocked mixed-button release preserves the held left sequence
+FAIL: actual context press/drag/release cannot write selector half or toggle
+FAIL: actual Shift+F10 routes without changing parameter
+FAIL: actual context press/drag/release cannot write selector half or toggle
+FAIL: actual Shift+F10 routes without changing parameter
+FAIL: held output half cannot be stolen by a context press or concurrent key
+FAIL: blocked opposite context half does not overwrite held mono choice
+Studio switch context tests: 122 checks, 9 failures

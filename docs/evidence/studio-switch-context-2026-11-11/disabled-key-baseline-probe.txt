@@ -1,0 +1,25 @@
+Main dispatch branch injected into the previous reviewed native snapshot translation unit, then linked against the unchanged pre-switch editor/processor objects. This probe reports disabled callback admission separately from parameter mutation.
+
+    if (argc > 1 && std::strcmp(argv[1], "--studio-disabled-baseline") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI init;
+        juce::TemporaryFile fixture("-studio-disabled-baseline");
+        Cs80AudioProcessor processor(fixture.getFile());
+        Cs80AudioProcessorEditor editor(processor);
+        juce::Button* output = nullptr;
+        std::function<void(juce::Component&)> find = [&](juce::Component& c) {
+            if (c.getName() == "Output mode") output = dynamic_cast<juce::Button*>(&c);
+            for (auto* child : c.getChildren()) find(*child);
+        };
+        find(editor);
+        if (output == nullptr) return 2;
+        auto* p = processor.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_outputMode));
+        const float before = p->getValue();
+        output->setEnabled(false);
+        const bool direct = static_cast<juce::Component*>(output)->keyPressed(juce::KeyPress(juce::KeyPress::spaceKey));
+        const float disabled = p->getValue();
+        output->setEnabled(true); editor.setEnabled(false);
+        const bool ancestor = static_cast<juce::Component*>(output)->keyPressed(juce::KeyPress(juce::KeyPress::rightKey));
+        std::printf("Baseline disabled Output: direct handled=%d, ancestor handled=%d; before=%g direct=%g ancestor=%g\n", direct, ancestor, before, disabled, p->getValue());
+        return disabled == before && p->getValue() == before && direct && ancestor ? 0 : 1;
+    }

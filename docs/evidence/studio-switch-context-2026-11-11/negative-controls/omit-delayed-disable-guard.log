@@ -1,0 +1,6 @@
+FAIL: disabled component blocks keyboard dispatch and delayed actions
+FAIL: ancestor disabled state blocks context routing and delayed edits
+FAIL: binding ABA invalidates stale reset, learn and opener callbacks
+FAIL: clear invalidates callbacks but preserves live presentation ownership until dismissal
+FAIL: ordinary release after clear still completes the existing attachment
+Studio switch context tests: 122 checks, 5 failures

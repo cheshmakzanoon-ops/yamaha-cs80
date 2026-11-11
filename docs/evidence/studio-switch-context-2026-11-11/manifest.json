@@ -1,0 +1,57 @@
+{
+  "base_commit": "588f91c11df50a58d71943b05205f52a74e5ba39",
+  "scope": "Studio original-waveform and stereo/mono one-parameter buttons only",
+  "qualification": "Headless direct callbacks, queued messages and offscreen component paint. No native popup, physical input, external registered Button shortcuts, DAW or full-suite qualification.",
+  "results": {
+    "focused_checks": 122,
+    "focused_failures": 0,
+    "focused_adjacent_ctests_passed": 9,
+    "focused_adjacent_ctests_total": 9,
+    "independent_exact_binary_ctests_passed": 9,
+    "source_faults_detected": 14,
+    "source_faults_total": 14,
+    "source_faults_all_normal_completion": true
+  },
+  "artifact": {
+    "name": "CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "66a3f3d46fb51743712db2d2b05b68327e0ebcb67c5293ad7bf9a302cadb0f10"
+  },
+  "source_sha256": {
+    "CMakeLists.txt": "af373767ea8e59a3cd07ebef3a5fcb03b4f308552dd93fa358c13dd2a512dcad",
+    "src/plugin/ParameterContextButton.h": "6af912df4d54a19c57876ca57441765524e7f0a90f536bc9d5b66c1413a093d2",
+    "src/plugin/ParameterContextButton.cpp": "d03c42175d51513eb3a725614a2b40d45b803137808fb1a4cbd9c825210567b0",
+    "src/plugin/AdvancedPanel.cpp": "9a450617193a4ad799c206152b3ff1d1a3ab1637609684f1e0a97694a7376045",
+    "src/tools/ui_snapshot.cpp": "3a84f7dc25e81617af91b934062bdc8fae526f66938d17a21d89b5f752bf139c",
+    "tests/StudioSwitchContextTests.h": "5069c1449e8e399be5f51a0f8f70d54f8766a96f9c00783b949b4e655473689d",
+    "tests/test_studio_switch_context_negative_controls.py": "a2b3522452fba269d0d028570aea447bff14f8a4a3f8323e3bb5d820c0ea7889",
+    "docs/STUDIO_SWITCH_CONTEXT_MENUS.md": "3c71b32b6cb49cd224da2414053fb557aebc6f18f3c3772d4c4cdc9992851d43"
+  },
+  "evidence_sha256": {
+    "configure.log": "80bc4395c0041ba3ed2fefca1bdd971dd117960aff94f717f7b828a0977f1076",
+    "disabled-key-baseline-probe.txt": "abf0cc32002ae5e78d7eea5a824df3394412e8d17701f81c08ac83e5f8bf4a80",
+    "disabled-key-baseline.log": "7e23e194838b6160f3e4faeef8fb1e9abc7d7ef1aa6fa44afa2a625ea7101314",
+    "final-build.log": "91116152283fffb7ec45e78ade7a2bfdb2098869d503211d49a7c48ea6ee6dd9",
+    "focused-ctests.log": "8b1301a5f8bfdda5f7a046231ff08dbbbf4f66eab6eecde51599f44e4500bd33",
+    "focused.log": "d5d78ad2f735234cf78df977864d1cf397ea2d7d84dcc88e15df7572063ff66c",
+    "independent-LastTest.log": "c4b00b9b3c67ed2a508feaaef6e1caa370e598ca0968d99455c92ee27d91c433",
+    "independent-ctests.log": "d739cd2cc347ec4a5e3c7a7070f26dfcb88788d11c9de3d95fb9a37ab3c95b2d",
+    "native-configuration.json": "53de6a72e8cd5c70814cc613b8adb5cff24f4d9f76f9b2c90f822d89b4c84304",
+    "negative-controls/bypass-output-keyboard-fallback.log": "aa8f3ae4ab244c6b3cc9c0c2d83fb842e2f17a265eaf66414ea14de5b3301bb1",
+    "negative-controls/candidate.log": "d5d78ad2f735234cf78df977864d1cf397ea2d7d84dcc88e15df7572063ff66c",
+    "negative-controls/hardcode-off-default.log": "49950770ef9ecf0e5094569d7554eeb93c4165ed68e58d138daf2d0565a41f72",
+    "negative-controls/omit-binding-generation.log": "1a6caf5301c1db2430344742d607b1210602796e5dbc84ed228a25ae7a450211",
+    "negative-controls/omit-delayed-activation-guard.log": "e24e9bfbb69398d4582f62a6d14b6afa9db26370f0fe9caaa73f4aac9de92f84",
+    "negative-controls/omit-delayed-disable-guard.log": "cb74c4b14b82a86155eeec29d9c3d1deae369dd24a9aa1e2d4772d7c06cd23dc",
+    "negative-controls/omit-disabled-key-admission.log": "131f899b146f00551b67a9cde0011b3fb40d45959aa0a33f7cb416fc7c6012d0",
+    "negative-controls/omit-map-generation.log": "d66f26a536c5fdc83d06c8e265d5751270b73bd19e1d2fe8c16dbf8a212f4b3c",
+    "negative-controls/omit-original-factory-binding.log": "59ee06cd51a2d9e28131e6711f3a2e54f0ea05d1b5544405174348a2cc45e3a0",
+    "negative-controls/omit-output-factory-binding.log": "5d2028f2fe525c4fb48ad28fb8ff0b2e9952a63d1a0ee69b756ad61bc1efbc53",
+    "negative-controls/omit-output-pressed-release.log": "5c5a53ac4179b4f8339bcd2a5ebea950911fae7d3d43d11e55ffa127b1b716b0",
+    "negative-controls/omit-pure-guard.log": "7ed929658f36c82e2a3f96513a492fb7992fb8eb3595a3941c5aab735b4f2a5b",
+    "negative-controls/omit-queued-keyboard-guard.log": "e663a744c2f7b743998dcd54eb357621d7e818d176464e15bdfbbd74f613b2dd",
+    "negative-controls/omit-reset-noop.log": "699233a767007e75e87602e83df65732fe00aba85f2cac5acd9479185827e390",
+    "negative-controls/omit-right-click-routing.log": "42f75b69ba0d447f42f8ca733075490760c324fd15cf683eadc322ffea9bbd19",
+    "negative-controls/summary.json": "ded9533e10131f35dd8d43182852fac00540451561347693adcdecd773ec07a4",
+    "negative-controls.log": "45e0e26cd436ff54ebfaec8d40e713321ae3846bc99c2e89fa678f3479e6b7d9"
+  }
+}

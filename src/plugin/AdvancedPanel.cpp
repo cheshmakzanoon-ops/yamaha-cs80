@@ -6,6 +6,7 @@
 #include "LfoScopePreview.h"
 #include "PluginProcessor.h"
 #include "ParameterComboBox.h"
+#include "ParameterContextButton.h"
 #include "core/Dsp.h"
 
 #include <algorithm>
@@ -2891,10 +2892,10 @@ private:
 // stored name that the automation and self-test layers look for.
 // ---------------------------------------------------------------------------
 
-class AdvSwitch final : public juce::Button
+class AdvSwitch final : public ParameterContextButton
 {
 public:
-    AdvSwitch(const juce::String& storedName, const juce::String& legendText) : juce::Button(storedName), legend(legendText)
+    AdvSwitch(const juce::String& storedName, const juce::String& legendText) : ParameterContextButton(storedName), legend(legendText)
     {
         setClickingTogglesState(true);
         setWantsKeyboardFocus(true);
@@ -2926,10 +2927,10 @@ private:
 // Two-way selector: STEREO and MONO side by side, the one in force lit. One boolean parameter (on = stereo).
 // ---------------------------------------------------------------------------
 
-class AdvOutputSwitch final : public juce::Button
+class AdvOutputSwitch final : public ParameterContextButton
 {
 public:
-    AdvOutputSwitch() : juce::Button("Output mode")
+    AdvOutputSwitch() : ParameterContextButton("Output mode")
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
@@ -2939,25 +2940,23 @@ public:
         setDescription(getTooltip());
     }
 
-    void mouseDown(const juce::MouseEvent& e) override
+    void ordinaryMouseDown(const juce::MouseEvent& e) override
     {
         pressed = e.x < getWidth() / 2 ? 0 : 1;
-        juce::Button::mouseDown(e);
     }
 
-    void mouseUp(const juce::MouseEvent& e) override
+    void ordinaryMouseUp(const juce::MouseEvent&) override
     {
-        juce::Button::mouseUp(e);
         pressed = -1;
     }
 
     // The arrows pick a side, Space and Return flip it.
-    bool keyPressed(const juce::KeyPress& key) override
+    bool ordinaryKeyPressed(const juce::KeyPress& key) override
     {
         const bool flip = key == juce::KeyPress::spaceKey || key == juce::KeyPress::returnKey;
         const bool left = key == juce::KeyPress::leftKey, right = key == juce::KeyPress::rightKey;
         if (! (flip || left || right))
-            return juce::Button::keyPressed(key);
+            return ParameterContextButton::ordinaryKeyPressed(key);
         const bool toStereo = flip ? ! getToggleState() : left;
         if (toStereo != getToggleState())
             setToggleState(toStereo, juce::sendNotificationSync);
@@ -3542,6 +3541,7 @@ public:
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        raw->bindParameterContext(proc, Cs80AudioProcessor::parameterId(parameter));
         owned.push_back(std::move(control));
         placed.push_back({ raw, at(r) });
         return raw;
@@ -3556,6 +3556,7 @@ public:
         addAndMakeVisible(*raw);
         buttonAttachments.push_back(std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             proc.getAPVTS(), Cs80AudioProcessor::parameterId(parameter), *raw));
+        raw->bindParameterContext(proc, Cs80AudioProcessor::parameterId(parameter));
         owned.push_back(std::move(control));
         placed.push_back({ raw, at(r) });
         return raw;

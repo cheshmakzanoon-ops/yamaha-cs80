@@ -1,0 +1,18 @@
+{
+  "cmake": {
+    "CMAKE_BUILD_TYPE": "Release",
+    "CMAKE_CXX_COMPILER": "/usr/bin/c++",
+    "CMAKE_CXX_FLAGS": "-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/freetype2",
+    "CMAKE_C_COMPILER": "/usr/bin/cc",
+    "CMAKE_C_FLAGS": "-idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include -idirafter /workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/include/x86_64-linux-gnu",
+    "CMAKE_EXE_LINKER_FLAGS": "-L/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu -Wl,-rpath-link,/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu",
+    "CS80_BUILD_PLUGIN": "ON",
+    "CS80_BUILD_TESTS": "ON",
+    "CS80_ENABLE_AVX2_FILTER_BATCH": "OFF",
+    "FETCHCONTENT_SOURCE_DIR_JUCE": "/workspace/scratch/ee447c520988/mpe-native-tools/JUCE",
+    "PKG_CONFIG_EXECUTABLE": "/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/bin/pkg-config"
+  },
+  "compiler": "GCC 14.2.0",
+  "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "juce_worktree_clean": true
+}
