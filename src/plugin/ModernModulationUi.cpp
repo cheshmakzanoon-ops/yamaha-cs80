@@ -458,6 +458,9 @@ void MsegEditor::mouseDoubleClick(const juce::MouseEvent& e)
 
 bool MsegEditor::keyPressed(const juce::KeyPress& key)
 {
+    // Topology edits must not invalidate indices owned by an active pointer drag.
+    if (drag != Drag::none)
+        return false;
     if ((key == juce::KeyPress::deleteKey || key == juce::KeyPress::backspaceKey) && selected > 0 && shape.count > 2)
     {
         for (int k = selected; k + 1 < shape.count; ++k)
