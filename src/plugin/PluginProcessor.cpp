@@ -1398,16 +1398,19 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
         auto tree = juce::ValueTree::fromXml(*xml);
         if (tree.isValid() && tree.hasType(stateType))
         {
-            readStudioState(tree);   // [ws8-studio] also removes those children from the parameter tree
+            // Validate embedded tuning before committing any other session state.
             // [ws3-keyboard] session Scala/KBM texts; not part of the parameter tree either.
             const auto tuning = tree.getChildWithName("WS3_TUNING");
             if (tuning.isValid())
             {
-                publishScala(tuning.getProperty("scl").toString(), tuning.getProperty("kbm").toString());
+                if (publishScala(tuning.getProperty("scl").toString(),
+                                 tuning.getProperty("kbm").toString()).isNotEmpty())
+                    return;
                 tree.removeChild(tuning, nullptr);
             }
             else
                 clearScalaTuning();
+            readStudioState(tree);   // [ws8-studio] removes studio children after tuning admission
             const juce::ScopedLock treeLock(apvts.treeLock());
             apvts.replaceState(normaliseRestoredState(tree));
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
