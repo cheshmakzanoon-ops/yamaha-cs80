@@ -1,0 +1,397 @@
+{
+  "base_commit": "1d6a37b61b12284788913e059b73fe756da5af71",
+  "scope": "Direct supported host only; no production build/CMake configuration/CTest execution",
+  "compile_exit": 0,
+  "runs": 6,
+  "full_cases": 72,
+  "renders": 936,
+  "capture_identities": 216,
+  "baseline_comparisons": 0,
+  "metrics": {
+    "low": [
+      {
+        "max_error": 0.0,
+        "effect": 0.0190392,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0505018,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0190392,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0539408,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0561465,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0539408,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0188662,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0223472,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0188662,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0527218,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0385906,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0527218,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0192708,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0387882,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0192708,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0467221,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0650504,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0467221,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.019195,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0218095,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.019195,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0464855,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0333244,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0464855,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0165838,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0442559,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0165838,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0260408,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0358597,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0260408,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0166266,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0452023,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0166266,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0254544,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0358426,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0254544,
+        "prefix_exact": 1
+      }
+    ],
+    "high": [
+      {
+        "max_error": 0.0,
+        "effect": 0.00323209,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00277222,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00323209,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.051256,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0311038,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.051256,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00261232,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00276682,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00261232,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0545489,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0306468,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0545489,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00269355,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00270839,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00269355,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0498229,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0394378,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0498229,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00243583,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00271203,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00243583,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0475198,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0366908,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0475198,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00241729,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00198052,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00241729,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0279584,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0356157,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0279584,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00249027,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00197661,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00249027,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0278991,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0356717,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0278991,
+        "prefix_exact": 1
+      }
+    ]
+  },
+  "inputs_before_after_identical": true,
+  "old_contract_count": 34,
+  "old_contracts_byte_unchanged": true,
+  "production_exporters_shared_helper_unchanged": true,
+  "source_hashes": {
+    "CMakeLists.txt": "c96a8e722715c614de4a7a64064b5f3a98c2354e428f7654649a918df85bba35",
+    "tests/Vst3KbdContourCombinedAutomationTests.cpp": "65d7019c248b517f6dfa1a41255488e6cd40a1d0cff0140bc9dc7c07bf2abbef",
+    "tests/Vst3AutomationTests.cpp": "a5b2804cba6a5622d51634681fb8bd327e85fd2dba3464fb47a6073b0fb39f15",
+    "src/plugin/HostAutomationBridge.h": "3ef45b9c8ec3efe540871a39f2f0c73d35261805d005727f816047867bce9124",
+    "tests/parity/tolerances-v2/host-automation-kbd-contour-combined-v1.json": "4fe9661132ed4e12fd9f41910729bd7e7f4a54c7d34b92db36163d006299e38e",
+    "docs/VST3_KBD_CONTOUR_COMBINED_AUTOMATION.md": "feaf06cdb27f7f3a44598f9e6e1942ac2f65b0820cb600d81a35e53e0506c49e",
+    "docs/HOST_AUTOMATION.md": "8f52bbbc534f4077fa38dd27997635c1ccae401b7d2617c7d90260e8ef5e23e8"
+  },
+  "failed_attempts": 0,
+  "runtime_retries": 0,
+  "artifact_policy": "Raw PCM and native binaries retained in ignored local build directories, not distributed. Textual evidence is not a complete replay bundle.",
+  "limitations": [
+    "Two simultaneously active controls on one contour side; aggregate witness does not isolate each lane.",
+    "No simultaneous LOW+HIGH or four-lever qualification.",
+    "No hardware cutoff/isolated-key/calibrated contour or broad GUI/CPU/negative tests."
+  ]
+}

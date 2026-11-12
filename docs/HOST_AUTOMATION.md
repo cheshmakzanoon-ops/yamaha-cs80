@@ -63,6 +63,11 @@ appends existing LOW/HIGH levers at lanes40/41. Live smoothed KBC1 voltages
 feed the existing separate HP/LP cutoff-control receiver paths, not the LC
 level path. The complete preceding40-lane roster stays fixed.
 
+A candidate [paired contour qualification](VST3_KBD_CONTOUR_COMBINED_AUTOMATION.md)
+combines LEVEL and BRILLIANCE separately for LOW and HIGH on responsive
+keyboard cohorts. This is an existing42-lane test-only gate, not another
+capability append or a simultaneous-all-four qualification.
+
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's
 AU interface source list and native wrapper remain untouched. AU scheduled
