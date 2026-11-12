@@ -184,24 +184,35 @@ KeyboardTuningPage::~KeyboardTuningPage()
 
 juce::String KeyboardTuningPage::loadScalaText(const juce::String& scl, const juce::String& kbm)
 {
-    const auto error = processor.loadScalaTuning(scl, kbm);
+    bool changed = false;
+    const auto error = processor.loadScalaTuning(scl, kbm, &changed);
     lastError = error;
     refreshStatus();
+    // Host listeners may save state or destroy this page synchronously. Keep
+    // notification outside the Scala lock and do not touch the page afterward.
+    if (changed)
+        processor.updateHostDisplay(juce::AudioProcessor::ChangeDetails().withNonParameterStateChanged(true));
     return error;
 }
 
 juce::String KeyboardTuningPage::loadKeyboardMappingText(const juce::String& kbm, std::optional<unsigned> expectedVersion)
 {
-    lastError = processor.loadScalaKeyboardMapping(kbm, expectedVersion);
+    bool changed = false;
+    const auto error = processor.loadScalaKeyboardMapping(kbm, expectedVersion, &changed);
+    lastError = error;
     refreshStatus();
-    return lastError;
+    if (changed)
+        processor.updateHostDisplay(juce::AudioProcessor::ChangeDetails().withNonParameterStateChanged(true));
+    return error;
 }
 
 void KeyboardTuningPage::clearTuning()
 {
-    processor.clearScalaTuning();
+    const bool changed = processor.clearScalaTuning();
     lastError = {};
     refreshStatus();
+    if (changed)
+        processor.updateHostDisplay(juce::AudioProcessor::ChangeDetails().withNonParameterStateChanged(true));
 }
 
 void KeyboardTuningPage::chooseFile(bool keyboardMapping)

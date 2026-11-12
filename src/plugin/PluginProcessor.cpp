@@ -889,8 +889,9 @@ void Cs80AudioProcessor::handleMidi(const juce::MidiMessage& message)
 }
 
 juce::String Cs80AudioProcessor::publishScala(const juce::String& scl, const juce::String& kbm,
-                                            std::optional<unsigned> expectedVersion)
+                                            std::optional<unsigned> expectedVersion, bool* stateChanged)
 {
+    if (stateChanged != nullptr) *stateChanged = false;
     cs80::tuning::Scale scale;
     if (const auto error = cs80::tuning::parseScale(scl.toStdString(), scale); !error.empty())
         return juce::String(error);
@@ -906,21 +907,27 @@ juce::String Cs80AudioProcessor::publishScala(const juce::String& scl, const juc
     // overwrite a scale replaced by a concurrent session restore while parsing.
     if (expectedVersion.has_value() && scalaVersion.load(std::memory_order_relaxed) != *expectedVersion)
         return "Scala tuning changed while loading its mapping. Please try again.";
+    const bool changed = scalaText != scl || kbmText != kbm;
     scalaSlot = table;
     scalaText = scl;
     kbmText = kbm;
     scalaDescription = juce::String(scale.description);
     scalaVersion.fetch_add(1, std::memory_order_release);
+    if (stateChanged != nullptr) *stateChanged = changed;
     return {};
 }
 
-juce::String Cs80AudioProcessor::loadScalaTuning(const juce::String& scl, const juce::String& kbm)
+juce::String Cs80AudioProcessor::loadScalaTuning(const juce::String& scl, const juce::String& kbm,
+                                               bool* stateChanged)
 {
-    return publishScala(scl, kbm);
+    return publishScala(scl, kbm, std::nullopt, stateChanged);
 }
 
-juce::String Cs80AudioProcessor::loadScalaKeyboardMapping(const juce::String& kbm, std::optional<unsigned> expectedVersion)
+juce::String Cs80AudioProcessor::loadScalaKeyboardMapping(const juce::String& kbm,
+                                                        std::optional<unsigned> expectedVersion,
+                                                        bool* stateChanged)
 {
+    if (stateChanged != nullptr) *stateChanged = false;
     juce::String scl;
     unsigned version;
     {
@@ -935,15 +942,17 @@ juce::String Cs80AudioProcessor::loadScalaKeyboardMapping(const juce::String& kb
     }
     if (scl.isEmpty())
         return "Load a .scl scale before its .kbm mapping.";
-    return publishScala(scl, kbm, version);
+    return publishScala(scl, kbm, version, stateChanged);
 }
 
-void Cs80AudioProcessor::clearScalaTuning()
+bool Cs80AudioProcessor::clearScalaTuning()
 {
     const juce::SpinLock::ScopedLockType lock(scalaLock);
+    const bool changed = scalaText.isNotEmpty();
     scalaSlot = {};
     scalaText = kbmText = scalaDescription = {};
     scalaVersion.fetch_add(1, std::memory_order_release);
+    return changed;
 }
 
 bool Cs80AudioProcessor::hasScalaTuning() const

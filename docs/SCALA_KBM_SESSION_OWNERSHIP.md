@@ -87,3 +87,10 @@ separate checkout of the pinned staged baseline, apply
 `tests/KeyboardTuningUiTests.h`. Build its CS80Snapshots and run
 `--keyboard-tuning-ui-tests`; the recorded result is exit 1, 29 checks and 13
 failures. Do not apply that negative-control patch to the production checkout.
+
+## Host save notification
+
+Changed user imports and CLEAR now notify the host that the session needs saving,
+while identical text, empty CLEAR and host restores stay silent. See
+[Tuning state notifications](TUNING_STATE_NOTIFICATIONS.md) for the action boundary,
+reentrant listener behavior and focused verification.
