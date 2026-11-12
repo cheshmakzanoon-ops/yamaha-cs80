@@ -7,7 +7,7 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-11. The latest local core integration checkpoint on this
+Last updated: 2026-11-12. The latest local core integration checkpoint on this
 page tests published `863e6c5b` (retained MPE manager/note pressure and CC74),
 with exact scope and results below.
 Native CI, downloaded installers, and hardware/DAW qualification are separate
@@ -39,6 +39,20 @@ Focused instrumentation on `ccb812e0` separately passed four core suites under
 ASan+UBSan with leak detection excluded (119.03 s). The leak-enabled attempt
 failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 [configuration, distinct outcomes and limits](CORE_SANITIZER_CHECKPOINT_CCB812E.md).
+
+## November 12 scoped native VST3 automation
+
+Published `72934df6349422a70891a11221cde22ad49bec35` extends the append-only
+roster to 27 lanes with SUB touch speed/VCO/VCF amounts. Its reviewed candidate
+passed **24/24 selected native CTests** (432 scenarios), including 108 touch
+cases, and retained all 816 scoped compatibility captures byte-for-byte against
+the frozen 24-lane module. One baseline negative control had exactly 18 expected
+partition failures; it was retained and not counted as a passing gate. See
+[exact module/source hashes, evidence and limits](VST3_SUB_TOUCH_AUTOMATION.md).
+
+This is bounded Linux float32 protocol/render qualification, not a new full
+core/native integration, DAW, GUI, hardware-fidelity or release checkpoint.
+Earlier integration and download pins below retain their original scope.
 
 ## Latest local native processor/component integration
 
@@ -111,7 +125,7 @@ handover PDF remain dated evidence, not current-head measurements.
 | Filter resonance cache | Reuses cutoff-dependent coefficients on Q-only updates; cutoff/rate changes retain the full path and the solver law is unchanged | `465e56c` ([PR #76](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/76)); [cache scope and measurements](IG00156_RESONANCE_CACHE.md) |
 | External modulation | Sparse FIR reconstruction skips guaranteed-zero products while retaining coefficient design, phase and accumulation order | `228cc8d` ([PR #74](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/74)); [scope and measurements](EXTERNAL_INTERPOLATOR_SPARSE.md) |
 | Delay-reader safety | A rounded circular-buffer position at capacity is wrapped to zero, preventing an out-of-bounds read | `ff9943e`; [DELAY_LINE_WRAP_SAFETY.md](DELAY_LINE_WRAP_SAFETY.md). Previously valid interpolation retains its arithmetic. |
-| Host automation | Eighteen key VST3 parameters retain sample offsets in modern circuit policy; protected policies and unsupported parameters keep block-rate behavior | `1b3df5a`, endpoint correction `7c54caf`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md). AU scheduled ramps are not enabled. |
+| Host automation | Twenty-seven key VST3 parameters retain sample offsets in modern circuit policy, including SUB speed, depths and touch amounts; protected policies and unsupported parameters keep block-rate behavior | `72934df6`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [touch qualification](VST3_SUB_TOUCH_AUTOMATION.md). AU scheduled ramps are not enabled. |
 | Tuning | Pinned 0BSD MTS-ESP client included, with bounded whole-table updates and missing-master fallback | `73e76ce`; [MTS_ESP_INTEGRATION.md](MTS_ESP_INTEGRATION.md). [Per-channel master tables](MTS_ESP_CHANNEL_MASTER.md) are implemented; live external-master DAW qualification remains open. |
 | MIDI and note lifecycle | Channel-scoped pressure/MPE routing, retained release ownership, ordered KAS short notes, bounded CC121 controller defaults and live conventional bend-range edits | [VOICE_RELEASE_OWNERSHIP.md](VOICE_RELEASE_OWNERSHIP.md), [MPE_MASTER_BEND_ROUTING.md](MPE_MASTER_BEND_ROUTING.md), [CONTROLLER_RESET.md](CONTROLLER_RESET.md), [PITCH_BEND_RANGE_AUTOMATION.md](PITCH_BEND_RANGE_AUTOMATION.md) |
 | Immediate sixteen-voice release | Cancels one matching waiter or releases the newest comparable held group across both instruments; unison groups and UI source guards are retained | `77dfd74`; [bounded contract](SIXTEEN_VOICE_NOTE_RELEASE.md). Deferred/ARP-origin candidates and active/pending scan paths retain broadcast fallback. No complete sixteen-voice release or realtime qualification claim. |
@@ -439,7 +453,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.3-5.4 Toolbar, Studio view, interaction | done; modern and tuning pages mounted | ws8 merge `5af3b77`, `230f367` |
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
-| 6 Sample-accurate automation | partial: twenty key VST3 parameters in modern circuit policy; AU and other parameters remain block-rate | `1b3df5a`, `7c54caf`; [scope](HOST_AUTOMATION.md) |
+| 6 Sample-accurate automation | partial: twenty-seven key VST3 parameters in modern circuit policy; AU and other parameters remain block-rate | `72934df6`; [scope](HOST_AUTOMATION.md) |
 | 7 Release qualification | packaging safeguards and scoped Linux ABI evidence merged; complete licence/native installation/host/signing qualification and Linux validation failures remain open | `b363b325`, `fa7e988`, `58ed29e`; exact scope and failures above |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -612,7 +626,7 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   edit gestures and rejects unsafe replay during an active edit
   ([contract and local tests](UNDO_REPLAY_GESTURES.md)). VST3/AU-wrapper and
   real-DAW automation-recording qualification remain open.
-- Sample-offset automation is limited to twenty-four key VST3 parameters in modern
+- Sample-offset automation is limited to twenty-seven key VST3 parameters in modern
   circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
   qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).
 - CC121 now resets supported controller targets through existing routes, sustain,
