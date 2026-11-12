@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_qualification_extension",
+  "description": "Qualify consumption of updated existing RING attack/decay at a later fresh ring trigger. This retains the existing 33-lane capability and introduces no new production lane or behavior. All 22 prior contracts remain unchanged.",
+  "host_automation_ring_retrigger": {
+    "key_parameter_count": 33,
+    "keys": "Existing 33 lanes and order unchanged, including P_ringAttack at 31 and P_ringDecay at 32.",
+    "authority": "Existing global trigger-latched RING times; no live envelope reshape. Updated times are consumed at a qualifying onset after all held/pedal-held notes have cleared in the relevant engine.",
+    "timing": "Supported fixture explicitly opts into first notes at 17+key, releases at 1024+key, second notes at 2048+key and releases at 3584+key. Historical default note sequence remains unchanged. Same-offset automation precedes MIDI under existing routing.",
+    "verification": "Bounded actual-module finite queues on frozen 33-lane module: initial hold through 64, target before next trigger, exact PCM prefix before sample 2048 versus matched constant-active queue, positive aggregate effect after second trigger. Distinct second-onset step at 2048 versus held-since-2047 witness, target held through all second onsets. Original numerical tolerances retained; default-helper no-queue/policy regression separate. No production, metadata, UI, DSP, malformed-input, GUI, hardware or CPU change or claim."
+  }
+}

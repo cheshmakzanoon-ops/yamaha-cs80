@@ -312,7 +312,7 @@ struct Instance
         releaseReadbackController();
         return values;
     }
-    void process(int start, int count, Changes* changes, std::vector<float>& output, bool sixteen = false, bool pressure = false)
+    void process(int start, int count, Changes* changes, std::vector<float>& output, bool sixteen = false, bool pressure = false, bool twoNoteCycles = false)
     {
         std::vector<float> left(static_cast<size_t>(count)), right(static_cast<size_t>(count));
         float* channels[] { left.data(), right.data() };
@@ -330,8 +330,19 @@ struct Instance
             else { event.noteOff.channel = 0; event.noteOff.pitch = static_cast<int16>(pitch); event.noteOff.velocity = 0.0f; event.noteOff.noteId = pitch; }
             events.events.push_back(event);
         };
+        if (twoNoteCycles)
+        {
+            for (int key = 0; key < (sixteen ? 16 : 2); ++key)
+            {
+                note(17 + key, 48 + key, true); note(1024 + key, 48 + key, false);
+                note(2048 + key, 48 + key, true); note(3584 + key, 48 + key, false);
+            }
+        }
+        else
+        {
         for (int key = 0; key < (sixteen ? 16 : 2); ++key)
         { note(17 + key, 48 + key, true); note(3072 + key, 48 + key, false); }
+        }
         // Ordinary note pressure is opt-in; every historical call retains
         // the exact note-only event sequence. All pressure events follow their
         // note onset and precede its release, with supported channel/pitch IDs.
@@ -400,7 +411,7 @@ Curves curvesFor(const cs80::ParamValues& parameters)
 }
 std::vector<float> render(Module& module, const cs80::ParamValues& parameters, const Curves& curves,
                           int block, bool automate = true, bool flatten = false, int source = 13, bool nullChanges = false,
-                          int secondSource = -1, bool pressure = false)
+                          int secondSource = -1, bool pressure = false, bool twoNoteCycles = false)
 {
     Instance instance(module, parameters, source, secondSource);
     std::vector<float> output;
@@ -424,7 +435,7 @@ std::vector<float> render(Module& module, const cs80::ParamValues& parameters, c
                     points.emplace_back(flatten ? 0 : count - 1, absoluteValue(curves[lane], initial, start + count - 1));
                 changes.add(parameterId(cs80::paramId(parameter)), std::move(points));
             }
-        instance.process(start, count, nullChanges ? nullptr : &changes, output, parameters[cs80::P_voiceMode] > 0.5f, pressure);
+        instance.process(start, count, nullChanges ? nullptr : &changes, output, parameters[cs80::P_voiceMode] > 0.5f, pressure, twoNoteCycles);
     }
     return output;
 }

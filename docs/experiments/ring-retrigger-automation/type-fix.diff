@@ -1,0 +1,11 @@
+--- build/prior-compile-attempt/Vst3RingRetriggerAutomationTests.cpp	2026-11-12 07:36:32.676816086 -0400
++++ tests/Vst3RingRetriggerAutomationTests.cpp	2026-11-12 07:36:32.711195118 -0400
+@@ -52,7 +52,7 @@
+         Module module(argv[1]);
+         auto parameters = cs80::defaultValues();
+         parameters[cs80::P_sourcePerformance] = 1;
+-        for (int parameter : {cs80::P_arpOn, cs80::P_kasScanTiming,
++        for (int parameter : std::array<int, 8> {cs80::P_arpOn, cs80::P_kasScanTiming,
+                               cs80::P_footswitchPlugged, cs80::P_footswitchPressed,
+                               cs80::P_sustainAssign, cs80::P_glideAssign,
+                               cs80::P_masterSustain, cs80::P_sustainMode})

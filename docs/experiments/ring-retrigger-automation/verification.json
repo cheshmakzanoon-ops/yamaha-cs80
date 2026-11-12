@@ -1,0 +1,687 @@
+{
+  "base_commit": "09d97cded9516666b532801f748ad7a9b6852aa6",
+  "build": "Direct official-SDK g++ compilation of two supported hosts only; no production/CMake build or CTest.",
+  "compile_exit": 0,
+  "runs": 18,
+  "full_cases": 72,
+  "default_helper_compatibility_cases": 144,
+  "default_helper_actual_pcm_pairs": 216,
+  "all_pairs_exact": true,
+  "metrics": [
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "attack-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0488583,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "decay-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0343748,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "attack-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.376299,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "decay-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.225232,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "attack-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0488583,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "decay-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0343748,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "attack-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.111814,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "decay-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.141049,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "attack-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.416059,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "decay-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.55328,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "attack-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.111814,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "decay-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.141049,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "attack-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0493003,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "decay-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0336031,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "attack-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.344641,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "decay-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.210913,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "attack-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0493003,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "decay-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0336031,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "attack-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.108197,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "decay-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.142796,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "attack-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.371558,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "decay-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.498058,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "attack-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.108197,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "decay-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.142796,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "attack-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0404978,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "decay-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.032204,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "attack-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.293745,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "decay-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.155978,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "attack-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0404978,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "decay-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.032204,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "attack-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.108535,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "decay-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.123978,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "attack-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.172459,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "decay-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.249485,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "attack-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.108535,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "decay-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.123978,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "attack-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0406773,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "decay-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0320216,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "attack-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.294051,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "decay-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.159576,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "attack-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0406773,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "decay-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0320216,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "attack-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.109784,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "decay-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.123302,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "attack-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.190755,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "decay-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.24485,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "attack-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.109784,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "decay-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.123302,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "attack-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0773213,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "decay-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0377447,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "attack-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.37696,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "decay-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.235311,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "attack-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0773213,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "decay-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0377447,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "attack-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0909393,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "decay-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.124498,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "attack-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.230495,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "decay-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.321716,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "attack-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0909393,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "decay-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.124498,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "attack-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0775186,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "decay-8-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0382429,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "attack-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.351127,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "decay-8-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.219844,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "attack-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0775186,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "decay-8-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0382429,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "attack-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0903356,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "decay-16-13",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.124149,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "attack-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.224457,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "decay-16-0",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.317061,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "attack-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.0903356,
+      "same_offset_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "decay-16-11",
+      "max_error": 0.0,
+      "prefix_exact": true,
+      "post_effect": 0.124149,
+      "same_offset_error": 0.0
+    }
+  ],
+  "source_hashes": {
+    "tests/Vst3RingRetriggerAutomationTests.cpp": "b27be9bc44fb0db63f8eb8d289fab26226a5677e87ddbcf122049932801e0af2",
+    "tests/Vst3RingTimesAutomationTests.cpp": "9460166ff661c4dd7a4d1e79332f113a5d583e2a5ec2859035a33df0565a7efe",
+    "tests/Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "src/plugin/HostAutomationBridge.h": "bf521c6f0df6cdce037b5c04d42343410862c97498dc51dcf414b741cccc3def",
+    "CMakeLists.txt": "2401acc75d4e798d4577f947599cada4e2f66a223698396f532e6bda638dfeb3",
+    "tests/parity/tolerances-v2/host-automation-ring-retrigger-v1.json": "33c3f6ac38719c26e2db6d4b3d20d419fd4d2320690024bd49867ad6b7b6fbe6",
+    "docs/VST3_RING_RETRIGGER_AUTOMATION.md": "174d84f50a937ff23fa037e6e53b759c99fa6932f9c3eb196749ba1c9580c4c2"
+  },
+  "runtime_inputs_unchanged": true,
+  "production_and_prior_scripts_unchanged": true,
+  "previous_contracts_unchanged": 22,
+  "prior_compile_failure": {
+    "exit": 1,
+    "native_runs": 0,
+    "cause": "Mixed enum types in deduced initializer list. Reviewed one-line explicit std::array<int,8> fix; no runtime behavior change.",
+    "runtime_guard": "Guard rejected invocation before launching any native process."
+  },
+  "scope": "Initial and subsequent trigger fixture: isolated attack/decay, sources13/0/11,8/16 capacities,3rates2modes. Exact pre2048 interleaved PCM; positivepost2048; second-offset2048vs2047 and partitions.",
+  "limitations": [
+    "Default-helper comparison covers noqueue and Legacy/PURE PCM only, not all previous automated assertions.",
+    "Frozen33module reused throughout; no production change or new module build.",
+    "Raw PCM and host executables local only; committed evidence is not a complete replay bundle.",
+    "No broad, malformed, fuzz, negative-baseline, CPU, GUI, AU, DAW or hardware tests."
+  ],
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/run-retrigger-matrix.py >build/matrix.log 2>&1; code=$?; echo \"$code\" >build/matrix.exit; exit \"$code\"",
+  "sdk_provenance_limit": "SDK inventory taken after compilation during matrix, not before compilation."
+}

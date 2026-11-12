@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-retrigger/build/run-retrigger-matrix.py", line 8, in <module>
+    assert Path('build/compile.exit').read_text().strip()=='0'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

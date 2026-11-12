@@ -1,0 +1,14 @@
+rate=44100 mode=offline gate=full-ring-retrigger
+ring=attack-8-13 max_error=0 prefix_exact=1 post_effect=0.0493003 same_offset_error=0
+ring=decay-8-13 max_error=0 prefix_exact=1 post_effect=0.0336031 same_offset_error=0
+ring=attack-8-0 max_error=0 prefix_exact=1 post_effect=0.344641 same_offset_error=0
+ring=decay-8-0 max_error=0 prefix_exact=1 post_effect=0.210913 same_offset_error=0
+ring=attack-8-11 max_error=0 prefix_exact=1 post_effect=0.0493003 same_offset_error=0
+ring=decay-8-11 max_error=0 prefix_exact=1 post_effect=0.0336031 same_offset_error=0
+ring=attack-16-13 max_error=0 prefix_exact=1 post_effect=0.108197 same_offset_error=0
+ring=decay-16-13 max_error=0 prefix_exact=1 post_effect=0.142796 same_offset_error=0
+ring=attack-16-0 max_error=0 prefix_exact=1 post_effect=0.371558 same_offset_error=0
+ring=decay-16-0 max_error=0 prefix_exact=1 post_effect=0.498058 same_offset_error=0
+ring=attack-16-11 max_error=0 prefix_exact=1 post_effect=0.108197 same_offset_error=0
+ring=decay-16-11 max_error=0 prefix_exact=1 post_effect=0.142796 same_offset_error=0
+12 native ring-retrigger scenarios, 0 failures

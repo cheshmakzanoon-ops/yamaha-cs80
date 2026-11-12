@@ -1,0 +1,5 @@
+tests/Vst3RingRetriggerAutomationTests.cpp: In function ‘int main(int, char**)’:
+tests/Vst3RingRetriggerAutomationTests.cpp:58:73: error: unable to deduce ‘std::initializer_list<auto>&&’ from ‘{cs80::P_arpOn, cs80::P_kasScanTiming, cs80::P_footswitchPlugged, cs80::P_footswitchPressed, cs80::P_sustainAssign, cs80::P_glideAssign, cs80::P_masterSustain, cs80::P_sustainMode}’
+   58 |                               cs80::P_masterSustain, cs80::P_sustainMode})
+      |                                                                         ^
+tests/Vst3RingRetriggerAutomationTests.cpp:58:73: note:   deduced conflicting types for parameter ‘auto’ (‘cs80::GlobalParam’ and ‘cs80::<unnamed enum>’)
