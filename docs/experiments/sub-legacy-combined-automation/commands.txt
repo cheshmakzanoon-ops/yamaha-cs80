@@ -1,0 +1,9 @@
+From repository root:
+bash build/compile-command.sh >build/compile.log 2>&1
+source build/recovery-env.sh
+cmake -S . -B build-native -G Ninja -DCMAKE_BUILD_TYPE=Release -DFETCHCONTENT_SOURCE_DIR_JUCE="$PWD/../yamaha-cs80/build/_deps/juce-src" -DFETCHCONTENT_SOURCE_DIR_CS80_LIBXML2="$PWD/../yamaha-cs80/build-native/_deps/cs80_libxml2-src" -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON >build/configure.log 2>&1
+source build/recovery-env.sh && CS80_SCOPED_BUILD_REVIEW_APPROVED=1 python build/run-legacy-combined-matrix.py >build/matrix.log 2>&1
+
+Compile and configure exited0. Runtime uses standalone host, not CMake host or CTest.
+Existing28candidate module reused; no production plugin rebuild performed.
+Registration inspection initially used an unquoted add_test prefix and found0lines; corrected extraction to quoted prefix found6full registrations. No CMake/source/runtime change or test retry involved.
