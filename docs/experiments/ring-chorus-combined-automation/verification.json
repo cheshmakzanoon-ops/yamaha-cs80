@@ -1,0 +1,702 @@
+{
+  "base_commit": "26beb0793e3993c57cf3b59c324faa3019b95ff5",
+  "build": "Direct official-SDK compilation of combined supported host only. No production build, CMake configure/build or CTest.",
+  "compile_exit": 0,
+  "runs": 6,
+  "full_cases": 96,
+  "render_budget": 1248,
+  "all_exits_zero": true,
+  "metrics": [
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "chorus-8-13-0",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.420815
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "chorus-8-0-13",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.0550697
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "chorus-8-13-11",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.0682917
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "chorus-8-11-13",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.0682917
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "chorus-16-13-0",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.341306
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "chorus-16-0-13",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.12297
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "chorus-16-13-11",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.166769
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "chorus-16-11-13",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.166769
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "tremolo-8-13-0",
+      "max_error": 5.82077e-11,
+      "aggregate_effect": 0.425252
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "tremolo-8-0-13",
+      "max_error": 2.91038e-11,
+      "aggregate_effect": 0.0554125
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "tremolo-8-13-11",
+      "max_error": 1.16415e-10,
+      "aggregate_effect": 0.0677189
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "tremolo-8-11-13",
+      "max_error": 1.16415e-10,
+      "aggregate_effect": 0.0677189
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "tremolo-16-13-0",
+      "max_error": 1.16415e-10,
+      "aggregate_effect": 0.345146
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "tremolo-16-0-13",
+      "max_error": 2.91038e-11,
+      "aggregate_effect": 0.127685
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "tremolo-16-13-11",
+      "max_error": 2.32831e-10,
+      "aggregate_effect": 0.1885
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "tremolo-16-11-13",
+      "max_error": 2.32831e-10,
+      "aggregate_effect": 0.1885
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "chorus-8-13-0",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.384526
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "chorus-8-0-13",
+      "max_error": 5.58794e-09,
+      "aggregate_effect": 0.0548363
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "chorus-8-13-11",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.0681542
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "chorus-8-11-13",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.0681542
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "chorus-16-13-0",
+      "max_error": 5.96046e-08,
+      "aggregate_effect": 0.374651
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "chorus-16-0-13",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.124258
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "chorus-16-13-11",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.172334
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "chorus-16-11-13",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.172334
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "tremolo-8-13-0",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.39115
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "tremolo-8-0-13",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.0569401
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "tremolo-8-13-11",
+      "max_error": 4.65661e-10,
+      "aggregate_effect": 0.0676193
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "tremolo-8-11-13",
+      "max_error": 4.65661e-10,
+      "aggregate_effect": 0.0676193
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "tremolo-16-13-0",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.354633
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "tremolo-16-0-13",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.12935
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "tremolo-16-13-11",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.192632
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "tremolo-16-11-13",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.192632
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "chorus-8-13-0",
+      "max_error": 2.23517e-08,
+      "aggregate_effect": 0.350767
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "chorus-8-0-13",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.06296
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "chorus-8-13-11",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.0588699
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "chorus-8-11-13",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.0588699
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "chorus-16-13-0",
+      "max_error": 2.98023e-08,
+      "aggregate_effect": 0.402313
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "chorus-16-0-13",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.139871
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "chorus-16-13-11",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.137081
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "chorus-16-11-13",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.137081
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "tremolo-8-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.350207
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "tremolo-8-0-13",
+      "max_error": 4.65661e-10,
+      "aggregate_effect": 0.0647162
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "tremolo-8-13-11",
+      "max_error": 2.32831e-10,
+      "aggregate_effect": 0.0568048
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "tremolo-8-11-13",
+      "max_error": 2.32831e-10,
+      "aggregate_effect": 0.0568048
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "tremolo-16-13-0",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.385279
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "tremolo-16-0-13",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.147475
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "tremolo-16-13-11",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.144774
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "tremolo-16-11-13",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.144774
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "chorus-8-13-0",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.35061
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "chorus-8-0-13",
+      "max_error": 5.58794e-09,
+      "aggregate_effect": 0.0628473
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "chorus-8-13-11",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.0591151
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "chorus-8-11-13",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.0591151
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "chorus-16-13-0",
+      "max_error": 2.98023e-08,
+      "aggregate_effect": 0.400331
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "chorus-16-0-13",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.139895
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "chorus-16-13-11",
+      "max_error": 1.86265e-08,
+      "aggregate_effect": 0.13795
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "chorus-16-11-13",
+      "max_error": 1.86265e-08,
+      "aggregate_effect": 0.13795
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "tremolo-8-13-0",
+      "max_error": 2.32831e-10,
+      "aggregate_effect": 0.350111
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "tremolo-8-0-13",
+      "max_error": 1.16415e-10,
+      "aggregate_effect": 0.0645055
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "tremolo-8-13-11",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.0571246
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "tremolo-8-11-13",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.0571246
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "tremolo-16-13-0",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.38475
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "tremolo-16-0-13",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.147383
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "tremolo-16-13-11",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.147575
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "tremolo-16-11-13",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.147575
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "chorus-8-13-0",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.507416
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "chorus-8-0-13",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.101269
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "chorus-8-13-11",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.124071
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "chorus-8-11-13",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.124071
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "chorus-16-13-0",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.389654
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "chorus-16-0-13",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.134627
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "chorus-16-13-11",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.169328
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "chorus-16-11-13",
+      "max_error": 7.45058e-09,
+      "aggregate_effect": 0.169328
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "tremolo-8-13-0",
+      "max_error": 1.16415e-10,
+      "aggregate_effect": 0.507465
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "tremolo-8-0-13",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.10199
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "tremolo-8-13-11",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.124515
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "tremolo-8-11-13",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.124515
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "tremolo-16-13-0",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.400533
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "tremolo-16-0-13",
+      "max_error": 1.86265e-09,
+      "aggregate_effect": 0.135813
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "tremolo-16-13-11",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.186222
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "tremolo-16-11-13",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.186222
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "chorus-8-13-0",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.472526
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "chorus-8-0-13",
+      "max_error": 5.58794e-09,
+      "aggregate_effect": 0.10062
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "chorus-8-13-11",
+      "max_error": 9.31323e-09,
+      "aggregate_effect": 0.123721
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "chorus-8-11-13",
+      "max_error": 9.31323e-09,
+      "aggregate_effect": 0.123721
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "chorus-16-13-0",
+      "max_error": 2.98023e-08,
+      "aggregate_effect": 0.352997
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "chorus-16-0-13",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.135297
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "chorus-16-13-11",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.169879
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "chorus-16-11-13",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.169879
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "tremolo-8-13-0",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.472581
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "tremolo-8-0-13",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.101327
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "tremolo-8-13-11",
+      "max_error": 1.16415e-10,
+      "aggregate_effect": 0.12415
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "tremolo-8-11-13",
+      "max_error": 1.16415e-10,
+      "aggregate_effect": 0.12415
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "tremolo-16-13-0",
+      "max_error": 1.49012e-08,
+      "aggregate_effect": 0.425712
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "tremolo-16-0-13",
+      "max_error": 3.72529e-09,
+      "aggregate_effect": 0.136208
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "tremolo-16-13-11",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.186329
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "tremolo-16-11-13",
+      "max_error": 9.31323e-10,
+      "aggregate_effect": 0.186329
+    }
+  ],
+  "baseline_comparison_performed": false,
+  "retained_local_capture_count": 288,
+  "source_host_module_sdk_compiler_unchanged": true,
+  "production_prior_scripts_shared_helper_unchanged": true,
+  "prior_contracts_unchanged": 26,
+  "source_hashes": {
+    "CMakeLists.txt": "08c13799e2dda2d396ca09144f886e4e554fde5974a80115a2f422b4b39d109e",
+    "tests/Vst3RingChorusCombinedAutomationTests.cpp": "4874c17bcb079b12675b79010c63a547d5ba2e33d9d3c99117e2164b49337341",
+    "tests/Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "tests/parity/tolerances-v2/host-automation-ring-chorus-combined-v1.json": "5facf9e62637c4bd8accc9bd5b0c2f5deef3f9dd1eed5f7ad9404d3b7bc1daa0",
+    "docs/VST3_RING_CHORUS_COMBINED_AUTOMATION.md": "a7e28242d4fd4cb9a4a5b0bee7b02b2bde7a46d3e7cc865d142bce2099de8d77"
+  },
+  "limitations": [
+    "Seven-lane aggregate effect only; not per-lane attribution.",
+    "StaticCHORUS/TREMOLO modes,4096frames,two-note-cycle startup transient;not fullLFO/steady-state/mode-switch qualification.",
+    "No baseline replay or bypass controls;288captureidentities only.",
+    "No broad/malformed/fuzz/negative/GUI/DAW/AU/CPU/hardware tests."
+  ],
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/run-matrix.py >build/matrix.log 2>&1; code=$?; echo \"$code\" >build/matrix.exit; exit \"$code\""
+}

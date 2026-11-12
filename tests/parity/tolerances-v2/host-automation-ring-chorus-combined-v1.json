@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_qualification_extension",
+  "description": "Qualify simultaneous existing five RING and two chorus controls with asymmetric rank sources and static CHORUS/TREMOLO modes. Existing 35-lane capability and all 26 earlier contracts unchanged.",
+  "host_automation_ring_chorus_combined": {
+    "key_parameter_count": 35,
+    "keys": "Complete existing 35-lane roster unchanged; RING speed/amount/depth/attack/decay remain lanes 28 through 32, chorus speed/depth lanes 33 and 34.",
+    "authority": "Seven existing global controls retain source-independent routing and physical conversion. Asymmetric rank sources, neutral macros, chorus on and each effect mode are held fixed; no switch automation or production change.",
+    "timing": "Existing modern VST3 interpolation and control-before-MIDI ordering. RING attack/decay retain fresh-trigger latch semantics; initial values are held through all first onsets and later targets through all second onsets. Two supported note cycles use the unchanged shared renderer.",
+    "verification": "96 bounded float32 cases, 1248 renders: six no-queue/policy observations, scalar plus five partition renders, and one matched seven-active-constant aggregate comparator per case. Original thresholds retained. Aggregate effects do not attribute contribution to each lane. 288 local capture identities are not frozen-baseline comparisons. Fixed startup/transient windows, static modes, no optional bypass, full-cycle, steady-state, hardware, GUI, malformed-input or CPU qualification. Exact frozen module and host/source provenance required."
+  }
+}
