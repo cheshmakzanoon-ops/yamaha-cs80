@@ -44,8 +44,37 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `cc1dcae50812fa7851c161923c37de2fd420270c` appends the three existing
+MSEG octave-rate controls at lanes 89–91, bringing the current roster to
+**92 lanes**, with the literal 89-lane prefix preserved. The native prerequisite
+routing proof is published as `36efea390ac1a5a3c213db10140a471fa4584f4a`.
+
+The independently audited rate qualification passed 18 full and 18 compatibility
+scenarios: 432 renders (306 candidate + 126 frozen89), 72 actual cross-build PCM
+pairs byte-identical, and 36 native canonical-configuration readbacks. All 72
+scalar/block comparisons had maximum error 0; initial 1024-frame holds were exact.
+Positive held-note effects ranged from 0.0113993 to 0.0389594 against a predeclared
+0.00001 minimum. Five runtime binary identities and all retained/frozen sources
+matched before and after the completed resumed pass.
+See [MSEG rate evidence, recovery disclosure and exact identities](experiments/mseg-rate-automation-resume/README.md).
+
+Coverage is Linux VST3 at 44.1/48/96 kHz, realtime/offline, three isolated
+unsynced poly-looping bipolar MSEG routes to both-rank pitch/cutoff/level,
+fixed 0.15 amounts, manual/manual source mode and two held notes. Blocks
+7/64/256/1024 match scalar rendering. Unrouted, zero-amount, PURE and Legacy
+controls pass. Compatibility histories cover noqueue and four representative
+preceding lanes, not all 89. Production changes are only the three roster entries;
+DSP/UI, metadata, routing and serialization are unchanged. Five historical
+fixture guards were made append-compatible and source-reviewed, not rerun.
+
+The original attempt was interrupted during baseline-runner compilation after
+candidate linkage; its logs are preserved and are not counted as a test outcome.
+Fresh baseline compilation and qualification completed under distinct resumed
+paths. No combined-route, source-mask, sync/shape-switching, full-range, native
+DAW, cross-platform, CPU-target or hardware-fidelity qualification is implied.
+
 Published `244016b22e290a450707947b221f777f18e22c01` appends modern LFO1,
-LFO2 and LFO3 rate at lanes 86–88, bringing the current roster to **89 lanes**
+LFO2 and LFO3 rate at lanes 86–88, bringing that checkpoint’s roster to **89 lanes**
 with the literal 86-lane prefix preserved. The reviewed candidate passed 96
 full cases and 96 frozen86 compatibility cases: 2208 completed renders
 (1536 candidate + 672 baseline). All 384 actual cross-build PCM pairs matched
