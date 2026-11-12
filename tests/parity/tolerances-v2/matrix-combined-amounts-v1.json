@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "combined_supported_input_qualification",
+  "matrix_combined_amounts": {
+    "minimum_held_effect": 1e-05,
+    "scope": "All16slots concurrent, slot%3 MSEG->pitch/cutoff/level both ranks; fixed unsynced poly-loop shapes; manual/manual2notes capacity8; no baseline comparison",
+    "timing": "Physical amount0.02 through1023 then 0.040-v/-0.030+v/0.045-v/-0.035+v at2047/4095/8191/12287 +17*slot, v=.001*(slot%4);0.02 at16383. Scalar vs7/64/256/1024. Reverse and rotate-by5 queue permutations.",
+    "verification_plan": "6configs*36renders=216captures;24scalar-block,48exact queue-order,96per-slot positive motion witnesses,12native config readbacks,2canonical roundtrips; off/PURE/zero-static controls"
+  }
+}
