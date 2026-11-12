@@ -1,0 +1,34 @@
+{
+  "build_exit": 0,
+  "runtime_processes": 1,
+  "full_cases": 6,
+  "failed_positive_effect_assertions": 6,
+  "remaining_processes_not_started": 11,
+  "baseline_comparisons": 0,
+  "diagnosis": "Read-only independent source analysis: default note cohort does not excite LOW contour; no runtime instrumented diagnosis. No retries or changes yet.",
+  "runtime_inputs": {
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-kbd-level-low-automation/build-native/cs80_vst3_kbd_level_low_automation_tests": "afdbd18e0b06c17c7696b48766291c2f8351bb119f3f2faa9f4e2ef556530970",
+    "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "9bec1e7493af3fe4a7c6b68735c7befd4c6fff45cddd02f7812b5c0ff1676eeb",
+    "../yamaha-cs80-initial-bend-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "0f58966509ddb78b14c2acc454c8e01a5ac387cb4cbf4f460d7e1eae08520f4a",
+    "tests/Vst3KbdLevelLowAutomationTests.cpp": "ac1a3479ddccd7bf1704a3cd0992c736b3fae7bab07fa7cba80e0b40aa66bd81",
+    "src/plugin/HostAutomationBridge.h": "e3194fd284bc6543af1ebd9587962e3858bf2e73d67159a7fd3defa9dad1ff35"
+  },
+  "retained": {
+    "runtime-inputs.json": "b84e10d6f456741cc798063c5734fe91a2ca02610f62bf0229004a9789509c06",
+    "Vst3KbdLevelLowAutomationTests.cpp": "ac1a3479ddccd7bf1704a3cd0992c736b3fae7bab07fa7cba80e0b40aa66bd81",
+    "build.log": "b5770ee4a18e257973d76d24fa127216b9769a4cf239bc8475fe875cc55e8850",
+    "cs80_vst3_kbd_level_low_automation_tests": "afdbd18e0b06c17c7696b48766291c2f8351bb119f3f2faa9f4e2ef556530970",
+    "build-command.sh": "28a4aa587b77b755d456cd3374ad74802f2f7b8b621b96a05658da3fb923a905",
+    "HostAutomationBridge.h": "e3194fd284bc6543af1ebd9587962e3858bf2e73d67159a7fd3defa9dad1ff35",
+    "matrix-runs.json": "e26c72c3423528cbca1ef8a25069fa821f3ab7e2109497fe7c8bc957cf9cb4c1",
+    "matrix.log": "077f75f148e3cd4baeb33a6c5758b382284b43a499d5bbd7c058e3ab65e6de1a",
+    "build.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "provenance-before.json": "43f18eb3aad3e759693933e777c8f5a1e6c115495e84d644fa27a88aa9be7cc0",
+    "run-kbd-level-low-matrix.py": "22b7f130872a5cafbaefd259ba0f3e7f836ddad11bcc0a30b2bf42b2643d22c0",
+    "configure.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "matrix.exit": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "configure.log": "be019d8917490c5642103a3a99b63251e3c413711d9bd98259dbe664d3354ac1",
+    "candidate-failed.so": "9bec1e7493af3fe4a7c6b68735c7befd4c6fff45cddd02f7812b5c0ff1676eeb"
+  }
+}

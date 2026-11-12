@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing P_kbdLevelLow lane38 after unchanged38-lane prefix. Preserve metadata, contour/smoothing/DSP and31 earlier contracts.",
+  "host_automation_kbd_level_low": {
+    "key_parameter_count": 39,
+    "keys": "Full original38-lane roster unchanged; P_kbdLevelLow appended at38.",
+    "authority": "Existing global LOW keyboard level lever; physical -1..1, zero default, linear conversion. Existing smoothed held-node refresh and factory shared-bus/direct LC receiver paths unchanged.",
+    "timing": "Physical0 held0/64, then .4/-.3/.25/-.4/.3/-.2 at255/767/1535/2303/3583/4095, converted through existing normalized mapping. Live contour, not onset-latched. No per-key invariance or hardware-law claim.",
+    "verification": "36 full plus36 frozen38 compatibility cases;684 renders,12 processes,108 actual pairs across sources13/0/11,capacities8/16,six rate/modes. Exact prefix before64 and later aggregate PCM effect vs matched activeconstant; scalar/five partitions,original thresholds. No inertcontrol,full keyboard contour calibration,GUI,hardware or CPU qualification."
+  }
+}

@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), initial_bendLimits(argv[3], "host_automation_initial_bend");
-        require(initial_bendLimits["key_parameter_count"] == 38 && cs80::kSampleAccurateParameters.size() == 38,
-                "exact 38-lane initial_bend capability");
+        require(initial_bendLimits["key_parameter_count"] == 38 && cs80::kSampleAccurateParameters.size() >= 38,
+                "historical 38-lane initial_bend capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 37-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[37] == cs80::P_initBend, "exact initial_bend lane");

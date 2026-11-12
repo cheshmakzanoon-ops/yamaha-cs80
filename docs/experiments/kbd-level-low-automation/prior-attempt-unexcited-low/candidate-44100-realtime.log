@@ -1,0 +1,14 @@
+rate=44100 mode=realtime gate=full-kbd_level_low
+FAIL: kbd_level_low automation has positive later PCM effect versus active hold
+kbd_level_low=kbd_level_low-8-13 max_error=0 effect=0 prefix_exact=1
+FAIL: kbd_level_low automation has positive later PCM effect versus active hold
+kbd_level_low=kbd_level_low-8-0 max_error=0 effect=0 prefix_exact=1
+FAIL: kbd_level_low automation has positive later PCM effect versus active hold
+kbd_level_low=kbd_level_low-8-11 max_error=0 effect=0 prefix_exact=1
+FAIL: kbd_level_low automation has positive later PCM effect versus active hold
+kbd_level_low=kbd_level_low-16-13 max_error=0 effect=0 prefix_exact=1
+FAIL: kbd_level_low automation has positive later PCM effect versus active hold
+kbd_level_low=kbd_level_low-16-0 max_error=0 effect=0 prefix_exact=1
+FAIL: kbd_level_low automation has positive later PCM effect versus active hold
+kbd_level_low=kbd_level_low-16-11 max_error=0 effect=0 prefix_exact=1
+6 native kbd_level_low scenarios, 6 failures

@@ -312,7 +312,7 @@ struct Instance
         releaseReadbackController();
         return values;
     }
-    void process(int start, int count, Changes* changes, std::vector<float>& output, bool sixteen = false, bool pressure = false, bool twoNoteCycles = false)
+    void process(int start, int count, Changes* changes, std::vector<float>& output, bool sixteen = false, bool pressure = false, bool twoNoteCycles = false, int noteBase = 48)
     {
         std::vector<float> left(static_cast<size_t>(count)), right(static_cast<size_t>(count));
         float* channels[] { left.data(), right.data() };
@@ -330,6 +330,23 @@ struct Instance
             else { event.noteOff.channel = 0; event.noteOff.pitch = static_cast<int16>(pitch); event.noteOff.velocity = 0.0f; event.noteOff.noteId = pitch; }
             events.events.push_back(event);
         };
+        // Historical callers retain the literal default event sequence below.
+        // A lower physical-key cohort is opt-in for the LOW contour fixture.
+        if (noteBase != 48)
+        {
+            for (int key = 0; key < (sixteen ? 16 : 2); ++key)
+            {
+                note(17 + key, noteBase + key, true);
+                note((twoNoteCycles ? 1024 : 3072) + key, noteBase + key, false);
+                if (twoNoteCycles)
+                {
+                    note(2048 + key, noteBase + key, true);
+                    note(3584 + key, noteBase + key, false);
+                }
+            }
+        }
+        else
+        {
         if (twoNoteCycles)
         {
             for (int key = 0; key < (sixteen ? 16 : 2); ++key)
@@ -342,6 +359,7 @@ struct Instance
         {
         for (int key = 0; key < (sixteen ? 16 : 2); ++key)
         { note(17 + key, 48 + key, true); note(3072 + key, 48 + key, false); }
+        }
         }
         // Ordinary note pressure is opt-in; every historical call retains
         // the exact note-only event sequence. All pressure events follow their
@@ -356,8 +374,8 @@ struct Instance
                 event.sampleOffset = absolute - start;
                 event.type = Event::kPolyPressureEvent;
                 event.polyPressure.channel = 0;
-                event.polyPressure.pitch = static_cast<int16>(48 + key);
-                event.polyPressure.noteId = 48 + key;
+                event.polyPressure.pitch = static_cast<int16>(noteBase + key);
+                event.polyPressure.noteId = noteBase + key;
                 event.polyPressure.pressure = .7f;
                 events.events.push_back(event);
             }
@@ -411,7 +429,7 @@ Curves curvesFor(const cs80::ParamValues& parameters)
 }
 std::vector<float> render(Module& module, const cs80::ParamValues& parameters, const Curves& curves,
                           int block, bool automate = true, bool flatten = false, int source = 13, bool nullChanges = false,
-                          int secondSource = -1, bool pressure = false, bool twoNoteCycles = false)
+                          int secondSource = -1, bool pressure = false, bool twoNoteCycles = false, int noteBase = 48)
 {
     Instance instance(module, parameters, source, secondSource);
     std::vector<float> output;
@@ -435,7 +453,7 @@ std::vector<float> render(Module& module, const cs80::ParamValues& parameters, c
                     points.emplace_back(flatten ? 0 : count - 1, absoluteValue(curves[lane], initial, start + count - 1));
                 changes.add(parameterId(cs80::paramId(parameter)), std::move(points));
             }
-        instance.process(start, count, nullChanges ? nullptr : &changes, output, parameters[cs80::P_voiceMode] > 0.5f, pressure, twoNoteCycles);
+        instance.process(start, count, nullChanges ? nullptr : &changes, output, parameters[cs80::P_voiceMode] > 0.5f, pressure, twoNoteCycles, noteBase);
     }
     return output;
 }

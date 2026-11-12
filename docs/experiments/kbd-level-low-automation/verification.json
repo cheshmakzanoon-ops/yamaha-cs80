@@ -1,0 +1,246 @@
+{
+  "base_commit": "6a4087c81422fc26a3df5342aa2c0342d7a176e6",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_kbd_level_low_automation_tests",
+      "cs80_vst3_initial_bend_automation_tests"
+    ],
+    "log_note": "Requested candidate VST3 plus corrected LOW and historical InitialBend hosts; exact dependency/link steps retained in build.log."
+  },
+  "runs": 24,
+  "full_cases": 36,
+  "compatibility_cases": 36,
+  "pcm_pairs": 216,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": "Executable runtime inputs identical; scopedoc prose revision during build disclosed separately",
+  "metrics": {
+    "kbd_level_low": [
+      {
+        "max_error": 0.0,
+        "effect": 0.00873639,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00717221,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00873639,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0277936,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0240116,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0277936,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0087489,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00704122,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0087489,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0280948,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0240352,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0280948,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0188641,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0159971,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0188641,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0285558,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0234837,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0285558,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0187854,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0157409,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0187854,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0285516,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0233348,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0285516,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00382752,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00538227,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00382752,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0212375,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0155885,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0212375,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00382685,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00527321,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00382685,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0212557,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0153447,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0212557,
+        "prefix_exact": 1
+      }
+    ]
+  },
+  "old_contract_count": 31,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "fda04a570f6c580da2e49dd055a5a9f98bd11269d31c293cf4e6b5f4f9f8dda7",
+    "tests/Vst3KbdLevelLowAutomationTests.cpp": "d1dd219e5de5623035e125a056661c5e27d08f690ad08ce1e7f0f69de63c62b6",
+    "tests/Vst3AutomationTests.cpp": "a5b2804cba6a5622d51634681fb8bd327e85fd2dba3464fb47a6073b0fb39f15",
+    "tests/Vst3InitialBendAutomationTests.cpp": "66a6e9bba4676bd3f5b2f20b06cd072665959682f511b605da7e55413f98bf01",
+    "src/plugin/HostAutomationBridge.h": "e3194fd284bc6543af1ebd9587962e3858bf2e73d67159a7fd3defa9dad1ff35",
+    "tests/parity/tolerances-v2/host-automation-kbd-level-low-v1.json": "eb54a435a2980f944966707d2a8cd09d9269758f0cedc734c9815b0a30cab23f",
+    "docs/VST3_KBD_LEVEL_LOW_AUTOMATION.md": "a57111b37298156d6abc86e4743880256a54abb753260bef41ef282676fc46a1",
+    "docs/HOST_AUTOMATION.md": "da178ad8149ffa8a4010b2c1dbe0b6db85833871147e86b35c73a4be4290a8ca"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Modern smoothed live keyboard level contour; held eight-node factory shared bus unchanged.",
+    "Aggregate PCM witness is not isolated-key or calibrated hardware contour validation.",
+    "No invented bypass control.",
+    "No hardware/DAW/GUI/AU/CPU/broad/negative tests."
+  ],
+  "documentation_change_record": "documentation-change-during-build.json",
+  "executable_inputs_before_after_identical": true,
+  "renders": 1116,
+  "feature_pairs": 108,
+  "default_helper_pairs": 108,
+  "historical_compatibility_only_cases": 72,
+  "prior_attempt": {
+    "processes": 1,
+    "cases": 6,
+    "positive_effect_failures": 6,
+    "unstarted_processes": 11,
+    "diagnosis": "Source review: historical MIDI48 cohort is LOW-independent; corrected explicit MIDI24 cohort. No threshold or DSP change.",
+    "retained_binaries": "Local ignored prior-attempt-unexcited-low; hashes in outcome.json, binaries not distributed."
+  },
+  "helper_change": "Optional default48 noteBase; corrected fixture24; default-helper108actualpairs exact on same frozen38module. Not every historical suite executed.",
+  "corrected_full_cases": 36,
+  "corrected_processes": 24,
+  "prior_failed_processes": 1,
+  "total_processes_including_failed_attempt": 25,
+  "total_renders_including_failed_attempt": 1194,
+  "prior_failed_attempt_renders": 78
+}
