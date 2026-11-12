@@ -322,6 +322,11 @@ void Cs80AudioProcessor::abCopyCurrentTo(int slot)
     if (library == nullptr || slot < 0 || slot > 1)
         return;
     const juce::ScopedLock treeLock(apvts.treeLock());
+    // Only the inactive slot is persisted. Compare the serialized view so active-slot,
+    // identical and in-process-origin-only copies do not dirty the host session.
+    // This path is message-thread only; no serialization is added to the audio callback.
+    juce::ValueTree beforeSavedState("AB_COPY_STATE");
+    writeLibraryState(beforeSavedState);
     const bool record = apvts.hasActiveUserEdit();
     LibraryState::Snapshot before;
     if (record)
@@ -339,6 +344,11 @@ void Cs80AudioProcessor::abCopyCurrentTo(int slot)
         }
         undoManager.perform(new LibraryState::CopyAction(*library, slot, std::move(before), std::move(after)));
     }
+    juce::ValueTree afterSavedState("AB_COPY_STATE");
+    writeLibraryState(afterSavedState);
+    if (! beforeSavedState.isEquivalentTo(afterSavedState))
+        apvts.requestNonParameterStateUpdate();
+
 }
 
 int Cs80AudioProcessor::getAbSlot() const noexcept
