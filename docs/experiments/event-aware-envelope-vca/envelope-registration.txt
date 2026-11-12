@@ -1,0 +1,2 @@
+add_test("cs80_event_aware_envelope_vca_tests" "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-envelope-vca/tests/test_event_aware_envelope_vca.py")
+set_tests_properties("cs80_event_aware_envelope_vca_tests" PROPERTIES  TIMEOUT "120" _BACKTRACE_TRIPLES "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-envelope-vca/CMakeLists.txt;1871;add_test;/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-envelope-vca/CMakeLists.txt;0;")

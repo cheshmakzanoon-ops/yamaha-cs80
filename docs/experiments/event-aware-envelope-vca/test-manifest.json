@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "tests/test_event_aware_envelope_vca.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-envelope-vca",
+  "source_sha256": {
+    "scripts/render_event_aware_envelope_vca.py": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710",
+    "scripts/render_amplitude_envelope_reference.py": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca",
+    "tests/test_event_aware_envelope_vca.py": "a3316cc688124e0d66f2677d21b3ba140a33207327e0066de2eccd27e05028a4"
+  },
+  "started": 1794477436.4504263,
+  "exit_code": 0,
+  "finished": 1794477436.6555696,
+  "source_sha256_after": {
+    "scripts/render_event_aware_envelope_vca.py": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710",
+    "scripts/render_amplitude_envelope_reference.py": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca",
+    "tests/test_event_aware_envelope_vca.py": "a3316cc688124e0d66f2677d21b3ba140a33207327e0066de2eccd27e05028a4"
+  },
+  "log_sha256": "0f5af540163111f306a56ef99cf949008983b59ee11c33db6841579d0dd2ca3a"
+}

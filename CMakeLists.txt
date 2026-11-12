@@ -1866,6 +1866,13 @@ if (CS80_BUILD_TESTS AND UNIX)
     set_tests_properties(cs80_amplitude_envelope_reference_tests PROPERTIES TIMEOUT 120)
 endif()
 
+# Independent event-aware constant-input envelope/VCA reference (stdlib only).
+if (CS80_BUILD_TESTS AND UNIX AND Python3_VERSION VERSION_GREATER_EQUAL "3.11")
+    add_test(NAME cs80_event_aware_envelope_vca_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_event_aware_envelope_vca.py)
+    set_tests_properties(cs80_event_aware_envelope_vca_tests PROPERTIES TIMEOUT 120)
+endif()
+
 # Independent signed filter EG and its dynamic-filter/amplitude chain composition.
 if (CS80_BUILD_TESTS AND UNIX)
     add_test(NAME cs80_filter_envelope_reference_tests

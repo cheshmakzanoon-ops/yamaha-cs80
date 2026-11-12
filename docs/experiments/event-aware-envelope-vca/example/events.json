@@ -1,0 +1,337 @@
+[
+  {
+    "action": "note_on",
+    "after": {
+      "coupling": 0.0,
+      "envelope": 0.0,
+      "gain": 0.0,
+      "gate": true,
+      "li": 0.4968609655070803,
+      "output": 0.0,
+      "raw": 0.0,
+      "stage": "attack",
+      "time": {
+        "denominator": 100000,
+        "numerator": 37,
+        "seconds": 0.00037
+      }
+    },
+    "before": {
+      "coupling": 0.0,
+      "envelope": 0.0,
+      "gain": 0.0,
+      "gate": false,
+      "li": 0.4968609655070803,
+      "output": 0.0,
+      "raw": 0.0,
+      "stage": "idle",
+      "time": {
+        "denominator": 100000,
+        "numerator": 37,
+        "seconds": 0.00037
+      }
+    },
+    "envelope_event": {
+      "action": "note_on",
+      "after": {
+        "envelope": 0.0,
+        "gate": true,
+        "phase_start": {
+          "denominator": 100000,
+          "numerator": 37,
+          "seconds": 0.00037
+        },
+        "stage": "attack"
+      },
+      "before": {
+        "envelope": 0.0,
+        "gate": false,
+        "phase_start": {
+          "denominator": 1,
+          "numerator": 0,
+          "seconds": 0.0
+        },
+        "stage": "idle"
+      },
+      "time": {
+        "denominator": 100000,
+        "numerator": 37,
+        "seconds": 0.00037
+      }
+    },
+    "event": 0,
+    "time": {
+      "denominator": 100000,
+      "numerator": 37,
+      "seconds": 0.00037
+    }
+  },
+  {
+    "action": "note_off",
+    "after": {
+      "coupling": 0.0013411716770660059,
+      "envelope": 0.38990528444458844,
+      "gain": 0.38309664627098994,
+      "gate": false,
+      "li": 0.7980686114908784,
+      "output": 0.09539073152955009,
+      "raw": 0.0967319032066161,
+      "stage": "release",
+      "time": {
+        "denominator": 100000,
+        "numerator": 311,
+        "seconds": 0.00311
+      }
+    },
+    "before": {
+      "coupling": 0.0013411716770660059,
+      "envelope": 0.38990528444458844,
+      "gain": 0.38309664627098994,
+      "gate": true,
+      "li": 0.7980686114908784,
+      "output": 0.09539073152955009,
+      "raw": 0.0967319032066161,
+      "stage": "attack",
+      "time": {
+        "denominator": 100000,
+        "numerator": 311,
+        "seconds": 0.00311
+      }
+    },
+    "envelope_event": {
+      "action": "note_off",
+      "after": {
+        "envelope": 0.38990528444458844,
+        "gate": false,
+        "phase_start": {
+          "denominator": 100000,
+          "numerator": 311,
+          "seconds": 0.00311
+        },
+        "stage": "release"
+      },
+      "before": {
+        "envelope": 0.38990528444458844,
+        "gate": true,
+        "phase_start": {
+          "denominator": 100000,
+          "numerator": 37,
+          "seconds": 0.00037
+        },
+        "stage": "attack"
+      },
+      "time": {
+        "denominator": 100000,
+        "numerator": 311,
+        "seconds": 0.00311
+      }
+    },
+    "event": 1,
+    "time": {
+      "denominator": 100000,
+      "numerator": 311,
+      "seconds": 0.00311
+    }
+  },
+  {
+    "action": "retrigger",
+    "after": {
+      "coupling": 0.0026184685779795497,
+      "envelope": 0.26850916948953396,
+      "gain": 0.26442672139979295,
+      "gate": true,
+      "li": 0.7999028060230782,
+      "output": 0.06414927859147551,
+      "raw": 0.06676774716945506,
+      "stage": "attack",
+      "time": {
+        "denominator": 100000,
+        "numerator": 473,
+        "seconds": 0.00473
+      }
+    },
+    "before": {
+      "coupling": 0.0026184685779795497,
+      "envelope": 0.26850916948953396,
+      "gain": 0.26442672139979295,
+      "gate": false,
+      "li": 0.7999028060230782,
+      "output": 0.06414927859147551,
+      "raw": 0.06676774716945506,
+      "stage": "release",
+      "time": {
+        "denominator": 100000,
+        "numerator": 473,
+        "seconds": 0.00473
+      }
+    },
+    "envelope_event": {
+      "action": "retrigger",
+      "after": {
+        "envelope": 0.26850916948953396,
+        "gate": true,
+        "phase_start": {
+          "denominator": 100000,
+          "numerator": 473,
+          "seconds": 0.00473
+        },
+        "stage": "attack"
+      },
+      "before": {
+        "envelope": 0.26850916948953396,
+        "gate": false,
+        "phase_start": {
+          "denominator": 100000,
+          "numerator": 311,
+          "seconds": 0.00311
+        },
+        "stage": "release"
+      },
+      "time": {
+        "denominator": 100000,
+        "numerator": 473,
+        "seconds": 0.00473
+      }
+    },
+    "event": 2,
+    "time": {
+      "denominator": 100000,
+      "numerator": 473,
+      "seconds": 0.00473
+    }
+  },
+  {
+    "action": "reset",
+    "after": {
+      "coupling": 0.00384991259141307,
+      "envelope": 0.0,
+      "gain": 0.0,
+      "gate": false,
+      "li": 0.7999934290322191,
+      "output": -0.00384991259141307,
+      "raw": 0.0,
+      "stage": "idle",
+      "time": {
+        "denominator": 100000,
+        "numerator": 619,
+        "seconds": 0.00619
+      }
+    },
+    "before": {
+      "coupling": 0.00384991259141307,
+      "envelope": 0.43111385431721605,
+      "gain": 0.42460724297729996,
+      "gate": true,
+      "li": 0.7999934290322191,
+      "output": 0.10336341628605919,
+      "raw": 0.10721332887747226,
+      "stage": "attack",
+      "time": {
+        "denominator": 100000,
+        "numerator": 619,
+        "seconds": 0.00619
+      }
+    },
+    "envelope_event": {
+      "action": "reset",
+      "after": {
+        "envelope": 0.0,
+        "gate": false,
+        "phase_start": {
+          "denominator": 100000,
+          "numerator": 619,
+          "seconds": 0.00619
+        },
+        "stage": "idle"
+      },
+      "before": {
+        "envelope": 0.43111385431721605,
+        "gate": true,
+        "phase_start": {
+          "denominator": 100000,
+          "numerator": 473,
+          "seconds": 0.00473
+        },
+        "stage": "attack"
+      },
+      "time": {
+        "denominator": 100000,
+        "numerator": 619,
+        "seconds": 0.00619
+      }
+    },
+    "event": 3,
+    "time": {
+      "denominator": 100000,
+      "numerator": 619,
+      "seconds": 0.00619
+    }
+  },
+  {
+    "action": "note_on",
+    "after": {
+      "coupling": 0.003705990055517216,
+      "envelope": 0.0,
+      "gain": 0.0,
+      "gate": true,
+      "li": 0.7999999941872182,
+      "output": -0.003705990055517216,
+      "raw": 0.0,
+      "stage": "attack",
+      "time": {
+        "denominator": 100,
+        "numerator": 1,
+        "seconds": 0.01
+      }
+    },
+    "before": {
+      "coupling": 0.003705990055517216,
+      "envelope": 0.0,
+      "gain": 0.0,
+      "gate": false,
+      "li": 0.7999999941872182,
+      "output": -0.003705990055517216,
+      "raw": 0.0,
+      "stage": "idle",
+      "time": {
+        "denominator": 100,
+        "numerator": 1,
+        "seconds": 0.01
+      }
+    },
+    "envelope_event": {
+      "action": "note_on",
+      "after": {
+        "envelope": 0.0,
+        "gate": true,
+        "phase_start": {
+          "denominator": 100,
+          "numerator": 1,
+          "seconds": 0.01
+        },
+        "stage": "attack"
+      },
+      "before": {
+        "envelope": 0.0,
+        "gate": false,
+        "phase_start": {
+          "denominator": 100000,
+          "numerator": 619,
+          "seconds": 0.00619
+        },
+        "stage": "idle"
+      },
+      "time": {
+        "denominator": 100,
+        "numerator": 1,
+        "seconds": 0.01
+      }
+    },
+    "event": 4,
+    "time": {
+      "denominator": 100,
+      "numerator": 1,
+      "seconds": 0.01
+    }
+  }
+]

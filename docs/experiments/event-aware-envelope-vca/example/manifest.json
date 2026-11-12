@@ -1,0 +1,120 @@
+{
+  "artifacts": {
+    "envelope_transitions.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "events.json": {
+      "bytes": 7479,
+      "sha256": "83e12bed1a9673ea05f3bf2c33093cdaf22d5948199716bb5a16d464707a3e46"
+    },
+    "input_events.csv": {
+      "bytes": 108,
+      "sha256": "990e533df2898692fba59da46949208c4a686b6458edeaa1e37f21919d3523d4"
+    },
+    "render_amplitude_envelope_reference.py": {
+      "bytes": 14530,
+      "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+    },
+    "renderer.py": {
+      "bytes": 15166,
+      "sha256": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710"
+    },
+    "segments.json": {
+      "bytes": 2518,
+      "sha256": "ed51f07b5b7f0c90ec96a070fddc6b7287e7492f4f2bc2acd141ff4114f993e1"
+    },
+    "trace.csv": {
+      "bytes": 10829,
+      "sha256": "a40081436d1fa761ae25376390146bd66fcff7b93422ae3fe5a25c4d768f5e3c"
+    },
+    "transitions.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    }
+  },
+  "clock": "Exact Fraction samples/events; autonomous boundaries before same-time events in file order; snapshots after events; no t=0 tick",
+  "complete": true,
+  "constants": {
+    "feedthrough_promoted_float32": 0.0010000000474974513,
+    "offset_promoted_float32": 0.001500000013038516,
+    "tau_ac_seconds": 0.09999999999999999,
+    "tau_li_seconds": 0.0005419354838709677
+  },
+  "endpoint_span": {
+    "denominator": 100,
+    "numerator": 1,
+    "seconds": 0.01
+  },
+  "equations": [
+    "LI=LC+(LI0-LC)*exp(-t/tauLI)",
+    "raw=2**EI*(input+offset+feedthrough)*LI*envelope",
+    "dCoupling/dt=(raw-Coupling)/tauAC",
+    "output=raw-Coupling"
+  ],
+  "integration": "Closed exponential convolution; anchor only actual stage/event boundaries. Samples query anchors, never feed states back. Short-interval cancellation uses 40-term local series; binary64 evaluation is not a rigorous error certificate.",
+  "intervals": 80,
+  "jump_semantics": "LI/coupling continuous through envelope events/snaps; raw/output right-continuous jumps retained with no fictitious pre-event forcing",
+  "limits": {
+    "max_bundle_bytes": 33554432,
+    "max_events": 1024,
+    "max_input_bytes": 1048576,
+    "max_samples": 20001,
+    "max_seconds": 2
+  },
+  "not_modelled": [
+    "time-varying audio/LC/EI",
+    "negative LI or zero-floor crossings",
+    "filter/oscillator",
+    "voice allocation",
+    "pedals",
+    "live ADSR parameters",
+    "hardware calibration",
+    "production comparison"
+  ],
+  "parameters": {
+    "attack": {
+      "binary64": 0.01,
+      "decimal_rational": "1/100"
+    },
+    "audio_input": {
+      "binary64": 0.25,
+      "decimal_rational": "1/4"
+    },
+    "decay": {
+      "binary64": 0.02,
+      "decimal_rational": "1/50"
+    },
+    "ei": {
+      "binary64": 0.3,
+      "decimal_rational": "3/10"
+    },
+    "initial_coupling": {
+      "binary64": 0.0,
+      "decimal_rational": "0"
+    },
+    "initial_li": {
+      "binary64": 0.2,
+      "decimal_rational": "1/5"
+    },
+    "lc": {
+      "binary64": 0.8,
+      "decimal_rational": "4/5"
+    },
+    "release": {
+      "binary64": 0.03,
+      "decimal_rational": "3/100"
+    },
+    "sustain": {
+      "binary64": 0.4,
+      "decimal_rational": "2/5"
+    }
+  },
+  "phase_boundaries": "Existing envelope exact rational attack duration; binary64 logarithmic decay/release durations converted once to Fraction; existing threshold snaps retained",
+  "provenance": "Source/event snapshots identify bytes, not an authenticated runtime. Existing IG00151Reference.h equations and promoted float offsets; libm final bits can vary.",
+  "rate_hz": 8000,
+  "samples": 81,
+  "schema": "cs80-event-aware-envelope-vca-v1",
+  "scope": "Constant-audio conditional envelope/VCA reference; inferred laws, not hardware, production equivalence, or a whole voice",
+  "units": "Uncalibrated engine units for input/LC/LI/coupling/output; EI octaves; envelope unitless"
+}
