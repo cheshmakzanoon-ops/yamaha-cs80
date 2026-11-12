@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "scripts/render_ring_reference.py",
+    "--knots",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-reference/build/ring-example-knots.csv",
+    "--input-amplitude",
+    ".4",
+    "--input-frequency",
+    "700",
+    "--input-phase",
+    ".125",
+    "--amount",
+    ".6",
+    "--carrier-initial-phase",
+    ".25",
+    "--rate",
+    "8000",
+    "--samples",
+    "81",
+    "--out",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-reference/build/ring-reference-example"
+  ],
+  "renderer_sha256": "89016c5402a8151c08be1495ef9bf69926bcee3157c4ce46a8c88fe57a403020",
+  "input_sha256": "181242a51cc1255b73376c529b9f62d067fc2b2b9b4642ebd13e34da8856fe2f",
+  "exit_code": 0,
+  "renderer_sha256_after": "89016c5402a8151c08be1495ef9bf69926bcee3157c4ce46a8c88fe57a403020"
+}

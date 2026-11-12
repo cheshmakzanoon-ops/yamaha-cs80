@@ -1,0 +1,2 @@
+add_test("cs80_ring_time_reference_tests" "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-reference/tests/test_ring_time_reference.py")
+set_tests_properties("cs80_ring_time_reference_tests" PROPERTIES  TIMEOUT "120" _BACKTRACE_TRIPLES "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-reference/CMakeLists.txt;1878;add_test;/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-reference/CMakeLists.txt;0;")

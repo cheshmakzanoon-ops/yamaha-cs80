@@ -1,0 +1,3 @@
+/workspace/scratch/ee447c520988/cs80-build-tools/bin/cmake -S . -B build-core -G Ninja -DCMAKE_MAKE_PROGRAM=/workspace/scratch/ee447c520988/cs80-build-tools/bin/ninja -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON >build/ring-reference-configure.log 2>&1
+exit_code=0
+No build or CTest executions performed.

@@ -1,0 +1,97 @@
+{
+  "artifacts": {
+    "RingModulator.h": {
+      "bytes": 2860,
+      "sha256": "db854fa63756c188b2b2ee855fd2e9cd68cf2efcb09f0fcc0e2b59735c945dce"
+    },
+    "input_knots.csv": {
+      "bytes": 55,
+      "sha256": "181242a51cc1255b73376c529b9f62d067fc2b2b9b4642ebd13e34da8856fe2f"
+    },
+    "knots.json": {
+      "bytes": 1367,
+      "sha256": "02a8267e7a1d7eea0e809e4a2def756e171e0c25ee156fd02cae559c53b73b3f"
+    },
+    "render_amplitude_envelope_reference.py": {
+      "bytes": 14530,
+      "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+    },
+    "renderer.py": {
+      "bytes": 10139,
+      "sha256": "89016c5402a8151c08be1495ef9bf69926bcee3157c4ce46a8c88fe57a403020"
+    },
+    "segments.json": {
+      "bytes": 949,
+      "sha256": "adcc8e2537a3aa111d9fae198acadfa50cc59437314f0cbc2035eb21c6420f75"
+    },
+    "trace.csv": {
+      "bytes": 12998,
+      "sha256": "07dc13a849c4c9c237f80a815e19458854a331d2d88eb158f683849e8b70c31e"
+    }
+  },
+  "clock": "Exact Fraction sample/knot clock; continuous PWL voltage; phase anchored only at actual knots; no time-zero tick",
+  "complete": true,
+  "constants": {
+    "anchor_period_seconds": 0.15,
+    "anchor_volts": 5,
+    "carrier_offset": 0.005,
+    "inferred_max_volts": 10,
+    "max_period_seconds": 0.005,
+    "output_offset": 0.001,
+    "signal_offset": 0.0005
+  },
+  "endpoint_span": {
+    "denominator": 100,
+    "numerator": 1,
+    "seconds": 0.01
+  },
+  "equations": [
+    "f(V)=(1/.150)*exp(log(30)*(V-5)/5)",
+    "phase_increment=fstart*dt*expm1(z)/z; z=log(30)/5*(Vend-Vstart)*dt/duration",
+    "wet=(input+.0005)*(carrier+.005)+.001",
+    "output=(1-amount)*input+amount*wet"
+  ],
+  "intervals": 80,
+  "limitations": [
+    "No hardware calibration",
+    "No production equivalence",
+    "No alias/antialias qualification",
+    "No audio listening or WAV",
+    "No whole voice"
+  ],
+  "limits": {
+    "max_bundle_bytes": 33554432,
+    "max_input_bytes": 1048576,
+    "max_knots": 1024,
+    "max_samples": 20001,
+    "max_seconds": 2
+  },
+  "parameters": {
+    "amount": {
+      "binary64": 0.6,
+      "decimal_rational": "3/5"
+    },
+    "carrier_initial_phase": {
+      "binary64": 0.25,
+      "decimal_rational": "1/4"
+    },
+    "input_amplitude": {
+      "binary64": 0.4,
+      "decimal_rational": "2/5"
+    },
+    "input_frequency": {
+      "binary64": 700.0,
+      "decimal_rational": "700"
+    },
+    "input_phase": {
+      "binary64": 0.125,
+      "decimal_rational": "1/8"
+    }
+  },
+  "provenance": "RingModulator.h algebraic model; docs/workstreams/ws4-circuits.md Step 2 evidence classes. Header snapshot is provenance only, not executed. Direct converter voltage, not SPEED/depth/envelope composition or production smoothing. Saved source hashes identify bytes, not authenticated execution; libm bits may vary.",
+  "rate_hz": 8000,
+  "samples": 81,
+  "schema": "cs80-ring-time-reference-v1",
+  "scope": "Independent inferred exponential-converter/offset-multiplier reference; fixed sine input and amount, explicit initial phases; no envelope generation or smoothing",
+  "units": "Converter-node volts; frequencies Hz; phases cycles; input/output uncalibrated engine units"
+}

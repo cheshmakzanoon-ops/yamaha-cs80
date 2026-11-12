@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "tests/test_ring_time_reference.py",
+    "-v"
+  ],
+  "interpreter": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "python_version": "3.12.14",
+  "interpreter_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+  "source_sha256": {
+    "scripts/render_ring_reference.py": "89016c5402a8151c08be1495ef9bf69926bcee3157c4ce46a8c88fe57a403020",
+    "scripts/render_amplitude_envelope_reference.py": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca",
+    "src/reference/RingModulator.h": "db854fa63756c188b2b2ee855fd2e9cd68cf2efcb09f0fcc0e2b59735c945dce",
+    "tests/test_ring_time_reference.py": "8f284a538eab06167dadb1128ff936a69984da3fad11eca25a2bdebc295abbcf"
+  },
+  "exit_code": 0,
+  "source_sha256_after": {
+    "scripts/render_ring_reference.py": "89016c5402a8151c08be1495ef9bf69926bcee3157c4ce46a8c88fe57a403020",
+    "scripts/render_amplitude_envelope_reference.py": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca",
+    "src/reference/RingModulator.h": "db854fa63756c188b2b2ee855fd2e9cd68cf2efcb09f0fcc0e2b59735c945dce",
+    "tests/test_ring_time_reference.py": "8f284a538eab06167dadb1128ff936a69984da3fad11eca25a2bdebc295abbcf"
+  },
+  "log_sha256": "338d743efca69f6bacc90abd1003af7f69bbcf45890f8b9f5e261e67b3b22d2e"
+}
