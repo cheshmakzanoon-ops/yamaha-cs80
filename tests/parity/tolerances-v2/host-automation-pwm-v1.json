@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append rank PWM speed/depth lanes50..53 after unchanged50-lane prefix; preserve metadata,DSP,source masks,helper and37 contracts.",
+  "host_automation_pwm": {
+    "key_parameter_count": 54,
+    "keys": "Rank0speed50/depth51;rank1speed52/depth53. Full50-lane prefix unchanged.",
+    "authority": "Existing rank routing: PANEL13 positive;factory0/MEMORY11 selected-source PCMmasking. Existing speed.05..20Hz/skew.35 anddepth0..1 metadata unchanged.",
+    "timing": "Live smoothed speed drives continuous PWMphase;depth scales pulsewidth modulation. Initial3Hz/.6hold0/128;speed1/7/2/6/1.5/4Hz ordepth.2/.8/.3/.7/.15/.5 at511/1023/1791/2559/3583/4095 via existingnormalizedconversion. PANELpulseon,sawoff,sine/noise0,PW.5,otherPWmods0.",
+    "verification": "144full48PANELpositive96masked plus144frozen50compatibility;2784renders12process432actualpairs. Scalar/fivepartitions,exactpre128,matchedactivehold effects/masks;24PANELspeedcases addselectedrankdepth0 PCM-onlycontrolpairs. No phasestate/fullLFOcycle/alias/hardware/GUI/CPUclaim;originalthresholds retained."
+  }
+}
