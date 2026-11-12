@@ -88,7 +88,7 @@ establish sample-offset support. It is not a passing qualification result.
 Every runtime outcome was retained without retries. All 18 earlier JSON
 contracts were verified byte-identical to the base revision. The initial build
 attempt failed because configuration preceded a concurrent CMake target edit;
-no tests ran in that attempt. Explicit reconfiguration and the final 98-step
+no tests ran in that attempt. Explicit reconfiguration and the final plugin/three-host
 build succeeded. Both attempts' logs and exact commands are retained alongside
 source/module/host hashes, all runtime logs, and per-capture hashes in
 `experiments/sub-legacy-speed-automation/verification.json` and its referenced
