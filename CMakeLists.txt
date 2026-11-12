@@ -1205,6 +1205,9 @@ if (CS80_BUILD_PLUGIN)
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_preset_preferences.py
                 --executable $<TARGET_FILE:CS80Snapshots>)
     set_tests_properties(cs80_preset_preferences_tests PROPERTIES TIMEOUT 90)
+    # Explicit pointer choice of a restored selection through real JUCE rows, no native peer.
+    add_test(NAME cs80_preset_click_tests COMMAND CS80Snapshots --preset-click-tests)
+    set_tests_properties(cs80_preset_click_tests PROPERTIES TIMEOUT 60)
     # Real processor/FIFO ownership tests without constructing an editor or
     # native peer. The existing full UI smoke test remains independent.
     add_test(NAME cs80_undo_replay_gesture_tests COMMAND CS80Snapshots --undo-replay-gesture-tests)

@@ -9,7 +9,7 @@
 #include <vector>
 
 class Cs80AudioProcessor;
-namespace cs80::tests { struct PresetSaveAccess; struct PresetLoadAccess; struct PresetIdentityAccess; struct PresetRefreshAccess; struct PresetBrowserXmlAccess; struct PresetRevertAccess; struct PresetSearchAccess; struct PresetPreferencesAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct PresetLoadAccess; struct PresetIdentityAccess; struct PresetRefreshAccess; struct PresetBrowserXmlAccess; struct PresetRevertAccess; struct PresetSearchAccess; struct PresetPreferencesAccess; struct PresetClickAccess; }
 
 namespace cs80::ui
 {
@@ -143,6 +143,7 @@ private:
     friend struct cs80::tests::PresetRevertAccess;
     friend struct cs80::tests::PresetSearchAccess;
     friend struct cs80::tests::PresetPreferencesAccess;
+    friend struct cs80::tests::PresetClickAccess;
 
     struct Entry
     {
@@ -191,6 +192,7 @@ private:
                                             juce::Component* existing) override;
     juce::String getNameForRow(int rowNumber) override;
     void selectedRowsChanged(int lastRowSelected) override;
+    void listBoxItemClicked(int row, const juce::MouseEvent&) override;
     void listBoxItemDoubleClicked(int row, const juce::MouseEvent&) override;
     void returnKeyPressed(int lastRow) override;
     void deleteKeyPressed(int lastRow) override;
@@ -243,6 +245,7 @@ private:
     std::vector<Entry> entries;
     std::vector<int> filtered;
     int selectedFilteredRow = -1;
+    juce::String silentlySelectedKey;  // restored highlight still awaiting an explicit row choice
     int hoveredRow = -1;
     float uiScale = 1.0f;
     Layout layout;

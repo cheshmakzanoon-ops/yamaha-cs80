@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-12",
+  "integration_base": "b323b8e885914be2309b04539f46029adc576c3f",
+  "click_commit_reviewed_separately": "b42fe720de3225a3261ca38d1ab6fd9fc8f1a0a5",
+  "preference_commit_already_published": "c580b9450625f6a4641e3c0ea313cfe94c184448",
+  "provenance": "Combined verification only. The original click review manifest/evidence and preference evidence are preserved byte-for-byte and are not relabeled as tests of this combined binary.",
+  "resolutions": "Additive test CMake registration, test-friend declarations, snapshot include/entry point. PresetBrowser.cpp merged cleanly. Removing reviewed click additions exactly reconstructs the remote integration base in all four overlapping files.",
+  "behavior_changes_during_integration": "None beyond the two separately reviewed patches.",
+  "preserved": "All 19 non-overlap reviewed click paths and all unrelated current-main files, including preference tests and protected UI/fader sources.",
+  "build": "Fresh Linux Release GCC 14.2.0, pinned JUCE 8.0.11, Ninja; no cache retargeting.",
+  "combined_binary": {
+    "path": "build-preset-click-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "c30e8fcd1f0b263c186aeda31dc605aef1ff5d4550262e34c01727ad31e16e15"
+  },
+  "focused": {
+    "checks": 41,
+    "failures": 0,
+    "exit_code": 0
+  },
+  "preferences": {
+    "checks": 85,
+    "failures": 0,
+    "fresh_processes": 7,
+    "phase_checks": {
+      "enable": 19,
+      "read-enabled": 8,
+      "disable": 16,
+      "read-disabled": 8,
+      "missing": 15,
+      "read-missing": 7,
+      "blocked": 12
+    },
+    "exit_code": 0
+  },
+  "adjacent": {
+    "passed": 12,
+    "failed": 0,
+    "seconds": 7.77,
+    "parallelism": 1,
+    "exit_code": 0,
+    "regex": "^cs80_(preset_click|preset_preferences|preset_search|controller_reset_host|keyboard_handoff_host|voice_activity_host|context_menu_keyboard|typed_value_unit|parameter_combo_context|studio_switch_context|studio_lfo_context|undo_replay_gesture)_tests$"
+  },
+  "source_sha256": {
+    "CMakeLists.txt": "d2e45340bd43de0a32f76eb5c7946c7766fb94e4cc558db6d28b9d94517deb73",
+    "src/plugin/PresetBrowser.cpp": "c20495c3e7de0587a6be141fa190582733823c3334919ef5da379e10e8d8ee75",
+    "src/plugin/PresetBrowser.h": "c6a7e4dfc2544f71bcc8efd922619bc79842cb5ff3a7690fdf5462ca943657bf",
+    "src/tools/ui_snapshot.cpp": "d47b83542bdcf217379e19184da6179e5c2980beabc5cc14a2846bd7827cceb9",
+    "tests/PresetClickTests.h": "d1eda112adcc0ce436f9d584c320588249af09368146db417cb8e0be192eab3d",
+    "tests/PresetPreferencesTests.h": "6f1d84c3f3cc604d018f6e882e5f049dfc76650c0e684732a8542189145b0409",
+    "tests/test_preset_preferences.py": "849fd0b0287cce0f86157b4a995f56c75ba3e15cb0d1b899d8e99c7b01e0b8c7"
+  },
+  "independent_review": {
+    "source": "Approved, both fixes retained; no blocker.",
+    "binary_sha256_verified": "c30e8fcd1f0b263c186aeda31dc605aef1ff5d4550262e34c01727ad31e16e15",
+    "source_hashes_verified": 7,
+    "focused": {
+      "checks": 41,
+      "failures": 0,
+      "exit_code": 0
+    },
+    "preferences": {
+      "checks": 85,
+      "failures": 0,
+      "fresh_processes": 7,
+      "exit_code": 0
+    },
+    "adjacent": {
+      "passed": 12,
+      "failed": 0,
+      "seconds": 7.7,
+      "parallelism": 1,
+      "exit_code": 0
+    },
+    "post_run_sources": "All seven hashes rechecked unchanged.",
+    "reviewer_actions": "No builds, source edits or remote writes."
+  },
+  "execution_limits": "DISPLAY unset, disposable preference paths; no remote writes, native peers, Xvfb, security/parser/corruption suites or restricted scanner/benchmark work.",
+  "not_qualified": [
+    "full regression suite",
+    "native-pointer/GUI validation",
+    "DAW",
+    "cross-platform",
+    "pluginval",
+    "sanitizers",
+    "remote CI"
+  ]
+}

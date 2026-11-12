@@ -1,0 +1,116 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-preset-category-selection/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-preset-category-selection/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-preset-category-selection
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 190
+      Start 190: cs80_preset_search_tests
+
+190: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-search-tests"
+190: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+190: Test timeout computed to be: 60
+190: Preset search keyboard: 140 checks, 0 failures
+ 1/11 Test #190: cs80_preset_search_tests .............   Passed    0.20 sec
+test 191
+      Start 191: cs80_preset_click_tests
+
+191: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-click-tests"
+191: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+191: Test timeout computed to be: 60
+191: Preset row click audition: 41 checks, 0 failures
+ 2/11 Test #191: cs80_preset_click_tests ..............   Passed    0.10 sec
+test 192
+      Start 192: cs80_undo_replay_gesture_tests
+
+192: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--undo-replay-gesture-tests"
+192: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+192: Test timeout computed to be: 120
+192: Undo replay gesture tests: 317 checks, 0 failures
+ 3/11 Test #192: cs80_undo_replay_gesture_tests .......   Passed    0.42 sec
+test 207
+      Start 207: cs80_controller_reset_host_tests
+
+207: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--controller-reset-tests"
+207: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+207: Test timeout computed to be: 120
+207: Controller reset host tests: 2304 checks, 0 failures
+ 4/11 Test #207: cs80_controller_reset_host_tests .....   Passed    2.07 sec
+test 208
+      Start 208: cs80_voice_activity_host_tests
+
+208: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--voice-activity-tests"
+208: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+208: Test timeout computed to be: 120
+208: Voice activity host tests: 0 failures
+ 5/11 Test #208: cs80_voice_activity_host_tests .......   Passed    0.14 sec
+test 210
+      Start 210: cs80_keyboard_handoff_host_tests
+
+210: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--keyboard-handoff-tests"
+210: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+210: Test timeout computed to be: 120
+210: Keyboard handoff host tests: 0 failures
+ 6/11 Test #210: cs80_keyboard_handoff_host_tests .....   Passed    0.47 sec
+test 212
+      Start 212: cs80_studio_lfo_context_tests
+
+212: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--studio-lfo-context-tests"
+212: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+212: Test timeout computed to be: 120
+212: Studio LFO context tests: 511 checks, 0 failures
+ 7/11 Test #212: cs80_studio_lfo_context_tests ........   Passed    3.05 sec
+test 213
+      Start 213: cs80_studio_switch_context_tests
+
+213: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--studio-switch-context-tests"
+213: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+213: Test timeout computed to be: 120
+213: Studio switch context tests: 122 checks, 0 failures
+ 8/11 Test #213: cs80_studio_switch_context_tests .....   Passed    0.42 sec
+test 214
+      Start 214: cs80_parameter_combo_context_tests
+
+214: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--parameter-combo-context-tests"
+214: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+214: Test timeout computed to be: 120
+214: Parameter combo context tests: 119 checks, 0 failures
+ 9/11 Test #214: cs80_parameter_combo_context_tests ...   Passed    0.13 sec
+test 215
+      Start 215: cs80_context_menu_keyboard_tests
+
+215: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--context-menu-keyboard-tests"
+215: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+215: Test timeout computed to be: 60
+215: Context menu keyboard tests: 62 checks, 0 failures
+10/11 Test #215: cs80_context_menu_keyboard_tests .....   Passed    0.10 sec
+test 216
+      Start 216: cs80_typed_value_unit_tests
+
+216: Test command: /workspace/scratch/ee447c520988/build-preset-category-selection/CS80Snapshots_artefacts/Release/CS80Snapshots "--typed-value-unit-tests"
+216: Working Directory: /workspace/scratch/ee447c520988/build-preset-category-selection
+216: Test timeout computed to be: 60
+216: Typed-value formatter compatibility: 950 cases, 950 accepted, digest 8d7e609da2f21897
+216: Typed-value unit tests: 116 checks, 0 failures
+11/11 Test #216: cs80_typed_value_unit_tests ..........   Passed    0.06 sec
+
+The following tests passed:
+	cs80_preset_search_tests
+	cs80_preset_click_tests
+	cs80_undo_replay_gesture_tests
+	cs80_controller_reset_host_tests
+	cs80_voice_activity_host_tests
+	cs80_keyboard_handoff_host_tests
+	cs80_studio_lfo_context_tests
+	cs80_studio_switch_context_tests
+	cs80_parameter_combo_context_tests
+	cs80_context_menu_keyboard_tests
+	cs80_typed_value_unit_tests
+
+100% tests passed, 0 tests failed out of 11
+
+Total Test time (real) =   7.18 sec

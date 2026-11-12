@@ -1,0 +1,5 @@
+FAIL: single-clicking the highlighted search result auditions exactly when enabled
+FAIL: explicit click still chooses the restored file after its row moves
+FAIL: missing silently selected file reports failure without replacing the live sound
+FAIL: another explicit click retries the same restored selection after its file returns
+Preset row click audition: 41 checks, 4 failures

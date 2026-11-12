@@ -3589,6 +3589,8 @@ void PresetBrowser::paintListBoxItem(int rowNumber, Graphics& g, int width, int 
 void PresetBrowser::selectedRowsChanged(int lastRowSelected)
 {
     selectedFilteredRow = lastRowSelected;
+    const auto* selected = selectedEntry();
+    silentlySelectedKey = restoringSelection && selected != nullptr ? selected->key : juce::String();
     if (deleteArmedKey.isNotEmpty())
     {
         const auto* armed = selectedEntry();
@@ -3612,6 +3614,21 @@ void PresetBrowser::selectedRowsChanged(int lastRowSelected)
     }
     updateSelectionWidgets();
     list->repaint();
+}
+
+void PresetBrowser::listBoxItemClicked(int row, const juce::MouseEvent&)
+{
+    // JUCE does not report a selection change when a click chooses an already
+    // highlighted search/restore result. Only that silent selection needs this
+    // path: an ordinary new-row click already attempted audition above, even
+    // if the load failed. Keep the stable key so an explicit retry can work.
+    const auto* entry = selectedEntry();
+    if (! auditionOn || restoringSelection || row != selectedFilteredRow
+        || entry == nullptr || entry->key != silentlySelectedKey)
+        return;
+    syncLoaded();
+    if (! isLoaded(*entry))
+        loadSelected();
 }
 
 void PresetBrowser::listBoxItemDoubleClicked(int, const juce::MouseEvent&)

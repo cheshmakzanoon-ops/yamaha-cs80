@@ -1,0 +1,6 @@
+src/plugin/PresetBrowser.cpp: removing only the reviewed click additions exactly reproduces remote base, including preference callbacks.
+src/plugin/PresetBrowser.h: removing only additive click friend/override/marker declarations exactly reproduces remote base.
+CMakeLists.txt: removing the three-line click registration exactly reproduces remote base with preference registration intact.
+src/tools/ui_snapshot.cpp: removing only click include/entry point/smoke invocation exactly reproduces remote base.
+All 19 other reviewed click paths, including original documentation and evidence, remain byte-identical to b42fe720.
+Preference tests and protected UI/fader sources remain byte-identical to remote integration base.

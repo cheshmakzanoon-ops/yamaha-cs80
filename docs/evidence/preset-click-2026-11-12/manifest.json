@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-12",
+  "base_commit": "54479a9a64e15c16579f67b8818fe2beba428aee",
+  "issue": "Single-click AUDITION does not load a silently restored selected result.",
+  "production_scope": "PresetBrowser silent-selection stable key and explicit row-click callback only.",
+  "baseline": {
+    "checks": 41,
+    "failures": 4,
+    "exit_code": 1,
+    "sha256": "fd08c328adb552dcaf60b2d3a3e80655c9679f4ce4c08734b5a33acb1be6bfa6",
+    "construction": "Original base PresetBrowser.cpp; final test harness, friend and inert marker storage declaration only; new click override declaration absent. Same source worktree and fresh build directory, no cache retargeting."
+  },
+  "final": {
+    "checks": 41,
+    "failures": 0,
+    "exit_code": 0,
+    "sha256": "ef61cb988cf528ef52ed3fbd1740c857b8bcb419c7c82379d352b501b57aa87a"
+  },
+  "adjacent": {
+    "passed": 11,
+    "failed": 0,
+    "seconds": 7.28,
+    "parallelism": 1,
+    "selection_regex": "^cs80_(preset_click|preset_search|controller_reset_host|keyboard_handoff_host|voice_activity_host|context_menu_keyboard|typed_value_unit|parameter_combo_context|studio_switch_context|studio_lfo_context|undo_replay_gesture)_tests$"
+  },
+  "fixture": "Disposable valid presets only. Missing-file retry moves one intact fixture file out and back. Favourites storage is isolated with CS80_FAVOURITES_FILE.",
+  "build": "Fresh Linux Release, GCC 14.2.0, pinned JUCE 8.0.11, Ninja; DISPLAY unset for test execution.",
+  "source_sha256": {
+    "CMakeLists.txt": "0d6c674dc8d1f4d9a1f12f8c2e596e1c38ed4e579da10298d52ba0f7dedf1849",
+    "src/plugin/PresetBrowser.cpp": "ef9a4314563c5e2aa9678473e76cef8fa32001633bd1dbd82dfdd30969da2bef",
+    "src/plugin/PresetBrowser.h": "7fa31299fca8a3cce1031f7c364fda45bc587704bc0229f03ce30c42c8666fd4",
+    "src/tools/ui_snapshot.cpp": "5d79c686e0863fdaab834456b9a226f123ebaa55221fbd4ec30beeeb37544ea3",
+    "tests/PresetClickTests.h": "d1eda112adcc0ce436f9d584c320588249af09368146db417cb8e0be192eab3d"
+  },
+  "independent_review": {
+    "source_review": "Approved with no blocker; final marker lifetime verified.",
+    "baseline": {
+      "checks": 41,
+      "failures": 4,
+      "exit_code": 1
+    },
+    "final": {
+      "checks": 41,
+      "failures": 0,
+      "exit_code": 0
+    },
+    "adjacent": {
+      "passed": 11,
+      "failed": 0,
+      "seconds": 7.18,
+      "exit_code": 0
+    },
+    "verified": "Five source/test hashes and exact final/baseline binaries.",
+    "reviewer_changes": "No source edits, builds, native peers or restricted test suites."
+  },
+  "not_qualified": [
+    "native-peer UI",
+    "real pointing devices",
+    "accessibility",
+    "screenshots",
+    "DAW",
+    "macOS/Windows",
+    "pluginval",
+    "sanitizers",
+    "remote CI",
+    "full regression suite"
+  ],
+  "excluded": "No security, parser, malformed-file or corruption regression suites were run."
+}
