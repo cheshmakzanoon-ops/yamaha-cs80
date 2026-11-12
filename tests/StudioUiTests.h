@@ -6,6 +6,7 @@
 // learning tools, keyboard tab order and minimum hit targets. Every capture is written as a PNG
 // next to the other snapshots for visual review.
 
+#include "VoiceMonitorFocusChecks.h"
 #include "plugin/AdvancedPanel.h"
 #include "core/ModulationLfo.h"
 #include "plugin/EvidenceRegister.h"
@@ -1157,10 +1158,8 @@ inline void testTabOrder(const Check& check, const Flush& flush)
         flush(30);
         if (auto* scope = findById(editor, "voice_monitor"))
         {
-            const auto scopeOrder = tabOrder(*scope);
-            check(scopeOrder.size() == 3 && accessibleName(*scopeOrder[0]) == "Monitor channel I"
-                      && accessibleName(*scopeOrder[2]) == "Close the voice monitor",
-                  "voice monitor order: channel I, channel II, CLOSE");
+            check(cs80::test::voiceMonitorFocusMatches(*scope, false),
+                  "voice monitor order: channel I, channel II, CLOSE, LIVE");
         }
         toolbar->getActions().toggleScope();
         toolbar->getActions().startTour();
