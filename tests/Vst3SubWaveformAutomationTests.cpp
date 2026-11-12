@@ -14,7 +14,7 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation");
-        require(cs80::kSampleAccurateParameters.size() == 24, "unchanged 24-lane capability");
+        require(cs80::kSampleAccurateParameters.size() >= 24, "unchanged 24-lane capability prefix");
         require(cs80::kSampleAccurateParameters[20] == cs80::P_subOriginalSpeed
                 && cs80::kSampleAccurateParameters[21] == cs80::P_subVco
                 && cs80::kSampleAccurateParameters[22] == cs80::P_subVcf

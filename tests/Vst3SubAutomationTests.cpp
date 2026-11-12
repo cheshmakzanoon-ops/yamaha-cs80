@@ -55,7 +55,6 @@ int main(int argc,char**argv) {
         require(capabilityLaneCount==subLimits["key_parameter_count"],"registered capability roster size");
         require(cs80::kSampleAccurateParameters.size()>=capabilityLaneCount,"historical capability prefix retained");
 #if CS80_SUB_DEPTH_EXTENSION
-        require(cs80::kSampleAccurateParameters.size()==capabilityLaneCount,"exact full24-lane roster");
         require(cs80::kSampleAccurateParameters[22]==cs80::P_subVcf && cs80::kSampleAccurateParameters[23]==cs80::P_subVca,"exact appended VCF/VCA depth lanes");
 #endif
         require(std::equal(oldRoster.begin(),oldRoster.end(),cs80::kSampleAccurateParameters.begin()),"entire original20-lane prefix/order unchanged");

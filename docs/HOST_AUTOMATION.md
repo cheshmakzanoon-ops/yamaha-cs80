@@ -2,10 +2,10 @@
 
 ## Scope
 
-This integration preserves host sample offsets for twenty-four VST3 parameters in
+This integration preserves host sample offsets for twenty-seven VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed and SUB VCO/VCF/VCA depths. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
@@ -15,6 +15,9 @@ continuous depths while preserving that 22-lane prefix.
 Static falling-saw, rising-saw and square selection with those continuous queues
 has a separate [bounded native gate](VST3_SUB_WAVEFORM_AUTOMATION.md); discrete
 waveform selection itself remains block-rate.
+The [touch-amount extension](VST3_SUB_TOUCH_AUTOMATION.md) appends three existing
+global amounts after the unchanged 24-lane prefix; pressure-event routing and
+DSP response laws are not altered.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

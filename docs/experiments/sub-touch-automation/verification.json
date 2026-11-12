@@ -1,0 +1,70 @@
+{
+  "base_local_commit": "dfba15600b33ed22b5e78a0ed7f17fb220a45dc0",
+  "base_published_equivalent_commit": "365542faa497d4f1fc2f337fc32473500af0df8f",
+  "baseline_module_source": "760fcb55e793ea3b408eecff36bf955f6f81da17",
+  "candidate_ctests_passed": 24,
+  "candidate_ctests_failed": 0,
+  "scenario_counts": {
+    "touch": 108,
+    "static_waveform": 108,
+    "depth": 144,
+    "speed_vco": 72
+  },
+  "touch_max_partition_error": 0.0,
+  "touch_effect_range": [
+    0.0019374,
+    0.658937
+  ],
+  "pressure_effect_range": [
+    0.00291219,
+    0.651497
+  ],
+  "byte_identical_captures": {
+    "touch": 324,
+    "depth": 246,
+    "speed_vco": 246
+  },
+  "sha256": {
+    "src/plugin/HostAutomationBridge.h": "b522502a6bdd47457ef76adcfcf3fc2edf30faa2ec0a46033ba2f08fb5b5f8af",
+    "tests/Vst3AutomationTests.cpp": "e1343fafaba48948917c45f7df3d2ad43821ece497438977d7d0afc0a0eb94fd",
+    "tests/Vst3SubTouchAutomationTests.cpp": "274b3fa5866bc6c7bc77383bbfb74bcc96c3a2476f1f0a0de81021a90a36492e",
+    "tests/Vst3SubAutomationTests.cpp": "960f054294aed812ce1089e2214c438edf2b39d06776b525244abf9b55584f5b",
+    "tests/Vst3SubWaveformAutomationTests.cpp": "1ad585a6ff93dee0239a2f03bfccd64bb8cde272cfa8f6397ab41f028346240d",
+    "CMakeLists.txt": "aec76f01cc9588ffab4f69e62deb8ffbcfde17bcea8a045c9097c7c82fe03802",
+    "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json": "eefcbd55b959e6d2f755f1c88749b965dc0cd3726724036a93ac55c079a3e131",
+    "build-native/cs80_vst3_sub_touch_automation_tests": "73e9826c8dca1e473a8aa8dee2cad89d517c68d3f06357122d540648a48f403a",
+    "build-native/cs80_vst3_sub_depth_automation_tests": "836325b0b6dba29e8ed48feeea78ee31dc3b693f452a9dfac56b46cdcbff19e3",
+    "build-native/cs80_vst3_sub_automation_tests": "da0b0b2ba0e1a6e852d21ce5fa8fbb9eb478257e834e9977691506230a56d95e",
+    "build-native/cs80_vst3_sub_waveform_automation_tests": "f0ec9f128ea16e351142621d9db1b1c13f1c0a7af7fd038ca58acf44a684ac48",
+    "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "a1915dd34d7c63519ef6bedc1e276b2f7429512c7845527e5d55596e05fe252d",
+    "build/baseline/CS80-24-lane.so": "95b60dd9dabf2844fe0bbfb8e6254f3738df19da7c3852621a54e90f5f38eb4c"
+  },
+  "unchanged_historical_contract_sha256": {
+    "tests/parity/tolerances-v2/host-automation-state-boundary.json": "348a4797e1c62793c46a6937c61cc888cb9f2aace8799f7460f3ffb29194440a",
+    "tests/parity/tolerances-v2/windows-wrapper-path-alias.json": "a39e0253f4edf1957e52e4baed95bf2dc39c69b21b89f46f254d09eb21af8950",
+    "tests/parity/tolerances-v2/memory-nonlinear-study.json": "75171d226efeeb6de3acf18256c074d13470cea503b8b09264d341b1e5af4593",
+    "tests/parity/tolerances-v2/host-automation-sub-v1.json": "edee0856bee56ca8aeb057dd3a0c7bc7e0efa829d5c499ccbba435236429d295",
+    "tests/parity/tolerances-v2/host-automation-sub-depth-v1.json": "0f6d52e6c61be465dd648745fbfd9dcaf704ee9f2b6cc3ef24e769a9bf86bcc2",
+    "tests/parity/tolerances-v2/main-vst3-compatibility.json": "8f5ff72877242e1ae6f39894ea6d3b731a9a5eaa14a47b779cb59dae89ff3c9c",
+    "tests/parity/tolerances-v2/memory-port-map.json": "64cda2f23145d738b2d6d402c3de0f2a0f7fdfdcf278e04768ba703ba4f350b9",
+    "tests/parity/tolerances-v2/host-wrapper-platforms.json": "f38086ecc6997f74b80fe5c66d19ef3c0032a435ab9904a0a407f78538e1686d",
+    "tests/parity/tolerances-v2/main-vst3-only-automation.json": "c72c1b97faf5c6dc66f7f2b6ea6813807e275aafdeddda91a567b8264631f5ae",
+    "tests/parity/tolerances-v2/memory-sparse-update.json": "1370d58617cc566838e733fc5b16780a2314393051ca7138c54ab18093c4c5cf",
+    "tests/parity/tolerances-v2/ws1-voice.json": "d19de5bea8f7203e76674abdb271be678526688add4807105f9dcd2098d4177c",
+    "tests/parity/tolerances-v2/main-vst3-multirecall-state.json": "63d364d2f05166f945e9bd82c685e6d04bd3856b9b24e08932d43119588b8fd6",
+    "tests/parity/tolerances-v2/host-automation.json": "c301b3eddf110a8dc6b6b07416d6eba9ddb68f7c19fb2eeea99cebc26bee7bf6",
+    "tests/parity/tolerances-v2/ws6-library.json": "28fda06871af1fa25753cbda5bf64e88fc44ec4712e07c10d720055c983c6b95",
+    "tests/parity/tolerances-v2/host-automation-pan-v1.json": "713904671b1782a1d23f49f95194fa1fb9ef3539b00becd2190914562d8a1711",
+    "tests/parity/tolerances-v2/ws3-keyboard.json": "88812719a9967ec9d2ce862ecdda498c6b9865efe724d3eb80f2bec1a260554e",
+    "tests/parity/tolerances-v2/memory-control-routing.json": "d107527be98c3867243b26b87cf9176282b0f95c4bbc9f0f6dbdc05823c0ae54"
+  },
+  "scope": "Linux float32 supported finite queues, fixed ordinary poly-pressure, original sine, common rank sources, eight/sixteen voice modes; no malformed/broad/GUI/DAW/AU/performance qualification",
+  "negative_capability": {
+    "baseline_full_gate_rate": 48000,
+    "mode": "realtime",
+    "exit_code": 1,
+    "expected_partition_failures": 18,
+    "other_failures": 0,
+    "retries": 0
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing SUB touch speed, VCO and VCF amounts after the unchanged 24-lane prefix. Original 18, pan 20, SUB 22 and depth 24 contracts remain unchanged.",
+  "host_automation_sub_touch": {
+    "key_parameter_count": 27,
+    "keys": "Original 24 in original order, then P_subAtSpeed, P_subAtVco and P_subAtVcf.",
+    "authority": "Global SUB touch amounts remain independent of PANEL/factory/MEMORY selection. Pressure event semantics and all DSP laws remain unchanged.",
+    "timing": "Modern VST3 normalized interpolation before existing DSP. No-queue and Legacy/PURE final-point behavior unchanged. AU not expanded.",
+    "verification": "Bounded actual-module Linux float32 checks with finite supported queues and ordinary poly pressure. Historical numeric tolerances unchanged. Native runtime evidence must identify exact source/module and pre-feature compatibility captures; no malformed inputs, GUI, DAW, hardware or CPU claim."
+  }
+}

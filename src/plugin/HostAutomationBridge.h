@@ -26,7 +26,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Original-panel SUB controls: append without moving existing lanes.
     int(P_subOriginalSpeed), int(P_subVco),
     // Complete the three continuous original SUB depth controls.
-    int(P_subVcf), int(P_subVca)
+    int(P_subVcf), int(P_subVca),
+    // Existing global touch amounts; keep the complete 24-lane prefix stable.
+    int(P_subAtSpeed), int(P_subAtVco), int(P_subAtVcf)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow
