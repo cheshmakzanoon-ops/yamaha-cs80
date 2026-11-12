@@ -7,10 +7,10 @@ The [portamento extension](VST3_PORTAMENTO_AUTOMATION.md) appends existing
 updates affect the existing live glide coefficient when the footswitch gate
 is active; glide-mode selection, gate behavior and DSP laws are unchanged.
 
-This candidate keyboard-brilliance extension preserves host sample offsets for forty-two VST3 parameters in
+This candidate INITIAL TOUCH extension preserves host sample offsets for forty-six VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, LOW/HIGH keyboard level, and LOW/HIGH keyboard brilliance. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, LOW/HIGH keyboard level, LOW/HIGH keyboard brilliance, and both ranks’ INITIAL TOUCH brilliance/level amounts. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
@@ -67,6 +67,11 @@ A candidate [paired contour qualification](VST3_KBD_CONTOUR_COMBINED_AUTOMATION.
 combines LEVEL and BRILLIANCE separately for LOW and HIGH on responsive
 keyboard cohorts. This is an existing42-lane test-only gate, not another
 capability append or a simultaneous-all-four qualification.
+
+The candidate [INITIAL TOUCH extension](VST3_INITIAL_TOUCH_AUTOMATION.md) appends
+both ranks’ brilliance/level amounts at lanes42..45. Existing smoothed amounts
+remain live only for selected PANEL ranks; factory and MEMORY authority
+continues masking their panel trajectories. No touch or DSP law is changed.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

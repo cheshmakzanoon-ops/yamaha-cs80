@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), kbd_contour_combinedLimits(argv[3], "host_automation_kbd_contour_combined");
-        require(kbd_contour_combinedLimits["key_parameter_count"] == 42 && cs80::kSampleAccurateParameters.size() == 42,
-                "exact 42-lane kbd_contour_combined capability");
+        require(kbd_contour_combinedLimits["key_parameter_count"] == 42 && cs80::kSampleAccurateParameters.size() >= 42,
+                "historical 42-lane kbd_contour_combined capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire complete 42-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[40] == cs80::P_kbdBrillianceLow && cs80::kSampleAccurateParameters[41] == cs80::P_kbdBrillianceHigh, "exact brilliance lanes");

@@ -50,7 +50,10 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing HIGH level contour; retain the complete 39-lane prefix.
     int(P_kbdLevelHigh),
     // Existing LOW/HIGH brilliance contours; retain the complete 40-lane prefix.
-    int(P_kbdBrillianceLow), int(P_kbdBrillianceHigh)
+    int(P_kbdBrillianceLow), int(P_kbdBrillianceHigh),
+    // Existing rank INITIAL TOUCH amounts; preserve source authority and 42-lane prefix.
+    chParam(0, CP_initBrill), chParam(0, CP_initLevel),
+    chParam(1, CP_initBrill), chParam(1, CP_initLevel)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

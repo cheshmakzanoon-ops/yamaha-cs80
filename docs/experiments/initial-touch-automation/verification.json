@@ -1,0 +1,1487 @@
+{
+  "base_commit": "6f2a8a1fff08d6fb1459254881cf59291434c82a",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_initial_touch_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 144,
+  "compatibility_cases": 144,
+  "pcm_pairs": 432,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": [
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00746806,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0168474,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0146732,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.051878,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00599171,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0108718,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0157817,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0537433,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00696753,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0122064,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0136489,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0535502,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00663917,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00981395,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0153718,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0519479,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00746836,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0105672,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0149267,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.043804,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00743307,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0114789,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0147848,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0573346,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00620968,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00996361,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0141912,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0421138,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00740855,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0115401,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.014335,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0546995,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00721646,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0124302,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0106164,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0335009,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00737255,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0143468,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0170723,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0349855,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00699893,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0121651,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 42,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0106065,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0336579,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 43,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00732305,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0133486,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 44,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0170365,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0350198,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 45,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    }
+  ],
+  "old_contract_count": 35,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "b8c36c3ee0ca2589ecd54b55e049b2881bf29047359d2185f39e2dbf1fd353b3",
+    "tests/Vst3InitialTouchAutomationTests.cpp": "bc7ca198d085fe49d920b97b8c0ba952541796691af4de9da68e812b9edc2ce6",
+    "tests/Vst3AutomationTests.cpp": "a5b2804cba6a5622d51634681fb8bd327e85fd2dba3464fb47a6073b0fb39f15",
+    "tests/Vst3KbdBrillianceAutomationTests.cpp": "3a1cbe82f0a916737a647afbd55e7f723f2e6d9d4d7bfa15ce84bf7e66e487ae",
+    "tests/Vst3KbdContourCombinedAutomationTests.cpp": "a24a886ac15bea9772ea7b2496d53736678959462ebbb8855b61e775807363b0",
+    "src/plugin/HostAutomationBridge.h": "5f41308b2ca94c9dc3d4e7929ed0d5ab3b1d6d77a9e79f8441a73b78acccb391",
+    "tests/parity/tolerances-v2/host-automation-initial-touch-v1.json": "1e293a9004e28d270faff2a0a48a6a6ec3a2568ff8802ae1aa5a2e67d8041bcb",
+    "docs/VST3_INITIAL_TOUCH_AUTOMATION.md": "2f554aef670bcf2c9df618500aa28fd37edee887f29a491a1c7e988baf867234",
+    "docs/HOST_AUTOMATION.md": "4234f96eed8691a3268b93e42be2f948f4d62b811caf9ae1536b52d1cd0aa078"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Isolated rank initial touch amount with modern held b; PANEL positive, selected factory/MEMORY masked.",
+    "No hardware touch calibration or simultaneous-rank qualification.",
+    "No invented bypass control.",
+    "No hardware/DAW/GUI/AU/CPU/broad/negative tests."
+  ],
+  "renders": 2736,
+  "panel_positive_cases": 48,
+  "selected_source_exact_mask_cases": 96,
+  "failed_attempts": 0,
+  "runtime_retries": 0
+}
