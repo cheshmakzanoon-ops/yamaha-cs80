@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include <pluginterfaces/vst/ivstmidicontrollers.h>
+#include "Vst3Frozen81Roster.h"
 
 namespace {
 bool pcmBytesEqual(const std::vector<float>& a, const std::vector<float>& b)
@@ -66,7 +67,9 @@ int main(int argc, char** argv)
         require(mode == "realtime" || mode == "offline", "supported mode");
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
-        require(cs80::kSampleAccurateParameters.size() == 81, "81-lane production roster unchanged");
+        require(cs80::kSampleAccurateParameters.size() >= 81, "at least 81 production lanes");
+        require(std::equal(cs80::kFrozen81Roster.begin(), cs80::kFrozen81Roster.end(),
+                           cs80::kSampleAccurateParameters.begin()), "literal 81-lane prefix unchanged");
         auto parameters = cs80::defaultValues();
         parameters[cs80::P_sourcePerformance] = 1;
         parameters[cs80::P_parityMode] = 0;

@@ -3,6 +3,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include <fstream>
+#include "Vst3Frozen81Roster.h"
 
 namespace {
 constexpr std::array previousRoster {
@@ -41,8 +42,10 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), tuning_refLimits(argv[3], "host_automation_tuning_ref");
-        require(tuning_refLimits["key_parameter_count"] == 81 && cs80::kSampleAccurateParameters.size() == 81,
-                "exact 81-lane tuning_ref capability");
+        require(tuning_refLimits["key_parameter_count"] == 81 && cs80::kSampleAccurateParameters.size() >= 81,
+                "historical 81-lane tuning_ref contract retained");
+        require(std::equal(cs80::kFrozen81Roster.begin(), cs80::kFrozen81Roster.end(),
+                           cs80::kSampleAccurateParameters.begin()), "literal 81-lane prefix unchanged");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 80-lane roster/order unchanged");
         constexpr std::array added {int(cs80::P_tuningRef)};

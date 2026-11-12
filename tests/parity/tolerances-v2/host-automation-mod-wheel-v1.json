@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "host_automation_mod_wheel": {
+    "key_parameter_count": 83,
+    "minimum_held_effect": 1e-05,
+    "keys": "P_modWheelSub lane81, P_modWheelVcf lane82; frozen81 prefix unchanged",
+    "scope": "Existing finite continuous amount queues only. Stationary mapped CC1 excitation; no MIDI CC1 timing capability claim.",
+    "timing": "Initial endpoints frames0 and1023 then1535/2047/3071/4095. Scalar versus64/127/256, exact1024frame prefix, positive held1024to3072.",
+    "verification_plan": "72 full +72 frozen81 compatibility cases, candidate1080 and baseline576 renders;432 actual PCM pairs (864 captures). Separate Legacy flatten, PURE-inert and CC1zero gates."
+  }
+}

@@ -85,7 +85,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing global release floor; preserve the 79-lane prefix.
     int(P_keyRelease),
     // Existing global tuning reference; preserve the 80-lane prefix.
-    int(P_tuningRef)
+    int(P_tuningRef),
+    // Existing continuous wheel depths; preserve the full 81-lane prefix.
+    int(P_modWheelSub), int(P_modWheelVcf)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow
