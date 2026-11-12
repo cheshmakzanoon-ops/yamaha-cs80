@@ -851,14 +851,61 @@ private:
 // The five ring parameters have their front-panel home; this plot is where their combined effect is
 // read and where the envelope is edited by hand. At zero depth a dashed preview at full depth shows
 // the shape the controls will draw.
-class RingCurve final : public LiveWidget
+class RingCurve final : public LiveWidget, private juce::ComponentListener
 {
 public:
     explicit RingCurve(Cs80AudioProcessor& p) : LiveWidget(p, 668.0f, 376.0f) { enableMouse(false); }
+    ~RingCurve() override { finishDrag(); }
 
     void paintStatic(juce::Graphics& g) override { glassWell(g, { 0.0f, 0.0f, designW, designH }); }
 
 private:
+    // A host listener may hide or destroy the graph synchronously from a begin,
+    // value or end notification. The event keeps this record alive independently
+    // of the component; cancellation waits until a begin/value dispatch finishes
+    // so every host listener sees that notification before its matching end.
+    struct DragGesture
+    {
+        std::vector<juce::RangedAudioParameter*> parameters;
+        int notifications = 0;
+        bool active = true, ending = false;
+
+        bool finished() const { return !active && !ending && notifications == 0 && parameters.empty(); }
+
+        void finish()
+        {
+            active = false;
+            if (notifications != 0 || ending) return;
+            ending = true;
+            auto closing = std::move(parameters);
+            parameters.clear();
+            for (auto* parameter : closing) parameter->endChangeGesture();
+            ending = false;
+        }
+
+        struct Notification
+        {
+            explicit Notification(DragGesture& g) : gesture(g) { ++gesture.notifications; }
+            ~Notification() { if (--gesture.notifications == 0 && !gesture.active) gesture.finish(); }
+            DragGesture& gesture;
+        };
+
+        void begin(juce::RangedAudioParameter* parameter)
+        {
+            if (!active || parameter == nullptr) return;
+            parameters.push_back(parameter);
+            const Notification notification(*this);
+            parameter->beginChangeGesture();
+        }
+
+        void set(juce::RangedAudioParameter* parameter, float value)
+        {
+            if (!active || parameter == nullptr) return;
+            const Notification notification(*this);
+            parameter->setValueNotifyingHost(parameter->convertTo0to1(value));
+        }
+    };
+
     static Rect plotRect() { return { 84.0f, 58.0f, 562.0f, 226.0f }; }
 
     struct Geo
@@ -936,6 +983,12 @@ private:
 
     void mouseDown(const juce::MouseEvent& e) override
     {
+        if ((gesture != nullptr && !gesture->finished()) || !isEnabled() || !e.mods.isLeftButtonDown() || e.mods.isPopupMenu()
+            || e.mods.isMiddleButtonDown())
+            return;
+        for (auto* c = static_cast<juce::Component*>(this); c != nullptr; c = c->getParentComponent())
+            if (!c->isVisible())
+                return;
         const int h = hitNode(toDesign(e.getPosition()));
         if (h == 0)
             return;
@@ -943,50 +996,71 @@ private:
         dragging = h;
         dragTotal = gm.total;
         dragFmax = gm.fmax;
-        params.clear();
-        params.push_back(h == 1 ? cs80::P_ringAttack : cs80::P_ringDecay);
-        if (h == 1)
-            params.push_back(cs80::P_ringDepth);
-        for (int index : params)
-            if (auto* pr = par(index))
-                pr->beginChangeGesture();
-        repaint();
+        const std::array<juce::RangedAudioParameter*, 2> targets {
+            par(h == 1 ? cs80::P_ringAttack : cs80::P_ringDecay), h == 1 ? par(cs80::P_ringDepth) : nullptr
+        };
+        const auto owned = gesture = std::make_shared<DragGesture>();
+        // JUCE does not propagate visibilityChanged() to hidden descendants.
+        // Observe only the current drag's ancestors, then detach on every exit.
+        for (auto* c = getParentComponent(); c != nullptr; c = c->getParentComponent())
+        {
+            c->addComponentListener(this);
+            dragParents.push_back(c);
+        }
+        const juce::Component::SafePointer<RingCurve> safe(this);
+        for (auto* target : targets) owned->begin(target);
+        if (safe != nullptr) safe->repaint();
     }
 
     void mouseDrag(const juce::MouseEvent& e) override
     {
-        if (dragging == 0)
+        const auto owned = gesture;
+        if (dragging == 0 || owned == nullptr || !owned->active)
             return;
         const auto plot = plotRect();
         const auto p = toDesign(e.getPosition());
         const auto gm = geo();
         const float t = juce::jlimit(0.0f, 1.0f, (p.x - plot.getX()) / plot.getWidth()) * dragTotal;
-        auto set = [&](int index, float value)
-        {
-            if (auto* pr = par(index))
-                pr->setValueNotifyingHost(pr->convertTo0to1(value));
-        };
+        const juce::Component::SafePointer<RingCurve> safe(this);
         if (dragging == 1)
         {
-            set(cs80::P_ringAttack, juce::jmax(0.001f, t / 1.151f));
+            auto* attack = par(cs80::P_ringAttack);
+            auto* depth = par(cs80::P_ringDepth);
             const float f = juce::jlimit(0.0f, 1.0f, (plot.getBottom() - p.y) / plot.getHeight()) * dragFmax;
-            set(cs80::P_ringDepth, juce::jmax(0.0f, f / gm.speed - 1.0f));
+            owned->set(attack, juce::jmax(0.001f, t / 1.151f));
+            owned->set(depth, juce::jmax(0.0f, f / gm.speed - 1.0f));
         }
         else
-            set(cs80::P_ringDecay, juce::jmax(0.001f, (t - gm.ta) / 1.267f));
-        refresh();
+            owned->set(par(cs80::P_ringDecay), juce::jmax(0.001f, (t - gm.ta) / 1.267f));
+        if (safe != nullptr && owned->active) safe->refresh();
     }
 
     void mouseUp(const juce::MouseEvent&) override
     {
-        if (dragging == 0)
+        finishDrag();
+    }
+
+    void visibilityChanged() override { if (!isVisible()) finishDrag(); }
+    void enablementChanged() override { if (!isEnabled()) finishDrag(); }
+    void parentHierarchyChanged() override { finishDrag(); }
+    void componentVisibilityChanged(juce::Component& parent) override
+    {
+        if (!parent.isVisible()) finishDrag();
+    }
+    void componentBeingDeleted(juce::Component&) override { finishDrag(); }
+
+    void finishDrag()
+    {
+        const auto owned = gesture;
+        if (owned == nullptr || owned->finished())
             return;
-        for (int index : params)
-            if (auto* pr = par(index))
-                pr->endChangeGesture();
-        params.clear();
         dragging = 0;
+        for (auto* parent : dragParents)
+            parent->removeComponentListener(this);
+        dragParents.clear();
         repaint();
+        // No component access after host callbacks, which may delete this.
+        owned->finish();
     }
 
     static juce::String timeText(float s) { return periodString(s); }
@@ -1102,7 +1176,8 @@ private:
 
     int hover = 0, dragging = 0;
     float dragTotal = 1.0f, dragFmax = 1.0f;
-    std::vector<int> params;
+    std::shared_ptr<DragGesture> gesture;
+    std::vector<juce::Component*> dragParents;
 };
 
 // ---- Chorus / tremolo sweep -----------------------------------------------------------------

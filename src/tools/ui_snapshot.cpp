@@ -1,3 +1,4 @@
+#include "../../tests/RingCurveGestureTests.h"
 #include "../../tests/ModMatrixRouteActionsTests.h"
 #include "../../tests/ModMatrixRoutingUiTests.h"
 #include "../../tests/MsegPointValuesTests.h"
@@ -2082,6 +2083,14 @@ int main(int argc, char** argv)
         std::printf("Preset catalogue refresh: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--ring-curve-gesture-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testRingCurveGestures([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Ring curve gestures: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--mod-matrix-route-actions-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -3941,6 +3950,8 @@ int main(int argc, char** argv)
     phases.begin("studio views");
     cs80::tests::studio::testStudioViewsPaint(check, flushGui, dir);
     cs80::tests::studio::testLfoScopeWaveforms(check, flushGui, dir);
+    phases.begin("ring curve gestures");
+    cs80::tests::testRingCurveGestures(check);
     phases.begin("studio interaction");
     cs80::tests::studio::testInteractionPolish(check, flushGui, dir);
     phases.begin("studio MIDI learn");

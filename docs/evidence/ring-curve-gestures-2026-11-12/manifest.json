@@ -1,0 +1,60 @@
+{
+  "base_commit": "2ab60f4e46a89bd6e68107a818e8be4ddf7413a9",
+  "scope": "Studio RingCurve host gesture lifetime and admission; unchanged drag math and parameter identities",
+  "build": {
+    "fresh_directory": "/workspace/scratch/ee447c520988/build-studio-state-lifetime",
+    "compiler": "GCC 14.2.0",
+    "cmake": "3.31.6",
+    "juce": "8.0.11",
+    "configuration": "Release"
+  },
+  "baseline": {
+    "checks": 166,
+    "failures": 66,
+    "production_source": "unmodified base commit",
+    "binary_sha256": "2493ab015f5bb67a3ad6330f6adac89c866354ec1ba760862e8740cd74dbdc13",
+    "note": "Baseline fixture predates direct-plot-hide and synchronous callback additions. Retained binary was not rebuilt with those additional tests."
+  },
+  "final": {
+    "checks": 270,
+    "failures": 0,
+    "adjacent_ctests": 18,
+    "adjacent_failures": 0,
+    "adjacent_seconds": 8.45,
+    "binary_sha256": "7f79f2512cef35e7847ff915d2065c7f273e26bb47cd92153443b573f9d8c855"
+  },
+  "qualification": "Offscreen real Studio components and processor; no native peer, physical input, external DAW, cross-platform runtime, full visual smoke or remote CI qualification.",
+  "source_sha256": {
+    "src/plugin/AdvancedPanel.cpp": "72a8b46d7f3a806e1b56c2479e89d297177660d9cf0ed22292f4d69b4b34eca9",
+    "tests/RingCurveGestureTests.h": "15fd6981bab868b32c9191654259dd629fe7393da29a34faae3b0eeefe5097b3",
+    "src/tools/ui_snapshot.cpp": "8087e6a392c74073b0ad648bf4948d051ba4ffc0dc09f66d760b29c3c4ae7ab5",
+    "CMakeLists.txt": "c8ea6910ec8e26da14264d2675377265847393502490ead95de0d809497abe83"
+  },
+  "evidence_sha256": {
+    "adjacent-tests.log": "555a4e99aa07e2ecde536513d1670e312b9cab4d343ea6bd85a6173b03c250d6",
+    "baseline-binary.sha256": "3c9d5745c7ddd4918ff87dc7de7e31edd081937557af17aacf0e17e4ed5dcebc",
+    "baseline-tests.log": "b8afe60f4819d1bb4e76519ba8c1de1647529f1b1beb598f2b0233f64e4487f3",
+    "configure-command.json": "656081d41f1b2da4354c12f64ce68deed90995832aa4ea95db54a767e7053e26",
+    "configure.log": "665b229cb1ec616ecc25c638115825465153e0afdeaa7bddf266bc381f88943c",
+    "final-build.log": "f84e777e9eea06943c0fb524f0026eab3818346c96fa46cb26543cbe4c93f85b",
+    "focused-tests.log": "3cddd29a9fcb16cb03586d54d7d57d00699bc8b4abb85890a0c68882bcee9382",
+    "independent-adjacent.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "independent-adjacent.log": "ba466add6db3a74a1dd83d6e9833725ba40b47ddfec2d11dc1f25223ff4577df",
+    "independent-focused.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "independent-focused.log": "3cddd29a9fcb16cb03586d54d7d57d00699bc8b4abb85890a0c68882bcee9382",
+    "independent-hashes.log": "09ab6b400d94aae483efee10b4badd4d3a0914df880a233e1332861b500d8653",
+    "source-binary.sha256": "3ec016da43398aee463026acdbf8dcf649f1eef267bbf58127d54b8f71381972"
+  },
+  "independent_verification": {
+    "source_review": "approved after reentrant cancellation correction",
+    "source_and_binary_hashes": "all four source files and final binary verified",
+    "focused_checks": 270,
+    "focused_failures": 0,
+    "focused_exit": 0,
+    "adjacent_ctests": 18,
+    "adjacent_failures": 0,
+    "adjacent_exit": 0,
+    "adjacent_seconds": 8.34,
+    "baseline_rerun": false
+  }
+}
