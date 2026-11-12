@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "bounded_software_protocol_interaction",
+  "host_automation_lfo_static_shapes": {
+    "key_parameter_count": 89,
+    "minimum_held_effect": 1e-05,
+    "scope": "Triangle/sawUp/sawDown/square static shapes; same shape for active LFOs,13/13manual sources,8voicecapacity(actual2notes),rates16..20Hz,depth trajectories; no mixed shapes/switching/random",
+    "verification_plan": "4shapes*4routes*3sample rates*2modes=96cases,1536renders,384captures,288scalarblock comparisons,96queue-order checks; exact published89module, no cross-build pairs",
+    "waveform_count": 4
+  }
+}
