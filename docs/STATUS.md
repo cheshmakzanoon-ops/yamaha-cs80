@@ -44,8 +44,29 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `d7f949b3269bda208588f63311cf6c1e2ae21e12` appends global KEY RELEASE
+at lane79, bringing the current roster to **80 lanes**. Its reviewed candidate
+passed12 direct native runs:36 full cases and36 compatibility cases,684 renders
+total. All108 actual candidate80/frozen79 no-queue and Legacy/PURE pairs matched
+byte-for-byte. Maximum partition error was0; all36 pre3100 prefixes were exact.
+All36 PANEL/factory0/MEMORY11 cases had positive tail effects in frames[3100,4096).
+See [KEY RELEASE evidence and exact hashes](VST3_KEY_RELEASE_AUTOMATION.md).
+
+Existing live max-release timing preserves state/stage; it is not ordinary
+rank smoothing or a source-masked rank control. The chosen key floor dominates
+all selected rank floors with master sustain0. PURE retains its effective-zero
+key-release policy, qualified separately by protected flattening comparisons.
+This finite tail result does not qualify floor crossings, every factory tab,
+complete releases or calibrated hardware. Source authority and DSP remain
+unchanged. Linux float32 coverage is44.1/48/96kHz,realtime/offline,8/16 capacities.
+Direct runs are not CTest or historical-suite reruns. Broad integration/release
+qualification and retained candidate binary/source hashes remain separate from
+this published source commit.
+
+The preceding held RIBBON checkpoint remains historical:
+
 Published `1bd0d3e10d7f546cdf4c058121e0601a5b16282a` appends global RIBBON
-at lane78, bringing the current roster to **79 lanes**. Its reviewed candidate
+at lane78, bringing that checkpoint’s roster to **79 lanes**. Its reviewed candidate
 passed12 direct native runs:36 full cases and36 compatibility cases,684 renders
 total. All108 actual candidate79/frozen78 no-queue and Legacy/PURE pairs matched
 byte-for-byte. Maximum partition error was5.96046e-08 under the unchanged2e-6
@@ -559,7 +580,7 @@ handover PDF remain dated evidence, not current-head measurements.
 | Filter resonance cache | Reuses cutoff-dependent coefficients on Q-only updates; cutoff/rate changes retain the full path and the solver law is unchanged | `465e56c` ([PR #76](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/76)); [cache scope and measurements](IG00156_RESONANCE_CACHE.md) |
 | External modulation | Sparse FIR reconstruction skips guaranteed-zero products while retaining coefficient design, phase and accumulation order | `228cc8d` ([PR #74](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/74)); [scope and measurements](EXTERNAL_INTERPOLATOR_SPARSE.md) |
 | Delay-reader safety | A rounded circular-buffer position at capacity is wrapped to zero, preventing an out-of-bounds read | `ff9943e`; [DELAY_LINE_WRAP_SAFETY.md](DELAY_LINE_WRAP_SAFETY.md). Previously valid interpolation retains its arithmetic. |
-| Host automation | Seventy-nine key VST3 parameters retain sample offsets in modern circuit policy, including global RIBBON and PANEL-routed rank SINE/NOISE levels, filter/VCA attack, decay and release times, filter EG IL/AL, VCA envelope SUSTAIN, VCF LEVEL, PWM speed/depth and INITIAL/AFTER TOUCH amounts, live LOW/HIGH keyboard level and brilliance, initial-bend amount, MASTER SUSTAIN release timing and portamento time; RING attack/decay retain fresh-trigger latch semantics, while protected policies and unsupported parameters keep block-rate behavior | `1bd0d3e1`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [RIBBON qualification](VST3_RIBBON_AUTOMATION.md); historical [SINE/NOISE](VST3_SINE_NOISE_AUTOMATION.md), [RELEASE TIME](VST3_ENVELOPE_RELEASE_AUTOMATION.md), [DECAY TIME](VST3_ENVELOPE_DECAY_AUTOMATION.md), [ATTACK TIME](VST3_ENVELOPE_ATTACK_AUTOMATION.md), [filter AL](VST3_FILTER_AL_AUTOMATION.md), [filter IL](VST3_FILTER_IL_AUTOMATION.md), [VCA SUSTAIN](VST3_VCA_SUSTAIN_AUTOMATION.md), [VCF LEVEL](VST3_VCF_LEVEL_AUTOMATION.md), [PWM](VST3_PWM_AUTOMATION.md), [AFTER TOUCH](VST3_AFTER_TOUCH_AUTOMATION.md), [INITIAL TOUCH](VST3_INITIAL_TOUCH_AUTOMATION.md), [BRILLIANCE](VST3_KBD_BRILLIANCE_AUTOMATION.md), [HIGH keyboard level](VST3_KBD_LEVEL_HIGH_AUTOMATION.md), [LOW keyboard level](VST3_KBD_LEVEL_LOW_AUTOMATION.md), [INITIAL PITCH BEND](VST3_INITIAL_BEND_AUTOMATION.md), [MASTER SUSTAIN](VST3_MASTER_SUSTAIN_AUTOMATION.md), [portamento](VST3_PORTAMENTO_AUTOMATION.md), [CHORUS](VST3_CHORUS_AUTOMATION.md) and [TREMOLO](VST3_TREMOLO_AUTOMATION.md) retain their own evidence. AU scheduled ramps are not enabled. |
+| Host automation | Eighty key VST3 parameters retain sample offsets in modern circuit policy, including global KEY RELEASE and RIBBON and PANEL-routed rank SINE/NOISE levels, filter/VCA attack, decay and release times, filter EG IL/AL, VCA envelope SUSTAIN, VCF LEVEL, PWM speed/depth and INITIAL/AFTER TOUCH amounts, live LOW/HIGH keyboard level and brilliance, initial-bend amount, MASTER SUSTAIN release timing and portamento time; RING attack/decay retain fresh-trigger latch semantics, while protected policies and unsupported parameters keep block-rate behavior | `d7f949b3`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [KEY RELEASE qualification](VST3_KEY_RELEASE_AUTOMATION.md); historical [RIBBON](VST3_RIBBON_AUTOMATION.md), [SINE/NOISE](VST3_SINE_NOISE_AUTOMATION.md), [RELEASE TIME](VST3_ENVELOPE_RELEASE_AUTOMATION.md), [DECAY TIME](VST3_ENVELOPE_DECAY_AUTOMATION.md), [ATTACK TIME](VST3_ENVELOPE_ATTACK_AUTOMATION.md), [filter AL](VST3_FILTER_AL_AUTOMATION.md), [filter IL](VST3_FILTER_IL_AUTOMATION.md), [VCA SUSTAIN](VST3_VCA_SUSTAIN_AUTOMATION.md), [VCF LEVEL](VST3_VCF_LEVEL_AUTOMATION.md), [PWM](VST3_PWM_AUTOMATION.md), [AFTER TOUCH](VST3_AFTER_TOUCH_AUTOMATION.md), [INITIAL TOUCH](VST3_INITIAL_TOUCH_AUTOMATION.md), [BRILLIANCE](VST3_KBD_BRILLIANCE_AUTOMATION.md), [HIGH keyboard level](VST3_KBD_LEVEL_HIGH_AUTOMATION.md), [LOW keyboard level](VST3_KBD_LEVEL_LOW_AUTOMATION.md), [INITIAL PITCH BEND](VST3_INITIAL_BEND_AUTOMATION.md), [MASTER SUSTAIN](VST3_MASTER_SUSTAIN_AUTOMATION.md), [portamento](VST3_PORTAMENTO_AUTOMATION.md), [CHORUS](VST3_CHORUS_AUTOMATION.md) and [TREMOLO](VST3_TREMOLO_AUTOMATION.md) retain their own evidence. AU scheduled ramps are not enabled. |
 | Tuning | Pinned 0BSD MTS-ESP client included, with bounded whole-table updates and missing-master fallback | `73e76ce`; [MTS_ESP_INTEGRATION.md](MTS_ESP_INTEGRATION.md). [Per-channel master tables](MTS_ESP_CHANNEL_MASTER.md) are implemented; live external-master DAW qualification remains open. |
 | MIDI and note lifecycle | Channel-scoped pressure/MPE routing, retained release ownership, ordered KAS short notes, bounded CC121 controller defaults and live conventional bend-range edits | [VOICE_RELEASE_OWNERSHIP.md](VOICE_RELEASE_OWNERSHIP.md), [MPE_MASTER_BEND_ROUTING.md](MPE_MASTER_BEND_ROUTING.md), [CONTROLLER_RESET.md](CONTROLLER_RESET.md), [PITCH_BEND_RANGE_AUTOMATION.md](PITCH_BEND_RANGE_AUTOMATION.md) |
 | Immediate sixteen-voice release | Cancels one matching waiter or releases the newest comparable held group across both instruments; unison groups and UI source guards are retained | `77dfd74`; [bounded contract](SIXTEEN_VOICE_NOTE_RELEASE.md). Deferred/ARP-origin candidates and active/pending scan paths retain broadcast fallback. No complete sixteen-voice release or realtime qualification claim. |
