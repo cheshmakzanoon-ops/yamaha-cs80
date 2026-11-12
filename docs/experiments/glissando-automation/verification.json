@@ -1,0 +1,318 @@
+{
+  "base_commit": "88df1af0b15c80fdfc29b480087541b810f0cf47",
+  "build": "Direct official-SDK compilation of glissando supported host only. No production build, CMake configure/build or CTest.",
+  "compile_exit": 0,
+  "runs": 6,
+  "full_cases": 36,
+  "render_budget": 540,
+  "all_exits_zero": true,
+  "metrics": [
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "glissando-8-13",
+      "max_error": 0.0,
+      "effect": 0.0493929,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "glissando-8-0",
+      "max_error": 0.0,
+      "effect": 0.193939,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "glissando-8-11",
+      "max_error": 0.0,
+      "effect": 0.0493929,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "glissando-16-13",
+      "max_error": 7.45058e-09,
+      "effect": 0.145403,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "glissando-16-0",
+      "max_error": 3.72529e-09,
+      "effect": 0.461173,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "glissando-16-11",
+      "max_error": 7.45058e-09,
+      "effect": 0.145403,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "glissando-8-13",
+      "max_error": 1.86265e-09,
+      "effect": 0.0494214,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "glissando-8-0",
+      "max_error": 4.65661e-10,
+      "effect": 0.215191,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "glissando-8-11",
+      "max_error": 1.86265e-09,
+      "effect": 0.0494214,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "glissando-16-13",
+      "max_error": 7.45058e-09,
+      "effect": 0.144275,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "glissando-16-0",
+      "max_error": 1.49012e-08,
+      "effect": 0.468947,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "glissando-16-11",
+      "max_error": 7.45058e-09,
+      "effect": 0.144275,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "glissando-8-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.0496773,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "glissando-8-0",
+      "max_error": 7.45058e-09,
+      "effect": 0.208052,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "glissando-8-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.0496773,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "glissando-16-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.133739,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "glissando-16-0",
+      "max_error": 1.49012e-08,
+      "effect": 0.442562,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "glissando-16-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.133739,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "glissando-8-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.0479842,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "glissando-8-0",
+      "max_error": 1.16415e-10,
+      "effect": 0.206345,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "glissando-8-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.0479842,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "glissando-16-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.133017,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "glissando-16-0",
+      "max_error": 1.86265e-09,
+      "effect": 0.421948,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "glissando-16-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.133017,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "glissando-8-13",
+      "max_error": 0.0,
+      "effect": 0.0426866,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "glissando-8-0",
+      "max_error": 0.0,
+      "effect": 0.232429,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "glissando-8-11",
+      "max_error": 0.0,
+      "effect": 0.0426866,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "glissando-16-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.07681,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "glissando-16-0",
+      "max_error": 0.0,
+      "effect": 0.233274,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "glissando-16-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.07681,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "glissando-8-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.0426078,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "glissando-8-0",
+      "max_error": 2.32831e-10,
+      "effect": 0.226731,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "glissando-8-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.0426078,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "glissando-16-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.076125,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "glissando-16-0",
+      "max_error": 3.72529e-09,
+      "effect": 0.22628,
+      "bypass_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "glissando-16-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.076125,
+      "bypass_error": 0.0
+    }
+  ],
+  "baseline_comparison_performed": false,
+  "retained_local_capture_count": 108,
+  "source_host_module_sdk_compiler_unchanged": true,
+  "production_prior_scripts_shared_helper_unchanged": true,
+  "prior_contracts_unchanged": 28,
+  "source_hashes": {
+    "CMakeLists.txt": "78dae4fa0a48cc620be40d3a386ba8008412583b718200325297e5772fa68397",
+    "tests/Vst3GlissandoAutomationTests.cpp": "cf74bd5dac5ac748428178393f54d2e76aa00cf019b9e9133e2974b31859d1bf",
+    "tests/Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "tests/parity/tolerances-v2/host-automation-glissando-v1.json": "a74841d9b96661f62bb8f2ba9e75f30f973f95d5c27798901e00204097227203",
+    "docs/VST3_GLISSANDO_AUTOMATION.md": "7c2c8429c6155ad1085dfc2e5ba05a7ece70bf59429f50fc609c6fe61acf196a"
+  },
+  "limitations": [
+    "Staticmode2 only; oscillatorcomposedpitchrounding doesnotquantize whole output/keyCV orpostround multipliers.",
+    "AggregatePCM effect,not isolatedstep timing/staircaseaccuracy.",
+    "GateoffPCM-only,not state/futuregate behavior.",
+    "No baseline replay, broad/malformed/fuzz/negative/GUI/DAW/AU/CPU/hardware tests."
+  ],
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/run-matrix.py >build/matrix.log 2>&1; code=$?; echo \"$code\" >build/matrix.exit; exit \"$code\""
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_qualification_extension",
+  "description": "Qualify existing portamento lane35 in static GLISSANDO mode2 without changing the36-lane capability, production or28 earlier contracts.",
+  "host_automation_glissando": {
+    "key_parameter_count": 36,
+    "keys": "Complete existing36-lane roster unchanged; P_portamento remains lane35.",
+    "authority": "Existing global time route, metadata and glide law preserved. Static glide mode2 and footswitch settings only; no switch automation or helper changes.",
+    "timing": "Continuous glide recurrence feeds an aggregate oscillator pitch rounded when mode2 and gate enabled. Filter key CV remains continuous; ribbon, feet and key-ratio factors follow rounding. No whole-signal quantization or staircase-accuracy claim.",
+    "verification": "36 finite startup/transient cases across three sources, two capacities and six rate/process configurations;540 renders in six native processes. Scalar plus five partitions and matched active-constant waveform-effect controls; fixed open-assigned-footswitch PCM-only equality.108 retained capture identities, not baseline comparisons. Original thresholds unchanged. No full pitch accuracy, general legato, threshold crossing, mode transitions, later re-enable state, hardware, GUI, malformed or CPU qualification."
+  }
+}
