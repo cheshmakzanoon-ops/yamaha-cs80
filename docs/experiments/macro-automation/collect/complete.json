@@ -1,0 +1,20 @@
+{
+  "stage": "collect",
+  "source_freeze_sha256": "960a77090e68fb2c56bee8a2b6f0539215e50e51339f304581a5ba32a17b6cc1",
+  "full_cases": 30,
+  "compat_cases": 30,
+  "candidate_renders": 438,
+  "baseline_renders": 210,
+  "actual_pcm_pairs": 120,
+  "scalar_block_comparisons": 120,
+  "queue_order_comparisons": 24,
+  "overall_witnesses": 30,
+  "combined_per_macro_witnesses": 24,
+  "roster": 112,
+  "historical_suites": "not rerun",
+  "forward_guards": "source reviewed only",
+  "state_readbacks": false,
+  "evidence_hashes": {
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/docs/experiments/macro-automation/collect/compatibility-pairs.json": "b5ef2abae27fbf3085bbc571923f51eb54e29d9ee6bc7e19d73f34933ef7021c"
+  }
+}

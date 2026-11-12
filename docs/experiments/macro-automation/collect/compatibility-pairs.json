@@ -1,0 +1,962 @@
+[
+  {
+    "case": "44100-offline/macro-case0-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case0-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case0-legacy.pcm",
+    "candidate_sha256": "a0c09b430cfd5a4492057e13c0b6529715582faa149283ace2468d2b408f24f2",
+    "baseline_sha256": "a0c09b430cfd5a4492057e13c0b6529715582faa149283ace2468d2b408f24f2",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case0-noqueue.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case0-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case0-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case0-preceding108.pcm",
+    "candidate_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "baseline_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case0-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case0-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case0-pure.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case1-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case1-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case1-legacy.pcm",
+    "candidate_sha256": "24d135201ec52b356571ae6b2de629bd67d320e1422182169d2d5d7b79989c25",
+    "baseline_sha256": "24d135201ec52b356571ae6b2de629bd67d320e1422182169d2d5d7b79989c25",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case1-noqueue.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case1-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case1-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case1-preceding108.pcm",
+    "candidate_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "baseline_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case1-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case1-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case1-pure.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case2-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case2-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case2-legacy.pcm",
+    "candidate_sha256": "0f56d9de9cd73bf028a2cf18c5621c3d2d0a5a06f4b9cd20d1746ec6286c7a0a",
+    "baseline_sha256": "0f56d9de9cd73bf028a2cf18c5621c3d2d0a5a06f4b9cd20d1746ec6286c7a0a",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case2-noqueue.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case2-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case2-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case2-preceding108.pcm",
+    "candidate_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "baseline_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case2-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case2-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case2-pure.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case3-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case3-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case3-legacy.pcm",
+    "candidate_sha256": "f970b71b1039077f3bec538b783ab21047a1914f7c3b0a14b9473e5c2a83db28",
+    "baseline_sha256": "f970b71b1039077f3bec538b783ab21047a1914f7c3b0a14b9473e5c2a83db28",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case3-noqueue.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case3-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case3-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case3-preceding108.pcm",
+    "candidate_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "baseline_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case3-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case3-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case3-pure.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case4-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case4-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case4-legacy.pcm",
+    "candidate_sha256": "a072d568015649bcc194b93348164ece1685f0da8e15c3a67194c83a4fe762e7",
+    "baseline_sha256": "a072d568015649bcc194b93348164ece1685f0da8e15c3a67194c83a4fe762e7",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case4-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case4-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case4-noqueue.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case4-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case4-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case4-preceding108.pcm",
+    "candidate_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "baseline_sha256": "146eb350fa2e8aecb6e6893bd0f0c7359178129da137ec0785b6a884f0e57fa2",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/macro-case4-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-offline/macro-case4-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-offline/macro-case4-pure.pcm",
+    "candidate_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "baseline_sha256": "bda65a90e1d1dd2e175cffb0607fe6c4f44e356640a6305e2ebf52a9cc5f1d85",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case0-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case0-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case0-legacy.pcm",
+    "candidate_sha256": "a0c09b430cfd5a4492057e13c0b6529715582faa149283ace2468d2b408f24f2",
+    "baseline_sha256": "a0c09b430cfd5a4492057e13c0b6529715582faa149283ace2468d2b408f24f2",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case0-noqueue.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case0-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case0-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case0-preceding108.pcm",
+    "candidate_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "baseline_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case0-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case0-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case0-pure.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case1-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case1-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case1-legacy.pcm",
+    "candidate_sha256": "24d135201ec52b356571ae6b2de629bd67d320e1422182169d2d5d7b79989c25",
+    "baseline_sha256": "24d135201ec52b356571ae6b2de629bd67d320e1422182169d2d5d7b79989c25",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case1-noqueue.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case1-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case1-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case1-preceding108.pcm",
+    "candidate_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "baseline_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case1-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case1-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case1-pure.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case2-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case2-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case2-legacy.pcm",
+    "candidate_sha256": "0f56d9de9cd73bf028a2cf18c5621c3d2d0a5a06f4b9cd20d1746ec6286c7a0a",
+    "baseline_sha256": "0f56d9de9cd73bf028a2cf18c5621c3d2d0a5a06f4b9cd20d1746ec6286c7a0a",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case2-noqueue.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case2-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case2-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case2-preceding108.pcm",
+    "candidate_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "baseline_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case2-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case2-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case2-pure.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case3-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case3-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case3-legacy.pcm",
+    "candidate_sha256": "f970b71b1039077f3bec538b783ab21047a1914f7c3b0a14b9473e5c2a83db28",
+    "baseline_sha256": "f970b71b1039077f3bec538b783ab21047a1914f7c3b0a14b9473e5c2a83db28",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case3-noqueue.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case3-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case3-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case3-preceding108.pcm",
+    "candidate_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "baseline_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case3-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case3-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case3-pure.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case4-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case4-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case4-legacy.pcm",
+    "candidate_sha256": "a072d568015649bcc194b93348164ece1685f0da8e15c3a67194c83a4fe762e7",
+    "baseline_sha256": "a072d568015649bcc194b93348164ece1685f0da8e15c3a67194c83a4fe762e7",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case4-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case4-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case4-noqueue.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case4-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case4-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case4-preceding108.pcm",
+    "candidate_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "baseline_sha256": "ec7bc192b134b7a868457448d16f77b18db3a751b4de48f45011cf6de3694c63",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/macro-case4-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-44100-realtime/macro-case4-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-44100-realtime/macro-case4-pure.pcm",
+    "candidate_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "baseline_sha256": "1bb3cb9620033fbb076766acdcfe0f0cdbb8573c73447665024e87cb28667d7f",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case0-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case0-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case0-legacy.pcm",
+    "candidate_sha256": "0e372027bb3f2eb3033169cf4013033e85311120400a93b21dd14aba6beefe39",
+    "baseline_sha256": "0e372027bb3f2eb3033169cf4013033e85311120400a93b21dd14aba6beefe39",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case0-noqueue.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case0-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case0-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case0-preceding108.pcm",
+    "candidate_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "baseline_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case0-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case0-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case0-pure.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case1-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case1-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case1-legacy.pcm",
+    "candidate_sha256": "602ea8ce718b4c98454fedc8cc66be535e3c04f57fe23db023f5e5c4dfe4da71",
+    "baseline_sha256": "602ea8ce718b4c98454fedc8cc66be535e3c04f57fe23db023f5e5c4dfe4da71",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case1-noqueue.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case1-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case1-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case1-preceding108.pcm",
+    "candidate_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "baseline_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case1-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case1-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case1-pure.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case2-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case2-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case2-legacy.pcm",
+    "candidate_sha256": "0a5bff4c0205cb829bc231f3c77e023d7fa3a5a74605446267f93f0f72d92663",
+    "baseline_sha256": "0a5bff4c0205cb829bc231f3c77e023d7fa3a5a74605446267f93f0f72d92663",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case2-noqueue.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case2-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case2-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case2-preceding108.pcm",
+    "candidate_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "baseline_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case2-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case2-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case2-pure.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case3-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case3-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case3-legacy.pcm",
+    "candidate_sha256": "1dd8e2cb77d912e20c9bbc1e0a12947c06fcd09418772aae1d7c1730aff8d7cc",
+    "baseline_sha256": "1dd8e2cb77d912e20c9bbc1e0a12947c06fcd09418772aae1d7c1730aff8d7cc",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case3-noqueue.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case3-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case3-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case3-preceding108.pcm",
+    "candidate_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "baseline_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case3-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case3-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case3-pure.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case4-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case4-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case4-legacy.pcm",
+    "candidate_sha256": "fdfcf2c63677ab3c290d3e19d0a9bbd7cc6820f29981cbaa72d6add6145bceba",
+    "baseline_sha256": "fdfcf2c63677ab3c290d3e19d0a9bbd7cc6820f29981cbaa72d6add6145bceba",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case4-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case4-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case4-noqueue.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case4-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case4-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case4-preceding108.pcm",
+    "candidate_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "baseline_sha256": "821411a4984bad7f1e9d55de29aacb676ea2676c1fd2ec13badc6f43a5980400",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/macro-case4-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-offline/macro-case4-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-offline/macro-case4-pure.pcm",
+    "candidate_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "baseline_sha256": "448f13ccce8651f45a1f0930daa88d83fc8f2247498ef1c864c2995a6a983e4d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case0-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case0-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case0-legacy.pcm",
+    "candidate_sha256": "0e372027bb3f2eb3033169cf4013033e85311120400a93b21dd14aba6beefe39",
+    "baseline_sha256": "0e372027bb3f2eb3033169cf4013033e85311120400a93b21dd14aba6beefe39",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case0-noqueue.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case0-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case0-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case0-preceding108.pcm",
+    "candidate_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "baseline_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case0-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case0-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case0-pure.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case1-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case1-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case1-legacy.pcm",
+    "candidate_sha256": "602ea8ce718b4c98454fedc8cc66be535e3c04f57fe23db023f5e5c4dfe4da71",
+    "baseline_sha256": "602ea8ce718b4c98454fedc8cc66be535e3c04f57fe23db023f5e5c4dfe4da71",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case1-noqueue.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case1-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case1-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case1-preceding108.pcm",
+    "candidate_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "baseline_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case1-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case1-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case1-pure.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case2-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case2-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case2-legacy.pcm",
+    "candidate_sha256": "0a5bff4c0205cb829bc231f3c77e023d7fa3a5a74605446267f93f0f72d92663",
+    "baseline_sha256": "0a5bff4c0205cb829bc231f3c77e023d7fa3a5a74605446267f93f0f72d92663",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case2-noqueue.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case2-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case2-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case2-preceding108.pcm",
+    "candidate_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "baseline_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case2-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case2-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case2-pure.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case3-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case3-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case3-legacy.pcm",
+    "candidate_sha256": "1dd8e2cb77d912e20c9bbc1e0a12947c06fcd09418772aae1d7c1730aff8d7cc",
+    "baseline_sha256": "1dd8e2cb77d912e20c9bbc1e0a12947c06fcd09418772aae1d7c1730aff8d7cc",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case3-noqueue.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case3-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case3-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case3-preceding108.pcm",
+    "candidate_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "baseline_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case3-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case3-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case3-pure.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case4-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case4-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case4-legacy.pcm",
+    "candidate_sha256": "fdfcf2c63677ab3c290d3e19d0a9bbd7cc6820f29981cbaa72d6add6145bceba",
+    "baseline_sha256": "fdfcf2c63677ab3c290d3e19d0a9bbd7cc6820f29981cbaa72d6add6145bceba",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case4-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case4-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case4-noqueue.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case4-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case4-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case4-preceding108.pcm",
+    "candidate_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "baseline_sha256": "592a53cb29b6724570ec303d5a0a9fc31c6eba612f7f64aa97a1afe9c87856f1",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/macro-case4-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-48000-realtime/macro-case4-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-48000-realtime/macro-case4-pure.pcm",
+    "candidate_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "baseline_sha256": "f44ddb41e13629c4e6b790bf2cbc7116aecd96de631c30b394fb93254ac49df8",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case0-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case0-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case0-legacy.pcm",
+    "candidate_sha256": "a1906a5d87ece51a334b970e1a140380fb9df616d1e36e08d2cc0c623f72018e",
+    "baseline_sha256": "a1906a5d87ece51a334b970e1a140380fb9df616d1e36e08d2cc0c623f72018e",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case0-noqueue.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case0-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case0-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case0-preceding108.pcm",
+    "candidate_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "baseline_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case0-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case0-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case0-pure.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case1-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case1-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case1-legacy.pcm",
+    "candidate_sha256": "6b499be30395a1a4aa3ece965d35ef1d159d71cc6543f5040177db54784cf1af",
+    "baseline_sha256": "6b499be30395a1a4aa3ece965d35ef1d159d71cc6543f5040177db54784cf1af",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case1-noqueue.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case1-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case1-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case1-preceding108.pcm",
+    "candidate_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "baseline_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case1-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case1-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case1-pure.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case2-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case2-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case2-legacy.pcm",
+    "candidate_sha256": "e94a19f35a574a04140c25f61309cda3ae7a0941bb20f34772da0dab0e7c4a33",
+    "baseline_sha256": "e94a19f35a574a04140c25f61309cda3ae7a0941bb20f34772da0dab0e7c4a33",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case2-noqueue.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case2-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case2-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case2-preceding108.pcm",
+    "candidate_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "baseline_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case2-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case2-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case2-pure.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case3-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case3-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case3-legacy.pcm",
+    "candidate_sha256": "77ccafe7d393508edf02507d8dee5869321a2f11d2972cca58e53f971d92fe23",
+    "baseline_sha256": "77ccafe7d393508edf02507d8dee5869321a2f11d2972cca58e53f971d92fe23",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case3-noqueue.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case3-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case3-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case3-preceding108.pcm",
+    "candidate_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "baseline_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case3-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case3-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case3-pure.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case4-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case4-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case4-legacy.pcm",
+    "candidate_sha256": "89c41ba8f7ef9a71c87c5b479d109bac9c5de5ec9978e7578e4a212d351d9f9f",
+    "baseline_sha256": "89c41ba8f7ef9a71c87c5b479d109bac9c5de5ec9978e7578e4a212d351d9f9f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case4-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case4-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case4-noqueue.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case4-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case4-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case4-preceding108.pcm",
+    "candidate_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "baseline_sha256": "cef4547419e7c4f6d33bbce580d89b40c9b75272fdbbe0e646d792fc1fbb476c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/macro-case4-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-offline/macro-case4-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-offline/macro-case4-pure.pcm",
+    "candidate_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "baseline_sha256": "049758daf055ba5722ad9eac9d294c0e5209bb8a0f88fc04c3b893247338b359",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case0-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case0-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case0-legacy.pcm",
+    "candidate_sha256": "a1906a5d87ece51a334b970e1a140380fb9df616d1e36e08d2cc0c623f72018e",
+    "baseline_sha256": "a1906a5d87ece51a334b970e1a140380fb9df616d1e36e08d2cc0c623f72018e",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case0-noqueue.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case0-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case0-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case0-preceding108.pcm",
+    "candidate_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "baseline_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case0-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case0-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case0-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case1-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case1-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case1-legacy.pcm",
+    "candidate_sha256": "6b499be30395a1a4aa3ece965d35ef1d159d71cc6543f5040177db54784cf1af",
+    "baseline_sha256": "6b499be30395a1a4aa3ece965d35ef1d159d71cc6543f5040177db54784cf1af",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case1-noqueue.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case1-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case1-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case1-preceding108.pcm",
+    "candidate_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "baseline_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case1-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case1-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case1-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case2-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case2-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case2-legacy.pcm",
+    "candidate_sha256": "e94a19f35a574a04140c25f61309cda3ae7a0941bb20f34772da0dab0e7c4a33",
+    "baseline_sha256": "e94a19f35a574a04140c25f61309cda3ae7a0941bb20f34772da0dab0e7c4a33",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case2-noqueue.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case2-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case2-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case2-preceding108.pcm",
+    "candidate_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "baseline_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case2-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case2-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case2-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case3-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case3-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case3-legacy.pcm",
+    "candidate_sha256": "77ccafe7d393508edf02507d8dee5869321a2f11d2972cca58e53f971d92fe23",
+    "baseline_sha256": "77ccafe7d393508edf02507d8dee5869321a2f11d2972cca58e53f971d92fe23",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case3-noqueue.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case3-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case3-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case3-preceding108.pcm",
+    "candidate_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "baseline_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case3-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case3-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case3-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case4-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case4-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case4-legacy.pcm",
+    "candidate_sha256": "89c41ba8f7ef9a71c87c5b479d109bac9c5de5ec9978e7578e4a212d351d9f9f",
+    "baseline_sha256": "89c41ba8f7ef9a71c87c5b479d109bac9c5de5ec9978e7578e4a212d351d9f9f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case4-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case4-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case4-noqueue.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case4-preceding108.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case4-preceding108.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case4-preceding108.pcm",
+    "candidate_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "baseline_sha256": "813c5a7f155663693f031aa41cf91e23465b779fb2062266db0ca1dd647fd071",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/macro-case4-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-native/macro-candidate-96000-realtime/macro-case4-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-macro-automation/build-macro-helpers/macro-baseline-96000-realtime/macro-case4-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  }
+]

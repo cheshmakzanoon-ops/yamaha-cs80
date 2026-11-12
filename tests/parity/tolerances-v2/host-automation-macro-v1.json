@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "host_automation_macro": {
+    "key_parameter_count": 112,
+    "minimum_held_effect": 0.00001,
+    "keys": "macro1..macro4 at108..111; literal108 prefix unchanged",
+    "scope": "Four intrinsic macros separately and combined; manual/manual two notes16384frames. Motion/combined selects fixed18Hz sine LFO1 filter destination, other LFO destinations off. All matrix amounts zero. Width retains intrinsic detune/dispersion changes; space retains intrinsic ring/sub changes. No claim constituent effects isolated.",
+    "timing": "Neutral0.5 through1023;0.75/0.25/0.70/0.30/0.5 at2047/4095/8191/12287/16383; combined interior offsets37*i. Scalar vs7/64/256/1024; reverse queues forcombined.",
+    "verification_plan": "30full+30compat cases;438candidate+210baseline renders;120actualPCM pairs;120scalar24queue-order comparisons;30overall24combined per-macro witnesses. No state readback claim."
+  }
+}

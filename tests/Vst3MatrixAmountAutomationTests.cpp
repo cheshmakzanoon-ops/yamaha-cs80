@@ -1,6 +1,7 @@
 // Bounded ordinary canonical-session matrix amount automation qualification.
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
+#include "Vst3Frozen108Roster.h"
 #include "Vst3Frozen92Roster.h"
 #include <fstream>
 namespace {
@@ -105,7 +106,7 @@ int main(int argc,char**argv)
     constexpr std::array amounts{int(cs80::P_mod1Amount),int(cs80::P_mod2Amount),int(cs80::P_mod3Amount),int(cs80::P_mod4Amount),int(cs80::P_mod5Amount),int(cs80::P_mod6Amount),int(cs80::P_mod7Amount),int(cs80::P_mod8Amount),int(cs80::P_mod9Amount),int(cs80::P_mod10Amount),int(cs80::P_mod11Amount),int(cs80::P_mod12Amount),int(cs80::P_mod13Amount),int(cs80::P_mod14Amount),int(cs80::P_mod15Amount),int(cs80::P_mod16Amount)};
     for(size_t i=0;i<amounts.size();++i)require(cs80::paramId(amounts[i])=="mod"+std::to_string(i+1)+"_amount","stable matrix IDs");
     require(limits["key_parameter_count"]==108,"108 lane contract");
-    if(!compat){require(cs80::kSampleAccurateParameters.size()==108,"exact108 capability");
+    if(!compat){require(cs80::kSampleAccurateParameters.size()>=108,"108 prefix available"); require(std::equal(cs80::kFrozen108Roster.begin(),cs80::kFrozen108Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal108 prefix unchanged");
       require(std::equal(amounts.begin(),amounts.end(),cs80::kSampleAccurateParameters.begin()+92),"amounts at92..107");}
     std::cout<<"compiled_lanes="<<cs80::kSampleAccurateParameters.size()<<"\n";
     const std::filesystem::path input(argv[2]),out(argv[3]);

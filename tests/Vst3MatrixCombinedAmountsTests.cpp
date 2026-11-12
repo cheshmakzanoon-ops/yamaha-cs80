@@ -99,7 +99,7 @@ int main(int argc,char**argv)
     require(mode=="realtime" || mode=="offline","supported mode");
     testSampleRate=std::stod(rate);testProcessMode=mode=="offline"?kOffline:kRealtime;
     const ws1::Tolerances host(argv[4],"host_automation"),limits(argv[5],"matrix_combined_amounts");
-    require(cs80::kSampleAccurateParameters.size()==108,"unchanged108 roster");
+    require(cs80::kSampleAccurateParameters.size()>=108,"108 prefix available"); require(std::equal(cs80::kFrozen108Roster.begin(),cs80::kFrozen108Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal108 prefix unchanged");
     require(std::equal(cs80::kFrozen108Roster.begin(),cs80::kFrozen108Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal108 roster");
     const std::filesystem::path input(argv[2]),out(argv[3]);
     require(!std::filesystem::exists(out),"fresh captures");std::filesystem::create_directory(out);
