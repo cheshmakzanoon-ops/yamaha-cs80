@@ -36,7 +36,14 @@ void validScalarCheck(const ws1::Tolerances& limits) {
 }
 int main(int argc,char**argv) {
     try {
-        require(argc==5,"usage: sub-test MODULE ORIGINAL_CONTRACT SUB_CONTRACT OUTPUT_DIRECTORY");
+        require(argc==5 || argc==7,"usage: sub-test MODULE ORIGINAL_CONTRACT SUB_CONTRACT OUTPUT_DIRECTORY [44100|48000|96000 realtime|offline]");
+        if(argc==7) {
+            const std::string rate(argv[5]),mode(argv[6]);
+            require(rate=="44100" || rate=="48000" || rate=="96000","supported sample rate");
+            require(mode=="realtime" || mode=="offline","supported process mode");
+            testSampleRate=std::stod(rate);testProcessMode=mode=="offline"?kOffline:kRealtime;
+        }
+        std::cout<<"rate="<<testSampleRate<<" mode="<<(testProcessMode==kOffline?"offline":"realtime")<<'\n';
         const ws1::Tolerances limits(argv[2],"host_automation"),subLimits(argv[3],"host_automation_sub");
         require(cs80::kSampleAccurateParameters.size()==subLimits["key_parameter_count"],"registered22-lane roster");
         require(std::equal(oldRoster.begin(),oldRoster.end(),cs80::kSampleAccurateParameters.begin()),"entire original20-lane prefix/order unchanged");

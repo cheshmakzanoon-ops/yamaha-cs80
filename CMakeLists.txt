@@ -939,6 +939,20 @@ if (CS80_BUILD_PLUGIN)
             "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation-sub-v1.json"
             "${CMAKE_CURRENT_BINARY_DIR}/sub-automation-capture")
         set_tests_properties(cs80_vst3_sub_automation_tests PROPERTIES TIMEOUT 180)
+        foreach(rate IN ITEMS 44100 48000 96000)
+            foreach(mode IN ITEMS realtime offline)
+                if(NOT (rate STREQUAL "48000" AND mode STREQUAL "realtime"))
+                    set(sub_test_name "cs80_vst3_sub_automation_${rate}_${mode}_tests")
+                    add_test(NAME "${sub_test_name}" COMMAND cs80_vst3_sub_automation_tests
+                        "$<TARGET_FILE:CS80Reference_VST3>"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json"
+                        "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation-sub-v1.json"
+                        "${CMAKE_CURRENT_BINARY_DIR}/sub-automation-capture-${rate}-${mode}"
+                        "${rate}" "${mode}")
+                    set_tests_properties("${sub_test_name}" PROPERTIES TIMEOUT 180)
+                endif()
+            endforeach()
+        endforeach()
         add_executable(cs80_vst3_automation_tests tests/Vst3AutomationTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"

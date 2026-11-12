@@ -51,9 +51,28 @@ This establishes those recorded windows, not all sounds or a universal offline
 render guarantee. Baseline/candidate modules, executable hashes and raw logs
 are retained with the local verification evidence.
 
+## Expanded rate/mode qualification
+
+The dedicated helper now accepts optional 44.1/48/96 kHz and realtime/offline
+arguments. Defaults remain 48 kHz realtime. Five additional CTest registrations
+use separate capture directories, leaving six supported-input configurations.
+No production code or tolerance changes are part of this expansion.
+
+One retained run per configuration completed all 72 native SUB scenarios with
+zero failures and zero observed partition error. The smallest modulation versus
+neutral PCM difference was 0.051143. The same helper run against the preserved
+pre-feature module completed each configuration with exactly twelve expected
+partition failures; none was discarded or rerun into a passing baseline.
+
+All 246 compatibility captures (41 per configuration) matched the corresponding
+pre-feature module bytes exactly. Comparisons are within the same rate/mode,
+not across sample rates or realtime/offline: a 4096-frame timeline has different
+physical duration at each rate, and offline processing uses its existing
+quality policy. This does not erase earlier unrelated offline limitations.
+
 ## Limits
 
-No real DAW, native GUI, alternate sample rate, offline mode, float64, mixed
+No real DAW, native GUI, sample rates outside this matrix, float64, mixed
 rank-source selection, program-boundary or new CPU/deadline qualification is
 claimed by this bounded gate. Historical larger-suite results remain historical;
 the broad native suite and malformed-input tests were not run for this change.
