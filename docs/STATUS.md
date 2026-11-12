@@ -44,8 +44,27 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `a5f46bc3786f3d0f97872c709e05ffc34245a822` appends existing
+portamento time at lane35 after the unchanged 35-lane prefix, bringing the
+current roster to **36 lanes**. Its reviewed candidate passed six full host
+runs (36 cases) and six frozen35 compatibility-only runs. All 108 actual
+no-queue and Legacy/PURE capture pairs matched byte-for-byte. Maximum
+partition error was 4.47035e-08, below the unchanged 2e-6 threshold, not zero;
+all 36 assigned-open footswitch comparisons were PCM-output inert only.
+These were direct runs, not CTest or historical-fixture executions. See
+[portamento evidence and exact input hashes](VST3_PORTAMENTO_AUTOMATION.md).
+
+This scope is static smooth mode0 with strictly positive time queues and a
+reset-pitch60 to first-note48 onset transient, not broad legato behavior,
+gate switching or internal-state equivalence. It covers Linux float32,
+44.1/48/96 kHz, realtime/offline and 8/16 capacities; it is not broad
+integration, hardware/DAW or release qualification. Published source identity
+does not replace the retained candidate binary/source hashes.
+
+The preceding CHORUS and TREMOLO checkpoints remain historical on their own inputs:
+
 Published `278d5c5fce7f45f83e17589f17811f515335509c` appends chorus speed/depth
-after the unchanged 33-lane prefix, bringing the current roster to **35 lanes**.
+after the unchanged 33-lane prefix, bringing that checkpoint's roster to **35 lanes**.
 Its reviewed candidate passed six full CHORUS-mode host runs (72 cases) and
 six frozen33 compatibility-only runs, with all 216 actual no-queue and
 Legacy/PURE capture pairs byte-identical. Maximum partition errors were
@@ -180,7 +199,7 @@ handover PDF remain dated evidence, not current-head measurements.
 | Filter resonance cache | Reuses cutoff-dependent coefficients on Q-only updates; cutoff/rate changes retain the full path and the solver law is unchanged | `465e56c` ([PR #76](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/76)); [cache scope and measurements](IG00156_RESONANCE_CACHE.md) |
 | External modulation | Sparse FIR reconstruction skips guaranteed-zero products while retaining coefficient design, phase and accumulation order | `228cc8d` ([PR #74](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/74)); [scope and measurements](EXTERNAL_INTERPOLATOR_SPARSE.md) |
 | Delay-reader safety | A rounded circular-buffer position at capacity is wrapped to zero, preventing an out-of-bounds read | `ff9943e`; [DELAY_LINE_WRAP_SAFETY.md](DELAY_LINE_WRAP_SAFETY.md). Previously valid interpolation retains its arithmetic. |
-| Host automation | Thirty-five key VST3 parameters retain sample offsets in modern circuit policy, including five RING controls and chorus speed/depth; RING attack/decay retain fresh-trigger latch semantics, while protected policies and unsupported parameters keep block-rate behavior | `278d5c5f`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [CHORUS qualification](VST3_CHORUS_AUTOMATION.md); static [TREMOLO qualification](VST3_TREMOLO_AUTOMATION.md) at `bd4c9c6f`. AU scheduled ramps are not enabled. |
+| Host automation | Thirty-six key VST3 parameters retain sample offsets in modern circuit policy, including five RING controls, chorus speed/depth and live portamento time; RING attack/decay retain fresh-trigger latch semantics, while protected policies and unsupported parameters keep block-rate behavior | `a5f46bc3`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [portamento qualification](VST3_PORTAMENTO_AUTOMATION.md); historical [CHORUS](VST3_CHORUS_AUTOMATION.md) at `278d5c5f` and static [TREMOLO](VST3_TREMOLO_AUTOMATION.md) at `bd4c9c6f`. AU scheduled ramps are not enabled. |
 | Tuning | Pinned 0BSD MTS-ESP client included, with bounded whole-table updates and missing-master fallback | `73e76ce`; [MTS_ESP_INTEGRATION.md](MTS_ESP_INTEGRATION.md). [Per-channel master tables](MTS_ESP_CHANNEL_MASTER.md) are implemented; live external-master DAW qualification remains open. |
 | MIDI and note lifecycle | Channel-scoped pressure/MPE routing, retained release ownership, ordered KAS short notes, bounded CC121 controller defaults and live conventional bend-range edits | [VOICE_RELEASE_OWNERSHIP.md](VOICE_RELEASE_OWNERSHIP.md), [MPE_MASTER_BEND_ROUTING.md](MPE_MASTER_BEND_ROUTING.md), [CONTROLLER_RESET.md](CONTROLLER_RESET.md), [PITCH_BEND_RANGE_AUTOMATION.md](PITCH_BEND_RANGE_AUTOMATION.md) |
 | Immediate sixteen-voice release | Cancels one matching waiter or releases the newest comparable held group across both instruments; unison groups and UI source guards are retained | `77dfd74`; [bounded contract](SIXTEEN_VOICE_NOTE_RELEASE.md). Deferred/ARP-origin candidates and active/pending scan paths retain broadcast fallback. No complete sixteen-voice release or realtime qualification claim. |
