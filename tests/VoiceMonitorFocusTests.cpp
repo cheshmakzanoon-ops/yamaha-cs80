@@ -2,6 +2,20 @@
 #include "plugin/StudioDrawers.h"
 #include "VoiceMonitorFocusChecks.h"
 #include <iostream>
+namespace {
+struct DirtyListener : juce::AudioProcessorListener
+{
+    int changes = 0;
+    void audioProcessorParameterChanged(juce::AudioProcessor*, int, float) override { ++changes; }
+    void audioProcessorChanged(juce::AudioProcessor*, const ChangeDetails&) override { ++changes; }
+};
+juce::MemoryBlock save(Cs80AudioProcessor& processor)
+{
+    juce::MemoryBlock state;
+    processor.getStateInformation(state);
+    return state;
+}
+}
 int main()
 {
     juce::ScopedJuceInitialiser_GUI init;
@@ -20,6 +34,52 @@ int main()
         for (auto* c : traverser.getAllComponents(&drawer))
             std::cout << c->getTitle() << '\n';
     }
+    // Exercise real UI callbacks, not processor telemetry setters. Inspection is
+    // observational: it must not modify session bytes or mark the host dirty.
+    juce::Thread::sleep(350);
+    juce::Timer::callPendingTimersSynchronously();
+    const auto saved = save(processor);
+    DirtyListener listener;
+    processor.addListener(&listener);
+    auto check = [&](bool ok) { ++checks; if (!ok) ++failures; };
+    auto click = [&](const char* id)
+    {
+        auto* button = dynamic_cast<juce::Button*>(drawer.findChildWithID(id));
+        check(button != nullptr);
+        if (button && button->onClick) button->onClick();
+    };
+    click("scope_live");
+    check(cs80::test::voiceMonitorFocusMatches(drawer, true));
+    click("scope_previous_slot");
+    check(drawer.getInspectedSlot() == 15);
+    click("scope_next_slot");
+    check(drawer.getInspectedSlot() == 0);
+    juce::KeyboardFocusTraverser traverser;
+    const auto liveOrder = traverser.getAllComponents(&drawer);
+    if (liveOrder.size() >= 2)
+    {
+        auto* rank = dynamic_cast<juce::Button*>(liveOrder[1]);
+        check(rank != nullptr);
+        if (rank && rank->onClick) rank->onClick();
+    }
+    else check(false);
+    check(drawer.getChannel() == 1);
+    int closes = 0;
+    drawer.onClose = [&] { ++closes; drawer.setVisible(false); };
+    click("scope_close");
+    check(closes == 1 && !drawer.isVisible());
+    drawer.setVisible(true);
+    check(cs80::test::voiceMonitorFocusMatches(drawer, true));
+    check(!drawer.keyPressed(juce::KeyPress('x')) && closes == 1);
+    check(drawer.keyPressed(juce::KeyPress(juce::KeyPress::escapeKey)) && closes == 2 && !drawer.isVisible());
+    drawer.setVisible(true);
+    click("scope_live");
+    check(cs80::test::voiceMonitorFocusMatches(drawer, false));
+    juce::Thread::sleep(350);
+    juce::Timer::callPendingTimersSynchronously();
+    check(listener.changes == 0);
+    check(save(processor) == saved);
+    processor.removeListener(&listener);
     std::cout << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;
 }
