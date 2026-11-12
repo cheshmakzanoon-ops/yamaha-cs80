@@ -46,7 +46,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing smoothed initial-bend amount; retain all 37 previous lanes.
     int(P_initBend),
     // Existing smoothed LOW level contour; preserve the 38-lane prefix.
-    int(P_kbdLevelLow)
+    int(P_kbdLevelLow),
+    // Existing HIGH level contour; retain the complete 39-lane prefix.
+    int(P_kbdLevelHigh)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

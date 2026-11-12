@@ -1,0 +1,226 @@
+{
+  "base_commit": "dd6647c707cb452a75899fed92f1f903d770b994",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_kbd_level_high_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 36,
+  "compatibility_cases": 36,
+  "pcm_pairs": 108,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": {
+    "kbd_level_high": [
+      {
+        "max_error": 0.0,
+        "effect": 0.00171365,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00174871,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00171365,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0276334,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0123239,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0276334,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00180554,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0017527,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00180554,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0271516,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0141903,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0271516,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00170518,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0016357,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00170518,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0272744,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0132212,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0272744,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00163551,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0016658,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00163551,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0271499,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0140286,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0271499,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00140315,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00147215,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00140315,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0276816,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0141495,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0276816,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00139232,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00149858,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00139232,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0274942,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0144053,
+        "prefix_exact": 1
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0274942,
+        "prefix_exact": 1
+      }
+    ]
+  },
+  "old_contract_count": 32,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "344f8a7de175c16c52d608bbf727c5939b326dc511b959098b203f9ba21c86c2",
+    "tests/Vst3KbdLevelHighAutomationTests.cpp": "05e5e2e4b366714bc482894b5c2c7d8270fa1c382552d692b20c93fa07f78e01",
+    "tests/Vst3AutomationTests.cpp": "a5b2804cba6a5622d51634681fb8bd327e85fd2dba3464fb47a6073b0fb39f15",
+    "tests/Vst3KbdLevelLowAutomationTests.cpp": "f23e0d10caab31298e74f00de8e74659c4057c63b257df0fc9f6127fa27db92b",
+    "src/plugin/HostAutomationBridge.h": "6e6867694bf1ab244fccc2477adb58c7be9eb1297d28c799f546241aee61a53b",
+    "tests/parity/tolerances-v2/host-automation-kbd-level-high-v1.json": "07bdaebed9c4010b47c06c6faa3b16064b783bf9727f5387f107e70cbf4b257a",
+    "docs/VST3_KBD_LEVEL_HIGH_AUTOMATION.md": "c9b893a8bc6b24646b946c661f647e69c5d46cf155cdce6ab0d691cd0e92191d",
+    "docs/HOST_AUTOMATION.md": "0d96bce3c4ef48b36cc61eeed2f739652a0451b5d12be63e54d9f0119911da2b"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Modern smoothed HIGH contour, explicit MIDI62 cohort, LOW0; helper unchanged.",
+    "Aggregate PCM witness is not isolated-key or calibrated hardware contour validation.",
+    "No invented bypass control.",
+    "No hardware/DAW/GUI/AU/CPU/broad/negative tests."
+  ],
+  "renders": 684,
+  "failed_attempts": 0,
+  "runtime_retries": 0
+}
