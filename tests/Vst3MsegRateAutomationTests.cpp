@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen89Roster.h"
+#include "Vst3Frozen92Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -106,7 +107,8 @@ int main(int argc,char**argv)
     const std::array<std::string,3> ids{"mseg1_rate","mseg2_rate","mseg3_rate"};
     for(size_t i=0;i<rates.size();++i)require(cs80::paramId(rates[i])==ids[i],"stable MSEG rate IDs");
     require(limits["key_parameter_count"]==92,"92 lane contract");
-    if(!compat){require(cs80::kSampleAccurateParameters.size()==92,"exact92 capability");
+    if(!compat){require(cs80::kSampleAccurateParameters.size()>=92,"92 prefix available");
+      require(std::equal(cs80::kFrozen92Roster.begin(),cs80::kFrozen92Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal92 prefix unchanged");
       require(std::equal(rates.begin(),rates.end(),cs80::kSampleAccurateParameters.begin()+89),"rates at89/90/91");}
     std::cout<<"compiled_lanes="<<cs80::kSampleAccurateParameters.size()<<"\n";
     const std::filesystem::path input(argv[2]),out(argv[3]);

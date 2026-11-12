@@ -1,0 +1,514 @@
+[
+  {
+    "case": "96000-realtime/matrix-slot0-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot0-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot0-legacy.pcm",
+    "candidate_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "baseline_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot0-noqueue.pcm",
+    "candidate_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "baseline_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot0-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot0-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot0-preceding92.pcm",
+    "candidate_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "baseline_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot0-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot0-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot0-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot1-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot1-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot1-legacy.pcm",
+    "candidate_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "baseline_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot1-noqueue.pcm",
+    "candidate_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "baseline_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot1-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot1-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot1-preceding92.pcm",
+    "candidate_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "baseline_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot1-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot1-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot1-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot10-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot10-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot10-legacy.pcm",
+    "candidate_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "baseline_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot10-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot10-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot10-noqueue.pcm",
+    "candidate_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "baseline_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot10-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot10-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot10-preceding92.pcm",
+    "candidate_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "baseline_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot10-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot10-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot10-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot11-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot11-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot11-legacy.pcm",
+    "candidate_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "baseline_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot11-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot11-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot11-noqueue.pcm",
+    "candidate_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "baseline_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot11-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot11-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot11-preceding92.pcm",
+    "candidate_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "baseline_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot11-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot11-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot11-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot12-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot12-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot12-legacy.pcm",
+    "candidate_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "baseline_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot12-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot12-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot12-noqueue.pcm",
+    "candidate_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "baseline_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot12-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot12-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot12-preceding92.pcm",
+    "candidate_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "baseline_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot12-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot12-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot12-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot13-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot13-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot13-legacy.pcm",
+    "candidate_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "baseline_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot13-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot13-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot13-noqueue.pcm",
+    "candidate_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "baseline_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot13-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot13-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot13-preceding92.pcm",
+    "candidate_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "baseline_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot13-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot13-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot13-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot14-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot14-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot14-legacy.pcm",
+    "candidate_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "baseline_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot14-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot14-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot14-noqueue.pcm",
+    "candidate_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "baseline_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot14-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot14-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot14-preceding92.pcm",
+    "candidate_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "baseline_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot14-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot14-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot14-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot15-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot15-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot15-legacy.pcm",
+    "candidate_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "baseline_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot15-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot15-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot15-noqueue.pcm",
+    "candidate_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "baseline_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot15-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot15-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot15-preceding92.pcm",
+    "candidate_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "baseline_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot15-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot15-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot15-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot2-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot2-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot2-legacy.pcm",
+    "candidate_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "baseline_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot2-noqueue.pcm",
+    "candidate_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "baseline_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot2-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot2-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot2-preceding92.pcm",
+    "candidate_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "baseline_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot2-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot2-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot2-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot3-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot3-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot3-legacy.pcm",
+    "candidate_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "baseline_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot3-noqueue.pcm",
+    "candidate_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "baseline_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot3-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot3-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot3-preceding92.pcm",
+    "candidate_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "baseline_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot3-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot3-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot3-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot4-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot4-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot4-legacy.pcm",
+    "candidate_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "baseline_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot4-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot4-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot4-noqueue.pcm",
+    "candidate_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "baseline_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot4-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot4-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot4-preceding92.pcm",
+    "candidate_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "baseline_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot4-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot4-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot4-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot5-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot5-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot5-legacy.pcm",
+    "candidate_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "baseline_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot5-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot5-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot5-noqueue.pcm",
+    "candidate_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "baseline_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot5-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot5-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot5-preceding92.pcm",
+    "candidate_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "baseline_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot5-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot5-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot5-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot6-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot6-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot6-legacy.pcm",
+    "candidate_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "baseline_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot6-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot6-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot6-noqueue.pcm",
+    "candidate_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "baseline_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot6-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot6-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot6-preceding92.pcm",
+    "candidate_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "baseline_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot6-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot6-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot6-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot7-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot7-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot7-legacy.pcm",
+    "candidate_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "baseline_sha256": "46f85d63aff66a15a1b20a1a5f95f08e1fb6ec45afeb9537f32e206ae289c008",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot7-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot7-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot7-noqueue.pcm",
+    "candidate_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "baseline_sha256": "ecb000ac7ca08fad08dd2270caadde61beaee02b6d294cf11acaee96ffec84d2",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot7-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot7-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot7-preceding92.pcm",
+    "candidate_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "baseline_sha256": "b5611329313aabd259d283656e328800d012eead845b25dea92c55884c24d181",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot7-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot7-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot7-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot8-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot8-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot8-legacy.pcm",
+    "candidate_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "baseline_sha256": "d43f74d0e19b6f7543b9b0335f8712fd0d14142daf8889b2ca5ca49c78981dc3",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot8-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot8-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot8-noqueue.pcm",
+    "candidate_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "baseline_sha256": "5e3ceef45447148707be65a36a61726f4dea76d37f685bfcba8643580781c43b",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot8-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot8-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot8-preceding92.pcm",
+    "candidate_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "baseline_sha256": "7dacc83ad6929637e0cc6ea8e71354be332ce461024836b85bd16afa61aa1a7f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot8-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot8-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot8-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot9-legacy.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot9-legacy.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot9-legacy.pcm",
+    "candidate_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "baseline_sha256": "40123e8cdd2f374c56875c0c2313cea96eb3714e048b682abb77b532de6f9ca9",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot9-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot9-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot9-noqueue.pcm",
+    "candidate_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "baseline_sha256": "e7ffbd26a5ebeeed976df08b967fa5f04544359e418ecd198b491ddcad2762b8",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot9-preceding92.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot9-preceding92.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot9-preceding92.pcm",
+    "candidate_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "baseline_sha256": "5d19657335c7eaf0e17819fd780690f5c78fabf00e0546bf4295de77e681621f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/matrix-slot9-pure.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-native/matrix-candidate-96000-realtime/matrix-slot9-pure.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-matrix-amount-automation/build-matrix-helpers/matrix-baseline-96000-realtime/matrix-slot9-pure.pcm",
+    "candidate_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "baseline_sha256": "455ad2c8a87a3eaec8a3933e15e6d0fde1dff0fd301d0ad81d22e7124c8517a4",
+    "byte_equal": true
+  }
+]

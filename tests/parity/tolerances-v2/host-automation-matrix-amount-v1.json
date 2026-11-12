@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "host_automation_matrix_amount": {
+    "key_parameter_count": 108,
+    "minimum_held_effect": 1e-05,
+    "keys": "P_mod1Amount..P_mod16Amount at92..107; literal92 prefix preserved",
+    "scope": "16 isolated slots, MSEG(slot%3) to corresponding pitch/cutoff/level both ranks, proven unsynced poly-loop shapes; manual/manual2notes capacity8; no combined slots, source/via edits or source-mask claim",
+    "timing": "16384frames; physical amount0.10 through1023, then0.20/-0.10/0.25/-0.20/0.10 at2047/4095/8191/12287/16383. Scalar vs7/64/256/1024; initial1024frame exact hold.",
+    "verification_plan": "96full+96compat cases;1440candidate+672baseline renders,384actualPCM pairs/768captures,192native config readbacks;17canonical sessions. Off/PURE/Legacy controls."
+  }
+}

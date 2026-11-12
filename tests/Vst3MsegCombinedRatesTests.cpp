@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen89Roster.h"
+#include "Vst3Frozen92Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -99,7 +100,8 @@ int main(int argc,char**argv)
     require(mode=="realtime" || mode=="offline","supported mode");
     testSampleRate=std::stod(rate);testProcessMode=mode=="offline"?kOffline:kRealtime;
     const ws1::Tolerances host(argv[4],"host_automation"),limits(argv[5],"mseg_combined_rates");
-    require(cs80::kSampleAccurateParameters.size()==92,"unchanged92 roster");
+    require(cs80::kSampleAccurateParameters.size()>=92,"92 prefix available");
+      require(std::equal(cs80::kFrozen92Roster.begin(),cs80::kFrozen92Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal92 prefix unchanged");
     require(std::equal(cs80::kFrozen89Roster.begin(),cs80::kFrozen89Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal89 prefix");
     constexpr std::array rates{int(cs80::P_mseg1Rate),int(cs80::P_mseg2Rate),int(cs80::P_mseg3Rate)};
     require(std::equal(rates.begin(),rates.end(),cs80::kSampleAccurateParameters.begin()+89),"literal3 appended rates");
