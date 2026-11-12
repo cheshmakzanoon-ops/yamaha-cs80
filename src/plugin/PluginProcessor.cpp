@@ -1586,6 +1586,7 @@ void Cs80AudioProcessor::setStateInformation(const void* data, int sizeInBytes)
             setPresetMetadata(tree.getProperty("presetName", "Init Patch").toString(),
                               (int) tree.getProperty("factoryIndex", 0));
             readLibraryState(tree); // [ws6-library] A/B compare slot
+            apvts.discardNonParameterStateUpdate();
             // DSP state is updated by the next audio block, not the state-loading thread.
         }
     }
@@ -1897,12 +1898,26 @@ void Cs80AudioProcessor::readStudioState(juce::ValueTree& state)
 // ---------------------------------------------------------------------------
 bool Cs80AudioProcessor::undo()
 {
-    return apvts.undo();
+    auto* messages = juce::MessageManager::getInstanceWithoutCreating();
+    if (messages == nullptr || !messages->isThisTheMessageThread())
+        return false;
+    const auto before = modernLayer.getConfig();
+    const bool changed = apvts.undo();
+    if (changed && modernLayer.getConfig() != before)
+        apvts.requestNonParameterStateUpdate();
+    return changed;
 }
 
 bool Cs80AudioProcessor::redo()
 {
-    return apvts.redo();
+    auto* messages = juce::MessageManager::getInstanceWithoutCreating();
+    if (messages == nullptr || !messages->isThisTheMessageThread())
+        return false;
+    const auto before = modernLayer.getConfig();
+    const bool changed = apvts.redo();
+    if (changed && modernLayer.getConfig() != before)
+        apvts.requestNonParameterStateUpdate();
+    return changed;
 }
 
 // Display-only query. No name allocation or external name call occurs in processBlock.

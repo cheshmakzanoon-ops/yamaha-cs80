@@ -55,6 +55,17 @@ public:
         static_assert(std::atomic<bool>::is_always_lock_free);
         programDisplayPending.store(true, std::memory_order_release);
     }
+    // User-edited non-parameter session data. Coalesced on the existing timer,
+    // not delivered inside a component's mutation/refresh stack.
+    void requestNonParameterStateUpdate() noexcept
+    {
+        nonParameterStatePending.store(true, std::memory_order_release);
+    }
+    // An accepted host restore supersedes pending editor changes.
+    void discardNonParameterStateUpdate() noexcept
+    {
+        nonParameterStatePending.store(false, std::memory_order_release);
+    }
     juce::CriticalSection& treeLock() noexcept { return lock; }
 
     // Message thread, outside any gesture/ScopedUserEdit. Unsafe calls are rejected before sync;
@@ -102,7 +113,7 @@ private:
     void syncExternal();
     void write(int index, juce::UndoManager* undoManager);
 
-    std::atomic<bool> programDisplayPending { false };
+    std::atomic<bool> programDisplayPending { false }, nonParameterStatePending { false };
     juce::AudioProcessor& owner;
     juce::UndoManager& history;
     juce::CriticalSection lock;

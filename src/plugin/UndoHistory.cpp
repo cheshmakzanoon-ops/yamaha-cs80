@@ -306,8 +306,11 @@ void UndoableParameterState::timerCallback()
         flushUser();   // a long drag keeps the tree current; the steps coalesce into its transaction
     // No OS message-queue posting or queue growth on the audio thread.
     // Keep external listener notification last to tolerate listener reentrancy.
-    if (programDisplayPending.exchange(false, std::memory_order_acq_rel))
-        owner.updateHostDisplay(juce::AudioProcessor::ChangeDetails().withProgramChanged(true));
+    const bool programChanged = programDisplayPending.exchange(false, std::memory_order_acq_rel);
+    const bool stateChanged = nonParameterStatePending.exchange(false, std::memory_order_acq_rel);
+    if (programChanged || stateChanged)
+        owner.updateHostDisplay(juce::AudioProcessor::ChangeDetails()
+            .withProgramChanged(programChanged).withNonParameterStateChanged(stateChanged));
 }
 
 } // namespace cs80

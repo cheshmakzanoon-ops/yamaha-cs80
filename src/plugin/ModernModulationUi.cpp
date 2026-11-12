@@ -16,6 +16,26 @@ namespace
 {
 using namespace cs80::modern;
 
+// Only explicit editor mutations request a host save reminder. Generic state
+// setters remain silent for session restore, preset recall and setup code.
+void setEditedShape(Cs80AudioProcessor& owner, int index, const MsegShape& shape)
+{
+    auto& layer = owner.getModernLayer();
+    const auto before = layer.getRevision();
+    layer.setShape(index, shape);
+    if (layer.getRevision() != before)
+        owner.getUndoableState().requestNonParameterStateUpdate();
+}
+
+void setEditedSlot(Cs80AudioProcessor& owner, int index, const ModSlot& slot)
+{
+    auto& layer = owner.getModernLayer();
+    const auto before = layer.getRevision();
+    layer.setSlot(index, slot);
+    if (layer.getRevision() != before)
+        owner.getUndoableState().requestNonParameterStateUpdate();
+}
+
 constexpr float kMargin = 10.0f;
 constexpr float kMarkerStrip = 18.0f;
 constexpr float kPointRadius = 5.0f;
@@ -200,7 +220,7 @@ bool MsegEditor::refreshIfStale()
 
 void MsegEditor::commit()
 {
-    processor.getModernLayer().setShape(msegIndex, shape);
+    setEditedShape(processor, msegIndex, shape);
     const auto snapshot = processor.getModernLayer().getEditSnapshot();
     shape = snapshot.config.msegs[(std::size_t) msegIndex];
     shapeRevision = snapshot.revision; // our own change notification may arrive mid-drag
@@ -731,7 +751,7 @@ MsegPage::MsegPage(Cs80AudioProcessor& p) : processor(p), editor(p)
     {
         if (refreshing || presetBox.getSelectedId() <= 0) return;
         const int preset = presetBox.getSelectedId();
-        processor.getModernLayer().setShape(editor.getMsegIndex(),
+        setEditedShape(processor, editor.getMsegIndex(),
                                             presetShape(preset, processor.getModernLayer().getShape(editor.getMsegIndex())));
         presetBox.setSelectedId(0, juce::dontSendNotification);
     };
@@ -807,7 +827,7 @@ void MsegPage::showPointValues()
         {
             auto& undo = safe->processor.getUndoManager();
             undo.beginNewTransaction("Edit MSEG " + juce::String(slot + 1) + " point " + juce::String(point + 1));
-            safe->processor.getModernLayer().setShape(slot, edited);
+            setEditedShape(safe->processor, slot, edited);
             undo.beginNewTransaction();
         }
         safe->editor.reload();
@@ -865,7 +885,7 @@ juce::PopupMenu MsegPage::buildShapeCopyMenu()
             auto& undo = safe->processor.getUndoManager();
             undo.beginNewTransaction("Copy MSEG " + juce::String(source + 1) + " shape to MSEG "
                                      + juce::String(destination + 1));
-            safe->processor.getModernLayer().setShape(destination, sourceShape);
+            setEditedShape(safe->processor, destination, sourceShape);
             undo.beginNewTransaction(); // a later direct shape edit cannot join this copy
         };
         menu.addItem(item);
@@ -888,7 +908,7 @@ void MsegPage::writeShape(const std::function<void(MsegShape&)>& edit)
     if (refreshing) return;
     auto s = processor.getModernLayer().getShape(editor.getMsegIndex());
     edit(s);
-    processor.getModernLayer().setShape(editor.getMsegIndex(), s);
+    setEditedShape(processor, editor.getMsegIndex(), s);
 }
 
 void MsegPage::changeListenerCallback(juce::ChangeBroadcaster*)
@@ -1103,7 +1123,7 @@ juce::PopupMenu ModMatrixPage::buildRouteActionsMenu(int source)
             auto& owner = safe->processor;
             {
                 Cs80AudioProcessor::ScopedUserEdit edit(owner.getUndoableState(), name);
-                owner.getModernLayer().setSlot(destination, route);
+                setEditedSlot(owner, destination, route);
                 auto* p = parameter(owner, P_mod1Amount + destination);
                 if (p->getValue() != amount)
                 {
@@ -1174,7 +1194,7 @@ void ModMatrixPage::write(int slot, RouteField field)
     {
         auto& undo = processor.getUndoManager();
         undo.beginNewTransaction("Matrix slot " + juce::String(slot + 1) + " " + name);
-        processor.getModernLayer().setSlot(slot, edited);
+        setEditedSlot(processor, slot, edited);
         undo.beginNewTransaction(); // later routing choices must not join this action
     }
     refresh();
