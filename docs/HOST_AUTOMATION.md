@@ -7,10 +7,10 @@ The [portamento extension](VST3_PORTAMENTO_AUTOMATION.md) appends existing
 updates affect the existing live glide coefficient when the footswitch gate
 is active; glide-mode selection, gate behavior and DSP laws are unchanged.
 
-This candidate envelope ATTACK extension preserves host sample offsets for sixty-six VST3 parameters in
+This candidate envelope DECAY extension preserves host sample offsets for seventy VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, LOW/HIGH keyboard level, LOW/HIGH keyboard brilliance, and both ranks’ INITIAL/AFTER TOUCH brilliance/level amounts and PWM speed/depth, plus both rank VCF LEVEL and VCA envelope SUSTAIN controls, plus both filter EG IL/AL targets and both ranks’ filter/VCA attack times. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, LOW/HIGH keyboard level, LOW/HIGH keyboard brilliance, and both ranks’ INITIAL/AFTER TOUCH brilliance/level amounts and PWM speed/depth, plus both rank VCF LEVEL and VCA envelope SUSTAIN controls, plus both filter EG IL/AL targets and both ranks’ filter/VCA attack and decay times. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
@@ -107,6 +107,11 @@ The candidate [envelope ATTACK extension](VST3_ENVELOPE_ATTACK_AUTOMATION.md)
 appends filter/VCA attack times at lanes62..65. Existing live timing updates
 preserve state, stage, elapsed time and attack anchor, unlike changed AL target
 reanchoring. The complete62-lane prefix and source authority remain unchanged.
+
+The candidate [envelope DECAY extension](VST3_ENVELOPE_DECAY_AUTOMATION.md)
+appends filter/VCA decay times at lanes66..69. Existing live timing updates
+preserve state and stage; a bounded post-attack held window qualifies the
+selected decay coefficients. Full66 prefix and source authority are unchanged.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

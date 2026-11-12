@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), envelope_attackLimits(argv[3], "host_automation_envelope_attack");
-        require(envelope_attackLimits["key_parameter_count"] == 66 && cs80::kSampleAccurateParameters.size() == 66,
-                "exact 66-lane envelope_attack capability");
+        require(envelope_attackLimits["key_parameter_count"] == 66 && cs80::kSampleAccurateParameters.size() >= 66,
+                "historical 66-lane envelope_attack capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 62-lane roster/order unchanged");
         constexpr std::array added {cs80::chParam(0, cs80::CP_fA), cs80::chParam(0, cs80::CP_vA), cs80::chParam(1, cs80::CP_fA), cs80::chParam(1, cs80::CP_vA)};
