@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), kbd_level_highLimits(argv[3], "host_automation_kbd_level_high");
-        require(kbd_level_highLimits["key_parameter_count"] == 40 && cs80::kSampleAccurateParameters.size() == 40,
-                "exact 40-lane kbd_level_high capability");
+        require(kbd_level_highLimits["key_parameter_count"] == 40 && cs80::kSampleAccurateParameters.size() >= 40,
+                "historical 40-lane kbd_level_high capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 39-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[39] == cs80::P_kbdLevelHigh, "exact kbd_level_high lane");

@@ -7,10 +7,10 @@ The [portamento extension](VST3_PORTAMENTO_AUTOMATION.md) appends existing
 updates affect the existing live glide coefficient when the footswitch gate
 is active; glide-mode selection, gate behavior and DSP laws are unchanged.
 
-This candidate HIGH keyboard-level extension preserves host sample offsets for forty VST3 parameters in
+This candidate keyboard-brilliance extension preserves host sample offsets for forty-two VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, and LOW/HIGH keyboard level. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, LOW/HIGH keyboard level, and LOW/HIGH keyboard brilliance. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
@@ -57,6 +57,11 @@ The candidate [HIGH keyboard-level extension](VST3_KBD_LEVEL_HIGH_AUTOMATION.md)
 appends `P_kbdLevelHigh` at lane39, preserving all earlier39 lanes. Its
 existing live smoothed contour path is unchanged; the bounded fixture uses
 source-proven responsive MIDI62..77 through the unchanged note-base helper.
+
+The candidate [keyboard-brilliance extension](VST3_KBD_BRILLIANCE_AUTOMATION.md)
+appends existing LOW/HIGH levers at lanes40/41. Live smoothed KBC1 voltages
+feed the existing separate HP/LP cutoff-control receiver paths, not the LC
+level path. The complete preceding40-lane roster stays fixed.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's
