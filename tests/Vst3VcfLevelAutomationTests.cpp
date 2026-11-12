@@ -41,7 +41,7 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), vcf_levelLimits(argv[3], "host_automation_vcf_level");
-        require(vcf_levelLimits["key_parameter_count"] == 56 && cs80::kSampleAccurateParameters.size() == 56,
+        require(vcf_levelLimits["key_parameter_count"] == 56 && cs80::kSampleAccurateParameters.size() >= 56,
                 "exact 56-lane vcf_level capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 54-lane roster/order unchanged");

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append rank VCA envelope SUSTAIN lanes56/57 after unchanged56 prefix; preserve39 historical contracts, metadata, DSP, source mask and helper.",
+  "host_automation_vca_sustain": {
+    "key_parameter_count": 58,
+    "keys": "Rank0 CP_vS lane56; rank1 CP_vS lane57. Entire preceding56 prefix unchanged.",
+    "authority": "PANEL13 positive; factory0/MEMORY11 selected-source PCM masking unchanged. Range0..1/default.78/linear unchanged.",
+    "timing": "Modern active setSustain preserves envelope state and stage, following existing decay coefficient in Decay/Sustain, not ordinary rank gain smoothing. PANEL A.001,D.002,envTimeScale1,dispersion0,S.5hold0/512 then.2/.8/.3/.7/.15/.6 at767/1279/1919/2559/3071/4095. Release/Idle ignore target; no separate release-only proof.",
+    "verification": "72 full24PANELpositive48masked plus72frozen56compatibility;1368renders12process216actualpairs. Matchedactivehold, exactpre512, scalar/fivepartitions; pulse1/saw0/sine0/noise0/PW.5/PWMdepth0/VCAlevel.35/mix.5, touch/mods0. No calibrated envelope, stage timing accuracy, hardware, simultaneous lane, GUI or CPU claims."
+  }
+}

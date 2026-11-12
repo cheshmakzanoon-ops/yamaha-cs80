@@ -1,0 +1,764 @@
+{
+  "base_commit": "4532bcbcbb8867e861cf61b37a3bc9b3e9960511",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_vca_sustain_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 72,
+  "compatibility_cases": 72,
+  "pcm_pairs": 216,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": [
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00646117,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0169766,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00461425,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0226942,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00649679,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0169488,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00459032,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0225605,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00595589,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0207458,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00532298,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0193546,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00592665,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0208264,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00535522,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0193927,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00419772,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0199087,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.00533379,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0155998,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00418879,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0198313,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 56,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.00528673,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0155298,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 57,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0,
+      "prefix_exact": 1
+    }
+  ],
+  "old_contract_count": 39,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "f5bea39dd2400f1b66f8c4e2975dce8812e366b2f0621eff77e96aa95472e34e",
+    "src/plugin/HostAutomationBridge.h": "a9206c3c204a33b6345f527ecb50158319f0646fa4c923da6eea8c45ea7638f7",
+    "tests/Vst3VcfLevelAutomationTests.cpp": "c5bd7b983fa96c826c57c947e3baa9c9d4a6b830dc71e7db0d76c8fa74227b25",
+    "tests/Vst3VcaSustainAutomationTests.cpp": "586c2ed329ce3608011942be9a2e42493d2b08752cd7a6ece85cd6fa04e53f6e",
+    "tests/Vst3AutomationTests.cpp": "a5b2804cba6a5622d51634681fb8bd327e85fd2dba3464fb47a6073b0fb39f15",
+    "tests/parity/tolerances-v2/host-automation-vca-sustain-v1.json": "a5feaf64fd23e83a79ecb24cf966a9eae783ac10e5f1e1f797eb6ecc12eb67af",
+    "docs/HOST_AUTOMATION.md": "43e0c883ad5dc816baeacedfd34f7da4e50c801a1f4897fac3401566d2c60f74",
+    "docs/VST3_VCA_SUSTAIN_AUTOMATION.md": "82cee4e656ec7aaec7d79cda89c745e306aadc207133b241d72d0402219964e4"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Isolated rank VCA EG SUSTAIN, PANEL positive and selected factory/MEMORY masked.",
+    "No calibrated envelope-stage accuracy, ordinary smoothed-gain law, hardware or simultaneous-rank qualification.",
+    "No invented bypass control.",
+    "No hardware/DAW/GUI/AU/CPU/broad/negative tests."
+  ],
+  "render_count": 1368,
+  "positive_panel_cases": 24,
+  "masked_factory_memory_cases": 48
+}
