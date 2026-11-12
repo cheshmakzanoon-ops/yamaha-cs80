@@ -12,6 +12,9 @@ not replace DSP smoothing or change a parameter law. The
 changing either historical capability contract. The
 [VCF/VCA depth extension](VST3_SUB_DEPTH_AUTOMATION.md) appends the remaining two
 continuous depths while preserving that 22-lane prefix.
+Static falling-saw, rising-saw and square selection with those continuous queues
+has a separate [bounded native gate](VST3_SUB_WAVEFORM_AUTOMATION.md); discrete
+waveform selection itself remains block-rate.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

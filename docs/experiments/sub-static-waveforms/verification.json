@@ -1,0 +1,111 @@
+{
+  "base_local_commit": "760ff303be76bd3d06f47f76b2deda1a173b9540",
+  "base_published_equivalent_commit": "2f8fff5bde2217e8056da0855d46d3a679581e8b",
+  "production_module_built_from": "760fcb55e793ea3b408eecff36bf955f6f81da17",
+  "production_source_unchanged_since_module_build": true,
+  "execution": "Six direct scoped-host invocations against exact previously built unchanged module; not CTest runs",
+  "cmake_configure_passed": true,
+  "cmake_tests_registered": 6,
+  "scenarios": 108,
+  "failures": 0,
+  "max_partition_error": 0.0,
+  "effect_range": [
+    0.0525242,
+    0.745734
+  ],
+  "function_effect_range": [
+    0.0935069,
+    0.904
+  ],
+  "sha256": {
+    "tests/Vst3SubWaveformAutomationTests.cpp": "154eb2ca6ff558737b05cf6555252f51f4deed7eb77e2cfc6be8569f49a79bbd",
+    "tests/Vst3AutomationTests.cpp": "bd83396dc6290daed79a67aaa18b609de01e6e41cdb3197ee26aac802be242ac",
+    "tests/parity/tolerances-v2/host-automation.json": "c301b3eddf110a8dc6b6b07416d6eba9ddb68f7c19fb2eeea99cebc26bee7bf6",
+    "CMakeLists.txt": "0b47a8ada8e35ed1c68faf104d54773fbdaa319755348096800646fd3d92eed9",
+    "build/cs80_vst3_sub_waveform_standalone": "35d9e73cd8612ff993131cbc1be3686846bf0ce0ef0522acadd2320e45fb44e8",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "95b60dd9dabf2844fe0bbfb8e6254f3738df19da7c3852621a54e90f5f38eb4c"
+  },
+  "runs": [
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "exit_code": 0,
+      "elapsed_seconds": 24.690254701999947,
+      "command": [
+        "build/cs80_vst3_sub_waveform_standalone",
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "tests/parity/tolerances-v2/host-automation.json",
+        "44100",
+        "realtime"
+      ]
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "exit_code": 0,
+      "elapsed_seconds": 64.35268146499993,
+      "command": [
+        "build/cs80_vst3_sub_waveform_standalone",
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "tests/parity/tolerances-v2/host-automation.json",
+        "44100",
+        "offline"
+      ]
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "exit_code": 0,
+      "elapsed_seconds": 24.52058378799984,
+      "command": [
+        "build/cs80_vst3_sub_waveform_standalone",
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "tests/parity/tolerances-v2/host-automation.json",
+        "48000",
+        "realtime"
+      ]
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "exit_code": 0,
+      "elapsed_seconds": 65.80141030300001,
+      "command": [
+        "build/cs80_vst3_sub_waveform_standalone",
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "tests/parity/tolerances-v2/host-automation.json",
+        "48000",
+        "offline"
+      ]
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "exit_code": 0,
+      "elapsed_seconds": 24.11171947799994,
+      "command": [
+        "build/cs80_vst3_sub_waveform_standalone",
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "tests/parity/tolerances-v2/host-automation.json",
+        "96000",
+        "realtime"
+      ]
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "exit_code": 0,
+      "elapsed_seconds": 37.747250473999884,
+      "command": [
+        "build/cs80_vst3_sub_waveform_standalone",
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "tests/parity/tolerances-v2/host-automation.json",
+        "96000",
+        "offline"
+      ]
+    }
+  ],
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "host_compile_command": "compile-command.sh",
+  "host_compile_exit_code": 0
+}
