@@ -299,6 +299,12 @@ public:
         std::atomic<bool> controllersShown { false };
     };
     EditorState& getEditorState() noexcept { return editorState; }
+    // User preference edits notify the host only when serialized state changes.
+    // Restore keeps direct atomic assignment so loading a session stays silent.
+    void setEditorQwertyEnabled(bool enabled) noexcept { setEditorPreference(editorState.qwertyEnabled, enabled); }
+    void setEditorControllersShown(bool shown) noexcept { setEditorPreference(editorState.controllersShown, shown); }
+    void setEditorCircuitNotes(bool shown) noexcept { setEditorPreference(editorState.circuitNotes, shown); }
+    void setEditorTourSeen(bool seen) noexcept { setEditorPreference(editorState.tourSeen, seen); }
     static constexpr int editorStateVersion = 1;
 
     // ---- [ws8-studio] Undo history ------------------------------------------------------------
@@ -354,6 +360,7 @@ private:
     bool midiLearnConsumes(int cc) const noexcept { return midiLearnLive && midiLearn.parameterFor(cc) >= 0; }
     void writeStudioState(juce::ValueTree& state) const;
     void readStudioState(juce::ValueTree& state);
+    void setEditorPreference(std::atomic<bool>& preference, bool value) noexcept;
     juce::File userPresetDirectory() const;
     using PresetWriter = std::function<juce::Result(const juce::XmlElement&, const juce::File&)>;
     PresetSaveResult writeUserPreset(const juce::String&, PresetOverwrite, const PresetWriter&);

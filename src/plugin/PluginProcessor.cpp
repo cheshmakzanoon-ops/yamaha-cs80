@@ -1863,6 +1863,12 @@ void Cs80AudioProcessor::applyVst3MidiLearn(const juce::MidiBuffer& midi) noexce
     applyPass(false);
 }
 
+void Cs80AudioProcessor::setEditorPreference(std::atomic<bool>& preference, bool value) noexcept
+{
+    if (preference.exchange(value, std::memory_order_acq_rel) != value)
+        apvts.requestNonParameterStateUpdate();
+}
+
 void Cs80AudioProcessor::writeStudioState(juce::ValueTree& state) const
 {
     juce::ValueTree learn("MIDI_LEARN");

@@ -65,7 +65,7 @@ public:
         tour.setComponentID("guided_tour");
         tour.onDismissed = [this]
         {
-            processor.getEditorState().tourSeen = true;
+            processor.setEditorTourSeen(true);
             if (tour.getPeer() != nullptr)
                 TourMemory::markSeen();   // only a real window remembers it for new instances
         };
@@ -77,19 +77,19 @@ public:
     void setControllersShown(bool shown)
     {
         controllersWanted = shown;
-        processor.getEditorState().controllersShown = shown;
+        processor.setEditorControllersShown(shown);
         sync();
     }
     void setQwertyEnabled(bool shouldPlay)
     {
         qwerty.setEnabled(shouldPlay);
-        processor.getEditorState().qwertyEnabled = shouldPlay;
+        processor.setEditorQwertyEnabled(shouldPlay);
     }
     void setCircuitNotesShown(bool shown)
     {
         notesWanted = shown;
         setCircuitNotesInTooltips(shown);
-        processor.getEditorState().circuitNotes = shown;
+        processor.setEditorCircuitNotes(shown);
     }
     bool areControllersShown() const noexcept { return controllersWanted; }
     void sync()

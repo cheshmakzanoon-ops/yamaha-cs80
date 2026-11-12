@@ -1108,6 +1108,14 @@ if (CS80_BUILD_PLUGIN)
         target_link_libraries(cs80_ab_copy_notification_tests PRIVATE CS80Reference)
         add_test(NAME cs80_ab_copy_notification_tests COMMAND cs80_ab_copy_notification_tests)
         set_tests_properties(cs80_ab_copy_notification_tests PROPERTIES TIMEOUT 120)
+        add_executable(cs80_studio_preference_notification_tests tests/StudioPreferenceNotificationTests.cpp)
+        target_include_directories(cs80_studio_preference_notification_tests PRIVATE src
+            "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_studio_preference_notification_tests PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_studio_preference_notification_tests PRIVATE CS80Reference)
+        add_test(NAME cs80_studio_preference_notification_tests COMMAND cs80_studio_preference_notification_tests)
+        set_tests_properties(cs80_studio_preference_notification_tests PROPERTIES TIMEOUT 120)
         add_executable(cs80_studio_state_sync_tests tests/StudioStateSyncTests.cpp)
         target_include_directories(cs80_studio_state_sync_tests PRIVATE src
             "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")

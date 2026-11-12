@@ -4143,7 +4143,7 @@ public:
         toggle.onClick = [this]
         {
             const bool on = ! proc.getEditorState().qwertyEnabled.load();
-            proc.getEditorState().qwertyEnabled = on;
+            proc.setEditorQwertyEnabled(on);
             if (auto* q = keyboard ? keyboard() : nullptr)
                 q->setEnabled(on);
             refresh();
