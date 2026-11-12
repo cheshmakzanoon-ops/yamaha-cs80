@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), ribbon_release_modesLimits(argv[3], "host_automation_ribbon_release_modes");
-        require(ribbon_release_modesLimits["key_parameter_count"] == 79 && cs80::kSampleAccurateParameters.size() == 79,
-                "exact 79-lane ribbon_release_modes capability");
+        require(ribbon_release_modesLimits["key_parameter_count"] == 79 && cs80::kSampleAccurateParameters.size() >= 79,
+                "historical 79-lane ribbon_release_modes capability");
         require(std::equal(expectedRoster.begin(), expectedRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire 79-lane roster/order unchanged");
         std::cout << "rate=" << rate << " mode=" << mode

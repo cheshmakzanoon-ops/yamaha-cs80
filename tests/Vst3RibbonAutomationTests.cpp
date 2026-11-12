@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), ribbonLimits(argv[3], "host_automation_ribbon");
-        require(ribbonLimits["key_parameter_count"] == 79 && cs80::kSampleAccurateParameters.size() == 79,
-                "exact 79-lane ribbon capability");
+        require(ribbonLimits["key_parameter_count"] == 79 && cs80::kSampleAccurateParameters.size() >= 79,
+                "historical 79-lane ribbon capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 78-lane roster/order unchanged");
         constexpr std::array added {int(cs80::P_ribbon)};
