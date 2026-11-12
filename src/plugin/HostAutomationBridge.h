@@ -79,7 +79,9 @@ inline constexpr std::array kSampleAccurateParameters {
     chParam(1, CP_fR), chParam(1, CP_vR),
     // Existing sine/noise levels; preserve the 74-lane prefix.
     chParam(0, CP_sine), chParam(0, CP_noise),
-    chParam(1, CP_sine), chParam(1, CP_noise)
+    chParam(1, CP_sine), chParam(1, CP_noise),
+    // Existing global ribbon displacement; preserve the 78-lane prefix.
+    int(P_ribbon)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

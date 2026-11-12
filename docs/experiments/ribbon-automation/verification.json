@@ -1,0 +1,404 @@
+{
+  "base_commit": "18e075e84664ae5699bb4fda090309e85850937b",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_ribbon_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 36,
+  "compatibility_cases": 36,
+  "pcm_pairs": 108,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": [
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 1.86265e-09,
+      "effect": 0.0388235,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 1.49012e-08,
+      "effect": 0.231743,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 3.72529e-09,
+      "effect": 0.0762216,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 7.45058e-09,
+      "effect": 0.121137,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 5.96046e-08,
+      "effect": 0.550055,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 1.49012e-08,
+      "effect": 0.195528,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 1.86265e-09,
+      "effect": 0.038886,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 1.49012e-08,
+      "effect": 0.223813,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 3.72529e-09,
+      "effect": 0.0759116,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 7.45058e-09,
+      "effect": 0.120152,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 2.98023e-08,
+      "effect": 0.540053,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 1.49012e-08,
+      "effect": 0.198599,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0333653,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.228578,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.074743,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.10197,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.517908,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.229298,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 1.86265e-09,
+      "effect": 0.0333542,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 1.49012e-08,
+      "effect": 0.228461,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 3.72529e-09,
+      "effect": 0.0746449,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 7.45058e-09,
+      "effect": 0.101824,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 2.98023e-08,
+      "effect": 0.491157,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 1.49012e-08,
+      "effect": 0.229765,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 9.31323e-10,
+      "effect": 0.027669,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 1.86265e-09,
+      "effect": 0.245699,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 1.86265e-09,
+      "effect": 0.0769856,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 7.45058e-09,
+      "effect": 0.0878625,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 2.98023e-08,
+      "effect": 0.529165,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 1.49012e-08,
+      "effect": 0.213634,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 1.86265e-09,
+      "effect": 0.0276681,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 1.49012e-08,
+      "effect": 0.230585,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 1.86265e-09,
+      "effect": 0.0769697,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 7.45058e-09,
+      "effect": 0.0877925,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 2.98023e-08,
+      "effect": 0.538025,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 78,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 1.49012e-08,
+      "effect": 0.213977,
+      "prefix_exact": 1
+    }
+  ],
+  "old_contract_count": 47,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "5199de30d975104e6cb2e33fcb176fe2512fa1c5730be7f3840ee1a76820dd71",
+    "src/plugin/HostAutomationBridge.h": "c85a20da2ca3ff0c686c467755963a1b31b7565515ecb922492f90f64cc8b65e",
+    "tests/Vst3SineNoiseAutomationTests.cpp": "daee1c8fdd75186413e76e01ed6b212e12348efb45faaa4368b8d087800a0bff",
+    "tests/Vst3EnvelopeDecayReleaseCombinedAutomationTests.cpp": "311575a6799affd4fb804d96416b63987c093accc5243e1131e9a35d8fdfbf37",
+    "tests/Vst3RibbonAutomationTests.cpp": "49e1ea2315f12e54ae0979246e7131b63cc6fb4434672e203fcd8fdd8c78019c",
+    "tests/Vst3AutomationTests.cpp": "a5b2804cba6a5622d51634681fb8bd327e85fd2dba3464fb47a6073b0fb39f15",
+    "tests/parity/tolerances-v2/host-automation-ribbon-v1.json": "f51bd6b3ca923dfc9c33226c03d2fc286d4264dce2463a34ecf7ebbd91e43d47",
+    "docs/HOST_AUTOMATION.md": "54939afb3bdf63c13147e09693046c537d9bd6f7f5154eac5d272284fb2976f9",
+    "docs/VST3_RIBBON_AUTOMATION.md": "418012dea12127783be7b9e887b26e5ec8fb5d23cd5dacf96ad86586183db222"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Global RIBBON positive for all selected sources.",
+    "Positive witness only held frames[128,3072); no release-latching, SustainII, filter invariant, MIDI CC adapter or physical calibration qualification.",
+    "No invented bypass control.",
+    "No hardware/DAW/GUI/AU/CPU/broad/negative tests."
+  ],
+  "render_count": 684,
+  "positive_cases": 36
+}

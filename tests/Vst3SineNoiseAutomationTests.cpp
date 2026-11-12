@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), sine_noiseLimits(argv[3], "host_automation_sine_noise");
-        require(sine_noiseLimits["key_parameter_count"] == 78 && cs80::kSampleAccurateParameters.size() == 78,
-                "exact 78-lane sine_noise capability");
+        require(sine_noiseLimits["key_parameter_count"] == 78 && cs80::kSampleAccurateParameters.size() >= 78,
+                "historical 78-lane sine_noise capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 74-lane roster/order unchanged");
         constexpr std::array added {cs80::chParam(0, cs80::CP_sine), cs80::chParam(0, cs80::CP_noise), cs80::chParam(1, cs80::CP_sine), cs80::chParam(1, cs80::CP_noise)};

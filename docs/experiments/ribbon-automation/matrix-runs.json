@@ -1,0 +1,200 @@
+[
+  {
+    "kind": "candidate",
+    "rate": 44100,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/candidate/44100-realtime",
+      "44100",
+      "realtime"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/candidate/44100-realtime/run.log"
+  },
+  {
+    "kind": "candidate",
+    "rate": 44100,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/candidate/44100-offline",
+      "44100",
+      "offline"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/candidate/44100-offline/run.log"
+  },
+  {
+    "kind": "candidate",
+    "rate": 48000,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/candidate/48000-realtime",
+      "48000",
+      "realtime"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/candidate/48000-realtime/run.log"
+  },
+  {
+    "kind": "candidate",
+    "rate": 48000,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/candidate/48000-offline",
+      "48000",
+      "offline"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/candidate/48000-offline/run.log"
+  },
+  {
+    "kind": "candidate",
+    "rate": 96000,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/candidate/96000-realtime",
+      "96000",
+      "realtime"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/candidate/96000-realtime/run.log"
+  },
+  {
+    "kind": "candidate",
+    "rate": 96000,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/candidate/96000-offline",
+      "96000",
+      "offline"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/candidate/96000-offline/run.log"
+  },
+  {
+    "kind": "baseline",
+    "rate": 44100,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "../yamaha-cs80-sine-noise-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/baseline/44100-realtime",
+      "44100",
+      "realtime",
+      "--compat-only"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/baseline/44100-realtime/run.log"
+  },
+  {
+    "kind": "baseline",
+    "rate": 44100,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "../yamaha-cs80-sine-noise-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/baseline/44100-offline",
+      "44100",
+      "offline",
+      "--compat-only"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/baseline/44100-offline/run.log"
+  },
+  {
+    "kind": "baseline",
+    "rate": 48000,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "../yamaha-cs80-sine-noise-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/baseline/48000-realtime",
+      "48000",
+      "realtime",
+      "--compat-only"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/baseline/48000-realtime/run.log"
+  },
+  {
+    "kind": "baseline",
+    "rate": 48000,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "../yamaha-cs80-sine-noise-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/baseline/48000-offline",
+      "48000",
+      "offline",
+      "--compat-only"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/baseline/48000-offline/run.log"
+  },
+  {
+    "kind": "baseline",
+    "rate": 96000,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "../yamaha-cs80-sine-noise-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/baseline/96000-realtime",
+      "96000",
+      "realtime",
+      "--compat-only"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/baseline/96000-realtime/run.log"
+  },
+  {
+    "kind": "baseline",
+    "rate": 96000,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ribbon-automation/build-native/cs80_vst3_ribbon_automation_tests",
+      "../yamaha-cs80-sine-noise-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ribbon-v1.json",
+      "build/ribbon-matrix/baseline/96000-offline",
+      "96000",
+      "offline",
+      "--compat-only"
+    ],
+    "exit": 0,
+    "log": "build/ribbon-matrix/baseline/96000-offline/run.log"
+  }
+]
