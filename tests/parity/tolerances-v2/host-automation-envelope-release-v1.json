@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append isolated rank filter/VCA release times after unchanged70 prefix; preserve44 historical contracts,metadata,DSP,helper and source masks.",
+  "host_automation_envelope_release": {
+    "key_parameter_count": 74,
+    "keys": "Rank0 fR70/vR71;rank1 fR72/vR73. Complete70 prefix unchanged.",
+    "authority": "PANEL13 positive;factory0/MEMORY11 selected-source PCM masking unchanged. Existing .001..20s range/skew.4/defaults unchanged.",
+    "timing": "Live setTimes preserves state/stage. SelectedR.5hold0/3100 then .3/.6/.4/.7 at3327/3583/3839/4095 via existing conversion;nonselectedR.5,keyRelease.18,masterSustain0,neutral scale/dispersion. Selected rank minimum.3 dominates effective max floor. BothA.001/D.002,filterIL.5/AL.3,VCA S.7,allnoteoffs3072..3087.",
+    "verification": "144full48PANELpositive96masked plus144frozen70compatibility;2736renders12process432actualpairs. Exactpre3100,positive tail[3100,4096) versusmatchedactivehold,fullPCMmask,scalar/fivepartitions. No floor bypass,complete release,calibratedtime/hardware,simultaneouslane,GUI or CPU claim."
+  }
+}

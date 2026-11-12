@@ -73,7 +73,10 @@ inline constexpr std::array kSampleAccurateParameters {
     chParam(1, CP_fA), chParam(1, CP_vA),
     // Existing live decay times; preserve the 66-lane prefix.
     chParam(0, CP_fD), chParam(0, CP_vD),
-    chParam(1, CP_fD), chParam(1, CP_vD)
+    chParam(1, CP_fD), chParam(1, CP_vD),
+    // Existing live release times; preserve the 70-lane prefix.
+    chParam(0, CP_fR), chParam(0, CP_vR),
+    chParam(1, CP_fR), chParam(1, CP_vR)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), envelope_decayLimits(argv[3], "host_automation_envelope_decay");
-        require(envelope_decayLimits["key_parameter_count"] == 70 && cs80::kSampleAccurateParameters.size() == 70,
-                "exact 70-lane envelope_decay capability");
+        require(envelope_decayLimits["key_parameter_count"] == 70 && cs80::kSampleAccurateParameters.size() >= 70,
+                "historical 70-lane envelope_decay capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 66-lane roster/order unchanged");
         constexpr std::array added {cs80::chParam(0, cs80::CP_fD), cs80::chParam(0, cs80::CP_vD), cs80::chParam(1, cs80::CP_fD), cs80::chParam(1, cs80::CP_vD)};
