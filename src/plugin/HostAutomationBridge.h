@@ -67,7 +67,10 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing filter release targets; preserve the 58-lane prefix.
     chParam(0, CP_fIl), chParam(1, CP_fIl),
     // Existing filter attack targets; preserve the 60-lane prefix.
-    chParam(0, CP_fAl), chParam(1, CP_fAl)
+    chParam(0, CP_fAl), chParam(1, CP_fAl),
+    // Existing live attack times; preserve the 62-lane prefix.
+    chParam(0, CP_fA), chParam(0, CP_vA),
+    chParam(1, CP_fA), chParam(1, CP_vA)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow
