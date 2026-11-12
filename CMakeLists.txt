@@ -1192,6 +1192,25 @@ if (CS80_BUILD_PLUGIN)
                 set_tests_properties("${initial_touch_test_name}" PROPERTIES TIMEOUT 180)
             endforeach()
         endforeach()
+        add_executable(cs80_vst3_after_touch_automation_tests tests/Vst3AfterTouchAutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_after_touch_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_after_touch_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_after_touch_automation_tests CS80Reference_VST3)
+        foreach(rate IN ITEMS 44100 48000 96000)
+            foreach(mode IN ITEMS realtime offline)
+                set(after_touch_test_name "cs80_vst3_after_touch_automation_${rate}_${mode}_tests")
+                add_test(NAME "${after_touch_test_name}" COMMAND cs80_vst3_after_touch_automation_tests
+                    "$<TARGET_FILE:CS80Reference_VST3>"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation-after-touch-v1.json"
+                    "${CMAKE_CURRENT_BINARY_DIR}/after-touch-automation-capture-${rate}-${mode}"
+                    "${rate}" "${mode}")
+                set_tests_properties("${after_touch_test_name}" PROPERTIES TIMEOUT 180)
+            endforeach()
+        endforeach()
         add_executable(cs80_vst3_kbd_contour_combined_automation_tests tests/Vst3KbdContourCombinedAutomationTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
