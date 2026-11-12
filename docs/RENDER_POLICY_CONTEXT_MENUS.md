@@ -36,3 +36,12 @@ These headless checks do not establish native popup presentation, physical
 keyboard routing, DAW automation recording or new MIDI conformance. Context
 presentation is intercepted; menu actions are called directly. Neighboring
 safe focused suites are run separately, not the broad screenshot smoke suite.
+
+## Idempotent LEGACY selection
+
+The composite LEGACY action now skips a stored request already at zero. From
+SOURCE/isolation states 00, 10, 01 and 11 it sends respectively zero, one, one
+and two balanced gesture pairs. Repeating LEGACY sends none. An effective
+composite edit remains one undo/redo step through the existing same-message-pass
+history grouping. The focused regression completed 81 checks with seven failed
+gesture assertions before this narrow callback change, then 81 with no failures.

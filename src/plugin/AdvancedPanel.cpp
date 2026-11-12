@@ -4751,8 +4751,12 @@ void buildRenderPolicy(AdvancedPage& page, Cs80AudioProcessor& proc)
     legacy->setDescription(legacy->getTooltip());
     legacy->onClick = [&proc]
     {
-        setParameterOnce(proc, cs80::P_sourcePerformance, 0.0f);
-        setParameterOnce(proc, cs80::P_parityMode, 0.0f);
+        // Selecting an already-effective LEGACY policy is a no-op. Preserve
+        // one balanced host gesture for each stored request actually cleared.
+        if (proc.getParamValue(cs80::P_sourcePerformance) != 0.0f)
+            setParameterOnce(proc, cs80::P_sourcePerformance, 0.0f);
+        if (proc.getParamValue(cs80::P_parityMode) != 0.0f)
+            setParameterOnce(proc, cs80::P_parityMode, 0.0f);
     };
 
     auto* sourcePerformance = page.policyCell({ 772.0f, 612.0f, 368.0f, 54.0f }, 1, "SOURCE PERFORMANCE", "SOURCE MODELS, OVERLAYS LIVE");

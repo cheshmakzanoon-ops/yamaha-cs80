@@ -95,9 +95,29 @@ int main() {
         check(!action(button->buildContextMenu(),"Reset to default"),"disabled ancestor prevents reset");
         studio->setEnabled(true);
     }
-    host.setParamValue(cs80::P_sourcePerformance,1);host.setParamValue(cs80::P_parityMode,1);
-    legacy->onClick();
-    check(host.getParamValue(cs80::P_sourcePerformance)==0 && host.getParamValue(cs80::P_parityMode)==0,"legacy still clears both requests");
+    for(int sourceState:{0,1}) for(int isolationState:{0,1}) {
+        juce::MessageManager::getInstance()->runDispatchLoopUntil(5);
+        host.setParamValue(cs80::P_sourcePerformance,float(sourceState));
+        host.setParamValue(cs80::P_parityMode,float(isolationState));
+        host.getUndoableState().syncNow();host.getUndoManager().clearUndoHistory();
+        Listener listener;host.addListener(&listener);
+        legacy->onClick();
+        check(host.getParamValue(cs80::P_sourcePerformance)==0 && host.getParamValue(cs80::P_parityMode)==0,"legacy clears both stored requests");
+        const int expected=sourceState+isolationState;
+        check(listener.begins==expected && listener.ends==expected,"legacy gestures only changed requests");
+        const int begins=listener.begins,ends=listener.ends;
+        legacy->onClick();
+        check(listener.begins==begins && listener.ends==ends,"already legacy repeated action emits no gestures");
+        host.removeListener(&listener);
+        check(host.getUndoManager().canUndo()==(expected!=0),"legacy no-op creates no undo step");
+        if(expected!=0) {
+            check(host.getUndoableState().undo(),"legacy effective action is undoable");
+            check(host.getParamValue(cs80::P_sourcePerformance)==sourceState && host.getParamValue(cs80::P_parityMode)==isolationState,"single undo restores both prior requests");
+            check(!host.getUndoManager().canUndo(),"composite legacy is only one undo step");
+            check(host.getUndoableState().redo(),"legacy action is redoable");
+            check(host.getParamValue(cs80::P_sourcePerformance)==0 && host.getParamValue(cs80::P_parityMode)==0,"single redo clears both requests");
+        }
+    }
     auto oldReset=action(source->buildContextMenu(),"Reset to default");
     studio.reset();
     auto* sourceParameter=host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_sourcePerformance));
