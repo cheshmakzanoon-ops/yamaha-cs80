@@ -1,0 +1,511 @@
+{
+  "base_commit": "5d22484f092c9c099f253d659524f0585809cda6",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_ring_times_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 72,
+  "compatibility_cases": 72,
+  "pcm_pairs": 216,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": {
+    "attack": [
+      {
+        "max_error": 0.0,
+        "effect": 0.0472714,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.153448,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0472714,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0947036,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.309336,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0947036,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0468183,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.148886,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0468183,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0932446,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.282404,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0932446,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0469614,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.155094,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0469614,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0955364,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.286351,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0955364,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0467184,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.150348,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0467184,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0962077,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.31215,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0962077,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0490867,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.157111,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0490867,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0993239,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.312214,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0993239,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0491453,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.145892,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0491453,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0981361,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.303928,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0981361,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      }
+    ],
+    "decay": [
+      {
+        "max_error": 0.0,
+        "effect": 0.0584491,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.185491,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0584491,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.147649,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.491292,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.147649,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0583385,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.174431,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0583385,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.144243,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.439682,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.144243,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0575983,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.193663,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0575983,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.135221,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.406096,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.135221,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0578374,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.188821,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0578374,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.13663,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.381423,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.13663,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0575063,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.203281,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0575063,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.133622,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.361768,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.133622,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0577399,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.188127,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0577399,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.132565,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.371985,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.132565,
+        "same_offset_error": 0.0,
+        "late_latch_error": 0.0
+      }
+    ]
+  },
+  "old_contract_count": 21,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "34dfe7fea2970b7cab9bc3916e90635bfe03841999e1f9bbdfc199a5a467c7df",
+    "src/plugin/HostAutomationBridge.h": "bf521c6f0df6cdce037b5c04d42343410862c97498dc51dcf414b741cccc3def",
+    "tests/Vst3RingTimesAutomationTests.cpp": "9460166ff661c4dd7a4d1e79332f113a5d583e2a5ec2859035a33df0565a7efe",
+    "tests/Vst3RingDepthAutomationTests.cpp": "24b580feeee80a4676af2d525f6d9e72121151ecd5ecee854fb51baa16586196",
+    "tests/Vst3AutomationTests.cpp": "e1343fafaba48948917c45f7df3d2ad43821ece497438977d7d0afc0a0eb94fd",
+    "tests/parity/tolerances-v2/host-automation-ring-times-v1.json": "0c50892042cc15125c9a90f93a7da1a395570ff8d86d4353076723ce2f00ce76",
+    "docs/VST3_RING_TIMES_AUTOMATION.md": "2b3aaeb9964b408b0ac865c5e980bc87b2d020f6e504b919e5298b56ae1a63b5",
+    "docs/HOST_AUTOMATION.md": "20cb22fd759e3c76fc552ccd84b8b9d7a23d5bcf37a38e6c25ff84a42d75fa23"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Times qualify initial latch, not live envelope reshaping.",
+    "Same-offset17 and early16 targets agree; late queues hold initial through64 to cover all engine onsets17..32.",
+    "No later onset exists in4096 samples; subsequent-trigger stored-time behavior not runtime qualified.",
+    "8-capacity uses2 held notes;16-capacity uses16.",
+    "No hardware, DAW, GUI, AU, CPU, broad suites or negative baseline."
+  ],
+  "prior_attempt": {
+    "run_exit": 1,
+    "full_configurations_run": 1,
+    "failures": 6,
+    "failed_assertion": "decay late-changing queue versus noqueue exact equality",
+    "max_difference": 3.72529e-07,
+    "correction": "Reviewed oracle correction to late-changing versus constant active normalized queue, matching onset publication and partition. No DSP or tolerance change.",
+    "cause_limit": "Normalized zero-frame flush and active normalized conversion paths differ; exact numerical cause not instrumented.",
+    "remaining_initial_runs_not_started": true,
+    "old_host_retained_locally": "build/attempt-1-failed/failed-host-binary"
+  },
+  "corrected_attempt_render_budget": 1512,
+  "tools": {
+    "python": {
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+    },
+    "compiler": {
+      "path": "/usr/bin/x86_64-linux-gnu-g++-14",
+      "sha256": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+      "version": "x86_64-linux-gnu-g++-14 (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    }
+  },
+  "corrected_host_build": {
+    "exit": 0,
+    "targets": [
+      "cs80_vst3_ring_times_automation_tests"
+    ],
+    "candidate_module_unchanged": true,
+    "dependency_detail": "The corrected host target was requested; its dependency step relinked the candidate VST3, whose SHA remained unchanged."
+  },
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/attempt-2/run-times-matrix.py >build/attempt-2/matrix.log 2>&1; code=$?; echo \"$code\" >build/attempt-2/matrix.exit; exit \"$code\""
+}

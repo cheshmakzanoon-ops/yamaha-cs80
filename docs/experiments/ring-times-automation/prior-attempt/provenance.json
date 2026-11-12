@@ -1,0 +1,16 @@
+{
+  "attempt": "original oracle, failed before correction",
+  "run_exit": 1,
+  "failures": 6,
+  "remaining_runs_started": false,
+  "inputs": {
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-times/build-native/cs80_vst3_ring_times_automation_tests": "a898432e6d696cf129850160600edc58ec77d2cee51486d9f921dfab802bb7c6",
+    "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "2e536c42f7cfe221127501471bbe091fc1e2e5554b2938215c0e21e8c9bf342e",
+    "../yamaha-cs80-ring-depth/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "ca0cc5b5a2b49299e7a1f633a2f100a6e0bed2987f7701c467685bcca5756156",
+    "tests/Vst3RingTimesAutomationTests.cpp": "8ddbc7cafc42dc6d014f88a827821a857e26454594be09f2e7a29bc31dc66506",
+    "src/plugin/HostAutomationBridge.h": "bf521c6f0df6cdce037b5c04d42343410862c97498dc51dcf414b741cccc3def"
+  },
+  "host_retained_locally": "failed-host-binary",
+  "host_sha256": "a898432e6d696cf129850160600edc58ec77d2cee51486d9f921dfab802bb7c6",
+  "note": "Normalized zero-frame flush versus active conversion may differ before onset; precise numeric cause not instrumented."
+}

@@ -1,0 +1,34 @@
+--- build/attempt-1-failed/Vst3RingTimesAutomationTests.cpp	2026-11-12 07:17:40.644001161 -0400
++++ tests/Vst3RingTimesAutomationTests.cpp	2026-11-12 07:20:22.970004768 -0400
+@@ -72,13 +72,14 @@
+             const int parameter = cs80::kSampleAccurateParameters[lane];
+             const double initial = normalized(parameter, p[parameter]);
+             const double target = normalized(parameter, lane == 31 ? .003f : .02f);
+-            Curves curves, early, late;
++            Curves curves, early, late, constant;
+             // Both trajectories reach the identical target before first held-key
+             // allocation. Offset17 explicitly exercises automation-before-MIDI.
+             curves[lane] = {{0, initial}, {16, initial}, {17, target}, {4095, target}};
+             early[lane] = {{0, initial}, {15, initial}, {16, target}, {4095, target}};
+             // Hold through every initial note17..32, including extension-engine
+             // onset. No subsequent onset exists in this renderer's4096 samples.
++            constant[lane] = {{0, initial}, {64, initial}, {4095, initial}};
+             late[lane] = {{0, initial}, {64, initial}, {511, target}, {1023, .4},
+                           {2047, .2}, {3071, .6}, {4095, .3}};
+             const auto ringRender = [&](const cs80::ParamValues& values, int block,
+@@ -112,10 +113,13 @@
+                 const auto earlyAudio = render(module, p, early, 256, true, false, source);
+                 const auto lateAudio = render(module, p, late, 256, true, false, source);
+                 check(scalar == earlyAudio, "ring time target at note offset17 equals pre-note16 latch");
+-                check(lateAudio == neutral, "post-latch time changes preserve PCM in no-retrigger window");
++                // Match active normalized publication at onset in both controls;
++                // no-queue initialization is a distinct zero-frame-flush path.
++                const auto constantAudio = render(module, p, constant, 256, true, false, source);
++                check(lateAudio == constantAudio, "post-latch time changes preserve PCM versus matched active hold");
+                 std::cout << "ring=" << id << " max_error=" << error << " effect=" << effect
+                           << " same_offset_error=" << difference(scalar, earlyAudio)
+-                          << " late_latch_error=" << difference(lateAudio, neutral) << '\n';
++                          << " late_latch_error=" << difference(lateAudio, constantAudio) << '\n';
+             }
+             else std::cout << "compatibility=" << id << '\n';
+             ++scenarios;

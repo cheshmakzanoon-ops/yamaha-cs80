@@ -1,0 +1,20 @@
+rate=44100 mode=realtime gate=full-ring-times
+ring=attack-8-13 max_error=0 effect=0.0472714 same_offset_error=0 late_latch_error=0
+FAIL: post-latch time changes preserve PCM in no-retrigger window
+ring=decay-8-13 max_error=0 effect=0.0584491 same_offset_error=0 late_latch_error=6.89179e-08
+ring=attack-8-0 max_error=0 effect=0.153448 same_offset_error=0 late_latch_error=0
+FAIL: post-latch time changes preserve PCM in no-retrigger window
+ring=decay-8-0 max_error=0 effect=0.185491 same_offset_error=0 late_latch_error=2.68221e-07
+ring=attack-8-11 max_error=0 effect=0.0472714 same_offset_error=0 late_latch_error=0
+FAIL: post-latch time changes preserve PCM in no-retrigger window
+ring=decay-8-11 max_error=0 effect=0.0584491 same_offset_error=0 late_latch_error=6.89179e-08
+ring=attack-16-13 max_error=0 effect=0.0947036 same_offset_error=0 late_latch_error=0
+FAIL: post-latch time changes preserve PCM in no-retrigger window
+ring=decay-16-13 max_error=0 effect=0.147649 same_offset_error=0 late_latch_error=1.76951e-07
+ring=attack-16-0 max_error=0 effect=0.309336 same_offset_error=0 late_latch_error=0
+FAIL: post-latch time changes preserve PCM in no-retrigger window
+ring=decay-16-0 max_error=0 effect=0.491292 same_offset_error=0 late_latch_error=3.72529e-07
+ring=attack-16-11 max_error=0 effect=0.0947036 same_offset_error=0 late_latch_error=0
+FAIL: post-latch time changes preserve PCM in no-retrigger window
+ring=decay-16-11 max_error=0 effect=0.147649 same_offset_error=0 late_latch_error=1.76951e-07
+12 native ring-times scenarios, 6 failures

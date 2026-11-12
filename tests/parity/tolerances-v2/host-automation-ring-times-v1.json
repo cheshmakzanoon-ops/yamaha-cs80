@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing global ring attack and decay after the unchanged 31-lane prefix. All 21 earlier numerical and capability contracts remain unchanged.",
+  "host_automation_ring_times": {
+    "key_parameter_count": 33,
+    "keys": "Original 31 in original order, then P_ringAttack at lane 31 and P_ringDecay at lane 32.",
+    "authority": "Global ring times retain existing PANEL/factory/MEMORY independence, ranges and skewed conversions. The existing envelope latches times only when a new ring trigger occurs while ringKeyDown is false; updating the global controls does not reshape an already running envelope.",
+    "timing": "Modern VST3 normalized interpolation is published through existing physical conversion before MIDI at the same sample, so a qualifying trigger latches that sample's value. No-queue and Legacy/PURE final-point behavior unchanged. AU not expanded.",
+    "verification": "Bounded actual-module Linux float32 finite attack-only and decay-only queues; same-offset onset and partition/reference witnesses. Late-only controls explicitly retain initial values through every initial engine trigger and test PCM inertness only during a window without a later fresh trigger. Existing numeric tolerances unchanged; source/host/module provenance and frozen pre-feature 31-lane PCM compatibility required. No live-ADSR, malformed-input, GUI, DAW, hardware or CPU claim."
+  }
+}
