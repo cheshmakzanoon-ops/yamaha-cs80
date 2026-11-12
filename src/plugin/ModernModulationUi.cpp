@@ -957,6 +957,15 @@ ModMatrixPage::ModMatrixPage(Cs80AudioProcessor& p) : processor(p)
         styleCombo(r.destination, "Slot " + n + " destination");
         styleCombo(r.target, "Slot " + n + " rank");
         styleSlider(r.amount, "Slot " + n + " amount");
+        r.actions.setTitle("Slot " + n + " route actions");
+        r.actions.setTooltip("Copy the complete route and signed amount to another slot, or clear this route and zero its amount. Undo restores both.");
+        r.actions.setColour(juce::TextButton::buttonColourId, panelDark.brighter(0.1f));
+        r.actions.setColour(juce::TextButton::textColourOffId, ivory);
+        r.actions.onClick = [this, i]
+        {
+            if (!canManageRoutes()) return;
+            buildRouteActionsMenu(i).showMenuAsync(juce::PopupMenu::Options().withTargetComponent(&rows[(size_t) i].actions));
+        };
         r.amount.setDoubleClickReturnValue(true, 0.0);
         if (auto* q = parameter(p, P_mod1Amount + i))
             r.amountAttachment = std::make_unique<juce::SliderParameterAttachment>(*q, r.amount);
@@ -967,16 +976,110 @@ ModMatrixPage::ModMatrixPage(Cs80AudioProcessor& p) : processor(p)
         r.destination.onChange = [this, i] { write(i, RouteField::destination); };
         r.target.onChange = [this, i] { write(i, RouteField::target); };
         for (juce::Component* c : { (juce::Component*) &r.index, (juce::Component*) &r.source, (juce::Component*) &r.via,
-                                    (juce::Component*) &r.destination, (juce::Component*) &r.target, (juce::Component*) &r.amount })
+                                    (juce::Component*) &r.destination, (juce::Component*) &r.target, (juce::Component*) &r.amount, (juce::Component*) &r.actions })
             addAndMakeVisible(*c);
     }
     processor.getModernLayer().addChangeListener(this);
+    processor.getAPVTS().state.addListener(this);
+    for (auto* p : processor.getParameters()) p->addListener(this);
     refresh();
 }
 
 ModMatrixPage::~ModMatrixPage()
 {
+    for (auto* p : processor.getParameters()) p->removeListener(this);
+    processor.getAPVTS().state.removeListener(this);
     processor.getModernLayer().removeChangeListener(this);
+}
+
+void ModMatrixPage::parameterValueChanged(int, float)
+{
+    parameterGeneration.fetch_add(1, std::memory_order_relaxed);
+}
+
+void ModMatrixPage::parameterGestureChanged(int, bool)
+{
+    parameterGeneration.fetch_add(1, std::memory_order_relaxed);
+}
+
+void ModMatrixPage::valueTreeRedirected(juce::ValueTree&)
+{
+    parameterGeneration.fetch_add(1, std::memory_order_relaxed);
+}
+
+void ModMatrixPage::enablementChanged()
+{
+    ++routeMenuGeneration;
+}
+
+bool ModMatrixPage::canManageRoutes() const
+{
+    return isEnabled() && !processor.isPure()
+        && !processor.getUndoableState().hasActiveParameterGesture()
+        && !processor.getUndoableState().hasActiveUserEdit();
+}
+
+juce::PopupMenu ModMatrixPage::buildRouteActionsMenu(int source)
+{
+    juce::PopupMenu menu;
+    const auto generation = ++routeMenuGeneration;
+    if (source < 0 || source >= kModSlots) return menu;
+    const auto parameterRevision = parameterGeneration.load(std::memory_order_relaxed);
+    const auto [config, revision] = processor.getModernLayer().getEditSnapshot();
+    const auto sourceSlot = config.slots[(size_t) source];
+    std::array<float, kModSlots> amounts {};
+    for (int i = 0; i < kModSlots; ++i)
+        amounts[(size_t) i] = parameter(processor, P_mod1Amount + i)->getValue();
+    const bool admitted = canManageRoutes() && rows[(size_t) source].actions.isEnabled()
+        && parameterGeneration.load(std::memory_order_relaxed) == parameterRevision;
+    juce::Component::SafePointer<ModMatrixPage> safe(this);
+    menu.addSectionHeader("Slot " + juce::String(source + 1) + " complete route + amount");
+    auto addAction = [&](int destination, bool clear)
+    {
+        const ModSlot route = clear ? ModSlot{} : sourceSlot;
+        const float amount = clear ? parameter(processor, P_mod1Amount + source)->convertTo0to1(0.f)
+                                   : amounts[(size_t) source];
+        const bool different = route != config.slots[(size_t) destination] || amount != amounts[(size_t) destination];
+        juce::PopupMenu::Item item(clear ? "Clear route and amount" : "Copy route + amount to slot " + juce::String(destination + 1));
+        item.isEnabled = admitted && different;
+        item.action = [safe, source, destination, route, amount, clear, admitted, different,
+                       revision, parameterRevision, generation]
+        {
+            // This snapshot grants one explicit replacement only. Any intervening edit,
+            // gesture (including ABA), session restore or newer menu invalidates it.
+            if (!admitted || !different || safe == nullptr || !safe->canManageRoutes()
+                || !safe->rows[(size_t) source].actions.isEnabled()
+                || safe->routeMenuGeneration != generation
+                || safe->parameterGeneration.load(std::memory_order_relaxed) != parameterRevision
+                || safe->processor.getModernLayer().getRevision() != revision)
+                return;
+            ++safe->routeMenuGeneration;
+            const auto name = clear ? "Clear matrix slot " + juce::String(source + 1)
+                : "Copy matrix slot " + juce::String(source + 1) + " to slot " + juce::String(destination + 1);
+            // The processor outlives its editor. Host/tree listeners may close the
+            // page reentrantly, so do not dereference it after publishing a write.
+            auto& owner = safe->processor;
+            {
+                Cs80AudioProcessor::ScopedUserEdit edit(owner.getUndoableState(), name);
+                owner.getModernLayer().setSlot(destination, route);
+                auto* p = parameter(owner, P_mod1Amount + destination);
+                if (p->getValue() != amount)
+                {
+                    p->beginChangeGesture();
+                    p->setValueNotifyingHost(amount);
+                    p->endChangeGesture();
+                }
+            }
+            owner.getUndoManager().beginNewTransaction();
+            if (safe != nullptr) safe->refresh();
+        };
+        menu.addItem(std::move(item));
+    };
+    for (int destination = 0; destination < kModSlots; ++destination)
+        if (destination != source) addAction(destination, false);
+    menu.addSeparator();
+    addAction(source, true);
+    return menu;
 }
 
 void ModMatrixPage::refresh()
@@ -1046,6 +1149,8 @@ void ModMatrixPage::paint(juce::Graphics& g)
     auto header = getLocalBounds().reduced(8).withTrimmedTop(20).removeFromTop(16);
     g.setColour(ivoryDim);
     g.setFont(uiFont(11.5f));
+    auto actionsHeader = header.removeFromRight(76);
+    g.drawText("ACTIONS", actionsHeader, juce::Justification::centred);
     const int w = header.getWidth() - 28;
     header.removeFromLeft(28);
     const float columns[] = { 0.23f, 0.19f, 0.22f, 0.12f, 0.24f };
@@ -1064,6 +1169,7 @@ void ModMatrixPage::resized()
     {
         auto row = area.removeFromTop(h).reduced(0, 1);
         r.index.setBounds(row.removeFromLeft(28));
+        r.actions.setBounds(row.removeFromRight(76).reduced(2, 0));
         const int w = row.getWidth();
         r.source.setBounds(row.removeFromLeft((int) (w * 0.23f)).reduced(2, 0));
         r.via.setBounds(row.removeFromLeft((int) (w * 0.19f)).reduced(2, 0));

@@ -86,6 +86,8 @@ public:
     // Side-state edits join only an explicit message-thread ScopedUserEdit.
     // A direct API call or unrelated parameter gesture must not record them.
     bool hasActiveUserEdit() const;
+    // UI admission only. Includes gestures opened before a component was constructed.
+    bool hasActiveParameterGesture() const;
 
 private:
     struct ParameterValueAction;

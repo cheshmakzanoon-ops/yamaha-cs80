@@ -1,3 +1,4 @@
+#include "../../tests/ModMatrixRouteActionsTests.h"
 #include "../../tests/ModMatrixRoutingUiTests.h"
 #include "../../tests/MsegPointValuesTests.h"
 #include "../../tests/MsegShapeCopyTests.h"
@@ -2070,6 +2071,15 @@ int main(int argc, char** argv)
         cs80::tests::PresetRefreshAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
         cs80::tests::PresetBrowserXmlAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
         std::printf("Preset catalogue refresh: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--mod-matrix-route-actions-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testModMatrixRouteActions([&](bool condition, const char* what) { ++checks; check(condition, what); },
+                                            argc > 2 ? juce::File(argv[2]) : juce::File{});
+        std::printf("Modulation matrix route actions: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--mod-matrix-routing-ui-tests") == 0)

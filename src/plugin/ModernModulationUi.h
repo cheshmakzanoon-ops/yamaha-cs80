@@ -8,6 +8,7 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 
 #include <array>
+#include <atomic>
 #include <cstdint>
 #include <memory>
 #include <vector>
@@ -143,7 +144,9 @@ private:
 };
 
 // 16-slot modulation matrix: source, via, destination, rank target, amount.
-class ModMatrixPage final : public juce::Component, private juce::ChangeListener
+class ModMatrixPage final : public juce::Component, private juce::ChangeListener,
+                            private juce::AudioProcessorParameter::Listener,
+                            private juce::ValueTree::Listener
 {
 public:
     explicit ModMatrixPage(Cs80AudioProcessor& processor);
@@ -155,22 +158,33 @@ public:
     juce::ComboBox& destinationBox(int slot) { return rows[(size_t) slot].destination; }
     juce::ComboBox& targetBox(int slot) { return rows[(size_t) slot].target; }
     juce::Slider& amountSlider(int slot) { return rows[(size_t) slot].amount; }
+    // Complete route = source/via/destination/rank plus its signed host amount.
+    juce::PopupMenu buildRouteActionsMenu(int slot);
 
 private:
     void changeListenerCallback(juce::ChangeBroadcaster*) override;
     void refresh();
     enum class RouteField { source, via, destination, target };
     void write(int slot, RouteField field);
+    bool canManageRoutes() const;
+    void parameterValueChanged(int, float) override;
+    void parameterGestureChanged(int, bool) override;
+    void valueTreeRedirected(juce::ValueTree&) override;
+    void enablementChanged() override;
 
     struct Row
     {
         juce::Label index;
+        juce::TextButton actions { "Actions..." };
         juce::ComboBox source, via, destination, target;
         ParameterSlider amount { juce::Slider::LinearHorizontal, juce::Slider::TextBoxRight };
         std::unique_ptr<juce::SliderParameterAttachment> amountAttachment;
     };
     Cs80AudioProcessor& processor;
     std::array<Row, cs80::modern::kModSlots> rows;
+    // Parameter callbacks may arrive on the audio thread: no UI/tree access there.
+    std::atomic<std::uint64_t> parameterGeneration { 0 };
+    std::uint64_t routeMenuGeneration = 0;
     bool refreshing = false;
 };
 

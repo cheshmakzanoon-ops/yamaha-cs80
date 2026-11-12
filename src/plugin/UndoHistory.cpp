@@ -177,6 +177,11 @@ bool UndoableParameterState::hasActiveUserEdit() const
     return onMessageThread() && userScopes > 0 && ! history.isPerformingUndoRedo();
 }
 
+bool UndoableParameterState::hasActiveParameterGesture() const
+{
+    return onMessageThread() && openGestures > 0;
+}
+
 void UndoableParameterState::beginUserEdit(const juce::String& name)
 {
     jassert(onMessageThread());
