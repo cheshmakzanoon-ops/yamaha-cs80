@@ -1,0 +1,26 @@
+enable: exit 1
+FAIL: audition load callback observes the new choice already persisted
+FAIL: audition click persists immediately without another preference or favourite action
+FAIL: facet click persists immediately while preserving the audition setting
+Preset browser preferences: 19 checks, 3 failures
+read-enabled: exit 1
+FAIL: fresh process restores the saved audition setting and its button
+FAIL: fresh process restores the saved facet and its selected segment
+Preset browser preferences: 8 checks, 2 failures
+disable: exit 1
+FAIL: fresh process restores the saved audition setting and its button
+FAIL: fresh process restores the saved facet and its selected segment
+Preset browser preferences: 16 checks, 2 failures
+read-disabled: exit 0
+Preset browser preferences: 8 checks, 0 failures
+missing: exit 1
+FAIL: audition load callback observes the new choice already persisted
+FAIL: audition click persists immediately without another preference or favourite action
+FAIL: facet click persists immediately while preserving the audition setting
+Preset browser preferences: 15 checks, 3 failures
+read-missing: exit 1
+FAIL: fresh process restores the saved audition setting and its button
+FAIL: fresh process restores the saved facet and its selected segment
+Preset browser preferences: 6 checks, 2 failures
+blocked: exit 0
+Preset browser preferences: 12 checks, 0 failures

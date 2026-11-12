@@ -9,7 +9,7 @@
 #include <vector>
 
 class Cs80AudioProcessor;
-namespace cs80::tests { struct PresetSaveAccess; struct PresetLoadAccess; struct PresetIdentityAccess; struct PresetRefreshAccess; struct PresetBrowserXmlAccess; struct PresetRevertAccess; struct PresetSearchAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct PresetLoadAccess; struct PresetIdentityAccess; struct PresetRefreshAccess; struct PresetBrowserXmlAccess; struct PresetRevertAccess; struct PresetSearchAccess; struct PresetPreferencesAccess; }
 
 namespace cs80::ui
 {
@@ -123,7 +123,8 @@ public:
     void loadAdjacent(int delta);
     // Audition: selecting a row (click, arrows, PREV/NEXT) loads it at once;
     // REVERT still returns to the sound loaded when the library opened.
-    void setAudition(bool shouldAudition);
+    // Only explicit user actions persist; programmatic changes stay session-only.
+    void setAudition(bool shouldAudition, bool persist = false);
     bool isAuditioning() const noexcept { return auditionOn; }
 
     std::function<void()> onClose;
@@ -141,6 +142,7 @@ private:
     friend struct cs80::tests::PresetBrowserXmlAccess;
     friend struct cs80::tests::PresetRevertAccess;
     friend struct cs80::tests::PresetSearchAccess;
+    friend struct cs80::tests::PresetPreferencesAccess;
 
     struct Entry
     {
@@ -213,7 +215,7 @@ private:
     bool isLoadedAndEdited(const Entry& e) const { return isLoaded(e) && loadedEdited; }
     void loadSelected();
     void loadEntry(int entryIndex);
-    void setShowTechniques(bool techniques);
+    void setShowTechniques(bool techniques, bool persist = false);
     void revertToOpening();
     void captureOpening();
     bool canRevert() const;

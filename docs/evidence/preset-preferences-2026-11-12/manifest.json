@@ -1,0 +1,44 @@
+{
+  "baseline_commit": "54479a9a64e15c16579f67b8818fe2beba428aee",
+  "baseline": {
+    "log": "baseline.log",
+    "exit": 1,
+    "expected_assertion_failures": 12,
+    "normal_process_completions": 7,
+    "binary_sha256": "9eb8846e7e73ab3e71fa2528f892694eee94d7b6d4073ebda1debf9e560103b2"
+  },
+  "final": {
+    "log": "focused.log",
+    "exit": 0,
+    "checks": 85,
+    "processes": 7,
+    "binary_sha256": "749674a743f177cfa1245f5eac764246510d036d17389cb81b764dfced83791e"
+  },
+  "adjacent": {
+    "log": "ctest.log",
+    "detail": "ctest-detail.log",
+    "exit": 0,
+    "passed": 10,
+    "failed": 0,
+    "parallelism": 1
+  },
+  "limits": [
+    "No native peer or desktop UI",
+    "No full registered test suite",
+    "No macOS/Windows or real DAW validation",
+    "No pluginval or remote CI qualification"
+  ],
+  "independent_review": {
+    "source_result": "No blocker",
+    "hashes": "independent-hashes.log",
+    "verified_sources": 6,
+    "verified_binaries": 1,
+    "focused_log": "independent-focused.log",
+    "focused_exit": 0,
+    "focused_checks": 85,
+    "ctest_log": "independent-ctest.log",
+    "ctest_exit": 0,
+    "ctest_passed": 10,
+    "ctest_seconds": 5.61
+  }
+}

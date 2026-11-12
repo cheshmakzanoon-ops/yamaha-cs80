@@ -360,8 +360,9 @@ constexpr int kSortCount = 5;
 // factory name or "U:" + user file name. They are kept in a plain text file,
 // one key per line, next to the user presets (CS80Reference/favourites.txt in
 // the application-data folder; CS80_FAVOURITES_FILE overrides the path for
-// portable installs and tests). The file is only read when the library opens
-// and only written when a star is toggled, so the UI self-test never writes.
+// portable installs and tests). The file is read on library refresh and written
+// for explicit favourite, density, audition and facet actions. Programmatic
+// preference changes stay session-only, so restoration does not write.
 // Every file operation is best effort: a read-only or missing folder just
 // means favourites last for the session. A "#view=compact" or "#view=cards"
 // line in the same file remembers the row density the same way.
@@ -2416,7 +2417,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
     addAndMakeVisible(nextButton);
     auditionButton.setTitle("Audition");
     auditionButton.setClickingTogglesState(true);
-    auditionButton.onClick = [this] { setAudition(auditionButton.getToggleState()); };
+    auditionButton.onClick = [this] { setAudition(auditionButton.getToggleState(), true); };
     addAndMakeVisible(auditionButton);
 
     description.setJustificationType(juce::Justification::topLeft);
@@ -2594,15 +2595,17 @@ void PresetBrowser::buildFilterChips()
         button->setRadioGroupId(7004);
         button->setTitle(juce::String("Show ") + facetNames[f] + " filters");
         button->setTooltip(facetTips[f]);
-        button->onClick = [this, f] { setShowTechniques(f == 1); };
+        button->onClick = [this, f] { setShowTechniques(f == 1, true); };
         addChildComponent(*button);
         facetButtons.push_back(std::move(button));
     }
 }
 
-void PresetBrowser::setShowTechniques(bool techniques)
+void PresetBrowser::setShowTechniques(bool techniques, bool persist)
 {
     techniqueFacetPreference() = techniques;
+    if (persist)
+        saveFavourites();
     if (techniques != showTechniques)
     {
         showTechniques = techniques;
@@ -4105,10 +4108,13 @@ void PresetBrowser::loadAdjacent(int delta)
     loadEntry(filtered[(size_t) next]);
 }
 
-void PresetBrowser::setAudition(bool shouldAudition)
+void PresetBrowser::setAudition(bool shouldAudition, bool persist)
 {
     auditionOn = shouldAudition;
     auditionPreference() = shouldAudition;
+    // Persist before audition can notify a caller that reopens the library.
+    if (persist)
+        saveFavourites();
     auditionButton.setToggleState(shouldAudition, juce::dontSendNotification);
     updateActionTips();
     // Turning it on auditions the row that is already selected.

@@ -42,6 +42,7 @@
 #include "../../tests/PresetIdentityTests.h"
 #include "../../tests/PresetRefreshTests.h"
 #include "../../tests/PresetSearchTests.h"
+#include "../../tests/PresetPreferencesTests.h"
 #include "../../tests/PresetBrowserXmlTests.h"
 #include "../../tests/PresetRevertTests.h"
 #include "../../tests/PresetRecallHostTests.h"
@@ -2066,6 +2067,15 @@ int main(int argc, char** argv)
         int checks = 0;
         cs80::tests::PresetIdentityAccess::run([&](bool condition, const char* what) { ++checks; check(condition, what); });
         std::printf("Preset loaded identity: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 2 && std::strcmp(argv[1], "--preset-preferences-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::PresetPreferencesAccess::run(
+            [&](bool condition, const char* what) { ++checks; check(condition, what); }, flushGui, argv[2]);
+        std::printf("Preset browser preferences: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--preset-search-tests") == 0)
