@@ -598,11 +598,16 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   propagation, scheduling/fallback and eight-versus-sixteen-voice loading remain
   unqualified. The 25 tone-tab cells remain hypotheses; tremolo/chorus
   both-off/both-on states need an engine parameter.
-- Parameter-backed illuminated switches now have guarded context menus/MIDI
-  learn, including memory SAW/PULSE. Custom Studio switches/segmented selectors,
-  combo boxes and memory faders remain open
-  ([scope and local tests](SWITCH_CONTEXT_MENUS.md)). The voice monitor still
-  illustrates settings rather than tapping the engine.
+- Parameter-backed illuminated switches, Studio switches, parameter choice boxes,
+  LFO destination chips and stored render-policy requests now have scoped
+  context actions ([switches](SWITCH_CONTEXT_MENUS.md),
+  [Studio switches](STUDIO_SWITCH_CONTEXT_MENUS.md),
+  [choices](PARAMETER_COMBO_CONTEXT_MENUS.md),
+  [LFO chips](STUDIO_LFO_CONTEXT_MENUS.md),
+  [policy requests](RENDER_POLICY_CONTEXT_MENUS.md)). The composite LEGACY action
+  has no single MIDI target; memory miniature faders remain outside this coverage.
+  The voice monitor retains settings illustrations and also offers
+  [read-only callback voice inspection](LIVE_VOICE_INSPECTION.md), not audio taps.
 - Plugin undo/redo now brackets effective recorded parameter replays with host
   edit gestures and rejects unsafe replay during an active edit
   ([contract and local tests](UNDO_REPLAY_GESTURES.md)). VST3/AU-wrapper and

@@ -2746,11 +2746,11 @@ private:
 // buttons; LEGACY clears both.
 // ---------------------------------------------------------------------------
 
-class AdvPolicyCell final : public juce::Button
+class AdvPolicyCell final : public ParameterContextButton
 {
 public:
     AdvPolicyCell(Cs80AudioProcessor& p, int idx, const juce::String& name, const juce::String& caption)
-        : juce::Button(name), proc(p), index(idx), sub(caption)
+        : ParameterContextButton(name), proc(p), index(idx), sub(caption)
     {
         setWantsKeyboardFocus(true);
         setMouseClickGrabsKeyboardFocus(false);
@@ -4764,7 +4764,9 @@ void buildRenderPolicy(AdvancedPage& page, Cs80AudioProcessor& proc)
                                   "switches are ON; changing this source request while isolation stays ON is masked and does not stop notes. The source "
                                   "request is saved with sound presets; library programs reset it OFF and return both selectors to PANEL. Selected tones "
                                   "and memories still own only the 26 programmer controls; footage and global controls remain live.");
+    sourcePerformance->setTooltip(sourcePerformance->getTooltip() + " Context reset and MIDI learn target only the stored SOURCE PERFORMANCE request. Effective policy follows both requests; the isolation request is retained.");
     sourcePerformance->setDescription(sourcePerformance->getTooltip());
+    sourcePerformance->bindParameterContext(proc, Cs80AudioProcessor::parameterId(cs80::P_sourcePerformance));
 
     auto* parity = page.policyCell({ 1148.0f, 612.0f, 368.0f, 54.0f }, 2, "PARITY ISOLATION", "NOMINAL MODELS, OVERLAYS MASKED");
     parity->setComponentID("parity_mode");
@@ -4773,7 +4775,9 @@ void buildRenderPolicy(AdvancedPage& page, Cs80AudioProcessor& proc)
                        "remain active. Hardware factory tabs use nominal source models; library programs still return to PANEL. Modern settings are "
                        "retained but inert. Isolation takes priority over SOURCE PERFORMANCE; its stored source request is masked, not cleared. "
                        "Output may exceed digital full scale.");
+    parity->setTooltip(parity->getTooltip() + " Context reset and MIDI learn affect only the stored PARITY ISOLATION request; the source request is retained. Learned MIDI is inactive while isolation is enabled, so turn isolation off manually before learning or using a controller.");
     parity->setDescription(parity->getTooltip());
+    parity->bindParameterContext(proc, Cs80AudioProcessor::parameterId(cs80::P_parityMode));
 
     page.widget<PolicyTable>({ 80.0f, 672.0f, 1440.0f, 184.0f });
 
