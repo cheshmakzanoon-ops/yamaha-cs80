@@ -1449,6 +1449,25 @@ if (CS80_BUILD_PLUGIN)
                 set_tests_properties("${key_release_test_name}" PROPERTIES TIMEOUT 180)
             endforeach()
         endforeach()
+        add_executable(cs80_vst3_lfo_native_random_tests tests/Vst3LfoNativeRandomTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_lfo_native_random_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_lfo_native_random_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_lfo_native_random_tests CS80Reference_VST3)
+        foreach(rate IN ITEMS 44100 48000 96000)
+            foreach(mode IN ITEMS realtime offline)
+                set(lfo_native_random_test_name "cs80_vst3_lfo_native_random_${rate}_${mode}_tests")
+                add_test(NAME "${lfo_native_random_test_name}" COMMAND cs80_vst3_lfo_native_random_tests
+                    "$<TARGET_FILE:CS80Reference_VST3>"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation-lfo-native-random-v1.json"
+                    "${CMAKE_CURRENT_BINARY_DIR}/lfo-native-random-candidate-${rate}-${mode}"
+                    "${rate}" "${mode}")
+                set_tests_properties("${lfo_native_random_test_name}" PROPERTIES TIMEOUT 1200)
+            endforeach()
+        endforeach()
         add_executable(cs80_vst3_lfo_static_shapes_tests tests/Vst3LfoStaticShapesTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"

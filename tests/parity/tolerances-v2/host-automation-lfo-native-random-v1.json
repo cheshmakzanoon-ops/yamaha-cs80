@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "bounded_software_protocol_interaction",
+  "host_automation_lfo_native_random": {
+    "key_parameter_count": 89,
+    "minimum_held_effect": 1e-05,
+    "scope": "Static sample-and-hold/smooth-random; same shape for all active LFOs; manual13/13; capacity8 actual2notes; rates16..20; 16384frames onset17/18 release14336/14337; no switching or mixed waveforms",
+    "verification_plan": "2shapes*4routes*3rates*2modes=48cases;18renders/case=864;192captures,144scalarblock comparisons,48queueorder checks; no cross-build pairs",
+    "waveform_count": 2
+  }
+}
