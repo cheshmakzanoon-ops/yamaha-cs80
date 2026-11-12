@@ -133,6 +133,11 @@ global displacement at lane78. Existing controller smoothing and held-voice
 frequency-ratio routing remain unchanged; qualification is held-note only.
 The complete78-lane prefix is preserved.
 
+The candidate [RIBBON release-mode qualification](VST3_RIBBON_RELEASE_MODES_AUTOMATION.md)
+compares within each fixed Sustain I/II mode after identical note histories.
+This uses the existing79 lanes and frozen module; it adds no production logic
+or live mode-switch qualification.
+
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's
 AU interface source list and native wrapper remain untouched. AU scheduled

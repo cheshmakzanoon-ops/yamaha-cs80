@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_qualification_extension",
+  "description": "Test-only static Sustain I/II ribbon release qualification of existing79 lanes; no production/helper or48 prior-contract changes.",
+  "host_automation_ribbon_release_modes": {
+    "key_parameter_count": 79,
+    "keys": "Existing global P_ribbon lane78;complete79 roster unchanged.",
+    "authority": "Same-source within-mode matchedactive comparisons across PANEL13/factory0/MEMORY11,static sustainMode0/1,assign0 gateenabled/no pedal. All16 matrix amounts0.",
+    "timing": "Ribbon physical0hold0/3100 then.2/-.15/.3/-.2 at3327/3583/3839/4095,afteralloffs3072..3087. keyRelease.5/masterSustain0/rankR.5 support tails. SustainI holds releasedvoice ratio;SustainII follows ribbon when gateenabled.",
+    "verification": "72cases936renders6process216captureidentitiesNOTbaseline;frozen79module reused. Within-mode activeconstant0:both pre3100 exact,modeI wholePCM exact,modeIIpositive tail[3100,4096);scalar/fivepartitions,noqueue/Legacy/PURE. No mode-switch/internalstate/fullrelease/filterinvariant/calibratedpitch/hardware/GUI/CPU claim."
+  }
+}
