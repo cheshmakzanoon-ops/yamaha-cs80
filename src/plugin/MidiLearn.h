@@ -16,6 +16,7 @@
 #include <array>
 #include <atomic>
 #include <cstdint>
+#include <cstddef>
 
 namespace cs80
 {
@@ -28,7 +29,11 @@ public:
     // Format version of the serialised map (the MIDI_LEARN element of the plugin state).
     static constexpr int kStateVersion = 1;
 
-    MidiLearnMap() noexcept
+    // Callback must be allocation-free and non-blocking: learning can invoke it on audio.
+    // Its context must outlive this map; no callback is made for transient learning state.
+    using ChangeCallback = void (*)(void*) noexcept;
+    explicit MidiLearnMap(void* context = nullptr, ChangeCallback changed = nullptr) noexcept
+        : changeContext(context), onChange(changed)
     {
         for (auto& slot : map)
             slot.store(kNone, std::memory_order_relaxed);
@@ -57,14 +62,16 @@ public:
     int learningParameter() const noexcept { return learn.load(std::memory_order_acquire); }
 
     // Assigns `cc` to `parameter`, removing the parameter's previous controller. False for an
-    // unlearnable controller or a negative parameter.
-    bool assign(int cc, int parameter) noexcept
+    // unlearnable controller or a negative parameter. notify=false is reserved for host restore.
+    bool assign(int cc, int parameter, bool notify = true) noexcept
     {
         if (! isLearnable(cc) || parameter < 0)
             return false;
-        release(parameter, cc);
-        map[(size_t) cc].store(parameter, std::memory_order_release);
+        const int removed = release(parameter, cc);
+        const int previous = map[(std::size_t) cc].exchange(parameter, std::memory_order_acq_rel);
         bump();
+        if (notify && (removed != 0 || previous != parameter))
+            changed();
         return true;
     }
 
@@ -72,30 +79,37 @@ public:
     {
         if (cc < 0 || cc >= kNumControllers)
             return;
-        map[(size_t) cc].store(kNone, std::memory_order_release);
+        const int previous = map[(std::size_t) cc].exchange(kNone, std::memory_order_acq_rel);
         bump();
+        if (previous != kNone)
+            changed();
     }
 
     // Removes every controller assigned to `parameter`; returns how many there were.
     int clearParameter(int parameter) noexcept
     {
-        const int removed = release(parameter, kNone);
+        const int removed = parameter >= 0 ? release(parameter, kNone) : 0;
         bump();
+        if (removed != 0)
+            changed();
         return removed;
     }
 
-    void clearAll() noexcept
+    void clearAll(bool notify = true) noexcept
     {
+        bool removed = false;
         for (auto& slot : map)
-            slot.store(kNone, std::memory_order_release);
+            removed |= slot.exchange(kNone, std::memory_order_acq_rel) != kNone;
         learn.store(kNone, std::memory_order_release);
         bump();
+        if (notify && removed)
+            changed();
     }
 
     // ---- any thread ----------------------------------------------------------------------
     int parameterFor(int cc) const noexcept
     {
-        return cc >= 0 && cc < kNumControllers ? map[(size_t) cc].load(std::memory_order_acquire) : kNone;
+        return cc >= 0 && cc < kNumControllers ? map[(std::size_t) cc].load(std::memory_order_acquire) : kNone;
     }
 
     int controllerFor(int parameter) const noexcept
@@ -103,7 +117,7 @@ public:
         if (parameter < 0)
             return kNone;
         for (int cc = 0; cc < kNumControllers; ++cc)
-            if (map[(size_t) cc].load(std::memory_order_acquire) == parameter)
+            if (map[(std::size_t) cc].load(std::memory_order_acquire) == parameter)
                 return cc;
         return kNone;
     }
@@ -131,13 +145,15 @@ public:
             int armed = learn.load(std::memory_order_acquire);
             if (armed >= 0 && learn.compare_exchange_strong(armed, kNone, std::memory_order_acq_rel))
             {
-                release(armed, cc);
-                map[(size_t) cc].store(armed, std::memory_order_release);
+                const int removed = release(armed, cc);
+                const int previous = map[(std::size_t) cc].exchange(armed, std::memory_order_acq_rel);
                 bump();
+                if (removed != 0 || previous != armed)
+                    changed();
                 return armed;
             }
         }
-        return map[(size_t) cc].load(std::memory_order_acquire);
+        return map[(std::size_t) cc].load(std::memory_order_acquire);
     }
 
 private:
@@ -150,11 +166,16 @@ private:
             if (cc == keep)
                 continue;
             int expected = parameter;
-            if (map[(size_t) cc].compare_exchange_strong(expected, kNone, std::memory_order_acq_rel))
+            if (map[(std::size_t) cc].compare_exchange_strong(expected, kNone, std::memory_order_acq_rel))
                 ++removed;
         }
         return removed;
     }
+
+    void changed() noexcept { if (onChange != nullptr) onChange(changeContext); }
+
+    void* const changeContext;
+    const ChangeCallback onChange;
 
     void bump() noexcept { gen.fetch_add(1, std::memory_order_acq_rel); }
 

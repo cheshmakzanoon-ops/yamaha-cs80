@@ -432,7 +432,10 @@ private:
     std::atomic<int> currentProgram { 0 };
 
     // [ws8-studio]
-    cs80::MidiLearnMap midiLearn;
+    cs80::MidiLearnMap midiLearn { &apvts, [](void* context) noexcept
+    {
+        static_cast<cs80::UndoableParameterState*>(context)->requestNonParameterStateUpdate();
+    } };
     bool midiLearnLive = false;   // audio thread: mappings apply in this block (not PURE CS-80)
     EditorState editorState;
 

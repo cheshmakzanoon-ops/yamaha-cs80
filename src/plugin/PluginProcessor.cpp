@@ -1895,7 +1895,7 @@ void Cs80AudioProcessor::writeStudioState(juce::ValueTree& state) const
 void Cs80AudioProcessor::readStudioState(juce::ValueTree& state)
 {
     // A restored session owns its map: a state without one (or from before this feature) has no mappings.
-    midiLearn.clearAll();
+    midiLearn.clearAll(false); // Host restore is not a user edit.
     const auto learn = state.getChildWithName("MIDI_LEARN");
     if (learn.isValid())
     {
@@ -1909,7 +1909,7 @@ void Cs80AudioProcessor::readStudioState(juce::ValueTree& state)
             for (int index = 0; index < parameters.size(); ++index)
                 if (auto* p = dynamic_cast<juce::AudioProcessorParameterWithID*>(parameters.getUnchecked(index)); p != nullptr && p->paramID == id)
                 {
-                    midiLearn.assign(cc, index);   // refuses unlearnable controllers
+                    midiLearn.assign(cc, index, false);   // refuses unlearnable controllers
                     break;
                 }
         }

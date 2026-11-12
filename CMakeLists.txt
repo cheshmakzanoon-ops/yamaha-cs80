@@ -1097,6 +1097,17 @@ if (CS80_BUILD_PLUGIN)
         target_link_libraries(cs80_tuning_state_notification_tests PRIVATE CS80Reference)
         add_test(NAME cs80_tuning_state_notification_tests COMMAND cs80_tuning_state_notification_tests)
         set_tests_properties(cs80_tuning_state_notification_tests PROPERTIES TIMEOUT 120)
+        add_executable(cs80_midi_map_change_tests tests/MidiMapChangeTests.cpp)
+        target_include_directories(cs80_midi_map_change_tests PRIVATE src/plugin)
+        add_test(NAME cs80_midi_map_change_tests COMMAND cs80_midi_map_change_tests)
+        add_executable(cs80_midi_map_notification_tests tests/MidiMapNotificationTests.cpp)
+        target_include_directories(cs80_midi_map_notification_tests PRIVATE src
+            "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_midi_map_notification_tests PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_midi_map_notification_tests PRIVATE CS80Reference)
+        add_test(NAME cs80_midi_map_notification_tests COMMAND cs80_midi_map_notification_tests)
+        set_tests_properties(cs80_midi_map_notification_tests PROPERTIES TIMEOUT 120)
         add_executable(cs80_voice_inspection_host_tests tests/VoiceInspectionHostTests.cpp)
         target_include_directories(cs80_voice_inspection_host_tests PRIVATE src
             "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
