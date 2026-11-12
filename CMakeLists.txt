@@ -1449,6 +1449,20 @@ if (CS80_BUILD_PLUGIN)
                 set_tests_properties("${key_release_test_name}" PROPERTIES TIMEOUT 180)
             endforeach()
         endforeach()
+        # Narrow canonical session generator: public API only, no editor/audio rendering.
+        add_executable(cs80_mseg_canonical_state_generator tests/MsegCanonicalStateGenerator.cpp)
+        target_include_directories(cs80_mseg_canonical_state_generator PRIVATE
+            src "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_mseg_canonical_state_generator PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_mseg_canonical_state_generator PRIVATE CS80Reference)
+        add_executable(cs80_vst3_mseg_routing_proof_tests tests/Vst3MsegRoutingProofTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_mseg_routing_proof_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_mseg_routing_proof_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_mseg_routing_proof_tests CS80Reference_VST3)
         add_executable(cs80_vst3_lfo_native_random_tests tests/Vst3LfoNativeRandomTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
