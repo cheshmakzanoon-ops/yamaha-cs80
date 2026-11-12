@@ -44,8 +44,30 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `b1019b1fdc74d2e2df1bf30999be318e2f1657a3` appends both ranks’
+AFTER TOUCH brilliance/level amounts at lanes46..49, bringing the current
+roster to **50 lanes**. Its reviewed candidate passed12 direct native runs:
+144 full cases and144 compatibility cases,2832 renders total. All432 actual
+candidate50/frozen46 no-queue and Legacy/PURE pairs matched byte-for-byte.
+Maximum partition error was3.72529e-09 under the unchanged2e-6 threshold,
+not zero; all144 pre256 prefixes were exact. All48 PANEL pressure-ON cases
+had positive effects and all96 factory/MEMORY masking comparisons were exact.
+The48 additional PANEL pressure-OFF controls were exact, separate from the432
+baseline pairs. See [AFTER TOUCH evidence and exact hashes](VST3_AFTER_TOUCH_AUTOMATION.md).
+
+Existing smoothing, modern TouchCircuit pressure nodes and source authority
+remain unchanged. Pressure-OFF establishes PCM equality only, not internal
+state or later-pressure equivalence. These isolated rank-amount tests do not
+qualify simultaneous-rank or calibrated hardware touch behavior. Linux float32
+coverage is44.1/48/96kHz,realtime/offline,8/16 capacities. No failures or retries
+occurred in this gate; direct runs are not CTest or historical-suite reruns.
+Broad integration/release qualification and retained candidate binary/source
+hashes remain separate from this published source commit.
+
+The preceding INITIAL TOUCH checkpoint remains historical on its own inputs:
+
 Published `ea6c58b08cc9f9ed466d2f6427b0a4f67c05bc7e` appends both ranks’
-INITIAL TOUCH brilliance/level amounts at lanes42..45, bringing the current
+INITIAL TOUCH brilliance/level amounts at lanes42..45, bringing that checkpoint’s
 roster to **46 lanes**. Its reviewed candidate passed12 direct native runs:
 144 full cases and144 compatibility cases,2736 renders total. All432 actual
 candidate46/frozen42 no-queue and Legacy/PURE pairs matched byte-for-byte.
@@ -326,7 +348,7 @@ handover PDF remain dated evidence, not current-head measurements.
 | Filter resonance cache | Reuses cutoff-dependent coefficients on Q-only updates; cutoff/rate changes retain the full path and the solver law is unchanged | `465e56c` ([PR #76](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/76)); [cache scope and measurements](IG00156_RESONANCE_CACHE.md) |
 | External modulation | Sparse FIR reconstruction skips guaranteed-zero products while retaining coefficient design, phase and accumulation order | `228cc8d` ([PR #74](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/74)); [scope and measurements](EXTERNAL_INTERPOLATOR_SPARSE.md) |
 | Delay-reader safety | A rounded circular-buffer position at capacity is wrapped to zero, preventing an out-of-bounds read | `ff9943e`; [DELAY_LINE_WRAP_SAFETY.md](DELAY_LINE_WRAP_SAFETY.md). Previously valid interpolation retains its arithmetic. |
-| Host automation | Forty-six key VST3 parameters retain sample offsets in modern circuit policy, including PANEL-routed rank INITIAL TOUCH amounts, live LOW/HIGH keyboard level and brilliance, initial-bend amount, MASTER SUSTAIN release timing and portamento time; RING attack/decay retain fresh-trigger latch semantics, while protected policies and unsupported parameters keep block-rate behavior | `ea6c58b0`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [INITIAL TOUCH qualification](VST3_INITIAL_TOUCH_AUTOMATION.md); historical [BRILLIANCE](VST3_KBD_BRILLIANCE_AUTOMATION.md), [HIGH keyboard level](VST3_KBD_LEVEL_HIGH_AUTOMATION.md), [LOW keyboard level](VST3_KBD_LEVEL_LOW_AUTOMATION.md), [INITIAL PITCH BEND](VST3_INITIAL_BEND_AUTOMATION.md), [MASTER SUSTAIN](VST3_MASTER_SUSTAIN_AUTOMATION.md), [portamento](VST3_PORTAMENTO_AUTOMATION.md), [CHORUS](VST3_CHORUS_AUTOMATION.md) and [TREMOLO](VST3_TREMOLO_AUTOMATION.md) retain their own evidence. AU scheduled ramps are not enabled. |
+| Host automation | Fifty key VST3 parameters retain sample offsets in modern circuit policy, including PANEL-routed rank INITIAL/AFTER TOUCH amounts, live LOW/HIGH keyboard level and brilliance, initial-bend amount, MASTER SUSTAIN release timing and portamento time; RING attack/decay retain fresh-trigger latch semantics, while protected policies and unsupported parameters keep block-rate behavior | `b1019b1f`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [AFTER TOUCH qualification](VST3_AFTER_TOUCH_AUTOMATION.md); historical [INITIAL TOUCH](VST3_INITIAL_TOUCH_AUTOMATION.md), [BRILLIANCE](VST3_KBD_BRILLIANCE_AUTOMATION.md), [HIGH keyboard level](VST3_KBD_LEVEL_HIGH_AUTOMATION.md), [LOW keyboard level](VST3_KBD_LEVEL_LOW_AUTOMATION.md), [INITIAL PITCH BEND](VST3_INITIAL_BEND_AUTOMATION.md), [MASTER SUSTAIN](VST3_MASTER_SUSTAIN_AUTOMATION.md), [portamento](VST3_PORTAMENTO_AUTOMATION.md), [CHORUS](VST3_CHORUS_AUTOMATION.md) and [TREMOLO](VST3_TREMOLO_AUTOMATION.md) retain their own evidence. AU scheduled ramps are not enabled. |
 | Tuning | Pinned 0BSD MTS-ESP client included, with bounded whole-table updates and missing-master fallback | `73e76ce`; [MTS_ESP_INTEGRATION.md](MTS_ESP_INTEGRATION.md). [Per-channel master tables](MTS_ESP_CHANNEL_MASTER.md) are implemented; live external-master DAW qualification remains open. |
 | MIDI and note lifecycle | Channel-scoped pressure/MPE routing, retained release ownership, ordered KAS short notes, bounded CC121 controller defaults and live conventional bend-range edits | [VOICE_RELEASE_OWNERSHIP.md](VOICE_RELEASE_OWNERSHIP.md), [MPE_MASTER_BEND_ROUTING.md](MPE_MASTER_BEND_ROUTING.md), [CONTROLLER_RESET.md](CONTROLLER_RESET.md), [PITCH_BEND_RANGE_AUTOMATION.md](PITCH_BEND_RANGE_AUTOMATION.md) |
 | Immediate sixteen-voice release | Cancels one matching waiter or releases the newest comparable held group across both instruments; unison groups and UI source guards are retained | `77dfd74`; [bounded contract](SIXTEEN_VOICE_NOTE_RELEASE.md). Deferred/ARP-origin candidates and active/pending scan paths retain broadcast fallback. No complete sixteen-voice release or realtime qualification claim. |
