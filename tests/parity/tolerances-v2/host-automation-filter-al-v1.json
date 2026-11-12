@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append rank filter EG AL lanes60/61, preserving complete60 prefix,41 historical contracts, DSP, metadata, helper and source masks.",
+  "host_automation_filter_al": {
+    "key_parameter_count": 62,
+    "keys": "Rank0 CP_fAl lane60; rank1 CP_fAl lane61. All preceding60 lanes unchanged.",
+    "authority": "PANEL13 positive; factory0/MEMORY11 selected-source PCM masking unchanged. Range0..1/default.55/linear unchanged.",
+    "timing": "Existing changed AL during Attack reanchors attackFrom to current precise value and resets preciseTime, retaining stage. Filter A.5,IL.5,AL.2hold0/128,monotone.3/.4/.5/.6/.7/.8 at511/1023/1791/2559/3071/4095; neutral scale/dispersion. No ordinary smoothing or post-noteoff selection claim.",
+    "verification": "72full24PANELpositive48masked plus72frozen60compatibility;1368renders12process216actualpairs. Exactpre128,positive held-frame interval[128,3072) versusmatchedactivehold,scalar/fivepartitions. No calibrated hardware/stage accuracy/full attack/simultaneous lane/GUI/CPU claim."
+  }
+}

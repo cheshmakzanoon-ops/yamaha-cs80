@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), filter_ilLimits(argv[3], "host_automation_filter_il");
-        require(filter_ilLimits["key_parameter_count"] == 60 && cs80::kSampleAccurateParameters.size() == 60,
-                "exact 60-lane filter_il capability");
+        require(filter_ilLimits["key_parameter_count"] == 60 && cs80::kSampleAccurateParameters.size() >= 60,
+                "historical 60-lane filter_il capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 58-lane roster/order unchanged");
         constexpr std::array added {cs80::chParam(0, cs80::CP_fIl), cs80::chParam(1, cs80::CP_fIl)};
