@@ -3,6 +3,7 @@
 #include "UiComponents.h"
 
 #include <array>
+#include <cstdint>
 #include <functional>
 #include <memory>
 #include <optional>
@@ -104,6 +105,7 @@ private:
 
     Cs80AudioProcessor& processor;
     Actions actions;
+    std::uint64_t actionsGeneration = 0;
     std::unique_ptr<Key> prev, next, library, compareA, compareB, undoKey, redoKey,
         circuitKey, legacyKey, pureKey, studioKey, menuKey;
     std::unique_ptr<Display> display;

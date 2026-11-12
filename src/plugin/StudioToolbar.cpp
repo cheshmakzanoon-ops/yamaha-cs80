@@ -329,6 +329,7 @@ StudioToolbar::~StudioToolbar()
 
 void StudioToolbar::setActions(Actions newActions)
 {
+    ++actionsGeneration;
     actions = std::move(newActions);
     refresh();
 }
@@ -401,7 +402,18 @@ void StudioToolbar::timerCallback()
 juce::PopupMenu StudioToolbar::buildMenu()
 {
     juce::PopupMenu menu;
-    auto item = [&menu](int id, const juce::String& text, bool enabled, bool ticked, const std::function<void()>& action)
+    // JUCE queues Item::action separately from menu dismissal. Preserve the
+    // selected callback, but discard it if its toolbar or binding has ended.
+    auto guarded = [safe = juce::Component::SafePointer<StudioToolbar>(this), generation = actionsGeneration]
+                   (std::function<void()> action)
+    {
+        return [safe, generation, action = std::move(action)]
+        {
+            if (safe != nullptr && safe->actionsGeneration == generation)
+                action(); // May destroy the toolbar or replace its Actions. Do not touch it afterward.
+        };
+    };
+    auto item = [&menu, &guarded](int id, const juce::String& text, bool enabled, bool ticked, const std::function<void()>& action)
     {
         if (! action)
             return;
@@ -409,7 +421,7 @@ juce::PopupMenu StudioToolbar::buildMenu()
         entry.itemID = id;
         entry.isEnabled = enabled;
         entry.isTicked = ticked;
-        entry.action = action;
+        entry.action = guarded(action);
         menu.addItem(entry);
     };
     const bool pure = pureValue >= 0.5f;
@@ -443,7 +455,7 @@ juce::PopupMenu StudioToolbar::buildMenu()
             juce::PopupMenu::Item size(juce::String(percent) + " %   (" + juce::String(16 * percent) + " x " + juce::String(10 * percent) + ")");
             size.itemID = 100 + percent;
             size.isTicked = percent == current;
-            size.action = [setZoom = actions.setZoom, percent] { setZoom(percent); };
+            size.action = guarded([setZoom = actions.setZoom, percent] { setZoom(percent); });
             sizes.addItem(size);
         }
         menu.addSubMenu("Display size", sizes);

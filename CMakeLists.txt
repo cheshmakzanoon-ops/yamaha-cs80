@@ -1225,6 +1225,8 @@ if (CS80_BUILD_PLUGIN)
     set_tests_properties(cs80_mseg_editor_lifecycle_tests PROPERTIES TIMEOUT 60)
     add_test(NAME cs80_modern_slider_gesture_tests COMMAND CS80Snapshots --modern-slider-gesture-tests)
     set_tests_properties(cs80_modern_slider_gesture_tests PROPERTIES TIMEOUT 60)
+    add_test(NAME cs80_toolbar_menu_lifetime_tests COMMAND CS80Snapshots --toolbar-menu-lifetime-tests)
+    set_tests_properties(cs80_toolbar_menu_lifetime_tests PROPERTIES TIMEOUT 60)
     add_test(NAME cs80_snapshot_cli_tests COMMAND "${Python3_EXECUTABLE}"
              "${CMAKE_CURRENT_SOURCE_DIR}/tests/SnapshotCliTests.py"
              "$<TARGET_FILE:CS80Snapshots>")
