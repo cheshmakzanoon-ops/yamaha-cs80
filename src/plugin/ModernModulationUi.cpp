@@ -149,31 +149,61 @@ MsegEditor::~MsegEditor()
 void MsegEditor::enablementChanged()
 {
     ++editGeneration;
+    cancelDrag(true);
+    repaint();
 }
 
 void MsegEditor::setMsegIndex(int index)
 {
     ++editGeneration;
     // A pointer gesture belongs to its original envelope, even across A-B-A selection.
-    drag = Drag::none;
-    dragIndex = -1;
-    frozenViewLength = 0.0f;
+    cancelDrag(true);
     msegIndex = juce::jlimit(0, kMsegCount - 1, index);
     selected = hovered = -1;
     reload();
 }
 
+void MsegEditor::cancelDrag(bool invalidateDoubleClick)
+{
+    if (invalidateDoubleClick && frozenViewLength > 0.0f)
+        suppressDoubleClick = true;
+    drag = Drag::none;
+    dragIndex = -1;
+    frozenViewLength = 0.0f;
+}
+
 void MsegEditor::reload()
 {
-    shape = processor.getModernLayer().getShape(msegIndex);
+    const auto snapshot = processor.getModernLayer().getEditSnapshot();
+    if (snapshot.revision != shapeRevision)
+    {
+        // A recall or Undo can replace point identities even when the count is unchanged.
+        ++editGeneration;
+        cancelDrag(true);
+        selected = hovered = -1;
+    }
+    shape = snapshot.config.msegs[(std::size_t) msegIndex];
+    shapeRevision = snapshot.revision;
     if (selected >= shape.count) selected = -1;
     repaint();
+}
+
+bool MsegEditor::refreshIfStale()
+{
+    if (processor.getModernLayer().getRevision() == shapeRevision)
+        return false;
+    // Input may beat the asynchronous change callback. Reject this old-context event
+    // instead of interpreting its coordinates or selected index in the new shape.
+    reload();
+    return true;
 }
 
 void MsegEditor::commit()
 {
     processor.getModernLayer().setShape(msegIndex, shape);
-    shape = processor.getModernLayer().getShape(msegIndex);
+    const auto snapshot = processor.getModernLayer().getEditSnapshot();
+    shape = snapshot.config.msegs[(std::size_t) msegIndex];
+    shapeRevision = snapshot.revision; // our own change notification may arrive mid-drag
     repaint();
 }
 
@@ -351,6 +381,12 @@ void MsegEditor::mouseDown(const juce::MouseEvent& e)
 {
     if (!e.mods.isLeftButtonDown() || e.mods.isPopupMenu())
         return;
+    suppressDoubleClick = false;
+    if (refreshIfStale())
+    {
+        suppressDoubleClick = true;
+        return;
+    }
     ++editGeneration;
     grabKeyboardFocus();
     frozenViewLength = viewLength();
@@ -378,6 +414,7 @@ void MsegEditor::mouseDown(const juce::MouseEvent& e)
 
 void MsegEditor::mouseDrag(const juce::MouseEvent& e)
 {
+    if (refreshIfStale()) return;
     const bool fine = e.mods.isShiftDown();
     switch (drag)
     {
@@ -418,8 +455,8 @@ void MsegEditor::mouseDrag(const juce::MouseEvent& e)
 
 void MsegEditor::mouseUp(const juce::MouseEvent&)
 {
-    drag = Drag::none;
-    frozenViewLength = 0.0f;
+    refreshIfStale();
+    cancelDrag();
     repaint();
 }
 
@@ -440,6 +477,11 @@ void MsegEditor::mouseDoubleClick(const juce::MouseEvent& e)
 {
     if (!e.mods.isLeftButtonDown() || e.mods.isPopupMenu())
         return;
+    if (refreshIfStale() || suppressDoubleClick)
+    {
+        suppressDoubleClick = true;
+        return;
+    }
     ++editGeneration;
     drag = Drag::none;
     if (const int i = hitPoint(e.position); i > 0 && shape.count > 2)
@@ -471,6 +513,7 @@ void MsegEditor::mouseDoubleClick(const juce::MouseEvent& e)
 
 bool MsegEditor::keyPressed(const juce::KeyPress& key)
 {
+    if (refreshIfStale()) return false;
     // Topology edits must not invalidate indices owned by an active pointer drag.
     if (drag != Drag::none)
         return false;
@@ -491,8 +534,7 @@ bool MsegEditor::keyPressed(const juce::KeyPress& key)
 
 void MsegEditor::changeListenerCallback(juce::ChangeBroadcaster*)
 {
-    if (drag == Drag::none)
-        reload();
+    refreshIfStale();
 }
 
 void MsegEditor::timerCallback()
@@ -761,16 +803,16 @@ void MsegPage::showPointValues()
         edited.points[(std::size_t) point] = { time, level, curve };
         ++safe->pointValuesGeneration; // single use, even after undo
         ++safe->editor.editGeneration;
-        safe->editor.selected = point; // Keep the applied point selected for the next edit.
-        safe->editor.repaint();
         if (edited != captured)
         {
             auto& undo = safe->processor.getUndoManager();
             undo.beginNewTransaction("Edit MSEG " + juce::String(slot + 1) + " point " + juce::String(point + 1));
             safe->processor.getModernLayer().setShape(slot, edited);
             undo.beginNewTransaction();
-            safe->editor.reload();
         }
+        safe->editor.reload();
+        safe->editor.selected = point; // Re-select the applied point after adopting its revision.
+        safe->editor.repaint();
         safe->pointValuesEditor->setVisible(false);
         return {};
     };

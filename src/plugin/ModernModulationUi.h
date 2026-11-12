@@ -64,6 +64,8 @@ private:
     void changeListenerCallback(juce::ChangeBroadcaster*) override;
     void timerCallback() override;
     void reload();
+    bool refreshIfStale();
+    void cancelDrag(bool invalidateDoubleClick = false);
     void commit();
     int hitPoint(juce::Point<float>) const;
     int segmentAt(float x) const;
@@ -72,8 +74,10 @@ private:
     Cs80AudioProcessor& processor;
     int msegIndex = 0;
     std::uint64_t editGeneration = 0;
+    std::uint64_t shapeRevision = 0; // publication represented by the displayed points
     cs80::modern::MsegShape shape;
     Drag drag = Drag::none;
+    bool suppressDoubleClick = false; // JUCE sends this after mouseUp for the same sequence
     int dragIndex = -1, selected = -1, hovered = -1;
     float dragStartCurve = 0.0f;
     juce::Point<float> dragStart;
