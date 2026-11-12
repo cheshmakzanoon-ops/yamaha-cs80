@@ -1,0 +1,261 @@
+{
+  "result": "PASS",
+  "method": "exact integer phase accumulation with 2^-19 Hz rate quantum; independent uint32 RNG arithmetic; double cosine then float32 projection",
+  "cases": 24,
+  "compared_samples": 1140300,
+  "rate_quantum": "2^-19 Hz",
+  "max_actual_error": 1.4901161193847656e-07,
+  "max_saved_reference_error": 0.0,
+  "minimum_boundary_clearance": 2.3502341203408446e-07,
+  "wraps_per_case": 4,
+  "sample_hold_bit_exact": true,
+  "rate_capture_sha256": {
+    "rates-88200.f32": "23bef0de22a816db55714c2d597dfda3fca578378c2b9989eb9a6687859a6707",
+    "rates-96000.f32": "7e2d03a3d2c815edc93286458a178f489fae908d68ad20d38afd0d0f586aeaeb",
+    "rates-192000.f32": "72955cf4a28c187aad4777f8aac3336f884e962d07787e2ab7b52c3c68d003c6",
+    "rates-384000.f32": "6bfbd3a9b635e0d87e37da0c06c2764ca60c48298cd25ecdc69c541fdf6ccb28"
+  },
+  "case_results": [
+    {
+      "case": "88200-wave5-seed1821285621",
+      "samples": 22050,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 2.3502341203408446e-07,
+      "actual_sha256": "253eab3098d3f48ace01b0097b8235070c4d0bac5dfd601341f0aabbf1bd1441",
+      "reference_sha256": "253eab3098d3f48ace01b0097b8235070c4d0bac5dfd601341f0aabbf1bd1441"
+    },
+    {
+      "case": "88200-wave5-seed1000234273",
+      "samples": 22050,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 2.3502341203408446e-07,
+      "actual_sha256": "4900940bdebfe0847baab9509e79cb2459f959196b8ba1ba44c95445f96cdc54",
+      "reference_sha256": "4900940bdebfe0847baab9509e79cb2459f959196b8ba1ba44c95445f96cdc54"
+    },
+    {
+      "case": "88200-wave5-seed2714038285",
+      "samples": 22050,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 2.3502341203408446e-07,
+      "actual_sha256": "285fe32022beb424240b1aec3c473ba5305ab10cb38b514c7e6ce20c4b9e650f",
+      "reference_sha256": "285fe32022beb424240b1aec3c473ba5305ab10cb38b514c7e6ce20c4b9e650f"
+    },
+    {
+      "case": "88200-wave6-seed1821285621",
+      "samples": 22050,
+      "wraps": 4,
+      "max_actual_error": 5.960464477539063e-08,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 2.3502341203408446e-07,
+      "actual_sha256": "c7c8056bdfc7fe1e61e36b9f77ba11f78a5943cc754bf46e2736f57ccde52b7a",
+      "reference_sha256": "69729ee7485a21f797453b392f305e5e722b72e70369efc02d94e57dd222f374"
+    },
+    {
+      "case": "88200-wave6-seed1000234273",
+      "samples": 22050,
+      "wraps": 4,
+      "max_actual_error": 1.1920928955078125e-07,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 2.3502341203408446e-07,
+      "actual_sha256": "78cf1615b3217de7cc66af5c926cc2f03bbbb741b895bc4b71fd57a6f2d44b84",
+      "reference_sha256": "4dc046c0de18bae76ecf0ea08d401473392bdcdbba507d980694e9252b8b801d"
+    },
+    {
+      "case": "88200-wave6-seed2714038285",
+      "samples": 22050,
+      "wraps": 4,
+      "max_actual_error": 1.1920928955078125e-07,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 2.3502341203408446e-07,
+      "actual_sha256": "50272dfcb34ce520c3832bd30f0411c5a350f7b9865c2007e644b8ad05533a66",
+      "reference_sha256": "8949001429da4febb9c88521a4a64541c60c645480b1465b3e6ff857a2f845f5"
+    },
+    {
+      "case": "96000-wave5-seed1821285621",
+      "samples": 24000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 3.902852535247803e-06,
+      "actual_sha256": "f1b7a1459477e5b46a8e7ed99e07cbe85438a0fa5faa3853a0f72c8d510781bf",
+      "reference_sha256": "f1b7a1459477e5b46a8e7ed99e07cbe85438a0fa5faa3853a0f72c8d510781bf"
+    },
+    {
+      "case": "96000-wave5-seed1000234273",
+      "samples": 24000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 3.902852535247803e-06,
+      "actual_sha256": "e07bd13de6f7e55750ea716ae6dddd586773d786c4a04236397184ee457b9f32",
+      "reference_sha256": "e07bd13de6f7e55750ea716ae6dddd586773d786c4a04236397184ee457b9f32"
+    },
+    {
+      "case": "96000-wave5-seed2714038285",
+      "samples": 24000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 3.902852535247803e-06,
+      "actual_sha256": "f54dbd0d9953cd6dac3b4c57a5ec36a19ee16356229e3e86250a1d58dc6b4736",
+      "reference_sha256": "f54dbd0d9953cd6dac3b4c57a5ec36a19ee16356229e3e86250a1d58dc6b4736"
+    },
+    {
+      "case": "96000-wave6-seed1821285621",
+      "samples": 24000,
+      "wraps": 4,
+      "max_actual_error": 5.960464477539063e-08,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 3.902852535247803e-06,
+      "actual_sha256": "4b32a7b97b8ad0459a7ae371bcc888e4a08cc9d6d2f1307bbd6f2434e7dee34d",
+      "reference_sha256": "0f4be1c265b250c96fb92095da8e94e3de7a583044dadc334d9c8a1cc8e7a2d6"
+    },
+    {
+      "case": "96000-wave6-seed1000234273",
+      "samples": 24000,
+      "wraps": 4,
+      "max_actual_error": 1.1920928955078125e-07,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 3.902852535247803e-06,
+      "actual_sha256": "faee67c31970e0b447feaa2fd8c41a0163a398159e55aeca462ea1548ac97ae0",
+      "reference_sha256": "0a2c6744753a54f85e7fcf8dc9d97b6ea87820851e3736db8bb4683284866b86"
+    },
+    {
+      "case": "96000-wave6-seed2714038285",
+      "samples": 24000,
+      "wraps": 4,
+      "max_actual_error": 1.4901161193847656e-07,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 3.902852535247803e-06,
+      "actual_sha256": "d1763e060efb2a475168fb845c83e44d4ccf7c778ad6caa0b677b1dcb1a0d0da",
+      "reference_sha256": "b7f6edc55120e84692f80b90301fea66f331b29ffdb7f6af3deed1a802fd1335"
+    },
+    {
+      "case": "192000-wave5-seed1821285621",
+      "samples": 48000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 8.809169133504231e-06,
+      "actual_sha256": "a0cc881b1ab237a9234ef77acf6de4551745d94463669c2c82cf1f0ece55fd0b",
+      "reference_sha256": "a0cc881b1ab237a9234ef77acf6de4551745d94463669c2c82cf1f0ece55fd0b"
+    },
+    {
+      "case": "192000-wave5-seed1000234273",
+      "samples": 48000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 8.809169133504231e-06,
+      "actual_sha256": "9bfda9be7d41bd670c4bec08644ff444bea69eba276a0293dac159e9dcfc451d",
+      "reference_sha256": "9bfda9be7d41bd670c4bec08644ff444bea69eba276a0293dac159e9dcfc451d"
+    },
+    {
+      "case": "192000-wave5-seed2714038285",
+      "samples": 48000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 8.809169133504231e-06,
+      "actual_sha256": "755400f86e3359aaaf675cf2d4c1a9a33e8994449b7b2311be5914c420c71a3f",
+      "reference_sha256": "755400f86e3359aaaf675cf2d4c1a9a33e8994449b7b2311be5914c420c71a3f"
+    },
+    {
+      "case": "192000-wave6-seed1821285621",
+      "samples": 48000,
+      "wraps": 4,
+      "max_actual_error": 5.960464477539063e-08,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 8.809169133504231e-06,
+      "actual_sha256": "49cb9833cba30fa5db19a7e2823a4ec0914836c68f35a7f46ab077bf8650e8af",
+      "reference_sha256": "31c5ba6cb4b08d1cbb5cd191aafb86149abdc8cfbfb26b8c072295e740bcbe4b"
+    },
+    {
+      "case": "192000-wave6-seed1000234273",
+      "samples": 48000,
+      "wraps": 4,
+      "max_actual_error": 1.1920928955078125e-07,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 8.809169133504231e-06,
+      "actual_sha256": "237cba81dbaefa1ff38972ba1672f3093b0278c7fe0365f3d67952f32cb1ad19",
+      "reference_sha256": "a85d0dc830196e265e9fffd8397b357aaae19f767935faa152df8bceffc10c11"
+    },
+    {
+      "case": "192000-wave6-seed2714038285",
+      "samples": 48000,
+      "wraps": 4,
+      "max_actual_error": 1.4901161193847656e-07,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 8.809169133504231e-06,
+      "actual_sha256": "2e38aaa7338fb3e204d7de4c9ed0b320f836e3941d8c17ad08e15b2560e9e172",
+      "reference_sha256": "6109e8a543da8a856dbc87afa80b9063dae7b3e5a36b4cd680deea9452d207c3"
+    },
+    {
+      "case": "384000-wave5-seed1821285621",
+      "samples": 96000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 1.1262287696202597e-05,
+      "actual_sha256": "b35df7d62c3674f56555769858bd40ebd86bc7c53d1c16daa8b55660d750ddb9",
+      "reference_sha256": "b35df7d62c3674f56555769858bd40ebd86bc7c53d1c16daa8b55660d750ddb9"
+    },
+    {
+      "case": "384000-wave5-seed1000234273",
+      "samples": 96000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 1.1262287696202597e-05,
+      "actual_sha256": "d99abf664882fac939edb96ba61005d460d2543cc04db8864e237030dd5b7882",
+      "reference_sha256": "d99abf664882fac939edb96ba61005d460d2543cc04db8864e237030dd5b7882"
+    },
+    {
+      "case": "384000-wave5-seed2714038285",
+      "samples": 96000,
+      "wraps": 4,
+      "max_actual_error": 0.0,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 1.1262287696202597e-05,
+      "actual_sha256": "d9ff301d88d6095a9f95b3d0753963639b753d628ba7101e904014c086a46d5c",
+      "reference_sha256": "d9ff301d88d6095a9f95b3d0753963639b753d628ba7101e904014c086a46d5c"
+    },
+    {
+      "case": "384000-wave6-seed1821285621",
+      "samples": 96000,
+      "wraps": 4,
+      "max_actual_error": 5.960464477539063e-08,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 1.1262287696202597e-05,
+      "actual_sha256": "6b5a09882b9ef54f7e3ba7f93d5404a68fc5e53c0ba90bfcc5ddb5df323be64d",
+      "reference_sha256": "596654b59478be6060566a50c0cbce9962e177070bc7d10b3f001072f1fef0fd"
+    },
+    {
+      "case": "384000-wave6-seed1000234273",
+      "samples": 96000,
+      "wraps": 4,
+      "max_actual_error": 1.1920928955078125e-07,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 1.1262287696202597e-05,
+      "actual_sha256": "f762e3b0390d8d219d5e8f85a878ef34bf18d56c10bf42596a9d26064c58ea4c",
+      "reference_sha256": "6cbf1791b18db18cd8c1f528681855f58678dc269bf263ae3244f3d58c7edc05"
+    },
+    {
+      "case": "384000-wave6-seed2714038285",
+      "samples": 96000,
+      "wraps": 4,
+      "max_actual_error": 1.1920928955078125e-07,
+      "max_saved_reference_error": 0.0,
+      "minimum_boundary_clearance": 1.1262287696202597e-05,
+      "actual_sha256": "b1483914194b4aba717b22e88c8d8cd209890b4e4338b5628e7741c9e47df5f1",
+      "reference_sha256": "57dee7fc277554f5706285e6fa52de370281163534f86cd4382ec05a0f80ee23"
+    }
+  ],
+  "limits": "Saved-data audit only. Reset replay is verified by the reviewed native fixture and its completed log, not rerun here. No native execution, build, timing or randomness-quality claim."
+}

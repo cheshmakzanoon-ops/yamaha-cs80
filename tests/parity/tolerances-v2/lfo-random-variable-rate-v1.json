@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "standalone_software_waveform_law",
+  "lfo_random_variable_rate": {
+    "cases": 24,
+    "samples": 1140300,
+    "shape_abs_tolerance": 1e-06,
+    "minimum_boundary_clearance": 1e-10,
+    "minimum_wraps": 4,
+    "sample_rates": [
+      88200,
+      96000,
+      192000,
+      384000
+    ],
+    "seeds": [
+      1821285621,
+      1000234273,
+      2714038285
+    ],
+    "scope": "2static random shapes,3Engine seeds,4internal rates,.25seconds,ratecurve16.37/19.79/17.13/18.61/16.89Hz;independentlongdoublephaseandxorshift;notEngineorhost"
+  }
+}
