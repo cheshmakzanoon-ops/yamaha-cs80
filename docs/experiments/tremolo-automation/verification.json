@@ -1,0 +1,752 @@
+{
+  "base_commit": "802b9c40425e8db4c5175afbf7b42bf6af4c4cd0",
+  "build": "Direct official-SDK compilation of tremolo supported host only. No production build, CMake configure/build or CTest.",
+  "compile_exit": 0,
+  "runs": 6,
+  "full_cases": 72,
+  "render_budget": 1152,
+  "all_exits_zero": true,
+  "metrics": [
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "speed-8-13",
+      "max_error": 9.31323e-10,
+      "effect": 0.000924155,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "depth-8-13",
+      "max_error": 0.0,
+      "effect": 0.00465543,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "speed-8-0",
+      "max_error": 1.45519e-10,
+      "effect": 0.00338668,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "depth-8-0",
+      "max_error": 0.0,
+      "effect": 0.0144007,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "speed-8-11",
+      "max_error": 9.31323e-10,
+      "effect": 0.000924155,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "depth-8-11",
+      "max_error": 0.0,
+      "effect": 0.00465543,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "speed-16-13",
+      "max_error": 7.45058e-09,
+      "effect": 0.00270019,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "depth-16-13",
+      "max_error": 1.86265e-09,
+      "effect": 0.0128526,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "speed-16-0",
+      "max_error": 1.39698e-09,
+      "effect": 0.00896248,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "depth-16-0",
+      "max_error": 1.86265e-09,
+      "effect": 0.025479,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "speed-16-11",
+      "max_error": 7.45058e-09,
+      "effect": 0.00270019,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "depth-16-11",
+      "max_error": 1.86265e-09,
+      "effect": 0.0128526,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "speed-8-13",
+      "max_error": 1.86265e-09,
+      "effect": 0.000922561,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "depth-8-13",
+      "max_error": 0.0,
+      "effect": 0.00461976,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "speed-8-0",
+      "max_error": 1.16415e-10,
+      "effect": 0.00340746,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "depth-8-0",
+      "max_error": 1.16415e-10,
+      "effect": 0.0143271,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "speed-8-11",
+      "max_error": 1.86265e-09,
+      "effect": 0.000922561,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "depth-8-11",
+      "max_error": 0.0,
+      "effect": 0.00461976,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "speed-16-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.00257027,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "depth-16-13",
+      "max_error": 0.0,
+      "effect": 0.0132489,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "speed-16-0",
+      "max_error": 7.45058e-09,
+      "effect": 0.00899467,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "depth-16-0",
+      "max_error": 9.31323e-10,
+      "effect": 0.0283183,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "speed-16-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.00257027,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "depth-16-11",
+      "max_error": 0.0,
+      "effect": 0.0132489,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "speed-8-13",
+      "max_error": 1.16415e-10,
+      "effect": 0.000834487,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "depth-8-13",
+      "max_error": 0.0,
+      "effect": 0.00526461,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "speed-8-0",
+      "max_error": 1.16415e-10,
+      "effect": 0.00368318,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "depth-8-0",
+      "max_error": 0.0,
+      "effect": 0.0150293,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "speed-8-11",
+      "max_error": 1.16415e-10,
+      "effect": 0.000834487,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "depth-8-11",
+      "max_error": 0.0,
+      "effect": 0.00526461,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "speed-16-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.00280626,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "depth-16-13",
+      "max_error": 0.0,
+      "effect": 0.0104119,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "speed-16-0",
+      "max_error": 2.32831e-10,
+      "effect": 0.00804058,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "depth-16-0",
+      "max_error": 0.0,
+      "effect": 0.0358306,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "speed-16-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.00280626,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "depth-16-11",
+      "max_error": 0.0,
+      "effect": 0.0104119,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "speed-8-13",
+      "max_error": 9.31323e-10,
+      "effect": 0.000825892,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "depth-8-13",
+      "max_error": 2.32831e-10,
+      "effect": 0.00525796,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "speed-8-0",
+      "max_error": 9.31323e-10,
+      "effect": 0.00366746,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "depth-8-0",
+      "max_error": 1.45519e-11,
+      "effect": 0.0148631,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "speed-8-11",
+      "max_error": 9.31323e-10,
+      "effect": 0.000825892,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "depth-8-11",
+      "max_error": 2.32831e-10,
+      "effect": 0.00525796,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "speed-16-13",
+      "max_error": 3.72529e-09,
+      "effect": 0.0027917,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "depth-16-13",
+      "max_error": 0.0,
+      "effect": 0.0104792,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "speed-16-0",
+      "max_error": 7.45058e-09,
+      "effect": 0.0076409,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "depth-16-0",
+      "max_error": 0.0,
+      "effect": 0.0334586,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "speed-16-11",
+      "max_error": 3.72529e-09,
+      "effect": 0.0027917,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "depth-16-11",
+      "max_error": 0.0,
+      "effect": 0.0104792,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "speed-8-13",
+      "max_error": 4.65661e-10,
+      "effect": 0.000926886,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "depth-8-13",
+      "max_error": 0.0,
+      "effect": 0.00230088,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "speed-8-0",
+      "max_error": 0.0,
+      "effect": 0.00378121,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "depth-8-0",
+      "max_error": 0.0,
+      "effect": 0.0106166,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "speed-8-11",
+      "max_error": 4.65661e-10,
+      "effect": 0.000926886,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "depth-8-11",
+      "max_error": 0.0,
+      "effect": 0.00230088,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "speed-16-13",
+      "max_error": 1.49012e-08,
+      "effect": 0.00266777,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "depth-16-13",
+      "max_error": 1.86265e-09,
+      "effect": 0.00572124,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "speed-16-0",
+      "max_error": 3.72529e-09,
+      "effect": 0.0072358,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "depth-16-0",
+      "max_error": 0.0,
+      "effect": 0.0183275,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "speed-16-11",
+      "max_error": 1.49012e-08,
+      "effect": 0.00266777,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "depth-16-11",
+      "max_error": 1.86265e-09,
+      "effect": 0.00572124,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "speed-8-13",
+      "max_error": 4.65661e-10,
+      "effect": 0.00091989,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "depth-8-13",
+      "max_error": 4.65661e-10,
+      "effect": 0.00231048,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "speed-8-0",
+      "max_error": 3.72529e-09,
+      "effect": 0.00377721,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "depth-8-0",
+      "max_error": 0.0,
+      "effect": 0.0106506,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "speed-8-11",
+      "max_error": 4.65661e-10,
+      "effect": 0.00091989,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "depth-8-11",
+      "max_error": 4.65661e-10,
+      "effect": 0.00231048,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "speed-16-13",
+      "max_error": 7.45058e-09,
+      "effect": 0.00265361,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "depth-16-13",
+      "max_error": 7.45058e-09,
+      "effect": 0.00574564,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "speed-16-0",
+      "max_error": 1.86265e-09,
+      "effect": 0.00713161,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "depth-16-0",
+      "max_error": 0.0,
+      "effect": 0.017874,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "speed-16-11",
+      "max_error": 7.45058e-09,
+      "effect": 0.00265361,
+      "bypass_error": 0.0,
+      "depth_zero_control": "speed-only",
+      "depth_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "depth-16-11",
+      "max_error": 7.45058e-09,
+      "effect": 0.00574564,
+      "bypass_error": 0.0,
+      "depth_zero_control": "not-applicable",
+      "depth_zero_error": 0.0
+    }
+  ],
+  "baseline_comparison_performed": false,
+  "retained_local_capture_count": 216,
+  "source_host_module_sdk_compiler_unchanged": true,
+  "production_prior_scripts_shared_helper_unchanged": true,
+  "prior_contracts_unchanged": 25,
+  "source_hashes": {
+    "CMakeLists.txt": "168d6bd9aaa45d662335e96e6878905e48321279e22efc7ff6c1e2b119b5ba07",
+    "tests/Vst3TremoloAutomationTests.cpp": "329c7e9ae001294ecc3fe414dce9715f494f308442084273134fd31c81d45c07",
+    "tests/Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "tests/parity/tolerances-v2/host-automation-tremolo-v1.json": "5b5a7d83cf812285bbdc14035d86101df1853052249693e319528932164519cd",
+    "docs/VST3_TREMOLO_AUTOMATION.md": "4cea13bb3d532322cef934682ca4be7cee99cab00ee6ee4fe090e06ae7f4de31"
+  },
+  "limitations": [
+    "StaticTREMOLO mode1,4096frame startup transient, not completeLFO/steady-state or mode transitions.",
+    "Off and speed-at-depth0 controls establish PCM-output inertness only, not state equivalence.",
+    "Sources13/0/11,8/16capacity,three rates/two modes,unchangedonecycle helper.",
+    "No baseline replay, negative/broad/fuzz/malformed/GUI/DAW/AU/CPU/hardware qualification."
+  ],
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/run-tremolo-matrix.py >build/matrix.log 2>&1; code=$?; echo \"$code\" >build/matrix.exit; exit \"$code\"",
+  "depth_zero_control_case_count": 36,
+  "bypass_control_case_count": 72
+}

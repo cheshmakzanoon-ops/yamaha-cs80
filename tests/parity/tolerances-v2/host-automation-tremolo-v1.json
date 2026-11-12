@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_qualification_extension",
+  "description": "Qualify existing chorus speed/depth queues in static active TREMOLO mode. Existing 35-lane capability unchanged; all 25 earlier numerical and capability contracts preserved.",
+  "host_automation_tremolo": {
+    "key_parameter_count": 35,
+    "keys": "Complete existing 35-lane roster unchanged; P_chorusSpeed and P_chorusDepth remain lanes 33 and 34.",
+    "authority": "Global speed/depth controls retain existing source independence, conversion and DSP. Fixture holds chorus on, tremolo mode and neutral width macro fixed. No mode-switch or on/off automation extension.",
+    "timing": "Existing modern VST3 interpolation. TREMOLO keeps the BBD clock nominal; speed advances oscillator phases and depth affects stereo gains. No DSP or shared host changes.",
+    "verification": "Bounded actual-module float32 isolated speed/depth queues, per-sample references, partitions and matched-active-constant effect controls. Off-state equality and speed-at-zero-depth equality are PCM-output controls only, not internal-state equivalence. Fixed startup/transient window, not full-cycle, steady-state, mode-switch, hardware, GUI, malformed-input or CPU qualification. Original thresholds retained; exact frozen module and host/source provenance required."
+  }
+}
