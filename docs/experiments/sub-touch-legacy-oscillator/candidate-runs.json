@@ -1,0 +1,92 @@
+[
+  {
+    "rate": 44100,
+    "mode": "realtime",
+    "exit_code": 0,
+    "elapsed_seconds": 29.188185358999817,
+    "command": [
+      "build/cs80_vst3_sub_touch_legacy_standalone",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json",
+      "build/legacy-touch-results/44100-realtime",
+      "44100",
+      "realtime"
+    ]
+  },
+  {
+    "rate": 44100,
+    "mode": "offline",
+    "exit_code": 0,
+    "elapsed_seconds": 81.87115109699971,
+    "command": [
+      "build/cs80_vst3_sub_touch_legacy_standalone",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json",
+      "build/legacy-touch-results/44100-offline",
+      "44100",
+      "offline"
+    ]
+  },
+  {
+    "rate": 48000,
+    "mode": "realtime",
+    "exit_code": 0,
+    "elapsed_seconds": 29.99424662699994,
+    "command": [
+      "build/cs80_vst3_sub_touch_legacy_standalone",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json",
+      "build/legacy-touch-results/48000-realtime",
+      "48000",
+      "realtime"
+    ]
+  },
+  {
+    "rate": 48000,
+    "mode": "offline",
+    "exit_code": 0,
+    "elapsed_seconds": 79.337109177,
+    "command": [
+      "build/cs80_vst3_sub_touch_legacy_standalone",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json",
+      "build/legacy-touch-results/48000-offline",
+      "48000",
+      "offline"
+    ]
+  },
+  {
+    "rate": 96000,
+    "mode": "realtime",
+    "exit_code": 0,
+    "elapsed_seconds": 27.883818127999803,
+    "command": [
+      "build/cs80_vst3_sub_touch_legacy_standalone",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json",
+      "build/legacy-touch-results/96000-realtime",
+      "96000",
+      "realtime"
+    ]
+  },
+  {
+    "rate": 96000,
+    "mode": "offline",
+    "exit_code": 0,
+    "elapsed_seconds": 43.93032048299983,
+    "command": [
+      "build/cs80_vst3_sub_touch_legacy_standalone",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json",
+      "build/legacy-touch-results/96000-offline",
+      "96000",
+      "offline"
+    ]
+  }
+]

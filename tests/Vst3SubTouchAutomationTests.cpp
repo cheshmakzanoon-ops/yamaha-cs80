@@ -53,9 +53,18 @@ int main(int argc, char** argv)
         parameters[cs80::P_sourcePerformance] = 1;
         parameters[cs80::P_parityMode] = 0;
         parameters[cs80::P_drift] = parameters[cs80::P_voiceDispersion] = parameters[cs80::P_analogNoise] = 0;
+#if defined(CS80_SUB_TOUCH_LEGACY_OSCILLATOR) && CS80_SUB_TOUCH_LEGACY_OSCILLATOR
+        // Oscillator selection is fixed before processing. This is distinct
+        // from the Legacy render policy exercised by compatibility checks.
+        parameters[cs80::P_subOriginalMode] = 0;
+        parameters[cs80::P_subWave] = 0;
+        parameters[cs80::P_subSpeed] = 12;
+        std::cout << "oscillator=legacy sine, static selection\n";
+#else
         parameters[cs80::P_subOriginalMode] = 1;
         parameters[cs80::P_subOriginalFunction] = 0;
         parameters[cs80::P_subOriginalSpeed] = 12;
+#endif
         int scenarios = 0;
         for (int voices : {8, 16}) for (int source : {13, 0, 11}) for (size_t lane : {24u, 25u, 26u})
         {
@@ -89,6 +98,13 @@ int main(int argc, char** argv)
             if (!compatibilityOnly)
             {
                 const auto scalar = touchRender(p, 1);
+#if defined(CS80_SUB_TOUCH_LEGACY_OSCILLATOR) && CS80_SUB_TOUCH_LEGACY_OSCILLATOR
+                auto originalMode = p;
+                originalMode[cs80::P_subOriginalMode] = 1;
+                const double modeEffect = difference(scalar, touchRender(originalMode, 1));
+                check(modeEffect > .00001, "legacy SUB selection differs from original mode under identical queues");
+                std::cout << "mode_witness=" << id << " mode_effect=" << modeEffect << '\n';
+#endif
                 double error = 0;
                 for (int block : {7, 64, 256, 1024, 4096})
                     error = std::max(error, difference(scalar, touchRender(p, block)));

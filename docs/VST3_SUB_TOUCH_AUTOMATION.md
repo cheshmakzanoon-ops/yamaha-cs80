@@ -65,6 +65,9 @@ Exact source/module/host hashes, CTest logs, final baseline commands and all
 paired capture hashes are retained in
 [`experiments/sub-touch-automation/`](experiments/sub-touch-automation/).
 
+A separate [legacy-oscillator sine follow-up](VST3_SUB_TOUCH_LEGACY_OSCILLATOR.md)
+qualifies that static mode without enlarging this original-mode checkpoint.
+
 ## Limits
 
 This is a software protocol extension, not measured Yamaha hardware parity,
