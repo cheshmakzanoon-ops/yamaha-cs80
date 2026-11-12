@@ -1203,7 +1203,8 @@ private:
 //
 // It never takes keys while a text field has focus, nor keys pressed with Ctrl, Cmd or Alt (menu shortcuts). A held
 // note is released when its key comes up, when the editor stops seeing the key (for example after losing focus; a
-// 10 Hz check), on disable and on destruction, so no note can hang.
+// 10 Hz check), on disable and on destruction, so no note can hang. If octave changes make two physical
+// keys share a pitch, they share one logical note until its last current owner lifts.
 class QwertyKeyboard final : public juce::KeyListener, private juce::Timer
 {
 public:
@@ -1268,7 +1269,15 @@ public:
         const int note = baseNote + offset;
         if (note < 0 || note > 127)
             return true;
-        state.noteOn(kChannel, note, velocity);
+        // Panic and policy changes clear MIDI state without physical key-ups.
+        // A new key may play that pitch again, but stale pre-reset owners must
+        // not release or prolong it. Keep their key codes to ignore auto-repeat.
+        if (! state.isNoteOn(kChannel, note))
+            for (auto& h : held)
+                if (h.note == note)
+                    h.ownsNote = false;
+        if (! isNoteHeld(note))
+            state.noteOn(kChannel, note, velocity);
         held.push_back({ keyCode, note });
         if (! isTimerRunning())
             startTimerHz(10);
@@ -1285,7 +1294,8 @@ public:
     void releaseAll()
     {
         for (const auto& h : held)
-            state.noteOff(kChannel, h.note, 0.0f);
+            if (h.ownsNote)
+                state.noteOff(kChannel, h.note, 0.0f);
         held.clear();
         stopTimer();
     }
@@ -1299,7 +1309,15 @@ public:
     }
 
 private:
-    struct Held { int keyCode; int note; };
+    struct Held { int keyCode; int note; bool ownsNote = true; };
+
+    bool isNoteHeld(int note) const
+    {
+        for (const auto& h : held)
+            if (h.note == note && h.ownsNote)
+                return true;
+        return false;
+    }
 
     void releaseLifted()
     {
@@ -1307,8 +1325,10 @@ private:
         {
             if (! isKeyDown(it->keyCode))
             {
-                state.noteOff(kChannel, it->note, 0.0f);
+                const auto lifted = *it;
                 it = held.erase(it);
+                if (lifted.ownsNote && ! isNoteHeld(lifted.note))
+                    state.noteOff(kChannel, lifted.note, 0.0f);
             }
             else
                 ++it;

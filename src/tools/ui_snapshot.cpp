@@ -1,3 +1,4 @@
+#include "../../tests/QwertyNoteOwnershipTests.h"
 #include "../../tests/RingCurveGestureTests.h"
 #include "../../tests/ModMatrixRouteActionsTests.h"
 #include "../../tests/ModMatrixRoutingUiTests.h"
@@ -2133,6 +2134,14 @@ int main(int argc, char** argv)
         std::printf("MSEG editor lifecycle: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
+    if (argc > 1 && std::strcmp(argv[1], "--qwerty-note-ownership-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testQwertyNoteOwnership([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("QWERTY note ownership: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--toolbar-menu-lifetime-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -2358,6 +2367,7 @@ int main(int argc, char** argv)
     cs80::tests::testWs3KeyboardHost(check);
     cs80::tests::testKeyboardTuningUiState(check);
     cs80::tests::testTransientControlLifecycle(check);
+    cs80::tests::testQwertyNoteOwnership(check);
     cs80::tests::testToolbarMenuLifetime(check);
     cs80::tests::testPerformanceWheelKeyboard(check);
     phases.begin("preset recall host");
