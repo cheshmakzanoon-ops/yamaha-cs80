@@ -1,0 +1,14 @@
+rate=96000 mode=offline gate=full-ring-depth
+ring=depth-8-13 max_error=0 effect=0.0261518 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-8-13 max_error=0 effect=0.0659873 inactive_control=not-applicable inactive_error=0
+ring=depth-8-0 max_error=0 effect=0.133668 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-8-0 max_error=0 effect=0.169616 inactive_control=not-applicable inactive_error=0
+ring=depth-8-11 max_error=0 effect=0.0261518 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-8-11 max_error=0 effect=0.0659873 inactive_control=not-applicable inactive_error=0
+ring=depth-16-13 max_error=0 effect=0.117426 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-16-13 max_error=0 effect=0.128532 inactive_control=not-applicable inactive_error=0
+ring=depth-16-0 max_error=0 effect=0.351174 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-16-0 max_error=0 effect=0.26943 inactive_control=not-applicable inactive_error=0
+ring=depth-16-11 max_error=0 effect=0.117426 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-16-11 max_error=0 effect=0.128532 inactive_control=not-applicable inactive_error=0
+12 native ring-depth scenarios, 0 failures

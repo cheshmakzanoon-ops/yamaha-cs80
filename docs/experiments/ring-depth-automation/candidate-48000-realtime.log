@@ -1,0 +1,14 @@
+rate=48000 mode=realtime gate=full-ring-depth
+ring=depth-8-13 max_error=0 effect=0.0422017 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-8-13 max_error=0 effect=0.0660464 inactive_control=not-applicable inactive_error=0
+ring=depth-8-0 max_error=0 effect=0.14727 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-8-0 max_error=0 effect=0.163585 inactive_control=not-applicable inactive_error=0
+ring=depth-8-11 max_error=0 effect=0.0422017 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-8-11 max_error=0 effect=0.0660464 inactive_control=not-applicable inactive_error=0
+ring=depth-16-13 max_error=0 effect=0.1142 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-16-13 max_error=0 effect=0.135853 inactive_control=not-applicable inactive_error=0
+ring=depth-16-0 max_error=0 effect=0.382355 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-16-0 max_error=0 effect=0.25951 inactive_control=not-applicable inactive_error=0
+ring=depth-16-11 max_error=0 effect=0.1142 inactive_control=depth-zero-amount inactive_error=0
+ring=combined-16-11 max_error=0 effect=0.135853 inactive_control=not-applicable inactive_error=0
+12 native ring-depth scenarios, 0 failures

@@ -32,7 +32,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Compatibility-mode SUB speed, distinct from original-panel speed.
     int(P_subSpeed),
     // Existing global ring controls; retain every preceding capability lane.
-    int(P_ringSpeed), int(P_ringAmount)
+    int(P_ringSpeed), int(P_ringAmount),
+    // Existing global envelope depth; preserve the complete 30-lane prefix.
+    int(P_ringDepth)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

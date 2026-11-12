@@ -1,0 +1,418 @@
+{
+  "base_commit": "b97163dfb19c49a47ce322aaae88fd259b5b9a35",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_ring_depth_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 72,
+  "compatibility_cases": 72,
+  "pcm_pairs": 216,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": {
+    "depth": [
+      {
+        "max_error": 0.0,
+        "effect": 0.0480086,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.158355,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0480086,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.120838,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.447292,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.120838,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0478619,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.15833,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0478619,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.118696,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.401388,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.118696,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0422017,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.14727,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0422017,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.1142,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.382355,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.1142,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0425791,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.144553,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0425791,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.116252,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.360866,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.116252,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0266077,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.132075,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0266077,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.116335,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.334733,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.116335,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0261518,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.133668,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0261518,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.117426,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.351174,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.117426,
+        "inactive_error": 0.0
+      }
+    ],
+    "combined": [
+      {
+        "max_error": 0.0,
+        "effect": 0.0660609,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.178965,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0660609,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.133085,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.305344,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.133085,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0651161,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.202985,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0651161,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.128727,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.335922,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.128727,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0660464,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.163585,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0660464,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.135853,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.25951,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.135853,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0654594,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.164507,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0654594,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.13579,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.276413,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.13579,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0660674,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.181892,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0660674,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.12826,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.268988,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.12826,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0659873,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.169616,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0659873,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.128532,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.26943,
+        "inactive_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.128532,
+        "inactive_error": 0.0
+      }
+    ]
+  },
+  "old_contract_count": 20,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "19a57c0d7314437b1a74e9fb524a9aa66c92b1a2cb516ad9fce1507ed58c88c8",
+    "src/plugin/HostAutomationBridge.h": "c45e20491b73499549be8c1026992c5c968eaa9a7097bf97789f219fa366a841",
+    "tests/Vst3RingDepthAutomationTests.cpp": "451d463cfcae3c78349487a3bb5cda3cb53b3b6dec32c00e28832b0de3e1c956",
+    "tests/Vst3RingAutomationTests.cpp": "5e4983645d483d4836010a9aafc8c775acd9099917ce6522237bf6b4c9a63cfa",
+    "tests/Vst3AutomationTests.cpp": "e1343fafaba48948917c45f7df3d2ad43821ece497438977d7d0afc0a0eb94fd",
+    "tests/parity/tolerances-v2/host-automation-ring-depth-v1.json": "d81e22add3e74713604e7a7a16812ec253eda2c9288a4b3e2abaf0c9065ddd29",
+    "docs/VST3_RING_DEPTH_AUTOMATION.md": "7e27a8ddbe41560b17435a83092fab2ffab1dd7832074c84fde0ece23abc793c",
+    "docs/HOST_AUTOMATION.md": "6bea2b8ee40caa2004d534e2e9b3e14a87f1c3fcbb3060f599d74d30ec256b72"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Combined witness is aggregate; isolated depth cases separately establish depth effect.",
+    "Zero-amount control establishes PCM-output inertness only, not phase/state identity or later re-enable.",
+    "Static attack .01 s and decay .45 s; note on17+key, off3072+key; 8 capacity uses2 notes and16 uses16 notes.",
+    "No hardware, DAW, GUI, AU, CPU or broader-suite claim; no negative baseline run."
+  ],
+  "tools": {
+    "python": {
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+    },
+    "compiler": {
+      "path": "/usr/bin/x86_64-linux-gnu-g++-14",
+      "sha256": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+      "version": "x86_64-linux-gnu-g++-14 (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    }
+  },
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/run-depth-matrix.py >build/matrix.log 2>&1; code=$?; echo \"$code\" >build/matrix.exit; exit \"$code\""
+}

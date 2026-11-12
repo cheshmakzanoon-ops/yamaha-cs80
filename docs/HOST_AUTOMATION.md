@@ -2,10 +2,10 @@
 
 ## Scope
 
-This integration preserves host sample offsets for thirty VST3 parameters in
+This candidate depth extension preserves host sample offsets for thirty-one VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, and ring speed/amount. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, and ring speed/amount/depth. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
@@ -22,8 +22,11 @@ The [compatibility-mode speed extension](VST3_SUB_LEGACY_SPEED_AUTOMATION.md)
 appends the existing `P_subSpeed` control after that 27-lane prefix. It is
 distinct from original-panel speed and does not change mode selection.
 The [ring extension](VST3_RING_AUTOMATION.md) appends existing speed and amount
-after the unchanged 28-lane prefix; ring depth and envelope controls are not
-added to the sample-offset roster.
+after the unchanged 28-lane prefix. The candidate [ring-depth extension](VST3_RING_DEPTH_AUTOMATION.md)
+appends depth at lane 30 while retaining that complete 30-lane prefix; attack
+and decay are not added. This source capability statement is not a claim of
+published or verified 31-lane qualification; retained checkpoints keep their
+own pinned scope.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

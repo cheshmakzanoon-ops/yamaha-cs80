@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing global ring depth after the unchanged 30-lane prefix. All 20 earlier numerical and capability contracts remain unchanged.",
+  "host_automation_ring_depth": {
+    "key_parameter_count": 31,
+    "keys": "Original 30 in original order, then P_ringDepth at lane 30.",
+    "authority": "Global ring depth retains existing PANEL/factory/MEMORY independence. Static ring attack/decay and the existing envelope/frequency law are not changed or added to the automation roster.",
+    "timing": "Modern VST3 normalized interpolation through existing physical conversion and DSP. No-queue and Legacy/PURE final-point behavior unchanged. AU not expanded.",
+    "verification": "Bounded actual-module Linux float32 checks with supported finite depth-only and combined speed/amount/depth queues; explicit static active-envelope settings, voice capacity, active-note count and source selections. Existing numeric tolerances unchanged. Exact source/host/module provenance and frozen pre-feature 30-lane PCM compatibility required. No malformed inputs, GUI, DAW, hardware or CPU claim."
+  }
+}
