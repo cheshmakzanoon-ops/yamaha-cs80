@@ -1,6 +1,7 @@
 // Bounded supported-input renderer only. Historical broad host bodies excluded.
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
+#include "Vst3Frozen89Roster.h"
 #include "Vst3Frozen86Roster.h"
 #include <fstream>
 namespace {
@@ -69,7 +70,9 @@ int main(int argc, char** argv)
         require(limits["key_parameter_count"] == 89, "89-lane contract");
         std::cout << "compiled_lanes=" << cs80::kSampleAccurateParameters.size() << "\n";
         if (!compat) {
-            require(cs80::kSampleAccurateParameters.size() == 89, "exact89 capability");
+            require(cs80::kSampleAccurateParameters.size() >= 89, "89-lane prefix available");
+            require(std::equal(cs80::kFrozen89Roster.begin(), cs80::kFrozen89Roster.end(),
+                               cs80::kSampleAccurateParameters.begin()), "literal89 prefix unchanged");
             require(std::equal(rates.begin(), rates.end(), cs80::kSampleAccurateParameters.begin() + 86),
                     "rate1/2/3 at86/87/88 exactly");
         }

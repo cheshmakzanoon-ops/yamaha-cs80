@@ -1456,6 +1456,13 @@ if (CS80_BUILD_PLUGIN)
         target_compile_definitions(cs80_mseg_canonical_state_generator PRIVATE
             "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
         target_link_libraries(cs80_mseg_canonical_state_generator PRIVATE CS80Reference)
+        add_executable(cs80_vst3_mseg_rate_automation_tests tests/Vst3MsegRateAutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_mseg_rate_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_mseg_rate_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_mseg_rate_automation_tests CS80Reference_VST3)
         add_executable(cs80_vst3_mseg_routing_proof_tests tests/Vst3MsegRoutingProofTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"

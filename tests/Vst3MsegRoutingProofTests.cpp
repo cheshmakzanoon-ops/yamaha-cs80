@@ -1,6 +1,7 @@
 // Narrow ordinary canonical-session routing proof; no automation roster change.
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
+#include "Vst3Frozen89Roster.h"
 #include <fstream>
 namespace {
 std::string fileBytes(const std::filesystem::path& path)
@@ -80,7 +81,9 @@ int main(int argc,char**argv)
     try {
         require(argc==5,"MODULE CANONICAL_DIRECTORY OUTPUT CONTRACT");
         const ws1::Tolerances limits(argv[4],"mseg_native_routing_proof");
-        require(cs80::kSampleAccurateParameters.size()==89,"unchanged89 roster");
+        require(cs80::kSampleAccurateParameters.size() >= 89, "89-lane prefix available");
+            require(std::equal(cs80::kFrozen89Roster.begin(), cs80::kFrozen89Roster.end(),
+                               cs80::kSampleAccurateParameters.begin()), "literal89 prefix unchanged");
         testSampleRate=48000;testProcessMode=kRealtime;
         const std::filesystem::path input(argv[2]), out(argv[3]);
         require(!std::filesystem::exists(out),"fresh native output");std::filesystem::create_directory(out);

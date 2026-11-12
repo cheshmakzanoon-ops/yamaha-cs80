@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "host_automation_mseg_rate": {
+    "key_parameter_count": 92,
+    "minimum_held_effect": 1e-05,
+    "keys": "P_mseg1Rate89 P_mseg2Rate90 P_mseg3Rate91; literal89 prefix unchanged",
+    "scope": "Three isolated canonical unsynced poly looping bipolar MSEGs routed to both-rank pitch/cutoff/level at fixed0.15 amount. Manual/manual two-note cohort, capacity8. No combined routes, sync, shape edits, source masks, full-range or native DAW claim.",
+    "timing": "Octave values0 at0/1023 then1/-1/2/-2/0 at2047/4095/8191/12287/16383. Scalar vs7/64/256/1024; initial1024frames exact hold.",
+    "verification_plan": "18full+18compat cases,306candidate+126baseline renders,72actualPCM pairs; Legacy/PURE/zero/unrouted controls.18candidate+18baseline config readbacks."
+  }
+}

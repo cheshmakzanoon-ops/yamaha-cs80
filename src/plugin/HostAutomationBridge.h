@@ -91,7 +91,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing modern LFO depth amounts; preserve the full 83-lane prefix.
     int(P_lfo1Depth), int(P_lfo2Depth), int(P_lfo3Depth),
     // Existing modern LFO rates; preserve the full 86-lane prefix.
-    int(P_lfo1Rate), int(P_lfo2Rate), int(P_lfo3Rate)
+    int(P_lfo1Rate), int(P_lfo2Rate), int(P_lfo3Rate),
+    // Existing octave MSEG rates; preserve the complete 89-lane prefix.
+    int(P_mseg1Rate), int(P_mseg2Rate), int(P_mseg3Rate)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow
