@@ -44,8 +44,40 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `9e8ccd7c262fd50f063f95a9020ca1127d071267` appends modern LFO1,
+LFO2 and LFO3 depth at lanes 83–85, bringing the current roster to **86 lanes**
+with the literal 83-lane prefix preserved. The reviewed candidate passed 96
+full cases and 96 frozen83 compatibility cases in 12 completed native runs:
+2016 completed renders (1344 candidate + 672 baseline). All 384 actual
+cross-build PCM pairs matched byte-for-byte; 768 capture files are not 768
+comparisons. Maximum partition error was 0. All 96 held-window effects were
+positive, ranging from 0.00261088 to 0.139784.
+See [LFO depth evidence, identities and recovery limitations](experiments/lfo-depth-automation/README.md).
+
+Coverage is Linux VST3 at 44.1/48/96 kHz, realtime/offline, with fixed sine
+rates and pitch/filter/amplitude destinations, each depth separately and all
+three together, source pairs 13/13 and 0/13, and voice capacities 8/16.
+No DSP, smoothing, metadata/defaults or UI/fader source changed. The prior
+53 tolerances-v2 contracts remain unchanged; the new LFO contract makes 54.
+The separate tolerances-v1 contract is also retained. Historical suites were
+not rerun; forward compatibility guards were source-reviewed only.
+
+The interrupted original 48 kHz offline attempt remains preserved and is
+excluded from passing-run/render totals. Recovery reused and rechecked the
+three completed batches, then finished missing work with fresh capture paths.
+Candidate binary hashes identify final artifacts only; no pre-recovery hashes
+exist to establish candidate binary identity across the interruption. Frozen
+baseline module identity was checked before and after recovery.
+
+This is bounded protocol evidence, not rate automation, all-waveform or
+all-destination coverage, DAW/GUI, AU, Windows/macOS, CPU-target, hardware
+fidelity or whole-project qualification. Native CI and release qualification
+remain separate; no new pass is inferred here.
+
+The preceding MOD WHEEL checkpoint remains historical:
+
 Published `34cab029e84b97712fd27b2b085e6b295c7dc299` appends MOD WHEEL SUB
-at lane81 and MOD WHEEL VCF at lane82, bringing the current roster to **83 lanes**
+at lane81 and MOD WHEEL VCF at lane82, bringing that checkpoint’s roster to **83 lanes**
 with the literal 81-lane prefix preserved. Its reviewed candidate passed 12
 native processes: 72 full cases and 72 frozen81 compatibility cases, 1656 renders
 (1080 candidate + 576 baseline). All 432 actual cross-build PCM pairs matched

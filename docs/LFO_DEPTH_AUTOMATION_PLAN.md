@@ -99,7 +99,9 @@ from 768 captures. Record pairs distinctly from capture counts. Protected
 Legacy/PURE cases deliberately send new depth curves; noqueue and preceding83
 preservation captures do not.
 
-Preserve the 54 old contracts and all old evidence unchanged. Inventory exact
+Preserve the 54 old contracts (53 in tolerances-v2 plus tolerances-v1.json)
+and all old evidence unchanged. The new LFO contract makes 54 tolerances-v2
+contracts, or 55 including tolerances-v1.json. Inventory exact
 old source/test changes separately; forward-compatible roster guards require
 literal prior-prefix identity, never a silently weakened count. Candidate
 controls not exercised by this matrix remain outside its runtime claim.
@@ -124,8 +126,9 @@ Frozen published83 module and copied src/tests live in `../lfo-depth-frozen83`.
 Module SHA256 `04adbf33704b1b053847d4e6f5532b9d75b0b960584f087f1a9864338b0f4182`.
 4662 tracked identities were frozen before edits, inventory SHA256
 `7f9c9c65919082a05db0ac23d6de53454d4afade807d07ec5899673bdeb75db6`.
-The independent baseline audit additionally pins54 contracts and564 source/test
-identities. The only files added to frozen83/tests are the new LFO runner and
+The independent baseline audit additionally pins 54 contracts (53 in
+tolerances-v2 plus tolerances-v1.json) and 564 source/test identities. The only
+files added to frozen83/tests are the new LFO runner and
 literal83 header, so its relative renderer include resolves to original source.
 
 Exact proposed command after independent approval:
