@@ -87,7 +87,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing global tuning reference; preserve the 80-lane prefix.
     int(P_tuningRef),
     // Existing continuous wheel depths; preserve the full 81-lane prefix.
-    int(P_modWheelSub), int(P_modWheelVcf)
+    int(P_modWheelSub), int(P_modWheelVcf),
+    // Existing modern LFO depth amounts; preserve the full 83-lane prefix.
+    int(P_lfo1Depth), int(P_lfo2Depth), int(P_lfo3Depth)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "host_automation_lfo_depth": {
+    "key_parameter_count": 86,
+    "minimum_held_effect": 1e-05,
+    "keys": "P_lfo1Depth83 P_lfo2Depth84 P_lfo3Depth85; frozen83 prefix preserved",
+    "scope": "Static sine rates8/11/14Hz, LFO1pitch/LFO2filter/LFO3amp alone and combined. Rate/destination/waveform automation excluded.",
+    "timing": "Initial depths .15 at frames0/1023 then.8/.25/.9/.4 at1535/2047/3071/4095. Scalar vs64/127/256 and bytehold1024frames.",
+    "verification_plan": "96full+96compat cases across8/16voice capacities(actual2/16notes),2source layouts,3rates/2modes.1344+672renders,384actualPCM pairs/768captures. Legacyflatten/PURE/destinationoff separate."
+  }
+}

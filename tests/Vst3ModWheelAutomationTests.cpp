@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen81Roster.h"
+#include "Vst3Frozen83Roster.h"
 #include <pluginterfaces/vst/ivstmidicontrollers.h>
 #include <fstream>
 namespace {
@@ -91,7 +92,9 @@ int main(int argc, char** argv)
         require(limits["key_parameter_count"] == 83, "new83 contract");
         std::cout << "compiled_lanes=" << cs80::kSampleAccurateParameters.size() << "\n";
         if (!compat) {
-            require(cs80::kSampleAccurateParameters.size() == 83, "exact83 capability");
+            require(cs80::kSampleAccurateParameters.size() >= 83, "historical83 capability retained");
+            require(std::equal(cs80::kFrozen83Roster.begin(), cs80::kFrozen83Roster.end(),
+                               cs80::kSampleAccurateParameters.begin()), "literal83 prefix retained");
             require(cs80::kSampleAccurateParameters[81] == cs80::P_modWheelSub
                  && cs80::kSampleAccurateParameters[82] == cs80::P_modWheelVcf, "SUB81 VCF82 append order");
         }
