@@ -1,0 +1,86 @@
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 317
+    Start 317: cs80_vst3_cc1_fixture_44100_realtime_tests
+
+317: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/cs80_vst3_cc1_fixture_tests "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "44100" "realtime"
+317: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native
+317: Test timeout computed to be: 180
+317: rate=44100 mode=realtime block=1 cc1_effect=0.0327 held_effect=0.0293218
+317: rate=44100 mode=realtime block=64 cc1_effect=0.0327 held_effect=0.0293218
+317: rate=44100 mode=realtime block=256 cc1_effect=0.0327 held_effect=0.0293218
+317: fixture_renders=15 failures=0 (no mod-wheel automation capability claim)
+1/6 Test #317: cs80_vst3_cc1_fixture_44100_realtime_tests ...   Passed    0.86 sec
+test 318
+    Start 318: cs80_vst3_cc1_fixture_44100_offline_tests
+
+318: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/cs80_vst3_cc1_fixture_tests "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "44100" "offline"
+318: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native
+318: Test timeout computed to be: 180
+318: rate=44100 mode=offline block=1 cc1_effect=0.0293135 held_effect=0.0263919
+318: rate=44100 mode=offline block=64 cc1_effect=0.0293135 held_effect=0.0263919
+318: rate=44100 mode=offline block=256 cc1_effect=0.0293135 held_effect=0.0263919
+318: fixture_renders=15 failures=0 (no mod-wheel automation capability claim)
+2/6 Test #318: cs80_vst3_cc1_fixture_44100_offline_tests ....   Passed    1.72 sec
+test 319
+    Start 319: cs80_vst3_cc1_fixture_48000_realtime_tests
+
+319: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/cs80_vst3_cc1_fixture_tests "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "48000" "realtime"
+319: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native
+319: Test timeout computed to be: 180
+319: rate=48000 mode=realtime block=1 cc1_effect=0.0300914 held_effect=0.0300914
+319: rate=48000 mode=realtime block=64 cc1_effect=0.0300914 held_effect=0.0300914
+319: rate=48000 mode=realtime block=256 cc1_effect=0.0300914 held_effect=0.0300914
+319: fixture_renders=15 failures=0 (no mod-wheel automation capability claim)
+3/6 Test #319: cs80_vst3_cc1_fixture_48000_realtime_tests ...   Passed    0.78 sec
+test 320
+    Start 320: cs80_vst3_cc1_fixture_48000_offline_tests
+
+320: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/cs80_vst3_cc1_fixture_tests "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "48000" "offline"
+320: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native
+320: Test timeout computed to be: 180
+320: rate=48000 mode=offline block=1 cc1_effect=0.0275741 held_effect=0.0275741
+320: rate=48000 mode=offline block=64 cc1_effect=0.0275741 held_effect=0.0275741
+320: rate=48000 mode=offline block=256 cc1_effect=0.0275741 held_effect=0.0275741
+320: fixture_renders=15 failures=0 (no mod-wheel automation capability claim)
+4/6 Test #320: cs80_vst3_cc1_fixture_48000_offline_tests ....   Passed    1.96 sec
+test 321
+    Start 321: cs80_vst3_cc1_fixture_96000_realtime_tests
+
+321: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/cs80_vst3_cc1_fixture_tests "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "96000" "realtime"
+321: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native
+321: Test timeout computed to be: 180
+321: rate=96000 mode=realtime block=1 cc1_effect=0.0344556 held_effect=0.0344556
+321: rate=96000 mode=realtime block=64 cc1_effect=0.0344556 held_effect=0.0344556
+321: rate=96000 mode=realtime block=256 cc1_effect=0.0344556 held_effect=0.0344556
+321: fixture_renders=15 failures=0 (no mod-wheel automation capability claim)
+5/6 Test #321: cs80_vst3_cc1_fixture_96000_realtime_tests ...   Passed    0.94 sec
+test 322
+    Start 322: cs80_vst3_cc1_fixture_96000_offline_tests
+
+322: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/cs80_vst3_cc1_fixture_tests "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "96000" "offline"
+322: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-wheel-fixture/build-native
+322: Test timeout computed to be: 180
+322: rate=96000 mode=offline block=1 cc1_effect=0.0349083 held_effect=0.0349083
+322: rate=96000 mode=offline block=64 cc1_effect=0.0349083 held_effect=0.0349083
+322: rate=96000 mode=offline block=256 cc1_effect=0.0349083 held_effect=0.0349083
+322: fixture_renders=15 failures=0 (no mod-wheel automation capability claim)
+6/6 Test #322: cs80_vst3_cc1_fixture_96000_offline_tests ....   Passed    1.20 sec
+
+The following tests passed:
+	cs80_vst3_cc1_fixture_44100_realtime_tests
+	cs80_vst3_cc1_fixture_44100_offline_tests
+	cs80_vst3_cc1_fixture_48000_realtime_tests
+	cs80_vst3_cc1_fixture_48000_offline_tests
+	cs80_vst3_cc1_fixture_96000_realtime_tests
+	cs80_vst3_cc1_fixture_96000_offline_tests
+
+100% tests passed out of 6
+
+Total Test time (real) =   7.49 sec

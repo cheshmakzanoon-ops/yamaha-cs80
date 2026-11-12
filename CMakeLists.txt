@@ -1439,6 +1439,22 @@ if (CS80_BUILD_PLUGIN)
                 set_tests_properties("${key_release_test_name}" PROPERTIES TIMEOUT 180)
             endforeach()
         endforeach()
+        # Standalone opt-in CC1 host fixture; no change to the historical renderer.
+        add_executable(cs80_vst3_cc1_fixture_tests tests/Vst3Cc1FixtureTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_cc1_fixture_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_cc1_fixture_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_cc1_fixture_tests CS80Reference_VST3)
+        foreach(rate IN ITEMS 44100 48000 96000)
+            foreach(mode IN ITEMS realtime offline)
+                set(cc1_test_name "cs80_vst3_cc1_fixture_${rate}_${mode}_tests")
+                add_test(NAME "${cc1_test_name}" COMMAND cs80_vst3_cc1_fixture_tests
+                    "$<TARGET_FILE:CS80Reference_VST3>" "${rate}" "${mode}")
+                set_tests_properties("${cc1_test_name}" PROPERTIES TIMEOUT 180)
+            endforeach()
+        endforeach()
         add_executable(cs80_vst3_tuning_ref_automation_tests tests/Vst3TuningRefAutomationTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
