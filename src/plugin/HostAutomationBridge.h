@@ -36,7 +36,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing global envelope depth; preserve the complete 30-lane prefix.
     int(P_ringDepth),
     // Existing trigger-latched times; do not reshape an active ring envelope.
-    int(P_ringAttack), int(P_ringDecay)
+    int(P_ringAttack), int(P_ringDecay),
+    // Existing global chorus controls; retain the complete 33-lane prefix.
+    int(P_chorusSpeed), int(P_chorusDepth)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

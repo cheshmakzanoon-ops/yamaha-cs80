@@ -2,10 +2,10 @@
 
 ## Scope
 
-This candidate RING-time extension preserves host sample offsets for thirty-three VST3 parameters in
+This candidate chorus-control extension preserves host sample offsets for thirty-five VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, and ring speed/amount/depth/attack/decay. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, and chorus speed/depth. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
@@ -26,8 +26,11 @@ after the unchanged 28-lane prefix. The [ring-depth extension](VST3_RING_DEPTH_A
 appends depth at lane 30. The candidate [ring-time extension](VST3_RING_TIMES_AUTOMATION.md)
 appends existing attack and decay at lanes 31/32 after the complete 31-lane
 prefix. Times are latched at a fresh RING trigger, not applied as live envelope
-reshaping. This source capability statement is not a claim of published or
-verified 33-lane qualification; retained checkpoints keep their own pinned scope.
+reshaping. The candidate [chorus-control extension](VST3_CHORUS_AUTOMATION.md) appends
+speed/depth at lanes 33/34. Its first active qualification scope is CHORUS
+mode only; chorus on/off and chorus/tremolo selection remain block-rate.
+This source capability statement is not a claim of published or verified
+35-lane qualification; retained checkpoints keep their own pinned scope.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

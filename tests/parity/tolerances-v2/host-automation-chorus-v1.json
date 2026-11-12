@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing global chorus speed and depth after the unchanged 33-lane prefix. All 24 earlier numerical and capability contracts remain unchanged.",
+  "host_automation_chorus": {
+    "key_parameter_count": 35,
+    "keys": "Original 33 in original order, then P_chorusSpeed at lane 33 and P_chorusDepth at lane 34.",
+    "authority": "Global chorus controls retain existing PANEL/factory/MEMORY independence, physical ranges, defaults and conversions. Macro width is explicitly neutral in the bounded fixture. Chorus on/off and chorus/tremolo selection are not added to the sample-offset roster.",
+    "timing": "Modern VST3 normalized interpolation through existing physical conversion and BBD processing; no DSP or smoothing changes. No-queue and Legacy/PURE final-point behavior unchanged. AU not expanded.",
+    "verification": "Bounded actual-module Linux float32 isolated speed/depth checks in active CHORUS mode only. Per-sample reference and partitions, matched active-constant effect controls, and off-state matched-active PCM equality are separate. Bypass equality does not claim internal-state equality. Finite startup/transient observations are not full LFO-cycle, steady-state, tremolo, hardware, GUI, malformed-input or CPU qualification. Exact source/host/module hashes and frozen pre-feature 33-lane no-queue/policy PCM comparisons required; original numeric tolerances unchanged."
+  }
+}

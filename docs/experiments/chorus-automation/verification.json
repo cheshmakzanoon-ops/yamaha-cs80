@@ -1,0 +1,410 @@
+{
+  "base_commit": "8aa5b8dd8346e291d6722876beac298f14740567",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_chorus_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 72,
+  "compatibility_cases": 72,
+  "pcm_pairs": 216,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": {
+    "speed": [
+      {
+        "max_error": 3.72529e-09,
+        "effect": 0.0133375,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.72529e-09,
+        "effect": 0.0625129,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.72529e-09,
+        "effect": 0.0133375,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0353302,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.163533,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0353302,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0134545,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.23517e-08,
+        "effect": 0.0667546,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0134545,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.0372864,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.154634,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.0372864,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.012098,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.11759e-08,
+        "effect": 0.0658326,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.012098,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0319677,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.141817,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0319677,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 8.67294e-09,
+        "effect": 0.0121879,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.23517e-08,
+        "effect": 0.0671619,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 8.67294e-09,
+        "effect": 0.0121879,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.23517e-08,
+        "effect": 0.0308838,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 5.96046e-08,
+        "effect": 0.145023,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.23517e-08,
+        "effect": 0.0308838,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 9.31323e-09,
+        "effect": 0.0147458,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0713907,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 9.31323e-09,
+        "effect": 0.0147458,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0430098,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.134415,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0430098,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0146181,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.23517e-08,
+        "effect": 0.0712308,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0146181,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0419857,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 4.47035e-08,
+        "effect": 0.141444,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0419857,
+        "bypass_error": 0.0
+      }
+    ],
+    "depth": [
+      {
+        "max_error": 0.0,
+        "effect": 0.0221761,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.86265e-09,
+        "effect": 0.0932774,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0221761,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.72529e-09,
+        "effect": 0.0586006,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.208206,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.72529e-09,
+        "effect": 0.0586006,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0218798,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.23517e-08,
+        "effect": 0.0906522,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0218798,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.0582644,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.245787,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.0582644,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0223247,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 4.65661e-10,
+        "effect": 0.0917684,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0223247,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0622342,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.241676,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0622342,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0222805,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0901377,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0222805,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0623114,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.72529e-08,
+        "effect": 0.235092,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0623114,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.28057e-09,
+        "effect": 0.0206073,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.0872884,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.28057e-09,
+        "effect": 0.0206073,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.056957,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.149668,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.056957,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0206599,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.23517e-08,
+        "effect": 0.0863104,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0206599,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.0570968,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.149244,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.0570968,
+        "bypass_error": 0.0
+      }
+    ]
+  },
+  "old_contract_count": 24,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "dbad2310046bf57f4062f6821ecad3a80877f8ee898f29c0490357bd4f821c58",
+    "src/plugin/HostAutomationBridge.h": "1e3e75d133f087ed0117903399a3e4275222a7dfefd9135c9ac85a4192933ea7",
+    "tests/Vst3ChorusAutomationTests.cpp": "ac9b03bae684ab642e03ecd9223088a6daea257a989402d01e9e9768c8dff569",
+    "tests/Vst3RingAutomationTests.cpp": "5e4983645d483d4836010a9aafc8c775acd9099917ce6522237bf6b4c9a63cfa",
+    "tests/Vst3RingTimesAutomationTests.cpp": "7a9595ef013c527aa53150449d2ca7f78c4ed3bc5b9b79b9fc3d5188964e5a6e",
+    "tests/Vst3RingRetriggerAutomationTests.cpp": "7f77a9669f64659d10fd92d7a33ec13f783477c37c1e00f4f3b13635ad3809f0",
+    "tests/Vst3RingCombinedAutomationTests.cpp": "e99cdfcafc12852f945e60d861161449779fa6dddd5b8c0617cf72631a099c5c",
+    "tests/Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "tests/parity/tolerances-v2/host-automation-chorus-v1.json": "7a199455a7493d9ad9dfa18bae28276a7d0a482cb24afa3148b69424e70bb988",
+    "docs/VST3_CHORUS_AUTOMATION.md": "93427a896e3a0949f6102ec3bf9f0771e12c92059cae75c2c517093fe2a4eb19",
+    "docs/HOST_AUTOMATION.md": "183460aa2c01cc95d197b1ee5a77a8200bae4085a7476c3651dd982565f10a62"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Active CHORUS mode only, not tremolo; finite4096frame startup transient, not fullLFO or steady-state coverage.",
+    "Off control establishes PCM-output inertness only, not state equivalence or later re-enable.",
+    "8capacity2notes and16capacity16notes, unchanged one-cycle renderer.",
+    "No hardware, DAW, GUI, AU, CPU or broader-suite claim; no negative baseline run."
+  ],
+  "full_sdk_compiler_python_source_before_after_identical": true,
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/run-chorus-matrix.py >build/matrix.log 2>&1; code=$?; echo \"$code\" >build/matrix.exit; exit \"$code\""
+}

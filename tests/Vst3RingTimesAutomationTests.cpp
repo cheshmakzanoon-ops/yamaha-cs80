@@ -39,8 +39,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), ringLimits(argv[3], "host_automation_ring_times");
-        require(ringLimits["key_parameter_count"] == 33 && cs80::kSampleAccurateParameters.size() == 33,
-                "exact 33-lane ring-times capability");
+        require(ringLimits["key_parameter_count"] == 33 && cs80::kSampleAccurateParameters.size() >= 33,
+                "historical exact 33-lane ring-times contract and available prefix");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 31-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[31] == cs80::P_ringAttack
