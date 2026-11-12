@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "combined_supported_input_qualification",
+  "mseg_combined_rates": {
+    "minimum_held_effect": 1e-05,
+    "scope": "Three concurrent fixed unsynced poly always-loop bipolar MSEGs, both-rank pitch/cutoff/level at0.15 amounts; manual/manual two notes; no baseline compatibility claim",
+    "timing": "16384frames. Lane i octave curve0 held through1023; targets1+.25i/-1+.25i/2-.25i/-2+.25i at2047/4095/8191/12287 +37i;0 at16383. Scalar vs7/64/256/1024; reverse parameter queue ordering.",
+    "verification_plan": "6configs*19renders=114captures;24scalar/block comparisons,24byte-identical queue-order comparisons,18positive per-lane witnesses,12native config readbacks; zero/off/PURE controls"
+  }
+}

@@ -1450,6 +1450,20 @@ if (CS80_BUILD_PLUGIN)
             endforeach()
         endforeach()
         # Narrow canonical session generator: public API only, no editor/audio rendering.
+        # Bounded combined-rate tests: public canonical state, no production changes.
+        add_executable(cs80_mseg_combined_canonical_generator tests/MsegCombinedCanonicalGenerator.cpp)
+        target_include_directories(cs80_mseg_combined_canonical_generator PRIVATE
+            src "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_mseg_combined_canonical_generator PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_mseg_combined_canonical_generator PRIVATE CS80Reference)
+        add_executable(cs80_vst3_mseg_combined_rates_tests tests/Vst3MsegCombinedRatesTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_mseg_combined_rates_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_mseg_combined_rates_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_mseg_combined_rates_tests CS80Reference_VST3)
         add_executable(cs80_mseg_canonical_state_generator tests/MsegCanonicalStateGenerator.cpp)
         target_include_directories(cs80_mseg_canonical_state_generator PRIVATE
             src "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
