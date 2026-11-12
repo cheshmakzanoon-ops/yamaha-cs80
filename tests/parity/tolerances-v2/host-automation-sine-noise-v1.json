@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append isolated rank SINE/NOISE levels after unchanged74 prefix; preserve45 historical contracts, metadata, helper, DSP and source masks.",
+  "host_automation_sine_noise": {
+    "key_parameter_count": 78,
+    "keys": "Rank0 sine74/noise75;rank1 sine76/noise77. Entire74 prefix unchanged.",
+    "authority": "PANEL13 positive;factory0/MEMORY11 selected-source PCM masking unchanged. Existing0..1/default0/linear metadata unchanged.",
+    "timing": "Existing live smoothed levels: noise before filters, sine added after filtered-path gain. Only selected rank/kind initial.2,all other sine/noise0. Hold0/128 then.6/.3/.7/.15/.5/.25 at511/1023/1791/2559/3583/4095. Saw/pulse0,neutral modulation,ordinary sounding VCA/filter path.",
+    "verification": "144full48PANELpositive96masked plus144frozen74compatibility;2736renders12process432actualpairs. Exactpre128,positiveheld[128,3072) versusmatchedactivehold,fullPCMmask,scalar/fivepartitions. No spectral/statistical randomness, truezero/filterbypass,hardware,simultaneouslane,GUI or CPU claim."
+  }
+}
