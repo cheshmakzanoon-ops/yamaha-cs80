@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_qualification_extension",
+  "description": "Test-only combined DECAY/RELEASE group qualification of existing78-lane capability; no new lane or production/helper changes. Preserve46 earlier contracts.",
+  "host_automation_envelope_decay_release_combined": {
+    "key_parameter_count": 78,
+    "keys": "Existing eight filter/VCA D/R lanes66..73, both ranks. Entire78 roster unchanged.",
+    "authority": "Mixed sourcepairs13/0,0/13,13/11,11/13 retain existing PANEL authority and non-PANEL masking; group witnesses are not individual-lane attribution.",
+    "timing": "D.5hold512 then.2/.6/.3/.7/.25/.4 at767/1279/1919/2559/3071/4095;R.5hold3100 then.3/.6/.4/.7 at3327/3583/3839/4095. BothA.001,filterIL.5/AL.3,VCA S.3,keyR.18/master0,neutral scale/dispersion.",
+    "verification": "48cases672renders6processes144captureidentities,not baseline comparisons; frozen78 reused. All8activehold comparator exactpre512/positiveheld512..3072; identicalDcurves with4Ractivehold comparator exactpre3100/positive release-group tail3100..4096. Scalar/fivepartitions and noqueue/Legacy/PURE preserved. No per-lane,fullstage,hardware,GUI,CPU or broadsuite claim."
+  }
+}

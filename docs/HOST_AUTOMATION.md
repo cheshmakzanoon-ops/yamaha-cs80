@@ -123,6 +123,11 @@ existing rank levels at lanes74..77. Noise enters before filters, while sine
 is added after filtered-path gain; both retain their existing smoothing and
 source masks. The complete74-lane prefix is unchanged.
 
+The candidate [combined DECAY/RELEASE qualification](VST3_ENVELOPE_DECAY_RELEASE_COMBINED_AUTOMATION.md)
+exercises eight existing timing queues with asymmetric rank sources. Matched
+active comparators separate a held group effect from release-group tail effect;
+this adds no lanes and makes no individual-lane attribution.
+
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's
 AU interface source list and native wrapper remain untouched. AU scheduled
