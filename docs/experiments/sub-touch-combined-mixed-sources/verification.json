@@ -1,0 +1,61 @@
+{
+  "base_commit": "9de44b97c6326bb9b8bf85c00dafd2cc56a5e319",
+  "production_tree": "0bacd54d8dddff1428a5f79c0f45a63a09e05587",
+  "candidate_module_source_commit": "56e1191468726f1ea52690279572364b85826536",
+  "candidate_production_tree": "0bacd54d8dddff1428a5f79c0f45a63a09e05587",
+  "baseline_module_source_commit": "760fcb55e793ea3b408eecff36bf955f6f81da17",
+  "execution": "Six direct full candidate runs and six direct compatibility-only baseline runs; no CTest executions",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "compile_exit_code": 0,
+  "cmake_configure_passed": true,
+  "cmake_full_registrations": 6,
+  "candidate_runs_passed": 6,
+  "baseline_compatibility_runs_passed": 6,
+  "combined_cases": 72,
+  "failures": 0,
+  "max_partition_error": 0.0,
+  "automation_effect_range": [
+    0.0356504,
+    0.61175
+  ],
+  "pressure_effect_range": [
+    0.0434618,
+    0.645346
+  ],
+  "compatibility_capture_pairs": 216,
+  "sha256": {
+    "tests/Vst3SubTouchCombinedAutomationTests.cpp": "25598db494f0ea8c9063784e2c1beab39c5c250e891546af651222277a1226d1",
+    "CMakeLists.txt": "3f9f8ed755605bbee7f7ab7896644e4afe26ed43313d0ac3e8ff9873e1fe73ef",
+    "tests/Vst3AutomationTests.cpp": "e1343fafaba48948917c45f7df3d2ad43821ece497438977d7d0afc0a0eb94fd",
+    "tests/Vst3SubTouchAutomationTests.cpp": "45e50d2f908f317f2650e803a2ed177e47117d3f26ce770d139970ea42540482",
+    "src/plugin/HostAutomationBridge.h": "b522502a6bdd47457ef76adcfcf3fc2edf30faa2ec0a46033ba2f08fb5b5f8af",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch-combined/build/cs80_vst3_sub_touch_combined_standalone": "59ffc0ba034727a76bcf3b4d12af2081f4adfe08cdb6e1a45b97e914b19f244c",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "a1915dd34d7c63519ef6bedc1e276b2f7429512c7845527e5d55596e05fe252d",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-touch/build/baseline/CS80-24-lane.so": "95b60dd9dabf2844fe0bbfb8e6254f3738df19da7c3852621a54e90f5f38eb4c",
+    "docs/experiments/sub-touch-combined-mixed-sources/compile-command.sh": "2a10226c5b4faaf56284828f34b0496be2d3f3e45b5ae08e255394d99ff60e2e"
+  },
+  "unchanged_contract_sha256": {
+    "tests/parity/tolerances-v2/host-automation-state-boundary.json": "348a4797e1c62793c46a6937c61cc888cb9f2aace8799f7460f3ffb29194440a",
+    "tests/parity/tolerances-v2/windows-wrapper-path-alias.json": "a39e0253f4edf1957e52e4baed95bf2dc39c69b21b89f46f254d09eb21af8950",
+    "tests/parity/tolerances-v2/memory-nonlinear-study.json": "75171d226efeeb6de3acf18256c074d13470cea503b8b09264d341b1e5af4593",
+    "tests/parity/tolerances-v2/host-automation-sub-v1.json": "edee0856bee56ca8aeb057dd3a0c7bc7e0efa829d5c499ccbba435236429d295",
+    "tests/parity/tolerances-v2/host-automation-sub-depth-v1.json": "0f6d52e6c61be465dd648745fbfd9dcaf704ee9f2b6cc3ef24e769a9bf86bcc2",
+    "tests/parity/tolerances-v2/main-vst3-compatibility.json": "8f5ff72877242e1ae6f39894ea6d3b731a9a5eaa14a47b779cb59dae89ff3c9c",
+    "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json": "eefcbd55b959e6d2f755f1c88749b965dc0cd3726724036a93ac55c079a3e131",
+    "tests/parity/tolerances-v2/memory-port-map.json": "64cda2f23145d738b2d6d402c3de0f2a0f7fdfdcf278e04768ba703ba4f350b9",
+    "tests/parity/tolerances-v2/host-wrapper-platforms.json": "f38086ecc6997f74b80fe5c66d19ef3c0032a435ab9904a0a407f78538e1686d",
+    "tests/parity/tolerances-v2/main-vst3-only-automation.json": "c72c1b97faf5c6dc66f7f2b6ea6813807e275aafdeddda91a567b8264631f5ae",
+    "tests/parity/tolerances-v2/memory-sparse-update.json": "1370d58617cc566838e733fc5b16780a2314393051ca7138c54ab18093c4c5cf",
+    "tests/parity/tolerances-v2/ws1-voice.json": "d19de5bea8f7203e76674abdb271be678526688add4807105f9dcd2098d4177c",
+    "tests/parity/tolerances-v2/main-vst3-multirecall-state.json": "63d364d2f05166f945e9bd82c685e6d04bd3856b9b24e08932d43119588b8fd6",
+    "tests/parity/tolerances-v2/host-automation.json": "c301b3eddf110a8dc6b6b07416d6eba9ddb68f7c19fb2eeea99cebc26bee7bf6",
+    "tests/parity/tolerances-v2/ws6-library.json": "28fda06871af1fa25753cbda5bf64e88fc44ec4712e07c10d720055c983c6b95",
+    "tests/parity/tolerances-v2/host-automation-pan-v1.json": "713904671b1782a1d23f49f95194fa1fb9ef3539b00becd2190914562d8a1711",
+    "tests/parity/tolerances-v2/ws3-keyboard.json": "88812719a9967ec9d2ce862ecdda498c6b9865efe724d3eb80f2bec1a260554e",
+    "tests/parity/tolerances-v2/memory-control-routing.json": "d107527be98c3867243b26b87cf9176282b0f95c4bbc9f0f6dbdc05823c0ae54"
+  },
+  "limitations": [
+    "Aggregate combined witness, not individual lane isolation; earlier isolated-touch gate remains separate",
+    "No source/waveform switching, additional pressure patterns, GUI/DAW/AU, float64 or CPU qualification"
+  ]
+}

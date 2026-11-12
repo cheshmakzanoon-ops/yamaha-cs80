@@ -1,0 +1,1366 @@
+{
+  "scope": "Same final combined-touch host; frozen24 versus unchanged27 module noqueue/Legacy/PURE captures",
+  "host_sha256": "59ffc0ba034727a76bcf3b4d12af2081f4adfe08cdb6e1a45b97e914b19f244c",
+  "candidate_module_sha256": "a1915dd34d7c63519ef6bedc1e276b2f7429512c7845527e5d55596e05fe252d",
+  "baseline_module_sha256": "95b60dd9dabf2844fe0bbfb8e6254f3738df19da7c3852621a54e90f5f38eb4c",
+  "runs": [
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "candidate_directory": "build/combined-touch-runs/candidate-44100-realtime",
+      "baseline_directory": "build/combined-touch-runs/baseline-44100-realtime",
+      "count": 36,
+      "byte_identical": true,
+      "captures": [
+        {
+          "filename": "16-0-11-noqueue.pcm",
+          "candidate_sha256": "1ee431ec3df32af56e3d5d20e7a728fd9757ca15407206f8750f51984c0b4108",
+          "baseline_sha256": "1ee431ec3df32af56e3d5d20e7a728fd9757ca15407206f8750f51984c0b4108",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy0.pcm",
+          "candidate_sha256": "2f93c0d9f28c6b3f40faa020a1944b258870f1f52c531d990e937c0bdc9cb6a1",
+          "baseline_sha256": "2f93c0d9f28c6b3f40faa020a1944b258870f1f52c531d990e937c0bdc9cb6a1",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy2.pcm",
+          "candidate_sha256": "a316da39f2cab69b47dda69ba22f864b4364358edb239ddedeab21a49cc1ef07",
+          "baseline_sha256": "a316da39f2cab69b47dda69ba22f864b4364358edb239ddedeab21a49cc1ef07",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-noqueue.pcm",
+          "candidate_sha256": "1ee431ec3df32af56e3d5d20e7a728fd9757ca15407206f8750f51984c0b4108",
+          "baseline_sha256": "1ee431ec3df32af56e3d5d20e7a728fd9757ca15407206f8750f51984c0b4108",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy0.pcm",
+          "candidate_sha256": "2f93c0d9f28c6b3f40faa020a1944b258870f1f52c531d990e937c0bdc9cb6a1",
+          "baseline_sha256": "2f93c0d9f28c6b3f40faa020a1944b258870f1f52c531d990e937c0bdc9cb6a1",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy2.pcm",
+          "candidate_sha256": "a316da39f2cab69b47dda69ba22f864b4364358edb239ddedeab21a49cc1ef07",
+          "baseline_sha256": "a316da39f2cab69b47dda69ba22f864b4364358edb239ddedeab21a49cc1ef07",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-noqueue.pcm",
+          "candidate_sha256": "90febfd3a4b938bbd825ef839116c27971bb76bb08db0699a3e14b642c1a157b",
+          "baseline_sha256": "90febfd3a4b938bbd825ef839116c27971bb76bb08db0699a3e14b642c1a157b",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy0.pcm",
+          "candidate_sha256": "047847a8f905af37cc07b88cb3590f649a5840af966c42f01b55226e62d42ffe",
+          "baseline_sha256": "047847a8f905af37cc07b88cb3590f649a5840af966c42f01b55226e62d42ffe",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy2.pcm",
+          "candidate_sha256": "b11b8773221898c6566942e9e71ab7fbb347252fa80aea58e7c57418363b4d35",
+          "baseline_sha256": "b11b8773221898c6566942e9e71ab7fbb347252fa80aea58e7c57418363b4d35",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-noqueue.pcm",
+          "candidate_sha256": "23959eae4608ba3e692d275fe5fb0de6345699a043894706f105007d54c73005",
+          "baseline_sha256": "23959eae4608ba3e692d275fe5fb0de6345699a043894706f105007d54c73005",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy0.pcm",
+          "candidate_sha256": "ec51b5b8b39c446c0b1ec02f8e610b1640c1520107fbba70ccc981542dad51c2",
+          "baseline_sha256": "ec51b5b8b39c446c0b1ec02f8e610b1640c1520107fbba70ccc981542dad51c2",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy2.pcm",
+          "candidate_sha256": "b58563127056c18a2a21ad8ae4a920df9702b24b716a7abd290acac149809194",
+          "baseline_sha256": "b58563127056c18a2a21ad8ae4a920df9702b24b716a7abd290acac149809194",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-noqueue.pcm",
+          "candidate_sha256": "90febfd3a4b938bbd825ef839116c27971bb76bb08db0699a3e14b642c1a157b",
+          "baseline_sha256": "90febfd3a4b938bbd825ef839116c27971bb76bb08db0699a3e14b642c1a157b",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy0.pcm",
+          "candidate_sha256": "047847a8f905af37cc07b88cb3590f649a5840af966c42f01b55226e62d42ffe",
+          "baseline_sha256": "047847a8f905af37cc07b88cb3590f649a5840af966c42f01b55226e62d42ffe",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy2.pcm",
+          "candidate_sha256": "b11b8773221898c6566942e9e71ab7fbb347252fa80aea58e7c57418363b4d35",
+          "baseline_sha256": "b11b8773221898c6566942e9e71ab7fbb347252fa80aea58e7c57418363b4d35",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-noqueue.pcm",
+          "candidate_sha256": "23959eae4608ba3e692d275fe5fb0de6345699a043894706f105007d54c73005",
+          "baseline_sha256": "23959eae4608ba3e692d275fe5fb0de6345699a043894706f105007d54c73005",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy0.pcm",
+          "candidate_sha256": "ec51b5b8b39c446c0b1ec02f8e610b1640c1520107fbba70ccc981542dad51c2",
+          "baseline_sha256": "ec51b5b8b39c446c0b1ec02f8e610b1640c1520107fbba70ccc981542dad51c2",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy2.pcm",
+          "candidate_sha256": "b58563127056c18a2a21ad8ae4a920df9702b24b716a7abd290acac149809194",
+          "baseline_sha256": "b58563127056c18a2a21ad8ae4a920df9702b24b716a7abd290acac149809194",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-noqueue.pcm",
+          "candidate_sha256": "244581236bd06b70857c1db741c18f809332d189f087d59c0c2fa00d731e7f64",
+          "baseline_sha256": "244581236bd06b70857c1db741c18f809332d189f087d59c0c2fa00d731e7f64",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy0.pcm",
+          "candidate_sha256": "a6a83309435c3a332d1284a87b3df17e6a1b8203b6ea61edb9b7f10a5ea10df7",
+          "baseline_sha256": "a6a83309435c3a332d1284a87b3df17e6a1b8203b6ea61edb9b7f10a5ea10df7",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy2.pcm",
+          "candidate_sha256": "f3fa09d7d99b236a27d7e6e797fb468fb979c7f002417aae2aff6a6037142dec",
+          "baseline_sha256": "f3fa09d7d99b236a27d7e6e797fb468fb979c7f002417aae2aff6a6037142dec",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-noqueue.pcm",
+          "candidate_sha256": "244581236bd06b70857c1db741c18f809332d189f087d59c0c2fa00d731e7f64",
+          "baseline_sha256": "244581236bd06b70857c1db741c18f809332d189f087d59c0c2fa00d731e7f64",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy0.pcm",
+          "candidate_sha256": "a6a83309435c3a332d1284a87b3df17e6a1b8203b6ea61edb9b7f10a5ea10df7",
+          "baseline_sha256": "a6a83309435c3a332d1284a87b3df17e6a1b8203b6ea61edb9b7f10a5ea10df7",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy2.pcm",
+          "candidate_sha256": "f3fa09d7d99b236a27d7e6e797fb468fb979c7f002417aae2aff6a6037142dec",
+          "baseline_sha256": "f3fa09d7d99b236a27d7e6e797fb468fb979c7f002417aae2aff6a6037142dec",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-noqueue.pcm",
+          "candidate_sha256": "619fe29bd315775ec39fa30d054b405a8296a4939df36f5ff58892f622e4aed0",
+          "baseline_sha256": "619fe29bd315775ec39fa30d054b405a8296a4939df36f5ff58892f622e4aed0",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy0.pcm",
+          "candidate_sha256": "ca9a60b582a74ef1ef624c01fa8741ef850a5d7dc45071c2c56a0a26386f18c4",
+          "baseline_sha256": "ca9a60b582a74ef1ef624c01fa8741ef850a5d7dc45071c2c56a0a26386f18c4",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy2.pcm",
+          "candidate_sha256": "8363b3c614aecca366d278abb574c18fa60109da3b541383c2e7629168aa435b",
+          "baseline_sha256": "8363b3c614aecca366d278abb574c18fa60109da3b541383c2e7629168aa435b",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-noqueue.pcm",
+          "candidate_sha256": "9870cd2937e5421e0edc0ff7a66fb2af9b1b4dc902f4d4d7d19a39b8a8e2cede",
+          "baseline_sha256": "9870cd2937e5421e0edc0ff7a66fb2af9b1b4dc902f4d4d7d19a39b8a8e2cede",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy0.pcm",
+          "candidate_sha256": "f8584550943839ce8a292e1cd64842e118d12a54b4a01c54d9f118cad82a325f",
+          "baseline_sha256": "f8584550943839ce8a292e1cd64842e118d12a54b4a01c54d9f118cad82a325f",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy2.pcm",
+          "candidate_sha256": "a012ff466776d01196d151fa376cf50407bad9757417a40b2c49b71f861172d8",
+          "baseline_sha256": "a012ff466776d01196d151fa376cf50407bad9757417a40b2c49b71f861172d8",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-noqueue.pcm",
+          "candidate_sha256": "619fe29bd315775ec39fa30d054b405a8296a4939df36f5ff58892f622e4aed0",
+          "baseline_sha256": "619fe29bd315775ec39fa30d054b405a8296a4939df36f5ff58892f622e4aed0",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy0.pcm",
+          "candidate_sha256": "ca9a60b582a74ef1ef624c01fa8741ef850a5d7dc45071c2c56a0a26386f18c4",
+          "baseline_sha256": "ca9a60b582a74ef1ef624c01fa8741ef850a5d7dc45071c2c56a0a26386f18c4",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy2.pcm",
+          "candidate_sha256": "8363b3c614aecca366d278abb574c18fa60109da3b541383c2e7629168aa435b",
+          "baseline_sha256": "8363b3c614aecca366d278abb574c18fa60109da3b541383c2e7629168aa435b",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-noqueue.pcm",
+          "candidate_sha256": "9870cd2937e5421e0edc0ff7a66fb2af9b1b4dc902f4d4d7d19a39b8a8e2cede",
+          "baseline_sha256": "9870cd2937e5421e0edc0ff7a66fb2af9b1b4dc902f4d4d7d19a39b8a8e2cede",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy0.pcm",
+          "candidate_sha256": "f8584550943839ce8a292e1cd64842e118d12a54b4a01c54d9f118cad82a325f",
+          "baseline_sha256": "f8584550943839ce8a292e1cd64842e118d12a54b4a01c54d9f118cad82a325f",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy2.pcm",
+          "candidate_sha256": "a012ff466776d01196d151fa376cf50407bad9757417a40b2c49b71f861172d8",
+          "baseline_sha256": "a012ff466776d01196d151fa376cf50407bad9757417a40b2c49b71f861172d8",
+          "byte_identical": true
+        }
+      ]
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "candidate_directory": "build/combined-touch-runs/candidate-44100-offline",
+      "baseline_directory": "build/combined-touch-runs/baseline-44100-offline",
+      "count": 36,
+      "byte_identical": true,
+      "captures": [
+        {
+          "filename": "16-0-11-noqueue.pcm",
+          "candidate_sha256": "a095ba0ab0906df99f3f4b63b435ec190f5a4f56159f57f4dd6774f9c4f91658",
+          "baseline_sha256": "a095ba0ab0906df99f3f4b63b435ec190f5a4f56159f57f4dd6774f9c4f91658",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy0.pcm",
+          "candidate_sha256": "2f93c0d9f28c6b3f40faa020a1944b258870f1f52c531d990e937c0bdc9cb6a1",
+          "baseline_sha256": "2f93c0d9f28c6b3f40faa020a1944b258870f1f52c531d990e937c0bdc9cb6a1",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy2.pcm",
+          "candidate_sha256": "8422b76393b93757c260dedd5e161c712a33be3522661130787038f2b7751320",
+          "baseline_sha256": "8422b76393b93757c260dedd5e161c712a33be3522661130787038f2b7751320",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-noqueue.pcm",
+          "candidate_sha256": "a095ba0ab0906df99f3f4b63b435ec190f5a4f56159f57f4dd6774f9c4f91658",
+          "baseline_sha256": "a095ba0ab0906df99f3f4b63b435ec190f5a4f56159f57f4dd6774f9c4f91658",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy0.pcm",
+          "candidate_sha256": "2f93c0d9f28c6b3f40faa020a1944b258870f1f52c531d990e937c0bdc9cb6a1",
+          "baseline_sha256": "2f93c0d9f28c6b3f40faa020a1944b258870f1f52c531d990e937c0bdc9cb6a1",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy2.pcm",
+          "candidate_sha256": "8422b76393b93757c260dedd5e161c712a33be3522661130787038f2b7751320",
+          "baseline_sha256": "8422b76393b93757c260dedd5e161c712a33be3522661130787038f2b7751320",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-noqueue.pcm",
+          "candidate_sha256": "eb05831adfe77400c9165d118e27111b3ddf7e35f9c302a610cb7a880df716ed",
+          "baseline_sha256": "eb05831adfe77400c9165d118e27111b3ddf7e35f9c302a610cb7a880df716ed",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy0.pcm",
+          "candidate_sha256": "047847a8f905af37cc07b88cb3590f649a5840af966c42f01b55226e62d42ffe",
+          "baseline_sha256": "047847a8f905af37cc07b88cb3590f649a5840af966c42f01b55226e62d42ffe",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy2.pcm",
+          "candidate_sha256": "14d2e144199dd96e8bc7dddbf7ade935adc53776a2582053ac082a9c874f84c8",
+          "baseline_sha256": "14d2e144199dd96e8bc7dddbf7ade935adc53776a2582053ac082a9c874f84c8",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-noqueue.pcm",
+          "candidate_sha256": "cb737809c65d6f3939fcb0775afa73e126105c1b816c3e4917b80759585e4558",
+          "baseline_sha256": "cb737809c65d6f3939fcb0775afa73e126105c1b816c3e4917b80759585e4558",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy0.pcm",
+          "candidate_sha256": "ec51b5b8b39c446c0b1ec02f8e610b1640c1520107fbba70ccc981542dad51c2",
+          "baseline_sha256": "ec51b5b8b39c446c0b1ec02f8e610b1640c1520107fbba70ccc981542dad51c2",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy2.pcm",
+          "candidate_sha256": "80605bd2f123b465aebdcadefd2e7c9463fb93b21094839bae3420065ffe535e",
+          "baseline_sha256": "80605bd2f123b465aebdcadefd2e7c9463fb93b21094839bae3420065ffe535e",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-noqueue.pcm",
+          "candidate_sha256": "eb05831adfe77400c9165d118e27111b3ddf7e35f9c302a610cb7a880df716ed",
+          "baseline_sha256": "eb05831adfe77400c9165d118e27111b3ddf7e35f9c302a610cb7a880df716ed",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy0.pcm",
+          "candidate_sha256": "047847a8f905af37cc07b88cb3590f649a5840af966c42f01b55226e62d42ffe",
+          "baseline_sha256": "047847a8f905af37cc07b88cb3590f649a5840af966c42f01b55226e62d42ffe",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy2.pcm",
+          "candidate_sha256": "14d2e144199dd96e8bc7dddbf7ade935adc53776a2582053ac082a9c874f84c8",
+          "baseline_sha256": "14d2e144199dd96e8bc7dddbf7ade935adc53776a2582053ac082a9c874f84c8",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-noqueue.pcm",
+          "candidate_sha256": "cb737809c65d6f3939fcb0775afa73e126105c1b816c3e4917b80759585e4558",
+          "baseline_sha256": "cb737809c65d6f3939fcb0775afa73e126105c1b816c3e4917b80759585e4558",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy0.pcm",
+          "candidate_sha256": "ec51b5b8b39c446c0b1ec02f8e610b1640c1520107fbba70ccc981542dad51c2",
+          "baseline_sha256": "ec51b5b8b39c446c0b1ec02f8e610b1640c1520107fbba70ccc981542dad51c2",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy2.pcm",
+          "candidate_sha256": "80605bd2f123b465aebdcadefd2e7c9463fb93b21094839bae3420065ffe535e",
+          "baseline_sha256": "80605bd2f123b465aebdcadefd2e7c9463fb93b21094839bae3420065ffe535e",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-noqueue.pcm",
+          "candidate_sha256": "108e3adbce0cb1e3fa8d6ce7878410a44740e1c8c244fc012b080ad97b8633db",
+          "baseline_sha256": "108e3adbce0cb1e3fa8d6ce7878410a44740e1c8c244fc012b080ad97b8633db",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy0.pcm",
+          "candidate_sha256": "a6a83309435c3a332d1284a87b3df17e6a1b8203b6ea61edb9b7f10a5ea10df7",
+          "baseline_sha256": "a6a83309435c3a332d1284a87b3df17e6a1b8203b6ea61edb9b7f10a5ea10df7",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy2.pcm",
+          "candidate_sha256": "7eb6f2f6af894e99d290f1002518c26c76194c337a82862ae6ffa832eb3f2ceb",
+          "baseline_sha256": "7eb6f2f6af894e99d290f1002518c26c76194c337a82862ae6ffa832eb3f2ceb",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-noqueue.pcm",
+          "candidate_sha256": "108e3adbce0cb1e3fa8d6ce7878410a44740e1c8c244fc012b080ad97b8633db",
+          "baseline_sha256": "108e3adbce0cb1e3fa8d6ce7878410a44740e1c8c244fc012b080ad97b8633db",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy0.pcm",
+          "candidate_sha256": "a6a83309435c3a332d1284a87b3df17e6a1b8203b6ea61edb9b7f10a5ea10df7",
+          "baseline_sha256": "a6a83309435c3a332d1284a87b3df17e6a1b8203b6ea61edb9b7f10a5ea10df7",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy2.pcm",
+          "candidate_sha256": "7eb6f2f6af894e99d290f1002518c26c76194c337a82862ae6ffa832eb3f2ceb",
+          "baseline_sha256": "7eb6f2f6af894e99d290f1002518c26c76194c337a82862ae6ffa832eb3f2ceb",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-noqueue.pcm",
+          "candidate_sha256": "982313d2fcdbf5a4d85c8a439d92f4df04b2fd5ad223f140a94c4bbfb0576cda",
+          "baseline_sha256": "982313d2fcdbf5a4d85c8a439d92f4df04b2fd5ad223f140a94c4bbfb0576cda",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy0.pcm",
+          "candidate_sha256": "ca9a60b582a74ef1ef624c01fa8741ef850a5d7dc45071c2c56a0a26386f18c4",
+          "baseline_sha256": "ca9a60b582a74ef1ef624c01fa8741ef850a5d7dc45071c2c56a0a26386f18c4",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy2.pcm",
+          "candidate_sha256": "28bf287abd17f9eff6cc33995dce0a73899e2af50f867a820e659c9d78affbaa",
+          "baseline_sha256": "28bf287abd17f9eff6cc33995dce0a73899e2af50f867a820e659c9d78affbaa",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-noqueue.pcm",
+          "candidate_sha256": "58d4a52a23364a7680bc554fe96ec2ce31b50a682eeb26db042635ae1565505f",
+          "baseline_sha256": "58d4a52a23364a7680bc554fe96ec2ce31b50a682eeb26db042635ae1565505f",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy0.pcm",
+          "candidate_sha256": "f8584550943839ce8a292e1cd64842e118d12a54b4a01c54d9f118cad82a325f",
+          "baseline_sha256": "f8584550943839ce8a292e1cd64842e118d12a54b4a01c54d9f118cad82a325f",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy2.pcm",
+          "candidate_sha256": "d247e7c5da41ca6113af1552f30627b5b8be4443b3ed845c6ff9b46d422f8dff",
+          "baseline_sha256": "d247e7c5da41ca6113af1552f30627b5b8be4443b3ed845c6ff9b46d422f8dff",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-noqueue.pcm",
+          "candidate_sha256": "982313d2fcdbf5a4d85c8a439d92f4df04b2fd5ad223f140a94c4bbfb0576cda",
+          "baseline_sha256": "982313d2fcdbf5a4d85c8a439d92f4df04b2fd5ad223f140a94c4bbfb0576cda",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy0.pcm",
+          "candidate_sha256": "ca9a60b582a74ef1ef624c01fa8741ef850a5d7dc45071c2c56a0a26386f18c4",
+          "baseline_sha256": "ca9a60b582a74ef1ef624c01fa8741ef850a5d7dc45071c2c56a0a26386f18c4",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy2.pcm",
+          "candidate_sha256": "28bf287abd17f9eff6cc33995dce0a73899e2af50f867a820e659c9d78affbaa",
+          "baseline_sha256": "28bf287abd17f9eff6cc33995dce0a73899e2af50f867a820e659c9d78affbaa",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-noqueue.pcm",
+          "candidate_sha256": "58d4a52a23364a7680bc554fe96ec2ce31b50a682eeb26db042635ae1565505f",
+          "baseline_sha256": "58d4a52a23364a7680bc554fe96ec2ce31b50a682eeb26db042635ae1565505f",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy0.pcm",
+          "candidate_sha256": "f8584550943839ce8a292e1cd64842e118d12a54b4a01c54d9f118cad82a325f",
+          "baseline_sha256": "f8584550943839ce8a292e1cd64842e118d12a54b4a01c54d9f118cad82a325f",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy2.pcm",
+          "candidate_sha256": "d247e7c5da41ca6113af1552f30627b5b8be4443b3ed845c6ff9b46d422f8dff",
+          "baseline_sha256": "d247e7c5da41ca6113af1552f30627b5b8be4443b3ed845c6ff9b46d422f8dff",
+          "byte_identical": true
+        }
+      ]
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "candidate_directory": "build/combined-touch-runs/candidate-48000-realtime",
+      "baseline_directory": "build/combined-touch-runs/baseline-48000-realtime",
+      "count": 36,
+      "byte_identical": true,
+      "captures": [
+        {
+          "filename": "16-0-11-noqueue.pcm",
+          "candidate_sha256": "40845c53dbff21d120aa763cd58b79e298bb191468301ee12f2d922965e64ac3",
+          "baseline_sha256": "40845c53dbff21d120aa763cd58b79e298bb191468301ee12f2d922965e64ac3",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy0.pcm",
+          "candidate_sha256": "dfe0d9d1e26dd30ef87673e05075e237e393f7e623b1982626849bce2a740c9f",
+          "baseline_sha256": "dfe0d9d1e26dd30ef87673e05075e237e393f7e623b1982626849bce2a740c9f",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy2.pcm",
+          "candidate_sha256": "43e0df68677b3d82a3a6c12dd6d0ef0817d42e19a70a12cab191c6323a95d5ff",
+          "baseline_sha256": "43e0df68677b3d82a3a6c12dd6d0ef0817d42e19a70a12cab191c6323a95d5ff",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-noqueue.pcm",
+          "candidate_sha256": "40845c53dbff21d120aa763cd58b79e298bb191468301ee12f2d922965e64ac3",
+          "baseline_sha256": "40845c53dbff21d120aa763cd58b79e298bb191468301ee12f2d922965e64ac3",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy0.pcm",
+          "candidate_sha256": "dfe0d9d1e26dd30ef87673e05075e237e393f7e623b1982626849bce2a740c9f",
+          "baseline_sha256": "dfe0d9d1e26dd30ef87673e05075e237e393f7e623b1982626849bce2a740c9f",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy2.pcm",
+          "candidate_sha256": "43e0df68677b3d82a3a6c12dd6d0ef0817d42e19a70a12cab191c6323a95d5ff",
+          "baseline_sha256": "43e0df68677b3d82a3a6c12dd6d0ef0817d42e19a70a12cab191c6323a95d5ff",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-noqueue.pcm",
+          "candidate_sha256": "88402c495203cf5c7ff0ae38a37d049d4816b4e161a40b96f3f727ac5ac79895",
+          "baseline_sha256": "88402c495203cf5c7ff0ae38a37d049d4816b4e161a40b96f3f727ac5ac79895",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy0.pcm",
+          "candidate_sha256": "63c2dba99ccfc5af81989cce1203c68a2cda1698472046c9155064c0829d9327",
+          "baseline_sha256": "63c2dba99ccfc5af81989cce1203c68a2cda1698472046c9155064c0829d9327",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy2.pcm",
+          "candidate_sha256": "7e7043a764294e6da5fd331155b4e7aca0c01c910b01a21578fa4420780ffdea",
+          "baseline_sha256": "7e7043a764294e6da5fd331155b4e7aca0c01c910b01a21578fa4420780ffdea",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-noqueue.pcm",
+          "candidate_sha256": "d6eb40f582c00acaae986c8116ec8ba9ff4ac952e983a565454c8b7f0e1d2327",
+          "baseline_sha256": "d6eb40f582c00acaae986c8116ec8ba9ff4ac952e983a565454c8b7f0e1d2327",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy0.pcm",
+          "candidate_sha256": "e30d7850be0465b2aa50c2735ea71dc92314d9603025a9452026d1cff684bcef",
+          "baseline_sha256": "e30d7850be0465b2aa50c2735ea71dc92314d9603025a9452026d1cff684bcef",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy2.pcm",
+          "candidate_sha256": "a31d21d9f9f23c17465d791a2b372284a1fccbb7267976ccde70ec5db6365496",
+          "baseline_sha256": "a31d21d9f9f23c17465d791a2b372284a1fccbb7267976ccde70ec5db6365496",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-noqueue.pcm",
+          "candidate_sha256": "88402c495203cf5c7ff0ae38a37d049d4816b4e161a40b96f3f727ac5ac79895",
+          "baseline_sha256": "88402c495203cf5c7ff0ae38a37d049d4816b4e161a40b96f3f727ac5ac79895",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy0.pcm",
+          "candidate_sha256": "63c2dba99ccfc5af81989cce1203c68a2cda1698472046c9155064c0829d9327",
+          "baseline_sha256": "63c2dba99ccfc5af81989cce1203c68a2cda1698472046c9155064c0829d9327",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy2.pcm",
+          "candidate_sha256": "7e7043a764294e6da5fd331155b4e7aca0c01c910b01a21578fa4420780ffdea",
+          "baseline_sha256": "7e7043a764294e6da5fd331155b4e7aca0c01c910b01a21578fa4420780ffdea",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-noqueue.pcm",
+          "candidate_sha256": "d6eb40f582c00acaae986c8116ec8ba9ff4ac952e983a565454c8b7f0e1d2327",
+          "baseline_sha256": "d6eb40f582c00acaae986c8116ec8ba9ff4ac952e983a565454c8b7f0e1d2327",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy0.pcm",
+          "candidate_sha256": "e30d7850be0465b2aa50c2735ea71dc92314d9603025a9452026d1cff684bcef",
+          "baseline_sha256": "e30d7850be0465b2aa50c2735ea71dc92314d9603025a9452026d1cff684bcef",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy2.pcm",
+          "candidate_sha256": "a31d21d9f9f23c17465d791a2b372284a1fccbb7267976ccde70ec5db6365496",
+          "baseline_sha256": "a31d21d9f9f23c17465d791a2b372284a1fccbb7267976ccde70ec5db6365496",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-noqueue.pcm",
+          "candidate_sha256": "05cd6edcbeae83560f828d72bf2709c3534efd6c0a3f9bde7498edaa2ad817aa",
+          "baseline_sha256": "05cd6edcbeae83560f828d72bf2709c3534efd6c0a3f9bde7498edaa2ad817aa",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy0.pcm",
+          "candidate_sha256": "b55f4b10aa63f2a38b914180cc51fecd1abec1b3e03cc8bf624028aa1f142d79",
+          "baseline_sha256": "b55f4b10aa63f2a38b914180cc51fecd1abec1b3e03cc8bf624028aa1f142d79",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy2.pcm",
+          "candidate_sha256": "4f323f8b76f8fac2a061f3ffac5e193d0db7e7aa070ab1be399a859dae239bba",
+          "baseline_sha256": "4f323f8b76f8fac2a061f3ffac5e193d0db7e7aa070ab1be399a859dae239bba",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-noqueue.pcm",
+          "candidate_sha256": "05cd6edcbeae83560f828d72bf2709c3534efd6c0a3f9bde7498edaa2ad817aa",
+          "baseline_sha256": "05cd6edcbeae83560f828d72bf2709c3534efd6c0a3f9bde7498edaa2ad817aa",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy0.pcm",
+          "candidate_sha256": "b55f4b10aa63f2a38b914180cc51fecd1abec1b3e03cc8bf624028aa1f142d79",
+          "baseline_sha256": "b55f4b10aa63f2a38b914180cc51fecd1abec1b3e03cc8bf624028aa1f142d79",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy2.pcm",
+          "candidate_sha256": "4f323f8b76f8fac2a061f3ffac5e193d0db7e7aa070ab1be399a859dae239bba",
+          "baseline_sha256": "4f323f8b76f8fac2a061f3ffac5e193d0db7e7aa070ab1be399a859dae239bba",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-noqueue.pcm",
+          "candidate_sha256": "acac688d7b134912372ed75adc818560899704a052f679f563e479ce7d1d9c56",
+          "baseline_sha256": "acac688d7b134912372ed75adc818560899704a052f679f563e479ce7d1d9c56",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy0.pcm",
+          "candidate_sha256": "d53463deae5722bcae9d7c71fc474a45705f3e73a04e19324702a2b19a77d6c1",
+          "baseline_sha256": "d53463deae5722bcae9d7c71fc474a45705f3e73a04e19324702a2b19a77d6c1",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy2.pcm",
+          "candidate_sha256": "b7c2f813b745caf7bd1bdf3e557de18f046c2fe37c7ba99b64465bd3aa4a4bad",
+          "baseline_sha256": "b7c2f813b745caf7bd1bdf3e557de18f046c2fe37c7ba99b64465bd3aa4a4bad",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-noqueue.pcm",
+          "candidate_sha256": "6854ff1f8f6ab3adaaf60a350cd92ccfd5515d065e58c5e9d8d18ca6b8590638",
+          "baseline_sha256": "6854ff1f8f6ab3adaaf60a350cd92ccfd5515d065e58c5e9d8d18ca6b8590638",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy0.pcm",
+          "candidate_sha256": "9e33042ea487aaca0c92fc1538950c541d1d52487a04e37c5ce86a533a5536d8",
+          "baseline_sha256": "9e33042ea487aaca0c92fc1538950c541d1d52487a04e37c5ce86a533a5536d8",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy2.pcm",
+          "candidate_sha256": "f101d4e95dfaad5eeef7c024ff28596e57de078ae2c425ec8b27cf665ab15e01",
+          "baseline_sha256": "f101d4e95dfaad5eeef7c024ff28596e57de078ae2c425ec8b27cf665ab15e01",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-noqueue.pcm",
+          "candidate_sha256": "acac688d7b134912372ed75adc818560899704a052f679f563e479ce7d1d9c56",
+          "baseline_sha256": "acac688d7b134912372ed75adc818560899704a052f679f563e479ce7d1d9c56",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy0.pcm",
+          "candidate_sha256": "d53463deae5722bcae9d7c71fc474a45705f3e73a04e19324702a2b19a77d6c1",
+          "baseline_sha256": "d53463deae5722bcae9d7c71fc474a45705f3e73a04e19324702a2b19a77d6c1",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy2.pcm",
+          "candidate_sha256": "b7c2f813b745caf7bd1bdf3e557de18f046c2fe37c7ba99b64465bd3aa4a4bad",
+          "baseline_sha256": "b7c2f813b745caf7bd1bdf3e557de18f046c2fe37c7ba99b64465bd3aa4a4bad",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-noqueue.pcm",
+          "candidate_sha256": "6854ff1f8f6ab3adaaf60a350cd92ccfd5515d065e58c5e9d8d18ca6b8590638",
+          "baseline_sha256": "6854ff1f8f6ab3adaaf60a350cd92ccfd5515d065e58c5e9d8d18ca6b8590638",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy0.pcm",
+          "candidate_sha256": "9e33042ea487aaca0c92fc1538950c541d1d52487a04e37c5ce86a533a5536d8",
+          "baseline_sha256": "9e33042ea487aaca0c92fc1538950c541d1d52487a04e37c5ce86a533a5536d8",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy2.pcm",
+          "candidate_sha256": "f101d4e95dfaad5eeef7c024ff28596e57de078ae2c425ec8b27cf665ab15e01",
+          "baseline_sha256": "f101d4e95dfaad5eeef7c024ff28596e57de078ae2c425ec8b27cf665ab15e01",
+          "byte_identical": true
+        }
+      ]
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "candidate_directory": "build/combined-touch-runs/candidate-48000-offline",
+      "baseline_directory": "build/combined-touch-runs/baseline-48000-offline",
+      "count": 36,
+      "byte_identical": true,
+      "captures": [
+        {
+          "filename": "16-0-11-noqueue.pcm",
+          "candidate_sha256": "c57a2c035f7253511fb7d27e18440b8b6706badb9c79e204a193dd2d41a4d213",
+          "baseline_sha256": "c57a2c035f7253511fb7d27e18440b8b6706badb9c79e204a193dd2d41a4d213",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy0.pcm",
+          "candidate_sha256": "dfe0d9d1e26dd30ef87673e05075e237e393f7e623b1982626849bce2a740c9f",
+          "baseline_sha256": "dfe0d9d1e26dd30ef87673e05075e237e393f7e623b1982626849bce2a740c9f",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy2.pcm",
+          "candidate_sha256": "7336637979604b04e9359c662d0b30522fce3c5006691537909ec0b253995964",
+          "baseline_sha256": "7336637979604b04e9359c662d0b30522fce3c5006691537909ec0b253995964",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-noqueue.pcm",
+          "candidate_sha256": "c57a2c035f7253511fb7d27e18440b8b6706badb9c79e204a193dd2d41a4d213",
+          "baseline_sha256": "c57a2c035f7253511fb7d27e18440b8b6706badb9c79e204a193dd2d41a4d213",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy0.pcm",
+          "candidate_sha256": "dfe0d9d1e26dd30ef87673e05075e237e393f7e623b1982626849bce2a740c9f",
+          "baseline_sha256": "dfe0d9d1e26dd30ef87673e05075e237e393f7e623b1982626849bce2a740c9f",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy2.pcm",
+          "candidate_sha256": "7336637979604b04e9359c662d0b30522fce3c5006691537909ec0b253995964",
+          "baseline_sha256": "7336637979604b04e9359c662d0b30522fce3c5006691537909ec0b253995964",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-noqueue.pcm",
+          "candidate_sha256": "e4971a0f9b3334e1c2c813510a33353a94c3abf866db15453deb08e3849a0a0c",
+          "baseline_sha256": "e4971a0f9b3334e1c2c813510a33353a94c3abf866db15453deb08e3849a0a0c",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy0.pcm",
+          "candidate_sha256": "63c2dba99ccfc5af81989cce1203c68a2cda1698472046c9155064c0829d9327",
+          "baseline_sha256": "63c2dba99ccfc5af81989cce1203c68a2cda1698472046c9155064c0829d9327",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy2.pcm",
+          "candidate_sha256": "5e059032a1fe3c816a180d7524b5fd088ebb137f4225b857de9f298753680ba2",
+          "baseline_sha256": "5e059032a1fe3c816a180d7524b5fd088ebb137f4225b857de9f298753680ba2",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-noqueue.pcm",
+          "candidate_sha256": "62b9b7b33c4f54c9dccdc7f69466741f996bf9f9403ef375f03332304d2a2569",
+          "baseline_sha256": "62b9b7b33c4f54c9dccdc7f69466741f996bf9f9403ef375f03332304d2a2569",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy0.pcm",
+          "candidate_sha256": "e30d7850be0465b2aa50c2735ea71dc92314d9603025a9452026d1cff684bcef",
+          "baseline_sha256": "e30d7850be0465b2aa50c2735ea71dc92314d9603025a9452026d1cff684bcef",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy2.pcm",
+          "candidate_sha256": "8e92e26d4a2ca84556fd3a7e5cb84c557e28323dc1a048b8f52e22df553008bd",
+          "baseline_sha256": "8e92e26d4a2ca84556fd3a7e5cb84c557e28323dc1a048b8f52e22df553008bd",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-noqueue.pcm",
+          "candidate_sha256": "e4971a0f9b3334e1c2c813510a33353a94c3abf866db15453deb08e3849a0a0c",
+          "baseline_sha256": "e4971a0f9b3334e1c2c813510a33353a94c3abf866db15453deb08e3849a0a0c",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy0.pcm",
+          "candidate_sha256": "63c2dba99ccfc5af81989cce1203c68a2cda1698472046c9155064c0829d9327",
+          "baseline_sha256": "63c2dba99ccfc5af81989cce1203c68a2cda1698472046c9155064c0829d9327",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy2.pcm",
+          "candidate_sha256": "5e059032a1fe3c816a180d7524b5fd088ebb137f4225b857de9f298753680ba2",
+          "baseline_sha256": "5e059032a1fe3c816a180d7524b5fd088ebb137f4225b857de9f298753680ba2",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-noqueue.pcm",
+          "candidate_sha256": "62b9b7b33c4f54c9dccdc7f69466741f996bf9f9403ef375f03332304d2a2569",
+          "baseline_sha256": "62b9b7b33c4f54c9dccdc7f69466741f996bf9f9403ef375f03332304d2a2569",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy0.pcm",
+          "candidate_sha256": "e30d7850be0465b2aa50c2735ea71dc92314d9603025a9452026d1cff684bcef",
+          "baseline_sha256": "e30d7850be0465b2aa50c2735ea71dc92314d9603025a9452026d1cff684bcef",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy2.pcm",
+          "candidate_sha256": "8e92e26d4a2ca84556fd3a7e5cb84c557e28323dc1a048b8f52e22df553008bd",
+          "baseline_sha256": "8e92e26d4a2ca84556fd3a7e5cb84c557e28323dc1a048b8f52e22df553008bd",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-noqueue.pcm",
+          "candidate_sha256": "26533789b2051c726e6baa904c1d64cf9e6a549415ee2e58c3b495a0c178bff5",
+          "baseline_sha256": "26533789b2051c726e6baa904c1d64cf9e6a549415ee2e58c3b495a0c178bff5",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy0.pcm",
+          "candidate_sha256": "b55f4b10aa63f2a38b914180cc51fecd1abec1b3e03cc8bf624028aa1f142d79",
+          "baseline_sha256": "b55f4b10aa63f2a38b914180cc51fecd1abec1b3e03cc8bf624028aa1f142d79",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy2.pcm",
+          "candidate_sha256": "e6522ba13b33c8b323aaac5e6d61a08079b0e7907ee2de26c53d4a74d46e226c",
+          "baseline_sha256": "e6522ba13b33c8b323aaac5e6d61a08079b0e7907ee2de26c53d4a74d46e226c",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-noqueue.pcm",
+          "candidate_sha256": "26533789b2051c726e6baa904c1d64cf9e6a549415ee2e58c3b495a0c178bff5",
+          "baseline_sha256": "26533789b2051c726e6baa904c1d64cf9e6a549415ee2e58c3b495a0c178bff5",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy0.pcm",
+          "candidate_sha256": "b55f4b10aa63f2a38b914180cc51fecd1abec1b3e03cc8bf624028aa1f142d79",
+          "baseline_sha256": "b55f4b10aa63f2a38b914180cc51fecd1abec1b3e03cc8bf624028aa1f142d79",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy2.pcm",
+          "candidate_sha256": "e6522ba13b33c8b323aaac5e6d61a08079b0e7907ee2de26c53d4a74d46e226c",
+          "baseline_sha256": "e6522ba13b33c8b323aaac5e6d61a08079b0e7907ee2de26c53d4a74d46e226c",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-noqueue.pcm",
+          "candidate_sha256": "fec67c19b6c75ee48a810753bc7bd0cdca7bac429bf743e3e21d7de9a2181a76",
+          "baseline_sha256": "fec67c19b6c75ee48a810753bc7bd0cdca7bac429bf743e3e21d7de9a2181a76",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy0.pcm",
+          "candidate_sha256": "d53463deae5722bcae9d7c71fc474a45705f3e73a04e19324702a2b19a77d6c1",
+          "baseline_sha256": "d53463deae5722bcae9d7c71fc474a45705f3e73a04e19324702a2b19a77d6c1",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy2.pcm",
+          "candidate_sha256": "95915d6679a33047ef76a3b0e21f83c619232e21c3e032787b4dc301750b2eac",
+          "baseline_sha256": "95915d6679a33047ef76a3b0e21f83c619232e21c3e032787b4dc301750b2eac",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-noqueue.pcm",
+          "candidate_sha256": "b33cbeb4ea43e5ac3c7ec1598914d4e35ca92c84aaab69a200ab8da1b122b169",
+          "baseline_sha256": "b33cbeb4ea43e5ac3c7ec1598914d4e35ca92c84aaab69a200ab8da1b122b169",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy0.pcm",
+          "candidate_sha256": "9e33042ea487aaca0c92fc1538950c541d1d52487a04e37c5ce86a533a5536d8",
+          "baseline_sha256": "9e33042ea487aaca0c92fc1538950c541d1d52487a04e37c5ce86a533a5536d8",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy2.pcm",
+          "candidate_sha256": "f7cdf6a01711b3372bf6cf09e57ddbb110e87e7f3bd7ceb6770c64289d987745",
+          "baseline_sha256": "f7cdf6a01711b3372bf6cf09e57ddbb110e87e7f3bd7ceb6770c64289d987745",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-noqueue.pcm",
+          "candidate_sha256": "fec67c19b6c75ee48a810753bc7bd0cdca7bac429bf743e3e21d7de9a2181a76",
+          "baseline_sha256": "fec67c19b6c75ee48a810753bc7bd0cdca7bac429bf743e3e21d7de9a2181a76",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy0.pcm",
+          "candidate_sha256": "d53463deae5722bcae9d7c71fc474a45705f3e73a04e19324702a2b19a77d6c1",
+          "baseline_sha256": "d53463deae5722bcae9d7c71fc474a45705f3e73a04e19324702a2b19a77d6c1",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy2.pcm",
+          "candidate_sha256": "95915d6679a33047ef76a3b0e21f83c619232e21c3e032787b4dc301750b2eac",
+          "baseline_sha256": "95915d6679a33047ef76a3b0e21f83c619232e21c3e032787b4dc301750b2eac",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-noqueue.pcm",
+          "candidate_sha256": "b33cbeb4ea43e5ac3c7ec1598914d4e35ca92c84aaab69a200ab8da1b122b169",
+          "baseline_sha256": "b33cbeb4ea43e5ac3c7ec1598914d4e35ca92c84aaab69a200ab8da1b122b169",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy0.pcm",
+          "candidate_sha256": "9e33042ea487aaca0c92fc1538950c541d1d52487a04e37c5ce86a533a5536d8",
+          "baseline_sha256": "9e33042ea487aaca0c92fc1538950c541d1d52487a04e37c5ce86a533a5536d8",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy2.pcm",
+          "candidate_sha256": "f7cdf6a01711b3372bf6cf09e57ddbb110e87e7f3bd7ceb6770c64289d987745",
+          "baseline_sha256": "f7cdf6a01711b3372bf6cf09e57ddbb110e87e7f3bd7ceb6770c64289d987745",
+          "byte_identical": true
+        }
+      ]
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "candidate_directory": "build/combined-touch-runs/candidate-96000-realtime",
+      "baseline_directory": "build/combined-touch-runs/baseline-96000-realtime",
+      "count": 36,
+      "byte_identical": true,
+      "captures": [
+        {
+          "filename": "16-0-11-noqueue.pcm",
+          "candidate_sha256": "44cb93086c71a5cc03bd6e4dfc1d1bfae49628d709973887fddf819fbceda1db",
+          "baseline_sha256": "44cb93086c71a5cc03bd6e4dfc1d1bfae49628d709973887fddf819fbceda1db",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy0.pcm",
+          "candidate_sha256": "32c4cbaba858f60ce2920afd62a3fff8c4d8b333a6f8ecc20e774570606c0b59",
+          "baseline_sha256": "32c4cbaba858f60ce2920afd62a3fff8c4d8b333a6f8ecc20e774570606c0b59",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy2.pcm",
+          "candidate_sha256": "f06c636c20733943156c4fa72993230b1a00d1e18311f696e663bdec1fb5f12a",
+          "baseline_sha256": "f06c636c20733943156c4fa72993230b1a00d1e18311f696e663bdec1fb5f12a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-noqueue.pcm",
+          "candidate_sha256": "44cb93086c71a5cc03bd6e4dfc1d1bfae49628d709973887fddf819fbceda1db",
+          "baseline_sha256": "44cb93086c71a5cc03bd6e4dfc1d1bfae49628d709973887fddf819fbceda1db",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy0.pcm",
+          "candidate_sha256": "32c4cbaba858f60ce2920afd62a3fff8c4d8b333a6f8ecc20e774570606c0b59",
+          "baseline_sha256": "32c4cbaba858f60ce2920afd62a3fff8c4d8b333a6f8ecc20e774570606c0b59",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy2.pcm",
+          "candidate_sha256": "f06c636c20733943156c4fa72993230b1a00d1e18311f696e663bdec1fb5f12a",
+          "baseline_sha256": "f06c636c20733943156c4fa72993230b1a00d1e18311f696e663bdec1fb5f12a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-noqueue.pcm",
+          "candidate_sha256": "44a7c46b6a94fedfa2dfe85bae5823dc7e753159ab31bd8d759c81ea51b6bd35",
+          "baseline_sha256": "44a7c46b6a94fedfa2dfe85bae5823dc7e753159ab31bd8d759c81ea51b6bd35",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy0.pcm",
+          "candidate_sha256": "b87088f2b5912e1f5a2b8266ea001800f30d1b04177f9c2ce90069e84169116a",
+          "baseline_sha256": "b87088f2b5912e1f5a2b8266ea001800f30d1b04177f9c2ce90069e84169116a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy2.pcm",
+          "candidate_sha256": "5e861bbea3f32ed6888abd828666a5a98e7886b42a30ed70f0ed208730e22d7c",
+          "baseline_sha256": "5e861bbea3f32ed6888abd828666a5a98e7886b42a30ed70f0ed208730e22d7c",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-noqueue.pcm",
+          "candidate_sha256": "2185feb5a182f7fc25a44cf652db5d6a658b43ce34c134866eb10b274eb39b4f",
+          "baseline_sha256": "2185feb5a182f7fc25a44cf652db5d6a658b43ce34c134866eb10b274eb39b4f",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy0.pcm",
+          "candidate_sha256": "cc516028d45d3fb85750fe34bf6b04f3e01deb54833cd82ae2d1b2bd50719a9a",
+          "baseline_sha256": "cc516028d45d3fb85750fe34bf6b04f3e01deb54833cd82ae2d1b2bd50719a9a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy2.pcm",
+          "candidate_sha256": "1734ff88153b462978a4cd9655171ebd44d97202c810e4d99427e59842bcee4c",
+          "baseline_sha256": "1734ff88153b462978a4cd9655171ebd44d97202c810e4d99427e59842bcee4c",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-noqueue.pcm",
+          "candidate_sha256": "44a7c46b6a94fedfa2dfe85bae5823dc7e753159ab31bd8d759c81ea51b6bd35",
+          "baseline_sha256": "44a7c46b6a94fedfa2dfe85bae5823dc7e753159ab31bd8d759c81ea51b6bd35",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy0.pcm",
+          "candidate_sha256": "b87088f2b5912e1f5a2b8266ea001800f30d1b04177f9c2ce90069e84169116a",
+          "baseline_sha256": "b87088f2b5912e1f5a2b8266ea001800f30d1b04177f9c2ce90069e84169116a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy2.pcm",
+          "candidate_sha256": "5e861bbea3f32ed6888abd828666a5a98e7886b42a30ed70f0ed208730e22d7c",
+          "baseline_sha256": "5e861bbea3f32ed6888abd828666a5a98e7886b42a30ed70f0ed208730e22d7c",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-noqueue.pcm",
+          "candidate_sha256": "2185feb5a182f7fc25a44cf652db5d6a658b43ce34c134866eb10b274eb39b4f",
+          "baseline_sha256": "2185feb5a182f7fc25a44cf652db5d6a658b43ce34c134866eb10b274eb39b4f",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy0.pcm",
+          "candidate_sha256": "cc516028d45d3fb85750fe34bf6b04f3e01deb54833cd82ae2d1b2bd50719a9a",
+          "baseline_sha256": "cc516028d45d3fb85750fe34bf6b04f3e01deb54833cd82ae2d1b2bd50719a9a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy2.pcm",
+          "candidate_sha256": "1734ff88153b462978a4cd9655171ebd44d97202c810e4d99427e59842bcee4c",
+          "baseline_sha256": "1734ff88153b462978a4cd9655171ebd44d97202c810e4d99427e59842bcee4c",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-noqueue.pcm",
+          "candidate_sha256": "307c50686efa9549c9be020127a1dea32707d05661545c92976292884470b68a",
+          "baseline_sha256": "307c50686efa9549c9be020127a1dea32707d05661545c92976292884470b68a",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy0.pcm",
+          "candidate_sha256": "89af37e1f962dd263c4755d2f39dcd27214bbfa056913f92d85584f15e660f4c",
+          "baseline_sha256": "89af37e1f962dd263c4755d2f39dcd27214bbfa056913f92d85584f15e660f4c",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy2.pcm",
+          "candidate_sha256": "afc7a36537d15b96b45c24e1d27e780f5b8c6644e54d19a0551bd64068e763dd",
+          "baseline_sha256": "afc7a36537d15b96b45c24e1d27e780f5b8c6644e54d19a0551bd64068e763dd",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-noqueue.pcm",
+          "candidate_sha256": "307c50686efa9549c9be020127a1dea32707d05661545c92976292884470b68a",
+          "baseline_sha256": "307c50686efa9549c9be020127a1dea32707d05661545c92976292884470b68a",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy0.pcm",
+          "candidate_sha256": "89af37e1f962dd263c4755d2f39dcd27214bbfa056913f92d85584f15e660f4c",
+          "baseline_sha256": "89af37e1f962dd263c4755d2f39dcd27214bbfa056913f92d85584f15e660f4c",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy2.pcm",
+          "candidate_sha256": "afc7a36537d15b96b45c24e1d27e780f5b8c6644e54d19a0551bd64068e763dd",
+          "baseline_sha256": "afc7a36537d15b96b45c24e1d27e780f5b8c6644e54d19a0551bd64068e763dd",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-noqueue.pcm",
+          "candidate_sha256": "c714248d60a7eb64272f05f8166e6b2b07a028897cded750662786e793ea8a95",
+          "baseline_sha256": "c714248d60a7eb64272f05f8166e6b2b07a028897cded750662786e793ea8a95",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy0.pcm",
+          "candidate_sha256": "fa56dbc9883500f868d6eea7aab2508896f9c88c3f9e5a355b29c92f06663cdc",
+          "baseline_sha256": "fa56dbc9883500f868d6eea7aab2508896f9c88c3f9e5a355b29c92f06663cdc",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy2.pcm",
+          "candidate_sha256": "4667370cec9d588a2397681057ebfce08e9faccaeab86344c463ecdd864a79f9",
+          "baseline_sha256": "4667370cec9d588a2397681057ebfce08e9faccaeab86344c463ecdd864a79f9",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-noqueue.pcm",
+          "candidate_sha256": "a727d3b9183b517cad635368163de7323e36121803d54de1affa38a1f74c4e55",
+          "baseline_sha256": "a727d3b9183b517cad635368163de7323e36121803d54de1affa38a1f74c4e55",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy0.pcm",
+          "candidate_sha256": "32ab24c97ce0b669635b0dad2ca6829d825f9c0cc9e14f4b0cdf056599cfb881",
+          "baseline_sha256": "32ab24c97ce0b669635b0dad2ca6829d825f9c0cc9e14f4b0cdf056599cfb881",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy2.pcm",
+          "candidate_sha256": "cf386025b1ce7485be1b6d0f6aea7eb79bf25f40b8975b179a456fcc28ebc9d0",
+          "baseline_sha256": "cf386025b1ce7485be1b6d0f6aea7eb79bf25f40b8975b179a456fcc28ebc9d0",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-noqueue.pcm",
+          "candidate_sha256": "c714248d60a7eb64272f05f8166e6b2b07a028897cded750662786e793ea8a95",
+          "baseline_sha256": "c714248d60a7eb64272f05f8166e6b2b07a028897cded750662786e793ea8a95",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy0.pcm",
+          "candidate_sha256": "fa56dbc9883500f868d6eea7aab2508896f9c88c3f9e5a355b29c92f06663cdc",
+          "baseline_sha256": "fa56dbc9883500f868d6eea7aab2508896f9c88c3f9e5a355b29c92f06663cdc",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy2.pcm",
+          "candidate_sha256": "4667370cec9d588a2397681057ebfce08e9faccaeab86344c463ecdd864a79f9",
+          "baseline_sha256": "4667370cec9d588a2397681057ebfce08e9faccaeab86344c463ecdd864a79f9",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-noqueue.pcm",
+          "candidate_sha256": "a727d3b9183b517cad635368163de7323e36121803d54de1affa38a1f74c4e55",
+          "baseline_sha256": "a727d3b9183b517cad635368163de7323e36121803d54de1affa38a1f74c4e55",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy0.pcm",
+          "candidate_sha256": "32ab24c97ce0b669635b0dad2ca6829d825f9c0cc9e14f4b0cdf056599cfb881",
+          "baseline_sha256": "32ab24c97ce0b669635b0dad2ca6829d825f9c0cc9e14f4b0cdf056599cfb881",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy2.pcm",
+          "candidate_sha256": "cf386025b1ce7485be1b6d0f6aea7eb79bf25f40b8975b179a456fcc28ebc9d0",
+          "baseline_sha256": "cf386025b1ce7485be1b6d0f6aea7eb79bf25f40b8975b179a456fcc28ebc9d0",
+          "byte_identical": true
+        }
+      ]
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "candidate_directory": "build/combined-touch-runs/candidate-96000-offline",
+      "baseline_directory": "build/combined-touch-runs/baseline-96000-offline",
+      "count": 36,
+      "byte_identical": true,
+      "captures": [
+        {
+          "filename": "16-0-11-noqueue.pcm",
+          "candidate_sha256": "f78592cf8bf3f841f47e98796ef896a5f8fff28506b998ead5f628f11e80c237",
+          "baseline_sha256": "f78592cf8bf3f841f47e98796ef896a5f8fff28506b998ead5f628f11e80c237",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy0.pcm",
+          "candidate_sha256": "32c4cbaba858f60ce2920afd62a3fff8c4d8b333a6f8ecc20e774570606c0b59",
+          "baseline_sha256": "32c4cbaba858f60ce2920afd62a3fff8c4d8b333a6f8ecc20e774570606c0b59",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-11-policy2.pcm",
+          "candidate_sha256": "02b65b5a1a08ac2908c99d906d96094cfec6880bc699ee941d62f42aeb5dd544",
+          "baseline_sha256": "02b65b5a1a08ac2908c99d906d96094cfec6880bc699ee941d62f42aeb5dd544",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-noqueue.pcm",
+          "candidate_sha256": "f78592cf8bf3f841f47e98796ef896a5f8fff28506b998ead5f628f11e80c237",
+          "baseline_sha256": "f78592cf8bf3f841f47e98796ef896a5f8fff28506b998ead5f628f11e80c237",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy0.pcm",
+          "candidate_sha256": "32c4cbaba858f60ce2920afd62a3fff8c4d8b333a6f8ecc20e774570606c0b59",
+          "baseline_sha256": "32c4cbaba858f60ce2920afd62a3fff8c4d8b333a6f8ecc20e774570606c0b59",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-0-13-policy2.pcm",
+          "candidate_sha256": "02b65b5a1a08ac2908c99d906d96094cfec6880bc699ee941d62f42aeb5dd544",
+          "baseline_sha256": "02b65b5a1a08ac2908c99d906d96094cfec6880bc699ee941d62f42aeb5dd544",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-noqueue.pcm",
+          "candidate_sha256": "e0704887e7e96544637b9d3ebdd831e8e1ff2e1ece8761b929ba95d173f19d9c",
+          "baseline_sha256": "e0704887e7e96544637b9d3ebdd831e8e1ff2e1ece8761b929ba95d173f19d9c",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy0.pcm",
+          "candidate_sha256": "b87088f2b5912e1f5a2b8266ea001800f30d1b04177f9c2ce90069e84169116a",
+          "baseline_sha256": "b87088f2b5912e1f5a2b8266ea001800f30d1b04177f9c2ce90069e84169116a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-0-policy2.pcm",
+          "candidate_sha256": "bf84914ec68d5de525f6ca58303bda450913b0ef4d42d8662c9ea7f4af1b0b62",
+          "baseline_sha256": "bf84914ec68d5de525f6ca58303bda450913b0ef4d42d8662c9ea7f4af1b0b62",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-noqueue.pcm",
+          "candidate_sha256": "d581b54f98abe5b2d63ddbf8f208f2dee50a0eea4e706c94589e38d2366a4f3a",
+          "baseline_sha256": "d581b54f98abe5b2d63ddbf8f208f2dee50a0eea4e706c94589e38d2366a4f3a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy0.pcm",
+          "candidate_sha256": "cc516028d45d3fb85750fe34bf6b04f3e01deb54833cd82ae2d1b2bd50719a9a",
+          "baseline_sha256": "cc516028d45d3fb85750fe34bf6b04f3e01deb54833cd82ae2d1b2bd50719a9a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-11-13-policy2.pcm",
+          "candidate_sha256": "b6e3e5efc3f0ad2f28df5d20cd14a96dc6e1d2b7b052d34134b8a9808d163487",
+          "baseline_sha256": "b6e3e5efc3f0ad2f28df5d20cd14a96dc6e1d2b7b052d34134b8a9808d163487",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-noqueue.pcm",
+          "candidate_sha256": "e0704887e7e96544637b9d3ebdd831e8e1ff2e1ece8761b929ba95d173f19d9c",
+          "baseline_sha256": "e0704887e7e96544637b9d3ebdd831e8e1ff2e1ece8761b929ba95d173f19d9c",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy0.pcm",
+          "candidate_sha256": "b87088f2b5912e1f5a2b8266ea001800f30d1b04177f9c2ce90069e84169116a",
+          "baseline_sha256": "b87088f2b5912e1f5a2b8266ea001800f30d1b04177f9c2ce90069e84169116a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-0-policy2.pcm",
+          "candidate_sha256": "bf84914ec68d5de525f6ca58303bda450913b0ef4d42d8662c9ea7f4af1b0b62",
+          "baseline_sha256": "bf84914ec68d5de525f6ca58303bda450913b0ef4d42d8662c9ea7f4af1b0b62",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-noqueue.pcm",
+          "candidate_sha256": "d581b54f98abe5b2d63ddbf8f208f2dee50a0eea4e706c94589e38d2366a4f3a",
+          "baseline_sha256": "d581b54f98abe5b2d63ddbf8f208f2dee50a0eea4e706c94589e38d2366a4f3a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy0.pcm",
+          "candidate_sha256": "cc516028d45d3fb85750fe34bf6b04f3e01deb54833cd82ae2d1b2bd50719a9a",
+          "baseline_sha256": "cc516028d45d3fb85750fe34bf6b04f3e01deb54833cd82ae2d1b2bd50719a9a",
+          "byte_identical": true
+        },
+        {
+          "filename": "16-13-11-policy2.pcm",
+          "candidate_sha256": "b6e3e5efc3f0ad2f28df5d20cd14a96dc6e1d2b7b052d34134b8a9808d163487",
+          "baseline_sha256": "b6e3e5efc3f0ad2f28df5d20cd14a96dc6e1d2b7b052d34134b8a9808d163487",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-noqueue.pcm",
+          "candidate_sha256": "961b6a3e2cf1d0e5e26d035d046d5c43a221074a066c5d513440a9b414c4426d",
+          "baseline_sha256": "961b6a3e2cf1d0e5e26d035d046d5c43a221074a066c5d513440a9b414c4426d",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy0.pcm",
+          "candidate_sha256": "89af37e1f962dd263c4755d2f39dcd27214bbfa056913f92d85584f15e660f4c",
+          "baseline_sha256": "89af37e1f962dd263c4755d2f39dcd27214bbfa056913f92d85584f15e660f4c",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-11-policy2.pcm",
+          "candidate_sha256": "ada4a74f147ee0b5a09dbca84536df8449ae9b800fb3624ad43b196751d7f988",
+          "baseline_sha256": "ada4a74f147ee0b5a09dbca84536df8449ae9b800fb3624ad43b196751d7f988",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-noqueue.pcm",
+          "candidate_sha256": "961b6a3e2cf1d0e5e26d035d046d5c43a221074a066c5d513440a9b414c4426d",
+          "baseline_sha256": "961b6a3e2cf1d0e5e26d035d046d5c43a221074a066c5d513440a9b414c4426d",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy0.pcm",
+          "candidate_sha256": "89af37e1f962dd263c4755d2f39dcd27214bbfa056913f92d85584f15e660f4c",
+          "baseline_sha256": "89af37e1f962dd263c4755d2f39dcd27214bbfa056913f92d85584f15e660f4c",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-0-13-policy2.pcm",
+          "candidate_sha256": "ada4a74f147ee0b5a09dbca84536df8449ae9b800fb3624ad43b196751d7f988",
+          "baseline_sha256": "ada4a74f147ee0b5a09dbca84536df8449ae9b800fb3624ad43b196751d7f988",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-noqueue.pcm",
+          "candidate_sha256": "1896270e835dc878c7c07eb12ecc891b4fbb0e539a2403a8a2ef56d1e31cef19",
+          "baseline_sha256": "1896270e835dc878c7c07eb12ecc891b4fbb0e539a2403a8a2ef56d1e31cef19",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy0.pcm",
+          "candidate_sha256": "fa56dbc9883500f868d6eea7aab2508896f9c88c3f9e5a355b29c92f06663cdc",
+          "baseline_sha256": "fa56dbc9883500f868d6eea7aab2508896f9c88c3f9e5a355b29c92f06663cdc",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-0-policy2.pcm",
+          "candidate_sha256": "b673861b46a7ee3462090f11dbcd1b4fd65a35ae7b4cd2439dbc2c5e9e69931f",
+          "baseline_sha256": "b673861b46a7ee3462090f11dbcd1b4fd65a35ae7b4cd2439dbc2c5e9e69931f",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-noqueue.pcm",
+          "candidate_sha256": "975869ead49a81559e2a6c118a1c1e980e49763bfcadac81975666f0dcdbea5e",
+          "baseline_sha256": "975869ead49a81559e2a6c118a1c1e980e49763bfcadac81975666f0dcdbea5e",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy0.pcm",
+          "candidate_sha256": "32ab24c97ce0b669635b0dad2ca6829d825f9c0cc9e14f4b0cdf056599cfb881",
+          "baseline_sha256": "32ab24c97ce0b669635b0dad2ca6829d825f9c0cc9e14f4b0cdf056599cfb881",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-11-13-policy2.pcm",
+          "candidate_sha256": "14899d63856fe84dd0efbc97a51e1ca30f51d426796271f0cd94113a8966c886",
+          "baseline_sha256": "14899d63856fe84dd0efbc97a51e1ca30f51d426796271f0cd94113a8966c886",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-noqueue.pcm",
+          "candidate_sha256": "1896270e835dc878c7c07eb12ecc891b4fbb0e539a2403a8a2ef56d1e31cef19",
+          "baseline_sha256": "1896270e835dc878c7c07eb12ecc891b4fbb0e539a2403a8a2ef56d1e31cef19",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy0.pcm",
+          "candidate_sha256": "fa56dbc9883500f868d6eea7aab2508896f9c88c3f9e5a355b29c92f06663cdc",
+          "baseline_sha256": "fa56dbc9883500f868d6eea7aab2508896f9c88c3f9e5a355b29c92f06663cdc",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-0-policy2.pcm",
+          "candidate_sha256": "b673861b46a7ee3462090f11dbcd1b4fd65a35ae7b4cd2439dbc2c5e9e69931f",
+          "baseline_sha256": "b673861b46a7ee3462090f11dbcd1b4fd65a35ae7b4cd2439dbc2c5e9e69931f",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-noqueue.pcm",
+          "candidate_sha256": "975869ead49a81559e2a6c118a1c1e980e49763bfcadac81975666f0dcdbea5e",
+          "baseline_sha256": "975869ead49a81559e2a6c118a1c1e980e49763bfcadac81975666f0dcdbea5e",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy0.pcm",
+          "candidate_sha256": "32ab24c97ce0b669635b0dad2ca6829d825f9c0cc9e14f4b0cdf056599cfb881",
+          "baseline_sha256": "32ab24c97ce0b669635b0dad2ca6829d825f9c0cc9e14f4b0cdf056599cfb881",
+          "byte_identical": true
+        },
+        {
+          "filename": "8-13-11-policy2.pcm",
+          "candidate_sha256": "14899d63856fe84dd0efbc97a51e1ca30f51d426796271f0cd94113a8966c886",
+          "baseline_sha256": "14899d63856fe84dd0efbc97a51e1ca30f51d426796271f0cd94113a8966c886",
+          "byte_identical": true
+        }
+      ]
+    }
+  ],
+  "capture_count": 216,
+  "all_passed": true
+}
