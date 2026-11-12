@@ -344,7 +344,11 @@ never treated as calibration data, as `docs/ANALOG_FIDELITY_REQUIREMENT.md` alre
 
 - **Modulation sources**
   - 3 drawable multi-segment envelopes (MSEGs), loopable and tempo-syncable.
-  - LFO waveforms beyond sine; today the waveform is hard-coded to sine at `Engine.cpp:1150`.
+  - Seven LFO shapes are implemented: sine, triangle, saw up/down, square,
+    sample-and-hold and smooth random (`src/core/ModulationLfo.h`). Published
+    native and core qualification is bounded; see the
+    [modern LFO evidence map](MODERN_LFO_QUALIFICATION.md). This is not a claim
+    that Phase 6 or every waveform/host combination is complete.
 - **Modulation routing**
   - A 16-slot modulation matrix whose sources include the original controls: ribbon,
     pressure, contour, SUB and ring envelope.
@@ -362,8 +366,10 @@ never treated as calibration data, as `docs/ANALOG_FIDELITY_REQUIREMENT.md` alre
   - Copy rank I↔II and copy memory↔panel.
   - "Randomize within original ranges".
 - **Host and engine**
-  - Host parameter groups (`ParamDef.group` already exists; `PluginProcessor.cpp:153-240`
-    ignores it).
+  - Host parameter groups are implemented in `PluginProcessor.cpp`'s
+    `createParameterLayout`, using `ParamDef.group` for contiguous global runs
+    and explicit groups for other blocks. Host-specific presentation and release
+    qualification remain separate from source availability.
   - Voice modes: 8 voices (authentic default), plus optional 16-voice and unison modes as
     labeled extensions.
   - Optionally sample-accurate automation for key parameters.
