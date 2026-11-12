@@ -75,8 +75,11 @@ void testVst3PanAutomation(Module& module, double audioTolerance)
         cs80::chParam(1, cs80::CP_lpfCutoff), cs80::chParam(1, cs80::CP_lpfRes),
         cs80::chParam(1, cs80::CP_vLevel), cs80::chParam(1, cs80::CP_pw)
     };
-    require(cs80::kSampleAccurateParameters.size() == originalKeys.size() + 2,
-            "exactly two native pan keys are appended to the original roster");
+    // Later SUB/RING lanes append after this historical twenty-lane prefix.
+    // Their dedicated witnesses own the full-roster contracts; pan must keep
+    // checking its original keys and exact positions without freezing the tail.
+    require(cs80::kSampleAccurateParameters.size() >= originalKeys.size() + 2,
+            "the native automation roster retains the original keys and two pan lanes");
     check(std::equal(originalKeys.begin(), originalKeys.end(), cs80::kSampleAccurateParameters.begin()),
           "original eighteen native automation keys retain their lane order");
     check(cs80::kSampleAccurateParameters[originalKeys.size()] == cs80::chParam(0, cs80::CP_pan)
