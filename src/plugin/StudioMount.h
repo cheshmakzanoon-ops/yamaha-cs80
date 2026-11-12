@@ -60,7 +60,8 @@ public:
         auto& state = processor.getEditorState();
         controllersWanted = state.controllersShown.load();
         qwerty.setEnabled(state.qwertyEnabled.load());
-        setCircuitNotesInTooltips(state.circuitNotes.load());
+        notesWanted = state.circuitNotes.load();
+        setCircuitNotesInTooltips(notesWanted);
         tour.setComponentID("guided_tour");
         tour.onDismissed = [this]
         {
@@ -86,12 +87,28 @@ public:
     }
     void setCircuitNotesShown(bool shown)
     {
+        notesWanted = shown;
         setCircuitNotesInTooltips(shown);
         processor.getEditorState().circuitNotes = shown;
     }
     bool areControllersShown() const noexcept { return controllersWanted; }
     void sync()
     {
+        // A host can restore session preferences while the same editor stays open.
+        // Apply them here on the message thread, including QWERTY note release on disable.
+        const auto& state = processor.getEditorState();
+        const bool keyboardWanted = state.qwertyEnabled.load();
+        if (qwerty.isEnabled() != keyboardWanted)
+            qwerty.setEnabled(keyboardWanted);
+        controllersWanted = state.controllersShown.load();
+        const bool restoredNotes = state.circuitNotes.load();
+        if (notesWanted != restoredNotes)
+        {
+            notesWanted = restoredNotes;
+            // Tooltips currently share a process-global flag. Do not reassert an unchanged
+            // local preference every tick and fight another open instance's preference.
+            setCircuitNotesInTooltips(notesWanted);
+        }
         const bool pure = processor.getParamValue(cs80::P_parityMode) >= 0.5f;
         const bool visible = controllersWanted && ! pure;
         if (controllers.isVisible() != visible)
@@ -133,6 +150,7 @@ public:
 
 private:
     bool controllersWanted = false;
+    bool notesWanted = false;
     bool tourChecked = false;
 };
 
