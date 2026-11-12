@@ -926,6 +926,19 @@ if (CS80_BUILD_PLUGIN)
     if(CS80_BUILD_TESTS AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
         get_target_property(CS80_JUCE_MODULES juce_audio_processors_headless INTERFACE_JUCE_MODULE_PATH)
         set(CS80_VST3_SDK "${CS80_JUCE_MODULES}/juce_audio_processors_headless/format_types/VST3_SDK")
+        add_executable(cs80_vst3_sub_automation_tests tests/Vst3SubAutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_sub_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_sub_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_sub_automation_tests CS80Reference_VST3)
+        add_test(NAME cs80_vst3_sub_automation_tests COMMAND cs80_vst3_sub_automation_tests
+            "$<TARGET_FILE:CS80Reference_VST3>"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation-sub-v1.json"
+            "${CMAKE_CURRENT_BINARY_DIR}/sub-automation-capture")
+        set_tests_properties(cs80_vst3_sub_automation_tests PROPERTIES TIMEOUT 180)
         add_executable(cs80_vst3_automation_tests tests/Vst3AutomationTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"

@@ -2,12 +2,14 @@
 
 ## Scope
 
-This integration preserves host sample offsets for twenty VST3 parameters in
+This integration preserves host sample offsets for twenty-two VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, plus both rank pan controls. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed and SUB VCO depth. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
-not replace DSP smoothing or change a parameter law.
+not replace DSP smoothing or change a parameter law. The
+[SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
+changing either historical capability contract.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

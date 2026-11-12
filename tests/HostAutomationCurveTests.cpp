@@ -63,12 +63,17 @@ int main(int argc, char** argv)
             cs80::chParam(1, cs80::CP_vLevel), cs80::chParam(1, cs80::CP_pw) };
         const ws1::Tolerances panLimits(argc > 2 ? argv[2]
             : "tests/parity/tolerances-v2/host-automation-pan-v1.json", "host_automation_pan");
+        // Preserve this historical pan contract as its exact twenty-lane prefix.
+        // The separately registered SUB capability validates the full roster.
+        static_assert(cs80::kSampleAccurateParameters.size() >= 20);
+        std::array<int, 20> panRoster {};
+        std::copy_n(cs80::kSampleAccurateParameters.begin(), panRoster.size(), panRoster.begin());
         check(original.size() == limits["key_parameter_count"], "frozen registered key roster size");
-        check(cs80::kSampleAccurateParameters.size() == panLimits["key_parameter_count"], "expanded pan roster size");
+        check(panRoster.size() == panLimits["key_parameter_count"], "expanded pan roster size");
         check(cs80::kSampleAccurateParameters.size() >= original.size()
             && std::equal(original.begin(), original.end(), cs80::kSampleAccurateParameters.begin()),
             "original eighteen lanes retain their order");
-        check(cs80::kSampleAccurateParameters.size() == original.size() + 2
+        check(panRoster.size() == original.size() + 2
             && cs80::kSampleAccurateParameters[original.size()] == cs80::chParam(0, cs80::CP_pan)
             && cs80::kSampleAccurateParameters[original.size() + 1] == cs80::chParam(1, cs80::CP_pan),
             "only the two rank pan lanes are appended");

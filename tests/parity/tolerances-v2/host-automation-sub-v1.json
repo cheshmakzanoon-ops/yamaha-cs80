@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append original-panel SUB speed and SUB VCO depth to the unchanged twenty-lane prefix. Historical eighteen-lane and pan contracts remain unchanged.",
+  "host_automation_sub": {
+    "key_parameter_count": 22,
+    "keys": "Original twenty in original order, then P_subOriginalSpeed and P_subVco.",
+    "authority": "Global SUB controls remain live independently of PANEL/factory/MEMORY selection. Original SUB speed applies when original SUB mode is selected; this does not add legacy SUB speed or other depths.",
+    "timing": "Modern VST3 normalized interpolation before existing DSP behavior; unchanged no-queue and Legacy/PURE final-point behavior. AU is not expanded.",
+    "verification": "Supported finite normal queues through actual built Linux VST3, original twenty-lane prefix, per-sample reference, block partitions, source modes, eight/sixteen voices and preserved baseline captures. Existing host-automation.json numerical limits apply without relaxation. No malformed cases, native GUI, DAW or CPU-deadline claim."
+  }
+}

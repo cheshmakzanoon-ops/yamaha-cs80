@@ -22,7 +22,9 @@ inline constexpr std::array kSampleAccurateParameters {
     chParam(1, CP_hpfCutoff), chParam(1, CP_hpfRes), chParam(1, CP_lpfCutoff),
     chParam(1, CP_lpfRes), chParam(1, CP_vLevel), chParam(1, CP_pw),
     // Append capability lanes so the original eighteen keep their indices.
-    chParam(0, CP_pan), chParam(1, CP_pan)
+    chParam(0, CP_pan), chParam(1, CP_pan),
+    // Original-panel SUB controls: append without moving existing lanes.
+    int(P_subOriginalSpeed), int(P_subVco)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

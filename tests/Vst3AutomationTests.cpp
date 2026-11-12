@@ -462,6 +462,7 @@ std::vector<float> renderAfterFlush(Module& module, const cs80::ParamValues& par
 }
 } // namespace
 
+#ifndef CS80_SUPPORTED_SUB_AUTOMATION_ONLY
 #include "Vst3AutomationPolicyBoundaryTests.h"
 #include "Vst3AutomationProgramBoundaryTests.h"
 #include "Vst3PanAutomationTests.h"
@@ -556,3 +557,5 @@ int main(int argc, char** argv)
     catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 2; }
     return failures == 0 ? 0 : 1;
 }
+
+#endif // CS80_SUPPORTED_SUB_AUTOMATION_ONLY
