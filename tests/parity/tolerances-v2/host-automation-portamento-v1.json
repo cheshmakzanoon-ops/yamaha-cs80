@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing global portamento time as lane 35 after the unchanged 35-lane prefix. Existing parameter metadata, glide law and all 27 earlier contracts remain unchanged.",
+  "host_automation_portamento": {
+    "key_parameter_count": 36,
+    "keys": "Complete preceding 35-lane roster/order unchanged; P_portamento appended at lane 35.",
+    "authority": "Existing global portamento control retains source-independent routing, 0..5 second range, zero default and existing normalized conversion. No glide-mode or footswitch automation append.",
+    "timing": "Modern VST3 normalized interpolation updates the existing live exponential glide-time coefficient; existing gate, onset initialization and key-hold behavior remain unchanged. Protected policies keep historical block behavior.",
+    "verification": "36 bounded full cases and 36 frozen35 compatibility cases across three sources, two capacities and six rate/process configurations; 756 renders, 12 processes, 108 actual capture pairs. Finite strictly positive times in static smooth mode; scalar plus five partitions, matched active constant effect and fixed open-assigned-footswitch PCM-only controls. Reset-pitch/startup transient scope, not general legato, glissando, threshold crossing, re-enable state, hardware, GUI or CPU qualification. Original numerical thresholds retained; exact module/host/source provenance required."
+  }
+}

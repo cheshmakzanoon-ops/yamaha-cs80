@@ -39,8 +39,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), ringLimits(argv[3], "host_automation_ring_chorus_combined");
-        require(ringLimits["key_parameter_count"] == 35 && cs80::kSampleAccurateParameters.size() == 35,
-                "exact 35-lane ring/effect integration capability");
+        require(ringLimits["key_parameter_count"] == 35 && cs80::kSampleAccurateParameters.size() >= 35,
+                "historical 35-lane ring/effect integration capability prefix");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 31-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[31] == cs80::P_ringAttack

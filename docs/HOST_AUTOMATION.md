@@ -2,10 +2,15 @@
 
 ## Scope
 
-This candidate chorus-control extension preserves host sample offsets for thirty-five VST3 parameters in
+The [portamento extension](VST3_PORTAMENTO_AUTOMATION.md) appends existing
+`P_portamento` at lane35 after the unchanged35-lane prefix. Positive time
+updates affect the existing live glide coefficient when the footswitch gate
+is active; glide-mode selection, gate behavior and DSP laws are unchanged.
+
+This candidate portamento extension preserves host sample offsets for thirty-six VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, and chorus speed/depth. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, and smooth portamento time. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without

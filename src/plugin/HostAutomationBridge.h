@@ -38,7 +38,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing trigger-latched times; do not reshape an active ring envelope.
     int(P_ringAttack), int(P_ringDecay),
     // Existing global chorus controls; retain the complete 33-lane prefix.
-    int(P_chorusSpeed), int(P_chorusDepth)
+    int(P_chorusSpeed), int(P_chorusDepth),
+    // Existing global glide time; preserve the complete 35-lane prefix.
+    int(P_portamento)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

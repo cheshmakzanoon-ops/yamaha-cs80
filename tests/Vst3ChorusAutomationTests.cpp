@@ -40,8 +40,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), chorusLimits(argv[3], "host_automation_chorus");
-        require(chorusLimits["key_parameter_count"] == 35 && cs80::kSampleAccurateParameters.size() == 35,
-                "exact 35-lane chorus capability");
+        require(chorusLimits["key_parameter_count"] == 35 && cs80::kSampleAccurateParameters.size() >= 35,
+                "historical 35-lane chorus capability prefix");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 33-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[33] == cs80::P_chorusSpeed

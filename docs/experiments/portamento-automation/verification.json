@@ -1,0 +1,228 @@
+{
+  "base_commit": "1eb1b80961dc10c36db9d84d43084bc4eba72856",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_portamento_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 36,
+  "compatibility_cases": 36,
+  "pcm_pairs": 108,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": {
+    "portamento": [
+      {
+        "max_error": 0.0,
+        "effect": 0.0703339,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.303564,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0703339,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.174852,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.433475,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.174852,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.95812e-09,
+        "effect": 0.0672933,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.26406,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.95812e-09,
+        "effect": 0.0672933,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.172926,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.416255,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.172926,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 9.31323e-10,
+        "effect": 0.0679446,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.238831,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 9.31323e-10,
+        "effect": 0.0679446,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.158011,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.23517e-08,
+        "effect": 0.556828,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.158011,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.72529e-09,
+        "effect": 0.0673854,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.224064,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.72529e-09,
+        "effect": 0.0673854,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.1639,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.495754,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.1639,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0566545,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 3.72529e-08,
+        "effect": 0.236951,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.0566545,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.127477,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 4.47035e-08,
+        "effect": 0.411703,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 1.49012e-08,
+        "effect": 0.127477,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 5.58794e-09,
+        "effect": 0.0567639,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.221286,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 5.58794e-09,
+        "effect": 0.0567639,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.128923,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 2.98023e-08,
+        "effect": 0.394261,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 7.45058e-09,
+        "effect": 0.128923,
+        "bypass_error": 0.0
+      }
+    ]
+  },
+  "old_contract_count": 27,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "5f3363b40b7f86a3c55222fe53b9108eb40794e3e7b6d95a1c1048ecb7e07dbf",
+    "src/plugin/HostAutomationBridge.h": "500c20d2467be901b9b3767bf9a7e537cb5908b7b6dfbdb5f050bcac6f61aa70",
+    "tests/Vst3PortamentoAutomationTests.cpp": "444bfe930e1aaba7516d2e6493dae2009dd8afb296050eaf026cfab887276694",
+    "tests/Vst3RingAutomationTests.cpp": "5e4983645d483d4836010a9aafc8c775acd9099917ce6522237bf6b4c9a63cfa",
+    "tests/Vst3ChorusAutomationTests.cpp": "21cdc1bca2fac4d36389034695336c4c05092b08b4818b64232f2cb45a56b76e",
+    "tests/Vst3TremoloAutomationTests.cpp": "b1304b7ce0bc10a5b9b54d372025bf33cd7f2cba136be65274c23f56c5c91531",
+    "tests/Vst3RingChorusCombinedAutomationTests.cpp": "faba6d4ff3ac1e8cdad2df654c05d55906295f8229621fd8b26391510c9c164f",
+    "tests/Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "tests/parity/tolerances-v2/host-automation-portamento-v1.json": "e948bee9aae14843f73aa13f0f66d3c2547271094966d94768e976eccc534782",
+    "docs/VST3_PORTAMENTO_AUTOMATION.md": "430190a35e9e172d59c5fceb4811a1da2d964ebaa388fc234932178409117947",
+    "docs/HOST_AUTOMATION.md": "bbec6055b59fe1f712ddc518748cbd41fd5d36b0e900666220ef6c8e7dabe9d5"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Smoothglide mode0 only,positivefinite times.",
+    "Initialglide includesresetlastPitch60 tofirstnote48;not broadlegato qualification.",
+    "Assigned-open gatecontrol establishes PCM-output equality,not futuregate/state behavior.",
+    "Nohardware/DAW/GUI/AU/CPU/broad/negative tests."
+  ],
+  "full_sdk_compiler_python_source_before_after_identical": true,
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/run-portamento-matrix.py >build/matrix.log 2>&1; code=$?; echo \"$code\" >build/matrix.exit; exit \"$code\""
+}
