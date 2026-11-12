@@ -1,0 +1,423 @@
+Start testing: Nov 12 04:06 AST
+----------------------------------------------------------
+155/268 Testing: cs80_vst3_sub_depth_automation_44100_realtime_tests
+155/268 Test: cs80_vst3_sub_depth_automation_44100_realtime_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_depth_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-depth-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-depth-automation-capture-44100-realtime" "44100" "realtime"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_depth_automation_44100_realtime_tests" start time: Nov 12 04:06 AST
+Output:
+----------------------------------------------------------
+rate=44100 mode=realtime
+scenario=8-13-22 max_error=0 effect=0.0225028
+scenario=8-13-23 max_error=0 effect=0.0222511
+scenario=8-0-22 max_error=0 effect=0.0340641
+scenario=8-0-23 max_error=0 effect=0.0646554
+scenario=8-11-22 max_error=0 effect=0.0225028
+scenario=8-11-23 max_error=0 effect=0.0222511
+scenario=16-13-22 max_error=0 effect=0.033287
+scenario=16-13-23 max_error=0 effect=0.0455287
+scenario=16-0-22 max_error=0 effect=0.0705252
+scenario=16-0-23 max_error=0 effect=0.094335
+scenario=16-11-22 max_error=0 effect=0.033287
+scenario=16-11-23 max_error=0 effect=0.0455287
+combined=8-13-0 max_error=0 effect=0.27821
+combined=8-0-13 max_error=0 effect=0.0659279
+combined=8-13-11 max_error=0 effect=0.0618323
+combined=8-11-13 max_error=0 effect=0.0618323
+combined=8-0-11 max_error=0 effect=0.0659279
+combined=8-11-0 max_error=0 effect=0.27821
+combined=16-13-0 max_error=0 effect=0.82271
+combined=16-0-13 max_error=0 effect=0.250962
+combined=16-13-11 max_error=0 effect=0.28219
+combined=16-11-13 max_error=0 effect=0.28219
+combined=16-0-11 max_error=0 effect=0.250962
+combined=16-11-0 max_error=0 effect=0.82271
+24 native SUB scenarios, 0 failures
+<end of output>
+Test time =  31.68 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_depth_automation_44100_realtime_tests" end time: Nov 12 04:07 AST
+"cs80_vst3_sub_depth_automation_44100_realtime_tests" time elapsed: 00:00:31
+----------------------------------------------------------
+
+157/268 Testing: cs80_vst3_sub_depth_automation_48000_realtime_tests
+157/268 Test: cs80_vst3_sub_depth_automation_48000_realtime_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_depth_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-depth-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-depth-automation-capture-48000-realtime" "48000" "realtime"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_depth_automation_48000_realtime_tests" start time: Nov 12 04:07 AST
+Output:
+----------------------------------------------------------
+rate=48000 mode=realtime
+scenario=8-13-22 max_error=0 effect=0.0205911
+scenario=8-13-23 max_error=0 effect=0.0222937
+scenario=8-0-22 max_error=0 effect=0.0345095
+scenario=8-0-23 max_error=0 effect=0.0554668
+scenario=8-11-22 max_error=0 effect=0.0205911
+scenario=8-11-23 max_error=0 effect=0.0222937
+scenario=16-13-22 max_error=0 effect=0.0302783
+scenario=16-13-23 max_error=0 effect=0.0461818
+scenario=16-0-22 max_error=0 effect=0.0858061
+scenario=16-0-23 max_error=0 effect=0.104987
+scenario=16-11-22 max_error=0 effect=0.0302783
+scenario=16-11-23 max_error=0 effect=0.0461818
+combined=8-13-0 max_error=0 effect=0.271364
+combined=8-0-13 max_error=0 effect=0.0669202
+combined=8-13-11 max_error=0 effect=0.0632824
+combined=8-11-13 max_error=0 effect=0.0632824
+combined=8-0-11 max_error=0 effect=0.0669202
+combined=8-11-0 max_error=0 effect=0.271364
+combined=16-13-0 max_error=0 effect=0.792156
+combined=16-0-13 max_error=0 effect=0.236232
+combined=16-13-11 max_error=0 effect=0.255703
+combined=16-11-13 max_error=0 effect=0.255703
+combined=16-0-11 max_error=0 effect=0.236232
+combined=16-11-0 max_error=0 effect=0.792156
+24 native SUB scenarios, 0 failures
+<end of output>
+Test time =  30.14 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_depth_automation_48000_realtime_tests" end time: Nov 12 04:07 AST
+"cs80_vst3_sub_depth_automation_48000_realtime_tests" time elapsed: 00:00:30
+----------------------------------------------------------
+
+156/268 Testing: cs80_vst3_sub_depth_automation_44100_offline_tests
+156/268 Test: cs80_vst3_sub_depth_automation_44100_offline_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_depth_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-depth-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-depth-automation-capture-44100-offline" "44100" "offline"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_depth_automation_44100_offline_tests" start time: Nov 12 04:06 AST
+Output:
+----------------------------------------------------------
+rate=44100 mode=offline
+scenario=8-13-22 max_error=0 effect=0.021014
+scenario=8-13-23 max_error=0 effect=0.0219672
+scenario=8-0-22 max_error=0 effect=0.0371862
+scenario=8-0-23 max_error=0 effect=0.0571624
+scenario=8-11-22 max_error=0 effect=0.021014
+scenario=8-11-23 max_error=0 effect=0.0219672
+scenario=16-13-22 max_error=0 effect=0.0292921
+scenario=16-13-23 max_error=0 effect=0.0441305
+scenario=16-0-22 max_error=0 effect=0.0724953
+scenario=16-0-23 max_error=0 effect=0.0979602
+scenario=16-11-22 max_error=0 effect=0.0292921
+scenario=16-11-23 max_error=0 effect=0.0441305
+combined=8-13-0 max_error=0 effect=0.283228
+combined=8-0-13 max_error=0 effect=0.0666716
+combined=8-13-11 max_error=0 effect=0.0628143
+combined=8-11-13 max_error=0 effect=0.0628143
+combined=8-0-11 max_error=0 effect=0.0666716
+combined=8-11-0 max_error=0 effect=0.283228
+combined=16-13-0 max_error=0 effect=0.804771
+combined=16-0-13 max_error=0 effect=0.2421
+combined=16-13-11 max_error=0 effect=0.280305
+combined=16-11-13 max_error=0 effect=0.280305
+combined=16-0-11 max_error=0 effect=0.2421
+combined=16-11-0 max_error=0 effect=0.804771
+24 native SUB scenarios, 0 failures
+<end of output>
+Test time =  82.47 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_depth_automation_44100_offline_tests" end time: Nov 12 04:07 AST
+"cs80_vst3_sub_depth_automation_44100_offline_tests" time elapsed: 00:01:22
+----------------------------------------------------------
+
+159/268 Testing: cs80_vst3_sub_depth_automation_96000_realtime_tests
+159/268 Test: cs80_vst3_sub_depth_automation_96000_realtime_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_depth_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-depth-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-depth-automation-capture-96000-realtime" "96000" "realtime"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_depth_automation_96000_realtime_tests" start time: Nov 12 04:07 AST
+Output:
+----------------------------------------------------------
+rate=96000 mode=realtime
+scenario=8-13-22 max_error=0 effect=0.0106132
+scenario=8-13-23 max_error=0 effect=0.0158898
+scenario=8-0-22 max_error=0 effect=0.022961
+scenario=8-0-23 max_error=0 effect=0.046047
+scenario=8-11-22 max_error=0 effect=0.0106132
+scenario=8-11-23 max_error=0 effect=0.0158898
+scenario=16-13-22 max_error=0 effect=0.0187768
+scenario=16-13-23 max_error=0 effect=0.0311977
+scenario=16-0-22 max_error=0 effect=0.0769555
+scenario=16-0-23 max_error=0 effect=0.103489
+scenario=16-11-22 max_error=0 effect=0.0187768
+scenario=16-11-23 max_error=0 effect=0.0311977
+combined=8-13-0 max_error=0 effect=0.27264
+combined=8-0-13 max_error=0 effect=0.0617174
+combined=8-13-11 max_error=0 effect=0.0625761
+combined=8-11-13 max_error=0 effect=0.0625761
+combined=8-0-11 max_error=0 effect=0.0617174
+combined=8-11-0 max_error=0 effect=0.27264
+combined=16-13-0 max_error=0 effect=0.503797
+combined=16-0-13 max_error=0 effect=0.232983
+combined=16-13-11 max_error=0 effect=0.208214
+combined=16-11-13 max_error=0 effect=0.208214
+combined=16-0-11 max_error=0 effect=0.232983
+combined=16-11-0 max_error=0 effect=0.503797
+24 native SUB scenarios, 0 failures
+<end of output>
+Test time =  32.38 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_depth_automation_96000_realtime_tests" end time: Nov 12 04:08 AST
+"cs80_vst3_sub_depth_automation_96000_realtime_tests" time elapsed: 00:00:32
+----------------------------------------------------------
+
+158/268 Testing: cs80_vst3_sub_depth_automation_48000_offline_tests
+158/268 Test: cs80_vst3_sub_depth_automation_48000_offline_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_depth_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-depth-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-depth-automation-capture-48000-offline" "48000" "offline"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_depth_automation_48000_offline_tests" start time: Nov 12 04:07 AST
+Output:
+----------------------------------------------------------
+rate=48000 mode=offline
+scenario=8-13-22 max_error=0 effect=0.0205913
+scenario=8-13-23 max_error=0 effect=0.0221581
+scenario=8-0-22 max_error=0 effect=0.0365844
+scenario=8-0-23 max_error=0 effect=0.0557943
+scenario=8-11-22 max_error=0 effect=0.0205913
+scenario=8-11-23 max_error=0 effect=0.0221581
+scenario=16-13-22 max_error=0 effect=0.0322471
+scenario=16-13-23 max_error=0 effect=0.0462891
+scenario=16-0-22 max_error=0 effect=0.0868231
+scenario=16-0-23 max_error=0 effect=0.0974675
+scenario=16-11-22 max_error=0 effect=0.0322471
+scenario=16-11-23 max_error=0 effect=0.0462891
+combined=8-13-0 max_error=0 effect=0.259379
+combined=8-0-13 max_error=0 effect=0.0667924
+combined=8-13-11 max_error=0 effect=0.0625616
+combined=8-11-13 max_error=0 effect=0.0625616
+combined=8-0-11 max_error=0 effect=0.0667924
+combined=8-11-0 max_error=0 effect=0.259379
+combined=16-13-0 max_error=0 effect=0.749422
+combined=16-0-13 max_error=0 effect=0.230913
+combined=16-13-11 max_error=0 effect=0.2573
+combined=16-11-13 max_error=0 effect=0.2573
+combined=16-0-11 max_error=0 effect=0.230913
+combined=16-11-0 max_error=0 effect=0.749422
+24 native SUB scenarios, 0 failures
+<end of output>
+Test time =  84.36 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_depth_automation_48000_offline_tests" end time: Nov 12 04:09 AST
+"cs80_vst3_sub_depth_automation_48000_offline_tests" time elapsed: 00:01:24
+----------------------------------------------------------
+
+161/268 Testing: cs80_vst3_sub_automation_tests
+161/268 Test: cs80_vst3_sub_automation_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-automation-capture"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_automation_tests" start time: Nov 12 04:09 AST
+Output:
+----------------------------------------------------------
+rate=48000 mode=realtime
+scenario=8-13-20 max_error=0 effect=0.0640073
+scenario=8-13-21 max_error=0 effect=0.0681956
+scenario=8-0-20 max_error=0 effect=0.224391
+scenario=8-0-21 max_error=0 effect=0.231947
+scenario=8-11-20 max_error=0 effect=0.0640073
+scenario=8-11-21 max_error=0 effect=0.0681956
+scenario=16-13-20 max_error=0 effect=0.192234
+scenario=16-13-21 max_error=0 effect=0.215168
+scenario=16-0-20 max_error=0 effect=0.585339
+scenario=16-0-21 max_error=0 effect=0.54304
+scenario=16-11-20 max_error=0 effect=0.192234
+scenario=16-11-21 max_error=0 effect=0.215168
+12 native SUB scenarios, 0 failures
+<end of output>
+Test time =  16.24 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_automation_tests" end time: Nov 12 04:09 AST
+"cs80_vst3_sub_automation_tests" time elapsed: 00:00:16
+----------------------------------------------------------
+
+160/268 Testing: cs80_vst3_sub_depth_automation_96000_offline_tests
+160/268 Test: cs80_vst3_sub_depth_automation_96000_offline_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_depth_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-depth-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-depth-automation-capture-96000-offline" "96000" "offline"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_depth_automation_96000_offline_tests" start time: Nov 12 04:08 AST
+Output:
+----------------------------------------------------------
+rate=96000 mode=offline
+scenario=8-13-22 max_error=0 effect=0.0105447
+scenario=8-13-23 max_error=0 effect=0.0158363
+scenario=8-0-22 max_error=0 effect=0.0257101
+scenario=8-0-23 max_error=0 effect=0.0427332
+scenario=8-11-22 max_error=0 effect=0.0105447
+scenario=8-11-23 max_error=0 effect=0.0158363
+scenario=16-13-22 max_error=0 effect=0.0191359
+scenario=16-13-23 max_error=0 effect=0.0311981
+scenario=16-0-22 max_error=0 effect=0.0782086
+scenario=16-0-23 max_error=0 effect=0.110379
+scenario=16-11-22 max_error=0 effect=0.0191359
+scenario=16-11-23 max_error=0 effect=0.0311981
+combined=8-13-0 max_error=0 effect=0.271597
+combined=8-0-13 max_error=0 effect=0.0617739
+combined=8-13-11 max_error=0 effect=0.0622732
+combined=8-11-13 max_error=0 effect=0.0622732
+combined=8-0-11 max_error=0 effect=0.0617739
+combined=8-11-0 max_error=0 effect=0.271597
+combined=16-13-0 max_error=0 effect=0.506456
+combined=16-0-13 max_error=0 effect=0.23414
+combined=16-13-11 max_error=0 effect=0.207791
+combined=16-11-13 max_error=0 effect=0.207791
+combined=16-0-11 max_error=0 effect=0.23414
+combined=16-11-0 max_error=0 effect=0.506456
+24 native SUB scenarios, 0 failures
+<end of output>
+Test time =  48.04 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_depth_automation_96000_offline_tests" end time: Nov 12 04:09 AST
+"cs80_vst3_sub_depth_automation_96000_offline_tests" time elapsed: 00:00:48
+----------------------------------------------------------
+
+162/268 Testing: cs80_vst3_sub_automation_44100_realtime_tests
+162/268 Test: cs80_vst3_sub_automation_44100_realtime_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-automation-capture-44100-realtime" "44100" "realtime"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_automation_44100_realtime_tests" start time: Nov 12 04:09 AST
+Output:
+----------------------------------------------------------
+rate=44100 mode=realtime
+scenario=8-13-20 max_error=0 effect=0.0696402
+scenario=8-13-21 max_error=0 effect=0.0712433
+scenario=8-0-20 max_error=0 effect=0.224133
+scenario=8-0-21 max_error=0 effect=0.226008
+scenario=8-11-20 max_error=0 effect=0.0696402
+scenario=8-11-21 max_error=0 effect=0.0712433
+scenario=16-13-20 max_error=0 effect=0.214293
+scenario=16-13-21 max_error=0 effect=0.216419
+scenario=16-0-20 max_error=0 effect=0.565114
+scenario=16-0-21 max_error=0 effect=0.596714
+scenario=16-11-20 max_error=0 effect=0.214293
+scenario=16-11-21 max_error=0 effect=0.216419
+12 native SUB scenarios, 0 failures
+<end of output>
+Test time =  16.20 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_automation_44100_realtime_tests" end time: Nov 12 04:09 AST
+"cs80_vst3_sub_automation_44100_realtime_tests" time elapsed: 00:00:16
+----------------------------------------------------------
+
+163/268 Testing: cs80_vst3_sub_automation_44100_offline_tests
+163/268 Test: cs80_vst3_sub_automation_44100_offline_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-automation-capture-44100-offline" "44100" "offline"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_automation_44100_offline_tests" start time: Nov 12 04:09 AST
+Output:
+----------------------------------------------------------
+rate=44100 mode=offline
+scenario=8-13-20 max_error=0 effect=0.0693227
+scenario=8-13-21 max_error=0 effect=0.0710327
+scenario=8-0-20 max_error=0 effect=0.214759
+scenario=8-0-21 max_error=0 effect=0.220685
+scenario=8-11-20 max_error=0 effect=0.0693227
+scenario=8-11-21 max_error=0 effect=0.0710327
+scenario=16-13-20 max_error=0 effect=0.215149
+scenario=16-13-21 max_error=0 effect=0.233294
+scenario=16-0-20 max_error=0 effect=0.599408
+scenario=16-0-21 max_error=0 effect=0.552979
+scenario=16-11-20 max_error=0 effect=0.215149
+scenario=16-11-21 max_error=0 effect=0.233294
+12 native SUB scenarios, 0 failures
+<end of output>
+Test time =  41.07 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_automation_44100_offline_tests" end time: Nov 12 04:09 AST
+"cs80_vst3_sub_automation_44100_offline_tests" time elapsed: 00:00:41
+----------------------------------------------------------
+
+164/268 Testing: cs80_vst3_sub_automation_48000_offline_tests
+164/268 Test: cs80_vst3_sub_automation_48000_offline_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-automation-capture-48000-offline" "48000" "offline"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_automation_48000_offline_tests" start time: Nov 12 04:09 AST
+Output:
+----------------------------------------------------------
+rate=48000 mode=offline
+scenario=8-13-20 max_error=0 effect=0.063824
+scenario=8-13-21 max_error=0 effect=0.0681702
+scenario=8-0-20 max_error=0 effect=0.221837
+scenario=8-0-21 max_error=0 effect=0.224596
+scenario=8-11-20 max_error=0 effect=0.063824
+scenario=8-11-21 max_error=0 effect=0.0681702
+scenario=16-13-20 max_error=0 effect=0.194508
+scenario=16-13-21 max_error=0 effect=0.218216
+scenario=16-0-20 max_error=0 effect=0.551592
+scenario=16-0-21 max_error=0 effect=0.51381
+scenario=16-11-20 max_error=0 effect=0.194508
+scenario=16-11-21 max_error=0 effect=0.218216
+12 native SUB scenarios, 0 failures
+<end of output>
+Test time =  39.84 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_automation_48000_offline_tests" end time: Nov 12 04:10 AST
+"cs80_vst3_sub_automation_48000_offline_tests" time elapsed: 00:00:39
+----------------------------------------------------------
+
+165/268 Testing: cs80_vst3_sub_automation_96000_realtime_tests
+165/268 Test: cs80_vst3_sub_automation_96000_realtime_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-automation-capture-96000-realtime" "96000" "realtime"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_automation_96000_realtime_tests" start time: Nov 12 04:09 AST
+Output:
+----------------------------------------------------------
+rate=96000 mode=realtime
+scenario=8-13-20 max_error=0 effect=0.0512712
+scenario=8-13-21 max_error=0 effect=0.0633235
+scenario=8-0-20 max_error=0 effect=0.213579
+scenario=8-0-21 max_error=0 effect=0.230543
+scenario=8-11-20 max_error=0 effect=0.0512712
+scenario=8-11-21 max_error=0 effect=0.0633235
+scenario=16-13-20 max_error=0 effect=0.213017
+scenario=16-13-21 max_error=0 effect=0.19868
+scenario=16-0-20 max_error=0 effect=0.478099
+scenario=16-0-21 max_error=0 effect=0.516992
+scenario=16-11-20 max_error=0 effect=0.213017
+scenario=16-11-21 max_error=0 effect=0.19868
+12 native SUB scenarios, 0 failures
+<end of output>
+Test time =  15.31 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_automation_96000_realtime_tests" end time: Nov 12 04:10 AST
+"cs80_vst3_sub_automation_96000_realtime_tests" time elapsed: 00:00:15
+----------------------------------------------------------
+
+166/268 Testing: cs80_vst3_sub_automation_96000_offline_tests
+166/268 Test: cs80_vst3_sub_automation_96000_offline_tests
+Command: "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/cs80_vst3_sub_automation_tests" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/tests/parity/tolerances-v2/host-automation-sub-v1.json" "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native/sub-automation-capture-96000-offline" "96000" "offline"
+Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build-native
+"cs80_vst3_sub_automation_96000_offline_tests" start time: Nov 12 04:10 AST
+Output:
+----------------------------------------------------------
+rate=96000 mode=offline
+scenario=8-13-20 max_error=0 effect=0.051143
+scenario=8-13-21 max_error=0 effect=0.06342
+scenario=8-0-20 max_error=0 effect=0.208036
+scenario=8-0-21 max_error=0 effect=0.21682
+scenario=8-11-20 max_error=0 effect=0.051143
+scenario=8-11-21 max_error=0 effect=0.06342
+scenario=16-13-20 max_error=0 effect=0.212844
+scenario=16-13-21 max_error=0 effect=0.198495
+scenario=16-0-20 max_error=0 effect=0.475415
+scenario=16-0-21 max_error=0 effect=0.487562
+scenario=16-11-20 max_error=0 effect=0.212844
+scenario=16-11-21 max_error=0 effect=0.198495
+12 native SUB scenarios, 0 failures
+<end of output>
+Test time =  24.78 sec
+----------------------------------------------------------
+Test Passed.
+"cs80_vst3_sub_automation_96000_offline_tests" end time: Nov 12 04:10 AST
+"cs80_vst3_sub_automation_96000_offline_tests" time elapsed: 00:00:24
+----------------------------------------------------------
+
+End testing: Nov 12 04:10 AST

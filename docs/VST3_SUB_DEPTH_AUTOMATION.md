@@ -44,10 +44,34 @@ no-queue, Legacy/PURE and old-22 modern trajectories within each rate/mode.
 The preserved speed/VCO suite was also rerun across all six configurations,
 retaining its original contract. No failure was discarded or rerun into a pass.
 
+## Combined queues and mixed rank sources (2026-11-12)
+
+A test-only extension adds simultaneous original-speed, VCO, VCF and VCA
+queues for each ordered pair of different PANEL/factory 0/MEMORY 11 sources,
+with eight and sixteen voices. The same six rate/mode configurations now run
+24 depth scenarios each: twelve historical single-lane scenarios and twelve
+combined/mixed-source scenarios. All 144 passed, including the 72 new cases,
+with zero observed partition error against the one-sample reference. Every new
+case had a nonzero modulation witness (observed maximum-absolute differences
+from its no-queue render ranged from 0.0617174 to 0.82271). Empty/no-queue
+identity and Legacy/PURE flattening assertions also passed for every new case.
+
+The speed/VCO matrix retained its original 72 passing scenarios. These are
+supported finite-input tests only. No production code, parameter roster,
+normalized conversion or tolerance was changed. Historical capture generation
+is unchanged; the additional cases assert and log without adding capture files.
+
+Original-HEAD hosts were compiled separately and run against the same unchanged
+production module. All 246 historical depth captures and all 246 historical
+speed/VCO captures match the extended hosts byte-for-byte. This checks test-host
+compatibility, not a new production pre/post comparison. Logs, source/module
+hashes and per-file capture hashes are retained in
+[`experiments/sub-combined-mixed-sources/`](experiments/sub-combined-mixed-sources/).
+
 ## Limits
 
 These are Linux float32 protocol/render observations, not a real DAW or native
-GUI qualification. Other rates, float64, mixed rank-source combinations,
+GUI qualification. Other rates, float64, other rank-source combinations,
 pressure-driven modulation, waveform changes, program-boundary expansion and
 CPU deadlines remain outside this gate. Comparisons are within a rate/mode,
 not cross-rate waveform identity. Earlier unrelated offline limitations remain.

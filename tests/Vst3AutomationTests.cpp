@@ -211,7 +211,7 @@ struct Instance
     IConnectionPoint* controllerConnection = nullptr;
     IPluginFactory* factory = nullptr;
     bool active = false;
-    explicit Instance(Module& module, cs80::ParamValues parameters, int source = 13) : factory(module.factory)
+    explicit Instance(Module& module, cs80::ParamValues parameters, int source = 13, int secondSource = -1) : factory(module.factory)
     {
         require(module.factory->createInstance(module.componentId, IComponent::iid,
                     reinterpret_cast<void**>(&component)) == kResultOk, "VST3 createInstance");
@@ -226,7 +226,7 @@ struct Instance
         for (int parameter = 0; parameter < cs80::P_numParams; ++parameter)
             initial.add(parameterId(cs80::paramId(parameter)), {{0, normalized(parameter, parameters[parameter])}});
         for (int rank = 0; rank < 2; ++rank)
-            initial.add(parameterId("hardware_source_" + std::to_string(rank + 1)), {{0, double(source) / 13.0}});
+            initial.add(parameterId("hardware_source_" + std::to_string(rank + 1)), {{0, double(rank == 1 && secondSource >= 0 ? secondSource : source) / 13.0}});
         ProcessData flush {};
         flush.symbolicSampleSize = kSample32;
         flush.processMode = testProcessMode;
@@ -381,9 +381,10 @@ Curves curvesFor(const cs80::ParamValues& parameters)
     return curves;
 }
 std::vector<float> render(Module& module, const cs80::ParamValues& parameters, const Curves& curves,
-                          int block, bool automate = true, bool flatten = false, int source = 13, bool nullChanges = false)
+                          int block, bool automate = true, bool flatten = false, int source = 13, bool nullChanges = false,
+                          int secondSource = -1)
 {
-    Instance instance(module, parameters, source);
+    Instance instance(module, parameters, source, secondSource);
     std::vector<float> output;
     output.reserve(8192);
     for (int start = 0; start < 4096; start += block)

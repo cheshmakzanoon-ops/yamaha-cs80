@@ -1,0 +1,25 @@
+{
+  "base_commit": "760fcb55e793ea3b408eecff36bf955f6f81da17",
+  "platform": "Linux x86_64 float32",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "tests_passed": 12,
+  "tests_failed": 0,
+  "depth_scenarios": 144,
+  "combined_scenarios": 72,
+  "historical_speed_vco_scenarios": 72,
+  "combined_max_partition_error": 0,
+  "combined_effect_min": 0.0617174,
+  "combined_effect_max": 0.82271,
+  "sha256": {
+    "tests/Vst3AutomationTests.cpp": "bd83396dc6290daed79a67aaa18b609de01e6e41cdb3197ee26aac802be242ac",
+    "tests/Vst3SubAutomationTests.cpp": "f3dc118fcb3ff6b881201a2974ddbd7f662e0e492df53a6e90237e52d396a53f",
+    "build-native/cs80_vst3_sub_depth_automation_tests": "79b6b9e27a437cbcc8b7b2b4268bed7981113d2d63334d5f626b21a145f07556",
+    "build-native/cs80_vst3_sub_automation_tests": "4e9d252d15f53a16d63eb52db17640ea6d43de064cc78d550b4bd97d9ef5d4bd",
+    "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "95b60dd9dabf2844fe0bbfb8e6254f3738df19da7c3852621a54e90f5f38eb4c"
+  },
+  "limitations": [
+    "No DAW, GUI, float64, pressure, waveform changes, other rates or CPU deadline qualification",
+    "Only scoped finite normal-input SUB automation tests executed",
+    "Historical comparison uses original and modified hosts against the same unchanged production module"
+  ]
+}

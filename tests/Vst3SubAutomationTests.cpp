@@ -96,6 +96,41 @@ int main(int argc,char**argv) {
             ++scenarios;
             std::cout<<"scenario="<<id<<" max_error="<<error<<" effect="<<effect<<'\n';
         }
+#if CS80_SUB_DEPTH_EXTENSION
+        // Supported simultaneous global SUB queues with different rank sources.
+        // Keep historical capture names/counts unchanged: these are additional
+        // assertions only, not a replacement for the single-lane witnesses.
+        for(int voices:{8,16}) for(const auto sources : {std::array{13,0}, std::array{0,13},
+                std::array{13,11}, std::array{11,13}, std::array{0,11}, std::array{11,0}}) {
+            auto p=parameters;p[cs80::P_voiceMode]=voices==16?1.f:0.f;
+            p[cs80::P_subVco]=.3f;p[cs80::P_subVcf]=.4f;p[cs80::P_subVca]=.5f;
+            Curves combined;
+            combined[20]={{511,.15},{1023,.7},{1024,.25},{2047,.8},{3071,.2},{4095,.6}};
+            combined[21]={{511,.7},{1023,.2},{1024,.65},{2047,.3},{3071,.8},{4095,.4}};
+            combined[22]={{511,.2},{1023,.8},{1024,.35},{2047,.65},{3071,.25},{4095,.7}};
+            combined[23]={{511,.6},{1023,.3},{1024,.75},{2047,.2},{3071,.65},{4095,.35}};
+            const auto mixedRender=[&](const cs80::ParamValues& values,int block,bool automate=true,bool flatten=false,bool nullChanges=false) {
+                return render(module,values,combined,block,automate,flatten,sources[0],nullChanges,sources[1]);
+            };
+            const auto scalar=mixedRender(p,1);
+            double error=0;
+            for(int block:{7,64,256,1024,4096})
+                error=std::max(error,difference(scalar,mixedRender(p,block)));
+            check(error<=limits["audio_max_abs_error"],"combined SUB mixed-source queues match per-sample reference across partitions");
+            const auto neutral=mixedRender(p,256,false);
+            const double effect=difference(scalar,neutral);
+            check(effect>0.00001,"combined SUB mixed-source modulation positive PCM witness");
+            check(neutral==mixedRender(p,256,false,false,true),"combined SUB mixed-source empty/no queue unchanged");
+            for(int policy:{0,2}) {
+                auto protectedP=p;protectedP[cs80::P_sourcePerformance]=policy==0?0.f:1.f;protectedP[cs80::P_parityMode]=policy==2?1.f:0.f;
+                check(mixedRender(protectedP,256)==mixedRender(protectedP,256,true,true),
+                      "combined SUB mixed-source Legacy/PURE retain flattened native queues");
+            }
+            ++scenarios;
+            std::cout<<"combined="<<voices<<'-'<<sources[0]<<'-'<<sources[1]
+                     <<" max_error="<<error<<" effect="<<effect<<'\n';
+        }
+#endif
         // Preserve each capability's preceding roster (20 or22), including
         // all earlier lane authority. Newer lanes never enter this witness.
         auto old=curvesFor(parameters);
