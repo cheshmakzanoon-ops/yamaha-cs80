@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "tests/test_event_aware_ring_vca_coincident.py",
+    "-v"
+  ],
+  "python_version": "3.12.14",
+  "interpreter": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "interpreter_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+  "source_sha256": {
+    "scripts/render_event_aware_ring_vca.py": "4e43484b64fcddc3cc8e42b0bc494ddc2b834c800bd741d32e96e35b98bd0911",
+    "tests/test_event_aware_ring_vca.py": "a08cbdadc1bddc869e23377dd4c83179fe62f8e9287338c6c7dee3d48b26aada",
+    "tests/test_event_aware_ring_vca_coincident.py": "108c7fc8d92e7d70eb11ef4bab8f4b027ac6884e5119d3d10f333e091c011c9a"
+  },
+  "exit_code": 0,
+  "source_sha256_after": {
+    "scripts/render_event_aware_ring_vca.py": "4e43484b64fcddc3cc8e42b0bc494ddc2b834c800bd741d32e96e35b98bd0911",
+    "tests/test_event_aware_ring_vca.py": "a08cbdadc1bddc869e23377dd4c83179fe62f8e9287338c6c7dee3d48b26aada",
+    "tests/test_event_aware_ring_vca_coincident.py": "108c7fc8d92e7d70eb11ef4bab8f4b027ac6884e5119d3d10f333e091c011c9a"
+  },
+  "log_sha256": "f2f952686574b1c3b222ebeb1971bbab8165454470b7f9aa94f86acfda1ff1a9"
+}

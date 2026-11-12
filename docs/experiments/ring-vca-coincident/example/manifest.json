@@ -1,0 +1,158 @@
+{
+  "artifacts": {
+    "envelope_transitions.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "events.json": {
+      "bytes": 9328,
+      "sha256": "8fb883a4f3bd56739b89f7bbbdc40d4323a1a40edaae6686bd7a1c7459d56d0d"
+    },
+    "input_events.csv": {
+      "bytes": 108,
+      "sha256": "990e533df2898692fba59da46949208c4a686b6458edeaa1e37f21919d3523d4"
+    },
+    "render_amplitude_envelope_reference.py": {
+      "bytes": 14530,
+      "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+    },
+    "render_event_aware_envelope_sine_vca.py": {
+      "bytes": 11074,
+      "sha256": "468e2b3a42f173938d77ea7f4a4cc4daa5c9fefd9bd711382912ee09aea070e8"
+    },
+    "render_event_aware_envelope_vca.py": {
+      "bytes": 15166,
+      "sha256": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710"
+    },
+    "render_ring_reference.py": {
+      "bytes": 10139,
+      "sha256": "89016c5402a8151c08be1495ef9bf69926bcee3157c4ce46a8c88fe57a403020"
+    },
+    "renderer.py": {
+      "bytes": 14219,
+      "sha256": "4e43484b64fcddc3cc8e42b0bc494ddc2b834c800bd741d32e96e35b98bd0911"
+    },
+    "segments.json": {
+      "bytes": 2552,
+      "sha256": "6fb1595e6b19f935e3588c2bfd0e8022f8b00600c5debf968798839adb0c47ee"
+    },
+    "trace.csv": {
+      "bytes": 18137,
+      "sha256": "0af4c372dc60e49e402fb7e8a3a68de8bf02ef6c8122ab9b83233c24691f13fa"
+    },
+    "transitions.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    }
+  },
+  "clock": "Exact Fraction samples/events and input/carrier/sideband phase clocks; autonomous boundaries precede same-time events in file order; no t=0 tick",
+  "coincident_semantics": "Exact rational frequency equality folds +amount*A/2*cos(2*pi*(input_phase-carrier_phase)) into DC once and omits the lower tone; no nearzero expansion",
+  "complete": true,
+  "constants": {
+    "feedthrough_promoted_float32": 0.0010000000474974513,
+    "offset_promoted_float32": 0.001500000013038516,
+    "ring_carrier_offset": 0.005,
+    "ring_output_offset": 0.001,
+    "ring_signal_offset": 0.0005,
+    "tau_ac_seconds": 0.09999999999999999,
+    "tau_li_seconds": 0.0005419354838709677
+  },
+  "endpoint_span": {
+    "denominator": 100,
+    "numerator": 1,
+    "seconds": 0.01
+  },
+  "equations": [
+    "input=A*sin(2*pi*(phase+frequency*t))",
+    "carrier=sin(2*pi*(carrier_phase+carrier_frequency*t))",
+    "ring_output=(1-amount)*input+amount*((input+.0005)*(carrier+.005)+.001)",
+    "LI=LC+(LI0-LC)*exp(-t/tauLI)",
+    "raw=2**EI*(ring_output+offset+feedthrough)*LI*envelope",
+    "dCoupling/dt=(raw-Coupling)/tauAC",
+    "output=raw-Coupling"
+  ],
+  "integration": "Boundary-only anchors; real/complex exponential convolution; total-degree40 local forcing series when max rate*duration<=.5; binary64, not certified error bounds",
+  "intervals": 80,
+  "jump_semantics": "LI/coupling continuous; envelope reset/snap raw/output jumps retained at their true endpoints",
+  "limitations": [
+    "No converter or ring envelope generation",
+    "No strictly nonzero frequency difference below0.1Hz or sum above2000Hz",
+    "No arbitrary audio",
+    "No live controls or ADSR",
+    "No negative LI floor crossings",
+    "No filter or whole voice",
+    "No alias qualification",
+    "No WAV/listening claim"
+  ],
+  "limits": {
+    "max_bundle_bytes": 33554432,
+    "max_events": 1024,
+    "max_input_bytes": 1048576,
+    "max_samples": 20001,
+    "max_seconds": 2
+  },
+  "parameters": {
+    "amount": {
+      "binary64": 0.6,
+      "decimal_rational": "3/5"
+    },
+    "attack": {
+      "binary64": 0.01,
+      "decimal_rational": "1/100"
+    },
+    "carrier_frequency": {
+      "binary64": 200.0,
+      "decimal_rational": "200"
+    },
+    "carrier_phase": {
+      "binary64": 0.625,
+      "decimal_rational": "5/8"
+    },
+    "decay": {
+      "binary64": 0.02,
+      "decimal_rational": "1/50"
+    },
+    "ei": {
+      "binary64": 0.3,
+      "decimal_rational": "3/10"
+    },
+    "initial_coupling": {
+      "binary64": 0.013,
+      "decimal_rational": "13/1000"
+    },
+    "initial_li": {
+      "binary64": 0.2,
+      "decimal_rational": "1/5"
+    },
+    "input_amplitude": {
+      "binary64": 0.4,
+      "decimal_rational": "2/5"
+    },
+    "input_frequency": {
+      "binary64": 200.0,
+      "decimal_rational": "200"
+    },
+    "input_phase": {
+      "binary64": 0.125,
+      "decimal_rational": "1/8"
+    },
+    "lc": {
+      "binary64": 0.8,
+      "decimal_rational": "4/5"
+    },
+    "release": {
+      "binary64": 0.03,
+      "decimal_rational": "3/100"
+    },
+    "sustain": {
+      "binary64": 0.4,
+      "decimal_rational": "2/5"
+    }
+  },
+  "provenance": "RingModulator.h offset multiplier via existing ring reference plus IG00151Reference.h conditional laws via existing constant reference and existing amplitude envelope inferences. Snapshots identify source bytes, not authenticated execution; platform libm bits may vary.",
+  "rate_hz": 8000,
+  "samples": 81,
+  "schema": "cs80-event-aware-ring-vca-v1",
+  "scope": "Fixed sine input and carrier offset multiplier into event-aware envelope/conditional VCA. Explicit numeric unit mapping 1:1, fixed LC/EI, nonnegative LI. No production equivalence or hardware calibration.",
+  "units": "Phase cycles, frequency Hz, EI octaves, envelope unitless; uncalibrated engine input/output/control units"
+}

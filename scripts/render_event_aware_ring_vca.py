@@ -21,14 +21,20 @@ MAX_BUNDLE_BYTES = 32 * 1024 * 1024
 
 
 def ring_tones(amplitude,frequency,phase,carrier_frequency,carrier_phase,amount):
-    """Return one DC and four (signed amplitude, positive Hz, phase cycles) terms."""
+    """Return DC and positive-Hz tones; exact coincidence folds the lower term."""
     fi,fc,pi,pc=map(Fraction,(frequency,carrier_frequency,phase,carrier_phase))
-    delta=pi-pc if fi>fc else pc-pi
+    dc=amount*(ring.SIGNAL_OFFSET*ring.CARRIER_OFFSET+ring.OUTPUT_OFFSET)
     tones=((amplitude*((1-amount)+amount*ring.CARRIER_OFFSET),fi,pi),
-           (amount*ring.SIGNAL_OFFSET,fc,pc),
-           (amount*amplitude/2,abs(fi-fc),delta+Fraction(1,4)),
-           (-amount*amplitude/2,fi+fc,pi+pc+Fraction(1,4)))
-    return amount*(ring.SIGNAL_OFFSET*ring.CARRIER_OFFSET+ring.OUTPUT_OFFSET),tones
+           (amount*ring.SIGNAL_OFFSET,fc,pc))
+    if fi==fc:
+        # Equality and cycle reduction are rational, never tolerance decisions.
+        lower_dc=amount*amplitude/2*math.cos(math.tau*float((pi-pc)%1))
+        dc=math.fsum((dc,lower_dc))
+    else:
+        delta=pi-pc if fi>fc else pc-pi
+        tones+=((amount*amplitude/2,abs(fi-fc),delta+Fraction(1,4)),)
+    tones+=((-amount*amplitude/2,fi+fc,pi+pc+Fraction(1,4)),)
+    return dc,tones
 
 
 def short_forcing(li,lc,e0,target,a,b,dc,tones,dt,q):
@@ -95,7 +101,8 @@ class Composition(constant.Composition):
         require(math.isfinite(self.input_amplitude) and 0<=self.input_amplitude<=1 and
                 math.isfinite(self.amount) and 0<=self.amount<=1,'Amplitude/amount outside bounds')
         require(self.input_frequency>=Fraction(1,10) and self.carrier_frequency>=Fraction(1,10) and
-                abs(self.input_frequency-self.carrier_frequency)>=Fraction(1,10) and
+                (self.input_frequency==self.carrier_frequency or
+                 abs(self.input_frequency-self.carrier_frequency)>=Fraction(1,10)) and
                 self.input_frequency+self.carrier_frequency<=2000,'Frequency combination outside bounded scope')
         require(0<=self.input_phase<1 and 0<=self.carrier_phase<1,'Phase outside bounds')
         dc,self.tones=ring_tones(self.input_amplitude,self.input_frequency,self.input_phase,
@@ -144,7 +151,8 @@ def parse(argv):
         require(Fraction(str(low))<=value<=Fraction(str(high)),name+' outside bounds')
         if name in ('input_phase','carrier_phase'): require(value<1,'Phase must be below one cycle')
         setattr(args,name,value)
-    require(abs(args.input_frequency-args.carrier_frequency)>=Fraction(1,10) and
+    require((args.input_frequency==args.carrier_frequency or
+             abs(args.input_frequency-args.carrier_frequency)>=Fraction(1,10)) and
             args.input_frequency+args.carrier_frequency<=2000,'Frequency combination outside bounded scope')
     return args
 
@@ -201,9 +209,10 @@ def render(args):
         clock='Exact Fraction samples/events and input/carrier/sideband phase clocks; autonomous boundaries precede same-time events in file order; no t=0 tick',
         integration='Boundary-only anchors; real/complex exponential convolution; total-degree40 local forcing series when max rate*duration<=.5; binary64, not certified error bounds',
         scope='Fixed sine input and carrier offset multiplier into event-aware envelope/conditional VCA. Explicit numeric unit mapping 1:1, fixed LC/EI, nonnegative LI. No production equivalence or hardware calibration.',
+        coincident_semantics='Exact rational frequency equality folds +amount*A/2*cos(2*pi*(input_phase-carrier_phase)) into DC once and omits the lower tone; no nearzero expansion',
         jump_semantics='LI/coupling continuous; envelope reset/snap raw/output jumps retained at their true endpoints',
         units='Phase cycles, frequency Hz, EI octaves, envelope unitless; uncalibrated engine input/output/control units',
-        limitations=['No converter or ring envelope generation','No coincident/near-coincident frequencies or sum above2000Hz','No arbitrary audio','No live controls or ADSR','No negative LI floor crossings','No filter or whole voice','No alias qualification','No WAV/listening claim'],
+        limitations=['No converter or ring envelope generation','No strictly nonzero frequency difference below0.1Hz or sum above2000Hz','No arbitrary audio','No live controls or ADSR','No negative LI floor crossings','No filter or whole voice','No alias qualification','No WAV/listening claim'],
         limits=dict(max_samples=MAX_SAMPLES,max_events=MAX_EVENTS,max_seconds=2,max_input_bytes=helpers.MAX_INPUT_BYTES,max_bundle_bytes=MAX_BUNDLE_BYTES),
         provenance='RingModulator.h offset multiplier via existing ring reference plus IG00151Reference.h conditional laws via existing constant reference and existing amplitude envelope inferences. Snapshots identify source bytes, not authenticated execution; platform libm bits may vary.',
         artifacts={n:helpers.metadata(data) for n,data in sorted(artifacts.items())})

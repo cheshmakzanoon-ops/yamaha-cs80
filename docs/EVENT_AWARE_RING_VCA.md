@@ -37,11 +37,15 @@ upper cosine = -(m*A/2)*cos((wi+wc)*t+pi+pc)
 
 Cosines become signed-amplitude sine terms by adding 1/4 cycle. When `fi<fc`,
 first negate the **cosine** phase difference, then add 1/4 cycle while keeping
-the lower amplitude positive. The upper amplitude stays negative. Exact
+the lower amplitude positive. At **exact rational frequency equality**, the
+lower term is the constant `+(m*A/2)*cos(2*pi*(input_phase-carrier_phase))`.
+It is folded once into DC and its zero-frequency tone is omitted. The phase
+difference is reduced rationally modulo one cycle before cosine evaluation.
+This preserves phase-dependent positive, negative or zero DC without a
+frequency-tolerance decision. The upper amplitude stays negative. Exact
 Fraction frequency/phase clocks avoid a per-sample oscillator accumulator.
 
-The RING DC plus downstream VCA offset/feedthrough are added **once**. The four
-tones and DC feed one LI state and one coupling state:
+The RING DC plus downstream VCA offset/feedthrough are added **once**. The tones and DC feed one LI state and one coupling state:
 
 ```
 raw = 2**EI * (ring_output+VCA_offset+VCA_feedthrough) * LI * envelope
@@ -84,9 +88,10 @@ python3 scripts/render_event_aware_ring_vca.py \
 ```
 
 Amplitude/amount are 0–1; phases [0,1) cycles. Input and carrier frequencies
-must each be at least .1 Hz, differ by at least .1 Hz and sum to at most 2,000 Hz.
-Both frequency orders are supported. Coincident and near-coincident/DC
-degeneracies are **excluded**, not claimed as universally handled. Frequency
+must each be at least .1 Hz and sum to at most 2,000 Hz. Their difference must
+be exactly zero or at least .1 Hz. Both frequency orders and exact coincidence
+are supported; strictly nonzero differences below .1 Hz remain **excluded**.
+No nearzero-frequency expansion is implemented. Frequency
 limits are scope limits, not antialias certification.
 
 LC/initial LI are 0–8, EI/initial coupling -8–8. ADSR bounds match prior tools.
@@ -106,10 +111,13 @@ Owned-file cleanup follows existing helpers without recursive directory deletion
 
 ```sh
 python3 tests/test_event_aware_ring_vca.py
+python3 tests/test_event_aware_ring_vca_coincident.py
 ```
 
 CMake registers `cs80_event_aware_ring_vca_tests` with a 120-second timeout only
-when tests are enabled, UNIX and discovered Python >=3.11. No production
+when tests are enabled, UNIX and discovered Python >=3.11. The targeted
+`cs80_event_aware_ring_vca_coincident_tests` registration has the same conditions
+and timeout. No production
 executable is required. Implementation is not a test result: retained runtime
 and independent review must qualify the exact source. Independent checks should
 use the undecomposed direct multiplier in their ODE oracle, both frequency
@@ -117,7 +125,13 @@ orders/nonzero phases, zero amount, zero input amplitude, nonzero initial
 coupling, reset splits and exact shared clocks. No broad, malformed-input, fuzz,
 GUI, CPU/benchmark or hardware qualification is implied.
 
-## Verified local result
+## Historical noncoincident qualification
+
+The results below qualify the earlier noncoincident renderer with SHA-256
+`7409f88f1ae9289d8d24f19d53a555ac14423fb47357db902f8fb4b881ea97eb`,
+not the exact-coincidence extension. Its retained evidence is unchanged.
+New-source targeted checks and the unchanged nine-test regression must be
+recorded separately before the extension is described as verified.
 
 One direct run of nine bounded valid-input tests passed. Independent checks use
 the direct offset-ring equation rather than its tone decomposition, with both
@@ -138,3 +152,23 @@ and provide no certified numerical error bound.
 [Verification evidence](experiments/event-aware-ring-vca/verification.json)
 retains exact commands, logs, source/interpreter identities and the complete
 small example bundle.
+
+## Verified coincident-frequency extension
+
+Against the exact-equal-frequency extension, one direct run of the unchanged
+nine-test regression suite and one run of six targeted tests passed. Targeted
+checks cover same, opposite and quadrature phases, signed DC means, short and
+normal real-ODE refinement, initial coupling counted once, reset splitting,
+exact shared-grid queries and valid CLI provenance. One matched-frequency
+81-row example passed; its final-endpoint event and all artifact hashes were
+verified. No runtime failures or retries occurred.
+
+Core-only configuration generated the new coincident test registration; no
+build or CTest execution is claimed. Python 3.12.14 alone was tested. Production,
+all 20 earlier contracts, older helper exporters and the existing nine-test
+source remain unchanged. The current ring/VCA exporter is intentionally extended;
+historical experiment evidence is unchanged. These are bounded model checks,
+not hardware or alias qualification or certified numerical error bounds.
+
+[Coincident-frequency evidence](experiments/ring-vca-coincident/verification.json)
+retains the separate suite logs, exact commands/hashes and complete small example.

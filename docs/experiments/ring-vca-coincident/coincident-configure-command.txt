@@ -1,0 +1,3 @@
+source build/recovery-env.sh
+cmake -S . -B build-core -G Ninja -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON >build/coincident-configure.log 2>&1
+configure_exit=0
