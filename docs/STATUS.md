@@ -44,8 +44,29 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `a8c7de33041365a1531c37e6e62e33d09eb6060b` appends both rank
+filter EG AL controls at lanes60/61, bringing the current roster to **62 lanes**.
+Its reviewed candidate passed12 direct native runs:72 full cases and72
+compatibility cases,1368 renders total. All216 actual candidate62/frozen60
+no-queue and Legacy/PURE pairs matched byte-for-byte. Maximum partition error
+was0; all72 pre128 prefixes were exact. All24 PANEL cases had positive held-window
+effects in frames[128,3072), and all48 factory/MEMORY masking comparisons were
+exact. See [filter AL evidence and exact hashes](VST3_FILTER_AL_AUTOMATION.md).
+
+Changed AL during Attack reanchors the existing trajectory from current precise
+state and resets its local time without replacing capacitor state or stage.
+The long-attack, monotonically increasing-target fixture avoids downward target
+crossing; it does not qualify post-noteoff selection, full attack timing or
+calibrated hardware. Existing target law and selected-source authority remain
+unchanged. Linux float32 coverage is44.1/48/96kHz,realtime/offline,8/16 capacities.
+Direct runs are not CTest or historical-suite reruns. Broad integration/release
+qualification and retained candidate binary/source hashes remain separate from
+this published source commit.
+
+The preceding filter IL checkpoint remains historical:
+
 Published `3f67375012dce7a973c5fa27c2da99922fb8f98b` appends both rank
-filter EG IL controls at lanes58/59, bringing the current roster to **60 lanes**.
+filter EG IL controls at lanes58/59, bringing that checkpoint’s roster to **60 lanes**.
 Its reviewed candidate passed12 direct native runs:72 full cases and72
 compatibility cases,1368 renders total. All216 actual candidate60/frozen58
 no-queue and Legacy/PURE pairs matched byte-for-byte. Maximum partition error
@@ -433,7 +454,7 @@ handover PDF remain dated evidence, not current-head measurements.
 | Filter resonance cache | Reuses cutoff-dependent coefficients on Q-only updates; cutoff/rate changes retain the full path and the solver law is unchanged | `465e56c` ([PR #76](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/76)); [cache scope and measurements](IG00156_RESONANCE_CACHE.md) |
 | External modulation | Sparse FIR reconstruction skips guaranteed-zero products while retaining coefficient design, phase and accumulation order | `228cc8d` ([PR #74](https://github.com/cheshmakzanoon-ops/yamaha-cs80/pull/74)); [scope and measurements](EXTERNAL_INTERPOLATOR_SPARSE.md) |
 | Delay-reader safety | A rounded circular-buffer position at capacity is wrapped to zero, preventing an out-of-bounds read | `ff9943e`; [DELAY_LINE_WRAP_SAFETY.md](DELAY_LINE_WRAP_SAFETY.md). Previously valid interpolation retains its arithmetic. |
-| Host automation | Sixty key VST3 parameters retain sample offsets in modern circuit policy, including PANEL-routed rank filter EG IL, VCA envelope SUSTAIN, VCF LEVEL, PWM speed/depth and INITIAL/AFTER TOUCH amounts, live LOW/HIGH keyboard level and brilliance, initial-bend amount, MASTER SUSTAIN release timing and portamento time; RING attack/decay retain fresh-trigger latch semantics, while protected policies and unsupported parameters keep block-rate behavior | `3f673750`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [filter IL qualification](VST3_FILTER_IL_AUTOMATION.md); historical [VCA SUSTAIN](VST3_VCA_SUSTAIN_AUTOMATION.md), [VCF LEVEL](VST3_VCF_LEVEL_AUTOMATION.md), [PWM](VST3_PWM_AUTOMATION.md), [AFTER TOUCH](VST3_AFTER_TOUCH_AUTOMATION.md), [INITIAL TOUCH](VST3_INITIAL_TOUCH_AUTOMATION.md), [BRILLIANCE](VST3_KBD_BRILLIANCE_AUTOMATION.md), [HIGH keyboard level](VST3_KBD_LEVEL_HIGH_AUTOMATION.md), [LOW keyboard level](VST3_KBD_LEVEL_LOW_AUTOMATION.md), [INITIAL PITCH BEND](VST3_INITIAL_BEND_AUTOMATION.md), [MASTER SUSTAIN](VST3_MASTER_SUSTAIN_AUTOMATION.md), [portamento](VST3_PORTAMENTO_AUTOMATION.md), [CHORUS](VST3_CHORUS_AUTOMATION.md) and [TREMOLO](VST3_TREMOLO_AUTOMATION.md) retain their own evidence. AU scheduled ramps are not enabled. |
+| Host automation | Sixty-two key VST3 parameters retain sample offsets in modern circuit policy, including PANEL-routed rank filter EG IL/AL, VCA envelope SUSTAIN, VCF LEVEL, PWM speed/depth and INITIAL/AFTER TOUCH amounts, live LOW/HIGH keyboard level and brilliance, initial-bend amount, MASTER SUSTAIN release timing and portamento time; RING attack/decay retain fresh-trigger latch semantics, while protected policies and unsupported parameters keep block-rate behavior | `a8c7de33`; [HOST_AUTOMATION.md](HOST_AUTOMATION.md) and [filter AL qualification](VST3_FILTER_AL_AUTOMATION.md); historical [filter IL](VST3_FILTER_IL_AUTOMATION.md), [VCA SUSTAIN](VST3_VCA_SUSTAIN_AUTOMATION.md), [VCF LEVEL](VST3_VCF_LEVEL_AUTOMATION.md), [PWM](VST3_PWM_AUTOMATION.md), [AFTER TOUCH](VST3_AFTER_TOUCH_AUTOMATION.md), [INITIAL TOUCH](VST3_INITIAL_TOUCH_AUTOMATION.md), [BRILLIANCE](VST3_KBD_BRILLIANCE_AUTOMATION.md), [HIGH keyboard level](VST3_KBD_LEVEL_HIGH_AUTOMATION.md), [LOW keyboard level](VST3_KBD_LEVEL_LOW_AUTOMATION.md), [INITIAL PITCH BEND](VST3_INITIAL_BEND_AUTOMATION.md), [MASTER SUSTAIN](VST3_MASTER_SUSTAIN_AUTOMATION.md), [portamento](VST3_PORTAMENTO_AUTOMATION.md), [CHORUS](VST3_CHORUS_AUTOMATION.md) and [TREMOLO](VST3_TREMOLO_AUTOMATION.md) retain their own evidence. AU scheduled ramps are not enabled. |
 | Tuning | Pinned 0BSD MTS-ESP client included, with bounded whole-table updates and missing-master fallback | `73e76ce`; [MTS_ESP_INTEGRATION.md](MTS_ESP_INTEGRATION.md). [Per-channel master tables](MTS_ESP_CHANNEL_MASTER.md) are implemented; live external-master DAW qualification remains open. |
 | MIDI and note lifecycle | Channel-scoped pressure/MPE routing, retained release ownership, ordered KAS short notes, bounded CC121 controller defaults and live conventional bend-range edits | [VOICE_RELEASE_OWNERSHIP.md](VOICE_RELEASE_OWNERSHIP.md), [MPE_MASTER_BEND_ROUTING.md](MPE_MASTER_BEND_ROUTING.md), [CONTROLLER_RESET.md](CONTROLLER_RESET.md), [PITCH_BEND_RANGE_AUTOMATION.md](PITCH_BEND_RANGE_AUTOMATION.md) |
 | Immediate sixteen-voice release | Cancels one matching waiter or releases the newest comparable held group across both instruments; unison groups and UI source guards are retained | `77dfd74`; [bounded contract](SIXTEEN_VOICE_NOTE_RELEASE.md). Deferred/ARP-origin candidates and active/pending scan paths retain broadcast fallback. No complete sixteen-voice release or realtime qualification claim. |
