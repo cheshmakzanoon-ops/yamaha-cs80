@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), master_sustainLimits(argv[3], "host_automation_master_sustain");
-        require(master_sustainLimits["key_parameter_count"] == 37 && cs80::kSampleAccurateParameters.size() == 37,
-                "exact 37-lane master_sustain capability");
+        require(master_sustainLimits["key_parameter_count"] == 37 && cs80::kSampleAccurateParameters.size() >= 37,
+                "historical 37-lane master_sustain capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 36-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[36] == cs80::P_masterSustain, "exact master_sustain lane");

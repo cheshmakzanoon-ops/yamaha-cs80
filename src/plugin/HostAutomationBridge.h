@@ -42,7 +42,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing global glide time; preserve the complete 35-lane prefix.
     int(P_portamento),
     // Existing global performance release; retain the 36-lane prefix.
-    int(P_masterSustain)
+    int(P_masterSustain),
+    // Existing smoothed initial-bend amount; retain all 37 previous lanes.
+    int(P_initBend)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

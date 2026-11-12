@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing initial pitch-bend amount at lane37 after unchanged37-lane prefix. Preserve metadata, smoothing, TouchCircuit/DSP and30 earlier contracts.",
+  "host_automation_initial_bend": {
+    "key_parameter_count": 38,
+    "keys": "Complete preceding37-lane roster/order unchanged; P_initBend appended at lane37.",
+    "authority": "Existing global source-independent initial-bend amount with0..1 range,zero default and linear conversion. No new routing or transient law.",
+    "timing": "Modern normalized queues drive the existing smoothed amount multiplied live by TouchCircuit c in each rank oscillator pitch. Not a note-latched amount or the simple legacy exponential transient. Hold initial.2 through64,then .8@255,.3@767,.9@1535,.15@2303,.65@3583,.4@4095.",
+    "verification": "36 full cases and36 frozen37 compatibility cases across sources13/0/11,capacities8/16 and six rate/modes:684 renders,12 processes,108 actual capture pairs. Scalar/five partitions,exact PCM prefix before64 and positive later aggregate waveform effect versus matched activeconstant. No inert control or individual circuit/pitch calibration claim. Original numerical thresholds preserved; finite startup transient,not hardware,GUI,full pitch accuracy or CPU qualification."
+  }
+}
