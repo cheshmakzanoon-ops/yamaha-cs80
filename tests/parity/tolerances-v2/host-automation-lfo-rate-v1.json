@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "host_automation_lfo_rate": {
+    "key_parameter_count": 89,
+    "minimum_held_effect": 1e-05,
+    "keys": "P_lfo1Rate86 P_lfo2Rate87 P_lfo3Rate88; literal frozen86 prefix preserved",
+    "scope": "Fixed sine waveform, fixed depths0.65, fixed pitch/filter/amp destinations; three isolated rates and combined. Other waveforms, switching, all-phase/full-cycle accuracy excluded.",
+    "timing": "Physical Hz normalized with existing helper: initial8/11/14Hz at0/1023 then16/4/18/7Hz at1535/2047/3071/4095. Scalar vs64/127/256 and exact initial1024frames.",
+    "verification_plan": "96full+96compat cases; capacities8/16(actual2/16notes),2source layouts,3sample rates,2process modes.1536+672renders,384actualPCM pairs/768captures. Legacy/PURE/destination-off/zero-depth controls."
+  }
+}

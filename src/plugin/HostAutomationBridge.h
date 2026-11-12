@@ -89,7 +89,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing continuous wheel depths; preserve the full 81-lane prefix.
     int(P_modWheelSub), int(P_modWheelVcf),
     // Existing modern LFO depth amounts; preserve the full 83-lane prefix.
-    int(P_lfo1Depth), int(P_lfo2Depth), int(P_lfo3Depth)
+    int(P_lfo1Depth), int(P_lfo2Depth), int(P_lfo3Depth),
+    // Existing modern LFO rates; preserve the full 86-lane prefix.
+    int(P_lfo1Rate), int(P_lfo2Rate), int(P_lfo3Rate)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

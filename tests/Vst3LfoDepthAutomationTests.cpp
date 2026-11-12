@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen83Roster.h"
+#include "Vst3Frozen86Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -68,7 +69,9 @@ int main(int argc, char** argv)
         require(limits["key_parameter_count"] == 86, "86-lane contract");
         std::cout << "compiled_lanes=" << cs80::kSampleAccurateParameters.size() << "\n";
         if (!compat) {
-            require(cs80::kSampleAccurateParameters.size() == 86, "exact86 capability");
+            require(cs80::kSampleAccurateParameters.size() >= 86, "historical86 capability retained");
+            require(std::equal(cs80::kFrozen86Roster.begin(), cs80::kFrozen86Roster.end(),
+                               cs80::kSampleAccurateParameters.begin()), "literal86 prefix retained");
             require(std::equal(depths.begin(), depths.end(), cs80::kSampleAccurateParameters.begin() + 83),
                     "depth1/2/3 at83/84/85 exactly");
         }
