@@ -22,6 +22,8 @@ source and images; they are not a claim that every screenshot renders current
 main. Native downloads remain pinned to `0996a15af334f9dcfd63ed8c1d574a22b6804f00`
 at the historical inspection checkpoint. No newer binary is qualified here.
 
+For the bounded offline research tools, see the [offline reference guide](OFFLINE_REFERENCE_GUIDE.md).
+
 ## Latest local core integration
 
 Tested published source `863e6c5b63d2fc0a2af90cc051fa1387286e065f` completed a
