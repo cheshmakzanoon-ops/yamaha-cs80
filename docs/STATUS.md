@@ -44,8 +44,32 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `3ec4a5830ceb604533af95033ed76a1c41f1db50` appends the sixteen existing
+modulation-matrix amount controls at lanes 92–107, bringing the current roster to
+**108 lanes**, with the literal 92-lane prefix preserved. The independently audited
+qualification passed 96 full and 96 compatibility cases: 2112 renders (1440
+candidate + 672 frozen92), 384 actual cross-build PCM pairs byte-identical,
+192 native configuration readbacks and 17 public canonical roundtrips.
+All 384 scalar/block comparisons had error 0; all 96 initial 1024-frame holds
+were exact. Per-slot effects ranged from 0.0108975 to 0.0282302, above the
+predeclared 0.00001 minimum. All ten staged operations completed once, with
+six binary identities and retained/frozen evidence unchanged.
+See [matrix amount evidence and exact identities](experiments/matrix-amount-automation/README.md).
+
+Coverage is Linux VST3 at 44.1/48/96 kHz, realtime/offline, all sixteen isolated
+slots using the specified unsynced poly MSEG-to-pitch/cutoff/level pattern,
+both ranks, manual/manual sources and two notes. Signed amount histories stay
+within -0.20 to 0.25. Blocks 7/64/256/1024 match scalar rendering; unrouted,
+PURE, Legacy and empty/null-queue controls pass. Compatibility histories cover
+four representative preceding controls, not all 92. Only the sixteen roster
+entries changed in production; DSP/UI, metadata, source authority, routing and
+serialization remain unchanged. Two historical guards were source-reviewed,
+not rerun. Simultaneous matrix slots, general source/via behavior, source masks,
+full-range, native DAW, cross-platform, CPU-target and hardware fidelity are not
+qualified by this isolated-slot milestone.
+
 Published `cc1dcae50812fa7851c161923c37de2fd420270c` appends the three existing
-MSEG octave-rate controls at lanes 89–91, bringing the current roster to
+MSEG octave-rate controls at lanes 89–91, bringing that checkpoint’s roster to
 **92 lanes**, with the literal 89-lane prefix preserved. The native prerequisite
 routing proof is published as `36efea390ac1a5a3c213db10140a471fa4584f4a`.
 
@@ -72,6 +96,15 @@ candidate linkage; its logs are preserved and are not counted as a test outcome.
 Fresh baseline compilation and qualification completed under distinct resumed
 paths. No combined-route, source-mask, sync/shape-switching, full-range, native
 DAW, cross-platform, CPU-target or hardware-fidelity qualification is implied.
+
+A separate test-only milestone, published
+`78f2ad10132f919594d053b0b46633f09ce27538`, qualifies three simultaneous MSEG
+rate histories across the same six configurations: 114 renders, 24 scalar/block
+comparisons (maximum error 9.31323e-10), 24 byte-identical reversed-queue checks,
+18 positive per-lane witnesses and 12 native readbacks. Production remains
+unchanged. These are capture identities, not old/new baseline comparisons;
+source masks, sync and shape switching remain outside scope.
+See [combined MSEG evidence](experiments/mseg-combined-rates/README.md).
 
 Published `244016b22e290a450707947b221f777f18e22c01` appends modern LFO1,
 LFO2 and LFO3 rate at lanes 86–88, bringing that checkpoint’s roster to **89 lanes**
