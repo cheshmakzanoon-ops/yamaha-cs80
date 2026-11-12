@@ -143,6 +143,11 @@ global release floor at lane79. Existing live max-release timing and PURE
 effective-zero policy are preserved; this is not ordinary rank smoothing or
 a source-masked rank control. Full79 prefix remains unchanged.
 
+The candidate [release-floor interaction qualification](VST3_RELEASE_FLOOR_INTERACTION.md)
+checks a master-sustain trajectory below and across a fixed key-release floor.
+Matched active histories isolate this max-rule interaction without new lanes,
+production changes or dynamic rank-release attribution.
+
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's
 AU interface source list and native wrapper remain untouched. AU scheduled
