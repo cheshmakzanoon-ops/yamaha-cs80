@@ -51,10 +51,12 @@ private:
     };
     void timerCallback() override;
     Snapshot sample() const;
+    void refreshAccessibleStatus();
     float p(int local) const { return snap.v[(size_t) local]; }
 
     Cs80AudioProcessor& processor;
     Snapshot snap;
+    std::unique_ptr<juce::Component> accessibleStatus;
     int channel = 0;
     bool liveInspection = false;
     int inspectedSlot = 0;

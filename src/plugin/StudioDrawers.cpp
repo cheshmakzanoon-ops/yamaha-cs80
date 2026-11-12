@@ -91,6 +91,22 @@ float sectionDb(float f, float fc, float res, bool highPass)
     return 20.0f * std::log10(juce::jmax(1.0e-6f, mag));
 }
 
+class VoiceMonitorStatus final : public juce::Component
+{
+public:
+    VoiceMonitorStatus()
+    {
+        setComponentID("voice_monitor_status");
+        setInterceptsMouseClicks(false, false);
+        setWantsKeyboardFocus(false);
+        setDescription("Read-only visual summary, not an audio waveform or measured circuit response.");
+    }
+    std::unique_ptr<juce::AccessibilityHandler> createAccessibilityHandler() override
+    {
+        return std::make_unique<juce::AccessibilityHandler>(*this, juce::AccessibilityRole::staticText);
+    }
+};
+
 class DrawerKey final : public juce::Button
 {
 public:
@@ -122,6 +138,8 @@ ScopeDrawer::ScopeDrawer(Cs80AudioProcessor& p) : processor(p)
     setWantsKeyboardFocus(true);
     setFocusContainerType(juce::Component::FocusContainerType::keyboardFocusContainer);
     setOpaque(false);
+    accessibleStatus = std::make_unique<VoiceMonitorStatus>();
+    addAndMakeVisible(*accessibleStatus);
     closeKey = std::make_unique<DrawerKey>("CLOSE", "Close the voice monitor");
     channelI = std::make_unique<DrawerKey>("I", "Monitor channel I");
     channelII = std::make_unique<DrawerKey>("II", "Monitor channel II");
@@ -163,6 +181,7 @@ void ScopeDrawer::setChannel(int newChannel)
     channelII->setToggleState(channel == 1, juce::dontSendNotification);
     processor.requestVoiceInspection(inspectedSlot, channel, liveInspection && isVisible());
     snap = sample();
+    refreshAccessibleStatus();
     repaint();
 }
 
@@ -172,13 +191,13 @@ void ScopeDrawer::setLiveInspection(bool enabled)
     liveKey->setToggleState(enabled, juce::dontSendNotification);
     previousSlot->setVisible(enabled); nextSlot->setVisible(enabled);
     processor.requestVoiceInspection(inspectedSlot, channel, enabled && isVisible());
-    snap = sample(); repaint();
+    snap = sample(); refreshAccessibleStatus(); repaint();
 }
 void ScopeDrawer::setInspectedSlot(int slot)
 {
     inspectedSlot = juce::jlimit(0, 15, slot);
     processor.requestVoiceInspection(inspectedSlot, channel, liveInspection && isVisible());
-    snap = sample(); repaint();
+    snap = sample(); refreshAccessibleStatus(); repaint();
 }
 
 ScopeDrawer::Snapshot ScopeDrawer::sample() const
@@ -209,12 +228,46 @@ ScopeDrawer::Snapshot ScopeDrawer::sample() const
     return s;
 }
 
+void ScopeDrawer::refreshAccessibleStatus()
+{
+    if (accessibleStatus == nullptr) return;
+    juce::String text = "Voice monitor. ";
+    if (!liveInspection)
+        text << "Settings illustrations for channel " << (channel == 0 ? "I" : "II")
+             << ". These are settings, not measured audio taps.";
+    else
+    {
+        text << "Live inspection. Physical slot " << inspectedSlot + 1 << ", rank " << (channel == 0 ? "I" : "II") << ". ";
+        const auto& r = snap.inspection;
+        const bool matching = r.ready && cs80::VoiceInspection::slot(r.request) == inspectedSlot
+            && cs80::VoiceInspection::rank(r.request) == channel && cs80::VoiceInspection::enabled(r.request);
+        if (!matching) text << "Waiting for audio callback.";
+        else if (!r.available) text << "Slot not available in 8-voice mode.";
+        else if (!r.active) text << "Inactive slot. Values unavailable.";
+        else
+        {
+            text << (r.held ? "Key held. " : r.pedalHeld ? "Pedal held. " : "Release tail. ")
+                 << "MIDI note " << r.note << ", channel " << r.channel << ". ";
+            if (!r.rendered) text << "Rank was not rendered. Values unavailable.";
+            else text << "VCA envelope " << juce::String(r.amplitude, 4)
+                      << ", VCF envelope " << juce::String(r.filter, 4)
+                      << ", oscillator " << juce::String(r.oscillatorHz, 2)
+                      << " Hz, HP cutoff " << juce::String(r.hpfHz, 2)
+                      << " Hz, LP cutoff " << juce::String(r.lpfHz, 2) << " Hz.";
+        }
+    }
+    // Read on demand by accessibility clients; do not announce audio-rate value
+    // changes or add a keyboard stop to the existing control traversal.
+    accessibleStatus->setTitle(text);
+}
+
 void ScopeDrawer::timerCallback()
 {
     const auto now = sample();
     if (! (now == snap))
     {
         snap = now;
+        refreshAccessibleStatus();
         repaint();
     }
 }
@@ -225,6 +278,7 @@ void ScopeDrawer::visibilityChanged()
     if (isVisible())
     {
         snap = sample();
+        refreshAccessibleStatus();
         startTimerHz(15);
     }
     else
@@ -436,6 +490,7 @@ void ScopeDrawer::resized()
     channelI->setBounds(r(254.0f, 18.0f, 36.0f, 36.0f));
     channelII->setBounds(r(292.0f, 18.0f, 40.0f, 36.0f));
     closeKey->setBounds(r(338.0f, 18.0f, 62.0f, 36.0f));
+    accessibleStatus->setBounds(r(20,60,380,390));
     liveKey->setBounds(r(176,16,70,20));
     previousSlot->setBounds(r(22,72,40,36)); nextSlot->setBounds(r(358,72,40,36));
 }

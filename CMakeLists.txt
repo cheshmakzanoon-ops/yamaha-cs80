@@ -1132,6 +1132,14 @@ if (CS80_BUILD_PLUGIN)
         target_link_libraries(cs80_midi_map_notification_tests PRIVATE CS80Reference)
         add_test(NAME cs80_midi_map_notification_tests COMMAND cs80_midi_map_notification_tests)
         set_tests_properties(cs80_midi_map_notification_tests PROPERTIES TIMEOUT 120)
+        add_executable(cs80_voice_monitor_accessibility_tests tests/VoiceMonitorAccessibilityTests.cpp)
+        target_include_directories(cs80_voice_monitor_accessibility_tests PRIVATE src
+            "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_voice_monitor_accessibility_tests PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_voice_monitor_accessibility_tests PRIVATE CS80Reference)
+        add_test(NAME cs80_voice_monitor_accessibility_tests COMMAND cs80_voice_monitor_accessibility_tests)
+        set_tests_properties(cs80_voice_monitor_accessibility_tests PROPERTIES TIMEOUT 120)
         add_executable(cs80_render_policy_context_tests tests/RenderPolicyContextTests.cpp)
         target_include_directories(cs80_render_policy_context_tests PRIVATE src
             "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
