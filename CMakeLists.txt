@@ -977,6 +977,14 @@ if (CS80_BUILD_PLUGIN)
             target_link_libraries(cs80_mts_real_processor PRIVATE CS80Reference ${CMAKE_DL_LIBS})
             set_target_properties(cs80_mts_real_processor PROPERTIES BUILD_RPATH "${CS80_MTS_REAL_BUILD_RPATH}")
         endif()
+        add_executable(cs80_sub_routing_display_tests tests/SubRoutingDisplayTests.cpp)
+        target_include_directories(cs80_sub_routing_display_tests PRIVATE src
+            "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_sub_routing_display_tests PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_sub_routing_display_tests PRIVATE CS80Reference)
+        add_test(NAME cs80_sub_routing_display_tests COMMAND cs80_sub_routing_display_tests)
+        set_tests_properties(cs80_sub_routing_display_tests PROPERTIES TIMEOUT 120)
         add_executable(cs80_parameter_admission_tests tests/ParameterValueAdmissionTests.cpp)
         target_include_directories(cs80_parameter_admission_tests PRIVATE src
             "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")

@@ -8,6 +8,7 @@
 #include "ParameterComboBox.h"
 #include "ParameterContextButton.h"
 #include "core/Dsp.h"
+#include "core/OriginalSubOscillator.h"
 
 #include <algorithm>
 #include <array>
@@ -799,17 +800,31 @@ public:
     explicit SubRouting(Cs80AudioProcessor& p) : LiveWidget(p, 712.0f, 100.0f) {}
 
 private:
+    bool circuitSpeedLaw() const
+    {
+        // PURE forces Original even when the stored waveform-set switch is off.
+        return policy() != 0 && (isolated() || v(cs80::P_subOriginalMode) >= 0.5f);
+    }
+
     void sample(Sig& s) const override
     {
         const int idx[6] = { cs80::P_subVco, cs80::P_subVcf, cs80::P_subVca, cs80::P_subAtSpeed, cs80::P_subAtVco, cs80::P_subAtVcf };
         for (int i = 0; i < 6; ++i)
             s[(size_t) i] = v(idx[i]);
         s[6] = v(cs80::P_parityMode);
+        s[7] = circuitSpeedLaw() ? 1.0f : 0.0f;
     }
 
     void draw(juce::Graphics& g) override
     {
         const bool iso = isolated();
+        const bool exponentialSpeed = circuitSpeedLaw();
+        const auto speedMultiplier = [exponentialSpeed](float amount)
+        {
+            return exponentialSpeed
+                ? std::exp2(static_cast<double>(amount) * cs80::OriginalSubOscillator::touchOctaves())
+                : 1.0f + cs80::OriginalSubOscillator::kAftertouchRateFactor * amount;
+        };
         struct Row { const char* name; int param; float full; const char* unit; };
         static const Row left[3] = { { "VCO", cs80::P_subVco, 1.5f, " st" }, { "VCF", cs80::P_subVcf, 1.5f, " oct" },
                                      { "VCA", cs80::P_subVca, 0.45f, " lvl" } };
@@ -832,10 +847,12 @@ private:
                 g.fillRoundedRectangle(x + 84.0f, y + 8.0f, juce::jmax(4.0f, 72.0f * amount), 7.0f, 3.5f);
             }
             // The bright figure is what the setting gives now; the dim one is what full amount would give.
-            // AT SPEED multiplies the rate by 1 + 2 x amount at full key pressure.
+            // At full key pressure, Original circuit mode adds converter octaves;
+            // Legacy policy and the legacy waveform set retain their linear law.
             const juce::String now = r.full > 0.0f ? (zero ? juce::String("0") + r.unit : "+" + juce::String(amount * r.full, 2) + r.unit)
-                                                   : (zero ? juce::String("0") : "x" + juce::String(1.0f + 2.0f * amount, 2));
-            const juce::String top = r.full > 0.0f ? "max " + juce::String(r.full, 2) : juce::String("max x3.00");
+                                                   : (zero ? juce::String("0") : "x" + juce::String(speedMultiplier(amount), 2));
+            const juce::String top = r.full > 0.0f ? "max " + juce::String(r.full, 2)
+                                                 : "max x" + juce::String(speedMultiplier(1.0f), 2);
             text(g, now, { x + 158.0f, y, 90.0f, 22.0f }, 12.5f, lit, lit ? amberBright : ivoryDim, Just::centredRight, 0.02f);
             text(g, top, { x + 254.0f, y, 74.0f, 22.0f }, 12.5f, false, axisInk(), Just::centredRight);
         };
