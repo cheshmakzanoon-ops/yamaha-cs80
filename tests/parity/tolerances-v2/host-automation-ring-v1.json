@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing ring speed and amount controls after the unchanged 28-lane prefix. All earlier capability and numerical contracts remain unchanged.",
+  "host_automation_ring": {
+    "key_parameter_count": 30,
+    "keys": "Original 28 in original order, then P_ringSpeed and P_ringAmount.",
+    "authority": "Global ring speed and amount retain existing PANEL/factory/MEMORY independence. Ring depth, attack, decay and envelope behavior are outside this extension.",
+    "timing": "Modern VST3 normalized interpolation through existing physical conversion and DSP. No-queue and Legacy/PURE final-point behavior unchanged. AU not expanded.",
+    "verification": "Bounded actual-module Linux float32 checks with supported finite queues and explicitly recorded voice capacity, active-note and source-selection scope. Existing numeric tolerances unchanged. Exact runtime provenance and frozen pre-feature compatibility captures required; no malformed inputs, GUI, DAW, hardware or CPU claim."
+  }
+}

@@ -30,7 +30,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing global touch amounts; keep the complete 24-lane prefix stable.
     int(P_subAtSpeed), int(P_subAtVco), int(P_subAtVcf),
     // Compatibility-mode SUB speed, distinct from original-panel speed.
-    int(P_subSpeed)
+    int(P_subSpeed),
+    // Existing global ring controls; retain every preceding capability lane.
+    int(P_ringSpeed), int(P_ringAmount)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

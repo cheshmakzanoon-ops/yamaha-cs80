@@ -38,8 +38,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), speedLimits(argv[3], "host_automation_sub_legacy_speed");
-        require(speedLimits["key_parameter_count"] == 28 && cs80::kSampleAccurateParameters.size() == 28,
-                "exact 28-lane legacy combined capability");
+        require(speedLimits["key_parameter_count"] == 28 && cs80::kSampleAccurateParameters.size() >= 28,
+                "historical 28-lane legacy combined capability prefix");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 27-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[27] == cs80::P_subSpeed, "exact appended legacy speed lane");

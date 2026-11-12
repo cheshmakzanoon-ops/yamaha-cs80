@@ -1,0 +1,261 @@
+{
+  "base_commit": "4b7b999a63b7985acbb329994aadf19b3008376e",
+  "direct_runs_not_ctest": true,
+  "full_cases": {
+    "ring": 72,
+    "speed": 36,
+    "legacy-combined": 72
+  },
+  "compatibility_pairs": {
+    "ring": 216,
+    "speed": 108,
+    "legacy-combined": 216
+  },
+  "total_pairs": 540,
+  "all_36_matrix_runs_exit_zero": true,
+  "inputs_unchanged": true,
+  "all_captures_byte_identical": true,
+  "metrics": {
+    "ring": {
+      "max_error": {
+        "min": 0.0,
+        "max": 0.0,
+        "count": 72
+      },
+      "effect": {
+        "min": 0.0106765,
+        "max": 0.385975,
+        "count": 72
+      },
+      "inactive_error": {
+        "min": 0,
+        "max": 0,
+        "count": 36,
+        "scope": "Speed lane only; amount-lane logs mark not-applicable. PCM output only, not internal state or later re-enable."
+      }
+    },
+    "speed": {
+      "max_error": {
+        "min": 0.0,
+        "max": 0.0,
+        "count": 36
+      },
+      "effect": {
+        "min": 0.043749,
+        "max": 0.635032,
+        "count": 36
+      },
+      "inactive_error": {
+        "min": 0.0,
+        "max": 0.0,
+        "count": 36
+      }
+    },
+    "legacy-combined": {
+      "max_error": {
+        "min": 0.0,
+        "max": 0.0,
+        "count": 72
+      },
+      "effect": {
+        "min": 0.043593,
+        "max": 0.610964,
+        "count": 72
+      },
+      "pressure_effect": {
+        "min": 0.0428891,
+        "max": 0.618739,
+        "count": 72
+      },
+      "unpressured_speed_effect": {
+        "min": 0.0432892,
+        "max": 0.515918,
+        "count": 72
+      }
+    }
+  },
+  "negative_control": {
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-automation/build-native/cs80_vst3_ring_automation_tests",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-automation/../yamaha-cs80-legacy-speed/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-automation/tests/parity/tolerances-v2/host-automation.json",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-automation/tests/parity/tolerances-v2/host-automation-ring-v1.json",
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-automation/build/ring-negative-control/captures",
+      "48000",
+      "realtime"
+    ],
+    "host_sha256": "3856a616369daf7070a73816d72f7ffc9896e0099e371ba0217cd79221e3f3fc",
+    "module_sha256": "3ec2aba7ce6760b522475f9edeb47299ce148540a4674ccf6a84686a26553bbd",
+    "purpose": "Capability negative control: full gate on frozen 28-lane baseline, expected twelve partition failures; NOT a passing full qualification",
+    "started": 1794476578.6436126,
+    "exit_code": 1,
+    "finished": 1794476591.8595304,
+    "host_sha256_after": "3856a616369daf7070a73816d72f7ffc9896e0099e371ba0217cd79221e3f3fc",
+    "module_sha256_after": "3ec2aba7ce6760b522475f9edeb47299ce148540a4674ccf6a84686a26553bbd",
+    "log_sha256": "789e296d3e5ecbc2448363a9cbdbfaa8a604d916822f860227f7d19a86f62e56"
+  },
+  "negative_control_is_not_passing_full_gate": true,
+  "previous_contracts": {
+    "tests/parity/tolerances-v2/host-automation-pan-v1.json": {
+      "base_sha256": "713904671b1782a1d23f49f95194fa1fb9ef3539b00becd2190914562d8a1711",
+      "current_sha256": "713904671b1782a1d23f49f95194fa1fb9ef3539b00becd2190914562d8a1711",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/host-automation-state-boundary.json": {
+      "base_sha256": "348a4797e1c62793c46a6937c61cc888cb9f2aace8799f7460f3ffb29194440a",
+      "current_sha256": "348a4797e1c62793c46a6937c61cc888cb9f2aace8799f7460f3ffb29194440a",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/host-automation-sub-depth-v1.json": {
+      "base_sha256": "0f6d52e6c61be465dd648745fbfd9dcaf704ee9f2b6cc3ef24e769a9bf86bcc2",
+      "current_sha256": "0f6d52e6c61be465dd648745fbfd9dcaf704ee9f2b6cc3ef24e769a9bf86bcc2",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/host-automation-sub-legacy-speed-v1.json": {
+      "base_sha256": "92f2456fd12ea4411913f72944a42a0d2f8f8a3347b0af7ed33ac99d21bacee8",
+      "current_sha256": "92f2456fd12ea4411913f72944a42a0d2f8f8a3347b0af7ed33ac99d21bacee8",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/host-automation-sub-touch-v1.json": {
+      "base_sha256": "eefcbd55b959e6d2f755f1c88749b965dc0cd3726724036a93ac55c079a3e131",
+      "current_sha256": "eefcbd55b959e6d2f755f1c88749b965dc0cd3726724036a93ac55c079a3e131",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/host-automation-sub-v1.json": {
+      "base_sha256": "edee0856bee56ca8aeb057dd3a0c7bc7e0efa829d5c499ccbba435236429d295",
+      "current_sha256": "edee0856bee56ca8aeb057dd3a0c7bc7e0efa829d5c499ccbba435236429d295",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/host-automation.json": {
+      "base_sha256": "c301b3eddf110a8dc6b6b07416d6eba9ddb68f7c19fb2eeea99cebc26bee7bf6",
+      "current_sha256": "c301b3eddf110a8dc6b6b07416d6eba9ddb68f7c19fb2eeea99cebc26bee7bf6",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/host-wrapper-platforms.json": {
+      "base_sha256": "f38086ecc6997f74b80fe5c66d19ef3c0032a435ab9904a0a407f78538e1686d",
+      "current_sha256": "f38086ecc6997f74b80fe5c66d19ef3c0032a435ab9904a0a407f78538e1686d",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/main-vst3-compatibility.json": {
+      "base_sha256": "8f5ff72877242e1ae6f39894ea6d3b731a9a5eaa14a47b779cb59dae89ff3c9c",
+      "current_sha256": "8f5ff72877242e1ae6f39894ea6d3b731a9a5eaa14a47b779cb59dae89ff3c9c",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/main-vst3-multirecall-state.json": {
+      "base_sha256": "63d364d2f05166f945e9bd82c685e6d04bd3856b9b24e08932d43119588b8fd6",
+      "current_sha256": "63d364d2f05166f945e9bd82c685e6d04bd3856b9b24e08932d43119588b8fd6",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/main-vst3-only-automation.json": {
+      "base_sha256": "c72c1b97faf5c6dc66f7f2b6ea6813807e275aafdeddda91a567b8264631f5ae",
+      "current_sha256": "c72c1b97faf5c6dc66f7f2b6ea6813807e275aafdeddda91a567b8264631f5ae",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/memory-control-routing.json": {
+      "base_sha256": "d107527be98c3867243b26b87cf9176282b0f95c4bbc9f0f6dbdc05823c0ae54",
+      "current_sha256": "d107527be98c3867243b26b87cf9176282b0f95c4bbc9f0f6dbdc05823c0ae54",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/memory-nonlinear-study.json": {
+      "base_sha256": "75171d226efeeb6de3acf18256c074d13470cea503b8b09264d341b1e5af4593",
+      "current_sha256": "75171d226efeeb6de3acf18256c074d13470cea503b8b09264d341b1e5af4593",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/memory-port-map.json": {
+      "base_sha256": "64cda2f23145d738b2d6d402c3de0f2a0f7fdfdcf278e04768ba703ba4f350b9",
+      "current_sha256": "64cda2f23145d738b2d6d402c3de0f2a0f7fdfdcf278e04768ba703ba4f350b9",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/memory-sparse-update.json": {
+      "base_sha256": "1370d58617cc566838e733fc5b16780a2314393051ca7138c54ab18093c4c5cf",
+      "current_sha256": "1370d58617cc566838e733fc5b16780a2314393051ca7138c54ab18093c4c5cf",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/windows-wrapper-path-alias.json": {
+      "base_sha256": "a39e0253f4edf1957e52e4baed95bf2dc39c69b21b89f46f254d09eb21af8950",
+      "current_sha256": "a39e0253f4edf1957e52e4baed95bf2dc39c69b21b89f46f254d09eb21af8950",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/ws1-voice.json": {
+      "base_sha256": "d19de5bea8f7203e76674abdb271be678526688add4807105f9dcd2098d4177c",
+      "current_sha256": "d19de5bea8f7203e76674abdb271be678526688add4807105f9dcd2098d4177c",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/ws3-keyboard.json": {
+      "base_sha256": "88812719a9967ec9d2ce862ecdda498c6b9865efe724d3eb80f2bec1a260554e",
+      "current_sha256": "88812719a9967ec9d2ce862ecdda498c6b9865efe724d3eb80f2bec1a260554e",
+      "unchanged": true
+    },
+    "tests/parity/tolerances-v2/ws6-library.json": {
+      "base_sha256": "28fda06871af1fa25753cbda5bf64e88fc44ec4712e07c10d720055c983c6b95",
+      "current_sha256": "28fda06871af1fa25753cbda5bf64e88fc44ec4712e07c10d720055c983c6b95",
+      "unchanged": true
+    }
+  },
+  "source_sha256": {
+    "src/plugin/HostAutomationBridge.h": "9a905d35f2a1f5a98beeef36fcf29c2b7af21f7e23f6ba289204c28f90a96fc9",
+    "tests/Vst3AutomationTests.cpp": "e1343fafaba48948917c45f7df3d2ad43821ece497438977d7d0afc0a0eb94fd",
+    "tests/Vst3SubLegacySpeedAutomationTests.cpp": "db427b8c741f1a5ee3d3e6aae742399e8ff3d98bd4ae2618a8d27d9ef727ef63",
+    "tests/Vst3RingAutomationTests.cpp": "d4882d8ad87c67810f080c2bfdc614bb3f87891871b19a474219f768ac3e64e3",
+    "tests/Vst3SubLegacyCombinedAutomationTests.cpp": "1de01713fd3f46fc1cfca4cdb973d473aba0c76cfac7343fa5d6f3196d3b5a2e",
+    "tests/parity/tolerances-v2/host-automation-sub-legacy-speed-v1.json": "92f2456fd12ea4411913f72944a42a0d2f8f8a3347b0af7ed33ac99d21bacee8",
+    "tests/parity/tolerances-v2/host-automation-ring-v1.json": "3f9660b91dda5091a6f2adaab1547be05d3cb4dccb106bcb6fb28747414cb1fa",
+    "CMakeLists.txt": "75074e4e87a7c58bf84cd6fb3e36a0b6f55b8651899f2699bbc1126fd9aa33b2",
+    "docs/VST3_RING_AUTOMATION.md": "f76ff4ad0b7ff0af4e644fe0003924ec6fa84ab4e8e153fbf3b2dbd04db7a6e6"
+  },
+  "build_history": "Fresh configure and plugin plus three-host CMake build exited zero, observed by the coordinator in the completed command result. The Ninja log final counter is 97/98; no exact step-count claim is made. All logs retained; runtime outcomes never retried.",
+  "limits": "Linux float32 direct native hosts; static oscillator modes, finite supported queues; no broad, malformed, fuzz, CPU, hardware, GUI, DAW or AU qualification.",
+  "evidence_sha256": {
+    "speed-candidate-96000-realtime.log": "524e51bc970368b069ed693a2b2859fdec24636638fe5ba6d9ba6b6fab29d05f",
+    "manifest.json": "8b89b70b7d7fb8107acbaf18ae7a55f6017769992fbfa22a7b23571fdac6e327",
+    "legacy-combined-candidate-96000-offline.log": "e9fb13978aa56e8a6700c00902470f17d5ed7c3456e63c7055715a0e85ba6cdd",
+    "legacy-combined-baseline-96000-offline.log": "d1de578055703db8beacbc9f3d46e4381b6a78bdc02f1e96ff750c49d93eba4c",
+    "legacy-combined-candidate-44100-realtime.log": "71efb568e7ead93fec3e9b8839d2934df94cc190a2e749f2cb19bcc45fc5c49a",
+    "build.log": "07cf27cdecee70e4ddc2575b31e41fdd99413c287836de8307e847f1b1857f92",
+    "speed-candidate-44100-offline.log": "ad531312dc4b45f40276476ec5fef1615441efc37334b43bd68254830879d975",
+    "speed-baseline-48000-offline.log": "2ce37177d7a6e95c0162f7a3b154a63c1bf26ec0133d247e85c78ba39929402d",
+    "run-ring-scoped-matrix.py": "aee43974fcab997831fc099ae38b12fdf630652e8fa8b012571333a656295826",
+    "speed-baseline-44100-offline.log": "74b71dfb5f0472c13f31e125a8d9f84855250a0de1b0e41f22ac78e76be22194",
+    "inputs-after.json": "4ca15cf2ce6cc479731b8783f23594518dd48d3fee1257d217e97e5b4a0c4ce9",
+    "speed-candidate-48000-realtime.log": "50ae2d3033632fa06604e1c1db18f57d10b33efc71dfaf3f238afa310d5be594",
+    "ring-baseline-48000-offline.log": "db5b5a90fd8066721bd9b335115009f997305d213fc4348d8bfa2d47945aa574",
+    "ring-candidate-48000-offline.log": "a6a5fb7504b88f1f701320532d59f0ffff73d991cd33af859fa3bd2257af31db",
+    "legacy-combined-baseline-48000-realtime.log": "31862a0a36023a9776c0c9f2824d651b8d71f9a544244023a788c05d40a893fd",
+    "build-command.txt": "f2350ec572606d68521b1606799356ab6e4c760068245c6c7e7ae8ce858a0d59",
+    "legacy-combined-candidate-44100-offline.log": "c193a8647e2d3ce0b194768e79b528a9620f4111296b87a24af8078180c4a8a2",
+    "ring-baseline-96000-realtime.log": "9b9a155a81eee686a57756dd6c39a247bbbeede682dd8b644661aacb2375a81e",
+    "speed-baseline-96000-offline.log": "02a9cf90064aa83a411929b3214261933b878435d3a8ed2ca9abfe3db0b59d79",
+    "legacy-combined-baseline-96000-realtime.log": "6bcbb4bdcb6112d78c6ceea77de12e971b419c9377ade37565cfcc3d329b2e8a",
+    "ring-candidate-96000-realtime.log": "38ed5b42bad6c8baa21fe4447e6eaf93b956cfc47403f02833e77ee866f3eb41",
+    "legacy-combined-baseline-48000-offline.log": "83c25101bf32c497a66e0eceecced0e05f4678c1e92e2f66c0a58023cedbec32",
+    "ring-baseline-44100-realtime.log": "f4acdf68074827ff83881bad84332284b8757ffd884d12238399ce04ff29d41c",
+    "ring-baseline-96000-offline.log": "2c4fa17401600403a53c59ed41a5cf2ed3a5eed081e1d68dc49c9f39b71a6b2a",
+    "ring-baseline-48000-realtime.log": "c6856e8ec9d9b034ca68ee8bec1d61694d4efb3e4dbdd43fe3be1f5d10d1aacd",
+    "negative-control-manifest.json": "889ee0ecd10ebda427f00492529964164fd923813077bb913193023ebcf00d93",
+    "legacy-combined-baseline-44100-offline.log": "41da835c88876c1ea43ace3b102df248c0a64bf2fdc5efef7564098f45df1302",
+    "speed-baseline-96000-realtime.log": "b65b27d8922ffc129e2a021686815d9b8b74145993ef80640f92c809e3d19d91",
+    "speed-baseline-44100-realtime.log": "3043f42866a439d979bcf5c56f9ecbf3eaa18dc0a3a81137a297b5129c0a3933",
+    "speed-candidate-48000-offline.log": "f2afddc47e01123448bd5bd8836efa2ea0258adf513e1a33a23e31ac5465a18d",
+    "ring-candidate-44100-offline.log": "2dbb9665a74340331a5accbec8b69e66c72b5eef8282fb6c339cd6c2f08e2a1f",
+    "capture-comparison.json": "5fffc9eebd506aba94a36651ba3fe6c4d7961dc2ce47259d8535233976f37d3c",
+    "legacy-combined-candidate-48000-offline.log": "85fa8d4f790f5225fe3e7ff761b65c8129af5aee64974fb2681a3eb5e3fcc729",
+    "ring-matrix.log": "de32624f2fcea5715bf3eae97b9775e8f9307239ef84dbc2a308f169df3445a5",
+    "legacy-combined-candidate-48000-realtime.log": "556848e04f091fe7455fa2f6c2c925dee6715b06f52724335b27c95ba861a80c",
+    "ring-candidate-48000-realtime.log": "a17aae613ce44ddecb798d1ae50d6017155f6c5903ae7268abcd22f193f65ce2",
+    "negative-control.log": "789e296d3e5ecbc2448363a9cbdbfaa8a604d916822f860227f7d19a86f62e56",
+    "legacy-combined-baseline-44100-realtime.log": "4749d34af984a843fb7de91218c3ca113291a4ba9e0fd9a6054de042a24d0731",
+    "ring-baseline-44100-offline.log": "36b903a7f7dd93cda933f8b3f05640c13583d03d6fc58b34060335cea7bd5214",
+    "ring-candidate-96000-offline.log": "a8da06a2e8eed8936a71557cc262bec4d6dcf66e40f9b5ac8ff77abf2bb56b15",
+    "speed-baseline-48000-realtime.log": "c1db0501b25847ac7231492769aa9ec3a4e98c83ad35240765fff1e6e2ee873d",
+    "speed-candidate-96000-offline.log": "8b9958d43b7f602238e54b1fc75ce6db7fa06f709ff078e300972a053e0e5304",
+    "speed-candidate-44100-realtime.log": "4d08ae1f7d61306bca018121a8a3ee1ba2c5ea91be28a8edbbbf5eae4e7fc3cc",
+    "inputs-before.json": "4ca15cf2ce6cc479731b8783f23594518dd48d3fee1257d217e97e5b4a0c4ce9",
+    "run-ring-negative-control.py": "28e8b4cdad9c74a9b9bce47ff670cfa6f2da52a246863641858a38ac2077ad9b",
+    "legacy-combined-candidate-96000-realtime.log": "2e75bd3efaa89149ff5c2176b390e564b8affe0118e10bbb14c687f24f024a89",
+    "configure.log": "71e2663f3e00dfb225d73e3a3051766861d16c2ceb549007814fd384e7f5933f",
+    "ring-candidate-44100-realtime.log": "923cf031988f07161e738d61bcd9bf3b947c48fa6fe4e6abc8a15feb21f6a0f9"
+  },
+  "negative_control_expected_failure_verified": true,
+  "published_base_commit": "1831a16bbc56dc45c8ae2452eaa75bd7765ad469",
+  "base_provenance": "Local base4b7b999a; coordinator reports published development-equivalent base1831a16b, screenshots differ."
+}

@@ -1,0 +1,26 @@
+rate=48000 mode=realtime gate=full-ring
+FAIL: ring queues match per-sample reference across partitions
+ring=28-8-13 max_error=0.0551107 effect=0.0415315 inactive_control=speed-zero-amount inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=29-8-13 max_error=0.0249162 effect=0.0110834 inactive_control=not-applicable inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=28-8-0 max_error=0.190573 effect=0.181968 inactive_control=speed-zero-amount inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=29-8-0 max_error=0.110396 effect=0.062701 inactive_control=not-applicable inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=28-8-11 max_error=0.0551107 effect=0.0415315 inactive_control=speed-zero-amount inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=29-8-11 max_error=0.0249162 effect=0.0110834 inactive_control=not-applicable inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=28-16-13 max_error=0.128041 effect=0.114602 inactive_control=speed-zero-amount inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=29-16-13 max_error=0.0725283 effect=0.0443516 inactive_control=not-applicable inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=28-16-0 max_error=0.46046 effect=0.385975 inactive_control=speed-zero-amount inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=29-16-0 max_error=0.291804 effect=0.0987628 inactive_control=not-applicable inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=28-16-11 max_error=0.128041 effect=0.114602 inactive_control=speed-zero-amount inactive_error=0
+FAIL: ring queues match per-sample reference across partitions
+ring=29-16-11 max_error=0.0725283 effect=0.0443516 inactive_control=not-applicable inactive_error=0
+12 native ring scenarios, 12 failures
