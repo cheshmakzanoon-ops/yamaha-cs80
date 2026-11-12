@@ -1,0 +1,92 @@
+[
+  {
+    "rate": 44100,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-combined/build/combined-host",
+      "../yamaha-cs80-ring-times/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ring-combined-v1.json",
+      "build/matrix/44100-realtime",
+      "44100",
+      "realtime"
+    ],
+    "exit": 0,
+    "log": "build/matrix/44100-realtime/run.log"
+  },
+  {
+    "rate": 44100,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-combined/build/combined-host",
+      "../yamaha-cs80-ring-times/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ring-combined-v1.json",
+      "build/matrix/44100-offline",
+      "44100",
+      "offline"
+    ],
+    "exit": 0,
+    "log": "build/matrix/44100-offline/run.log"
+  },
+  {
+    "rate": 48000,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-combined/build/combined-host",
+      "../yamaha-cs80-ring-times/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ring-combined-v1.json",
+      "build/matrix/48000-realtime",
+      "48000",
+      "realtime"
+    ],
+    "exit": 0,
+    "log": "build/matrix/48000-realtime/run.log"
+  },
+  {
+    "rate": 48000,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-combined/build/combined-host",
+      "../yamaha-cs80-ring-times/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ring-combined-v1.json",
+      "build/matrix/48000-offline",
+      "48000",
+      "offline"
+    ],
+    "exit": 0,
+    "log": "build/matrix/48000-offline/run.log"
+  },
+  {
+    "rate": 96000,
+    "mode": "realtime",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-combined/build/combined-host",
+      "../yamaha-cs80-ring-times/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ring-combined-v1.json",
+      "build/matrix/96000-realtime",
+      "96000",
+      "realtime"
+    ],
+    "exit": 0,
+    "log": "build/matrix/96000-realtime/run.log"
+  },
+  {
+    "rate": 96000,
+    "mode": "offline",
+    "command": [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-ring-combined/build/combined-host",
+      "../yamaha-cs80-ring-times/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "tests/parity/tolerances-v2/host-automation.json",
+      "tests/parity/tolerances-v2/host-automation-ring-combined-v1.json",
+      "build/matrix/96000-offline",
+      "96000",
+      "offline"
+    ],
+    "exit": 0,
+    "log": "build/matrix/96000-offline/run.log"
+  }
+]

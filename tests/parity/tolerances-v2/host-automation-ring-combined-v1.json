@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_qualification_extension",
+  "description": "Qualify all five existing global RING queues together across two fresh triggers and asymmetric rank-source selections. Existing 33-lane capability unchanged; all 23 earlier contracts preserved.",
+  "host_automation_ring_combined": {
+    "key_parameter_count": 33,
+    "keys": "Existing complete 33-lane roster unchanged; RING speed/amount/depth/attack/decay remain lanes 28/29/30/31/32.",
+    "authority": "Global RING controls remain independent of rank sources. Bounded asymmetric source pairs are PANEL/factory, factory/PANEL, PANEL/MEMORY and MEMORY/PANEL. Attack/decay remain fresh-trigger-latched, not live reshape.",
+    "timing": "Unchanged supported two-note-cycle renderer. Initial time values held through first engine onsets, later targets held through the second onset cohort. Modern normalized interpolation retains existing conversion and DSP semantics.",
+    "verification": "Bounded actual-module float32 checks on frozen 33-lane module: per-sample reference and five partitions, aggregate five-queue versus matched five-active-constant effect without per-parameter attribution, and amount-zero four-queue versus matched four-active-constant PCM equality with amount queue omitted on both sides. Existing numeric thresholds and no-queue/policy checks remain separate; no internal-state, hardware, GUI, malformed-input or CPU qualification."
+  }
+}

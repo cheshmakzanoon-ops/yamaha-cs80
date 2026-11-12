@@ -1,0 +1,415 @@
+{
+  "base_commit": "e423a70397cd903b852334b955d8d3dd7d820f25",
+  "build": "Direct official-SDK compilation of combined supported host only. No production build, CMake configure/build or CTest.",
+  "compile_exit": 0,
+  "runs": 6,
+  "full_cases": 48,
+  "render_budget": 720,
+  "all_exits_zero": true,
+  "metrics": [
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "8-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.427014,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "8-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.055163,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "8-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0614965,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "8-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0614965,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "16-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.294579,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "16-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.111529,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "16-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.130407,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "realtime",
+      "case": "16-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.130407,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "8-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.392728,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "8-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0549402,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "8-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0613528,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "8-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0613528,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "16-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.327669,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "16-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.1136,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "16-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.13514,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 44100,
+      "mode": "offline",
+      "case": "16-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.13514,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "8-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.352566,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "8-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0570519,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "8-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0540867,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "8-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0540867,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "16-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.338022,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "16-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.137448,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "16-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.127783,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "realtime",
+      "case": "16-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.127783,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "8-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.352285,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "8-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0569161,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "8-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0544168,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "8-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0544168,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "16-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.330285,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "16-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.137454,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "16-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.12918,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 48000,
+      "mode": "offline",
+      "case": "16-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.12918,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "8-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.508186,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "8-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0948626,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "8-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.115392,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "8-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.115392,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "16-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.390349,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "16-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.119069,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "16-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.140362,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "realtime",
+      "case": "16-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.140362,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "8-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.47328,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "8-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.0942237,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "8-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.115081,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "8-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.115081,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "16-13-0",
+      "max_error": 0.0,
+      "aggregate_effect": 0.413552,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "16-0-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.120325,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "16-13-11",
+      "max_error": 0.0,
+      "aggregate_effect": 0.141202,
+      "amount_zero_error": 0.0
+    },
+    {
+      "rate": 96000,
+      "mode": "offline",
+      "case": "16-11-13",
+      "max_error": 0.0,
+      "aggregate_effect": 0.141202,
+      "amount_zero_error": 0.0
+    }
+  ],
+  "baseline_comparison_performed": false,
+  "retained_local_capture_count": 144,
+  "source_host_module_sdk_compiler_unchanged": true,
+  "production_prior_scripts_shared_helper_unchanged": true,
+  "prior_contracts_unchanged": 23,
+  "source_hashes": {
+    "CMakeLists.txt": "e4b417bf36a9983876d3e35ade21b48f4a3d492a7b4c485917161dd780002905",
+    "tests/Vst3RingCombinedAutomationTests.cpp": "9048456e1f81addca2b1274b88118727dd00620abbbb4017950de40c20ccbab6",
+    "tests/Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "tests/parity/tolerances-v2/host-automation-ring-combined-v1.json": "44659a667db4a7a4ed9ff46dcc6fc10ae7d134a8b12af7e229279b089e551beb",
+    "docs/VST3_RING_COMBINED_AUTOMATION.md": "6858c4df6f1e90e461cfe8bd69d14d9cb213f34074108a56c28b05de7a77684a"
+  },
+  "limitations": [
+    "Aggregate five-lane effect is not per-lane attribution; earlier isolated gates remain separate.",
+    "Amount-zero four-lane control establishes PCM-output inertness only, not state equivalence.",
+    "Mixed source pairs13/0,0/13,13/11,11/13;8/16capacity;three rates/two modes/two-note-cycle fixture only.",
+    "Raw PCM and executable retained locally; not a complete replay bundle.",
+    "No baseline replay, negative/broad/fuzz/malformed/GUI/DAW/AU/CPU/hardware qualification."
+  ],
+  "matrix_invocation": ". build/recovery-env.sh; python3 -B build/run-combined-matrix.py >build/matrix.log 2>&1; code=$?; echo \"$code\" >build/matrix.exit; exit \"$code\""
+}
