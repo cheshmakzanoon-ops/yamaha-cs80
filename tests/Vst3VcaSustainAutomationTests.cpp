@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), vca_sustainLimits(argv[3], "host_automation_vca_sustain");
-        require(vca_sustainLimits["key_parameter_count"] == 58 && cs80::kSampleAccurateParameters.size() == 58,
-                "exact 58-lane vca_sustain capability");
+        require(vca_sustainLimits["key_parameter_count"] == 58 && cs80::kSampleAccurateParameters.size() >= 58,
+                "historical 58-lane vca_sustain capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 56-lane roster/order unchanged");
         constexpr std::array added {cs80::chParam(0, cs80::CP_vS), cs80::chParam(1, cs80::CP_vS)};

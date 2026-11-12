@@ -63,7 +63,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing filtered-path gains; preserve the complete 54-lane prefix.
     chParam(0, CP_vcfLevel), chParam(1, CP_vcfLevel),
     // Existing live envelope targets; preserve the 56-lane prefix.
-    chParam(0, CP_vS), chParam(1, CP_vS)
+    chParam(0, CP_vS), chParam(1, CP_vS),
+    // Existing filter release targets; preserve the 58-lane prefix.
+    chParam(0, CP_fIl), chParam(1, CP_fIl)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

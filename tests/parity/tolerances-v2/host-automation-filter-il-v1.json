@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append both rank filter EG IL controls after unchanged58 prefix, preserving40 historical contracts, DSP, helper, metadata and source masks.",
+  "host_automation_filter_il": {
+    "key_parameter_count": 60,
+    "keys": "Rank0 CP_fIl lane58; rank1 CP_fIl lane59. Full58 prefix preserved.",
+    "authority": "Existing PANEL13 routing and factory0/MEMORY11 selected-source PCM masking unchanged. Range0..1/default.5/linear unchanged.",
+    "timing": "Live IL release target, not ordinary rank smoothing or state replacement. Initial.2 hold0/3100 then.6/.3/.7/.15 at3327/3583/3839/4095, after all noteoffs3072..3087. Filter A.001/D.002/AL.3/R.18,keyRelease.18/masterSustain0,VCA A.001/D.002/S.7/R.5,neutral scale/dispersion.",
+    "verification": "72full24PANELpositive48masked plus72frozen58compatibility;1368renders12process216actualpairs. Exactpre3100,matchedactivehold,positive PANEL tail,scalar/fivepartitions. No completedIdle, stage timing accuracy, full release, calibrated hardware, simultaneous lane, GUI or CPU claim."
+  }
+}
