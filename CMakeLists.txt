@@ -1880,6 +1880,13 @@ if (CS80_BUILD_TESTS AND UNIX AND Python3_VERSION VERSION_GREATER_EQUAL "3.11")
     set_tests_properties(cs80_ring_time_reference_tests PROPERTIES TIMEOUT 120)
 endif()
 
+# Independent event-aware envelope/VCA with one explicit sine input.
+if (CS80_BUILD_TESTS AND UNIX AND Python3_VERSION VERSION_GREATER_EQUAL "3.11")
+    add_test(NAME cs80_event_aware_envelope_sine_tests
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_event_aware_envelope_sine.py)
+    set_tests_properties(cs80_event_aware_envelope_sine_tests PROPERTIES TIMEOUT 120)
+endif()
+
 # Independent signed filter EG and its dynamic-filter/amplitude chain composition.
 if (CS80_BUILD_TESTS AND UNIX)
     add_test(NAME cs80_filter_envelope_reference_tests

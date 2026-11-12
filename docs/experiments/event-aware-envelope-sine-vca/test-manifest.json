@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "tests/test_event_aware_envelope_sine.py",
+    "-v"
+  ],
+  "interpreter": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "python_version": "3.12.14",
+  "interpreter_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+  "source_sha256": {
+    "scripts/render_event_aware_envelope_sine_vca.py": "468e2b3a42f173938d77ea7f4a4cc4daa5c9fefd9bd711382912ee09aea070e8",
+    "scripts/render_event_aware_envelope_vca.py": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710",
+    "scripts/render_amplitude_envelope_reference.py": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca",
+    "tests/test_event_aware_envelope_sine.py": "2f1469b04b1990b4676b6d2ef2c37346b3e49edc4c9eeb461ef5b1829c699e9b"
+  },
+  "exit_code": 0,
+  "source_sha256_after": {
+    "scripts/render_event_aware_envelope_sine_vca.py": "468e2b3a42f173938d77ea7f4a4cc4daa5c9fefd9bd711382912ee09aea070e8",
+    "scripts/render_event_aware_envelope_vca.py": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710",
+    "scripts/render_amplitude_envelope_reference.py": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca",
+    "tests/test_event_aware_envelope_sine.py": "2f1469b04b1990b4676b6d2ef2c37346b3e49edc4c9eeb461ef5b1829c699e9b"
+  },
+  "log_sha256": "253f98b043fbcd655840cca2e426cd9e3e534e41d15b897892cf0d93380c8167"
+}
