@@ -1,0 +1,69 @@
+{
+  "base": "b323b8e885914be2309b04539f46029adc576c3f",
+  "environment": "Fresh Linux Release build, GCC, local JUCE 8.0.11, no native display server",
+  "source_sha256": {
+    "CMakeLists.txt": "dbf10cd55d9a10a36776ff8f14a13eff71a4add3266819be6b02b752d3150bed",
+    "src/plugin/PluginProcessor.cpp": "18570299072115ecc0041ee50dc10425c998c948cbab60cc1814e8bd685ae7fe",
+    "src/plugin/PluginProcessorLibrary.cpp": "d5374d17d7f688d724efe7af7474b0f44fd0a4b495d12163d0caf6762013a860",
+    "src/plugin/PluginProcessorLibrary.h": "aa5dd1edd4c4ad7e9ae72ca197cd1d26920f037ed814cbb40e85dd6dd96f0d93",
+    "src/tools/ui_snapshot.cpp": "76683279f20d8858e0c4509f7869cd02c99d003e6c7a287f17389be7523fac6a",
+    "tests/HardwareSourceHistoryTests.h": "97f8fcf70f888bc64e870d249f3de9473a48a1585007ead5729b911fa53a6269"
+  },
+  "baseline": {
+    "binary": "/workspace/scratch/ee447c520988/patch-history-baseline",
+    "sha256": "96b8958051e11fb1aa027d63f3826f721cbe068e45b4eecbab76fc3d4206b55f",
+    "command": "CS80Snapshots --hardware-source-history-tests",
+    "checks": 305,
+    "failures": 41,
+    "exit": 1,
+    "fixture_note": "Initial witness used exact physical float comparison; final fixture adds two no-op/Redo assertions and uses the established range-based tolerance for A/B normalization."
+  },
+  "fixed": {
+    "binary": "/workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "393685b50e1b61623481a73c53da430a8253826e601c95e0bb849baa1fea03af",
+    "focused_checks": 307,
+    "focused_failures": 0,
+    "existing_history_checks": 106,
+    "existing_history_failures": 0,
+    "ctest_passed": 8,
+    "ctest_failed": 0
+  },
+  "runtime_environment": {
+    "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu"
+  },
+  "commands": {
+    "focused": [
+      "/workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--hardware-source-history-tests"
+    ],
+    "history": [
+      "/workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--patch-history-tests"
+    ],
+    "adjacent": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest",
+      "--test-dir",
+      "/workspace/scratch/ee447c520988/build-patch-history-navigation-audit",
+      "--output-on-failure",
+      "-R",
+      "^(cs80_hardware_source_history_tests|cs80_patch_history_tests|cs80_ring_curve_gesture_tests|cs80_mod_matrix_route_actions_tests|cs80_mod_matrix_routing_ui_tests|cs80_controller_reset_host_tests|cs80_studio_switch_context_tests|cs80_parameter_combo_context_tests)$"
+    ]
+  },
+  "limits": [
+    "No full UI smoke, DAW, native input, cross-platform, remote CI or release qualification.",
+    "No parser, corruption or security test dispatches were executed."
+  ],
+  "independent_review": {
+    "verdict": "approved",
+    "source_hashes_verified_before_and_after": true,
+    "binary_sha256": "393685b50e1b61623481a73c53da430a8253826e601c95e0bb849baa1fea03af",
+    "focused_checks": 307,
+    "focused_failures": 0,
+    "existing_history_checks": 106,
+    "existing_history_failures": 0,
+    "ctest_passed": 8,
+    "ctest_failed": 0,
+    "all_exit_codes": 0,
+    "note": "Independent source review and reruns of the final binary; no reviewer rebuild."
+  }
+}

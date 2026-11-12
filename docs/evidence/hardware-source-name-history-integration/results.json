@@ -1,0 +1,47 @@
+{
+  "focused": {
+    "command": [
+      "/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--hardware-source-history-tests"
+    ],
+    "exit": 0
+  },
+  "history": {
+    "command": [
+      "/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--patch-history-tests"
+    ],
+    "exit": 0
+  },
+  "click": {
+    "command": [
+      "/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--preset-click-tests"
+    ],
+    "exit": 0
+  },
+  "preferences": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "/workspace/scratch/ee447c520988/hardware-source-history-integrated/tests/test_preset_preferences.py",
+      "--executable",
+      "/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots"
+    ],
+    "exit": 0
+  },
+  "adjacent": {
+    "command": [
+      "/workspace/scratch/ee447c520988/pitch-power-recovery/tools/cmake/data/bin/ctest",
+      "--test-dir",
+      "/workspace/scratch/ee447c520988/build-hardware-source-history-integrated",
+      "--output-on-failure",
+      "-R",
+      "^(cs80_hardware_source_history_tests|cs80_patch_history_tests|cs80_ring_curve_gesture_tests|cs80_mod_matrix_route_actions_tests|cs80_mod_matrix_routing_ui_tests|cs80_controller_reset_host_tests|cs80_studio_switch_context_tests|cs80_parameter_combo_context_tests|cs80_preset_click_tests|cs80_preset_preferences_tests)$"
+    ],
+    "exit": 0
+  },
+  "binary": {
+    "path": "/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "53b7abdc465ac52888a5b66d98a25289018d6a0483599e86f57b11ae980410b9"
+  }
+}

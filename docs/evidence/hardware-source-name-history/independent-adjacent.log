@@ -1,0 +1,88 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-patch-history-navigation-audit/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-patch-history-navigation-audit/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 193
+    Start 193: cs80_hardware_source_history_tests
+
+193: Test command: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots "--hardware-source-history-tests"
+193: Working Directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+193: Test timeout computed to be: 60
+193: Hardware source history: 307 checks, 0 failures
+1/8 Test #193: cs80_hardware_source_history_tests ....   Passed    0.79 sec
+test 194
+    Start 194: cs80_patch_history_tests
+
+194: Test command: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots "--patch-history-tests"
+194: Working Directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+194: Test timeout computed to be: 60
+194: A/B and randomise history: 106 checks, 0 failures
+2/8 Test #194: cs80_patch_history_tests ..............   Passed    0.20 sec
+test 198
+    Start 198: cs80_ring_curve_gesture_tests
+
+198: Test command: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots "--ring-curve-gesture-tests"
+198: Working Directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+198: Test timeout computed to be: 120
+198: Ring curve gestures: 270 checks, 0 failures
+3/8 Test #198: cs80_ring_curve_gesture_tests .........   Passed    0.63 sec
+test 199
+    Start 199: cs80_mod_matrix_route_actions_tests
+
+199: Test command: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots "--mod-matrix-route-actions-tests"
+199: Working Directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+199: Test timeout computed to be: 60
+199: Modulation matrix route actions: 2574 checks, 0 failures
+4/8 Test #199: cs80_mod_matrix_route_actions_tests ...   Passed    0.13 sec
+test 200
+    Start 200: cs80_mod_matrix_routing_ui_tests
+
+200: Test command: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots "--mod-matrix-routing-ui-tests"
+200: Working Directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+200: Test timeout computed to be: 60
+200: Modulation matrix routing UI: 481 checks, 0 failures
+5/8 Test #200: cs80_mod_matrix_routing_ui_tests ......   Passed    0.07 sec
+test 209
+    Start 209: cs80_controller_reset_host_tests
+
+209: Test command: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots "--controller-reset-tests"
+209: Working Directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+209: Test timeout computed to be: 120
+209: Controller reset host tests: 2304 checks, 0 failures
+6/8 Test #209: cs80_controller_reset_host_tests ......   Passed    1.99 sec
+test 215
+    Start 215: cs80_studio_switch_context_tests
+
+215: Test command: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots "--studio-switch-context-tests"
+215: Working Directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+215: Test timeout computed to be: 120
+215: Studio switch context tests: 122 checks, 0 failures
+7/8 Test #215: cs80_studio_switch_context_tests ......   Passed    0.41 sec
+test 216
+    Start 216: cs80_parameter_combo_context_tests
+
+216: Test command: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit/CS80Snapshots_artefacts/Release/CS80Snapshots "--parameter-combo-context-tests"
+216: Working Directory: /workspace/scratch/ee447c520988/build-patch-history-navigation-audit
+216: Test timeout computed to be: 120
+216: Parameter combo context tests: 119 checks, 0 failures
+8/8 Test #216: cs80_parameter_combo_context_tests ....   Passed    0.12 sec
+
+The following tests passed:
+	cs80_hardware_source_history_tests
+	cs80_patch_history_tests
+	cs80_ring_curve_gesture_tests
+	cs80_mod_matrix_route_actions_tests
+	cs80_mod_matrix_routing_ui_tests
+	cs80_controller_reset_host_tests
+	cs80_studio_switch_context_tests
+	cs80_parameter_combo_context_tests
+
+100% tests passed, 0 tests failed out of 8
+
+Total Test time (real) =   4.36 sec

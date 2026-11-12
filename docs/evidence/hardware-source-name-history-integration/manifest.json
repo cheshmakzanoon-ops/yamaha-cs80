@@ -1,0 +1,79 @@
+{
+  "main_baseline": "47c0a05b2f41f9f1581e75d28fb7b74da6d18007",
+  "reviewed_fix": "28b5e4233ab8491a10bb4a482bc0f7f7c6dfa78c",
+  "source_integration": "3f84dc712795cefc72b58ddd3d670de94700d95b",
+  "scope": "No new behavior changes. Only clean integration with existing preset-click repair and separate combined evidence.",
+  "runtime_source_files_verified": 189,
+  "runtime_sources_match_reviewed_fix_or_main": true,
+  "original_evidence_unchanged": true,
+  "original_evidence_sha256": {
+    "docs/evidence/hardware-source-name-history/final-build.log": "50501f4043b532695e67b2177e778b2ff3b09c18d3819da096cdfd7732a1f75c",
+    "docs/evidence/hardware-source-name-history/independent-adjacent.log": "9422a51c41f92cb7ad6378e8919f2a50c27bda18d8db3c398c7b964e247f1b69",
+    "docs/evidence/hardware-source-name-history/independent-focused.log": "305f4e986ecffeef030f77e4db09bcc41c3d4ca74222fbea6cfc9f1f9dcf3a50",
+    "docs/evidence/hardware-source-name-history/source.sha256": "c9f11135b2f456bd29d0d96d41da45e80d8ad4c4fceb82b51947115b3fa57d92",
+    "docs/evidence/hardware-source-name-history/independent-history.log": "05663328f9a7b3b8b577604d0f94aef42cd11feba2c6bbf3c655ab4c9e177c4c",
+    "docs/evidence/hardware-source-name-history/adjacent-tests.log": "36111e2919585d1a15d9473ead223d4b16d6c79488ca693584d2a10afb77c670",
+    "docs/evidence/hardware-source-name-history/manifest.json": "34f7043a65f6b3123e4a63df4d199d16cdd2eedfe6a5c7cde5df136d395d437d",
+    "docs/evidence/hardware-source-name-history/baseline-tests.log": "02306ac8ec289336ac8b6f308daaad854d98be468e5cee56b368cc4f56aab89c",
+    "docs/evidence/hardware-source-name-history/independent-hashes.log": "7be455c2a44b7034234635d18ff6c5b1b831388287b584e55e0ad4f0bb82b48e",
+    "docs/evidence/hardware-source-name-history/focused-tests.log": "305f4e986ecffeef030f77e4db09bcc41c3d4ca74222fbea6cfc9f1f9dcf3a50",
+    "docs/evidence/hardware-source-name-history/existing-history-tests.log": "05663328f9a7b3b8b577604d0f94aef42cd11feba2c6bbf3c655ab4c9e177c4c",
+    "docs/evidence/hardware-source-name-history/configure-command.json": "893f15c021438105501d920e292a7a43bb7b3fcbf00c1b36485f995d5262dae5"
+  },
+  "fresh_build": true,
+  "final_rebuild": "no work to do",
+  "binary": {
+    "path": "/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots",
+    "sha256": "53b7abdc465ac52888a5b66d98a25289018d6a0483599e86f57b11ae980410b9"
+  },
+  "results": {
+    "hardware_history": {
+      "checks": 307,
+      "failures": 0
+    },
+    "ab_randomise_history": {
+      "checks": 106,
+      "failures": 0
+    },
+    "preset_click": {
+      "checks": 41,
+      "failures": 0
+    },
+    "preset_preferences": {
+      "checks": 85,
+      "processes": 7,
+      "failures": 0
+    },
+    "ctest": {
+      "passed": 10,
+      "failed": 0
+    }
+  },
+  "commands_and_exit_codes": "results.json",
+  "runtime_environment": {
+    "LD_LIBRARY_PATH": "/workspace/scratch/ee447c520988/mpe-native-tools/sysroot/usr/lib/x86_64-linux-gnu"
+  },
+  "limits": [
+    "No native peer, DAW, full UI smoke, malformed-input, cross-platform, remote CI or release qualification.",
+    "No remote writes."
+  ],
+  "independent_review": {
+    "verdict": "approved",
+    "binary_sha256": "53b7abdc465ac52888a5b66d98a25289018d6a0483599e86f57b11ae980410b9",
+    "source_hash_count": 11,
+    "source_and_binary_hashes_verified_before_and_after": true,
+    "source_history": "307/307",
+    "ab_randomise_history": "106/106",
+    "preset_click": "41/41",
+    "preset_preferences": "85/85 across seven normal-exit processes",
+    "ctest": "10/10",
+    "five_command_exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "scope": "Independent exact-binary rerun and source checks; no reviewer rebuild."
+  }
+}

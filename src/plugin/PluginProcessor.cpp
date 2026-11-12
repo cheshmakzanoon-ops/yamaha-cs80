@@ -1335,15 +1335,23 @@ void Cs80AudioProcessor::resetHardwareSources() noexcept
 void Cs80AudioProcessor::selectHardwareSource(int channel, int source)
 {
     if (channel < 0 || channel > 1 || source < 0 || source > 13) return;
+    const juce::String label = source < 11 ? juce::String(cs80::hardwareToneName(source, channel))
+        : source == 13 ? "Panel" : "Memory " + juce::String(channel + (source == 12 ? 3 : 1));
+    const auto name = juce::String(channel == 0 ? "Tone I: " : "Tone II: ") + label;
     if (auto* p = apvts.getParameter(hardwareSourceParameterId(channel)))
     {
         p->beginChangeGesture();
+        if (library != nullptr && apvts.hasActiveParameterGesture() && !undoManager.isPerformingUndoRedo())
+        {
+            // Join the selector's existing transaction before its value is
+            // flushed. The effective metadata also resolves a prior MIDI recall.
+            const auto before = getPresetMetadata();
+            library->recordMetadataChange(before, PresetMetadata { name, before.factoryIndex, before.origin });
+        }
         p->setValueNotifyingHost(p->convertTo0to1((float) source));
         p->endChangeGesture();
     }
-    juce::String label = source < 11 ? juce::String(cs80::hardwareToneName(source, channel))
-        : source == 13 ? "Panel" : "Memory " + juce::String(channel + (source == 12 ? 3 : 1));
-    setPresetName(juce::String(channel == 0 ? "Tone I: " : "Tone II: ") + label);
+    setPresetName(name);
 }
 
 float Cs80AudioProcessor::getMemoryValue(int bank, int local) const noexcept

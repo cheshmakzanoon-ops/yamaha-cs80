@@ -1,0 +1,119 @@
+Internal ctest changing into directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 191
+      Start 191: cs80_preset_preferences_tests
+
+191: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/hardware-source-history-integrated/tests/test_preset_preferences.py" "--executable" "/workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots"
+191: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+191: Test timeout computed to be: 90
+191: enable: exit 0
+191: Preset browser preferences: 19 checks, 0 failures
+191: read-enabled: exit 0
+191: Preset browser preferences: 8 checks, 0 failures
+191: disable: exit 0
+191: Preset browser preferences: 16 checks, 0 failures
+191: read-disabled: exit 0
+191: Preset browser preferences: 8 checks, 0 failures
+191: missing: exit 0
+191: Preset browser preferences: 15 checks, 0 failures
+191: read-missing: exit 0
+191: Preset browser preferences: 7 checks, 0 failures
+191: blocked: exit 0
+191: Preset browser preferences: 12 checks, 0 failures
+ 1/10 Test #191: cs80_preset_preferences_tests .........   Passed    0.60 sec
+test 192
+      Start 192: cs80_preset_click_tests
+
+192: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--preset-click-tests"
+192: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+192: Test timeout computed to be: 60
+192: Preset row click audition: 41 checks, 0 failures
+ 2/10 Test #192: cs80_preset_click_tests ...............   Passed    0.08 sec
+test 194
+      Start 194: cs80_hardware_source_history_tests
+
+194: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--hardware-source-history-tests"
+194: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+194: Test timeout computed to be: 60
+194: Hardware source history: 307 checks, 0 failures
+ 3/10 Test #194: cs80_hardware_source_history_tests ....   Passed    0.68 sec
+test 195
+      Start 195: cs80_patch_history_tests
+
+195: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--patch-history-tests"
+195: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+195: Test timeout computed to be: 60
+195: A/B and randomise history: 106 checks, 0 failures
+ 4/10 Test #195: cs80_patch_history_tests ..............   Passed    0.20 sec
+test 199
+      Start 199: cs80_ring_curve_gesture_tests
+
+199: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--ring-curve-gesture-tests"
+199: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+199: Test timeout computed to be: 120
+199: Ring curve gestures: 270 checks, 0 failures
+ 5/10 Test #199: cs80_ring_curve_gesture_tests .........   Passed    0.59 sec
+test 200
+      Start 200: cs80_mod_matrix_route_actions_tests
+
+200: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--mod-matrix-route-actions-tests"
+200: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+200: Test timeout computed to be: 60
+200: Modulation matrix route actions: 2574 checks, 0 failures
+ 6/10 Test #200: cs80_mod_matrix_route_actions_tests ...   Passed    0.12 sec
+test 201
+      Start 201: cs80_mod_matrix_routing_ui_tests
+
+201: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--mod-matrix-routing-ui-tests"
+201: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+201: Test timeout computed to be: 60
+201: Modulation matrix routing UI: 481 checks, 0 failures
+ 7/10 Test #201: cs80_mod_matrix_routing_ui_tests ......   Passed    0.07 sec
+test 210
+      Start 210: cs80_controller_reset_host_tests
+
+210: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--controller-reset-tests"
+210: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+210: Test timeout computed to be: 120
+210: Controller reset host tests: 2304 checks, 0 failures
+ 8/10 Test #210: cs80_controller_reset_host_tests ......   Passed    1.92 sec
+test 216
+      Start 216: cs80_studio_switch_context_tests
+
+216: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--studio-switch-context-tests"
+216: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+216: Test timeout computed to be: 120
+216: Studio switch context tests: 122 checks, 0 failures
+ 9/10 Test #216: cs80_studio_switch_context_tests ......   Passed    0.42 sec
+test 217
+      Start 217: cs80_parameter_combo_context_tests
+
+217: Test command: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated/CS80Snapshots_artefacts/Release/CS80Snapshots "--parameter-combo-context-tests"
+217: Working Directory: /workspace/scratch/ee447c520988/build-hardware-source-history-integrated
+217: Test timeout computed to be: 120
+217: Parameter combo context tests: 119 checks, 0 failures
+10/10 Test #217: cs80_parameter_combo_context_tests ....   Passed    0.14 sec
+
+The following tests passed:
+	cs80_preset_preferences_tests
+	cs80_preset_click_tests
+	cs80_hardware_source_history_tests
+	cs80_patch_history_tests
+	cs80_ring_curve_gesture_tests
+	cs80_mod_matrix_route_actions_tests
+	cs80_mod_matrix_routing_ui_tests
+	cs80_controller_reset_host_tests
+	cs80_studio_switch_context_tests
+	cs80_parameter_combo_context_tests
+
+100% tests passed, 0 tests failed out of 10
+
+Total Test time (real) =   4.82 sec

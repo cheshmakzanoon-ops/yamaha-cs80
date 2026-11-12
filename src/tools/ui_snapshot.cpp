@@ -1,4 +1,5 @@
 #include "../../tests/QwertyNoteOwnershipTests.h"
+#include "../../tests/HardwareSourceHistoryTests.h"
 #include "../../tests/RingCurveGestureTests.h"
 #include "../../tests/ModMatrixRouteActionsTests.h"
 #include "../../tests/ModMatrixRoutingUiTests.h"
@@ -2254,6 +2255,24 @@ int main(int argc, char** argv)
         juce::ScopedJuceInitialiser_GUI juceInit;
         cs80::tests::testVoiceActivityUi(check, flushGui);
         std::printf("Voice activity UI tests: %d failures\n", failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--hardware-source-history-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        cs80::tests::testHardwareSourceHistory([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Hardware source history: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
+    if (argc > 1 && std::strcmp(argv[1], "--patch-history-tests") == 0)
+    {
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        const auto checked = [&](bool condition, const char* what) { ++checks; check(condition, what); };
+        cs80::tests::testAbCompareHistoryHost(checked);
+        cs80::tests::testRandomiseHistoryHost(checked);
+        std::printf("A/B and randomise history: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
     if (argc > 1 && std::strcmp(argv[1], "--undo-replay-gesture-tests") == 0)

@@ -440,11 +440,11 @@ void Cs80AudioProcessor::readLibraryState(const juce::ValueTree& state)
 }
 
 // ---------------------------------------------------------------------------
-// Randomise within original ranges (message thread)
+// Metadata for named sound edits (message thread)
 // ---------------------------------------------------------------------------
-struct Cs80AudioProcessor::LibraryState::RandomiseMetadataAction final : juce::UndoableAction
+struct Cs80AudioProcessor::LibraryState::MetadataAction final : juce::UndoableAction
 {
-    RandomiseMetadataAction(LibraryState& state, PresetMetadata oldState, PresetMetadata newState)
+    MetadataAction(LibraryState& state, PresetMetadata oldState, PresetMetadata newState)
         : library(state), before(std::move(oldState)), after(std::move(newState)) {}
 
     bool perform() override
@@ -482,6 +482,17 @@ struct Cs80AudioProcessor::LibraryState::RandomiseMetadataAction final : juce::U
     bool firstPerform = true;
 };
 
+void Cs80AudioProcessor::LibraryState::recordMetadataChange(PresetMetadata before, PresetMetadata after)
+{
+    if (before.name == after.name && before.factoryIndex == after.factoryIndex && before.origin == after.origin)
+        return;
+    const juce::ScopedLock treeLock(owner.apvts.treeLock());
+    owner.undoManager.perform(new MetadataAction(*this, std::move(before), std::move(after)));
+}
+
+// ---------------------------------------------------------------------------
+// Randomise within original ranges (message thread)
+// ---------------------------------------------------------------------------
 void Cs80AudioProcessor::randomiseWithinOriginalRanges(juce::uint32 seed)
 {
     const juce::ScopedLock treeLock(apvts.treeLock());
@@ -492,9 +503,7 @@ void Cs80AudioProcessor::randomiseWithinOriginalRanges(juce::uint32 seed)
         const auto before = getPresetMetadata();
         // Randomise preserves the effective program index, including a prior
         // MIDI recall. Register before parameter callbacks can flush history.
-        if (before.name != name)
-            undoManager.perform(new LibraryState::RandomiseMetadataAction(
-                *library, before, PresetMetadata { name, before.factoryIndex, before.origin }));
+        library->recordMetadataChange(before, PresetMetadata { name, before.factoryIndex, before.origin });
     }
     // A randomised patch is a PANEL sound; physical setup and isolation stay.
     applyValues(next);
