@@ -1,0 +1,130 @@
+{
+  "artifacts": {
+    "envelope_transitions.json": {
+      "bytes": 432,
+      "sha256": "862ba69b491119d8dd3de9f061bb641624373bd7161f489fe1e6d91976810513"
+    },
+    "events.json": {
+      "bytes": 4934,
+      "sha256": "eeb8ee88e95236264df14e69e5be421b58af0f72f7ed32b2e18c0131f216ecb5"
+    },
+    "input_events.csv": {
+      "bytes": 74,
+      "sha256": "b55c194f652c9197734b81d85102bb936294a434c3ae56ce284989c48baf4be9"
+    },
+    "render_amplitude_envelope_reference.py": {
+      "bytes": 14530,
+      "sha256": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca"
+    },
+    "render_event_aware_envelope_vca.py": {
+      "bytes": 15166,
+      "sha256": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710"
+    },
+    "renderer.py": {
+      "bytes": 11074,
+      "sha256": "468e2b3a42f173938d77ea7f4a4cc4daa5c9fefd9bd711382912ee09aea070e8"
+    },
+    "segments.json": {
+      "bytes": 3109,
+      "sha256": "a6ee56e74b967ebe9d5238db9020eed34f1e5b5c0cdcfdbc0cadf00dd84542b6"
+    },
+    "trace.csv": {
+      "bytes": 31036,
+      "sha256": "67ed8b8984c3649ccaaf9f61da30a47a768458f0e1c52b86dd13af0d7733048b"
+    },
+    "transitions.json": {
+      "bytes": 2579,
+      "sha256": "c6a6423cd9922824673234bf5323b79e2049cb5a3e7ce02293202fa317cf925e"
+    }
+  },
+  "clock": "Exact Fraction samples/events and input phase clock; autonomous boundaries precede same-time events in file order; no t=0 tick",
+  "complete": true,
+  "constants": {
+    "feedthrough_promoted_float32": 0.0010000000474974513,
+    "offset_promoted_float32": 0.001500000013038516,
+    "tau_ac_seconds": 0.09999999999999999,
+    "tau_li_seconds": 0.0005419354838709677
+  },
+  "endpoint_span": {
+    "denominator": 50,
+    "numerator": 1,
+    "seconds": 0.02
+  },
+  "equations": [
+    "input=A*sin(2*pi*(phase+frequency*t))",
+    "LI=LC+(LI0-LC)*exp(-t/tauLI)",
+    "raw=2**EI*(input+offset+feedthrough)*LI*envelope",
+    "dCoupling/dt=(raw-Coupling)/tauAC",
+    "output=raw-Coupling"
+  ],
+  "integration": "Boundary-only anchors; real/complex exponential convolution; total-degree40 local forcing series when max rate*duration<=.5; binary64, not certified error bounds",
+  "intervals": 160,
+  "jump_semantics": "LI/coupling continuous; envelope reset/snap raw/output jumps retained at their true endpoints",
+  "limitations": [
+    "No arbitrary audio",
+    "No live controls or ADSR",
+    "No negative LI floor crossings",
+    "No filter or whole voice",
+    "No alias qualification",
+    "No WAV/listening claim"
+  ],
+  "limits": {
+    "max_bundle_bytes": 33554432,
+    "max_events": 1024,
+    "max_input_bytes": 1048576,
+    "max_samples": 20001,
+    "max_seconds": 2
+  },
+  "parameters": {
+    "attack": {
+      "binary64": 0.004,
+      "decimal_rational": "1/250"
+    },
+    "decay": {
+      "binary64": 0.03,
+      "decimal_rational": "3/100"
+    },
+    "ei": {
+      "binary64": -0.5,
+      "decimal_rational": "-1/2"
+    },
+    "initial_coupling": {
+      "binary64": 0.0,
+      "decimal_rational": "0"
+    },
+    "initial_li": {
+      "binary64": 0.1,
+      "decimal_rational": "1/10"
+    },
+    "input_amplitude": {
+      "binary64": 0.4,
+      "decimal_rational": "2/5"
+    },
+    "input_frequency": {
+      "binary64": 440.0,
+      "decimal_rational": "440"
+    },
+    "input_phase": {
+      "binary64": 0.125,
+      "decimal_rational": "1/8"
+    },
+    "lc": {
+      "binary64": 0.8,
+      "decimal_rational": "4/5"
+    },
+    "release": {
+      "binary64": 0.02,
+      "decimal_rational": "1/50"
+    },
+    "sustain": {
+      "binary64": 0.4,
+      "decimal_rational": "2/5"
+    }
+  },
+  "provenance": "IG00151Reference.h conditional laws via existing constant reference and existing amplitude envelope inferences. Snapshots identify source bytes, not authenticated execution; platform libm bits may vary.",
+  "rate_hz": 8000,
+  "samples": 161,
+  "schema": "cs80-event-aware-envelope-sine-vca-v1",
+  "scope": "One explicit fixed-frequency sine, fixed LC/EI, nonnegative LI. Inferred envelope/conditional VCA laws; not production equivalence or hardware calibration.",
+  "units": "Phase cycles, frequency Hz, EI octaves, envelope unitless; uncalibrated engine input/output/control units"
+}

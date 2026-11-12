@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "scripts/compare_envelope_endpoint_clock.py",
+    "--vca",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-envelope-clock/build-native/cs80_vca_reference",
+    "--out",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-envelope-clock/build/endpoint-clock-bundle"
+  ],
+  "interpreter": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "interpreter_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+  "python_version": "3.12.14",
+  "source_sha256": {
+    "scripts/compare_envelope_endpoint_clock.py": "a5d01c94ab31effb8e7962636060bd77e13eeafca75d7ca8eee8503fd889ea48",
+    "scripts/render_event_aware_envelope_sine_vca.py": "468e2b3a42f173938d77ea7f4a4cc4daa5c9fefd9bd711382912ee09aea070e8",
+    "scripts/render_event_aware_envelope_vca.py": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710",
+    "scripts/render_amplitude_envelope_reference.py": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca",
+    "build-native/cs80_vca_reference": "1c5e94aeee41c94b1787ef48583e69e0b299e54c4beebe276faed184c3d56f07"
+  },
+  "exit_code": 0,
+  "source_sha256_after": {
+    "scripts/compare_envelope_endpoint_clock.py": "a5d01c94ab31effb8e7962636060bd77e13eeafca75d7ca8eee8503fd889ea48",
+    "scripts/render_event_aware_envelope_sine_vca.py": "468e2b3a42f173938d77ea7f4a4cc4daa5c9fefd9bd711382912ee09aea070e8",
+    "scripts/render_event_aware_envelope_vca.py": "372e737a545879aeb3a8828723d6ec14737d5bd8dd1b667d8b83dc28a2034710",
+    "scripts/render_amplitude_envelope_reference.py": "013ed2ef4f96c5091455d8313757c9b138e9c6f216d42ca7d5be8b3c55f437ca",
+    "build-native/cs80_vca_reference": "1c5e94aeee41c94b1787ef48583e69e0b299e54c4beebe276faed184c3d56f07"
+  },
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

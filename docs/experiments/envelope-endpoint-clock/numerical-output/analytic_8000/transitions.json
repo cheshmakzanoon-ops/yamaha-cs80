@@ -1,0 +1,110 @@
+[
+  {
+    "after": {
+      "coupling": -0.000837024465132333,
+      "envelope": 1.0,
+      "gain": 0.5655296251963183,
+      "gate": true,
+      "input": 0.11833657167306388,
+      "input_cycles": 2.0478,
+      "li": 0.7997796658764065,
+      "output": 0.06917368558764309,
+      "raw": 0.06833666112251076,
+      "stage": "decay",
+      "time": {
+        "denominator": 100000,
+        "numerator": 437,
+        "seconds": 0.00437
+      }
+    },
+    "before": {
+      "coupling": -0.000837024465132333,
+      "envelope": 1.0,
+      "gain": 0.5655296251963183,
+      "gate": true,
+      "input": 0.11833657167306388,
+      "input_cycles": 2.0478,
+      "li": 0.7997796658764065,
+      "output": 0.06917368558764309,
+      "raw": 0.06833666112251076,
+      "stage": "attack",
+      "time": {
+        "denominator": 100000,
+        "numerator": 437,
+        "seconds": 0.00437
+      }
+    },
+    "envelope_transitions": [
+      {
+        "after_stage": "decay",
+        "after_value": 1.0,
+        "before_stage": "attack",
+        "before_value": 1.0,
+        "time": {
+          "denominator": 100000,
+          "numerator": 437,
+          "seconds": 0.00437
+        }
+      }
+    ],
+    "time": {
+      "denominator": 100000,
+      "numerator": 437,
+      "seconds": 0.00437
+    }
+  },
+  {
+    "after": {
+      "coupling": -0.0007970279016375707,
+      "envelope": 1.0,
+      "gain": 0.5656854249491153,
+      "gate": true,
+      "input": 0.11448942044602964,
+      "input_cycles": 7.0462,
+      "li": 0.7999999999998265,
+      "output": 0.06697623795544488,
+      "raw": 0.06617921005380731,
+      "stage": "decay",
+      "time": {
+        "denominator": 100000,
+        "numerator": 1573,
+        "seconds": 0.01573
+      }
+    },
+    "before": {
+      "coupling": -0.0007970279016375707,
+      "envelope": 1.0,
+      "gain": 0.5656854249491153,
+      "gate": true,
+      "input": 0.11448942044602964,
+      "input_cycles": 7.0462,
+      "li": 0.7999999999998265,
+      "output": 0.06697623795544488,
+      "raw": 0.06617921005380731,
+      "stage": "attack",
+      "time": {
+        "denominator": 100000,
+        "numerator": 1573,
+        "seconds": 0.01573
+      }
+    },
+    "envelope_transitions": [
+      {
+        "after_stage": "decay",
+        "after_value": 1.0,
+        "before_stage": "attack",
+        "before_value": 1.0,
+        "time": {
+          "denominator": 100000,
+          "numerator": 1573,
+          "seconds": 0.01573
+        }
+      }
+    ],
+    "time": {
+      "denominator": 100000,
+      "numerator": 1573,
+      "seconds": 0.01573
+    }
+  }
+]

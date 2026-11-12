@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-B",
+    "tests/test_envelope_endpoint_clock.py",
+    "--bundle",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-envelope-clock/build/endpoint-clock-bundle",
+    "-v"
+  ],
+  "source_sha256": {
+    "tests/test_envelope_endpoint_clock.py": "fde6d0b48ff54870d5664d214a4391e4a99b3b09c27270301325ce3c63ce2418",
+    "scripts/compare_envelope_endpoint_clock.py": "a5d01c94ab31effb8e7962636060bd77e13eeafca75d7ca8eee8503fd889ea48",
+    "build/endpoint-clock-bundle/manifest.json": "ef9b9b5dc584108e3df5b13566851b136c501487c12006ff1a02431a3145ebf1"
+  },
+  "exit_code": 0,
+  "source_sha256_after": {
+    "tests/test_envelope_endpoint_clock.py": "fde6d0b48ff54870d5664d214a4391e4a99b3b09c27270301325ce3c63ce2418",
+    "scripts/compare_envelope_endpoint_clock.py": "a5d01c94ab31effb8e7962636060bd77e13eeafca75d7ca8eee8503fd889ea48",
+    "build/endpoint-clock-bundle/manifest.json": "ef9b9b5dc584108e3df5b13566851b136c501487c12006ff1a02431a3145ebf1"
+  },
+  "log_sha256": "c1de679c8c1830e8fd8de7954d8ba28f67a93b360303219e0ccc1935760fdf26"
+}

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "./tools/vca",
+    "--input",
+    "inputs/native_16000.csv",
+    "--rate",
+    "16000",
+    "--samples",
+    "321",
+    "--steps",
+    "8",
+    "--tolerance",
+    "1e-07",
+    "--initial-li",
+    ".1",
+    "--out",
+    "native_16000"
+  ],
+  "exit_code": 0,
+  "stderr_tail": ""
+}

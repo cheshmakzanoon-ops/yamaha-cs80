@@ -1,0 +1,4 @@
+source build/recovery-env.sh
+cmake -S . -B build-native -G Ninja -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=OFF >build/native-configure.log 2>&1
+cmake --build build-native --target cs80_vca_reference --parallel 2 >build/native-build.log 2>&1
+combined_configure_build_exit=0

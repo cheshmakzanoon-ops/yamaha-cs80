@@ -1,0 +1,23 @@
+{
+  "schema": "cs80-ig00151-reference-v1",
+  "scope": "conditional inferred VCA stage; not hardware or whole-note truth",
+  "forcing": "piecewise linear endpoints, no normalization",
+  "units": {"input_lc_li_output_coupling": "uncalibrated engine units", "ei": "octaves", "envelope_gain": "unitless"},
+  "assumptions": "documented LI branches/capacitor; inferred ideal-source tau, multiplier, offset/feedthrough and next-stage AC coupling",
+  "constant_convention": "independently declared float offset/feedthrough literals promoted to double; double time constants",
+  "initialization": "explicit LI or first LC; zero coupling; instantaneous output at t=0",
+  "solver": "double RK4, h and h/2; fine trace exported",
+  "refinement_meaning": "raw maximum endpoint differences, not rigorous bounds or hardware acceptance gate",
+  "absolute_refinement_tolerance": 9.9999999999999995e-08,
+  "compare_realtime": false,
+  "comparison_clock": "same-rate endpoint calls; t0 envelope zero; PWL reference versus endpoint production, not a parity gate",
+  "max_abs_realtime_difference": null,
+  "rate": 32000, "samples": 641, "intervals": 640,
+  "duration_seconds": 0.02, "coarse_steps_per_interval": 8,
+  "fine_steps_per_interval": 16, "initial_li": 0.10000000000000001,
+  "li_seconds": 0.00054193548387096772, "ac_seconds": 0.099999999999999992,
+  "input_offset": 0.001500000013038516, "feedthrough": 0.0010000000474974513,
+  "max_abs_h_h2_difference": {"li": 5.4631854595754703e-12, "coupling": 1.6315074291561871e-15, "output": 3.0006552798056418e-13},
+  "stimulus_bytes": 44210, "stimulus_sha256": "e9062cbfc4e2e4c04980ed4d257bf868943f0f03694b2eb4bec46c84c004ca58",
+  "source_sha256": {"renderer": "450b2fd76db2feb0276586c69b619afbd3bced85952d2781e1f140750cca238e", "reference": "484e0872bd9daaaca8466c33cbc2f81bf218892bd33df1abf7fdbcd124b5c4f3", "wav_helper": "e6d096bd11eac4a368dcc35d04c9847875c59fb3e17d1bbddfc81f487d9407df", "decimal_conversion": "b9aebea2a28dde610258f2bc1e3ddd6c629df01b6009ff75646dc30a68d1e703", "hash_helper": "14c3b9c139dfbd7dd00b45a5627c808cc07c57a53d0d680852e7e298fc045271", "declared_core_model": "0264ffb4947bf84fd405bd8c467ac68a4ce19b677ae03dd0e06002d5c92da11f", "model_document": "9e0c9f27808dc32ac6e6409691a7998ae22bbcdd4e3a5b44f34c12d513b97dd4", "workflow_document": "58b13ca635b1102179b1ec800a3ac03f4912ba6eaafbd6714fd6ea81f0333f59"}
+}

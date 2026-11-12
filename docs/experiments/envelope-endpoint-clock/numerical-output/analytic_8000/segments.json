@@ -1,0 +1,128 @@
+[
+  {
+    "coupling_end": 0.0,
+    "coupling_start": 0.0,
+    "end": {
+      "denominator": 100000,
+      "numerator": 37,
+      "seconds": 0.00037
+    },
+    "end_reason": "event: note_on",
+    "envelope_rate": 0.0,
+    "envelope_start": 0.0,
+    "envelope_target": 0.0,
+    "li_end": 0.4463377930915937,
+    "li_start": 0.1,
+    "stage": "idle",
+    "start": {
+      "denominator": 1,
+      "numerator": 0,
+      "seconds": 0.0
+    }
+  },
+  {
+    "coupling_end": -0.000837024465132333,
+    "coupling_start": 0.0,
+    "end": {
+      "denominator": 100000,
+      "numerator": 437,
+      "seconds": 0.00437
+    },
+    "end_reason": "autonomous phase boundary",
+    "envelope_rate": 274.65307216702746,
+    "envelope_start": 0.0,
+    "envelope_target": 1.5,
+    "li_end": 0.7997796658764065,
+    "li_start": 0.4463377930915937,
+    "stage": "attack",
+    "start": {
+      "denominator": 100000,
+      "numerator": 37,
+      "seconds": 0.00037
+    }
+  },
+  {
+    "coupling_end": -2.058965077937668e-05,
+    "coupling_start": -0.000837024465132333,
+    "end": {
+      "denominator": 100000,
+      "numerator": 711,
+      "seconds": 0.00711
+    },
+    "end_reason": "event: note_off",
+    "envelope_rate": 230.25850929940458,
+    "envelope_start": 1.0,
+    "envelope_target": 0.4,
+    "li_end": 0.7999985961860862,
+    "li_start": 0.7997796658764065,
+    "stage": "decay",
+    "start": {
+      "denominator": 100000,
+      "numerator": 437,
+      "seconds": 0.00437
+    }
+  },
+  {
+    "coupling_end": 7.112792763085128e-05,
+    "coupling_start": -2.058965077937668e-05,
+    "end": {
+      "denominator": 100000,
+      "numerator": 1173,
+      "seconds": 0.01173
+    },
+    "end_reason": "event: retrigger",
+    "envelope_rate": 345.38776394910684,
+    "envelope_start": 0.7192649555600765,
+    "envelope_target": 0.0,
+    "li_end": 0.7999999997214206,
+    "li_start": 0.7999985961860862,
+    "stage": "release",
+    "start": {
+      "denominator": 100000,
+      "numerator": 711,
+      "seconds": 0.00711
+    }
+  },
+  {
+    "coupling_end": -0.0007970279016375707,
+    "coupling_start": 7.112792763085128e-05,
+    "end": {
+      "denominator": 100000,
+      "numerator": 1573,
+      "seconds": 0.01573
+    },
+    "end_reason": "autonomous phase boundary",
+    "envelope_rate": 274.65307216702746,
+    "envelope_start": 0.14584411211464102,
+    "envelope_target": 1.4270779439426795,
+    "li_end": 0.7999999999998265,
+    "li_start": 0.7999999997214206,
+    "stage": "attack",
+    "start": {
+      "denominator": 100000,
+      "numerator": 1173,
+      "seconds": 0.01173
+    }
+  },
+  {
+    "coupling_end": -0.00040692525440285055,
+    "coupling_start": -0.0007970279016375707,
+    "end": {
+      "denominator": 50,
+      "numerator": 1,
+      "seconds": 0.02
+    },
+    "end_reason": "final output endpoint (query only)",
+    "envelope_rate": 230.25850929940458,
+    "envelope_start": 1.0,
+    "envelope_target": 0.4,
+    "li_end": 0.7999999999999999,
+    "li_start": 0.7999999999998265,
+    "stage": "decay",
+    "start": {
+      "denominator": 100000,
+      "numerator": 1573,
+      "seconds": 0.01573
+    }
+  }
+]

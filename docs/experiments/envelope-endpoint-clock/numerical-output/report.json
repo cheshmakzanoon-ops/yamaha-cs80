@@ -1,0 +1,265 @@
+{
+  "boundaries": [
+    {
+      "denominator": 100000,
+      "numerator": 37,
+      "seconds": 0.00037
+    },
+    {
+      "denominator": 100000,
+      "numerator": 437,
+      "seconds": 0.00437
+    },
+    {
+      "denominator": 100000,
+      "numerator": 711,
+      "seconds": 0.00711
+    },
+    {
+      "denominator": 100000,
+      "numerator": 1173,
+      "seconds": 0.01173
+    },
+    {
+      "denominator": 100000,
+      "numerator": 1573,
+      "seconds": 0.01573
+    }
+  ],
+  "boundary_bucket": "t0 separate; boundary_near if deduplicated event/autonomous boundary in (t-1/8000,t]; otherwise smooth",
+  "claims": "Descriptive metrics only; no monotonic rate or maximum-error assertion. All 161 common endpoints included for every rate.",
+  "common_endpoint_count": 161,
+  "common_rate_hz": 8000,
+  "meaning": "Native fine PWL minus analytic event-aware sine values. Differences combine forcing interpolation, event placement, residual numerical and arithmetic-order rounding. Not interpolation-only error or hardware/production equivalence.",
+  "rate_results": {
+    "16000": {
+      "analytic_manifest": "analytic_16000/manifest.json",
+      "coarse_steps": 8,
+      "fine_steps": 16,
+      "metrics": {
+        "all": {
+          "count": 161,
+          "coupling": {
+            "max_abs": 2.67408793295273e-06,
+            "rms": 1.0665727493183163e-06
+          },
+          "li": {
+            "max_abs": 5.8090199317462066e-12,
+            "rms": 1.299633729656727e-12
+          },
+          "output": {
+            "max_abs": 2.6740879329528386e-06,
+            "rms": 1.0665727448503627e-06
+          }
+        },
+        "boundary_near": {
+          "count": 5,
+          "coupling": {
+            "max_abs": 2.4837360960643746e-06,
+            "rms": 1.4970640335199943e-06
+          },
+          "li": {
+            "max_abs": 5.487277299209836e-12,
+            "rms": 2.45404975492521e-12
+          },
+          "output": {
+            "max_abs": 2.4837360960844324e-06,
+            "rms": 1.4970640346025792e-06
+          }
+        },
+        "smooth": {
+          "count": 155,
+          "coupling": {
+            "max_abs": 2.67408793295273e-06,
+            "rms": 1.0532406598176756e-06
+          },
+          "li": {
+            "max_abs": 5.8090199317462066e-12,
+            "rms": 1.2490639071303829e-12
+          },
+          "output": {
+            "max_abs": 2.6740879329528386e-06,
+            "rms": 1.0532406550683858e-06
+          }
+        },
+        "t0": {
+          "count": 1,
+          "coupling": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          },
+          "li": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          },
+          "output": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "native_manifest": "native_16000/manifest.json",
+      "native_refinement": {
+        "coupling": 2.6054787667650903e-14,
+        "li": 8.791267713803563e-11,
+        "output": 4.830788546961173e-12
+      },
+      "samples": 321
+    },
+    "32000": {
+      "analytic_manifest": "analytic_32000/manifest.json",
+      "coarse_steps": 8,
+      "fine_steps": 16,
+      "metrics": {
+        "all": {
+          "count": 161,
+          "coupling": {
+            "max_abs": 6.691167592020415e-07,
+            "rms": 2.6821199046657376e-07
+          },
+          "li": {
+            "max_abs": 3.6193270602780103e-13,
+            "rms": 8.110332404816446e-14
+          },
+          "output": {
+            "max_abs": 6.691167592025836e-07,
+            "rms": 2.682119901359724e-07
+          }
+        },
+        "boundary_near": {
+          "count": 5,
+          "coupling": {
+            "max_abs": 6.187415577255714e-07,
+            "rms": 3.763118464036389e-07
+          },
+          "li": {
+            "max_abs": 3.419486915845482e-13,
+            "rms": 1.529264009728883e-13
+          },
+          "output": {
+            "max_abs": 6.187415577257882e-07,
+            "rms": 3.7631184645812427e-07
+          }
+        },
+        "smooth": {
+          "count": 155,
+          "coupling": {
+            "max_abs": 6.691167592020415e-07,
+            "rms": 2.6486651703194355e-07
+          },
+          "li": {
+            "max_abs": 3.6193270602780103e-13,
+            "rms": 7.796133020203277e-14
+          },
+          "output": {
+            "max_abs": 6.691167592025836e-07,
+            "rms": 2.6486651668171025e-07
+          }
+        },
+        "t0": {
+          "count": 1,
+          "coupling": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          },
+          "li": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          },
+          "output": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "native_manifest": "native_32000/manifest.json",
+      "native_refinement": {
+        "coupling": 1.631507429156187e-15,
+        "li": 5.46318545957547e-12,
+        "output": 3.000655279805642e-13
+      },
+      "samples": 641
+    },
+    "8000": {
+      "analytic_manifest": "analytic_8000/manifest.json",
+      "coarse_steps": 8,
+      "fine_steps": 16,
+      "metrics": {
+        "all": {
+          "count": 161,
+          "coupling": {
+            "max_abs": 1.0293351167041712e-05,
+            "rms": 4.178925415016598e-06
+          },
+          "li": {
+            "max_abs": 9.350598073609717e-11,
+            "rms": 2.091899372522145e-11
+          },
+          "output": {
+            "max_abs": 1.029335116704182e-05,
+            "rms": 4.178925345090295e-06
+          }
+        },
+        "boundary_near": {
+          "count": 5,
+          "coupling": {
+            "max_abs": 9.668944633259963e-06,
+            "rms": 5.8631843196274045e-06
+          },
+          "li": {
+            "max_abs": 8.83226825010297e-11,
+            "rms": 3.950014882859737e-11
+          },
+          "output": {
+            "max_abs": 9.668944633264842e-06,
+            "rms": 5.863184337065846e-06
+          }
+        },
+        "smooth": {
+          "count": 155,
+          "coupling": {
+            "max_abs": 1.0293351167041712e-05,
+            "rms": 4.126801140052208e-06
+          },
+          "li": {
+            "max_abs": 9.350598073609717e-11,
+            "rms": 2.0105044025624408e-11
+          },
+          "output": {
+            "max_abs": 1.029335116704182e-05,
+            "rms": 4.126801065702456e-06
+          }
+        },
+        "t0": {
+          "count": 1,
+          "coupling": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          },
+          "li": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          },
+          "output": {
+            "max_abs": 0.0,
+            "rms": 0.0
+          }
+        }
+      },
+      "native_manifest": "native_8000/manifest.json",
+      "native_refinement": {
+        "coupling": 4.153295546024949e-13,
+        "li": 1.4206784637593728e-09,
+        "output": 7.826563008794807e-11
+      },
+      "samples": 161
+    }
+  },
+  "refinement_meaning": "Native h/h2 endpoint differences use the same forcing knots; independent numerical refinement diagnostic, not a rigorous bound.",
+  "schema": "cs80-envelope-endpoint-clock-v1",
+  "span": {
+    "denominator": 50,
+    "numerator": 1,
+    "seconds": 0.02
+  }
+}

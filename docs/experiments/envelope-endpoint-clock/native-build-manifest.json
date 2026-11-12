@@ -1,0 +1,24 @@
+{
+  "binary": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-envelope-clock/build-native/cs80_vca_reference",
+  "binary_sha256": "1c5e94aeee41c94b1787ef48583e69e0b299e54c4beebe276faed184c3d56f07",
+  "compiler": "/usr/bin/c++",
+  "compiler_sha256": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+  "compiler_version": "c++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "build_exit_code": 0,
+  "source_sha256": {
+    "CMakeLists.txt": "9ee25e7a4ddeca10c7b463b04638db7e15da86fbfc75561f92bd3d1bfcf12543",
+    "src/tools/vca_reference.cpp": "450b2fd76db2feb0276586c69b619afbd3bced85952d2781e1f140750cca238e",
+    "src/reference/IG00151Reference.h": "484e0872bd9daaaca8466c33cbc2f81bf218892bd33df1abf7fdbcd124b5c4f3",
+    "src/tools/TruthInputSha256.h": "14c3b9c139dfbd7dd00b45a5627c808cc07c57a53d0d680852e7e298fc045271",
+    "src/core/Vca.h": "0264ffb4947bf84fd405bd8c467ac68a4ce19b677ae03dd0e06002d5c92da11f",
+    "docs/IG00151_VCA_MODEL.md": "9e0c9f27808dc32ac6e6409691a7998ae22bbcdd4e3a5b44f34c12d513b97dd4",
+    "docs/VCA_REFERENCE.md": "58b13ca635b1102179b1ec800a3ac03f4912ba6eaafbd6714fd6ea81f0333f59",
+    "src/tools/DecimalConversion.h": "b9aebea2a28dde610258f2bc1e3ddd6c629df01b6009ff75646dc30a68d1e703",
+    "src/tools/FloatWav.h": "e6d096bd11eac4a368dcc35d04c9847875c59fb3e17d1bbddfc81f487d9407df"
+  },
+  "build_evidence_sha256": {
+    "native-build-command.txt": "33f31cbb00dd93f49cedd62e8972b84d05b65eb2cb4d0b97cf44b0cdae9557bc",
+    "native-configure.log": "bcb1f1e79fa954af76dab02507ba53bd7ce1a29731e377b466b0f9c0662dfa4d",
+    "native-build.log": "604fe25dda3e38b61bdd4e86eb6d7d903355094f4a1b4d76c01807cd6416b341"
+  }
+}
