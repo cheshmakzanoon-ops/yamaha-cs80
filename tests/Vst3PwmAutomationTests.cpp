@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), pwmLimits(argv[3], "host_automation_pwm");
-        require(pwmLimits["key_parameter_count"] == 54 && cs80::kSampleAccurateParameters.size() == 54,
-                "exact 54-lane pwm capability");
+        require(pwmLimits["key_parameter_count"] == 54 && cs80::kSampleAccurateParameters.size() >= 54,
+                "historical 54-lane pwm capability prefix");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 50-lane roster/order unchanged");
         constexpr std::array added {cs80::chParam(0, cs80::CP_pwmSpeed), cs80::chParam(0, cs80::CP_pwmDepth),

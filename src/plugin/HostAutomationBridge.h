@@ -59,7 +59,9 @@ inline constexpr std::array kSampleAccurateParameters {
     chParam(1, CP_afterBrill), chParam(1, CP_afterLevel),
     // Existing rank PWM controls; preserve source authority and 50-lane prefix.
     chParam(0, CP_pwmSpeed), chParam(0, CP_pwmDepth),
-    chParam(1, CP_pwmSpeed), chParam(1, CP_pwmDepth)
+    chParam(1, CP_pwmSpeed), chParam(1, CP_pwmDepth),
+    // Existing filtered-path gains; preserve the complete 54-lane prefix.
+    chParam(0, CP_vcfLevel), chParam(1, CP_vcfLevel)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow
