@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing global master sustain as lane36 after unchanged36-lane prefix. Preserve parameter metadata, existing live release law and29 earlier contracts.",
+  "host_automation_master_sustain": {
+    "key_parameter_count": 37,
+    "keys": "Full preceding36-lane roster unchanged; P_masterSustain appended at lane36.",
+    "authority": "Existing global performance-release control, range0..1/default0/linear conversion, source-independent routing. No DSP, footswitch or sustain-mode automation change.",
+    "timing": "Existing modern control-frame refresh updates live envelope release ports without resetting stage/state. Release=max(rankRelease,keyRelease,sustainGate*masterSustain*10) times existing scale/tolerance. Not noteOff-only latch or calibrated hardware pot law.",
+    "verification": "Initial.12 held through3100 after all3072..3087 noteoffs, then .04@3327,.20@3583,.06@3839,.15@4095. Source-derived rank/key floor<=.30s; performance term>=.4s.36 full cases,756 renders,12 processes,108 actual frozen36 compatibility pairs. Exact pre3100 PCM plus positive late-tail difference versus matched active constant; scalar/five partitions and static assigned-open sustain-gate PCM-only controls. Finite release-tail window, no full release/calibration/state-reenable/GUI/hardware/CPU claims. Original thresholds preserved."
+  }
+}

@@ -1,0 +1,263 @@
+{
+  "base_commit": "9a2cf0d6089d91a36c6366dd9d82369375386a14",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_master_sustain_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 36,
+  "compatibility_cases": 36,
+  "pcm_pairs": 108,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": {
+    "master_sustain": [
+      {
+        "max_error": 0.0,
+        "effect": 0.00250784,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00579409,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00250784,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00498025,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00894967,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00498025,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00237983,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00544958,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00237983,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00540856,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00832485,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00540856,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00208475,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0055501,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00208475,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00517241,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00932625,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00517241,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0019474,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00539695,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0019474,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00462212,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00874126,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00462212,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00140975,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00284182,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00140975,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0028597,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00533903,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.0028597,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00143237,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00286338,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00143237,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00288947,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00526106,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      },
+      {
+        "max_error": 0.0,
+        "effect": 0.00288947,
+        "prefix_exact": 1,
+        "bypass_error": 0.0
+      }
+    ]
+  },
+  "old_contract_count": 29,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "d25b0634b056caf73304768b5d387cef0724d0778b7bc8edd6ee1285a4d119b7",
+    "tests/Vst3MasterSustainAutomationTests.cpp": "2a3cf406ed3476d997a80a470e2631d57ef1a1a7dbd72d946c076c1f2b974c7a",
+    "tests/Vst3AutomationTests.cpp": "d84ae2c466fa9783e80d4eaafe1372c679ce73ce27d31caa95883b9db436770c",
+    "tests/Vst3PortamentoAutomationTests.cpp": "e0ae368baa1ad57a7be8c9c32b270b6c7a037db0d8c2ae98aeec6097ad4683fc",
+    "tests/Vst3GlissandoAutomationTests.cpp": "5be60f1a5f053ea044cff3639d005cd770d7c81f660462b451d4185ac61cc6f9",
+    "src/plugin/HostAutomationBridge.h": "44461edc40b6bdd36134986fad01c255d600dbc7aea38e2dba121b06a1ed23e9",
+    "tests/parity/tolerances-v2/host-automation-master-sustain-v1.json": "223dad517b821f1e6990f7978e7f3ec76ed4644e3308b3f0f18ee5105d1bd75e",
+    "docs/VST3_MASTER_SUSTAIN_AUTOMATION.md": "db853053bde660bee986f1e0e22872b1b0fc82a6668374ed747df92219af5922",
+    "docs/HOST_AUTOMATION.md": "4bcceebfde02f317adeb3831ef4b1d8fa9a1bcaf48b7d50a87cb8df4a0390dc1"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Sustain mode0 fixed, no pedal or gate transitions.",
+    "Live released-tail automation only after frame3100, not a complete release or hardware timing calibration.",
+    "Assigned-open gate control establishes PCM equality only.",
+    "No hardware/DAW/GUI/AU/CPU/broad/negative tests."
+  ],
+  "renders": 756,
+  "failed_attempts": 0,
+  "runtime_retries": 0
+}

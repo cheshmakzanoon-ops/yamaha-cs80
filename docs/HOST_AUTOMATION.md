@@ -7,10 +7,10 @@ The [portamento extension](VST3_PORTAMENTO_AUTOMATION.md) appends existing
 updates affect the existing live glide coefficient when the footswitch gate
 is active; glide-mode selection, gate behavior and DSP laws are unchanged.
 
-This candidate portamento extension preserves host sample offsets for thirty-six VST3 parameters in
+This candidate master-sustain extension preserves host sample offsets for thirty-seven VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, and smooth portamento time. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, and master sustain. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
@@ -36,6 +36,12 @@ speed/depth at lanes 33/34. Its first active qualification scope is CHORUS
 mode only; chorus on/off and chorus/tremolo selection remain block-rate.
 This source capability statement is not a claim of published or verified
 35-lane qualification; retained checkpoints keep their own pinned scope.
+
+The candidate [master-sustain extension](VST3_MASTER_SUSTAIN_AUTOMATION.md) appends
+existing global performance release at lane36. Modern control-frame updates
+refresh live release timing using the existing max of rank release, key release
+and gated master sustain times ten; this is not a note-off-only latch or a
+new hardware potentiometer law. The preceding 36-lane prefix is unchanged.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

@@ -1078,6 +1078,25 @@ if (CS80_BUILD_PLUGIN)
                 set_tests_properties("${portamento_test_name}" PROPERTIES TIMEOUT 180)
             endforeach()
         endforeach()
+        add_executable(cs80_vst3_master_sustain_automation_tests tests/Vst3MasterSustainAutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_master_sustain_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_master_sustain_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_master_sustain_automation_tests CS80Reference_VST3)
+        foreach(rate IN ITEMS 44100 48000 96000)
+            foreach(mode IN ITEMS realtime offline)
+                set(master_sustain_test_name "cs80_vst3_master_sustain_automation_${rate}_${mode}_tests")
+                add_test(NAME "${master_sustain_test_name}" COMMAND cs80_vst3_master_sustain_automation_tests
+                    "$<TARGET_FILE:CS80Reference_VST3>"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation.json"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/tests/parity/tolerances-v2/host-automation-master-sustain-v1.json"
+                    "${CMAKE_CURRENT_BINARY_DIR}/master-sustain-automation-capture-${rate}-${mode}"
+                    "${rate}" "${mode}")
+                set_tests_properties("${master_sustain_test_name}" PROPERTIES TIMEOUT 180)
+            endforeach()
+        endforeach()
         add_executable(cs80_vst3_glissando_automation_tests tests/Vst3GlissandoAutomationTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"

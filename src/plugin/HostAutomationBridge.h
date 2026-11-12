@@ -40,7 +40,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing global chorus controls; retain the complete 33-lane prefix.
     int(P_chorusSpeed), int(P_chorusDepth),
     // Existing global glide time; preserve the complete 35-lane prefix.
-    int(P_portamento)
+    int(P_portamento),
+    // Existing global performance release; retain the 36-lane prefix.
+    int(P_masterSustain)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

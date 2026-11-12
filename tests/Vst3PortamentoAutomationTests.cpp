@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), portamentoLimits(argv[3], "host_automation_portamento");
-        require(portamentoLimits["key_parameter_count"] == 36 && cs80::kSampleAccurateParameters.size() == 36,
-                "exact 36-lane portamento capability");
+        require(portamentoLimits["key_parameter_count"] == 36 && cs80::kSampleAccurateParameters.size() >= 36,
+                "historical 36-lane portamento capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 35-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[35] == cs80::P_portamento, "exact portamento lane");
