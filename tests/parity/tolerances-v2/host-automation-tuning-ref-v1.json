@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing global tuning reference lane80 after unchanged80 prefix; preserve51 historical contracts,metadata,DSP,helper and source authority.",
+  "host_automation_tuning_ref": {
+    "key_parameter_count": 81,
+    "keys": "P_tuningRef lane80; complete80 prefix unchanged.",
+    "authority": "Global smoothed reference across PANEL13/factory0/MEMORY11. Existing415..465Hz/default440/linear metadata unchanged; PURE effective440 remains separate protected-policy compatibility.",
+    "timing": "Existing global smoother and midiToHz(pitch,reference) oscillator-frequency path unchanged.440hold0/128 then432/452/438/460/425/446Hz at511/1023/1791/2559/3583/4095 via existing normalization. No MTS/table/ribbon/feet or filter-keyCV changes.",
+    "verification": "36fullallsourcepositive plus36frozen80compatibility;684renders12process108actualpairs. Exactpre128/positiveheld[128,3072) versusmatchedactivehold,scalar/fivepartitions. No calibratedpitch/tuning,MTS,filterinvariant,hardware,GUI or CPU claim."
+  }
+}

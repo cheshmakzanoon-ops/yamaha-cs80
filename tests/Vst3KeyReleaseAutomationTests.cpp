@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), key_releaseLimits(argv[3], "host_automation_key_release");
-        require(key_releaseLimits["key_parameter_count"] == 80 && cs80::kSampleAccurateParameters.size() == 80,
-                "exact 80-lane key_release capability");
+        require(key_releaseLimits["key_parameter_count"] == 80 && cs80::kSampleAccurateParameters.size() >= 80,
+                "historical 80-lane key_release capability");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 79-lane roster/order unchanged");
         constexpr std::array added {int(cs80::P_keyRelease)};

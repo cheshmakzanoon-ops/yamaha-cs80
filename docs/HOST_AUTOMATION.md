@@ -7,10 +7,10 @@ The [portamento extension](VST3_PORTAMENTO_AUTOMATION.md) appends existing
 updates affect the existing live glide coefficient when the footswitch gate
 is active; glide-mode selection, gate behavior and DSP laws are unchanged.
 
-This candidate KEY RELEASE extension preserves host sample offsets for eighty VST3 parameters in
+This candidate TUNING REF extension preserves host sample offsets for eighty-one VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
-pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, LOW/HIGH keyboard level, LOW/HIGH keyboard brilliance, and both ranks’ INITIAL/AFTER TOUCH brilliance/level amounts and PWM speed/depth, plus both rank VCF LEVEL and VCA envelope SUSTAIN controls, plus both filter EG IL/AL targets and both ranks’ filter/VCA attack, decay and release times and both rank SINE/NOISE levels, plus global ribbon displacement and key release floor. The [pan extension](VST3_PAN_AUTOMATION.md)
+pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, LOW/HIGH keyboard level, LOW/HIGH keyboard brilliance, and both ranks’ INITIAL/AFTER TOUCH brilliance/level amounts and PWM speed/depth, plus both rank VCF LEVEL and VCA envelope SUSTAIN controls, plus both filter EG IL/AL targets and both ranks’ filter/VCA attack, decay and release times and both rank SINE/NOISE levels, plus global ribbon displacement, key release floor and tuning reference. The [pan extension](VST3_PAN_AUTOMATION.md)
 appends two lanes to the original eighteen without moving their indices. It does
 not replace DSP smoothing or change a parameter law. The
 [SUB extension](VST3_SUB_AUTOMATION.md) appends two further global lanes without
@@ -147,6 +147,10 @@ The candidate [release-floor interaction qualification](VST3_RELEASE_FLOOR_INTER
 checks a master-sustain trajectory below and across a fixed key-release floor.
 Matched active histories isolate this max-rule interaction without new lanes,
 production changes or dynamic rank-release attribution.
+
+The candidate [TUNING REF extension](VST3_TUNING_REF_AUTOMATION.md) appends
+global reference frequency at lane80, preserving existing smoothing, oscillator
+scaling and PURE440 behavior. Full80 prefix and source authority are unchanged.
 
 The main product explicitly selects only VST3 in `CS80_HOST_AUTOMATION_FORMATS`.
 The reusable generator retains its reviewed multi-format capability, but main's

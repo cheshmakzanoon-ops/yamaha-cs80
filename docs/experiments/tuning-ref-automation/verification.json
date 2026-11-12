@@ -1,0 +1,405 @@
+{
+  "base_commit": "2ee3355ac42865d786bce451a35e7d369a5b2039",
+  "scope": "Bounded direct native supported-input tests, not CTest",
+  "build": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "targets": [
+      "CS80Reference_VST3",
+      "cs80_vst3_tuning_ref_automation_tests"
+    ]
+  },
+  "runs": 12,
+  "full_cases": 36,
+  "compatibility_cases": 36,
+  "pcm_pairs": 108,
+  "all_actual_pcm_pairs_exact": true,
+  "all_run_exits_zero": true,
+  "inputs_before_after_identical": true,
+  "metrics": [
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0265063,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.216062,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0425455,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.101265,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.582072,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.173561,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0267189,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.209638,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0425482,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 13,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.104913,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 0,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.542669,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 11,
+      "rate": 44100,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.16933,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0158761,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.218225,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.043828,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0742028,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.485675,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.16734,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0159188,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.216327,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0459665,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 13,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0743294,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 0,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.441065,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 11,
+      "rate": 48000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.170082,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.0128054,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.214095,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.041865,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.070551,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.42267,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "realtime",
+      "max_error": 0.0,
+      "effect": 0.186327,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0128156,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.20281,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 8,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0418873,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 13,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.0706026,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 0,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.39241,
+      "prefix_exact": 1
+    },
+    {
+      "lane": 80,
+      "capacity": 16,
+      "source": 11,
+      "rate": 96000,
+      "mode": "offline",
+      "max_error": 0.0,
+      "effect": 0.186753,
+      "prefix_exact": 1
+    }
+  ],
+  "old_contract_count": 51,
+  "old_contracts_byte_unchanged": true,
+  "unchanged_scope": "All src except single capability header and all prior scripts/contracts match base; see unchanged-files.json",
+  "source_hashes": {
+    "CMakeLists.txt": "67a22f3a79b5edaf311fdbbc27a7641770799d29b7dda9e968ad881c481f761b",
+    "docs/HOST_AUTOMATION.md": "b64dfd0d7445a87657cdbe566acb10b4423a8c4b46a60bd6ed06d44eaf522e82",
+    "docs/VST3_TUNING_REF_AUTOMATION.md": "e2b25e6ff4b280fd6ee66c2886e2ab466dfedbf0802d7bbcaa0c0c5a41703d45",
+    "src/plugin/HostAutomationBridge.h": "808124d684130ef9d9f61bc7f21c437deffadb78970d7d99f19d0230016f584a",
+    "tests/Vst3AutomationTests.cpp": "a5b2804cba6a5622d51634681fb8bd327e85fd2dba3464fb47a6073b0fb39f15",
+    "tests/Vst3KeyReleaseAutomationTests.cpp": "43a61f8773935c0fe2652455d5ae1a2d6c196a5260f75224f6b62c3ae4b5deb9",
+    "tests/Vst3ReleaseFloorInteractionTests.cpp": "e371c413e9ca06c042a62462dc656769aee09d275683078cdbfafb97ac1113f5",
+    "tests/Vst3TuningRefAutomationTests.cpp": "10e972a62a88f3cbc32bb0900ff2faa435c42783ce824a8a470f7453119745ee",
+    "tests/parity/tolerances-v2/host-automation-tuning-ref-v1.json": "b2e96508c7197f1345b841e23eece7f9626313e957e1c963c1e7062d9bfd2e99",
+    "tests/parity/tolerances-v2/host-automation.json": "c301b3eddf110a8dc6b6b07416d6eba9ddb68f7c19fb2eeea99cebc26bee7bf6"
+  },
+  "artifact_policy": "Logs, command scripts and actual capture hashes retained here. Raw PCM and native binaries retained in ignored workspace build directories, not distributed; not a complete replay bundle.",
+  "limitations": [
+    "Global TUNING REF positive for all selected sources.",
+    "Positive witness only held frames[128,3072); no MTS, pitch calibration or filter-invariance qualification.",
+    "No invented bypass control.",
+    "No hardware/DAW/GUI/AU/CPU/broad/negative tests."
+  ],
+  "render_count": 684,
+  "positive_cases": 36
+}

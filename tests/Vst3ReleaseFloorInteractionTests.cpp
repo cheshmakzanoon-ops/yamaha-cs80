@@ -41,8 +41,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), release_floor_interactionLimits(argv[3], "host_automation_release_floor_interaction");
-        require(release_floor_interactionLimits["key_parameter_count"] == 80 && cs80::kSampleAccurateParameters.size() == 80,
-                "exact 80-lane release_floor_interaction capability");
+        require(release_floor_interactionLimits["key_parameter_count"] == 80 && cs80::kSampleAccurateParameters.size() >= 80,
+                "historical 80-lane release_floor_interaction capability");
         require(std::equal(fullRoster.begin(), fullRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire 80-lane roster/order unchanged");
         std::cout << "rate=" << rate << " mode=" << mode
