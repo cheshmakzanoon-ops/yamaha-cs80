@@ -1197,6 +1197,9 @@ if (CS80_BUILD_PLUGIN)
     # Real browser components and a temporary catalogue, without a native peer.
     add_test(NAME cs80_preset_refresh_tests COMMAND CS80Snapshots --preset-refresh-tests)
     set_tests_properties(cs80_preset_refresh_tests PROPERTIES TIMEOUT 60)
+    # Pending search input through real TextEditor and list keyboard handlers, no native peer.
+    add_test(NAME cs80_preset_search_tests COMMAND CS80Snapshots --preset-search-tests)
+    set_tests_properties(cs80_preset_search_tests PROPERTIES TIMEOUT 60)
     # Real processor/FIFO ownership tests without constructing an editor or
     # native peer. The existing full UI smoke test remains independent.
     add_test(NAME cs80_undo_replay_gesture_tests COMMAND CS80Snapshots --undo-replay-gesture-tests)

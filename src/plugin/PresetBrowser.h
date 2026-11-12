@@ -9,7 +9,7 @@
 #include <vector>
 
 class Cs80AudioProcessor;
-namespace cs80::tests { struct PresetSaveAccess; struct PresetLoadAccess; struct PresetIdentityAccess; struct PresetRefreshAccess; struct PresetBrowserXmlAccess; struct PresetRevertAccess; }
+namespace cs80::tests { struct PresetSaveAccess; struct PresetLoadAccess; struct PresetIdentityAccess; struct PresetRefreshAccess; struct PresetBrowserXmlAccess; struct PresetRevertAccess; struct PresetSearchAccess; }
 
 namespace cs80::ui
 {
@@ -140,6 +140,7 @@ private:
     friend struct cs80::tests::PresetRefreshAccess;
     friend struct cs80::tests::PresetBrowserXmlAccess;
     friend struct cs80::tests::PresetRevertAccess;
+    friend struct cs80::tests::PresetSearchAccess;
 
     struct Entry
     {
@@ -201,6 +202,7 @@ private:
     void buildFilterChips();
     void layoutAll();
     void layoutDescription();
+    void applyPendingSearch();
     void rebuildFilter();
     void rebuildFilter(const juce::String& previousKey);
     void updateSelectionWidgets();
@@ -246,6 +248,7 @@ private:
     std::uint32_t stylePresent = 0;      // style tags that occur in the library
 
     // Filter state.
+    juce::String filteredSearchText;     // exact text used by the current result list
     int scopeFilter = 0;                 // all (library + user), favourites, library, legacy, user
     std::uint32_t typeFilter = 0;
     std::uint32_t styleFilter = 0;

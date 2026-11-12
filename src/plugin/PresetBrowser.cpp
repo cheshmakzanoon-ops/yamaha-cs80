@@ -2250,7 +2250,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
     search.setTitle("Search presets");
     search.setTooltip("Search names, categories, instrument types and style tags. Press Ctrl+F to jump here.");
     search.setTextToShowWhenEmpty("Search patches, instruments, character...", ivoryDim.withAlpha(0.8f));
-    search.onTextChange = [this] { rebuildFilter(); };
+    search.onTextChange = [this] { applyPendingSearch(); };
     search.onSpecialKey = [this](const juce::KeyPress& key)
     {
         if (key.isKeyCode(juce::KeyPress::escapeKey) && search.getText().isNotEmpty())
@@ -2260,6 +2260,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
         }
         if (key.isKeyCode(juce::KeyPress::returnKey))
         {
+            applyPendingSearch();
             loadSelected();
             return true;
         }
@@ -2267,6 +2268,7 @@ PresetBrowser::PresetBrowser(Cs80AudioProcessor& p) : processor(p)
                                 || key.isKeyCode(juce::KeyPress::pageUpKey) || key.isKeyCode(juce::KeyPress::pageDownKey);
         if (navigation && ! key.getModifiers().isAnyModifierKeyDown())
         {
+            applyPendingSearch();
             if (list->getSelectedRow() < 0 && ! filtered.empty())
                 list->selectRow(0);
             else
@@ -3056,6 +3058,15 @@ bool scopeAccepts(int scope, bool favourite, bool isUser, bool legacy)
 }
 } // namespace
 
+void PresetBrowser::applyPendingSearch()
+{
+    // TextEditor posts onTextChange asynchronously, but its key handlers run
+    // immediately. Enter/navigation must never act on rows from the old query.
+    // A later callback for text already applied here needs no second rebuild.
+    if (search.getText() != filteredSearchText)
+        rebuildFilter();
+}
+
 void PresetBrowser::rebuildFilter()
 {
     const juce::String previousKey = selectedEntry() != nullptr ? selectedEntry()->key : juce::String();
@@ -3064,8 +3075,9 @@ void PresetBrowser::rebuildFilter()
 
 void PresetBrowser::rebuildFilter(const juce::String& previousKey)
 {
+    filteredSearchText = search.getText();
     juce::StringArray tokens;
-    tokens.addTokens(search.getText().trim().toLowerCase(), " ", "");
+    tokens.addTokens(filteredSearchText.trim().toLowerCase(), " ", "");
     tokens.removeEmptyStrings();
 
     // One predicate with overrides so the facet counts on the chips can ask

@@ -1,0 +1,81 @@
+{
+  "date": "2026-11-12",
+  "base_commit": "8cfd6e8d3938dc8d0c6de73ed03a44fa8a073d35",
+  "scope": "Search keyboard handlers reconcile current query before Return or unmodified Up/Down/Page keys. No DSP, parameter layout, recall, NEXT, overwrite or favourite policy changes.",
+  "build": {
+    "fresh_directory": "build-preset-search-workflow",
+    "compiler": "GCC 14.2.0",
+    "type": "Release",
+    "target": "CS80Snapshots",
+    "parallel_jobs": 2,
+    "juce": "Official pinned JUCE 8.0.11, c352e2489000ffeb9e397051377d75eef2efe641",
+    "libxml2": "Official pinned libxml2 2.15.4, 96498992efa48d52b0e8b83058bd88dbdaf153c1",
+    "environment": "Linux; native sysroot includes/libraries; direct offscreen components; DISPLAY unset",
+    "warning": "Existing enum comparison warnings in ui_snapshot.cpp and ignored JUCE splash-screen flag; no new warnings identified."
+  },
+  "baseline": {
+    "method": "Current production code plus the new test harness/friend access only. New production change was applied only after this failed run.",
+    "binary_sha256": "ac8f3cdf2deb145631c29d8e457b92a1e88064b48dec9625e293c84beb144bb5",
+    "preset_browser_cpp_sha256": "ef8353bf3611cd80f9a25208a436bfe66f222345f7bd32053ebfbff90e76f299",
+    "checks": 140,
+    "failures": 22,
+    "exit_code": 1,
+    "log": "baseline.log"
+  },
+  "final": {
+    "binary_sha256": "d5859be7ef9917cbb6fe8d4b4f26fffaa6c8cf1382a20780d74b33ebed3822fc",
+    "source_sha256": {
+      "src/plugin/PresetBrowser.cpp": "daea8c8b7fce96bebe184b8d55809cae8fc73cf99cc0e2e33f594886132d9667",
+      "src/plugin/PresetBrowser.h": "36efe6088b72aa01fa9c1123b0f46db0d7ba2c1a4723a483c5895d65eb01a1af",
+      "tests/PresetSearchTests.h": "7a932f1f83c106484cf03160898865fa7981ecda30551eb4cb06dcdf41c93de0",
+      "src/tools/ui_snapshot.cpp": "d2b101a2e1a09094e1a8b2d31a049821ed51463ec45d45c6ec097a24984da00f",
+      "CMakeLists.txt": "2a408bbea7e2a663f9387e10736cd09dbe4cdf865f073b57873b90036361d5af"
+    },
+    "focused_checks": 140,
+    "focused_failures": 0,
+    "focused_exit_code": 0,
+    "focused_log": "focused.log",
+    "adjacent_ctests": 18,
+    "adjacent_failed": 0,
+    "ctest_exit_code": 0,
+    "ctest_log": "ctest.log",
+    "ctest_detail_log": "ctest-detail.log",
+    "no_work_rebuild": "A subsequent CS80Snapshots build reported ninja: no work to do."
+  },
+  "independent_review": {
+    "status": "approved, no blocking issue",
+    "source_review": "The exact-text cache is updated by every rebuild; keyboard reconciliation preserves guarded selection and the existing audition policy. Source/docs contract consistent; diff check clean.",
+    "source_hashes_verified": 5,
+    "binary_sha256": "d5859be7ef9917cbb6fe8d4b4f26fffaa6c8cf1382a20780d74b33ebed3822fc",
+    "hash_log": "independent-hashes.log",
+    "baseline_checks": 140,
+    "baseline_failures": 22,
+    "baseline_exit": 1,
+    "baseline_log": "independent-baseline.log",
+    "focused_checks": 140,
+    "focused_failures": 0,
+    "focused_exit": 0,
+    "focused_log": "independent-focused.log",
+    "adjacent_ctests": 18,
+    "adjacent_failures": 0,
+    "adjacent_exit": 0,
+    "adjacent_seconds": 13.3,
+    "adjacent_log": "independent-adjacent.log",
+    "modifications": "Reviewer made no source or remote changes."
+  },
+  "limits": [
+    "Component-level ordering reproduction, not OS event injection or clipboard automation.",
+    "No native peer, full GUI smoke, screen reader, real DAW, sanitizer, pluginval, macOS/Windows or remote CI qualification.",
+    "No Xvfb, socket or ptrace retry was attempted."
+  ],
+  "evidence_sha256": {
+    "baseline.log": "4c8aa996a4004b7c4bb49b7753d98020a97386a2d2aa068ae688510927a46a83",
+    "ctest-detail.log": "9bd98c22ff0510eeefbbc49e7b794173a7c20e1324255f3fc98519f725afba72",
+    "ctest.log": "b95517bdae03b7780f48118581966b81dfd22a11746d73d4e7997b6caea0a904",
+    "focused.log": "ca69cea742ddfb8dbe7ce96ef782a0e5778acb9ceadc858de4c03fbee0404815",
+    "independent-adjacent.log": "025e646101c611434a69a2e76d5cddda10635fcbc4986583c80a7b934dfd6bd6",
+    "independent-baseline.log": "4c8aa996a4004b7c4bb49b7753d98020a97386a2d2aa068ae688510927a46a83",
+    "independent-focused.log": "ca69cea742ddfb8dbe7ce96ef782a0e5778acb9ceadc858de4c03fbee0404815",
+    "independent-hashes.log": "1e7ee3436abcef84c8865000407d7bc4a4491040bfa4670c4a4a4d3e3227624b"
+  }
+}
