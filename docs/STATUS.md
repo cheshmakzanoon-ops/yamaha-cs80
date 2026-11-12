@@ -44,8 +44,44 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `244016b22e290a450707947b221f777f18e22c01` appends modern LFO1,
+LFO2 and LFO3 rate at lanes 86–88, bringing the current roster to **89 lanes**
+with the literal 86-lane prefix preserved. The reviewed candidate passed 96
+full cases and 96 frozen86 compatibility cases: 2208 completed renders
+(1536 candidate + 672 baseline). All 384 actual cross-build PCM pairs matched
+byte-for-byte; 768 capture files are not 768 comparisons. Maximum partition
+error was 0; all 96 initial 1024-frame prefixes were byte-exact. All 96 held-window
+effects were positive, ranging from 0.000375077 to 0.149792.
+See [LFO rate evidence and exact identities](experiments/lfo-rate-automation/README.md).
+
+Coverage is Linux VST3 at 44.1/48/96 kHz, realtime/offline, with fixed sine
+waveforms, depths and destinations; three isolated paths and their combination.
+Physical rate curves remain within 4–18 Hz. Destination-off and zero-depth
+controls were independently byte-inert; PURE and Legacy behavior were checked
+separately. Noqueue and representative preceding86 curves, including LFO depth,
+matched frozen86. Four native binary hashes matched before/after the complete
+run; 9 source freezes, 622 frozen source/test identities and 620 retained
+candidate identities remained unchanged. The run completed once with exit 0;
+no interrupted or failed attempts were discarded or retried for this milestone.
+
+Production changes are limited to three roster entries. DSP/UI, metadata and
+historical float sine phase behavior remain unchanged. The 54 historical
+v2 tolerance contracts remain unchanged; the new rate contract makes 55 v2
+contracts. The separate tolerances-v1 contract is also retained, making 56
+combined. The earlier depth forward guard was source-reviewed only; historical
+runtime suites were not rerun.
+
+Scalar histories, not an ideal oscillator phase law, are the partition
+reference. Returning to an earlier rate does not restore phase, and inactive
+modulation continues advancing phase. These 4096-frame fixtures do not establish
+all-phase/full-cycle accuracy, random waveforms, waveform switching or all
+destinations. No DAW/GUI, AU, Windows/macOS, CPU-target, hardware-fidelity,
+release or whole-project qualification follows. Native CI remains separate.
+
+The preceding LFO depth checkpoint remains historical:
+
 Published `9e8ccd7c262fd50f063f95a9020ca1127d071267` appends modern LFO1,
-LFO2 and LFO3 depth at lanes 83–85, bringing the current roster to **86 lanes**
+LFO2 and LFO3 depth at lanes 83–85, bringing that checkpoint’s roster to **86 lanes**
 with the literal 83-lane prefix preserved. The reviewed candidate passed 96
 full cases and 96 frozen83 compatibility cases in 12 completed native runs:
 2016 completed renders (1344 candidate + 672 baseline). All 384 actual
