@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "bounded_software_protocol_interaction",
+  "host_automation_lfo_rate_depth": {
+    "key_parameter_count": 89,
+    "minimum_held_effect": 1e-05,
+    "scope": "Fixed sine waveforms/destinations; interleaved rate/depth trajectories, independent normalized scalar evaluator, rate-only and depth-only ablations, queue-order check",
+    "verification_plan": "96cases,1536renders,384captures;288scalar/block comparisons,96queue-order checks. Exact published89module, no cross-build compatibility claim."
+  }
+}
