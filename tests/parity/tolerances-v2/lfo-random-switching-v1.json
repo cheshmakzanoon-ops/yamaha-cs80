@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "standalone_software_waveform_law",
+  "lfo_random_switching": {
+    "cases": 24,
+    "samples": 1140300,
+    "shape_abs_tolerance": 1e-06,
+    "minimum_boundary_clearance": 1e-10,
+    "minimum_wraps": 4,
+    "sample_rates": [
+      88200,
+      96000,
+      192000,
+      384000
+    ],
+    "seeds": [
+      1821285621,
+      1000234273,
+      2714038285
+    ],
+    "scope": "Two starting random shapes; six toggles before ticks at floor(.13N),first reference wrap,wrap+1,floor(.61N),third reference wrap,floor(.87N);phase/RNG retained;initialization precedence at wrap. Standalone core, not host waveform automation.",
+    "phase_abs_tolerance": 1e-10,
+    "switches_per_case": 6
+  }
+}

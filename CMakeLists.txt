@@ -546,6 +546,11 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_pra_optical_cell_tests PROPERTIES TIMEOUT 120)
 
     # [ws5-modern] register this workstream's core tests below this line.
+    add_executable(cs80_lfo_random_switching_tests tests/LfoRandomSwitchingTests.cpp)
+    target_include_directories(cs80_lfo_random_switching_tests PRIVATE src tests)
+    add_test(NAME cs80_lfo_random_switching_tests COMMAND cs80_lfo_random_switching_tests
+        "${CMAKE_CURRENT_BINARY_DIR}/lfo-random-switching-captures")
+    set_tests_properties(cs80_lfo_random_switching_tests PROPERTIES TIMEOUT 120)
     add_executable(cs80_lfo_random_variable_rate_tests tests/LfoRandomVariableRateTests.cpp)
     target_include_directories(cs80_lfo_random_variable_rate_tests PRIVATE src tests)
     add_test(NAME cs80_lfo_random_variable_rate_tests COMMAND cs80_lfo_random_variable_rate_tests
