@@ -44,8 +44,38 @@ failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 
 ## November 12 scoped native VST3 automation
 
+Published `bb658fc7fd79c5d246bd8da846befc8cbf1acd1c` appends the four existing
+performance macros at lanes 108–111, bringing the current roster to **112 lanes**
+with the literal 108-lane prefix preserved. The audited qualification passed
+30 full and 30 compatibility cases: 648 finite renders (438 candidate + 210
+frozen108), 120 actual cross-build PCM pairs byte-identical, 120 scalar/block
+comparisons with maximum error 0, and 24 byte-identical combined reversed-queue
+checks. All 30 initial 1024-frame holds were exact. Overall held-note effects
+ranged from 0.000759895 to 0.0116455; 24 combined per-macro witnesses ranged
+from 0.000739954 to 0.0115045, above the predeclared 0.00001 minimum.
+All nine stages completed once without runtime interruption or retry; four
+runtime binary identities and the recorded source/evidence checks matched.
+See [macro evidence and exact qualification limits](experiments/macro-automation/README.md).
+
+Coverage is Linux VST3 at 44.1/48/96 kHz, realtime/offline, four isolated macro
+histories and their combination, manual/manual sources and two notes. Histories
+start at neutral 0.5, then use 0.75/0.25/0.70/0.30/0.5. Empty/null-queue, PURE
+and Legacy final-point flattening controls pass. Compatibility covers noqueue,
+four representative preceding controls, Legacy and PURE against frozen108,
+not every preceding lane. The 120 compatibility pairs have 240 retained PCM
+captures; active scalar/order/witness PCM was not retained. Those active results
+are supported by the reviewed fixture and passing logs, not later PCM
+recomputation. Brightness, motion, width and space retain their existing compound
+mappings; constituent synthesis effects were not isolated. Only four roster
+entries changed in production; DSP/UI, metadata, routing, serialization and
+source authority remain unchanged. Two historical guards were source-reviewed,
+not rerun. No state-readback, full-range, source-mask, native DAW, cross-platform,
+CPU-target or hardware-fidelity qualification is implied.
+
+The preceding matrix-amount checkpoint remains historical:
+
 Published `3ec4a5830ceb604533af95033ed76a1c41f1db50` appends the sixteen existing
-modulation-matrix amount controls at lanes 92–107, bringing the current roster to
+modulation-matrix amount controls at lanes 92–107, bringing that checkpoint’s roster to
 **108 lanes**, with the literal 92-lane prefix preserved. The independently audited
 qualification passed 96 full and 96 compatibility cases: 2112 renders (1440
 candidate + 672 frozen92), 384 actual cross-build PCM pairs byte-identical,
@@ -1093,7 +1123,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.3-5.4 Toolbar, Studio view, interaction | done; modern and tuning pages mounted | ws8 merge `5af3b77`, `230f367` |
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
-| 6 Sample-accurate automation | partial: eighty-three key VST3 parameters in modern circuit policy; AU and other parameters remain block-rate | `34cab029`; [scope](HOST_AUTOMATION.md) |
+| 6 Sample-accurate automation | partial: 112 key VST3 parameter lanes in modern circuit policy; AU and other parameters remain block-rate | `bb658fc7`; scoped native evidence above; [scope](HOST_AUTOMATION.md) |
 | 7 Release qualification | packaging safeguards and scoped Linux ABI evidence merged; complete licence/native installation/host/signing qualification and Linux validation failures remain open | `b363b325`, `fa7e988`, `58ed29e`; exact scope and failures above |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -1266,7 +1296,7 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   edit gestures and rejects unsafe replay during an active edit
   ([contract and local tests](UNDO_REPLAY_GESTURES.md)). VST3/AU-wrapper and
   real-DAW automation-recording qualification remain open.
-- Sample-offset automation is limited to eighty-three key VST3 parameters in modern
+- Sample-offset automation is limited to 112 key VST3 parameter lanes in modern
   circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
   qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).
 - CC121 now resets supported controller targets through existing routes, sustain,
