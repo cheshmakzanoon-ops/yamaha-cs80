@@ -16,7 +16,7 @@ juce::MemoryBlock save(Cs80AudioProcessor& processor)
     return state;
 }
 }
-int main()
+int main(int argc, char** argv)
 {
     juce::ScopedJuceInitialiser_GUI init;
     juce::TemporaryFile fixture("-voice-monitor-focus");
@@ -80,6 +80,25 @@ int main()
     check(listener.changes == 0);
     check(save(processor) == saved);
     processor.removeListener(&listener);
+    if (argc == 2)
+    {
+        juce::File directory(argv[1]);
+        directory.createDirectory();
+        processor.selectHardwareSource(1, 6);
+        drawer.setChannel(1);
+        for (bool live : {false, true})
+        for (int width : {420, 294})
+        {
+            drawer.setLiveInspection(live);
+            drawer.setSize(width, juce::roundToInt(470.0 * width / 420));
+            const auto image = drawer.createComponentSnapshot(drawer.getLocalBounds());
+            juce::FileOutputStream stream(directory.getChildFile(juce::String(live ? "voice-live-" : "voice-settings-") + juce::String(width) + ".png"));
+            stream.setPosition(0);
+            stream.truncate();
+            check(juce::PNGImageFormat().writeImageToStream(image, stream));
+        }
+    }
+
     std::cout << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;
 }
