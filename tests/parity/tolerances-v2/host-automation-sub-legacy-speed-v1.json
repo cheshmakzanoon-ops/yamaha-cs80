@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append existing compatibility-mode SUB speed P_subSpeed after the unchanged 27-lane prefix. All earlier capability and numerical contracts remain unchanged.",
+  "host_automation_sub_legacy_speed": {
+    "key_parameter_count": 28,
+    "keys": "Original 27 in original order, then P_subSpeed.",
+    "authority": "Global compatibility-mode SUB speed remains independent of PANEL/factory/MEMORY selection. Original-panel SUB mode retains its separate speed control; mode and waveform selection are not automated by this extension.",
+    "timing": "Modern VST3 normalized interpolation through existing parameter conversion and smoothing. No-queue and Legacy/PURE final-point behavior unchanged. AU not expanded.",
+    "verification": "Bounded actual-module Linux float32 checks with supported finite queues, static compatibility-mode sine and eight/sixteen voice capacities (two/sixteen active keys in this fixture). Existing numeric tolerances unchanged. Exact runtime provenance and frozen pre-feature compatibility captures required; no malformed inputs, GUI, DAW, hardware or CPU claim."
+  }
+}

@@ -1,0 +1,14 @@
+rate=48000 mode=realtime gate=full-legacy-speed
+FAIL: legacy speed queues match per-sample reference across partitions
+legacy_speed=8-13 max_error=0.0633988 effect=0.0643229 inactive_error=0
+FAIL: legacy speed queues match per-sample reference across partitions
+legacy_speed=8-0 max_error=0.219729 effect=0.222841 inactive_error=0
+FAIL: legacy speed queues match per-sample reference across partitions
+legacy_speed=8-11 max_error=0.0633988 effect=0.0643229 inactive_error=0
+FAIL: legacy speed queues match per-sample reference across partitions
+legacy_speed=16-13 max_error=0.214144 effect=0.209629 inactive_error=0
+FAIL: legacy speed queues match per-sample reference across partitions
+legacy_speed=16-0 max_error=0.554831 effect=0.548463 inactive_error=0
+FAIL: legacy speed queues match per-sample reference across partitions
+legacy_speed=16-11 max_error=0.214144 effect=0.209629 inactive_error=0
+6 native SUB legacy speed scenarios, 6 failures

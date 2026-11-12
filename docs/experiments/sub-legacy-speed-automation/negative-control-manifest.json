@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-legacy-speed/build-native/cs80_vst3_sub_legacy_speed_automation_tests",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-legacy-speed/../yamaha-cs80-touch/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-legacy-speed/tests/parity/tolerances-v2/host-automation.json",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-legacy-speed/tests/parity/tolerances-v2/host-automation-sub-legacy-speed-v1.json",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-legacy-speed/build/legacy-speed-negative-control/captures",
+    "48000",
+    "realtime"
+  ],
+  "host_sha256": "4b1c1f5716c888c5df430bc29ee27cf452f8ec6f927253153b1243235c355f47",
+  "module_sha256": "a1915dd34d7c63519ef6bedc1e276b2f7429512c7845527e5d55596e05fe252d",
+  "purpose": "Capability negative control: full gate on frozen 27-lane baseline, expected six partition failures; NOT a passing full qualification",
+  "started": 1794475128.856541,
+  "exit_code": 1,
+  "finished": 1794475137.3012352,
+  "host_sha256_after": "4b1c1f5716c888c5df430bc29ee27cf452f8ec6f927253153b1243235c355f47",
+  "module_sha256_after": "a1915dd34d7c63519ef6bedc1e276b2f7429512c7845527e5d55596e05fe252d",
+  "log_sha256": "f565bc8381424c154094761d8effa8aa24df60f71f7b7b5c663fc40b30e3ef91"
+}

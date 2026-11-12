@@ -28,7 +28,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Complete the three continuous original SUB depth controls.
     int(P_subVcf), int(P_subVca),
     // Existing global touch amounts; keep the complete 24-lane prefix stable.
-    int(P_subAtSpeed), int(P_subAtVco), int(P_subAtVcf)
+    int(P_subAtSpeed), int(P_subAtVco), int(P_subAtVcf),
+    // Compatibility-mode SUB speed, distinct from original-panel speed.
+    int(P_subSpeed)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

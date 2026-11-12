@@ -37,8 +37,8 @@ int main(int argc, char** argv)
         testSampleRate = std::stod(rate);
         testProcessMode = mode == "offline" ? kOffline : kRealtime;
         const ws1::Tolerances limits(argv[2], "host_automation"), touchLimits(argv[3], "host_automation_sub_touch");
-        require(touchLimits["key_parameter_count"] == 27 && cs80::kSampleAccurateParameters.size() == 27,
-                "exact 27-lane touch capability");
+        require(touchLimits["key_parameter_count"] == 27 && cs80::kSampleAccurateParameters.size() >= 27,
+                "historical 27-lane touch capability prefix");
         require(std::equal(previousRoster.begin(), previousRoster.end(), cs80::kSampleAccurateParameters.begin()),
                 "entire preceding 24-lane roster/order unchanged");
         require(cs80::kSampleAccurateParameters[24] == cs80::P_subAtSpeed
