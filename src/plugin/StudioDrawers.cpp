@@ -118,7 +118,7 @@ public:
 ScopeDrawer::ScopeDrawer(Cs80AudioProcessor& p) : processor(p)
 {
     setTitle("Voice monitor");
-    setDescription("Settings-based signal path, envelope and filter illustrations, not measured audio taps. Live voice activity shows eight slots, or two rows for sixteen: primary above, extension below; release tails remain active.");
+    setDescription("Settings shows signal path, envelope and filter illustrations, not measured audio taps. LIVE inspects one physical voice slot and rank from the latest callback, with last-processed envelope and frequency values. Live activity includes release tails; slots 9 to 16 belong to the extension.");
     setWantsKeyboardFocus(true);
     setFocusContainerType(juce::Component::FocusContainerType::keyboardFocusContainer);
     setOpaque(false);
@@ -135,6 +135,15 @@ ScopeDrawer::ScopeDrawer(Cs80AudioProcessor& p) : processor(p)
         k->setExplicitFocusOrder(++order);
         addAndMakeVisible(*k);
     }
+    liveKey = std::make_unique<DrawerKey>("LIVE", "Switch between settings illustrations and live callback voice inspection");
+    previousSlot = std::make_unique<DrawerKey>("<", "Inspect previous physical voice slot");
+    nextSlot = std::make_unique<DrawerKey>(">", "Inspect next physical voice slot");
+    liveKey->setComponentID("scope_live"); previousSlot->setComponentID("scope_previous_slot"); nextSlot->setComponentID("scope_next_slot");
+    for (auto* key : {liveKey.get(), previousSlot.get(), nextSlot.get()}) { key->setExplicitFocusOrder(++order); addAndMakeVisible(*key); }
+    liveKey->onClick = [this] { setLiveInspection(!liveInspection); };
+    previousSlot->onClick = [this] { setInspectedSlot((inspectedSlot + 15) % 16); };
+    nextSlot->onClick = [this] { setInspectedSlot((inspectedSlot + 1) % 16); };
+    previousSlot->setVisible(false); nextSlot->setVisible(false);
     closeKey->onClick = [this] { if (onClose) onClose(); };
     channelI->onClick = [this] { setChannel(0); };
     channelII->onClick = [this] { setChannel(1); };
@@ -143,6 +152,7 @@ ScopeDrawer::ScopeDrawer(Cs80AudioProcessor& p) : processor(p)
 
 ScopeDrawer::~ScopeDrawer()
 {
+    processor.requestVoiceInspection(inspectedSlot, channel, false);
     stopTimer();
 }
 
@@ -151,8 +161,24 @@ void ScopeDrawer::setChannel(int newChannel)
     channel = juce::jlimit(0, 1, newChannel);
     channelI->setToggleState(channel == 0, juce::dontSendNotification);
     channelII->setToggleState(channel == 1, juce::dontSendNotification);
+    processor.requestVoiceInspection(inspectedSlot, channel, liveInspection && isVisible());
     snap = sample();
     repaint();
+}
+
+void ScopeDrawer::setLiveInspection(bool enabled)
+{
+    liveInspection = enabled;
+    liveKey->setToggleState(enabled, juce::dontSendNotification);
+    previousSlot->setVisible(enabled); nextSlot->setVisible(enabled);
+    processor.requestVoiceInspection(inspectedSlot, channel, enabled && isVisible());
+    snap = sample(); repaint();
+}
+void ScopeDrawer::setInspectedSlot(int slot)
+{
+    inspectedSlot = juce::jlimit(0, 15, slot);
+    processor.requestVoiceInspection(inspectedSlot, channel, liveInspection && isVisible());
+    snap = sample(); repaint();
 }
 
 ScopeDrawer::Snapshot ScopeDrawer::sample() const
@@ -179,6 +205,7 @@ ScopeDrawer::Snapshot ScopeDrawer::sample() const
                 s.v[(size_t) local] = processor.getMemoryValue(bank, local);
     }
     s.voices = processor.getVoiceActivity();
+    s.inspection = processor.getVoiceInspection();
     return s;
 }
 
@@ -194,6 +221,7 @@ void ScopeDrawer::timerCallback()
 
 void ScopeDrawer::visibilityChanged()
 {
+    processor.requestVoiceInspection(inspectedSlot, channel, liveInspection && isVisible());
     if (isVisible())
     {
         snap = sample();
@@ -222,10 +250,36 @@ void ScopeDrawer::paint(juce::Graphics& g)
     softShadow(g, body.reduced(4.0f), 6.0f, 0.0f, 6.0f, 10.0f, 0.75f);
     drawBevelRect(g, body.reduced(4.0f), 6.0f, juce::Colour(0xff26241f), 1.6f, true);
     etchRect(g, body.reduced(10.0f), 4.0f, 0.35f);
-    say(g, "VOICE MONITOR", { 22.0f, 16.0f, 220.0f, 20.0f }, 15.0f, ivory);
+    say(g, "VOICE MONITOR", { 22.0f, 16.0f, 150.0f, 20.0f }, 15.0f, ivory);
     const auto sourceName = snap.source < 11 ? juce::String(cs80::hardwareToneName(snap.source, snap.channel)).toUpperCase() + " TONE"
                           : snap.source == 13 ? juce::String("PANEL") : "MEMORY " + juce::String(snap.channel + (snap.source == 12 ? 3 : 1));
     say(g, juce::String(snap.channel == 0 ? "CHANNEL I" : "CHANNEL II") + "  /  " + sourceName, { 22.0f, 38.0f, 260.0f, 16.0f }, 11.0f, goldInk());
+
+    if (liveInspection)
+    {
+        const auto& r = snap.inspection;
+        say(g, "PHYSICAL SLOT " + juce::String(inspectedSlot + 1) + "  /  RANK " + (channel == 0 ? "I" : "II"),
+            {70,78,280,24}, 14, ivory, juce::Justification::centred);
+        const bool matching = r.ready && cs80::VoiceInspection::slot(r.request)==inspectedSlot
+            && cs80::VoiceInspection::rank(r.request)==channel && cs80::VoiceInspection::enabled(r.request);
+        juce::String state = !matching ? "WAITING FOR AUDIO CALLBACK" : !r.available ? "SLOT NOT AVAILABLE IN 8-VOICE MODE"
+            : !r.active ? "INACTIVE SLOT" : r.held ? "KEY HELD" : r.pedalHeld ? "PEDAL HELD" : "RELEASE TAIL";
+        say(g,state,{22,116,376,26},13,goldInk(),juce::Justification::centred);
+        if (matching && r.available && r.active)
+            say(g,"MIDI NOTE " + juce::String(r.note) + "   CHANNEL " + juce::String(r.channel),{22,151,376,24},13,ivory,juce::Justification::centred);
+        const char* labels[] {"VCA ENVELOPE", "VCF ENVELOPE", "OSCILLATOR Hz", "HP CUTOFF Hz", "LP CUTOFF Hz"};
+        const float values[] {r.amplitude,r.filter,r.oscillatorHz,r.hpfHz,r.lpfHz};
+        for (int i=0;i<5;++i)
+        {
+            const float y = 198.0f + float(i)*34;
+            say(g,labels[i],{30,y,210,24},12,goldInk());
+            say(g,matching && r.rendered ? juce::String(values[i],i<2?4:2) : juce::String("--"),{240,y,145,24},14,ivory,juce::Justification::centredRight);
+        }
+        say(g,"LATEST CALLBACK / LAST PROCESSED RANK SAMPLE",{20,385,380,20},10.5f,goldInk(),juce::Justification::centred);
+        say(g,"Not an audio waveform or measured circuit response",{20,409,380,20},10.5f,ivory,juce::Justification::centred);
+        say(g,"Inactive and unrendered values are unavailable",{20,433,380,20},10.5f,ivory,juce::Justification::centred);
+        return;
+    }
 
     // The unchanged eight-card row gains a lower extension row only in 16 mode.
     for (int i = 0; i < snap.voices.capacity; ++i)
@@ -382,6 +436,8 @@ void ScopeDrawer::resized()
     channelI->setBounds(r(254.0f, 18.0f, 36.0f, 36.0f));
     channelII->setBounds(r(292.0f, 18.0f, 40.0f, 36.0f));
     closeKey->setBounds(r(338.0f, 18.0f, 62.0f, 36.0f));
+    liveKey->setBounds(r(176,16,70,20));
+    previousSlot->setBounds(r(22,72,40,36)); nextSlot->setBounds(r(358,72,40,36));
 }
 
 // ---------------------------------------------------------------------------

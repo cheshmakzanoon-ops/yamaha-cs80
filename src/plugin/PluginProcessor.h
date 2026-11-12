@@ -12,6 +12,7 @@
 #include "core/Tuning.h"
 #include "OutputMeter.h"
 #include "VoiceActivity.h"
+#include "VoiceInspection.h"
 #include "MpeStatus.h"
 #include "TuningInspection.h"
 #include "MidiLearn.h"
@@ -115,6 +116,8 @@ public:
     cs80::TuningInspectionReading getTuningInspection() const noexcept { return tuningInspection.read(); }
     cs80::MpeStatusReading getMpeStatus() const noexcept { return mpeStatus.read(); }
     cs80::VoiceActivityReading getVoiceActivity() const noexcept { return voiceActivity.read(); }
+    bool requestVoiceInspection(int slot, int rank, bool enabled) noexcept { return voiceInspection.request(slot, rank, enabled); }
+    cs80::VoiceInspectionReading getVoiceInspection() const noexcept { return voiceInspection.read(); }
     int getActiveVoiceCount() const noexcept { return getVoiceActivity().count(); }
     // Running count of MIDI events (notes, CC, bend, pressure, anything) that processBlock was handed by the host.
     // Presentation only: the UI compares it between polls to light the MIDI activity lamp.
@@ -401,6 +404,7 @@ private:
     std::atomic<float> expressionValue { 1.0f };
     std::atomic<unsigned> hostMidiEvents { 0 };
     cs80::VoiceActivity voiceActivity;
+    cs80::VoiceInspection voiceInspection;
     cs80::MpeStatus mpeStatus;
     cs80::TuningInspection tuningInspection;
     cs80::OutputMeter outputMeter;

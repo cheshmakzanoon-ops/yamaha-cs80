@@ -2,6 +2,7 @@
 
 #include "UiComponents.h"
 #include "VoiceActivity.h"
+#include "VoiceInspection.h"
 
 #include <array>
 #include <functional>
@@ -25,6 +26,9 @@ public:
 
     void setChannel(int channel);
     int getChannel() const noexcept { return channel; }
+    void setLiveInspection(bool enabled);
+    void setInspectedSlot(int slot);
+    int getInspectedSlot() const noexcept { return inspectedSlot; }
     std::function<void()> onClose;
 
     // Design size of the drawer in the editor's 1600 x 1000 design space.
@@ -40,6 +44,7 @@ private:
     {
         std::array<float, cs80::CP_count> v {};
         cs80::VoiceActivityReading voices;
+        cs80::VoiceInspectionReading inspection;
         int channel = 0;
         int source = 13;
         bool operator==(const Snapshot&) const = default;
@@ -51,7 +56,9 @@ private:
     Cs80AudioProcessor& processor;
     Snapshot snap;
     int channel = 0;
-    std::unique_ptr<juce::Button> closeKey, channelI, channelII;
+    bool liveInspection = false;
+    int inspectedSlot = 0;
+    std::unique_ptr<juce::Button> closeKey, channelI, channelII, liveKey, previousSlot, nextSlot;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ScopeDrawer)
 };

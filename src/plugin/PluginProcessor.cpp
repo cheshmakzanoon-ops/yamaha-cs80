@@ -423,6 +423,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     outputMeter.reset();
     voiceActivity.reset();
+    voiceInspection.reset();
     mpeStatus.reset();
     tuningInspection.reset();
     // Offline bounces render the circuit engine at HQ (Oversampling.h).
@@ -455,6 +456,7 @@ void Cs80AudioProcessor::releaseResources()
     resetHostAutomationState();
     outputMeter.reset();
     voiceActivity.reset();
+    voiceInspection.reset();
     mpeStatus.reset();
     tuningInspection.reset();
     engine.reset();
@@ -1130,6 +1132,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
 
     // Hosts may supply a block larger than their advertised maximum. Render
     // bounded chunks rather than allocating on the real-time thread.
+    bool inspectionRenderedAfterEvents = false;
     auto renderSegment = [&](int start, int length)
     {
         const int capacity = std::min((int) interleaved.size() / 2, (int) externalScratch.size());
@@ -1163,6 +1166,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
                     buffer.setSample(0, start + offset + i, 0.5f * (left + right));
             }
             offset += n;
+            inspectionRenderedAfterEvents = true;
         }
     };
 
@@ -1198,6 +1202,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     auto dispatchUI = [&]
     {
         advanceTo(uiPosition());
+        inspectionRenderedAfterEvents = false;
         const auto& event = uiEvents[uiIndex++];
         const unsigned bit = 1u << (event.channel - 1);
         auto& held = uiHeldMasks[(size_t) event.note];
@@ -1268,6 +1273,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         if (deferredHostNote) keyPressureOwnership.clear();
         observeHostMidi(message);
         handleMidi(message);
+        inspectionRenderedAfterEvents = false;
         if (message.isNoteOn()
             && (pressureArpOn || (allocatingHostNote && keyPressureOwnership.allocated(before, voiceSnapshot(), {},
                                                                                       message.getChannel(), message.getNoteNumber()))))
@@ -1285,6 +1291,30 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         if (extensionActive && extensionEngine->getVoiceInfo(i).active) extensionMask |= 1u << i;
     }
     voiceActivity.publish(primaryMask, extensionMask, extensionActive);
+    const auto voiceRequest = voiceInspection.requested();
+    if (cs80::VoiceInspection::enabled(voiceRequest))
+    {
+        cs80::VoiceInspectionReading r;
+        r.request = voiceRequest; r.ready = true; r.capacity = extensionActive ? 16 : 8;
+        const int slot = cs80::VoiceInspection::slot(voiceRequest);
+        r.available = slot < r.capacity;
+        if (r.available)
+        {
+            const auto& instrument = slot < 8 ? engine : *extensionEngine;
+            const auto voice = instrument.getVoiceInfo(slot % 8);
+            r.active=voice.active; r.held=voice.held; r.pedalHeld=voice.pedalHeld;
+            r.note=voice.note; r.channel=voice.channel;
+            r.rendered = voice.active && inspectionRenderedAfterEvents;
+            if (r.rendered)
+            {
+                const auto rank = instrument.getRankInfo(slot % 8, cs80::VoiceInspection::rank(voiceRequest));
+                r.amplitude=rank.ampEnvelope; r.filter=rank.filterEnvelope;
+                r.oscillatorHz=rank.oscillatorHz; r.hpfHz=rank.hpfHz; r.lpfHz=rank.lpfHz;
+            }
+        }
+        voiceInspection.publish(r);
+    }
+
     const auto& mpeZones = engine.getMpeZones();
     mpeStatus.publish(engine.isMpeEnabled(), mpeZones.lowerMemberCount(), mpeZones.upperMemberCount(),
                       engine.effectiveManagerBendRange(false), engine.effectiveMemberBendRange(false),
