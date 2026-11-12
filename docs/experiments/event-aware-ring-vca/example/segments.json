@@ -1,0 +1,107 @@
+[
+  {
+    "coupling_end": 0.012951988875353275,
+    "coupling_start": 0.013,
+    "end": {
+      "denominator": 100000,
+      "numerator": 37,
+      "seconds": 0.00037
+    },
+    "end_reason": "event: note_on",
+    "envelope_rate": 0.0,
+    "envelope_start": 0.0,
+    "envelope_target": 0.0,
+    "li_end": 0.4968609655070803,
+    "li_start": 0.2,
+    "stage": "idle",
+    "start": {
+      "denominator": 1,
+      "numerator": 0,
+      "seconds": 0.0
+    }
+  },
+  {
+    "coupling_end": 0.012744851583097195,
+    "coupling_start": 0.012951988875353275,
+    "end": {
+      "denominator": 100000,
+      "numerator": 311,
+      "seconds": 0.00311
+    },
+    "end_reason": "event: note_off",
+    "envelope_rate": 109.86122886681098,
+    "envelope_start": 0.0,
+    "envelope_target": 1.5,
+    "li_end": 0.7980686114908784,
+    "li_start": 0.4968609655070803,
+    "stage": "attack",
+    "start": {
+      "denominator": 100000,
+      "numerator": 37,
+      "seconds": 0.00037
+    }
+  },
+  {
+    "coupling_end": 0.011738748896442918,
+    "coupling_start": 0.012744851583097195,
+    "end": {
+      "denominator": 100000,
+      "numerator": 473,
+      "seconds": 0.00473
+    },
+    "end_reason": "event: retrigger",
+    "envelope_rate": 230.25850929940458,
+    "envelope_start": 0.38990528444458844,
+    "envelope_target": 0.0,
+    "li_end": 0.7999028060230782,
+    "li_start": 0.7980686114908784,
+    "stage": "release",
+    "start": {
+      "denominator": 100000,
+      "numerator": 311,
+      "seconds": 0.00311
+    }
+  },
+  {
+    "coupling_end": 0.010229254729276055,
+    "coupling_start": 0.011738748896442918,
+    "end": {
+      "denominator": 100000,
+      "numerator": 619,
+      "seconds": 0.00619
+    },
+    "end_reason": "event: reset",
+    "envelope_rate": 109.86122886681098,
+    "envelope_start": 0.26850916948953396,
+    "envelope_target": 1.3657454152552329,
+    "li_end": 0.7999934290322191,
+    "li_start": 0.7999028060230782,
+    "stage": "attack",
+    "start": {
+      "denominator": 100000,
+      "numerator": 473,
+      "seconds": 0.00473
+    }
+  },
+  {
+    "coupling_end": 0.009846851169193746,
+    "coupling_start": 0.010229254729276055,
+    "end": {
+      "denominator": 100,
+      "numerator": 1,
+      "seconds": 0.01
+    },
+    "end_reason": "event: note_on",
+    "envelope_rate": 0.0,
+    "envelope_start": 0.0,
+    "envelope_target": 0.0,
+    "li_end": 0.7999999941872182,
+    "li_start": 0.7999934290322191,
+    "stage": "idle",
+    "start": {
+      "denominator": 100000,
+      "numerator": 619,
+      "seconds": 0.00619
+    }
+  }
+]
