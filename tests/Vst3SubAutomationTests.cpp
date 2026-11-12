@@ -4,6 +4,13 @@
 #include "Vst3AutomationTests.cpp"
 #include <fstream>
 namespace {
+#if CS80_SUB_DEPTH_EXTENSION
+constexpr size_t firstTestLane = 22, capabilityLaneCount = 24;
+constexpr const char* capabilityKey = "host_automation_sub_depth";
+#else
+constexpr size_t firstTestLane = 20, capabilityLaneCount = 22;
+constexpr const char* capabilityKey = "host_automation_sub";
+#endif
 constexpr std::array oldRoster {
     int(cs80::P_volume),int(cs80::P_mix),int(cs80::P_brilliance),int(cs80::P_resonance),int(cs80::P_masterTune),int(cs80::P_detune),
     cs80::chParam(0,cs80::CP_hpfCutoff),cs80::chParam(0,cs80::CP_hpfRes),cs80::chParam(0,cs80::CP_lpfCutoff),
@@ -44,8 +51,13 @@ int main(int argc,char**argv) {
             testSampleRate=std::stod(rate);testProcessMode=mode=="offline"?kOffline:kRealtime;
         }
         std::cout<<"rate="<<testSampleRate<<" mode="<<(testProcessMode==kOffline?"offline":"realtime")<<'\n';
-        const ws1::Tolerances limits(argv[2],"host_automation"),subLimits(argv[3],"host_automation_sub");
-        require(cs80::kSampleAccurateParameters.size()==subLimits["key_parameter_count"],"registered22-lane roster");
+        const ws1::Tolerances limits(argv[2],"host_automation"),subLimits(argv[3],capabilityKey);
+        require(capabilityLaneCount==subLimits["key_parameter_count"],"registered capability roster size");
+        require(cs80::kSampleAccurateParameters.size()>=capabilityLaneCount,"historical capability prefix retained");
+#if CS80_SUB_DEPTH_EXTENSION
+        require(cs80::kSampleAccurateParameters.size()==capabilityLaneCount,"exact full24-lane roster");
+        require(cs80::kSampleAccurateParameters[22]==cs80::P_subVcf && cs80::kSampleAccurateParameters[23]==cs80::P_subVca,"exact appended VCF/VCA depth lanes");
+#endif
         require(std::equal(oldRoster.begin(),oldRoster.end(),cs80::kSampleAccurateParameters.begin()),"entire original20-lane prefix/order unchanged");
         require(cs80::kSampleAccurateParameters[20]==cs80::P_subOriginalSpeed && cs80::kSampleAccurateParameters[21]==cs80::P_subVco,"exact two appended SUB lanes");
         std::filesystem::create_directories(argv[4]);
@@ -58,8 +70,12 @@ int main(int argc,char**argv) {
         parameters[cs80::P_subOriginalMode]=1;parameters[cs80::P_subOriginalFunction]=0;
         parameters[cs80::P_subOriginalSpeed]=12;parameters[cs80::P_subVco]=.7f;
         int scenarios=0;
-        for(int voices:{8,16}) for(int source:{13,0,11}) for(size_t lane:{20u,21u}) {
+        for(int voices:{8,16}) for(int source:{13,0,11}) for(size_t lane:{firstTestLane,firstTestLane+1}) {
             auto p=parameters;p[cs80::P_voiceMode]=voices==16?1.f:0.f;
+#if CS80_SUB_DEPTH_EXTENSION
+            p[cs80::P_subVco]=p[cs80::P_subVcf]=p[cs80::P_subVca]=0;
+            p[cs80::kSampleAccurateParameters[lane]]=.7f;
+#endif
             Curves curves;curves[lane]=subCurve();
             const auto scalar=render(module,p,curves,1,true,false,source);
             double error=0;
@@ -80,14 +96,15 @@ int main(int argc,char**argv) {
             ++scenarios;
             std::cout<<"scenario="<<id<<" max_error="<<error<<" effect="<<effect<<'\n';
         }
-        // Existing20-lane modern trajectories retain their numerical contract,
-        // including old pan authority; no new SUB curve participates here.
-        auto old=curvesFor(parameters);old[20].clear();old[21].clear();
+        // Preserve each capability's preceding roster (20 or22), including
+        // all earlier lane authority. Newer lanes never enter this witness.
+        auto old=curvesFor(parameters);
+        for(size_t lane=firstTestLane;lane<old.size();++lane)old[lane].clear();
         const auto oldScalar=render(module,parameters,old,1);
         for(int block:{7,64,256,1024,4096}) {
             auto actual=render(module,parameters,old,block);
-            check(difference(oldScalar,actual)<=limits["audio_max_abs_error"],"preserved20-lane supported trajectory contract");
-            capture(out/("old20-"+std::to_string(block)+".pcm"),actual);
+            check(difference(oldScalar,actual)<=limits["audio_max_abs_error"],"preserved prior-lane supported trajectory contract");
+            capture(out/("old"+std::to_string(firstTestLane)+"-"+std::to_string(block)+".pcm"),actual);
         }
         std::cout<<scenarios<<" native SUB scenarios, "<<failures<<" failures\n";
         return failures?1:0;

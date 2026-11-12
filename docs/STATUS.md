@@ -612,7 +612,7 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   edit gestures and rejects unsafe replay during an active edit
   ([contract and local tests](UNDO_REPLAY_GESTURES.md)). VST3/AU-wrapper and
   real-DAW automation-recording qualification remain open.
-- Sample-offset automation is limited to twenty-two key VST3 parameters in modern
+- Sample-offset automation is limited to twenty-four key VST3 parameters in modern
   circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
   qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).
 - CC121 now resets supported controller targets through existing routes, sustain,

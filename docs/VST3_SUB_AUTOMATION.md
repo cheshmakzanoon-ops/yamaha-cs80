@@ -1,5 +1,8 @@
 # Sample-offset VST3 original SUB controls
 
+The later [VCF/VCA depth extension](VST3_SUB_DEPTH_AUTOMATION.md) appends two
+lanes without changing this capability contract or its historical evidence.
+
 ## Bounded capability
 
 Two lanes append to the unchanged twenty-lane roster: `P_subOriginalSpeed`

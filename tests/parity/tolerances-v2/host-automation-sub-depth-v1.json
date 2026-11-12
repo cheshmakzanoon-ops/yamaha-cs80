@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "software_protocol_capability_extension",
+  "description": "Append SUB VCF/VCA depth after the unchanged 22-lane prefix. Existing original 18, pan 20, and SUB 22 capability contracts remain unchanged.",
+  "host_automation_sub_depth": {
+    "key_parameter_count": 24,
+    "keys": "Original 22 in original order, then P_subVcf and P_subVca.",
+    "authority": "Global continuous SUB depths remain independent of PANEL/factory/MEMORY selection. Discrete mode/waveform and pressure-dependent depths are outside this extension.",
+    "timing": "Modern VST3 normalized interpolation before existing DSP. No-queue and Legacy/PURE final-point behavior unchanged. AU not expanded.",
+    "verification": "Actual built Linux float32 VST3, individual depth isolation, valid scalar curves, one-sample references, block partitions, source selections, eight/sixteen voices, six rate/mode configurations and preserved baseline PCM. Original numeric tolerances unchanged; no malformed inputs, native GUI, DAW or CPU claim."
+  }
+}
