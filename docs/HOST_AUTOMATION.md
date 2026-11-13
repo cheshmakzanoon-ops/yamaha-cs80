@@ -2,16 +2,24 @@
 
 ## Source capability and checkpoint status
 
-This source tree contains **115 sample-accurate VST3 lanes** in
+This source tree contains **117 sample-accurate VST3 lanes** in
 `src/plugin/HostAutomationBridge.h`. The roster is append-only; lane numbers here
 are zero-based. This is a source capability statement, not a claim that every
 lane combination, host or target platform has been qualified.
 
-The published macro checkpoint `bb658fc7fd79c5d246bd8da846befc8cbf1acd1c`
-contains 112 lanes. The three FX mix lanes are qualified locally in the
-[FX mix evidence](experiments/fx-mix-automation/README.md). Their publication
-must be verified against the repository revision; local qualification alone
-does not establish that an installed build or remote branch contains them.
+The published FX checkpoint `cec6580c301395fe1cdb4e8528bb850f5a3d9eac`
+contains 115 lanes. Publisher-confirmed ARP RATE116 checkpoint
+`4954da25d1ff0bd708fc2d4bd8c64df9201c33f1` includes local qualified source
+`b0ecf0dd70ad72f0ed7bb5bc9a9c44c623f3e7b5`; see [ARP evidence](experiments/arp-rate-automation/README.md).
+The six historical FX fixture forward guards are source-reviewed only, not
+newly rerun evidence.
+
+Publisher-confirmed ANALOG NOISE117 checkpoint
+`932bccfc93735e06b1ae21a4f7921f8647892d43` includes local qualified source
+`84ac43a0452734dd1d71a872119fe959964980f1`; see [noise evidence](experiments/noise-automation/README.md).
+The ARP fixture forward guard is source-reviewed only. Published source does
+not establish that an installed build contains these changes and is not a new
+whole-tree test or release qualification.
 No DSP laws, parameter IDs, source authority or AU support are changed by
 these roster extensions.
 
@@ -24,6 +32,8 @@ these roster extensions.
 | 92–107 | Modulation-matrix slots 1–16 amounts | [Amounts](experiments/matrix-amount-automation/README.md) |
 | 108–111 | Performance macros 1–4 | [Macros](experiments/macro-automation/README.md) |
 | 112–114 | FX slots 1–3 wet/dry mixes | [Fixed-type mixes](experiments/fx-mix-automation/README.md) |
+| 115 | ARP RATE | [Ascending ARP, alone and with volume](experiments/arp-rate-automation/README.md) |
+| 116 | ANALOG NOISE | [Mix-bus hiss, alone and with volume](experiments/noise-automation/README.md) |
 
 Discrete type/model/waveform selectors and unsupported parameters remain
 block-rate. Individual evidence reports define their tested policies, source

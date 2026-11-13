@@ -8,10 +8,11 @@ Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN
 lands. Record exact commits; do not restate test counts without one.
 
 Last updated: 2026-11-13. Publisher-confirmed main
-`35ddac37969cdff18d8bdee785641b25f9889670` contains the **115-lane** FX mix
-automation checkpoint described below. Its qualification used local source
-`2305421d50aab146cb348256234eaf71a2d0538e`; the published main identity is
-not a claim of a new build or a whole-tree test run.
+`932bccfc93735e06b1ae21a4f7921f8647892d43` contains **117 lanes**, adding
+ANALOG NOISE after ARP RATE116. The qualified local source identities remain
+`84ac43a0452734dd1d71a872119fe959964980f1` and
+`b0ecf0dd70ad72f0ed7bb5bc9a9c44c623f3e7b5`; publication is not a new
+whole-tree build, test run or release qualification.
 
 The latest local core integration checkpoint on this page still tests published
 `863e6c5b` (retained MPE manager/note pressure and CC74), with exact scope and
@@ -48,10 +49,51 @@ ASan+UBSan with leak detection excluded (119.03 s). The leak-enabled attempt
 failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 [configuration, distinct outcomes and limits](CORE_SANITIZER_CHECKPOINT_CCB812E.md).
 
+## Published ANALOG NOISE117 checkpoint
+
+Publisher-confirmed main `932bccfc93735e06b1ae21a4f7921f8647892d43` includes
+the qualified local candidate `84ac43a0452734dd1d71a872119fe959964980f1`, which appends existing
+`P_analogNoise` at index 116, preserving the literal 116-lane prefix. Both
+explicit builds, six native Linux VST3 configurations (44.1/48/96kHz,
+realtime/offline) and collection passed once. Independent audit verified 300
+finite captures, 60 actual frozen116 byte-identical pairs, 48 scalar/block
+comparisons with maximum error 0 under the new 1e-8 limit, 24 exact queue-order
+comparisons, 12 exact initial holds and 36 exact controls. All 12 overall,
+12 combined individual-lane and 12 positive no-note hiss witnesses exceed the
+fixed 1e-7 detection floor. No-note witnesses are not inert controls.
+
+The baseline module is the exact qualified ARP116 artifact; there is no new
+baseline plugin build. This covers noise amount .10–.70 alone and with volume,
+not spectral calibration, hardware fidelity, all ranges or policies. Existing
+DSP, UI, MEMORY and IDs are unchanged. The prior ARP fixture guard is source-
+reviewed only; its historical qualification is not rerun. See [source identities,
+logs, metrics and limits](experiments/noise-automation/README.md). No DAW/AU,
+CPU, cross-platform or release claim follows.
+
+## Published ARP RATE116 checkpoint
+
+Publisher-confirmed main `4954da25d1ff0bd708fc2d4bd8c64df9201c33f1` includes
+the qualified local candidate `b0ecf0dd70ad72f0ed7bb5bc9a9c44c623f3e7b5`, which appends existing
+`P_arpRate` at index 115, preserving the literal 115-lane prefix. The narrow
+candidate and frozen115 helper builds, six native Linux VST3 configurations
+(44.1/48/96kHz, realtime/offline), and collection each passed once. Independent
+read-only audit verified 300 finite PCM captures, 60 actual byte-identical
+frozen115 pairs, 48 scalar/block comparisons with maximum error 0, 24 exact
+queue-order comparisons, 12 exact initial holds, and 48 exact control pairs.
+Twelve overall and 12 combined individual-lane effect witnesses exceed 1e-5.
+
+This covers ascending ARP, 8–16Hz curves, alone and with volume. No DSP law,
+UI, MEMORY, parser, scanner, or state-readback changes/qualification are implied.
+The baseline module remains the previously qualified FX115 source `2305421d`,
+not a rebuild of current main; current baseline production changes from that
+source are comments only. Six historical FX roster guards were source-reviewed,
+not rerun. See [frozen provenance, logs, capture identities and limits](experiments/arp-rate-automation/README.md).
+No DAW/AU, external-clock, all-ARP-mode, CPU, hardware or release claim follows.
+
 ## Published FX115 checkpoint
 
 Publisher-confirmed main `cec6580c301395fe1cdb4e8528bb850f5a3d9eac` includes
-the three existing FX wet/dry controls at lanes 112–114. The current roster is
+the three existing FX wet/dry controls at lanes 112–114. The roster at that checkpoint is
 **115 lanes**, preserving the literal 112-lane prefix. The qualified local source
 is `2305421d50aab146cb348256234eaf71a2d0538e`. All nine staged operations
 passed once: narrow candidate and frozen112 helper builds, six configuration runs,
@@ -109,7 +151,7 @@ registration was source-reviewed only. No fresh plugin build is claimed.
 ## November 12 scoped native VST3 automation
 
 Historical checkpoints follow. References below to a “current roster” describe
-that dated checkpoint; the present roster is 115 lanes as stated above.
+that dated checkpoint; the present source roster is 117 lanes as stated above.
 
 Published `bb658fc7fd79c5d246bd8da846befc8cbf1acd1c` appends the four existing
 performance macros at lanes 108–111, bringing the current roster to **112 lanes**
@@ -1190,7 +1232,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.3-5.4 Toolbar, Studio view, interaction | done; modern and tuning pages mounted | ws8 merge `5af3b77`, `230f367` |
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
-| 6 Sample-accurate automation | partial: 115 key VST3 parameter lanes in modern circuit policy; AU and other parameters remain block-rate | `cec6580c`; scoped native evidence above; [scope](HOST_AUTOMATION.md) |
+| 6 Sample-accurate automation | partial: 117 key VST3 parameter lanes in modern circuit policy; AU and other parameters remain block-rate | published `932bccfc`; scoped native evidence above; [scope](HOST_AUTOMATION.md) |
 | 7 Release qualification | packaging safeguards and scoped Linux ABI evidence merged; complete licence/native installation/host/signing qualification and Linux validation failures remain open | `b363b325`, `fa7e988`, `58ed29e`; exact scope and failures above |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -1363,7 +1405,7 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   edit gestures and rejects unsafe replay during an active edit
   ([contract and local tests](UNDO_REPLAY_GESTURES.md)). VST3/AU-wrapper and
   real-DAW automation-recording qualification remain open.
-- Sample-offset automation is limited to 115 key VST3 parameter lanes in modern
+- Sample-offset automation is limited to 117 key VST3 parameter lanes in modern
   circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
   qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).
 - CC121 now resets supported controller targets through existing routes, sustain,
