@@ -1,0 +1,81 @@
+{
+  "backtraceGraph" : 
+  {
+    "commands" : 
+    [
+      "add_test"
+    ],
+    "files" : 
+    [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/CMakeLists.txt"
+    ],
+    "nodes" : 
+    [
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 407,
+        "parent" : 0
+      },
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 412,
+        "parent" : 2
+      }
+    ]
+  },
+  "kind" : "ctestInfo",
+  "tests" : 
+  [
+    {
+      "backtrace" : 1,
+      "command" : 
+      [
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest/cs80_fx_loudness_core_tests"
+      ],
+      "name" : "cs80_fx_loudness_core_tests",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest"
+        }
+      ]
+    },
+    {
+      "backtrace" : 3,
+      "command" : 
+      [
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest/cs80_fx_loudness_gate_tests"
+      ],
+      "name" : "cs80_fx_loudness_gate_tests",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest"
+        }
+      ]
+    }
+  ],
+  "version" : 
+  {
+    "major" : 1,
+    "minor" : 0
+  }
+}

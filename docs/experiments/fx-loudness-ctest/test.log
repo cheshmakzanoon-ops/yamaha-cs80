@@ -1,0 +1,59 @@
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 79
+    Start 79: cs80_fx_loudness_core_tests
+
+79: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest/cs80_fx_loudness_core_tests
+79: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest
+79: Test timeout computed to be: 60
+79: rate=44100 scale=0.5 terminal_gain=1.9999999999973355 terminal_error=2.6645352591003757e-12
+79: rate=44100 scale=2.0 terminal_gain=0.50000000000133227 terminal_error=1.3322676295501878e-12
+79: rate=48000 scale=0.5 terminal_gain=1.9999999999973705 terminal_error=2.6294522115222208e-12
+79: rate=48000 scale=2.0 terminal_gain=0.50000000000131473 terminal_error=1.3147261057611104e-12
+79: rate=96000 scale=0.5 terminal_gain=1.9999999999971887 terminal_error=2.8113067429558214e-12
+79: rate=96000 scale=2.0 terminal_gain=0.50000000000140565 terminal_error=1.4056533714779107e-12
+79: checks=42 failures=0 rates=3 ordinary_signal_only=1
+1/2 Test #79: cs80_fx_loudness_core_tests ......   Passed    0.10 sec
+test 80
+    Start 80: cs80_fx_loudness_gate_tests
+
+80: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest/cs80_fx_loudness_gate_tests
+80: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-loudness-ctest/build-fx-loudness-ctest
+80: Test timeout computed to be: 60
+80: PASS rate=44100 finite gain throughout fixed two-second history
+80: PASS rate=44100 gate genuinely opened
+80: PASS rate=44100 gate closed during silence and remained closed at least 250 ms
+80: PASS rate=44100 nontrivial gain deficit at closure
+80: PASS rate=44100 held target 2 with analytic 150 ms continuing slew
+80: PASS rate=44100 measurable gain movement after closure
+80: METRIC rate=44100 open_samples=25700 closure_frame=39331 closed_samples=48869 gain_before_closure=1.9794544231447635 max_slew_error=6.4392935428259079e-15 movement=0.020529755996661514
+80: PASS rate=48000 finite gain throughout fixed two-second history
+80: PASS rate=48000 gate genuinely opened
+80: PASS rate=48000 gate closed during silence and remained closed at least 250 ms
+80: PASS rate=48000 nontrivial gain deficit at closure
+80: PASS rate=48000 held target 2 with analytic 150 ms continuing slew
+80: PASS rate=48000 measurable gain movement after closure
+80: METRIC rate=48000 open_samples=27932 closure_frame=42779 closed_samples=53221 gain_before_closure=1.979337698950193 max_slew_error=1.021405182655144e-14 movement=0.020646697676351966
+80: PASS rate=96000 finite gain throughout fixed two-second history
+80: PASS rate=96000 gate genuinely opened
+80: PASS rate=96000 gate closed during silence and remained closed at least 250 ms
+80: PASS rate=96000 nontrivial gain deficit at closure
+80: PASS rate=96000 held target 2 with analytic 150 ms continuing slew
+80: PASS rate=96000 measurable gain movement after closure
+80: METRIC rate=96000 open_samples=55342 closure_frame=85176 closed_samples=106824 gain_before_closure=1.9785749492214766 max_slew_error=1.2878587085651816e-14 movement=0.021410704766060995
+80: RESULT checks=18 failures=0
+2/2 Test #80: cs80_fx_loudness_gate_tests ......   Passed    0.02 sec
+
+The following tests passed:
+	cs80_fx_loudness_core_tests
+	cs80_fx_loudness_gate_tests
+
+100% tests passed out of 2
+
+Total Test time (real) =   0.12 sec
