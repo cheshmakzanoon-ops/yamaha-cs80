@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "combined_supported_input_qualification",
+  "mseg_rate_amount_combined": {
+    "minimum_held_effect": 1e-05,
+    "scope": "Three concurrent MSEG octave rates and first three matrix amounts. Fixed unsynced poly always-loop bipolar MSEGs routed to both-rank pitch/cutoff/level. Manual/manual, two notes, macros neutral. No baseline or broad host claim.",
+    "timing": "16384 frames; initial values held through1023. Rate knots2047/4095/8191/12287 +37i, values1+.25i/-1+.25i/2-.25i/-2+.25i octaves. Amount knots2303/4351/8447/12543 +41i, values.18-.01i/-.08+.01i/.14+.01i/-.06-.01i. Shared final16383 returns rate0 and amount.10.",
+    "verification_plan": "Six configs each22 renders retained.24 scalar/block comparisons;48 byte-identical reverse/rotate comparisons;36 positive per-lane witnesses;6 initial holds;6 exact no-route controls;12 native config readbacks."
+  }
+}
