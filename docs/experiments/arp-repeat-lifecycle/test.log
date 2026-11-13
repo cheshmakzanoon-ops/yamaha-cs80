@@ -1,0 +1,38 @@
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-repeat-lifecycle/build-arp-repeat-lifecycle/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-repeat-lifecycle/build-arp-repeat-lifecycle
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 83
+    Start 83: cs80_arp_repeat_lifecycle_tests
+
+83: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-repeat-lifecycle/build-arp-repeat-lifecycle/cs80_arp_repeat_lifecycle_tests
+83: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-repeat-lifecycle/build-arp-repeat-lifecycle
+83: Test timeout computed to be: 60
+83: PASS Legacy fixed 2x clock
+83: PASS positive current source before repeat
+83: PASS repeat preserves current generated voice and velocity immediately
+83: PASS repeat preserves gate expiry and scheduled onset times versus untouched control
+83: PASS sequence restarts from retained played order without duplicate entry
+83: PASS future generated occurrences use replaced and untouched source velocities
+83: PASS single source release leaves current other source intact
+83: PASS one note-off removes repeated source with no duplicate obligation
+83: PASS final source release stops generated pattern
+83: PASS finite audio and at most one generated held voice
+83: EVENT frame=0 note=60 channel=1 velocity=0.25
+83: EVENT frame=1740 note=-1 channel=-1 velocity=0
+83: EVENT frame=3000 note=60 channel=1 velocity=0.75
+83: EVENT frame=4740 note=-1 channel=-1 velocity=0
+83: EVENT frame=6000 note=64 channel=1 velocity=0.5
+83: RESULT checks=10 failures=0
+1/1 Test #83: cs80_arp_repeat_lifecycle_tests ...   Passed    0.08 sec
+
+The following tests passed:
+	cs80_arp_repeat_lifecycle_tests
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.08 sec

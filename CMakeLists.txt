@@ -421,6 +421,11 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_arp_pedal_lifecycle_tests PRIVATE cs80_core)
     add_test(NAME cs80_arp_pedal_lifecycle_tests COMMAND cs80_arp_pedal_lifecycle_tests)
     set_tests_properties(cs80_arp_pedal_lifecycle_tests PROPERTIES TIMEOUT 60)
+    # Repeated held ARP source, public note/velocity lifecycle only.
+    add_executable(cs80_arp_repeat_lifecycle_tests tests/ArpRepeatLifecycleTests.cpp)
+    target_link_libraries(cs80_arp_repeat_lifecycle_tests PRIVATE cs80_core)
+    add_test(NAME cs80_arp_repeat_lifecycle_tests COMMAND cs80_arp_repeat_lifecycle_tests)
+    set_tests_properties(cs80_arp_repeat_lifecycle_tests PROPERTIES TIMEOUT 60)
     # Direct tape-slot lifecycle, no Engine/plugin linkage.
     add_executable(cs80_fx_tape_lifecycle_tests tests/FxTapeLifecycleTests.cpp)
     target_include_directories(cs80_fx_tape_lifecycle_tests PRIVATE src)
