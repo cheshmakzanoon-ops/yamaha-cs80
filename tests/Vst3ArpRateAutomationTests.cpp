@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen115Roster.h"
+#include "Vst3Frozen116Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -75,7 +76,8 @@ int main(int argc,char**argv) {
     require(std::equal(cs80::kFrozen115Roster.begin(),cs80::kFrozen115Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal115 prefix preserved");
     require(cs80::paramId(cs80::P_arpRate)=="arp_rate","stable existing ARP rate ID");
     require(limits["key_parameter_count"]==116,"116 lane contract");
-    if(!compat){require(cs80::kSampleAccurateParameters.size()==116,"exact116 capability");
+    if(!compat){require(cs80::kSampleAccurateParameters.size()>=116,"116 prefix available");
+      require(std::equal(cs80::kFrozen116Roster.begin(),cs80::kFrozen116Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal116 prefix preserved");
       require(cs80::kSampleAccurateParameters[115]==cs80::P_arpRate,"ARP rate at115");}
     std::cout<<"compiled_lanes="<<cs80::kSampleAccurateParameters.size()<<"\n";
     const std::filesystem::path out(argv[2]);require(!std::filesystem::exists(out),"fresh capture directory");std::filesystem::create_directory(out);

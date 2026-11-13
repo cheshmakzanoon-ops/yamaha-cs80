@@ -1,0 +1,140 @@
+{
+  "stage": "collect",
+  "source_freeze_sha256": "55609d35274977f26119bf9440871e213fa3a615717bafc68b8526362cfa1f31",
+  "full_cases": 12,
+  "compat_cases": 12,
+  "candidate_renders": 240,
+  "baseline_renders": 60,
+  "actual_pcm_pairs": 60,
+  "captures": 300,
+  "scalar_block_comparisons": 48,
+  "queue_order_comparisons": 24,
+  "overall_witnesses": 12,
+  "combined_per_lane_witnesses": 12,
+  "initial_holds": 12,
+  "no_note_witnesses": 12,
+  "recomputed_metrics": [
+    {
+      "config": "run-44100-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0008620563894510269,
+      "no_note_effect": 0.00086205467232503,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.008668169379234314,
+      "no_note_effect": 0.0009825042652664706,
+      "per_lane_effects": [
+        0.0009825043380260468,
+        0.008478127419948578
+      ]
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0007557754870504141,
+      "no_note_effect": 0.0007557754288427532,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.008667103946208954,
+      "no_note_effect": 0.0008682357001816854,
+      "per_lane_effects": [
+        0.0008682366460561752,
+        0.008487984538078308
+      ]
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0009006345644593239,
+      "no_note_effect": 0.0009006345935631543,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.009576760232448578,
+      "no_note_effect": 0.0010279956186423078,
+      "per_lane_effects": [
+        0.0010279957205057144,
+        0.009240247309207916
+      ]
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0007919188938103616,
+      "no_note_effect": 0.0007919191266410053,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.009438447654247284,
+      "no_note_effect": 0.0008991504582809284,
+      "per_lane_effects": [
+        0.0008991505019366741,
+        0.00918106734752655
+      ]
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.001113995909690857,
+      "no_note_effect": 0.0011139976413687691,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.010294463485479355,
+      "no_note_effect": 0.00119292143790517,
+      "per_lane_effects": [
+        0.001192919909954071,
+        0.009848520159721375
+      ]
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0011598340352065861,
+      "no_note_effect": 0.0011598340352065861,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.010122831910848618,
+      "no_note_effect": 0.0012737033539451659,
+      "per_lane_effects": [
+        0.001273703237529844,
+        0.00977393239736557
+      ]
+    }
+  ],
+  "roster": 117,
+  "historical_suites": "not rerun",
+  "forward_guards": "source reviewed only",
+  "state_readbacks": false,
+  "evidence_hashes": {
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-noise-automation/docs/experiments/noise-automation/collect/captures.json": "26d88ff4fbd9cb3ead15aa5904934783ef7444414db6bb590a4c016ebb1d91a0",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-noise-automation/docs/experiments/noise-automation/collect/compatibility-pairs.json": "e0f5c8a9508aa7e819c9be019cd784e6df30b5960767fdf7c25246ccd234b874"
+  }
+}
