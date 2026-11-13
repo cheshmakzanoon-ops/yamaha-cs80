@@ -106,7 +106,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing live ARP rate; preserve the complete 115-lane prefix.
     int(P_arpRate),
     // Existing live mix-bus hiss amount; preserve the complete 116-lane prefix.
-    int(P_analogNoise)
+    int(P_analogNoise),
+    // Existing live analog-drift amount; preserve the complete 117-lane prefix.
+    int(P_drift)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen116Roster.h"
+#include "Vst3Frozen117Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -76,7 +77,8 @@ int main(int argc,char**argv) {
     require(std::equal(cs80::kFrozen116Roster.begin(),cs80::kFrozen116Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal116 prefix preserved");
     require(cs80::paramId(cs80::P_analogNoise)=="analog_noise","stable existing analog-noise amount ID");
     require(limits["key_parameter_count"]==117,"117 lane contract");
-    if(!compat){require(cs80::kSampleAccurateParameters.size()==117,"exact117 capability");
+    if(!compat){require(cs80::kSampleAccurateParameters.size()>=117,"117 prefix available");
+      require(std::equal(cs80::kFrozen117Roster.begin(),cs80::kFrozen117Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal117 prefix preserved");
       require(cs80::kSampleAccurateParameters[116]==cs80::P_analogNoise,"analog noise at116");}
     std::cout<<"compiled_lanes="<<cs80::kSampleAccurateParameters.size()<<"\n";
     const std::filesystem::path out(argv[2]);require(!std::filesystem::exists(out),"fresh capture directory");std::filesystem::create_directory(out);

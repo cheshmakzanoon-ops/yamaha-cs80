@@ -1,0 +1,962 @@
+[
+  {
+    "case": "44100-offline/drift-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case0-legacy-prior.pcm",
+    "candidate_sha256": "c1f09f8e7d3a148549d47077bc17a9ee2a13be5bb4469d8d98c0532c3c049fd6",
+    "baseline_sha256": "c1f09f8e7d3a148549d47077bc17a9ee2a13be5bb4469d8d98c0532c3c049fd6",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case0-noqueue.pcm",
+    "candidate_sha256": "a4ed6a28bf70414505dda35b70d60e6e32bd6fd81643d647c77b179afe2d2f5d",
+    "baseline_sha256": "a4ed6a28bf70414505dda35b70d60e6e32bd6fd81643d647c77b179afe2d2f5d",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case0-null.pcm",
+    "candidate_sha256": "a4ed6a28bf70414505dda35b70d60e6e32bd6fd81643d647c77b179afe2d2f5d",
+    "baseline_sha256": "a4ed6a28bf70414505dda35b70d60e6e32bd6fd81643d647c77b179afe2d2f5d",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case0-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case0-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case0-preceding117.pcm",
+    "candidate_sha256": "66f88f2b451fa4c86bb1b202ac3cd068d242f530aa856ca4696eed9793755c5a",
+    "baseline_sha256": "66f88f2b451fa4c86bb1b202ac3cd068d242f530aa856ca4696eed9793755c5a",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case0-pure-prior.pcm",
+    "candidate_sha256": "046a53ed8e933c163dec9eb4372857e42d7cac86029935897da7f8f2b5141076",
+    "baseline_sha256": "046a53ed8e933c163dec9eb4372857e42d7cac86029935897da7f8f2b5141076",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case1-legacy-prior.pcm",
+    "candidate_sha256": "94adb9b657a03059ba56542b811dd75b9ab144154a7317b4537a3e9f392d8c8b",
+    "baseline_sha256": "94adb9b657a03059ba56542b811dd75b9ab144154a7317b4537a3e9f392d8c8b",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case1-noqueue.pcm",
+    "candidate_sha256": "3b3382d4ca2d1437705fddbf9d97a7998e4748e2a1b3f218c06a1e8479887d50",
+    "baseline_sha256": "3b3382d4ca2d1437705fddbf9d97a7998e4748e2a1b3f218c06a1e8479887d50",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case1-null.pcm",
+    "candidate_sha256": "3b3382d4ca2d1437705fddbf9d97a7998e4748e2a1b3f218c06a1e8479887d50",
+    "baseline_sha256": "3b3382d4ca2d1437705fddbf9d97a7998e4748e2a1b3f218c06a1e8479887d50",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case1-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case1-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case1-preceding117.pcm",
+    "candidate_sha256": "17d1cf3d2bde30fc955ff2e75c72667edfe385b3e5a0dfe989e8bf96a3fa21bf",
+    "baseline_sha256": "17d1cf3d2bde30fc955ff2e75c72667edfe385b3e5a0dfe989e8bf96a3fa21bf",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case1-pure-prior.pcm",
+    "candidate_sha256": "795d607d1f4c318c17d2a9ec5ab8e2b70a42a50e7b73f7a8427c428ca5dee668",
+    "baseline_sha256": "795d607d1f4c318c17d2a9ec5ab8e2b70a42a50e7b73f7a8427c428ca5dee668",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case2-legacy-prior.pcm",
+    "candidate_sha256": "c1f09f8e7d3a148549d47077bc17a9ee2a13be5bb4469d8d98c0532c3c049fd6",
+    "baseline_sha256": "c1f09f8e7d3a148549d47077bc17a9ee2a13be5bb4469d8d98c0532c3c049fd6",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case2-noqueue.pcm",
+    "candidate_sha256": "cc096b5e96d9b04ebfea34864bea6978545ad41d1875f318d10ba84be3ab2493",
+    "baseline_sha256": "cc096b5e96d9b04ebfea34864bea6978545ad41d1875f318d10ba84be3ab2493",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case2-null.pcm",
+    "candidate_sha256": "cc096b5e96d9b04ebfea34864bea6978545ad41d1875f318d10ba84be3ab2493",
+    "baseline_sha256": "cc096b5e96d9b04ebfea34864bea6978545ad41d1875f318d10ba84be3ab2493",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case2-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case2-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case2-preceding117.pcm",
+    "candidate_sha256": "51c2587441b558dc9d2e85b6956119697d2e83c644c003f535c9fa2e18454eef",
+    "baseline_sha256": "51c2587441b558dc9d2e85b6956119697d2e83c644c003f535c9fa2e18454eef",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case2-pure-prior.pcm",
+    "candidate_sha256": "046a53ed8e933c163dec9eb4372857e42d7cac86029935897da7f8f2b5141076",
+    "baseline_sha256": "046a53ed8e933c163dec9eb4372857e42d7cac86029935897da7f8f2b5141076",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case3-legacy-prior.pcm",
+    "candidate_sha256": "94adb9b657a03059ba56542b811dd75b9ab144154a7317b4537a3e9f392d8c8b",
+    "baseline_sha256": "94adb9b657a03059ba56542b811dd75b9ab144154a7317b4537a3e9f392d8c8b",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case3-noqueue.pcm",
+    "candidate_sha256": "6c4d5720153e8bda6e3d4c7b778347f7b4609e73753ff0c9fcd5c5b7cd33b1af",
+    "baseline_sha256": "6c4d5720153e8bda6e3d4c7b778347f7b4609e73753ff0c9fcd5c5b7cd33b1af",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case3-null.pcm",
+    "candidate_sha256": "6c4d5720153e8bda6e3d4c7b778347f7b4609e73753ff0c9fcd5c5b7cd33b1af",
+    "baseline_sha256": "6c4d5720153e8bda6e3d4c7b778347f7b4609e73753ff0c9fcd5c5b7cd33b1af",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case3-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case3-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case3-preceding117.pcm",
+    "candidate_sha256": "8fbf68b353cef47e42d0b4bc817ef649b885dc9a199fa895502a113a48d06246",
+    "baseline_sha256": "8fbf68b353cef47e42d0b4bc817ef649b885dc9a199fa895502a113a48d06246",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/drift-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-offline/drift-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-offline/drift-case3-pure-prior.pcm",
+    "candidate_sha256": "795d607d1f4c318c17d2a9ec5ab8e2b70a42a50e7b73f7a8427c428ca5dee668",
+    "baseline_sha256": "795d607d1f4c318c17d2a9ec5ab8e2b70a42a50e7b73f7a8427c428ca5dee668",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case0-legacy-prior.pcm",
+    "candidate_sha256": "c1f09f8e7d3a148549d47077bc17a9ee2a13be5bb4469d8d98c0532c3c049fd6",
+    "baseline_sha256": "c1f09f8e7d3a148549d47077bc17a9ee2a13be5bb4469d8d98c0532c3c049fd6",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case0-noqueue.pcm",
+    "candidate_sha256": "9d9b65fb8964e2c16c1922591384522aa21cd14ed5d625819a46e96617fc88c5",
+    "baseline_sha256": "9d9b65fb8964e2c16c1922591384522aa21cd14ed5d625819a46e96617fc88c5",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case0-null.pcm",
+    "candidate_sha256": "9d9b65fb8964e2c16c1922591384522aa21cd14ed5d625819a46e96617fc88c5",
+    "baseline_sha256": "9d9b65fb8964e2c16c1922591384522aa21cd14ed5d625819a46e96617fc88c5",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case0-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case0-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case0-preceding117.pcm",
+    "candidate_sha256": "bc84234b05302c07120511b39bbbe98ecf4f7c7ae57661639da3657d24da08d9",
+    "baseline_sha256": "bc84234b05302c07120511b39bbbe98ecf4f7c7ae57661639da3657d24da08d9",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case0-pure-prior.pcm",
+    "candidate_sha256": "1af40c310f66bb637e5c7ae0d84dd967de84f2834d9a52464dcc02fdc94a62d5",
+    "baseline_sha256": "1af40c310f66bb637e5c7ae0d84dd967de84f2834d9a52464dcc02fdc94a62d5",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case1-legacy-prior.pcm",
+    "candidate_sha256": "94adb9b657a03059ba56542b811dd75b9ab144154a7317b4537a3e9f392d8c8b",
+    "baseline_sha256": "94adb9b657a03059ba56542b811dd75b9ab144154a7317b4537a3e9f392d8c8b",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case1-noqueue.pcm",
+    "candidate_sha256": "ac7d0c87b008fa3ed692e9d163ad1f0c454dff196a15774027abbab172e3ece0",
+    "baseline_sha256": "ac7d0c87b008fa3ed692e9d163ad1f0c454dff196a15774027abbab172e3ece0",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case1-null.pcm",
+    "candidate_sha256": "ac7d0c87b008fa3ed692e9d163ad1f0c454dff196a15774027abbab172e3ece0",
+    "baseline_sha256": "ac7d0c87b008fa3ed692e9d163ad1f0c454dff196a15774027abbab172e3ece0",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case1-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case1-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case1-preceding117.pcm",
+    "candidate_sha256": "fb8ebbd28bc0e95bf970bb7b3f8f9ee9bc265b61483721d02c351fd99070f105",
+    "baseline_sha256": "fb8ebbd28bc0e95bf970bb7b3f8f9ee9bc265b61483721d02c351fd99070f105",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case1-pure-prior.pcm",
+    "candidate_sha256": "f563302ff799cdc68457d691f122b299aa97569b89dfc86d1f03ee612c77bd32",
+    "baseline_sha256": "f563302ff799cdc68457d691f122b299aa97569b89dfc86d1f03ee612c77bd32",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case2-legacy-prior.pcm",
+    "candidate_sha256": "c1f09f8e7d3a148549d47077bc17a9ee2a13be5bb4469d8d98c0532c3c049fd6",
+    "baseline_sha256": "c1f09f8e7d3a148549d47077bc17a9ee2a13be5bb4469d8d98c0532c3c049fd6",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case2-noqueue.pcm",
+    "candidate_sha256": "eb4e4ba9d348ca3fe1cfd7b015284da43dda6672b4faa9530c045a0dc856a980",
+    "baseline_sha256": "eb4e4ba9d348ca3fe1cfd7b015284da43dda6672b4faa9530c045a0dc856a980",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case2-null.pcm",
+    "candidate_sha256": "eb4e4ba9d348ca3fe1cfd7b015284da43dda6672b4faa9530c045a0dc856a980",
+    "baseline_sha256": "eb4e4ba9d348ca3fe1cfd7b015284da43dda6672b4faa9530c045a0dc856a980",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case2-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case2-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case2-preceding117.pcm",
+    "candidate_sha256": "0150a513d9280697545876a7cf51715fabc5cc92d77a006acee78965165c439c",
+    "baseline_sha256": "0150a513d9280697545876a7cf51715fabc5cc92d77a006acee78965165c439c",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case2-pure-prior.pcm",
+    "candidate_sha256": "1af40c310f66bb637e5c7ae0d84dd967de84f2834d9a52464dcc02fdc94a62d5",
+    "baseline_sha256": "1af40c310f66bb637e5c7ae0d84dd967de84f2834d9a52464dcc02fdc94a62d5",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case3-legacy-prior.pcm",
+    "candidate_sha256": "94adb9b657a03059ba56542b811dd75b9ab144154a7317b4537a3e9f392d8c8b",
+    "baseline_sha256": "94adb9b657a03059ba56542b811dd75b9ab144154a7317b4537a3e9f392d8c8b",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case3-noqueue.pcm",
+    "candidate_sha256": "20e9c7c72b6580300959ef50b58ed7cb256bcd0aca6e87ba47ea46d5ef791cfd",
+    "baseline_sha256": "20e9c7c72b6580300959ef50b58ed7cb256bcd0aca6e87ba47ea46d5ef791cfd",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case3-null.pcm",
+    "candidate_sha256": "20e9c7c72b6580300959ef50b58ed7cb256bcd0aca6e87ba47ea46d5ef791cfd",
+    "baseline_sha256": "20e9c7c72b6580300959ef50b58ed7cb256bcd0aca6e87ba47ea46d5ef791cfd",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case3-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case3-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case3-preceding117.pcm",
+    "candidate_sha256": "0700e67390fdbcc90814c3208d3e12fbff43f8fd01c1a667918973eb9efbdffa",
+    "baseline_sha256": "0700e67390fdbcc90814c3208d3e12fbff43f8fd01c1a667918973eb9efbdffa",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/drift-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-44100-realtime/drift-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-44100-realtime/drift-case3-pure-prior.pcm",
+    "candidate_sha256": "f563302ff799cdc68457d691f122b299aa97569b89dfc86d1f03ee612c77bd32",
+    "baseline_sha256": "f563302ff799cdc68457d691f122b299aa97569b89dfc86d1f03ee612c77bd32",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case0-legacy-prior.pcm",
+    "candidate_sha256": "f708fb02eefb0c8055e951d407602ffd53399f0778c441f112a95849579aa393",
+    "baseline_sha256": "f708fb02eefb0c8055e951d407602ffd53399f0778c441f112a95849579aa393",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case0-noqueue.pcm",
+    "candidate_sha256": "b3458bde825bc7db5d4afa43c65c4c8dea063de8fc88826134767e24908fc95b",
+    "baseline_sha256": "b3458bde825bc7db5d4afa43c65c4c8dea063de8fc88826134767e24908fc95b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case0-null.pcm",
+    "candidate_sha256": "b3458bde825bc7db5d4afa43c65c4c8dea063de8fc88826134767e24908fc95b",
+    "baseline_sha256": "b3458bde825bc7db5d4afa43c65c4c8dea063de8fc88826134767e24908fc95b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case0-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case0-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case0-preceding117.pcm",
+    "candidate_sha256": "87907dfaa880508007901dfdec8ad912bf84b62fc10bb40caea649777ec2d839",
+    "baseline_sha256": "87907dfaa880508007901dfdec8ad912bf84b62fc10bb40caea649777ec2d839",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case0-pure-prior.pcm",
+    "candidate_sha256": "136de3e96947dfa17ad73c3a3fadc46555889ebcf1d76b0f71cab8e6c4b35578",
+    "baseline_sha256": "136de3e96947dfa17ad73c3a3fadc46555889ebcf1d76b0f71cab8e6c4b35578",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case1-legacy-prior.pcm",
+    "candidate_sha256": "b0049ceb041a7d79663f414b2c498b1d947cd878e578899c3a985b8b78de17d9",
+    "baseline_sha256": "b0049ceb041a7d79663f414b2c498b1d947cd878e578899c3a985b8b78de17d9",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case1-noqueue.pcm",
+    "candidate_sha256": "85ac8b2b2236d9acdcc0ee1114845ff376a8357323284750ccdb97be98b19251",
+    "baseline_sha256": "85ac8b2b2236d9acdcc0ee1114845ff376a8357323284750ccdb97be98b19251",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case1-null.pcm",
+    "candidate_sha256": "85ac8b2b2236d9acdcc0ee1114845ff376a8357323284750ccdb97be98b19251",
+    "baseline_sha256": "85ac8b2b2236d9acdcc0ee1114845ff376a8357323284750ccdb97be98b19251",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case1-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case1-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case1-preceding117.pcm",
+    "candidate_sha256": "7cf14a2f83940a163c37cd9151f3bd87ff91d5f2599c1d367a9efd2cd815e5d5",
+    "baseline_sha256": "7cf14a2f83940a163c37cd9151f3bd87ff91d5f2599c1d367a9efd2cd815e5d5",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case1-pure-prior.pcm",
+    "candidate_sha256": "5d957d58c3464e243715ce014349db6e97068ff56640c80e162f22630f7b535b",
+    "baseline_sha256": "5d957d58c3464e243715ce014349db6e97068ff56640c80e162f22630f7b535b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case2-legacy-prior.pcm",
+    "candidate_sha256": "f708fb02eefb0c8055e951d407602ffd53399f0778c441f112a95849579aa393",
+    "baseline_sha256": "f708fb02eefb0c8055e951d407602ffd53399f0778c441f112a95849579aa393",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case2-noqueue.pcm",
+    "candidate_sha256": "5a86d2b3395aaceec79d9a6c4200044d7aea466d2e8ccf418097754c8cb12fa3",
+    "baseline_sha256": "5a86d2b3395aaceec79d9a6c4200044d7aea466d2e8ccf418097754c8cb12fa3",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case2-null.pcm",
+    "candidate_sha256": "5a86d2b3395aaceec79d9a6c4200044d7aea466d2e8ccf418097754c8cb12fa3",
+    "baseline_sha256": "5a86d2b3395aaceec79d9a6c4200044d7aea466d2e8ccf418097754c8cb12fa3",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case2-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case2-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case2-preceding117.pcm",
+    "candidate_sha256": "956e6ec2b7a73d5c8eb85272fdaa5d87136d9feb51615b18773413f1ab9a61bf",
+    "baseline_sha256": "956e6ec2b7a73d5c8eb85272fdaa5d87136d9feb51615b18773413f1ab9a61bf",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case2-pure-prior.pcm",
+    "candidate_sha256": "136de3e96947dfa17ad73c3a3fadc46555889ebcf1d76b0f71cab8e6c4b35578",
+    "baseline_sha256": "136de3e96947dfa17ad73c3a3fadc46555889ebcf1d76b0f71cab8e6c4b35578",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case3-legacy-prior.pcm",
+    "candidate_sha256": "b0049ceb041a7d79663f414b2c498b1d947cd878e578899c3a985b8b78de17d9",
+    "baseline_sha256": "b0049ceb041a7d79663f414b2c498b1d947cd878e578899c3a985b8b78de17d9",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case3-noqueue.pcm",
+    "candidate_sha256": "491559d71382c8a779eda9abdadac77c87a994fa503c6bf2798050777947ef7a",
+    "baseline_sha256": "491559d71382c8a779eda9abdadac77c87a994fa503c6bf2798050777947ef7a",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case3-null.pcm",
+    "candidate_sha256": "491559d71382c8a779eda9abdadac77c87a994fa503c6bf2798050777947ef7a",
+    "baseline_sha256": "491559d71382c8a779eda9abdadac77c87a994fa503c6bf2798050777947ef7a",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case3-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case3-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case3-preceding117.pcm",
+    "candidate_sha256": "35907920452daeba4fa62644f8c1b317bff40d81533dea1c8d7746582effb8b0",
+    "baseline_sha256": "35907920452daeba4fa62644f8c1b317bff40d81533dea1c8d7746582effb8b0",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/drift-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-offline/drift-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-offline/drift-case3-pure-prior.pcm",
+    "candidate_sha256": "5d957d58c3464e243715ce014349db6e97068ff56640c80e162f22630f7b535b",
+    "baseline_sha256": "5d957d58c3464e243715ce014349db6e97068ff56640c80e162f22630f7b535b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case0-legacy-prior.pcm",
+    "candidate_sha256": "f708fb02eefb0c8055e951d407602ffd53399f0778c441f112a95849579aa393",
+    "baseline_sha256": "f708fb02eefb0c8055e951d407602ffd53399f0778c441f112a95849579aa393",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case0-noqueue.pcm",
+    "candidate_sha256": "fda3012f362dc646c2bac9210f550c47920d55945fedcfe60aa9ed19ebd385de",
+    "baseline_sha256": "fda3012f362dc646c2bac9210f550c47920d55945fedcfe60aa9ed19ebd385de",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case0-null.pcm",
+    "candidate_sha256": "fda3012f362dc646c2bac9210f550c47920d55945fedcfe60aa9ed19ebd385de",
+    "baseline_sha256": "fda3012f362dc646c2bac9210f550c47920d55945fedcfe60aa9ed19ebd385de",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case0-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case0-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case0-preceding117.pcm",
+    "candidate_sha256": "c8c1243398a20b624dc0570dd522dab7c01b210e6de7200233fe9af6018fe4c8",
+    "baseline_sha256": "c8c1243398a20b624dc0570dd522dab7c01b210e6de7200233fe9af6018fe4c8",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case0-pure-prior.pcm",
+    "candidate_sha256": "abd22de9536be7d2a3ad66f4036d39392fdae68501d629152a4269d3d2babc97",
+    "baseline_sha256": "abd22de9536be7d2a3ad66f4036d39392fdae68501d629152a4269d3d2babc97",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case1-legacy-prior.pcm",
+    "candidate_sha256": "b0049ceb041a7d79663f414b2c498b1d947cd878e578899c3a985b8b78de17d9",
+    "baseline_sha256": "b0049ceb041a7d79663f414b2c498b1d947cd878e578899c3a985b8b78de17d9",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case1-noqueue.pcm",
+    "candidate_sha256": "336591815f26dbfd96e2384f11807d49e90bbdd23e37ec615ae60acadb108139",
+    "baseline_sha256": "336591815f26dbfd96e2384f11807d49e90bbdd23e37ec615ae60acadb108139",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case1-null.pcm",
+    "candidate_sha256": "336591815f26dbfd96e2384f11807d49e90bbdd23e37ec615ae60acadb108139",
+    "baseline_sha256": "336591815f26dbfd96e2384f11807d49e90bbdd23e37ec615ae60acadb108139",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case1-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case1-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case1-preceding117.pcm",
+    "candidate_sha256": "718360783edab6132e73fb58cc4492efc10ca8db1d6b3640555d6c1a1f4c6a75",
+    "baseline_sha256": "718360783edab6132e73fb58cc4492efc10ca8db1d6b3640555d6c1a1f4c6a75",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case1-pure-prior.pcm",
+    "candidate_sha256": "8a4b62882f5326943449a5f970ede6421efa880a549a57cb992ebfbe4715f17b",
+    "baseline_sha256": "8a4b62882f5326943449a5f970ede6421efa880a549a57cb992ebfbe4715f17b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case2-legacy-prior.pcm",
+    "candidate_sha256": "f708fb02eefb0c8055e951d407602ffd53399f0778c441f112a95849579aa393",
+    "baseline_sha256": "f708fb02eefb0c8055e951d407602ffd53399f0778c441f112a95849579aa393",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case2-noqueue.pcm",
+    "candidate_sha256": "2a459c6ef8d7512aaa690c70422bcda583c0ecca31e703ce94d12d1859e259f4",
+    "baseline_sha256": "2a459c6ef8d7512aaa690c70422bcda583c0ecca31e703ce94d12d1859e259f4",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case2-null.pcm",
+    "candidate_sha256": "2a459c6ef8d7512aaa690c70422bcda583c0ecca31e703ce94d12d1859e259f4",
+    "baseline_sha256": "2a459c6ef8d7512aaa690c70422bcda583c0ecca31e703ce94d12d1859e259f4",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case2-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case2-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case2-preceding117.pcm",
+    "candidate_sha256": "c9da7f8bc9a94ddad84d7e7c5f1d5661383c27fee1bf5d2710c4f3956b31462c",
+    "baseline_sha256": "c9da7f8bc9a94ddad84d7e7c5f1d5661383c27fee1bf5d2710c4f3956b31462c",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case2-pure-prior.pcm",
+    "candidate_sha256": "abd22de9536be7d2a3ad66f4036d39392fdae68501d629152a4269d3d2babc97",
+    "baseline_sha256": "abd22de9536be7d2a3ad66f4036d39392fdae68501d629152a4269d3d2babc97",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case3-legacy-prior.pcm",
+    "candidate_sha256": "b0049ceb041a7d79663f414b2c498b1d947cd878e578899c3a985b8b78de17d9",
+    "baseline_sha256": "b0049ceb041a7d79663f414b2c498b1d947cd878e578899c3a985b8b78de17d9",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case3-noqueue.pcm",
+    "candidate_sha256": "33cfc07cf6df53a502046a4924bbf4f8250a19a74d96459083cbff7f2f42d44b",
+    "baseline_sha256": "33cfc07cf6df53a502046a4924bbf4f8250a19a74d96459083cbff7f2f42d44b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case3-null.pcm",
+    "candidate_sha256": "33cfc07cf6df53a502046a4924bbf4f8250a19a74d96459083cbff7f2f42d44b",
+    "baseline_sha256": "33cfc07cf6df53a502046a4924bbf4f8250a19a74d96459083cbff7f2f42d44b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case3-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case3-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case3-preceding117.pcm",
+    "candidate_sha256": "457a3dd38cb97b67144822911ba62234e886d517ffb294e9bf5cf92265042752",
+    "baseline_sha256": "457a3dd38cb97b67144822911ba62234e886d517ffb294e9bf5cf92265042752",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/drift-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-48000-realtime/drift-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-48000-realtime/drift-case3-pure-prior.pcm",
+    "candidate_sha256": "8a4b62882f5326943449a5f970ede6421efa880a549a57cb992ebfbe4715f17b",
+    "baseline_sha256": "8a4b62882f5326943449a5f970ede6421efa880a549a57cb992ebfbe4715f17b",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case0-legacy-prior.pcm",
+    "candidate_sha256": "cb8fca3d8124ad86df173515f59bfd66a010a39add103ef164c90d60fb1f21ed",
+    "baseline_sha256": "cb8fca3d8124ad86df173515f59bfd66a010a39add103ef164c90d60fb1f21ed",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case0-noqueue.pcm",
+    "candidate_sha256": "1f2c8366a4c445471b172c6174046f918723e2e131ff482735772c314984c2c9",
+    "baseline_sha256": "1f2c8366a4c445471b172c6174046f918723e2e131ff482735772c314984c2c9",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case0-null.pcm",
+    "candidate_sha256": "1f2c8366a4c445471b172c6174046f918723e2e131ff482735772c314984c2c9",
+    "baseline_sha256": "1f2c8366a4c445471b172c6174046f918723e2e131ff482735772c314984c2c9",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case0-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case0-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case0-preceding117.pcm",
+    "candidate_sha256": "d95f4b8e555b4299ca884938f8f090731e317ad691b3e231d3b9c9040c155ae3",
+    "baseline_sha256": "d95f4b8e555b4299ca884938f8f090731e317ad691b3e231d3b9c9040c155ae3",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case0-pure-prior.pcm",
+    "candidate_sha256": "b44431222792f79bb41d56e538c2b5c37347490bc727e22435913a1139598952",
+    "baseline_sha256": "b44431222792f79bb41d56e538c2b5c37347490bc727e22435913a1139598952",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case1-legacy-prior.pcm",
+    "candidate_sha256": "303de68ff895d62109ad6e39d34aee413ab64442a40189b5a6400057674fe182",
+    "baseline_sha256": "303de68ff895d62109ad6e39d34aee413ab64442a40189b5a6400057674fe182",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case1-noqueue.pcm",
+    "candidate_sha256": "bf12b8065a206a4df16121620c6c1adbb347126317e2fea5e4e7cd81ce61550e",
+    "baseline_sha256": "bf12b8065a206a4df16121620c6c1adbb347126317e2fea5e4e7cd81ce61550e",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case1-null.pcm",
+    "candidate_sha256": "bf12b8065a206a4df16121620c6c1adbb347126317e2fea5e4e7cd81ce61550e",
+    "baseline_sha256": "bf12b8065a206a4df16121620c6c1adbb347126317e2fea5e4e7cd81ce61550e",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case1-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case1-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case1-preceding117.pcm",
+    "candidate_sha256": "35ec7033458d5aa4fded6e1c062bedb07a576b2fd95d4d5c2b023dc548cd4a09",
+    "baseline_sha256": "35ec7033458d5aa4fded6e1c062bedb07a576b2fd95d4d5c2b023dc548cd4a09",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case1-pure-prior.pcm",
+    "candidate_sha256": "204043ae963be4c9f7ffa5a4ef76631800622ed57da5deb2f2c229191ab45c0f",
+    "baseline_sha256": "204043ae963be4c9f7ffa5a4ef76631800622ed57da5deb2f2c229191ab45c0f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case2-legacy-prior.pcm",
+    "candidate_sha256": "cb8fca3d8124ad86df173515f59bfd66a010a39add103ef164c90d60fb1f21ed",
+    "baseline_sha256": "cb8fca3d8124ad86df173515f59bfd66a010a39add103ef164c90d60fb1f21ed",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case2-noqueue.pcm",
+    "candidate_sha256": "a485ab1679666b47b02af49e3bbbba3e228bd2f3c4ee0bc127a8d0a1c4c0d8a3",
+    "baseline_sha256": "a485ab1679666b47b02af49e3bbbba3e228bd2f3c4ee0bc127a8d0a1c4c0d8a3",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case2-null.pcm",
+    "candidate_sha256": "a485ab1679666b47b02af49e3bbbba3e228bd2f3c4ee0bc127a8d0a1c4c0d8a3",
+    "baseline_sha256": "a485ab1679666b47b02af49e3bbbba3e228bd2f3c4ee0bc127a8d0a1c4c0d8a3",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case2-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case2-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case2-preceding117.pcm",
+    "candidate_sha256": "9eba151ce154002a61a389b8a17dff1318043fd4894dea959a499b35647a7d72",
+    "baseline_sha256": "9eba151ce154002a61a389b8a17dff1318043fd4894dea959a499b35647a7d72",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case2-pure-prior.pcm",
+    "candidate_sha256": "b44431222792f79bb41d56e538c2b5c37347490bc727e22435913a1139598952",
+    "baseline_sha256": "b44431222792f79bb41d56e538c2b5c37347490bc727e22435913a1139598952",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case3-legacy-prior.pcm",
+    "candidate_sha256": "303de68ff895d62109ad6e39d34aee413ab64442a40189b5a6400057674fe182",
+    "baseline_sha256": "303de68ff895d62109ad6e39d34aee413ab64442a40189b5a6400057674fe182",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case3-noqueue.pcm",
+    "candidate_sha256": "1c3169ad8cf7cde7fa7ab277083ccf057c8efa0f3322e4090374220f2c814634",
+    "baseline_sha256": "1c3169ad8cf7cde7fa7ab277083ccf057c8efa0f3322e4090374220f2c814634",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case3-null.pcm",
+    "candidate_sha256": "1c3169ad8cf7cde7fa7ab277083ccf057c8efa0f3322e4090374220f2c814634",
+    "baseline_sha256": "1c3169ad8cf7cde7fa7ab277083ccf057c8efa0f3322e4090374220f2c814634",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case3-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case3-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case3-preceding117.pcm",
+    "candidate_sha256": "88f28c956dd8dc0bfa06c0720acc7a63269fcd49483c5a87b4443d2ae56bdf59",
+    "baseline_sha256": "88f28c956dd8dc0bfa06c0720acc7a63269fcd49483c5a87b4443d2ae56bdf59",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/drift-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-offline/drift-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-offline/drift-case3-pure-prior.pcm",
+    "candidate_sha256": "204043ae963be4c9f7ffa5a4ef76631800622ed57da5deb2f2c229191ab45c0f",
+    "baseline_sha256": "204043ae963be4c9f7ffa5a4ef76631800622ed57da5deb2f2c229191ab45c0f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case0-legacy-prior.pcm",
+    "candidate_sha256": "cb8fca3d8124ad86df173515f59bfd66a010a39add103ef164c90d60fb1f21ed",
+    "baseline_sha256": "cb8fca3d8124ad86df173515f59bfd66a010a39add103ef164c90d60fb1f21ed",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case0-noqueue.pcm",
+    "candidate_sha256": "83fd32e7cc4eced2a111fbc5fde35b67bf6c323d5c7f5cfc4366710be44346ff",
+    "baseline_sha256": "83fd32e7cc4eced2a111fbc5fde35b67bf6c323d5c7f5cfc4366710be44346ff",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case0-null.pcm",
+    "candidate_sha256": "83fd32e7cc4eced2a111fbc5fde35b67bf6c323d5c7f5cfc4366710be44346ff",
+    "baseline_sha256": "83fd32e7cc4eced2a111fbc5fde35b67bf6c323d5c7f5cfc4366710be44346ff",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case0-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case0-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case0-preceding117.pcm",
+    "candidate_sha256": "e34337ef80b7920b7e96c99efd2000d570a51d68d0296238fd7fc168f8aa8d83",
+    "baseline_sha256": "e34337ef80b7920b7e96c99efd2000d570a51d68d0296238fd7fc168f8aa8d83",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case0-pure-prior.pcm",
+    "candidate_sha256": "3ccb35ed7611873f237ce0c1be4cd44722d2b24dbb6e01c2a4d3f8c4942a7acc",
+    "baseline_sha256": "3ccb35ed7611873f237ce0c1be4cd44722d2b24dbb6e01c2a4d3f8c4942a7acc",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case1-legacy-prior.pcm",
+    "candidate_sha256": "303de68ff895d62109ad6e39d34aee413ab64442a40189b5a6400057674fe182",
+    "baseline_sha256": "303de68ff895d62109ad6e39d34aee413ab64442a40189b5a6400057674fe182",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case1-noqueue.pcm",
+    "candidate_sha256": "312023a94d231d67bbe0bddeca29c6fc7d1fb0f70b27abb23b0f61372ff8f599",
+    "baseline_sha256": "312023a94d231d67bbe0bddeca29c6fc7d1fb0f70b27abb23b0f61372ff8f599",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case1-null.pcm",
+    "candidate_sha256": "312023a94d231d67bbe0bddeca29c6fc7d1fb0f70b27abb23b0f61372ff8f599",
+    "baseline_sha256": "312023a94d231d67bbe0bddeca29c6fc7d1fb0f70b27abb23b0f61372ff8f599",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case1-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case1-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case1-preceding117.pcm",
+    "candidate_sha256": "f50552cb1d66b812caa30e4b6a92edcfb57e44f3891442302d2133e7c1441ed5",
+    "baseline_sha256": "f50552cb1d66b812caa30e4b6a92edcfb57e44f3891442302d2133e7c1441ed5",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case1-pure-prior.pcm",
+    "candidate_sha256": "be8f6a95bb21b05c274d15a4795f8b1565af7da95ba39164730e749c24121a5f",
+    "baseline_sha256": "be8f6a95bb21b05c274d15a4795f8b1565af7da95ba39164730e749c24121a5f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case2-legacy-prior.pcm",
+    "candidate_sha256": "cb8fca3d8124ad86df173515f59bfd66a010a39add103ef164c90d60fb1f21ed",
+    "baseline_sha256": "cb8fca3d8124ad86df173515f59bfd66a010a39add103ef164c90d60fb1f21ed",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case2-noqueue.pcm",
+    "candidate_sha256": "6bb59203adad2f517d885d494f112583c2acd1ae39a37db4bcb1a94673537938",
+    "baseline_sha256": "6bb59203adad2f517d885d494f112583c2acd1ae39a37db4bcb1a94673537938",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case2-null.pcm",
+    "candidate_sha256": "6bb59203adad2f517d885d494f112583c2acd1ae39a37db4bcb1a94673537938",
+    "baseline_sha256": "6bb59203adad2f517d885d494f112583c2acd1ae39a37db4bcb1a94673537938",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case2-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case2-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case2-preceding117.pcm",
+    "candidate_sha256": "e7c6ef80fcb120605e7ba5d0e09957a0ac0512eaaf16a63497d3a62f78d246fb",
+    "baseline_sha256": "e7c6ef80fcb120605e7ba5d0e09957a0ac0512eaaf16a63497d3a62f78d246fb",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case2-pure-prior.pcm",
+    "candidate_sha256": "3ccb35ed7611873f237ce0c1be4cd44722d2b24dbb6e01c2a4d3f8c4942a7acc",
+    "baseline_sha256": "3ccb35ed7611873f237ce0c1be4cd44722d2b24dbb6e01c2a4d3f8c4942a7acc",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case3-legacy-prior.pcm",
+    "candidate_sha256": "303de68ff895d62109ad6e39d34aee413ab64442a40189b5a6400057674fe182",
+    "baseline_sha256": "303de68ff895d62109ad6e39d34aee413ab64442a40189b5a6400057674fe182",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case3-noqueue.pcm",
+    "candidate_sha256": "4a22f545ff1ec643227686476a5937051c88a0affadb98b2518d901e27984ac7",
+    "baseline_sha256": "4a22f545ff1ec643227686476a5937051c88a0affadb98b2518d901e27984ac7",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case3-null.pcm",
+    "candidate_sha256": "4a22f545ff1ec643227686476a5937051c88a0affadb98b2518d901e27984ac7",
+    "baseline_sha256": "4a22f545ff1ec643227686476a5937051c88a0affadb98b2518d901e27984ac7",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case3-preceding117.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case3-preceding117.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case3-preceding117.pcm",
+    "candidate_sha256": "e041774e4e64cea635e7da4e58cb1815c29f52c0c9e390b65f359679488afa8c",
+    "baseline_sha256": "e041774e4e64cea635e7da4e58cb1815c29f52c0c9e390b65f359679488afa8c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/drift-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-native/drift-candidate-96000-realtime/drift-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-drift-automation/build-drift-helpers/drift-baseline-96000-realtime/drift-case3-pure-prior.pcm",
+    "candidate_sha256": "be8f6a95bb21b05c274d15a4795f8b1565af7da95ba39164730e749c24121a5f",
+    "baseline_sha256": "be8f6a95bb21b05c274d15a4795f8b1565af7da95ba39164730e749c24121a5f",
+    "byte_equal": true
+  }
+]
