@@ -1,0 +1,127 @@
+{
+  "stage": "collect",
+  "source_freeze_sha256": "c743cf6842c227199008d94b8db5db83d61e62e39cea992213f0000a448d91cb",
+  "full_cases": 12,
+  "compat_cases": 12,
+  "candidate_renders": 240,
+  "baseline_renders": 60,
+  "actual_pcm_pairs": 60,
+  "captures": 300,
+  "scalar_block_comparisons": 48,
+  "queue_order_comparisons": 24,
+  "overall_witnesses": 12,
+  "combined_per_lane_witnesses": 12,
+  "initial_holds": 12,
+  "recomputed_metrics": [
+    {
+      "config": "run-44100-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.04207883030176163,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.04288043454289436,
+      "per_lane_effects": [
+        0.045133521780371666,
+        0.004142260178923607
+      ]
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.04261752404272556,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.043406715616583824,
+      "per_lane_effects": [
+        0.045707495883107185,
+        0.004124598577618599
+      ]
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.04230308346450329,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.042086102068424225,
+      "per_lane_effects": [
+        0.0432063490152359,
+        0.004122806712985039
+      ]
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.04224718362092972,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.04202416352927685,
+      "per_lane_effects": [
+        0.04315144754946232,
+        0.004106504842638969
+      ]
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.03233593609184027,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.03387037478387356,
+      "per_lane_effects": [
+        0.03610554151237011,
+        0.0031034033745527267
+      ]
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.03292715456336737,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.03377758711576462,
+      "per_lane_effects": [
+        0.03601296991109848,
+        0.0031028445810079575
+      ]
+    }
+  ],
+  "roster": 116,
+  "historical_suites": "not rerun",
+  "forward_guards": "source reviewed only",
+  "state_readbacks": false,
+  "evidence_hashes": {
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-automation/docs/experiments/arp-rate-automation/collect/captures.json": "887af03642d81e7bfd134b27d1923c9e77bb528f2d8662dc9ef468487792f52c",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-automation/docs/experiments/arp-rate-automation/collect/compatibility-pairs.json": "4abb5e2e65f417dac994068bf47a1c11b28d393ba78b15d2154975d33398c623"
+  }
+}

@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen112Roster.h"
+#include "Vst3Frozen115Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -76,7 +77,8 @@ int main(int argc,char**argv) {
     constexpr std::array mixes{int(cs80::P_fx1Mix),int(cs80::P_fx2Mix),int(cs80::P_fx3Mix)};
     for(size_t i=0;i<mixes.size();++i)require(cs80::paramId(mixes[i])=="fx"+std::to_string(i+1)+"_mix","stable FX mix IDs");
     require(limits["key_parameter_count"]==115,"115 lane contract");
-    if(!compat){require(cs80::kSampleAccurateParameters.size()==115,"exact115 capability");
+    if(!compat){require(cs80::kSampleAccurateParameters.size()>=115,"115 capability prefix");
+      require(std::equal(cs80::kFrozen115Roster.begin(),cs80::kFrozen115Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal115 prefix preserved");
       require(std::equal(mixes.begin(),mixes.end(),cs80::kSampleAccurateParameters.begin()+112),"mixes at112..114");}
     std::cout<<"compiled_lanes="<<cs80::kSampleAccurateParameters.size()<<"\n";
     const std::filesystem::path out(argv[2]);require(!std::filesystem::exists(out),"fresh capture directory");std::filesystem::create_directory(out);

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-13",
+  "evidence_kind": "supported_input_qualification",
+  "host_automation_arp_rate": {
+    "key_parameter_count": 116,
+    "minimum_held_effect": 1e-05,
+    "scope": "One appended existing ARP rate lane at index 115; literal 115-entry prefix unchanged. Fixed ascending, one-octave, manual/manual held triad in modern circuit policy, rates 8\u201316 Hz. No DSP, UI or metadata change.",
+    "timing": "32768 frames; notes 48/52/56 on at 17/18/19, off at 28672/28673/28674; 1024-frame initial hold. Rate values 8/12/16/10/14/8 at frames 0 and 1023/4095/8191/16383/24575/32767. Combined existing volume .60/.75/.50/.70/.55/.60 has interior knots shifted 37 frames.",
+    "verification_plan": "Six configurations: 240 candidate + 60 baseline = 300 retained PCM captures; 60 actual frozen115 pairs from five captures per two scenarios per configuration, without submitting the new lane in compatibility cases. 48 scalar comparisons, 24 queue-order comparisons, 12 initial holds, 12 overall and 12 combined individual-lane witnesses. 12 each of Legacy-flat, PURE-inert and ARP-off-inert controls. No state-readback or external-clock claim."
+  }
+}

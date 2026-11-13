@@ -102,7 +102,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing performance macros; preserve the complete 108-lane prefix.
     int(P_macro1), int(P_macro2), int(P_macro3), int(P_macro4),
     // Existing FX wet/dry mixes; retain the complete 112-lane prefix.
-    int(P_fx1Mix), int(P_fx2Mix), int(P_fx3Mix)
+    int(P_fx1Mix), int(P_fx2Mix), int(P_fx3Mix),
+    // Existing live ARP rate; preserve the complete 115-lane prefix.
+    int(P_arpRate)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow
