@@ -1,0 +1,22 @@
+PASS rate=44100 finite gain throughout fixed two-second history
+PASS rate=44100 gate genuinely opened
+PASS rate=44100 gate closed during silence and remained closed at least 250 ms
+PASS rate=44100 nontrivial gain deficit at closure
+PASS rate=44100 held target 2 with analytic 150 ms continuing slew
+PASS rate=44100 measurable gain movement after closure
+METRIC rate=44100 open_samples=25700 closure_frame=39331 closed_samples=48869 gain_before_closure=1.9794544231447635 max_slew_error=6.4392935428259079e-15 movement=0.020529755996661514
+PASS rate=48000 finite gain throughout fixed two-second history
+PASS rate=48000 gate genuinely opened
+PASS rate=48000 gate closed during silence and remained closed at least 250 ms
+PASS rate=48000 nontrivial gain deficit at closure
+PASS rate=48000 held target 2 with analytic 150 ms continuing slew
+PASS rate=48000 measurable gain movement after closure
+METRIC rate=48000 open_samples=27932 closure_frame=42779 closed_samples=53221 gain_before_closure=1.979337698950193 max_slew_error=1.021405182655144e-14 movement=0.020646697676351966
+PASS rate=96000 finite gain throughout fixed two-second history
+PASS rate=96000 gate genuinely opened
+PASS rate=96000 gate closed during silence and remained closed at least 250 ms
+PASS rate=96000 nontrivial gain deficit at closure
+PASS rate=96000 held target 2 with analytic 150 ms continuing slew
+PASS rate=96000 measurable gain movement after closure
+METRIC rate=96000 open_samples=55342 closure_frame=85176 closed_samples=106824 gain_before_closure=1.9785749492214766 max_slew_error=1.2878587085651816e-14 movement=0.021410704766060995
+RESULT checks=18 failures=0
