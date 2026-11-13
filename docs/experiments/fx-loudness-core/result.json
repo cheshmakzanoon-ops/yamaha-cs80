@@ -1,0 +1,30 @@
+{
+  "base": "2305421d50aab146cb348256234eaf71a2d0538e",
+  "source_sha256": {
+    "src/core/FxLoudness.h": "855f157f9c4a59d2c64a04143f21d3585e6fedfef6f8d462d46798e06643e695",
+    "tests/FxLoudnessCoreTests.cpp": "e25bedc957145e3aed7ba1591f341fab71eb920aa1b91b42d2afc23c6c527952",
+    "CMakeLists.txt": "c002d07c75d6f71d0002833d57d31032368f7caa81ac1f65afa211d155d091f2"
+  },
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "compiler_sha256": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+  "source_review": "Independent parent reviewed bounded ordinary signals and final diff before execution",
+  "started_utc": "2026-11-13T00:27:49.584400+00:00",
+  "compile_command": [
+    "/usr/bin/c++",
+    "-std=c++20",
+    "-O2",
+    "-Isrc",
+    "tests/FxLoudnessCoreTests.cpp",
+    "-o",
+    "build-fx-loudness-core/fx-loudness-core"
+  ],
+  "compile_exit": 0,
+  "binary_sha256": "6b0afced16dbf6663973485728d81e089d2ede60e65a9502e74f1d5e049c8efc",
+  "run_exit": 0,
+  "source_unchanged": true,
+  "completed_utc": "2026-11-13T00:27:50.265643+00:00",
+  "log_sha256": {
+    "compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run.log": "0e5f2628dd978e501963438f5088292626903de2562ad4f37e4fe1fef0b6e35c"
+  }
+}

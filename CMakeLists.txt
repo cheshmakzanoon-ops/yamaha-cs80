@@ -401,6 +401,11 @@ if (CS80_BUILD_TESTS)
     set_tests_properties(cs80_tolerance_drift_tests PROPERTIES TIMEOUT 300)
 
     # [ws2-engine] register this workstream's core tests below this line.
+    # Header-only ordinary-signal regression; no engine or plugin linkage.
+    add_executable(cs80_fx_loudness_core_tests tests/FxLoudnessCoreTests.cpp)
+    target_include_directories(cs80_fx_loudness_core_tests PRIVATE src)
+    add_test(NAME cs80_fx_loudness_core_tests COMMAND cs80_fx_loudness_core_tests)
+    set_tests_properties(cs80_fx_loudness_core_tests PROPERTIES TIMEOUT 60)
     add_executable(cs80_external_interpolator_tests tests/ExternalModulationInterpolatorTests.cpp)
     target_include_directories(cs80_external_interpolator_tests PRIVATE src)
     add_test(NAME cs80_external_interpolator_tests COMMAND cs80_external_interpolator_tests)

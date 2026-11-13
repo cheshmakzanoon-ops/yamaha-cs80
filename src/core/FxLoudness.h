@@ -75,8 +75,9 @@ struct KWeighting
 // the slot output before this gain, and steers the gain toward sqrt(Ein / Eout).
 // Ballistics (engineering choices for a modern control):
 // - 1 s energy averages: slow enough not to follow the music, ~ a short-term meter;
-// - the gain only moves while the input is within 20 dB of its recent peak and above
-//   -70 dBFS, so release tails and silence hold the last gain instead of pumping;
+// - the target only updates while the input is within 20 dB of its recent peak,
+//   above -70 dBFS, and the measured output energy exceeds the numerical floor;
+//   when this gate closes, the target holds while gain continues slewing toward it;
 // - +/-18 dB range and a 150 ms gain slew.
 class LoudnessMatcher
 {

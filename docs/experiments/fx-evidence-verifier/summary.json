@@ -1,0 +1,29 @@
+{
+  "script_sha256": "b56f5f189b643e0e8e87105a615e341b4ac87a424371bc0810c34e9ddb9a728d",
+  "coverage_doc_sha256": "cad5e4e2f5b70646d371523748c7f5298131db9446636e15a52a39d3667c7ba8",
+  "reviewed_local_source_commits": {
+    "classic-mix": "2305421d50aab146cb348256234eaf71a2d0538e",
+    "classic-tail": "5761e8313ce0ba7998bf746a92a3bb597ea047b4",
+    "modern-mix": "5959e7012f632cad853cb2d744d0ef0a73af6c0c",
+    "modern-tail": "c0c5d63a6c509e42c191b16b0000c3caf526bc2b"
+  },
+  "four_suite_total_pcm": 1098,
+  "four_suite_total_scalar_comparisons": 248,
+  "four_suite_total_queue_order_checks": 64,
+  "four_suite_total_initial_holds": 62,
+  "actual_compatibility_pairs": 168,
+  "relocation_check": "96 existing classic-tail PCM copied under a different capture root; source read from reviewed commit through a different worktree; output exactly matched original audit. No new rendering.",
+  "native_code_executed": false,
+  "result_hashes": {
+    "classic-mix.json": "00afd37dbf6dc8333548162945090fd7e76569c412652cd1ce2a7b6d8736c5ea",
+    "classic-mix.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "classic-tail.json": "eb8bcb4c7b4c6faa6b794684b596754a601b4124154c32f28dd9940e375d421a",
+    "classic-tail.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "modern-mix.json": "0cccb9ed9b272bc4a41a68224df4fb696015e9e84c1732d570319fceb08d175a",
+    "modern-mix.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "modern-tail.json": "d8ab56ba10c55eab4fab2f6c6a3117ab0a790efa1117bf5a8e5c03ac0f209534",
+    "modern-tail.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "relocated-classic-tail.json": "eb8bcb4c7b4c6faa6b794684b596754a601b4124154c32f28dd9940e375d421a",
+    "relocated-classic-tail.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,13 +1,46 @@
-# VST3 key automation on current main
+# VST3 sample-accurate automation: source capability and evidence
 
-## Scope
+## Source capability and checkpoint status
+
+This source tree contains **115 sample-accurate VST3 lanes** in
+`src/plugin/HostAutomationBridge.h`. The roster is append-only; lane numbers here
+are zero-based. This is a source capability statement, not a claim that every
+lane combination, host or target platform has been qualified.
+
+The published macro checkpoint `bb658fc7fd79c5d246bd8da846befc8cbf1acd1c`
+contains 112 lanes. The three FX mix lanes are qualified locally in the
+[FX mix evidence](experiments/fx-mix-automation/README.md). Their publication
+must be verified against the repository revision; local qualification alone
+does not establish that an installed build or remote branch contains them.
+No DSP laws, parameter IDs, source authority or AU support are changed by
+these roster extensions.
+
+| Lane range | Existing controls | Scoped evidence |
+| --- | --- | --- |
+| 0–82 | Original key controls and subsequent extensions through MOD WHEEL depths | Historical extension notes below |
+| 83–85 | LFO1/2/3 depths | [Depth](experiments/lfo-depth-automation/README.md) |
+| 86–88 | LFO1/2/3 rates | [Rate](experiments/lfo-rate-automation/README.md) |
+| 89–91 | MSEG1/2/3 rates | [Completed resumed rate gate](experiments/mseg-rate-automation-resume/README.md) |
+| 92–107 | Modulation-matrix slots 1–16 amounts | [Amounts](experiments/matrix-amount-automation/README.md) |
+| 108–111 | Performance macros 1–4 | [Macros](experiments/macro-automation/README.md) |
+| 112–114 | FX slots 1–3 wet/dry mixes | [Fixed-type mixes](experiments/fx-mix-automation/README.md) |
+
+Discrete type/model/waveform selectors and unsupported parameters remain
+block-rate. Individual evidence reports define their tested policies, source
+layouts, histories and limits. Existing combined-history reports supplement
+those individual gates; they are not coverage of arbitrary combinations.
+
+## Historical extension notes through lane 82
+
+The following notes retain each extension's original candidate language and
+scope. They are chronological checkpoints, not the current lane count.
 
 The [portamento extension](VST3_PORTAMENTO_AUTOMATION.md) appends existing
 `P_portamento` at lane35 after the unchanged35-lane prefix. Positive time
 updates affect the existing live glide coefficient when the footswitch gate
 is active; glide-mode selection, gate behavior and DSP laws are unchanged.
 
-This candidate MOD WHEEL depth extension preserves host sample offsets for eighty-three VST3 parameters in
+The historical MOD WHEEL depth checkpoint preserves host sample offsets for eighty-three VST3 parameters in
 modern circuit policy: global volume, mix, brilliance, resonance, master tune
 and detune; each rank's HP cutoff/resonance, LP cutoff/resonance, VCA level and
 pulse width, both rank pan controls, original-panel SUB speed, SUB VCO/VCF/VCA depths and SUB touch speed/VCO/VCF amounts, compatibility-mode SUB speed, ring speed/amount/depth/attack/decay, chorus speed/depth, portamento time, master sustain, initial pitch-bend amount, LOW/HIGH keyboard level, LOW/HIGH keyboard brilliance, and both ranks’ INITIAL/AFTER TOUCH brilliance/level amounts and PWM speed/depth, plus both rank VCF LEVEL and VCA envelope SUSTAIN controls, plus both filter EG IL/AL targets and both ranks’ filter/VCA attack, decay and release times and both rank SINE/NOISE levels, plus global ribbon displacement, key release floor, tuning reference and MOD WHEEL > SUB/VCF depths. The [pan extension](VST3_PAN_AUTOMATION.md)
@@ -196,7 +229,27 @@ block-boundary activation/retirement and the existing VST3-curve path.
 
 ## Verification
 
-Latest bounded Linux depth-extension evidence (not a rerun of all old suites):
+The latest FX mix gate in this source tree covers fixed classic chorus/phaser/drive
+types for slots 1/2/3, respectively, separately and together. At 44.1/48/96 kHz
+in realtime/offline Linux VST3, 522 finite stereo PCM captures were retained:
+354 candidate and 168 frozen112. All 168 actual old/new compatibility pairs were
+byte-identical. Direct PCM recomputation verified 96 scalar/block comparisons
+with maximum error 0, 24 exact reversed-queue checks and 24 exact initial holds.
+Overall and per-lane held-motion witnesses exceeded the fixed 0.00001 threshold.
+The full [FX evidence report](experiments/fx-mix-automation/README.md) records
+source, binary and capture identities and the narrower qualification limits.
+This does not qualify type/model switching, every FX model, full control ranges,
+state readback, a native DAW, AU, cross-platform behavior or CPU targets.
+
+The preceding [macro report](experiments/macro-automation/README.md) has a
+material retention difference: compatibility PCM is retained, but active
+scalar/order/witness PCM was not retained. Those active macro results are
+supported by the reviewed fixture and passing logs, not later PCM recomputation.
+Neither checkpoint reruns all historical suites.
+
+### Historical MOD WHEEL depth checkpoint
+
+Bounded Linux depth-extension evidence (not a rerun of all old suites):
 
 | Gate | Verified scope/result |
 | --- | --- |

@@ -1,0 +1,11 @@
+COMMAND ['/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tail-automation/build-fx-tail/fx-tail', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-mix-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tail-automation/build-fx-tail/realtime', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tail-automation/tests/parity/tolerances-v2/host-automation.json', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tail-automation/tests/parity/tolerances-v2/host-automation-fx-tail-v1.json', '48000', 'realtime']
+compiled_lanes=115
+fx-case0 dry_tail=9.64836e-07 tail=0.00536207 tail_motion=0.00344966
+fx-case0 notes=2 max_error=0 held_effect=0.00324851
+fx-case1 dry_tail=9.64836e-07 tail=0.000615896 tail_motion=0.000420816
+fx-case1 notes=2 max_error=0 held_effect=0.00390854
+fx-case2 dry_tail=9.64836e-07 tail=0.00440873 tail_motion=0.00261807
+combined_slot=0 held_effect=0.00243246
+combined_slot=1 held_effect=0.00297674
+fx-case2 notes=2 max_error=0 held_effect=0.00601482
+scenarios=3 renders=48 captures=48 failures=0 mode=full
