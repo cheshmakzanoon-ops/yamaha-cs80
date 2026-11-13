@@ -1,0 +1,47 @@
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-pedal-lifecycle/build-arp-pedal-lifecycle/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-pedal-lifecycle/build-arp-pedal-lifecycle
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 82
+    Start 82: cs80_arp_pedal_lifecycle_tests
+
+82: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-pedal-lifecycle/build-arp-pedal-lifecycle/cs80_arp_pedal_lifecycle_tests
+82: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-pedal-lifecycle/build-arp-pedal-lifecycle
+82: Test timeout computed to be: 60
+82: PASS case=0 fixed Legacy internal rate
+82: PASS case=0 positive current generated-note witness
+82: PASS case=0 current-source release stops gate; other-source release preserves it
+82: PASS case=0 remaining source continues both octaves without released source
+82: PASS case=0 final source release stops pattern despite pedal down
+82: PASS case=0 pedal-up cannot revive released ARP sources
+82: PASS case=0 generated gates never become pedalHeld tails
+82: PASS case=0 finite audio and single generated held gate
+82: PASS case=1 fixed Legacy internal rate
+82: PASS case=1 positive current generated-note witness
+82: PASS case=1 current-source release stops gate; other-source release preserves it
+82: PASS case=1 remaining source continues both octaves without released source
+82: PASS case=1 final source release stops pattern despite pedal down
+82: PASS case=1 pedal-up cannot revive released ARP sources
+82: PASS case=1 generated gates never become pedalHeld tails
+82: PASS case=1 finite audio and single generated held gate
+82: PASS case=2 fixed Legacy internal rate
+82: PASS case=2 positive current generated-note witness
+82: PASS case=2 current-source release stops gate; other-source release preserves it
+82: PASS case=2 remaining source continues both octaves without released source
+82: PASS case=2 final source release stops pattern despite pedal down
+82: PASS case=2 pedal-up cannot revive released ARP sources
+82: PASS case=2 generated gates never become pedalHeld tails
+82: PASS case=2 finite audio and single generated held gate
+82: RESULT checks=24 failures=0
+1/1 Test #82: cs80_arp_pedal_lifecycle_tests ...   Passed    0.20 sec
+
+The following tests passed:
+	cs80_arp_pedal_lifecycle_tests
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.20 sec

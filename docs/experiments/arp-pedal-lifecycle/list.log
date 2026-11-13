@@ -1,0 +1,53 @@
+{
+  "backtraceGraph" : 
+  {
+    "commands" : 
+    [
+      "add_test"
+    ],
+    "files" : 
+    [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-pedal-lifecycle/CMakeLists.txt"
+    ],
+    "nodes" : 
+    [
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 422,
+        "parent" : 0
+      }
+    ]
+  },
+  "kind" : "ctestInfo",
+  "tests" : 
+  [
+    {
+      "backtrace" : 1,
+      "command" : 
+      [
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-pedal-lifecycle/build-arp-pedal-lifecycle/cs80_arp_pedal_lifecycle_tests"
+      ],
+      "name" : "cs80_arp_pedal_lifecycle_tests",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-pedal-lifecycle/build-arp-pedal-lifecycle"
+        }
+      ]
+    }
+  ],
+  "version" : 
+  {
+    "major" : 1,
+    "minor" : 0
+  }
+}
