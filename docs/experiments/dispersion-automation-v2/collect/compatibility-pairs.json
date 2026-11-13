@@ -1,0 +1,962 @@
+[
+  {
+    "case": "44100-offline/dispersion-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case0-legacy-prior.pcm",
+    "candidate_sha256": "bd965d35090557428e2ddf68a4664853fcc837b08f168c4afd589e4ad5c79ba5",
+    "baseline_sha256": "bd965d35090557428e2ddf68a4664853fcc837b08f168c4afd589e4ad5c79ba5",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case0-noqueue.pcm",
+    "candidate_sha256": "5345f6dfb7caa56969bb90aa08eb3556544ff6e0fb237de1b93a4116edb41c39",
+    "baseline_sha256": "5345f6dfb7caa56969bb90aa08eb3556544ff6e0fb237de1b93a4116edb41c39",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case0-null.pcm",
+    "candidate_sha256": "5345f6dfb7caa56969bb90aa08eb3556544ff6e0fb237de1b93a4116edb41c39",
+    "baseline_sha256": "5345f6dfb7caa56969bb90aa08eb3556544ff6e0fb237de1b93a4116edb41c39",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case0-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case0-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case0-preceding118.pcm",
+    "candidate_sha256": "297b952197f55d5c33dda049087437e2f523534bab6785676e44e7b834d7834c",
+    "baseline_sha256": "297b952197f55d5c33dda049087437e2f523534bab6785676e44e7b834d7834c",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case0-pure-prior.pcm",
+    "candidate_sha256": "046a53ed8e933c163dec9eb4372857e42d7cac86029935897da7f8f2b5141076",
+    "baseline_sha256": "046a53ed8e933c163dec9eb4372857e42d7cac86029935897da7f8f2b5141076",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case1-legacy-prior.pcm",
+    "candidate_sha256": "fef861a00a859b596ed93803df79fe1f131466e4fa518fc8b9797d1d84afde2c",
+    "baseline_sha256": "fef861a00a859b596ed93803df79fe1f131466e4fa518fc8b9797d1d84afde2c",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case1-noqueue.pcm",
+    "candidate_sha256": "3af04068028e41764a2cf2317640b4071b003d136806c0306f2911d77c810588",
+    "baseline_sha256": "3af04068028e41764a2cf2317640b4071b003d136806c0306f2911d77c810588",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case1-null.pcm",
+    "candidate_sha256": "3af04068028e41764a2cf2317640b4071b003d136806c0306f2911d77c810588",
+    "baseline_sha256": "3af04068028e41764a2cf2317640b4071b003d136806c0306f2911d77c810588",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case1-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case1-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case1-preceding118.pcm",
+    "candidate_sha256": "070c5334bdabc09576b9ea048089b0307ac649f54bc83a6b62a30c4114388d39",
+    "baseline_sha256": "070c5334bdabc09576b9ea048089b0307ac649f54bc83a6b62a30c4114388d39",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case1-pure-prior.pcm",
+    "candidate_sha256": "795d607d1f4c318c17d2a9ec5ab8e2b70a42a50e7b73f7a8427c428ca5dee668",
+    "baseline_sha256": "795d607d1f4c318c17d2a9ec5ab8e2b70a42a50e7b73f7a8427c428ca5dee668",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case2-legacy-prior.pcm",
+    "candidate_sha256": "807a162f4dd7bc223fca97ed998f4998733bd61010b9b91becad3c8458766158",
+    "baseline_sha256": "807a162f4dd7bc223fca97ed998f4998733bd61010b9b91becad3c8458766158",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case2-noqueue.pcm",
+    "candidate_sha256": "f1210711798cc8639075799dcaba52d2585253507f2c270a7b4b751a26fdedfe",
+    "baseline_sha256": "f1210711798cc8639075799dcaba52d2585253507f2c270a7b4b751a26fdedfe",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case2-null.pcm",
+    "candidate_sha256": "f1210711798cc8639075799dcaba52d2585253507f2c270a7b4b751a26fdedfe",
+    "baseline_sha256": "f1210711798cc8639075799dcaba52d2585253507f2c270a7b4b751a26fdedfe",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case2-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case2-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case2-preceding118.pcm",
+    "candidate_sha256": "bab822d89bd48281c8b39269ef3f48d6444378c3a59f525a04f51ae205a03827",
+    "baseline_sha256": "bab822d89bd48281c8b39269ef3f48d6444378c3a59f525a04f51ae205a03827",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case2-pure-prior.pcm",
+    "candidate_sha256": "91dd72d29884c8a33657ce800d30bd5dbb868781f68ccf0f5849885805353c64",
+    "baseline_sha256": "91dd72d29884c8a33657ce800d30bd5dbb868781f68ccf0f5849885805353c64",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case3-legacy-prior.pcm",
+    "candidate_sha256": "79fbf93a2570dae96abe2ddbc0ffe4ca18855f2a668248d2f03c0624c2efc7b9",
+    "baseline_sha256": "79fbf93a2570dae96abe2ddbc0ffe4ca18855f2a668248d2f03c0624c2efc7b9",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case3-noqueue.pcm",
+    "candidate_sha256": "cce342858eff946b76bf0b80f474432b68111e5764c06f77ad710744a7aacc07",
+    "baseline_sha256": "cce342858eff946b76bf0b80f474432b68111e5764c06f77ad710744a7aacc07",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case3-null.pcm",
+    "candidate_sha256": "cce342858eff946b76bf0b80f474432b68111e5764c06f77ad710744a7aacc07",
+    "baseline_sha256": "cce342858eff946b76bf0b80f474432b68111e5764c06f77ad710744a7aacc07",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case3-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case3-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case3-preceding118.pcm",
+    "candidate_sha256": "6b7f4a1f124b5fabcbf009d892b78ad84543faf49926f48d774f3dbc1d55de5b",
+    "baseline_sha256": "6b7f4a1f124b5fabcbf009d892b78ad84543faf49926f48d774f3dbc1d55de5b",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-offline/dispersion-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-offline/dispersion-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-offline/dispersion-case3-pure-prior.pcm",
+    "candidate_sha256": "55244eb287090236b52ff00911918633eb0887c2f31bade6eb5741f2569010a3",
+    "baseline_sha256": "55244eb287090236b52ff00911918633eb0887c2f31bade6eb5741f2569010a3",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case0-legacy-prior.pcm",
+    "candidate_sha256": "bd965d35090557428e2ddf68a4664853fcc837b08f168c4afd589e4ad5c79ba5",
+    "baseline_sha256": "bd965d35090557428e2ddf68a4664853fcc837b08f168c4afd589e4ad5c79ba5",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case0-noqueue.pcm",
+    "candidate_sha256": "5d98a54e1ee5c8ce9715c69abfd7e049cf9450a8de6d47054d66c826c6a68238",
+    "baseline_sha256": "5d98a54e1ee5c8ce9715c69abfd7e049cf9450a8de6d47054d66c826c6a68238",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case0-null.pcm",
+    "candidate_sha256": "5d98a54e1ee5c8ce9715c69abfd7e049cf9450a8de6d47054d66c826c6a68238",
+    "baseline_sha256": "5d98a54e1ee5c8ce9715c69abfd7e049cf9450a8de6d47054d66c826c6a68238",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case0-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case0-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case0-preceding118.pcm",
+    "candidate_sha256": "82f22f19acbb1322d6c19ada5bf74037ee795842476acf7a335c7f909911e4e8",
+    "baseline_sha256": "82f22f19acbb1322d6c19ada5bf74037ee795842476acf7a335c7f909911e4e8",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case0-pure-prior.pcm",
+    "candidate_sha256": "1af40c310f66bb637e5c7ae0d84dd967de84f2834d9a52464dcc02fdc94a62d5",
+    "baseline_sha256": "1af40c310f66bb637e5c7ae0d84dd967de84f2834d9a52464dcc02fdc94a62d5",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case1-legacy-prior.pcm",
+    "candidate_sha256": "fef861a00a859b596ed93803df79fe1f131466e4fa518fc8b9797d1d84afde2c",
+    "baseline_sha256": "fef861a00a859b596ed93803df79fe1f131466e4fa518fc8b9797d1d84afde2c",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case1-noqueue.pcm",
+    "candidate_sha256": "6116a8836cec2cc59e0b57fbb63674560b8dd177aead8a6c6a898d4966d81fe4",
+    "baseline_sha256": "6116a8836cec2cc59e0b57fbb63674560b8dd177aead8a6c6a898d4966d81fe4",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case1-null.pcm",
+    "candidate_sha256": "6116a8836cec2cc59e0b57fbb63674560b8dd177aead8a6c6a898d4966d81fe4",
+    "baseline_sha256": "6116a8836cec2cc59e0b57fbb63674560b8dd177aead8a6c6a898d4966d81fe4",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case1-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case1-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case1-preceding118.pcm",
+    "candidate_sha256": "cf90e90180a33363043de15e507039c0be74c30b091b943486d8e67b7d0d8a38",
+    "baseline_sha256": "cf90e90180a33363043de15e507039c0be74c30b091b943486d8e67b7d0d8a38",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case1-pure-prior.pcm",
+    "candidate_sha256": "f563302ff799cdc68457d691f122b299aa97569b89dfc86d1f03ee612c77bd32",
+    "baseline_sha256": "f563302ff799cdc68457d691f122b299aa97569b89dfc86d1f03ee612c77bd32",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case2-legacy-prior.pcm",
+    "candidate_sha256": "807a162f4dd7bc223fca97ed998f4998733bd61010b9b91becad3c8458766158",
+    "baseline_sha256": "807a162f4dd7bc223fca97ed998f4998733bd61010b9b91becad3c8458766158",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case2-noqueue.pcm",
+    "candidate_sha256": "e738681d0cd3f4043c8303809b2dae518679789595c422e5832d47e1e26275aa",
+    "baseline_sha256": "e738681d0cd3f4043c8303809b2dae518679789595c422e5832d47e1e26275aa",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case2-null.pcm",
+    "candidate_sha256": "e738681d0cd3f4043c8303809b2dae518679789595c422e5832d47e1e26275aa",
+    "baseline_sha256": "e738681d0cd3f4043c8303809b2dae518679789595c422e5832d47e1e26275aa",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case2-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case2-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case2-preceding118.pcm",
+    "candidate_sha256": "16c637433ec1034a02ee945328b50e168e9b4b5c5876147b1310e6ec7e8ea800",
+    "baseline_sha256": "16c637433ec1034a02ee945328b50e168e9b4b5c5876147b1310e6ec7e8ea800",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case2-pure-prior.pcm",
+    "candidate_sha256": "dae75a148767eb6875456f7bb2a0410aca6412129b39c94966e260fd1018eeae",
+    "baseline_sha256": "dae75a148767eb6875456f7bb2a0410aca6412129b39c94966e260fd1018eeae",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case3-legacy-prior.pcm",
+    "candidate_sha256": "79fbf93a2570dae96abe2ddbc0ffe4ca18855f2a668248d2f03c0624c2efc7b9",
+    "baseline_sha256": "79fbf93a2570dae96abe2ddbc0ffe4ca18855f2a668248d2f03c0624c2efc7b9",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case3-noqueue.pcm",
+    "candidate_sha256": "39bf4f73f48bc28b98a4b255af4f46f3d3a99c43cb26bb6a05730c907a86ebc1",
+    "baseline_sha256": "39bf4f73f48bc28b98a4b255af4f46f3d3a99c43cb26bb6a05730c907a86ebc1",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case3-null.pcm",
+    "candidate_sha256": "39bf4f73f48bc28b98a4b255af4f46f3d3a99c43cb26bb6a05730c907a86ebc1",
+    "baseline_sha256": "39bf4f73f48bc28b98a4b255af4f46f3d3a99c43cb26bb6a05730c907a86ebc1",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case3-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case3-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case3-preceding118.pcm",
+    "candidate_sha256": "59c1a2ec6d76640d10c19ecb97648bf376f6d0ba741eebd25a382595bb4a2238",
+    "baseline_sha256": "59c1a2ec6d76640d10c19ecb97648bf376f6d0ba741eebd25a382595bb4a2238",
+    "byte_equal": true
+  },
+  {
+    "case": "44100-realtime/dispersion-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-44100-realtime/dispersion-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-44100-realtime/dispersion-case3-pure-prior.pcm",
+    "candidate_sha256": "278a8dca48bb4858dce481f01589867c769b8e4b9927c23704ee488fc3c669f1",
+    "baseline_sha256": "278a8dca48bb4858dce481f01589867c769b8e4b9927c23704ee488fc3c669f1",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case0-legacy-prior.pcm",
+    "candidate_sha256": "4490f7cb0d70cfcaacbd7b74a76df558a480937f7c95b65100155c1db7b6689d",
+    "baseline_sha256": "4490f7cb0d70cfcaacbd7b74a76df558a480937f7c95b65100155c1db7b6689d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case0-noqueue.pcm",
+    "candidate_sha256": "fa25f544a2d48c457db5b94a0aac7c8045a5f46fa1b6c9d695c149378416a042",
+    "baseline_sha256": "fa25f544a2d48c457db5b94a0aac7c8045a5f46fa1b6c9d695c149378416a042",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case0-null.pcm",
+    "candidate_sha256": "fa25f544a2d48c457db5b94a0aac7c8045a5f46fa1b6c9d695c149378416a042",
+    "baseline_sha256": "fa25f544a2d48c457db5b94a0aac7c8045a5f46fa1b6c9d695c149378416a042",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case0-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case0-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case0-preceding118.pcm",
+    "candidate_sha256": "ebe6ef2746ae7d19e7b937846457726de112881eece3ae66b56ccb9cfd11b391",
+    "baseline_sha256": "ebe6ef2746ae7d19e7b937846457726de112881eece3ae66b56ccb9cfd11b391",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case0-pure-prior.pcm",
+    "candidate_sha256": "136de3e96947dfa17ad73c3a3fadc46555889ebcf1d76b0f71cab8e6c4b35578",
+    "baseline_sha256": "136de3e96947dfa17ad73c3a3fadc46555889ebcf1d76b0f71cab8e6c4b35578",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case1-legacy-prior.pcm",
+    "candidate_sha256": "3217e5b1d2c5cd5043a60a3fd7e2c7e9a329265c631708a9d81f7d348c4d7197",
+    "baseline_sha256": "3217e5b1d2c5cd5043a60a3fd7e2c7e9a329265c631708a9d81f7d348c4d7197",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case1-noqueue.pcm",
+    "candidate_sha256": "390be63c103778bcd891f3414c1aab8baa81203aa45c2c60a413ecc464d9b5cf",
+    "baseline_sha256": "390be63c103778bcd891f3414c1aab8baa81203aa45c2c60a413ecc464d9b5cf",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case1-null.pcm",
+    "candidate_sha256": "390be63c103778bcd891f3414c1aab8baa81203aa45c2c60a413ecc464d9b5cf",
+    "baseline_sha256": "390be63c103778bcd891f3414c1aab8baa81203aa45c2c60a413ecc464d9b5cf",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case1-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case1-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case1-preceding118.pcm",
+    "candidate_sha256": "418ae02e3a673c953ef2cd9e8001daa18d383e8bde18b9984816e4937e0358b2",
+    "baseline_sha256": "418ae02e3a673c953ef2cd9e8001daa18d383e8bde18b9984816e4937e0358b2",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case1-pure-prior.pcm",
+    "candidate_sha256": "5d957d58c3464e243715ce014349db6e97068ff56640c80e162f22630f7b535b",
+    "baseline_sha256": "5d957d58c3464e243715ce014349db6e97068ff56640c80e162f22630f7b535b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case2-legacy-prior.pcm",
+    "candidate_sha256": "3c7d0d0e41a30a39f2a9cceef7b1ebf72a3e70a5b5524c414c54661e8341c234",
+    "baseline_sha256": "3c7d0d0e41a30a39f2a9cceef7b1ebf72a3e70a5b5524c414c54661e8341c234",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case2-noqueue.pcm",
+    "candidate_sha256": "b2cbbed0068f3510783d4f74e68345518e1e3c8fb442654decdc2254cc27db99",
+    "baseline_sha256": "b2cbbed0068f3510783d4f74e68345518e1e3c8fb442654decdc2254cc27db99",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case2-null.pcm",
+    "candidate_sha256": "b2cbbed0068f3510783d4f74e68345518e1e3c8fb442654decdc2254cc27db99",
+    "baseline_sha256": "b2cbbed0068f3510783d4f74e68345518e1e3c8fb442654decdc2254cc27db99",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case2-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case2-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case2-preceding118.pcm",
+    "candidate_sha256": "52af4a47989e6d2eac3fe1195b4bdcc02fe4af8175fda9d6b3c6db4b582e22a0",
+    "baseline_sha256": "52af4a47989e6d2eac3fe1195b4bdcc02fe4af8175fda9d6b3c6db4b582e22a0",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case2-pure-prior.pcm",
+    "candidate_sha256": "5db2258edc8fb0a213f4b757d6a2f59d358e6ff93b7b43618e7a64da24a949de",
+    "baseline_sha256": "5db2258edc8fb0a213f4b757d6a2f59d358e6ff93b7b43618e7a64da24a949de",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case3-legacy-prior.pcm",
+    "candidate_sha256": "c919250a463d75e08ee2b770a753d38f5e86edfe2a4f9040b5baa37da410c55d",
+    "baseline_sha256": "c919250a463d75e08ee2b770a753d38f5e86edfe2a4f9040b5baa37da410c55d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case3-noqueue.pcm",
+    "candidate_sha256": "c447a0b2196d74a3139ee62804c387398188b8984814b0f07a89879193056782",
+    "baseline_sha256": "c447a0b2196d74a3139ee62804c387398188b8984814b0f07a89879193056782",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case3-null.pcm",
+    "candidate_sha256": "c447a0b2196d74a3139ee62804c387398188b8984814b0f07a89879193056782",
+    "baseline_sha256": "c447a0b2196d74a3139ee62804c387398188b8984814b0f07a89879193056782",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case3-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case3-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case3-preceding118.pcm",
+    "candidate_sha256": "38814024e43199a33d161ffd4632067878ef11af612c93298b0ef98b27ef1249",
+    "baseline_sha256": "38814024e43199a33d161ffd4632067878ef11af612c93298b0ef98b27ef1249",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-offline/dispersion-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-offline/dispersion-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-offline/dispersion-case3-pure-prior.pcm",
+    "candidate_sha256": "7471db0784bc9c16d95ff87fe4e95e9412ff9ed98ec151792098651e3b536b9e",
+    "baseline_sha256": "7471db0784bc9c16d95ff87fe4e95e9412ff9ed98ec151792098651e3b536b9e",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case0-legacy-prior.pcm",
+    "candidate_sha256": "4490f7cb0d70cfcaacbd7b74a76df558a480937f7c95b65100155c1db7b6689d",
+    "baseline_sha256": "4490f7cb0d70cfcaacbd7b74a76df558a480937f7c95b65100155c1db7b6689d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case0-noqueue.pcm",
+    "candidate_sha256": "78e4fe7929826ded6d2a7385ca4db6974f1cc4e169d64b5c72a6841d1bdcdd3e",
+    "baseline_sha256": "78e4fe7929826ded6d2a7385ca4db6974f1cc4e169d64b5c72a6841d1bdcdd3e",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case0-null.pcm",
+    "candidate_sha256": "78e4fe7929826ded6d2a7385ca4db6974f1cc4e169d64b5c72a6841d1bdcdd3e",
+    "baseline_sha256": "78e4fe7929826ded6d2a7385ca4db6974f1cc4e169d64b5c72a6841d1bdcdd3e",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case0-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case0-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case0-preceding118.pcm",
+    "candidate_sha256": "8d155b4118cf5b115e12ea69bfe145f63c8195888c9de802faff285010689d0f",
+    "baseline_sha256": "8d155b4118cf5b115e12ea69bfe145f63c8195888c9de802faff285010689d0f",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case0-pure-prior.pcm",
+    "candidate_sha256": "abd22de9536be7d2a3ad66f4036d39392fdae68501d629152a4269d3d2babc97",
+    "baseline_sha256": "abd22de9536be7d2a3ad66f4036d39392fdae68501d629152a4269d3d2babc97",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case1-legacy-prior.pcm",
+    "candidate_sha256": "3217e5b1d2c5cd5043a60a3fd7e2c7e9a329265c631708a9d81f7d348c4d7197",
+    "baseline_sha256": "3217e5b1d2c5cd5043a60a3fd7e2c7e9a329265c631708a9d81f7d348c4d7197",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case1-noqueue.pcm",
+    "candidate_sha256": "3c537183e88031c8ef4b39c24cc0014ac5343ec9e288decc216bcd8fb556aafb",
+    "baseline_sha256": "3c537183e88031c8ef4b39c24cc0014ac5343ec9e288decc216bcd8fb556aafb",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case1-null.pcm",
+    "candidate_sha256": "3c537183e88031c8ef4b39c24cc0014ac5343ec9e288decc216bcd8fb556aafb",
+    "baseline_sha256": "3c537183e88031c8ef4b39c24cc0014ac5343ec9e288decc216bcd8fb556aafb",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case1-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case1-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case1-preceding118.pcm",
+    "candidate_sha256": "6a572bd7bf09f68779c750bcf5d6c71ee15e61f7a6b0cbb25947ac0941b5f333",
+    "baseline_sha256": "6a572bd7bf09f68779c750bcf5d6c71ee15e61f7a6b0cbb25947ac0941b5f333",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case1-pure-prior.pcm",
+    "candidate_sha256": "8a4b62882f5326943449a5f970ede6421efa880a549a57cb992ebfbe4715f17b",
+    "baseline_sha256": "8a4b62882f5326943449a5f970ede6421efa880a549a57cb992ebfbe4715f17b",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case2-legacy-prior.pcm",
+    "candidate_sha256": "3c7d0d0e41a30a39f2a9cceef7b1ebf72a3e70a5b5524c414c54661e8341c234",
+    "baseline_sha256": "3c7d0d0e41a30a39f2a9cceef7b1ebf72a3e70a5b5524c414c54661e8341c234",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case2-noqueue.pcm",
+    "candidate_sha256": "5bd5de3e0f7b4835e6fba24d5be20232d823b6d561660ea06032c330e73c34cc",
+    "baseline_sha256": "5bd5de3e0f7b4835e6fba24d5be20232d823b6d561660ea06032c330e73c34cc",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case2-null.pcm",
+    "candidate_sha256": "5bd5de3e0f7b4835e6fba24d5be20232d823b6d561660ea06032c330e73c34cc",
+    "baseline_sha256": "5bd5de3e0f7b4835e6fba24d5be20232d823b6d561660ea06032c330e73c34cc",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case2-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case2-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case2-preceding118.pcm",
+    "candidate_sha256": "367e2d84b55fce1df234626f853d6435094fd82aeab141cd8f391ef88955cf28",
+    "baseline_sha256": "367e2d84b55fce1df234626f853d6435094fd82aeab141cd8f391ef88955cf28",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case2-pure-prior.pcm",
+    "candidate_sha256": "98fb60d0ad3b0cb21eae774ab7f82de91c1f09f75b0119df409c65b57697c7f2",
+    "baseline_sha256": "98fb60d0ad3b0cb21eae774ab7f82de91c1f09f75b0119df409c65b57697c7f2",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case3-legacy-prior.pcm",
+    "candidate_sha256": "c919250a463d75e08ee2b770a753d38f5e86edfe2a4f9040b5baa37da410c55d",
+    "baseline_sha256": "c919250a463d75e08ee2b770a753d38f5e86edfe2a4f9040b5baa37da410c55d",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case3-noqueue.pcm",
+    "candidate_sha256": "1d08939dbe1dd3d732b1213d84c8a3ce52904626741d012a061882aed606c370",
+    "baseline_sha256": "1d08939dbe1dd3d732b1213d84c8a3ce52904626741d012a061882aed606c370",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case3-null.pcm",
+    "candidate_sha256": "1d08939dbe1dd3d732b1213d84c8a3ce52904626741d012a061882aed606c370",
+    "baseline_sha256": "1d08939dbe1dd3d732b1213d84c8a3ce52904626741d012a061882aed606c370",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case3-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case3-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case3-preceding118.pcm",
+    "candidate_sha256": "038a7aed61aea3977af34d11ea842eb212576c333857ddc793e284b9ddbfe67a",
+    "baseline_sha256": "038a7aed61aea3977af34d11ea842eb212576c333857ddc793e284b9ddbfe67a",
+    "byte_equal": true
+  },
+  {
+    "case": "48000-realtime/dispersion-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-48000-realtime/dispersion-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-48000-realtime/dispersion-case3-pure-prior.pcm",
+    "candidate_sha256": "ca2a30b787ca45831175897936c8920cf3540d540b1427f0cc0d4e9af3307519",
+    "baseline_sha256": "ca2a30b787ca45831175897936c8920cf3540d540b1427f0cc0d4e9af3307519",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case0-legacy-prior.pcm",
+    "candidate_sha256": "a7de4a6898080d637f499827f08b41d6186ec75b24bef1c5ccb06ddc86c98312",
+    "baseline_sha256": "a7de4a6898080d637f499827f08b41d6186ec75b24bef1c5ccb06ddc86c98312",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case0-noqueue.pcm",
+    "candidate_sha256": "cc66a9aa502649dca4adf33b351ff3e42c45ea4a78aaba4212c67a39ccba321e",
+    "baseline_sha256": "cc66a9aa502649dca4adf33b351ff3e42c45ea4a78aaba4212c67a39ccba321e",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case0-null.pcm",
+    "candidate_sha256": "cc66a9aa502649dca4adf33b351ff3e42c45ea4a78aaba4212c67a39ccba321e",
+    "baseline_sha256": "cc66a9aa502649dca4adf33b351ff3e42c45ea4a78aaba4212c67a39ccba321e",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case0-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case0-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case0-preceding118.pcm",
+    "candidate_sha256": "e70143aec0cbbf1c566dd8fd1409db98261b2a3c9eecd977b16f53b22486eaa8",
+    "baseline_sha256": "e70143aec0cbbf1c566dd8fd1409db98261b2a3c9eecd977b16f53b22486eaa8",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case0-pure-prior.pcm",
+    "candidate_sha256": "b44431222792f79bb41d56e538c2b5c37347490bc727e22435913a1139598952",
+    "baseline_sha256": "b44431222792f79bb41d56e538c2b5c37347490bc727e22435913a1139598952",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case1-legacy-prior.pcm",
+    "candidate_sha256": "bd38894b645a2d0e497438115ea374247da21699fd91e876688f82d3b3f2ef9f",
+    "baseline_sha256": "bd38894b645a2d0e497438115ea374247da21699fd91e876688f82d3b3f2ef9f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case1-noqueue.pcm",
+    "candidate_sha256": "885b7e86b516a0e6fd703b8fbdc72d0ca9f7c20a3506f5f42b5838d1a6498781",
+    "baseline_sha256": "885b7e86b516a0e6fd703b8fbdc72d0ca9f7c20a3506f5f42b5838d1a6498781",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case1-null.pcm",
+    "candidate_sha256": "885b7e86b516a0e6fd703b8fbdc72d0ca9f7c20a3506f5f42b5838d1a6498781",
+    "baseline_sha256": "885b7e86b516a0e6fd703b8fbdc72d0ca9f7c20a3506f5f42b5838d1a6498781",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case1-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case1-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case1-preceding118.pcm",
+    "candidate_sha256": "8dbb6b24d29cb500b3481a26d364ce2f3d7a3e19f3beb22465e02f67059b8f5d",
+    "baseline_sha256": "8dbb6b24d29cb500b3481a26d364ce2f3d7a3e19f3beb22465e02f67059b8f5d",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case1-pure-prior.pcm",
+    "candidate_sha256": "204043ae963be4c9f7ffa5a4ef76631800622ed57da5deb2f2c229191ab45c0f",
+    "baseline_sha256": "204043ae963be4c9f7ffa5a4ef76631800622ed57da5deb2f2c229191ab45c0f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case2-legacy-prior.pcm",
+    "candidate_sha256": "398c731b455b107306e5b9455ac1f97f0eb2450567e0be600195f201bbe37ced",
+    "baseline_sha256": "398c731b455b107306e5b9455ac1f97f0eb2450567e0be600195f201bbe37ced",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case2-noqueue.pcm",
+    "candidate_sha256": "4c0e6d627ca32ecd670e66dd5385344923527f0391c619edb2608cd13632be6d",
+    "baseline_sha256": "4c0e6d627ca32ecd670e66dd5385344923527f0391c619edb2608cd13632be6d",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case2-null.pcm",
+    "candidate_sha256": "4c0e6d627ca32ecd670e66dd5385344923527f0391c619edb2608cd13632be6d",
+    "baseline_sha256": "4c0e6d627ca32ecd670e66dd5385344923527f0391c619edb2608cd13632be6d",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case2-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case2-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case2-preceding118.pcm",
+    "candidate_sha256": "f262dbb0aa33f21b0be380b53ccc73debda0b133d85a4e85cab34a69c52128ee",
+    "baseline_sha256": "f262dbb0aa33f21b0be380b53ccc73debda0b133d85a4e85cab34a69c52128ee",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case2-pure-prior.pcm",
+    "candidate_sha256": "c53412cef2c89f4b39feabb9dadd6f17622a28e67d03dc105217e8f411ec0e2c",
+    "baseline_sha256": "c53412cef2c89f4b39feabb9dadd6f17622a28e67d03dc105217e8f411ec0e2c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case3-legacy-prior.pcm",
+    "candidate_sha256": "6784a4ae63efd49266948ce10f1a8d388df1660f00494f092300d954b9a8d4e6",
+    "baseline_sha256": "6784a4ae63efd49266948ce10f1a8d388df1660f00494f092300d954b9a8d4e6",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case3-noqueue.pcm",
+    "candidate_sha256": "8bbac54d632388b35a634feddc75361881e4a00217f68837b0dd533de0f2c780",
+    "baseline_sha256": "8bbac54d632388b35a634feddc75361881e4a00217f68837b0dd533de0f2c780",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case3-null.pcm",
+    "candidate_sha256": "8bbac54d632388b35a634feddc75361881e4a00217f68837b0dd533de0f2c780",
+    "baseline_sha256": "8bbac54d632388b35a634feddc75361881e4a00217f68837b0dd533de0f2c780",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case3-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case3-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case3-preceding118.pcm",
+    "candidate_sha256": "e899e88986a09a98d4247116ae292ccbe6b1df24341f6bd2e1cd42cb1995fb18",
+    "baseline_sha256": "e899e88986a09a98d4247116ae292ccbe6b1df24341f6bd2e1cd42cb1995fb18",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-offline/dispersion-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-offline/dispersion-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-offline/dispersion-case3-pure-prior.pcm",
+    "candidate_sha256": "d28ae52f56f22bd0957c56bb9ecbfe4413c3bba76359bf89e96a173c630ca7ce",
+    "baseline_sha256": "d28ae52f56f22bd0957c56bb9ecbfe4413c3bba76359bf89e96a173c630ca7ce",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case0-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case0-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case0-legacy-prior.pcm",
+    "candidate_sha256": "a7de4a6898080d637f499827f08b41d6186ec75b24bef1c5ccb06ddc86c98312",
+    "baseline_sha256": "a7de4a6898080d637f499827f08b41d6186ec75b24bef1c5ccb06ddc86c98312",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case0-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case0-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case0-noqueue.pcm",
+    "candidate_sha256": "7e481964c1bb67fc2536c96d32ac7d0b00024fad10677489d28748e9081a7487",
+    "baseline_sha256": "7e481964c1bb67fc2536c96d32ac7d0b00024fad10677489d28748e9081a7487",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case0-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case0-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case0-null.pcm",
+    "candidate_sha256": "7e481964c1bb67fc2536c96d32ac7d0b00024fad10677489d28748e9081a7487",
+    "baseline_sha256": "7e481964c1bb67fc2536c96d32ac7d0b00024fad10677489d28748e9081a7487",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case0-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case0-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case0-preceding118.pcm",
+    "candidate_sha256": "c66e1fafc5145ea1fbc2b82f40e1d0df1b648356fe7d37b45954b353a069a5cd",
+    "baseline_sha256": "c66e1fafc5145ea1fbc2b82f40e1d0df1b648356fe7d37b45954b353a069a5cd",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case0-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case0-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case0-pure-prior.pcm",
+    "candidate_sha256": "3ccb35ed7611873f237ce0c1be4cd44722d2b24dbb6e01c2a4d3f8c4942a7acc",
+    "baseline_sha256": "3ccb35ed7611873f237ce0c1be4cd44722d2b24dbb6e01c2a4d3f8c4942a7acc",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case1-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case1-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case1-legacy-prior.pcm",
+    "candidate_sha256": "bd38894b645a2d0e497438115ea374247da21699fd91e876688f82d3b3f2ef9f",
+    "baseline_sha256": "bd38894b645a2d0e497438115ea374247da21699fd91e876688f82d3b3f2ef9f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case1-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case1-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case1-noqueue.pcm",
+    "candidate_sha256": "aace22202dea85ea8f0e594d941d62f577df2eff6e31f6b29ec988dee7cd90a0",
+    "baseline_sha256": "aace22202dea85ea8f0e594d941d62f577df2eff6e31f6b29ec988dee7cd90a0",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case1-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case1-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case1-null.pcm",
+    "candidate_sha256": "aace22202dea85ea8f0e594d941d62f577df2eff6e31f6b29ec988dee7cd90a0",
+    "baseline_sha256": "aace22202dea85ea8f0e594d941d62f577df2eff6e31f6b29ec988dee7cd90a0",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case1-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case1-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case1-preceding118.pcm",
+    "candidate_sha256": "6f72128ee69ba72bbdcbec448137599e2ce4d822372e2b53aa2cd4956107695c",
+    "baseline_sha256": "6f72128ee69ba72bbdcbec448137599e2ce4d822372e2b53aa2cd4956107695c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case1-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case1-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case1-pure-prior.pcm",
+    "candidate_sha256": "be8f6a95bb21b05c274d15a4795f8b1565af7da95ba39164730e749c24121a5f",
+    "baseline_sha256": "be8f6a95bb21b05c274d15a4795f8b1565af7da95ba39164730e749c24121a5f",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case2-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case2-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case2-legacy-prior.pcm",
+    "candidate_sha256": "398c731b455b107306e5b9455ac1f97f0eb2450567e0be600195f201bbe37ced",
+    "baseline_sha256": "398c731b455b107306e5b9455ac1f97f0eb2450567e0be600195f201bbe37ced",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case2-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case2-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case2-noqueue.pcm",
+    "candidate_sha256": "5920fe8b3d97b93fd9c4b020bbeaf76c8631c897c53305122e06a20821965c5c",
+    "baseline_sha256": "5920fe8b3d97b93fd9c4b020bbeaf76c8631c897c53305122e06a20821965c5c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case2-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case2-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case2-null.pcm",
+    "candidate_sha256": "5920fe8b3d97b93fd9c4b020bbeaf76c8631c897c53305122e06a20821965c5c",
+    "baseline_sha256": "5920fe8b3d97b93fd9c4b020bbeaf76c8631c897c53305122e06a20821965c5c",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case2-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case2-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case2-preceding118.pcm",
+    "candidate_sha256": "47e852cc6fc83b319a4d3fdd7a1bcf79c7535c9491582f97e27c6c6d902f9046",
+    "baseline_sha256": "47e852cc6fc83b319a4d3fdd7a1bcf79c7535c9491582f97e27c6c6d902f9046",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case2-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case2-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case2-pure-prior.pcm",
+    "candidate_sha256": "ea62038577a4fa7f44985f23da5e08993be2c0ea5e4b71d19ea83731844c92f0",
+    "baseline_sha256": "ea62038577a4fa7f44985f23da5e08993be2c0ea5e4b71d19ea83731844c92f0",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case3-legacy-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case3-legacy-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case3-legacy-prior.pcm",
+    "candidate_sha256": "6784a4ae63efd49266948ce10f1a8d388df1660f00494f092300d954b9a8d4e6",
+    "baseline_sha256": "6784a4ae63efd49266948ce10f1a8d388df1660f00494f092300d954b9a8d4e6",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case3-noqueue.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case3-noqueue.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case3-noqueue.pcm",
+    "candidate_sha256": "6f01e35c611403133284b0c0d730e99e07bb3ae87f050f09320c2ca2cc211596",
+    "baseline_sha256": "6f01e35c611403133284b0c0d730e99e07bb3ae87f050f09320c2ca2cc211596",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case3-null.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case3-null.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case3-null.pcm",
+    "candidate_sha256": "6f01e35c611403133284b0c0d730e99e07bb3ae87f050f09320c2ca2cc211596",
+    "baseline_sha256": "6f01e35c611403133284b0c0d730e99e07bb3ae87f050f09320c2ca2cc211596",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case3-preceding118.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case3-preceding118.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case3-preceding118.pcm",
+    "candidate_sha256": "470bd7994aa797f856cf8700711fe83e6b57f29f7dc382e06cd6abd729c86270",
+    "baseline_sha256": "470bd7994aa797f856cf8700711fe83e6b57f29f7dc382e06cd6abd729c86270",
+    "byte_equal": true
+  },
+  {
+    "case": "96000-realtime/dispersion-case3-pure-prior.pcm",
+    "candidate": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/dispersion-candidate-96000-realtime/dispersion-case3-pure-prior.pcm",
+    "baseline": "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers-v2/dispersion-baseline-96000-realtime/dispersion-case3-pure-prior.pcm",
+    "candidate_sha256": "b36d3fdb8f1e4d4f14c32a00a0b033ad088e0b67cf16e682726b2a0a89a99cdb",
+    "baseline_sha256": "b36d3fdb8f1e4d4f14c32a00a0b033ad088e0b67cf16e682726b2a0a89a99cdb",
+    "byte_equal": true
+  }
+]

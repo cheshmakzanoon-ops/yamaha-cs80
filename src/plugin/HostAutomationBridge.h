@@ -108,7 +108,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing live mix-bus hiss amount; preserve the complete 116-lane prefix.
     int(P_analogNoise),
     // Existing live analog-drift amount; preserve the complete 117-lane prefix.
-    int(P_drift)
+    int(P_drift),
+    // Existing live per-card dispersion; preserve the complete 118-lane prefix.
+    int(P_voiceDispersion)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

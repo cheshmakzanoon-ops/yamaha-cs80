@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen117Roster.h"
+#include "Vst3Frozen118Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -75,7 +76,8 @@ int main(int argc,char**argv) {
     require(std::equal(cs80::kFrozen117Roster.begin(),cs80::kFrozen117Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal117 prefix preserved");
     require(cs80::paramId(cs80::P_drift)=="drift","stable existing analog-drift amount ID");
     require(limits["key_parameter_count"]==118,"118 lane contract");
-    if(!compat){require(cs80::kSampleAccurateParameters.size()==118,"exact118 capability");
+    if(!compat){require(cs80::kSampleAccurateParameters.size()>=118,"118 prefix available");
+      require(std::equal(cs80::kFrozen118Roster.begin(),cs80::kFrozen118Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal118 prefix preserved");
       require(cs80::kSampleAccurateParameters[117]==cs80::P_drift,"analog drift at117");}
     std::cout<<"compiled_lanes="<<cs80::kSampleAccurateParameters.size()<<"\n";
     const std::filesystem::path out(argv[2]);require(!std::filesystem::exists(out),"fresh capture directory");std::filesystem::create_directory(out);

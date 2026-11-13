@@ -1,0 +1,22 @@
+COMMAND ['/usr/bin/c++', '-std=c++20', '-O3', '-DNDEBUG', '-I/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/src', '-I/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK', '/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/coreiids.cpp', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/funknown.cpp', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/public.sdk/source/vst/vstinitiids.cpp', '-ldl', '-o', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-dispersion-helpers/compat118']
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp: In function ‘int main(int, char**)’:
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp:235:3: error: expected primary-expression before ‘catch’
+  235 |  }catch(const std::exception&e){std::cerr<<e.what()<<"\n";return 2;}
+      |   ^~~~~
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp:236:2: error: expected ‘catch’ at end of input
+  236 | }
+      |  ^
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp:236:2: error: expected ‘(’ at end of input
+  236 | }
+      |  ^
+      |  (
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp:236:2: error: expected type-specifier at end of input
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp:236:2: error: expected ‘)’ at end of input
+  236 | }
+      |  ^
+      |  )
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp:236:2: error: expected ‘{’ at end of input
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp:236:2: error: expected ‘}’ at end of input
+/workspace/scratch/ee447c520988/cs80-recovery/dispersion-frozen118/tests/Vst3DispersionAutomationTests.cpp:66:31: note: to match this ‘{’
+   66 | int main(int argc,char**argv) {
+      |                               ^

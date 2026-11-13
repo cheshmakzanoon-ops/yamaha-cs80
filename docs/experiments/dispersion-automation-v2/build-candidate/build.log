@@ -1,0 +1,10 @@
+COMMAND ['/workspace/scratch/ee447c520988/cs80-build-tools/bin/cmake', '--build', '/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native', '--target', 'cs80_vst3_dispersion_automation_tests', '-j2']
+[0/2] Re-checking globbed directories...
+[1/7] Linking CXX shared module "CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so"
+removing moduleinfo.json
+creating /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-dispersion-automation/build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3
+[2/7] Building CXX object CMakeFiles/cs80_vst3_dispersion_automation_tests.dir/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/coreiids.cpp.o
+[3/7] Building CXX object CMakeFiles/cs80_vst3_dispersion_automation_tests.dir/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/funknown.cpp.o
+[4/7] Building CXX object CMakeFiles/cs80_vst3_dispersion_automation_tests.dir/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80/build/_deps/juce-src/modules/juce_audio_processors_headless/format_types/VST3_SDK/public.sdk/source/vst/vstinitiids.cpp.o
+[5/7] Building CXX object CMakeFiles/cs80_vst3_dispersion_automation_tests.dir/tests/Vst3DispersionAutomationTests.cpp.o
+[6/7] Linking CXX executable cs80_vst3_dispersion_automation_tests
