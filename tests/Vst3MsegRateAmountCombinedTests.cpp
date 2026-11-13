@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen108Roster.h"
+#include "Vst3Frozen112Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -99,7 +100,8 @@ int main(int argc,char**argv)
     require(mode=="realtime" || mode=="offline","supported mode");
     testSampleRate=std::stod(rate);testProcessMode=mode=="offline"?kOffline:kRealtime;
     const ws1::Tolerances host(argv[4],"host_automation"),limits(argv[5],"mseg_rate_amount_combined");
-    require(cs80::kSampleAccurateParameters.size()==112,"exact112 roster");
+    require(cs80::kSampleAccurateParameters.size()>=112,"112 prefix available");
+    require(std::equal(cs80::kFrozen112Roster.begin(),cs80::kFrozen112Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal112 prefix preserved");
     require(std::equal(cs80::kFrozen108Roster.begin(),cs80::kFrozen108Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal108 prefix unchanged");
     constexpr std::array macros{int(cs80::P_macro1),int(cs80::P_macro2),int(cs80::P_macro3),int(cs80::P_macro4)};
     require(std::equal(macros.begin(),macros.end(),cs80::kSampleAccurateParameters.begin()+108),"literal macro suffix unchanged");

@@ -1,0 +1,217 @@
+{
+  "stage": "collect",
+  "source_freeze_sha256": "3e7f392201e7ad6556634bb263385b0ab15c5dca3d1072d9274f4d0e70148f20",
+  "full_cases": 24,
+  "compat_cases": 24,
+  "candidate_renders": 354,
+  "baseline_renders": 168,
+  "actual_pcm_pairs": 168,
+  "captures": 522,
+  "scalar_block_comparisons": 96,
+  "queue_order_comparisons": 24,
+  "overall_witnesses": 24,
+  "combined_per_lane_witnesses": 18,
+  "initial_holds": 24,
+  "recomputed_metrics": [
+    {
+      "config": "run-44100-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.002635013312101364,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.005459369160234928,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.007048731669783592,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.0079248808324337,
+      "per_lane_effects": [
+        0.0033511966466903687,
+        0.007926783058792353,
+        0.006272450089454651
+      ]
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0026327408850193024,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.005454321391880512,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.007042793557047844,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.007901928387582302,
+      "per_lane_effects": [
+        0.0033371560275554657,
+        0.007776088081300259,
+        0.006266489624977112
+      ]
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0023106690496206284,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.005540602840483189,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.006870776414871216,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.009355849586427212,
+      "per_lane_effects": [
+        0.0029126768931746483,
+        0.007353823632001877,
+        0.005940958857536316
+      ]
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.002300083637237549,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.005542696453630924,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.006876599043607712,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.009363215416669846,
+      "per_lane_effects": [
+        0.002903197892010212,
+        0.007351445034146309,
+        0.005936259403824806
+      ]
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0020856261253356934,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.008952058851718903,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.012495826929807663,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.009926782920956612,
+      "per_lane_effects": [
+        0.001938559114933014,
+        0.013317074626684189,
+        0.007991015911102295
+      ]
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.002080952748656273,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.0089467354118824,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.012494880706071854,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.009918497875332832,
+      "per_lane_effects": [
+        0.001923542469739914,
+        0.013312727212905884,
+        0.007997827604413033
+      ]
+    }
+  ],
+  "roster": 115,
+  "historical_suites": "not rerun",
+  "forward_guards": "source reviewed only",
+  "state_readbacks": false,
+  "evidence_hashes": {
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-mix-automation/docs/experiments/fx-mix-automation/collect/captures.json": "6e725e8dc9d6935ec23136da415db73b3e11ecea72e13b3595726f3458d668df",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-mix-automation/docs/experiments/fx-mix-automation/collect/compatibility-pairs.json": "1405fe44cc85b0c97efc22375bdbdb946ca1b8e34a63ad3d998908d1092883ce"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "registered": "2026-11-12",
+  "evidence_kind": "supported_input_qualification",
+  "host_automation_fx_mix": {
+    "key_parameter_count": 115,
+    "minimum_held_effect": 1e-05,
+    "scope": "Three existing FX wet/dry mix lanes112-114; fixed classic slot types1chorus/2phaser/5drive. No type/model/metadata/DSP change.",
+    "timing": "16384frames, two notes48/49; initial mix.10 through1023, then.35/.15/.45/.20 at2047/4095/8191/12287 plus37i in combined scenario; return.10 at16383.",
+    "verification_plan": "Six configurations;354candidate and168baseline renders, all522PCM retained,168actual compatibility pairs;96scalar/block comparisons,24reverse comparisons,24overall and18combined per-lane witnesses,24initial holds; no native state readback claim."
+  }
+}

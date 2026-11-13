@@ -1491,6 +1491,13 @@ if (CS80_BUILD_PLUGIN)
         target_include_directories(cs80_vst3_macro_automation_tests PRIVATE src "${CS80_VST3_SDK}")
         target_link_libraries(cs80_vst3_macro_automation_tests PRIVATE ${CMAKE_DL_LIBS})
         add_dependencies(cs80_vst3_macro_automation_tests CS80Reference_VST3)
+        add_executable(cs80_vst3_fx_mix_automation_tests tests/Vst3FxMixAutomationTests.cpp
+            "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
+            "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
+            "${CS80_VST3_SDK}/public.sdk/source/vst/vstinitiids.cpp")
+        target_include_directories(cs80_vst3_fx_mix_automation_tests PRIVATE src "${CS80_VST3_SDK}")
+        target_link_libraries(cs80_vst3_fx_mix_automation_tests PRIVATE ${CMAKE_DL_LIBS})
+        add_dependencies(cs80_vst3_fx_mix_automation_tests CS80Reference_VST3)
         add_executable(cs80_vst3_matrix_amount_automation_tests tests/Vst3MatrixAmountAutomationTests.cpp
             "${CS80_VST3_SDK}/pluginterfaces/base/coreiids.cpp"
             "${CS80_VST3_SDK}/pluginterfaces/base/funknown.cpp"
