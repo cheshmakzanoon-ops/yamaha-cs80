@@ -1,0 +1,53 @@
+{
+  "backtraceGraph" : 
+  {
+    "commands" : 
+    [
+      "add_test"
+    ],
+    "files" : 
+    [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-lifecycle/CMakeLists.txt"
+    ],
+    "nodes" : 
+    [
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 417,
+        "parent" : 0
+      }
+    ]
+  },
+  "kind" : "ctestInfo",
+  "tests" : 
+  [
+    {
+      "backtrace" : 1,
+      "command" : 
+      [
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-lifecycle/build-arp-rate-lifecycle/cs80_arp_rate_lifecycle_tests"
+      ],
+      "name" : "cs80_arp_rate_lifecycle_tests",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-lifecycle/build-arp-rate-lifecycle"
+        }
+      ]
+    }
+  ],
+  "version" : 
+  {
+    "major" : 1,
+    "minor" : 0
+  }
+}

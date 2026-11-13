@@ -1,0 +1,90 @@
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-lifecycle/build-arp-rate-lifecycle/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-lifecycle/build-arp-rate-lifecycle
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 81
+    Start 81: cs80_arp_rate_lifecycle_tests
+
+81: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-lifecycle/build-arp-rate-lifecycle/cs80_arp_rate_lifecycle_tests
+81: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-arp-rate-lifecycle/build-arp-rate-lifecycle
+81: Test timeout computed to be: 60
+81: PASS decrease: fixed Legacy 2x internal clock
+81: PASS decrease: finite audio and at most one held generated note
+81: PASS decrease: complete held-note transition sequence and clock within two host frames
+81: PASS decrease: only overdue edit schedules the next note immediately
+81: PASS decrease: initial chord begins immediately at its lowest note
+81: EVENT decrease frame=0 note=60
+81: EVENT decrease frame=1740 note=-1
+81: EVENT decrease frame=6000 note=64
+81: EVENT decrease frame=9480 note=-1
+81: EVENT decrease frame=12000 note=67
+81: EVENT decrease frame=15481 note=-1
+81: EVENT decrease frame=18001 note=60
+81: EVENT decrease frame=21481 note=-1
+81: EVENT decrease frame=24001 note=64
+81: EVENT decrease frame=27481 note=-1
+81: METRIC decrease actual_events=10 expected_events=10 max_frame_error=0
+81: PASS early-increase: fixed Legacy 2x internal clock
+81: PASS early-increase: finite audio and at most one held generated note
+81: PASS early-increase: complete held-note transition sequence and clock within two host frames
+81: PASS early-increase: only overdue edit schedules the next note immediately
+81: PASS early-increase: initial chord begins immediately at its lowest note
+81: EVENT early-increase frame=0 note=60
+81: EVENT early-increase frame=3000 note=64
+81: EVENT early-increase frame=4740 note=-1
+81: EVENT early-increase frame=6000 note=67
+81: EVENT early-increase frame=7740 note=-1
+81: EVENT early-increase frame=9000 note=60
+81: EVENT early-increase frame=10740 note=-1
+81: EVENT early-increase frame=12000 note=64
+81: EVENT early-increase frame=13741 note=-1
+81: EVENT early-increase frame=15000 note=67
+81: EVENT early-increase frame=16741 note=-1
+81: EVENT early-increase frame=18000 note=60
+81: EVENT early-increase frame=19741 note=-1
+81: EVENT early-increase frame=21001 note=64
+81: EVENT early-increase frame=22741 note=-1
+81: EVENT early-increase frame=24001 note=67
+81: EVENT early-increase frame=25741 note=-1
+81: EVENT early-increase frame=27001 note=60
+81: EVENT early-increase frame=28741 note=-1
+81: METRIC early-increase actual_events=19 expected_events=19 max_frame_error=0
+81: PASS overdue-increase: fixed Legacy 2x internal clock
+81: PASS overdue-increase: finite audio and at most one held generated note
+81: PASS overdue-increase: complete held-note transition sequence and clock within two host frames
+81: PASS overdue-increase: only overdue edit schedules the next note immediately
+81: PASS overdue-increase: initial chord begins immediately at its lowest note
+81: EVENT overdue-increase frame=0 note=60
+81: EVENT overdue-increase frame=3480 note=-1
+81: EVENT overdue-increase frame=4000 note=64
+81: EVENT overdue-increase frame=5740 note=-1
+81: EVENT overdue-increase frame=6000 note=67
+81: EVENT overdue-increase frame=7740 note=-1
+81: EVENT overdue-increase frame=9000 note=60
+81: EVENT overdue-increase frame=10741 note=-1
+81: EVENT overdue-increase frame=12000 note=64
+81: EVENT overdue-increase frame=13741 note=-1
+81: EVENT overdue-increase frame=15000 note=67
+81: EVENT overdue-increase frame=16741 note=-1
+81: EVENT overdue-increase frame=18000 note=60
+81: EVENT overdue-increase frame=19741 note=-1
+81: EVENT overdue-increase frame=21001 note=64
+81: EVENT overdue-increase frame=22741 note=-1
+81: EVENT overdue-increase frame=24001 note=67
+81: EVENT overdue-increase frame=25741 note=-1
+81: EVENT overdue-increase frame=27001 note=60
+81: EVENT overdue-increase frame=28741 note=-1
+81: METRIC overdue-increase actual_events=20 expected_events=20 max_frame_error=0
+81: RESULT checks=15 failures=0
+1/1 Test #81: cs80_arp_rate_lifecycle_tests ....   Passed    0.24 sec
+
+The following tests passed:
+	cs80_arp_rate_lifecycle_tests
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.24 sec

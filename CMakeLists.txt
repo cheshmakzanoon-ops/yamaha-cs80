@@ -411,6 +411,11 @@ if (CS80_BUILD_TESTS)
     target_include_directories(cs80_fx_loudness_gate_tests PRIVATE src)
     add_test(NAME cs80_fx_loudness_gate_tests COMMAND cs80_fx_loudness_gate_tests)
     set_tests_properties(cs80_fx_loudness_gate_tests PROPERTIES TIMEOUT 60)
+    # Bounded ordinary held-chord ARP rate edits; no host/parser suite.
+    add_executable(cs80_arp_rate_lifecycle_tests tests/ArpRateLifecycleTests.cpp)
+    target_link_libraries(cs80_arp_rate_lifecycle_tests PRIVATE cs80_core)
+    add_test(NAME cs80_arp_rate_lifecycle_tests COMMAND cs80_arp_rate_lifecycle_tests)
+    set_tests_properties(cs80_arp_rate_lifecycle_tests PROPERTIES TIMEOUT 60)
     # Direct tape-slot lifecycle, no Engine/plugin linkage.
     add_executable(cs80_fx_tape_lifecycle_tests tests/FxTapeLifecycleTests.cpp)
     target_include_directories(cs80_fx_tape_lifecycle_tests PRIVATE src)
