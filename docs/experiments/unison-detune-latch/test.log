@@ -1,0 +1,69 @@
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-unison-latch/build-unison-latch-v2/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-unison-latch/build-unison-latch-v2
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 47
+    Start 47: cs80_unison_detune_latch_tests
+
+47: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-unison-latch/build-unison-latch-v2/cs80_unison_detune_latch_tests
+47: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-unison-latch/build-unison-latch-v2
+47: Test timeout computed to be: 60
+47: PASS initial group has analytic ten-cent spread
+47: PASS changing amount does not retune held circuits
+47: PASS later accepted onset uses new forty-cent spread
+47: PASS old group retains ten-cent spread beside new group
+47: PASS zero amount does not collapse already latched spread
+47: PASS next accepted onset uses zero spread after prior release
+47: PASS audio remains finite
+47: CASE policy=legacy mode=2 circuits=2
+47: PASS initial group has analytic ten-cent spread
+47: PASS changing amount does not retune held circuits
+47: PASS later accepted onset uses new forty-cent spread
+47: PASS old group retains ten-cent spread beside new group
+47: PASS zero amount does not collapse already latched spread
+47: PASS next accepted onset uses zero spread after prior release
+47: PASS audio remains finite
+47: CASE policy=legacy mode=3 circuits=4
+47: PASS initial group has analytic ten-cent spread
+47: PASS changing amount does not retune held circuits
+47: PASS later accepted onset uses new forty-cent spread
+47: PASS zero amount does not collapse already latched spread
+47: PASS next accepted onset uses zero spread after prior release
+47: PASS audio remains finite
+47: CASE policy=legacy mode=4 circuits=8
+47: PASS initial group has analytic ten-cent spread
+47: PASS changing amount does not retune held circuits
+47: PASS later accepted onset uses new forty-cent spread
+47: PASS old group retains ten-cent spread beside new group
+47: PASS zero amount does not collapse already latched spread
+47: PASS next accepted onset uses zero spread after prior release
+47: PASS audio remains finite
+47: CASE policy=source mode=2 circuits=2
+47: PASS initial group has analytic ten-cent spread
+47: PASS changing amount does not retune held circuits
+47: PASS later accepted onset uses new forty-cent spread
+47: PASS old group retains ten-cent spread beside new group
+47: PASS zero amount does not collapse already latched spread
+47: PASS next accepted onset uses zero spread after prior release
+47: PASS audio remains finite
+47: CASE policy=source mode=3 circuits=4
+47: PASS initial group has analytic ten-cent spread
+47: PASS changing amount does not retune held circuits
+47: PASS later accepted onset uses new forty-cent spread
+47: PASS zero amount does not collapse already latched spread
+47: PASS next accepted onset uses zero spread after prior release
+47: PASS audio remains finite
+47: CASE policy=source mode=4 circuits=8
+47: RESULT checks=40 failures=0
+1/1 Test #47: cs80_unison_detune_latch_tests ...   Passed    0.18 sec
+
+The following tests passed:
+	cs80_unison_detune_latch_tests
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.18 sec

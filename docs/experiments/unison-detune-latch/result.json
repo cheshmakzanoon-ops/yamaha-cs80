@@ -1,0 +1,70 @@
+{
+  "base": "0b4e39474e3923c18c9370eaa1147d1ffea01440",
+  "started_utc": "2026-11-13T02:32:04.248692+00:00",
+  "source_freeze_sha256": "8a4e40f15bb73552193bef7e077dde9adee7406e70e94b10c05f2270167b93d5",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-build-tools/bin/cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-unison-latch-v2",
+        "-G",
+        "Ninja",
+        "-DCS80_BUILD_PLUGIN=OFF",
+        "-DCS80_BUILD_TESTS=ON",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "exit": 0,
+      "log_sha256": "d67e638d3b5234968777ea07d1d4e75e94af7a69e5a9f369cb0dd6603f0075de"
+    },
+    {
+      "name": "build",
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-build-tools/bin/cmake",
+        "--build",
+        "build-unison-latch-v2",
+        "--target",
+        "cs80_unison_detune_latch_tests",
+        "--parallel",
+        "2"
+      ],
+      "exit": 0,
+      "log_sha256": "8fde876b79d72d87b39c280a6cec5e6c4c3b58b1899273b95862db1e00030247"
+    },
+    {
+      "name": "list",
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-build-tools/bin/ctest",
+        "--test-dir",
+        "build-unison-latch-v2",
+        "--show-only=json-v1",
+        "-R",
+        "^cs80_unison_detune_latch_tests$"
+      ],
+      "exit": 0,
+      "log_sha256": "02c83836b94246b48543255c9ebb62d67381a01ce2c8cdd01b8d78b127bdd62e"
+    },
+    {
+      "name": "test",
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-build-tools/bin/ctest",
+        "--test-dir",
+        "build-unison-latch-v2",
+        "--verbose",
+        "-j1",
+        "-R",
+        "^cs80_unison_detune_latch_tests$"
+      ],
+      "exit": 0,
+      "log_sha256": "2fc15efbc43df10f20c1f7372d350083f4f5f6a0908168c6fa0cf5e3c4e366c4"
+    }
+  ],
+  "source_unchanged": true,
+  "binary_sha256": {
+    "cs80_unison_detune_latch_tests": "b310c9969d6ec4b874ff7056eb4eae043082d94a6a8288c24335690a96f52ecc"
+  },
+  "completed_utc": "2026-11-13T02:32:14.954348+00:00"
+}

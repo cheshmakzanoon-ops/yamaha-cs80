@@ -1,0 +1,24 @@
+{
+  "base": "0b4e39474e3923c18c9370eaa1147d1ffea01440",
+  "started_utc": "2026-11-13T02:31:43.911676+00:00",
+  "source_freeze_sha256": "8a4e40f15bb73552193bef7e077dde9adee7406e70e94b10c05f2270167b93d5",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-build-tools/bin/cmake",
+        "-S",
+        ".",
+        "-B",
+        "build-unison-latch",
+        "-G",
+        "Ninja",
+        "-DCS80_BUILD_PLUGIN=OFF",
+        "-DCS80_BUILD_TESTS=ON",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "exit": 1,
+      "log_sha256": "d01d27fad9752dffd273cceaf9372ec6e17dc002e23f5d42e52474649de43f05"
+    }
+  ]
+}
