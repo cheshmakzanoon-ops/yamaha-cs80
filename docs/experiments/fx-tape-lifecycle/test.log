@@ -1,0 +1,53 @@
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tape-lifecycle/build-fx-tape-lifecycle/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tape-lifecycle/build-fx-tape-lifecycle
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 81
+    Start 81: cs80_fx_tape_lifecycle_tests
+
+81: Test command: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tape-lifecycle/build-fx-tape-lifecycle/cs80_fx_tape_lifecycle_tests
+81: Working Directory: /workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tape-lifecycle/build-fx-tape-lifecycle
+81: Test timeout computed to be: 60
+81: PASS model=0 path=-1 uninterrupted old-history tail witness
+81: PASS model=0 path=0 transition output finite
+81: PASS model=0 path=0 bypass exactly dry
+81: PASS model=0 path=0 reactivation exactly matches fresh silence and new probe
+81: PASS model=0 path=0 fresh new-probe delayed tail witness
+81: METRIC model=0 path=0 old_tail_peak=0.043371982872486115 new_tail_peak=0.043371986597776413
+81: PASS model=0 path=1 transition output finite
+81: PASS model=0 path=1 bypass exactly dry
+81: PASS model=0 path=1 reactivation exactly matches fresh silence and new probe
+81: PASS model=0 path=1 fresh new-probe delayed tail witness
+81: METRIC model=0 path=1 old_tail_peak=0.043371982872486115 new_tail_peak=0.043371986597776413
+81: PASS model=0 path=2 transition output finite
+81: PASS model=0 path=2 reactivation exactly matches fresh silence and new probe
+81: PASS model=0 path=2 fresh new-probe delayed tail witness
+81: METRIC model=0 path=2 old_tail_peak=0.043371982872486115 new_tail_peak=0.043371986597776413
+81: PASS model=4 path=-1 uninterrupted old-history tail witness
+81: PASS model=4 path=0 transition output finite
+81: PASS model=4 path=0 bypass exactly dry
+81: PASS model=4 path=0 reactivation exactly matches fresh silence and new probe
+81: PASS model=4 path=0 fresh new-probe delayed tail witness
+81: METRIC model=4 path=0 old_tail_peak=0.13475716114044189 new_tail_peak=0.13237370550632477
+81: PASS model=4 path=1 transition output finite
+81: PASS model=4 path=1 bypass exactly dry
+81: PASS model=4 path=1 reactivation exactly matches fresh silence and new probe
+81: PASS model=4 path=1 fresh new-probe delayed tail witness
+81: METRIC model=4 path=1 old_tail_peak=0.13475716114044189 new_tail_peak=0.13237370550632477
+81: PASS model=4 path=2 transition output finite
+81: PASS model=4 path=2 reactivation exactly matches fresh silence and new probe
+81: PASS model=4 path=2 fresh new-probe delayed tail witness
+81: METRIC model=4 path=2 old_tail_peak=0.13475716114044189 new_tail_peak=0.13237370550632477
+81: RESULT checks=24 failures=0
+1/1 Test #81: cs80_fx_tape_lifecycle_tests .....   Passed    0.08 sec
+
+The following tests passed:
+	cs80_fx_tape_lifecycle_tests
+
+100% tests passed out of 1
+
+Total Test time (real) =   0.08 sec

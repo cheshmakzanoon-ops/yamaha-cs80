@@ -1,0 +1,53 @@
+{
+  "backtraceGraph" : 
+  {
+    "commands" : 
+    [
+      "add_test"
+    ],
+    "files" : 
+    [
+      "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tape-lifecycle/CMakeLists.txt"
+    ],
+    "nodes" : 
+    [
+      {
+        "file" : 0
+      },
+      {
+        "command" : 0,
+        "file" : 0,
+        "line" : 417,
+        "parent" : 0
+      }
+    ]
+  },
+  "kind" : "ctestInfo",
+  "tests" : 
+  [
+    {
+      "backtrace" : 1,
+      "command" : 
+      [
+        "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tape-lifecycle/build-fx-tape-lifecycle/cs80_fx_tape_lifecycle_tests"
+      ],
+      "name" : "cs80_fx_tape_lifecycle_tests",
+      "properties" : 
+      [
+        {
+          "name" : "TIMEOUT",
+          "value" : 60.0
+        },
+        {
+          "name" : "WORKING_DIRECTORY",
+          "value" : "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-fx-tape-lifecycle/build-fx-tape-lifecycle"
+        }
+      ]
+    }
+  ],
+  "version" : 
+  {
+    "major" : 1,
+    "minor" : 0
+  }
+}
