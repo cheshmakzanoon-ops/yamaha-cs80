@@ -8,11 +8,10 @@ Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN
 lands. Record exact commits; do not restate test counts without one.
 
 Last updated: 2026-11-13. Publisher-confirmed main
-`932bccfc93735e06b1ae21a4f7921f8647892d43` contains **117 lanes**, adding
-ANALOG NOISE after ARP RATE116. The qualified local source identities remain
-`84ac43a0452734dd1d71a872119fe959964980f1` and
-`b0ecf0dd70ad72f0ed7bb5bc9a9c44c623f3e7b5`; publication is not a new
-whole-tree build, test run or release qualification.
+`de4138b3abae4e0f166eaca57e01b50e3e38bf59` contains **118 lanes**, adding
+ANALOG DRIFT after the published ARP116/NOISE117 checkpoints below. The qualified
+local source remains `803caea8157925da35d492681de30a568e741f2f`; publication
+is not a new whole-tree build, test run or release qualification.
 
 The latest local core integration checkpoint on this page still tests published
 `863e6c5b` (retained MPE manager/note pressure and CC74), with exact scope and
@@ -48,6 +47,27 @@ Focused instrumentation on `ccb812e0` separately passed four core suites under
 ASan+UBSan with leak detection excluded (119.03 s). The leak-enabled attempt
 failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 [configuration, distinct outcomes and limits](CORE_SANITIZER_CHECKPOINT_CCB812E.md).
+
+## Published ANALOG DRIFT118 checkpoint
+
+Publisher-confirmed main `de4138b3abae4e0f166eaca57e01b50e3e38bf59` includes
+qualified local candidate `803caea8157925da35d492681de30a568e741f2f`, which appends existing
+`P_drift` at index 117, preserving the literal 117-lane prefix. Both named
+builds, six native Linux VST3 configurations (44.1/48/96kHz, realtime/offline)
+and collection passed once. Four scenarios cover fixed thermal and worn-sine
+models, each alone and with volume. Independent audit verified 552 finite
+captures, 120 actual frozen117 byte-identical pairs, 96 scalar/block comparisons
+with maximum error 0 under the fixed 1e-8 limit, 48 exact queue-order comparisons,
+24 initial holds and 72 exact controls. All 24 overall, 24 individual-lane and
+12 fixed-model difference witnesses exceed the fixed 1e-6 floor.
+
+The copied baseline module is the exact qualified NOISE117 artifact. Fresh
+instances align histories; no sine reset/reprepare equivalence is claimed.
+The amount range is .10–.70, not full-range or model-switch coverage. DSP, UI,
+MEMORY and parameter IDs are unchanged. The noise fixture forward guard is
+source-reviewed only, not rerun. See [frozen sources, metrics and limits](experiments/drift-automation/README.md).
+No thermal statistics, long-term stability, spectral/hardware, DAW/AU,
+cross-platform, state-readback, CPU or release qualification follows.
 
 ## Published ANALOG NOISE117 checkpoint
 
@@ -151,7 +171,7 @@ registration was source-reviewed only. No fresh plugin build is claimed.
 ## November 12 scoped native VST3 automation
 
 Historical checkpoints follow. References below to a “current roster” describe
-that dated checkpoint; the present source roster is 117 lanes as stated above.
+that dated checkpoint; the present source roster is 118 lanes as stated above.
 
 Published `bb658fc7fd79c5d246bd8da846befc8cbf1acd1c` appends the four existing
 performance macros at lanes 108–111, bringing the current roster to **112 lanes**
@@ -1232,7 +1252,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.3-5.4 Toolbar, Studio view, interaction | done; modern and tuning pages mounted | ws8 merge `5af3b77`, `230f367` |
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
-| 6 Sample-accurate automation | partial: 117 key VST3 parameter lanes in modern circuit policy; AU and other parameters remain block-rate | published `932bccfc`; scoped native evidence above; [scope](HOST_AUTOMATION.md) |
+| 6 Sample-accurate automation | partial: 118 key VST3 parameter lanes in modern circuit policy; AU and other parameters remain block-rate | published `de4138b3`; scoped native evidence above; [scope](HOST_AUTOMATION.md) |
 | 7 Release qualification | packaging safeguards and scoped Linux ABI evidence merged; complete licence/native installation/host/signing qualification and Linux validation failures remain open | `b363b325`, `fa7e988`, `58ed29e`; exact scope and failures above |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -1405,7 +1425,7 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   edit gestures and rejects unsafe replay during an active edit
   ([contract and local tests](UNDO_REPLAY_GESTURES.md)). VST3/AU-wrapper and
   real-DAW automation-recording qualification remain open.
-- Sample-offset automation is limited to 117 key VST3 parameter lanes in modern
+- Sample-offset automation is limited to 118 key VST3 parameter lanes in modern
   circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
   qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).
 - CC121 now resets supported controller targets through existing routes, sustain,

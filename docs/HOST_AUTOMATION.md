@@ -2,7 +2,7 @@
 
 ## Source capability and checkpoint status
 
-This source tree contains **117 sample-accurate VST3 lanes** in
+This source tree contains **118 sample-accurate VST3 lanes** in
 `src/plugin/HostAutomationBridge.h`. The roster is append-only; lane numbers here
 are zero-based. This is a source capability statement, not a claim that every
 lane combination, host or target platform has been qualified.
@@ -20,6 +20,11 @@ Publisher-confirmed ANALOG NOISE117 checkpoint
 The ARP fixture forward guard is source-reviewed only. Published source does
 not establish that an installed build contains these changes and is not a new
 whole-tree test or release qualification.
+Publisher-confirmed drift checkpoint `de4138b3abae4e0f166eaca57e01b50e3e38bf59`
+includes qualified local candidate `803caea8157925da35d492681de30a568e741f2f`, which
+adds ANALOG DRIFT at index 117; see [fixed thermal/worn evidence](experiments/drift-automation/README.md).
+Publication is not a new test run or installed-binary guarantee. The prior noise fixture forward guard
+is source-reviewed only; no model-switch or thermal calibration claim follows.
 No DSP laws, parameter IDs, source authority or AU support are changed by
 these roster extensions.
 
@@ -34,6 +39,7 @@ these roster extensions.
 | 112–114 | FX slots 1–3 wet/dry mixes | [Fixed-type mixes](experiments/fx-mix-automation/README.md) |
 | 115 | ARP RATE | [Ascending ARP, alone and with volume](experiments/arp-rate-automation/README.md) |
 | 116 | ANALOG NOISE | [Mix-bus hiss, alone and with volume](experiments/noise-automation/README.md) |
+| 117 | ANALOG DRIFT | [Fixed thermal/worn models, alone and with volume](experiments/drift-automation/README.md) |
 
 Discrete type/model/waveform selectors and unsupported parameters remain
 block-rate. Individual evidence reports define their tested policies, source
