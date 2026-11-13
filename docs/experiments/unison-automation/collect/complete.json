@@ -1,0 +1,353 @@
+{
+  "stage": "collect",
+  "source_freeze_sha256": "5f348415c4c945cc17f4c5c9cc038139abff9fd84babba59cd3ba4172338777c",
+  "full_cases": 24,
+  "compat_cases": 24,
+  "candidate_renders": 432,
+  "baseline_renders": 120,
+  "actual_pcm_pairs": 120,
+  "captures": 552,
+  "scalar_block_comparisons": 96,
+  "queue_order_comparisons": 48,
+  "overall_witnesses": 24,
+  "combined_per_lane_witnesses": 24,
+  "initial_holds": 24,
+  "pre_next_onset_holds": 24,
+  "future_onset_witnesses": 24,
+  "onset_metrics": [
+    {
+      "config": "run-44100-offline",
+      "scenario": 0,
+      "future_onset_effect": 0.05649014189839363
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 1,
+      "future_onset_effect": 0.058710768818855286
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 2,
+      "future_onset_effect": 0.06480472162365913
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 3,
+      "future_onset_effect": 0.06600096635520458
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 0,
+      "future_onset_effect": 0.0565748680382967
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 1,
+      "future_onset_effect": 0.0587903056293726
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 2,
+      "future_onset_effect": 0.06426267325878143
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 3,
+      "future_onset_effect": 0.06555068120360374
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 0,
+      "future_onset_effect": 0.05143230967223644
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 1,
+      "future_onset_effect": 0.052438732236623764
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 2,
+      "future_onset_effect": 0.059917498379945755
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 3,
+      "future_onset_effect": 0.06167704239487648
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 0,
+      "future_onset_effect": 0.051086168736219406
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 1,
+      "future_onset_effect": 0.05243331752717495
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 2,
+      "future_onset_effect": 0.05982481129467487
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 3,
+      "future_onset_effect": 0.06137817166745663
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 0,
+      "future_onset_effect": 0.043046899139881134
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 1,
+      "future_onset_effect": 0.044249795377254486
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 2,
+      "future_onset_effect": 0.037886292207986116
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 3,
+      "future_onset_effect": 0.04200148908421397
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 0,
+      "future_onset_effect": 0.04305125214159489
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 1,
+      "future_onset_effect": 0.04425141587853432
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 2,
+      "future_onset_effect": 0.03780531231313944
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 3,
+      "future_onset_effect": 0.041915060486644506
+    }
+  ],
+  "recomputed_metrics": [
+    {
+      "config": "run-44100-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.05649014189839363,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.056707002222537994,
+      "per_lane_effects": [
+        0.058710768818855286,
+        0.003129146993160248
+      ]
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.0652467031031847,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-offline",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.065072325989604,
+      "per_lane_effects": [
+        0.06634511053562164,
+        0.004574764519929886
+      ]
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0565748680382967,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.0568122249096632,
+      "per_lane_effects": [
+        0.0587903056293726,
+        0.0031421110033988953
+      ]
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.0652158334851265,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-44100-realtime",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.06504649668931961,
+      "per_lane_effects": [
+        0.06630721874535084,
+        0.004502180963754654
+      ]
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0527005922049284,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.05237616412341595,
+      "per_lane_effects": [
+        0.05363531783223152,
+        0.004952631890773773
+      ]
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.059917498379945755,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-offline",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.0598814282566309,
+      "per_lane_effects": [
+        0.06167704239487648,
+        0.004585271701216698
+      ]
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.05219962261617184,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.05181686393916607,
+      "per_lane_effects": [
+        0.05312025547027588,
+        0.004905864596366882
+      ]
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.05982481129467487,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-48000-realtime",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.05969047360122204,
+      "per_lane_effects": [
+        0.06137817166745663,
+        0.004591519013047218
+      ]
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.04361058212816715,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.04393478203564882,
+      "per_lane_effects": [
+        0.04467352665960789,
+        0.0022720862179994583
+      ]
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.039200267754495144,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-offline",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.042210983112454414,
+      "per_lane_effects": [
+        0.04200148908421397,
+        0.004802275449037552
+      ]
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 0,
+      "max_error": 0.0,
+      "held_effect": 0.0436180355027318,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 1,
+      "max_error": 0.0,
+      "held_effect": 0.04394185729324818,
+      "per_lane_effects": [
+        0.04467826150357723,
+        0.0022727781906723976
+      ]
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 2,
+      "max_error": 0.0,
+      "held_effect": 0.03924341732636094,
+      "per_lane_effects": []
+    },
+    {
+      "config": "run-96000-realtime",
+      "scenario": 3,
+      "max_error": 0.0,
+      "held_effect": 0.04225842235609889,
+      "per_lane_effects": [
+        0.041915060486644506,
+        0.004792254418134689
+      ]
+    }
+  ],
+  "roster": 120,
+  "historical_suites": "not rerun",
+  "forward_guards": "source reviewed only",
+  "state_readbacks": false,
+  "evidence_hashes": {
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-unison-automation/docs/experiments/unison-automation/collect/captures.json": "46b3719449cb3514b9b4d2d29d4985e065706fd02c00e369867e3e7ccfcd0812",
+    "/workspace/scratch/ee447c520988/cs80-recovery/yamaha-cs80-unison-automation/docs/experiments/unison-automation/collect/compatibility-pairs.json": "fe2296277d4a9f5f18100f6ad2bb7e560f57abc696e971fae9057cf74af3e8b4"
+  }
+}

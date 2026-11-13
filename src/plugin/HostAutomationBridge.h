@@ -110,7 +110,9 @@ inline constexpr std::array kSampleAccurateParameters {
     // Existing live analog-drift amount; preserve the complete 117-lane prefix.
     int(P_drift),
     // Existing live per-card dispersion; preserve the complete 118-lane prefix.
-    int(P_voiceDispersion)
+    int(P_voiceDispersion),
+    // Existing note-on-latched unison amount; retain the complete119 prefix.
+    int(P_unisonDetune)
 };
 
 // The wrapper owns the queue for the entire synchronous process call. Borrow

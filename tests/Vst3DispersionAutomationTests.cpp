@@ -2,6 +2,7 @@
 #define CS80_SUPPORTED_SUB_AUTOMATION_ONLY 1
 #include "Vst3AutomationTests.cpp"
 #include "Vst3Frozen118Roster.h"
+#include "Vst3Frozen119Roster.h"
 #include <fstream>
 namespace {
 using NamedCurves = std::vector<std::pair<int, Curve>>;
@@ -76,7 +77,8 @@ int main(int argc,char**argv) {
     require(std::equal(cs80::kFrozen118Roster.begin(),cs80::kFrozen118Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal118 prefix preserved");
     require(cs80::paramId(cs80::P_voiceDispersion)=="voice_dispersion","stable existing voice-dispersion amount ID");
     require(limits["key_parameter_count"]==119,"119 lane contract");
-    if(!compat){require(cs80::kSampleAccurateParameters.size()==119,"exact119 capability");
+    if(!compat){require(cs80::kSampleAccurateParameters.size()>=119,"119 prefix available");
+      require(std::equal(cs80::kFrozen119Roster.begin(),cs80::kFrozen119Roster.end(),cs80::kSampleAccurateParameters.begin()),"literal119 prefix preserved");
       require(cs80::kSampleAccurateParameters[118]==cs80::P_voiceDispersion,"voice dispersion at118");}
     std::cout<<"compiled_lanes="<<cs80::kSampleAccurateParameters.size()<<"\n";
     const std::filesystem::path out(argv[2]);require(!std::filesystem::exists(out),"fresh capture directory");std::filesystem::create_directory(out);
