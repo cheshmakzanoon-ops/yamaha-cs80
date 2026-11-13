@@ -7,9 +7,15 @@ about the current state, this page wins and the other document is stale.
 Update this page whenever a phase step in [IMPROVEMENT_PLAN.md](IMPROVEMENT_PLAN.md)
 lands. Record exact commits; do not restate test counts without one.
 
-Last updated: 2026-11-12. The latest local core integration checkpoint on this
-page tests published `863e6c5b` (retained MPE manager/note pressure and CC74),
-with exact scope and results below.
+Last updated: 2026-11-13. Publisher-confirmed main
+`35ddac37969cdff18d8bdee785641b25f9889670` contains the **115-lane** FX mix
+automation checkpoint described below. Its qualification used local source
+`2305421d50aab146cb348256234eaf71a2d0538e`; the published main identity is
+not a claim of a new build or a whole-tree test run.
+
+The latest local core integration checkpoint on this page still tests published
+`863e6c5b` (retained MPE manager/note pressure and CC74), with exact scope and
+results below.
 Native CI, downloaded installers, and hardware/DAW qualification are separate
 checkpoints; the November 9 remote runs retained below do not cover this newer
 source. The sparse solver still exceeds the proposed audio-update budget;
@@ -42,7 +48,68 @@ ASan+UBSan with leak detection excluded (119.03 s). The leak-enabled attempt
 failed at LeakSanitizer runtime shutdown and remains unqualified. See the
 [configuration, distinct outcomes and limits](CORE_SANITIZER_CHECKPOINT_CCB812E.md).
 
+## Published FX115 checkpoint
+
+Publisher-confirmed main `cec6580c301395fe1cdb4e8528bb850f5a3d9eac` includes
+the three existing FX wet/dry controls at lanes 112–114. The current roster is
+**115 lanes**, preserving the literal 112-lane prefix. The qualified local source
+is `2305421d50aab146cb348256234eaf71a2d0538e`. All nine staged operations
+passed once: narrow candidate and frozen112 helper builds, six configuration runs,
+and collection. The audited evidence retains identities for nine sources, 5,328
+baseline paths and four runtime binaries.
+
+Across 44.1/48/96 kHz realtime/offline configurations, 24 full and 24 compatibility
+scenarios produced **522 retained finite stereo PCM captures** (354 candidate,
+168 frozen112). All **168 actual cross-build PCM pairs** were byte-identical;
+all **96 scalar/block comparisons** had maximum error **0**. The 24 combined
+reversed-queue comparisons and 24 initial 1,024-frame holds were byte-identical.
+All 24 overall and 18 combined per-lane effect witnesses exceeded the fixed
+`1e-5` minimum. Empty/null queue, Legacy flattening and PURE controls passed.
+See [FX mix evidence](experiments/fx-mix-automation/README.md).
+
+This is fixed classic chorus/phaser/drive types 1/2/5, models 0, outer gain
+compensation off, conservative mix histories, manual/manual two-note audio,
+neutral macros and matrix amounts. Compatibility samples representative preceding
+controls, not every prior lane. Unlike the earlier macro checkpoint, all active
+and control PCM was retained locally and independently recomputed. Git retains
+logs, manifests and hashes, not the PCM or compiled binaries. Production changes
+only the roster; historical exact-size guards were changed to prefix guards and
+source-reviewed, not rerun. No type/model switching, delay/reverb or all-model
+qualification, full-range or state-readback coverage, source masking, native DAW,
+cross-platform, CPU-target or hardware-fidelity claim follows.
+
+## Published test-only follow-ups
+
+Publisher-confirmed `58865b46b45fe38d8006eaa7d2aa3926a42393ef` adds the ten
+reviewed follow-up packages (147 paths), including the 115-lane host automation
+documentation. These are bounded evidence/tooling additions, not a new plugin
+DSP implementation or a broad integration/release qualification:
+
+- [Classic delay/reverb tails](experiments/fx-tail-automation/README.md): 96 retained PCM.
+- [Fixed modern mix](experiments/fx-modern-mix-automation/README.md): 354 retained PCM.
+- [Spring/Plate/Tape tails](experiments/fx-modern-tail-automation/README.md): 126 retained PCM.
+- [Fixed outer matching on, with off controls](experiments/fx-matched-mix-automation/README.md): 378 retained PCM and 24 matching witnesses.
+- [String1/manual and manual/String2 layouts](experiments/fx-source-mix-automation/README.md): 756 retained PCM and 48 source-layout witnesses against manual/manual controls. No MEMORY or live source switching is qualified.
+- [Six-suite read-only evidence replay](experiments/fx-evidence-verifier-source/README.md): including the original FX mix gate, 2,232 PCM, 536 scalar comparisons, 136 queue-order comparisons, 134 holds, 168 actual frozen112 pairs, 24 matching witnesses and 48 source-layout witnesses. Prior five outputs and the relocated classic-tail output remained byte-identical. This is a retained-file replay, not native plugin execution or a fresh runtime binary qualification.
+- [Focused loudness lifecycle regression](FX_LOUDNESS_CORE_REGRESSION.md): 42/42 assertions in one standalone run. The header change only corrects a misleading comment; executable DSP is unchanged. CMake registration was source-reviewed, not executed.
+
+The distinct scopes and exclusions in each linked record remain in force. None
+supersedes the pinned full-core integration above. Actual PCM and binaries remain
+local; repository records retain logs, hashes and manifests.
+
+The [closed-gate loudness regression](FX_LOUDNESS_GATE_REGRESSION.md) is
+publisher-confirmed at `35ddac37969cdff18d8bdee785641b25f9889670`, from reviewed
+local `c0b17dea57b14436418337a93f55df8176993475`: 18/18 assertions
+passed once at 44.1/48/96 kHz. The known-target analytic slew error was at most
+`1.2878587085651816e-14`; meaningful post-closure movement was observed. Its
+observer shares the public K-weighting implementation, so this is not an
+independent weighting-standard test. No production code changed; CMake
+registration was source-reviewed only. No fresh plugin build is claimed.
+
 ## November 12 scoped native VST3 automation
+
+Historical checkpoints follow. References below to a “current roster” describe
+that dated checkpoint; the present roster is 115 lanes as stated above.
 
 Published `bb658fc7fd79c5d246bd8da846befc8cbf1acd1c` appends the four existing
 performance macros at lanes 108–111, bringing the current roster to **112 lanes**
