@@ -1190,7 +1190,7 @@ this register is a measurement of a CS-80. The in-app evidence view
 | 5.3-5.4 Toolbar, Studio view, interaction | done; modern and tuning pages mounted | ws8 merge `5af3b77`, `230f367` |
 | 5.5-5.7 Readability, code health, UI tests | done; goldens re-recorded on the integrated tree | `bd524f9`, `41363ea` |
 | 6 Modern layer | done (MSEG, LFO waves, matrix, FX, tuning, MPE, voice modes, MIDI learn, undo, A/B, randomise, host groups) | ws5 `5263172`, ws3, ws6, ws8 |
-| 6 Sample-accurate automation | partial: 112 key VST3 parameter lanes in modern circuit policy; AU and other parameters remain block-rate | `bb658fc7`; scoped native evidence above; [scope](HOST_AUTOMATION.md) |
+| 6 Sample-accurate automation | partial: 115 key VST3 parameter lanes in modern circuit policy; AU and other parameters remain block-rate | `cec6580c`; scoped native evidence above; [scope](HOST_AUTOMATION.md) |
 | 7 Release qualification | packaging safeguards and scoped Linux ABI evidence merged; complete licence/native installation/host/signing qualification and Linux validation failures remain open | `b363b325`, `fa7e988`, `58ed29e`; exact scope and failures above |
 
 ## Scorecard (2026-10-31, `00ceccf`)
@@ -1363,7 +1363,7 @@ A passing Linux pluginval run is not a fix for the intermittent exit 139.
   edit gestures and rejects unsafe replay during an active edit
   ([contract and local tests](UNDO_REPLAY_GESTURES.md)). VST3/AU-wrapper and
   real-DAW automation-recording qualification remain open.
-- Sample-offset automation is limited to 112 key VST3 parameter lanes in modern
+- Sample-offset automation is limited to 115 key VST3 parameter lanes in modern
   circuit policy. AU scheduled ramps, unsupported parameters and DAW-level
   qualification remain open ([HOST_AUTOMATION.md](HOST_AUTOMATION.md)).
 - CC121 now resets supported controller targets through existing routes, sustain,
