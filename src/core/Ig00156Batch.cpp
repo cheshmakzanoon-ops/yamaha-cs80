@@ -117,6 +117,7 @@ struct Ig00156BatchAccess
             const V nextT1=tanh(nextHp*inv);
             t2=select(active,nextT2,t2);hp=select(active,nextHp,hp);t1=select(active,nextT1,t1);
             const V f=bp-zBp+g1*level*t1+f1*hp;
+#if CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY
             if(iteration==4) {
                 // No histories have been written yet. Let the caller redo all
                 // lanes through the authoritative scalar recovery path.
@@ -124,6 +125,9 @@ struct Ig00156BatchAccess
                 if(_mm256_movemask_pd(failed.x)!=0) return false;
                 break;
             }
+#else
+            if(iteration==4) break;
+#endif
             active=_mm256_andnot_pd(less(absolute(f),1.0e-7).x,active.x);
             if(_mm256_movemask_pd(active.x)==0) break;
             const V dh=c1+g2*(1.0-t2*t2)+f2;

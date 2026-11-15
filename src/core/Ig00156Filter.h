@@ -40,6 +40,12 @@
 #include "FastMath.h"
 #include "Ig00156RootFallback.h"
 
+// Recovery changes Source Audio V2 histories and subsequent PCM. Keep the
+// historical path until a separately versioned model is qualified.
+#ifndef CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY
+#define CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY 0
+#endif
+
 #include <algorithm>
 #include <cmath>
 
@@ -236,6 +242,7 @@ public:
             hp = c0 + c1 * bp + g2 * level * t2 + f2 * bp;
             t1 = fastTanh(hp * inv);
             const double f = bp - zBp + g1 * level * t1 + f1 * hp;
+#if CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY
             if (std::abs(f) < 1.0e-7) break;
             if (iteration == 4) {
                 if (std::isfinite(f) && std::isfinite(bp)) {
@@ -246,6 +253,10 @@ public:
                 }
                 break;
             }
+#else
+            if (std::abs(f) < 1.0e-7 || iteration == 4)
+                break;
+#endif
             const double dh = c1 + g2 * (1.0 - t2 * t2) + f2;
             bp -= f / (1.0 + (g1 * (1.0 - t1 * t1) + f1) * dh);
         }

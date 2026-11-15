@@ -8,6 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(CS80_BUILD_PLUGIN "Build the JUCE plugin and standalone application" ON)
 option(CS80_BUILD_TESTS "Build core tests" ON)
+option(CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY "Experimental changed-history filter solver; incompatible with Source Audio V2" OFF)
 option(CS80_ENABLE_AVX2_FILTER_BATCH "Opt into exact GCC AVX2 stage batches (throughput qualification is workload-specific)" OFF)
 
 add_library(cs80_core STATIC
@@ -22,6 +23,9 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         COMPILE_OPTIONS "-ffp-contract=off")
 endif()
 target_include_directories(cs80_core PUBLIC src)
+if(CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY)
+    target_compile_definitions(cs80_core PUBLIC CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY=1)
+endif()
 if (NOT CS80_ENABLE_AVX2_FILTER_BATCH OR NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # Unknown/Clang math contracts fail closed. This only disables the optional
     # backend; it never overrides any scalar source's floating-point flags.
@@ -206,8 +210,24 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_envelope_precision_tests PRIVATE cs80_core)
     add_test(NAME cs80_envelope_precision_tests COMMAND cs80_envelope_precision_tests)
     set_tests_properties(cs80_envelope_precision_tests PROPERTIES TIMEOUT 300)
+    if(NOT CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY)
+        add_executable(cs80_filter_default_history_tests tests/FilterDefaultHistoryTests.cpp)
+        target_link_libraries(cs80_filter_default_history_tests PRIVATE cs80_core)
+        add_test(NAME cs80_filter_default_history_tests COMMAND cs80_filter_default_history_tests
+            ${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states.csv)
+        foreach(kind IN ITEMS missing truncated)
+            add_test(NAME cs80_filter_default_history_${kind}_tests COMMAND ${CMAKE_COMMAND}
+                -DPROGRAM=$<TARGET_FILE:cs80_filter_default_history_tests>
+                -DINPUT=${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states-${kind}.csv
+                -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/ExpectFixtureInputRejection.cmake)
+        endforeach()
+        set_tests_properties(cs80_filter_default_history_tests cs80_filter_default_history_missing_tests
+            cs80_filter_default_history_truncated_tests PROPERTIES TIMEOUT 60)
+    endif()
     add_executable(cs80_filter_idle_fallback_tests tests/FilterIdleFallbackTests.cpp)
-    target_link_libraries(cs80_filter_idle_fallback_tests PRIVATE cs80_core)
+    # Header-only fixture: isolate experimental arithmetic from the default core.
+    target_include_directories(cs80_filter_idle_fallback_tests PRIVATE src)
+    target_compile_definitions(cs80_filter_idle_fallback_tests PRIVATE CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY=1)
     add_test(NAME cs80_filter_idle_fallback_tests COMMAND cs80_filter_idle_fallback_tests
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states.csv)
     foreach(kind IN ITEMS missing truncated)
@@ -223,6 +243,7 @@ if (CS80_BUILD_TESTS)
     # as the scalar comparison. Do not inherit platform-specific core tuning here.
     add_executable(cs80_filter_batch_cap_tests tests/FilterBatchCapTests.cpp src/core/Ig00156Batch.cpp)
     target_include_directories(cs80_filter_batch_cap_tests PRIVATE src)
+    target_compile_definitions(cs80_filter_batch_cap_tests PRIVATE CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY=1)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         target_compile_options(cs80_filter_batch_cap_tests PRIVATE -ffp-contract=off)
     endif()

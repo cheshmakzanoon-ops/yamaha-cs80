@@ -1,0 +1,21 @@
+Test project /workspace/scratch/ee447c520988/cs80-restored/ci-source-compat/fix/build
+    Start  2: cs80_ig00156_batch_tests
+1/8 Test  #2: cs80_ig00156_batch_tests ....................   Passed    0.02 sec
+    Start  3: cs80_filter_batch_engine_tests
+2/8 Test  #3: cs80_filter_batch_engine_tests ..............   Passed    8.03 sec
+    Start 37: cs80_filter_idle_fallback_tests
+3/8 Test #37: cs80_filter_idle_fallback_tests .............   Passed    0.03 sec
+    Start 38: cs80_filter_idle_fallback_missing_tests
+4/8 Test #38: cs80_filter_idle_fallback_missing_tests .....   Passed    0.01 sec
+    Start 39: cs80_filter_idle_fallback_truncated_tests
+5/8 Test #39: cs80_filter_idle_fallback_truncated_tests ...   Passed    0.01 sec
+    Start 40: cs80_filter_batch_cap_tests
+6/8 Test #40: cs80_filter_batch_cap_tests .................   Passed    0.08 sec
+    Start 41: cs80_filter_batch_cap_missing_tests
+7/8 Test #41: cs80_filter_batch_cap_missing_tests .........   Passed    0.01 sec
+    Start 42: cs80_filter_batch_cap_truncated_tests
+8/8 Test #42: cs80_filter_batch_cap_truncated_tests .......   Passed    0.01 sec
+
+100% tests passed out of 8
+
+Total Test time (real) =   8.19 sec
