@@ -1,0 +1,294 @@
+In file included from cs80-restored/solver-probe/baseline.h:39,
+                 from cs80-restored/solver-probe/helper-test.cpp:2:
+cs80-restored/published-main/src/core/Dsp.h:14:17: error: redefinition of ‘constexpr const float cs80::kPi’
+   14 | constexpr float kPi = 3.14159265358979323846f;
+      |                 ^~~
+In file included from cs80-restored/idle-filter-reconstruction/src/core/Ig00156Filter.h:39,
+                 from cs80-restored/solver-probe/helper-test.cpp:1:
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:14:17: note: ‘constexpr const float cs80::kPi’ previously defined here
+   14 | constexpr float kPi = 3.14159265358979323846f;
+      |                 ^~~
+cs80-restored/published-main/src/core/Dsp.h:15:17: error: redefinition of ‘constexpr const float cs80::kTwoPi’
+   15 | constexpr float kTwoPi = 6.28318530717958647692f;
+      |                 ^~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:15:17: note: ‘constexpr const float cs80::kTwoPi’ previously defined here
+   15 | constexpr float kTwoPi = 6.28318530717958647692f;
+      |                 ^~~~~~
+cs80-restored/published-main/src/core/Dsp.h:17:14: error: redefinition of ‘float cs80::clampf(float, float, float)’
+   17 | inline float clampf(float x, float lo, float hi) noexcept
+      |              ^~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:17:14: note: ‘float cs80::clampf(float, float, float)’ previously defined here
+   17 | inline float clampf(float x, float lo, float hi) noexcept
+      |              ^~~~~~
+cs80-restored/published-main/src/core/Dsp.h:22:14: error: redefinition of ‘float cs80::lerp(float, float, float)’
+   22 | inline float lerp(float a, float b, float t) noexcept
+      |              ^~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:22:14: note: ‘float cs80::lerp(float, float, float)’ previously defined here
+   22 | inline float lerp(float a, float b, float t) noexcept
+      |              ^~~~
+cs80-restored/published-main/src/core/Dsp.h:27:14: error: redefinition of ‘float cs80::softClip(float)’
+   27 | inline float softClip(float x) noexcept
+      |              ^~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:27:14: note: ‘float cs80::softClip(float)’ previously defined here
+   27 | inline float softClip(float x) noexcept
+      |              ^~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:33:14: error: redefinition of ‘float cs80::midiToHz(float, float)’
+   33 | inline float midiToHz(float note, float tuningRef = 440.0f) noexcept
+      |              ^~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:33:14: note: ‘float cs80::midiToHz(float, float)’ previously defined here
+   33 | inline float midiToHz(float note, float tuningRef = 440.0f) noexcept
+      |              ^~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:40:17: error: redefinition of ‘constexpr const float cs80::kReferenceKeyVolts’
+   40 | constexpr float kReferenceKeyVolts = 0.5f;
+      |                 ^~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:40:17: note: ‘constexpr const float cs80::kReferenceKeyVolts’ previously defined here
+   40 | constexpr float kReferenceKeyVolts = 0.5f;
+      |                 ^~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:42:8: error: redefinition of ‘struct cs80::Exp2Memo’
+   42 | struct Exp2Memo
+      |        ^~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:42:8: note: previous definition of ‘struct cs80::Exp2Memo’
+   42 | struct Exp2Memo
+      |        ^~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:57:14: error: redefinition of ‘float cs80::filterKeyVolts(float)’
+   57 | inline float filterKeyVolts(float midiPitch) noexcept
+      |              ^~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:57:14: note: ‘float cs80::filterKeyVolts(float)’ previously defined here
+   57 | inline float filterKeyVolts(float midiPitch) noexcept
+      |              ^~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:61:14: error: redefinition of ‘float cs80::filterKeyVolts(float, Exp2Memo&)’
+   61 | inline float filterKeyVolts(float midiPitch, Exp2Memo& memo) noexcept
+      |              ^~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:61:14: note: ‘float cs80::filterKeyVolts(float, Exp2Memo&)’ previously defined here
+   61 | inline float filterKeyVolts(float midiPitch, Exp2Memo& memo) noexcept
+      |              ^~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:65:14: error: redefinition of ‘float cs80::nominalFilterCutoff(float, float)’
+   65 | inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:65:14: note: ‘float cs80::nominalFilterCutoff(float, float)’ previously defined here
+   65 | inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:69:14: error: redefinition of ‘float cs80::nominalFilterCutoff(float, float, Exp2Memo&)’
+   69 | inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv, Exp2Memo& memo) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:69:14: note: ‘float cs80::nominalFilterCutoff(float, float, Exp2Memo&)’ previously defined here
+   69 | inline float nominalFilterCutoff(float keyVolts, float effectiveCutoffCv, Exp2Memo& memo) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:73:14: error: redefinition of ‘float cs80::filterEffectiveCv(float)’
+   73 | inline float filterEffectiveCv(float referenceCutoffHz) noexcept
+      |              ^~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:73:14: note: ‘float cs80::filterEffectiveCv(float)’ previously defined here
+   73 | inline float filterEffectiveCv(float referenceCutoffHz) noexcept
+      |              ^~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:79:14: error: redefinition of ‘float cs80::provisionalFilterQ(float)’
+   79 | inline float provisionalFilterQ(float resonance) noexcept
+      |              ^~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:79:14: note: ‘float cs80::provisionalFilterQ(float)’ previously defined here
+   79 | inline float provisionalFilterQ(float resonance) noexcept
+      |              ^~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:84:7: error: redefinition of ‘class cs80::Rng’
+   84 | class Rng
+      |       ^~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:84:7: note: previous definition of ‘class cs80::Rng’
+   84 | class Rng
+      |       ^~~
+cs80-restored/published-main/src/core/Dsp.h:114:14: error: redefinition of ‘float cs80::polyBlep(float, float)’
+  114 | inline float polyBlep(float t, float dt) noexcept
+      |              ^~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:114:14: note: ‘float cs80::polyBlep(float, float)’ previously defined here
+  114 | inline float polyBlep(float t, float dt) noexcept
+      |              ^~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:132:14: error: redefinition of ‘float cs80::blepPulse(float, float, float)’
+  132 | inline float blepPulse(float phase, float width, float dt) noexcept
+      |              ^~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:132:14: note: ‘float cs80::blepPulse(float, float, float)’ previously defined here
+  132 | inline float blepPulse(float phase, float width, float dt) noexcept
+      |              ^~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:150:14: error: redefinition of ‘float cs80::ribbonFrequencyRatio(float)’
+  150 | inline float ribbonFrequencyRatio(float displacement) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:150:14: note: ‘float cs80::ribbonFrequencyRatio(float)’ previously defined here
+  150 | inline float ribbonFrequencyRatio(float displacement) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:159:24: error: redefinition of ‘constexpr const float cs80::kProvisionalRingFrequencyExcursion’
+  159 | inline constexpr float kProvisionalRingFrequencyExcursion = 1.0f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:159:24: note: ‘constexpr const float cs80::kProvisionalRingFrequencyExcursion’ previously defined here
+  159 | inline constexpr float kProvisionalRingFrequencyExcursion = 1.0f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:161:14: error: redefinition of ‘float cs80::ringModulationFrequency(float, float, float)’
+  161 | inline float ringModulationFrequency(float baseHz, float depth, float envelope) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:161:14: note: ‘float cs80::ringModulationFrequency(float, float, float)’ previously defined here
+  161 | inline float ringModulationFrequency(float baseHz, float depth, float envelope) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:168:7: error: redefinition of ‘class cs80::Oscillator’
+  168 | class Oscillator
+      |       ^~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:168:7: note: previous definition of ‘class cs80::Oscillator’
+  168 | class Oscillator
+      |       ^~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:242:24: error: redefinition of ‘constexpr const float cs80::kIg00156FeedforwardHz’
+  242 | inline constexpr float kIg00156FeedforwardHz = 22.575f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:242:24: note: ‘constexpr const float cs80::kIg00156FeedforwardHz’ previously defined here
+  242 | inline constexpr float kIg00156FeedforwardHz = 22.575f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:243:25: error: redefinition of ‘constexpr const double cs80::kIg00156OtaLevel’
+  243 | inline constexpr double kIg00156OtaLevel = 2.5;
+      |                         ^~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:243:25: note: ‘constexpr const double cs80::kIg00156OtaLevel’ previously defined here
+  243 | inline constexpr double kIg00156OtaLevel = 2.5;
+      |                         ^~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:249:15: error: redefinition of ‘double cs80::fastTanh(double)’
+  249 | inline double fastTanh(double x) noexcept
+      |               ^~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:249:15: note: ‘double cs80::fastTanh(double)’ previously defined here
+  249 | inline double fastTanh(double x) noexcept
+      |               ^~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:259:7: error: redefinition of ‘class cs80::Svf’
+  259 | class Svf
+      |       ^~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:259:7: note: previous definition of ‘class cs80::Svf’
+  259 | class Svf
+      |       ^~~
+cs80-restored/published-main/src/core/Dsp.h:358:7: error: redefinition of ‘class cs80::OnePole’
+  358 | class OnePole
+      |       ^~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:358:7: note: previous definition of ‘class cs80::OnePole’
+  358 | class OnePole
+      |       ^~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:385:8: error: redefinition of ‘struct cs80::ExpMemo<T>’
+  385 | struct ExpMemo
+      |        ^~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:385:8: note: previous definition of ‘struct cs80::ExpMemo<T>’
+  385 | struct ExpMemo
+      |        ^~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:400:14: error: redefinition of ‘float cs80::coefficientExponent(float, float, float)’
+  400 | inline float coefficientExponent(float seconds, float sampleRate, float multiplier = 1.0f) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:400:14: note: ‘float cs80::coefficientExponent(float, float, float)’ previously defined here
+  400 | inline float coefficientExponent(float seconds, float sampleRate, float multiplier = 1.0f) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:406:14: error: redefinition of ‘float cs80::coefficientForTime(float, float, float)’
+  406 | inline float coefficientForTime(float seconds, float sampleRate, float multiplier = 1.0f) noexcept
+      |              ^~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:406:14: note: ‘float cs80::coefficientForTime(float, float, float)’ previously defined here
+  406 | inline float coefficientForTime(float seconds, float sampleRate, float multiplier = 1.0f) noexcept
+      |              ^~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:422:25: error: redefinition of ‘constexpr const double cs80::kRcSettleLog’
+  422 | inline constexpr double kRcSettleLog = 6.907755278982137; // ln(1000)
+      |                         ^~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:422:25: note: ‘constexpr const double cs80::kRcSettleLog’ previously defined here
+  422 | inline constexpr double kRcSettleLog = 6.907755278982137; // ln(1000)
+      |                         ^~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:423:25: error: redefinition of ‘constexpr const double cs80::kRcAttackOvershoot’
+  423 | inline constexpr double kRcAttackOvershoot = 1.5;
+      |                         ^~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:423:25: note: ‘constexpr const double cs80::kRcAttackOvershoot’ previously defined here
+  423 | inline constexpr double kRcAttackOvershoot = 1.5;
+      |                         ^~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:424:25: error: redefinition of ‘constexpr const double cs80::kRcAttackLog’
+  424 | inline constexpr double kRcAttackLog = 1.0986122886681098; // ln(1.5 / 0.5)
+      |                         ^~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:424:25: note: ‘constexpr const double cs80::kRcAttackLog’ previously defined here
+  424 | inline constexpr double kRcAttackLog = 1.0986122886681098; // ln(1.5 / 0.5)
+      |                         ^~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:428:7: error: redefinition of ‘class cs80::Adsr’
+  428 | class Adsr
+      |       ^~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:428:7: note: previous definition of ‘class cs80::Adsr’
+  428 | class Adsr
+      |       ^~~~
+cs80-restored/published-main/src/core/Dsp.h:644:24: error: redefinition of ‘constexpr const float cs80::kProvisionalVoiceTuneSpreadCents’
+  644 | inline constexpr float kProvisionalVoiceTuneSpreadCents = 7.0f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:644:24: note: ‘constexpr const float cs80::kProvisionalVoiceTuneSpreadCents’ previously defined here
+  644 | inline constexpr float kProvisionalVoiceTuneSpreadCents = 7.0f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:649:24: error: redefinition of ‘constexpr const float cs80::kProvisionalFilterEnvelopeOctaves’
+  649 | inline constexpr float kProvisionalFilterEnvelopeOctaves = 3.0f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:649:24: note: ‘constexpr const float cs80::kProvisionalFilterEnvelopeOctaves’ previously defined here
+  649 | inline constexpr float kProvisionalFilterEnvelopeOctaves = 3.0f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:652:24: error: redefinition of ‘constexpr const float cs80::kProvisionalHpfEnvelopeGain’
+  652 | inline constexpr float kProvisionalHpfEnvelopeGain = 0.5f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:652:24: note: ‘constexpr const float cs80::kProvisionalHpfEnvelopeGain’ previously defined here
+  652 | inline constexpr float kProvisionalHpfEnvelopeGain = 0.5f;
+      |                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:653:14: error: redefinition of ‘float cs80::filterInitialOffset(float)’
+  653 | inline float filterInitialOffset(float control) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:653:14: note: ‘float cs80::filterInitialOffset(float)’ previously defined here
+  653 | inline float filterInitialOffset(float control) noexcept
+      |              ^~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:657:14: error: redefinition of ‘float cs80::filterAttackOffset(float)’
+  657 | inline float filterAttackOffset(float control) noexcept
+      |              ^~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:657:14: note: ‘float cs80::filterAttackOffset(float)’ previously defined here
+  657 | inline float filterAttackOffset(float control) noexcept
+      |              ^~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:664:7: error: redefinition of ‘class cs80::FilterEnv’
+  664 | class FilterEnv
+      |       ^~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:664:7: note: previous definition of ‘class cs80::FilterEnv’
+  664 | class FilterEnv
+      |       ^~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:900:7: error: redefinition of ‘class cs80::Lfo’
+  900 | class Lfo
+      |       ^~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:900:7: note: previous definition of ‘class cs80::Lfo’
+  900 | class Lfo
+      |       ^~~
+cs80-restored/published-main/src/core/Dsp.h:942:7: error: redefinition of ‘class cs80::DelayLine’
+  942 | class DelayLine
+      |       ^~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:942:7: note: previous definition of ‘class cs80::DelayLine’
+  942 | class DelayLine
+      |       ^~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:1026:7: error: redefinition of ‘class cs80::Chorus’
+ 1026 | class Chorus
+      |       ^~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:1026:7: note: previous definition of ‘class cs80::Chorus’
+ 1026 | class Chorus
+      |       ^~~~~~
+cs80-restored/published-main/src/core/Dsp.h:1096:7: error: redefinition of ‘class cs80::Phaser’
+ 1096 | class Phaser
+      |       ^~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:1096:7: note: previous definition of ‘class cs80::Phaser’
+ 1096 | class Phaser
+      |       ^~~~~~
+cs80-restored/published-main/src/core/Dsp.h:1155:7: error: redefinition of ‘class cs80::Decimator’
+ 1155 | class Decimator
+      |       ^~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:1155:7: note: previous definition of ‘class cs80::Decimator’
+ 1155 | class Decimator
+      |       ^~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:1238:7: error: redefinition of ‘class cs80::OversamplingDecimator’
+ 1238 | class OversamplingDecimator
+      |       ^~~~~~~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:1238:7: note: previous definition of ‘class cs80::OversamplingDecimator’
+ 1238 | class OversamplingDecimator
+      |       ^~~~~~~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:1344:24: error: redefinition of ‘constexpr const float cs80::kReverbTimeScale’
+ 1344 | inline constexpr float kReverbTimeScale = 96000.0f / 44100.0f;
+      |                        ^~~~~~~~~~~~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:1344:24: note: ‘constexpr const float cs80::kReverbTimeScale’ previously defined here
+ 1344 | inline constexpr float kReverbTimeScale = 96000.0f / 44100.0f;
+      |                        ^~~~~~~~~~~~~~~~
+cs80-restored/published-main/src/core/Dsp.h:1346:7: error: redefinition of ‘class cs80::Reverb’
+ 1346 | class Reverb
+      |       ^~~~~~
+cs80-restored/idle-filter-reconstruction/src/core/Dsp.h:1346:7: note: previous definition of ‘class cs80::Reverb’
+ 1346 | class Reverb
+      |       ^~~~~~
+In file included from cs80-restored/solver-probe/baseline.h:40:
+cs80-restored/published-main/src/core/FastMath.h:23:15: error: redefinition of ‘double cs80::fastmath::tan(double)’
+   23 | inline double tan(double theta) noexcept
+      |               ^~~
+In file included from cs80-restored/idle-filter-reconstruction/src/core/Ig00156Filter.h:40:
+cs80-restored/idle-filter-reconstruction/src/core/FastMath.h:23:15: note: ‘double cs80::fastmath::tan(double)’ previously defined here
+   23 | inline double tan(double theta) noexcept
+      |               ^~~

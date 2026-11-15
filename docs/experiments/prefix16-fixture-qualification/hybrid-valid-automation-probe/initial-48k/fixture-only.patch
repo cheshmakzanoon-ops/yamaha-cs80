@@ -1,0 +1,57 @@
+--- baseline/Vst3AutomationTests.cpp
++++ scratch/Vst3AutomationTests.cpp
+@@ -425,6 +425,7 @@
+                      {1023, 0.41 + lane * 0.005}, {2047, 0.64 - lane * 0.007},
+                      {3071, 0.18 + lane * 0.01}, {4095, 0.50 + lane * 0.006}};
+     }
++    for (auto& curve : curves) for (auto& point : curve) point.second=std::clamp(point.second,0.0,1.0);
+     return curves;
+ }
+ std::vector<float> render(Module& module, const cs80::ParamValues& parameters, const Curves& curves,
+@@ -480,13 +481,13 @@
+         {
+             const int parameter = cs80::kSampleAccurateParameters[lane];
+             prior.add(parameterId(cs80::paramId(parameter)),
+-                {{0, normalized(parameter, parameters[parameter])}, {255, 0.23 + double(lane) * 0.007}});
++                {{0, normalized(parameter, parameters[parameter])}, {255, std::clamp(0.23 + double(lane) * 0.007,0.0,1.0)}});
+         }
+     instance.process(0, 256, priorCurve ? &prior : nullptr, output);
+     Changes flush;
+     for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
+         flush.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
+-                  {{0, double(0.69f - float(lane) * 0.009f)}});
++                  {{0, std::clamp(double(0.69f - float(lane) * 0.009f),0.0,1.0)}});
+     instance.flush(flush);
+     std::array<double, cs80::kSampleAccurateParameters.size()> flushed {};
+     if (readState) flushed = instance.normalizedState();
+@@ -497,7 +498,7 @@
+         for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
+         {
+             const double initial = flushed[lane];
+-            const double target = 0.31 + double(lane) * 0.008;
++            const double target = std::clamp(0.31 + double(lane) * 0.008,0.0,1.0);
+             const double fraction = std::min(1.0, double(sample + 1) / double(firstPoint + 1));
+             const double value = scalar ? initial * (1.0 - fraction) + target * fraction : target;
+             changes.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
+--- baseline/Vst3AutomationPolicyBoundaryTests.h
++++ scratch/Vst3AutomationPolicyBoundaryTests.h
+@@ -72,7 +72,7 @@
+     Curves curves;
+     for (size_t lane = 0; lane < curves.size(); ++lane) {
+         const int key = cs80::kSampleAccurateParameters[lane];
+-        curves[lane] = {{0, normalized(key, p[key])}, {255, 0.67 - double(lane) * 0.013}};
++        curves[lane] = {{0, normalized(key, p[key])}, {255, std::clamp(0.67 - double(lane) * 0.013,0.0,1.0)}};
+     }
+     std::vector<float> audio;
+     const int step = reference && targetModern ? 1 : 256;
+--- baseline/Vst3AutomationProgramBoundaryTests.h
++++ scratch/Vst3AutomationProgramBoundaryTests.h
+@@ -41,7 +41,7 @@
+     Curves curves;
+     for(size_t lane=0;lane<curves.size();++lane){
+         const int key=cs80::kSampleAccurateParameters[lane];
+-        curves[lane]={{0,normalized(key,p[key])},{255,.67-double(lane)*.013},{1023,.31+double(lane)*.008}};
++        curves[lane]={{0,normalized(key,p[key])},{255,std::clamp(.67-double(lane)*.013,0.0,1.0)},{1023,std::clamp(.31+double(lane)*.008,0.0,1.0)}};
+     }
+     std::vector<float> output;
+     for(int start=0;start<1024;){

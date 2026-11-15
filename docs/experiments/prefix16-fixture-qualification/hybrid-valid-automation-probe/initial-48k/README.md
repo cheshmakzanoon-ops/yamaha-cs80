@@ -1,0 +1,9 @@
+# Valid normalized-knot diagnostic (scratch host only)
+
+Original registered suite failures remain unchanged and preserved. This separate executable changes only constructed test inputs in three copied test sources: clamp generated normalized curve endpoints to[0,1] BEFORE interpolation/subdivision. No module/DSP source, assertions or tolerances changed. General curves, zero-frame prior/flush/target values, policy-transition endpoints and program-transition endpoints are bounded. All original first18 lane values that were already in bounds remain unchanged.
+
+Reason: expanded roster made lane-linear formulas emit negative or >1 queue endpoints. Production bridge clamps endpoints before interpolation; original per-sample oracle interpolated raw endpoints then resubmitted/clamped each sample, yielding a different curve. The patch makes both sides exercise the same valid normalized input curve. This is diagnostic evidence, not retrospective approval of original invalid-input expectations or a production test integration.
+
+Compile/link commands preserved; scratch host uses the baseline SDK objects and original compiler flags. Same scratch executable is run against original frozen baseline and candidate VST3 modules with unchanged official dependency environment. Scope is48k realtime default only, not all six rates/modes. fixture-only.patch contains every scratch source change; no repository source modified.
+
+Result: both baseline and candidate runs exited0. Entire stdout/stderr logs are byte-identical. Previously failing partition,16voice,zero-frame,policy/program and same-policy modern recall diagnostics now report zero error in this bounded scratch experiment. This supports the expanded invalid-knot fixture explanation for these default48k failures. Original fullsuite remains549/557; this experiment does not change its outcome or qualify unrun configurations. Source/host/module hashes retained in hashes.txt.

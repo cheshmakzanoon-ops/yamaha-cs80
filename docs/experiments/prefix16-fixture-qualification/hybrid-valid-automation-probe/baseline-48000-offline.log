@@ -1,0 +1,54 @@
+VST3 protocol configuration: rate=48000 mode=offline
+Generated normalized roster count=120
+real VST3 maximum partition error=0 sixteen-voice error=0
+real VST3 zero-frame state-boundary maximum audio error=0 reader observation error=0
+NO_CURVES mode=0 pcm_fnv1a=4701330124199983773 selector=1 volume=0.755906
+POLICY transition=modern_to_pure actual_selector=1 reference_selector=1 target=1 max_audio_error=0
+MIXED transition=modern_to_pure actual_selector=1 reference_selector=1 actual_volume=0.755906 reference_volume=0.755906 max_audio_error=0
+CONTROL transition=modern_to_pure kind=native_selector actual_selector=1 reference_selector=1 max_audio_error=0
+CONTROL transition=modern_to_pure kind=same_policy_CC actual_selector=1 reference_selector=1 max_audio_error=0
+NO_CURVES mode=1 pcm_fnv1a=15280198116005518309 selector=0 volume=0.755906
+POLICY transition=modern_to_legacy actual_selector=0 reference_selector=0 target=0 max_audio_error=0
+MIXED transition=modern_to_legacy actual_selector=0 reference_selector=0 actual_volume=0.755906 reference_volume=0.755906 max_audio_error=0
+CONTROL transition=modern_to_legacy kind=native_selector actual_selector=0 reference_selector=0 max_audio_error=0
+CONTROL transition=modern_to_legacy kind=same_policy_CC actual_selector=0 reference_selector=0 max_audio_error=0
+NO_CURVES mode=2 pcm_fnv1a=4701330124199983773 selector=1 volume=0.755906
+POLICY transition=legacy_to_modern actual_selector=1 reference_selector=1 target=1 max_audio_error=0
+MIXED transition=legacy_to_modern actual_selector=1 reference_selector=1 actual_volume=0.67 reference_volume=0.67 max_audio_error=0
+CONTROL transition=legacy_to_modern kind=native_selector actual_selector=1 reference_selector=1 max_audio_error=0
+CONTROL transition=legacy_to_modern kind=same_policy_CC actual_selector=1 reference_selector=1 max_audio_error=0
+PROGRAM modern_to_legacy offset=0 before_error=0 max_audio_error=0 actual_policy=0 reference_policy=0 actual_volume=0.58 reference_volume=0.58
+PROGRAM modern_to_legacy offset=1 before_error=0 max_audio_error=0 actual_policy=0 reference_policy=0 actual_volume=0.58 reference_volume=0.58
+PROGRAM modern_to_legacy offset=64 before_error=0 max_audio_error=0 actual_policy=0 reference_policy=0 actual_volume=0.58 reference_volume=0.58
+PROGRAM modern_to_legacy offset=256 before_error=0 max_audio_error=0 actual_policy=0 reference_policy=0 actual_volume=0.58 reference_volume=0.58
+PROGRAM modern_to_legacy offset=700 before_error=0 max_audio_error=0 actual_policy=0 reference_policy=0 actual_volume=0.58 reference_volume=0.58
+CONTROL no_queue bank=0 error=0 policy=1
+CONTROL program_audible bank=0 difference=0.129946
+CONTROL no_queue bank=1 error=0 policy=0
+CONTROL program_audible bank=1 difference=0.107352
+CONTROL modern_to_modern error=0 policy=1
+CONTROL modern_endpoint actual=0.31 split=0.31 expected=0.31
+CONTROL invalid_program error=0
+LEGACY_ENTRY bank=0 pcm_fnv1a=154875081221479416 policy=1 volume=1
+LEGACY_ENTRY bank=1 pcm_fnv1a=17940295227199270887 policy=0 volume=0.58
+CONTROL pure_ignores_program error=0
+PAN voices=8 source=13 rank=1 max_audio_error=0 peak=0.0851345 positive_difference=0.0397218 left_balance=-0.750139 right_balance=0.773537 silent_rank_error=0 no_queue_fnv1a=11810850559306828685 legacy_fnv1a=4560873674276286041 pure_fnv1a=11810850559306828685
+PAN voices=8 source=13 rank=2 max_audio_error=0 peak=0.123248 positive_difference=0.0531068 left_balance=-0.730816 right_balance=0.783112 silent_rank_error=0 no_queue_fnv1a=12067121950465775133 legacy_fnv1a=2273167979732054248 pure_fnv1a=12067121950465775133
+PAN voices=8 source=0 rank=1 max_audio_error=0 peak=0.10852 positive_difference=0.0448998 left_balance=-0.772048 right_balance=0.765194 silent_rank_error=0 no_queue_fnv1a=9075285550302380781 legacy_fnv1a=15515615159108501719 pure_fnv1a=3373096183842684437
+PAN voices=8 source=0 rank=2 max_audio_error=0 peak=0.541786 positive_difference=0.242152 left_balance=-0.736612 right_balance=0.800409 silent_rank_error=0 no_queue_fnv1a=12521128043403635761 legacy_fnv1a=8005757675500606955 pure_fnv1a=908905877244258785
+PAN voices=8 source=11 rank=1 max_audio_error=0 peak=0.0851345 positive_difference=0.0397218 left_balance=-0.750139 right_balance=0.773537 silent_rank_error=0 no_queue_fnv1a=11810850559306828685 legacy_fnv1a=4560873674276286041 pure_fnv1a=11810850559306828685
+PAN voices=8 source=11 rank=2 max_audio_error=0 peak=0.123248 positive_difference=0.0531068 left_balance=-0.730816 right_balance=0.783112 silent_rank_error=0 no_queue_fnv1a=12067121950465775133 legacy_fnv1a=2273167979732054248 pure_fnv1a=12067121950465775133
+PAN voices=8 source=12 rank=1 max_audio_error=0 peak=0.0851345 positive_difference=0.0397218 left_balance=-0.750139 right_balance=0.773537 silent_rank_error=0 no_queue_fnv1a=11810850559306828685 legacy_fnv1a=4560873674276286041 pure_fnv1a=11810850559306828685
+PAN voices=8 source=12 rank=2 max_audio_error=0 peak=0.123248 positive_difference=0.0531068 left_balance=-0.730816 right_balance=0.783112 silent_rank_error=0 no_queue_fnv1a=12067121950465775133 legacy_fnv1a=2273167979732054248 pure_fnv1a=12067121950465775133
+PAN voices=16 source=13 rank=1 max_audio_error=0 peak=0.313427 positive_difference=0.120307 left_balance=-0.7609 right_balance=0.785324 silent_rank_error=0 no_queue_fnv1a=1000190200888486409 legacy_fnv1a=2206601360923852324 pure_fnv1a=1832434233203630953
+PAN voices=16 source=13 rank=2 max_audio_error=0 peak=0.362668 positive_difference=0.157436 left_balance=-0.714522 right_balance=0.803326 silent_rank_error=0 no_queue_fnv1a=13218986550440528777 legacy_fnv1a=2343471373939776987 pure_fnv1a=11625718072473232565
+PAN voices=16 source=0 rank=1 max_audio_error=0 peak=0.188858 positive_difference=0.0586185 left_balance=-0.762291 right_balance=0.793681 silent_rank_error=0 no_queue_fnv1a=18063429192868363529 legacy_fnv1a=17426304519246793040 pure_fnv1a=4330563788197568757
+PAN voices=16 source=0 rank=2 max_audio_error=0 peak=1.16439 positive_difference=0.429876 left_balance=-0.745731 right_balance=0.781653 silent_rank_error=0 no_queue_fnv1a=4676206807336497269 legacy_fnv1a=10324722088099202886 pure_fnv1a=7291804596600493625
+PAN voices=16 source=11 rank=1 max_audio_error=0 peak=0.313427 positive_difference=0.120307 left_balance=-0.7609 right_balance=0.785324 silent_rank_error=0 no_queue_fnv1a=1000190200888486409 legacy_fnv1a=2206601360923852324 pure_fnv1a=1832434233203630953
+PAN voices=16 source=11 rank=2 max_audio_error=0 peak=0.362668 positive_difference=0.157436 left_balance=-0.714522 right_balance=0.803326 silent_rank_error=0 no_queue_fnv1a=13218986550440528777 legacy_fnv1a=2343471373939776987 pure_fnv1a=11625718072473232565
+PAN voices=16 source=12 rank=1 max_audio_error=0 peak=0.313427 positive_difference=0.120307 left_balance=-0.7609 right_balance=0.785324 silent_rank_error=0 no_queue_fnv1a=1000190200888486409 legacy_fnv1a=2206601360923852324 pure_fnv1a=1832434233203630953
+PAN voices=16 source=12 rank=2 max_audio_error=0 peak=0.362668 positive_difference=0.157436 left_balance=-0.714522 right_balance=0.803326 silent_rank_error=0 no_queue_fnv1a=13218986550440528777 legacy_fnv1a=2343471373939776987 pure_fnv1a=11625718072473232565
+Native MTS SysEx DataEvent matrix: 16 cases
+Native Scala IComponent sessions: 6 cases, roundtrip_error=0 activation_error=0 failures=0
+Native MPE mapping: 112 distinct channel/controller IDs
+Native MPE transport: scope_cases=48 onset_cases=24 boundary_cases=12 range_cases=16 least_positive_delta=0.00428115 max_isolation_error=0 max_ordering_error=0 failures=0

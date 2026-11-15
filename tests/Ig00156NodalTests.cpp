@@ -483,6 +483,21 @@ void saturationInLoop()
 
 // Regression for the original unchecked/checked arithmetic and the new
 // explicit interval controls. No production coefficient/state semantics change.
+// Compare runtime API arithmetic, not caller-dependent constant folding or
+// specialization. The assertions below remain bit-exact and retain the same
+// convergence certification; no numeric gate is relaxed by these barriers.
+#if defined(_MSC_VER)
+#define CS80_TEST_NOINLINE __declspec(noinline)
+#elif defined(__GNUC__) || defined(__clang__)
+#define CS80_TEST_NOINLINE __attribute__((noinline))
+#else
+#define CS80_TEST_NOINLINE
+#endif
+CS80_TEST_NOINLINE void uncheckedRuntime(ref::NonlinearPair& p,double a,double b,double dt){p.step(a,b,dt);}
+CS80_TEST_NOINLINE auto checkedRuntime(ref::NonlinearPair& p,double a,double b,double dt){return p.stepChecked(a,b,dt);}
+CS80_TEST_NOINLINE auto explicitRuntime(ref::NonlinearPair& p,double a,double b,double dt,const ref::NonlinearPair::Controls& c){return p.stepCheckedControlled(a,b,dt,c,c);}
+
+#undef CS80_TEST_NOINLINE
 void controlledReferenceApi()
 {
     for (double ota : {0.0, 2.5}) {
@@ -493,9 +508,9 @@ void controlledReferenceApi()
         bool exact = true, certified = true;
         for (int i=0; i<500; ++i) {
             const double u0 = 2.5*std::sin(i*.017), u1 = 2.5*std::sin((i+1)*.017), dt = 1.0/768000;
-            unchecked.step(u0,u1,dt);
-            const auto a = checked.stepChecked(u0,u1,dt);
-            const auto b = explicitControls.stepCheckedControlled(u0,u1,dt,controls,controls);
+            uncheckedRuntime(unchecked,u0,u1,dt);
+            const auto a = checkedRuntime(checked,u0,u1,dt);
+            const auto b = explicitRuntime(explicitControls,u0,u1,dt,controls);
             certified = certified && a.finite && a.converged && b.finite && b.converged;
             exact = exact && unchecked.state() == checked.state() && checked.state() == explicitControls.state();
         }

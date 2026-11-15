@@ -1,0 +1,4 @@
+g++ -march=native -O3 -DNDEBUG -std=gnu++20 -fPIE -DCS80_DISABLE_AVX2_FILTER_BATCH=1 -Ics80-restored/idle-filter-reconstruction/src -Ics80-restored/idle-filter-reconstruction/tests cs80-restored/solver-probe/nodal-context/barrier.cpp cs80-restored/idle-native-cmake/libcs80_core.a -o cs80-restored/solver-probe/nodal-context/barrier
+# First run from workspace root failed to open relative tolerance file; retained run.log.
+# Corrected run from cs80-restored/idle-filter-reconstruction:
+../solver-probe/nodal-context/barrier > ../solver-probe/nodal-context/run-corrected.log 2>&1

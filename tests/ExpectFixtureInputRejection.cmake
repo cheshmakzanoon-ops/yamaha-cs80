@@ -1,0 +1,7 @@
+if(NOT EXISTS "${PROGRAM}")
+  message(FATAL_ERROR "Fixture executable missing: ${PROGRAM}")
+endif()
+execute_process(COMMAND "${PROGRAM}" "${INPUT}" RESULT_VARIABLE result OUTPUT_VARIABLE output ERROR_VARIABLE error)
+if(NOT "${result}" STREQUAL "2")
+  message(FATAL_ERROR "Expected explicit input rejection 2; got ${result}: ${output}${error}")
+endif()

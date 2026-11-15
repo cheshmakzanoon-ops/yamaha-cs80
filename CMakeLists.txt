@@ -206,6 +206,39 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_envelope_precision_tests PRIVATE cs80_core)
     add_test(NAME cs80_envelope_precision_tests COMMAND cs80_envelope_precision_tests)
     set_tests_properties(cs80_envelope_precision_tests PROPERTIES TIMEOUT 300)
+    add_executable(cs80_filter_idle_fallback_tests tests/FilterIdleFallbackTests.cpp)
+    target_link_libraries(cs80_filter_idle_fallback_tests PRIVATE cs80_core)
+    add_test(NAME cs80_filter_idle_fallback_tests COMMAND cs80_filter_idle_fallback_tests
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states.csv)
+    foreach(kind IN ITEMS missing truncated)
+        add_test(NAME cs80_filter_idle_fallback_${kind}_tests COMMAND ${CMAKE_COMMAND}
+            -DPROGRAM=$<TARGET_FILE:cs80_filter_idle_fallback_tests>
+            -DINPUT=${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states-${kind}.csv
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/ExpectFixtureInputRejection.cmake)
+    endforeach()
+    set_tests_properties(cs80_filter_idle_fallback_tests cs80_filter_idle_fallback_missing_tests
+        cs80_filter_idle_fallback_truncated_tests PROPERTIES TIMEOUT 60)
+
+    # Compile the production backend directly with the same no-contraction contract
+    # as the scalar comparison. Do not inherit platform-specific core tuning here.
+    add_executable(cs80_filter_batch_cap_tests tests/FilterBatchCapTests.cpp src/core/Ig00156Batch.cpp)
+    target_include_directories(cs80_filter_batch_cap_tests PRIVATE src)
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        target_compile_options(cs80_filter_batch_cap_tests PRIVATE -ffp-contract=off)
+    endif()
+    if(NOT CS80_ENABLE_AVX2_FILTER_BATCH OR NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        target_compile_definitions(cs80_filter_batch_cap_tests PRIVATE CS80_DISABLE_AVX2_FILTER_BATCH=1)
+    endif()
+    add_test(NAME cs80_filter_batch_cap_tests COMMAND cs80_filter_batch_cap_tests
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states.csv)
+    set_tests_properties(cs80_filter_batch_cap_tests PROPERTIES TIMEOUT 120 SKIP_RETURN_CODE 77)
+    foreach(kind IN ITEMS missing truncated)
+        add_test(NAME cs80_filter_batch_cap_${kind}_tests COMMAND ${CMAKE_COMMAND}
+            -DPROGRAM=$<TARGET_FILE:cs80_filter_batch_cap_tests>
+            -DINPUT=${CMAKE_CURRENT_SOURCE_DIR}/tests/data/ig00156-cap-states-${kind}.csv
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/ExpectFixtureInputRejection.cmake)
+    endforeach()
+
     add_executable(cs80_ig00156_cache_tests tests/Ig00156CacheTests.cpp)
     target_include_directories(cs80_ig00156_cache_tests PRIVATE src)
     add_test(NAME cs80_ig00156_cache_tests COMMAND cs80_ig00156_cache_tests)

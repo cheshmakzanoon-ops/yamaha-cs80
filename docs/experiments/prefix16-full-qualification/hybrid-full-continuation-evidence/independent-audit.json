@@ -1,0 +1,31 @@
+{
+  "pass_counts": [
+    295,
+    2,
+    260
+  ],
+  "prior_failures": [
+    "cs80_lfo_random_switching_tests",
+    "cs80_lfo_random_variable_rate_tests"
+  ],
+  "union": 557,
+  "exclusions": [
+    "cs80_locale_editor",
+    "cs80_locale_editor_mixed",
+    "cs80_locale_query",
+    "cs80_locale_query_mixed",
+    "cs80_teardown_probe",
+    "cs80_ui_smoke",
+    "cs80_voice_activity_ui_tests"
+  ],
+  "production_files_verified": 192,
+  "head": "3f4fa7085d954cde8c25ed9584e8e8828044ab8f",
+  "logs_sha256": {
+    "hybrid-full-rerun-evidence/nonwindow.log": "8d8c2fe21f440ed8fc7cffb8ad4c578f563c0e80a90a56946ccd8eea2f71d6d8",
+    "hybrid-full-rerun-evidence/lfo-fresh-retest.log": "eff49356abe213e5f127286037b76112c20eb5c94a45656d5ec2107bec10de97",
+    "hybrid-full-continuation-evidence/ctest.log": "022a92ffb81566a78ef084500153c6a88e4cf1a011b5da8c6f39de45b26265e2",
+    "hybrid-full-continuation-evidence/interrupted-LastTest.log": "a6b3984067abea60bcb9c73ee26c2dcc65a7455a6ec52268a081d73dc43e7d26",
+    "hybrid-full-continuation-evidence/LastTest.log": "f139bc6e658d2d9d3a10f38b338a33b984c78d77692bb5142472c8bcd99b2ded"
+  },
+  "single_green_run": false
+}

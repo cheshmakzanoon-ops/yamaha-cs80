@@ -1,6 +1,7 @@
 #include "plugin/PluginProcessor.h"
 #include "plugin/StudioMount.h"
 #include <iostream>
+#include "TimerTestWait.h"
 
 namespace {
 int checks = 0, failures = 0;
@@ -21,8 +22,7 @@ void restore(Cs80AudioProcessor& p, const juce::MemoryBlock& data)
 }
 void flush()
 {
-    juce::Thread::sleep(130);
-    juce::Timer::callPendingTimersSynchronously();
+    check(cs80::tests::waitForTimerCycle(), "timer-thread cycle completed before deadline");
 }
 struct Notes : juce::MidiKeyboardState::Listener
 {
@@ -136,7 +136,12 @@ int main()
     Host host;
     p.addListener(&host);
     restore(p, setterState);
-    flush(); // Existing 8 Hz mount timer must consume restored preferences too.
+    // Observe the real 8Hz timer consuming the restored preferences. Do not
+    // call studio.sync(): that would bypass the periodic integration under test.
+    check(cs80::tests::waitForTimer([&] {
+        return studio.qwerty.isEnabled() && !studio.areControllersShown()
+            && !cs80::ui::circuitNotesInTooltips();
+    }), "periodic restore synchronization completed before deadline");
     check(studio.qwerty.isEnabled() && !studio.areControllersShown()
           && !cs80::ui::circuitNotesInTooltips(), "periodic sync consumes restored preferences");
     check(host.dirty == 0, "accepted restore and UI synchronization do not dirty host");

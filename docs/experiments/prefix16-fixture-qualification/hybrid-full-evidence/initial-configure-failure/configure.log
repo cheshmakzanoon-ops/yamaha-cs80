@@ -1,0 +1,78 @@
+-- The C compiler identification is GNU 14.2.0
+-- The CXX compiler identification is GNU 14.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found suitable version "3.12.14", minimum required is "3.10") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1")
+-- Performing Test HAVE_FUNC_ATTRIBUTE_DESTRUCTOR
+-- Performing Test HAVE_FUNC_ATTRIBUTE_DESTRUCTOR - Success
+-- Looking for getentropy
+-- Looking for getentropy - found
+-- Looking for glob
+-- Looking for glob - found
+-- Looking for mmap
+-- Looking for mmap - found
+-- Looking for include file stdint.h
+-- Looking for include file stdint.h - found
+-- Checking for module 'alsa'
+--   Package 'alsa', required by 'virtual:world', not found
+-- Checking for modules 'freetype2;fontconfig'
+--   Package 'freetype2', required by 'virtual:world', not found
+--   Package 'fontconfig', required by 'virtual:world', not found
+-- Checking for module 'gl'
+--   Package 'gl', required by 'virtual:world', not found
+-- Checking for module 'libcurl'
+--   Found libcurl, version 8.14.1
+-- Checking for modules 'webkit2gtk-4.0;gtk+-x11-3.0'
+--   Package 'webkit2gtk-4.0', required by 'virtual:world', not found
+--   Package 'gtk+-x11-3.0', required by 'virtual:world', not found
+-- Configuring juceaide
+-- Building juceaide
+CMake Error at /workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src/extras/Build/juceaide/CMakeLists.txt:157 (message):
+  Failed to build juceaide
+
+  [ 9%] Building CXX object
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/Main.cpp.o
+
+  [ 18%] Building CXX object
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/__/juce_build_tools/juce_build_tools.cpp.o
+
+  [ 27%] Building CXX object
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.cpp.o
+
+  In file included from
+  /workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.cpp:55:
+
+  
+  /workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src/modules/juce_gui_basics/juce_gui_basics.h:348:12:
+  fatal error: X11/Xlib.h: No such file or directory
+
+    348 |   #include <X11/Xlib.h>
+        |            ^~~~~~~~~~~~
+
+  compilation terminated.
+
+  gmake[2]: ***
+  [extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make:107:
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.cpp.o]
+  Error 1
+
+  gmake[1]: *** [CMakeFiles/Makefile2:148:
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/all] Error 2
+
+  gmake: *** [Makefile:136: all] Error 2
+
+
+
+-- Configuring incomplete, errors occurred!

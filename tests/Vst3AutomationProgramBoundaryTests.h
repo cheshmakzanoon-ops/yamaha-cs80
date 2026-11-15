@@ -41,8 +41,9 @@ ProgramRender renderProgram(Module& module,cs80::ParamValues p,int pc,int bank,b
     Curves curves;
     for(size_t lane=0;lane<curves.size();++lane){
         const int key=cs80::kSampleAccurateParameters[lane];
-        curves[lane]={{0,normalized(key,p[key])},{255,.67-double(lane)*.013},{1023,.31+double(lane)*.008}};
+        curves[lane]={{0,normalized(key,p[key])},{255,validGeneratedNormalized(.67-double(lane)*.013)},{1023,validGeneratedNormalized(.31+double(lane)*.008)}};
     }
+    for(const auto& curve:curves)checkGeneratedCurve(curve);
     std::vector<float> output;
     for(int start=0;start<1024;){
         const int count=split&&start<pc?pc-start:1024-start;

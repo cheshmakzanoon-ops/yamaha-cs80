@@ -1,0 +1,5 @@
+# Independent prefix-16 validation
+
+Production unchanged by reviewer. Current helper uses 16 candidate interpolation iterations then 64 midpoint iterations, at most 98 helper equation evaluations including bracket expansion. Real residual acceptance and finite output/unchanged sentinel failure semantics remain unchanged. Original 192-iteration analysis remains separately preserved.
+
+All commands and inputs captured in run.sh/hashes.txt. Generic, native, ASan/UBSan fixture: 768 captures pass each. Generic and sanitizer production AVX2 batch: 648,358 checks pass each. Generic and sanitizer deterministic extra equation/guard probe: 100,000 cases, 81,245 accepted, 18,755 rejected, zero failures. All accepted cases independently recompute strict residual <1e-7 and consistent finite tuple; failures retain five named sentinel bits. Previous 192 variant accepted one fewer case in this probe; do not infer universal outcome equivalence from successful validation. No timing or hardware-fidelity claim. Leak detection disabled for sanitizer runs.

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <thread>
+#include "TimerTestWait.h"
 
 namespace
 {
@@ -16,8 +17,7 @@ void check(bool ok, const char* message)
 }
 void timers()
 {
-    juce::Thread::sleep(130);
-    juce::Timer::callPendingTimersSynchronously();
+    check(cs80::tests::waitForTimerCycle(), "timer-thread cycle completed before deadline");
 }
 juce::MemoryBlock save(Cs80AudioProcessor& host)
 {
@@ -41,8 +41,10 @@ struct Probe final : juce::AudioProcessorListener
         if (callback) callback();
     }
     void reset() { notifications = dirty = program = other = parameters = 0; wrongThread = false; observed.reset(); }
+    void awaitNotification() { check(cs80::tests::waitForTimer([&] { return notifications != 0; }), "deferred notification arrived before deadline"); }
     void expect(int count, bool parameterEdit = false)
     {
+        if (count) awaitNotification(); else timers();
         check(notifications == count && dirty == count, "exact coalesced dirty notification count");
         check(program == 0 && other == 0 && !wrongThread, "dirty-only notification on message thread");
         if (!parameterEdit) check(parameters == 0, "side-state edit does not fabricate parameter notifications");
@@ -104,8 +106,8 @@ int main()
         action();
         check(before != host.getModernLayer().getConfig(), "valid component action changed modulation state");
         check(probe.notifications == 0, "notification deferred beyond component mutation stack");
-        timers(); probe.expect(1);
-        probe.reset(); timers(); probe.expect(0);
+        probe.expect(1);
+        probe.reset(); probe.expect(0);
     };
     for (int slot = 0; slot < 3; ++slot)
     {
@@ -125,7 +127,7 @@ int main()
             changed([&] { box->setSelectedId(2, juce::sendNotificationSync); });
         probe.reset();
         matrix.sourceBox(row).onChange(); // explicit unchanged callback
-        timers(); probe.expect(0);
+        probe.expect(0);
     }
     page->selectMseg(0); // refresh cached graph after other edits
     auto& graph = page->getEditor();
@@ -164,12 +166,12 @@ int main()
 
     // Multiple real actions share one notification; future timer intervals remain live.
     probe.reset(); click(*page, "Sync"); click(*page, "Bipolar");
-    timers(); probe.expect(1);
+    probe.expect(1);
     changed([&] { click(*page, "Sync"); });
 
     // Coalescing does not discard the existing program-display request.
     probe.reset(); click(*page, "Sync"); host.getUndoableState().requestProgramDisplayUpdate();
-    timers();
+    probe.awaitNotification();
     check(probe.notifications == 1 && probe.dirty == 1 && probe.program == 1 && probe.other == 0,
           "program and side-state flags coexist in one delivery");
 
@@ -180,19 +182,19 @@ int main()
     changed([&] { check(host.undo(), "real route undo succeeds"); });
     changed([&] { check(host.redo(), "real route redo succeeds"); });
     check(host.getModernLayer().getConfig() == edited, "redo restores route");
-    probe.reset(); check(!host.redo(), "empty redo rejected"); timers(); probe.expect(0);
+    probe.reset(); check(!host.redo(), "empty redo rejected"); probe.expect(0);
     {
         Cs80AudioProcessor::ScopedUserEdit edit(host.getUndoableState(), "Active edit");
         check(!host.undo(), "undo during active edit rejected");
     }
-    timers(); probe.expect(0);
+    probe.expect(0);
 
     bool backgroundUndo = true, backgroundRedo = true;
     std::thread background([&] { backgroundUndo = host.undo(); backgroundRedo = host.redo(); });
     background.join();
     check(!backgroundUndo && !backgroundRedo, "background replay remains rejected");
     check(host.getModernLayer().getConfig() == edited, "background replay preserves state");
-    timers(); probe.expect(0);
+    probe.expect(0);
 
     // Parameter-only amount edit/replay uses its normal parameter notification,
     // not the new non-parameter channel.
@@ -200,46 +202,46 @@ int main()
     probe.reset();
     auto* amount = host.getAPVTS().getParameter(Cs80AudioProcessor::parameterId(cs80::P_mod1Amount));
     amount->beginChangeGesture(); amount->setValueNotifyingHost(amount->convertTo0to1(.375f)); amount->endChangeGesture();
-    timers(); probe.expect(0, true);
+    probe.expect(0, true);
     check(probe.parameters > 0, "amount change retains parameter host notifications");
-    probe.reset(); check(host.undo(), "parameter-only undo succeeds"); timers(); probe.expect(0, true);
+    probe.reset(); check(host.undo(), "parameter-only undo succeeds"); probe.expect(0, true);
     check(probe.parameters > 0, "parameter-only undo retains parameter notifications");
-    probe.reset(); check(host.redo(), "parameter-only redo succeeds"); timers(); probe.expect(0, true);
+    probe.reset(); check(host.redo(), "parameter-only redo succeeds"); probe.expect(0, true);
 
     // A new edit made reentrantly during host delivery remains pending for the
     // next timer; the current exchange must not erase it after the callback.
     probe.reset(); click(*page, "Sync");
     bool once = false;
     probe.callback = [&] { if (!once) { once = true; click(*page, "Bipolar"); } };
-    timers();
+    probe.awaitNotification();
     check(probe.notifications == 1 && probe.dirty == 1 && once, "first delivery admits reentrant editor action");
-    probe.callback = {}; probe.reset(); timers(); probe.expect(1);
-    probe.reset(); timers(); probe.expect(0);
+    probe.callback = {}; probe.reset(); probe.expect(1);
+    probe.reset(); probe.expect(0);
 
     // Programmatic setup and host restore are not editor actions.
     probe.reset();
     auto config = host.getModernLayer().getConfig(); config.msegs[0].sync = !config.msegs[0].sync;
-    host.getModernLayer().setConfig(config); timers(); probe.expect(0);
+    host.getModernLayer().setConfig(config); probe.expect(0);
     const auto restored = save(host);
     probe.reset(); host.setStateInformation(restored.getData(), static_cast<int>(restored.getSize()));
-    timers(); probe.expect(0);
+    probe.expect(0);
     page->selectMseg(0);
     probe.reset(); click(*page, "Sync");
     host.setStateInformation(restored.getData(), static_cast<int>(restored.getSize()));
-    timers(); probe.expect(0);
+    probe.expect(0);
     check(host.getModernLayer().getConfig() == config, "accepted restore supersedes pending edit");
     page->selectMseg(0);
     changed([&] { click(*page, "Sync"); }); // future edits are not suppressed
 
     // Component lifetime does not own committed-state notification delivery.
-    probe.reset(); click(*page, "Sync"); page.reset(); timers(); probe.expect(1);
+    probe.reset(); click(*page, "Sync"); page.reset(); probe.expect(1);
     page = std::make_unique<MsegPage>(host); page->setSize(1000, 400);
     probe.reset(); click(*page, "Sync");
     probe.callback = [&] { page.reset(); };
-    timers(); probe.expect(1);
+    probe.expect(1);
     check(page == nullptr, "host listener can destroy page at deferred delivery");
     probe.callback = {};
-    probe.reset(); timers(); probe.expect(0);
+    probe.reset(); probe.expect(0);
     std::cout << "Modern state notification checks=" << checks << " failures=" << failures << '\n';
     return failures ? 1 : 0;
 }

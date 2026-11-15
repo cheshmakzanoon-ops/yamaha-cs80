@@ -72,8 +72,9 @@ RenderResult renderTransition(Module& module, cs80::ParamValues p, int parameter
     Curves curves;
     for (size_t lane = 0; lane < curves.size(); ++lane) {
         const int key = cs80::kSampleAccurateParameters[lane];
-        curves[lane] = {{0, normalized(key, p[key])}, {255, 0.67 - double(lane) * 0.013}};
+        curves[lane] = {{0, normalized(key, p[key])}, {255, validGeneratedNormalized(0.67 - double(lane) * 0.013)}};
     }
+    for(const auto& curve:curves)checkGeneratedCurve(curve);
     std::vector<float> audio;
     const int step = reference && targetModern ? 1 : 256;
     for (int sample = 0; sample < 256; sample += step) {

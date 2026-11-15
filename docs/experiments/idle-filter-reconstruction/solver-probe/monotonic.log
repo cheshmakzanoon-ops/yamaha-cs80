@@ -1,0 +1,25 @@
+{
+  "interval": "x in [-4.97,4.97]",
+  "derivative_numerator_coefficients_ascending_in_x_squared": [
+    18261468225,
+    -1404728325,
+    58939650,
+    -1819125,
+    47250,
+    -1134,
+    28
+  ],
+  "exact_positive_Bernstein_coefficients": [
+    "18261468225",
+    "9982767395601/800",
+    "90928577022078411/10000000",
+    "1077419800179288505863/160000000000",
+    "1040669866816816147604343/200000000000000",
+    "373785454912169992955370524739/100000000000000000000",
+    "1407613925525999641802274344131087/250000000000000000000000"
+  ],
+  "positive_denominator": "135135+62370*x^2+3150*x^4+28*x^6",
+  "edge_value": "57423365018233322759/57423400757658691600",
+  "upward_clamp_jump": 6.223843397863257e-07,
+  "conclusion": "Exact-real rational branch strictly increasing; outer constant branches and upward jumps make T nondecreasing and bounded [-1,1]. Not a floating-rounding monotonicity proof."
+}

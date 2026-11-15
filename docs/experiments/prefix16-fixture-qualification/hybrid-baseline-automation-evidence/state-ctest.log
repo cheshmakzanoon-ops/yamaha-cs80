@@ -1,0 +1,52 @@
+Test project /workspace/scratch/ee447c520988/cs80-restored/hybrid-baseline-automation-build
+    Start 478: cs80_modern_state_notification_tests
+1/2 Test #478: cs80_modern_state_notification_tests ...***Failed   28.79 sec
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+FAIL: exact coalesced dirty notification count
+FAIL: reentrant save sees latest complete state
+FAIL: exact coalesced dirty notification count
+Modern state notification checks=949 failures=3
+
+    Start 483: cs80_studio_state_sync_tests
+2/2 Test #483: cs80_studio_state_sync_tests ...........***Failed    0.57 sec
+FAIL: periodic sync consumes restored preferences
+25 checks, 1 failures
+
+
+0% tests passed, 2 tests failed out of 2
+
+Total Test time (real) =  29.38 sec
+
+The following tests FAILED:
+	478 - cs80_modern_state_notification_tests (Failed)
+	483 - cs80_studio_state_sync_tests (Failed)
+Errors while running CTest

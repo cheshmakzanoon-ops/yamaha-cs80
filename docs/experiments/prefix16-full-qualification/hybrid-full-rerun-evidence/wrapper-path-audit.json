@@ -1,0 +1,1657 @@
+{
+  "selected_inventory_tests": 557,
+  "script_entries": 51,
+  "unique_scripts": 48,
+  "entries": [
+    {
+      "test": "cs80_filter_batch_admission_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_filter_batch_admission.py",
+      "sha256": "2b6c4d2a835dffe00ef2ff1d6fa88303b4730ed7b209850b70734d451ec5dbde",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 133,
+          "text": "mutant.mkdir(parents=True)"
+        },
+        {
+          "line": 162,
+          "text": "parser.add_argument('--output', type=Path)"
+        },
+        {
+          "line": 166,
+          "text": "args.output.mkdir(parents=True)"
+        },
+        {
+          "line": 169,
+          "text": "with tempfile.TemporaryDirectory(prefix='cs80-batch-admission-') as temporary:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_filter_batch_admission.py",
+        "--compiler",
+        "/usr/bin/c++"
+      ]
+    },
+    {
+      "test": "cs80_package_binary_identity_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-package-binary-identity.py",
+      "sha256": "3b9cbba51ca8322f487269a9f069890aeb5bd0d4a6c0953978f0e254167bb480",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 53,
+          "text": "self.temp = tempfile.TemporaryDirectory(prefix='cs80-inert-headers-')"
+        },
+        {
+          "line": 63,
+          "text": "(b / 'Contents').mkdir(parents=True, exist_ok=True)"
+        },
+        {
+          "line": 70,
+          "text": "p.parent.mkdir(parents=True, exist_ok=True)"
+        },
+        {
+          "line": 185,
+          "text": "nested.mkdir(parents=True)"
+        },
+        {
+          "line": 218,
+          "text": "outside.mkdir()"
+        },
+        {
+          "line": 239,
+          "text": "self.assertFalse(out.exists())"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-package-binary-identity.py"
+      ]
+    },
+    {
+      "test": "cs80_packaging_notice_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-packaging-notices.py",
+      "sha256": "3783ac61dea3b702caf3b3cf6d6001734b3f62fabcb5881b414d692957da1b11",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 50,
+          "text": "(bundle / \"Contents\").mkdir(parents=True)"
+        },
+        {
+          "line": 57,
+          "text": "binary.parent.mkdir(parents=True, exist_ok=True)"
+        },
+        {
+          "line": 66,
+          "text": "self.temp = tempfile.TemporaryDirectory(prefix=\"cs80-notice-test-\")"
+        },
+        {
+          "line": 77,
+          "text": "source.mkdir()"
+        },
+        {
+          "line": 80,
+          "text": "target.parent.mkdir(parents=True, exist_ok=True)"
+        },
+        {
+          "line": 88,
+          "text": "juce.mkdir(parents=True)"
+        },
+        {
+          "line": 142,
+          "text": "standalone.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 143,
+          "text": "plugin.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 153,
+          "text": "(db / \"info\").mkdir(parents=True)"
+        },
+        {
+          "line": 165,
+          "text": "juce.parent.mkdir(parents=True)"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-packaging-notices.py"
+      ]
+    },
+    {
+      "test": "cs80_ci_juce_provenance_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-ci-juce-provenance.py",
+      "sha256": "6b192e39f0d77cbda7143498222ed420e1432d0c48efc1b7b66a2119bc825542",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 26,
+          "text": "self.temp = tempfile.TemporaryDirectory(prefix=\"cs80 source evidence space \")"
+        },
+        {
+          "line": 31,
+          "text": "self.source.mkdir(parents=True)"
+        },
+        {
+          "line": 102,
+          "text": "local.mkdir(parents=True)"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-ci-juce-provenance.py",
+        "--cmake",
+        "/workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake"
+      ]
+    },
+    {
+      "test": "cs80_pluginval_windows_download_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-windows-download.py",
+      "sha256": "6afd7e813fd1509dd1c747e9f04c6b5d2f35874a318a450f33ba60658b998ce8",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 58,
+          "text": "with tempfile.TemporaryDirectory() as work:"
+        },
+        {
+          "line": 72,
+          "text": "return status, details, path.read_bytes() if path.exists() else None"
+        },
+        {
+          "line": 131,
+          "text": "with tempfile.TemporaryDirectory() as work:"
+        },
+        {
+          "line": 164,
+          "text": "self.assertFalse(output.exists())"
+        },
+        {
+          "line": 213,
+          "text": "self.assertIn(\"python scripts/download-pluginval-windows.py --output pluginval.zip \""
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-windows-download.py"
+      ]
+    },
+    {
+      "test": "cs80_pluginval_macos_download_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-macos-download.py",
+      "sha256": "a0a0c9763006c7339fd45fab2bc812cb2bc5c9f2f405227ae1d5899a6bbe6c74",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 58,
+          "text": "with tempfile.TemporaryDirectory() as work:"
+        },
+        {
+          "line": 72,
+          "text": "return status, details, path.read_bytes() if path.exists() else None"
+        },
+        {
+          "line": 172,
+          "text": "with tempfile.TemporaryDirectory() as work:"
+        },
+        {
+          "line": 206,
+          "text": "self.assertFalse(output.exists())"
+        },
+        {
+          "line": 272,
+          "text": "with tempfile.TemporaryDirectory() as work:"
+        },
+        {
+          "line": 279,
+          "text": "self.assertFalse(output.exists())"
+        },
+        {
+          "line": 285,
+          "text": "with tempfile.TemporaryDirectory() as work:"
+        },
+        {
+          "line": 287,
+          "text": "evidence.mkdir()  # Deliberately unwritable as an evidence file."
+        },
+        {
+          "line": 313,
+          "text": "self.assertIn(\"python3 scripts/download-pluginval-macos.py --output pluginval.zip \""
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-macos-download.py"
+      ]
+    },
+    {
+      "test": "cs80_deb_runtime_dependency_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-deb-runtime-dependencies.py",
+      "sha256": "3558023e56f2eb4e2aaaa3d7dfae3f1693a060e456fad575df7f2bbb0fd8026f",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 33,
+          "text": "self.temp = tempfile.TemporaryDirectory(prefix='cs80-deb-deps-')"
+        },
+        {
+          "line": 40,
+          "text": "self.standalone.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 41,
+          "text": "self.plugin.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 48,
+          "text": "juce.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 51,
+          "text": "(db / 'info').mkdir(parents=True)"
+        },
+        {
+          "line": 79,
+          "text": "tools.mkdir()"
+        },
+        {
+          "line": 118,
+          "text": "self.assertFalse((extracted / 'debian').exists())"
+        },
+        {
+          "line": 150,
+          "text": "bin_dir.mkdir()"
+        },
+        {
+          "line": 151,
+          "text": "for name in ('dirname', 'sed', 'dpkg', 'mktemp', 'mkdir', 'cp', 'install', 'rm'):"
+        },
+        {
+          "line": 161,
+          "text": "bin_dir.mkdir()"
+        },
+        {
+          "line": 278,
+          "text": "target.mkdir()"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-deb-runtime-dependencies.py"
+      ]
+    },
+    {
+      "test": "cs80_ci_bundle_verification_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-verify-ci-bundle.py",
+      "sha256": "4f8d8bdaaa7066164ba0a340fa8a23381326f87833fa081bed4ac70c15f9895b",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 24,
+          "text": "self.temp = tempfile.TemporaryDirectory(prefix='cs80-offline-verifier-')"
+        },
+        {
+          "line": 35,
+          "text": "(b / 'Contents').mkdir(parents=True)"
+        },
+        {
+          "line": 42,
+          "text": "binary.parent.mkdir(parents=True, exist_ok=True)"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-verify-ci-bundle.py"
+      ]
+    },
+    {
+      "test": "cs80_windows_installer_preflight_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-windows-installer-preflight.py",
+      "sha256": "1525b8ef8f1626c34088910d6b08efbb69b349e56e71520674362aba9c9d1ad4",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 40,
+          "text": "self.temp = tempfile.TemporaryDirectory(prefix='cs80 installer space ')"
+        },
+        {
+          "line": 47,
+          "text": "binary.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 50,
+          "text": "resource.parent.mkdir()"
+        },
+        {
+          "line": 130,
+          "text": "external.mkdir()"
+        },
+        {
+          "line": 157,
+          "text": "destination.parent.mkdir(parents=True, exist_ok=True)"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-windows-installer-preflight.py"
+      ]
+    },
+    {
+      "test": "cs80_parity_harness_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_parity_harness.py",
+      "sha256": "cb05352e8abedfee5137631ba58da2b883e27ab6974b97180a5d351d20a8124b",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 21,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 146,
+          "text": "with tempfile.TemporaryDirectory() as outside:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_parity_harness.py"
+      ]
+    },
+    {
+      "test": "cs80_ui_environment_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_ui_smoke_environment.py",
+      "sha256": "f36dcd33a62d8adf2bb783f135e8d261739a5f02b65e1f5970bae51868967956",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 18,
+          "text": "self.fixture = tempfile.TemporaryDirectory(prefix=\"cs80-ui-wrapper-\")"
+        },
+        {
+          "line": 21,
+          "text": "self.bin.mkdir()"
+        },
+        {
+          "line": 22,
+          "text": "for name in (\"bash\", \"grep\", \"mktemp\", \"rm\", \"cat\", \"sleep\"):"
+        },
+        {
+          "line": 51,
+          "text": "if (pathlib.Path(os.environ['FIXTURE']) / 'wm.ready').exists():"
+        },
+        {
+          "line": 59,
+          "text": "if os.environ['MODE'] != 'missing-atom' and (pathlib.Path(os.environ['FIXTURE']) / 'wm.ready').exists():"
+        },
+        {
+          "line": 90,
+          "text": "if pid_file.exists():"
+        },
+        {
+          "line": 119,
+          "text": "self.assertFalse((self.root / \"child.json\").exists())"
+        },
+        {
+          "line": 124,
+          "text": "self.assertFalse((self.root / \"child.json\").exists())"
+        },
+        {
+          "line": 130,
+          "text": "self.assertFalse((self.root / \"child.json\").exists())"
+        },
+        {
+          "line": 134,
+          "text": "self.assertFalse((self.root / \"child.json\").exists())"
+        },
+        {
+          "line": 140,
+          "text": "self.assertFalse((self.root / \"child.json\").exists())"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_ui_smoke_environment.py"
+      ]
+    },
+    {
+      "test": "cs80_preset_trash_safety_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-preset-trash-safety.py",
+      "sha256": "4a535be61def4a119c5d3cd6c9b5fb0fc43b5b43d9d7cb4c801d8ce3b8217178",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 109,
+          "text": "with tempfile.TemporaryDirectory(prefix='cs80-trash-handler-') as directory:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-preset-trash-safety.py",
+        "--compiler",
+        "/usr/bin/c++"
+      ]
+    },
+    {
+      "test": "cs80_preset_signature_math_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-preset-signature-math.py",
+      "sha256": "39e0563a3d6fa7d69e44f60d301d721a62aa91e4aeafd9d76c22de0c4a05220f",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 112,
+          "text": "with tempfile.TemporaryDirectory(prefix='cs80-signature-') as directory:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-preset-signature-math.py",
+        "--compiler",
+        "/usr/bin/c++"
+      ]
+    },
+    {
+      "test": "cs80_macos_installer_architecture_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-macos-installer-architectures.py",
+      "sha256": "162872874a2aa510f5d4f4ab90b3de95aa07cd598e4ce4947a1cb2f199b0125d",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 19,
+          "text": "with tempfile.TemporaryDirectory() as tmp:"
+        },
+        {
+          "line": 22,
+          "text": "script.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 28,
+          "text": "target.parent.mkdir(parents=True, exist_ok=True)"
+        },
+        {
+          "line": 32,
+          "text": "license.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 36,
+          "text": "binary.parent.mkdir(parents=True)"
+        },
+        {
+          "line": 41,
+          "text": "tools.mkdir()"
+        },
+        {
+          "line": 73,
+          "text": "return result.returncode, result.stderr, calls.read_text().splitlines() if calls.exists() else [], list((root / 'out space').glob('*.pkg'))"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-macos-installer-architectures.py"
+      ]
+    },
+    {
+      "test": "cs80_keyboard_epoch_interleaving_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_keyboard_epoch_interleaving.py",
+      "sha256": "ea11e1c0f29dbafbcb9ab327bcfa1171a3ed4e383c792eafe0225e71dc47c4ed",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 80,
+          "text": "include.mkdir(parents=True)"
+        },
+        {
+          "line": 102,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-keyboard-epoch-\") as temporary:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_keyboard_epoch_interleaving.py",
+        "--compiler",
+        "/usr/bin/c++"
+      ]
+    },
+    {
+      "test": "cs80_filter_idle_fallback_missing_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/ExpectFixtureInputRejection.cmake",
+      "sha256": "e9ebd8dc897a20bb5e9435b6f44785ba76d59a66cb6244cfacf7b45a5f8d5eb2",
+      "classification": "read-only fixed missing/truncated input rejection; no output path",
+      "markers": [],
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake",
+        "-DPROGRAM=/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_filter_idle_fallback_tests",
+        "-DINPUT=/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/data/ig00156-cap-states-missing.csv",
+        "-P",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/ExpectFixtureInputRejection.cmake"
+      ]
+    },
+    {
+      "test": "cs80_filter_idle_fallback_truncated_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/ExpectFixtureInputRejection.cmake",
+      "sha256": "e9ebd8dc897a20bb5e9435b6f44785ba76d59a66cb6244cfacf7b45a5f8d5eb2",
+      "classification": "read-only fixed missing/truncated input rejection; no output path",
+      "markers": [],
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake",
+        "-DPROGRAM=/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_filter_idle_fallback_tests",
+        "-DINPUT=/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/data/ig00156-cap-states-truncated.csv",
+        "-P",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/ExpectFixtureInputRejection.cmake"
+      ]
+    },
+    {
+      "test": "cs80_filter_batch_cap_missing_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/ExpectFixtureInputRejection.cmake",
+      "sha256": "e9ebd8dc897a20bb5e9435b6f44785ba76d59a66cb6244cfacf7b45a5f8d5eb2",
+      "classification": "read-only fixed missing/truncated input rejection; no output path",
+      "markers": [],
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake",
+        "-DPROGRAM=/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_filter_batch_cap_tests",
+        "-DINPUT=/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/data/ig00156-cap-states-missing.csv",
+        "-P",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/ExpectFixtureInputRejection.cmake"
+      ]
+    },
+    {
+      "test": "cs80_filter_batch_cap_truncated_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/ExpectFixtureInputRejection.cmake",
+      "sha256": "e9ebd8dc897a20bb5e9435b6f44785ba76d59a66cb6244cfacf7b45a5f8d5eb2",
+      "classification": "read-only fixed missing/truncated input rejection; no output path",
+      "markers": [],
+      "command": [
+        "/workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake",
+        "-DPROGRAM=/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_filter_batch_cap_tests",
+        "-DINPUT=/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/data/ig00156-cap-states-truncated.csv",
+        "-P",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/ExpectFixtureInputRejection.cmake"
+      ]
+    },
+    {
+      "test": "cs80_validator_diagnostic_selection_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-diagnostic-log.py",
+      "sha256": "387d7f08779732c682d41939597ab0fd19393074546ef776293df994e4e7a239",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 64,
+          "text": "with tempfile.TemporaryDirectory() as work:"
+        },
+        {
+          "line": 75,
+          "text": "with tempfile.TemporaryDirectory() as work:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-diagnostic-log.py"
+      ]
+    },
+    {
+      "test": "cs80_validator_retry_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-retry.sh",
+      "sha256": "162e246d24559d144ea82312aaf07557bb5b2be0c4a0e265b0a1d2f7312550e4",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 6,
+          "text": "tmp=$(mktemp -d) || exit 1"
+        }
+      ],
+      "command": [
+        "/usr/bin/bash",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-retry.sh",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/run-pluginval-linux.sh"
+      ]
+    },
+    {
+      "test": "cs80_validator_retry_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/run-pluginval-linux.sh",
+      "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+      "classification": "argument to retry test, whose outer shell creates unique mktemp root",
+      "markers": [],
+      "command": [
+        "/usr/bin/bash",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-retry.sh",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/run-pluginval-linux.sh"
+      ]
+    },
+    {
+      "test": "cs80_validator_exit_classification_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-exit-classification.py",
+      "sha256": "ae466f90899b0a09615886458eff7b8dceb6120d8b7989dd0cee77a0d5448d18",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 29,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-exit-classification-\") as work:"
+        },
+        {
+          "line": 32,
+          "text": "child_work.mkdir()"
+        },
+        {
+          "line": 42,
+          "text": "mock.patch.object(wrapper.tempfile, \"mkdtemp\", return_value=str(child_work)),"
+        },
+        {
+          "line": 47,
+          "text": "mock.patch.object(wrapper.shutil, \"rmtree\") as cleanup):"
+        },
+        {
+          "line": 60,
+          "text": "text = log.read_text() if log.exists() else \"\""
+        },
+        {
+          "line": 102,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-exit-cli-\") as work:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/scripts/test-pluginval-exit-classification.py"
+      ]
+    },
+    {
+      "test": "cs80_memory_port_map_negative_controls",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_port_map_negative_controls.py",
+      "sha256": "2f7184ae8620ad0182cac8a705ff815bc774fc036801549f9f14a55b9c22407d",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 23,
+          "text": "include.mkdir(parents=True)"
+        },
+        {
+          "line": 49,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-memory-port-map-\") as temporary:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_port_map_negative_controls.py",
+        "--compiler",
+        "/usr/bin/c++"
+      ]
+    },
+    {
+      "test": "cs80_memory_verified_diode_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_verified_diode.py",
+      "sha256": "9356ca000c3e6bfe46065ffc28c5d3cf5575e99b2cc1709340ef7554afc43b31",
+      "classification": "read-only numeric oracle, child stdin/stdout; no generated output directory",
+      "markers": [
+        {
+          "line": 15,
+          "text": "include_root=root/'src' if (root/'src/experimental/MemoryVerifiedDiode.h').exists() else root"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_verified_diode.py",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_memory_verified_diode_tests"
+      ]
+    },
+    {
+      "test": "cs80_memory_centered_log_rational",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_centered_log_rational.py",
+      "sha256": "d98365165d099234a543e2df379f419df30f1eba505ba72b71f32bfeecc5324b",
+      "classification": "read-only numeric oracle, child stdin/stdout; no generated output directory",
+      "markers": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_centered_log_rational.py",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_memory_verified_diode_tests"
+      ]
+    },
+    {
+      "test": "cs80_memory_interval_extrema",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_interval_extrema.py",
+      "sha256": "a28e3a9f3d2a68989e6f4296df5734a6037def0d2f59e99c20bf519b5742a577",
+      "classification": "read-only numeric oracle, child stdin/stdout; no generated output directory",
+      "markers": [],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_interval_extrema.py",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_memory_verified_diode_tests"
+      ]
+    },
+    {
+      "test": "cs80_memory_sparse_negative_controls",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_sparse_negative_controls.py",
+      "sha256": "ba410b6a807d96c277eab1bba3042d1c3233724957eb7b0c6d842975f193ceaa",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 22,
+          "text": "with tempfile.TemporaryDirectory(prefix='cs80-memory-sparse-negative-') as directory:"
+        },
+        {
+          "line": 25,
+          "text": "header_directory.mkdir()"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_sparse_negative_controls.py",
+        "--compiler",
+        "/usr/bin/c++"
+      ]
+    },
+    {
+      "test": "cs80_memory_routing_negative_controls",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_routing_negative_controls.py",
+      "sha256": "0ae3590a43bcb7ed53b8e444f3f6307dcae563416d8ba43ffb9492b017f5f28f",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 22,
+          "text": "include.mkdir(parents=True)"
+        },
+        {
+          "line": 52,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-memory-routing-\") as temporary:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_memory_routing_negative_controls.py",
+        "--compiler",
+        "/usr/bin/c++"
+      ]
+    },
+    {
+      "test": "cs80_render_cli_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_render_cli.py",
+      "sha256": "4e87dcc9f17652225032088393eb98bfd8c8ef0e8d9f1e2003c6a9a7e0bf6868",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 46,
+          "text": "cases = [['--unknown'], ['--sr'], ['--seconds'], ['--out'], ['--out', '']]"
+        },
+        {
+          "line": 52,
+          "text": "with tempfile.TemporaryDirectory() as tmp:"
+        },
+        {
+          "line": 56,
+          "text": "result = subprocess.run([RENDER, '--out', str(output), *case],"
+        },
+        {
+          "line": 59,
+          "text": "self.assertFalse(output.exists())"
+        },
+        {
+          "line": 62,
+          "text": "with tempfile.TemporaryDirectory() as tmp:"
+        },
+        {
+          "line": 67,
+          "text": "'--out', str(output)], capture_output=True, timeout=10)"
+        },
+        {
+          "line": 82,
+          "text": "with tempfile.TemporaryDirectory() as tmp:"
+        },
+        {
+          "line": 86,
+          "text": "result = subprocess.run([RENDER, '--seconds', '0.001', '--out', str(output)],"
+        },
+        {
+          "line": 115,
+          "text": "with tempfile.TemporaryDirectory() as tmp:"
+        },
+        {
+          "line": 120,
+          "text": "result = self.run_limited(['--seconds', '1000', '--out', str(output)], address_space)"
+        },
+        {
+          "line": 122,
+          "text": "self.assertFalse(output.exists())"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_render_cli.py",
+        "--render",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_render"
+      ]
+    },
+    {
+      "test": "cs80_benchmark_preflight_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_benchmark_preflight.py",
+      "sha256": "3e85adca1bc1e896f7439076ccbc979bfab9bc61ed9c1cd232c50592381072b9",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 24,
+          "text": "with tempfile.TemporaryDirectory() as tmp:"
+        },
+        {
+          "line": 28,
+          "text": "result = subprocess.run([BENCHMARK, '--out', str(output),"
+        },
+        {
+          "line": 33,
+          "text": "self.assertFalse(output.exists(), 'rejected selection created artifacts')"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_benchmark_preflight.py",
+        "--benchmark",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_source_factory_benchmark"
+      ]
+    },
+    {
+      "test": "cs80_parity_capture_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_parity_capture.py",
+      "sha256": "e96295ef806e7ab787dbf223d6f2e490ca925e70e56e55dc2361f7fcbf80cce6",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 93,
+          "text": "cls.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 98,
+          "text": "result = subprocess.run([str(CAPTURE), '--out', str(directory)], capture_output=True, text=True)"
+        },
+        {
+          "line": 119,
+          "text": "for arguments in ([], ['--unknown'], ['--out'], ['--out', str(self.directory), '--extra']):"
+        },
+        {
+          "line": 128,
+          "text": "result = subprocess.run([str(CAPTURE), '--out', str(path)], capture_output=True, text=True)"
+        },
+        {
+          "line": 332,
+          "text": "cls.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 337,
+          "text": "subprocess.run([str(CAPTURE), '--out', str(directory), '--fixture', 'live-adr-v1'], check=True, capture_output=True)"
+        },
+        {
+          "line": 339,
+          "text": "subprocess.run([str(CAPTURE), '--out', str(default)], check=True, capture_output=True)"
+        },
+        {
+          "line": 363,
+          "text": "directory.mkdir()"
+        },
+        {
+          "line": 365,
+          "text": "(directory / 'envelope-events.csv').mkdir()"
+        },
+        {
+          "line": 367,
+          "text": "result = subprocess.run([str(CAPTURE), '--out', str(directory), *fixture], capture_output=True)"
+        },
+        {
+          "line": 369,
+          "text": "self.assertFalse((directory / 'capture.json').exists())"
+        },
+        {
+          "line": 414,
+          "text": "subprocess.run([str(CAPTURE), '--out', str(directory), '--fixture', 'live-adr-v1'], check=True, capture_output=True)"
+        },
+        {
+          "line": 416,
+          "text": "subprocess.run([str(CAPTURE), '--out', str(directory)], check=True, capture_output=True)"
+        },
+        {
+          "line": 417,
+          "text": "self.assertFalse((directory / 'envelope-events.csv').exists())"
+        },
+        {
+          "line": 421,
+          "text": "result = subprocess.run([str(CAPTURE), '--out', str(directory), '--fixture', 'unknown'], capture_output=True)"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_parity_capture.py",
+        "--capture",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_parity_capture"
+      ]
+    },
+    {
+      "test": "cs80_state_mirror_bridge_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/StateMirrorBridgeTests.py",
+      "sha256": "fef21df03f56aca79f943ae1821ae9d5e0e8008566804d8246a3bde05a4b562b",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 19,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 24,
+          "text": "target.parent.mkdir(parents=True, exist_ok=True)"
+        },
+        {
+          "line": 51,
+          "text": "self.assertFalse(output.exists())"
+        },
+        {
+          "line": 52,
+          "text": "self.assertFalse((output.parent / \"cs80_AudioProcessorValueTreeState.cpp\").exists())"
+        },
+        {
+          "line": 74,
+          "text": "self.assertTrue((self.root / \"crlf/module.cpp\").exists())"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/StateMirrorBridgeTests.py",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src/modules/juce_audio_processors"
+      ]
+    },
+    {
+      "test": "cs80_preset_preferences_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_preset_preferences.py",
+      "sha256": "849fd0b0287cce0f86157b4a995f56c75ba3e15cb0d1b899d8e99c7b01e0b8c7",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 15,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-preset-preferences-\") as tmp:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_preset_preferences.py",
+        "--executable",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/CS80Snapshots_artefacts/Release/CS80Snapshots"
+      ]
+    },
+    {
+      "test": "cs80_snapshot_cli_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/SnapshotCliTests.py",
+      "sha256": "e586eb3d0a74389bd9e682c15bc0fcfeee25a4dbcd82d440a9a9db3a64fcc1a2",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 11,
+          "text": "[\"--out\"],"
+        },
+        {
+          "line": 12,
+          "text": "[\"--out\", \"\"],"
+        },
+        {
+          "line": 13,
+          "text": "[\"--out\", \"--self-test\"],"
+        },
+        {
+          "line": 14,
+          "text": "[\"--out\", \"images\", \"--unknown\"],"
+        },
+        {
+          "line": 19,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-cli-admission-\") as cwd:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/SnapshotCliTests.py",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/CS80Snapshots_artefacts/Release/CS80Snapshots"
+      ]
+    },
+    {
+      "test": "cs80_host_wrapper_platform_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/HostWrapperPlatformTests.py",
+      "sha256": "8fa4c9a8e5aa62e4375116c2521745e6de0eb99526b36cb34248f80c95dcae25",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 47,
+          "text": "self.originals.mkdir(parents=True)"
+        },
+        {
+          "line": 48,
+          "text": "(root / \"cmake\").mkdir()"
+        },
+        {
+          "line": 49,
+          "text": "(root / \"scripts\").mkdir()"
+        },
+        {
+          "line": 179,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-host-wrapper-platforms-\") as temporary:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/HostWrapperPlatformTests.py",
+        "--source",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid",
+        "--juce-wrappers",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src/modules/juce_audio_plugin_client",
+        "--tolerances",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/parity/tolerances-v2/host-wrapper-platforms.json",
+        "--cmake",
+        "/workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake"
+      ]
+    },
+    {
+      "test": "cs80_main_vst3_only_automation_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/MainVst3OnlyAutomationTests.py",
+      "sha256": "3e8f724858cb6a028bb675b50680abc94d186f185cbd459ab50689686d512816",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 76,
+          "text": "self.originals.mkdir(parents=True)"
+        },
+        {
+          "line": 77,
+          "text": "(root / \"cmake\").mkdir()"
+        },
+        {
+          "line": 78,
+          "text": "(root / \"scripts\").mkdir()"
+        },
+        {
+          "line": 79,
+          "text": "(root / \"src\").mkdir()"
+        },
+        {
+          "line": 214,
+          "text": "with tempfile.TemporaryDirectory(prefix=\"cs80-main-vst3-only-\") as temporary:"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/MainVst3OnlyAutomationTests.py",
+        "--source",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid",
+        "--juce-wrappers",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src/modules/juce_audio_plugin_client",
+        "--tolerances",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/parity/tolerances-v2/main-vst3-only-automation.json",
+        "--cmake",
+        "/workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake"
+      ]
+    },
+    {
+      "test": "cs80_truth_render_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_truth_render.py",
+      "sha256": "4506c62089fb278cffc001e5a0858158a7e2d700f32d2ef35962d8fbf0ce7d47",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 34,
+          "text": "self.tmp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 40,
+          "text": "result = subprocess.run([RENDERER, '--out', str(out), *map(str, args)], capture_output=True, text=True)"
+        },
+        {
+          "line": 43,
+          "text": "self.assertFalse(out.exists(), result.stderr)"
+        },
+        {
+          "line": 239,
+          "text": "elif name == 'occupied-dir': target.mkdir(); (target/'keep').write_bytes(b'keep')"
+        },
+        {
+          "line": 241,
+          "text": "result = subprocess.run([RENDERER, '--out', str(target), *map(str,args)], capture_output=True)"
+        },
+        {
+          "line": 259,
+          "text": "result = subprocess.run([RENDERER, '--out', str(out), '--input', str(path),"
+        },
+        {
+          "line": 264,
+          "text": "self.assertFalse(out.exists())"
+        },
+        {
+          "line": 281,
+          "text": "result=subprocess.run([RENDERER,'--out',str(out),'--rate','8000','--duration',str((count-1)/8000),"
+        },
+        {
+          "line": 286,
+          "text": "self.assertFalse(out.exists())"
+        },
+        {
+          "line": 314,
+          "text": "self.assertFalse((plain/'realtime.csv').exists())"
+        },
+        {
+          "line": 531,
+          "text": "failed = subprocess.run([RENDERER, '--out', str(self.root / 'newton'),"
+        },
+        {
+          "line": 537,
+          "text": "self.assertFalse((self.root / 'newton').exists())"
+        },
+        {
+          "line": 539,
+          "text": "existing.mkdir()"
+        },
+        {
+          "line": 541,
+          "text": "result = subprocess.run([RENDERER, '--out', str(existing)], capture_output=True)"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_truth_render.py",
+        "--renderer",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_truth_render"
+      ]
+    },
+    {
+      "test": "cs80_amplitude_production_comparison_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_amplitude_production_comparison.py",
+      "sha256": "431212fab544e903c4cc869bf0d92eeed1b02d4e08d011bbb72e8239a321b692",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 38,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 226,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 272,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 277,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 316,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 333,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 348,
+          "text": "self.assertFalse((self.out / 'manifest.json').exists())"
+        },
+        {
+          "line": 354,
+          "text": "self.assertFalse(self.out.exists())"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_amplitude_production_comparison.py",
+        "--renderer",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_amplitude_production_trace",
+        "--oracle",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_amplitude_production_oracle"
+      ]
+    },
+    {
+      "test": "cs80_filter_production_comparison_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_filter_production_comparison.py",
+      "sha256": "c78899a3b1bb0a6691751a3c8f6ed7f1b2ce5dd4d24ebe681b6a1625a81f196f",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 38,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 116,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 128,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 133,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 304,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 354,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 359,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 399,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 416,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 431,
+          "text": "self.assertFalse((self.out / 'manifest.json').exists())"
+        },
+        {
+          "line": 437,
+          "text": "self.assertFalse(self.out.exists())"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_filter_production_comparison.py",
+        "--renderer",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_filter_production_trace",
+        "--oracle",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_filter_production_oracle"
+      ]
+    },
+    {
+      "test": "cs80_vca_reference_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_vca_reference.py",
+      "sha256": "a7e7cdfcee124658de398d6e92b83101a392631e7dd7b8bd0f710b5e12e14562",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 78,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 95,
+          "text": "'--out', str(out or self.out), *extra]"
+        },
+        {
+          "line": 109,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 266,
+          "text": "elif kind=='dir': self.out.mkdir()"
+        },
+        {
+          "line": 276,
+          "text": "self.source.mkdir()"
+        },
+        {
+          "line": 289,
+          "text": "self.assertFalse(self.out.exists())"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_vca_reference.py",
+        "--renderer",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_vca_reference"
+      ]
+    },
+    {
+      "test": "cs80_float_wav_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_float_wav.py",
+      "sha256": "dd3e42f5ff1992320fc911ef1f07beb7e3f2fd3e996715aca1bc9e33cdd4772a",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 44,
+          "text": "self.tmp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 64,
+          "text": "result = subprocess.run([binary or getattr(a,tool),'--out',str(out),*args,*extra],capture_output=True,text=True)"
+        },
+        {
+          "line": 66,
+          "text": "if not success: self.assertFalse(out.exists())"
+        },
+        {
+          "line": 89,
+          "text": "if not compare: self.assertFalse((out/'realtime.wav').exists())"
+        },
+        {
+          "line": 147,
+          "text": "self.assertFalse(path.exists())"
+        },
+        {
+          "line": 158,
+          "text": "self.assertFalse(path.exists(),result.stderr)"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_float_wav.py",
+        "--filter",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_truth_render",
+        "--vca",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_vca_reference",
+        "--fixture",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_float_wav_fixture"
+      ]
+    },
+    {
+      "test": "cs80_reference_chain_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_reference_chain.py",
+      "sha256": "6d5a908036dd674b1e71afa45011d8da10c6130bdf884c84f67fbcc76c45c7c9",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 144,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 180,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 308,
+          "text": "p = pathlib.Path(sys.argv[sys.argv.index('--out')+1])/'realtime.csv'"
+        },
+        {
+          "line": 329,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 369,
+          "text": "out=pathlib.Path(sys.argv[sys.argv.index('--out')+1])"
+        },
+        {
+          "line": 423,
+          "text": "self.out.mkdir()"
+        },
+        {
+          "line": 460,
+          "text": "p=pathlib.Path(sys.argv[sys.argv.index('--out')+1])/'manifest.json'"
+        },
+        {
+          "line": 466,
+          "text": "p=pathlib.Path(sys.argv[sys.argv.index('--out')+1])/'trace.csv'"
+        },
+        {
+          "line": 477,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 493,
+          "text": "index=command.index('--out'); command[index+1]=str(direct)"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_reference_chain.py",
+        "--filter",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_truth_render",
+        "--vca",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_vca_reference"
+      ]
+    },
+    {
+      "test": "cs80_reference_chain_clock_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_reference_chain_clock.py",
+      "sha256": "878e4bacd9198c4abd8d83df8b125f3d6b2dce8f93a2aac00843b35890f48357",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 71,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 131,
+          "text": "self.assertFalse(Path(changes.get('out', self.out)).exists())"
+        },
+        {
+          "line": 382,
+          "text": "self.assertFalse(marker.exists())"
+        },
+        {
+          "line": 422,
+          "text": "out=pathlib.Path(sys.argv[sys.argv.index('--out')+1])"
+        },
+        {
+          "line": 457,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 483,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 517,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 523,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 531,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 535,
+          "text": "self.out.mkdir()"
+        },
+        {
+          "line": 549,
+          "text": "self.assertFalse(target.exists())"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_reference_chain_clock.py",
+        "--filter",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_truth_render",
+        "--vca",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_vca_reference"
+      ]
+    },
+    {
+      "test": "cs80_amplitude_envelope_reference_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_amplitude_envelope_reference.py",
+      "sha256": "64d3fd88ac973319c3c0b7ede11d50e7a444aea52c4a8afc4c5d89aa252ddbce",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 203,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 302,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 317,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 324,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 339,
+          "text": "elif kind == 'directory': target.mkdir(); (target / 'keep').write_text('keep')"
+        },
+        {
+          "line": 372,
+          "text": "self.assertFalse(out.exists())"
+        },
+        {
+          "line": 379,
+          "text": "with patch.object(REF, 'generate', race), self.assertRaises(FileExistsError):"
+        },
+        {
+          "line": 395,
+          "text": "'--ota-level', '2.5', '--gain', 'unity', '--wav-gain', '.1', '--out', str(chain)]"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_amplitude_envelope_reference.py",
+        "--filter",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_truth_render",
+        "--vca",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_vca_reference"
+      ]
+    },
+    {
+      "test": "cs80_event_aware_envelope_vca_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_event_aware_envelope_vca.py",
+      "sha256": "a3316cc688124e0d66f2677d21b3ba140a33207327e0066de2eccd27e05028a4",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 222,
+          "text": "with tempfile.TemporaryDirectory() as temp:"
+        },
+        {
+          "line": 231,
+          "text": "'--rate','8000','--samples','81','--out',str(out)]"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_event_aware_envelope_vca.py"
+      ]
+    },
+    {
+      "test": "cs80_ring_time_reference_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_ring_time_reference.py",
+      "sha256": "8f284a538eab06167dadb1128ff936a69984da3fad11eca25a2bdebc295abbcf",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 118,
+          "text": "with tempfile.TemporaryDirectory() as temp:"
+        },
+        {
+          "line": 124,
+          "text": "'--carrier-initial-phase','.25','--rate','8000','--samples','81','--out',str(out)]"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_ring_time_reference.py"
+      ]
+    },
+    {
+      "test": "cs80_event_aware_envelope_sine_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_event_aware_envelope_sine.py",
+      "sha256": "2f1469b04b1990b4676b6d2ef2c37346b3e49edc4c9eeb461ef5b1829c699e9b",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 153,
+          "text": "with tempfile.TemporaryDirectory() as temp:"
+        },
+        {
+          "line": 159,
+          "text": "'--initial-li','.2','--initial-coupling','0','--rate','8000','--samples','81','--out',str(out)]"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_event_aware_envelope_sine.py"
+      ]
+    },
+    {
+      "test": "cs80_event_aware_ring_vca_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_event_aware_ring_vca.py",
+      "sha256": "a08cbdadc1bddc869e23377dd4c83179fe62f8e9287338c6c7dee3d48b26aada",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 148,
+          "text": "with tempfile.TemporaryDirectory() as temp:"
+        },
+        {
+          "line": 154,
+          "text": "'--amount','.6','--lc','.8','--ei','.3','--initial-li','.2','--initial-coupling','.013','--rate','8000','--samples','81','--out',str(out)]"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_event_aware_ring_vca.py"
+      ]
+    },
+    {
+      "test": "cs80_event_aware_ring_vca_coincident_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_event_aware_ring_vca_coincident.py",
+      "sha256": "108c7fc8d92e7d70eb11ef4bab8f4b027ac6884e5119d3d10f333e091c011c9a",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 85,
+          "text": "with tempfile.TemporaryDirectory() as temp:"
+        },
+        {
+          "line": 91,
+          "text": "'--amount','.6','--lc','.8','--ei','.3','--initial-li','.2','--initial-coupling','.013','--rate','8000','--samples','81','--out',str(out)]"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_event_aware_ring_vca_coincident.py"
+      ]
+    },
+    {
+      "test": "cs80_filter_envelope_reference_tests",
+      "script": "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_filter_envelope_reference.py",
+      "sha256": "2e5ae90c9a0bcaa05ddd2bd901d0c3a35e82ccee544d0d2fda247f699c2a04f7",
+      "classification": "unique temporary root present; inspected registered arguments",
+      "markers": [
+        {
+          "line": 230,
+          "text": "self.temp = tempfile.TemporaryDirectory()"
+        },
+        {
+          "line": 300,
+          "text": "self.assertFalse((self.out / 'filter_controls.csv').exists())"
+        },
+        {
+          "line": 324,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 348,
+          "text": "self.assertFalse(self.out.exists())"
+        },
+        {
+          "line": 374,
+          "text": "elif kind == 'directory': target.mkdir(); (target / 'keep').write_text('keep')"
+        },
+        {
+          "line": 406,
+          "text": "self.assertFalse(out.exists())"
+        },
+        {
+          "line": 412,
+          "text": "with patch.object(REF, 'generate', race), self.assertRaises(FileExistsError):"
+        },
+        {
+          "line": 423,
+          "text": "proc = subprocess.run([sys.executable, str(REF.HELPER), '--events', str(amp_events), '--out', str(amp),"
+        },
+        {
+          "line": 434,
+          "text": "'--ota-level', '2.5', '--gain', 'unity', '--wav-gain', '.1', '--out', str(chain)],"
+        }
+      ],
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/ee447c520988/cs80-restored/audio-root-hybrid/tests/test_filter_envelope_reference.py",
+        "--filter",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_truth_render",
+        "--vca",
+        "/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/cs80_vca_reference"
+      ]
+    }
+  ]
+}

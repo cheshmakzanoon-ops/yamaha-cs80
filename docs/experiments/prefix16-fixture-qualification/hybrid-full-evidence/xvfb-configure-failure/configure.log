@@ -1,0 +1,17 @@
+-- Checking for modules 'freetype2;fontconfig'
+--   Found freetype2, version 26.2.20
+--   Found fontconfig, version 2.15.0
+-- Checking for modules 'webkit2gtk-4.0;gtk+-x11-3.0'
+--   Package 'webkit2gtk-4.0', required by 'virtual:world', not found
+--   Package 'gtk+-x11-3.0', required by 'virtual:world', not found
+-- Configuring juceaide
+-- Building juceaide
+-- Exporting juceaide
+-- Testing juceaide
+-- Finished setting up juceaide
+-- Found Python3: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 (found version "3.12.14") found components: Interpreter
+CMake Error at CMakeLists.txt:2527 (find_program):
+  Could not find CS80_XVFB_RUN using the following names: xvfb-run
+
+
+-- Configuring incomplete, errors occurred!

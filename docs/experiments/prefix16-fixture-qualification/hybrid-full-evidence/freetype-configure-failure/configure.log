@@ -1,0 +1,43 @@
+-- Checking for module 'alsa'
+--   Found alsa, version 1.2.14
+-- Checking for modules 'freetype2;fontconfig'
+--   Package 'bzip2', required by 'freetype2', not found
+--   Package 'bzip2', required by 'freetype2', not found
+-- Checking for module 'gl'
+--   Found gl, version 1.2
+-- Checking for modules 'webkit2gtk-4.0;gtk+-x11-3.0'
+--   Package 'webkit2gtk-4.0', required by 'virtual:world', not found
+--   Package 'gtk+-x11-3.0', required by 'virtual:world', not found
+-- Configuring juceaide
+-- Building juceaide
+CMake Error at /workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src/extras/Build/juceaide/CMakeLists.txt:157 (message):
+  Failed to build juceaide
+
+  [ 9%] Building CXX object
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_gui_basics/juce_gui_basics.cpp.o
+
+  [ 18%] Building CXX object
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.cpp.o
+
+  
+  /workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src/modules/juce_graphics/juce_graphics.cpp:119:11:
+  fatal error: ft2build.h: No such file or directory
+
+    119 |  #include <ft2build.h>
+        |           ^~~~~~~~~~~~
+
+  compilation terminated.
+
+  gmake[2]: ***
+  [extras/Build/juceaide/CMakeFiles/juceaide.dir/build.make:121:
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/__/__/__/modules/juce_graphics/juce_graphics.cpp.o]
+  Error 1
+
+  gmake[1]: *** [CMakeFiles/Makefile2:148:
+  extras/Build/juceaide/CMakeFiles/juceaide.dir/all] Error 2
+
+  gmake: *** [Makefile:136: all] Error 2
+
+
+
+-- Configuring incomplete, errors occurred!

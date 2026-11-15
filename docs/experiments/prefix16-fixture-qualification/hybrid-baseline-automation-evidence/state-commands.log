@@ -1,0 +1,8 @@
++ cmake --build hybrid-baseline-automation-build -j2 --target cs80_modern_state_notification_tests cs80_studio_state_sync_tests
++ s=0
++ echo 0
++ '[' 0 = 0 ']'
++ ctest --test-dir hybrid-baseline-automation-build -R '^cs80_(modern_state_notification|studio_state_sync)_tests$' --output-on-failure
++ s=8
++ echo 8
++ exit 8

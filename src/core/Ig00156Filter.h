@@ -38,6 +38,7 @@
 // the same cached-slope start and 1e-7 tolerance as the first-stage model.
 #include "Dsp.h"
 #include "FastMath.h"
+#include "Ig00156RootFallback.h"
 
 #include <algorithm>
 #include <cmath>
@@ -235,8 +236,16 @@ public:
             hp = c0 + c1 * bp + g2 * level * t2 + f2 * bp;
             t1 = fastTanh(hp * inv);
             const double f = bp - zBp + g1 * level * t1 + f1 * hp;
-            if (std::abs(f) < 1.0e-7 || iteration == 4)
+            if (std::abs(f) < 1.0e-7) break;
+            if (iteration == 4) {
+                if (std::isfinite(f) && std::isfinite(bp)) {
+                    ig00156_detail::RootPoint point{};
+                    if (ig00156_detail::bracketedRoot(zBp,c0,c1,g1,f1,level,point)) {
+                        bp=point.bp; hp=point.hp; t1=point.t1; t2=point.t2;
+                    }
+                }
                 break;
+            }
             const double dh = c1 + g2 * (1.0 - t2 * t2) + f2;
             bp -= f / (1.0 + (g1 * (1.0 - t1 * t1) + f1) * dh);
         }

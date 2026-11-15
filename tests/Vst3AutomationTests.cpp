@@ -414,6 +414,19 @@ double absoluteValue(const Curve& curve, double initial, int sample)
     return previous.second;
 }
 using Curves = std::array<Curve, cs80::kSampleAccurateParameters.size()>;
+double validGeneratedNormalized(double raw)
+{
+    require(std::isfinite(raw), "generated normalized knot is finite");
+    const double value=std::clamp(raw,0.0,1.0);
+    require(std::isfinite(value)&&value>=0.0&&value<=1.0, "generated normalized knot within [0,1]");
+    return value;
+}
+void checkGeneratedCurve(const Curve& curve)
+{
+    for(const auto& point:curve)
+        require(std::isfinite(point.second)&&point.second>=0.0&&point.second<=1.0,
+                "generated curve points within normalized range before subdivision");
+}
 Curves curvesFor(const cs80::ParamValues& parameters)
 {
     Curves curves;
@@ -425,6 +438,7 @@ Curves curvesFor(const cs80::ParamValues& parameters)
                      {1023, 0.41 + lane * 0.005}, {2047, 0.64 - lane * 0.007},
                      {3071, 0.18 + lane * 0.01}, {4095, 0.50 + lane * 0.006}};
     }
+    for (auto& curve : curves) { for (auto& point : curve) point.second=validGeneratedNormalized(point.second); checkGeneratedCurve(curve); }
     return curves;
 }
 std::vector<float> render(Module& module, const cs80::ParamValues& parameters, const Curves& curves,
@@ -480,13 +494,13 @@ std::vector<float> renderAfterFlush(Module& module, const cs80::ParamValues& par
         {
             const int parameter = cs80::kSampleAccurateParameters[lane];
             prior.add(parameterId(cs80::paramId(parameter)),
-                {{0, normalized(parameter, parameters[parameter])}, {255, 0.23 + double(lane) * 0.007}});
+                {{0, normalized(parameter, parameters[parameter])}, {255, validGeneratedNormalized(0.23 + double(lane) * 0.007)}});
         }
     instance.process(0, 256, priorCurve ? &prior : nullptr, output);
     Changes flush;
     for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
         flush.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
-                  {{0, double(0.69f - float(lane) * 0.009f)}});
+                  {{0, validGeneratedNormalized(double(0.69f - float(lane) * 0.009f))}});
     instance.flush(flush);
     std::array<double, cs80::kSampleAccurateParameters.size()> flushed {};
     if (readState) flushed = instance.normalizedState();
@@ -497,7 +511,7 @@ std::vector<float> renderAfterFlush(Module& module, const cs80::ParamValues& par
         for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
         {
             const double initial = flushed[lane];
-            const double target = 0.31 + double(lane) * 0.008;
+            const double target = validGeneratedNormalized(0.31 + double(lane) * 0.008);
             const double fraction = std::min(1.0, double(sample + 1) / double(firstPoint + 1));
             const double value = scalar ? initial * (1.0 - fraction) + target * fraction : target;
             changes.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
@@ -535,6 +549,9 @@ int main(int argc, char** argv)
         std::cout << "VST3 protocol configuration: rate=" << testSampleRate
                   << " mode=" << (testProcessMode == kOffline ? "offline" : "realtime") << '\n';
         const ws1::Tolerances limits(argv[2], "host_automation");
+        require(limits["generated_parameter_count"]==double(cs80::kSampleAccurateParameters.size()),
+                "metadata parameter count matches actual generated roster");
+        std::cout<<"Generated normalized roster count="<<cs80::kSampleAccurateParameters.size()<<'\n';
         const ws1::Tolerances boundaryLimits((std::filesystem::path(argv[2]).parent_path()
             / "host-automation-state-boundary.json").string(), "host_automation_state_boundary");
         Module module(argv[1]);

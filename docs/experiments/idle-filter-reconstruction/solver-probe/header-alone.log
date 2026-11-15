@@ -1,0 +1,6 @@
+In file included from cs80-restored/solver-probe/header-alone.cpp:1:
+cs80-restored/idle-filter-reconstruction/src/core/Ig00156RootFallback.h: In lambda function:
+cs80-restored/idle-filter-reconstruction/src/core/Ig00156RootFallback.h:25:27: error: ‘fastTanh’ was not declared in this scope; did you mean ‘fastmath’?
+   25 |         p.bp = bp; p.t2 = fastTanh(bp * inv);
+      |                           ^~~~~~~~
+      |                           fastmath

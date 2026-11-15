@@ -1,0 +1,102 @@
+--- a/tests/Vst3AutomationTests.cpp
++++ b/tests/Vst3AutomationTests.cpp
+@@ -414,6 +414,19 @@
+     return previous.second;
+ }
+ using Curves = std::array<Curve, cs80::kSampleAccurateParameters.size()>;
++double validGeneratedNormalized(double raw)
++{
++    require(std::isfinite(raw), "generated normalized knot is finite");
++    const double value=std::clamp(raw,0.0,1.0);
++    require(std::isfinite(value)&&value>=0.0&&value<=1.0, "generated normalized knot within [0,1]");
++    return value;
++}
++void checkGeneratedCurve(const Curve& curve)
++{
++    for(const auto& point:curve)
++        require(std::isfinite(point.second)&&point.second>=0.0&&point.second<=1.0,
++                "generated curve points within normalized range before subdivision");
++}
+ Curves curvesFor(const cs80::ParamValues& parameters)
+ {
+     Curves curves;
+@@ -425,6 +438,7 @@
+                      {1023, 0.41 + lane * 0.005}, {2047, 0.64 - lane * 0.007},
+                      {3071, 0.18 + lane * 0.01}, {4095, 0.50 + lane * 0.006}};
+     }
++    for (auto& curve : curves) { for (auto& point : curve) point.second=validGeneratedNormalized(point.second); checkGeneratedCurve(curve); }
+     return curves;
+ }
+ std::vector<float> render(Module& module, const cs80::ParamValues& parameters, const Curves& curves,
+@@ -480,13 +494,13 @@
+         {
+             const int parameter = cs80::kSampleAccurateParameters[lane];
+             prior.add(parameterId(cs80::paramId(parameter)),
+-                {{0, normalized(parameter, parameters[parameter])}, {255, 0.23 + double(lane) * 0.007}});
++                {{0, normalized(parameter, parameters[parameter])}, {255, validGeneratedNormalized(0.23 + double(lane) * 0.007)}});
+         }
+     instance.process(0, 256, priorCurve ? &prior : nullptr, output);
+     Changes flush;
+     for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
+         flush.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
+-                  {{0, double(0.69f - float(lane) * 0.009f)}});
++                  {{0, validGeneratedNormalized(double(0.69f - float(lane) * 0.009f))}});
+     instance.flush(flush);
+     std::array<double, cs80::kSampleAccurateParameters.size()> flushed {};
+     if (readState) flushed = instance.normalizedState();
+@@ -497,7 +511,7 @@
+         for (size_t lane = 0; lane < cs80::kSampleAccurateParameters.size(); ++lane)
+         {
+             const double initial = flushed[lane];
+-            const double target = 0.31 + double(lane) * 0.008;
++            const double target = validGeneratedNormalized(0.31 + double(lane) * 0.008);
+             const double fraction = std::min(1.0, double(sample + 1) / double(firstPoint + 1));
+             const double value = scalar ? initial * (1.0 - fraction) + target * fraction : target;
+             changes.add(parameterId(cs80::paramId(cs80::kSampleAccurateParameters[lane])),
+@@ -535,6 +549,9 @@
+         std::cout << "VST3 protocol configuration: rate=" << testSampleRate
+                   << " mode=" << (testProcessMode == kOffline ? "offline" : "realtime") << '\n';
+         const ws1::Tolerances limits(argv[2], "host_automation");
++        require(limits["generated_parameter_count"]==double(cs80::kSampleAccurateParameters.size()),
++                "metadata parameter count matches actual generated roster");
++        std::cout<<"Generated normalized roster count="<<cs80::kSampleAccurateParameters.size()<<'\n';
+         const ws1::Tolerances boundaryLimits((std::filesystem::path(argv[2]).parent_path()
+             / "host-automation-state-boundary.json").string(), "host_automation_state_boundary");
+         Module module(argv[1]);
+--- a/tests/Vst3AutomationPolicyBoundaryTests.h
++++ b/tests/Vst3AutomationPolicyBoundaryTests.h
+@@ -72,8 +72,9 @@
+     Curves curves;
+     for (size_t lane = 0; lane < curves.size(); ++lane) {
+         const int key = cs80::kSampleAccurateParameters[lane];
+-        curves[lane] = {{0, normalized(key, p[key])}, {255, 0.67 - double(lane) * 0.013}};
++        curves[lane] = {{0, normalized(key, p[key])}, {255, validGeneratedNormalized(0.67 - double(lane) * 0.013)}};
+     }
++    for(const auto& curve:curves)checkGeneratedCurve(curve);
+     std::vector<float> audio;
+     const int step = reference && targetModern ? 1 : 256;
+     for (int sample = 0; sample < 256; sample += step) {
+--- a/tests/Vst3AutomationProgramBoundaryTests.h
++++ b/tests/Vst3AutomationProgramBoundaryTests.h
+@@ -41,8 +41,9 @@
+     Curves curves;
+     for(size_t lane=0;lane<curves.size();++lane){
+         const int key=cs80::kSampleAccurateParameters[lane];
+-        curves[lane]={{0,normalized(key,p[key])},{255,.67-double(lane)*.013},{1023,.31+double(lane)*.008}};
++        curves[lane]={{0,normalized(key,p[key])},{255,validGeneratedNormalized(.67-double(lane)*.013)},{1023,validGeneratedNormalized(.31+double(lane)*.008)}};
+     }
++    for(const auto& curve:curves)checkGeneratedCurve(curve);
+     std::vector<float> output;
+     for(int start=0;start<1024;){
+         const int count=split&&start<pc?pc-start:1024-start;
+--- a/tests/parity/tolerances-v2/host-automation.json
++++ b/tests/parity/tolerances-v2/host-automation.json
+@@ -10,6 +10,8 @@
+     "extreme_offset_denominator_error": 0.00000000000001,
+     "extreme_offset_fixture": "A deliberately out-of-range INT_MAX VST3 point follows the implicit sample -1. At sample zero, the rising normalized ramp must remain finite, above its previous value, and agree within 1e-14 with a double-widened independent denominator. UBSan must reject signed int overflow. This hardening is not a change to valid host-point timing or the existing numerical thresholds.",
+     "key_parameter_count": 18,
++    "generated_parameter_count": 120,
++    "generated_keys": "The valid-input general VST3 fixture uses all 120 current kSampleAccurateParameters entries; key_parameter_count and keys above/below retain the frozen original protocol prefix.",
+     "keys": "P_volume, P_mix, P_brilliance, P_resonance, P_masterTune, P_detune; CP_hpfCutoff, CP_hpfRes, CP_lpfCutoff, CP_lpfRes, CP_vLevel and CP_pw in both ranks, always referred to by enum name.",
+     "vst3_truth": "Steinberg IParamValueQueue: normalized piecewise-linear curves; previous block's last value is the implicit point at sample -1. A discontinuity is encoded by the old value at sample n-1 and new value at sample n. Preserve every queue point and all sample offsets, including first and last sample. Non-key parameters retain JUCE block-rate semantics.",
+     "au_truth": "Apple AudioUnitScheduleParameters: immediate changes at bufferOffset; ramps interpolate from startValue at signed startBufferOffset to endValue after durationInFrames, within the current render. Report scheduling capacity/invalid-input errors rather than silently dropping events.",

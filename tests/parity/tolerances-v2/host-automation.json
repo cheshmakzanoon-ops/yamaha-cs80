@@ -10,6 +10,8 @@
     "extreme_offset_denominator_error": 0.00000000000001,
     "extreme_offset_fixture": "A deliberately out-of-range INT_MAX VST3 point follows the implicit sample -1. At sample zero, the rising normalized ramp must remain finite, above its previous value, and agree within 1e-14 with a double-widened independent denominator. UBSan must reject signed int overflow. This hardening is not a change to valid host-point timing or the existing numerical thresholds.",
     "key_parameter_count": 18,
+    "generated_parameter_count": 120,
+    "generated_keys": "The valid-input general VST3 fixture uses all 120 current kSampleAccurateParameters entries; key_parameter_count and keys above/below retain the frozen original protocol prefix.",
     "keys": "P_volume, P_mix, P_brilliance, P_resonance, P_masterTune, P_detune; CP_hpfCutoff, CP_hpfRes, CP_lpfCutoff, CP_lpfRes, CP_vLevel and CP_pw in both ranks, always referred to by enum name.",
     "vst3_truth": "Steinberg IParamValueQueue: normalized piecewise-linear curves; previous block's last value is the implicit point at sample -1. A discontinuity is encoded by the old value at sample n-1 and new value at sample n. Preserve every queue point and all sample offsets, including first and last sample. Non-key parameters retain JUCE block-rate semantics.",
     "au_truth": "Apple AudioUnitScheduleParameters: immediate changes at bufferOffset; ramps interpolate from startValue at signed startBufferOffset to endValue after durationInFrames, within the current render. Report scheduling capacity/invalid-input errors rather than silently dropping events.",

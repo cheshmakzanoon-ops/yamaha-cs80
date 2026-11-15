@@ -1,0 +1,14 @@
++ git -C audio-root-recovery rev-parse HEAD
++ git -C audio-root-recovery status --short
++ cmake -S audio-root-recovery -B hybrid-baseline-automation-build -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON -DCS80_ENABLE_AVX2_FILTER_BATCH=ON -DCMAKE_CXX_FLAGS=-ffp-contract=off -DFETCHCONTENT_SOURCE_DIR_JUCE=/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/juce-src -DFETCHCONTENT_SOURCE_DIR_CS80_LIBXML2=/workspace/scratch/ee447c520988/cs80-restored/hybrid-full-build/_deps/cs80_libxml2-src
++ s=0
++ echo 0
++ '[' 0 = 0 ']'
++ cmake --build hybrid-baseline-automation-build -j2 --target cs80_vst3_automation_tests
++ s=0
++ echo 0
++ '[' 0 = 0 ']'
++ ctest --test-dir hybrid-baseline-automation-build -R '^cs80_vst3_automation_tests$' --output-on-failure
++ s=8
++ echo 8
++ exit 8
