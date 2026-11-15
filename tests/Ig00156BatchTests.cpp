@@ -178,7 +178,13 @@ int main() {
  const auto kernel=Batch::selectKernel(true);
  movement(kernel);fallbackCases(kernel);environments(kernel);
 #if CS80_IG00156_EXACT_BATCH_BUILD
- if(kernel)check(accelerated>0,"available SIMD backend genuinely exercised");
+ __builtin_cpu_init();
+ const bool capable = __builtin_cpu_supports("avx2");
+ check((kernel != nullptr) == capable,"qualified build dispatch matches CPU capability");
+ if(capable)check(accelerated>0,"capable qualified build genuinely exercises SIMD backend");
+#else
+ check(kernel == nullptr,"disabled or unsupported build remains scalar");
+ check(accelerated == 0,"disabled or unsupported build accelerates no groups");
 #endif
  std::printf("Ig00156Batch: %d checks, %d failures, %llu accelerated groups\n",checks,failures,
              static_cast<unsigned long long>(accelerated));

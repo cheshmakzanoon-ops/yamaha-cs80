@@ -1,0 +1,77 @@
+[
+  {
+    "pair": 1,
+    "rows": 36,
+    "checksums_exact": true,
+    "groups": {
+      "source_performance": {
+        "cases": 9,
+        "median_candidate_over_baseline_mean_rtf": 0.9175547030548419,
+        "baseline_median_mean_rtf": 0.938925240234,
+        "candidate_median_mean_rtf": 0.868762869141
+      },
+      "legacy": {
+        "cases": 3,
+        "median_candidate_over_baseline_mean_rtf": 0.9665869939151062,
+        "baseline_median_mean_rtf": 0.26187464502,
+        "candidate_median_mean_rtf": 0.253592058105
+      },
+      "isolation": {
+        "cases": 3,
+        "median_candidate_over_baseline_mean_rtf": 0.9726370385196161,
+        "baseline_median_mean_rtf": 0.748118746582,
+        "candidate_median_mean_rtf": 0.700639533691
+      }
+    }
+  },
+  {
+    "pair": 2,
+    "rows": 36,
+    "checksums_exact": true,
+    "groups": {
+      "source_performance": {
+        "cases": 9,
+        "median_candidate_over_baseline_mean_rtf": 0.9820381387825985,
+        "baseline_median_mean_rtf": 0.921882121582,
+        "candidate_median_mean_rtf": 0.893710439941
+      },
+      "legacy": {
+        "cases": 3,
+        "median_candidate_over_baseline_mean_rtf": 0.9841727476370987,
+        "baseline_median_mean_rtf": 0.267749753906,
+        "candidate_median_mean_rtf": 0.255537354492
+      },
+      "isolation": {
+        "cases": 3,
+        "median_candidate_over_baseline_mean_rtf": 0.9422942737181499,
+        "baseline_median_mean_rtf": 0.74397426123,
+        "candidate_median_mean_rtf": 0.751712160645
+      }
+    }
+  },
+  {
+    "pair": 3,
+    "rows": 36,
+    "checksums_exact": true,
+    "groups": {
+      "source_performance": {
+        "cases": 9,
+        "median_candidate_over_baseline_mean_rtf": 0.9493936079246242,
+        "baseline_median_mean_rtf": 0.946958118164,
+        "candidate_median_mean_rtf": 0.89564048291
+      },
+      "legacy": {
+        "cases": 3,
+        "median_candidate_over_baseline_mean_rtf": 0.9800697540458948,
+        "baseline_median_mean_rtf": 0.263680527832,
+        "candidate_median_mean_rtf": 0.258425310059
+      },
+      "isolation": {
+        "cases": 3,
+        "median_candidate_over_baseline_mean_rtf": 0.9210585540678933,
+        "baseline_median_mean_rtf": 0.77441498877,
+        "candidate_median_mean_rtf": 0.713281549805
+      }
+    }
+  }
+]

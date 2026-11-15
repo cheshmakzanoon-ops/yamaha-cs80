@@ -2,6 +2,8 @@
 
 An independent software reconstruction of the Yamaha CS-80, written in C++20 with JUCE 8: eight dual-rank voices whose oscillators, filters, envelopes, VCAs, keyboard, touch and effects are modelled from the circuits in Yamaha's public service documentation, behind an editor laid out like the original panel. A modern layer (MSEGs, a modulation matrix, effects, microtuning, MPE, voice modes) sits behind it and switches off completely in PURE CS-80.
 
+**CPU optimization:** qualified GCC/x86-64 builds enable the existing exact AVX2 filter-batch backend by default, with scalar fallbacks and an explicit OFF override. [Controlled callback timing and limitations](docs/experiments/avx-default/README.md) document the measured scope; this is not a claim of under 2% CPU or a macOS/Windows speedup.
+
 **What it is not:** a measured clone. No CS-80 has been measured for this project. Every law is either read from a schematic, manual or adjustment page, or is a declared engineering inference with its alternatives recorded. Nothing here claims measured hardware parity.
 
 **State on 2026-11-09:** the integration includes [sixteen-voice on-screen note/pressure ownership](docs/SIXTEEN_VOICE_UI_OWNERSHIP.md), [bounded tuning admission](docs/TUNING_ADMISSION_SAFETY.md), and [block-independent live dispersion envelope timing](docs/LIVE_DISPERSION_TIMING.md), on top of distribution verification and installer preflight source [`a6569a0`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/a6569a079e4c8f40975ba041e34e513abe0560b8). These are scoped software corrections, not hardware-parity or release qualification. The loaded memory-panel reference remains offline, not wired into audio.

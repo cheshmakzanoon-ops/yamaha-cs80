@@ -1,0 +1,46 @@
+[
+  {
+    "pair": "avxwide",
+    "rows": 100,
+    "checksums_exact": true,
+    "groups": {
+      "isolation": {
+        "cases": 3,
+        "median_candidate_over_baseline_mean_rtf": 0.9615138309216863,
+        "baseline_median_mean_rtf": 0.737526176514,
+        "candidate_median_mean_rtf": 0.696039405762
+      },
+      "legacy": {
+        "cases": 3,
+        "median_candidate_over_baseline_mean_rtf": 0.9770296496299468,
+        "baseline_median_mean_rtf": 0.258486581543,
+        "candidate_median_mean_rtf": 0.252549054199
+      },
+      "source_performance": {
+        "cases": 33,
+        "median_candidate_over_baseline_mean_rtf": 0.9387641466688843,
+        "baseline_median_mean_rtf": 0.934508023682,
+        "candidate_median_mean_rtf": 0.872660638184
+      }
+    }
+  },
+  {
+    "pair": "avxidle",
+    "rows": 19,
+    "checksums_exact": true,
+    "groups": {
+      "isolation": {
+        "cases": 5,
+        "median_candidate_over_baseline_mean_rtf": 1.4815059282308298,
+        "baseline_median_mean_rtf": 0.723120906738,
+        "candidate_median_mean_rtf": 1.07130791016
+      },
+      "legacy": {
+        "cases": 6,
+        "median_candidate_over_baseline_mean_rtf": 1.541254186827231,
+        "baseline_median_mean_rtf": 0.2412576013185,
+        "candidate_median_mean_rtf": 0.2527465356445
+      }
+    }
+  }
+]

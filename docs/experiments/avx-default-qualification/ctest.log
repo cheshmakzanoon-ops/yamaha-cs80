@@ -1,0 +1,85 @@
+UpdateCTestConfiguration  from :/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build/DartConfiguration.tcl
+Test project /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 2
+    Start  2: cs80_ig00156_batch_tests
+
+2: Test command: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build/cs80_ig00156_batch_tests
+2: Working Directory: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build
+2: Test timeout computed to be: 120
+2: Ig00156Batch: 1126361 checks, 0 failures, 15685 accelerated groups
+1/7 Test  #2: cs80_ig00156_batch_tests ......................   Passed    0.02 sec
+test 3
+    Start  3: cs80_filter_batch_engine_tests
+
+3: Test command: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build/cs80_filter_batch_engine_tests
+3: Working Directory: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build
+3: Test timeout computed to be: 180
+3: FilterBatchEngine: 4135998 checks, 285328 stereo frames, 0 failures
+2/7 Test  #3: cs80_filter_batch_engine_tests ................   Passed    8.03 sec
+test 4
+    Start  4: cs80_filter_batch_scheduling_tests
+
+4: Test command: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build/cs80_filter_batch_scheduling_tests
+4: Working Directory: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build
+4: Test timeout computed to be: 180
+4: FilterBatchScheduling: 869465 checks, 0 failures, 135454 timeline frames (four engine variants)
+3/7 Test  #4: cs80_filter_batch_scheduling_tests ............   Passed    2.41 sec
+test 8
+    Start  8: cs80_filter_batch_admission_tests
+
+8: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default/tests/test_filter_batch_admission.py" "--compiler" "/usr/bin/c++"
+8: Working Directory: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build
+8: Test timeout computed to be: 180
+8: gcc strict admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+8: gcc associative-alone admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+8: gcc associative-effective admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+8: gcc reciprocal admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+8: gcc no-signed-zero admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+8: gcc unsafe admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+8: gcc fast admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+8: gcc finite-only admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+8: gcc ofast admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+8: gcc fma admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+8: gcc no-trapping-only admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+4/7 Test  #8: cs80_filter_batch_admission_tests .............   Passed   22.63 sec
+test 37
+    Start 37: cs80_filter_default_history_tests
+
+37: Test command: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build/cs80_filter_default_history_tests "/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default/tests/data/ig00156-cap-states.csv"
+37: Working Directory: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build
+37: Test timeout computed to be: 60
+37: default captures=768 idle=256 warped=512 samples=197376 failures=0
+5/7 Test #37: cs80_filter_default_history_tests .............   Passed    0.05 sec
+test 38
+    Start 38: cs80_filter_default_history_missing_tests
+
+38: Test command: /workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake "-DPROGRAM=/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build/cs80_filter_default_history_tests" "-DINPUT=/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default/tests/data/ig00156-cap-states-missing.csv" "-P" "/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default/tests/ExpectFixtureInputRejection.cmake"
+38: Working Directory: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build
+38: Test timeout computed to be: 60
+6/7 Test #38: cs80_filter_default_history_missing_tests .....   Passed    0.02 sec
+test 39
+    Start 39: cs80_filter_default_history_truncated_tests
+
+39: Test command: /workspace/scratch/ee447c520988/cs80-restored/build-tools/cmake/data/bin/cmake "-DPROGRAM=/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build/cs80_filter_default_history_tests" "-DINPUT=/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default/tests/data/ig00156-cap-states-truncated.csv" "-P" "/workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default/tests/ExpectFixtureInputRejection.cmake"
+39: Working Directory: /workspace/scratch/ee447c520988/cs80-restored/cpu-avx-default-build
+39: Test timeout computed to be: 60
+7/7 Test #39: cs80_filter_default_history_truncated_tests ...   Passed    0.01 sec
+
+The following tests passed:
+	cs80_ig00156_batch_tests
+	cs80_filter_batch_engine_tests
+	cs80_filter_batch_scheduling_tests
+	cs80_filter_batch_admission_tests
+	cs80_filter_default_history_tests
+	cs80_filter_default_history_missing_tests
+	cs80_filter_default_history_truncated_tests
+
+100% tests passed out of 7
+
+Total Test time (real) =  33.17 sec

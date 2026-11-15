@@ -9,7 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(CS80_BUILD_PLUGIN "Build the JUCE plugin and standalone application" ON)
 option(CS80_BUILD_TESTS "Build core tests" ON)
 option(CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY "Experimental changed-history filter solver; incompatible with Source Audio V2" OFF)
-option(CS80_ENABLE_AVX2_FILTER_BATCH "Opt into exact GCC AVX2 stage batches (throughput qualification is workload-specific)" OFF)
+option(CS80_ENABLE_AVX2_FILTER_BATCH "Enable runtime-dispatched exact GCC AVX2 stage batches when qualified; unsupported builds remain scalar" ON)
 
 add_library(cs80_core STATIC
     src/core/Engine.cpp

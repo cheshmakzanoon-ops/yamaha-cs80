@@ -1,4 +1,4 @@
-name: Filter batch opt-in
+name: Filter batch qualification
 
 on:
   push:
@@ -31,16 +31,24 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [g++, clang++]
-        batch: ['ON', 'OFF']
+        batch: ['DEFAULT', 'ON', 'OFF']
     steps:
       - uses: actions/checkout@v5
       - name: Configure core only
         env:
           CXX: ${{ matrix.compiler }}
-        run: >-
-          cmake -S . -B build-filter-batch
-          -DCS80_BUILD_PLUGIN=OFF -DCMAKE_BUILD_TYPE=Release
-          -DCS80_ENABLE_AVX2_FILTER_BATCH=${{ matrix.batch }}
+          BATCH_MODE: ${{ matrix.batch }}
+        run: |
+          test ! -e build-filter-batch/CMakeCache.txt
+          extra=()
+          if [ "$BATCH_MODE" != DEFAULT ]; then
+            extra+=("-DCS80_ENABLE_AVX2_FILTER_BATCH=$BATCH_MODE")
+          fi
+          cmake -S . -B build-filter-batch \
+            -DCS80_BUILD_PLUGIN=OFF -DCMAKE_BUILD_TYPE=Release "${extra[@]}"
+          expected="$BATCH_MODE"
+          if [ "$expected" = DEFAULT ]; then expected=ON; fi
+          grep -Fx "CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=$expected" build-filter-batch/CMakeCache.txt
       - name: Build focused qualification tests
         run: >-
           cmake --build build-filter-batch --parallel 2 --target
