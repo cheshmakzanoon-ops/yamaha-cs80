@@ -1,0 +1,19 @@
+Test project /tmp/cs80-dynamic-integrated-build
+    Start  2: cs80_ig00156_batch_tests
+1/7 Test  #2: cs80_ig00156_batch_tests ......................   Passed    0.02 sec
+    Start  3: cs80_filter_batch_engine_tests
+2/7 Test  #3: cs80_filter_batch_engine_tests ................   Passed    7.29 sec
+    Start  4: cs80_filter_batch_scheduling_tests
+3/7 Test  #4: cs80_filter_batch_scheduling_tests ............   Passed    2.15 sec
+    Start  8: cs80_filter_batch_admission_tests
+4/7 Test  #8: cs80_filter_batch_admission_tests .............   Passed   11.33 sec
+    Start 37: cs80_filter_default_history_tests
+5/7 Test #37: cs80_filter_default_history_tests .............   Passed    0.04 sec
+    Start 38: cs80_filter_default_history_missing_tests
+6/7 Test #38: cs80_filter_default_history_missing_tests .....   Passed    0.01 sec
+    Start 39: cs80_filter_default_history_truncated_tests
+7/7 Test #39: cs80_filter_default_history_truncated_tests ...   Passed    0.01 sec
+
+100% tests passed out of 7
+
+Total Test time (real) =  20.84 sec

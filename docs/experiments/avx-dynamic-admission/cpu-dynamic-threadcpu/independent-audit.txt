@@ -1,0 +1,35 @@
+
+cpu-avx-dynamic-pairs
+1-baseline 36 mean_rtf sourceheld 0.9852799033009799
+worst [(('source_performance', 'mpe_chorus_reverb', '0', 'release_tail'), 1.238748989850536), (('legacy', 'paired_tones', '0', 'warmed_held'), 1.0911817649316644), (('source_performance', 'paired_tones', '10', 'release_tail'), 1.0545365486909672)]
+2-baseline 36 mean_rtf sourceheld 0.9613200050622728
+worst [(('legacy', 'paired_tones', '10', 'release_tail'), 1.0977283182471826), (('source_performance', 'mpe_chorus_reverb', '10', 'sustain_pedal_hold'), 1.0821094734838868), (('source_performance', 'mpe_chorus_reverb', '10', 'release_tail'), 1.0745128233031869)]
+3-baseline 36 mean_rtf sourceheld 0.9680184542337894
+worst [(('isolation', 'paired_tones', '0', 'release_tail'), 1.2857423530983838), (('legacy', 'paired_tones', '10', 'release_tail'), 1.1128045956779358), (('source_performance', 'mpe_chorus_reverb', '0', 'sustain_pedal_hold'), 1.0447446421372304)]
+
+cpu-dynamic-wide
+idle-baseline 19 mean_rtf sourceheld None
+worst [(('isolation', 'idle_quiet', '0', 'warmed_held'), 1.1451650679301966), (('legacy', 'idle_noise', '0', 'warmed_held'), 1.0599732016218697), (('isolation', 'paired_tones', '1', 'release_tail'), 1.0289527636963252)]
+quiet 1.1451650679301966
+wide-baseline 100 mean_rtf sourceheld 0.9768300295235587
+worst [(('legacy', 'paired_tones', '0', 'warmed_held'), 1.6128977493053516), (('source_performance', 'mpe_phaser_delay_drive', '8', 'release_tail'), 1.1869887082249855), (('source_performance', 'paired_tones', '2', 'release_tail'), 1.1430975520767763)]
+
+cpu-dynamic-threadcpu
+1-baseline 36 callback_cpu_rtf sourceheld 0.9864691493621709
+worst [(('source_performance', 'mpe_phaser_delay_drive', '1', 'sustain_pedal_hold'), 1.2807340922893955), (('legacy', 'paired_tones', '10', 'release_tail'), 1.1813916665845061), (('source_performance', 'paired_tones', '10', 'warmed_held'), 1.0742887811724249)]
+2-baseline 36 callback_cpu_rtf sourceheld 0.9764085499513592
+worst [(('source_performance', 'paired_tones', '1', 'release_tail'), 1.324223845275997), (('source_performance', 'mpe_phaser_delay_drive', '0', 'release_tail'), 1.0999886422758203), (('source_performance', 'mpe_phaser_delay_drive', '0', 'warmed_held'), 1.0727199068765945)]
+3-baseline 36 callback_cpu_rtf sourceheld 0.9874390815014585
+worst [(('legacy', 'paired_tones', '10', 'release_tail'), 1.0866785752521149), (('source_performance', 'paired_tones', '0', 'warmed_held'), 1.0458602829486596), (('source_performance', 'paired_tones', '10', 'release_tail'), 1.0264775976892)]
+
+cpu-dynamic-idle-threadcpu
+1-baseline 19 callback_cpu_rtf sourceheld None
+worst [(('legacy', 'paired_tones', '10', 'release_tail'), 1.0378906297619124), (('legacy', 'moving_tabs_pressure_wah', '0', 'release_tail'), 1.0289019805847643), (('isolation', 'idle_quiet', '0', 'warmed_held'), 1.0130730928475677)]
+quiet 1.0130730928475677
+2-baseline 19 callback_cpu_rtf sourceheld None
+worst [(('legacy', 'paired_tones', '0', 'release_tail'), 1.1472676069468282), (('legacy', 'idle_noise', '0', 'warmed_held'), 1.080002830402598), (('legacy', 'paired_tones', '0', 'warmed_held'), 1.0021760441052276)]
+quiet 0.9882957421673251
+3-baseline 19 callback_cpu_rtf sourceheld None
+worst [(('isolation', 'paired_tones', '10', 'release_tail'), 2.854273585264093), (('isolation', 'moving_tabs_pressure_wah', '0', 'release_tail'), 1.62246844186171), (('legacy', 'paired_tones', '1', 'warmed_held'), 1.3284382569632283)]
+quiet 1.051697228216383
+binary hashes verified

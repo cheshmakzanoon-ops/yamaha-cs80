@@ -1,0 +1,11 @@
+# Opt-in callback thread CPU measurement
+
+Measurement-only candidate based on b5b252979764c865bbd331827db4415498979e7b. No engine changes. `--callback-cpu` enables Linux CLOCK_THREAD_CPUTIME_ID reads immediately around the existing callback timing interval, including its two steady-clock reads but excluding controller synthesis, Stats/audio verification, setup and warmup. Default OFF adds no callback CPU clock reads. Existing wall timing scope remains unchanged.
+
+CSV schema3 appends callback_cpu_status, callback_cpu_seconds, callback_cpu_rtf, callback_cpu_call_count. RTF is callback thread CPU seconds / rendered audio seconds, NOT system CPU percentage. Call count is successful measured callbacks. Any failed/nonfinite/reversed read invalidates the entire aggregate; disabled and unavailable aggregates serialize literal `unavailable`, not a fabricated zero. Zero is a valid measured duration only when clock reads succeeded. No CPU clock implementation is provided outside Linux: these platforms explicitly report unavailable.
+
+Use identical instrumentation and flags for baseline and candidate. Clock overhead is not subtracted. These diagnostics do not establish a speedup, real-time safety or an under2percent result.
+
+Validation pinned CPUs3-4: unit14checks0fail; 19-row quick baseline fixture run with unchanged original tool, new default-disabled tool and new enabled tool. All deterministic fields (including checksums/events/voicecounts) identical. Enabled schema validates finite nonnegative durations, callback counts and RTF denominator; disabled fields/status validated. CLIpreflight passes. Original and candidate were compiled -O3 -DNDEBUG and linked to the same previously qualified unchanged core library. CMake registrations added; local qualification invoked the compiled tests directly rather than rerunning a full CMake build. No cross-platform run performed; unavailable/failure paths unit tested synthetically.
+
+Independent source review by cpu_research found no blocker: scope, poison-on-clock-failure, disabled/unavailable distinctions and comparison caveat correct. No timing conclusions drawn. Compute completed and idle marker written before later performance runs.

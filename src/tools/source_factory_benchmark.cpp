@@ -1,6 +1,7 @@
 // Bounded offline core timing. Not a DAW, audio-driver or hard-real-time test.
 #include "core/Engine.h"
 #include "core/FactoryPresets.h"
+#include "CallbackCpuMeasurement.h"
 
 #include <algorithm>
 #include <array>
@@ -74,6 +75,7 @@ struct Stats {
     std::uint64_t controllerEvents = 0, memberChecks = 0, pedalHeldCallbacks = 0;
     double threadCpu = -1.0, lastBlockPeak = 0.0;
     double pedalTargetMin = 1.0e30, pedalTargetMax = 0.0;
+    benchmark::CallbackCpuMeasurement callbackCpu;
     bool tailComplete = false;
     void observe(const std::vector<float>& audio, int voices) {
         lastBlockPeak = 0.0;
@@ -198,7 +200,14 @@ void writeRow(std::ostream& out, const Case& c, const char* phase, Stats& s) {
         << ',' << s.checksum << ',' << s.cpu << ',' << modeName(c) << ',' << c.sourcePerformance
         << ',' << s.threadCpu << ',' << s.controllerEvents << ',' << s.memberChecks
         << ',' << s.pedalHeldCallbacks << ',' << s.lastBlockPeak
-        << ',' << (s.pedalTargetMin == 1.0e30 ? 0.0 : s.pedalTargetMin) << ',' << s.pedalTargetMax << '\n';
+        << ',' << (s.pedalTargetMin == 1.0e30 ? 0.0 : s.pedalTargetMin) << ',' << s.pedalTargetMax
+        << ',' << s.callbackCpu.status() << ',';
+    if (s.callbackCpu.available()) out << s.callbackCpu.seconds;
+    else out << "unavailable";
+    out << ',';
+    if (s.callbackCpu.available()) out << s.callbackCpu.seconds / (static_cast<double>(s.frames) / c.rate);
+    else out << "unavailable";
+    out << ',' << s.callbackCpu.calls << '\n';
     out.flush();
     std::cout << c.rate << '/' << c.block << " mode=" << modeName(c) << ' ' << scenario
               << " pair=" << c.selector << ' ' << phase << " medianRTF=" << quantile(s.micros, 0.5) / budget
@@ -206,7 +215,7 @@ void writeRow(std::ostream& out, const Case& c, const char* phase, Stats& s) {
               << '/' << s.micros.size() << '\n' << std::flush;
 }
 
-int run(const Case& c, int callbacks, std::ostream& csv) {
+int run(const Case& c, int callbacks, std::ostream& csv, bool callbackCpu) {
     Engine engine;
     engine.prepare(c.rate);
     std::array<ControlFrame, 11> frames;
@@ -240,6 +249,7 @@ int run(const Case& c, int callbacks, std::ostream& csv) {
         const bool tail = measurementPhase == Phase::release;
         const bool sustain = measurementPhase == Phase::sustain;
         Stats stats;
+        stats.callbackCpu.requested = callbackCpu;
         // Member expression belongs to the physically held note. Once Note Off
         // transfers it to the sustain pedal, later member messages seed future
         // notes instead of changing this released voice's expression.
@@ -264,6 +274,7 @@ int run(const Case& c, int callbacks, std::ostream& csv) {
                 memberBend[member] = 0.1f * (2.0f * offset - 1.0f);
                 memberTimbre[member] = 0.15f + 0.35f * offset;
             }
+            const double callbackCpuBefore = callbackCpu ? threadCpuSeconds() : -1.0;
             const auto before = Clock::now();
             const bool accepted = engine.setControlFrame(frames[currentSelector]);
             if (c.moving && !tail) {
@@ -294,6 +305,8 @@ int run(const Case& c, int callbacks, std::ostream& csv) {
             }
             engine.render(audio.data(), c.block);
             const auto after = Clock::now();
+            const double callbackCpuAfter = callbackCpu ? threadCpuSeconds() : -1.0;
+            if (callbackCpu) stats.callbackCpu.observe(callbackCpuBefore, callbackCpuAfter);
             require(accepted, "Timed ControlFrame rejected");
             const double elapsed = std::chrono::duration<double, std::micro>(after - before).count();
             stats.micros.push_back(elapsed);
@@ -350,7 +363,7 @@ int run(const Case& c, int callbacks, std::ostream& csv) {
 
 void usage() {
     std::cout << "Usage: cs80_source_factory_benchmark --out NEW_DIRECTORY --source-commit HEX "
-                 "[--callbacks 1024] [--suite baseline|performance] [--include-64] [--quick] "
+                 "[--callbacks 1024] [--suite baseline|performance] [--include-64] [--quick] [--callback-cpu] "
                  "[--rate 44100|48000] [--block 64|128|256]\n"
                  "Full sweep: 44.1/48 kHz, 64/128/256 frames, all 22 tabs as 11 two-rank pairs, "
                  "8 notes, source/legacy held and release, moving controls, idle/noise.\n"
@@ -365,7 +378,7 @@ int main(int argc, char** argv) {
         fs::path directory;
         std::string commit;
         int callbacks = 1024;
-        bool quick = false, include64 = false;
+        bool quick = false, include64 = false, callbackCpu = false;
         int onlyRate = 0, onlyBlock = 0; // optional sweep filters; 0 keeps every value
         std::string suite = "baseline";
         const auto filterInteger = [](const std::string& value) {
@@ -376,6 +389,7 @@ int main(int argc, char** argv) {
         for (int i = 1; i < argc; ++i) {
             const std::string arg = argv[i];
             if (arg == "--help") { usage(); return 0; }
+            if (arg == "--callback-cpu") { callbackCpu = true; continue; }
             if (arg == "--quick") { quick = true; continue; }
             if (arg == "--include-64") { include64 = true; continue; }
             require(i + 1 < argc, "Missing option value; use --help");
@@ -437,7 +451,7 @@ int main(int argc, char** argv) {
         ScopedDenormals denormals;
         const auto started = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         auto meta = output(directory / "metadata.json");
-        meta << "{\n  \"schema_version\": 2,\n  \"fixture_id\": \"source-core-timing-v2\",\n"
+        meta << "{\n  \"schema_version\": 3,\n  \"fixture_id\": \"source-core-timing-v2\",\n"
              << "  \"suite\": " << jsonString(suite) << ",\n"
              << "  \"source_commit_caller_verified\": " << jsonString(commit) << ",\n"
              << "  \"started_unix_seconds\": " << started << ",\n"
@@ -457,6 +471,11 @@ int main(int argc, char** argv) {
              << "  \"performance_pedal_hold_seconds\": " << pedalHoldSeconds << ",\n"
              << "  \"performance_include_64\": " << (include64 ? "true" : "false") << ",\n"
              << "  \"thread_cpu_clock_available\": " << (threadCpuSeconds() >= 0.0 ? "true" : "false") << ",\n"
+             << "  \"callback_cpu_requested\": " << (callbackCpu ? "true" : "false") << ",\n"
+             << "  \"callback_cpu_clock\": \"CLOCK_THREAD_CPUTIME_ID on Linux; unavailable elsewhere\",\n"
+             << "  \"callback_cpu_scope\": \"existing timed callback plus its two wall-clock reads; excludes controller synthesis, Stats, verification and warmup\",\n"
+             << "  \"callback_cpu_rtf_definition\": \"callback thread CPU seconds / rendered audio seconds; not system CPU percent\",\n"
+             << "  \"callback_cpu_comparison_rule\": \"instrument baseline and candidate identically; extra clock reads add overhead\",\n"
              << "  \"order_seed\": " << orderSeed << ",\n"
              << "  \"timed_scope\": \"setControlFrame, active control events, render; no JUCE/DAW/driver\",\n"
              << "  \"source_model_version\": " << source_factory::modelVersion << ",\n"
@@ -470,11 +489,11 @@ int main(int argc, char** argv) {
                "final_active_voices,tail_voices_complete,source_compilations,nonfinite_count,abs_at_or_above_one,"
                "peak,rms,checksum,process_cpu_seconds_including_checks,mode,source_performance,"
                "thread_cpu_seconds_including_checks,controller_events,mpe_member_state_checks,"
-               "pedal_held_callbacks,last_block_peak,pra_target_min_ohms,pra_target_max_ohms\n";
+               "pedal_held_callbacks,last_block_peak,pra_target_min_ohms,pra_target_max_ohms,callback_cpu_status,callback_cpu_seconds,callback_cpu_rtf,callback_cpu_call_count\n";
         std::mt19937 random(orderSeed);
         std::shuffle(cases.begin(), cases.end(), random);
         int rows = 0;
-        for (const auto& c : cases) rows += run(c, callbacks, csv);
+        for (const auto& c : cases) rows += run(c, callbacks, csv, callbackCpu);
         csv.close();
         auto complete = output(directory / "completed.json");
         complete << "{\"completed\":true,\"cases\":" << cases.size() << ",\"rows\":" << rows << "}\n";

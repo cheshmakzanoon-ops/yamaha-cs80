@@ -1,0 +1,89 @@
+[
+  {
+    "pair": 1,
+    "rows": 36,
+    "checksums_exact": true,
+    "groups": {
+      "isolation": {
+        "cases": 3,
+        "wall_ratio": 0.9746929732619599,
+        "cpu_ratio": 0.9746237848732,
+        "baseline_cpu_rtf": 0.705345648926,
+        "candidate_cpu_rtf": 0.67142671582
+      },
+      "legacy": {
+        "cases": 3,
+        "wall_ratio": 0.9980515934746071,
+        "cpu_ratio": 0.9974115282910123,
+        "baseline_cpu_rtf": 0.254269407715,
+        "candidate_cpu_rtf": 0.250897022461
+      },
+      "source_performance": {
+        "cases": 9,
+        "wall_ratio": 0.9862922995497195,
+        "cpu_ratio": 0.9864691493621709,
+        "baseline_cpu_rtf": 0.844921987793,
+        "candidate_cpu_rtf": 0.833302794434
+      }
+    },
+    "idle_cases": []
+  },
+  {
+    "pair": 2,
+    "rows": 36,
+    "checksums_exact": true,
+    "groups": {
+      "isolation": {
+        "cases": 3,
+        "wall_ratio": 0.9813432303612976,
+        "cpu_ratio": 0.9813673186522682,
+        "baseline_cpu_rtf": 0.679405961426,
+        "candidate_cpu_rtf": 0.666746806641
+      },
+      "legacy": {
+        "cases": 3,
+        "wall_ratio": 0.9965010079327237,
+        "cpu_ratio": 0.9961525351571587,
+        "baseline_cpu_rtf": 0.251812114746,
+        "candidate_cpu_rtf": 0.259632829102
+      },
+      "source_performance": {
+        "cases": 9,
+        "wall_ratio": 0.9763411315709009,
+        "cpu_ratio": 0.9764085499513592,
+        "baseline_cpu_rtf": 0.854935016602,
+        "candidate_cpu_rtf": 0.827392618652
+      }
+    },
+    "idle_cases": []
+  },
+  {
+    "pair": 3,
+    "rows": 36,
+    "checksums_exact": true,
+    "groups": {
+      "isolation": {
+        "cases": 3,
+        "wall_ratio": 0.964743052119572,
+        "cpu_ratio": 0.9721039604771097,
+        "baseline_cpu_rtf": 0.686761476563,
+        "candidate_cpu_rtf": 0.663362367188
+      },
+      "legacy": {
+        "cases": 3,
+        "wall_ratio": 0.9663484821613102,
+        "cpu_ratio": 0.9678461748953553,
+        "baseline_cpu_rtf": 0.272832884766,
+        "candidate_cpu_rtf": 0.255758269043
+      },
+      "source_performance": {
+        "cases": 9,
+        "wall_ratio": 0.987472645675705,
+        "cpu_ratio": 0.9874390815014585,
+        "baseline_cpu_rtf": 0.8433046875,
+        "candidate_cpu_rtf": 0.820092033691
+      }
+    },
+    "idle_cases": []
+  }
+]

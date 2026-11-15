@@ -29,6 +29,13 @@ CS80_AVX2_INLINE V select(V mask,V yes,V no) { return _mm256_blendv_pd(no.x,yes.
 CS80_AVX2_INLINE V absolute(V x) { return _mm256_andnot_pd(_mm256_set1_pd(-0.0),x.x); }
 CS80_AVX2_INLINE V less(V a,V b) { return _mm256_cmp_pd(a.x,b.x,_CMP_LT_OQ); }
 CS80_AVX2_INLINE V greater(V a,V b) { return _mm256_cmp_pd(a.x,b.x,_CMP_GT_OQ); }
+CS80_AVX2_INLINE __m256i outsideStateBound(V value)
+{
+    const auto magnitude=_mm256_and_si256(_mm256_castpd_si256(value.x),
+                                          _mm256_set1_epi64x(0x7fffffffffffffffLL));
+    return _mm256_cmpgt_epi64(magnitude,
+        _mm256_set1_epi64x(std::bit_cast<std::int64_t>(1024.0)));
+}
 CS80_AVX2_INLINE V tanh(V original)
 {
     // The scalar branches do not evaluate the polynomial outside its clamp.
@@ -73,14 +80,11 @@ struct Ig00156BatchAccess
             for(double value : {s.inputScale,s.gmPart,s.ffPart,s.xFromFb,s.xFromIn,
                                  s.xFromU,s.xFromBp,s.kiGs,s.invA11,s.inFromX})
                 if(!bounded(value,1000000.0)) return false;
-            for(double value : {s.zIn,s.zFb,s.zBp,s.zLp,s.slope1,s.slope2})
-                if(!bounded(value,1024.0)) return false;
             // Positive physical gains make both Newton denominators >= 1.
             // Arbitrary restored slopes/custom networks must not turn a
             // discarded vector lane into a division by zero. These are still
             // eligibility checks: unsupported states keep the scalar solver.
-            if(s.gmPart<0.0 || s.ffPart<0.0 || s.xFromBp < -1.0
-               || s.slope1<0.0 || s.slope1>1.0 || s.slope2<0.0 || s.slope2>1.0)
+            if(s.gmPart<0.0 || s.ffPart<0.0 || s.xFromBp < -1.0)
                 return false;
         }
         return true;
@@ -103,6 +107,21 @@ struct Ig00156BatchAccess
         const V zIn=gather(&Ig00156Stage::zIn),zFb=gather(&Ig00156Stage::zFb);
         const V zBp=gather(&Ig00156Stage::zBp),zLp=gather(&Ig00156Stage::zLp);
         const V slope1=gather(&Ig00156Stage::slope1),slope2=gather(&Ig00156Stage::slope2);
+        // Reuse gathered state for the dynamic admission gate. Integer bit
+        // comparisons reject NaN (including signalling NaN) and infinities
+        // without evaluating them or altering any authoritative state.
+        auto bad=_mm256_or_si256(outsideStateBound(zIn),outsideStateBound(zFb));
+        bad=_mm256_or_si256(bad,outsideStateBound(zBp));
+        bad=_mm256_or_si256(bad,outsideStateBound(zLp));
+        bad=_mm256_or_si256(bad,outsideStateBound(slope1));
+        bad=_mm256_or_si256(bad,outsideStateBound(slope2));
+        if(_mm256_movemask_pd(_mm256_castsi256_pd(bad))!=0) return false;
+        // Bounds above prove both slope vectors finite before FP comparisons.
+        auto badSlope=_mm256_or_pd(less(slope1,0.0).x,greater(slope1,1.0).x);
+        badSlope=_mm256_or_pd(badSlope,less(slope2,0.0).x);
+        badSlope=_mm256_or_pd(badSlope,greater(slope2,1.0).x);
+        if(_mm256_movemask_pd(badSlope)!=0) return false;
+
         const V u=V(_mm256_setr_pd(input[0],input[1],input[2],input[3]))*scale;
         const V level=kIg00156OtaLevel,inv=1.0/kIg00156OtaLevel;
         const V x0=fromFb*zFb+fromIn*zIn+fromU*u;

@@ -1,0 +1,179 @@
+[
+  {
+    "pair": 1,
+    "rows": 19,
+    "checksums_exact": true,
+    "groups": {
+      "isolation": {
+        "cases": 5,
+        "wall_ratio": 0.9703861572533183,
+        "cpu_ratio": 0.9705004117366175,
+        "baseline_cpu_rtf": 0.696991672852,
+        "candidate_cpu_rtf": 0.662860646484
+      },
+      "legacy": {
+        "cases": 6,
+        "wall_ratio": 0.9744040105275182,
+        "cpu_ratio": 0.9744852522798821,
+        "baseline_cpu_rtf": 0.23588079895,
+        "candidate_cpu_rtf": 0.233494905762
+      }
+    },
+    "idle_cases": [
+      {
+        "case": [
+          "legacy",
+          "idle_quiet",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 0.8963558638232215,
+        "cpu_ratio": 0.8965098516352532,
+        "baseline_cpu_rtf": 0.0256295837402,
+        "candidate_cpu_rtf": 0.0229771743164
+      },
+      {
+        "case": [
+          "legacy",
+          "idle_noise",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 0.9246184420016877,
+        "cpu_ratio": 0.9239406099868485,
+        "baseline_cpu_rtf": 0.0261438669434,
+        "candidate_cpu_rtf": 0.0241553803711
+      },
+      {
+        "case": [
+          "isolation",
+          "idle_quiet",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 1.0141818411303456,
+        "cpu_ratio": 1.0130730928475677,
+        "baseline_cpu_rtf": 0.141686181885,
+        "candidate_cpu_rtf": 0.143538458496
+      }
+    ]
+  },
+  {
+    "pair": 2,
+    "rows": 19,
+    "checksums_exact": true,
+    "groups": {
+      "isolation": {
+        "cases": 5,
+        "wall_ratio": 0.9879560572304427,
+        "cpu_ratio": 0.9882957421673251,
+        "baseline_cpu_rtf": 0.693906839355,
+        "candidate_cpu_rtf": 0.662669414795
+      },
+      "legacy": {
+        "cases": 6,
+        "wall_ratio": 0.9821578103948332,
+        "cpu_ratio": 0.9636477970355288,
+        "baseline_cpu_rtf": 0.24637241088849998,
+        "candidate_cpu_rtf": 0.2357768477785
+      }
+    },
+    "idle_cases": [
+      {
+        "case": [
+          "legacy",
+          "idle_quiet",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 0.9924810384141707,
+        "cpu_ratio": 0.9420873248753477,
+        "baseline_cpu_rtf": 0.0243186218262,
+        "candidate_cpu_rtf": 0.0229102653809
+      },
+      {
+        "case": [
+          "legacy",
+          "idle_noise",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 1.080178333453416,
+        "cpu_ratio": 1.080002830402598,
+        "baseline_cpu_rtf": 0.0230926003418,
+        "candidate_cpu_rtf": 0.0249400737305
+      },
+      {
+        "case": [
+          "isolation",
+          "idle_quiet",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 0.9879560572304427,
+        "cpu_ratio": 0.9882957421673251,
+        "baseline_cpu_rtf": 0.14559417627,
+        "candidate_cpu_rtf": 0.143890104492
+      }
+    ]
+  },
+  {
+    "pair": 3,
+    "rows": 19,
+    "checksums_exact": true,
+    "groups": {
+      "isolation": {
+        "cases": 5,
+        "wall_ratio": 1.0514096668587316,
+        "cpu_ratio": 1.051697228216383,
+        "baseline_cpu_rtf": 0.699490567383,
+        "candidate_cpu_rtf": 0.677866048828
+      },
+      "legacy": {
+        "cases": 6,
+        "wall_ratio": 1.0878259821232703,
+        "cpu_ratio": 1.0880433563002359,
+        "baseline_cpu_rtf": 0.2385918149415,
+        "candidate_cpu_rtf": 0.2431609866945
+      }
+    },
+    "idle_cases": [
+      {
+        "case": [
+          "legacy",
+          "idle_quiet",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 1.0593264281592052,
+        "cpu_ratio": 1.059717492384816,
+        "baseline_cpu_rtf": 0.0241004633789,
+        "candidate_cpu_rtf": 0.0255396826172
+      },
+      {
+        "case": [
+          "legacy",
+          "idle_noise",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 1.30453191626413,
+        "cpu_ratio": 1.3216676540140928,
+        "baseline_cpu_rtf": 0.0252906796875,
+        "candidate_cpu_rtf": 0.033425873291
+      },
+      {
+        "case": [
+          "isolation",
+          "idle_quiet",
+          "0",
+          "warmed_held"
+        ],
+        "wall_ratio": 1.0514096668587316,
+        "cpu_ratio": 1.051697228216383,
+        "baseline_cpu_rtf": 0.140792731934,
+        "candidate_cpu_rtf": 0.148071325928
+      }
+    ]
+  }
+]

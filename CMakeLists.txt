@@ -841,6 +841,13 @@ target_include_directories(cs80_voice_continuity_probe PRIVATE src)
 add_executable(cs80_source_factory_benchmark src/tools/source_factory_benchmark.cpp)
 target_link_libraries(cs80_source_factory_benchmark PRIVATE cs80_core)
 if (CS80_BUILD_TESTS)
+    add_executable(cs80_callback_cpu_measurement_tests tests/CallbackCpuMeasurementTests.cpp)
+    target_include_directories(cs80_callback_cpu_measurement_tests PRIVATE src)
+    add_test(NAME cs80_callback_cpu_measurement_tests COMMAND cs80_callback_cpu_measurement_tests)
+    add_test(NAME cs80_callback_cpu_benchmark_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_callback_cpu_benchmark.py
+                     --benchmark $<TARGET_FILE:cs80_source_factory_benchmark>)
+    set_tests_properties(cs80_callback_cpu_benchmark_tests PROPERTIES TIMEOUT 300)
     add_test(NAME cs80_benchmark_preflight_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_benchmark_preflight.py
                      --benchmark $<TARGET_FILE:cs80_source_factory_benchmark>)

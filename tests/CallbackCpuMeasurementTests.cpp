@@ -1,0 +1,5 @@
+#include "tools/CallbackCpuMeasurement.h"
+#include <cstdio>
+#include <limits>
+#include <string_view>
+int main(){using cs80::benchmark::CallbackCpuMeasurement;int bad=0,checks=0;auto check=[&](bool v){++checks;bad+=!v;};CallbackCpuMeasurement s;check(std::string_view(s.status())=="disabled");s.observe(1,2);check(s.calls==0&&s.seconds==0&&!s.available());s.requested=true;check(std::string_view(s.status())=="unavailable");s.observe(1,1.25);s.observe(2,2.5);check(s.available()&&s.calls==2&&s.seconds==.75);s.observe(-1,3);check(!s.available()&&std::string_view(s.status())=="unavailable");s.observe(4,5);check(!s.available());for(double x:{-1.,std::numeric_limits<double>::quiet_NaN(),std::numeric_limits<double>::infinity()}){CallbackCpuMeasurement t;t.requested=true;t.observe(x,2);check(!t.available());t={};t.requested=true;t.observe(1,x);check(!t.available());}s={};s.requested=true;s.observe(2,1);check(!s.available());s={};s.requested=true;s.observe(2,2);check(s.available()&&s.seconds==0&&s.calls==1);std::printf("CallbackCpuMeasurement: %d checks, %d failures\n",checks,bad);return bad?1:0;}

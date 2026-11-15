@@ -137,6 +137,39 @@ void fallbackCases(Batch::Kernel kernel) {
   for(int i=0;i<4;++i){check(same(want[i].lp,got[i].lp)&&same(want[i].hp,got[i].hp)&&same(want[i].bp,got[i].bp),"duplicate-lane output bits");stateEqual(a[i],b[i]);}
  }
 }
+void dynamicAdmissionEdges(Batch::Kernel kernel) {
+ if(kernel==nullptr) return;
+ const double snan=std::bit_cast<double>(std::uint64_t{0x7ff0000000000001ULL});
+ for(int lane=0;lane<4;++lane) for(int field=0;field<6;++field)
+  for(double value:{0.0,-0.0,1.0,1024.0,-1024.0,std::nextafter(1024.0,0.0),
+                   std::nextafter(1024.0,std::numeric_limits<double>::infinity()),
+                   std::nextafter(-1024.0,-std::numeric_limits<double>::infinity()),
+                   std::numeric_limits<double>::infinity(),-std::numeric_limits<double>::infinity(),
+                   std::numeric_limits<double>::quiet_NaN(),snan,
+                   std::numeric_limits<double>::denorm_min(),-std::numeric_limits<double>::denorm_min(),
+                   std::numeric_limits<double>::min(),-std::numeric_limits<double>::min()}) {
+   auto a=makeStages();prepare(a);
+   auto m=a[lane].getMemory();
+   double* fields[]{&m.z.input,&m.z.feedback,&m.z.bp,&m.z.lp,&m.slope1,&m.slope2};
+   *fields[field]=value;a[lane].restoreMemory(m);prepare(a);
+   const auto before=a;
+   Batch::Outputs got;for(auto& out:got)out={123.f,456.f,789.f};
+   const auto magnitude=std::bit_cast<std::uint64_t>(value)&0x7fffffffffffffffULL;
+   const bool finiteBound=magnitude<=std::bit_cast<std::uint64_t>(1024.0);
+   const bool allowed=finiteBound&&(field<4||(value>=0.0&&value<=1.0));
+   std::feclearexcept(FE_ALL_EXCEPT);
+   const bool used=kernel(pointers(a),{.1f,.2f,.3f,.4f},got);
+   const int flags=std::fetestexcept(FE_INVALID);
+   check(used==allowed,"dynamic admission boundary verdict");
+   if(!allowed) {
+    check(flags==0,"rejected dynamic state raises no invalid");
+    for(int i=0;i<4;++i) {
+     stateEqual(a[i],before[i]);
+     check(got[i].lp==123.f&&got[i].hp==456.f&&got[i].bp==789.f,"rejected pack leaves outputs untouched");
+    }
+   }
+  }
+}
 void environments(Batch::Kernel kernel) {
  const int original=std::fegetround();
  for(int mode:{FE_DOWNWARD,FE_UPWARD,FE_TOWARDZERO}){
@@ -161,6 +194,7 @@ void environments(Batch::Kernel kernel) {
  for(unsigned denorm:{0U,0x40U,0x8000U,0x8040U}){
   const unsigned csr=(saved&~0xe040U)|denorm|0x1f80U;
   _mm_setcsr(csr);
+  dynamicAdmissionEdges(kernel);
   auto a=makeStages(),b=makeStages();prepare(a);prepare(b);
   for(int i=0;i<4;++i){
    auto m=a[i].getMemory();m.z.input=std::numeric_limits<double>::denorm_min();m.z.lp=-std::numeric_limits<double>::min();
@@ -176,7 +210,7 @@ void environments(Batch::Kernel kernel) {
 }
 int main() {
  const auto kernel=Batch::selectKernel(true);
- movement(kernel);fallbackCases(kernel);environments(kernel);
+ movement(kernel);fallbackCases(kernel);dynamicAdmissionEdges(kernel);environments(kernel);
 #if CS80_IG00156_EXACT_BATCH_BUILD
  __builtin_cpu_init();
  const bool capable = __builtin_cpu_supports("avx2");
