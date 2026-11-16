@@ -1,0 +1,72 @@
+{
+  "steady": {
+    "baseline_total_Ir": 199439819,
+    "candidate_total_Ir": 197090763,
+    "total_difference_Ir": -2349056,
+    "total_ratio": 0.9882217301851843,
+    "baseline_render_inclusive_Ir": 198680347,
+    "candidate_render_inclusive_Ir": 196331291,
+    "render_difference_Ir": -2349056,
+    "render_ratio": 0.9881767067781495,
+    "packed_FIR_instruction_hits": {
+      "0x91ff1d": {
+        "instruction": "mulpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x91ff7f": {
+        "instruction": "addpd  %xmm2,%xmm1",
+        "Ir": 260096
+      },
+      "0x91ff97": {
+        "instruction": "mulpd  %xmm2,%xmm1",
+        "Ir": 260096
+      },
+      "0x91ff9b": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 260096
+      }
+    },
+    "actual_AVX_filter_edges": [
+      {
+        "inclusive_Ir": 23120855,
+        "calls": 32768
+      }
+    ],
+    "same_measured_PCM_sha256": "397e290edbceac2b73d72731ea84be5ad556d0238bfc562ba568d4e179992a9d"
+  },
+  "moving": {
+    "baseline_total_Ir": 242531211,
+    "candidate_total_Ir": 240182155,
+    "total_difference_Ir": -2349056,
+    "total_ratio": 0.9903144177183859,
+    "baseline_render_inclusive_Ir": 241740875,
+    "candidate_render_inclusive_Ir": 239391819,
+    "render_difference_Ir": -2349056,
+    "render_ratio": 0.9902827521411097,
+    "packed_FIR_instruction_hits": {
+      "0x91ff1d": {
+        "instruction": "mulpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x91ff7f": {
+        "instruction": "addpd  %xmm2,%xmm1",
+        "Ir": 260096
+      },
+      "0x91ff97": {
+        "instruction": "mulpd  %xmm2,%xmm1",
+        "Ir": 260096
+      },
+      "0x91ff9b": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 260096
+      }
+    },
+    "actual_AVX_filter_edges": [
+      {
+        "inclusive_Ir": 23122213,
+        "calls": 32768
+      }
+    ],
+    "same_measured_PCM_sha256": "a74478da49912acd9107094ae553f9fcb514486d87bb44722f229cfc100a219b"
+  }
+}

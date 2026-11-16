@@ -1,0 +1,283 @@
+{
+  "raw": {
+    "reconstructed_direct_totals": {
+      "Ir": 1844648,
+      "Dr": 518813,
+      "Dw": 65488,
+      "I1mr": 11,
+      "D1mr": 1593,
+      "D1mw": 1,
+      "ILmr": 11,
+      "DLmr": 389,
+      "DLmw": 1
+    },
+    "executed_packed_instructions": {}
+  },
+  "helper": {
+    "reconstructed_direct_totals": {
+      "Ir": 1417177,
+      "Dr": 424119,
+      "Dw": 77776,
+      "I1mr": 37,
+      "D1mr": 2613,
+      "D1mw": 1,
+      "ILmr": 37,
+      "DLmr": 1412,
+      "DLmw": 1
+    },
+    "executed_packed_instructions": {
+      "0x75b5": {
+        "instruction": "subpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x75c9": {
+        "instruction": "mulpd  %xmm10,%xmm0",
+        "Ir": 2048
+      },
+      "0x75ce": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x75dc": {
+        "instruction": "mulpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x75f0": {
+        "instruction": "subpd  %xmm3,%xmm1",
+        "Ir": 2048
+      },
+      "0x75f4": {
+        "instruction": "mulpd  %xmm10,%xmm1",
+        "Ir": 2048
+      },
+      "0x75f9": {
+        "instruction": "addpd  %xmm3,%xmm1",
+        "Ir": 2048
+      },
+      "0x7607": {
+        "instruction": "mulpd  %xmm3,%xmm1",
+        "Ir": 2048
+      },
+      "0x760b": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x761f": {
+        "instruction": "subpd  %xmm2,%xmm1",
+        "Ir": 2048
+      },
+      "0x7623": {
+        "instruction": "mulpd  %xmm10,%xmm1",
+        "Ir": 2048
+      },
+      "0x7628": {
+        "instruction": "addpd  %xmm2,%xmm1",
+        "Ir": 2048
+      },
+      "0x7635": {
+        "instruction": "mulpd  %xmm2,%xmm1",
+        "Ir": 2048
+      },
+      "0x7639": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x7650": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x7d95": {
+        "instruction": "subpd  %xmm0,%xmm3",
+        "Ir": 8184
+      },
+      "0x7da5": {
+        "instruction": "mulpd  %xmm10,%xmm3",
+        "Ir": 8184
+      },
+      "0x7daa": {
+        "instruction": "addpd  %xmm0,%xmm3",
+        "Ir": 8184
+      },
+      "0x7dbb": {
+        "instruction": "subpd  %xmm0,%xmm2",
+        "Ir": 8184
+      },
+      "0x7dbf": {
+        "instruction": "mulpd  %xmm3,%xmm4",
+        "Ir": 8184
+      },
+      "0x7dc3": {
+        "instruction": "mulpd  %xmm10,%xmm2",
+        "Ir": 8184
+      },
+      "0x7dc8": {
+        "instruction": "addpd  %xmm0,%xmm2",
+        "Ir": 8184
+      },
+      "0x7ddc": {
+        "instruction": "subpd  %xmm1,%xmm0",
+        "Ir": 8184
+      },
+      "0x7de0": {
+        "instruction": "mulpd  %xmm10,%xmm0",
+        "Ir": 8184
+      },
+      "0x7de5": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 8184
+      },
+      "0x7df2": {
+        "instruction": "mulpd  %xmm2,%xmm1",
+        "Ir": 8184
+      },
+      "0x7df6": {
+        "instruction": "addpd  %xmm4,%xmm1",
+        "Ir": 8184
+      },
+      "0x7e02": {
+        "instruction": "mulpd  %xmm0,%xmm4",
+        "Ir": 8184
+      },
+      "0x7e06": {
+        "instruction": "addpd  %xmm4,%xmm1",
+        "Ir": 8184
+      },
+      "0x7e1c": {
+        "instruction": "addpd  %xmm4,%xmm1",
+        "Ir": 8184
+      },
+      "0x7e4b": {
+        "instruction": "mulpd  %xmm2,%xmm4",
+        "Ir": 4088
+      },
+      "0x7e4f": {
+        "instruction": "mulpd  %xmm3,%xmm1",
+        "Ir": 4088
+      },
+      "0x7e53": {
+        "instruction": "addpd  %xmm4,%xmm1",
+        "Ir": 4088
+      },
+      "0x7e60": {
+        "instruction": "mulpd  %xmm0,%xmm4",
+        "Ir": 4088
+      },
+      "0x7e64": {
+        "instruction": "addpd  %xmm4,%xmm1",
+        "Ir": 4088
+      },
+      "0x7e7a": {
+        "instruction": "addpd  %xmm4,%xmm1",
+        "Ir": 4088
+      },
+      "0x7e9f": {
+        "instruction": "mulpd  %xmm3,%xmm1",
+        "Ir": 4088
+      },
+      "0x7ead": {
+        "instruction": "mulpd  %xmm3,%xmm2",
+        "Ir": 4088
+      },
+      "0x7eb1": {
+        "instruction": "addpd  %xmm2,%xmm1",
+        "Ir": 4088
+      },
+      "0x7ebe": {
+        "instruction": "mulpd  %xmm2,%xmm0",
+        "Ir": 4088
+      },
+      "0x7ec2": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 4088
+      },
+      "0x7ed8": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 4088
+      },
+      "0x8516": {
+        "instruction": "subpd  %xmm0,%xmm2",
+        "Ir": 4096
+      },
+      "0x8526": {
+        "instruction": "mulpd  %xmm10,%xmm2",
+        "Ir": 4096
+      },
+      "0x852b": {
+        "instruction": "addpd  %xmm0,%xmm2",
+        "Ir": 4096
+      },
+      "0x853c": {
+        "instruction": "subpd  %xmm0,%xmm3",
+        "Ir": 4096
+      },
+      "0x8540": {
+        "instruction": "mulpd  %xmm2,%xmm4",
+        "Ir": 4096
+      },
+      "0x8544": {
+        "instruction": "mulpd  %xmm10,%xmm3",
+        "Ir": 4096
+      },
+      "0x8549": {
+        "instruction": "addpd  %xmm0,%xmm3",
+        "Ir": 4096
+      },
+      "0x855d": {
+        "instruction": "subpd  %xmm0,%xmm1",
+        "Ir": 4096
+      },
+      "0x8561": {
+        "instruction": "mulpd  %xmm10,%xmm1",
+        "Ir": 4096
+      },
+      "0x8566": {
+        "instruction": "addpd  %xmm0,%xmm1",
+        "Ir": 4096
+      },
+      "0x8574": {
+        "instruction": "mulpd  %xmm3,%xmm0",
+        "Ir": 4096
+      },
+      "0x8578": {
+        "instruction": "addpd  %xmm4,%xmm0",
+        "Ir": 4096
+      },
+      "0x8585": {
+        "instruction": "mulpd  %xmm1,%xmm4",
+        "Ir": 4096
+      },
+      "0x8589": {
+        "instruction": "addpd  %xmm4,%xmm0",
+        "Ir": 4096
+      },
+      "0x859f": {
+        "instruction": "addpd  %xmm4,%xmm0",
+        "Ir": 4096
+      },
+      "0x85c4": {
+        "instruction": "mulpd  %xmm3,%xmm0",
+        "Ir": 2048
+      },
+      "0x85d2": {
+        "instruction": "mulpd  %xmm3,%xmm2",
+        "Ir": 2048
+      },
+      "0x85d6": {
+        "instruction": "addpd  %xmm2,%xmm0",
+        "Ir": 2048
+      },
+      "0x85e3": {
+        "instruction": "mulpd  %xmm2,%xmm1",
+        "Ir": 2048
+      },
+      "0x85e7": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 2048
+      },
+      "0x85fd": {
+        "instruction": "addpd  %xmm1,%xmm0",
+        "Ir": 2048
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+diff --git a/src/core/Dsp.h b/src/core/Dsp.h
+index 2660073..461efc1 100644
+--- a/src/core/Dsp.h
++++ b/src/core/Dsp.h
+@@ -1237,6 +1237,7 @@ private:
+ // each frame retained its delay, is 63 host samples at every factor.
+ class OversamplingDecimator
+ {
++    friend struct StereoFirAccess;
+ public:
+     static constexpr int kMaxFactor = 8;
+     static constexpr int tapsFor(int factor) noexcept { return 128 * factor - 1; }
+diff --git a/src/core/Engine.cpp b/src/core/Engine.cpp
+index acc8c65..936568b 100644
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1,5 +1,6 @@
+ #include "Engine.h"
+ #include "RingModulatorCircuit.h"
++#include "StereoDecimator.h"
+ 
+ #include <algorithm>
+ #include <cmath>
+@@ -3343,8 +3344,9 @@ void Engine::render(float* interleavedStereo, int numFrames, const float* extern
+             // Evaluate only the retained last phase, using symmetric tap pairs.
+             if (os == retainedPhase)
+             {
+-                lastL = decL.output();
+-                lastR = decR.output();
++                const auto stereo = stereoFirOutput(decL, decR);
++                lastL = stereo.samples[0];
++                lastR = stereo.samples[1];
+             }
+         }
+         interleavedStereo[i * 2] = lastL;
+diff --git a/src/core/StereoDecimator.h b/src/core/StereoDecimator.h
+new file mode 100644
+index 0000000..1adeda2
+--- /dev/null
++++ b/src/core/StereoDecimator.h
+@@ -0,0 +1,38 @@
++#pragma once
++#include "Dsp.h"
++#if defined(__x86_64__)
++#include <xmmintrin.h>
++#endif
++namespace cs80 {
++// Unconditional layout/access definitions, identical across all caller TUs.
++struct StereoFirView { const float* newest; const float* coeffs; int center,taps; };
++struct StereoFirAccess {
++    static StereoFirView view(const OversamplingDecimator& d) noexcept {
++        return {d.hist.data()+d.idx-1+d.taps,d.coeffs.data(),d.center,d.taps};
++    }
++};
++struct StereoFirResult { std::array<float,2> samples; bool accelerated; };
++// Internal linkage deliberately isolates caller FP/ISA build contracts.
++static inline StereoFirResult stereoFirOutput(const OversamplingDecimator& l,
++                                              const OversamplingDecimator& r) noexcept {
++#if defined(__x86_64__) && defined(__GNUC__) && !defined(__clang__) \
++ && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) && !defined(__NVCOMPILER) \
++ && !defined(__PGI) && !defined(__ibmxl__) && !defined(_MSC_VER) \
++ && !defined(__FMA__) && !defined(__FAST_MATH__) && !defined(CS80_DISABLE_AVX2_FILTER_BATCH) \
++ && !defined(__ASSOCIATIVE_MATH__) && !defined(__RECIPROCAL_MATH__) && !defined(__NO_SIGNED_ZEROS__) \
++ && (!defined(__FINITE_MATH_ONLY__) || !__FINITE_MATH_ONLY__) \
++ && (!defined(__FLT_EVAL_METHOD__) || __FLT_EVAL_METHOD__ == 0)
++    const auto a=StereoFirAccess::view(l),b=StereoFirAccess::view(r);
++    if(a.center==b.center && (_mm_getcsr()&0x1f80u)==0x1f80u) {
++        std::array<double,2> y{(double)a.coeffs[a.center]*a.newest[-a.center],
++                               (double)b.coeffs[b.center]*b.newest[-b.center]};
++        for(int i=0;i<a.center;++i) {
++            y[0]+=(double)a.coeffs[i]*((double)a.newest[-i]+(double)a.newest[-(a.taps-1-i)]);
++            y[1]+=(double)b.coeffs[i]*((double)b.newest[-i]+(double)b.newest[-(b.taps-1-i)]);
++        }
++        return {{(float)y[0],(float)y[1]},true};
++    }
++#endif
++    return {{l.output(),r.output()},false};
++}
++}

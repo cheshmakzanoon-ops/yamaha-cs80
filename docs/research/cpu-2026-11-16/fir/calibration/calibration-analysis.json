@@ -1,0 +1,2799 @@
+{
+  "stage": "calibration",
+  "pairs": 4,
+  "total": {
+    "ratios": [
+      1.051241097802487,
+      0.9744678249137737,
+      0.9469047793685642,
+      0.9850590894728121
+    ],
+    "median": 0.9797634571932929,
+    "minimum": 0.9469047793685642,
+    "maximum": 1.051241097802487,
+    "below_one": 3,
+    "above": {
+      "1": 1,
+      "1.03": 1,
+      "1.05": 1,
+      "1.1": 0
+    },
+    "order_medians": {
+      "AB": 0.9990729385855257,
+      "BA": 0.9797634571932929
+    }
+  },
+  "source_held": {
+    "ratios": [
+      1.0526488065283253,
+      1.0128318186227496,
+      0.9435879642769756,
+      0.9713953082659712
+    ],
+    "median": 0.9921135634443604,
+    "minimum": 0.9435879642769756,
+    "maximum": 1.0526488065283253,
+    "below_one": 2,
+    "above": {
+      "1": 2,
+      "1.03": 1,
+      "1.05": 1,
+      "1.1": 0
+    },
+    "order_medians": {
+      "AB": 0.9981183854026504,
+      "BA": 0.9921135634443604
+    }
+  },
+  "cases": [
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "0",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.045749856992616,
+          1.0250771461762764,
+          0.9170949866089385,
+          0.9483887466676676
+        ],
+        "median": 0.9867329464219721,
+        "minimum": 0.9170949866089385,
+        "maximum": 1.045749856992616,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9814224218007772,
+          "BA": 0.9867329464219721
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.511438626,
+            "callback_cpu_rtf": 0.749177674805,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.54172484,
+            "callback_cpu_rtf": 0.793542246094,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.567406844,
+            "callback_cpu_rtf": 0.831162369141,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.532280699,
+            "callback_cpu_rtf": 0.779708055176,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.53483687,
+            "callback_cpu_rtf": 0.783452446289,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.555309753,
+            "callback_cpu_rtf": 0.813442020996,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.520365972,
+            "callback_cpu_rtf": 0.762254841797,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.504809025,
+            "callback_cpu_rtf": 0.739466345215,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "0",
+        "sustain_pedal_hold"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0130475169011934,
+          0.9455574401048183,
+          1.0002098352765942,
+          0.8993777399558822
+        ],
+        "median": 0.9728836376907063,
+        "minimum": 0.8993777399558822,
+        "maximum": 1.0130475169011934,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 0,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 1.0066286760888938,
+          "BA": 0.9224675900303503
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.177723395,
+            "callback_cpu_rtf": 0.709002905585,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.194555216,
+            "callback_cpu_rtf": 0.77615112766,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.182414514,
+            "callback_cpu_rtf": 0.727717476064,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.192368289,
+            "callback_cpu_rtf": 0.76742668484,
+            "audio_seconds": 0.250666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.180042244,
+            "callback_cpu_rtf": 0.718253632979,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.183963132,
+            "callback_cpu_rtf": 0.733895473404,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.182452791,
+            "callback_cpu_rtf": 0.727870176862,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.173011757,
+            "callback_cpu_rtf": 0.690206477394,
+            "audio_seconds": 0.250666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "0",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0059734117602825,
+          1.312215032373647,
+          0.9511290034945871,
+          1.0091421159880618
+        ],
+        "median": 1.0075577638741722,
+        "minimum": 0.9511290034945871,
+        "maximum": 1.312215032373647,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 1,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 0.9785512076274347,
+          "BA": 1.1606785741808543
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.519856679,
+            "callback_cpu_rtf": 0.173285559667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.51219283,
+            "callback_cpu_rtf": 0.170730943333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.528492784,
+            "callback_cpu_rtf": 0.176164261333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.513262357,
+            "callback_cpu_rtf": 0.171087452333,
+            "audio_seconds": 3.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.522961997,
+            "callback_cpu_rtf": 0.174320665667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.672107131,
+            "callback_cpu_rtf": 0.224035710333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.502664815,
+            "callback_cpu_rtf": 0.167554938333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.517954661,
+            "callback_cpu_rtf": 0.172651553667,
+            "audio_seconds": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "0",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.065870322971989,
+          1.0308888265596177,
+          0.9435879642769756,
+          1.149260814868107
+        ],
+        "median": 1.0483795747658033,
+        "minimum": 0.9435879642769756,
+        "maximum": 1.149260814868107,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 3,
+          "1.05": 2,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 1.0047291436244823,
+          "BA": 1.0900748207138622
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.502203428,
+            "callback_cpu_rtf": 0.735649552734,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.524536857,
+            "callback_cpu_rtf": 0.768364536621,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.548010484,
+            "callback_cpu_rtf": 0.802749732422,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.505366496,
+            "callback_cpu_rtf": 0.740282953125,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.53528373,
+            "callback_cpu_rtf": 0.784107026367,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.540739185,
+            "callback_cpu_rtf": 0.792098415527,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.517096097,
+            "callback_cpu_rtf": 0.75746498584,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.580797911,
+            "callback_cpu_rtf": 0.850778189941,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "0",
+        "sustain_pedal_hold"
+      ],
+      "ratio": {
+        "ratios": [
+          0.966519016068613,
+          1.0009419563969644,
+          0.9077352424039836,
+          1.039886926090403
+        ],
+        "median": 0.9837304862327887,
+        "minimum": 0.9077352424039836,
+        "maximum": 1.039886926090403,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9371271292362984,
+          "BA": 1.0204144412436835
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.182011228,
+            "callback_cpu_rtf": 0.72610862234,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.18234602,
+            "callback_cpu_rtf": 0.727444228723,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.187937588,
+            "callback_cpu_rtf": 0.749751015957,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.176301678,
+            "callback_cpu_rtf": 0.703331162234,
+            "audio_seconds": 0.250666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.175917313,
+            "callback_cpu_rtf": 0.701797791223,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.182517782,
+            "callback_cpu_rtf": 0.728129449468,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.170597572,
+            "callback_cpu_rtf": 0.680575420213,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.18333381,
+            "callback_cpu_rtf": 0.731384880319,
+            "audio_seconds": 0.250666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "0",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          0.9723873903469267,
+          1.0273552223956295,
+          0.9495818815588908,
+          0.9973811447207758
+        ],
+        "median": 0.9848842675338512,
+        "minimum": 0.9495818815588908,
+        "maximum": 1.0273552223956295,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 0,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9609846359529087,
+          "BA": 1.0123681835582026
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.555403607,
+            "callback_cpu_rtf": 0.185134535667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.530016126,
+            "callback_cpu_rtf": 0.176672042,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.547170915,
+            "callback_cpu_rtf": 0.182390305,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.514634776,
+            "callback_cpu_rtf": 0.171544925333,
+            "audio_seconds": 3.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.540067464,
+            "callback_cpu_rtf": 0.180022488,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.544514835,
+            "callback_cpu_rtf": 0.181504945,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.519583587,
+            "callback_cpu_rtf": 0.173194529,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.513287022,
+            "callback_cpu_rtf": 0.171095674,
+            "audio_seconds": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "legacy",
+        "paired_tones",
+        "0",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          0.9845305547215993,
+          1.1040303172235875,
+          0.7427944362367431,
+          1.0668049234635202
+        ],
+        "median": 1.0256677390925597,
+        "minimum": 0.7427944362367431,
+        "maximum": 1.1040303172235875,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 2,
+          "1.05": 2,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 0.8636624954791712,
+          "BA": 1.085417620343554
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.160653272,
+            "callback_cpu_rtf": 0.235331941406,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.160090649,
+            "callback_cpu_rtf": 0.234507786621,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.20002217,
+            "callback_cpu_rtf": 0.293001225586,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.156909947,
+            "callback_cpu_rtf": 0.229848555176,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.158168055,
+            "callback_cpu_rtf": 0.231691486816,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.17674493,
+            "callback_cpu_rtf": 0.258903706055,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.148575355,
+            "callback_cpu_rtf": 0.217639680176,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.167392304,
+            "callback_cpu_rtf": 0.245203570313,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "legacy",
+        "paired_tones",
+        "0",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0518206200238245,
+          1.073661584143778,
+          0.8094793440806577,
+          1.0429273619413866
+        ],
+        "median": 1.0473739909826056,
+        "minimum": 0.8094793440806577,
+        "maximum": 1.073661584143778,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 3,
+          "1.05": 2,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9306499820522411,
+          "BA": 1.0582944730425823
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.317917848,
+            "callback_cpu_rtf": 0.26317702649,
+            "audio_seconds": 1.208
+          },
+          {
+            "callback_cpu_seconds": 0.295576239,
+            "callback_cpu_rtf": 0.244682317053,
+            "audio_seconds": 1.208
+          },
+          {
+            "callback_cpu_seconds": 0.366675328,
+            "callback_cpu_rtf": 0.303539178808,
+            "audio_seconds": 1.208
+          },
+          {
+            "callback_cpu_seconds": 0.297208783,
+            "callback_cpu_rtf": 0.246033760762,
+            "audio_seconds": 1.208
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.334392548,
+            "callback_cpu_rtf": 0.276815023179,
+            "audio_seconds": 1.208
+          },
+          {
+            "callback_cpu_seconds": 0.317348853,
+            "callback_cpu_rtf": 0.262706004139,
+            "audio_seconds": 1.208
+          },
+          {
+            "callback_cpu_seconds": 0.296816104,
+            "callback_cpu_rtf": 0.245708695364,
+            "audio_seconds": 1.208
+          },
+          {
+            "callback_cpu_seconds": 0.309967172,
+            "callback_cpu_rtf": 0.25659534106,
+            "audio_seconds": 1.208
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "legacy",
+        "paired_tones",
+        "1",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0348417688962408,
+          1.0106135343244087,
+          0.8161932002581542,
+          0.9596056707718774
+        ],
+        "median": 0.9851096025481431,
+        "minimum": 0.8161932002581542,
+        "maximum": 1.0348417688962408,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9255174845771975,
+          "BA": 0.9851096025481431
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.192206774,
+            "callback_cpu_rtf": 0.281552891602,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.186797813,
+            "callback_cpu_rtf": 0.273629608887,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.225039161,
+            "callback_cpu_rtf": 0.329647208496,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.193056752,
+            "callback_cpu_rtf": 0.282797976562,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.198903598,
+            "callback_cpu_rtf": 0.291362692383,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.188780398,
+            "callback_cpu_rtf": 0.276533786133,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.183675433,
+            "callback_cpu_rtf": 0.269055810059,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.185258354,
+            "callback_cpu_rtf": 0.271374541992,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "legacy",
+        "paired_tones",
+        "1",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          0.967406631794152,
+          1.035183966525652,
+          0.8893116229047079,
+          0.965645975403155
+        ],
+        "median": 0.9665263035986535,
+        "minimum": 0.8893116229047079,
+        "maximum": 1.035183966525652,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9283591273494299,
+          "BA": 1.0004149709644035
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.465176471,
+            "callback_cpu_rtf": 0.264705882587,
+            "audio_seconds": 1.75733333333
+          },
+          {
+            "callback_cpu_seconds": 0.441135879,
+            "callback_cpu_rtf": 0.251025727807,
+            "audio_seconds": 1.75733333333
+          },
+          {
+            "callback_cpu_seconds": 0.490311462,
+            "callback_cpu_rtf": 0.279008798558,
+            "audio_seconds": 1.75733333333
+          },
+          {
+            "callback_cpu_seconds": 0.454550411,
+            "callback_cpu_rtf": 0.258659186836,
+            "audio_seconds": 1.75733333333
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.450014803,
+            "callback_cpu_rtf": 0.25607822629,
+            "audio_seconds": 1.75733333333
+          },
+          {
+            "callback_cpu_seconds": 0.456656789,
+            "callback_cpu_rtf": 0.259857808612,
+            "audio_seconds": 1.75733333333
+          },
+          {
+            "callback_cpu_seconds": 0.436039682,
+            "callback_cpu_rtf": 0.248125767451,
+            "audio_seconds": 1.75733333333
+          },
+          {
+            "callback_cpu_seconds": 0.438934775,
+            "callback_cpu_rtf": 0.249773202769,
+            "audio_seconds": 1.75733333333
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "10",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0246104746108122,
+          1.0128318186227496,
+          0.8077513950129487,
+          1.0017809310786343
+        ],
+        "median": 1.007306374850692,
+        "minimum": 0.8077513950129487,
+        "maximum": 1.0246104746108122,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 0,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9161809348118805,
+          "BA": 1.007306374850692
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.499541443,
+            "callback_cpu_rtf": 0.731750160645,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.509283539,
+            "callback_cpu_rtf": 0.746020809082,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.635757898,
+            "callback_cpu_rtf": 0.931285983398,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.503448455,
+            "callback_cpu_rtf": 0.737473322754,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.511835395,
+            "callback_cpu_rtf": 0.749758879395,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.515818573,
+            "callback_cpu_rtf": 0.755593612793,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.513534329,
+            "callback_cpu_rtf": 0.752247552246,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.504345062,
+            "callback_cpu_rtf": 0.738786711914,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "10",
+        "sustain_pedal_hold"
+      ],
+      "ratio": {
+        "ratios": [
+          1.03616894359838,
+          0.9934174218605744,
+          0.868224219850326,
+          1.0242838347278775
+        ],
+        "median": 1.008850628294226,
+        "minimum": 0.868224219850326,
+        "maximum": 1.03616894359838,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9521965817243531,
+          "BA": 1.008850628294226
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.184198468,
+            "callback_cpu_rtf": 0.73483431383,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.190747147,
+            "callback_cpu_rtf": 0.760959363032,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.215348837,
+            "callback_cpu_rtf": 0.859104402926,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.186040716,
+            "callback_cpu_rtf": 0.742183707447,
+            "audio_seconds": 0.250666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.190860732,
+            "callback_cpu_rtf": 0.761412494681,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.189491539,
+            "callback_cpu_rtf": 0.755950288564,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.186971076,
+            "callback_cpu_rtf": 0.74589525,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.190558498,
+            "callback_cpu_rtf": 0.760206773936,
+            "audio_seconds": 0.250666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "10",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          0.996874135518163,
+          0.999273725534487,
+          0.9981922122627661,
+          1.0340622953913414
+        ],
+        "median": 0.9987329688986266,
+        "minimum": 0.996874135518163,
+        "maximum": 1.0340622953913414,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9975331738904645,
+          "BA": 1.0166680104629142
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.536130408,
+            "callback_cpu_rtf": 0.178710136,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.541375222,
+            "callback_cpu_rtf": 0.180458407333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.598064683,
+            "callback_cpu_rtf": 0.199354894333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.532741079,
+            "callback_cpu_rtf": 0.177580359667,
+            "audio_seconds": 3.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.534454537,
+            "callback_cpu_rtf": 0.178151512333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.540982035,
+            "callback_cpu_rtf": 0.180327345,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.596983509,
+            "callback_cpu_rtf": 0.198994503,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.550887463,
+            "callback_cpu_rtf": 0.183629154333,
+            "audio_seconds": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "1",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0252552178428258,
+          1.0583550024775006,
+          0.9334358007529443,
+          1.0580174354681051
+        ],
+        "median": 1.0416363266554653,
+        "minimum": 0.9334358007529443,
+        "maximum": 1.0583550024775006,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 2,
+          "1.05": 2,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9793455092978851,
+          "BA": 1.0581862189728029
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.52552752,
+            "callback_cpu_rtf": 0.769815703125,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.51239141,
+            "callback_cpu_rtf": 0.750573354492,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.597095157,
+            "callback_cpu_rtf": 0.874651108887,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.524303216,
+            "callback_cpu_rtf": 0.768022289063,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.538799832,
+            "callback_cpu_rtf": 0.789257566406,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.542292012,
+            "callback_cpu_rtf": 0.794373064453,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.557349996,
+            "callback_cpu_rtf": 0.816430658203,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.554721944,
+            "callback_cpu_rtf": 0.812580972656,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "1",
+        "sustain_pedal_hold"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0246296106490496,
+          1.0068461550792658,
+          1.0298181747913924,
+          1.124075473671692
+        ],
+        "median": 1.027223892720221,
+        "minimum": 1.0068461550792658,
+        "maximum": 1.124075473671692,
+        "below_one": 0,
+        "above": {
+          "1": 4,
+          "1.03": 1,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 1.027223892720221,
+          "BA": 1.065460814375479
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.183989226,
+            "callback_cpu_rtf": 0.733999571809,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.183276158,
+            "callback_cpu_rtf": 0.731154885638,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.193648506,
+            "callback_cpu_rtf": 0.772533933511,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.184015852,
+            "callback_cpu_rtf": 0.734105792553,
+            "audio_seconds": 0.250666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.188520809,
+            "callback_cpu_rtf": 0.752077695479,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.184530895,
+            "callback_cpu_rtf": 0.736160485372,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.199422751,
+            "callback_cpu_rtf": 0.795569485372,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.206847706,
+            "callback_cpu_rtf": 0.825190316489,
+            "audio_seconds": 0.250666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "1",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.018248382310616,
+          0.9155384399833811,
+          0.8767525817118335,
+          0.9709345096997472
+        ],
+        "median": 0.9432364748415641,
+        "minimum": 0.8767525817118335,
+        "maximum": 1.018248382310616,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 0,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9475004820112247,
+          "BA": 0.9432364748415641
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.665461343,
+            "callback_cpu_rtf": 0.221820447667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.718652639,
+            "callback_cpu_rtf": 0.239550879667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.745796539,
+            "callback_cpu_rtf": 0.248598846333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.710143362,
+            "callback_cpu_rtf": 0.236714454,
+            "audio_seconds": 3.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.677604936,
+            "callback_cpu_rtf": 0.225868312,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.657954116,
+            "callback_cpu_rtf": 0.219318038667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.653879041,
+            "callback_cpu_rtf": 0.217959680333,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.689502697,
+            "callback_cpu_rtf": 0.229834232333,
+            "audio_seconds": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "isolation",
+        "paired_tones",
+        "1",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0371790123513225,
+          0.9963159005522801,
+          0.9529435126068457,
+          0.9904070942187512
+        ],
+        "median": 0.9933614973855156,
+        "minimum": 0.9529435126068457,
+        "maximum": 1.0371790123513225,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9950612624790841,
+          "BA": 0.9933614973855156
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.41564294,
+            "callback_cpu_rtf": 0.608851962891,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.421853976,
+            "callback_cpu_rtf": 0.617950160156,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.43475506,
+            "callback_cpu_rtf": 0.636848232422,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.490801443,
+            "callback_cpu_rtf": 0.71894742627,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.431096134,
+            "callback_cpu_rtf": 0.631488477539,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.420299824,
+            "callback_cpu_rtf": 0.615673570312,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.414297014,
+            "callback_cpu_rtf": 0.606880391602,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.486093231,
+            "callback_cpu_rtf": 0.712050631348,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "isolation",
+        "paired_tones",
+        "1",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.002158507296376,
+          1.1422897140985893,
+          0.9846122280446128,
+          0.9649512113723914
+        ],
+        "median": 0.9933853676704943,
+        "minimum": 0.9649512113723914,
+        "maximum": 1.1422897140985893,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 1,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 0.9933853676704943,
+          "BA": 1.0536204627354904
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.289156771,
+            "callback_cpu_rtf": 0.289156771,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.276185206,
+            "callback_cpu_rtf": 0.276185206,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.284003429,
+            "callback_cpu_rtf": 0.284003429,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.301412557,
+            "callback_cpu_rtf": 0.301412557,
+            "audio_seconds": 1.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.289780918,
+            "callback_cpu_rtf": 0.289780918,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.31548352,
+            "callback_cpu_rtf": 0.31548352,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.279633249,
+            "callback_cpu_rtf": 0.279633249,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.290848412,
+            "callback_cpu_rtf": 0.290848412,
+            "audio_seconds": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "paired_tones",
+        "1",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0526488065283253,
+          1.0276691606514856,
+          1.0744076113575494,
+          0.9713953082659712
+        ],
+        "median": 1.0401589835899054,
+        "minimum": 0.9713953082659712,
+        "maximum": 1.0744076113575494,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 2,
+          "1.05": 2,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 1.0635282089429374,
+          "BA": 0.9995322344587284
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.430548886,
+            "callback_cpu_rtf": 0.630686844727,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.413358437,
+            "callback_cpu_rtf": 0.605505522949,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.402038346,
+            "callback_cpu_rtf": 0.588923358398,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.429597498,
+            "callback_cpu_rtf": 0.629293209961,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.453216771,
+            "callback_cpu_rtf": 0.663891754395,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.424795718,
+            "callback_cpu_rtf": 0.622259352539,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.431953059,
+            "callback_cpu_rtf": 0.63274373877,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.417308994,
+            "callback_cpu_rtf": 0.61129247168,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "paired_tones",
+        "1",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0287165687698503,
+          0.9835461647858238,
+          0.838492864985398,
+          1.1451132439564882
+        ],
+        "median": 1.006131366777837,
+        "minimum": 0.838492864985398,
+        "maximum": 1.1451132439564882,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 1,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 0.9336047168776241,
+          "BA": 1.064329704371156
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.294712682,
+            "callback_cpu_rtf": 0.294712682,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.281777588,
+            "callback_cpu_rtf": 0.281777588,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.329296523,
+            "callback_cpu_rtf": 0.329296523,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.297679859,
+            "callback_cpu_rtf": 0.297679859,
+            "audio_seconds": 1.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.303175819,
+            "callback_cpu_rtf": 0.303175819,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.277141266,
+            "callback_cpu_rtf": 0.277141266,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.276112785,
+            "callback_cpu_rtf": 0.276112785,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.340877149,
+            "callback_cpu_rtf": 0.340877149,
+            "audio_seconds": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "paired_tones",
+        "0",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.1272496435297996,
+          0.9086743543777808,
+          0.9516389257409644,
+          1.163840256176358
+        ],
+        "median": 1.039444284635382,
+        "minimum": 0.9086743543777808,
+        "maximum": 1.163840256176358,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 2,
+          "1.05": 2,
+          "1.1": 2
+        },
+        "order_medians": {
+          "AB": 1.039444284635382,
+          "BA": 1.0362573052770694
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.370033736,
+            "callback_cpu_rtf": 0.542041605469,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.407609229,
+            "callback_cpu_rtf": 0.597083831543,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.384938368,
+            "callback_cpu_rtf": 0.5638745625,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.376997787,
+            "callback_cpu_rtf": 0.552242852051,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.417120397,
+            "callback_cpu_rtf": 0.611016206543,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.370384053,
+            "callback_cpu_rtf": 0.542554765137,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.366322335,
+            "callback_cpu_rtf": 0.53660498291,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.438765201,
+            "callback_cpu_rtf": 0.642722462402,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "paired_tones",
+        "0",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0339975864529931,
+          1.0186518985693684,
+          0.9882820217176732,
+          1.322416425769531
+        ],
+        "median": 1.0263247425111808,
+        "minimum": 0.9882820217176732,
+        "maximum": 1.322416425769531,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 2,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 1.0111398040853332,
+          "BA": 1.1705341621694498
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.170332709,
+            "callback_cpu_rtf": 0.170332709,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.167397597,
+            "callback_cpu_rtf": 0.167397597,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.175870867,
+            "callback_cpu_rtf": 0.175870867,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.174820814,
+            "callback_cpu_rtf": 0.174820814,
+            "audio_seconds": 1.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.17612361,
+            "callback_cpu_rtf": 0.17612361,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.17051988,
+            "callback_cpu_rtf": 0.17051988,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.173810016,
+            "callback_cpu_rtf": 0.173810016,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.231185916,
+            "callback_cpu_rtf": 0.231185916,
+            "audio_seconds": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "10",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          0.8094478433261625,
+          1.0053759351770888,
+          0.9970277248674033,
+          0.8807860730359126
+        ],
+        "median": 0.938906898951658,
+        "minimum": 0.8094478433261625,
+        "maximum": 1.0053759351770888,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 0,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9032377840967829,
+          "BA": 0.9430810041065008
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.631419933,
+            "callback_cpu_rtf": 0.92493154248,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.502359666,
+            "callback_cpu_rtf": 0.735878416992,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.510941596,
+            "callback_cpu_rtf": 0.748449603516,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.580193009,
+            "callback_cpu_rtf": 0.849892103027,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.511101503,
+            "callback_cpu_rtf": 0.748683842285,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.505060319,
+            "callback_cpu_rtf": 0.73983445166,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.509422937,
+            "callback_cpu_rtf": 0.746225005371,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.511025922,
+            "callback_cpu_rtf": 0.74857312793,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "10",
+        "sustain_pedal_hold"
+      ],
+      "ratio": {
+        "ratios": [
+          1.004228036690769,
+          0.995401393601974,
+          1.0312210644047266,
+          0.9718627036848898
+        ],
+        "median": 0.9998147151463714,
+        "minimum": 0.9718627036848898,
+        "maximum": 1.0312210644047266,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 1.0177245505477477,
+          "BA": 0.9836320486434319
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.189461932,
+            "callback_cpu_rtf": 0.755832175532,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.189421517,
+            "callback_cpu_rtf": 0.755670945479,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.18486314,
+            "callback_cpu_rtf": 0.737485930851,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.18934026,
+            "callback_cpu_rtf": 0.755346781915,
+            "audio_seconds": 0.250666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.190262984,
+            "callback_cpu_rtf": 0.759027861702,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.188550442,
+            "callback_cpu_rtf": 0.752195912234,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.190634764,
+            "callback_cpu_rtf": 0.760511026596,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.184012737,
+            "callback_cpu_rtf": 0.734093365692,
+            "audio_seconds": 0.250666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_chorus_reverb",
+        "10",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          0.9424729662003946,
+          0.9685324551360435,
+          1.035810387300098,
+          0.9180808486532491
+        ],
+        "median": 0.955502710668219,
+        "minimum": 0.9180808486532491,
+        "maximum": 1.035810387300098,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 1,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9891416767502462,
+          "BA": 0.9433066518946462
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.597425084,
+            "callback_cpu_rtf": 0.199141694667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.560703165,
+            "callback_cpu_rtf": 0.186901055,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.548771976,
+            "callback_cpu_rtf": 0.182923992,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.593583493,
+            "callback_cpu_rtf": 0.197861164333,
+            "audio_seconds": 3.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.563056991,
+            "callback_cpu_rtf": 0.187685663667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.543059213,
+            "callback_cpu_rtf": 0.181019737667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.568423713,
+            "callback_cpu_rtf": 0.189474571,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.544957637,
+            "callback_cpu_rtf": 0.181652545667,
+            "audio_seconds": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "1",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0698240716486995,
+          0.7270279432904518,
+          0.9382142132536042,
+          0.8864921339021414
+        ],
+        "median": 0.9123531735778728,
+        "minimum": 0.7270279432904518,
+        "maximum": 1.0698240716486995,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 1,
+          "1.05": 1,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 1.0040191424511518,
+          "BA": 0.8067600385962966
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.543142531,
+            "callback_cpu_rtf": 0.795618941895,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.713160894,
+            "callback_cpu_rtf": 1.04466927832,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.550801176,
+            "callback_cpu_rtf": 0.806837660156,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.582705184,
+            "callback_cpu_rtf": 0.853572046875,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.581066954,
+            "callback_cpu_rtf": 0.851172295898,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.518487898,
+            "callback_cpu_rtf": 0.759503756836,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.516769492,
+            "callback_cpu_rtf": 0.756986560547,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.516563562,
+            "callback_cpu_rtf": 0.756684905273,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "1",
+        "sustain_pedal_hold"
+      ],
+      "ratio": {
+        "ratios": [
+          1.3712137129580766,
+          0.7565472282455225,
+          0.9172638579823057,
+          0.8449080582293574
+        ],
+        "median": 0.8810859581058316,
+        "minimum": 0.7565472282455225,
+        "maximum": 1.3712137129580766,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 1,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 1.1442387854701912,
+          "BA": 0.80072764323744
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.193898004,
+            "callback_cpu_rtf": 0.773529271277,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.256056103,
+            "callback_cpu_rtf": 1.0215004109,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.196838233,
+            "callback_cpu_rtf": 0.785258908245,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.232586939,
+            "callback_cpu_rtf": 0.927873426862,
+            "audio_seconds": 0.250666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.265875602,
+            "callback_cpu_rtf": 1.06067394415,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.193718535,
+            "callback_cpu_rtf": 0.772813304521,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.180552597,
+            "callback_cpu_rtf": 0.720289615692,
+            "audio_seconds": 0.250666666667
+          },
+          {
+            "callback_cpu_seconds": 0.196514579,
+            "callback_cpu_rtf": 0.783967735372,
+            "audio_seconds": 0.250666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "mpe_phaser_delay_drive",
+        "1",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          0.9001716041177842,
+          0.957460111512629,
+          1.0039554639881625,
+          0.809661460364456
+        ],
+        "median": 0.9288158578152066,
+        "minimum": 0.809661460364456,
+        "maximum": 1.0039554639881625,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 0,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9520635340529733,
+          "BA": 0.8835607859385425
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.845089278,
+            "callback_cpu_rtf": 0.281696426,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.714263673,
+            "callback_cpu_rtf": 0.238087891,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.642217451,
+            "callback_cpu_rtf": 0.214072483667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.788857203,
+            "callback_cpu_rtf": 0.262952401,
+            "audio_seconds": 3.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.760725371,
+            "callback_cpu_rtf": 0.253575123667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.683878976,
+            "callback_cpu_rtf": 0.227959658667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.644757719,
+            "callback_cpu_rtf": 0.214919239667,
+            "audio_seconds": 3.0
+          },
+          {
+            "callback_cpu_seconds": 0.638707275,
+            "callback_cpu_rtf": 0.212902425,
+            "audio_seconds": 3.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "legacy",
+        "paired_tones",
+        "10",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.0027356448785005,
+          0.9119694197856607,
+          1.0149155959941927,
+          0.9299935716203027
+        ],
+        "median": 0.9663646082494016,
+        "minimum": 0.9119694197856607,
+        "maximum": 1.0149155959941927,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 0,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 1.0088256204363466,
+          "BA": 0.9209814957029817
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.145385464,
+            "callback_cpu_rtf": 0.212966988281,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.156147761,
+            "callback_cpu_rtf": 0.228732071777,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.14173024,
+            "callback_cpu_rtf": 0.20761265625,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.153551913,
+            "callback_cpu_rtf": 0.224929560059,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.145783187,
+            "callback_cpu_rtf": 0.213549590332,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.142401983,
+            "callback_cpu_rtf": 0.208596654785,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.143844231,
+            "callback_cpu_rtf": 0.210709322754,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.142802292,
+            "callback_cpu_rtf": 0.209183044922,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "legacy",
+        "paired_tones",
+        "10",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          0.8656995107408332,
+          1.2002694357799757,
+          0.965064407009736,
+          1.326008932464387
+        ],
+        "median": 1.0826669213948559,
+        "minimum": 0.8656995107408332,
+        "maximum": 1.326008932464387,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 2,
+          "1.05": 2,
+          "1.1": 2
+        },
+        "order_medians": {
+          "AB": 0.9153819588752845,
+          "BA": 1.2631391841221813
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.032463776,
+            "callback_cpu_rtf": 0.032463776,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.028612384,
+            "callback_cpu_rtf": 0.028612384,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.029526134,
+            "callback_cpu_rtf": 0.029526134,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.027827259,
+            "callback_cpu_rtf": 0.027827259,
+            "audio_seconds": 1.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.028103875,
+            "callback_cpu_rtf": 0.028103875,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.03434257,
+            "callback_cpu_rtf": 0.03434257,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.028494621,
+            "callback_cpu_rtf": 0.028494621,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.036899194,
+            "callback_cpu_rtf": 0.036899194,
+            "audio_seconds": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "paired_tones",
+        "10",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.595567696221355,
+          0.9251074354260193,
+          1.0332589218576962,
+          0.9444126859720621
+        ],
+        "median": 0.9888358039148791,
+        "minimum": 0.9251074354260193,
+        "maximum": 1.595567696221355,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 2,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 1.3144133090395256,
+          "BA": 0.9347600606990407
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.456651507,
+            "callback_cpu_rtf": 0.668923105957,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.473718976,
+            "callback_cpu_rtf": 0.69392428125,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.402559772,
+            "callback_cpu_rtf": 0.589687166016,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.439800401,
+            "callback_cpu_rtf": 0.644238868652,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.728618393,
+            "callback_cpu_rtf": 1.06731209912,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.438240947,
+            "callback_cpu_rtf": 0.641954512207,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.415948476,
+            "callback_cpu_rtf": 0.609299525391,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.415353078,
+            "callback_cpu_rtf": 0.608427360352,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "source_performance",
+        "paired_tones",
+        "10",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.5881866849896071,
+          0.8927291152224761,
+          1.0096502025665257,
+          1.015529403602106
+        ],
+        "median": 1.012589803084316,
+        "minimum": 0.8927291152224761,
+        "maximum": 1.5881866849896071,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 1,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 1.2989184437780663,
+          "BA": 0.9541292594122911
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.187288716,
+            "callback_cpu_rtf": 0.187288716,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.20995244,
+            "callback_cpu_rtf": 0.20995244,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.182176694,
+            "callback_cpu_rtf": 0.182176694,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.189558986,
+            "callback_cpu_rtf": 0.189558986,
+            "audio_seconds": 1.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.297449445,
+            "callback_cpu_rtf": 0.297449445,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.187430656,
+            "callback_cpu_rtf": 0.187430656,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.183934736,
+            "callback_cpu_rtf": 0.183934736,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.192502724,
+            "callback_cpu_rtf": 0.192502724,
+            "audio_seconds": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "isolation",
+        "paired_tones",
+        "10",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.019679575980941,
+          0.8813010343743768,
+          0.9795152191664579,
+          0.9633671249775053
+        ],
+        "median": 0.9714411720719816,
+        "minimum": 0.8813010343743768,
+        "maximum": 1.019679575980941,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 0,
+          "1.05": 0,
+          "1.1": 0
+        },
+        "order_medians": {
+          "AB": 0.9995973975736994,
+          "BA": 0.922334079675941
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.489541391,
+            "callback_cpu_rtf": 0.717101646973,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.467988004,
+            "callback_cpu_rtf": 0.685529302734,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.418034885,
+            "callback_cpu_rtf": 0.612355788574,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.42382371,
+            "callback_cpu_rtf": 0.620835512695,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.499175358,
+            "callback_cpu_rtf": 0.73121390332,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.412438312,
+            "callback_cpu_rtf": 0.604157683594,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.409471532,
+            "callback_cpu_rtf": 0.599811814453,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.408297829,
+            "callback_cpu_rtf": 0.598092522949,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "isolation",
+        "paired_tones",
+        "10",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.1796426636431192,
+          0.653790198664926,
+          1.040842184538157,
+          1.0059877722408466
+        ],
+        "median": 1.0234149783895017,
+        "minimum": 0.653790198664926,
+        "maximum": 1.1796426636431192,
+        "below_one": 1,
+        "above": {
+          "1": 3,
+          "1.03": 2,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 1.1102424240906381,
+          "BA": 0.8298889854528864
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.191910559,
+            "callback_cpu_rtf": 0.191910559,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.284580782,
+            "callback_cpu_rtf": 0.284580782,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.186899038,
+            "callback_cpu_rtf": 0.186899038,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.182915608,
+            "callback_cpu_rtf": 0.182915608,
+            "audio_seconds": 1.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.226385883,
+            "callback_cpu_rtf": 0.226385883,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.186056126,
+            "callback_cpu_rtf": 0.186056126,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.194532403,
+            "callback_cpu_rtf": 0.194532403,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.184010865,
+            "callback_cpu_rtf": 0.184010865,
+            "audio_seconds": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "isolation",
+        "paired_tones",
+        "0",
+        "warmed_held"
+      ],
+      "ratio": {
+        "ratios": [
+          1.441632723238674,
+          0.9278021819734938,
+          0.9786244952559355,
+          0.9793957708435586
+        ],
+        "median": 0.979010133049747,
+        "minimum": 0.9278021819734938,
+        "maximum": 1.441632723238674,
+        "below_one": 3,
+        "above": {
+          "1": 1,
+          "1.03": 1,
+          "1.05": 1,
+          "1.1": 1
+        },
+        "order_medians": {
+          "AB": 1.2101286092473047,
+          "BA": 0.9535989764085262
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.377771214,
+            "callback_cpu_rtf": 0.553375801758,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.40870249,
+            "callback_cpu_rtf": 0.598685288086,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.365459721,
+            "callback_cpu_rtf": 0.535341388184,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.374485934,
+            "callback_cpu_rtf": 0.548563379883,
+            "audio_seconds": 0.682666666667
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.544607344,
+            "callback_cpu_rtf": 0.797764664062,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.379195062,
+            "callback_cpu_rtf": 0.555461516602,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.357647835,
+            "callback_cpu_rtf": 0.523898195801,
+            "audio_seconds": 0.682666666667
+          },
+          {
+            "callback_cpu_seconds": 0.36676994,
+            "callback_cpu_rtf": 0.537260654297,
+            "audio_seconds": 0.682666666667
+          }
+        ]
+      }
+    },
+    {
+      "case": [
+        "isolation",
+        "paired_tones",
+        "0",
+        "release_tail"
+      ],
+      "ratio": {
+        "ratios": [
+          1.1319958812332218,
+          0.8750981058376347,
+          1.1147199902005762,
+          0.9716779811376967
+        ],
+        "median": 1.0431989856691364,
+        "minimum": 0.8750981058376347,
+        "maximum": 1.1319958812332218,
+        "below_one": 2,
+        "above": {
+          "1": 2,
+          "1.03": 2,
+          "1.05": 2,
+          "1.1": 2
+        },
+        "order_medians": {
+          "AB": 1.123357935716899,
+          "BA": 0.9233880434876657
+        }
+      },
+      "absolute": {
+        "baseline": [
+          {
+            "callback_cpu_seconds": 0.169208901,
+            "callback_cpu_rtf": 0.169208901,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.187734751,
+            "callback_cpu_rtf": 0.187734751,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.163503492,
+            "callback_cpu_rtf": 0.163503492,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.169864621,
+            "callback_cpu_rtf": 0.169864621,
+            "audio_seconds": 1.0
+          }
+        ],
+        "candidate": [
+          {
+            "callback_cpu_seconds": 0.191543779,
+            "callback_cpu_rtf": 0.191543779,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.164286325,
+            "callback_cpu_rtf": 0.164286325,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.182260611,
+            "callback_cpu_rtf": 0.182260611,
+            "audio_seconds": 1.0
+          },
+          {
+            "callback_cpu_seconds": 0.165053712,
+            "callback_cpu_rtf": 0.165053712,
+            "audio_seconds": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "csv_hashes": {
+    "calibration-1-baseline/results.csv": "cef0c1e18b2d66a2f3d701e9fb2693f806af55e7ed32d0f9b30e2e3077adc723",
+    "calibration-1-candidate/results.csv": "b25ece66f99e201b238f0c00bd584f91652aa355967a8a311366cd8cf41ba56b",
+    "calibration-2-baseline/results.csv": "c2ce625b3d69b33c6ffac6047e659aa056a7b3451edbe474c6f339f5438050bf",
+    "calibration-2-candidate/results.csv": "23df13a464c6e8f228b814cfa02e9a5fcc4f455b8246e2cc53b6b623c1be51ab",
+    "calibration-3-baseline/results.csv": "9943a5884c8eea7233419f83d66184553ec40ddd9a132bb75af636cb2e0a6252",
+    "calibration-3-candidate/results.csv": "1d4757f847d6d0f1960e4c40dc332c06b9fab1244efaa3e894ed59f10a0cb2a6",
+    "calibration-4-baseline/results.csv": "121c7795aedeb8327072cd06383d6e383923ad2422694350b5eb31205b09db6a",
+    "calibration-4-candidate/results.csv": "e571911e5f965012eda274d213ac4f7e5ad8db8ee28fea8bc0589de1d5cf51d1"
+  },
+  "empirical_aggregate_deviation": 0.056412035723024445,
+  "usable": false,
+  "decision": "calibration unusable; stop without candidate timing"
+}

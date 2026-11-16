@@ -1,0 +1,3 @@
+# Completed independent calibration audit
+
+cpu_research verified8 terminal0 runs/288rows,36unique keys each, same baseline executable in both roles, correct AB/BA order, exact all-run checksums/work/callback counts,48k/128, available positive finite clocks and nonfinite0. All144 case ratios and total/source formulas independently recomputed. E=0.056412035723024445. Total1.0512410978/0.9744678249/0.9469047794/0.9850590895; source1.0526488065/1.0128318186/0.9435879643/0.9713953083.39case-pair ratios outside[0.9,1.1]. CSV hashes and both current executable hashes match. Calibration unusable; candidate correctly skipped, no performance-run outputs. No retiming or promotion justified. No source writes or compute by auditor.

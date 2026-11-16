@@ -1,0 +1,56 @@
+{
+  "scope": "fixed synthetic residual accumulation; no native timing or Engine claim",
+  "snapshot_sha256": "2530ce4e50ee1310f4e93df603e71a13cc699673be3b3f4143ff8f5826fce37c",
+  "events": 2048,
+  "cross_environment_sticky_xor_counts": {
+    "0x0": 257,
+    "0x20": 1791
+  },
+  "native_snapshot_sha256": "2530ce4e50ee1310f4e93df603e71a13cc699673be3b3f4143ff8f5826fce37c",
+  "VG_snapshot_sha256": "4539a25679ced7c90acd66ee6701934d033043b8a7a82925a382c420901aba0b",
+  "raw": {
+    "client_totals": {
+      "Ir": 1844648,
+      "Dr": 518813,
+      "Dw": 65488,
+      "I1mr": 11,
+      "D1mr": 1593,
+      "D1mw": 1,
+      "ILmr": 11,
+      "DLmr": 389,
+      "DLmw": 1
+    },
+    "dump_sha256": "38588ea34819356013e8fc90e71a4e9ead1f63a319971159f415f09461eb00d0"
+  },
+  "helper": {
+    "client_totals": {
+      "Ir": 1417177,
+      "Dr": 424119,
+      "Dw": 77776,
+      "I1mr": 37,
+      "D1mr": 2613,
+      "D1mw": 1,
+      "ILmr": 37,
+      "DLmr": 1412,
+      "DLmw": 1
+    },
+    "dump_sha256": "2dbbd1470d191480b9105b35c1f896698e2890acb75830ff2fc73643baf53e6c"
+  },
+  "comparison": {
+    "Ir": {
+      "raw": 1844648,
+      "helper": 1417177,
+      "ratio": 0.7682641891569557
+    },
+    "Dr": {
+      "raw": 518813,
+      "helper": 424119,
+      "ratio": 0.817479515740739
+    },
+    "Dw": {
+      "raw": 65488,
+      "helper": 77776,
+      "ratio": 1.1876374297581236
+    }
+  }
+}
