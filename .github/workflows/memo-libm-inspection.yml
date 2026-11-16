@@ -1,0 +1,35 @@
+name: Memo libm inspection only (no timing)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['tools/memo-libm-inspection/request.json']
+permissions:
+  contents: read
+concurrency:
+  group: memo-libm-inspection-4681265-01
+  cancel-in-progress: false
+jobs:
+  inspect:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Parser and request tests
+        run: python3 -m unittest discover -s tools/memo-libm-inspection -p 'test_*.py' -v
+      - name: Collect actual runtime binding and supplementary proof
+        run: python3 tools/memo-libm-inspection/inspect.py --out "$GITHUB_WORKSPACE/memo-libm-evidence"
+      - name: Preserve inspection receipts even if unqualified
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: memo-libm-inspection-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            memo-libm-evidence/
+            !memo-libm-evidence/proof
+          if-no-files-found: warn
+          retention-days: 30
+          compression-level: 6

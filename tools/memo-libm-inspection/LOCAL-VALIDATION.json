@@ -1,0 +1,21 @@
+{
+  "scope": "inspection-only local validation; no memo enablement or timing",
+  "unit_tests": 6,
+  "unit_tests_pass": true,
+  "yaml_permissions_trigger_timeout_checks_pass": true,
+  "actual_collection_exit": 0,
+  "sample_calls": 2097168,
+  "local_runtime_glibc": "2.41",
+  "local_resolved_offset": "0x7e360",
+  "local_libm_sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+  "independent_review": "cpu_research verified all48 output manifest entries, actual GOT/PLT binding and supplementary result; fresh runner remains unqualified pending its separate audit",
+  "prior_failure": "First attempt stopped on lscpu because container /sys CPU view is missing; preserved. lscpu became optional metadata only; all binding/status gates remain mandatory.",
+  "tested_source_hashes": {
+    "Proof.cpp": "f4b54aa205d25e1fad1107e866c5d1f116941fa37acab0bcf5bb79c932c18fd3",
+    "inspect.py": "3e33ac1499c030b156c3fa9de82859cae784eaea666ecd23b3e019d3386b7135",
+    "test_binding.py": "ccfb8a09ccdfbb74f0e7a0d16058ba5eaf8b5042f2825ae0c5a2b6627d145e37",
+    "request.json": "7df996023ae9a6f998eb56aa2e0aa02c70dff4fbb05ce1cf276073f5259ddc07"
+  },
+  "actual_evidence_manifest_sha256": "75778fd63e76ad6508e9be137f1a9073bd1532f02929dab161c2fe74c2e60807",
+  "unit_log_sha256": "d995245d94ce150d5d036c4ad971109dcbf4ec8b5cdee63ad35c03a3b80f7058"
+}
