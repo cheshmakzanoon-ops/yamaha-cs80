@@ -1,0 +1,46 @@
+diff --git a/src/core/Engine.cpp b/src/core/Engine.cpp
+index acc8c65..192041e 100644
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -3,12 +3,29 @@
+ 
+ #include <algorithm>
+ #include <cmath>
++#if defined(__x86_64__)
++#include <xmmintrin.h>
++#endif
+ 
+ namespace cs80
+ {
+ 
+ namespace
+ {
++// Experimental bounded-fidelity pitch path. Public/Legacy midiToHz is unchanged.
++// Local vendor-libm samples are not an all-input equivalence proof.
++float sourcePitchHz(float note, float tuningRef) noexcept
++{
++#if CS80_IG00156_EXACT_BATCH_BUILD
++    if ((_mm_getcsr() & 0x7f80u) == 0x1f80u)
++    {
++        const float exponent = (note - 69.0f) / 12.0f;
++        if (std::isfinite(exponent) && exponent >= -120.0f && exponent <= 120.0f)
++            return tuningRef * std::exp2(exponent);
++    }
++#endif
++    return midiToHz(note, tuningRef);
++}
+ // Every continuous control the circuit engine smooths, in ONE list (field order
+ // is the SmootherBank slot order). Absent on purpose: switches and choices,
+ // envelope times and levels (the RC envelopes already move continuously toward
+@@ -2880,7 +2897,10 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
+ 
+             // Transposition is a separate nominal harmonic ratio, not rounded
+             // equal-tempered fifths and not part of the shared filter key CV.
+-            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
++            const float nominalHz = usesSourceModels(global.renderPolicy)
++                                      ? sourcePitchHz(pitch, global.tuningRef)
++                                      : midiToHz(pitch, global.tuningRef);
++            const float freq = nominalHz * v.ribbonRatio
+                                * kFeetRatios[std::clamp(rs.feet, 0, 5)] * keyRatio;
+             const float pwm = pwmSine[ch];
+             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);

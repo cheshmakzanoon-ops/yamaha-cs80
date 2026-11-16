@@ -1,0 +1,21 @@
+{
+  "scope": "local parser/unit/dry-run only; no benchmark or Actions execution",
+  "tests": 9,
+  "pass": true,
+  "yaml_parser": "PyYAML BaseLoader",
+  "files": {
+    "request.json": "82a14936cf43712b491dd5de55f381f811ccf1b59a931e847bb4b160a7f2929b",
+    "DispatchProbe.cpp": "b824913f45970f7b0a39c571bc2b3ad1e7825f34c8894899474f7df751e49633",
+    "metrics.py": "2671fa315535a04a069c891ddc99a10d855eed8ac868f87775ca3b45857bff60",
+    "candidate.patch": "7d9c73919d31330f35c9aad10b21a86d56b86526044a1f75b6398c694a1fe1ec",
+    "run.py": "d2fbf5970a5cd62ed9935620c60a80deb9b29b9014fc27fff2f3f9472d805d18",
+    "README.md": "0734104f18fea5566e9064fb446f24dbc3de2c91419fc2e8daad2f8b125547a2",
+    "test_metrics.py": "cd4dc9a528993c816425df27c9eb1e96cfa4fedc4a10a4bd60c77418b8860347"
+  },
+  "validation_log_hashes": {
+    "unit-final2.log": "9f72ac258169c61c276921b11ab3c04d965df723cf291cd1c6ec6b59f69ba20b",
+    "yaml.log": "b9bdafb8a40b470502e1770669826aeaa7ca7d3781115f278622c7237623e7ab",
+    "dryrun-final2/PLAN.json": "f1577640c8d3a9b92eb32bd1340f3d1f46b0e487c73e40f644a2ce946d425d0e",
+    "dryrun-final2/run.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  }
+}
