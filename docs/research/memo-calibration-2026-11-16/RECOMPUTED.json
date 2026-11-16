@@ -1,0 +1,97 @@
+{
+  "calibration_runs": 8,
+  "rows": 288,
+  "aggregates": {
+    "total": [
+      1.0019725421851284,
+      1.0200743423614191,
+      1.0050856445493184,
+      1.004101217444791
+    ],
+    "source_performance_dry_held": [
+      0.998936545544317,
+      1.0441395848927753,
+      1.0100074129952303,
+      1.0124599114733839
+    ],
+    "isolation_dry_held": [
+      1.0014373561805425,
+      1.0457290668051076,
+      1.0095368252078325,
+      1.0090965826245442
+    ]
+  },
+  "E": {
+    "total": 0.02007434236141914,
+    "source_performance_dry_held": 0.04413958489277525,
+    "isolation_dry_held": 0.04572906680510758
+  },
+  "absolute": [
+    {
+      "run": "calibration-active-1-left",
+      "cpu": 8.97930302,
+      "audio": 39.709333333337,
+      "cpu_audio": 0.22612575599353227
+    },
+    {
+      "run": "calibration-active-1-right",
+      "cpu": 8.997015074,
+      "audio": 39.709333333337,
+      "cpu_audio": 0.22657179858637355
+    },
+    {
+      "run": "calibration-active-2-left",
+      "cpu": 8.970387909,
+      "audio": 39.709333333337,
+      "cpu_audio": 0.2259012467849499
+    },
+    {
+      "run": "calibration-active-2-right",
+      "cpu": 9.150462547,
+      "audio": 39.709333333337,
+      "cpu_audio": 0.23043606575278244
+    },
+    {
+      "run": "calibration-active-3-left",
+      "cpu": 8.988214091,
+      "audio": 39.709333333337,
+      "cpu_audio": 0.22635016346280898
+    },
+    {
+      "run": "calibration-active-3-right",
+      "cpu": 9.033924953,
+      "audio": 39.709333333337,
+      "cpu_audio": 0.22750129993786092
+    },
+    {
+      "run": "calibration-active-4-left",
+      "cpu": 8.972084386,
+      "audio": 39.709333333337,
+      "cpu_audio": 0.22594396915920284
+    },
+    {
+      "run": "calibration-active-4-right",
+      "cpu": 9.008880855,
+      "audio": 39.709333333337,
+      "cpu_audio": 0.22687061450706386
+    }
+  ],
+  "csv_hashes": {
+    "calibration-active-1-left": "533354ac1ecd1acbd50fb9210a5e920623f80c13f3412220ec9fddfea9e58feb",
+    "calibration-active-1-right": "b0863222a8e76fe26f425116927ae4f3b571c4ed224a56535bf6af9c920565d3",
+    "calibration-active-2-left": "1da37bbfdc287b743addc61a5380eb70130a67a69ddaa71d0cea1e6a5fc650f8",
+    "calibration-active-2-right": "ab0c5a0a2b0593efbbd90e942b3c04a3b71765b6316b8706914c335533ee29f6",
+    "calibration-active-3-left": "10c7945622560d0a9224c04b8760f73f175ccba2c74abd4c4845ecafdda85e77",
+    "calibration-active-3-right": "a16d635e5580e59e0f17ef7e43a0b935c7fe44cb06640bc898a9a42141d517b9",
+    "calibration-active-4-left": "603017f7eb68ff92a50063896e1ddfeb7e2f8ab976eb1c621201e4760fee7172",
+    "calibration-active-4-right": "bf06174c49008a7838ff2e025c56fc0954612b483fe34f1f4764fb530e1f43ea"
+  },
+  "benchmark_hashes": {
+    "A": "624075846366081338f538ce9bf81a30ab156fee7ea5ab84d2a24713e2832fed",
+    "B": "a677b03ffb2772e8e36a7caf23813232821467bbf4945c60d25ecca76fb76996",
+    "C": "bfbeb8040b9c870ad131c5a9a0cd59ff3bbd527de3dd53ca3e9d67f15b7bb450"
+  },
+  "all_nine_corpora_pairwise_exact": true,
+  "candidate_timed": false,
+  "loss_or_gain_conclusion": null
+}
