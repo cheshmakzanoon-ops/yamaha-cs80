@@ -1,7 +1,7 @@
 """Read-only runtime/libm qualification evidence; never enables the memo."""
 import argparse,hashlib,json,os,pathlib,re,subprocess,traceback
 HERE=pathlib.Path(__file__).resolve().parent
-REQUEST={'request_id':'memo-libm-inspection-4681265-01','candidate_reference':'46812652364337aec1c8d51443427d1b63df5351','scope':'inspection-only-no-memo-no-timing'}
+REQUEST={'request_id':'memo-libm-inspection-4681265-02','candidate_reference':'46812652364337aec1c8d51443427d1b63df5351','scope':'inspection-only-no-memo-no-timing'}
 def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
 def check_binding(text,relocs,assembly):
  rows=[x.split('\t') for x in text.splitlines() if x.startswith('BIND\t')];assert len(rows)==1
@@ -51,6 +51,8 @@ def inspect(out):
   libs[kind]={'path':str(p),'sha256':sha(p),'bytes':p.stat().st_size,'build_id':ids[0]}
  assert libs['libm']['path']==str(lib)
  cmd(['objdump','-d','-Mintel',lib],'libm-complete-disassembly')
+ # Preserve constants needed to prove normal-domain branch exclusion; no execution.
+ cmd(['objdump','-s',lib],'libm-complete-section-bytes')
  start=int(bind['implementation_offset'],16);cmd(['objdump','-d','-Mintel','--start-address='+hex(start),'--stop-address='+hex(start+4096),lib],'resolved-powf-window')
  # This is a collection result, NEVER an automatic implementation approval.
  (out/'RESULT.json').write_text(json.dumps({'status':'evidence collected; independent normal-domain control-flow review required','memo_enabled':False,'timing_executed':False,'binding':bind,'libraries':libs,'proof_executable_sha256':sha(exe),'source_sha256':sha(HERE/'Proof.cpp'),'sample_calls':2097168},indent=2)+'\n')

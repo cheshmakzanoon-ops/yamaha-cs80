@@ -17,5 +17,17 @@
     "request.json": "7df996023ae9a6f998eb56aa2e0aa02c70dff4fbb05ce1cf276073f5259ddc07"
   },
   "actual_evidence_manifest_sha256": "75778fd63e76ad6508e9be137f1a9073bd1532f02929dab161c2fe74c2e60807",
-  "unit_log_sha256": "d995245d94ce150d5d036c4ad971109dcbf4ec8b5cdee63ad35c03a3b80f7058"
+  "unit_log_sha256": "d995245d94ce150d5d036c4ad971109dcbf4ec8b5cdee63ad35c03a3b80f7058",
+  "followup_request_02": {
+    "scope": "separate read-only constants capture; no memo or timing",
+    "unit_tests_pass": 6,
+    "actual_collection_exit": 0,
+    "evidence_manifest_sha256": "bf30da5b342c63a41446812ffd7459b27e54701972c1e0d8c5c2deed07d7d116",
+    "section_dump_bytes": 3695533,
+    "source_hashes": {
+      "inspect.py": "142f5690b1975b3b758ad5185df52ad19a53c6024d9bb8453c6ed364dfe5cc0b",
+      "request.json": "c721ec6599ee94db6d1bfe85c4d45c968d8c8a1b245717177237d679c980e3f3"
+    },
+    "prior_receipt": "All preceding fields describe original request01 validation, preserved unchanged."
+  }
 }

@@ -7,7 +7,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: memo-libm-inspection-4681265-01
+  group: memo-libm-inspection-4681265-02
   cancel-in-progress: false
 jobs:
   inspect:

@@ -17,3 +17,5 @@ Supplementary dense grid:2,097,168 `pow(2,x)` calls over finite[-120,120], all f
 Local validation requires parser unit tests and an actual inspection run. No CPU timings are collected. The locally generated executable is not uploaded; its digest is retained. Runtime library binaries are not copied, only their hashes and textual diagnostics. Artifact retention requested30days, not permanent preservation.
 
 `lscpu` is optional metadata: a nonzero exit is preserved (some container /sys views are unavailable), while a missing executable or command timeout still stops the inspection. /proc/cpuinfo, process affinity, runtime binding and all proof assertions remain required. This is not a relaxation of a binding or numerical gate.
+
+Inspection request 02 supplements request 01 with read-only section bytes from the actual hashed libm. The first artifact remains preserved; its successful collection alone did not establish a full normal-domain proof because referenced table/constants were absent. This follow-up performs no memo enablement or timing.
