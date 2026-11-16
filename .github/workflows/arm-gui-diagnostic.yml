@@ -46,8 +46,8 @@ jobs:
           codesign --force --sign - "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
           killall -9 AudioComponentRegistrar || true
           sleep 2
-      - name: One failing-seed replay under LLDB (not validation replacement)
-        timeout-minutes: 7
+      - name: One native then LLDB failing-seed comparison (not validation replacement)
+        timeout-minutes: 12
         run: >-
           python3 tools/arm-gui-diagnostic/replay.py --lldb "$(xcrun -f lldb)"
           --validator "$PWD/pluginval/pluginval.app/Contents/MacOS/pluginval"
