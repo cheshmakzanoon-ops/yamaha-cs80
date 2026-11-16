@@ -1,3 +1,8 @@
+test_codegen_all_arms (test_binding_receipt.Receipt.test_codegen_all_arms) ... ok
+test_codegen_not_driver_relocation_only (test_binding_receipt.Receipt.test_codegen_not_driver_relocation_only) ... ok
+test_runtime_failures (test_binding_receipt.Receipt.test_runtime_failures) ... ok
+test_runtime_receipt (test_binding_receipt.Receipt.test_runtime_receipt) ... ok
+test_real_patch_and_unexpected_paths (test_patch_inventory.ActualPatch.test_real_patch_and_unexpected_paths) ... ok
 test_active_calibration_stop (test_runner.Gates.test_active_calibration_stop) ... ok
 test_all_calibration_orders (test_runner.Gates.test_all_calibration_orders) ... ok
 test_all_triplet_orders (test_runner.Gates.test_all_triplet_orders) ... ok
@@ -11,12 +16,8 @@ test_default_off_regression_blocks (test_runner.Metrics.test_default_off_regress
 test_inconsistent_large_effect_caution (test_runner.Metrics.test_inconsistent_large_effect_caution) ... ok
 test_inventory_missing (test_runner.Metrics.test_inventory_missing) ... ok
 test_primary_target_and_default_off_loss (test_runner.Metrics.test_primary_target_and_default_off_loss) ... ok
-test_codegen_all_arms (test_binding_receipt.Receipt.test_codegen_all_arms) ... ok
-test_codegen_not_driver_relocation_only (test_binding_receipt.Receipt.test_codegen_not_driver_relocation_only) ... ok
-test_runtime_failures (test_binding_receipt.Receipt.test_runtime_failures) ... ok
-test_runtime_receipt (test_binding_receipt.Receipt.test_runtime_receipt) ... ok
 
 ----------------------------------------------------------------------
-Ran 17 tests in 0.058s
+Ran 18 tests in 2.341s
 
 OK

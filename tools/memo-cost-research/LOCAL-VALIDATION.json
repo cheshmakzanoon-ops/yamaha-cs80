@@ -1,5 +1,5 @@
 {
-  "scope": "17 unit/mock tests; minimal binding receipt only, no memoON or benchmark execution",
+  "scope": "18 unit/mock tests including real frozen patch application inventory; minimal receipt test retained from original tooling; no memoON or benchmark execution",
   "minimal_probe_build_exit": 0,
   "minimal_probe_run_exit": 0,
   "restoration_contexts": 16,
@@ -15,5 +15,13 @@
   "independent_reviews": {
     "numerical_binding": "cpu_research: corrected C-only helper gate, PIE gate, actual GOT provenance, exact audit pin and local16context receipt cleared; no source blocker",
     "workflow_security": "review_ring: narrowed trigger/attempt guard, fixed workload, controlled outputs and three executable/nine corpus artifact retention cleared"
+  },
+  "patch_inventory_repair": {
+    "failed_run": "43814107375",
+    "artifact_id": "14201691687",
+    "artifact_sha256": "5b773e510e7d707100a4066f21c61d6acca0cfa760a155139bc18295891c881a",
+    "state": "baseline A qualification completed; B patch succeeded; exact paths assertion failed before B configure/C/reach/calibration/timing",
+    "actual_local_test": "fresh583 worktree; immutable patch produces3tracked+2untracked paths; unexpected new and tracked files rejected",
+    "request": "memo-three-arm-4681265-02"
   }
 }

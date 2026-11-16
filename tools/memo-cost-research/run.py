@@ -14,9 +14,15 @@ def approve(entries,observed,tool_hashes):
  matched=[x for x in entries if x.get('candidate')==CANDIDATE and x.get('reviewed') is True and x.get('review_receipt_sha256') and x.get('inspection_tool_hashes')==tool_hashes and x.get('fingerprint')==observed]
  assert len(matched)==1,'unknown/drifted binding or inspection tool; stop unqualified'
  return matched[0]
+def validate_patch_paths(src,allowed):
+ tracked=subprocess.check_output(['git','diff','HEAD','--name-only','-z'],cwd=src).decode().split('\0')
+ untracked=subprocess.check_output(['git','ls-files','--others','--exclude-standard','-z'],cwd=src).decode().split('\0')
+ paths=set(filter(None,tracked+untracked))
+ assert paths==set(allowed),('unexpected patch inventory',sorted(paths),sorted(allowed))
+ return sorted(paths)
 class Runner:
  def __init__(self,args):
-  assert json.loads((HERE/'request.json').read_text())=={'request_id': 'memo-three-arm-4681265-01', 'baseline': '5836041138bc1708c3fd2d4240cf63a3e1def4b3', 'candidate': '46812652364337aec1c8d51443427d1b63df5351', 'timed_runs': 52, 'timeout_seconds': 5400},'request drift'
+  assert json.loads((HERE/'request.json').read_text())=={'request_id': 'memo-three-arm-4681265-02', 'baseline': '5836041138bc1708c3fd2d4240cf63a3e1def4b3', 'candidate': '46812652364337aec1c8d51443427d1b63df5351', 'timed_runs': 52, 'timeout_seconds': 5400},'request drift'
   self.args=args;self.repo=args.repo.resolve();self.out=args.out.resolve();self.work=args.work.resolve();self.out.mkdir(exist_ok=False);self.work.mkdir(exist_ok=False)
   self.cpu=min(os.sched_getaffinity(0));self.tooling_hashes={p.name:sha(p) for p in HERE.iterdir() if p.is_file() and p.name!='SOURCE-HASHES.json'};self.deadline=time.monotonic()+90*60;self.binding_approved=False;self.references={}
  def save(self,name,value):(self.out/name).write_text(json.dumps(value,indent=2)+'\n')
@@ -47,7 +53,7 @@ class Runner:
    self.command(['git','worktree','add','--detach',src,BASE],arm+'-source',self.repo)
    if arm!='A':
     self.command(['git','apply','--check',HERE/'candidate.patch'],arm+'-patch-check',src);self.command(['git','apply',HERE/'candidate.patch'],arm+'-patch',src)
-    paths=subprocess.check_output(['git','diff','--name-only'],cwd=src,text=True).splitlines();assert sorted(paths)==sorted(source['allowed_paths'])
+    validate_patch_paths(src,source['allowed_paths'])
    from binding import instrument
    benchmark_source=src/'src/tools/source_factory_benchmark.cpp'
    benchmark_source.write_text(instrument(benchmark_source.read_text()))
