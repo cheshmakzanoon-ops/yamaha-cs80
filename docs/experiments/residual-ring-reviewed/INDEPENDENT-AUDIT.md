@@ -1,0 +1,11 @@
+# Independent audit record
+
+The independent reviewer (`cpu_research`) directly inspected the local raw evidence, rather than relying solely on this compact publication. Its verified findings:
+
+1. Focused: all 18 exit receipts zero, all reported check/admission counts correct, frozen old-helper hashes intact. Overflow continuation rejects without mutation then applies raw continuation exactly once; inactive nonfinite branches conservatively reject. Packed integer classification is present in generated code.
+2. Synthetic instruction study: six 2,048 × 388-byte snapshots match three-way within environment; cross-environment residual/control equality with 257 equal statuses and 1,791 precision-only differences. Independently reconstructed direct non-call-edge costs match all three profiler footer totals. Actual new arithmetic/classification addresses execute. Old/raw absence at those addresses is not absence of SIMD in the old helper.
+3. Full core: all 27 corpora byte-equal within generic/native/OFF; all per-profile receipts and registered tests pass. All nine core archive, compile-database and cache hashes match receipts; normalized Engine compile commands match across arms per profile.
+4. Reach: instrumentation is count-only at the specified gates. The exact Engine corpus hash is `25dad72a8b6e5cd220b1d219c83be44dd238b8b6dfddfe0ee311b74716aa40aa`; 2,643,214 true-proof/nonzero packed entries, zero false-proof/raw fallback in this workload.
+5. Whole-core instruction study: executable/driver and six dump hashes verified. All six PCM/named-state outputs per case match (16,384 / 158,480 bytes); statuses match across arms within each environment, precision-only differences across environments. Independent non-call-edge sums match all footer totals and result tables. Actual packed/classification PC and AVX call-edge checks pass.
+
+Audit conclusion: a small whole-core instruction effect and increased raw-relative read/write traffic, not established native CPU benefit or promotion readiness. No timing retry is justified by these receipts. Full raw artifacts remain local; the compact archive deliberately omits them and discloses their hashes, so readers should not confuse the archive with a fresh independent raw audit.

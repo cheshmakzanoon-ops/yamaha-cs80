@@ -1,0 +1,230 @@
+{
+  "format": "utf8-evidence-records-v1",
+  "base_main": "d59244238a36adc4b4db8060523c993f9aa25824",
+  "tested_source_commit": "2abb1cfac291391fa477d0b38b52adedf8e553dd",
+  "full_local_preservation_commit": "1c5aa114e73034145ff4e69ce5d14bbc96f8c37f",
+  "encoding": "base64 lines of deterministic gzip (mtime=0) containing canonical JSON UTF-8 file records",
+  "encoded_sha256": "b20c4a51ad721c01a893661cbf546709de822278c519e7f172b1e42a3e2252f5",
+  "encoded_bytes": 65232,
+  "gzip_sha256": "0a396e0cb65a45bab716920b6690a1eb60f3c29c497142fd50f1362f947f2909",
+  "decoded_json_sha256": "dbffe2f57b1c8df26ffb4527f5d85817e52b69190190c904dc17ae4037d99cd6",
+  "decoded_json_bytes": 194232,
+  "included_records": [
+    {
+      "path": "residual-ring-core-instructions/CORE-PROVENANCE.json",
+      "bytes": 1848,
+      "sha256": "e16cbe1d2fe8269036d4ddd9fb92e930d37b02a73ab3d264cd99cb9ec6581ccb"
+    },
+    {
+      "path": "residual-ring-core-instructions/FROZEN.sha256",
+      "bytes": 650,
+      "sha256": "8989a10fec43426ccf99a76a77820da5c51cbc310948c19f46527deb1a522204"
+    },
+    {
+      "path": "residual-ring-core-instructions/INDEPENDENT-AUDIT.md",
+      "bytes": 417,
+      "sha256": "3062b140abb0413d513895a1c1205933ef3326e934a09427891d354f9a0ebb64"
+    },
+    {
+      "path": "residual-ring-core-instructions/INPUTS.json",
+      "bytes": 1189,
+      "sha256": "5feb24cf10ad6d00f5577aca1ac27f93bb900a3d1d34b13d72040f8a4a037f68"
+    },
+    {
+      "path": "residual-ring-core-instructions/MANIFEST.json",
+      "bytes": 19406,
+      "sha256": "bd694b0148dcf8ed50637b857c2e0eb8c03260e80f765b512576925640658f63"
+    },
+    {
+      "path": "residual-ring-core-instructions/PROTOCOL.md",
+      "bytes": 1959,
+      "sha256": "d119a001898c835f317f161d552ab8f013854772884e0d2c3459d889eec6cfd8"
+    },
+    {
+      "path": "residual-ring-core-instructions/Probe.cpp",
+      "bytes": 5397,
+      "sha256": "3b6eb6f2c95b88a04144aff4051b8c128a26254633969c059a6c9c434f6b1a4d"
+    },
+    {
+      "path": "residual-ring-core-instructions/RESULT.json",
+      "bytes": 15608,
+      "sha256": "aba2de4196df37699c4b708f1612f79e9689a8ef3288f6598279ff445940de4a"
+    },
+    {
+      "path": "residual-ring-core-instructions/RESULT.md",
+      "bytes": 2309,
+      "sha256": "35694d1b3a36784e228b85494006e6bdf8cb861d160a233b1f21b07c15e22ca5"
+    },
+    {
+      "path": "residual-ring-core-instructions/analyze.py",
+      "bytes": 3659,
+      "sha256": "a4153646ffca734605def923fe0daf8046efcc9a4e0ee237db62e18f9abd75ae"
+    },
+    {
+      "path": "residual-ring-core-instructions/run.py",
+      "bytes": 4503,
+      "sha256": "49c705708c9a2dad1a9ecae7749c5e1167780e20869cc1a4e9f265e25c6f0926"
+    },
+    {
+      "path": "residual-ring-design/DESIGN.md",
+      "bytes": 8635,
+      "sha256": "d4dbf54216dd5d83f2f464dfda28cd3f5f4a05fb3ee4ec21b80d9059884ba175"
+    },
+    {
+      "path": "residual-ring-evidence/FROZEN-OLD.sha256",
+      "bytes": 431,
+      "sha256": "72fabb26346f7e93addf0e2c17892ff6e797b1f50d16f80a89404f6ec3ee1156"
+    },
+    {
+      "path": "residual-ring-evidence/INDEPENDENT-AUDIT.md",
+      "bytes": 396,
+      "sha256": "cd50f916a596d424d7550a286ef64518b5faaef701a64b7eb8bdad317aef3895"
+    },
+    {
+      "path": "residual-ring-evidence/MANIFEST.json",
+      "bytes": 9352,
+      "sha256": "c8016c91909b9b25cde5e623eaf0e71b5fd53451b0360bee03f114e64dbecc92"
+    },
+    {
+      "path": "residual-ring-evidence/RESULT.md",
+      "bytes": 1832,
+      "sha256": "9c739e46bdc679597ee21a67201aa43e7cbccd0268d0c8338886f84b98c61155"
+    },
+    {
+      "path": "residual-ring-evidence/focused.sh",
+      "bytes": 1144,
+      "sha256": "da500c5e0121af07291ba24874da7dee8e1c3a4b8cf3c61ecd7b1b24568626ce"
+    },
+    {
+      "path": "residual-ring-evidence/layout-parent.log",
+      "bytes": 97,
+      "sha256": "bdd0eace6790600d27b0873f6e926907989f35a7b2eff32d827e309b93b73cff"
+    },
+    {
+      "path": "residual-ring-evidence/layout.log",
+      "bytes": 97,
+      "sha256": "bdd0eace6790600d27b0873f6e926907989f35a7b2eff32d827e309b93b73cff"
+    },
+    {
+      "path": "residual-ring-full-evidence/CORE-PROVENANCE.json",
+      "bytes": 4702,
+      "sha256": "7d447d1e81c0a9e9e5c208cda478570d289cafe880916297e1632b6fba3c2f39"
+    },
+    {
+      "path": "residual-ring-full-evidence/FROZEN.sha256",
+      "bytes": 482,
+      "sha256": "6b28dfe9080340454405ed4650cd887b63d6a34616c8d5ccda0e35b3da865e4a"
+    },
+    {
+      "path": "residual-ring-full-evidence/INDEPENDENT-AUDIT.md",
+      "bytes": 472,
+      "sha256": "a03f1e234af4b7f32f4e0c9fd8e5cdb53b1a68423fc557d7825f5867d0cd8a15"
+    },
+    {
+      "path": "residual-ring-full-evidence/MANIFEST.json",
+      "bytes": 39219,
+      "sha256": "11c0822746b22056cc42fbf2bdf710bdc28cd1f5805ce9784ff9cf8dd8d2b8da"
+    },
+    {
+      "path": "residual-ring-full-evidence/PROTOCOL.md",
+      "bytes": 1512,
+      "sha256": "cfa6cd3c6863e245e1ab853447084a5fdefae96034ec7844198c01726410c026"
+    },
+    {
+      "path": "residual-ring-full-evidence/SOURCES.json",
+      "bytes": 502,
+      "sha256": "75151ef6556f76a059ab0378747c7dc1e69218d65986f6b9b017298af3067bae"
+    },
+    {
+      "path": "residual-ring-full-evidence/provenance.py",
+      "bytes": 1141,
+      "sha256": "f3de88edc41aea98f0904dd48102e1035118f2c03bed3664b37db51c8e9bb9f8"
+    },
+    {
+      "path": "residual-ring-full-evidence/qualify.py",
+      "bytes": 3318,
+      "sha256": "fe0eaf908c382527f74972856b50b5170137b31888cc5e345520ee8b1ef1a841"
+    },
+    {
+      "path": "residual-ring-full-evidence/reach.py",
+      "bytes": 3551,
+      "sha256": "c1b1455258013844b5a7938fbc2767a767b389c2a84c09f375347a14c5ed6ac9"
+    },
+    {
+      "path": "residual-ring-full-evidence/reach/RESULT.json",
+      "bytes": 306,
+      "sha256": "d9f3f53975c3ad34bd4fa1785c9efc52787142fd8bf524751a60bab061e7a369"
+    },
+    {
+      "path": "residual-ring-full-evidence/reach/ReconstructedOscillator.h.diff",
+      "bytes": 1225,
+      "sha256": "2fefa10ba7f9f99fab3209b056be837ed5d68d5afde2e957d160381afc264453"
+    },
+    {
+      "path": "residual-ring-full-evidence/reach/ResidualFinitePrototype.cpp.diff",
+      "bytes": 2251,
+      "sha256": "00ed30f0c1bf5cd38c62c994ccc8d575ded9a0d9291cf2f29c0af3c7ee7153f8"
+    },
+    {
+      "path": "residual-ring-full-evidence/results.json",
+      "bytes": 3732,
+      "sha256": "d947d57dc6149fad61e3e349027ba60b3ee205cbd0e680144ccbc86eead9403f"
+    },
+    {
+      "path": "residual-ring-instructions/INDEPENDENT-AUDIT.md",
+      "bytes": 397,
+      "sha256": "83ecd22e148a81bb118fd60621aa30d4b64348185fc1acb1115f00e7a15fd5ce"
+    },
+    {
+      "path": "residual-ring-instructions/MANIFEST.json",
+      "bytes": 5874,
+      "sha256": "5ff7d5b5480adf2378fc84f617f63d2fd18ddd08f9e78fe7e07f088553626842"
+    },
+    {
+      "path": "residual-ring-instructions/PACKED-PATH.json",
+      "bytes": 7743,
+      "sha256": "4e057d97911e99cdb9abe83275db2a0b1fa8ebed6dd680e67ded2e15f01c617a"
+    },
+    {
+      "path": "residual-ring-instructions/PRELAUNCH.sha256",
+      "bytes": 1708,
+      "sha256": "05b7423c27c52ae937af57dad3b7c3748592657ab810a0b56f264b8429c9f900"
+    },
+    {
+      "path": "residual-ring-instructions/PROTOCOL.md",
+      "bytes": 2421,
+      "sha256": "346b6ea63e3425e9072f42e7ae9f41a07e00b942b2d9f8ad1cfba5b712cfbd1c"
+    },
+    {
+      "path": "residual-ring-instructions/Probe.cpp",
+      "bytes": 7658,
+      "sha256": "b1f8bb1b0af38ee9308dc271aa0f7ae9f7be54f893e0e962c6688afe09ac7820"
+    },
+    {
+      "path": "residual-ring-instructions/RESULT.json",
+      "bytes": 1796,
+      "sha256": "bd660625a4ab3afe4805e4bc4a3ed4da4ea606c2e41f0dd739b8371f00843035"
+    },
+    {
+      "path": "residual-ring-instructions/RESULT.md",
+      "bytes": 2318,
+      "sha256": "d6253b52c918b0148c6db734d8dd1ba774fac86a36b441ee2787275685c2d62b"
+    },
+    {
+      "path": "residual-ring-instructions/analyze.py",
+      "bytes": 1883,
+      "sha256": "52205793159aeef84724f1c391e5df34fa8dfcdd5d1e8febd51f96458db39ef4"
+    },
+    {
+      "path": "residual-ring-instructions/run.sh",
+      "bytes": 1803,
+      "sha256": "f1379761774aad6a92049b487ec202af6d7453565b9de22fabb89a3628c3c9fa"
+    },
+    {
+      "path": "residual-ring-instructions/verify-pc.py",
+      "bytes": 1484,
+      "sha256": "9782e8e84409f5e1c5513efe587684cc7288acbb93481149192850d426bea55f"
+    }
+  ],
+  "omissions": "No executable binaries, archives, PCM/state corpora, raw Callgrind dumps, full disassembly or build trees included. Embedded original manifests retain original hashes/sizes for those locally retained artifacts. This compact bundle does not independently replace the full raw audit evidence; paths identify local evidence provenance, not public download links."
+}
