@@ -1,0 +1,33 @@
+[
+  {
+    "candidate": "46812652364337aec1c8d51443427d1b63df5351",
+    "reviewed": true,
+    "review_receipt_sha256": "3b32bbad1bcf6e1a3afaa0e94f9b57f1d58ebf748dcad0ac31c0310cad6ba95d",
+    "inspection_tool_hashes": {
+      "inspect.py": "142f5690b1975b3b758ad5185df52ad19a53c6024d9bb8453c6ed364dfe5cc0b",
+      "Proof.cpp": "f4b54aa205d25e1fad1107e866c5d1f116941fa37acab0bcf5bb79c932c18fd3",
+      "request.json": "c721ec6599ee94db6d1bfe85c4d45c968d8c8a1b245717177237d679c980e3f3"
+    },
+    "fingerprint": {
+      "libraries": {
+        "libm": {
+          "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0",
+          "build_id": "d53fcbff9f855463606b25cfbe2a2e10856ea3a7"
+        },
+        "libc": {
+          "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf",
+          "build_id": "a4a7992a8e66555c8141ab2a08a8465ff6e0ea65"
+        },
+        "loader": {
+          "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da",
+          "build_id": "0d77dbd4379bf0b5af3e05be7fb6af1e4cea7c96"
+        }
+      },
+      "implementation_offset": "0x7df50",
+      "symbol_version": "GLIBC_2.27",
+      "compiler_receipt_sha256": "59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8",
+      "proof_source_sha256": "f4b54aa205d25e1fad1107e866c5d1f116941fa37acab0bcf5bb79c932c18fd3",
+      "proof_executable_sha256": "c6630e3868026d16aa90cb08f1447a3aa5918dbfa89ace90c0c142acb7f46523"
+    }
+  }
+]

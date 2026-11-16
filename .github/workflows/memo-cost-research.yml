@@ -1,0 +1,37 @@
+name: Fixed qualified memo research (no promotion)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['tools/memo-cost-research/request.json']
+permissions:
+  contents: read
+concurrency:
+  group: memo-three-arm-4681265-01
+  cancel-in-progress: false
+jobs:
+  measure:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Offline parser and fixed control-flow tests
+        run: python3 -m unittest discover -s tools/memo-cost-research -p 'test_*.py' -v
+      - name: Qualify exact binding, build fresh arms, calibrate and screen once
+        run: python3 tools/memo-cost-research/run.py --repo "$GITHUB_WORKSPACE" --out "$GITHUB_WORKSPACE/memo-cost-results" --work "$RUNNER_TEMP/memo-cost-work"
+      - name: Preserve every outcome, including calibration rejection
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: memo-three-arm-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            memo-cost-results/
+            !memo-cost-results/binding-inspection/proof
+            !memo-cost-results/binding-inspection-proof-local-only
+          if-no-files-found: warn
+          retention-days: 30
+          compression-level: 6

@@ -1,0 +1,252 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 288b80b..4955246 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,6 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+ option(CS80_BUILD_PLUGIN "Build the JUCE plugin and standalone application" ON)
+ option(CS80_BUILD_TESTS "Build core tests" ON)
+ option(CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY "Experimental changed-history filter solver; incompatible with Source Audio V2" OFF)
++option(CS80_EXPERIMENTAL_PITCH_MEMO_SSE_LIBM "Experimental pitch memo: requires independently qualified SSE-only libm" OFF)
+ option(CS80_ENABLE_AVX2_FILTER_BATCH "Enable runtime-dispatched exact GCC AVX2 stage batches when qualified; unsupported builds remain scalar" ON)
+ 
+ add_library(cs80_core STATIC
+@@ -22,6 +23,9 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+     set_source_files_properties(src/core/Ig00156Batch.cpp PROPERTIES
+         COMPILE_OPTIONS "-ffp-contract=off")
+ endif()
++if(CS80_EXPERIMENTAL_PITCH_MEMO_SSE_LIBM)
++    target_compile_definitions(cs80_core PUBLIC CS80_EXPERIMENTAL_PITCH_MEMO_SSE_LIBM=1)
++endif()
+ target_include_directories(cs80_core PUBLIC src)
+ if(CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY)
+     target_compile_definitions(cs80_core PUBLIC CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY=1)
+@@ -61,6 +65,14 @@ if (CS80_BUILD_TESTS)
+     target_link_libraries(cs80_filter_batch_engine_tests PRIVATE cs80_core)
+     add_test(NAME cs80_filter_batch_engine_tests COMMAND cs80_filter_batch_engine_tests)
+     set_tests_properties(cs80_filter_batch_engine_tests PROPERTIES TIMEOUT 180)
++    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_SYSTEM_PROCESSOR MATCHES "^(x86_64|AMD64|amd64)$")
++        add_executable(cs80_pitch_memo_tests tests/PitchMemoTests.cpp)
++        target_link_libraries(cs80_pitch_memo_tests PRIVATE cs80_core)
++        add_test(NAME cs80_pitch_memo_tests COMMAND cs80_pitch_memo_tests)
++        add_executable(cs80_pitch_memo_lifecycle_tests tests/PitchMemoLifecycleTests.cpp)
++        target_link_libraries(cs80_pitch_memo_lifecycle_tests PRIVATE cs80_core)
++        add_test(NAME cs80_pitch_memo_lifecycle_tests COMMAND cs80_pitch_memo_lifecycle_tests)
++    endif()
+     add_executable(cs80_filter_batch_scheduling_tests tests/FilterBatchSchedulingTests.cpp)
+     target_link_libraries(cs80_filter_batch_scheduling_tests PRIVATE cs80_core)
+     add_test(NAME cs80_filter_batch_scheduling_tests COMMAND cs80_filter_batch_scheduling_tests)
+diff --git a/src/core/Engine.cpp b/src/core/Engine.cpp
+index acc8c65..fb5f46b 100644
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -3,10 +3,52 @@
+ 
+ #include <algorithm>
+ #include <cmath>
++#include <bit>
++#if defined(__x86_64__)
++#include <xmmintrin.h>
++#endif
+ 
+ namespace cs80
+ {
+ 
++float Engine::PitchPowMemo::hz(float note, float tuningRef, bool bypass) noexcept
++{
++#if CS80_IG00156_EXACT_BATCH_BUILD && defined(CS80_EXPERIMENTAL_PITCH_MEMO_SSE_LIBM) && defined(__linux__) && defined(__GLIBC__)
++    if (!bypass)
++    {
++        const unsigned context = _mm_getcsr() & ~0x3fu;
++        if ((context & 0x7f80u) == 0x1f80u)
++        {
++            const float exponent = (note - 69.0f) / 12.0f;
++            const auto key = std::bit_cast<std::uint32_t>(exponent);
++            if ((key & 0x7fffffffu) <= 0x42f00000u) // finite |exponent| <= 120
++            {
++                // Opt-in is limited to a separately established SSE-only powf
++                // implementation and errno-safe finite-normal domain. A hit
++                // cannot suppress any previously observed pow sticky bit.
++                if (valid && key == exponentBits && context == control
++                    && (_mm_getcsr() & stickyMask) == stickyMask)
++                    return tuningRef * value;
++                const float computed = std::pow(2.0f, exponent);
++                const auto magnitude = std::bit_cast<std::uint32_t>(computed) & 0x7fffffffu;
++                if (magnitude >= 0x00800000u && magnitude < 0x7f800000u)
++                {
++                    exponentBits = key;
++                    control = context;
++                    stickyMask = _mm_getcsr() & 0x3fu;
++                    value = computed;
++                    valid = true;
++                }
++                return tuningRef * computed;
++            }
++        }
++    }
++#else
++    (void) bypass;
++#endif
++    return midiToHz(note, tuningRef);
++}
++
+ namespace
+ {
+ // Every continuous control the circuit engine smooths, in ONE list (field order
+@@ -57,6 +99,7 @@ Engine::Engine()
+ 
+ void Engine::prepare(double hostSampleRate)
+ {
++    for (auto& v : voices) for (auto& r : v.ranks) r.pitchPow.invalidate();
+     // Software resource/numeric guard, not an analog tuning assumption.
+     hostRate = std::isfinite(hostSampleRate) && hostSampleRate >= 8000.0
+                && hostSampleRate <= 768000.0 ? hostSampleRate : 48000.0;
+@@ -252,6 +295,7 @@ void Engine::prepareWarmColdOscillators() noexcept
+ 
+ void Engine::reset()
+ {
++    for (auto& v : voices) for (auto& r : v.ranks) r.pitchPow.invalidate();
+     // Circuit engine: every circuit starts cold but free-running (Phase 2.1).
+     const bool freeRunning = freeRunningVoices();
+     Rng coldPhases(kColdPhaseSeed);
+@@ -2880,7 +2924,22 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
+ 
+             // Transposition is a separate nominal harmonic ratio, not rounded
+             // equal-tempered fifths and not part of the shared filter key CV.
++#if CS80_IG00156_EXACT_BATCH_BUILD && defined(CS80_EXPERIMENTAL_PITCH_MEMO_SSE_LIBM) && defined(__linux__) && defined(__GLIBC__)
++            const unsigned pitchContext = _mm_getcsr();
++            const auto pitchNonzero = [pitchContext](float input) noexcept {
++                const auto magnitude = std::bit_cast<std::uint32_t>(input) & 0x7fffffffu;
++                return magnitude != 0 && !((pitchContext & 0x40u) != 0 && magnitude < 0x00800000u);
++            };
++            const float pitchHz = usesSourceModels(global.renderPolicy)
++                && (pitchContext & 0x7f80u) == 0x1f80u
++                ? r.pitchPow.hz(pitch, global.tuningRef,
++                    pitchNonzero(lfoPitch) || pitchNonzero(global.subVco) || pitchNonzero(global.subAtVco)
++                    || (pitchNonzero(modWheel) && pitchNonzero(global.modWheelSub)) || pitchNonzero(mod.pitch))
++                : midiToHz(pitch, global.tuningRef);
++            const float freq = pitchHz * v.ribbonRatio
++#else
+             const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
++#endif
+                                * kFeetRatios[std::clamp(rs.feet, 0, 5)] * keyRatio;
+             const float pwm = pwmSine[ch];
+             const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);
+diff --git a/src/core/Engine.h b/src/core/Engine.h
+index 216c473..9cb2388 100644
+--- a/src/core/Engine.h
++++ b/src/core/Engine.h
+@@ -452,6 +452,17 @@ private:
+     // constants: 4.5e-5 of the discharged DC step remains).
+     static constexpr double kColdWarmUpSeconds = 1.0;
+ 
++    friend struct PitchMemoTestAccess;
++    // Engine-owned source-only memo. Full control stamp, no cached tuning gain.
++    struct PitchPowMemo
++    {
++        std::uint32_t exponentBits = 0, control = 0, stickyMask = 0;
++        float value = 0.0f;
++        bool valid = false;
++        float hz(float note, float tuningRef, bool bypass) noexcept;
++        void invalidate() noexcept { valid = false; }
++    };
++
+     struct Rank
+     {
+         Oscillator osc;
+@@ -476,6 +487,7 @@ private:
+         float trimPan = 0.0f;
+         RankInfo info;
+         Exp2Memo hpCutoffExp, lpCutoffExp, keyVoltsExp;
++        PitchPowMemo pitchPow;
+         // Circuit engine (Phase 2.1): controls of the last processed interval,
+         // which drive the idle path and the wake catch-up of a silent circuit.
+         voice_continuity::IdleRankControls idle;
+diff --git a/tests/PitchMemoLifecycleTests.cpp b/tests/PitchMemoLifecycleTests.cpp
+new file mode 100644
+index 0000000..8020dde
+--- /dev/null
++++ b/tests/PitchMemoLifecycleTests.cpp
+@@ -0,0 +1,27 @@
++#include "core/Engine.h"
++#include <bit>
++#include <new>
++#include <cstdlib>
++#include <iostream>
++#include <memory>
++#include <type_traits>
++#include <xmmintrin.h>
++static bool failAllocation=false;
++void* operator new(std::size_t n){if(failAllocation)throw std::bad_alloc();if(void*p=std::malloc(n?n:1))return p;throw std::bad_alloc();}
++void operator delete(void*p)noexcept{std::free(p);}void operator delete(void*p,std::size_t)noexcept{std::free(p);}
++namespace cs80 {struct PitchMemoTestAccess {
++ static bool any(const Engine&e){for(const auto&v:e.voices)for(const auto&r:v.ranks)if(r.pitchPow.valid)return true;return false;}
++ static uint64_t hash(const Engine&e){uint64_t h=1469598103934665603ull;for(const auto&v:e.voices)for(const auto&r:v.ranks)for(uint32_t x:{r.pitchPow.exponentBits,r.pitchPow.control,r.pitchPow.stickyMask,std::bit_cast<uint32_t>(r.pitchPow.value),uint32_t(r.pitchPow.valid)})h=(h^x)*1099511628211ull;return h;}
++ static void restoreOscillators(Engine&e){for(auto&v:e.voices)for(auto&r:v.ranks){const auto state=r.wsc.getState();r.wsc.restoreState(state);}}
++};}
++int checks=0,failures=0;void check(bool x,const char*w){++checks;if(!x){++failures;std::cerr<<w<<'\n';}}
++template<class E>void copies(const E& e){if constexpr(std::is_copy_constructible_v<E>){auto c=std::make_unique<E>(e);check(cs80::PitchMemoTestAccess::hash(*c)==cs80::PitchMemoTestAccess::hash(e),"copy tuple");if constexpr(std::is_copy_assignable_v<E>){auto a=std::make_unique<E>();*a=e;check(cs80::PitchMemoTestAccess::hash(*a)==cs80::PitchMemoTestAccess::hash(e),"assignment tuple");}}}
++int main(){const auto old=_mm_getcsr();_mm_setcsr(0x1f80);auto e=std::make_unique<cs80::Engine>();e->prepare(48000);cs80::ControlFrame f;f.effectiveValues[cs80::P_sourcePerformance]=1;check(e->setControlFrame(f),"initial frame");e->noteOn(60,.8f,1);float audio[512]{};e->render(audio,256);
++#if CS80_IG00156_EXACT_BATCH_BUILD && defined(CS80_EXPERIMENTAL_PITCH_MEMO_SSE_LIBM) && defined(__linux__) && defined(__GLIBC__)
++ check(cs80::PitchMemoTestAccess::any(*e),"actual Engine populates memo");
++#else
++ check(!cs80::PitchMemoTestAccess::any(*e),"unsupported Engine stays raw");
++#endif
++ const auto hash=cs80::PitchMemoTestAccess::hash(*e);auto bad=f;bad.hardwareSources[0]=99;check(!e->setControlFrame(bad),"reject frame");check(cs80::PitchMemoTestAccess::hash(*e)==hash,"failed transaction retains tuple");check(e->setControlFrame(f),"restore frame");cs80::PitchMemoTestAccess::restoreOscillators(*e);check(cs80::PitchMemoTestAccess::hash(*e)==hash,"oscillator state restore independent");copies(*e);
++ e->reset();check(!cs80::PitchMemoTestAccess::any(*e),"reset invalidates");e->noteOn(72,.8f,1);e->render(audio,256);e->noteOff(72);e->noteOn(61,.7f,1);e->render(audio,256);for(float x:audio)check(std::isfinite(x),"voice reuse finite");
++ bool threw=false;failAllocation=true;try{e->prepare(768000);}catch(const std::bad_alloc&){threw=true;}failAllocation=false;check(threw,"prepare allocation fault reached");check(!cs80::PitchMemoTestAccess::any(*e),"failed prepare invalidated memo");e->prepare(48000);check(!cs80::PitchMemoTestAccess::any(*e),"reprepare invalidates");_mm_setcsr(old);std::cout<<"checks="<<checks<<" failures="<<failures<<" Engine_size="<<sizeof(cs80::Engine)<<'\n';return failures?1:0;}
+diff --git a/tests/PitchMemoTests.cpp b/tests/PitchMemoTests.cpp
+new file mode 100644
+index 0000000..b60015c
+--- /dev/null
++++ b/tests/PitchMemoTests.cpp
+@@ -0,0 +1,50 @@
++#include "core/Engine.h"
++#include <bit>
++#include <cerrno>
++#include <iostream>
++#include <memory>
++#include <limits>
++#include <xmmintrin.h>
++namespace cs80 {struct PitchMemoTestAccess {
++ using Memo=Engine::PitchPowMemo;
++ static bool any(const Engine& e){for(const auto& v:e.voices)for(const auto& r:v.ranks)if(r.pitchPow.valid)return true;return false;}
++ static void seed(Engine& e){for(auto& v:e.voices)for(auto& r:v.ranks){r.pitchPow.valid=true;r.pitchPow.value=1;r.pitchPow.exponentBits=0;r.pitchPow.control=0x1f80;}}
++};}
++using Memo=cs80::PitchMemoTestAccess::Memo;
++static int checks=0,fails=0;
++void check(bool x,const char* why){++checks;if(!x){if(fails++<12)std::cerr<<why<<'\n';}}
++__attribute__((noinline,noipa,noclone)) float raw(float n,float t){return cs80::midiToHz(n,t);}
++__attribute__((noinline,noipa,noclone)) float cached(Memo& m,float n,float t,bool b){return m.hz(n,t,b);}
++uint32_t bits(float x){return std::bit_cast<uint32_t>(x);}
++void compare(Memo& m,float n,float ref,bool bypass,unsigned env){
++ _mm_setcsr(env);errno=EDOM;const float a=raw(n,ref);const unsigned af=_mm_getcsr();const int ae=errno;
++ _mm_setcsr(env);errno=EDOM;const float b=cached(m,n,ref,bypass);const unsigned bf=_mm_getcsr();const int be=errno;
++ check(bits(a)==bits(b),"output bits");check((af&~63u)==(bf&~63u),"control bits");check(ae==be,"errno");
++ check(af==bf,"full MXCSR status");
++}
++int main(){const auto original=_mm_getcsr();int valid=0;
++ for(unsigned denorm:{0u,0x40u,0x8000u,0x8040u})for(unsigned rounding:{0u,0x2000u,0x4000u,0x6000u}){
++  const unsigned env=0x1f80|denorm|rounding;Memo m;
++  for(int i=-1400;i<=1500;++i){float n=float(i)/8;for(float ref:{440.f,432.f,0.f,-0.f}){compare(m,n,ref,false,env);compare(m,n,ref,false,env);compare(m,n,ref,true,env);}}
++  for(float n:{-1371.f,1509.f,std::nextafter(-1371.f,-2000.f),std::nextafter(1509.f,2000.f),0.f,-0.f,std::numeric_limits<float>::denorm_min(),-std::numeric_limits<float>::denorm_min(),INFINITY,-INFINITY,std::bit_cast<float>(0x7fc01234u),std::bit_cast<float>(0x7f801234u)})compare(m,n,440.f,false,env);
++  compare(m,69.f,440.f,false,env);auto copy=m;compare(copy,69.f,432.f,false,env);Memo assigned;assigned=copy;compare(assigned,70.f,440.f,true,env);compare(assigned,69.f,440.f,false,env);assigned.invalidate();check(!assigned.valid,"invalidate");compare(assigned,70.f,440.f,false,env);valid+=assigned.valid;
++ }
++ // Explicit containment gate: absent recorded sticky bits must force recomputation.
++#if CS80_IG00156_EXACT_BATCH_BUILD && defined(CS80_EXPERIMENTAL_PITCH_MEMO_SSE_LIBM) && defined(__linux__) && defined(__GLIBC__)
++ {Memo hit;compare(hit,75.f,440.f,false,0x1f80);const float good=hit.value;const unsigned required=hit.stickyMask;check(hit.valid && required!=0,"nontrivial cached miss");_mm_setcsr(0x1f80|required);hit.value=-1.f;check(cached(hit,75.f,440.f,false)==-440.f,"positive hit branch sentinel");hit.value=good;compare(hit,75.f,440.f,false,0x1f80|required);}
++ {Memo probe;compare(probe,69.25f,440.f,false,0x1f80);probe.value=-1.f;probe.stickyMask=1u;compare(probe,69.25f,440.f,false,0x1f80);check(probe.value>0.f,"missing sticky requires miss");}
++#endif
++ // Exact exponent arithmetic with irrational pow: cleared precision must not hit.
++ {Memo gate;for(int i=0;i<8;++i)compare(gate,75.f,440.f,false,0x1f80);}
++ // Cross-control transitions and cleared status without hidden flag replay.
++ Memo m;for(unsigned env:{0x1f80u,0x9fc0u,0x1f80u,0x3f80u,0x1f80u})compare(m,69.25f,440.f,false,env);
++ // Unmasked path uses benign exact operands only, no deliberate in-process trap.
++ for(unsigned mask=7;mask<=12;++mask)compare(m,69.f,440.f,false,0x1f80u&~(1u<<mask));
++ _mm_setcsr(0x1f80);auto e=std::make_unique<cs80::Engine>();cs80::PitchMemoTestAccess::seed(*e);e->reset();check(!cs80::PitchMemoTestAccess::any(*e),"reset cache invalidation");cs80::PitchMemoTestAccess::seed(*e);e->prepare(48000);check(!cs80::PitchMemoTestAccess::any(*e),"prepare invalidation");cs80::PitchMemoTestAccess::seed(*e);e->prepare(std::numeric_limits<double>::quiet_NaN());check(!cs80::PitchMemoTestAccess::any(*e),"invalid rate normalized prepare");
++#if CS80_IG00156_EXACT_BATCH_BUILD && defined(CS80_EXPERIMENTAL_PITCH_MEMO_SSE_LIBM) && defined(__linux__) && defined(__GLIBC__)
++ check(valid==4,"qualified four environments admit");
++#else
++ check(valid==0,"unsupported never fills");
++#endif
++ _mm_setcsr(original);std::cout<<"checks="<<checks<<" failures="<<fails<<" admitted_contexts="<<valid<<'\n';return fails?1:0;
++}

@@ -1,0 +1,19 @@
+{
+  "scope": "17 unit/mock tests; minimal binding receipt only, no memoON or benchmark execution",
+  "minimal_probe_build_exit": 0,
+  "minimal_probe_run_exit": 0,
+  "restoration_contexts": 16,
+  "local_receipt_hashes": {
+    "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "run.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "probe": "39c357ad3dc20f8cba09d7028d31f0408da23a57227768a8b39730e23db15842",
+    "Probe.cpp": "5c4d31a7c6c53c0751a1be459cd0aff7c48a2cfe26aa945ef54903a0b6572c51",
+    "run.log": "d2b1726096b5a7867b6286f2b5e15953a4cd3564fdb42211dd12f7a86a404d43"
+  },
+  "workflow_parse": "YAML parsed; read-only permissions and90-minute bound verified",
+  "independent_reviews": {
+    "numerical_binding": "cpu_research: corrected C-only helper gate, PIE gate, actual GOT provenance, exact audit pin and local16context receipt cleared; no source blocker",
+    "workflow_security": "review_ring: narrowed trigger/attempt guard, fixed workload, controlled outputs and three executable/nine corpus artifact retention cleared"
+  }
+}
