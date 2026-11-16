@@ -30,6 +30,7 @@ ALLOWED_HOSTS = {"api.github.com", "github.com", "release-assets.githubuserconte
                  "objects.githubusercontent.com"}
 TRANSIENT = 10
 FATAL = 11
+ALTERNATE_PUBLIC_ROUTE = 12
 
 
 def official_url(url):
@@ -79,6 +80,11 @@ def transfer(route, target, opener=None):
             data = response.read(EXPECTED_SIZE + 1)
             host = urllib.parse.urlsplit(response.geturl()).hostname
     except urllib.error.HTTPError as error:
+        # A denial from the public API itself may be API-specific. Permit only
+        # the separately pinned public release URL, never repeat the denied
+        # endpoint or treat a redirect-target denial as transient.
+        if route == 0 and error.code == 403 and error.geturl() == URLS[0]:
+            return ALTERNATE_PUBLIC_ROUTE, {"reason": "http", "http_status": 403}
         retryable = error.code in (408, 429) or 500 <= error.code <= 599
         return (TRANSIENT if retryable else FATAL), {"reason": "http", "http_status": error.code}
     except urllib.error.URLError as error:
@@ -108,6 +114,7 @@ def download(output, evidence, runner=subprocess.run, sleep=time.sleep):
               "expected_sha256": EXPECTED_SHA256, "attempts": [], "verified": False}
     try:
         with tempfile.TemporaryDirectory(prefix=".pluginval-transfer-", dir=output.parent) as work:
+            api_denied = False
             for index, route in enumerate(ROUTE_ORDER):
                 target = Path(work) / f"attempt-{index + 1}.zip"
                 attempt = {"number": index + 1, "source_url": URLS[route]}
@@ -137,7 +144,11 @@ def download(output, evidence, runner=subprocess.run, sleep=time.sleep):
                     target.replace(output)
                     record.update(verified=True, actual_size=len(data), actual_sha256=digest)
                     return record
-                if status != TRANSIENT:
+                if status == ALTERNATE_PUBLIC_ROUTE and index == 0 and route == 0:
+                    api_denied = True
+                elif api_denied:
+                    raise RuntimeError("alternate public route failed; no further retry")
+                elif status != TRANSIENT:
                     raise RuntimeError("non-transient transfer failure; no retry")
                 if index + 1 < len(ROUTE_ORDER):
                     sleep(2 * (index + 1))

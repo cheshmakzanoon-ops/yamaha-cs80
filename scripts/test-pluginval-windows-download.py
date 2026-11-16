@@ -54,7 +54,7 @@ class DownloadTests(unittest.TestCase):
         self.assertEqual(helper.ATTEMPT_SECONDS, 60)
         self.assertEqual(helper.OfficialRedirects.max_redirections, 5)
 
-    def transfer(self, response=None, error=None):
+    def transfer(self, response=None, error=None, route=0):
         with tempfile.TemporaryDirectory() as work:
             path = Path(work) / "download.zip"
             opener = mock.Mock()
@@ -63,9 +63,9 @@ class DownloadTests(unittest.TestCase):
             else:
                 opener.open.return_value = response or Response()
             with mock.patch.object(helper, "EXPECTED_SIZE", len(DATA)):
-                status, details = helper.transfer(0, path, opener=opener)
+                status, details = helper.transfer(route, path, opener=opener)
             request = opener.open.call_args.args[0]
-            self.assertEqual(request.full_url, helper.URLS[0])
+            self.assertEqual(request.full_url, helper.URLS[route])
             self.assertEqual(request.get_header("Accept"), "application/octet-stream")
             self.assertEqual(opener.open.call_args.kwargs["timeout"], 15)
             self.assertNotIn("PRIVATE", json.dumps(details))
@@ -85,10 +85,19 @@ class DownloadTests(unittest.TestCase):
             with self.subTest(code=code):
                 error = urllib.error.HTTPError(helper.URLS[0], code, "PRIVATE_DETAIL", {}, None)
                 self.assertEqual(self.transfer(error=error)[0], helper.TRANSIENT)
-        for code in (401, 403, 404):
+        for code in (401, 404):
             with self.subTest(code=code):
                 error = urllib.error.HTTPError(helper.URLS[0], code, "PRIVATE_DETAIL", {}, None)
                 self.assertEqual(self.transfer(error=error)[0], helper.FATAL)
+
+    def test_api_403_only_allows_alternate_public_route(self):
+        error = urllib.error.HTTPError(helper.URLS[0], 403, "PRIVATE_DETAIL", {}, None)
+        self.assertEqual(self.transfer(error=error)[0], helper.ALTERNATE_PUBLIC_ROUTE)
+        for route, url in ((1, helper.URLS[1]),
+                           (0, "https://release-assets.githubusercontent.com/denied?PRIVATE")):
+            with self.subTest(route=route, url=url):
+                error = urllib.error.HTTPError(url, 403, "PRIVATE_DETAIL", {}, None)
+                self.assertEqual(self.transfer(error=error, route=route)[0], helper.FATAL)
 
     def test_transport_timeout_and_tls(self):
         self.assertEqual(self.transfer(error=TimeoutError())[0], helper.TRANSIENT)
@@ -146,7 +155,7 @@ class DownloadTests(unittest.TestCase):
                 target.write_bytes(DATA if outcome == 0 else b"partial")
                 return subprocess.CompletedProcess(command, outcome,
                     json.dumps({"reason": "downloaded" if outcome == 0 else "http",
-                                "http_status": 200 if outcome == 0 else 504}), "")
+                                "http_status": 200 if outcome == 0 else (403 if outcome == 12 else 504)}), "")
 
             digest = "0" * 64 if bad_hash else DIGEST
             with (mock.patch.object(helper, "EXPECTED_SIZE", len(DATA)),
@@ -180,6 +189,28 @@ class DownloadTests(unittest.TestCase):
         self.assertNotEqual(calls[0][-1], calls[1][-1])
         self.assertEqual(sleeps, [2])
         self.assertEqual(len(record["attempts"]), 2)
+
+    def test_api_403_uses_one_pinned_alternate(self):
+        calls, sleeps, record = self.run_download([12, 0], expected_success=True)
+        self.assertEqual([c[3] for c in calls], ["0", "1"])
+        self.assertEqual(sleeps, [2])
+        self.assertEqual(record["attempts"][0]["http_status"], 403)
+        self.assertEqual(record["attempts"][0]["transfer_exit"], 12)
+        for second in (10, 11, 12, "timeout"):
+            with self.subTest(second=second):
+                calls, sleeps, _ = self.run_download([12, second], old_file=True)
+                self.assertEqual([c[3] for c in calls], ["0", "1"])
+                self.assertEqual(sleeps, [2])
+        calls, _, _ = self.run_download([12, 0], bad_hash=True)
+        self.assertEqual(len(calls), 2)
+
+    def test_alternate_status_is_initial_api_only(self):
+        for outcomes in ([10, 12], [10, 10, 12]):
+            with self.subTest(outcomes=outcomes):
+                calls, sleeps, _ = self.run_download(outcomes, old_file=True)
+                self.assertEqual(len(calls), len(outcomes))
+                self.assertEqual([c[3] for c in calls], ["0", "1", "0"][:len(outcomes)])
+                self.assertEqual(sleeps, [2, 4][:len(outcomes) - 1])
 
     def test_timeout_then_success(self):
         calls, sleeps, record = self.run_download(["timeout", 0], expected_success=True)
