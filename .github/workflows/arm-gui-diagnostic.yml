@@ -1,0 +1,66 @@
+name: Frozen ARM GUI assertion diagnostic
+on:
+  push:
+    branches: [main]
+    paths: ['tools/arm-gui-diagnostic/**', '.github/workflows/arm-gui-diagnostic.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: frozen-arm-gui-5fa6ace
+  cancel-in-progress: false
+jobs:
+  diagnostic:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Record source and platform
+        run: |
+          test "$(uname -m)" = arm64
+          git diff --exit-code 5fa6ace4089290ef6d9c85ec9cdeeb1458560e0d HEAD -- src tests CMakeLists.txt cmake scripts .github/workflows/build.yml
+          mkdir -p arm-gui-provenance
+          { git rev-parse HEAD; uname -a; sw_vers; xcodebuild -version; xcrun lldb --version; } > arm-gui-provenance/platform.txt
+          python3 -m unittest discover -s tools/arm-gui-diagnostic -p 'test_*.py' -v
+      - name: Configure original Release settings
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
+      - name: Verify pinned clean JUCE
+        run: cmake -DBUILD_DIR=build -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641 -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake
+      - name: Build unchanged AU only for diagnostic
+        run: cmake --build build --target CS80Reference_AU --parallel 3
+      - name: Fetch original pluginval and register rebuilt AU
+        timeout-minutes: 5
+        run: |
+          set -euo pipefail
+          python3 scripts/download-pluginval-macos.py --output pluginval.zip --evidence arm-gui-provenance/pluginval-download.json
+          unzip -q pluginval.zip -d pluginval
+          xattr -dr com.apple.quarantine pluginval/pluginval.app || true
+          ./pluginval/pluginval.app/Contents/MacOS/pluginval --version > arm-gui-provenance/pluginval-version.txt
+          mkdir -p "$HOME/Library/Audio/Plug-Ins/Components"
+          test ! -e "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+          cp -R 'build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component' "$HOME/Library/Audio/Plug-Ins/Components/"
+          codesign --force --sign - "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+          killall -9 AudioComponentRegistrar || true
+          sleep 2
+      - name: One failing-seed replay under LLDB (not validation replacement)
+        timeout-minutes: 7
+        run: >-
+          python3 tools/arm-gui-diagnostic/replay.py --lldb "$(xcrun -f lldb)"
+          --validator "$PWD/pluginval/pluginval.app/Contents/MacOS/pluginval"
+          --component "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+          --out "$PWD/arm-gui-result"
+      - name: Preserve diagnostic evidence regardless of outcome
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: arm-gui-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            arm-gui-provenance
+            arm-gui-result
+            build/ci-juce-provenance.txt
+            build/compile_commands.json
+          if-no-files-found: error
