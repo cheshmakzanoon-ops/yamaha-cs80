@@ -1,0 +1,66 @@
+name: Frozen full-suite CTest scheduling diagnostic
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/vst3-ctest-research/**'
+      - '.github/workflows/vst3-ctest-research.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: vst3-ctest-f9dc1586-diagnostic
+  cancel-in-progress: false
+jobs:
+  diagnostic:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install unchanged Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build pkg-config \
+            libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
+            libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
+            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb xauth openbox x11-utils
+      - name: Verify frozen source and real CTest negative fixtures
+        run: |
+          git diff --exit-code f9dc1586bf8bfbecd51d776f97c6ed0100750d20 HEAD -- src tests CMakeLists.txt cmake
+          python3 -m unittest discover -s tools/vst3-concurrency-research -p 'test_*.py' -v
+          python3 -m unittest discover -s tools/vst3-ctest-research -p 'test_*.py' -v
+      - name: Configure fresh original full test build
+        run: |
+          test ! -e build-ctest-diagnostic
+          cmake -S . -B build-ctest-diagnostic -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON
+      - name: Verify pinned clean JUCE
+        run: >-
+          cmake -DBUILD_DIR=build-ctest-diagnostic
+          -DEXPECTED_JUCE_SHA=c352e2489000ffeb9e397051377d75eef2efe641
+          -DEXPECTED_JUCE_VERSION=8.0.11 -P scripts/verify-ci-juce-source.cmake
+      - name: Build every original test target
+        run: cmake --build build-ctest-diagnostic --parallel 2
+      - name: Full CTest suite with bounded scheduling and fail-closed reports
+        run: >-
+          python3 tools/vst3-ctest-research/run.py --repo "$GITHUB_WORKSPACE"
+          --build "$GITHUB_WORKSPACE/build-ctest-diagnostic"
+          --out "$GITHUB_WORKSPACE/vst3-ctest-results"
+      - name: Preserve both test groups and original captures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: vst3-ctest-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            vst3-ctest-results/
+            build-ctest-diagnostic/ci-juce-provenance.txt
+            build-ctest-diagnostic/pwm-automation-capture-*/
+          if-no-files-found: warn
+          retention-days: 30
+          compression-level: 6
