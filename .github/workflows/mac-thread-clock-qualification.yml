@@ -1,0 +1,49 @@
+name: macOS ARM thread clock qualification diagnostic
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/mac-thread-clock-qualification/**'
+      - '.github/workflows/mac-thread-clock-qualification.yml'
+permissions:
+  contents: read
+concurrency:
+  group: mac-clock-qualification-a1e51ee0
+  cancel-in-progress: false
+jobs:
+  qualification:
+    if: github.ref == 'refs/heads/main' && github.run_attempt == 1
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Native architecture gate
+        run: test "$(uname -m)" = arm64
+      - name: Comparator tests
+        run: python3 -m unittest discover -s tools/mac-thread-clock-qualification -p 'test_*.py'
+        timeout-minutes: 1
+      - name: Single bounded qualification
+        run: python3 tools/mac-thread-clock-qualification/run.py
+        timeout-minutes: 23
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: mac-thread-clock-qualification
+          path: |
+            mac-clock-result/*.json
+            mac-clock-result/*.log
+            mac-clock-result/*/*.txt
+            mac-clock-result/*/*.json
+            mac-clock-result/*/results/**
+            mac-clock-result/build/compile_commands.json
+            mac-clock-result/build/original
+            mac-clock-result/build/candidate
+            mac-clock-result/build/probe
+            mac-clock-result/build/core-build/libcs80_core.a
+            mac-clock-result/generated/**
+            mac-clock-result/candidate.cpp
+          if-no-files-found: warn
+          retention-days: 14
