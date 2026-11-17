@@ -16,7 +16,7 @@ apart from exactly validated Ninja MD/MT/MF dependency switches. Both final link
 must contain one exact canonical map option and expected output argument. Required
 compile/archive/link actions must each occur exactly once in actual verbose output.
 
-A canonical cross-arm contract digest binds tools, runtime hashes, environment digest (never raw environment values), compile database, Ninja roster/actions, input manifests, targets and paths to the stock receipt. Candidate must match exactly. Archive action binds the frozen ar executable, output and complete core object roster.
+A canonical cross-arm contract digest binds tools, runtime hashes, environment digest (never raw environment values), compile database, Ninja roster/actions, input manifests, targets and paths to the stock receipt. Candidate must match exactly. Archive action binds the exact configured CMake removal/ar/ranlib chain, output and complete core object roster. Compiler/archive aliases are resolved and checked against the frozen canonical files before and after every command; alias spellings and their target maps are included in cross-arm identity. Compile rows must use the declared C/CXX tools; undeclared launchers are rejected. Complete compiler subprocess/linker closure remains external.
 
 An incremental bounded complete build-tree walk rejects symlinks, multiply-linked regular files and special nodes before/after every command, including compiler depfiles and Ninja side-output paths. The cap is frozen in the cross-arm contract; this requires the trusted generated build to remain within the owned nonsymlink tree and is not a race-proof sandbox against hostile concurrent writers.
 

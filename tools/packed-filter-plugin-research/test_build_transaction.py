@@ -10,7 +10,8 @@ H=lambda p:hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
 @unittest.skipUnless(os.environ.get('CS80_CMAKE') and os.environ.get('CS80_NINJA'),'explicit CMake/Ninja for inert build transaction')
 class BuildTransactionTests(unittest.TestCase):
  def setUp(self):
-  self.temp=tempfile.TemporaryDirectory();self.p=pathlib.Path(self.temp.name);self.repo=self.p/'repo';self.repo.mkdir();self.build=self.p/'build';self.cmake=pathlib.Path(os.environ['CS80_CMAKE']);self.ninja=pathlib.Path(os.environ['CS80_NINJA']);self.ar=pathlib.Path(shutil.which('ar')).resolve();self.cxx=pathlib.Path(shutil.which('g++')).resolve()
+  self.temp=tempfile.TemporaryDirectory();self.p=pathlib.Path(self.temp.name);self.repo=self.p/'repo';self.repo.mkdir();self.build=self.p/'build';self.cmake=pathlib.Path(os.environ['CS80_CMAKE']);self.ninja=pathlib.Path(os.environ['CS80_NINJA']);self.ar=pathlib.Path(shutil.which('ar')).resolve();self.ranlib=pathlib.Path(shutil.which('ranlib')).resolve();self.cxx=pathlib.Path(shutil.which('g++')).resolve()
+  self.compiler_alias=self.p/'compiler';self.compiler_alias.symlink_to(self.cxx);self.archiver_alias=self.p/'archiver';self.archiver_alias.symlink_to(self.ar)
   self.env={'PATH':str(self.ninja.parent)+':/usr/bin:/bin','HOME':str(self.p),'LANG':'C','TZ':'UTC'}
   self.source=self.repo/'src/core/Ig00156Batch.cpp';self.source.parent.mkdir(parents=True)
   self.source.write_text('extern "C" __attribute__((noinline,visibility("hidden"))) double helper(double x){return x+x;}\nextern "C" double process(double) __asm__("'+PROCESS+'");\nextern "C" __attribute__((noinline,visibility("hidden"))) double process(double x){return helper(x)*1.25;}\n')
@@ -29,11 +30,14 @@ foreach(t CS80Reference_VST3 CS80Reference_Standalone)
 endforeach()
 ''')
   shutil.copy2(ROOT/'link_overlay.cmake',self.repo/'link_overlay.cmake')
-  subprocess.run([str(self.cmake),'-DCMAKE_PROJECT_TOP_LEVEL_INCLUDES='+str(self.repo/'link_overlay.cmake'),'-S',str(self.repo),'-B',str(self.build),'-G','Ninja','-DCMAKE_BUILD_TYPE=Release','-DCMAKE_CXX_COMPILER='+str(self.cxx),'-DCMAKE_MAKE_PROGRAM='+str(self.ninja)],env=self.env,check=True,capture_output=True)
+  subprocess.run([str(self.cmake),'-DCMAKE_PROJECT_TOP_LEVEL_INCLUDES='+str(self.repo/'link_overlay.cmake'),'-S',str(self.repo),'-B',str(self.build),'-G','Ninja','-DCMAKE_BUILD_TYPE=Release','-DCMAKE_AR='+str(self.archiver_alias),'-DCMAKE_CXX_COMPILER='+str(self.compiler_alias),'-DCMAKE_MAKE_PROGRAM='+str(self.ninja)],env=self.env,check=True,capture_output=True)
   db=json.loads((self.build/'compile_commands.json').read_bytes());ninja=subprocess.check_output([str(self.ninja),'-C',str(self.build),'-t','commands'],env=self.env,text=True).splitlines()
   pick=lambda text:next(line for line in ninja if text in line)
   actions={'core_compile':pick('-o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o'),'cap_compile':pick('-o CMakeFiles/cap.dir/src/core/Ig00156Batch.cpp.o'),'archive':pick('libcs80_core.a '),'CS80Reference_VST3':pick('-o libCS80Reference_VST3.so'),'CS80Reference_Standalone':pick('-o CS80Reference_Standalone ')}
-  self.c={'arm':'stock','build_tree_entry_cap':10000,'repo':str(self.repo),'build':str(self.build),'output':str(self.p/'stock'),'cmake':str(self.cmake),'ar':str(self.ar),'ninja':str(self.ninja),'environment':self.env,'runtime_hashes':{str(p):H(p) for p in (self.cmake,self.ninja,self.ar,self.cxx)},'compile_database':db,'ninja_commands':ninja,'required_actions':actions,'source_hashes':{str(p.relative_to(self.repo)):H(p) for p in self.repo.rglob('*') if p.is_file()},'input_manifests':[{'root':str(self.build),'sha256':{n:H(self.build/n) for n in ('build.ninja','CMakeCache.txt','compile_commands.json')}}],'archive':'libcs80_core.a','finals':{t:{'binary':('libCS80Reference_VST3.so' if t.endswith('VST3') else t),'map':t+'.research.map'} for t in ('CS80Reference_VST3','CS80Reference_Standalone')}}
+  self.c={'arm':'stock','build_tree_entry_cap':10000,'repo':str(self.repo),'build':str(self.build),'output':str(self.p/'stock'),'cmake':str(self.cmake),'ar':str(self.ar),'ninja':str(self.ninja),'environment':self.env,'runtime_hashes':{str(p):H(p) for p in (self.cmake,self.ninja,self.ar,self.ranlib,self.cxx)},'compile_database':db,'ninja_commands':ninja,'required_actions':actions,'source_hashes':{str(p.relative_to(self.repo)):H(p) for p in self.repo.rglob('*') if p.is_file()},'input_manifests':[{'root':str(self.build),'sha256':{n:H(self.build/n) for n in ('build.ninja','CMakeCache.txt','compile_commands.json')}}],'archive':'libcs80_core.a','finals':{t:{'binary':('libCS80Reference_VST3.so' if t.endswith('VST3') else t),'map':t+'.research.map'} for t in ('CS80Reference_VST3','CS80Reference_Standalone')}}
+  cache={line.split(':',1)[0]:line.split('=',1)[1] for line in (self.build/'CMakeCache.txt').read_text().splitlines() if line and not line.startswith(('#','//')) and ':' in line and '=' in line}
+  self.c['cache_runtime']={key:cache[key] for key in ('CMAKE_CXX_COMPILER','CMAKE_AR','CMAKE_RANLIB','CMAKE_MAKE_PROGRAM')}
+  self.c['cache_runtime_files']={key:str(pathlib.Path(value).resolve()) for key,value in self.c['cache_runtime'].items()}
   self.commands=Commands(self.p/'logs',total_seconds=60)
  def tearDown(self):self.temp.cleanup()
  def run_arm(self):return _build_arm(self.c,self.commands,expected_count=4)
@@ -124,6 +128,18 @@ endforeach()
  def test_special_build_node_rejected_before_command(self):
   os.mkfifo(self.build/'unexpected-fifo')
   with self.assertRaisesRegex(ValueError,'build tree symlink/special'):self.run_arm()
+  self.assertFalse(any('argv' in r for r in self.commands.ledger))
+ def test_compiler_alias_retarget_rejected_before_command(self):
+  self.compiler_alias.unlink();self.compiler_alias.symlink_to(self.ar)
+  with self.assertRaisesRegex(ValueError,'tool alias changed'):self.run_arm()
+  self.assertFalse(any('argv' in r for r in self.commands.ledger))
+ def test_archiver_alias_retarget_rejected_before_command(self):
+  self.archiver_alias.unlink();self.archiver_alias.symlink_to(self.cxx)
+  with self.assertRaisesRegex(ValueError,'frozen archiver action|tool alias changed'):self.run_arm()
+  self.assertFalse(any('argv' in r for r in self.commands.ledger))
+ def test_missing_alias_contract_rejected(self):
+  self.c['cache_runtime_files'].pop('CMAKE_CXX_COMPILER')
+  with self.assertRaisesRegex(ValueError,'tool alias contract'):self.run_arm()
   self.assertFalse(any('argv' in r for r in self.commands.ledger))
  def test_missing_action_is_terminal(self):
   self.c['required_actions']['archive']='not an actual command'

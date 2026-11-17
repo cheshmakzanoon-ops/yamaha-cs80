@@ -25,6 +25,13 @@ def _build_arm(contract,commands,*,expected_count):
         require(database==c['compile_database'],'exact independent compile database required')
         rows=compile_inventory(database,source_root=root,build_root=build)
         require(len(rows)==expected_count,'complete normal compile roster required')
+        aliases=c['cache_runtime'];alias_files=c['cache_runtime_files']
+        required_aliases={'CMAKE_CXX_COMPILER','CMAKE_AR','CMAKE_RANLIB','CMAKE_MAKE_PROGRAM'}|({'CMAKE_C_COMPILER'} if expected_count==587 else set())
+        require(required_aliases<=set(aliases) and set(aliases)==set(alias_files),'complete configured tool alias contract required')
+        require(all(p in c['runtime_hashes'] for p in alias_files.values()),'resolved cache tools absent from runtime seal')
+        require(alias_files['CMAKE_AR']==str(ar) and alias_files['CMAKE_MAKE_PROGRAM']==str(ninja),'build/archive tools differ from configured tools')
+        compilers={aliases[key] for key in ('CMAKE_C_COMPILER','CMAKE_CXX_COMPILER') if key in aliases}
+        require(all(row['arguments'][0] in compilers for row in rows.values()),'compile command tool differs from configured compiler')
         filters=filter_outputs(database,source_root=root,build_root=build)
         require(len(filters['all_filter_objects'])==2,'exact normal and cap-test filter outputs required')
         targets={'CS80Reference_VST3','CS80Reference_Standalone'}
@@ -60,7 +67,9 @@ def _build_arm(contract,commands,*,expected_count):
         require(len(archive_argv)>=4 and archive_argv[1] in ('qc','rcs') and archive_argv[2]==c['archive'],'exact archive output/action required')
         core_objects=sorted(p for p in rows if p.startswith('CMakeFiles/cs80_core.dir/'))
         require(sorted(archive_argv[3:])==core_objects,'complete core archive object roster required')
-        frozen_keys=('repo','build','cmake','ar','ninja','runtime_hashes','compile_database','ninja_commands','required_actions','input_manifests','archive','finals','build_tree_entry_cap')
+        expected_archive=[':','&&',str(cmake),'-E','rm','-f',c['archive'],'&&',aliases['CMAKE_AR'],'qc',c['archive'],*archive_argv[3:],'&&',aliases['CMAKE_RANLIB'],c['archive'],'&&',':']
+        require(archive_tokens==expected_archive,'exact configured archive/ranlib chain required')
+        frozen_keys=('repo','build','cmake','ar','ninja','runtime_hashes','compile_database','ninja_commands','required_actions','input_manifests','archive','finals','build_tree_entry_cap','cache_runtime','cache_runtime_files')
         frozen_contract={key:c[key] for key in frozen_keys};frozen_contract['environment_sha256']=env_hash
         contract_sha256=hashlib.sha256(json.dumps(frozen_contract,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         if arm=='candidate':
@@ -79,6 +88,10 @@ def _build_arm(contract,commands,*,expected_count):
                 require(stat.S_ISREG(mode) or stat.S_ISDIR(mode),'build tree symlink/special output forbidden')
                 require(not stat.S_ISREG(mode) or metadata.st_nlink==1,'build tree hardlinked file forbidden')
             require(capture_files(root,list(c['source_hashes']))==c['source_hashes'],'build source changed')
+            cache={line.split(':',1)[0]:line.split('=',1)[1] for line in (build/'CMakeCache.txt').read_text().splitlines() if line and not line.startswith(('#','//')) and ':' in line and '=' in line}
+            for key,spelling in aliases.items():
+                require(cache.get(key)==spelling,'configured cache tool spelling changed')
+                require(Path(spelling).is_absolute() and Path(spelling).resolve(strict=True)==owned(alias_files[key]),'configured tool alias changed')
             for group in c['input_manifests']:
                 require(capture_files(owned(group['root']),list(group['sha256']))==group['sha256'],'configured/generated/dependency input changed')
             require(json.loads((build/'compile_commands.json').read_bytes())==database,'compile database changed')
