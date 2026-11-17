@@ -72,6 +72,16 @@ class HostTests(unittest.TestCase):
                 first.unlink()
                 with self.assertRaises(ValueError): p.capture_manifest(b, kind)
 
+    def test_raw_definitions_bind_prebuild_missing_commands(self):
+        with tempfile.TemporaryDirectory() as t:
+            root = Path(t); raw = root / 'CTestTestfile.cmake'
+            raw.write_text('add_test(real_test /build/real_test)')
+            frozen = p.definitions_manifest(root); p.verify_definitions(frozen, root)
+            raw.write_text('add_test(real_test /build/weakened_test)')
+            with self.assertRaises(ValueError): p.verify_definitions(frozen, root)
+            raw.unlink()
+            with self.assertRaises(ValueError): p.verify_definitions(frozen, root)
+
     def test_extra_or_symlink_capture_rejected(self):
         with tempfile.TemporaryDirectory() as t:
             root = Path(t)

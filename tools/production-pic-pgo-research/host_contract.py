@@ -104,3 +104,15 @@ def compare_captures(baseline, candidate, kind):
     require(a == b, 'host PCM capture mismatch')
     return {'kind': kind, 'files': len(a), 'bytes': len(a) * 32768, 'sha256': a,
             'scope': 'declared noqueue/flattened-policy and Sub historical-lane PCM only; active automation assertions remain separate'}
+
+
+def definitions_manifest(build):
+    build = Path(build)
+    result = {str(path.relative_to(build)): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in sorted(build.rglob('CTestTestfile.cmake')) if path.is_file()}
+    require(bool(result), 'raw configured CTest definitions required')
+    return result
+
+
+def verify_definitions(frozen, build):
+    require(definitions_manifest(build) == frozen, 'raw CTest definitions changed after configuration/build')
