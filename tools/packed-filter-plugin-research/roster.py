@@ -94,7 +94,7 @@ def admit_resolved_roster(configured, built):
 
 
 def admit_built_tests(*, configured, built, build_root, definition_hashes,
-                      executable_hashes, ctest_record, ctest_stdout, executable_resolutions):
+                      executable_hashes, ctest_record, ctest_stdout, executable_resolutions, ctest_executable="ctest"):
     """Join roster admission to raw definitions and actual owned executable bytes.
 
     expected hashes must be independently captured/frozen, not synthesized from
@@ -109,7 +109,7 @@ def admit_built_tests(*, configured, built, build_root, definition_hashes,
     import json,hashlib
     from identity import capture_files,hashes
     build=Path(build_root).absolute()
-    expected=['ctest','--test-dir',str(build),'--show-only=json-v1']
+    expected=[ctest_executable,'--test-dir',str(build),'--show-only=json-v1']
     require(ctest_record.get('argv')==expected and ctest_record.get('exit')==0
             and not ctest_record.get('error'), 'trusted CTest inventory command required')
     require(isinstance(ctest_stdout,bytes) and json.loads(ctest_stdout)==built,

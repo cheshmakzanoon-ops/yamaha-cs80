@@ -1,5 +1,6 @@
 """Single-attempt bounded subprocess ledger for the prospective research trial."""
 import json
+import hashlib
 import os
 from pathlib import Path
 import signal
@@ -43,7 +44,7 @@ class Commands:
         self.first_stage = False
         self.persist()
 
-    def run(self, label, argv, *, cwd, timeout=None, pin=False, env=None):
+    def run(self, label, argv, *, cwd, timeout=None, pin=False, env=None, replace_env=False, require_group_empty=False):
         require(label and all(c.isalnum() or c in '-_.' for c in label), 'safe command label required')
         require(not any(row['label'] == label for row in self.ledger), 'command retry forbidden')
         argv = list(map(str, argv)); require(bool(argv), 'empty command')
@@ -51,6 +52,15 @@ class Commands:
         if timeout is not None:
             require(timeout > 0, 'positive command timeout required')
             duration = min(duration, timeout)
+        require(isinstance(require_group_empty, bool), 'boolean process-group policy required')
+        require(isinstance(replace_env, bool), 'boolean environment policy required')
+        require(not replace_env or isinstance(env, dict), 'replacement environment required')
+        if env is not None:
+            require(isinstance(env, dict) and all(isinstance(k, str) and k and '=' not in k and '\0' not in k
+                    and isinstance(v, str) and '\0' not in v for k, v in env.items()), 'invalid child environment')
+        effective_env = dict(env) if replace_env else {**os.environ, **(env or {})}
+        environment_digest = hashlib.sha256(json.dumps(effective_env, sort_keys=True,
+            separators=(',', ':'), ensure_ascii=True).encode()).hexdigest()
         actual = argv
         if pin:
             wrapper = ('import os,sys;c=int(sys.argv[1]);os.sched_setaffinity(0,{c});'
@@ -61,12 +71,13 @@ class Commands:
         record = {'label': label, 'argv': argv, 'executed_argv': actual, 'cwd': str(cwd),
                   'timeout_seconds': duration, 'pinned_cpu': self.cpu if pin else None,
                   'phase': 'compatibility' if self.first_stage else 'full-release',
-                  'start_elapsed_seconds': time.monotonic() - self.started, 'exit': None}
+                  'start_elapsed_seconds': time.monotonic() - self.started, 'exit': None,
+                  'environment_sha256': environment_digest, 'replace_environment': replace_env}
         self.ledger.append(record); self.persist()
         child = None
         try:
             with stdout.open('xb') as out, stderr.open('xb') as err:
-                child = subprocess.Popen(actual, cwd=cwd, env=None if env is None else {**os.environ, **env},
+                child = subprocess.Popen(actual, cwd=cwd, env=effective_env,
                                          stdout=out, stderr=err, start_new_session=True)
                 record['pid'] = child.pid; self.persist()
                 try:
@@ -78,6 +89,10 @@ class Commands:
                     record['exit'] = child.wait()
                     raise
             require(record['exit'] == 0, label + ' failed; no retry')
+            if require_group_empty:
+                try: os.killpg(child.pid, 0)
+                except ProcessLookupError: record['owned_process_group_empty'] = True
+                else: raise ValueError('owned process group remains after leader exit')
             self.remaining()
             return stdout, stderr
         except BaseException as error:
