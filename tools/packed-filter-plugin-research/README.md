@@ -84,3 +84,7 @@ The initializer now supports an owned Connected metadata checkpoint, one setup a
 ## Standalone Linux runloop preparation
 
 The separate UI-owner-only dispatcher has 40 reviewed controls, including a hung-callback watchdog fixture. It retains callback snapshots, revalidates generations, bounds dispatch/timers, and requires checked shutdown. It does not advertise an optional host interface or load the synth. Actual JUCE registration-thread compatibility is not established, and sampled idle is never treated as global callback quiescence. The isolated preparation suite now totals 615 controls.
+
+## Actual file-identity prerequisite
+
+A separate verifier uses EVP SHA-256 over actual file bytes, comparing the complete declared bundle inventory and explicitly frozen runtime/input files with trusted expected manifests. Its immutable result and reverify checks have 36 reviewed inert controls, bringing this isolated checkpoint to 651. The owned/quiescent-root model is mandatory: this is not race-proof against adversarial writers, does not authenticate a caller's manifest or discover complete dependencies, and does not prove which image dlopen loaded. Loaded-provider binding and fresh-transfer authority remain blocked prerequisites.
