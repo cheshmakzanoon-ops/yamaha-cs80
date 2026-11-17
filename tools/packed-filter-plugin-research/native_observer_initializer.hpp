@@ -7,6 +7,11 @@
 #include <filesystem>
 
 namespace cs80_observer {
+// Strict SDK behavior remains default. The opt-in applies ONLY to the absent
+// combined IEditController query in the pinned JUCE implementation.
+enum class ControllerQueryPolicy : std::uint32_t { StrictSdk=1, PinnedJuceFalseNull=2 };
+struct ControllerQueryObservation {ControllerQueryPolicy policy=ControllerQueryPolicy::StrictSdk;bool attempted=false,normal=false,pointerPresent=false;std::int32_t result=kInternalError;};
+inline void validateControllerQueryPolicy(ControllerQueryPolicy p){require(p==ControllerQueryPolicy::StrictSdk || p==ControllerQueryPolicy::PinnedJuceFalseNull,"unknown controller query policy");}
 struct InitializerCall { const char* name=nullptr;std::int64_t returned=0;bool normal=false,ok=false;std::exception_ptr error; };
 template<std::size_t N> struct InitializerCalls {
     std::array<InitializerCall,N> rows{};std::size_t count=0;
@@ -149,7 +154,11 @@ public:
     InitializerCalls<96> calls;
     std::exception_ptr primaryError;
     bool started=false,initializationSucceeded=false,closedCleanly=false;
-    explicit InjectedInstance(InjectedModule& m,Handler& h):module(m),handler(h){}
+    private:
+    const ControllerQueryPolicy queryPolicy_;ControllerQueryObservation queryObservation_;
+public:
+    ControllerQueryObservation controllerQueryObservation()const noexcept{return queryObservation_;}
+    explicit InjectedInstance(InjectedModule& m,Handler& h,ControllerQueryPolicy p=ControllerQueryPolicy::StrictSdk):module(m),handler(h),queryPolicy_(p){validateControllerQueryPolicy(p);queryObservation_.policy=p;}
     InjectedInstance(const InjectedInstance&)=delete;InjectedInstance& operator=(const InjectedInstance&)=delete;
     void start(SynthSetup config) {
         try {phaseGuard(Phase::Fresh);validateSetup(config);initializeConnected();prepareAndStart(config);}
@@ -161,9 +170,11 @@ public:
             module.retainInstance();moduleRetained=true;
             auto& factory=module.factory();
             require(calls.run("component-create",kResultOk,[&]{return factory.createInstance(module.cid(),IComponent::iid,reinterpret_cast<void**>(&own.component));}) && own.component,"component create failed");
-            tresult controllerQuery=kInternalError;
+            tresult controllerQuery=kInternalError;queryObservation_.attempted=true;
             const bool queryReturned=calls.run("combined-query",0,[&]{controllerQuery=own.component->queryInterface(IEditController::iid,reinterpret_cast<void**>(&own.controller));return controllerQuery;},true);
-            const bool queryValid=queryReturned && ((controllerQuery==kResultOk && own.controller) || (controllerQuery==kNoInterface && !own.controller));
+            queryObservation_.normal=queryReturned;queryObservation_.result=controllerQuery;queryObservation_.pointerPresent=own.controller!=nullptr;
+            const bool absent=controllerQuery==kNoInterface || (queryPolicy_==ControllerQueryPolicy::PinnedJuceFalseNull && controllerQuery==kResultFalse);
+            const bool queryValid=queryReturned && ((controllerQuery==kResultOk && own.controller) || (absent && !own.controller));
             calls.rows[calls.count-1].ok=queryValid;require(queryValid,"controller query failed");
             const bool combined=controllerQuery==kResultOk;
             identity=CreatedIdentity::capture(*own.component,module.cid(),combined?ControllerKind::Combined:ControllerKind::Separate,ObserverPhase::Created);

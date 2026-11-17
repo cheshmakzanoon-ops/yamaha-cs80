@@ -1,0 +1,46 @@
+{
+  "schema": "cs80-historical-stock-diagnostic-v1",
+  "classification": "diagnostic-only-not-qualification",
+  "attempt": 2,
+  "source_commit": "0c351b9c509e2d3e8ae1ff978fbc0a3a739974e3",
+  "github_run_id": 44106223099,
+  "artifact_id": 14352965049,
+  "artifact_zip_sha256": "a4b3602edf300ff5906b1c29360553c8526ebd5cbc5364e9856de3c86ba93155",
+  "module_sha256": "baec79cbe2c8667b92312c858d40fb9d308ca5433bbf337b01c1257a4ded8d35",
+  "driver_sha256": "657d4578029fcebe5c49c31bbc373af89ff44d19df08eddbd498eeb29bb50d8c",
+  "request_sha256": "aa20a6fac2da8af98fa54fff4c2d2806e87818aa51d8fbf2df14bd416cbb6abd",
+  "raw_component_cid": "abcdef019182faeb5265664943733830",
+  "workload": {
+    "policy": "legacy",
+    "sample_rate": 48000,
+    "processing_mode": "realtime",
+    "voices": 8,
+    "block": 64
+  },
+  "controller_state_policy": "JuceUnsupported",
+  "native_worker_deadline_seconds": 5,
+  "outer_process_group_deadline_seconds": 25,
+  "outcome": "rejected",
+  "returncode": 24,
+  "wall_seconds_not_cpu_benchmark": 0.28513104699959513,
+  "diagnostic_stderr": "CS80_PROCESS_LIFETIME_FAILURE v1 stage=module-history module_step=instance-history primary=controller query failed opens=1 closes=0 provider_absent=0 host_refs=4 registrations=0 failed_module_calls=0 query_policy=1 query_attempted=1 query_normal=1 query_result=1 query_pointer=0 cleanup_retried=0 exit=24",
+  "receipt_bytes": 0,
+  "process_group_empty_after_wait": true,
+  "watchdog_reason": null,
+  "input_hashes_unchanged": true,
+  "production_qualified": false,
+  "runtime_closure_complete": false,
+  "cpu_timing_claim": false,
+  "notes": [
+    "New strictly bounded diagnostic with raw query evidence, not a successful rerun of a failed qualification.",
+    "Directly observed normal kResultFalse plus null under strict SDK policy, rejected as intended.",
+    "Complete A-D history, production qualification and CPU timing remain absent."
+  ],
+  "controller_query": {
+    "policy": "StrictSdk",
+    "attempted": true,
+    "normal": true,
+    "raw_result": 1,
+    "pointer_present": false
+  }
+}

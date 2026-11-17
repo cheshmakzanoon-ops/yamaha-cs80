@@ -51,8 +51,9 @@ class HistoryOwner final {
         evidence_.cleanup=owner_.cleanupReceipt();evidence_.joined=owner_.joinReceipt();if(evidence_.cleanup->error && !cleanupError_)cleanupError_=evidence_.cleanup->error;
     }
 public:
-    HistoryOwner(InjectedModule& module,Handler& handler,packed_filter_workload::Case c,ControllerStatePolicy policy)
-        :case_(c),policy_(policy),owner_(module,handler){}
+    HistoryOwner(InjectedModule& module,Handler& handler,packed_filter_workload::Case c,ControllerStatePolicy policy,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk)
+        :case_(c),policy_(policy),owner_(module,handler,q){}
+    ControllerQueryObservation controllerQueryObservation()const noexcept{return owner_.controllerQueryObservation();}
     HistoryOwner(const HistoryOwner&)=delete;HistoryOwner& operator=(const HistoryOwner&)=delete;
     template<class Pump> void run(worker::WaitPolicy budget,Pump&& pump){run(budget,std::forward<Pump>(pump),[]{});}
     template<class Pump,class Boundary> void run(worker::WaitPolicy budget,Pump&& pump,Boundary&& boundary){

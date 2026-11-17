@@ -100,7 +100,8 @@ class ProcessingInstanceOwner {
         require(instance_.phase_==InjectedInstance::Phase::Processing && !instance_.primaryError,"leased instance became terminal");
     }
 public:
-    ProcessingInstanceOwner(InjectedModule& module,Handler& handler):instance_(module,handler){instance_.deferFailureCleanup_=true;}
+    ProcessingInstanceOwner(InjectedModule& module,Handler& handler,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk):instance_(module,handler,q){instance_.deferFailureCleanup_=true;}
+    ControllerQueryObservation controllerQueryObservation()const noexcept{return instance_.controllerQueryObservation();}
     ProcessingInstanceOwner(const ProcessingInstanceOwner&)=delete;ProcessingInstanceOwner& operator=(const ProcessingInstanceOwner&)=delete;
     void initializeConnected(){uiCall([&]{instance_.initializeConnected();});}
     void captureConnected(){uiCall([&]{instance_.captureConnected();});}

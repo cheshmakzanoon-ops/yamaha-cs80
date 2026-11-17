@@ -1,0 +1,53 @@
+{
+  "schema": "cs80-historical-stock-diagnostic-v1",
+  "classification": "diagnostic-only-not-qualification",
+  "attempt": 1,
+  "source_commit": "0c351b9c509e2d3e8ae1ff978fbc0a3a739974e3",
+  "github_run_id": 44106223099,
+  "artifact_id": 14352965049,
+  "artifact_zip_sha256": "a4b3602edf300ff5906b1c29360553c8526ebd5cbc5364e9856de3c86ba93155",
+  "module_sha256": "baec79cbe2c8667b92312c858d40fb9d308ca5433bbf337b01c1257a4ded8d35",
+  "driver_sha256": "a39f301c6ac2a9d881b546f4b0f8860048559be5e41fddfc7ddcda7b9a0ba63a",
+  "request_sha256": "28a4306c3b255c672502b404ce91fc6ae9d7fdc77b810e211e9f9826990d0400",
+  "raw_component_cid": "abcdef019182faeb5265664943733830",
+  "workload": {
+    "policy": "legacy",
+    "sample_rate": 48000,
+    "processing_mode": "realtime",
+    "voices": 8,
+    "block": 64
+  },
+  "controller_state_policy": "JuceUnsupported",
+  "native_worker_deadline_seconds": 5,
+  "outer_process_group_deadline_seconds": 25,
+  "outcome": "rejected",
+  "returncode": 24,
+  "wall_seconds_not_cpu_benchmark": 0.4560080539959017,
+  "diagnostic_stderr": "CS80_PROCESS_LIFETIME_FAILURE v1 stage=module-history module_step=instance-history primary=controller query failed opens=1 closes=0 provider_absent=0 host_refs=4 registrations=0 failed_module_calls=0 cleanup_retried=0 exit=24",
+  "receipt_bytes": 0,
+  "process_group_empty_after_wait": true,
+  "watchdog_reason": null,
+  "input_hashes_unchanged": true,
+  "production_qualified": false,
+  "runtime_closure_complete": false,
+  "cpu_timing_claim": false,
+  "notes": [
+    "Actual historical module loaded; no complete A-D receipt was admitted.",
+    "No native cleanup retry or relaxed gate was used.",
+    "Controller-interface mismatch needs evidence-backed host compatibility diagnosis.",
+    "Source/artifact are historical stock, not the current candidate build."
+  ],
+  "source_based_diagnosis": {
+    "status": "inference-not-recorded-native-query-result",
+    "cause": "Pinned JUCE optional combined-controller query returns kResultFalse plus null; strict SDK observer requires kNoInterface plus null.",
+    "source_revision": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "files": {
+      "wrapper.cpp": {
+        "sha256": "16031325b31be2e32b23689f07338bd6c631941475b9bbf87d176d1f2565c202"
+      },
+      "utilities.h": {
+        "sha256": "bafec6a07d7d0fd07f49f1e2c2747f6371d9a3c956bc7cee125f748ba4ac9d2e"
+      }
+    }
+  }
+}

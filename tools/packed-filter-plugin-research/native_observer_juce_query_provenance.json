@@ -1,0 +1,21 @@
+{
+  "scope": "narrow preselected optional combined-controller query; research host only",
+  "juce_revision": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "origin": "https://github.com/juce-framework/JUCE",
+  "upstream_sources": {
+    "modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp": "16031325b31be2e32b23689f07338bd6c631941475b9bbf87d176d1f2565c202",
+    "modules/juce_audio_processors_headless/format_types/juce_VST3Utilities.h": "bafec6a07d7d0fd07f49f1e2c2747f6371d9a3c956bc7cee125f748ba4ac9d2e",
+    "modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/funknown.h": "e0d9609224fe15491c9ccd1463d964c303f1d5a6149fabf849e87f2c14be1951"
+  },
+  "implementation_sources": {
+    "native_observer_initializer.hpp": "4c54caa75337764440c97be5647da09b1cd911bc97dad5e56fbcdbaefe7b182b",
+    "native_observer_processing.hpp": "0256b94d6f80db1d36f05a3b40d5a1b2214efc739f77dcfb518d2ff21b78e551",
+    "native_observer_history.hpp": "641b078400f1c658e89f0c2e5ffc44b10888ec5b9e8a044265ff84ea56ffb44c",
+    "native_observer_module_history.hpp": "2a98a99ec8b09ec134f0998ed34be87b56e440e29fda27e8d417c14d4b18970c",
+    "native_observer_process_child.hpp": "8e658bddaecfb9822d5cccc20778dad407727f3f4b557e9ab0122cb12f2b0f36",
+    "native_observer_request.hpp": "ad2d2556cd276e3548f70719c3f1b5353635faf2f2e21f61ed7e392611f44560",
+    "native_observer_driver.cpp": "02ef32ba2f37d4e91c55fcdd45f64a46f169866303e1c41c2e72d95fce40b3d5",
+    "test_native_observer_juce_query_defect.py": "a8c34cc90954155557f37cb6ca13ff85266661bfc85d90def25eff710d900265",
+    "test_native_observer_juce_query_policy.py": "b4fd11b5b48511ea205b62ce45bd99bb3a9a67eb84f86dbed23118762ed165bb"
+  }
+}
