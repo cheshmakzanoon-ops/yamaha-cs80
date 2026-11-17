@@ -1,0 +1,21 @@
+--- a/src/core/SourceFactoryTones.h
++++ b/src/core/SourceFactoryTones.h
+@@ -770,11 +770,15 @@
+         next.qBusVolts[rank] = {loadedQBus(b.qHp, next.masterResVolts),
+                                 loadedQBus(b.qLp, next.masterResVolts)};
+         next.levelBusVolts[rank] = loadedLevelBus(b.level, sum);
++        std::array<double, 2> qVolts {}, q {};
++        for (std::size_t side = 0; side < 2; ++side) {
++            qVolts[side] = 0.5 * (next.qBusVolts[rank][side] + next.masterResVolts);
++            q[side] = qFromVolts(qVolts[side]);
++        }
+         for (std::size_t voice = 0; voice < voiceCount; ++voice) {
+             for (std::size_t side = 0; side < 2; ++side) {
+-                const double vq = 0.5 * (next.qBusVolts[rank][side] + next.masterResVolts);
+-                next.qVolts[rank][voice][side] = vq;
+-                next.q[rank][voice][side] = qFromVolts(vq);
++                next.qVolts[rank][voice][side] = qVolts[side];
++                next.q[rank][voice][side] = q[side];
+             }
+             const double pin = levelPinPerLoadedBus * next.levelBusVolts[rank] + levelPinPerTouch * touch[voice];
+             next.levelPinVolts[rank][voice] = pin;

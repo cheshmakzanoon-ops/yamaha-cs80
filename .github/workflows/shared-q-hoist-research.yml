@@ -1,0 +1,35 @@
+name: One-shot shared-Q CPU study
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/shared-q-hoist-research/**'
+      - '.github/workflows/shared-q-hoist-research.yml'
+permissions:
+  contents: read
+concurrency:
+  group: shared-q-hoist-first-study
+  cancel-in-progress: false
+jobs:
+  study:
+    if: github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify frozen study gates
+        run: python3 -m unittest discover -s tools/shared-q-hoist-research -p 'test_*.py' -v
+      - name: Single correctness, calibration and conditional cost study
+        run: >-
+          python3 tools/shared-q-hoist-research/run.py --repo "$GITHUB_WORKSPACE"
+          --work "$RUNNER_TEMP/shared-q-build" --out "$GITHUB_WORKSPACE/shared-q-results"
+      - name: Preserve raw receipts even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: shared-q-study-${{ github.run_id }}-${{ github.run_attempt }}
+          path: shared-q-results/
+          if-no-files-found: warn
+          retention-days: 14
