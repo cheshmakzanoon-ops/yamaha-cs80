@@ -94,16 +94,16 @@ def admit_resolved_roster(configured, built):
 
 
 def admit_built_tests(*, configured, built, build_root, definition_hashes,
-                      executable_hashes, ctest_record, ctest_stdout):
+                      executable_hashes, ctest_record, ctest_stdout, executable_resolutions):
     """Join roster admission to raw definitions and actual owned executable bytes.
 
     expected hashes must be independently captured/frozen, not synthesized from
     the submitted CTest JSON. Command provenance uses the shared trusted ledger.
-    The case-to-command association depends on trusted actual CTest execution
-    against these unchanged definitions, not independent CMake-language parsing.
-    A forged stdout/ledger could swap existing binaries or alter unresolved argv.
-    The orchestrator must freeze the CTest runtime, source/scripts and dependencies
-    and capture stdout directly via its shared ledger; this is a mandatory gate.
+    Case-to-command association is additionally checked against the observed
+    generated literal add_test subset, not a general CMake interpreter. Relative
+    executables need an independently frozen resolution map. The orchestrator
+    must still freeze CTest runtime/source/scripts/dependencies and capture its
+    stdout directly via the shared ledger.
     """
     from pathlib import Path
     import json,hashlib
@@ -118,6 +118,9 @@ def admit_built_tests(*, configured, built, build_root, definition_hashes,
     require(capture_files(build,list(definition_hashes))==definition_hashes,
             'raw CTest definitions changed')
     observed=roster(built)
+    from definition_commands import bind_definition_commands
+    association=bind_definition_commands({n:(build/n).read_text() for n in definition_hashes},
+        {n:r['command'] for n,r in observed.items()},executable_resolutions=executable_resolutions)
     paths={r['command'][0] for r in observed.values()}
     require(paths==set(executable_hashes), 'complete independently frozen executable roster required')
     for name,wanted in executable_hashes.items():
@@ -125,7 +128,7 @@ def admit_built_tests(*, configured, built, build_root, definition_hashes,
         require(path.is_absolute() and '..' not in path.parts,'canonical executable required')
         require(capture_files(path.parent,[path.name])[path.name]==wanted, 'test executable bytes changed')
     receipt=admit_resolved_roster(configured,built)
-    return {**receipt,'raw_definition_identity_required':False,
+    return {**receipt,**association,'raw_definition_identity_required':False,
             'resolved_executable_provenance_required':False,
             'ctest_runtime_and_case_association_required':True,
             'ctest_stdout_sha256':hashlib.sha256(ctest_stdout).hexdigest()}

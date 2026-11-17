@@ -34,13 +34,13 @@ class BuiltBindingTests(unittest.TestCase):
         from pathlib import Path
         from identity import capture_files
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name)
-        (self.root/'test').write_bytes(b'executable');(self.root/'CTestTestfile.cmake').write_text('add_test(one test)')
+        (self.root/'test').write_bytes(b'executable');(self.root/'CTestTestfile.cmake').write_text('add_test([=[one]=] "'+str(self.root/'test')+'")')
         self.a={'tests':[{'name':'one'}]};self.b={'tests':[{'name':'one','command':[str(self.root/'test')]}]}
         self.kw=dict(configured=self.a,built=self.b,build_root=self.root,
                      definition_hashes=capture_files(self.root,['CTestTestfile.cmake']),
                      executable_hashes={str(self.root/'test'):capture_files(self.root,['test'])['test']},
                      ctest_record={'argv':['ctest','--test-dir',str(self.root),'--show-only=json-v1'],'exit':0},
-                     ctest_stdout=json.dumps(self.b).encode())
+                     ctest_stdout=json.dumps(self.b).encode(),executable_resolutions={})
     def tearDown(self):self.tmp.cleanup()
     def call(self):
         from roster import admit_built_tests
