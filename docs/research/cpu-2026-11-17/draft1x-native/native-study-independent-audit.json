@@ -1,0 +1,188 @@
+{
+  "terminal": {
+    "decision": "MEASURED_USEFUL_GAIN",
+    "noise": 0.0018897625143874386,
+    "primary_ratios": [
+      0.5220801264423269,
+      0.5225030601086089,
+      0.5222604265618344
+    ],
+    "primary_gain": 0.47771882437491753,
+    "minimum_gain": 0.01,
+    "material_10pct_target_met": true,
+    "broad_lower_cost_statement_allowed": true,
+    "row_ratios": [
+      [
+        0.5230843808862177,
+        0.5213038771603512,
+        0.5194673162029508,
+        0.5244785259849831,
+        0.5222891567148432,
+        0.5210509481490866
+      ],
+      [
+        0.5224564761835976,
+        0.522045531373832,
+        0.5190632950816568,
+        0.5264735222851311,
+        0.518261496795638,
+        0.5240759513252038
+      ],
+      [
+        0.5229908837261039,
+        0.5210795330781715,
+        0.5175826669179342,
+        0.5274370314507711,
+        0.521078189311509,
+        0.5268943649633784
+      ]
+    ],
+    "quality_acceptance": false,
+    "elapsed_wall_seconds": 2748.8431202230004
+  },
+  "independently_recomputed": {
+    "aa": {
+      "row_ratios": [
+        [
+          1.0012394086610465,
+          1.0027291436018546,
+          0.9971717597165894,
+          1.0026412867517651,
+          0.9871617480868525,
+          0.9980826718805367
+        ],
+        [
+          1.0014931791315314,
+          0.9992127003714817,
+          0.9981580522836695,
+          1.0023822930294615,
+          0.994754258590607,
+          1.001051829282421
+        ],
+        [
+          0.9980409719701765,
+          1.0054112840541125,
+          1.0048400022606643,
+          0.9992880968295528,
+          0.9966382065094009,
+          1.0015363276276164
+        ]
+      ],
+      "primary_ratios": [
+        1.000942850417157,
+        1.0003101154299892,
+        1.0018897625143874
+      ],
+      "pass": true
+    },
+    "off": {
+      "row_ratios": [
+        [
+          1.001444714196028,
+          0.9986930951873205,
+          1.000616998243856,
+          1.0024232409315703,
+          0.997645741575246,
+          1.0000054848618303
+        ],
+        [
+          0.9971274882128763,
+          1.0002577673813857,
+          0.9964543574391578,
+          1.000950391089839,
+          1.001521036596535,
+          0.9985528588668541
+        ],
+        [
+          0.9962147135174491,
+          0.9895237851529386,
+          0.9985784747761542,
+          1.0003500069208948,
+          1.0026138732855607,
+          1.0196996874183235
+        ]
+      ],
+      "primary_ratios": [
+        1.0007935721217394,
+        0.9986956227662757,
+        0.9961582643316301
+      ],
+      "pass": true
+    },
+    "gain": 0.47771882437491753,
+    "material10pct": true,
+    "broad_claim": true,
+    "draft": {
+      "row_ratios": [
+        [
+          0.5230843808862177,
+          0.5213038771603512,
+          0.5194673162029508,
+          0.5244785259849831,
+          0.5222891567148432,
+          0.5210509481490866
+        ],
+        [
+          0.5224564761835976,
+          0.522045531373832,
+          0.5190632950816568,
+          0.5264735222851311,
+          0.518261496795638,
+          0.5240759513252038
+        ],
+        [
+          0.5229908837261039,
+          0.5210795330781715,
+          0.5175826669179342,
+          0.5274370314507711,
+          0.521078189311509,
+          0.5268943649633784
+        ]
+      ],
+      "primary_ratios": [
+        0.5220801264423269,
+        0.5225030601086089,
+        0.5222604265618344
+      ],
+      "pass": true
+    }
+  },
+  "completed_timed_rows": 108,
+  "timed_commands_started": 108,
+  "dry_rows": 18,
+  "retained_binding_hashes_verified": 399,
+  "remote_only_binding_paths": [
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/driver.cpp",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/analysis.py",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/pcm_store.py",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/test_analysis.py",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/test_receipts.py",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/IMPLEMENTATION.md",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/PROTOCOL.md",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/orchestrate.py",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/workflow.yml",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/test_orchestrate.py",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/test_process_cleanup.py",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/ORCHESTRATOR-DRAFT.md",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/draft1x.patch",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/structural.cpp",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/followup.cpp",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/capture.cpp",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/sanitizer-evidence/RESULT.json",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/sanitizer-evidence/RESULT.md",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/sanitizer-evidence/harness.sha256",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/sanitizer-evidence/run-address-undefined.sh",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/sanitizer-evidence/run.sh",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/sanitizer-evidence/structural-address-undefined.log",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/sanitizer-evidence/structural.log",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/admission.json",
+    "/home/runner/work/yamaha-cs80/yamaha-cs80/.github/workflows/draft1x-cpu-study.yml",
+    "/usr/bin/x86_64-linux-gnu-g++-13",
+    "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus"
+  ],
+  "caveats": [
+    "Compiler original-host hashes are receipts unless compiler binaries retained.",
+    "Incomplete final run must be audited as failure, not omitted from terminal interpretation.",
+    "No sonic acceptance, plugin/DAW CPU or production qualification follows."
+  ]
+}

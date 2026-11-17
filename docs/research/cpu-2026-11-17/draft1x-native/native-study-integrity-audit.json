@@ -1,0 +1,139 @@
+{
+  "scope": "Read-only independent retained evidence/source/binary integrity; no project execution or cost recomputation",
+  "zip_sha256": "9058a140b40c8bef9b350ee1b1b11d7043705afb0e3ddba8563b94b51649d90b",
+  "manifest_files_verified": 1991,
+  "admission_files_verified": 23,
+  "admission_sha256": "83dfe533ba13c7b70036a44d3e4cb9b4cdd2dccc47722f6e879700e479c22f8d",
+  "revision": "9dd1352393ed510e41ac1855f7503bb738cfc7a0",
+  "immutable_stock_trees": {
+    "src": {
+      "tree": "702bf5ee4e375c7b13da7ec95b01b56587bbf75c",
+      "files_verified": 193
+    },
+    "tests": {
+      "tree": "64b7f72ed0139d846e8107c47c62f190cb13eefa",
+      "files_verified": 546
+    }
+  },
+  "exact_patch_changed_files": [
+    "src/core/Dsp.h",
+    "src/core/Engine.cpp",
+    "src/core/Engine.h",
+    "src/core/ExternalModulationInterpolator.h"
+  ],
+  "source_manifests_verified": {
+    "stock": 739,
+    "candidate": 193
+  },
+  "retained_bindings_verified": 424,
+  "unretained_compiler_identity_receipts": {
+    "/usr/bin/x86_64-linux-gnu-g++-13": "1353e9bdd29a7295c7226bf6c63abccce056d8cac31f112e5cdbecc3f28c2769",
+    "/usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus": "840b332fb62ec6f694ac77d91fe69ef7f80b0d69512ed89374af0ee7a506255d"
+  },
+  "retained_binary_object_sha256": {
+    "build/candidate/Engine.o": "bcce41d740763776a69ab865526eddefd0edfc08483b76b8a63073b552f84996",
+    "build/candidate/FactoryPresets.o": "f626545b7e1025b2ce9f5e72a6535c69738fb131f604cf8f7874f89c44637236",
+    "build/candidate/Ig00156Batch.o": "f831b12bd93890f4c1acf5b214c4d0dbf2f821a430bc8b12c726700d9ef577d6",
+    "build/candidate/capture": "bd11bdff2ac6c14cad32cbdfdea8d93530781d66a26051ee15025fe1c49b11cf",
+    "build/candidate/driver": "5add99fea55d72d11c14e404c1b128ee4e452eaeb85a2b85f600774dd4cbd4da",
+    "build/candidate/followup": "93a969242ac34dd154c1165038276f4462cdaac0d418428ffb0999897aac51c4",
+    "build/candidate/structural": "5c098b005a5fe7c494eaabec1479072fd4259fa0dcf9aa4f45bade4c422f1bcb",
+    "build/stock/Engine.o": "f49a5005af06eb2a03ec0585c88404fcb6eca2592e9cb6e9e1b30816de0469af",
+    "build/stock/FactoryPresets.o": "f626545b7e1025b2ce9f5e72a6535c69738fb131f604cf8f7874f89c44637236",
+    "build/stock/Ig00156Batch.o": "f831b12bd93890f4c1acf5b214c4d0dbf2f821a430bc8b12c726700d9ef577d6",
+    "build/stock/capture": "fb90d353cf423a3ca96fe0ce25c58fd81a84fdaf5fb46612ba3d9d54265ff5d7",
+    "build/stock/driver": "3d1423a5e2e41ed36ade5d8c99acda7fbd619a2c91e11c2ad79e9473249835d0"
+  },
+  "compile_link_flags_verified": {
+    "compile-stock-Engine": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "compile-stock-FactoryPresets": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "compile-stock-Ig00156Batch": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off"
+    ],
+    "link-stock-driver": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "link-stock-capture": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "compile-candidate-Engine": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "compile-candidate-FactoryPresets": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "compile-candidate-Ig00156Batch": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off"
+    ],
+    "link-candidate-driver": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE"
+    ],
+    "link-candidate-capture": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE"
+    ],
+    "link-candidate-structural": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE"
+    ],
+    "link-candidate-followup": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE"
+    ]
+  },
+  "canonical_pcm_files": 12,
+  "canonical_pcm_bytes": 276480000,
+  "pcm_references_verified": 126,
+  "successful_ledger_commands": 159,
+  "source_contract_independently_verified": true,
+  "limitations": [
+    "Compiler driver/frontend binaries not retained: their hashes remain runner receipts, not local byte verification.",
+    "Remote active execution paths unavailable; retained hashes reproduce recorded bindings, not independent observation of execution.",
+    "No recompile, project binary execution, benchmark retry or PCM/CPU result analysis performed.",
+    "Artifact ZIP transports modes; executable permission identity is not independently asserted.",
+    "Core research only: no plugin host/PDC/realtime, cross-platform, sonic-acceptance or full-suite certification."
+  ]
+}

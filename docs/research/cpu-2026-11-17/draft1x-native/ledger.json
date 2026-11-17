@@ -1,0 +1,4377 @@
+[
+  {
+    "index": 0,
+    "label": "revision",
+    "argv": [
+      "git",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "rev-parse",
+      "9dd1352393ed510e41ac1855f7503bb738cfc7a0"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 0.001839149999966594,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "git",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "rev-parse",
+      "9dd1352393ed510e41ac1855f7503bb738cfc7a0"
+    ],
+    "pid": 2181,
+    "exit": 0,
+    "end_elapsed": 0.01764621199998828
+  },
+  {
+    "index": 1,
+    "label": "source-tree",
+    "argv": [
+      "git",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "rev-parse",
+      "9dd1352393ed510e41ac1855f7503bb738cfc7a0:src"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 0.01791527299997142,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "git",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "rev-parse",
+      "9dd1352393ed510e41ac1855f7503bb738cfc7a0:src"
+    ],
+    "pid": 2182,
+    "exit": 0,
+    "end_elapsed": 0.033748872999979085
+  },
+  {
+    "index": 2,
+    "label": "test-tree",
+    "argv": [
+      "git",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "rev-parse",
+      "9dd1352393ed510e41ac1855f7503bb738cfc7a0:tests"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 0.03401761200001374,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "git",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "rev-parse",
+      "9dd1352393ed510e41ac1855f7503bb738cfc7a0:tests"
+    ],
+    "pid": 2183,
+    "exit": 0,
+    "end_elapsed": 0.04974863699999332
+  },
+  {
+    "index": 3,
+    "label": "lscpu",
+    "argv": [
+      "lscpu",
+      "-J"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 0.051152840999975524,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "lscpu",
+      "-J"
+    ],
+    "pid": 2185,
+    "exit": 0,
+    "end_elapsed": 0.06830626199996459
+  },
+  {
+    "index": 4,
+    "label": "compiler-version",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "--version"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 0.06863354899996921,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "--version"
+    ],
+    "pid": 2186,
+    "exit": 0,
+    "end_elapsed": 0.2347116269999674
+  },
+  {
+    "index": 5,
+    "label": "compiler-frontend",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-print-prog-name=cc1plus"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 0.23510832099998424,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-print-prog-name=cc1plus"
+    ],
+    "pid": 2187,
+    "exit": 0,
+    "end_elapsed": 0.2523517149999748
+  },
+  {
+    "index": 6,
+    "label": "source-archive",
+    "argv": [
+      "git",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "archive",
+      "9dd1352393ed510e41ac1855f7503bb738cfc7a0",
+      "src",
+      "tests"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2.5809065849999797,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "git",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80",
+      "archive",
+      "9dd1352393ed510e41ac1855f7503bb738cfc7a0",
+      "src",
+      "tests"
+    ],
+    "pid": 2189,
+    "exit": 0,
+    "end_elapsed": 2.6966613779999875
+  },
+  {
+    "index": 7,
+    "label": "source-extract",
+    "argv": [
+      "tar",
+      "-x",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2.702514134000012,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "tar",
+      "-x",
+      "-C",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock"
+    ],
+    "pid": 2190,
+    "exit": 0,
+    "end_elapsed": 2.7379831889999764
+  },
+  {
+    "index": 8,
+    "label": "candidate-patch",
+    "argv": [
+      "patch",
+      "--batch",
+      "--fuzz=0",
+      "-p1"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate",
+    "start_elapsed": 2.744650421000017,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "patch",
+      "--batch",
+      "--fuzz=0",
+      "-p1"
+    ],
+    "pid": 2191,
+    "exit": 0,
+    "end_elapsed": 2.7623490670000024
+  },
+  {
+    "index": 9,
+    "label": "compile-stock-Engine",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src/core/Engine.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Engine.o"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2.8224561019999896,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src/core/Engine.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Engine.o"
+    ],
+    "pid": 2192,
+    "exit": 0,
+    "end_elapsed": 12.112697469000011
+  },
+  {
+    "index": 10,
+    "label": "compile-stock-FactoryPresets",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src/core/FactoryPresets.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/FactoryPresets.o"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 12.113204953999968,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src/core/FactoryPresets.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/FactoryPresets.o"
+    ],
+    "pid": 2198,
+    "exit": 0,
+    "end_elapsed": 15.486631122000006
+  },
+  {
+    "index": 11,
+    "label": "compile-stock-Ig00156Batch",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src/core/Ig00156Batch.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Ig00156Batch.o"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 15.487123355999984,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src/core/Ig00156Batch.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Ig00156Batch.o"
+    ],
+    "pid": 2202,
+    "exit": 0,
+    "end_elapsed": 16.457739113999992
+  },
+  {
+    "index": 12,
+    "label": "link-stock-driver",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/driver.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 16.458254804999967,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/driver.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver"
+    ],
+    "pid": 2207,
+    "exit": 0,
+    "end_elapsed": 17.827248313999974
+  },
+  {
+    "index": 13,
+    "label": "link-stock-capture",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/capture.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/capture"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 17.827700806999985,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/stock/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/capture.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/capture"
+    ],
+    "pid": 2213,
+    "exit": 0,
+    "end_elapsed": 18.845369618000007
+  },
+  {
+    "index": 14,
+    "label": "compile-candidate-Engine",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src/core/Engine.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 18.84771290599997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src/core/Engine.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o"
+    ],
+    "pid": 2218,
+    "exit": 0,
+    "end_elapsed": 26.332408246
+  },
+  {
+    "index": 15,
+    "label": "compile-candidate-FactoryPresets",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src/core/FactoryPresets.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 26.33299376100001,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src/core/FactoryPresets.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o"
+    ],
+    "pid": 2221,
+    "exit": 0,
+    "end_elapsed": 29.705807564999986
+  },
+  {
+    "index": 16,
+    "label": "compile-candidate-Ig00156Batch",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src/core/Ig00156Batch.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 29.70644273199997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "-c",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src/core/Ig00156Batch.cpp",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o"
+    ],
+    "pid": 2227,
+    "exit": 0,
+    "end_elapsed": 30.322473222999974
+  },
+  {
+    "index": 17,
+    "label": "link-candidate-driver",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/driver.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 30.323051998999972,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/driver.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver"
+    ],
+    "pid": 2230,
+    "exit": 0,
+    "end_elapsed": 31.591004381000005
+  },
+  {
+    "index": 18,
+    "label": "link-candidate-capture",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/capture.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/capture"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 31.59161160399998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/capture.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/capture"
+    ],
+    "pid": 2235,
+    "exit": 0,
+    "end_elapsed": 32.609404402999985
+  },
+  {
+    "index": 19,
+    "label": "link-candidate-structural",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/structural.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/structural"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 32.60993872400002,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/structural.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/structural"
+    ],
+    "pid": 2241,
+    "exit": 0,
+    "end_elapsed": 33.827847604
+  },
+  {
+    "index": 20,
+    "label": "link-candidate-followup",
+    "argv": [
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/followup.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 33.828486141999974,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/usr/bin/x86_64-linux-gnu-g++-13",
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-DDRAFT_CANDIDATE",
+      "-I/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/candidate/src",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/tools/draft1x-cpu-research/followup.cpp",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Engine.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/FactoryPresets.o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/Ig00156Batch.o",
+      "-o",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup"
+    ],
+    "pid": 2248,
+    "exit": 0,
+    "end_elapsed": 34.89725635899998
+  },
+  {
+    "index": 21,
+    "label": "structural",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/structural"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 34.95291429499997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/structural"
+    ],
+    "pid": 2253,
+    "exit": 0,
+    "end_elapsed": 37.274314747000005
+  },
+  {
+    "index": 22,
+    "label": "impulse",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 37.35225261300002,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup"
+    ],
+    "pid": 2254,
+    "exit": 0,
+    "end_elapsed": 37.370343924
+  },
+  {
+    "index": 23,
+    "label": "tail-44100-36",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "44100",
+      "36"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 37.448135045000015,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "44100",
+      "36"
+    ],
+    "pid": 2255,
+    "exit": 0,
+    "end_elapsed": 37.76395429399997
+  },
+  {
+    "index": 24,
+    "label": "tail-44100-96",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "44100",
+      "96"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 37.842636223,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "44100",
+      "96"
+    ],
+    "pid": 2257,
+    "exit": 0,
+    "end_elapsed": 38.158826328999965
+  },
+  {
+    "index": 25,
+    "label": "tail-48000-36",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "48000",
+      "36"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 38.23708393800001,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "48000",
+      "36"
+    ],
+    "pid": 2258,
+    "exit": 0,
+    "end_elapsed": 38.552827132000004
+  },
+  {
+    "index": 26,
+    "label": "tail-48000-96",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "48000",
+      "96"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 38.630972111999995,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "48000",
+      "96"
+    ],
+    "pid": 2259,
+    "exit": 0,
+    "end_elapsed": 38.996979409999994
+  },
+  {
+    "index": 27,
+    "label": "tail-88200-36",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "88200",
+      "36"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 39.075592594,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "88200",
+      "36"
+    ],
+    "pid": 2260,
+    "exit": 0,
+    "end_elapsed": 39.54205500699999
+  },
+  {
+    "index": 28,
+    "label": "tail-88200-96",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "88200",
+      "96"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 39.62076864199997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "88200",
+      "96"
+    ],
+    "pid": 2261,
+    "exit": 0,
+    "end_elapsed": 40.13723308599998
+  },
+  {
+    "index": 29,
+    "label": "tail-96000-36",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "96000",
+      "36"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 40.216190788999995,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "96000",
+      "36"
+    ],
+    "pid": 2262,
+    "exit": 0,
+    "end_elapsed": 40.683044662999976
+  },
+  {
+    "index": 30,
+    "label": "tail-96000-96",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "96000",
+      "96"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 40.761695129999964,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/followup",
+      "96000",
+      "96"
+    ],
+    "pid": 2263,
+    "exit": 0,
+    "end_elapsed": 41.27805384200002
+  },
+  {
+    "index": 31,
+    "label": "compatibility-stock",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/capture",
+      "stock",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/compatibility-stock"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 41.35650355199999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/capture",
+      "stock",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/compatibility-stock"
+    ],
+    "pid": 2264,
+    "exit": 0,
+    "end_elapsed": 44.827256111
+  },
+  {
+    "index": 32,
+    "label": "compatibility-off",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/capture",
+      "off",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/compatibility-off"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 44.906826275000014,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/capture",
+      "off",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/compatibility-off"
+    ],
+    "pid": 2266,
+    "exit": 0,
+    "end_elapsed": 48.37718161599997
+  },
+  {
+    "index": 33,
+    "label": "dry-stock-0",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-0"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 48.47084338499997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-0"
+    ],
+    "pid": 2269,
+    "exit": 0,
+    "end_elapsed": 72.16722646099998
+  },
+  {
+    "index": 34,
+    "label": "dry-off-0",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-0"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 72.50644157400001,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-0"
+    ],
+    "pid": 2275,
+    "exit": 0,
+    "end_elapsed": 96.20109460599997
+  },
+  {
+    "index": 35,
+    "label": "dry-draft-0",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-0"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 96.51271207499997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-0"
+    ],
+    "pid": 2279,
+    "exit": 0,
+    "end_elapsed": 109.093847998
+  },
+  {
+    "index": 36,
+    "label": "dry-stock-1",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-1"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 109.42189433699997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-1"
+    ],
+    "pid": 2287,
+    "exit": 0,
+    "end_elapsed": 134.269714078
+  },
+  {
+    "index": 37,
+    "label": "dry-off-1",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-1"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 134.60001474399996,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-1"
+    ],
+    "pid": 2291,
+    "exit": 0,
+    "end_elapsed": 159.69664633899998
+  },
+  {
+    "index": 38,
+    "label": "dry-draft-1",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-1"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 160.007480031,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-1"
+    ],
+    "pid": 2296,
+    "exit": 0,
+    "end_elapsed": 173.089757808
+  },
+  {
+    "index": 39,
+    "label": "dry-stock-2",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-2"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 173.41571588300002,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-2"
+    ],
+    "pid": 2300,
+    "exit": 0,
+    "end_elapsed": 198.21316851700004
+  },
+  {
+    "index": 40,
+    "label": "dry-off-2",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-2"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 198.539542456,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-2"
+    ],
+    "pid": 2304,
+    "exit": 0,
+    "end_elapsed": 223.38712622299994
+  },
+  {
+    "index": 41,
+    "label": "dry-draft-2",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-2"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 223.69908347099994,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-2"
+    ],
+    "pid": 2308,
+    "exit": 0,
+    "end_elapsed": 236.73198073500004
+  },
+  {
+    "index": 42,
+    "label": "dry-stock-3",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-3"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 237.05871344899998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-3"
+    ],
+    "pid": 2312,
+    "exit": 0,
+    "end_elapsed": 261.556814021
+  },
+  {
+    "index": 43,
+    "label": "dry-off-3",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-3"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 261.885432871,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-3"
+    ],
+    "pid": 2317,
+    "exit": 0,
+    "end_elapsed": 286.283827011
+  },
+  {
+    "index": 44,
+    "label": "dry-draft-3",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-3"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 286.596679394,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-3"
+    ],
+    "pid": 2325,
+    "exit": 0,
+    "end_elapsed": 299.47978397900005
+  },
+  {
+    "index": 45,
+    "label": "dry-stock-4",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-4"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 299.806365339,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-4"
+    ],
+    "pid": 2330,
+    "exit": 0,
+    "end_elapsed": 325.75555371900003
+  },
+  {
+    "index": 46,
+    "label": "dry-off-4",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-4"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 326.087215995,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-4"
+    ],
+    "pid": 2354,
+    "exit": 0,
+    "end_elapsed": 351.936803324
+  },
+  {
+    "index": 47,
+    "label": "dry-draft-4",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-4"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 352.25314386199994,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-4"
+    ],
+    "pid": 2360,
+    "exit": 0,
+    "end_elapsed": 365.73629453099994
+  },
+  {
+    "index": 48,
+    "label": "dry-stock-5",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-5"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 366.06498504099994,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "dry",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-stock-5"
+    ],
+    "pid": 2365,
+    "exit": 0,
+    "end_elapsed": 379.197833497
+  },
+  {
+    "index": 49,
+    "label": "dry-off-5",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-5"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 379.52822190499995,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "off",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-off-5"
+    ],
+    "pid": 2368,
+    "exit": 0,
+    "end_elapsed": 392.660820634
+  },
+  {
+    "index": 50,
+    "label": "dry-draft-5",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-5"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 392.97471278300003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "dry",
+      "draft",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/dry-draft-5"
+    ],
+    "pid": 2372,
+    "exit": 0,
+    "end_elapsed": 399.89873960200003
+  },
+  {
+    "index": 51,
+    "label": "aa-000",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-000"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 400.22715096999997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-000"
+    ],
+    "pid": 2373,
+    "exit": 0,
+    "end_elapsed": 424.07418801599994
+  },
+  {
+    "index": 52,
+    "label": "aa-001",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-001"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 424.39385455999997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-001"
+    ],
+    "pid": 2375,
+    "exit": 0,
+    "end_elapsed": 448.241466246
+  },
+  {
+    "index": 53,
+    "label": "aa-002",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-002"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 448.555829274,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-002"
+    ],
+    "pid": 2378,
+    "exit": 0,
+    "end_elapsed": 473.45376973000003
+  },
+  {
+    "index": 54,
+    "label": "aa-003",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-003"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 473.76887199699996,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-003"
+    ],
+    "pid": 2381,
+    "exit": 0,
+    "end_elapsed": 498.716268522
+  },
+  {
+    "index": 55,
+    "label": "aa-004",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-004"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 499.03252073999994,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-004"
+    ],
+    "pid": 2384,
+    "exit": 0,
+    "end_elapsed": 523.88020588
+  },
+  {
+    "index": 56,
+    "label": "aa-005",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-005"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 524.194240969,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-005"
+    ],
+    "pid": 2386,
+    "exit": 0,
+    "end_elapsed": 548.941986265
+  },
+  {
+    "index": 57,
+    "label": "aa-006",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-006"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 549.2578942130001,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-006"
+    ],
+    "pid": 2392,
+    "exit": 0,
+    "end_elapsed": 573.6545767729999
+  },
+  {
+    "index": 58,
+    "label": "aa-007",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-007"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 573.9695083510001,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-007"
+    ],
+    "pid": 2395,
+    "exit": 0,
+    "end_elapsed": 598.4169940730001
+  },
+  {
+    "index": 59,
+    "label": "aa-008",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-008"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 598.7301198990001,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-008"
+    ],
+    "pid": 2405,
+    "exit": 0,
+    "end_elapsed": 624.980245791
+  },
+  {
+    "index": 60,
+    "label": "aa-009",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-009"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 625.2998186990001,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-009"
+    ],
+    "pid": 2408,
+    "exit": 0,
+    "end_elapsed": 651.2502396499999
+  },
+  {
+    "index": 61,
+    "label": "aa-010",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-010"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 651.570500023,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-010"
+    ],
+    "pid": 2411,
+    "exit": 0,
+    "end_elapsed": 664.803160786
+  },
+  {
+    "index": 62,
+    "label": "aa-011",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-011"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 665.1202029030001,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-011"
+    ],
+    "pid": 2415,
+    "exit": 0,
+    "end_elapsed": 678.302347505
+  },
+  {
+    "index": 63,
+    "label": "aa-012",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-012"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 678.6166390989999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-012"
+    ],
+    "pid": 2416,
+    "exit": 0,
+    "end_elapsed": 691.747984544
+  },
+  {
+    "index": 64,
+    "label": "aa-013",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-013"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 692.062579527,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-013"
+    ],
+    "pid": 2419,
+    "exit": 0,
+    "end_elapsed": 705.1939967829999
+  },
+  {
+    "index": 65,
+    "label": "aa-014",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-014"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 705.5071128329998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-014"
+    ],
+    "pid": 2421,
+    "exit": 0,
+    "end_elapsed": 731.2541143829999
+  },
+  {
+    "index": 66,
+    "label": "aa-015",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-015"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 731.569699037,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-015"
+    ],
+    "pid": 2424,
+    "exit": 0,
+    "end_elapsed": 757.467361583
+  },
+  {
+    "index": 67,
+    "label": "aa-016",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-016"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 757.785034534,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-016"
+    ],
+    "pid": 2428,
+    "exit": 0,
+    "end_elapsed": 782.2311422509999
+  },
+  {
+    "index": 68,
+    "label": "aa-017",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-017"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 782.5439088149999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-017"
+    ],
+    "pid": 2430,
+    "exit": 0,
+    "end_elapsed": 806.939149482
+  },
+  {
+    "index": 69,
+    "label": "aa-018",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-018"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 807.2543668839999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-018"
+    ],
+    "pid": 2432,
+    "exit": 0,
+    "end_elapsed": 832.1024301789998
+  },
+  {
+    "index": 70,
+    "label": "aa-019",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-019"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 832.4205679059999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-019"
+    ],
+    "pid": 2436,
+    "exit": 0,
+    "end_elapsed": 857.31752757
+  },
+  {
+    "index": 71,
+    "label": "aa-020",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-020"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 857.633335664,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-020"
+    ],
+    "pid": 2438,
+    "exit": 0,
+    "end_elapsed": 882.631174896
+  },
+  {
+    "index": 72,
+    "label": "aa-021",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-021"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 882.950705387,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-021"
+    ],
+    "pid": 2439,
+    "exit": 0,
+    "end_elapsed": 907.947308152
+  },
+  {
+    "index": 73,
+    "label": "aa-022",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-022"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 908.2636711709999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-022"
+    ],
+    "pid": 2445,
+    "exit": 0,
+    "end_elapsed": 932.05855815
+  },
+  {
+    "index": 74,
+    "label": "aa-023",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-023"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 932.3739964449999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-023"
+    ],
+    "pid": 2447,
+    "exit": 0,
+    "end_elapsed": 956.169150427
+  },
+  {
+    "index": 75,
+    "label": "aa-024",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-024"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 956.482690989,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-024"
+    ],
+    "pid": 2449,
+    "exit": 0,
+    "end_elapsed": 980.278287655
+  },
+  {
+    "index": 76,
+    "label": "aa-025",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-025"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 980.5935698339999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-025"
+    ],
+    "pid": 2452,
+    "exit": 0,
+    "end_elapsed": 1004.3385733589998
+  },
+  {
+    "index": 77,
+    "label": "aa-026",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-026"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1004.6538797829999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-026"
+    ],
+    "pid": 2453,
+    "exit": 0,
+    "end_elapsed": 1029.600787447
+  },
+  {
+    "index": 78,
+    "label": "aa-027",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-027"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1029.917185435,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-027"
+    ],
+    "pid": 2456,
+    "exit": 0,
+    "end_elapsed": 1055.0141682429999
+  },
+  {
+    "index": 79,
+    "label": "aa-028",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-028"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1055.336010043,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-028"
+    ],
+    "pid": 2459,
+    "exit": 0,
+    "end_elapsed": 1080.083152626
+  },
+  {
+    "index": 80,
+    "label": "aa-029",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-029"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1080.397826924,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-029"
+    ],
+    "pid": 2463,
+    "exit": 0,
+    "end_elapsed": 1105.2441676239998
+  },
+  {
+    "index": 81,
+    "label": "aa-030",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-030"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1105.5620287099998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-030"
+    ],
+    "pid": 2464,
+    "exit": 0,
+    "end_elapsed": 1130.108017537
+  },
+  {
+    "index": 82,
+    "label": "aa-031",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-031"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1130.4262635149998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-031"
+    ],
+    "pid": 2469,
+    "exit": 0,
+    "end_elapsed": 1154.972726837
+  },
+  {
+    "index": 83,
+    "label": "aa-032",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-032"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1155.28907927,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-032"
+    ],
+    "pid": 2474,
+    "exit": 0,
+    "end_elapsed": 1181.1382800709998
+  },
+  {
+    "index": 84,
+    "label": "aa-033",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-033"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1181.45535366,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-033"
+    ],
+    "pid": 2478,
+    "exit": 0,
+    "end_elapsed": 1207.203140361
+  },
+  {
+    "index": 85,
+    "label": "aa-034",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-034"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1207.519558815,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-034"
+    ],
+    "pid": 2482,
+    "exit": 0,
+    "end_elapsed": 1220.652138321
+  },
+  {
+    "index": 86,
+    "label": "aa-035",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-035"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1220.9687258719998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-035"
+    ],
+    "pid": 2483,
+    "exit": 0,
+    "end_elapsed": 1234.1009528959999
+  },
+  {
+    "index": 87,
+    "label": "off-036",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-036"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1241.357520883,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-036"
+    ],
+    "pid": 2484,
+    "exit": 0,
+    "end_elapsed": 1265.152129034
+  },
+  {
+    "index": 88,
+    "label": "off-037",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-037"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1265.454961667,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-037"
+    ],
+    "pid": 2487,
+    "exit": 0,
+    "end_elapsed": 1289.249195889
+  },
+  {
+    "index": 89,
+    "label": "off-038",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-038"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1289.565708267,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-038"
+    ],
+    "pid": 2488,
+    "exit": 0,
+    "end_elapsed": 1314.6131834159999
+  },
+  {
+    "index": 90,
+    "label": "off-039",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-039"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1314.929748245,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-039"
+    ],
+    "pid": 2490,
+    "exit": 0,
+    "end_elapsed": 1339.9270304709999
+  },
+  {
+    "index": 91,
+    "label": "off-040",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-040"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1340.241180588,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-040"
+    ],
+    "pid": 2492,
+    "exit": 0,
+    "end_elapsed": 1364.987211704
+  },
+  {
+    "index": 92,
+    "label": "off-041",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-041"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1365.3040524629998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-041"
+    ],
+    "pid": 2493,
+    "exit": 0,
+    "end_elapsed": 1390.101128414
+  },
+  {
+    "index": 93,
+    "label": "off-042",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-042"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1390.414688705,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-042"
+    ],
+    "pid": 2495,
+    "exit": 0,
+    "end_elapsed": 1414.811282167
+  },
+  {
+    "index": 94,
+    "label": "off-043",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-043"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1415.127778931,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-043"
+    ],
+    "pid": 2498,
+    "exit": 0,
+    "end_elapsed": 1439.5740118259998
+  },
+  {
+    "index": 95,
+    "label": "off-044",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-044"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1439.887099795,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-044"
+    ],
+    "pid": 2562,
+    "exit": 0,
+    "end_elapsed": 1465.784392285
+  },
+  {
+    "index": 96,
+    "label": "off-045",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-045"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1466.101436096,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-045"
+    ],
+    "pid": 2565,
+    "exit": 0,
+    "end_elapsed": 1491.950131616
+  },
+  {
+    "index": 97,
+    "label": "off-046",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-046"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1492.266126127,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-046"
+    ],
+    "pid": 2570,
+    "exit": 0,
+    "end_elapsed": 1505.398138238
+  },
+  {
+    "index": 98,
+    "label": "off-047",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-047"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1505.711890388,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-047"
+    ],
+    "pid": 2574,
+    "exit": 0,
+    "end_elapsed": 1518.844123435
+  },
+  {
+    "index": 99,
+    "label": "off-048",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-048"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1519.156419612,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-048"
+    ],
+    "pid": 2576,
+    "exit": 0,
+    "end_elapsed": 1532.2879112859998
+  },
+  {
+    "index": 100,
+    "label": "off-049",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-049"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1532.6011464819999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-049"
+    ],
+    "pid": 2577,
+    "exit": 0,
+    "end_elapsed": 1545.783023148
+  },
+  {
+    "index": 101,
+    "label": "off-050",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-050"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1546.10001072,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-050"
+    ],
+    "pid": 2579,
+    "exit": 0,
+    "end_elapsed": 1571.947075279
+  },
+  {
+    "index": 102,
+    "label": "off-051",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-051"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1572.263668741,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-051"
+    ],
+    "pid": 2581,
+    "exit": 0,
+    "end_elapsed": 1598.0606066389998
+  },
+  {
+    "index": 103,
+    "label": "off-052",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-052"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1598.3777553329999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-052"
+    ],
+    "pid": 2584,
+    "exit": 0,
+    "end_elapsed": 1622.773039592
+  },
+  {
+    "index": 104,
+    "label": "off-053",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-053"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1623.082072706,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-053"
+    ],
+    "pid": 2586,
+    "exit": 0,
+    "end_elapsed": 1647.4761213719999
+  },
+  {
+    "index": 105,
+    "label": "off-054",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-054"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1647.787049866,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-054"
+    ],
+    "pid": 2588,
+    "exit": 0,
+    "end_elapsed": 1672.5325284849998
+  },
+  {
+    "index": 106,
+    "label": "off-055",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-055"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1672.84580309,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-055"
+    ],
+    "pid": 2590,
+    "exit": 0,
+    "end_elapsed": 1697.69212384
+  },
+  {
+    "index": 107,
+    "label": "off-056",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-056"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1698.0067139569999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-056"
+    ],
+    "pid": 2593,
+    "exit": 0,
+    "end_elapsed": 1722.953484353
+  },
+  {
+    "index": 108,
+    "label": "off-057",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-057"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1723.2699885109998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-057"
+    ],
+    "pid": 2596,
+    "exit": 0,
+    "end_elapsed": 1748.2165164599999
+  },
+  {
+    "index": 109,
+    "label": "off-058",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-058"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1748.5312671569998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-058"
+    ],
+    "pid": 2599,
+    "exit": 0,
+    "end_elapsed": 1772.22578013
+  },
+  {
+    "index": 110,
+    "label": "off-059",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-059"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1772.544333487,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-059"
+    ],
+    "pid": 2601,
+    "exit": 0,
+    "end_elapsed": 1796.289866286
+  },
+  {
+    "index": 111,
+    "label": "off-060",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-060"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1796.6072820329998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-060"
+    ],
+    "pid": 2608,
+    "exit": 0,
+    "end_elapsed": 1820.453101379
+  },
+  {
+    "index": 112,
+    "label": "off-061",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-061"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1820.771943993,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-061"
+    ],
+    "pid": 2611,
+    "exit": 0,
+    "end_elapsed": 1844.518333114
+  },
+  {
+    "index": 113,
+    "label": "off-062",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-062"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1844.835864729,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-062"
+    ],
+    "pid": 2612,
+    "exit": 0,
+    "end_elapsed": 1869.933497657
+  },
+  {
+    "index": 114,
+    "label": "off-063",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-063"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1870.249187234,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-063"
+    ],
+    "pid": 2616,
+    "exit": 0,
+    "end_elapsed": 1895.0954115359998
+  },
+  {
+    "index": 115,
+    "label": "off-064",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-064"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1895.4075719589998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-064"
+    ],
+    "pid": 2617,
+    "exit": 0,
+    "end_elapsed": 1920.1537291769998
+  },
+  {
+    "index": 116,
+    "label": "off-065",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-065"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1920.470270137,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-065"
+    ],
+    "pid": 2620,
+    "exit": 0,
+    "end_elapsed": 1945.166025749
+  },
+  {
+    "index": 117,
+    "label": "off-066",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-066"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1945.481072839,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-066"
+    ],
+    "pid": 2622,
+    "exit": 0,
+    "end_elapsed": 1969.877370934
+  },
+  {
+    "index": 118,
+    "label": "off-067",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-067"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1970.193277685,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-067"
+    ],
+    "pid": 2624,
+    "exit": 0,
+    "end_elapsed": 1994.6401393579997
+  },
+  {
+    "index": 119,
+    "label": "off-068",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-068"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 1994.9576196729997,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-068"
+    ],
+    "pid": 2627,
+    "exit": 0,
+    "end_elapsed": 2020.7555184719997
+  },
+  {
+    "index": 120,
+    "label": "off-069",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-069"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2021.0747582279998,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-069"
+    ],
+    "pid": 2629,
+    "exit": 0,
+    "end_elapsed": 2046.9226379959998
+  },
+  {
+    "index": 121,
+    "label": "off-070",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-070"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2047.2449565069999,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-070"
+    ],
+    "pid": 2631,
+    "exit": 0,
+    "end_elapsed": 2060.427419213
+  },
+  {
+    "index": 122,
+    "label": "off-071",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-071"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2060.7464978390003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "off",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-071"
+    ],
+    "pid": 2633,
+    "exit": 0,
+    "end_elapsed": 2074.1799043620003
+  },
+  {
+    "index": 123,
+    "label": "draft-072",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-072"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2088.409279112,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-072"
+    ],
+    "pid": 2639,
+    "exit": 0,
+    "end_elapsed": 2112.1549541150002
+  },
+  {
+    "index": 124,
+    "label": "draft-073",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-073"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2112.462362707,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-073"
+    ],
+    "pid": 2643,
+    "exit": 0,
+    "end_elapsed": 2124.944483874
+  },
+  {
+    "index": 125,
+    "label": "draft-074",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-074"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2125.2611241040004,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-074"
+    ],
+    "pid": 2645,
+    "exit": 0,
+    "end_elapsed": 2150.2086436890004
+  },
+  {
+    "index": 126,
+    "label": "draft-075",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-075"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2150.525149393,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-075"
+    ],
+    "pid": 2646,
+    "exit": 0,
+    "end_elapsed": 2163.6081623500004
+  },
+  {
+    "index": 127,
+    "label": "draft-076",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-076"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2163.9271677260003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-076"
+    ],
+    "pid": 2647,
+    "exit": 0,
+    "end_elapsed": 2188.6736280580003
+  },
+  {
+    "index": 128,
+    "label": "draft-077",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-077"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2188.991775298,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-077"
+    ],
+    "pid": 2650,
+    "exit": 0,
+    "end_elapsed": 2201.9251397760004
+  },
+  {
+    "index": 129,
+    "label": "draft-078",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-078"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2202.242253801,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-078"
+    ],
+    "pid": 2651,
+    "exit": 0,
+    "end_elapsed": 2226.73957112
+  },
+  {
+    "index": 130,
+    "label": "draft-079",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-079"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2227.0583792310003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-079"
+    ],
+    "pid": 2653,
+    "exit": 0,
+    "end_elapsed": 2239.9410128090003
+  },
+  {
+    "index": 131,
+    "label": "draft-080",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-080"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2240.25891899,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-080"
+    ],
+    "pid": 2654,
+    "exit": 0,
+    "end_elapsed": 2266.006955762
+  },
+  {
+    "index": 132,
+    "label": "draft-081",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-081"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2266.324354582,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-081"
+    ],
+    "pid": 2656,
+    "exit": 0,
+    "end_elapsed": 2279.8076354070004
+  },
+  {
+    "index": 133,
+    "label": "draft-082",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-082"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2280.129948183,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-082"
+    ],
+    "pid": 2658,
+    "exit": 0,
+    "end_elapsed": 2293.362253096
+  },
+  {
+    "index": 134,
+    "label": "draft-083",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-083"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2293.681687155,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-083"
+    ],
+    "pid": 2659,
+    "exit": 0,
+    "end_elapsed": 2300.606803057
+  },
+  {
+    "index": 135,
+    "label": "draft-084",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-084"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2300.9266595040003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-084"
+    ],
+    "pid": 2660,
+    "exit": 0,
+    "end_elapsed": 2307.9021340020004
+  },
+  {
+    "index": 136,
+    "label": "draft-085",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-085"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2308.221387974,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-085"
+    ],
+    "pid": 2661,
+    "exit": 0,
+    "end_elapsed": 2321.4047013550003
+  },
+  {
+    "index": 137,
+    "label": "draft-086",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-086"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2321.725294613,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-086"
+    ],
+    "pid": 2662,
+    "exit": 0,
+    "end_elapsed": 2335.2591434660003
+  },
+  {
+    "index": 138,
+    "label": "draft-087",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-087"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2335.584085498,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-087"
+    ],
+    "pid": 2664,
+    "exit": 0,
+    "end_elapsed": 2361.585146888
+  },
+  {
+    "index": 139,
+    "label": "draft-088",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-088"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2361.906880604,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-088"
+    ],
+    "pid": 2665,
+    "exit": 0,
+    "end_elapsed": 2374.8911514700003
+  },
+  {
+    "index": 140,
+    "label": "draft-089",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-089"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2375.215918401,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-089"
+    ],
+    "pid": 2666,
+    "exit": 0,
+    "end_elapsed": 2399.764781398
+  },
+  {
+    "index": 141,
+    "label": "draft-090",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-090"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2400.089014954,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-090"
+    ],
+    "pid": 2673,
+    "exit": 0,
+    "end_elapsed": 2413.02211541
+  },
+  {
+    "index": 142,
+    "label": "draft-091",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-091"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2413.34011598,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-091"
+    ],
+    "pid": 2675,
+    "exit": 0,
+    "end_elapsed": 2438.137228946
+  },
+  {
+    "index": 143,
+    "label": "draft-092",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-092"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2438.457416174,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-092"
+    ],
+    "pid": 2676,
+    "exit": 0,
+    "end_elapsed": 2451.5405105970003
+  },
+  {
+    "index": 144,
+    "label": "draft-093",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-093"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2451.859293111,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-093"
+    ],
+    "pid": 2677,
+    "exit": 0,
+    "end_elapsed": 2476.857542357
+  },
+  {
+    "index": 145,
+    "label": "draft-094",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-094"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2477.1791302,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-094"
+    ],
+    "pid": 2682,
+    "exit": 0,
+    "end_elapsed": 2489.711919321
+  },
+  {
+    "index": 146,
+    "label": "draft-095",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-095"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2490.0316781660003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-095"
+    ],
+    "pid": 2684,
+    "exit": 0,
+    "end_elapsed": 2513.928589741
+  },
+  {
+    "index": 147,
+    "label": "draft-096",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-096"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2514.249794666,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-096"
+    ],
+    "pid": 2685,
+    "exit": 0,
+    "end_elapsed": 2538.0475345070004
+  },
+  {
+    "index": 148,
+    "label": "draft-097",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-097"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2538.3677792930002,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "0",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-097"
+    ],
+    "pid": 2687,
+    "exit": 0,
+    "end_elapsed": 2550.850497584
+  },
+  {
+    "index": 149,
+    "label": "draft-098",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-098"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2551.1717710860003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-098"
+    ],
+    "pid": 2688,
+    "exit": 0,
+    "end_elapsed": 2576.22151575
+  },
+  {
+    "index": 150,
+    "label": "draft-099",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-099"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2576.5421542060003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "1",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-099"
+    ],
+    "pid": 2691,
+    "exit": 0,
+    "end_elapsed": 2589.62576268
+  },
+  {
+    "index": 151,
+    "label": "draft-100",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-100"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2589.947870464,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-100"
+    ],
+    "pid": 2692,
+    "exit": 0,
+    "end_elapsed": 2614.897259934
+  },
+  {
+    "index": 152,
+    "label": "draft-101",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-101"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2615.2259854460003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-101"
+    ],
+    "pid": 2693,
+    "exit": 0,
+    "end_elapsed": 2628.160288374
+  },
+  {
+    "index": 153,
+    "label": "draft-102",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-102"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2628.4871093220004,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-102"
+    ],
+    "pid": 2694,
+    "exit": 0,
+    "end_elapsed": 2652.9873531430003
+  },
+  {
+    "index": 154,
+    "label": "draft-103",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-103"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2653.3145301490003,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "3",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-103"
+    ],
+    "pid": 2696,
+    "exit": 0,
+    "end_elapsed": 2666.2981444280003
+  },
+  {
+    "index": 155,
+    "label": "draft-104",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-104"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2666.623150722,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-104"
+    ],
+    "pid": 2697,
+    "exit": 0,
+    "end_elapsed": 2692.624580235
+  },
+  {
+    "index": 156,
+    "label": "draft-105",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-105"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2692.9556112090004,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "4",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-105"
+    ],
+    "pid": 2702,
+    "exit": 0,
+    "end_elapsed": 2706.5409923350003
+  },
+  {
+    "index": 157,
+    "label": "draft-106",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-106"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2706.867910233,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/stock/driver",
+      "timed",
+      "stock",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-106"
+    ],
+    "pid": 2705,
+    "exit": 0,
+    "end_elapsed": 2720.052349468
+  },
+  {
+    "index": 158,
+    "label": "draft-107",
+    "argv": [
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-107"
+    ],
+    "cwd": "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results",
+    "start_elapsed": 2720.3768122620004,
+    "launch_argv": [
+      "/usr/bin/python3",
+      "-c",
+      "import os,signal,sys; signal.pthread_sigmask(signal.SIG_SETMASK,{int(x) for x in sys.argv[1].split(',') if x}); os.execvp(sys.argv[2],sys.argv[2:])",
+      "",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/build/candidate/driver",
+      "timed",
+      "draft",
+      "5",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/draft1x-cpu-results/run-107"
+    ],
+    "pid": 2706,
+    "exit": 0,
+    "end_elapsed": 2727.404207198
+  }
+]

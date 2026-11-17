@@ -1,0 +1,17 @@
+{
+  "independent_csv_validation": "PASS",
+  "receipt_count": 126,
+  "dry_receipts": 18,
+  "timed_receipts": 108,
+  "callback_rows_checked": 1417500,
+  "event_rows_checked": 1417500,
+  "shared_study_validator_imported": false,
+  "checks": [
+    "all callback sequence/count/nonnegative time and total CPU sums",
+    "all event callback/frame positions",
+    "all release note counts and exact375/1125 callback pattern",
+    "all pressure float32 bit patterns and event counts",
+    "all selector/rate/block/factor/latency/warmup/frame receipt constants"
+  ],
+  "limits": "PCM finiteness and cross-run hash checks remain from earlier audit using shared study receipt validator; gate arithmetic and this complete CSV supplement are independently implemented."
+}

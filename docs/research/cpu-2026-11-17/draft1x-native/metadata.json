@@ -1,0 +1,68 @@
+{
+  "revision": "9dd1352393ed510e41ac1855f7503bb738cfc7a0",
+  "source": "702bf5ee4e375c7b13da7ec95b01b56587bbf75c",
+  "tests": "64b7f72ed0139d846e8107c47c62f190cb13eefa",
+  "flags": [
+    "-std=gnu++20",
+    "-O3",
+    "-DNDEBUG",
+    "-fPIC"
+  ],
+  "unit_flags": {
+    "Engine": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "FactoryPresets": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "Ig00156Batch": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off"
+    ],
+    "driver": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ]
+  },
+  "affinity_available": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "affinity_selected": [
+    0
+  ],
+  "uname": [
+    "Linux",
+    "ip-10-0-132-69",
+    "7.0.0-1014-aws",
+    "#14~24.04.1-Ubuntu SMP PREEMPT Fri Sep 18 21:24:59 UTC 2026",
+    "x86_64",
+    "x86_64"
+  ],
+  "thread_clock_resolution": 1e-09,
+  "wall_clock_resolution": 1e-09,
+  "environment": {
+    "ImageOS": "ubuntu24",
+    "ImageVersion": "20261111.127.1",
+    "RUNNER_ARCH": "X64",
+    "RUNNER_ENVIRONMENT": "github-hosted",
+    "GITHUB_SHA": "9dd1352393ed510e41ac1855f7503bb738cfc7a0",
+    "GITHUB_RUN_ID": "44090859110",
+    "GITHUB_RUN_NUMBER": "1",
+    "GITHUB_RUN_ATTEMPT": "1"
+  },
+  "compiler_version": "x86_64-linux-gnu-g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+}

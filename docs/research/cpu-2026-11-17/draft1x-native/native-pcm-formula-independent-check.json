@@ -1,0 +1,80 @@
+{
+  "result": "PASS",
+  "method": "Independent chunked float64 energy sums from raw float32 stereo PCM, not importing study/quality modules",
+  "alignment": "stock[t+67], draft[t+8], t=0..2879932 inclusive; both channels separately; no fitted gain/offset or selected window",
+  "rows": [
+    {
+      "row": 0,
+      "frames_per_channel": 2879933,
+      "difference_relative_rms_per_channel": [
+        0.26709246916798024,
+        0.26709246916798024
+      ],
+      "draft_stock_rms_ratio_per_channel": [
+        0.98347746017297,
+        0.98347746017297
+      ]
+    },
+    {
+      "row": 1,
+      "frames_per_channel": 2879933,
+      "difference_relative_rms_per_channel": [
+        0.09452427360332039,
+        0.09452427360332039
+      ],
+      "draft_stock_rms_ratio_per_channel": [
+        0.9977758047902671,
+        0.9977758047902671
+      ]
+    },
+    {
+      "row": 2,
+      "frames_per_channel": 2879933,
+      "difference_relative_rms_per_channel": [
+        0.08006181749285231,
+        0.08006181749285231
+      ],
+      "draft_stock_rms_ratio_per_channel": [
+        0.999732051201402,
+        0.999732051201402
+      ]
+    },
+    {
+      "row": 3,
+      "frames_per_channel": 2879933,
+      "difference_relative_rms_per_channel": [
+        0.11002270966485803,
+        0.11002270966485803
+      ],
+      "draft_stock_rms_ratio_per_channel": [
+        0.9984395040965769,
+        0.9984395040965769
+      ]
+    },
+    {
+      "row": 4,
+      "frames_per_channel": 2879933,
+      "difference_relative_rms_per_channel": [
+        0.09478127911240106,
+        0.09478127911240106
+      ],
+      "draft_stock_rms_ratio_per_channel": [
+        0.9978014263570396,
+        0.9978014263570396
+      ]
+    },
+    {
+      "row": 5,
+      "frames_per_channel": 2879933,
+      "difference_relative_rms_per_channel": [
+        0.12450454141871932,
+        0.12450454141871932
+      ],
+      "draft_stock_rms_ratio_per_channel": [
+        0.9982208509892622,
+        0.9982208509892622
+      ]
+    }
+  ],
+  "scope": "Descriptive waveform RMS and level only; not audibility, distortion, aliasing or acceptance"
+}

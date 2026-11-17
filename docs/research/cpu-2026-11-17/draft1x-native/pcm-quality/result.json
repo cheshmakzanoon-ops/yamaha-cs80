@@ -1,0 +1,5499 @@
+{
+  "scope": "Read-only interpretation of frozen native-study PCM; no synthesis or timing execution",
+  "verified_timed_receipts": 108,
+  "unique_pcm_files": 12,
+  "stock_off_exact_all_six": true,
+  "alignment": "stock[t+67] vs draft[t+8], integer nominal latency only, no fitting; common logical frames 0..2879932",
+  "limitations": [
+    "Waveform differences are not THD, alias energy or perceptual acceptance.",
+    "Nominal latency alignment does not remove frequency-dependent phase or rate-dependent analog-model changes.",
+    "Eight-voice source-factory subset at48k only; no hardware truth, fullbank, hostPDC or plugin validation.",
+    "Fixed tails analyzed through every predetermined endpoint; final window loses67frames only for common alignment."
+  ],
+  "canonical_sha256": {
+    "canonical-pcm/1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82.f32": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82",
+    "canonical-pcm/ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05.f32": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05",
+    "canonical-pcm/db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd.f32": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd",
+    "canonical-pcm/1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869.f32": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869",
+    "canonical-pcm/9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d.f32": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d",
+    "canonical-pcm/5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6.f32": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6",
+    "canonical-pcm/14d9dce75ce32b57e423023f893c8061f9f800ef37c214dd32d42c96cd959180.f32": "14d9dce75ce32b57e423023f893c8061f9f800ef37c214dd32d42c96cd959180",
+    "canonical-pcm/720b900d33f56c3b7956e250e3b82e22bf14b295473a363197b8daa7cb232cc9.f32": "720b900d33f56c3b7956e250e3b82e22bf14b295473a363197b8daa7cb232cc9",
+    "canonical-pcm/162d4dbee1b6ed2b3eb93938c6558049d633a889240c7a42f05f42b417a87ffc.f32": "162d4dbee1b6ed2b3eb93938c6558049d633a889240c7a42f05f42b417a87ffc",
+    "canonical-pcm/d74aa224a08bad002e4b3531bdccb74238f4378632399fe0124b18bb5c658e6d.f32": "d74aa224a08bad002e4b3531bdccb74238f4378632399fe0124b18bb5c658e6d",
+    "canonical-pcm/92ce91b30ac9db60c45a0f58d64c6c72637da2b19ba1b27dc93d5c68a8530595.f32": "92ce91b30ac9db60c45a0f58d64c6c72637da2b19ba1b27dc93d5c68a8530595",
+    "canonical-pcm/93a9babe51bb7598da4591d86f8d8eaaae4cd9825aa1ce7be91f4b7a3c3ccbb9.f32": "93a9babe51bb7598da4591d86f8d8eaaae4cd9825aa1ce7be91f4b7a3c3ccbb9"
+  },
+  "receipts": [
+    {
+      "run": "run-000",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-001",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-002",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-003",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-004",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-005",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-006",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-007",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-008",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-009",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-010",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-011",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-012",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-013",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-014",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-015",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-016",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-017",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-018",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-019",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-020",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-021",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-022",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-023",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-024",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-025",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-026",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-027",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-028",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-029",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-030",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-031",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-032",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-033",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-034",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-035",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-036",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-037",
+      "arm": "off",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-038",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-039",
+      "arm": "off",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-040",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-041",
+      "arm": "off",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-042",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-043",
+      "arm": "off",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-044",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-045",
+      "arm": "off",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-046",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-047",
+      "arm": "off",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-048",
+      "arm": "off",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-049",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-050",
+      "arm": "off",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-051",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-052",
+      "arm": "off",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-053",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-054",
+      "arm": "off",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-055",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-056",
+      "arm": "off",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-057",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-058",
+      "arm": "off",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-059",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-060",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-061",
+      "arm": "off",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-062",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-063",
+      "arm": "off",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-064",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-065",
+      "arm": "off",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-066",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-067",
+      "arm": "off",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-068",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-069",
+      "arm": "off",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-070",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-071",
+      "arm": "off",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-072",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-073",
+      "arm": "draft",
+      "row": 0,
+      "pcm_sha256": "14d9dce75ce32b57e423023f893c8061f9f800ef37c214dd32d42c96cd959180"
+    },
+    {
+      "run": "run-074",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-075",
+      "arm": "draft",
+      "row": 1,
+      "pcm_sha256": "720b900d33f56c3b7956e250e3b82e22bf14b295473a363197b8daa7cb232cc9"
+    },
+    {
+      "run": "run-076",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-077",
+      "arm": "draft",
+      "row": 2,
+      "pcm_sha256": "162d4dbee1b6ed2b3eb93938c6558049d633a889240c7a42f05f42b417a87ffc"
+    },
+    {
+      "run": "run-078",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-079",
+      "arm": "draft",
+      "row": 3,
+      "pcm_sha256": "d74aa224a08bad002e4b3531bdccb74238f4378632399fe0124b18bb5c658e6d"
+    },
+    {
+      "run": "run-080",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-081",
+      "arm": "draft",
+      "row": 4,
+      "pcm_sha256": "92ce91b30ac9db60c45a0f58d64c6c72637da2b19ba1b27dc93d5c68a8530595"
+    },
+    {
+      "run": "run-082",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-083",
+      "arm": "draft",
+      "row": 5,
+      "pcm_sha256": "93a9babe51bb7598da4591d86f8d8eaaae4cd9825aa1ce7be91f4b7a3c3ccbb9"
+    },
+    {
+      "run": "run-084",
+      "arm": "draft",
+      "row": 5,
+      "pcm_sha256": "93a9babe51bb7598da4591d86f8d8eaaae4cd9825aa1ce7be91f4b7a3c3ccbb9"
+    },
+    {
+      "run": "run-085",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-086",
+      "arm": "draft",
+      "row": 4,
+      "pcm_sha256": "92ce91b30ac9db60c45a0f58d64c6c72637da2b19ba1b27dc93d5c68a8530595"
+    },
+    {
+      "run": "run-087",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-088",
+      "arm": "draft",
+      "row": 3,
+      "pcm_sha256": "d74aa224a08bad002e4b3531bdccb74238f4378632399fe0124b18bb5c658e6d"
+    },
+    {
+      "run": "run-089",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-090",
+      "arm": "draft",
+      "row": 2,
+      "pcm_sha256": "162d4dbee1b6ed2b3eb93938c6558049d633a889240c7a42f05f42b417a87ffc"
+    },
+    {
+      "run": "run-091",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-092",
+      "arm": "draft",
+      "row": 1,
+      "pcm_sha256": "720b900d33f56c3b7956e250e3b82e22bf14b295473a363197b8daa7cb232cc9"
+    },
+    {
+      "run": "run-093",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-094",
+      "arm": "draft",
+      "row": 0,
+      "pcm_sha256": "14d9dce75ce32b57e423023f893c8061f9f800ef37c214dd32d42c96cd959180"
+    },
+    {
+      "run": "run-095",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-096",
+      "arm": "stock",
+      "row": 0,
+      "pcm_sha256": "1b8ec6fbb812925078b055480f16add35e9d962725875d639004f996e2053a82"
+    },
+    {
+      "run": "run-097",
+      "arm": "draft",
+      "row": 0,
+      "pcm_sha256": "14d9dce75ce32b57e423023f893c8061f9f800ef37c214dd32d42c96cd959180"
+    },
+    {
+      "run": "run-098",
+      "arm": "stock",
+      "row": 1,
+      "pcm_sha256": "ca4d5355afcd0b3b0c142704bc84a8ffd26a7fbff2352eff278c504bf6c13b05"
+    },
+    {
+      "run": "run-099",
+      "arm": "draft",
+      "row": 1,
+      "pcm_sha256": "720b900d33f56c3b7956e250e3b82e22bf14b295473a363197b8daa7cb232cc9"
+    },
+    {
+      "run": "run-100",
+      "arm": "stock",
+      "row": 2,
+      "pcm_sha256": "db2a2300b15421385568dff32cfe8f2e1d4dbcffb9dd330214a1bcd1d10c43fd"
+    },
+    {
+      "run": "run-101",
+      "arm": "draft",
+      "row": 2,
+      "pcm_sha256": "162d4dbee1b6ed2b3eb93938c6558049d633a889240c7a42f05f42b417a87ffc"
+    },
+    {
+      "run": "run-102",
+      "arm": "stock",
+      "row": 3,
+      "pcm_sha256": "1b89be8f036cbb28b6cfdf89568c382fd88a52bc8ffe77b7b7fcf311028a3869"
+    },
+    {
+      "run": "run-103",
+      "arm": "draft",
+      "row": 3,
+      "pcm_sha256": "d74aa224a08bad002e4b3531bdccb74238f4378632399fe0124b18bb5c658e6d"
+    },
+    {
+      "run": "run-104",
+      "arm": "stock",
+      "row": 4,
+      "pcm_sha256": "9defd8ecf0d0bd90e4d15449db861fd147fb71c99eeb91c83f91778324c6748d"
+    },
+    {
+      "run": "run-105",
+      "arm": "draft",
+      "row": 4,
+      "pcm_sha256": "92ce91b30ac9db60c45a0f58d64c6c72637da2b19ba1b27dc93d5c68a8530595"
+    },
+    {
+      "run": "run-106",
+      "arm": "stock",
+      "row": 5,
+      "pcm_sha256": "5650da5f4e221b1f67fc6a148ffd338917fdb7bf11acdee211e3266660fbeed6"
+    },
+    {
+      "run": "run-107",
+      "arm": "draft",
+      "row": 5,
+      "pcm_sha256": "93a9babe51bb7598da4591d86f8d8eaaae4cd9825aa1ce7be91f4b7a3c3ccbb9"
+    }
+  ],
+  "rows": [
+    {
+      "row": 0,
+      "selector": 0,
+      "raw": {
+        "stock": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.004819997860254157,
+            0.004819997860254157
+          ],
+          "peak": [
+            0.04247545823454857,
+            0.04247545823454857
+          ],
+          "dc": [
+            -8.572495345800351e-08,
+            -8.572495345800351e-08
+          ],
+          "max_adjacent_delta": [
+            0.03014969825744629,
+            0.03014969825744629
+          ]
+        },
+        "draft": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.0047403633781161,
+            0.0047403633781161
+          ],
+          "peak": [
+            0.04169012978672981,
+            0.04169012978672981
+          ],
+          "dc": [
+            -1.961166694840323e-08,
+            -1.961166694840323e-08
+          ],
+          "max_adjacent_delta": [
+            0.02706805244088173,
+            0.02706805244088173
+          ]
+        }
+      },
+      "common_logical_frames": 2879933,
+      "comparison": {
+        "stock": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.004820011831732442,
+            0.004820011831732442
+          ],
+          "peak": [
+            0.04247545823454857,
+            0.04247545823454857
+          ],
+          "dc": [
+            -9.686544466637507e-08,
+            -9.686544466637507e-08
+          ],
+          "max_adjacent_delta": [
+            0.03014969825744629,
+            0.03014969825744629
+          ]
+        },
+        "draft": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.0047403729942758766,
+            0.0047403729942758766
+          ],
+          "peak": [
+            0.04169012978672981,
+            0.04169012978672981
+          ],
+          "dc": [
+            -9.681981184827469e-08,
+            -9.681981184827469e-08
+          ],
+          "max_adjacent_delta": [
+            0.02706805244088173,
+            0.02706805244088173
+          ]
+        },
+        "difference_rms_per_channel": [
+          0.0012873888615567146,
+          0.0012873888615567146
+        ],
+        "difference_relative_rms_per_channel": [
+          0.26709246916806684,
+          0.26709246916806684
+        ],
+        "draft_stock_rms_ratio_per_channel": [
+          0.9834774601729678,
+          0.9834774601729678
+        ],
+        "stereo_difference_relative_rms": 0.26709246916797663
+      },
+      "segments": [
+        {
+          "name": "held_all",
+          "logical_start": 0,
+          "logical_end": 2879933,
+          "omitted_end_frames": 67,
+          "comparison": {
+            "stock": {
+              "finite_count": 5759866,
+              "sample_count": 5759866,
+              "rms": [
+                0.004820011831732442,
+                0.004820011831732442
+              ],
+              "peak": [
+                0.04247545823454857,
+                0.04247545823454857
+              ],
+              "dc": [
+                -9.686544466637507e-08,
+                -9.686544466637507e-08
+              ],
+              "max_adjacent_delta": [
+                0.03014969825744629,
+                0.03014969825744629
+              ]
+            },
+            "draft": {
+              "finite_count": 5759866,
+              "sample_count": 5759866,
+              "rms": [
+                0.0047403729942758766,
+                0.0047403729942758766
+              ],
+              "peak": [
+                0.04169012978672981,
+                0.04169012978672981
+              ],
+              "dc": [
+                -9.681981184827469e-08,
+                -9.681981184827469e-08
+              ],
+              "max_adjacent_delta": [
+                0.02706805244088173,
+                0.02706805244088173
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0012873888615567146,
+              0.0012873888615567146
+            ],
+            "difference_relative_rms_per_channel": [
+              0.26709246916806684,
+              0.26709246916806684
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9834774601729678,
+              0.9834774601729678
+            ],
+            "stereo_difference_relative_rms": 0.26709246916797663
+          }
+        }
+      ],
+      "event_windows": []
+    },
+    {
+      "row": 1,
+      "selector": 4,
+      "raw": {
+        "stock": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.0016878838057233553,
+            0.0016878838057233553
+          ],
+          "peak": [
+            0.006934860721230507,
+            0.006934860721230507
+          ],
+          "dc": [
+            -2.812866227397656e-08,
+            -2.812866227397656e-08
+          ],
+          "max_adjacent_delta": [
+            0.0013738672714680433,
+            0.0013738672714680433
+          ]
+        },
+        "draft": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.0016841322620136342,
+            0.0016841322620136342
+          ],
+          "peak": [
+            0.006986743770539761,
+            0.006986743770539761
+          ],
+          "dc": [
+            3.197155435368765e-08,
+            3.197155435368765e-08
+          ],
+          "max_adjacent_delta": [
+            0.0013105099787935615,
+            0.0013105099787935615
+          ]
+        }
+      },
+      "common_logical_frames": 2879933,
+      "comparison": {
+        "stock": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.0016878757854497566,
+            0.0016878757854497566
+          ],
+          "peak": [
+            0.006934860721230507,
+            0.006934860721230507
+          ],
+          "dc": [
+            9.860512998502982e-10,
+            9.860512998502982e-10
+          ],
+          "max_adjacent_delta": [
+            0.0013738672714680433,
+            0.0013738672714680433
+          ]
+        },
+        "draft": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.0016841216202131502,
+            0.0016841216202131502
+          ],
+          "peak": [
+            0.006986743770539761,
+            0.006986743770539761
+          ],
+          "dc": [
+            3.0197713650502462e-09,
+            3.0197713650502462e-09
+          ],
+          "max_adjacent_delta": [
+            0.0013105099787935615,
+            0.0013105099787935615
+          ]
+        },
+        "difference_rms_per_channel": [
+          0.00015954523255244126,
+          0.00015954523255244126
+        ],
+        "difference_relative_rms_per_channel": [
+          0.09452427360342061,
+          0.09452427360342061
+        ],
+        "draft_stock_rms_ratio_per_channel": [
+          0.997775804790276,
+          0.997775804790276
+        ],
+        "stereo_difference_relative_rms": 0.09452427360332988
+      },
+      "segments": [
+        {
+          "name": "held_all",
+          "logical_start": 0,
+          "logical_end": 2879933,
+          "omitted_end_frames": 67,
+          "comparison": {
+            "stock": {
+              "finite_count": 5759866,
+              "sample_count": 5759866,
+              "rms": [
+                0.0016878757854497566,
+                0.0016878757854497566
+              ],
+              "peak": [
+                0.006934860721230507,
+                0.006934860721230507
+              ],
+              "dc": [
+                9.860512998502982e-10,
+                9.860512998502982e-10
+              ],
+              "max_adjacent_delta": [
+                0.0013738672714680433,
+                0.0013738672714680433
+              ]
+            },
+            "draft": {
+              "finite_count": 5759866,
+              "sample_count": 5759866,
+              "rms": [
+                0.0016841216202131502,
+                0.0016841216202131502
+              ],
+              "peak": [
+                0.006986743770539761,
+                0.006986743770539761
+              ],
+              "dc": [
+                3.0197713650502462e-09,
+                3.0197713650502462e-09
+              ],
+              "max_adjacent_delta": [
+                0.0013105099787935615,
+                0.0013105099787935615
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00015954523255244126,
+              0.00015954523255244126
+            ],
+            "difference_relative_rms_per_channel": [
+              0.09452427360342061,
+              0.09452427360342061
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.997775804790276,
+              0.997775804790276
+            ],
+            "stereo_difference_relative_rms": 0.09452427360332988
+          }
+        }
+      ],
+      "event_windows": []
+    },
+    {
+      "row": 2,
+      "selector": 7,
+      "raw": {
+        "stock": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.022005028344750127,
+            0.022005028344750127
+          ],
+          "peak": [
+            0.1275952011346817,
+            0.1275952011346817
+          ],
+          "dc": [
+            -1.661142422582461e-07,
+            -1.661142422582461e-07
+          ],
+          "max_adjacent_delta": [
+            0.024746421724557877,
+            0.024746421724557877
+          ]
+        },
+        "draft": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.02199924687340718,
+            0.02199924687340718
+          ],
+          "peak": [
+            0.12769357860088348,
+            0.12769357860088348
+          ],
+          "dc": [
+            -4.742600225163941e-07,
+            -4.742600225163941e-07
+          ],
+          "max_adjacent_delta": [
+            0.022936049848794937,
+            0.022936049848794937
+          ]
+        }
+      },
+      "common_logical_frames": 2879933,
+      "comparison": {
+        "stock": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.022005080382728515,
+            0.022005080382728515
+          ],
+          "peak": [
+            0.1275952011346817,
+            0.1275952011346817
+          ],
+          "dc": [
+            -3.026066932008177e-08,
+            -3.026066932008177e-08
+          ],
+          "max_adjacent_delta": [
+            0.024746421724557877,
+            0.024746421724557877
+          ]
+        },
+        "draft": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.02199918414787729,
+            0.02199918414787729
+          ],
+          "peak": [
+            0.12769357860088348,
+            0.12769357860088348
+          ],
+          "dc": [
+            -3.397747678598046e-08,
+            -3.397747678598046e-08
+          ],
+          "max_adjacent_delta": [
+            0.022936049848794937,
+            0.022936049848794937
+          ]
+        },
+        "difference_rms_per_channel": [
+          0.0017617667295204606,
+          0.0017617667295204606
+        ],
+        "difference_relative_rms_per_channel": [
+          0.08006181749298436,
+          0.08006181749298436
+        ],
+        "draft_stock_rms_ratio_per_channel": [
+          0.9997320512014192,
+          0.9997320512014192
+        ],
+        "stereo_difference_relative_rms": 0.08006181749286521
+      },
+      "segments": [
+        {
+          "name": "held_all",
+          "logical_start": 0,
+          "logical_end": 2879933,
+          "omitted_end_frames": 67,
+          "comparison": {
+            "stock": {
+              "finite_count": 5759866,
+              "sample_count": 5759866,
+              "rms": [
+                0.022005080382728515,
+                0.022005080382728515
+              ],
+              "peak": [
+                0.1275952011346817,
+                0.1275952011346817
+              ],
+              "dc": [
+                -3.026066932008177e-08,
+                -3.026066932008177e-08
+              ],
+              "max_adjacent_delta": [
+                0.024746421724557877,
+                0.024746421724557877
+              ]
+            },
+            "draft": {
+              "finite_count": 5759866,
+              "sample_count": 5759866,
+              "rms": [
+                0.02199918414787729,
+                0.02199918414787729
+              ],
+              "peak": [
+                0.12769357860088348,
+                0.12769357860088348
+              ],
+              "dc": [
+                -3.397747678598046e-08,
+                -3.397747678598046e-08
+              ],
+              "max_adjacent_delta": [
+                0.022936049848794937,
+                0.022936049848794937
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0017617667295204606,
+              0.0017617667295204606
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08006181749298436,
+              0.08006181749298436
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9997320512014192,
+              0.9997320512014192
+            ],
+            "stereo_difference_relative_rms": 0.08006181749286521
+          }
+        }
+      ],
+      "event_windows": []
+    },
+    {
+      "row": 3,
+      "selector": 10,
+      "raw": {
+        "stock": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.021686242933767343,
+            0.021686242933767343
+          ],
+          "peak": [
+            0.10162650048732758,
+            0.10162650048732758
+          ],
+          "dc": [
+            -7.632385513142612e-07,
+            -7.632385513142612e-07
+          ],
+          "max_adjacent_delta": [
+            0.03743290342390537,
+            0.03743290342390537
+          ]
+        },
+        "draft": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.021652441144526552,
+            0.021652441144526552
+          ],
+          "peak": [
+            0.09880456328392029,
+            0.09880456328392029
+          ],
+          "dc": [
+            -6.474480878272688e-07,
+            -6.474480878272688e-07
+          ],
+          "max_adjacent_delta": [
+            0.03400474041700363,
+            0.03400474041700363
+          ]
+        }
+      },
+      "common_logical_frames": 2879933,
+      "comparison": {
+        "stock": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.021686301682897712,
+            0.021686301682897712
+          ],
+          "peak": [
+            0.10162650048732758,
+            0.10162650048732758
+          ],
+          "dc": [
+            -9.248955874959052e-07,
+            -9.248955874959052e-07
+          ],
+          "max_adjacent_delta": [
+            0.03743290342390537,
+            0.03743290342390537
+          ]
+        },
+        "draft": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.021652460297960516,
+            0.021652460297960516
+          ],
+          "peak": [
+            0.09880456328392029,
+            0.09880456328392029
+          ],
+          "dc": [
+            -9.250794741699665e-07,
+            -9.250794741699665e-07
+          ],
+          "max_adjacent_delta": [
+            0.03400474041700363,
+            0.03400474041700363
+          ]
+        },
+        "difference_rms_per_channel": [
+          0.00238598567376445,
+          0.00238598567376445
+        ],
+        "difference_relative_rms_per_channel": [
+          0.11002270966497205,
+          0.11002270966497205
+        ],
+        "draft_stock_rms_ratio_per_channel": [
+          0.9984395040965475,
+          0.9984395040965475
+        ],
+        "stereo_difference_relative_rms": 0.11002270966486588
+      },
+      "segments": [
+        {
+          "name": "held_all",
+          "logical_start": 0,
+          "logical_end": 2879933,
+          "omitted_end_frames": 67,
+          "comparison": {
+            "stock": {
+              "finite_count": 5759866,
+              "sample_count": 5759866,
+              "rms": [
+                0.021686301682897712,
+                0.021686301682897712
+              ],
+              "peak": [
+                0.10162650048732758,
+                0.10162650048732758
+              ],
+              "dc": [
+                -9.248955874959052e-07,
+                -9.248955874959052e-07
+              ],
+              "max_adjacent_delta": [
+                0.03743290342390537,
+                0.03743290342390537
+              ]
+            },
+            "draft": {
+              "finite_count": 5759866,
+              "sample_count": 5759866,
+              "rms": [
+                0.021652460297960516,
+                0.021652460297960516
+              ],
+              "peak": [
+                0.09880456328392029,
+                0.09880456328392029
+              ],
+              "dc": [
+                -9.250794741699665e-07,
+                -9.250794741699665e-07
+              ],
+              "max_adjacent_delta": [
+                0.03400474041700363,
+                0.03400474041700363
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00238598567376445,
+              0.00238598567376445
+            ],
+            "difference_relative_rms_per_channel": [
+              0.11002270966497205,
+              0.11002270966497205
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9984395040965475,
+              0.9984395040965475
+            ],
+            "stereo_difference_relative_rms": 0.11002270966486588
+          }
+        }
+      ],
+      "event_windows": []
+    },
+    {
+      "row": 4,
+      "selector": 4,
+      "raw": {
+        "stock": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.0023741212652551615,
+            0.0023741212652551615
+          ],
+          "peak": [
+            0.011742029339075089,
+            0.011742029339075089
+          ],
+          "dc": [
+            -2.8366457377659514e-08,
+            -2.8366457377659514e-08
+          ],
+          "max_adjacent_delta": [
+            0.0023572202771902084,
+            0.0023572202771902084
+          ]
+        },
+        "draft": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.0023689053158282088,
+            0.0023689053158282088
+          ],
+          "peak": [
+            0.011765389703214169,
+            0.011765389703214169
+          ],
+          "dc": [
+            3.310081650294449e-08,
+            3.310081650294449e-08
+          ],
+          "max_adjacent_delta": [
+            0.0022270141635090113,
+            0.0022270141635090113
+          ]
+        }
+      },
+      "common_logical_frames": 2879933,
+      "comparison": {
+        "stock": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.0023741292208346873,
+            0.0023741292208346873
+          ],
+          "peak": [
+            0.011742029339075089,
+            0.011742029339075089
+          ],
+          "dc": [
+            7.482506639997773e-10,
+            7.482506639997773e-10
+          ],
+          "max_adjacent_delta": [
+            0.0023572202771902084,
+            0.0023572202771902084
+          ]
+        },
+        "draft": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.002368909522904833,
+            0.002368909522904833
+          ],
+          "peak": [
+            0.011765389703214169,
+            0.011765389703214169
+          ],
+          "dc": [
+            2.8654650137280115e-09,
+            2.8654650137280115e-09
+          ],
+          "max_adjacent_delta": [
+            0.0022270141635090113,
+            0.0022270141635090113
+          ]
+        },
+        "difference_rms_per_channel": [
+          0.00022502300432911875,
+          0.00022502300432911875
+        ],
+        "difference_relative_rms_per_channel": [
+          0.09478127911251857,
+          0.09478127911251857
+        ],
+        "draft_stock_rms_ratio_per_channel": [
+          0.9978014263570627,
+          0.9978014263570627
+        ],
+        "stereo_difference_relative_rms": 0.0947812791124102
+      },
+      "segments": [
+        {
+          "name": "pressure_cycle_0",
+          "logical_start": 0,
+          "logical_end": 192000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002433402150788085,
+                0.002433402150788085
+              ],
+              "peak": [
+                0.011495782062411308,
+                0.011495782062411308
+              ],
+              "dc": [
+                2.7330201481608426e-07,
+                2.7330201481608426e-07
+              ],
+              "max_adjacent_delta": [
+                0.0022675609216094017,
+                0.0022675609216094017
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002430332705920561,
+                0.002430332705920561
+              ],
+              "peak": [
+                0.011619653552770615,
+                0.011619653552770615
+              ],
+              "dc": [
+                2.7499177864334645e-07,
+                2.7499177864334645e-07
+              ],
+              "max_adjacent_delta": [
+                0.0021341918036341667,
+                0.0021341918036341667
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00019324308876942018,
+              0.00019324308876942018
+            ],
+            "difference_relative_rms_per_channel": [
+              0.07941272210466166,
+              0.07941272210466166
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9987386199742899,
+              0.9987386199742899
+            ],
+            "stereo_difference_relative_rms": 0.0794127221046681
+          }
+        },
+        {
+          "name": "pressure_cycle_1",
+          "logical_start": 192000,
+          "logical_end": 384000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002419842146567177,
+                0.002419842146567177
+              ],
+              "peak": [
+                0.011742029339075089,
+                0.011742029339075089
+              ],
+              "dc": [
+                -1.6112803711794872e-07,
+                -1.6112803711794872e-07
+              ],
+              "max_adjacent_delta": [
+                0.002279509324580431,
+                0.002279509324580431
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002415786704126729,
+                0.002415786704126729
+              ],
+              "peak": [
+                0.011737300083041191,
+                0.011737300083041191
+              ],
+              "dc": [
+                -1.5507815600373138e-07,
+                -1.5507815600373138e-07
+              ],
+              "max_adjacent_delta": [
+                0.0021632127463817596,
+                0.0021632127463817596
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0002011297153946151,
+              0.0002011297153946151
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08311687424733082,
+              0.08311687424733082
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9983240880211129,
+              0.9983240880211129
+            ],
+            "stereo_difference_relative_rms": 0.08311687424733641
+          }
+        },
+        {
+          "name": "pressure_cycle_2",
+          "logical_start": 384000,
+          "logical_end": 576000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0023421348465952627,
+                0.0023421348465952627
+              ],
+              "peak": [
+                0.010206845588982105,
+                0.010206845588982105
+              ],
+              "dc": [
+                4.3579336346167196e-07,
+                4.3579336346167196e-07
+              ],
+              "max_adjacent_delta": [
+                0.002208456447988283,
+                0.002208456447988283
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002338147936238571,
+                0.002338147936238571
+              ],
+              "peak": [
+                0.010256723500788212,
+                0.010256723500788212
+              ],
+              "dc": [
+                4.274297653572382e-07,
+                4.274297653572382e-07
+              ],
+              "max_adjacent_delta": [
+                0.002041037194430828,
+                0.002041037194430828
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.000196342597048135,
+              0.000196342597048135
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08383061177436313,
+              0.08383061177436313
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9982977451693325,
+              0.9982977451693325
+            ],
+            "stereo_difference_relative_rms": 0.0838306117743685
+          }
+        },
+        {
+          "name": "pressure_cycle_3",
+          "logical_start": 576000,
+          "logical_end": 768000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0023036254256860018,
+                0.0023036254256860018
+              ],
+              "peak": [
+                0.00921991653740406,
+                0.00921991653740406
+              ],
+              "dc": [
+                -3.874783640049062e-07,
+                -3.874783640049062e-07
+              ],
+              "max_adjacent_delta": [
+                0.002287818118929863,
+                0.002287818118929863
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0022991717080652406,
+                0.0022991717080652406
+              ],
+              "peak": [
+                0.009233551099896431,
+                0.009233551099896431
+              ],
+              "dc": [
+                -3.79569985828244e-07,
+                -3.79569985828244e-07
+              ],
+              "max_adjacent_delta": [
+                0.0022123464732430875,
+                0.0022123464732430875
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00020154302761165243,
+              0.00020154302761165243
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08748949606320415,
+              0.08748949606320415
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9980666485223244,
+              0.9980666485223244
+            ],
+            "stereo_difference_relative_rms": 0.08748949606320817
+          }
+        },
+        {
+          "name": "pressure_cycle_4",
+          "logical_start": 768000,
+          "logical_end": 960000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0023594697238265424,
+                0.0023594697238265424
+              ],
+              "peak": [
+                0.009543593041598797,
+                0.009543593041598797
+              ],
+              "dc": [
+                -2.2627880300109724e-07,
+                -2.2627880300109724e-07
+              ],
+              "max_adjacent_delta": [
+                0.002328393660718575,
+                0.002328393660718575
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0023479683557569076,
+                0.0023479683557569076
+              ],
+              "peak": [
+                0.009526458568871021,
+                0.009526458568871021
+              ],
+              "dc": [
+                -2.2371345002112117e-07,
+                -2.2371345002112117e-07
+              ],
+              "max_adjacent_delta": [
+                0.002173064975067973,
+                0.002173064975067973
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00024129786770813857,
+              0.00024129786770813857
+            ],
+            "difference_relative_rms_per_channel": [
+              0.10226783809575922,
+              0.10226783809575922
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9951254436734276,
+              0.9951254436734276
+            ],
+            "stereo_difference_relative_rms": 0.10226783809576556
+          }
+        },
+        {
+          "name": "pressure_cycle_5",
+          "logical_start": 960000,
+          "logical_end": 1152000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002424694086595958,
+                0.002424694086595958
+              ],
+              "peak": [
+                0.010548854246735573,
+                0.010548854246735573
+              ],
+              "dc": [
+                4.1655749444621805e-07,
+                4.1655749444621805e-07
+              ],
+              "max_adjacent_delta": [
+                0.0023481762036681175,
+                0.0023481762036681175
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0024199043655909465,
+                0.0024199043655909465
+              ],
+              "peak": [
+                0.010616187006235123,
+                0.010616187006235123
+              ],
+              "dc": [
+                4.1571296173136504e-07,
+                4.1571296173136504e-07
+              ],
+              "max_adjacent_delta": [
+                0.0021955538541078568,
+                0.0021955538541078568
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00020855947311283283,
+              0.00020855947311283283
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08601475718762966,
+              0.08601475718762966
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9980246081221175,
+              0.9980246081221175
+            ],
+            "stereo_difference_relative_rms": 0.08601475718763518
+          }
+        },
+        {
+          "name": "pressure_cycle_6",
+          "logical_start": 1152000,
+          "logical_end": 1344000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0024024506527260117,
+                0.0024024506527260117
+              ],
+              "peak": [
+                0.009881990030407906,
+                0.009881990030407906
+              ],
+              "dc": [
+                5.754830679656024e-08,
+                5.754830679656024e-08
+              ],
+              "max_adjacent_delta": [
+                0.0023572202771902084,
+                0.0023572202771902084
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0024037671293244468,
+                0.0024037671293244468
+              ],
+              "peak": [
+                0.009947649203240871,
+                0.009947649203240871
+              ],
+              "dc": [
+                5.105312018119368e-08,
+                5.105312018119368e-08
+              ],
+              "max_adjacent_delta": [
+                0.0022270141635090113,
+                0.0022270141635090113
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00017246681519924188,
+              0.00017246681519924188
+            ],
+            "difference_relative_rms_per_channel": [
+              0.07178787002494612,
+              0.07178787002494612
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0005479723785133,
+              1.0005479723785133
+            ],
+            "stereo_difference_relative_rms": 0.07178787002495303
+          }
+        },
+        {
+          "name": "pressure_cycle_7",
+          "logical_start": 1344000,
+          "logical_end": 1536000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.00235544667449717,
+                0.00235544667449717
+              ],
+              "peak": [
+                0.010108601301908493,
+                0.010108601301908493
+              ],
+              "dc": [
+                -5.581292996870897e-07,
+                -5.581292996870897e-07
+              ],
+              "max_adjacent_delta": [
+                0.002352649113163352,
+                0.002352649113163352
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002357780552172263,
+                0.002357780552172263
+              ],
+              "peak": [
+                0.010193772614002228,
+                0.010193772614002228
+              ],
+              "dc": [
+                -5.607140041820295e-07,
+                -5.607140041820295e-07
+              ],
+              "max_adjacent_delta": [
+                0.0021675771567970514,
+                0.0021675771567970514
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00016897477276736397,
+              0.00016897477276736397
+            ],
+            "difference_relative_rms_per_channel": [
+              0.0717378892916079,
+              0.0717378892916079
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0009908429260412,
+              1.0009908429260412
+            ],
+            "stereo_difference_relative_rms": 0.07173788929161486
+          }
+        },
+        {
+          "name": "pressure_cycle_8",
+          "logical_start": 1536000,
+          "logical_end": 1728000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0023445003539609623,
+                0.0023445003539609623
+              ],
+              "peak": [
+                0.010244441218674183,
+                0.010244441218674183
+              ],
+              "dc": [
+                2.6082072566295984e-07,
+                2.6082072566295984e-07
+              ],
+              "max_adjacent_delta": [
+                0.002247651806101203,
+                0.002247651806101203
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002337439820721433,
+                0.002337439820721433
+              ],
+              "peak": [
+                0.010283172130584717,
+                0.010283172130584717
+              ],
+              "dc": [
+                2.620032680800723e-07,
+                2.620032680800723e-07
+              ],
+              "max_adjacent_delta": [
+                0.002154506742954254,
+                0.002154506742954254
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00021910096055806553,
+              0.00021910096055806553
+            ],
+            "difference_relative_rms_per_channel": [
+              0.09345315738080444,
+              0.09345315738080444
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9969884699622241,
+              0.9969884699622241
+            ],
+            "stereo_difference_relative_rms": 0.09345315738081095
+          }
+        },
+        {
+          "name": "pressure_cycle_9",
+          "logical_start": 1728000,
+          "logical_end": 1920000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0023937552425775757,
+                0.0023937552425775757
+              ],
+              "peak": [
+                0.01173426117748022,
+                0.01173426117748022
+              ],
+              "dc": [
+                -1.6104460638296143e-07,
+                -1.6104460638296143e-07
+              ],
+              "max_adjacent_delta": [
+                0.0022895255824550986,
+                0.0022895255824550986
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002379066689818413,
+                0.002379066689818413
+              ],
+              "peak": [
+                0.011765389703214169,
+                0.011765389703214169
+              ],
+              "dc": [
+                -1.4731562781307438e-07,
+                -1.4731562781307438e-07
+              ],
+              "max_adjacent_delta": [
+                0.0021179812029004097,
+                0.0021179812029004097
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0003035128595025973,
+              0.0003035128595025973
+            ],
+            "difference_relative_rms_per_channel": [
+              0.1267936061732766,
+              0.1267936061732766
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9938638034090126,
+              0.9938638034090126
+            ],
+            "stereo_difference_relative_rms": 0.12679360617327748
+          }
+        },
+        {
+          "name": "pressure_cycle_10",
+          "logical_start": 1920000,
+          "logical_end": 2112000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002428825032345005,
+                0.002428825032345005
+              ],
+              "peak": [
+                0.011461745016276836,
+                0.011461745016276836
+              ],
+              "dc": [
+                5.887310808621605e-07,
+                5.887310808621605e-07
+              ],
+              "max_adjacent_delta": [
+                0.002244691364467144,
+                0.002244691364467144
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002420283191246312,
+                0.002420283191246312
+              ],
+              "peak": [
+                0.011450337246060371,
+                0.011450337246060371
+              ],
+              "dc": [
+                5.70688280710323e-07,
+                5.70688280710323e-07
+              ],
+              "max_adjacent_delta": [
+                0.002123425714671612,
+                0.002123425714671612
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0002286087176349518,
+              0.0002286087176349518
+            ],
+            "difference_relative_rms_per_channel": [
+              0.09412317255896877,
+              0.09412317255896877
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9964831385608514,
+              0.9964831385608514
+            ],
+            "stereo_difference_relative_rms": 0.0941231725589762
+          }
+        },
+        {
+          "name": "pressure_cycle_11",
+          "logical_start": 2112000,
+          "logical_end": 2304000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0024015652205542004,
+                0.0024015652205542004
+              ],
+              "peak": [
+                0.009922981262207031,
+                0.009922981262207031
+              ],
+              "dc": [
+                -4.92694259792407e-07,
+                -4.92694259792407e-07
+              ],
+              "max_adjacent_delta": [
+                0.002273963880725205,
+                0.002273963880725205
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0024079360619615113,
+                0.0024079360619615113
+              ],
+              "peak": [
+                0.01005382090806961,
+                0.01005382090806961
+              ],
+              "dc": [
+                -4.972011028674903e-07,
+                -4.972011028674903e-07
+              ],
+              "max_adjacent_delta": [
+                0.002130757551640272,
+                0.002130757551640272
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.000165195770699968,
+              0.000165195770699968
+            ],
+            "difference_relative_rms_per_channel": [
+              0.06878671013641943,
+              0.06878671013641943
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0026527871709605,
+              1.0026527871709605
+            ],
+            "stereo_difference_relative_rms": 0.06878671013642891
+          }
+        },
+        {
+          "name": "pressure_cycle_12",
+          "logical_start": 2304000,
+          "logical_end": 2496000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002320496536503297,
+                0.002320496536503297
+              ],
+              "peak": [
+                0.008990731090307236,
+                0.008990731090307236
+              ],
+              "dc": [
+                -1.1963581758798388e-07,
+                -1.1963581758798388e-07
+              ],
+              "max_adjacent_delta": [
+                0.0022513276198878884,
+                0.0022513276198878884
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0023316718554283766,
+                0.0023316718554283766
+              ],
+              "peak": [
+                0.009093723259866238,
+                0.009093723259866238
+              ],
+              "dc": [
+                -1.1735067844028646e-07,
+                -1.1735067844028646e-07
+              ],
+              "max_adjacent_delta": [
+                0.002145656297216192,
+                0.002145656297216192
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00016684192999432272,
+              0.00016684192999432272
+            ],
+            "difference_relative_rms_per_channel": [
+              0.07189923680977908,
+              0.07189923680977908
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.004815917088986,
+              1.004815917088986
+            ],
+            "stereo_difference_relative_rms": 0.07189923680978683
+          }
+        },
+        {
+          "name": "pressure_cycle_13",
+          "logical_start": 2496000,
+          "logical_end": 2688000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.0022924429730611577,
+                0.0022924429730611577
+              ],
+              "peak": [
+                0.00977200549095869,
+                0.00977200549095869
+              ],
+              "dc": [
+                4.418501618408954e-07,
+                4.418501618408954e-07
+              ],
+              "max_adjacent_delta": [
+                0.0022955777822062373,
+                0.0022955777822062373
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                0.002282326554983678,
+                0.002282326554983678
+              ],
+              "peak": [
+                0.0097368024289608,
+                0.0097368024289608
+              ],
+              "dc": [
+                4.5217970915939256e-07,
+                4.5217970915939256e-07
+              ],
+              "max_adjacent_delta": [
+                0.0021726288832724094,
+                0.0021726288832724094
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00023669496008195086,
+              0.00023669496008195086
+            ],
+            "difference_relative_rms_per_channel": [
+              0.10325009732559935,
+              0.10325009732559935
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9955870579131697,
+              0.9955870579131697
+            ],
+            "stereo_difference_relative_rms": 0.10325009732560503
+          }
+        },
+        {
+          "name": "pressure_cycle_14",
+          "logical_start": 2688000,
+          "logical_end": 2879933,
+          "omitted_end_frames": 67,
+          "comparison": {
+            "stock": {
+              "finite_count": 383866,
+              "sample_count": 383866,
+              "rms": [
+                0.002382939708872844,
+                0.002382939708872844
+              ],
+              "peak": [
+                0.010301593691110611,
+                0.010301593691110611
+              ],
+              "dc": [
+                -3.571150797434994e-07,
+                -3.571150797434994e-07
+              ],
+              "max_adjacent_delta": [
+                0.0023043551482260227,
+                0.0023043551482260227
+              ]
+            },
+            "draft": {
+              "finite_count": 383866,
+              "sample_count": 383866,
+              "rms": [
+                0.0023556226293498907,
+                0.0023556226293498907
+              ],
+              "peak": [
+                0.010388053022325039,
+                0.010388053022325039
+              ],
+              "dc": [
+                -3.3025014696979903e-07,
+                -3.3025014696979903e-07
+              ],
+              "max_adjacent_delta": [
+                0.002194612752646208,
+                0.002194612752646208
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0003728786331583002,
+              0.0003728786331583002
+            ],
+            "difference_relative_rms_per_channel": [
+              0.1564784168772259,
+              0.1564784168772259
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9885363950161062,
+              0.9885363950161062
+            ],
+            "stereo_difference_relative_rms": 0.15647841687721312
+          }
+        }
+      ],
+      "event_windows": []
+    },
+    {
+      "row": 5,
+      "selector": 4,
+      "raw": {
+        "stock": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.006973517270178481,
+            0.006973517270178481
+          ],
+          "peak": [
+            0.14766766130924225,
+            0.14766766130924225
+          ],
+          "dc": [
+            -9.001622081752142e-14,
+            -9.001622081752142e-14
+          ],
+          "max_adjacent_delta": [
+            0.06220637576188892,
+            0.06220637576188892
+          ]
+        },
+        "draft": {
+          "finite_count": 5760000,
+          "sample_count": 5760000,
+          "rms": [
+            0.0069611103680243275,
+            0.0069611103680243275
+          ],
+          "peak": [
+            0.14904627203941345,
+            0.14904627203941345
+          ],
+          "dc": [
+            -1.6938537782062112e-13,
+            -1.6938537782062112e-13
+          ],
+          "max_adjacent_delta": [
+            0.05127866379916668,
+            0.05127866379916668
+          ]
+        }
+      },
+      "common_logical_frames": 2879933,
+      "comparison": {
+        "stock": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.006973598384534664,
+            0.006973598384534664
+          ],
+          "peak": [
+            0.14766766130924225,
+            0.14766766130924225
+          ],
+          "dc": [
+            -2.0040520434271037e-10,
+            -2.0040520434271037e-10
+          ],
+          "max_adjacent_delta": [
+            0.06220637576188892,
+            0.06220637576188892
+          ]
+        },
+        "draft": {
+          "finite_count": 5759866,
+          "sample_count": 5759866,
+          "rms": [
+            0.006961191313867645,
+            0.006961191313867645
+          ],
+          "peak": [
+            0.14904627203941345,
+            0.14904627203941345
+          ],
+          "dc": [
+            -9.550546043777448e-10,
+            -9.550546043777448e-10
+          ],
+          "max_adjacent_delta": [
+            0.05127866379916668,
+            0.05127866379916668
+          ]
+        },
+        "difference_rms_per_channel": [
+          0.000868244668905146,
+          0.000868244668905146
+        ],
+        "difference_relative_rms_per_channel": [
+          0.12450454141876748,
+          0.12450454141876748
+        ],
+        "draft_stock_rms_ratio_per_channel": [
+          0.9982208509892778,
+          0.9982208509892778
+        ],
+        "stereo_difference_relative_rms": 0.1245045414187239
+      },
+      "segments": [
+        {
+          "name": "held_0",
+          "logical_start": 0,
+          "logical_end": 96000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.012216277648694346,
+                0.012216277648694346
+              ],
+              "peak": [
+                0.11840491741895676,
+                0.11840491741895676
+              ],
+              "dc": [
+                1.633454343538445e-07,
+                1.633454343538445e-07
+              ],
+              "max_adjacent_delta": [
+                0.05547127453610301,
+                0.05547127453610301
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.01219904468117962,
+                0.01219904468117962
+              ],
+              "peak": [
+                0.11917675286531448,
+                0.11917675286531448
+              ],
+              "dc": [
+                1.528526852917119e-07,
+                1.528526852917119e-07
+              ],
+              "max_adjacent_delta": [
+                0.044427089393138885,
+                0.044427089393138885
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0013334730257205131,
+              0.0013334730257205131
+            ],
+            "difference_relative_rms_per_channel": [
+              0.10915542885217842,
+              0.10915542885217842
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9985893438238475,
+              0.9985893438238475
+            ],
+            "stereo_difference_relative_rms": 0.10915542885218031
+          }
+        },
+        {
+          "name": "release_0",
+          "logical_start": 96000,
+          "logical_end": 288000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                6.786474888435875e-05,
+                6.786474888435875e-05
+              ],
+              "peak": [
+                0.002473922446370125,
+                0.002473922446370125
+              ],
+              "dc": [
+                -8.825879987309596e-08,
+                -8.825879987309596e-08
+              ],
+              "max_adjacent_delta": [
+                0.0006975624710321426,
+                0.0006975624710321426
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                6.744599224467162e-05,
+                6.744599224467162e-05
+              ],
+              "peak": [
+                0.0022353564854711294,
+                0.0022353564854711294
+              ],
+              "dc": [
+                -1.1525118092025424e-07,
+                -1.1525118092025424e-07
+              ],
+              "max_adjacent_delta": [
+                0.000699342112056911,
+                0.000699342112056911
+              ]
+            },
+            "difference_rms_per_channel": [
+              6.050843496647501e-06,
+              6.050843496647501e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08916033133723242,
+              0.08916033133723242
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9938295411598634,
+              0.9938295411598634
+            ],
+            "stereo_difference_relative_rms": 0.08916033133723217
+          }
+        },
+        {
+          "name": "late_release_0",
+          "logical_start": 240000,
+          "logical_end": 288000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                1.6665729766535103e-06,
+                1.6665729766535103e-06
+              ],
+              "peak": [
+                0.00021925559849478304,
+                0.00021925559849478304
+              ],
+              "dc": [
+                -1.4325043376681226e-08,
+                -1.4325043376681226e-08
+              ],
+              "max_adjacent_delta": [
+                0.00012203090591356158,
+                0.00012203090591356158
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                7.974071799832593e-06,
+                7.974071799832593e-06
+              ],
+              "peak": [
+                0.0007787746144458652,
+                0.0007787746144458652
+              ],
+              "dc": [
+                -9.800274983717827e-08,
+                -9.800274983717827e-08
+              ],
+              "max_adjacent_delta": [
+                0.00020034871704410762,
+                0.00020034871704410762
+              ]
+            },
+            "difference_rms_per_channel": [
+              6.802751108030072e-06,
+              6.802751108030072e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              4.081880123659536,
+              4.081880123659536
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              4.784712047740377,
+              4.784712047740377
+            ],
+            "stereo_difference_relative_rms": 4.081880123659537
+          }
+        },
+        {
+          "name": "held_1",
+          "logical_start": 288000,
+          "logical_end": 384000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.013307177889822632,
+                0.013307177889822632
+              ],
+              "peak": [
+                0.12941792607307434,
+                0.12941792607307434
+              ],
+              "dc": [
+                -1.0201082525258346e-07,
+                -1.0201082525258346e-07
+              ],
+              "max_adjacent_delta": [
+                0.0439149159938097,
+                0.0439149159938097
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.01328602043168957,
+                0.01328602043168957
+              ],
+              "peak": [
+                0.12396499514579773,
+                0.12396499514579773
+              ],
+              "dc": [
+                -5.628529869124617e-08,
+                -5.628529869124617e-08
+              ],
+              "max_adjacent_delta": [
+                0.0395243838429451,
+                0.0395243838429451
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0015239509582575677,
+              0.0015239509582575677
+            ],
+            "difference_relative_rms_per_channel": [
+              0.11452097288209319,
+              0.11452097288209319
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9984100717441191,
+              0.9984100717441191
+            ],
+            "stereo_difference_relative_rms": 0.11452097288209824
+          }
+        },
+        {
+          "name": "release_1",
+          "logical_start": 384000,
+          "logical_end": 576000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.911963387367282e-05,
+                7.911963387367282e-05
+              ],
+              "peak": [
+                0.003997810184955597,
+                0.003997810184955597
+              ],
+              "dc": [
+                4.075821227944458e-08,
+                4.075821227944458e-08
+              ],
+              "max_adjacent_delta": [
+                0.0009633059962652624,
+                0.0009633059962652624
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.916674800272984e-05,
+                7.916674800272984e-05
+              ],
+              "peak": [
+                0.0039761858060956,
+                0.0039761858060956
+              ],
+              "dc": [
+                -1.7721603159008905e-09,
+                -1.7721603159008905e-09
+              ],
+              "max_adjacent_delta": [
+                0.0008673255797475576,
+                0.0008673255797475576
+              ]
+            },
+            "difference_rms_per_channel": [
+              9.739883394355182e-06,
+              9.739883394355182e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              0.12310324147741214,
+              0.12310324147741214
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.000595479614229,
+              1.000595479614229
+            ],
+            "stereo_difference_relative_rms": 0.1231032414774181
+          }
+        },
+        {
+          "name": "late_release_1",
+          "logical_start": 528000,
+          "logical_end": 576000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                7.058937590320835e-06,
+                7.058937590320835e-06
+              ],
+              "peak": [
+                0.0011861528037115932,
+                0.0011861528037115932
+              ],
+              "dc": [
+                -5.5313978185493665e-08,
+                -5.5313978185493665e-08
+              ],
+              "max_adjacent_delta": [
+                0.00035831316199619323,
+                0.00035831316199619323
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                1.9877863583160555e-05,
+                1.9877863583160555e-05
+              ],
+              "peak": [
+                0.0025490683037787676,
+                0.0025490683037787676
+              ],
+              "dc": [
+                -2.1766168932420744e-07,
+                -2.1766168932420744e-07
+              ],
+              "max_adjacent_delta": [
+                0.00044563738629221916,
+                0.00044563738629221916
+              ]
+            },
+            "difference_rms_per_channel": [
+              1.3863366053595087e-05,
+              1.3863366053595087e-05
+            ],
+            "difference_relative_rms_per_channel": [
+              1.9639451229324416,
+              1.9639451229324416
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              2.815985171822023,
+              2.815985171822023
+            ],
+            "stereo_difference_relative_rms": 1.9639451229324416
+          }
+        },
+        {
+          "name": "held_2",
+          "logical_start": 576000,
+          "logical_end": 672000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.011799402980103684,
+                0.011799402980103684
+              ],
+              "peak": [
+                0.1059427335858345,
+                0.1059427335858345
+              ],
+              "dc": [
+                4.2262657620887694e-07,
+                4.2262657620887694e-07
+              ],
+              "max_adjacent_delta": [
+                0.05284812115132809,
+                0.05284812115132809
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.011791447735668417,
+                0.011791447735668417
+              ],
+              "peak": [
+                0.10971932858228683,
+                0.10971932858228683
+              ],
+              "dc": [
+                4.788287174642969e-07,
+                4.788287174642969e-07
+              ],
+              "max_adjacent_delta": [
+                0.04489380121231079,
+                0.04489380121231079
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0014216889226000829,
+              0.0014216889226000829
+            ],
+            "difference_relative_rms_per_channel": [
+              0.12048820817437579,
+              0.12048820817437579
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9993257926313152,
+              0.9993257926313152
+            ],
+            "stereo_difference_relative_rms": 0.12048820817438104
+          }
+        },
+        {
+          "name": "release_2",
+          "logical_start": 672000,
+          "logical_end": 864000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.802487379626734e-05,
+                7.802487379626734e-05
+              ],
+              "peak": [
+                0.004056096076965332,
+                0.004056096076965332
+              ],
+              "dc": [
+                -1.9577367465860014e-07,
+                -1.9577367465860014e-07
+              ],
+              "max_adjacent_delta": [
+                0.0008695685655766283,
+                0.0008695685655766283
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.724796298682842e-05,
+                7.724796298682842e-05
+              ],
+              "peak": [
+                0.004047562833875418,
+                0.004047562833875418
+              ],
+              "dc": [
+                -1.8739017426296104e-07,
+                -1.8739017426296104e-07
+              ],
+              "max_adjacent_delta": [
+                0.0008112001232802868,
+                0.0008112001232802868
+              ]
+            },
+            "difference_rms_per_channel": [
+              7.159742287088095e-06,
+              7.159742287088095e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              0.09176230525900078,
+              0.09176230525900078
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9900427803130124,
+              0.9900427803130124
+            ],
+            "stereo_difference_relative_rms": 0.09176230525900078
+          }
+        },
+        {
+          "name": "late_release_2",
+          "logical_start": 816000,
+          "logical_end": 864000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                9.111637176361866e-07,
+                9.111637176361866e-07
+              ],
+              "peak": [
+                0.00015559086750727147,
+                0.00015559086750727147
+              ],
+              "dc": [
+                6.843413211869535e-09,
+                6.843413211869535e-09
+              ],
+              "max_adjacent_delta": [
+                5.8650668506743386e-05,
+                5.8650668506743386e-05
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                3.3302398765810258e-06,
+                3.3302398765810258e-06
+              ],
+              "peak": [
+                0.0003782466519623995,
+                0.0003782466519623995
+              ],
+              "dc": [
+                -9.56402237761722e-09,
+                -9.56402237761722e-09
+              ],
+              "max_adjacent_delta": [
+                0.00024074096290860325,
+                0.00024074096290860325
+              ]
+            },
+            "difference_rms_per_channel": [
+              2.90285280552191e-06,
+              2.90285280552191e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              3.1858740085181636,
+              3.1858740085181636
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              3.6549302964132493,
+              3.6549302964132493
+            ],
+            "stereo_difference_relative_rms": 3.185874008518163
+          }
+        },
+        {
+          "name": "held_3",
+          "logical_start": 864000,
+          "logical_end": 960000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.011225182398396823,
+                0.011225182398396823
+              ],
+              "peak": [
+                0.12624907493591309,
+                0.12624907493591309
+              ],
+              "dc": [
+                -1.2676424315838374e-07,
+                -1.2676424315838374e-07
+              ],
+              "max_adjacent_delta": [
+                0.06220637576188892,
+                0.06220637576188892
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.011184077013102362,
+                0.011184077013102362
+              ],
+              "peak": [
+                0.1320764720439911,
+                0.1320764720439911
+              ],
+              "dc": [
+                -8.675900417924135e-08,
+                -8.675900417924135e-08
+              ],
+              "max_adjacent_delta": [
+                0.04975549166556448,
+                0.04975549166556448
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0016582513160088273,
+              0.0016582513160088273
+            ],
+            "difference_relative_rms_per_channel": [
+              0.14772600187286564,
+              0.14772600187286564
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9963381098109968,
+              0.9963381098109968
+            ],
+            "stereo_difference_relative_rms": 0.14772600187286009
+          }
+        },
+        {
+          "name": "release_3",
+          "logical_start": 960000,
+          "logical_end": 1152000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.705347959174533e-05,
+                7.705347959174533e-05
+              ],
+              "peak": [
+                0.00326384580694139,
+                0.00326384580694139
+              ],
+              "dc": [
+                5.404353007455888e-08,
+                5.404353007455888e-08
+              ],
+              "max_adjacent_delta": [
+                0.001103516106695679,
+                0.001103516106695679
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.652980013446864e-05,
+                7.652980013446864e-05
+              ],
+              "peak": [
+                0.0031538689509034157,
+                0.0031538689509034157
+              ],
+              "dc": [
+                1.207238179381513e-09,
+                1.207238179381513e-09
+              ],
+              "max_adjacent_delta": [
+                0.0009955335408449173,
+                0.0009955335408449173
+              ]
+            },
+            "difference_rms_per_channel": [
+              1.034098018083861e-05,
+              1.034098018083861e-05
+            ],
+            "difference_relative_rms_per_channel": [
+              0.134205232984007,
+              0.134205232984007
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.993203688398612,
+              0.993203688398612
+            ],
+            "stereo_difference_relative_rms": 0.13420523298400475
+          }
+        },
+        {
+          "name": "late_release_3",
+          "logical_start": 1104000,
+          "logical_end": 1152000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                3.6379313100489765e-06,
+                3.6379313100489765e-06
+              ],
+              "peak": [
+                0.0005503394058905542,
+                0.0005503394058905542
+              ],
+              "dc": [
+                -3.0509029168401815e-08,
+                -3.0509029168401815e-08
+              ],
+              "max_adjacent_delta": [
+                0.0002194176340708509,
+                0.0002194176340708509
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                1.4489074051653689e-05,
+                1.4489074051653689e-05
+              ],
+              "peak": [
+                0.0013848759699612856,
+                0.0013848759699612856
+              ],
+              "dc": [
+                -1.7825228799968804e-07,
+                -1.7825228799968804e-07
+              ],
+              "max_adjacent_delta": [
+                0.0003531764086801559,
+                0.0003531764086801559
+              ]
+            },
+            "difference_rms_per_channel": [
+              1.2068793363688778e-05,
+              1.2068793363688778e-05
+            ],
+            "difference_relative_rms_per_channel": [
+              3.317487971900794,
+              3.317487971900794
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              3.9827783475820016,
+              3.9827783475820016
+            ],
+            "stereo_difference_relative_rms": 3.317487971900794
+          }
+        },
+        {
+          "name": "held_4",
+          "logical_start": 1152000,
+          "logical_end": 1248000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.011499339795848796,
+                0.011499339795848796
+              ],
+              "peak": [
+                0.11500183492898941,
+                0.11500183492898941
+              ],
+              "dc": [
+                -5.958047045796199e-07,
+                -5.958047045796199e-07
+              ],
+              "max_adjacent_delta": [
+                0.03553389385342598,
+                0.03553389385342598
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.011487106092976655,
+                0.011487106092976655
+              ],
+              "peak": [
+                0.11464178562164307,
+                0.11464178562164307
+              ],
+              "dc": [
+                -5.319695318135587e-07,
+                -5.319695318135587e-07
+              ],
+              "max_adjacent_delta": [
+                0.035175621509552,
+                0.035175621509552
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0013348369561114255,
+              0.0013348369561114255
+            ],
+            "difference_relative_rms_per_channel": [
+              0.11607944280360295,
+              0.11607944280360295
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9989361386749736,
+              0.9989361386749736
+            ],
+            "stereo_difference_relative_rms": 0.11607944280360681
+          }
+        },
+        {
+          "name": "release_4",
+          "logical_start": 1248000,
+          "logical_end": 1440000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.620557610218174e-05,
+                7.620557610218174e-05
+              ],
+              "peak": [
+                0.003620065515860915,
+                0.003620065515860915
+              ],
+              "dc": [
+                2.9801658846969896e-07,
+                2.9801658846969896e-07
+              ],
+              "max_adjacent_delta": [
+                0.0008575261163059622,
+                0.0008575261163059622
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.642795122539788e-05,
+                7.642795122539788e-05
+              ],
+              "peak": [
+                0.003626075107604265,
+                0.003626075107604265
+              ],
+              "dc": [
+                2.686956779996921e-07,
+                2.686956779996921e-07
+              ],
+              "max_adjacent_delta": [
+                0.000801784626673907,
+                0.000801784626673907
+              ]
+            },
+            "difference_rms_per_channel": [
+              7.458791595602835e-06,
+              7.458791595602835e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              0.0978772417598624,
+              0.0978772417598624
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0029180951656078,
+              1.0029180951656078
+            ],
+            "stereo_difference_relative_rms": 0.09787724175986008
+          }
+        },
+        {
+          "name": "late_release_4",
+          "logical_start": 1392000,
+          "logical_end": 1440000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                3.7329068002437028e-06,
+                3.7329068002437028e-06
+              ],
+              "peak": [
+                0.0006116171134635806,
+                0.0006116171134635806
+              ],
+              "dc": [
+                -3.005312853442682e-08,
+                -3.005312853442682e-08
+              ],
+              "max_adjacent_delta": [
+                0.00019703403813764453,
+                0.00019703403813764453
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                1.3984456490377571e-05,
+                1.3984456490377571e-05
+              ],
+              "peak": [
+                0.0015396939124912024,
+                0.0015396939124912024
+              ],
+              "dc": [
+                -1.6740902052940026e-07,
+                -1.6740902052940026e-07
+              ],
+              "max_adjacent_delta": [
+                0.00030656278249807656,
+                0.00030656278249807656
+              ]
+            },
+            "difference_rms_per_channel": [
+              1.115052791884029e-05,
+              1.115052791884029e-05
+            ],
+            "difference_relative_rms_per_channel": [
+              2.987089824506824,
+              2.987089824506824
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              3.7462645704051853,
+              3.7462645704051853
+            ],
+            "stereo_difference_relative_rms": 2.987089824506824
+          }
+        },
+        {
+          "name": "held_5",
+          "logical_start": 1440000,
+          "logical_end": 1536000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.009624821194898209,
+                0.009624821194898209
+              ],
+              "peak": [
+                0.11759475618600845,
+                0.11759475618600845
+              ],
+              "dc": [
+                -7.462883426227288e-08,
+                -7.462883426227288e-08
+              ],
+              "max_adjacent_delta": [
+                0.03873787261545658,
+                0.03873787261545658
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.009634546862210467,
+                0.009634546862210467
+              ],
+              "peak": [
+                0.11690109968185425,
+                0.11690109968185425
+              ],
+              "dc": [
+                -1.172927735389647e-08,
+                -1.172927735389647e-08
+              ],
+              "max_adjacent_delta": [
+                0.035908730467781425,
+                0.035908730467781425
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0012823083913695895,
+              0.0012823083913695895
+            ],
+            "difference_relative_rms_per_channel": [
+              0.13322932087811643,
+              0.13322932087811643
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0010104777133328,
+              1.0010104777133328
+            ],
+            "stereo_difference_relative_rms": 0.13322932087811723
+          }
+        },
+        {
+          "name": "release_5",
+          "logical_start": 1536000,
+          "logical_end": 1728000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.109798869406556e-05,
+                7.109798869406556e-05
+              ],
+              "peak": [
+                0.003335024230182171,
+                0.003335024230182171
+              ],
+              "dc": [
+                4.395650721038e-08,
+                4.395650721038e-08
+              ],
+              "max_adjacent_delta": [
+                0.0007200338295660913,
+                0.0007200338295660913
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.06858784820623e-05,
+                7.06858784820623e-05
+              ],
+              "peak": [
+                0.0033426331356167793,
+                0.0033426331356167793
+              ],
+              "dc": [
+                4.6668076719467286e-08,
+                4.6668076719467286e-08
+              ],
+              "max_adjacent_delta": [
+                0.0006531841354444623,
+                0.0006531841354444623
+              ]
+            },
+            "difference_rms_per_channel": [
+              5.612616717632831e-06,
+              5.612616717632831e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              0.07894199007209479,
+              0.07894199007209479
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9942036305165176,
+              0.9942036305165176
+            ],
+            "stereo_difference_relative_rms": 0.07894199007209504
+          }
+        },
+        {
+          "name": "late_release_5",
+          "logical_start": 1680000,
+          "logical_end": 1728000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                4.444003777485442e-07,
+                4.444003777485442e-07
+              ],
+              "peak": [
+                7.034052396193147e-05,
+                7.034052396193147e-05
+              ],
+              "dc": [
+                -3.484485994615532e-09,
+                -3.484485994615532e-09
+              ],
+              "max_adjacent_delta": [
+                4.812356019101571e-05,
+                4.812356019101571e-05
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                2.7910390432454578e-06,
+                2.7910390432454578e-06
+              ],
+              "peak": [
+                0.00029850692953914404,
+                0.00029850692953914404
+              ],
+              "dc": [
+                -4.194854000161286e-09,
+                -4.194854000161286e-09
+              ],
+              "max_adjacent_delta": [
+                0.00023220899674925022,
+                0.00023220899674925022
+              ]
+            },
+            "difference_rms_per_channel": [
+              2.4889701944182677e-06,
+              2.4889701944182677e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              5.600738251007082,
+              5.600738251007082
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              6.280460555379446,
+              6.280460555379446
+            ],
+            "stereo_difference_relative_rms": 5.600738251007082
+          }
+        },
+        {
+          "name": "held_6",
+          "logical_start": 1728000,
+          "logical_end": 1824000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.011433541362252575,
+                0.011433541362252575
+              ],
+              "peak": [
+                0.12013360857963562,
+                0.12013360857963562
+              ],
+              "dc": [
+                8.626866027731476e-08,
+                8.626866027731476e-08
+              ],
+              "max_adjacent_delta": [
+                0.05279179196804762,
+                0.05279179196804762
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.0113505584781167,
+                0.0113505584781167
+              ],
+              "peak": [
+                0.1171591728925705,
+                0.1171591728925705
+              ],
+              "dc": [
+                8.69501588593909e-08,
+                8.69501588593909e-08
+              ],
+              "max_adjacent_delta": [
+                0.04922141507267952,
+                0.04922141507267952
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0018615746493251353,
+              0.0018615746493251353
+            ],
+            "difference_relative_rms_per_channel": [
+              0.16281697772757064,
+              0.16281697772757064
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.992742153851838,
+              0.992742153851838
+            ],
+            "stereo_difference_relative_rms": 0.1628169777275634
+          }
+        },
+        {
+          "name": "release_6",
+          "logical_start": 1824000,
+          "logical_end": 2016000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                8.758970826456019e-05,
+                8.758970826456019e-05
+              ],
+              "peak": [
+                0.00406944053247571,
+                0.00406944053247571
+              ],
+              "dc": [
+                -4.19244273657864e-08,
+                -4.19244273657864e-08
+              ],
+              "max_adjacent_delta": [
+                0.0008994730887934566,
+                0.0008994730887934566
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                8.718062454006473e-05,
+                8.718062454006473e-05
+              ],
+              "peak": [
+                0.003936137072741985,
+                0.003936137072741985
+              ],
+              "dc": [
+                -3.752611698482349e-08,
+                -3.752611698482349e-08
+              ],
+              "max_adjacent_delta": [
+                0.000870794290676713,
+                0.000870794290676713
+              ]
+            },
+            "difference_rms_per_channel": [
+              1.2776691831128546e-05,
+              1.2776691831128546e-05
+            ],
+            "difference_relative_rms_per_channel": [
+              0.14586978406797757,
+              0.14586978406797757
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9953295457582774,
+              0.9953295457582774
+            ],
+            "stereo_difference_relative_rms": 0.14586978406797982
+          }
+        },
+        {
+          "name": "late_release_6",
+          "logical_start": 1968000,
+          "logical_end": 2016000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                3.2426683407094794e-07,
+                3.2426683407094794e-07
+              ],
+              "peak": [
+                4.807283767149784e-05,
+                4.807283767149784e-05
+              ],
+              "dc": [
+                1.35418993041572e-09,
+                1.35418993041572e-09
+              ],
+              "max_adjacent_delta": [
+                6.822248178650625e-05,
+                6.822248178650625e-05
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                2.034892861015746e-06,
+                2.034892861015746e-06
+              ],
+              "peak": [
+                0.0002284911461174488,
+                0.0002284911461174488
+              ],
+              "dc": [
+                1.96016095893962e-08,
+                1.96016095893962e-08
+              ],
+              "max_adjacent_delta": [
+                0.00018326689314562827,
+                0.00018326689314562827
+              ]
+            },
+            "difference_rms_per_channel": [
+              1.8533440613614444e-06,
+              1.8533440613614444e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              5.715490659633548,
+              5.715490659633548
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              6.275365369529348,
+              6.275365369529348
+            ],
+            "stereo_difference_relative_rms": 5.7154906596335495
+          }
+        },
+        {
+          "name": "held_7",
+          "logical_start": 2016000,
+          "logical_end": 2112000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.01329867806277346,
+                0.01329867806277346
+              ],
+              "peak": [
+                0.1470617800951004,
+                0.1470617800951004
+              ],
+              "dc": [
+                1.5456610432518226e-07,
+                1.5456610432518226e-07
+              ],
+              "max_adjacent_delta": [
+                0.05272885411977768,
+                0.05272885411977768
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.01329596338482381,
+                0.01329596338482381
+              ],
+              "peak": [
+                0.14679241180419922,
+                0.14679241180419922
+              ],
+              "dc": [
+                1.3977122569745297e-07,
+                1.3977122569745297e-07
+              ],
+              "max_adjacent_delta": [
+                0.05127866379916668,
+                0.05127866379916668
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0016293441233765464,
+              0.0016293441233765464
+            ],
+            "difference_relative_rms_per_channel": [
+              0.12251925459700498,
+              0.12251925459700498
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9997958685865741,
+              0.9997958685865741
+            ],
+            "stereo_difference_relative_rms": 0.1225192545970052
+          }
+        },
+        {
+          "name": "release_7",
+          "logical_start": 2112000,
+          "logical_end": 2304000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.526028919776377e-05,
+                7.526028919776377e-05
+              ],
+              "peak": [
+                0.0029781260527670383,
+                0.0029781260527670383
+              ],
+              "dc": [
+                -7.796765204246091e-08,
+                -7.796765204246091e-08
+              ],
+              "max_adjacent_delta": [
+                0.0009324775892309844,
+                0.0009324775892309844
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                7.515219752735126e-05,
+                7.515219752735126e-05
+              ],
+              "peak": [
+                0.0029823994264006615,
+                0.0029823994264006615
+              ],
+              "dc": [
+                -6.274295178876428e-08,
+                -6.274295178876428e-08
+              ],
+              "max_adjacent_delta": [
+                0.000880730920471251,
+                0.000880730920471251
+              ]
+            },
+            "difference_rms_per_channel": [
+              5.6941792864611985e-06,
+              5.6941792864611985e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              0.07565981139799276,
+              0.07565981139799276
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9985637622235484,
+              0.9985637622235484
+            ],
+            "stereo_difference_relative_rms": 0.07565981139799124
+          }
+        },
+        {
+          "name": "late_release_7",
+          "logical_start": 2256000,
+          "logical_end": 2304000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                7.066665507068634e-07,
+                7.066665507068634e-07
+              ],
+              "peak": [
+                0.00014059434761293232,
+                0.00014059434761293232
+              ],
+              "dc": [
+                -1.3833627411064497e-09,
+                -1.3833627411064497e-09
+              ],
+              "max_adjacent_delta": [
+                0.00012954943667864427,
+                0.00012954943667864427
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                5.3654202337763755e-06,
+                5.3654202337763755e-06
+              ],
+              "peak": [
+                0.0005744954687543213,
+                0.0005744954687543213
+              ],
+              "dc": [
+                4.8170703640456246e-08,
+                4.8170703640456246e-08
+              ],
+              "max_adjacent_delta": [
+                0.00036449582421482773,
+                0.00036449582421482773
+              ]
+            },
+            "difference_rms_per_channel": [
+              5.0964526307999495e-06,
+              5.0964526307999495e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              7.211962453440137,
+              7.211962453440137
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              7.592577048410542,
+              7.592577048410542
+            ],
+            "stereo_difference_relative_rms": 7.211962453440138
+          }
+        },
+        {
+          "name": "held_8",
+          "logical_start": 2304000,
+          "logical_end": 2400000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.012440649149174027,
+                0.012440649149174027
+              ],
+              "peak": [
+                0.14766766130924225,
+                0.14766766130924225
+              ],
+              "dc": [
+                6.512170859464724e-07,
+                6.512170859464724e-07
+              ],
+              "max_adjacent_delta": [
+                0.047537073493003845,
+                0.047537073493003845
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.012443037720891692,
+                0.012443037720891692
+              ],
+              "peak": [
+                0.14904627203941345,
+                0.14904627203941345
+              ],
+              "dc": [
+                6.27262856903917e-07,
+                6.27262856903917e-07
+              ],
+              "max_adjacent_delta": [
+                0.04116302169859409,
+                0.04116302169859409
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.001342508232458543,
+              0.001342508232458543
+            ],
+            "difference_relative_rms_per_channel": [
+              0.10791303704177496,
+              0.10791303704177496
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0001919973539182,
+              1.0001919973539182
+            ],
+            "stereo_difference_relative_rms": 0.10791303704178042
+          }
+        },
+        {
+          "name": "release_8",
+          "logical_start": 2400000,
+          "logical_end": 2592000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                6.833497497674711e-05,
+                6.833497497674711e-05
+              ],
+              "peak": [
+                0.0038137694355100393,
+                0.0038137694355100393
+              ],
+              "dc": [
+                -3.11899948043426e-07,
+                -3.11899948043426e-07
+              ],
+              "max_adjacent_delta": [
+                0.0008373130112886429,
+                0.0008373130112886429
+              ]
+            },
+            "draft": {
+              "finite_count": 384000,
+              "sample_count": 384000,
+              "rms": [
+                6.905028927804772e-05,
+                6.905028927804772e-05
+              ],
+              "peak": [
+                0.003857508534565568,
+                0.003857508534565568
+              ],
+              "dc": [
+                -2.70961615528382e-07,
+                -2.70961615528382e-07
+              ],
+              "max_adjacent_delta": [
+                0.0007683513103984296,
+                0.0007683513103984296
+              ]
+            },
+            "difference_rms_per_channel": [
+              8.714473027924757e-06,
+              8.714473027924757e-06
+            ],
+            "difference_relative_rms_per_channel": [
+              0.12752580989295892,
+              0.12752580989295892
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.010467762687321,
+              1.010467762687321
+            ],
+            "stereo_difference_relative_rms": 0.1275258098929567
+          }
+        },
+        {
+          "name": "late_release_8",
+          "logical_start": 2544000,
+          "logical_end": 2592000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                6.871853524190811e-06,
+                6.871853524190811e-06
+              ],
+              "peak": [
+                0.0011965218000113964,
+                0.0011965218000113964
+              ],
+              "dc": [
+                5.345541701737809e-08,
+                5.345541701737809e-08
+              ],
+              "max_adjacent_delta": [
+                0.0004235472879372537,
+                0.0004235472879372537
+              ]
+            },
+            "draft": {
+              "finite_count": 96000,
+              "sample_count": 96000,
+              "rms": [
+                1.977758975572534e-05,
+                1.977758975572534e-05
+              ],
+              "peak": [
+                0.002649308880791068,
+                0.002649308880791068
+              ],
+              "dc": [
+                2.18852932145334e-07,
+                2.18852932145334e-07
+              ],
+              "max_adjacent_delta": [
+                0.0005013805348426104,
+                0.0005013805348426104
+              ]
+            },
+            "difference_rms_per_channel": [
+              1.3972584159344567e-05,
+              1.3972584159344567e-05
+            ],
+            "difference_relative_rms_per_channel": [
+              2.033306459481017,
+              2.033306459481017
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              2.8780575264159505,
+              2.8780575264159505
+            ],
+            "stereo_difference_relative_rms": 2.033306459481017
+          }
+        },
+        {
+          "name": "held_9",
+          "logical_start": 2592000,
+          "logical_end": 2688000,
+          "omitted_end_frames": 0,
+          "comparison": {
+            "stock": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.013416864035194315,
+                0.013416864035194315
+              ],
+              "peak": [
+                0.13148663938045502,
+                0.13148663938045502
+              ],
+              "dc": [
+                -4.875715854560184e-07,
+                -4.875715854560184e-07
+              ],
+              "max_adjacent_delta": [
+                0.03961627744138241,
+                0.03961627744138241
+              ]
+            },
+            "draft": {
+              "finite_count": 192000,
+              "sample_count": 192000,
+              "rms": [
+                0.01337595951431283,
+                0.01337595951431283
+              ],
+              "peak": [
+                0.13232682645320892,
+                0.13232682645320892
+              ],
+              "dc": [
+                -5.580250965326512e-07,
+                -5.580250965326512e-07
+              ],
+              "max_adjacent_delta": [
+                0.03843275085091591,
+                0.03843275085091591
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0015469900710524968,
+              0.0015469900710524968
+            ],
+            "difference_relative_rms_per_channel": [
+              0.11530191160874292,
+              0.11530191160874292
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9969512606840029,
+              0.9969512606840029
+            ],
+            "stereo_difference_relative_rms": 0.11530191160874775
+          }
+        },
+        {
+          "name": "release_9",
+          "logical_start": 2688000,
+          "logical_end": 2879933,
+          "omitted_end_frames": 67,
+          "comparison": {
+            "stock": {
+              "finite_count": 383866,
+              "sample_count": 383866,
+              "rms": [
+                7.42584750569275e-05,
+                7.42584750569275e-05
+              ],
+              "peak": [
+                0.004062886815518141,
+                0.004062886815518141
+              ],
+              "dc": [
+                2.305022572995505e-07,
+                2.305022572995505e-07
+              ],
+              "max_adjacent_delta": [
+                0.0006938986334716901,
+                0.0006938986334716901
+              ]
+            },
+            "draft": {
+              "finite_count": 383866,
+              "sample_count": 383866,
+              "rms": [
+                7.239343340635956e-05,
+                7.239343340635956e-05
+              ],
+              "peak": [
+                0.004008973017334938,
+                0.004008973017334938
+              ],
+              "dc": [
+                2.2437730161748652e-07,
+                2.2437730161748652e-07
+              ],
+              "max_adjacent_delta": [
+                0.0006718582444591448,
+                0.0006718582444591448
+              ]
+            },
+            "difference_rms_per_channel": [
+              1.0817229653405442e-05,
+              1.0817229653405442e-05
+            ],
+            "difference_relative_rms_per_channel": [
+              0.14566996757087747,
+              0.14566996757087747
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9748844606741764,
+              0.9748844606741764
+            ],
+            "stereo_difference_relative_rms": 0.14566996757087652
+          }
+        },
+        {
+          "name": "late_release_9",
+          "logical_start": 2832000,
+          "logical_end": 2879933,
+          "omitted_end_frames": 67,
+          "comparison": {
+            "stock": {
+              "finite_count": 95866,
+              "sample_count": 95866,
+              "rms": [
+                1.4689876886579705e-26,
+                1.4689876886579705e-26
+              ],
+              "peak": [
+                8.434140880835051e-26,
+                8.434140880835051e-26
+              ],
+              "dc": [
+                -5.116227285286076e-27,
+                -5.116227285286076e-27
+              ],
+              "max_adjacent_delta": [
+                2.90091271943383e-29,
+                2.90091271943383e-29
+              ]
+            },
+            "draft": {
+              "finite_count": 95866,
+              "sample_count": 95866,
+              "rms": [
+                1.463629460569166e-26,
+                1.463629460569166e-26
+              ],
+              "peak": [
+                8.403376538126596e-26,
+                8.403376538126596e-26
+              ],
+              "dc": [
+                -5.097565477919657e-27,
+                -5.097565477919657e-27
+              ],
+              "max_adjacent_delta": [
+                2.8898193629541597e-29,
+                2.8898193629541597e-29
+              ]
+            },
+            "difference_rms_per_channel": [
+              5.358228089099128e-29,
+              5.358228089099128e-29
+            ],
+            "difference_relative_rms_per_channel": [
+              0.003647565007160998,
+              0.003647565007160998
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9963524349930396,
+              0.9963524349930396
+            ],
+            "stereo_difference_relative_rms": 0.003647565007161189
+          }
+        }
+      ],
+      "event_windows": [
+        {
+          "event_frame": 0,
+          "logical_start": 0,
+          "logical_end": 256,
+          "comparison": {
+            "stock": {
+              "finite_count": 512,
+              "sample_count": 512,
+              "rms": [
+                0.015126432387170676,
+                0.015126432387170676
+              ],
+              "peak": [
+                0.05535515025258064,
+                0.05535515025258064
+              ],
+              "dc": [
+                0.0037529924870547404,
+                0.0037529924870547404
+              ],
+              "max_adjacent_delta": [
+                0.025074923876672983,
+                0.025074923876672983
+              ]
+            },
+            "draft": {
+              "finite_count": 512,
+              "sample_count": 512,
+              "rms": [
+                0.01542013222137777,
+                0.01542013222137777
+              ],
+              "peak": [
+                0.0586102120578289,
+                0.0586102120578289
+              ],
+              "dc": [
+                0.0038170485857929037,
+                0.0038170485857929037
+              ],
+              "max_adjacent_delta": [
+                0.025777451694011688,
+                0.025777451694011688
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0032810765578524218,
+              0.0032810765578524218
+            ],
+            "difference_relative_rms_per_channel": [
+              0.2169101394083665,
+              0.2169101394083665
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0194163320662573,
+              1.0194163320662573
+            ],
+            "stereo_difference_relative_rms": 0.21691013940836654
+          }
+        },
+        {
+          "event_frame": 288000,
+          "logical_start": 287744,
+          "logical_end": 288256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.010941450595243783,
+                0.010941450595243783
+              ],
+              "peak": [
+                0.052912984043359756,
+                0.052912984043359756
+              ],
+              "dc": [
+                0.0015321185836105209,
+                0.0015321185836105209
+              ],
+              "max_adjacent_delta": [
+                0.021559515967965126,
+                0.021559515967965126
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.011227486955952775,
+                0.011227486955952775
+              ],
+              "peak": [
+                0.05318012833595276,
+                0.05318012833595276
+              ],
+              "dc": [
+                0.0015829393740389719,
+                0.0015829393740389719
+              ],
+              "max_adjacent_delta": [
+                0.019814849365502596,
+                0.019814849365502596
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0023943117868647206,
+              0.0023943117868647206
+            ],
+            "difference_relative_rms_per_channel": [
+              0.2188294656199902,
+              0.2188294656199902
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.026142453253258,
+              1.026142453253258
+            ],
+            "stereo_difference_relative_rms": 0.21882946561999025
+          }
+        },
+        {
+          "event_frame": 576000,
+          "logical_start": 575744,
+          "logical_end": 576256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.012803707685990148,
+                0.012803707685990148
+              ],
+              "peak": [
+                0.06244192644953728,
+                0.06244192644953728
+              ],
+              "dc": [
+                0.0005257311649464073,
+                0.0005257311649464073
+              ],
+              "max_adjacent_delta": [
+                0.021208062767982483,
+                0.021208062767982483
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.013081356789233915,
+                0.013081356789233915
+              ],
+              "peak": [
+                0.06143693998456001,
+                0.06143693998456001
+              ],
+              "dc": [
+                0.0005798726855843483,
+                0.0005798726855843483
+              ],
+              "max_adjacent_delta": [
+                0.019794972613453865,
+                0.019794972613453865
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.002421291953888373,
+              0.002421291953888373
+            ],
+            "difference_relative_rms_per_channel": [
+              0.18910865612292582,
+              0.18910865612292582
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0216850548335754,
+              1.0216850548335754
+            ],
+            "stereo_difference_relative_rms": 0.1891086561229258
+          }
+        },
+        {
+          "event_frame": 864000,
+          "logical_start": 863744,
+          "logical_end": 864256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.015745052229974188,
+                0.015745052229974188
+              ],
+              "peak": [
+                0.07783568650484085,
+                0.07783568650484085
+              ],
+              "dc": [
+                0.003739711407181911,
+                0.003739711407181911
+              ],
+              "max_adjacent_delta": [
+                0.033826126717031,
+                0.033826126717031
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.015984102546117256,
+                0.015984102546117256
+              ],
+              "peak": [
+                0.07986779510974884,
+                0.07986779510974884
+              ],
+              "dc": [
+                0.003742794179801834,
+                0.003742794179801834
+              ],
+              "max_adjacent_delta": [
+                0.037744518369436264,
+                0.037744518369436264
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0033229352286470357,
+              0.0033229352286470357
+            ],
+            "difference_relative_rms_per_channel": [
+              0.2110463134775186,
+              0.2110463134775186
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0151825673647485,
+              1.0151825673647485
+            ],
+            "stereo_difference_relative_rms": 0.2110463134775187
+          }
+        },
+        {
+          "event_frame": 1152000,
+          "logical_start": 1151744,
+          "logical_end": 1152256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.010923540594794542,
+                0.010923540594794542
+              ],
+              "peak": [
+                0.05010880529880524,
+                0.05010880529880524
+              ],
+              "dc": [
+                -0.00023640897801068504,
+                -0.00023640897801068504
+              ],
+              "max_adjacent_delta": [
+                0.03519745171070099,
+                0.03519745171070099
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.011269592389402925,
+                0.011269592389402925
+              ],
+              "peak": [
+                0.052751846611499786,
+                0.052751846611499786
+              ],
+              "dc": [
+                -0.0003198555778638479,
+                -0.0003198555778638479
+              ],
+              "max_adjacent_delta": [
+                0.029997974168509245,
+                0.029997974168509245
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.002407603404136612,
+              0.002407603404136612
+            ],
+            "difference_relative_rms_per_channel": [
+              0.22040504021964463,
+              0.22040504021964463
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0316794533425626,
+              1.0316794533425626
+            ],
+            "stereo_difference_relative_rms": 0.22040504021964458
+          }
+        },
+        {
+          "event_frame": 1440000,
+          "logical_start": 1439744,
+          "logical_end": 1440256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.007913532357261631,
+                0.007913532357261631
+              ],
+              "peak": [
+                0.04455087333917618,
+                0.04455087333917618
+              ],
+              "dc": [
+                -0.0006737696332107445,
+                -0.0006737696332107445
+              ],
+              "max_adjacent_delta": [
+                0.026787403039634228,
+                0.026787403039634228
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.008274622158068732,
+                0.008274622158068732
+              ],
+              "peak": [
+                0.04753522574901581,
+                0.04753522574901581
+              ],
+              "dc": [
+                -0.0007873189624341137,
+                -0.0007873189624341137
+              ],
+              "max_adjacent_delta": [
+                0.023221142357215285,
+                0.023221142357215285
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0021505997924244334,
+              0.0021505997924244334
+            ],
+            "difference_relative_rms_per_channel": [
+              0.27176230478807556,
+              0.27176230478807556
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.045629408525228,
+              1.045629408525228
+            ],
+            "stereo_difference_relative_rms": 0.27176230478807556
+          }
+        },
+        {
+          "event_frame": 1728000,
+          "logical_start": 1727744,
+          "logical_end": 1728256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.009381787572697378,
+                0.009381787572697378
+              ],
+              "peak": [
+                0.04256507754325867,
+                0.04256507754325867
+              ],
+              "dc": [
+                -0.000389077771284113,
+                -0.000389077771284113
+              ],
+              "max_adjacent_delta": [
+                0.022993295453488827,
+                0.022993295453488827
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.009832987109308059,
+                0.009832987109308059
+              ],
+              "peak": [
+                0.04723185673356056,
+                0.04723185673356056
+              ],
+              "dc": [
+                -0.00036982199649227,
+                -0.00036982199649227
+              ],
+              "max_adjacent_delta": [
+                0.021331067429855466,
+                0.021331067429855466
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0032413686315215834,
+              0.0032413686315215834
+            ],
+            "difference_relative_rms_per_channel": [
+              0.3454958456909135,
+              0.3454958456909135
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0480931307721941,
+              1.0480931307721941
+            ],
+            "stereo_difference_relative_rms": 0.3454958456909134
+          }
+        },
+        {
+          "event_frame": 2016000,
+          "logical_start": 2015744,
+          "logical_end": 2016256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.015867627254171058,
+                0.015867627254171058
+              ],
+              "peak": [
+                0.090814970433712,
+                0.090814970433712
+              ],
+              "dc": [
+                0.0012097600554554083,
+                0.0012097600554554083
+              ],
+              "max_adjacent_delta": [
+                0.025214578956365585,
+                0.025214578956365585
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.016444204950744872,
+                0.016444204950744872
+              ],
+              "peak": [
+                0.091844342648983,
+                0.091844342648983
+              ],
+              "dc": [
+                0.0013642271803320227,
+                0.0013642271803320227
+              ],
+              "max_adjacent_delta": [
+                0.02151706162840128,
+                0.02151706162840128
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.003034284070668007,
+              0.003034284070668007
+            ],
+            "difference_relative_rms_per_channel": [
+              0.19122481402318026,
+              0.19122481402318026
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0363367305859956,
+              1.0363367305859956
+            ],
+            "stereo_difference_relative_rms": 0.19122481402318017
+          }
+        },
+        {
+          "event_frame": 2304000,
+          "logical_start": 2303744,
+          "logical_end": 2304256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.009879703093440538,
+                0.009879703093440538
+              ],
+              "peak": [
+                0.04941526800394058,
+                0.04941526800394058
+              ],
+              "dc": [
+                -0.001196396398112088,
+                -0.001196396398112088
+              ],
+              "max_adjacent_delta": [
+                0.03731039725244045,
+                0.03731039725244045
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.010070726627234882,
+                0.010070726627234882
+              ],
+              "peak": [
+                0.05368944630026817,
+                0.05368944630026817
+              ],
+              "dc": [
+                -0.001277294819052699,
+                -0.001277294819052699
+              ],
+              "max_adjacent_delta": [
+                0.023796435445547104,
+                0.023796435445547104
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.002201618964095592,
+              0.002201618964095592
+            ],
+            "difference_relative_rms_per_channel": [
+              0.22284262424417586,
+              0.22284262424417586
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0193349468083885,
+              1.0193349468083885
+            ],
+            "stereo_difference_relative_rms": 0.22284262424417584
+          }
+        },
+        {
+          "event_frame": 2592000,
+          "logical_start": 2591744,
+          "logical_end": 2592256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.009612120752092567,
+                0.009612120752092567
+              ],
+              "peak": [
+                0.04522644728422165,
+                0.04522644728422165
+              ],
+              "dc": [
+                -0.0003362516284828227,
+                -0.0003362516284828227
+              ],
+              "max_adjacent_delta": [
+                0.029244082048535347,
+                0.029244082048535347
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.010015980838625684,
+                0.010015980838625684
+              ],
+              "peak": [
+                0.0458701029419899,
+                0.0458701029419899
+              ],
+              "dc": [
+                -0.0003139750956648868,
+                -0.0003139750956648868
+              ],
+              "max_adjacent_delta": [
+                0.02375124499667436,
+                0.02375124499667436
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0027461601377795123,
+              0.0027461601377795123
+            ],
+            "difference_relative_rms_per_channel": [
+              0.28569763204250953,
+              0.28569763204250953
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0420157108872354,
+              1.0420157108872354
+            ],
+            "stereo_difference_relative_rms": 0.2856976320425094
+          }
+        },
+        {
+          "event_frame": 96000,
+          "logical_start": 95744,
+          "logical_end": 96256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0012946713552852039,
+                0.0012946713552852039
+              ],
+              "peak": [
+                0.004068472422659397,
+                0.004068472422659397
+              ],
+              "dc": [
+                -8.379152523430022e-05,
+                -8.379152523430022e-05
+              ],
+              "max_adjacent_delta": [
+                0.0009255022523575462,
+                0.0009255022523575462
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0012907286886755477,
+                0.0012907286886755477
+              ],
+              "peak": [
+                0.004076200071722269,
+                0.004076200071722269
+              ],
+              "dc": [
+                -8.321478031447782e-05,
+                -8.321478031447782e-05
+              ],
+              "max_adjacent_delta": [
+                0.0008707117813173681,
+                0.0008707117813173681
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00010195831956132128,
+              0.00010195831956132128
+            ],
+            "difference_relative_rms_per_channel": [
+              0.07875227882744099,
+              0.07875227882744099
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9969546969633944,
+              0.9969546969633944
+            ],
+            "stereo_difference_relative_rms": 0.07875227882744093
+          }
+        },
+        {
+          "event_frame": 384000,
+          "logical_start": 383744,
+          "logical_end": 384256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0015716119954240514,
+                0.0015716119954240514
+              ],
+              "peak": [
+                0.005117823835462332,
+                0.005117823835462332
+              ],
+              "dc": [
+                0.00015577503483044097,
+                0.00015577503483044097
+              ],
+              "max_adjacent_delta": [
+                0.0009892204543575644,
+                0.0009892204543575644
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0015658224023606382,
+                0.0015658224023606382
+              ],
+              "peak": [
+                0.005121737252920866,
+                0.005121737252920866
+              ],
+              "dc": [
+                0.0001550452711835959,
+                0.0001550452711835959
+              ],
+              "max_adjacent_delta": [
+                0.0009988847450586036,
+                0.0009988847450586036
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0001333780740668833,
+              0.0001333780740668833
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08486705017219934,
+              0.08486705017219934
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9963161435008957,
+              0.9963161435008957
+            ],
+            "stereo_difference_relative_rms": 0.08486705017219945
+          }
+        },
+        {
+          "event_frame": 672000,
+          "logical_start": 671744,
+          "logical_end": 672256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0016473264119827333,
+                0.0016473264119827333
+              ],
+              "peak": [
+                0.004797362722456455,
+                0.004797362722456455
+              ],
+              "dc": [
+                -2.753401818722523e-05,
+                -2.753401818722523e-05
+              ],
+              "max_adjacent_delta": [
+                0.0008695685655766283,
+                0.0008695685655766283
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0016397852634178769,
+                0.0016397852634178769
+              ],
+              "peak": [
+                0.004843506496399641,
+                0.004843506496399641
+              ],
+              "dc": [
+                -2.9452247999550707e-05,
+                -2.9452247999550707e-05
+              ],
+              "max_adjacent_delta": [
+                0.0008112001232802868,
+                0.0008112001232802868
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00014100199026936355,
+              0.00014100199026936355
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08559444518324247,
+              0.08559444518324247
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9954221892455547,
+              0.9954221892455547
+            ],
+            "stereo_difference_relative_rms": 0.0855944451832425
+          }
+        },
+        {
+          "event_frame": 960000,
+          "logical_start": 959744,
+          "logical_end": 960256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0017520882949442786,
+                0.0017520882949442786
+              ],
+              "peak": [
+                0.00444506760686636,
+                0.00444506760686636
+              ],
+              "dc": [
+                -9.594577289151474e-05,
+                -9.594577289151474e-05
+              ],
+              "max_adjacent_delta": [
+                0.0011554304510354996,
+                0.0011554304510354996
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0017410275593358602,
+                0.0017410275593358602
+              ],
+              "peak": [
+                0.004525735508650541,
+                0.004525735508650541
+              ],
+              "dc": [
+                -9.129528524765007e-05,
+                -9.129528524765007e-05
+              ],
+              "max_adjacent_delta": [
+                0.001089225450414233,
+                0.001089225450414233
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.0001709800706587676,
+              0.0001709800706587676
+            ],
+            "difference_relative_rms_per_channel": [
+              0.09758644650052026,
+              0.09758644650052026
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.993687112892464,
+              0.993687112892464
+            ],
+            "stereo_difference_relative_rms": 0.0975864465005203
+          }
+        },
+        {
+          "event_frame": 1248000,
+          "logical_start": 1247744,
+          "logical_end": 1248256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0014595067267579311,
+                0.0014595067267579311
+              ],
+              "peak": [
+                0.0040814317762851715,
+                0.0040814317762851715
+              ],
+              "dc": [
+                9.04996039228223e-05,
+                9.04996039228223e-05
+              ],
+              "max_adjacent_delta": [
+                0.0008575261163059622,
+                0.0008575261163059622
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.001462019224471398,
+                0.001462019224471398
+              ],
+              "peak": [
+                0.004192647524178028,
+                0.004192647524178028
+              ],
+              "dc": [
+                9.409585940778342e-05,
+                9.409585940778342e-05
+              ],
+              "max_adjacent_delta": [
+                0.000801784626673907,
+                0.000801784626673907
+              ]
+            },
+            "difference_rms_per_channel": [
+              9.833952354893688e-05,
+              9.833952354893688e-05
+            ],
+            "difference_relative_rms_per_channel": [
+              0.0673786024730307,
+              0.0673786024730307
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.001721470458069,
+              1.001721470458069
+            ],
+            "stereo_difference_relative_rms": 0.06737860247303072
+          }
+        },
+        {
+          "event_frame": 1536000,
+          "logical_start": 1535744,
+          "logical_end": 1536256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0013387365690837086,
+                0.0013387365690837086
+              ],
+              "peak": [
+                0.004666900262236595,
+                0.004666900262236595
+              ],
+              "dc": [
+                -0.000193282392986327,
+                -0.000193282392986327
+              ],
+              "max_adjacent_delta": [
+                0.0008677142491251288,
+                0.0008677142491251288
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0013334613323249373,
+                0.0013334613323249373
+              ],
+              "peak": [
+                0.004699375480413437,
+                0.004699375480413437
+              ],
+              "dc": [
+                -0.0001923123375826563,
+                -0.0001923123375826563
+              ],
+              "max_adjacent_delta": [
+                0.0007847222150303423,
+                0.0007847222150303423
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00011608684370890196,
+              0.00011608684370890196
+            ],
+            "difference_relative_rms_per_channel": [
+              0.08671373173017677,
+              0.08671373173017677
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.9960595408532226,
+              0.9960595408532226
+            ],
+            "stereo_difference_relative_rms": 0.08671373173017675
+          }
+        },
+        {
+          "event_frame": 1824000,
+          "logical_start": 1823744,
+          "logical_end": 1824256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0016553122449521286,
+                0.0016553122449521286
+              ],
+              "peak": [
+                0.00464043952524662,
+                0.00464043952524662
+              ],
+              "dc": [
+                5.9922441574933316e-05,
+                5.9922441574933316e-05
+              ],
+              "max_adjacent_delta": [
+                0.0010875682928599417,
+                0.0010875682928599417
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0016418166155359045,
+                0.0016418166155359045
+              ],
+              "peak": [
+                0.004646570887416601,
+                0.004646570887416601
+              ],
+              "dc": [
+                5.173648604328562e-05,
+                5.173648604328562e-05
+              ],
+              "max_adjacent_delta": [
+                0.001178619684651494,
+                0.001178619684651494
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.000252703332627889,
+              0.000252703332627889
+            ],
+            "difference_relative_rms_per_channel": [
+              0.15266203303848402,
+              0.15266203303848402
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.991847079330574,
+              0.991847079330574
+            ],
+            "stereo_difference_relative_rms": 0.1526620330384839
+          }
+        },
+        {
+          "event_frame": 2112000,
+          "logical_start": 2111744,
+          "logical_end": 2112256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0016203227980926339,
+                0.0016203227980926339
+              ],
+              "peak": [
+                0.003585514146834612,
+                0.003585514146834612
+              ],
+              "dc": [
+                0.00015311278190122124,
+                0.00015311278190122124
+              ],
+              "max_adjacent_delta": [
+                0.001030681247357279,
+                0.001030681247357279
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0016226656473403319,
+                0.0016226656473403319
+              ],
+              "peak": [
+                0.0035930362064391375,
+                0.0035930362064391375
+              ],
+              "dc": [
+                0.00015287994635748703,
+                0.00015287994635748703
+              ],
+              "max_adjacent_delta": [
+                0.001036491164995823,
+                0.001036491164995823
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00010251391403405337,
+              0.00010251391403405337
+            ],
+            "difference_relative_rms_per_channel": [
+              0.06326758727009694,
+              0.06326758727009694
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0014459151290447,
+              1.0014459151290447
+            ],
+            "stereo_difference_relative_rms": 0.06326758727009692
+          }
+        },
+        {
+          "event_frame": 2400000,
+          "logical_start": 2399744,
+          "logical_end": 2400256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0012904321526921402,
+                0.0012904321526921402
+              ],
+              "peak": [
+                0.0038137694355100393,
+                0.0038137694355100393
+              ],
+              "dc": [
+                -0.0001809639080798675,
+                -0.0001809639080798675
+              ],
+              "max_adjacent_delta": [
+                0.0008373130112886429,
+                0.0008373130112886429
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.001296756747398745,
+                0.001296756747398745
+              ],
+              "peak": [
+                0.003857508534565568,
+                0.003857508534565568
+              ],
+              "dc": [
+                -0.0001820613738150456,
+                -0.0001820613738150456
+              ],
+              "max_adjacent_delta": [
+                0.0007683513103984296,
+                0.0007683513103984296
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00010323933632086247,
+              0.00010323933632086247
+            ],
+            "difference_relative_rms_per_channel": [
+              0.0800036918682484,
+              0.0800036918682484
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              1.0049011447005642,
+              1.0049011447005642
+            ],
+            "stereo_difference_relative_rms": 0.08000369186824832
+          }
+        },
+        {
+          "event_frame": 2688000,
+          "logical_start": 2687744,
+          "logical_end": 2688256,
+          "comparison": {
+            "stock": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0013238475017983981,
+                0.0013238475017983981
+              ],
+              "peak": [
+                0.005288171581923962,
+                0.005288171581923962
+              ],
+              "dc": [
+                5.9748081469912506e-05,
+                5.9748081469912506e-05
+              ],
+              "max_adjacent_delta": [
+                0.0008866570133250207,
+                0.0008866570133250207
+              ]
+            },
+            "draft": {
+              "finite_count": 1024,
+              "sample_count": 1024,
+              "rms": [
+                0.0012979457263763807,
+                0.0012979457263763807
+              ],
+              "peak": [
+                0.005219805985689163,
+                0.005219805985689163
+              ],
+              "dc": [
+                6.310621670313488e-05,
+                6.310621670313488e-05
+              ],
+              "max_adjacent_delta": [
+                0.0008604598697274923,
+                0.0008604598697274923
+              ]
+            },
+            "difference_rms_per_channel": [
+              0.00021376767222062854,
+              0.00021376767222062854
+            ],
+            "difference_relative_rms_per_channel": [
+              0.16147454440955852,
+              0.16147454440955852
+            ],
+            "draft_stock_rms_ratio_per_channel": [
+              0.980434471956301,
+              0.980434471956301
+            ],
+            "stereo_difference_relative_rms": 0.1614745444095584
+          }
+        }
+      ]
+    }
+  ]
+}
