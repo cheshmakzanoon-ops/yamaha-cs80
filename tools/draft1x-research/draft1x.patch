@@ -1,0 +1,81 @@
+diff -ru a/src/core/Dsp.h b/src/core/Dsp.h
+--- a/src/core/Dsp.h	2026-11-16 21:30:41.000000000 -0400
++++ b/src/core/Dsp.h	2026-11-17 08:32:34.888325658 -0400
+@@ -1239,13 +1239,13 @@
+ {
+ public:
+     static constexpr int kMaxFactor = 8;
+-    static constexpr int tapsFor(int factor) noexcept { return 128 * factor - 1; }
++    static constexpr int tapsFor(int factor) noexcept { return factor == 1 ? 1 : 128 * factor - 1; }
+     static constexpr int centerFor(int factor) noexcept { return (tapsFor(factor) - 1) / 2; }
+     static constexpr int retainedPhaseFor(int factor) noexcept { return factor - 1; }
+     static constexpr int hostLatencyFor(int factor) noexcept
+     { return (centerFor(factor) - retainedPhaseFor(factor)) / factor; }
+     static constexpr bool validFactor(int factor) noexcept
+-    { return factor == 2 || factor == 4 || factor == 8; }
++    { return factor == 1 || factor == 2 || factor == 4 || factor == 8; }
+     static constexpr int kMaxTaps = 128 * kMaxFactor - 1;
+ 
+     // Bounded work and no allocation: safe to repeat on the render thread.
+@@ -1254,6 +1254,7 @@
+         factor = validFactor(newFactor) ? newFactor : 2;
+         taps = tapsFor(factor);
+         center = centerFor(factor);
++        if (factor == 1) { coeffs[0] = 1.0f; reset(); return; }
+         constexpr double pi = 3.14159265358979323846;
+         // Same expression as Decimator for factor 2 (the scale is then exactly 1).
+         const double fc = (20000.0 / 88200.0 + 0.25) * 0.5 * (2.0 / (double) factor);
+@@ -1287,6 +1288,7 @@
+     float output() const noexcept
+     {
+         const float* newest = hist.data() + idx - 1 + taps;
++        if (factor == 1) return newest[0];
+         double y = (double) coeffs[(size_t) center] * newest[-center];
+         for (int i = 0; i < center; ++i)
+             y += (double) coeffs[(size_t) i]
+diff -ru a/src/core/Engine.cpp b/src/core/Engine.cpp
+--- a/src/core/Engine.cpp	2026-11-16 21:30:41.000000000 -0400
++++ b/src/core/Engine.cpp	2026-11-17 08:32:34.890532469 -0400
+@@ -109,6 +109,10 @@
+ 
+ int Engine::effectiveOversampling() const noexcept
+ {
++    if (researchDraft1x && usesSourceModels(global.renderPolicy) && !nonRealtime
++        && oversamplingMode(params[P_oversampling]) != OversamplingMode::hq
++        && (hostRate == 44100.0 || hostRate == 48000.0 || hostRate == 88200.0 || hostRate == 96000.0))
++        return 1;
+     return oversamplingFactor(oversamplingMode(params[P_oversampling]),
+                               usesSourceModels(global.renderPolicy), nonRealtime, hostRate);
+ }
+diff -ru a/src/core/Engine.h b/src/core/Engine.h
+--- a/src/core/Engine.h	2026-11-16 21:30:41.000000000 -0400
++++ b/src/core/Engine.h	2026-11-17 08:32:34.889241592 -0400
+@@ -353,6 +353,9 @@
+     // Effective internal factor (2, 4 or 8) from the OVERSAMPLING mode, the
+     // render policy, the host rate and the offline flag (see Oversampling.h).
+     int getOversamplingFactor() const noexcept { return oversample; }
++    // Research-only, setup-only; never a serialized parameter or realtime toggle.
++    bool setResearchDraft1xBeforePrepare(bool enabled) noexcept
++    { if (prepared) return false; researchDraft1x = enabled; return true; }
+     // Host offline-render flag (AudioProcessor::isNonRealtime). The circuit
+     // engine renders offline at HQ. A factor change re-prepares the
+     // rate-dependent state without allocating and stops sounding notes, like a
+@@ -675,6 +678,7 @@
+     double hostRate = 48000.0;
+     double internalRate = 96000.0;
+     double initialPitchDecay = 0.0; // initialized in constructor and prepare
++    bool researchDraft1x = false;
+     int oversample = 2;
+     // Circuit engine idle path: internal samples per idle step and the
+     // matching initial-pitch-transient decay over one step.
+diff -ru a/src/core/ExternalModulationInterpolator.h b/src/core/ExternalModulationInterpolator.h
+--- a/src/core/ExternalModulationInterpolator.h	2026-11-16 21:30:41.000000000 -0400
++++ b/src/core/ExternalModulationInterpolator.h	2026-11-17 08:32:34.888833267 -0400
+@@ -63,6 +63,7 @@
+     {
+         Frame out {};
+         if (!connected) return out;
++        if (factor == 1) { out[0] = sanitise(input); return out; }
+         const float x = static_cast<float>(factor) * sanitise(input);
+         history[(size_t) next] = history[(size_t) (next + kHistory)] = x;
+         if (++next == kHistory) next = 0;

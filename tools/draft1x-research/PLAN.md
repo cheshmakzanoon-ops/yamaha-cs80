@@ -1,0 +1,27 @@
+# Draft 1x research-only prospective plan
+
+Scope: opt-in approximate lower-cost rendering, not parity or production integration. No existing default, parameter enum, serialized value, or normal workflow changes. Source tree 702bf5ee4e375c7b13da7ec95b01b56587bbf75c, tests64b7f72ed0139d846e8107c47c62f190cb13eefa. Parent owns permission for later experiments; independent design review precedes cost.
+
+## Prototype boundary
+Copy immutable source/tests to isolated baseline and candidate directories. Candidate-only setup flag on Engine, default false, accepted only BEFORE prepare; changing a prepared instance is rejected, not silently reset during sound. Gate effective factor1 on explicit flag, source policy, realtime, non-HQ selection and exact host rates44100/48000/88200/96000. All other configurations retain original factor rule, including Legacy and offlineHQ. No parameter or plugin state field added. Reprepare/offline/policy changes retain existing documented reset behavior; draft is not a seamless live switch.
+
+Implement explicit factor1 decimator: one tap coefficient1, center0, retainedphase0, hostlatency0, output exactly latest input without arithmetic; prepare early branch avoids generic sinc/window center0. Existing factors2/4/8 formulas untouched. EXT factor1 returns sanitise(input) atout[0], other lanes0, disconnectedzero, delay0, normal reset/connect history isolation. Engine oscillator latency remains8hostsamples source1x; total8, not67/71. No existing live/plugin host compensation certification is inferred.
+
+Structural benefit: two internal process calls become one per hostframe relative to2x; stereo255tap output FIR omitted. This is NOT50%measured CPU benefit; per-second oscillator event work and fixed host work remain. No blocked lifecycle instrumentation, approximate libm, PGO, new compiler strategy or closed trial repetition.
+
+## Safety/default gates, before cost
+1. Exact default-off baseline PCM/work/state and FP checks across existing baseline/performance rosters; old enums/definitions byte-unchanged. Legacy, explicitHQ and offline fallback exact against stock at all four rates. Default supported-rate behavior remains unchanged.
+2. Component factor1 impulse/step/signedzero/finite-extremes/reset/push-output/latency tests; factors2/4/8 exact against baseline. EXT connected/disconnected, reset, finite clamping, NaN/Inf sanitization and unused-lanezero. 1x raw audio bypass does NOT sanitize internal nonfinite output: engine qualification must fail nonfinite audio.
+3. Core structural gate: exactfactor/internalrate/latency; flag rejected afterprepare; reprepare and source-policy/offline transitions reset deterministically and do not retain voices/tails. Unsupported rates8000/16000/32000/192000 use existing factors, never new lower-rate circuit behavior. Allocation/bounds/sanitizer checks on bounded test workloads; no assertion of plugin real-time safety from core-only test.
+4. Existing filter/oscillator rate admission supports >=8k, but this research limits1x to>=44.1k. Measure high-pitch clipping at maxfrequency=min(.45*rate,.95/resetSeconds), resonance stability, overload recovery and finite tails. Any unexpected NaN/Inf, memory error, hang, unbounded growth or persistent nondecaying output outside known self-oscillation scenarios rejects prototype.
+
+## Descriptive quality report, not user acceptance
+Freeze fixture inventory before rendering: all22 source tones, PANEL/memory, highnotes across usable MIDI span, pulse/saw/noise, highresonance/filtercutoff grid, ringon/off, MPE/pressure/bend, EXT, BBD and modernFX, held/release and steppedcontrols at four rates. Initial bounded report can explicitly cover a named subset; cannot claim full coverage. Retain raw stereo PCM and exact controls. Compare equal physical duration and deterministic seed, align by declared latency (and report actual impulse behavior), never null-compare unaligned signals.
+Report pitch cents, envelope timing, RMS/peak/crest/DC, bandwise energy and highfrequency residual, existing alias metric with its ring-carrier caveat, smallsignal filter magnitude/Q/cutoff deviation. Reference2x default plus8x offline where affordable; no claim8x is hardware truth. Quantify onset/reset click peak and derivative against stock reset; latency changes and deliberate voiceclear must be disclosed. No post-hoc metric exclusion or threshold tuning.
+No inaudibility/acceptable-quality threshold invented: report departures and representative level-matched listening files for user judgment. Bypass removes antialiasing stages, changes circuit time discretization, oscillator frequency ceiling, noise/FX bandwidth and EXT delay; all are explicit qualitytradeoffs.
+
+## Production gaps
+Core-only flag is not serialized or exposed. Any later appended unique defaultoff parameter requires missing-old-state default testing, normalized-host automation/ID stability, actual plugin state roundtrip and latency/PDC checks. PluginProcessor's existing setLatencySamples hooks are not proof of host compatibility. No live toggle promised; safe stopped-only UI or separately proven transition required. No production integration until user accepts concrete quality tradeoffs and separate independent review.
+
+## Cost later
+Only after design/prototype correctness review: separately preregistered1x-vs2x research study, not PGO retry. Preserve fixed workload/order/calibration/no-retry and disclose no sonic parity. No cost trial in this implementation assignment before independent review.
