@@ -1,0 +1,11 @@
+# Linux loader preparation: inert shared-object tests only
+
+`DlopenOps` is a Linux/glibc64 implementation of the existing typed LoaderOps interface. It is inert on construction and has no production CLI or default integration. Its16 tests invoke the OS dynamic loader exclusively on tiny shared libraries compiled by the test; their GetPluginFactory always returns null. No synth, VST3 plugin instance or audio process code is loaded or executed.
+
+Admission checks: canonical absolute regular path with no symlink resolution change; single native open attempt using RTLD_NOW|RTLD_LOCAL; mandatory typed exports; exported symbol must have ELF STT_FUNC type and belong to the exact opened module's link-map base, rejecting a same-named dependency export or data symbol. Function conversion follows the POSIX dlsym contract. A foreign handle, repeated resolution, repeated close or reopen is rejected. Native open/close counts and resolution status are retained; missing-symbol/dlopen diagnostics are available.
+
+A ModuleSession, not the loader destructor, owns ModuleExit and object teardown. The loader must outlive that session. If open fails after obtaining a handle but before returning it, it closes that unescaped handle itself. On later resolution/entry/factory failures, the tested session performs exact appropriate cleanup: no ModuleExit after failed entry, but one exit after successful entry even when the factory is null; one unload in either case. The loader does not blindly dlclose live objects in its destructor.
+
+Tests cover valid inert callbacks, factory-null failure, missing exports, data/dependency export rejection, failed entry/exit, invalid ELF, missing/noncanonical/symlink paths, foreign handles and close/reopen prohibition. Constructor/entry/exit/destructor events are checked against exact expected sequences. They are not real-plugin lifecycle or symbol/linkage qualification.
+
+Caller-owned quiescent roots and prior full bundle/module hashes remain mandatory. The loader does not independently seal bytes or prevent an adversarial file replacement between verification and dlopen. It does not replace archived core/map/ELF binding or the complete release/host/render gates. Other OS/libc/32-bit targets and IFUNC exports are unsupported rather than guessed.

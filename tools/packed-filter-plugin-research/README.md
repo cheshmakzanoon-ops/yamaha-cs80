@@ -1,11 +1,11 @@
 # Packed filter plugin qualification preparation
 
-Research only; no workflow, renderer or production default change. This is not a
+Research only; no production default change or runnable qualification workflow. This is not a
 completed plugin qualification or benchmark. See PLAN.md for the prospective
 stages and remaining implementation/review gates.
 
-Run offline checks (GNU gcc is required for tiny inert ELF fixtures; generated
-code is never executed):
+Run preparation checks (GNU compilers required; ELF proof fixtures are not
+executed, while explicit SDK/CTest controls execute inert fake programs only):
 
     PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/packed-filter-plugin-research -v
 
@@ -57,3 +57,14 @@ The workflow cannot ship production changes or launch plugin timing.
 For the complete existing native-fixture capture scope see `capture_roster-notes.md`. For the additive observer's exact implemented and missing pieces see `native_observer_STATUS.md`, and its fake-interface runtime evidence in `native_observer_fake_STATUS.md`. Original native tests and validator breadth remain mandatory. `split_ctest.py` constructs a prospective sequential full-roster schedule only; its toy equivalence check is not real suite evidence. Native initialization/rendering, actual postbuild admission and the reviewed launch workflow are still missing.
 
 The prospective split schedule uses CTest `-T Test` to retain **same-attempt** dashboard `Test.xml`, alongside JUnit and the tag-specific `LastTest_<tag>.log`, before any next invocation overwrites them. `dashboard_exit.py` adds a strict raw-exit gate for the frozen CTest 3.31.6 producer: that version emits exit fields for every nonzero or abnormal exit, even when a pass regex makes JUnit pass. Passed/Completed without those fields implies zero only under that producer's reviewed format. The inert toy covers regex-output plus exit 42, skip 77 and timeout; these cannot pass the exit gate. A separate successful rerun would never prove the first process exited cleanly. Runtime identity, fresh-output/same-attempt binding, hook/config absence and complete log archival remain mandatory orchestration work, not claims made by this parser.
+
+
+## Native observer preparation checkpoint
+
+With explicit pinned `CS80_OBSERVER_SDK` and `CS80_CTEST` paths, 452 preparation controls pass. These include injected lifecycle fakes, inert dynamically loaded library/export checks, 50 render adapters, 24 canonical render encoding controls and 25 explicit state-contract controls. They do not load the actual CS80 plugin. The render adapters allocate and are correctness-only, never performance evidence. Native loader support has no executable launch entry point.
+
+The pinned official SDK host attribute helper has independently reproduced overwrite and zero-size allocation leaks. Its wrapper is explicitly defect-control-only and inadmissible as the real observer host. See `native_observer_host_LIMITATIONS.md`; a separately reviewed bounded replacement is still required. No dependency or synth code was patched.
+
+The pinned JUCE controller intentionally has no separate serialized controller state. `native_observer_state.hpp` records its exact unsupported/empty result under a preselected policy, while requiring full successful component state and supported controller synchronization. It never treats arbitrary failures as optional. Restore does not restore RNG/DSP history: eventual audio equivalence must compare identical full histories across arms, not assert that one arm returns to initial PCM.
+
+See each `native_observer_*_STATUS.md` for precise limits. Still outstanding: complete conforming host integration, frozen workload and state/reset/transport semantics, UI-thread/message handling, immutable actual module/runtime identity, same-attempt subprocess evidence, production clean-link proof, full original release tests/validators and separately reviewed timing. No production integration or real qualification launch is justified by this checkpoint.
