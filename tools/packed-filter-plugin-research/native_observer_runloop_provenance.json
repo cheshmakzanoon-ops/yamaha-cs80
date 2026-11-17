@@ -1,0 +1,34 @@
+{
+  "additional_headers": {
+    "pluginterfaces/gui/iplugview.h": "024e6c4ea59ba6961bc45431ead6b2a8c60231250b2c181a6de99d62a1cfdc11",
+    "pluginterfaces/base/typesizecheck.h": "99288a4b2191e3edb48f1a365ef2ba29b5c8211b57b08a93ae2ed9416bbdf74e"
+  },
+  "scope": "standalone UI-only runloop preparation; inert pipe/timer/ref fixtures",
+  "native_plugin_loaded": false,
+  "host_interface_advertised": false,
+  "sdk_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "tests": 40,
+  "returning_cases": 39,
+  "watchdog_hang_cases": 1,
+  "compile_argv": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-pthread",
+    "-I<research>",
+    "-I<verified-sdk>",
+    "<research>/native_observer_runloop_fixture.cpp",
+    "-o<temporary-fixture>"
+  ],
+  "sources": {
+    "native_observer_runloop.hpp": "e9e20eb3623777c29b9783887d776b07365d1e207b9c77851375b0bd62ccbc3f",
+    "native_observer_runloop_fixture.cpp": "da9190edc4f2ab11c5480e354ab30b9991185c6768477e5d02552be2a2014c24",
+    "native_observer_runloop_STATUS.md": "9f44d1cb9db0138bc7a7732923f13a8d4b22fcd05247d21923eb5a415650c53e",
+    "native_observer_runloop_PLAN.md": "3f2b073edec761e4a1ff85672a775302ea41741fa87f804e922a66307f329571",
+    "native_observer_runloop_sources.json": "ebd3ec9b4be279fa894af7dc3d82eeaadbd0fc80e3ffb8804088001f0a58e57a",
+    "test_native_observer_runloop.py": "25b1fc49cc0f87ba16108cc5684f5ab43fedc922b4587812e094902949dfd0fa"
+  }
+}

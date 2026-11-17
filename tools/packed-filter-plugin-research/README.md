@@ -80,3 +80,7 @@ The isolated checkpoint suite totals515 controls with explicit pinned SDK/CTest.
 ## Phase-owned lifecycle preparation
 
 The initializer now supports an owned Connected metadata checkpoint, one setup and three checked activation cycles with a same-instance saved-state restore only in the first suspension. Complete parameter IDs are retained from the same metadata enumeration. Processing operations use a private phase guard and terminal cleanup; rejected nested operations cannot release objects until the outer callback unwinds. 58 new inert phase controls plus two SDK-enabled workload-bridge controls bring the isolated suite to 575. The concrete bridge requires the owner’s successful Connected metadata, explicitly maps offline mode and reuses the existing flush/render formats; each segment declares project time starting at zero. Fresh-module reload/state transfer, actual threads/message-loop integration, full driver orchestration and real-plugin qualification remain outstanding.
+
+## Standalone Linux runloop preparation
+
+The separate UI-owner-only dispatcher has 40 reviewed controls, including a hung-callback watchdog fixture. It retains callback snapshots, revalidates generations, bounds dispatch/timers, and requires checked shutdown. It does not advertise an optional host interface or load the synth. Actual JUCE registration-thread compatibility is not established, and sampled idle is never treated as global callback quiescence. The isolated preparation suite now totals 615 controls.
