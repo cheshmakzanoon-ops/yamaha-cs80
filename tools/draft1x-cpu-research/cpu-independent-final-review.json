@@ -1,0 +1,57 @@
+{
+  "decision": "TECHNICALLY_APPROVED_PENDING_ROOT_LAUNCH_DIRECTION",
+  "scope": "Exact frozen Draft1x approximate-quality core CPU study; not production integration, sonic acceptance or plugin qualification",
+  "admission_sha256": "5080d5b64ece8b405ac5ee97907ca0d81243b14e3fb6fc1c01cccea35b758e7c",
+  "bound_files": {
+    "driver.cpp": "3a0645633ece272966577c699e6e8bb2a83d5193fdd80dc2966dafbcd9c0f6cb",
+    "analysis.py": "a3c49a6a7516b6c9f8568d427d4ef283a80cfe9d1bd9b7306ea137f406acce40",
+    "pcm_store.py": "0ed645d932ab402f5bf7c1d109f1e9f0efb4c44a2c66d4037cfab79b8347f48d",
+    "test_analysis.py": "a2577281a0fa940c81cc3b0dd47dbe7e581039ed14988026a23cd746b50de02b",
+    "test_receipts.py": "44567f3451c28ed10ab8f4818dccdb3a4e464af473239fd0c29283e0b1bfaa70",
+    "IMPLEMENTATION.md": "f72914cadd24f135828afd554905f96812b6ad68c8657486a37097e3c4d46706",
+    "PROTOCOL.md": "386271304f5342406c5b676e7a49116d47ae8c84915a0fdc93fee6b21a846ef0",
+    "orchestrate.py": "6b5db556d60e97883cf93e69fe84c1406dd93eb6124b97a07efecf0cbc5d2f4a",
+    "workflow.yml": "e852fbbb1aa4f3721b9e3196cd280670ebcb2fd401b2e7a39b5804a8f64e138b",
+    "test_orchestrate.py": "0461587022462321e8f29317b0036fbc9b48c21ca34346b4d46c35c1a58e2d9e",
+    "test_process_cleanup.py": "850cff0024d9dca6212ed86daccb8a5da06190971c61648c9c0fd369988681db",
+    "ORCHESTRATOR-DRAFT.md": "ce6013fce9fbe0700a688530b3992ef249e1b1c723762ecf939af1b0bbf02559",
+    "draft1x.patch": "82be9cbdfd790e46a9b0abf82cc225b907242025bc69d2d7f59b81b943782c9e",
+    "structural.cpp": "20bb54ba85180ca8fc212db7073dccc28d98c35c253b283fca559922ef8f3cb8",
+    "followup.cpp": "9b16e28483f3010192b23d2b8d5ff56614be4742ab2df2d227fdd51b52ee687e",
+    "capture.cpp": "3a813b64f97ade53f929f53a1cdcb1c42bc00fa12b069d5ee4548f7378401998",
+    "sanitizer-evidence/RESULT.json": "620ad1c91dd9b793eb93dc00a8f2714c8ce8416e44ed73bd27a1554979376a8a",
+    "sanitizer-evidence/RESULT.md": "dad4b291adcbadcf460f03d44f0189fdd5c37897032fd65e94907da13dad02ff",
+    "sanitizer-evidence/harness.sha256": "18b009baba8773dc73664fa6e130f501a12bd37cf55af2ea9af8cd5b899ceddd",
+    "sanitizer-evidence/run-address-undefined.sh": "1b0737220dd7a009334f852c74177a9500346acfb0050b0fef60863a590564f5",
+    "sanitizer-evidence/run.sh": "9cf4b08968497486e63d059ffd7e2b145e87b85890c0e96e1f64bdb9e1efd942",
+    "sanitizer-evidence/structural-address-undefined.log": "88734f2ec3384a800dfbb8521f6228622177d491bbf3239cec3cca8c037cd909",
+    "sanitizer-evidence/structural.log": "e5a06fcb9e7cdbf133caf0e6725e736d0d5ee9325d61238044bdea703cbe4d4a"
+  },
+  "verified_file_count": 23,
+  "independent_executor_tests_passed": 8,
+  "verified_controls": [
+    "120-second tail cases",
+    "SIGALRM launch-window cleanup",
+    "failed-leader and timeout descendant cleanup",
+    "fixed108 run schedule and phase-terminal gates",
+    "source/driver/compiler/binary bindings",
+    "independent event/metadata/PCM checks",
+    "post-timing canonical PCM retention",
+    "public standard first-run/attempt workflow;180-minute hard study/210-minute job limits"
+  ],
+  "billing_assessment": {
+    "conclusion": "Public Actions artifact zero-cost scope is a supported inference, not account-budget verification",
+    "sources": [
+      "https://docs.github.com/en/billing/concepts/product-billing/github-actions",
+      "https://github.com/orgs/community/discussions/26438"
+    ],
+    "basis": "Current billing document scopes compute/storage allowances to private repositories and exempts public standard compute; accepted GitHub support answer explicitly says public build artifacts do not count toward storage limits. Historical support answer is interpreted with current documentation, not presented as a current account billing inspection."
+  },
+  "restrictions": [
+    "No release or tag creation",
+    "No timing execution performed during review",
+    "No modifications to frozen files or admission",
+    "Root launch direction still required",
+    "All previously closed trials remain terminal"
+  ]
+}
