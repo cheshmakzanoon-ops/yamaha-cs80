@@ -1,0 +1,188 @@
+{
+  "capture_kind": "historical-stock-only-diagnostic-not-qualification",
+  "receipt_sha256": "d0e588450b0b8a7c27c9ec4cc843073d300a67a2a454ac012e0c265759a5f7f0",
+  "metadata_sha256": "5c4719ed323b2dcbec34430329dde20a5d5211040a4addc919b45a18ecdc85bc",
+  "failure_operation": "initial-flush",
+  "primary_error": "full flush complete ID-set binding",
+  "source_classification": {
+    "admitted": false,
+    "read_only": true,
+    "write_permission": false,
+    "source_pattern_only": true,
+    "pinned_wrapper_sha256": "16031325b31be2e32b23689f07338bd6c631941475b9bbf87d176d1f2565c202",
+    "pinned_midi_header_sha256": "c51527d390b09d62e71be172908b81990f77c25920047f729cfc9b5c69f73e4b",
+    "generated_count": 192,
+    "source_memory_count": 104,
+    "missing_source_memory": [],
+    "observed_count": 2378,
+    "missing_generated": [],
+    "role_counts": {
+      "generated_workload_control": 192,
+      "source_memory_control": 104,
+      "pinned_juce_wrapper_bypass_pattern": 1,
+      "pinned_juce_wrapper_program_pattern": 1,
+      "pinned_juce_midi_emulation_pattern": 2080
+    }
+  },
+  "role_statistics": {
+    "generated_workload_control": {
+      "count": 192,
+      "flags_counts": {
+        "1": 192
+      },
+      "step_counts": {
+        "0": 177,
+        "13": 2,
+        "1": 10,
+        "5": 1,
+        "2": 2
+      },
+      "current_not_default_count": 55,
+      "nonzero_current_count": 134,
+      "nonzero_default_count": 117
+    },
+    "source_memory_control": {
+      "count": 104,
+      "flags_counts": {
+        "1": 104
+      },
+      "step_counts": {
+        "1": 8,
+        "0": 96
+      },
+      "current_not_default_count": 0,
+      "nonzero_current_count": 64,
+      "nonzero_default_count": 64
+    },
+    "pinned_juce_wrapper_bypass_pattern": {
+      "count": 1,
+      "flags_counts": {
+        "65537": 1
+      },
+      "step_counts": {
+        "1": 1
+      },
+      "current_not_default_count": 0,
+      "nonzero_current_count": 0,
+      "nonzero_default_count": 0,
+      "complete_parameters": [
+        {
+          "index": 296,
+          "id": 1652125811,
+          "id_hex": "62797073",
+          "title": {
+            "text": "Bypass",
+            "utf16le_hex": "420079007000610073007300",
+            "code_units": [
+              66,
+              121,
+              112,
+              97,
+              115,
+              115
+            ]
+          },
+          "short_title": {
+            "text": "Bypass",
+            "utf16le_hex": "420079007000610073007300",
+            "code_units": [
+              66,
+              121,
+              112,
+              97,
+              115,
+              115
+            ]
+          },
+          "units": {
+            "text": "",
+            "utf16le_hex": "",
+            "code_units": []
+          },
+          "step_count_raw": 1,
+          "step_count": 1,
+          "default_normalized": 0.0,
+          "default_f64le_hex": "0000000000000000",
+          "unit_id_raw": 0,
+          "unit_id": 0,
+          "flags_raw": 65537,
+          "current_normalized": 0.0,
+          "current_f64le_hex": "0000000000000000"
+        }
+      ]
+    },
+    "pinned_juce_wrapper_program_pattern": {
+      "count": 1,
+      "flags_counts": {
+        "32769": 1
+      },
+      "step_counts": {
+        "522": 1
+      },
+      "current_not_default_count": 0,
+      "nonzero_current_count": 0,
+      "nonzero_default_count": 0,
+      "complete_parameters": [
+        {
+          "index": 297,
+          "id": 1886548852,
+          "id_hex": "70727374",
+          "title": {
+            "text": "Program",
+            "utf16le_hex": "500072006f006700720061006d00",
+            "code_units": [
+              80,
+              114,
+              111,
+              103,
+              114,
+              97,
+              109
+            ]
+          },
+          "short_title": {
+            "text": "Program",
+            "utf16le_hex": "500072006f006700720061006d00",
+            "code_units": [
+              80,
+              114,
+              111,
+              103,
+              114,
+              97,
+              109
+            ]
+          },
+          "units": {
+            "text": "",
+            "utf16le_hex": "",
+            "code_units": []
+          },
+          "step_count_raw": 522,
+          "step_count": 522,
+          "default_normalized": 0.0,
+          "default_f64le_hex": "0000000000000000",
+          "unit_id_raw": 0,
+          "unit_id": 0,
+          "flags_raw": 32769,
+          "current_normalized": 0.0,
+          "current_f64le_hex": "0000000000000000"
+        }
+      ]
+    },
+    "pinned_juce_midi_emulation_pattern": {
+      "count": 2080,
+      "flags_counts": {
+        "0": 2080
+      },
+      "step_counts": {
+        "0": 2080
+      },
+      "current_not_default_count": 0,
+      "nonzero_current_count": 0,
+      "nonzero_default_count": 0
+    }
+  },
+  "production_qualified": false,
+  "admitted": false
+}

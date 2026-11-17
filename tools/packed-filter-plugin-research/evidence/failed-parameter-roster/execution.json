@@ -1,0 +1,51 @@
+{
+  "kind": "historical-stock-only-diagnostic-not-qualification",
+  "argv": [
+    "DIAGNOSTIC_ROOT/observer-failure-metadata",
+    "DIAGNOSTIC_ROOT/request-metadata-v3.bin",
+    "36e417e3036c719e96f02f8d3cef5461168d04211bc8e2373035435aad6d8798",
+    "e55b77b4f9e74a4a1ae26801c5c4c4434b5e5ef2766c0435474079f95723fcc7",
+    "DIAGNOSTIC_ROOT/attempt-5-metadata/receipt"
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "DIAGNOSTIC_ROOT/attempt-5-metadata/home",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "pid": 11,
+  "returncode": 24,
+  "seconds": 0.3468090050009778,
+  "watchdog_reason": null,
+  "group_empty_after_wait": true,
+  "input_hashes_before": {
+    "request-metadata-v3.bin": "36e417e3036c719e96f02f8d3cef5461168d04211bc8e2373035435aad6d8798",
+    "observer-failure-metadata": "d050754e1ca694e9eff6ed585d47eceb31bb858269e0a2d07d334edbaf884dba",
+    "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "baec79cbe2c8667b92312c858d40fb9d308ca5433bbf337b01c1257a4ded8d35",
+    "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4"
+  },
+  "input_hashes_unchanged": true,
+  "files": {
+    "receipt": {
+      "size": 198985,
+      "sha256": "d0e588450b0b8a7c27c9ec4cc843073d300a67a2a454ac012e0c265759a5f7f0"
+    },
+    "stdout": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "size": 316,
+      "sha256": "cf6472fda4091db7792591012d68382bc1410e538acec89d2c7b91668412c11e"
+    }
+  },
+  "production_qualified": false,
+  "runtime_closure_complete": false,
+  "CPU_timing_claim": false,
+  "export_redaction": {
+    "kind": "path-redacted-portable-export",
+    "original_execution_json_sha256": "56815d8f22fc8b25549fb4e60579be611eb32dce45845c12b09a88e5595a5916",
+    "path_label": "DIAGNOSTIC_ROOT",
+    "scope": "Internal absolute diagnostic paths in argv and HOME replaced by portable relative labels. Not exact raw argv/environment evidence; original retained locally."
+  }
+}

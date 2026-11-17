@@ -8,6 +8,21 @@ class ProcessLifetimeChild final {
     static constexpr std::size_t payloadCap=64u*1024u*1024u,receiptCap=96u*1024u*1024u;
     static void outputIdentity(int fd){struct stat s{};require(::fstat(fd,&s)==0 && S_ISREG(s.st_mode) && s.st_uid==::geteuid() && s.st_nlink==1 && s.st_size==0 && (s.st_mode&0777)==0600 && ::lseek(fd,0,SEEK_CUR)==0,"exclusive empty owned receipt file");}
     static std::string digest(const auto& b){cs80_identity::detail::Hash hash;hash.update(b.data(),b.size());return hash.finish();}
+    static void failureMetadata(int fd,const ModuleHistoryFailure& failure,const cs80_identity::PinnedModule& pin,const std::string& nonce,const char* step,const char* primary)noexcept{
+        try{
+            // Metadata lives in the intentionally retained graph. Never request new
+            // native data, admit failure, retry cleanup, or overwrite partial output.
+            constexpr std::size_t metadataCap=16u*1024u*1024u;
+            if(fd<0 || !failure.connectedMetadata || failure.connectedMetadata->data.empty())return;
+            const auto& metadata=failure.connectedMetadata->data;require(metadata.size()<=metadataCap,"failure metadata cap");outputIdentity(fd);
+            Bytes body;body.text("cs80-process-lifetime-failure-metadata-v1");body.text("rejected");body.u32(24);body.text(nonce);body.u64(static_cast<std::uint64_t>(::getpid()));
+            body.text(pin.identity()->arm());body.text(pin.identity()->expectedManifestDigest());body.text(pin.identity()->evidenceDigest());body.text(pin.stamp().sha256);
+            body.text("preload-identities-not-postfailure-verification");body.text(std::string_view(step).substr(0,64));body.text(std::string_view(failure.attempted).substr(0,64));body.text(std::string_view(failure.historyOperation).substr(0,64));body.text(std::string_view(primary?primary:"unknown").substr(0,256));
+            body.text(digest(metadata));body.blob(metadata.data(),metadata.size());require(body.data.size()<=metadataCap+4096,"failure frame cap");
+            Bytes framed;framed.u64(body.data.size());framed.raw(body.data.data(),body.data.size());framed.text(digest(body.data));
+            outputIdentity(fd);std::size_t at=0;while(at<framed.data.size()){const auto n=::write(fd,framed.data.data()+at,framed.data.size()-at);if(n<0 && errno==EINTR)continue;require(n>0,"failure metadata write");at+=static_cast<std::size_t>(n);}require(::fsync(fd)==0,"failure metadata fsync");
+        }catch(...){} // Best effort only; caller always exits24.
+    }
 public:
     ProcessLifetimeChild()=delete;
     [[noreturn]] static void run(std::shared_ptr<const cs80_identity::PinnedModule> pin,const TUID cid,packed_filter_workload::Case c,ControllerStatePolicy policy,worker::WaitPolicy wait,const std::string& nonce,const std::string& output,ControllerQueryPolicy queryPolicy=ControllerQueryPolicy::StrictSdk,bool recordQueryEvidence=false,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput){
@@ -61,6 +76,7 @@ public:
             unsigned badCalls=0;for(std::size_t i=0;i<failure.module.count;++i)if(!failure.module.rows[i].normal || !failure.module.rows[i].ok || failure.module.rows[i].error)++badCalls;
             char diagnostic[1024];const int count=std::snprintf(diagnostic,sizeof(diagnostic),"CS80_PROCESS_LIFETIME_FAILURE v1 stage=%.64s module_step=%.64s primary=%.256s opens=%u closes=%u provider_absent=%u host_refs=%u registrations=%zu failed_module_calls=%u query_policy=%u query_attempted=%u query_normal=%u query_result=%d query_pointer=%u cleanup_retried=0 exit=24\n",step,failure.attempted,primary?primary:"unknown",failure.opens,failure.closes,failure.providerAbsent?1u:0u,failure.hostReferences,failure.registrations,badCalls,static_cast<unsigned>(failure.query.policy),failure.query.attempted?1u:0u,failure.query.normal?1u:0u,failure.query.result,failure.query.pointerPresent?1u:0u);
             if(count>0){const auto size=std::min(static_cast<std::size_t>(count),sizeof(diagnostic)-1);(void)::write(STDERR_FILENO,diagnostic,size);}
+            if(pin)failureMetadata(fd,failure,*pin,nonce,step,primary);
             if(fd>=0){const int closing=std::exchange(fd,-1);(void)::close(closing);}
             std::_Exit(24);
         }

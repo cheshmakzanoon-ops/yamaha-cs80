@@ -10,10 +10,12 @@ struct ProcessingCleanupSnapshot {
     std::size_t interfaceCount=0;std::exception_ptr error;
 };
 class ProcessingInstanceOwner {
+    friend class HistoryOwner;
     enum class Violation {None,WrongThread,Nested,Closed,Failed};
     const std::thread::id ui_=std::this_thread::get_id();
     std::atomic<Violation> violation_{Violation::None};
-    InjectedInstance instance_;
+    InjectedInstance instance_;bool connectedCaptured_=false;
+    const Bytes* diagnosticConnectedMetadata()const noexcept{return std::this_thread::get_id()==ui_ && !operation_ && connectedCaptured_?&instance_.connectedMetadata_:nullptr;}
     struct Results {
         RenderProtocol renderProtocol;FlushProtocol flushProtocol;
         RenderObservation render;FlushReceipt flush;
@@ -104,7 +106,7 @@ public:
     ControllerQueryObservation controllerQueryObservation()const noexcept{return instance_.controllerQueryObservation();}
     ProcessingInstanceOwner(const ProcessingInstanceOwner&)=delete;ProcessingInstanceOwner& operator=(const ProcessingInstanceOwner&)=delete;
     void initializeConnected(){uiCall([&]{instance_.initializeConnected();});}
-    void captureConnected(){uiCall([&]{instance_.captureConnected();});}
+    void captureConnected(){uiCall([&]{instance_.captureConnected();});connectedCaptured_=true;}
     void prepareAndStart(SynthSetup setup,bool metrics=false){uiCall([&]{instance_.prepareAndStart(setup,metrics);});}
     void saveState(ControllerStatePolicy policy){uiCall([&]{instance_.saveState(policy);});}
     void suspend(){uiCall([&]{instance_.suspend();});}

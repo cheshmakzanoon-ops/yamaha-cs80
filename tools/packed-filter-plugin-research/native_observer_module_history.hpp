@@ -24,7 +24,7 @@ inline std::vector<ThreadStamp> threads(){
     return result;
 }
 }
-struct ModuleHistoryFailure {const char* attempted="none";uint32 hostReferences=0;std::size_t registrations=0;bool providerAbsent=false;unsigned opens=0,closes=0;InitializerCalls<128> module;ControllerQueryObservation query;};
+struct ModuleHistoryFailure {const char* attempted="none";uint32 hostReferences=0;std::size_t registrations=0;bool providerAbsent=false;unsigned opens=0,closes=0;InitializerCalls<128> module;ControllerQueryObservation query;const Bytes* connectedMetadata=nullptr;const char* historyOperation="unavailable";};
 // Private advertised views share one FUnknown identity; Dispatcher never escapes.
 class ProcessLifetimeChild;
 class ModuleHistoryOwner final {
@@ -99,7 +99,7 @@ class ModuleHistoryOwner final {
     uint32 lastHostRefs_=0;std::size_t lastRegistrations_=0;
     void receiptAccess()const{require(std::this_thread::get_id()==ui_ && !running_,"module history UI idle receipt");}
     void check(){require(!violation_ && !processTerminal_,"module history terminal violation");}
-    void quarantine()noexcept{processTerminal_=true;if(graph_){providerAbsent_=graph_->loader.evidence().providerClosedCleanly();lastHostRefs_=graph_->host.refs();lastRegistrations_=graph_->host.registrations();failure_.attempted=attemptedStep_;failure_.hostReferences=lastHostRefs_;failure_.registrations=lastRegistrations_;failure_.providerAbsent=providerAbsent_;failure_.opens=graph_->loader.evidence().nativeOpenCalls();failure_.closes=graph_->loader.evidence().nativeCloseCalls();failure_.module=graph_->module.calls;if(graph_->history)failure_.query=graph_->history->controllerQueryObservation();graph_.release();}quarantined_=true;}
+    void quarantine()noexcept{processTerminal_=true;if(graph_){providerAbsent_=graph_->loader.evidence().providerClosedCleanly();lastHostRefs_=graph_->host.refs();lastRegistrations_=graph_->host.registrations();failure_.attempted=attemptedStep_;failure_.hostReferences=lastHostRefs_;failure_.registrations=lastRegistrations_;failure_.providerAbsent=providerAbsent_;failure_.opens=graph_->loader.evidence().nativeOpenCalls();failure_.closes=graph_->loader.evidence().nativeCloseCalls();failure_.module=graph_->module.calls;if(graph_->history){failure_.query=graph_->history->controllerQueryObservation();failure_.connectedMetadata=graph_->history->diagnosticConnectedMetadata();failure_.historyOperation=graph_->history->diagnosticAttemptedOperation();}graph_.release();}quarantined_=true;}
     ModuleHistoryOwner(std::shared_ptr<const cs80_identity::PinnedModule> pin,ModuleLifetimeProfile profile):graph_(allocate(std::move(pin),profile)){}
 public:
     explicit ModuleHistoryOwner(std::shared_ptr<const cs80_identity::PinnedModule> pin):ModuleHistoryOwner(std::move(pin),ModuleLifetimeProfile::StrictUnmap){}

@@ -17,6 +17,9 @@ struct HistoryObservation {
 // Owns this fixed instance/worker history, NOT module/load/runloop lifetime.
 // External module and handler must remain live until this owner is destroyed.
 class HistoryOwner final {
+    friend class ModuleHistoryOwner;
+    const Bytes* diagnosticConnectedMetadata()const noexcept{return std::this_thread::get_id()==ui_ && !running_?owner_.diagnosticConnectedMetadata():nullptr;}
+    const char* diagnosticAttemptedOperation()const noexcept{return std::this_thread::get_id()==ui_ && !running_?evidence_.attemptedOperation:"unavailable";}
     const std::thread::id ui_=std::this_thread::get_id();
     const packed_filter_workload::Case case_;const ControllerStatePolicy policy_;const AudioInputTopology inputTopology_;
     ProcessingInstanceOwner owner_;HistoryObservation evidence_;
