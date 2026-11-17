@@ -109,6 +109,21 @@ class Tests(unittest.TestCase):
             (root / 'alias').symlink_to(target)
             with self.assertRaises(ValueError): p.profile_manifest(root)
 
+    def test_explicit_c_compiler_inventory(self):
+        a = database(); b = changed('use')
+        c = {'directory': '/frozen/build', 'file': ROOT + '/dependency.c',
+             'arguments': ['/usr/bin/cc', '-O3', '-DNDEBUG', '-fPIC', '-o', 'dependency.c.o',
+                           '-c', ROOT + '/dependency.c']}
+        a.append(copy.deepcopy(c)); b.append(copy.deepcopy(c))
+        with self.assertRaises(ValueError): verify_scope(a, b, ROOT, PROFILE, 'use')
+        result = p.verify_compile_scope(a, b, ROOT, PROFILE, 'use',
+                                      expected_compiler='g++', expected_c_compiler='/usr/bin/cc')
+        self.assertEqual(len(result['ordinary_objects']), 3)
+        b[-1]['arguments'][0] = '/usr/bin/clang'
+        with self.assertRaises(ValueError):
+            p.verify_compile_scope(a, b, ROOT, PROFILE, 'use',
+                                   expected_compiler='g++', expected_c_compiler='/usr/bin/cc')
+
     def test_effective_optimization_and_compiler(self):
         a = database(); b = changed('use')
         a[0]['arguments'].append('-O0'); b[0]['arguments'].append('-O0')

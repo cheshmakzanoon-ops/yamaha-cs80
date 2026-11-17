@@ -44,7 +44,7 @@ def reject_unsafe(argv):
                 'undeclared math/ISA/LTO/response option ' + item)
 
 
-def verify_compile_scope(baseline, changed, source_root, profile_dir, mode, *, expected_compiler):
+def verify_compile_scope(baseline, changed, source_root, profile_dir, mode, *, expected_compiler, expected_c_compiler=None):
     require(mode in ('baseline', 'generate', 'use'), 'unknown mode')
     require(bool(expected_compiler), 'explicit frozen compiler required')
     a, b = command_entries(baseline), command_entries(changed)
@@ -57,7 +57,9 @@ def verify_compile_scope(baseline, changed, source_root, profile_dir, mode, *, e
     if mode == 'use': expected += ['-Werror=missing-profile', '-Werror=coverage-mismatch']
     for key, row in a.items():
         other = b[key]
-        require(row['argv'][0] == other['argv'][0] == expected_compiler, 'unexpected compiler command')
+        compiler = expected_c_compiler if Path(row['source']).suffix == '.c' else expected_compiler
+        require(bool(compiler), 'explicit frozen C compiler required for C translation unit')
+        require(row['argv'][0] == other['argv'][0] == compiler, 'unexpected compiler command')
         require(row['source'] == other['source'] and row['directory'] == other['directory'],
                 'compile source/directory drift')
         require(not any('-fprofile-' in arg or arg.startswith('-fauto-profile') for arg in row['argv']),
