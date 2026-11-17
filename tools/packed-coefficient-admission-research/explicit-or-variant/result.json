@@ -1,0 +1,33 @@
+{
+  "scope": "one explicit OR compile variant; no CPU timing",
+  "compiler": "GNU 14.2",
+  "flags": [
+    "-std=gnu++20",
+    "-O3",
+    "-DNDEBUG",
+    "-fPIC",
+    "-ffp-contract=off"
+  ],
+  "baseline_source_sha256": "b80b7f5f183139a007156df952ce11f74d3b336101822d6eb2a830bdd20d4307",
+  "variant_source_sha256": "a612510e598be7471aa8ced68b57e56868cd7345335dc475d44bfab3758bb6fd",
+  "process_bytes": {
+    "b80": 4114,
+    "variant": 3846
+  },
+  "stack_allocation_bytes": {
+    "b80": 1184,
+    "variant": 576
+  },
+  "component": {
+    "checks": 25329954,
+    "admitted": 14616,
+    "rejected": 93870,
+    "transcript_bytes": 133980210,
+    "sha256": "af13f05f7445ebfacdc607c36ed125e4386c7c522d78af0a8d02236a2fd55c0e",
+    "identical_stock_and_b80": true
+  },
+  "static_rsp_vector_store_instructions": {
+    "b80": 42,
+    "explicit": 24
+  }
+}

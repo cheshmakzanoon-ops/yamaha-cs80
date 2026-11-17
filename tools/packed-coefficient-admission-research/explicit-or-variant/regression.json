@@ -1,0 +1,25 @@
+{
+  "candidate_sha256": "a612510e598be7471aa8ced68b57e56868cd7345335dc475d44bfab3758bb6fd",
+  "compiler": "GNU14.2 O3 PIC, Igonly contractionoff",
+  "batch": "Ig00156Batch: 1183425 checks, 0 failures, 15685 accelerated groups\n",
+  "engine": "FilterBatchEngine: 4135998 checks, 285328 stereo frames, 0 failures\n",
+  "engine_corpus_bytes": 22400288,
+  "engine_corpus_sha256": "25dad72a8b6e5cd220b1d219c83be44dd238b8b6dfddfe0ee311b74716aa40aa",
+  "stock_corpus_match": true,
+  "disabled_object_sha256": "eadeac4b36878e699241026a687120e2b2b8fd3ea0c0d9664be1d33cc53b8544",
+  "disabled_object_matches_tested": true,
+  "common_objects": {
+    "Engine.o": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+    "FactoryPresets.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b"
+  },
+  "binary_hashes": {
+    "batch-tests": "9da12c0011b17eb4ac301ea9b2d55a4fae93f720ea65a4cf05ddaaf2a39a1894",
+    "engine-tests": "d31af429dc6211531c5bda26c0a43728ecc1533388e73a55a454c703f4189071",
+    "Ig00156Batch.o": "963f12bbfbe5a20fce9eda677dec8263329b0f5c139fe18567530abf7f3524d1"
+  },
+  "exit": 0,
+  "limitations": [
+    "No native CPUmeasurement, noGNU13orotherplatform qualification.",
+    "Stockcontrolartifacts reusedunchanged; not rerun."
+  ]
+}

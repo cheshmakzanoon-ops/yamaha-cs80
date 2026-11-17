@@ -1,0 +1,20 @@
+--- a/src/core/Ig00156Batch.cpp
++++ b/src/core/Ig00156Batch.cpp
+@@ -137,8 +137,15 @@
+         // Sign-cleared IEEE magnitudes are nonnegative signed64 values, so cmpgt
+         // rejects >1e6, infinities and all NaNs without FP evaluation.
+         auto badCoefficient=outsideCoefficientBound(scale);
+-        for (V value : {g1,f1,fromFb,fromIn,fromU,fromBp,kiGs,invA11,inFromX})
+-            badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(value));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(g1));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(f1));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(fromFb));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(fromIn));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(fromU));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(fromBp));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(kiGs));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(invA11));
++        badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(inFromX));
+         if (_mm256_movemask_pd(_mm256_castsi256_pd(badCoefficient)) != 0)
+         {
+             // Replay the ORIGINAL guard sequence before rejecting: an earlier
