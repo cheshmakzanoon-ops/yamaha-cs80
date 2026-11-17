@@ -1,0 +1,47 @@
+name: Production PIC PGO configuration preflight
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/production-pic-pgo-research/preflight.py'
+      - 'tools/production-pic-pgo-research/test_preflight.py'
+      - '.github/workflows/production-pic-pgo-preflight.yml'
+permissions:
+  contents: read
+jobs:
+  configure:
+    if: github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Normal Linux configuration dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build pkg-config libxml2-dev \
+            libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
+            libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
+            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb xauth openbox x11-utils
+      - name: Synthetic configuration and provenance negative controls
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest discover -s tools/production-pic-pgo-research -p 'test_*.py' -v
+      - name: Configure four modes and integer toolchain plumbing, no synth training
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: >-
+          python3 tools/production-pic-pgo-research/preflight.py
+          --repo "$GITHUB_WORKSPACE" --work "$RUNNER_TEMP/pic-pgo-preflight"
+          --out "$GITHUB_WORKSPACE/pic-pgo-preflight-results"
+      - name: Preserve configuration receipts even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pic-pgo-configuration-${{ github.run_id }}-${{ github.run_attempt }}
+          path: pic-pgo-preflight-results/
+          if-no-files-found: warn
+          retention-days: 14
