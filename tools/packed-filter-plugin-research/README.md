@@ -88,3 +88,7 @@ The separate UI-owner-only dispatcher has 40 reviewed controls, including a hung
 ## Actual file-identity prerequisite
 
 A separate verifier uses EVP SHA-256 over actual file bytes, comparing the complete declared bundle inventory and explicitly frozen runtime/input files with trusted expected manifests. Its immutable result and reverify checks have 36 reviewed inert controls, bringing this isolated checkpoint to 651. The owned/quiescent-root model is mandatory: this is not race-proof against adversarial writers, does not authenticate a caller's manifest or discover complete dependencies, and does not prove which image dlopen loaded. Loaded-provider binding and fresh-transfer authority remain blocked prerequisites.
+
+## Retained module-file capability
+
+The identity verifier now retains a typed module stamp from its original admitted scan. A separate RAII capability pins a no-follow read-only descriptor, verifies its actual hash/stamp, and reverifies the complete identity before and after pinning. Its 17 new controls bring the isolated suite to 668. The held descriptor is not evidence that dlopen selected it; loaded-provider binding, trusted dependency closure and disciplined borrowed-descriptor use remain required. No actual plugin is loaded by these controls.

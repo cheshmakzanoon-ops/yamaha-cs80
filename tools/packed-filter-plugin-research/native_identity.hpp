@@ -21,6 +21,10 @@
 
 namespace cs80_identity {
 inline void check(bool ok,const char* why){if(!ok)throw std::runtime_error(why);}
+class PinnedModule;
+struct ModuleStamp {
+    std::uint64_t device=0,inode=0,size=0;std::uint32_t mode=0,uid=0,gid=0;std::string sha256;
+};
 struct Caps {std::uint64_t entries,files,bytes,pathBytes;};
 struct Entry {
     std::string path; bool directory=false; std::uint32_t mode=0,uid=0,gid=0;
@@ -93,7 +97,11 @@ inline void validate(const ExpectedIdentity&e,const Caps&c){
     for(const auto&i:e.inputs){check(!i.name.empty()&&i.name.size()<=c.pathBytes&&i.name.find('\0')==std::string::npos&&i.name>prev,"input label/order");prev=i.name;check(i.root<e.inputRoots.size()&&!i.file.directory&&i.file.path!=".","input root/type");validateEntry(i.file,c);check(paths.emplace(i.root,i.file.path).second,"duplicate input path");used.insert(i.root);count=add(count,1,c.entries);files=add(files,1,c.files);bytes=add(bytes,i.file.size,c.bytes);}
     check(used.size()==e.inputRoots.size(),"unused input root");
 }
+inline ModuleStamp stamp(const struct stat&s,const Entry&e){return {static_cast<std::uint64_t>(s.st_dev),static_cast<std::uint64_t>(s.st_ino),e.size,e.mode,e.uid,e.gid,e.sha256};}
+inline bool sameStamp(const ModuleStamp&a,const ModuleStamp&b){return a.device==b.device&&a.inode==b.inode&&a.size==b.size&&a.mode==b.mode&&a.uid==b.uid&&a.gid==b.gid&&a.sha256==b.sha256;}
+struct ScanResult {std::string inodes;ModuleStamp module;};
 struct Scan {
+    std::string designatedModule;ModuleStamp moduleStamp;
     const Caps& caps;std::uint64_t count=0,files=0,bytes=0;
     std::set<std::pair<std::uint64_t,std::uint64_t>> nodes;
     std::string inodes;
@@ -103,7 +111,7 @@ struct Scan {
         count=add(count,1,caps.entries);files=add(files,1,caps.files);bytes=add(bytes,result.size,caps.bytes);
         Hash hash;std::array<char,65536> buffer{};std::uint64_t readBytes=0;
         for(;;){auto n=::read(fd.n,buffer.data(),buffer.size());if(n<0&&errno==EINTR)continue;check(n>=0,"read failed");if(n==0)break;readBytes=add(readBytes,static_cast<std::uint64_t>(n),result.size);hash.update(buffer.data(),static_cast<std::size_t>(n));}
-        check(readBytes==result.size&&stable(before,statFd(fd.n)),"file changed during read");result.sha256=hash.finish();return result;
+        check(readBytes==result.size&&stable(before,statFd(fd.n)),"file changed during read");result.sha256=hash.finish();if(label=="bundle:"+designatedModule)moduleStamp=stamp(before,result);return result;
     }
     void tree(int fd,const std::string&path,std::vector<Entry>&out){
         auto before=statFd(fd);auto value=entry(path,before);check(value.directory,"expected directory");count=add(count,1,caps.entries);note("bundle:"+path,before);out.push_back(value);
@@ -118,24 +126,27 @@ struct Scan {
         check(stable(before,statFd(fd)),"directory changed during scan");
     }
 };
-inline std::string scan(const ExpectedIdentity&e,const Caps&c){
-    Scan s{c,0,0,0,{}, {}};Fd root(openRoot(e.bundle.path));rootCheck(root.n,e.bundle);std::vector<Entry> actual;s.tree(root.n,".",actual);
+inline ScanResult scan(const ExpectedIdentity&e,const Caps&c){
+    Scan s{e.module,{},c,0,0,0,{}, {}};Fd root(openRoot(e.bundle.path));rootCheck(root.n,e.bundle);std::vector<Entry> actual;s.tree(root.n,".",actual);
     std::sort(actual.begin(),actual.end(),[](const Entry&a,const Entry&b){return a.path=="."?b.path!=".":b.path=="."?false:a.path<b.path;});check(actual.size()==e.bundleEntries.size(),"bundle inventory mismatch");for(std::size_t i=0;i<actual.size();++i)check(equal(actual[i],e.bundleEntries[i]),"bundle bytes/metadata mismatch");
     for(std::size_t r=0;r<e.inputRoots.size();++r){Fd fd(openRoot(e.inputRoots[r].path));rootCheck(fd.n,e.inputRoots[r]);s.note("root:"+e.inputRoots[r].path,statFd(fd.n));
         for(const auto&i:e.inputs)if(i.root==r){Fd parent(::dup(fd.n));std::size_t p=0;for(;;){auto q=i.file.path.find('/',p);if(q==std::string::npos)break;auto part=i.file.path.substr(p,q-p);int next=::openat(parent.n,part.c_str(),O_RDONLY|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC);check(next>=0,"input ancestor symlink/missing");::close(parent.n);parent.n=next;p=q+1;}
             auto actualFile=s.file(parent.n,i.file.path.substr(p),i.file.path,"input:"+i.name);check(equal(actualFile,i.file),"input bytes/metadata mismatch");}
     }
-    return s.inodes;
+    return {std::move(s.inodes),std::move(s.moduleStamp)};
 }
 } // detail
 class VerifiedIdentity final {
+    friend class PinnedModule;
+    const ModuleStamp moduleStamp_;
     const ExpectedIdentity expected_;const Caps caps_;const std::string expectedBytes_,evidenceBytes_,expectedDigest_,evidenceDigest_;
-    VerifiedIdentity(ExpectedIdentity e,Caps c,std::string inodeEvidence):expected_(std::move(e)),caps_(c),expectedBytes_(detail::encode(expected_,caps_)),evidenceBytes_(makeEvidence(expectedBytes_,inodeEvidence)),expectedDigest_(detail::digest(expectedBytes_)),evidenceDigest_(detail::digest(evidenceBytes_)){}
+    VerifiedIdentity(ExpectedIdentity e,Caps c,detail::ScanResult observed):moduleStamp_(std::move(observed.module)),expected_(std::move(e)),caps_(c),expectedBytes_(detail::encode(expected_,caps_)),evidenceBytes_(makeEvidence(expectedBytes_,observed.inodes)),expectedDigest_(detail::digest(expectedBytes_)),evidenceDigest_(detail::digest(evidenceBytes_)){}
     static std::string makeEvidence(const std::string&e,const std::string&i){std::string out;detail::text(out,"cs80-native-verified-v1");detail::text(out,e);detail::text(out,i);return out;}
 public:
     VerifiedIdentity(const VerifiedIdentity&)=delete;VerifiedIdentity&operator=(const VerifiedIdentity&)=delete;
     static std::shared_ptr<const VerifiedIdentity> verify(const ExpectedIdentity& expected,Caps caps){detail::validate(expected,caps);ExpectedIdentity snapshot=expected;auto observed=detail::scan(snapshot,caps);return std::shared_ptr<const VerifiedIdentity>(new VerifiedIdentity(std::move(snapshot),caps,std::move(observed)));}
     std::shared_ptr<const VerifiedIdentity> reverify()const{auto fresh=verify(expected_,caps_);check(fresh->evidenceBytes_==evidenceBytes_,"verified inode identity changed");return fresh;}
+    const ModuleStamp& moduleStamp()const{return moduleStamp_;}
     const std::string& arm()const{return expected_.arm;}
     std::string modulePath()const{return expected_.bundle.path+"/"+expected_.module;}
     const std::string& expectedManifestDigest()const{return expectedDigest_;}
