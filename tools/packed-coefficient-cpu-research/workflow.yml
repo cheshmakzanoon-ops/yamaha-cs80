@@ -1,0 +1,36 @@
+# DRAFT ONLY. Review/freeze all input hashes before publication or dispatch.
+name: Packed coefficient CPU first research attempt
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/packed-coefficient-cpu-study.yml'
+permissions:
+  contents: read
+concurrency:
+  group: packed-coefficient-cpu-first-study
+  cancel-in-progress: false
+jobs:
+  study:
+    if: github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 210
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: One-shot functional admission then AA, candidate phases
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: >-
+          python3 tools/packed-coefficient-cpu-research/orchestrate.py
+          --repo "$GITHUB_WORKSPACE" --revision "$GITHUB_SHA"
+          --out "$GITHUB_WORKSPACE/packed-coefficient-cpu-results"
+      - name: Retain failed and successful evidence without retry
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: packed-coefficient-cpu-first-${{ github.run_id }}-${{ github.run_attempt }}
+          path: packed-coefficient-cpu-results/
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,53 @@
+[
+  {
+    "label": "compiler",
+    "argv": [
+      "g++",
+      "--version"
+    ],
+    "timeout_seconds": 120,
+    "exit": 0
+  },
+  {
+    "label": "compile",
+    "argv": [
+      "g++",
+      "-std=gnu++20",
+      "-O1",
+      "-g",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off",
+      "-fno-omit-frame-pointer",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I/workspace/shared/cs80-audits/draft1x-design/native-study/stock/src",
+      "-I/workspace/shared/cs80-audits/draft1x-design/native-study/stock/src/core",
+      "-DBATCH_SOURCE=\"/workspace/shared/cs80-audits/packed-coefficient-admission/explicit-or-variant/Ig00156Batch.cpp\"",
+      "/workspace/shared/cs80-audits/packed-coefficient-admission/component.cpp",
+      "-o",
+      "/workspace/shared/cs80-audits/packed-coefficient-admission/explicit-or-variant/sanitizer/candidate"
+    ],
+    "timeout_seconds": 120,
+    "exit": 0
+  },
+  {
+    "label": "component",
+    "argv": [
+      "/workspace/shared/cs80-audits/packed-coefficient-admission/explicit-or-variant/sanitizer/candidate",
+      "/workspace/shared/cs80-audits/packed-coefficient-admission/explicit-or-variant/sanitizer/candidate.bin"
+    ],
+    "timeout_seconds": 120,
+    "exit": 0
+  },
+  {
+    "label": "compare",
+    "argv": [
+      "cmp",
+      "/workspace/shared/cs80-audits/packed-coefficient-admission/sanitizer/stock.bin",
+      "/workspace/shared/cs80-audits/packed-coefficient-admission/explicit-or-variant/sanitizer/candidate.bin"
+    ],
+    "timeout_seconds": 120,
+    "exit": 0
+  }
+]

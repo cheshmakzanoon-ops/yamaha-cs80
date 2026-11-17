@@ -1,0 +1,41 @@
+test_existing_work_never_reused (test_orchestrate.Guards.test_existing_work_never_reused) ... ok
+test_missing_attempt_terminal (test_orchestrate.Guards.test_missing_attempt_terminal) ... ok
+test_normal_prototype_flag_vectors (test_orchestrate.Guards.test_normal_prototype_flag_vectors) ... ok
+test_qualification_timeout_forwarding (test_orchestrate.Guards.test_qualification_timeout_forwarding) ... ok
+test_second_attempt_rejected (test_orchestrate.Guards.test_second_attempt_rejected) ... ok
+test_alarm_during_spawn_assignment (test_process_cleanup.Cleanup.test_alarm_during_spawn_assignment) ... ok
+test_nonzero_leader_kills_descendant (test_process_cleanup.Cleanup.test_nonzero_leader_kills_descendant) ... ok
+test_timeout_kills_group (test_process_cleanup.Cleanup.test_timeout_kills_group) ... ok
+test_aa_terminal (test_protocol_math.Test.test_aa_terminal) ... ok
+test_each_primary_round_must_improve (test_protocol_math.Test.test_each_primary_round_must_improve) ... ok
+test_gain_threshold_adjacent (test_protocol_math.Test.test_gain_threshold_adjacent) ... ok
+test_inclusive_row_bounds (test_protocol_math.Test.test_inclusive_row_bounds) ... ok
+test_invalid (test_protocol_math.Test.test_invalid) ... ok
+test_legacy_hard (test_protocol_math.Test.test_legacy_hard) ... ok
+test_noise_scaled_minimum (test_protocol_math.Test.test_noise_scaled_minimum) ... ok
+test_primary_aa_fails_inside_row_bounds (test_protocol_math.Test.test_primary_aa_fails_inside_row_bounds) ... ok
+test_schedule (test_protocol_math.Test.test_schedule) ... ok
+test_secondary_blocks_broad (test_protocol_math.Test.test_secondary_blocks_broad) ... ok
+test_small_gain (test_protocol_math.Test.test_small_gain) ... ok
+test_useful (test_protocol_math.Test.test_useful) ... ok
+test_callback_inventory (test_receipts.Receipts.test_callback_inventory) ... ok
+test_dry_receipt_zero_clock_required (test_receipts.Receipts.test_dry_receipt_zero_clock_required) ... ok
+test_legacy_metadata_and_parameter_oracle (test_receipts.Receipts.test_legacy_metadata_and_parameter_oracle) ... ok
+test_metadata_mutations (test_receipts.Receipts.test_metadata_mutations) ... ok
+test_missing_pcm (test_receipts.Receipts.test_missing_pcm) ... ok
+test_nonfinite_pcm (test_receipts.Receipts.test_nonfinite_pcm) ... ok
+test_parameter_bit_or_id_mutation (test_receipts.Receipts.test_parameter_bit_or_id_mutation) ... ok
+test_pressure_oracle (test_receipts.Receipts.test_pressure_oracle) ... ok
+test_release_oracle (test_receipts.Receipts.test_release_oracle) ... ok
+test_valid_and_dedup (test_receipts.Receipts.test_valid_and_dedup) ... ok
+test_wrong_event_frames_and_extra_rows (test_receipts.Receipts.test_wrong_event_frames_and_extra_rows) ... ok
+test_corruption_preserves_raw (test_receipts.Store.test_corruption_preserves_raw) ... ok
+test_duplicate_retains_one_verified_copy (test_receipts.Store.test_duplicate_retains_one_verified_copy) ... ok
+test_reference_path_and_missing_canonical (test_receipts.Store.test_reference_path_and_missing_canonical) ... ok
+test_symlink_rejected_without_copy (test_receipts.Store.test_symlink_rejected_without_copy) ... ok
+test_unique_limit_keeps_failed_unique (test_receipts.Store.test_unique_limit_keeps_failed_unique) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 2.871s
+
+OK

@@ -1,0 +1,13 @@
+# Packed coefficient CPU orchestrator: review draft
+
+No study build/render/timing or workflow dispatch was performed while preparing this draft. Only Python syntax and synthetic tests ran. Parent owns publication and final independent approval.
+
+Paths: tools/packed-coefficient-cpu-research and .github/workflows/packed-coefficient-cpu-study.yml. New first-run public standard Ubuntu24 x64 workflow,210min job; one shared180min monotonic study deadline. Timed/dry command cap600s, component and unchanged Batch qualification120s, Engine --write-corpus180s. All phases run in one orchestrator to prevent later steps surviving terminal AA failure. Frozen84-row schedule:42AA then42candidate. All14fullworkload dry runs precede timing; all PCM exact across both arms and all repeats, canonical cap7.
+
+The original tested execute_owned helper is reused without semantic change: pending SIGALRM blocked around spawn/assignment and restored under cleanup protection; child wrapper restores original mask; timeout/nonzero leader cleanup kills its process group and reaps leader. Three synthetic process cleanup tests plus flag/timeout/new-output/attempt/link-object tests pass. No project binary is used by these tests.
+
+Engine, FactoryPresets and driver objects compile ONCE from immutable stock source and are linked as exactly the same paths and hashes into both arms. Test harness objects are shared too. Only Ig00156Batch object differs, candidate must hash a612510e598be7471aa8ced68b57e56868cd7345335dc475d44bfab3758bb6fd and source diff is restricted to that file. Link manifest binds each actual arm executable, shared objects and distinct Ig objects. Shared-link validator rejects changed hash or path. Source contents are rechecked after build; all input/compiler/source/object/binary hashes are verified before and after each rendering command.
+
+Prior local sanitizer evidence is admitted only for the chosen a612 variant, explicitly GNU14 O1 address+undefined and no leak qualification. Actual runner GNU13 component/state/FP corpus, unchanged Batch tests and Engine corpus are independently executed before cost and compared exactly. No claim of GNU13 sanitized code.
+
+Admission intentionally absent until independent review. Required files include orchestrate/driver/reducer/protocol_math/pcm_store/PROTOCOL/candidate.patch/component/workflow, seven parameter-oracle CSVs and sanitizer-evidence/RESULT.json. Parent must package exact reviewed inputs and freeze APPROVED admission with source/test tree and candidate hash. Workflow copy must byte-match installed workflow. No production changes, plugin lifecycle hooks, retries or cross-platform claims. All failed outputs retained; artifacts use existing public no-charge approach, no releases/tags.
