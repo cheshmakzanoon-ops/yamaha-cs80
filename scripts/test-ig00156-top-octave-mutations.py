@@ -68,7 +68,10 @@ changed = header.replace(needle, '''const Output current { static_cast<float>(lp
         const Output previous = delayedOutput;
         delayedOutput = current;
         return previous;''')
-changed = changed.replace('private:\n    Ig00156Network net;', 'private:\n    Output delayedOutput {};\n    Ig00156Network net;')
+# Batch-access declarations may appear between private: and the network field.
+needle = '    Ig00156Network net;'
+assert changed.count(needle) == 1
+changed = changed.replace(needle, '    Output delayedOutput {};\n' + needle, 1)
 assert 'Output delayedOutput {};' in changed
 delayed = build('delayed', changed)
 run_case('delayed', delayed, limits, 1,
