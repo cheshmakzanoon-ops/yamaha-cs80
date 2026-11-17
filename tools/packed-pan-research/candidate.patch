@@ -1,0 +1,63 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -1,5 +1,6 @@
+ #include "Engine.h"
+ #include "RingModulatorCircuit.h"
++#include "PackedPanResearch.h"
+ 
+ #include <algorithm>
+ #include <cmath>
+@@ -3116,6 +3117,8 @@
+         }
+         // Preserve the original rank order and the exact multiply/add order
+         // of the VCA and mix. There is no block queue or additional latency.
++        bool panReady = false;
++        float nextPanLeft = 0.0f, nextPanRight = 0.0f;
+         for (int i = 0; i < pendingCount; ++i)
+         {
+             const auto& p = pending[(size_t) i];
+@@ -3129,7 +3132,14 @@
+             const float voiceOut = r.vca.process(vcaInput, p.levelCv, subValue * global.subVca * kIg00151SubOctaves, p.amp)
+                                    * p.chGain * 0.17f;
+             float panLeft, panRight;
+-            constantPowerPan(p.pan, panLeft, panRight);
++            if (panReady) {
++                panLeft = nextPanLeft; panRight = nextPanRight; panReady = false;
++            } else if (i + 1 < pendingCount && research::tryPanPair(p.pan, pending[(size_t) i + 1].pan,
++                                  panLeft, panRight, nextPanLeft, nextPanRight)) {
++                panReady = true;
++            } else {
++                constantPowerPan(p.pan, panLeft, panRight);
++            }
+             mixL += voiceOut * panLeft;
+             mixR += voiceOut * panRight;
+         }
+--- /dev/null
++++ b/src/core/PackedPanResearch.h
+@@ -0,0 +1,26 @@
++#pragma once
++#include "core/Vca.h"
++#include "core/Ig00156Batch.h"
++#include <bit>
++#if CS80_IG00156_EXACT_BATCH_BUILD
++#include <immintrin.h>
++#endif
++namespace cs80::research {
++static inline bool tryPanPair(float a,float b,float& al,float& ar,float& bl,float& br) noexcept {
++#if CS80_IG00156_EXACT_BATCH_BUILD
++ const bool finiteA=(std::bit_cast<unsigned>(a)&0x7f800000u)!=0x7f800000u;
++ const bool finiteB=(std::bit_cast<unsigned>(b)&0x7f800000u)!=0x7f800000u;
++ if(finiteA && finiteB && (_mm_getcsr()&0x1f80u)==0x1f80u){
++  const float p=std::clamp(a,-1.0f,1.0f),q=std::clamp(b,-1.0f,1.0f);
++  const __m128 x=_mm_setr_ps(1.0f-p,1.0f+p,1.0f-q,1.0f+q);
++  float out[4];_mm_storeu_ps(out,_mm_mul_ps(_mm_set1_ps(.5f),_mm_sqrt_ps(x)));
++  al=out[0];ar=out[1];bl=out[2];br=out[3];return true;
++ }
++#endif
++ return false;
++}
++static inline bool panPair(float a,float b,float& al,float& ar,float& bl,float& br) noexcept {
++ if(tryPanPair(a,b,al,ar,bl,br))return true;
++ constantPowerPan(a,al,ar);constantPowerPan(b,bl,br);return false;
++}
++}
