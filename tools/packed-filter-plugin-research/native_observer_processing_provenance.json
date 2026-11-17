@@ -1,0 +1,63 @@
+{
+  "scope": "real dedicated worker plus actual flush/render helpers against inert SDK native interfaces; no module loaded",
+  "native_plugin_loaded": false,
+  "tests": 26,
+  "returning_cases": 23,
+  "watchdog_cases": 1,
+  "invalid_destructor_termination_cases": 2,
+  "sdk_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "headers": {
+    "pluginterfaces/vst/ivstmessage.h": "cbd141fbd77264fa623b8de43aff795059599ead17c70a0ac4349c9647b42b64",
+    "pluginterfaces/base/falignpop.h": "c612b740f92c0d7426723af12d09083f26009e40a7cafe985801e6f3f706b60b",
+    "pluginterfaces/base/falignpush.h": "464d603bf4ece2d09e0f59a6830eac2d34c2cd66ad42a872831c5f30ae86675b",
+    "pluginterfaces/vst/ivstattributes.h": "61b70959f234145033c986847e1bdd45c45a8f244c927b2eb48d838c2e6054b3",
+    "pluginterfaces/vst/vsttypes.h": "5f1158d3b10d08494d72011c86c41dcf69ee16f6ffb360e76fe3013cc34c0652",
+    "pluginterfaces/base/fstrdefs.h": "c13810a921cfba8a2f20531b60b831f17e67c978ac368b7c2060ef976f5cd18e",
+    "pluginterfaces/base/conststringtable.h": "d081dd449e46059f75d3f47fb922d975611b13f6148fba58790f785d22b9b819",
+    "pluginterfaces/base/ftypes.h": "2a9273012944c30ff6bf2975066057cdba39464afffdc5d65a9bff5cd6264fd9",
+    "pluginterfaces/base/fplatform.h": "9b6f36614b73ed48de1a39d25e98d2d988063774e02f878b7de5e7da78824f57",
+    "pluginterfaces/base/funknown.h": "e0d9609224fe15491c9ccd1463d964c303f1d5a6149fabf849e87f2c14be1951",
+    "pluginterfaces/base/smartpointer.h": "f690163a2d5fa71e76cce1909ae719561031b897f79342ddf38190b2ed9613b3",
+    "pluginterfaces/vst/ivsteditcontroller.h": "a1aba69d8d411fdae6f7bee422fa9eb747a312a9fb517ff3436ee06d45a4e051",
+    "pluginterfaces/base/ipluginbase.h": "e10e9a4b9b0811c392af5758542e1f72875b56ebe7e1673d5075bc1160d9fd0b",
+    "pluginterfaces/vst/ivstcomponent.h": "cc587e34c009388d4187948c14a651df1481a01920abe895023094ca5b13faee",
+    "pluginterfaces/vst/ivstaudioprocessor.h": "6289b19c8300fb381da7688414fae52d5ca139371f910830532204b860bd6549",
+    "pluginterfaces/vst/vstspeaker.h": "f7942918bc52e78c2f061f77d2d28761f8a7b38a364cc3985bc22da21c8418d4",
+    "pluginterfaces/base/ibstream.h": "9530d37a36ceab42f7b03771f78337d5892e3328e805a9ff4e219409a1766c1e",
+    "pluginterfaces/vst/ivsthostapplication.h": "b7ef5b02f24c103e952e18b3e974e97b3c23d19c870a46c7c3aad36af8832332",
+    "pluginterfaces/vst/ivstevents.h": "3650f62d7152a4e5e8b4912c95d28a55a265da08c04b0a347e4132a8d5c8134d",
+    "pluginterfaces/vst/ivstparameterchanges.h": "4f177d8f9e207fc4f247fde5aebfbdf863d02bced08a6c2d21d759f043eea3dd",
+    "pluginterfaces/vst/ivstprocesscontext.h": "42dbc4ff739da1df828d016df91932cde89e39b9d3e5ff5bd15d9003b93d022f",
+    "pluginterfaces/vst/ivstnoteexpression.h": "4422cd750b64c33f04f6772fc324f38c81d237a04c74ef01df158c01cda72a9d"
+  },
+  "sources": {
+    "native_observer_processing.hpp": "f7127e494a22c86cc9c5e75ff9ede012333bd12d3d9bf590a929326e5a71d0c3",
+    "native_observer_processing_fixture.cpp": "76a3a6476a45890f5471bfa4b8715f121831fd957f450e8bc3be0deb697b2478",
+    "native_observer_processing_PLAN.md": "7a347536f4bfb9ceafc9a18f038bd158ad60aee940bec559d3ea09ac8d933da8",
+    "native_observer_processing_STATUS.md": "b63c84c29aff85cd49909fc4f9194b4342a44195a801ce20d8af08259b4078c7",
+    "test_native_observer_processing.py": "99fa28e272e4d51d69dff8a0d8281199e585d4a0dccaa29521544e42453f58c2"
+  },
+  "dependencies": {
+    "native_observer_initializer.hpp": "5424cd3ed14259271463725401843eee123ac88690bc7eec743d9740ef6a8323",
+    "native_observer_sdk.hpp": "938d80026f4b4340c862e18494b7c64b99165e43e489dd59703d519cef2ca371",
+    "native_observer_support.hpp": "17aecd02841c1511ffc17b4cd19726b919bf733307bcc9031c048597358d5c8f",
+    "native_observer_state.hpp": "6517f8a3050f83ec7673a845a7f5f9466020af23ae3597a519ac9b7bffbe88f6",
+    "native_observer_worker.hpp": "7d00c502ac97aa2c3c46c7933f7aeca22ef68fe2f1e153af55bb9f7992364b15",
+    "native_observer_render.hpp": "54482bdd3a1575c7a32cef57bcf560962a88c5762194da3f981112292f3a1d81",
+    "native_observer_flush.hpp": "7ab8ac33bc9434137a3c525e90c0d273ccc69aeaca1027d47e61a5aee2741b8c"
+  },
+  "compile_argv": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-pthread",
+    "-I<research>",
+    "-I<verified-sdk>",
+    "<research>/native_observer_processing_fixture.cpp",
+    "-ldl",
+    "-o<temporary-fixture>"
+  ]
+}

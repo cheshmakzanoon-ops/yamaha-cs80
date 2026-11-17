@@ -94,7 +94,9 @@ public:
 struct SynthSetup { double rate=48000;int32 mode=kRealtime,block=64; };
 // This subset supports the exact stereo synth topology (zero audio inputs,
 // one stereo output, one event input, no event output). Other layouts fail.
+class ProcessingInstanceOwner;
 class InjectedInstance {
+    friend class ProcessingInstanceOwner;
 public:
     enum class Phase { Fresh,Connected,Processing,Suspended,Closed,Failed };
 private:
@@ -107,11 +109,12 @@ private:
     std::optional<CreatedIdentity> identity;
     Phase phase_=Phase::Fresh;SynthSetup setup_{};unsigned suspensions_=0,resumes_=0;
     bool operation_=false,metadataAttempted_=false;
+    bool deferFailureCleanup_=false; // private owned-worker boundary; synchronous default unchanged
     StateObservation saved_;StateRestoreReceipt restored_;Bytes connectedMetadata_,setupMetrics_;ConnectedParameterRoster connectedRoster_;
     void fail(std::exception_ptr error) {
         if(!primaryError)primaryError=error;
         phase_=Phase::Failed;
-        if(!operation_ && !closeAttempted){try{close();}catch(...){}}
+        if(!operation_ && !closeAttempted && !deferFailureCleanup_){try{close();}catch(...){}}
         std::rethrow_exception(primaryError);
     }
     static void validateSetup(const SynthSetup& config) {

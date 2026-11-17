@@ -100,3 +100,7 @@ The separate real-thread worker has 32 reviewed controls, bringing the isolated 
 ## Joined inert-library provider checks
 
 The retained-file capability now joins a concrete normal-path loader and bounded ELF/maps checks.63 new controls, including 16 actual inert-library load/close cases, bring this isolated checkpoint to 763. The checks reject preloaded/replaced-path providers and bind actual handle/export mapping offsets to the retained file. They do not prove in-memory code-byte integrity or detect all private/COW modifications, and do not establish complete runtime closure. A sole native owner must keep loader operations inaccessible while instances or callbacks are live. No CS80 module or qualification driver is launched.
+
+## Private worker-to-instance integration
+
+26 additional controls bring the isolated suite to 789. A private UI-owned processing lease now joins the real worker to the existing flush/render helpers over inert SDK instances. It preserves native lifetime through synchronized completion and joins before UI-only failure cleanup, including nested pump misuse. The existing synchronous wrapper remains unchanged by default. Module/handler ownership, the complete history coordinator and real plugin interoperability remain external prerequisites. Clean closure is not full-history admission; no synth or qualification run is launched.
