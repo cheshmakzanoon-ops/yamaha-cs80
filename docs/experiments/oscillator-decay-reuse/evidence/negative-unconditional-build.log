@@ -1,0 +1,5 @@
+In file included from oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:1:
+oscillator-decay-reuse/negative/unconditional/core/ReconstructedOscillator.h: In member function ‘double cs80::ReconstructedOscillator::nextBranchEvent(const Nodes&, double, bool&) const’:
+oscillator-decay-reuse/negative/unconditional/core/ReconstructedOscillator.h:473:20: warning: unused variable ‘originalLimitBits’ [-Wunused-variable]
+  473 |         const auto originalLimitBits=std::bit_cast<std::uint64_t>(limit);
+      |                    ^~~~~~~~~~~~~~~~~

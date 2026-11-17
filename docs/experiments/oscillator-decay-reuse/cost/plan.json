@@ -1,0 +1,63 @@
+{
+  "scope": "component wholeoscillator walltime diagnostic only",
+  "candidate_sha256": "489cc6f9a442691a3ed73032bc37605a3e819e61e49343defc06f448629d2959",
+  "flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "frames": 8192,
+  "active_warmup_frames": 16384,
+  "idle_warmup_steps": 1024,
+  "aa_rounds": 4,
+  "ab_rounds": 12,
+  "cases": "all archived12cases unchanged",
+  "affinity_cpu": 0,
+  "allowed_cpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "outer_wall_cap_seconds_per_phase": 600,
+  "retained_byte_cap": 67108864,
+  "bootstrap": {
+    "unit": "whole ABBA block index correlated acrossall10activecases",
+    "samples": 10000,
+    "seed": 20261117,
+    "percentile_indices_zero_based": [
+      249,
+      9749
+    ]
+  },
+  "advance": "primary lower95gain >max(0.03,largestabsolute activecase AAblockgain) AND everyactive+idle lower95gain>=-0.03; failure=noadvance, not proofregression",
+  "no_retry_drop_or_replacement": true,
+  "immutable_sha256": {
+    "EXPERIMENT_ROOT/core/ReconstructedOscillator.h": "489cc6f9a442691a3ed73032bc37605a3e819e61e49343defc06f448629d2959",
+    "EXPERIMENT_ROOT/cost-aa/core/ReconstructedOscillator.h": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373",
+    "EXPERIMENT_ROOT/tests/fixtures/ReconstructedOscillatorPreProfileCache.h": "e52106cc05bba6caa3e03c7bf01c64412e0782d34b70f77905b3c670be63fee5",
+    "EXPERIMENT_ROOT/tests/OscillatorDecayCostProbe.cpp": "03f1097b7c266e821de1e9f6c14bf8e9f728e37daf8380b703d349701c847882",
+    "EXPERIMENT_ROOT/cost/probe-aa": "c9bb5b567d027cb2821cdab3400c1142f3e5c46bb393b0c42907a4246798c024",
+    "EXPERIMENT_ROOT/cost/probe-ab": "e73420084bd92ca91a33e32a1a027d927280a965d8f751f9a8229d885078c359",
+    "EXPERIMENT_ROOT/cost/run_once.py": "76de3dcf9cb5362598df89916af06241eb1dcf123844eabaaee44ee25409651c",
+    "EXPERIMENT_ROOT/cost/analyze.py": "70c5d706d0b5d0c905c4bbf60f08dcc013cdb6f58c0b9734d3fd0bb93aaf6258",
+    "/usr/bin/g++-14": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+    "/usr/libexec/gcc/x86_64-linux-gnu/14/cc1plus": "3064a74d411cc6a72fa3d8d2ce47d72925a42807d89d60618d8467b0eb10c948",
+    "/usr/bin/ld": "d2766988b6a1b1d1518cdc09242e726d1f24e151e16410ada3092b11ffd9081b",
+    "EXPERIMENT_ROOT/cost/hardware.txt": "686912c7ce277a9d3fd1022fb0b96aa4173366f20f88d98e287b6ad944f49220"
+  }
+}

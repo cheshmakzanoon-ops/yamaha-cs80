@@ -1,0 +1,34 @@
+--- oscillator-decay-reuse/tests/fixtures/ReconstructedOscillatorPreProfileCache.h	2026-11-17 18:12:13.592888424 -0400
++++ oscillator-decay-reuse/core/ReconstructedOscillator.h	2026-11-17 18:12:41.790597530 -0400
+@@ -7,6 +7,7 @@
+ // keeps the PolyBLEP Oscillator. Qualification against the nodal filter, the
+ // alias/CPU results and the remaining limits are in docs/OSCILLATOR_PROMOTION.md.
+ #include <algorithm>
++#include <bit>
+ #include <array>
+ #include <atomic>
+ #include <cmath>
+@@ -469,11 +470,15 @@
+         const double tau=profile.couplingSecondsNominal;
+         const double pinSlope=state.resetRemainingSeconds>0.?0.:-converterGain*state.heldFrequencyHz;
+         const double base=pinSlope*tau,b=n.u-base;
+-        const double end=base+b*decay(limit/tau);
++        const auto originalLimitBits=std::bit_cast<std::uint64_t>(limit);
++        const double originalDecay=decay(limit/tau);
++        const double end=base+b*originalDecay;
+         const std::array<double,4> levels {profile.sliceVoltsInferred-rampHalf,profile.sliceVoltsInferred,profile.sliceVoltsInferred+rampHalf,state.heldThresholdVolts};
+         for(double level:levels){if((level-n.u)*(level-end)<=0.&&level!=n.u&&b!=0.){const double root=-tau*std::log1p((level-n.u)/b);if(root>epsilon&&root<=limit){limit=root;event=true;}}}
+         const double triangleB=n.triangleGain*b;
+-        const auto w=[&](double t){return (n.w-triangleB*t/tau)*decay(t/tau);};
++        const auto w=[&](double t){return (n.w-triangleB*t/tau)*
++            (originalLimitBits>0 && originalLimitBits<UINT64_C(0x7ff0000000000000)
++             && std::bit_cast<std::uint64_t>(t)==originalLimitBits ? originalDecay : decay(t/tau));};
+         // w has at most one turning point within an analytic fold segment.
+         if(triangleB!=0.){const double turn=tau*(n.w+triangleB)/triangleB;if(turn>epsilon&&turn<limit){limit=turn;event=true;}}
+         const double searchLimit=limit,wEnd=w(searchLimit),half=profile.triangleSpanVoltsNominal*.5;
+@@ -570,5 +575,3 @@
+     double rate=96000.,dt=1./96000.,converterGain=0.,rampHalf=1.525;
+ };
+ } // namespace cs80
+-
+-// Separate baseline inclusion identity; production tokens unchanged.

@@ -1,0 +1,182 @@
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:58:16: error: ‘cs80_osc_profile_baseline’ does not name a type
+   58 | using Baseline=cs80_osc_profile_baseline::ReconstructedOscillator;
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:72:24: error: ‘Baseline’ has not been declared
+   72 | void tick(Candidate& a,Baseline& b,const Controls& c) {
+      |                        ^~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp: In function ‘void {anonymous}::tick(Candidate&, int&, const Controls&)’:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:74:20: error: request for member ‘tick’ in ‘b’, which is of non-class type ‘int’
+   74 |     const auto y=b.tick(c.frequency,{c.threshold,c.saw,c.pulse});
+      |                    ^~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp: In function ‘void {anonymous}::matrix()’:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:82:21: error: ‘Baseline’ was not declared in this scope
+   82 |         Candidate a;Baseline b;
+      |                     ^~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:84:31: error: ‘cs80_osc_profile_baseline’ was not declared in this scope
+   84 |         const auto pb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(recipe);
+      |                               ^~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:84:23: error: parse error in template argument list
+   84 |         const auto pb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(recipe);
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:84:83: error: no matching function for call to ‘profile<<expression error> >(int&)’
+   84 |         const auto pb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(recipe);
+      |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:43:21: note: candidate: ‘template<class P> P {anonymous}::profile(int)’
+   43 | template<class P> P profile(int recipe) {
+      |                     ^~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:43:21: note:   template argument deduction/substitution failed:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:84:83: error: template argument 1 is invalid
+   84 |         const auto pb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(recipe);
+      |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:85:35: error: ‘b’ was not declared in this scope
+   85 |         check(a.prepare(rate,pa)&&b.prepare(rate,pb),"valid profile/rate matrix prepares both oscillators");
+      |                                   ^
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:92:41: error: expected ‘;’ before ‘bc’
+   92 |                 Candidate ac(a);Baseline bc(b);
+      |                                         ^~~
+      |                                         ;
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:93:46: error: ‘bc’ was not declared in this scope; did you mean ‘ac’?
+   93 |                 for(int j=1;j<=3;++j)tick(ac,bc,controls(frame+j,a.maximumFrequencyHz()));
+      |                                              ^~
+      |                                              ac
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:94:44: error: expected ‘;’ before ‘assignedBaseline’
+   94 |                 Candidate assigned;Baseline assignedBaseline;
+      |                                            ^~~~~~~~~~~~~~~~~
+      |                                            ;
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:96:31: error: parse error in template argument list
+   96 |                 const auto qb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>((recipe+1)%9);
+      |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:96:91: error: no matching function for call to ‘profile<cs80_osc_profile_baseline>(int)’
+   96 |                 const auto qb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>((recipe+1)%9);
+      |                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:43:21: note: candidate: ‘template<class P> P {anonymous}::profile(int)’
+   43 | template<class P> P profile(int recipe) {
+      |                     ^~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:43:21: note:   template argument deduction/substitution failed:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:97:52: error: ‘assignedBaseline’ was not declared in this scope
+   97 |                 check(assigned.prepare(48000.,qa)&&assignedBaseline.prepare(48000.,qb),"assignment destination has a different prepared profile");
+      |                                                    ^~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:98:46: error: ‘bc’ was not declared in this scope; did you mean ‘ac’?
+   98 |                 assigned=ac;assignedBaseline=bc;
+      |                                              ^~
+      |                                              ac
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:129:64: error: parse error in template argument list
+  129 |             check(!a.prepare(invalid,badA)&&!b.prepare(invalid,profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(0)),"invalid rate prepare fails transactionally");
+      |                                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:129:124: error: no matching function for call to ‘profile<cs80_osc_profile_baseline>(int)’
+  129 |             check(!a.prepare(invalid,badA)&&!b.prepare(invalid,profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(0)),"invalid rate prepare fails transactionally");
+      |                                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:43:21: note: candidate: ‘template<class P> P {anonymous}::profile(int)’
+   43 | template<class P> P profile(int recipe) {
+      |                     ^~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:43:21: note:   template argument deduction/substitution failed:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp: In function ‘void {anonymous}::poolAndAllocation()’:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:148:21: error: ‘Baseline’ was not declared in this scope
+  148 |         Candidate a;Baseline b;std::array<const cs80::OscillatorExponentialBasis*,15> ap{};
+      |                     ^~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:149:51: error: ISO C++ forbids declaration of ‘type name’ with no type [-fpermissive]
+  149 |         std::array<const cs80_osc_profile_baseline::OscillatorExponentialBasis*,15> bp{};
+      |                                                   ^~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:149:83: error: wrong number of template arguments (1, should be 2)
+  149 |         std::array<const cs80_osc_profile_baseline::OscillatorExponentialBasis*,15> bp{};
+      |                                                                                   ^
+In file included from /usr/include/c++/14/bits/stl_algobase.h:64,
+                 from /usr/include/c++/14/algorithm:60,
+                 from oscillator-decay-reuse/core/ReconstructedOscillator.h:9,
+                 from oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:1:
+/usr/include/c++/14/bits/stl_pair.h:99:12: note: provided for ‘template<class _Tp, long unsigned int _Nm> struct std::array’
+   99 |     struct array;
+      |            ^~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:150:119: error: invalid types ‘int[std::size_t {aka long unsigned int}]’ for array subscript
+  150 |         for(std::size_t i=0;i<ap.size();++i){ap[i]=cs80::OscillatorBasisRegistry::acquire(96000.,.01+double(i)*.01);bp[i]=cs80_osc_profile_baseline::OscillatorBasisRegistry::acquire(96000.,.01+double(i)*.01);check(ap[i]&&bp[i],"fill every other basis slot");}
+      |                                                                                                                       ^
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:150:123: error: ‘cs80_osc_profile_baseline’ has not been declared
+  150 |         for(std::size_t i=0;i<ap.size();++i){ap[i]=cs80::OscillatorBasisRegistry::acquire(96000.,.01+double(i)*.01);bp[i]=cs80_osc_profile_baseline::OscillatorBasisRegistry::acquire(96000.,.01+double(i)*.01);check(ap[i]&&bp[i],"fill every other basis slot");}
+      |                                                                                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:150:224: error: invalid types ‘int[std::size_t {aka long unsigned int}]’ for array subscript
+  150 |         for(std::size_t i=0;i<ap.size();++i){ap[i]=cs80::OscillatorBasisRegistry::acquire(96000.,.01+double(i)*.01);bp[i]=cs80_osc_profile_baseline::OscillatorBasisRegistry::acquire(96000.,.01+double(i)*.01);check(ap[i]&&bp[i],"fill every other basis slot");}
+      |                                                                                                                                                                                                                                ^
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:151:16: error: ‘b’ was not declared in this scope; did you mean ‘bp’?
+  151 |         tick(a,b,controls(77,a.maximumFrequencyHz()));const auto prior=a.getState();const auto maximum=a.maximumFrequencyHz();
+      |                ^
+      |                bp
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:152:76: error: ‘cs80_osc_profile_baseline’ was not declared in this scope
+  152 |         auto pa=profile<cs80::OscillatorNominalProfile>(7);auto pb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(7);pa.couplingSecondsNominal=pb.couplingSecondsNominal=.777;
+      |                                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:152:68: error: parse error in template argument list
+  152 |         auto pa=profile<cs80::OscillatorNominalProfile>(7);auto pb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(7);pa.couplingSecondsNominal=pb.couplingSecondsNominal=.777;
+      |                                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:152:128: error: no matching function for call to ‘profile<<expression error> >(int)’
+  152 |         auto pa=profile<cs80::OscillatorNominalProfile>(7);auto pb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(7);pa.couplingSecondsNominal=pb.couplingSecondsNominal=.777;
+      |                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:43:21: note: candidate: ‘template<class P> P {anonymous}::profile(int)’
+   43 | template<class P> P profile(int recipe) {
+      |                     ^~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:43:21: note:   template argument deduction/substitution failed:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:152:128: error: template argument 1 is invalid
+  152 |         auto pa=profile<cs80::OscillatorNominalProfile>(7);auto pb=profile<cs80_osc_profile_baseline::OscillatorNominalProfile>(7);pa.couplingSecondsNominal=pb.couplingSecondsNominal=.777;
+      |                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:155:92: error: ‘cs80_osc_profile_baseline’ is not a class, namespace, or enumeration
+  155 |         for(std::size_t i=0;i<ap.size();++i){cs80::OscillatorBasisRegistry::release(ap[i]);cs80_osc_profile_baseline::OscillatorBasisRegistry::release(bp[i]);}
+      |                                                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:155:154: error: invalid types ‘int[std::size_t {aka long unsigned int}]’ for array subscript
+  155 |         for(std::size_t i=0;i<ap.size();++i){cs80::OscillatorBasisRegistry::release(ap[i]);cs80_osc_profile_baseline::OscillatorBasisRegistry::release(bp[i]);}
+      |                                                                                                                                                          ^
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:158:111: error: ISO C++ forbids declaration of ‘type name’ with no type [-fpermissive]
+  158 |         std::array<const cs80::OscillatorExponentialBasis*,16> ap{};std::array<const cs80_osc_profile_baseline::OscillatorExponentialBasis*,16> bp{};
+      |                                                                                                               ^~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:158:143: error: wrong number of template arguments (1, should be 2)
+  158 |         std::array<const cs80::OscillatorExponentialBasis*,16> ap{};std::array<const cs80_osc_profile_baseline::OscillatorExponentialBasis*,16> bp{};
+      |                                                                                                                                               ^
+/usr/include/c++/14/bits/stl_pair.h:99:12: note: provided for ‘template<class _Tp, long unsigned int _Nm> struct std::array’
+   99 |     struct array;
+      |            ^~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:159:118: error: invalid types ‘int[std::size_t {aka long unsigned int}]’ for array subscript
+  159 |         for(std::size_t i=0;i<ap.size();++i){ap[i]=cs80::OscillatorBasisRegistry::acquire(96000.,.2+double(i)*.01);bp[i]=cs80_osc_profile_baseline::OscillatorBasisRegistry::acquire(96000.,.2+double(i)*.01);check(ap[i]&&bp[i],"fill registry without a default-key basis");}
+      |                                                                                                                      ^
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:159:122: error: ‘cs80_osc_profile_baseline’ has not been declared
+  159 |         for(std::size_t i=0;i<ap.size();++i){ap[i]=cs80::OscillatorBasisRegistry::acquire(96000.,.2+double(i)*.01);bp[i]=cs80_osc_profile_baseline::OscillatorBasisRegistry::acquire(96000.,.2+double(i)*.01);check(ap[i]&&bp[i],"fill registry without a default-key basis");}
+      |                                                                                                                          ^~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:159:222: error: invalid types ‘int[std::size_t {aka long unsigned int}]’ for array subscript
+  159 |         for(std::size_t i=0;i<ap.size();++i){ap[i]=cs80::OscillatorBasisRegistry::acquire(96000.,.2+double(i)*.01);bp[i]=cs80_osc_profile_baseline::OscillatorBasisRegistry::acquire(96000.,.2+double(i)*.01);check(ap[i]&&bp[i],"fill registry without a default-key basis");}
+      |                                                                                                                                                                                                                              ^
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:161:25: error: ‘Baseline’ was not declared in this scope
+  161 |             Candidate a;Baseline b;check(a.sharedBasis()==nullptr&&b.sharedBasis()==nullptr&&complete(a,b),"exhausted constructors preserve original unprepared defaults");
+      |                         ^~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:161:68: error: ‘b’ was not declared in this scope
+  161 |             Candidate a;Baseline b;check(a.sharedBasis()==nullptr&&b.sharedBasis()==nullptr&&complete(a,b),"exhausted constructors preserve original unprepared defaults");
+      |                                                                    ^
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:164:37: error: expected ‘;’ before ‘bc’
+  164 |             Candidate ac(a);Baseline bc(b);check(complete(ac,bc),"copy of an unprepared oscillator retains its default cache");
+      |                                     ^~~
+      |                                     ;
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:164:62: error: ‘bc’ was not declared in this scope; did you mean ‘ac’?
+  164 |             Candidate ac(a);Baseline bc(b);check(complete(ac,bc),"copy of an unprepared oscillator retains its default cache");
+      |                                                              ^~
+      |                                                              ac
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:167:92: error: ‘cs80_osc_profile_baseline’ has not been declared
+  167 |         for(std::size_t i=0;i<ap.size();++i){cs80::OscillatorBasisRegistry::release(ap[i]);cs80_osc_profile_baseline::OscillatorBasisRegistry::release(bp[i]);}
+      |                                                                                            ^~~~~~~~~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:167:154: error: invalid types ‘int[std::size_t {aka long unsigned int}]’ for array subscript
+  167 |         for(std::size_t i=0;i<ap.size();++i){cs80::OscillatorBasisRegistry::release(ap[i]);cs80_osc_profile_baseline::OscillatorBasisRegistry::release(bp[i]);}
+      |                                                                                                                                                          ^
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp: In instantiation of ‘bool {anonymous}::complete(const A&, const B&) [with A = cs80::ReconstructedOscillator; B = int]’:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:76:19:   required from here
+   76 |     check(complete(a,b),"complete public continuation/diagnostic bits match the baseline");
+      |           ~~~~~~~~^~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:40:35: error: request for member ‘sampleRate’ in ‘b’, which is of non-class type ‘const int’
+   40 |     return equal(a.sampleRate(),b.sampleRate())&&equal(a.maximumFrequencyHz(),b.maximumFrequencyHz())
+      |                                 ~~^~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:40:81: error: request for member ‘maximumFrequencyHz’ in ‘b’, which is of non-class type ‘const int’
+   40 |     return equal(a.sampleRate(),b.sampleRate())&&equal(a.maximumFrequencyHz(),b.maximumFrequencyHz())
+      |                                                                               ~~^~~~~~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:41:32: error: request for member ‘getState’ in ‘b’, which is of non-class type ‘const int’
+   41 |         &&state(a.getState(),b.getState())&&diagnostics(a.getDiagnostics(),b.getDiagnostics());
+      |                              ~~^~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:41:78: error: request for member ‘getDiagnostics’ in ‘b’, which is of non-class type ‘const int’
+   41 |         &&state(a.getState(),b.getState())&&diagnostics(a.getDiagnostics(),b.getDiagnostics());
+      |                                                                            ~~^~~~~~~~~~~~~~
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp: At global scope:
+oscillator-decay-reuse/tests/OscillatorProfileCacheTests.cpp:72:6: warning: ‘void {anonymous}::tick(Candidate&, int&, const Controls&)’ defined but not used [-Wunused-function]
+   72 | void tick(Candidate& a,Baseline& b,const Controls& c) {
+      |      ^~~~
