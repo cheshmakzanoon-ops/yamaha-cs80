@@ -92,3 +92,7 @@ A separate verifier uses EVP SHA-256 over actual file bytes, comparing the compl
 ## Retained module-file capability
 
 The identity verifier now retains a typed module stamp from its original admitted scan. A separate RAII capability pins a no-follow read-only descriptor, verifies its actual hash/stamp, and reverifies the complete identity before and after pinning. Its 17 new controls bring the isolated suite to 668. The held descriptor is not evidence that dlopen selected it; loaded-provider binding, trusted dependency closure and disciplined borrowed-descriptor use remain required. No actual plugin is loaded by these controls.
+
+## Dedicated processing-worker preparation
+
+The separate real-thread worker has 32 reviewed controls, bringing the isolated suite to 700. It guards queue/await sequencing and UI pumping, retains callback failures and completion timestamps, and distinguishes actual joined cleanup from healthy consumed-task admission. It never detaches hung callbacks. This is not native processing evidence: the current synchronous instance wrapper must not run on the worker because its failure cleanup would invoke UI-only teardown there. A private UI-owned in-flight lease and the full case coordinator remain required.

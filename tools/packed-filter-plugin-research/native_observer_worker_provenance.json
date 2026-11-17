@@ -1,0 +1,29 @@
+{
+  "scope": "dedicated real std::thread inert controls; no native processing integration",
+  "native_plugin_loaded": false,
+  "tests": 32,
+  "returning_cases": 30,
+  "watchdog_cases": 2,
+  "compile_argv": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-pthread",
+    "-I<research>",
+    "<research>/native_observer_worker_fixture.cpp",
+    "-o<temporary-fixture>"
+  ],
+  "sources": {
+    "native_observer_worker.hpp": "7d00c502ac97aa2c3c46c7933f7aeca22ef68fe2f1e153af55bb9f7992364b15",
+    "native_observer_worker_fixture.cpp": "d3c1051c2f251e0ec645690c6cff555a1df83b8285ff4c3287276c57e07bc03d",
+    "native_observer_worker_PLAN.md": "4935ce1ec33d0a2fbd7148fe55c484c5a96c1ab4558e58a25b6f83ecad224548",
+    "native_observer_worker_STATUS.md": "b927a95facb4b9cc1b69b3e9139c994b06cb6a9fe6b6feeb9c09206fc4bbfb99",
+    "test_native_observer_worker.py": "cdbc4e887c049084cf51c02e56875bc3eb1dd298e2b4fd15bbfac7dc38bf7220"
+  },
+  "test_dependencies": {
+    "native_observer_support.hpp": "17aecd02841c1511ffc17b4cd19726b919bf733307bcc9031c048597358d5c8f"
+  }
+}
