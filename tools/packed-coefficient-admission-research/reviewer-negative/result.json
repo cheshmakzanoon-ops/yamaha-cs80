@@ -1,0 +1,70 @@
+{
+  "positive": {
+    "cases": 108486,
+    "bytes": 133980210,
+    "sha256": "af13f05f7445ebfacdc607c36ed125e4386c7c522d78af0a8d02236a2fd55c0e",
+    "exact": true
+  },
+  "negative": {
+    "no-replay": {
+      "diff_byte": 1186836,
+      "record": 961,
+      "case": {
+        "csr": "0x1f80",
+        "wrapper": false,
+        "kind": "earlier-subnormal-later-invalid",
+        "early": 0,
+        "late": 1,
+        "physical": 1,
+        "tiny": "0x1"
+      },
+      "stock_header": [
+        0,
+        8066,
+        0,
+        33
+      ],
+      "mutant_header": [
+        0,
+        8064,
+        0,
+        33
+      ]
+    },
+    "strict-bound": {
+      "diff_byte": 12350,
+      "record": 10,
+      "case": {
+        "csr": "0x1f80",
+        "wrapper": false,
+        "kind": "coefficient",
+        "field": 0,
+        "lane": 0,
+        "bit_index": 9
+      },
+      "stock_header": [
+        1,
+        8096,
+        0,
+        33
+      ],
+      "mutant_header": [
+        0,
+        8064,
+        0,
+        33
+      ],
+      "additional_bound_difference_vs_no_replay": {
+        "record": 10,
+        "case": {
+          "csr": "0x1f80",
+          "wrapper": false,
+          "kind": "coefficient",
+          "field": 0,
+          "lane": 0,
+          "bit_index": 9
+        }
+      }
+    }
+  }
+}

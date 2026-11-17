@@ -1,0 +1,74 @@
+--- a/src/core/Ig00156Batch.cpp
++++ b/src/core/Ig00156Batch.cpp
+@@ -36,6 +36,13 @@
+     return _mm256_cmpgt_epi64(magnitude,
+         _mm256_set1_epi64x(std::bit_cast<std::int64_t>(1024.0)));
+ }
++CS80_AVX2_INLINE __m256i outsideCoefficientBound(V value)
++{
++    const auto bits=_mm256_and_si256(_mm256_castpd_si256(value.x),
++        _mm256_set1_epi64x(0x7fffffffffffffffLL));
++    return _mm256_cmpgt_epi64(bits,
++        _mm256_set1_epi64x(std::bit_cast<std::int64_t>(1000000.0)));
++}
+ CS80_AVX2_INLINE V tanh(V original)
+ {
+     // The scalar branches do not evaluate the polynomial outside its clamp.
+@@ -90,11 +97,33 @@
+         return true;
+     }
+ 
++    static bool eligibleAfterCoefficientProof(const Ig00156Batch::Stages& stages,
++                         const Ig00156Batch::Inputs& input) noexcept
++    {
++        // Nearest rounding and masked traps only. Never change FTZ/DAZ or
++        // clear existing status flags. Arithmetic may raise sticky flags;
++        // exact flag equality with the scalar calculation is not promised.
++        for(std::size_t i=0;i<4;++i)
++        {
++            const auto& s=*stages[i];
++            if(!bounded(input[i],64.0f) || !bounded(s.lastRate,1536000.0f)
++               || s.lastRate<8000.0f || s.lastUnwarped || !s.cutoffCoefficientsValid)
++                return false;
++            // Positive physical gains make both Newton denominators >= 1.
++            // Arbitrary restored slopes/custom networks must not turn a
++            // discarded vector lane into a division by zero. These are still
++            // eligibility checks: unsupported states keep the scalar solver.
++            if(s.gmPart<0.0 || s.ffPart<0.0 || s.xFromBp < -1.0)
++                return false;
++        }
++        return true;
++    }
++
+     static CS80_AVX2 bool process(const Ig00156Batch::Stages& stages,
+                                   const Ig00156Batch::Inputs& input,
+                                   Ig00156Batch::Outputs& output) noexcept
+     {
+-        if(!eligible(stages,input)) return false;
++        if(!Ig00156Batch::environmentSupported()) return false;
+         const auto gather=[&](double Ig00156Stage::*member) CS80_AVX2 {
+             return V(_mm256_setr_pd(stages[0]->*member,stages[1]->*member,
+                                    stages[2]->*member,stages[3]->*member));
+@@ -104,6 +133,22 @@
+         const V fromFb=gather(&Ig00156Stage::xFromFb),fromIn=gather(&Ig00156Stage::xFromIn);
+         const V fromU=gather(&Ig00156Stage::xFromU),fromBp=gather(&Ig00156Stage::xFromBp);
+         const V kiGs=gather(&Ig00156Stage::kiGs),invA11=gather(&Ig00156Stage::invA11),inFromX=gather(&Ig00156Stage::inFromX);
++        // Exact static coefficient magnitude proof, using only integer operations.
++        // Sign-cleared IEEE magnitudes are nonnegative signed64 values, so cmpgt
++        // rejects >1e6, infinities and all NaNs without FP evaluation.
++        auto badCoefficient=outsideCoefficientBound(scale);
++        for (V value : {g1,f1,fromFb,fromIn,fromU,fromBp,kiGs,invA11,inFromX})
++            badCoefficient=_mm256_or_si256(badCoefficient,outsideCoefficientBound(value));
++        if (_mm256_movemask_pd(_mm256_castsi256_pd(badCoefficient)) != 0)
++        {
++            // Replay the ORIGINAL guard sequence before rejecting: an earlier
++            // lane's valid FP comparisons may have raised flags before a later
++            // coefficient failed. No solver/state/output writes have occurred.
++            if (!eligible(stages,input)) return false;
++        }
++        // All coefficient bounds now proved. Preserve remaining per-stage order,
++        // including FP physical-gain comparisons and their DAZ/subnormal semantics.
++        else if (!eligibleAfterCoefficientProof(stages,input)) return false;
+         const V zIn=gather(&Ig00156Stage::zIn),zFb=gather(&Ig00156Stage::zFb);
+         const V zBp=gather(&Ig00156Stage::zBp),zLp=gather(&Ig00156Stage::zLp);
+         const V slope1=gather(&Ig00156Stage::slope1),slope2=gather(&Ig00156Stage::slope2);

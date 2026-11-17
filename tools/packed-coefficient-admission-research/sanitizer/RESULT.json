@@ -1,0 +1,33 @@
+{
+  "outcome": "ASAN_UBSAN_COMPONENT_PASS",
+  "identical_corpus_bytes": 133980210,
+  "corpus_sha256": "af13f05f7445ebfacdc607c36ed125e4386c7c522d78af0a8d02236a2fd55c0e",
+  "inputs_unchanged": 195,
+  "binaries": {
+    "stock": "857a2acadbd3c5d83a48973bd0b33ad7f334807c417a160591798b058c946ab8",
+    "candidate": "02c2636810740738340c89549aa8e482739a09446cefbdd0c2968ec13c19fda1"
+  },
+  "results": {
+    "stock": "PASS checks=25329954 admitted=14616 rejected=93870\n",
+    "candidate": "PASS checks=25329954 admitted=14616 rejected=93870\n"
+  },
+  "flags": [
+    "-std=gnu++20",
+    "-O1",
+    "-g",
+    "-DNDEBUG",
+    "-fPIC",
+    "-ffp-contract=off",
+    "-fno-omit-frame-pointer",
+    "-fsanitize=address,undefined",
+    "-fno-sanitize-recover=all"
+  ],
+  "ASAN_OPTIONS": "detect_leaks=0:halt_on_error=1",
+  "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1",
+  "limits": [
+    "Leaks unqualified: LeakSanitizer unsupported under sandbox ptrace, previously documented; intentionally disabled here.",
+    "Pure filter component, no plugin lifecycle hooks, full engine/host qualification or timing claims.",
+    "Instrumented GNU14 O1 binaries; production optimized GCC13/14 behavior requires separate existing evidence."
+  ],
+  "stderr_empty": true
+}

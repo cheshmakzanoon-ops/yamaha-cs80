@@ -1,0 +1,78 @@
+{
+  "candidate_source_sha256": "b80b7f5f183139a007156df952ce11f74d3b336101822d6eb2a830bdd20d4307",
+  "compiler": "GNU14.2.0",
+  "flags": [
+    "-std=gnu++20",
+    "-O3",
+    "-DNDEBUG",
+    "-fPIC"
+  ],
+  "ig_only_flags": [
+    "-ffp-contract=off"
+  ],
+  "stock_source_tree": "702bf5ee4e375c7b13da7ec95b01b56587bbf75c",
+  "test_tree": "64b7f72ed0139d846e8107c47c62f190cb13eefa",
+  "common_objects": {
+    "Engine.o": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+    "FactoryPresets.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b"
+  },
+  "arms": {
+    "stock": {
+      "batch_test": "Ig00156Batch: 1183425 checks, 0 failures, 15685 accelerated groups",
+      "engine_test": "FilterBatchEngine: 4135998 checks, 285328 stereo frames, 0 failures",
+      "exit": 0,
+      "files": {
+        "batch-tests": {
+          "sha256": "04243369391a55299c21f7e26f81b24acd66dd0a0060ee1c2198ba03a7c4dc69",
+          "bytes": 72136
+        },
+        "engine-tests": {
+          "sha256": "af4902f3a455fd9fecbe5b86846c08972e41438e0563a548f4e9406d3b818683",
+          "bytes": 701808
+        },
+        "Ig00156Batch.o": {
+          "sha256": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+          "bytes": 7400
+        },
+        "engine.corpus": {
+          "sha256": "25dad72a8b6e5cd220b1d219c83be44dd238b8b6dfddfe0ee311b74716aa40aa",
+          "bytes": 22400288
+        }
+      }
+    },
+    "candidate": {
+      "batch_test": "Ig00156Batch: 1183425 checks, 0 failures, 15685 accelerated groups",
+      "engine_test": "FilterBatchEngine: 4135998 checks, 285328 stereo frames, 0 failures",
+      "exit": 0,
+      "files": {
+        "batch-tests": {
+          "sha256": "c10eb6a8ae50e054a4c278a0ed6a6922ccb2d744e909ecb4655b00d63e00fcdc",
+          "bytes": 72136
+        },
+        "engine-tests": {
+          "sha256": "1e74abed24d1a89b6422983845d647f2871382413dad3fa0b3802d641d77ba69",
+          "bytes": 701808
+        },
+        "Ig00156Batch.o": {
+          "sha256": "17d2b22d748ff8ac6b39aa30ddd5fbdb605a8a897d2d9a576b804d0659536c77",
+          "bytes": 8768
+        },
+        "engine.corpus": {
+          "sha256": "25dad72a8b6e5cd220b1d219c83be44dd238b8b6dfddfe0ee311b74716aa40aa",
+          "bytes": 22400288
+        }
+      }
+    }
+  },
+  "engine_corpus_exact": true,
+  "scalar_disabled": {
+    "test": "Ig00156Batch: 1142910 checks, 0 failures, 0 accelerated groups",
+    "exit": 0,
+    "final_backend_object_byte_identical_to_tested_interim": true,
+    "object_sha256": "eadeac4b36878e699241026a687120e2b2b8fd3ea0c0d9664be1d33cc53b8544"
+  },
+  "limitations": [
+    "Core correctness only, no CPU timing or plugin/full-suite qualification.",
+    "Local GNU14 x86AVX2; noGNU13/ARM/Clang performance inference."
+  ]
+}
