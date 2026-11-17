@@ -1,6 +1,7 @@
 #pragma once
 // Bounded injected initialization only. NO dlopen/dlsym implementation or CLI.
 #include "native_observer_sdk.hpp"
+#include "native_observer_state.hpp"
 #include <pluginterfaces/vst/ivsthostapplication.h>
 #include <optional>
 #include <filesystem>
@@ -94,6 +95,9 @@ struct SynthSetup { double rate=48000;int32 mode=kRealtime,block=64; };
 // This subset supports the exact stereo synth topology (zero audio inputs,
 // one stereo output, one event input, no event output). Other layouts fail.
 class InjectedInstance {
+public:
+    enum class Phase { Fresh,Connected,Processing,Suspended,Closed,Failed };
+private:
     InjectedModule& module;Handler& handler;
     NativeOwnership own;
     FUnknown* componentIdentity=nullptr;FUnknown* controllerIdentity=nullptr;
@@ -101,18 +105,56 @@ class InjectedInstance {
     std::array<Bus,2> buses{{{kAudio,kOutput,0,false},{kEvent,kInput,0,false}}};
     bool startAttempted=false,closeAttempted=false,moduleRetained=false;
     std::optional<CreatedIdentity> identity;
+    Phase phase_=Phase::Fresh;SynthSetup setup_{};unsigned suspensions_=0,resumes_=0;
+    bool operation_=false,metadataAttempted_=false;
+    StateObservation saved_;StateRestoreReceipt restored_;Bytes connectedMetadata_,setupMetrics_;ConnectedParameterRoster connectedRoster_;
+    void fail(std::exception_ptr error) {
+        if(!primaryError)primaryError=error;
+        phase_=Phase::Failed;
+        if(!operation_ && !closeAttempted){try{close();}catch(...){}}
+        std::rethrow_exception(primaryError);
+    }
+    static void validateSetup(const SynthSetup& config) {
+        require((config.rate==44100 || config.rate==48000 || config.rate==96000)
+          && (config.mode==kRealtime || config.mode==kOffline)
+          && (config.block==64 || config.block==256 || config.block==1024),"frozen setup grid required");
+    }
+    void phaseGuard(Phase expected) {
+        require(phase_==expected && !closeAttempted && !primaryError && !operation_,"instance phase/operation guard");
+    }
+    void activateAndStart() {
+        for(auto& b:buses){require(calls.run(b.media==kAudio?"audio-bus-activate":"event-bus-activate",kResultOk,[&]{return own.component->activateBus(b.media,b.direction,b.index,true);}),"bus activate failed");b.active=true;}
+        require(calls.run("activate",kResultOk,[&]{return own.component->setActive(true);}),"component activate failed");own.active=true;
+        require(calls.run("start-processing",kResultOk,[&]{return own.audio->setProcessing(true);}),"processing start failed");own.processing=true;
+        phase_=Phase::Processing;started=true;
+    }
+    bool stopAndDeactivate() noexcept {
+        bool ok=true;started=false;
+        if(own.processing){own.processing=false;ok=calls.run("stop-processing",kResultOk,[&]{return own.audio->setProcessing(false);})&&ok;}
+        if(own.active){own.active=false;ok=calls.run("deactivate",kResultOk,[&]{return own.component->setActive(false);})&&ok;}
+        for(auto i=buses.rbegin();i!=buses.rend();++i)if(i->active){i->active=false;ok=calls.run(i->media==kAudio?"audio-bus-deactivate":"event-bus-deactivate",kResultOk,[&]{return own.component->activateBus(i->media,i->direction,i->index,false);})&&ok;}
+        return ok;
+    }
 public:
-    InitializerCalls<64> calls;
+    // Worst admitted schedule: separate initialization31 + optional metadata1 and
+    // setup metrics1 + two suspend/resume pairs16 + final close4 =53. Partial
+    // failure cannot add another lifecycle attempt; at most two temporary
+    // identity releases add two cleanup rows. State/native ownership have their
+    // own bounded receipts. Keep explicit headroom without dynamic growth.
+    static constexpr std::size_t maximumScheduledCalls=55;
+    static_assert(maximumScheduledCalls<=96);
+    InitializerCalls<96> calls;
     std::exception_ptr primaryError;
     bool started=false,initializationSucceeded=false,closedCleanly=false;
     explicit InjectedInstance(InjectedModule& m,Handler& h):module(m),handler(h){}
     InjectedInstance(const InjectedInstance&)=delete;InjectedInstance& operator=(const InjectedInstance&)=delete;
     void start(SynthSetup config) {
-        require(!startAttempted && !closeAttempted,"instance initialization retry forbidden");startAttempted=true;
+        try {phaseGuard(Phase::Fresh);validateSetup(config);initializeConnected();prepareAndStart(config);}
+        catch(...){fail(std::current_exception());}
+    }
+    void initializeConnected() {
         try {
-            require((config.rate==44100 || config.rate==48000 || config.rate==96000)
-                    && (config.mode==kRealtime || config.mode==kOffline)
-                    && (config.block==64 || config.block==256 || config.block==1024),"frozen setup grid required");
+            phaseGuard(Phase::Fresh);require(!startAttempted,"instance initialization retry forbidden");startAttempted=true;
             module.retainInstance();moduleRetained=true;
             auto& factory=module.factory();
             require(calls.run("component-create",kResultOk,[&]{return factory.createInstance(module.cid(),IComponent::iid,reinterpret_cast<void**>(&own.component));}) && own.component,"component create failed");
@@ -145,6 +187,12 @@ public:
             Stream initial;require(calls.run("component-state",kResultOk,[&]{return own.component->getState(&initial);}) && !initial.failed,"initial component state failed");
             require(initial.seek(0,IBStream::kIBSeekSet,nullptr)==kResultOk,"initial state rewind");
             require(calls.run("controller-state",kResultOk,[&]{return own.controller->setComponentState(&initial);}) && !initial.failed,"initial controller state failed");
+            phase_=Phase::Connected;
+        }catch(...){fail(std::current_exception());}
+    }
+    void prepareAndStart(SynthSetup config,bool captureMetrics=false) {
+        try {
+            phaseGuard(Phase::Connected);validateSetup(config);setup_=config;
             for(auto media:{kAudio,kEvent})for(auto direction:{kInput,kOutput}) {
                 int32 count=-1;const int32 wanted=(media==kAudio && direction==kOutput) || (media==kEvent && direction==kInput)?1:0;
                 require(calls.run("bus-count",0,[&]{count=own.component->getBusCount(media,direction);return count;},true) && count==wanted,"frozen synth bus topology");
@@ -159,22 +207,68 @@ public:
             require(calls.run("sample-size",kResultOk,[&]{return own.audio->canProcessSampleSize(kSample32);}),"sample format unsupported");
             ProcessSetup setup{config.mode,kSample32,config.block,config.rate};
             require(calls.run("setup",kResultOk,[&]{return own.audio->setupProcessing(setup);}),"processing setup failed");
-            for(auto& b:buses){require(calls.run(b.media==kAudio?"audio-bus-activate":"event-bus-activate",kResultOk,[&]{return own.component->activateBus(b.media,b.direction,b.index,true);}),"bus activate failed");b.active=true;}
-            require(calls.run("activate",kResultOk,[&]{return own.component->setActive(true);}),"component activate failed");own.active=true;
-            require(calls.run("start-processing",kResultOk,[&]{return own.audio->setProcessing(true);}),"processing start failed");own.processing=true;
-            started=true;initializationSucceeded=true;
-        }catch(...) {primaryError=std::current_exception();try{close();}catch(...){}std::rethrow_exception(primaryError);}
+            if(captureMetrics)require(calls.run("setup-metrics",1,[&]{cs80_observer::captureSetupMetrics(*own.audio,ObserverPhase::Setup,setupMetrics_);return 1;}),"setup metrics failed");
+            activateAndStart();initializationSucceeded=true;
+        }catch(...){fail(std::current_exception());}
     }
+    void captureConnected() {
+        try {phaseGuard(Phase::Connected);require(!metadataAttempted_,"connected metadata retry forbidden");metadataAttempted_=true;
+            require(calls.run("connected-metadata",1,[&]{cs80_observer::captureConnectedMetadata(*own.component,*own.audio,*own.controller,*identity,ObserverPhase::Connected,connectedMetadata_,&connectedRoster_);return 1;}),"connected metadata failed");
+        }catch(...){fail(std::current_exception());}
+    }
+    void saveState(ControllerStatePolicy policy) {
+        try {phaseGuard(Phase::Processing);require(suspensions_==0 && !saved_.attempted,"save only once in initial history");
+            observeStates(*own.component,*own.controller,policy,saved_);
+        }catch(...){fail(std::current_exception());}
+    }
+    void suspend() {
+        try {phaseGuard(Phase::Processing);require(suspensions_<2 && suspensions_==resumes_,"bounded suspension history");
+            require(saved_.accepted,"initial history state must be saved before suspension");
+            ++suspensions_;require(stopAndDeactivate(),"suspension failed");phase_=Phase::Suspended;
+        }catch(...){fail(std::current_exception());}
+    }
+    void restoreSavedState() {
+        try {phaseGuard(Phase::Suspended);require(suspensions_==1 && resumes_==0 && !restored_.attempted,"restore only once in first suspension");
+            restoreStates(*own.component,*own.controller,saved_,restored_);
+        }catch(...){fail(std::current_exception());}
+    }
+    void resume() {
+        try {phaseGuard(Phase::Suspended);require(suspensions_==resumes_+1 && suspensions_<=2 && restored_.accepted,"resume requires first exact restore and bounded history");
+            activateAndStart();++resumes_;
+        }catch(...){fail(std::current_exception());}
+    }
+    template<class Function> void withProcessingOperation(Function&& function) {
+        try {phaseGuard(Phase::Processing);operation_=true;
+            struct Reset {bool& active;~Reset(){active=false;}} reset{operation_};
+            static_assert(std::is_void_v<std::invoke_result_t<Function,IAudioProcessor&,const SynthSetup&>>,"processing operation callbacks return void");
+            std::forward<Function>(function)(*own.audio,static_cast<const SynthSetup&>(setup_));
+            require(phase_==Phase::Processing && !closeAttempted && !primaryError,"processing operation became terminal");
+        }catch(...){fail(std::current_exception());throw;}
+    }
+    IAudioProcessor& processingAudio(){try{phaseGuard(Phase::Processing);return *own.audio;}catch(...){fail(std::current_exception());throw;}}
+    const SynthSetup& processingSetup(){try{phaseGuard(Phase::Processing);return setup_;}catch(...){fail(std::current_exception());throw;}}
+    IComponent& connectedComponent(){try{phaseGuard(Phase::Connected);return *own.component;}catch(...){fail(std::current_exception());throw;}}
+    IEditController& connectedController(){try{phaseGuard(Phase::Connected);return *own.controller;}catch(...){fail(std::current_exception());throw;}}
+    Phase phase()const noexcept{return phase_;}
+    unsigned suspensionCount()const noexcept{return suspensions_;}
+    unsigned resumeCount()const noexcept{return resumes_;}
+    const StateObservation& savedStateReceipt()const noexcept{return saved_;}
+    const StateRestoreReceipt& restoreReceipt()const noexcept{return restored_;}
+    const ConnectedParameterRoster& connectedParameterRoster()const noexcept{return connectedRoster_;}
+    const Bytes& connectedMetadataReceipt()const noexcept{return connectedMetadata_;}
+    const Bytes& setupMetricsReceipt()const noexcept{return setupMetrics_;}
     void close() {
+        try {
+        require(!operation_,"cannot close inside active processing operation");
         require(!closeAttempted,"instance close retry forbidden");closeAttempted=true;started=false;bool ok=true;
-        if(own.processing){own.processing=false;ok=calls.run("stop-processing",kResultOk,[&]{return own.audio->setProcessing(false);})&&ok;}
-        if(own.active){own.active=false;ok=calls.run("deactivate",kResultOk,[&]{return own.component->setActive(false);})&&ok;}
-        for(auto i=buses.rbegin();i!=buses.rend();++i)if(i->active){i->active=false;ok=calls.run(i->media==kAudio?"audio-bus-deactivate":"event-bus-deactivate",kResultOk,[&]{return own.component->activateBus(i->media,i->direction,i->index,false);})&&ok;}
+        if(phase_!=Phase::Failed)phase_=Phase::Closed;
+        ok=stopAndDeactivate()&&ok;
         if(componentIdentity){auto* p=std::exchange(componentIdentity,nullptr);ok=calls.run("component-identity-release",0,[&]{return p->release();},true)&&ok;}
         if(controllerIdentity){auto* p=std::exchange(controllerIdentity,nullptr);ok=calls.run("controller-identity-release",0,[&]{return p->release();},true)&&ok;}
         try{own.close();}catch(...){ok=false;}
         if(moduleRetained){module.releaseInstance();moduleRetained=false;}
         closedCleanly=ok;require(ok,"instance cleanup failed");
+        }catch(...){phase_=Phase::Failed;if(!primaryError)primaryError=std::current_exception();throw;}
     }
     const NativeOwnership& ownershipReceipt()const{return own;}
     const CreatedIdentity& createdIdentity()const{require(identity.has_value(),"no Created identity");return *identity;}

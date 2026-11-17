@@ -5,12 +5,13 @@
 using namespace cs80_observer;
 static std::vector<std::string> trace;
 static std::string failure;
-static bool pass(const char* name){trace.push_back(name);return failure!=name;}
+static bool throwFailure=false,restoreTracing=false,badAllocationFailure=false,releaseAllocationFailure=false;
+static bool pass(const char* name){trace.push_back(name);if(failure==name && badAllocationFailure)throw std::bad_alloc();if(failure==name && throwFailure)throw std::runtime_error("injected native exception");return failure!=name;}
 struct InitFake final : IComponent, IAudioProcessor, IEditController, IConnectionPoint {
     std::string name;uint32 refs;int terminated=0;bool throwStop=false,failStop=false,failActive=false,failDisconnect=false,failTerminate=false;
     bool combined=true;bool busActive[2]{false,false};
     ObserverPhase phase=ObserverPhase::Created;int classQueries=0,metricsQueries=0;
-    bool badStream=false;double normalized=.25,defaultNormalized=.5;int parameterCount=1;
+    bool badStream=false;double normalized=.25,defaultNormalized=.5;int parameterCount=1,parameterCountQueries=0,parameterInfoQueries=0;
     explicit InitFake(std::string n,uint32 r):name(std::move(n)),refs(r){}
     tresult PLUGIN_API queryInterface(const TUID id,void** p) override {
         if(!p){return kInvalidArgument;}*p=nullptr;
@@ -22,7 +23,7 @@ struct InitFake final : IComponent, IAudioProcessor, IEditController, IConnectio
         addRef();return kResultOk;
     }
     uint32 PLUGIN_API addRef() override {return ++refs;}
-    uint32 PLUGIN_API release() override {trace.push_back("interface-release");require(refs>0,"reference underflow");return --refs;}
+    uint32 PLUGIN_API release() override {trace.push_back("interface-release");require(refs>0,"reference underflow");--refs;if(releaseAllocationFailure)throw std::bad_alloc();return refs;}
     tresult PLUGIN_API initialize(FUnknown* host) override {require(host,"mandatory host");if(!pass(name=="controller"?"controller-initialize":"component-initialize"))return kResultFalse;phase=ObserverPhase::Initialized;return kResultOk;}
     tresult PLUGIN_API terminate() override {const bool result=pass(name=="controller"?"controller-terminate":"component-terminate");++terminated;return !result || failTerminate || terminated>1?kResultFalse:kResultOk;}
     tresult PLUGIN_API getControllerClassId(TUID id) override {++classQueries;if(!pass("controller-class-id"))return kResultFalse;if(phase!=ObserverPhase::Created)return kResultFalse;std::memset(id,7,sizeof(TUID));return kResultOk;}
@@ -36,7 +37,7 @@ struct InitFake final : IComponent, IAudioProcessor, IEditController, IConnectio
         require(phase==ObserverPhase::Setup,"bus activation/deactivation Setup phase");busActive[i]=active;return kResultOk;
     }
     tresult PLUGIN_API setActive(TBool active) override {if(!pass(active?"activate":"deactivate"))return kResultFalse;phase=active?ObserverPhase::Activated:ObserverPhase::Setup;return kResultOk;}
-    tresult PLUGIN_API setState(IBStream*) override {return kResultOk;}
+    tresult PLUGIN_API setState(IBStream*) override {return pass(name=="controller"?"controller-restore":"component-restore")?kResultOk:kResultFalse;}
     tresult PLUGIN_API getState(IBStream* s) override {if(!pass("component-state"))return kResultFalse;char raw[]{'A',0,'Z'};int32 n=0;s->write(badStream?nullptr:raw,3,&n);return kResultOk;}
     tresult PLUGIN_API setBusArrangements(SpeakerArrangement*,int32 inputs,SpeakerArrangement* output,int32 outputs) override {require(inputs==0 && outputs==1 && output && *output==SpeakerArr::kStereo,"exact stereo arrangement");return pass("bus-arrangements")?kResultOk:kResultFalse;}
     tresult PLUGIN_API getBusArrangement(BusDirection,int32,SpeakerArrangement& a) override {a=3;return pass("bus-readback")?kResultOk:kResultFalse;}
@@ -46,9 +47,9 @@ struct InitFake final : IComponent, IAudioProcessor, IEditController, IConnectio
     tresult PLUGIN_API setProcessing(TBool processing) override {if(!pass(processing?"start-processing":"stop-processing"))return kResultFalse;require(phase==(processing?ObserverPhase::Activated:ObserverPhase::Processing),"processing phase");phase=processing?ObserverPhase::Processing:ObserverPhase::Activated;return kResultOk;}
     tresult PLUGIN_API process(ProcessData&) override {return kResultOk;}
     uint32 PLUGIN_API getTailSamples() override {++metricsQueries;require(phase==ObserverPhase::Setup,"fake metrics before setup");return 23;}
-    tresult PLUGIN_API setComponentState(IBStream* stream) override {int64 pos=-1;require(stream && stream->tell(&pos)==kResultOk && pos==0,"rewound component state");return pass("controller-state")?kResultOk:kResultFalse;}
-    int32 PLUGIN_API getParameterCount() override {require(phase==ObserverPhase::Connected,"fake parameter phase");return parameterCount;}
-    tresult PLUGIN_API getParameterInfo(int32,ParameterInfo& p) override {p={};p.id=31;p.title[0]='P';p.defaultNormalizedValue=defaultNormalized;return kResultOk;}
+    tresult PLUGIN_API setComponentState(IBStream* stream) override {int64 pos=-1;require(stream && stream->tell(&pos)==kResultOk && pos==0,"rewound component state");return pass(restoreTracing?"restore-sync":"controller-state")?kResultOk:kResultFalse;}
+    int32 PLUGIN_API getParameterCount() override {++parameterCountQueries;require(phase==ObserverPhase::Connected,"fake parameter phase");return parameterCount;}
+    tresult PLUGIN_API getParameterInfo(int32,ParameterInfo& p) override {++parameterInfoQueries;p={};p.id=31;p.title[0]='P';p.defaultNormalizedValue=defaultNormalized;return kResultOk;}
     tresult PLUGIN_API getParamStringByValue(ParamID,ParamValue,String128) override {return kNotImplemented;}
     tresult PLUGIN_API getParamValueByString(ParamID,TChar*,ParamValue&) override {return kNotImplemented;}
     ParamValue PLUGIN_API normalizedParamToPlain(ParamID,ParamValue v) override {return v;}
@@ -142,4 +143,5 @@ int main(int argc,char** argv) {
         bool moduleCloseFailed=false;try{module.close();}catch(...){moduleCloseFailed=true;}
         require(moduleCloseFailed==(test=="live-module-close"),"module close receipt");require(host.refs==1 && f.refs==0 && loader.closes==1 && count("ModuleExit")==1,"module ownership balanced");
     }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
+    return 0;
 }

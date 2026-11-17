@@ -25,15 +25,36 @@
     "<temporary-injected-initializer>"
   ],
   "source_sha256": {
-    "native_observer_initializer.hpp": "8958d31edf5bcdba2d3174eb4c0f9cd84858ef350d7ce16f42d7369b6792ab49",
-    "native_observer_initializer_fixture.cpp": "ffaba6fccfd95dc01717ca5cb494299f22392f0856ff710186779689519f3acb",
+    "native_observer_initializer.hpp": "d6bdf10fc1a049f0e479e1f609a1c1319d90eff646d268a53a2b760c76c5bc36",
+    "native_observer_initializer_fixture.cpp": "bcfcac1234e1ee325961dc43a78832fbd9bf6a6588ff0396e5c1ddf09387280b",
     "test_native_observer_initializer.py": "e1827b93a25ff64df5c216a13c32304a78512dda934ed37b321e27db45de6fda",
-    "native_observer_sdk.hpp": "5bbfccc6432caf0c405a08c5e559125209f014939dded0bee86b4070bcc2c112"
+    "native_observer_sdk.hpp": "938d80026f4b4340c862e18494b7c64b99165e43e489dd59703d519cef2ca371",
+    "native_observer_initializer_phase_fixture.cpp": "98fda750787a318bd004f1afb994345ea954b58a9f8df3c2c07052679597ad0f",
+    "test_native_observer_initializer_phase.py": "d4f2168c37b7afb55183ab3b46afde8a3924685a0a0cc37ea6ce79bcc83f5d34",
+    "native_observer_initializer_STATUS.md": "73f9dd153b38ef4870100000bc6ebd6ed739691d07258afac84a7430ab05ed94"
   },
   "sanitizer_probe": {
     "cases": 8,
     "address_undefined_sanitizers": "passed",
     "leak_sanitizer": "unavailable: ptrace restriction",
-    "ASAN_OPTIONS": "detect_leaks=0"
+    "ASAN_OPTIONS": "detect_leaks=0",
+    "scope": "historical pre-phase initializer checkpoint; current phase probe recorded separately"
+  },
+  "phase_fake_cases": 58,
+  "phase_sanitizer_probe": {
+    "cases": [
+      "history",
+      "separate-history",
+      "flush",
+      "operation-caught-reentrant",
+      "operation-nested-caught",
+      "cleanup-allocation",
+      "suspend-throw:stop-processing",
+      "restore-fail:controller-restore",
+      "resume-throw:activate"
+    ],
+    "address_undefined_sanitizers": "passed",
+    "ASAN_OPTIONS": "detect_leaks=0",
+    "leak_sanitizer_pass_claimed": false
   }
 }

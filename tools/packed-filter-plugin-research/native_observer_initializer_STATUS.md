@@ -25,3 +25,64 @@ The caller must supply a real conforming IHostApplication with the required mess
 CreatedIdentity captures the pre-init controller CID but does not expose a raw failed getControllerClassId status receipt, only the checked helper failure; expanded per-call observation provenance still needs review. The current implementation assumes native query/create failure contracts leave null outputs; failure-with-nonnull output is not a validated ownership scenario. Malicious or memory-unsafe in-process plugins are outside this harness's protection. No real module may be loaded based on these fake tests alone.
 
 Eight representative injected-fake paths also passed AddressSanitizer/UndefinedBehaviorSanitizer with leak detection explicitly disabled. LeakSanitizer cannot run under this environment's ptrace restriction; no leak-sanitizer pass is claimed.
+
+## Phase-split, bounded history extension
+
+`initializeConnected()` now stops after connection/initial component-state sync.
+`captureConnected()` owns the phase check and a single metadata enumeration;
+`connectedParameterRoster()` exposes readonly declared count and ordered unique,
+non-sentinel IDs gathered from those same ParameterInfo calls, not a second pass.
+Partial metadata on failure is not admitted metadata. `prepareAndStart(config)`
+performs original topology/setup/activation. Optional second argument `true`
+records setup latency/tail at the valid Setup checkpoint before activation;
+default `start(config)` retains original native sequence and rejects invalid grid
+before component creation. No parameter delivery policy is guessed here.
+
+Private phase/config/history counters govern admission, not public compatibility
+receipt booleans. One initial activation plus at most two suspend/resume pairs is
+permitted. `saveState(policy)` is owned and once-only in initial Processing history;
+first suspension must consume that same instance's exact stored state through
+`restoreSavedState()` once before resume. Controller unsupported policy follows
+the reviewed state helper. Second suspension permits only plain resume, not a
+second restore. Saved data is not accepted from an arbitrary external instance.
+A future fresh-instance E restore needs separately reviewed cross-instance
+identity binding. Resumes keep original setup and do not call setupProcessing
+again. Restore controls does not restore oscillator/RNG/delay history; A=C PCM
+is not claimed. The suite uses matched histories across arms instead.
+
+`withProcessingOperation(callback)` supplies the owned audio interface and const
+stored setup only in private Processing phase; callback returns void. All callback
+errors, including invalid flush inputs, become terminal. Nested lifecycle misuse
+also becomes terminal even when the callback catches it: native cleanup is
+postponed until that callback unwinds, then checked once. Borrowed typed getters
+are phase-checked when obtained but cannot revoke a retained C++ reference. Do
+not retain interfaces across callbacks/phase transitions or call concurrently.
+No worker-thread/UI-thread, idle, or callback-quiescence claim is made: the real
+driver must establish these boundaries independently before invoking methods.
+
+Suspension consumes stop/active/bus ownership before each call, attempts all
+remaining stop/deactivate/bus-off operations despite errors, then terminally
+cleans; no failed operation is retried. Native returns/exceptions are retained
+in fixed calls, state receipts or NativeOwnership cleanup receipts. Primary
+failure survives secondary cleanup errors. A caller-provided callback must keep
+its own detailed process/descriptor receipt (as the flush helper does); this
+wrapper is not a general process recorder or timeout boundary.
+
+96 fixed initializer call slots have a conservative55 bound: largest separate
+start31 + optional metadata1 + optional metrics1 + two suspend/resume pairs16 +
+final stop/deactivate/bus-off4 =53; two temporary identity releases conservatively
+add2 on partial paths. Earlier failure removes later calls; terminal guards forbid
+new lifecycle work. State helpers have separate2/3-call receipts and final native
+ownership uses its existing fixed15 slots. Every new failure/positive control
+asserts the initializer count remains within55. No receipt scheduling allocation
+is introduced; metadata/state storage may allocate and failures still clean up.
+
+58 new phase controls plus the existing50 initializer controls pass, including
+full combined/separate histories, same-enumeration roster, all selected suspend/
+restore/resume return/exception failures, genuine std::bad_alloc injection during
+metadata/callback/cleanup, spoofed public booleans, late/stale access and nested
+misuse (including caught nested processing-wrapper rejection with live outer
+processor access until unwind). The real flush template is instantiated against InjectedInstance with
+inert process calls, including invalid/repeat failures. Nine representative new
+phase paths passed ASan/UBSan with detect_leaks=0; this is not leak-sanitizer proof.
+No production synth was loaded, no audio rendered, no driver launched.
