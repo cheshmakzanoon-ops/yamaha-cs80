@@ -13,13 +13,13 @@ Request rejection exits2 before loading. Native execution is terminal exit0 or
 exit24. Neither success nor file hashing alone authenticates a parent supervisor,
 a compiler, complete runtime closure or the expected manifest's source.
 
-## Frozen binary request v1/v2
+## Frozen binary request v1/v2/v3
 
 Every integer is unsigned64 little-endian. Every text is a u64 byte count followed
 by those bytes, with no NUL and no terminator. No padding or trailing bytes.
 All limits are checked before field allocation/iteration. Ordered fields:
 
-1. Text `cs80-process-lifetime-request-v1` or `cs80-process-lifetime-request-v2`, text `process-lifetime`.
+1. Text `cs80-process-lifetime-request-v1` or `cs80-process-lifetime-request-v2` or `cs80-process-lifetime-request-v3`, text `process-lifetime`.
 2. Text arm, exactly `stock` or `candidate`.
 3. Text32 lowercase hex representing the exact16 raw SDK TUID bytes, not a
    platform-reordered UUID display string. All-zero is rejected. Authentic CID
@@ -27,8 +27,10 @@ All limits are checked before field allocation/iteration. Ordered fields:
 4. Integers: workload policy0/1/2, rate44100/48000/96000, mode0/1
    (private workload enum, never cast to SDK), voices8/16, block64/256/1024.
 5. Controller-state policy1 (`Supported`) or2 (`JuceUnsupported`), selected before
-   native execution. Request-v2 then carries query policy1 (strict SDK) or2
-   (pinned JUCE false/null); v1 implies strict. Worker timeout milliseconds1..600000.
+   native execution. Request-v2/v3 then carries query policy1 (strict SDK) or2
+   (pinned JUCE false/null); v1 implies strict. Request-v3 then carries topology1
+   (zero audio inputs) or2 (disabled mono external input); v1/v2 imply1.
+   Worker timeout milliseconds1..600000.
 6. Identity caps: entries1..16384, files1..entries, bytes1..8589934592,
    pathBytes1..4096. These are limits, not a claim all dependencies were declared.
 7. Bundle root: text absolute path, integers mode, uid, gid. Then text relative
@@ -57,7 +59,7 @@ process exit as physical `dlclose` unmapping. Full A-D evidence remains mandator
 
 ## Checks
 
-33 controls pass. The dedicated executable builds with strict C++20 warnings and the explicitly
+41 driver controls pass. The dedicated executable builds with strict C++20 warnings and the explicitly
 pinned SDK. Tests include actual inert-library execution for both arm labels at
 one supported inert workload, parser-only coverage of all108 frozen cases,
 truncation/oversize integer/trailing/NUL/schema/profile/CID/enum/deadline/cap
@@ -68,4 +70,6 @@ expectations, then checks its actual inert-child receipt and process completion.
 library's native setup is deliberately fixed to one workload; parsing the grid
 does not claim native interoperability across the grid. No CS80 plugin was run.
 
-The standalone driver emits child-receipt-v2 with actual query policy/result/nullness. See native_observer_juce_query_STATUS.md for the separate query compatibility contract and original diagnostic limitation.
+The standalone driver emits child-receipt-v3 with actual query policy/result/nullness and explicit input topology, including for older strict requests. See native_observer_juce_query_STATUS.md for the separate query compatibility contract and original diagnostic limitation.
+
+See native_observer_input_topology_STATUS.md for frozen input-lifecycle and descriptor semantics.

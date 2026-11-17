@@ -2,6 +2,7 @@
 // Bounded injected initialization only. NO dlopen/dlsym implementation or CLI.
 #include "native_observer_sdk.hpp"
 #include "native_observer_state.hpp"
+#include "native_observer_topology.hpp"
 #include <pluginterfaces/vst/ivsthostapplication.h>
 #include <optional>
 #include <filesystem>
@@ -131,6 +132,8 @@ private:
         require(phase_==expected && !closeAttempted && !primaryError && !operation_,"instance phase/operation guard");
     }
     void activateAndStart() {
+        if(inputTopology_==AudioInputTopology::DisabledMonoExternalInput)
+            require(calls.run("external-input-disable",kResultOk,[&]{return own.component->activateBus(kAudio,kInput,0,false);}),"external input inactive request failed");
         for(auto& b:buses){require(calls.run(b.media==kAudio?"audio-bus-activate":"event-bus-activate",kResultOk,[&]{return own.component->activateBus(b.media,b.direction,b.index,true);}),"bus activate failed");b.active=true;}
         require(calls.run("activate",kResultOk,[&]{return own.component->setActive(true);}),"component activate failed");own.active=true;
         require(calls.run("start-processing",kResultOk,[&]{return own.audio->setProcessing(true);}),"processing start failed");own.processing=true;
@@ -148,17 +151,19 @@ public:
     // setup metrics1 + two suspend/resume pairs16 + final close4 =53. Partial
     // failure cannot add another lifecycle attempt; at most two temporary
     // identity releases add two cleanup rows. State/native ownership have their
-    // own bounded receipts. Keep explicit headroom without dynamic growth.
-    static constexpr std::size_t maximumScheduledCalls=55;
+    // own bounded receipts. Disabled mono input adds metadata1 + readback1 +
+    // three explicit inactive requests3: worst bound60, capacity96 unchanged.
+    static constexpr std::size_t maximumScheduledCalls=60;
     static_assert(maximumScheduledCalls<=96);
     InitializerCalls<96> calls;
     std::exception_ptr primaryError;
     bool started=false,initializationSucceeded=false,closedCleanly=false;
-    private:
-    const ControllerQueryPolicy queryPolicy_;ControllerQueryObservation queryObservation_;
+private:
+    const AudioInputTopology inputTopology_;const ControllerQueryPolicy queryPolicy_;ControllerQueryObservation queryObservation_;
 public:
     ControllerQueryObservation controllerQueryObservation()const noexcept{return queryObservation_;}
-    explicit InjectedInstance(InjectedModule& m,Handler& h,ControllerQueryPolicy p=ControllerQueryPolicy::StrictSdk):module(m),handler(h),queryPolicy_(p){validateControllerQueryPolicy(p);queryObservation_.policy=p;}
+    AudioInputTopology audioInputTopology()const noexcept{return inputTopology_;}
+    explicit InjectedInstance(InjectedModule& m,Handler& h,ControllerQueryPolicy p=ControllerQueryPolicy::StrictSdk,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput):module(m),handler(h),inputTopology_(topology),queryPolicy_(p){validateAudioInputTopology(topology);validateControllerQueryPolicy(p);queryObservation_.policy=p;}
     InjectedInstance(const InjectedInstance&)=delete;InjectedInstance& operator=(const InjectedInstance&)=delete;
     void start(SynthSetup config) {
         try {phaseGuard(Phase::Fresh);validateSetup(config);initializeConnected();prepareAndStart(config);}
@@ -208,15 +213,23 @@ public:
         try {
             phaseGuard(Phase::Connected);validateSetup(config);setup_=config;
             for(auto media:{kAudio,kEvent})for(auto direction:{kInput,kOutput}) {
-                int32 count=-1;const int32 wanted=(media==kAudio && direction==kOutput) || (media==kEvent && direction==kInput)?1:0;
+                int32 count=-1;const int32 wanted=(media==kAudio && (direction==kOutput || inputTopology_==AudioInputTopology::DisabledMonoExternalInput)) || (media==kEvent && direction==kInput)?1:0;
                 require(calls.run("bus-count",0,[&]{count=own.component->getBusCount(media,direction);return count;},true) && count==wanted,"frozen synth bus topology");
             }
             for(const auto& b:buses) {
                 BusInfo info{};require(calls.run(b.media==kAudio?"audio-bus-info":"event-bus-info",kResultOk,[&]{return own.component->getBusInfo(b.media,b.direction,b.index,info);})
                     && info.mediaType==b.media && info.direction==b.direction && (b.media==kAudio?info.channelCount==2:info.channelCount>0 && info.channelCount<=16),"frozen bus metadata differs");
             }
-            SpeakerArrangement stereo=SpeakerArr::kStereo;
-            require(calls.run("bus-arrangements",kResultOk,[&]{return own.audio->setBusArrangements(nullptr,0,&stereo,1);}),"stereo arrangement failed");
+            if(inputTopology_==AudioInputTopology::DisabledMonoExternalInput){
+                BusInfo info{};require(calls.run("external-input-info",kResultOk,[&]{return own.component->getBusInfo(kAudio,kInput,0,info);}) && info.mediaType==kAudio && info.direction==kInput && info.channelCount==1 && info.busType==kMain && info.flags==0,"external input metadata differs");
+                constexpr char16_t name[]=u"External Modulation";static_assert(sizeof(name)/sizeof(name[0])<=128);
+                for(std::size_t i=0;i<sizeof(name)/sizeof(name[0]);++i)require(info.name[i]==name[i],"external input name differs");
+            }
+            SpeakerArrangement stereo=SpeakerArr::kStereo,mono=SpeakerArr::kMono;
+            const int32 inputCount=inputTopology_==AudioInputTopology::DisabledMonoExternalInput?1:0;
+            // Even count0 passes a valid pointer: a plugin may form begin+count.
+            require(calls.run("bus-arrangements",kResultOk,[&]{return own.audio->setBusArrangements(&mono,inputCount,&stereo,1);}),"stereo arrangement failed");
+            if(inputCount){SpeakerArrangement observedInput=0;require(calls.run("external-input-arrangement-readback",kResultOk,[&]{return own.audio->getBusArrangement(kInput,0,observedInput);}) && observedInput==mono,"external input arrangement differs");}
             SpeakerArrangement observed=0;require(calls.run("bus-arrangement-readback",kResultOk,[&]{return own.audio->getBusArrangement(kOutput,0,observed);}) && observed==stereo,"arrangement readback differs");
             require(calls.run("sample-size",kResultOk,[&]{return own.audio->canProcessSampleSize(kSample32);}),"sample format unsupported");
             ProcessSetup setup{config.mode,kSample32,config.block,config.rate};

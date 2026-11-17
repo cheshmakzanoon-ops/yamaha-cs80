@@ -1,0 +1,19 @@
+{
+  "scope": "research host frozen disabled mono input, not production DSP",
+  "juce_revision": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "upstream_sources": {
+    "modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp": "16031325b31be2e32b23689f07338bd6c631941475b9bbf87d176d1f2565c202",
+    "modules/juce_audio_processors_headless/format_types/juce_VST3Common.h": "ac8ef5f9bbc1df1a0ef83d40b49c79ac7fc3e6899d0f4bb7eba1a06307c81103"
+  },
+  "sources": {
+    "native_observer_topology.hpp": "627661f149d961c44e9ff8a530e2c918e058c0b899425691ff90549d72684138",
+    "native_observer_initializer.hpp": "3b6d7054b6a0d0ff3453623c625b2d8778dd3e2aa85a1ebf2308d9f4b7fbaf7c",
+    "native_observer_processing.hpp": "ba5554c68bfbc985ce2f2b89a37d7e6b94beaff6183ee9fe7d654ed9c16a315c",
+    "native_observer_history.hpp": "a5067c96bf0507518119396dcfff20206ab2bb7bbde9f5b5d10d6f139b23fc3e",
+    "native_observer_module_history.hpp": "6647782279115df4cf0de70c3d5c7b6aad437911a9d4177f207ec0b8a2b51844",
+    "native_observer_process_child.hpp": "df3841cf73a43842eb6544d09e40e2c3f183c75ba8ef9bed0f9963f35348ee88",
+    "native_observer_request.hpp": "4e9cd8f1b772c28ae2772fbddc6268a10c7fa1dd1c243e12954e118f61ffefc0",
+    "native_observer_driver.cpp": "b08c438d790fa87b5372b87ecf7aeed8cd40bf06668a89b2cf5403bbc34a7e6a",
+    "test_native_observer_input_topology.py": "920d39738bda598989d9765839853d390a65979043afd98ba9c7ec0b20637fb3"
+  }
+}

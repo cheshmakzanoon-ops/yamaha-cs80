@@ -9,7 +9,7 @@ int main(int argc,char** argv){
   auto identity=cs80_identity::VerifiedIdentity::verify(q.identity,q.caps);
   auto pin=cs80_identity::PinnedModule::pin(identity);
   cs80_observer::ProcessLifetimeChild::run(pin,q.cid.data(),q.workload,q.state,
-   {cs80_observer::worker::Clock::now()+std::chrono::milliseconds(q.timeoutMs),1000000,std::chrono::milliseconds(1)},argv[3],argv[4],q.query,true);
+   {cs80_observer::worker::Clock::now()+std::chrono::milliseconds(q.timeoutMs),1000000,std::chrono::milliseconds(1)},argv[3],argv[4],q.query,true,q.topology);
  }catch(const std::exception& e){std::fprintf(stderr,"CS80_REQUEST_REJECTED %.256s\n",e.what());return 2;}
  catch(...){std::fputs("CS80_REQUEST_REJECTED non-standard exception\n",stderr);return 2;}
 }

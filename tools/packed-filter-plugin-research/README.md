@@ -146,3 +146,9 @@ A first bounded standalone-driver diagnostic actually loaded the authentic histo
 A separate second strict diagnostic directly recorded the normal return value1 (`kResultFalse`) and null pointer, then rejected it under unchanged strict policy. historical-native-diagnostic-2.json retains this direct observation. Neither attempt admitted a full history or produced a CPU result.
 
 A third, separately preselected compatibility diagnostic passed the optional-controller query but was rejected at frozen bus topology. The synth declares a disabled mono External Modulation input; the observer incorrectly expected no input bus. historical-native-diagnostic-3.json records this next blocker. Correct handling must explicitly represent the inactive bus through enumeration, arrangements, activation and processing, without removing the feature or weakening topology checks.
+
+## Explicit inactive external-input topology
+
+The research host now preselects and binds the real disabled mono input topology through exact bus metadata, mono/stereo arrangements, readback, three explicit inactive requests, worker-owned input descriptors and versioned render evidence. The legacy zero-input profile remains separate. Independent inert full A-D integration and mutation/failure controls passed; no production synth feature was removed.
+
+A fourth historical-stock diagnostic passed controller, topology and setup gates, then rejected the complete parameter-ID binding before any admitted A-D receipt. historical-native-diagnostic-4.json records the failure. The frozen flush roster contains intended synth controls, while JUCE adds framework parameters; exact observed extra IDs still require retained native metadata. The next step is source-aware classification and explicit bypass/program/MIDI handling, not an arbitrary-subset exception or blind writes to every framework default. No real-plugin CPU savings or release qualification are established.

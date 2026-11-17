@@ -35,14 +35,14 @@ class DriverTests(unittest.TestCase):
   def entry(p,name,directory):
    s=p.stat();return T(name)+U(directory)+U(s.st_mode&0o777)+U(s.st_uid)+U(s.st_gid)+U(0 if directory else s.st_size)+T('' if directory else H(p))
   data=T(val('schema','cs80-process-lifetime-request-v1'))+T(val('profile','process-lifetime'))+T(val('arm','stock'))+T(val('cid','05'*16))
-  data+=b''.join(U(val(k,d)) for k,d in [('policy',0),('rate',48000),('mode',0),('voices',8),('block',64),('state',1)]+([('query',1)] if val('schema','cs80-process-lifetime-request-v1')=='cs80-process-lifetime-request-v2' else [])+[('timeout',5000),('entries',64),('files',64),('bytes',8*1024*1024),('paths',4096)])
+  data+=b''.join(U(val(k,d)) for k,d in [('policy',0),('rate',48000),('mode',0),('voices',8),('block',64),('state',1)]+([('query',1)] if val('schema','cs80-process-lifetime-request-v1')in ('cs80-process-lifetime-request-v2','cs80-process-lifetime-request-v3') else [])+([('topology',1)] if val('schema','cs80-process-lifetime-request-v1')=='cs80-process-lifetime-request-v3' else [])+[('timeout',5000),('entries',64),('files',64),('bytes',8*1024*1024),('paths',4096)])
   data+=root(self.bundle)+T('module.so')+U(2)+entry(self.bundle,'.',1)+entry(self.bundle/'module.so','module.so',0)+U(0)+U(0)
   return data
  def run_driver(self,data=None,hash_override=None,nonce='1'*64):
   self.req.write_bytes(self.encoded() if data is None else data);self.req.chmod(0o600)
   return subprocess.run([str(self.exe),str(self.req),hash_override or H(self.req),nonce,str(self.out)],capture_output=True,timeout=15)
  def test_actual_inert_success(self):
-  p=self.run_driver();self.assertEqual(p.returncode,0,p.stderr);self.assertTrue(self.out.is_file());b=self.out.read_bytes();n=struct.unpack_from('<Q',b)[0];self.assertEqual(len(b),n+80);self.assertEqual(b[-64:].decode(),hashlib.sha256(b[8:8+n]).hexdigest());self.assertIn(b'cs80-process-lifetime-child-v2',b);self.assertTrue(b'provider_retained' in b or b'provider_removed' in b)
+  p=self.run_driver();self.assertEqual(p.returncode,0,p.stderr);self.assertTrue(self.out.is_file());b=self.out.read_bytes();n=struct.unpack_from('<Q',b)[0];self.assertEqual(len(b),n+80);self.assertEqual(b[-64:].decode(),hashlib.sha256(b[8:8+n]).hexdigest());self.assertIn(b'cs80-process-lifetime-child-v3',b);self.assertTrue(b'provider_retained' in b or b'provider_removed' in b)
  def test_candidate_native_arm(self):
   p=self.run_driver(self.encoded(arm='candidate'));self.assertEqual(p.returncode,0,p.stderr);self.assertIn(b'candidate',self.out.read_bytes())
  def test_parse_all_108_frozen_cases(self):
@@ -63,7 +63,7 @@ class DriverTests(unittest.TestCase):
   text_manifest.write_text(f'{json.dumps(str(self.bundle))} {s.st_mode&0o777} {s.st_uid} {s.st_gid}\n"module.so"\n2\n"." 1 {s.st_mode&0o777} {s.st_uid} {s.st_gid} 0 ""\n"module.so" 0 {f.st_mode&0o777} {f.st_uid} {f.st_gid} {f.st_size} "{H(module)}"\n')
   probe=subprocess.run([str(self.expected),str(text_manifest)],capture_output=True,text=True,check=True,timeout=10).stdout.splitlines();self.assertEqual(len(probe),6)
   helper=pathlib.Path(impl.__file__).resolve();cwd=self.work/'cwd';cwd.mkdir()
-  c={'controller_query_policy':1,'controller_query_result':0,'controller_query_pointer_present':True,'arm':'stock','schema':SCHEMA,'profile':PROFILE,'history_schema':HISTORY,'controller_state_policy':1,'controller_state_result':0,'selected_cid_hex':'05'*16,'controller_cid_hex':None,'case_identity_hex':probe[2],'protocol_sha256':probe[3:],'expected_manifest_digest':probe[0],'expected_evidence_digest':probe[1],'manifest':str(self.req),'manifest_sha256':H(self.req),'driver':str(self.exe),'runtime_hashes':{str(self.exe):H(self.exe)},'helper_hashes':{str(helper):H(helper)},'inputs':[],'module_root':str(self.bundle),'module_relative':'module.so','module_sha256':H(module),'module_hashes':{'module.so':H(module)},'module_directories':[],'module_modes':{'.':s.st_mode&0o777,'module.so':f.st_mode&0o777},'module_entry_cap':16,'module_byte_cap':8*1024**2,'receipt_cap':8*1024**2,'timeout':15,'cwd':str(cwd),'output':str(self.work/'output'),'environment':{'PATH':'/usr/bin:/bin','HOME':str(cwd),'LANG':'C'}}
+  c={'audio_input_topology':1,'controller_query_policy':1,'controller_query_result':0,'controller_query_pointer_present':True,'arm':'stock','schema':SCHEMA,'profile':PROFILE,'history_schema':HISTORY,'controller_state_policy':1,'controller_state_result':0,'selected_cid_hex':'05'*16,'controller_cid_hex':None,'case_identity_hex':probe[2],'protocol_sha256':probe[3:],'expected_manifest_digest':probe[0],'expected_evidence_digest':probe[1],'manifest':str(self.req),'manifest_sha256':H(self.req),'driver':str(self.exe),'runtime_hashes':{str(self.exe):H(self.exe)},'helper_hashes':{str(helper):H(helper)},'inputs':[],'module_root':str(self.bundle),'module_relative':'module.so','module_sha256':H(module),'module_hashes':{'module.so':H(module)},'module_directories':[],'module_modes':{'.':s.st_mode&0o777,'module.so':f.st_mode&0o777},'module_entry_cap':16,'module_byte_cap':8*1024**2,'receipt_cap':8*1024**2,'timeout':15,'cwd':str(cwd),'output':str(self.work/'output'),'environment':{'PATH':'/usr/bin:/bin','HOME':str(cwd),'LANG':'C'}}
   return c,Commands(self.work/'logs',total_seconds=30)
  def test_public_supervisor_integration(self):
   from process_lifetime_transaction import process_lifetime_arm
@@ -74,6 +74,15 @@ class DriverTests(unittest.TestCase):
   c,commands=self.public_contract();c['controller_query_policy']=2
   with self.assertRaisesRegex(ValueError,'prelaunch controller query policy mismatch'):process_lifetime_arm(c,commands)
   self.assertFalse(any('argv' in row for row in commands.ledger))
+ def test_public_request_topology_mismatch(self):
+  from process_lifetime_transaction import process_lifetime_arm
+  c,commands=self.public_contract();c['audio_input_topology']=2
+  with self.assertRaisesRegex(ValueError,'prelaunch audio input topology mismatch'):process_lifetime_arm(c,commands)
+  self.assertFalse(any('argv' in row for row in commands.ledger))
+ def test_v3_legacy_topology_request(self):
+  p=self.run_driver(self.encoded(schema='cs80-process-lifetime-request-v3',topology=1));self.assertEqual(p.returncode,0,p.stderr)
+ def test_v3_bad_topology_zero(self):self.bad(self.encoded(schema='cs80-process-lifetime-request-v3',topology=0))
+ def test_v3_bad_topology_three(self):self.bad(self.encoded(schema='cs80-process-lifetime-request-v3',topology=3))
  def test_v2_juce_query_request(self):
   p=self.run_driver(self.encoded(schema='cs80-process-lifetime-request-v2',query=2));self.assertEqual(p.returncode,0,p.stderr)
  def test_v2_bad_query_zero(self):self.bad(self.encoded(schema='cs80-process-lifetime-request-v2',query=0))

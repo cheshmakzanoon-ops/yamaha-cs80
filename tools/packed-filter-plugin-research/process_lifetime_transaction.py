@@ -5,7 +5,8 @@ from identity import require,capture_files
 from suite_transaction import owned,bounded_entries,environment_digest
 
 LEGACY_SCHEMA='cs80-process-lifetime-child-v1'
-SCHEMA='cs80-process-lifetime-child-v2'
+QUERY_SCHEMA='cs80-process-lifetime-child-v2'
+SCHEMA='cs80-process-lifetime-child-v3'
 PROFILE='process-lifetime'
 HISTORY='cs80-instance-history-A-D-v1'
 BODY_CAP=96*1024**2
@@ -36,6 +37,11 @@ def _payload(data,case,policy,controller_result,c):
     spans=[r.blob(PAYLOAD_CAP) for _ in range(8)]
     require(all(len(v)>0 for v in spans),'incomplete A-D protocol/metadata/state')
     require([digest(v) for v in spans[:3]]==c['protocol_sha256'],'actual initial/alter/render protocol mismatch')
+    protocol=_Reader(spans[2]);require(protocol.raw(8)==b'CS80RPRT','render protocol magic required')
+    if c.get('audio_input_topology',1)==2:
+        require(protocol.u32()==2 and protocol.u32()==2,'disabled input render protocol identity required')
+    else:
+        require(protocol.u32()==1,'zero input render protocol identity required')
     connected=_Reader(spans[3]);require(connected.text()=='native-observer-connected-v1' and connected.text()=='native-observer-created-identity-v1','connected Created identity schema')
     require(connected.raw(16)==bytes.fromhex(c['selected_cid_hex']),'actual selected class CID mismatch')
     separate=connected.u32();require(separate in (0,1) and bool(separate)==bool(c['controller_cid_hex']),'controller class kind mismatch')
@@ -49,9 +55,19 @@ def _payload(data,case,policy,controller_result,c):
     for index in range(3):
         attempted=r.u32();require(attempted==(1 if index<2 or policy==1 else 0),'restore policy/attempt mismatch')
         if attempted:require(r.u32()==0 and r.blob(PAYLOAD_CAP)==(component if index<2 else controller),'restored state bytes/result differ')
+    cleanup=[]
     for cap in (128,128):
-        count=r.count(cap);require(count>0,'missing cleanup ledger')
-        for _ in range(count):require(bool(r.text(256)),'empty cleanup name');r.u64()
+        count=r.count(cap);require(count>0,'missing cleanup ledger');rows=[]
+        for _ in range(count):
+            name=r.text(256);require(bool(name),'empty cleanup name');rows.append((name,r.u64()))
+        cleanup.append(rows)
+    require(not any(row[0]=='external-input-enable' for rows in cleanup for row in rows),'external input activation forbidden')
+    disabled=[row for row in cleanup[0] if row[0]=='external-input-disable']
+    require(disabled==[('external-input-disable',0)]*(3 if c.get('audio_input_topology',1)==2 else 0),'exact external input disable lifecycle required')
+    if c.get('audio_input_topology',1)==2:
+        activation=[row for row in cleanup[0] if row[0] in ('external-input-disable','activate')]
+        require(activation==[('external-input-disable',0),('activate',0)]*3,'external input disable before each activation required')
+        require(all(i+1<len(cleanup[0]) and cleanup[0][i+1]==('audio-bus-activate',0) for i,row in enumerate(cleanup[0]) if row[0]=='external-input-disable'),'external input disable/output activation adjacency required')
     require([r.u64() for _ in range(5)]==[6,6,6,6,0],'worker join totals differ');r.end()
     return {'render_sha256':[digest(v) for v in renders],'post_A_state_sha256':digest(spans[-1]),'controller_state_policy':policy,'inner_semantics_trusted_native_producer_required':True}
 
@@ -76,10 +92,12 @@ def _parse(data,c,nonce,pid,module_stat):
     for key in ('expected_manifest_digest','expected_evidence_digest','module_sha256'):require(sha(r.text(64))==c[key],'receipt identity mismatch: '+key)
     require(r.text()==HISTORY,'history schema mismatch');case=r.blob(CASE_CAP);require(case==bytes.fromhex(c['case_identity_hex']),'receipt case mismatch')
     query_details={}
-    if c['schema']==SCHEMA:
+    if c['schema'] in (QUERY_SCHEMA,SCHEMA):
         query_policy,query_result,query_pointer=r.u32(),r.u32(),r.u32()
         require(query_policy==c['controller_query_policy'] and query_result==c['controller_query_result'] and query_pointer==int(c['controller_query_pointer_present']),'controller query policy/result/pointer mismatch')
         query_details={'controller_query_policy':query_policy,'controller_query_result':query_result,'controller_query_pointer_present':bool(query_pointer)}
+    if c['schema']==SCHEMA:
+        topology=r.u32();require(topology==c['audio_input_topology'],'audio input topology mismatch');query_details['audio_input_topology']=topology
     require(r.u32()==1,'native dlclose return not zero');disposition=r.text(64);require(disposition in ('provider_removed','provider_retained'),'provider disposition missing')
     payload_hash=sha(r.text(64));payload=r.blob(PAYLOAD_CAP);require(len(payload)>0 and digest(payload)==payload_hash,'full A-D payload SHA mismatch')
     details=_payload(payload,case,c['controller_state_policy'],c['controller_state_result'],c)
@@ -127,7 +145,7 @@ def _request_preselection(c,manifest,commands):
     data,_=_read_receipt(manifest,8*1024**2,commands)
     require(digest(data)==c['manifest_sha256'],'prelaunch request SHA256 mismatch')
     r=_Reader(data);schema=r.text(64)
-    require(schema in ('cs80-process-lifetime-request-v1','cs80-process-lifetime-request-v2'),'prelaunch request schema')
+    require(schema in ('cs80-process-lifetime-request-v1','cs80-process-lifetime-request-v2','cs80-process-lifetime-request-v3'),'prelaunch request schema')
     require(r.text(32)==PROFILE and r.text(16)==c['arm'] and r.text(32)==c['selected_cid_hex'],'prelaunch profile/arm/CID mismatch')
     selectors=[r.u64() for _ in range(5)]
     case=_Reader(bytes.fromhex(c['case_identity_hex']))
@@ -137,16 +155,22 @@ def _request_preselection(c,manifest,commands):
     sha(case_text(64));sha(case_text(64))
     require(selectors==[case.u32() for _ in range(5)],'prelaunch workload selectors mismatch')
     require(r.u64()==c['controller_state_policy'],'prelaunch controller state policy mismatch')
-    query_policy=r.u64() if schema=='cs80-process-lifetime-request-v2' else 1
+    query_policy=r.u64() if schema in ('cs80-process-lifetime-request-v2','cs80-process-lifetime-request-v3') else 1
     require(query_policy==c['controller_query_policy'],'prelaunch controller query policy mismatch')
+    topology=r.u64() if schema=='cs80-process-lifetime-request-v3' else 1
+    require(topology==c['audio_input_topology'],'prelaunch audio input topology mismatch')
 
 
 def _process_lifetime(contract,commands,*,allow_script=False,allow_fixture=False):
     out=None;created=False;arm=None
     try:
         c=copy.deepcopy(contract);commands.remaining();arm=c['arm'];require(arm in ('stock','candidate'),'explicit arm')
-        require(c['profile']==PROFILE and (c['schema']==SCHEMA or ((allow_script or allow_fixture) and c['schema']==LEGACY_SCHEMA)) and c['history_schema']==HISTORY,'frozen process-lifetime schema/profile only; E blocked')
+        require(c['profile']==PROFILE and (c['schema']==SCHEMA or ((allow_script or allow_fixture) and c['schema'] in (LEGACY_SCHEMA,QUERY_SCHEMA))) and c['history_schema']==HISTORY,'frozen process-lifetime schema/profile only; E blocked')
         if c['schema']==SCHEMA:
+            require(type(c.get('audio_input_topology')) is int and c['audio_input_topology'] in (1,2),'explicit audio input topology required')
+        else:
+            require(c.get('audio_input_topology',1)==1,'legacy receipt cannot authorize external input topology')
+        if c['schema'] in (QUERY_SCHEMA,SCHEMA):
             require(type(c.get('controller_query_policy')) is int and c['controller_query_policy'] in (1,2),'explicit controller query policy required')
             require(type(c.get('controller_query_result')) is int and 0<=c['controller_query_result']<2**32 and type(c.get('controller_query_pointer_present')) is bool,'explicit raw controller query result/pointer required')
             if c['controller_query_pointer_present']:
@@ -206,7 +230,7 @@ def _process_lifetime(contract,commands,*,allow_script=False,allow_fixture=False
         audit();
         if not allow_script and not allow_fixture:_request_preselection(c,manifest,commands)
         module_stat=module_path.stat();out.mkdir(mode=0o700,parents=True);created=True;nonce=secrets.token_hex(32);receipt=out/'child.receipt'
-        common={k:c[k] for k in ('driver','driver_script','driver_mode','manifest','manifest_sha256','profile','schema','history_schema','arm','case_identity_hex','protocol_sha256','selected_cid_hex','controller_cid_hex','controller_query_policy','controller_query_result','controller_query_pointer_present','controller_state_policy','controller_state_result','runtime_hashes','helper_hashes','inputs','module_root','module_relative','module_hashes','module_directories','module_modes','expected_manifest_digest','expected_evidence_digest','module_sha256','receipt_cap','module_entry_cap','module_byte_cap','timeout','cwd') if k in c}
+        common={k:c[k] for k in ('driver','driver_script','driver_mode','manifest','manifest_sha256','profile','schema','history_schema','arm','case_identity_hex','protocol_sha256','selected_cid_hex','controller_cid_hex','controller_query_policy','controller_query_result','controller_query_pointer_present','audio_input_topology','controller_state_policy','controller_state_result','runtime_hashes','helper_hashes','inputs','module_root','module_relative','module_hashes','module_directories','module_modes','expected_manifest_digest','expected_evidence_digest','module_sha256','receipt_cap','module_entry_cap','module_byte_cap','timeout','cwd') if k in c}
         common['driver_request_argument']=driver_argument;common['environment_sha256']=env_hash;contract_hash=digest(json.dumps(common,sort_keys=True,separators=(',',':')).encode());argv=[*prefix,str(manifest),driver_argument,nonce,str(receipt)]
         require(list(out.iterdir())==[],'output root not empty before child')
         audit();stdout,stderr=commands.run('process-lifetime-'+arm,argv,cwd=cwd,timeout=c['timeout'],env=env,replace_env=True,require_group_empty=True)

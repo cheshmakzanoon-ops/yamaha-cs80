@@ -100,7 +100,7 @@ class ProcessingInstanceOwner {
         require(instance_.phase_==InjectedInstance::Phase::Processing && !instance_.primaryError,"leased instance became terminal");
     }
 public:
-    ProcessingInstanceOwner(InjectedModule& module,Handler& handler,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk):instance_(module,handler,q){instance_.deferFailureCleanup_=true;}
+    ProcessingInstanceOwner(InjectedModule& module,Handler& handler,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput):instance_(module,handler,q,topology){instance_.deferFailureCleanup_=true;}
     ControllerQueryObservation controllerQueryObservation()const noexcept{return instance_.controllerQueryObservation();}
     ProcessingInstanceOwner(const ProcessingInstanceOwner&)=delete;ProcessingInstanceOwner& operator=(const ProcessingInstanceOwner&)=delete;
     void initializeConnected(){uiCall([&]{instance_.initializeConnected();});}
@@ -112,7 +112,7 @@ public:
     void resume(){uiCall([&]{instance_.resume();});}
     template<class Pump> RenderObservation render(const RenderProtocol& protocol,worker::WaitPolicy policy,Pump&& pump){
         Guard guard(*this);try{
-            auto task=begin(worker::Kind::Render);results_.renderProtocol=protocol;results_.render={};
+            require(protocol.topology==instance_.audioInputTopology(),"render input topology differs from owned lifecycle");auto task=begin(worker::Kind::Render);results_.renderProtocol=protocol;results_.render={};
             execute(task,policy,std::forward<Pump>(pump));releaseLease();return std::move(results_.render);
         }catch(...){abort(std::current_exception());}
     }

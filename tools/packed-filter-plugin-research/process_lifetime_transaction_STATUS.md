@@ -43,7 +43,7 @@ unload. No E-transfer authority, CPU timing or production qualification is grant
 
 ## Explicit controller-query compatibility evidence (receipt v2)
 
-The standalone public supervisor now requires `cs80-process-lifetime-child-v2`
+The query-policy checkpoint introduced `cs80-process-lifetime-child-v2`
 and three explicit contract fields: `controller_query_policy` (1 strict SDK or
 2 pinned JUCE false/null), `controller_query_result` (raw uint32 encoding of the
 Linux SDK result), and `controller_query_pointer_present` (boolean). It binds all
@@ -72,3 +72,25 @@ strict policy1; request-v2 carries an explicit policy. A mismatched compatibilit
 request is rejected before native execution, not merely after seeing a receipt.
 The native parser remains responsible for validating the complete identity/caps
 tail. Header checks do not replace that parser or prove runtime closure.
+
+
+## Explicit disabled-mono-input topology (receipt v3)
+
+The public standalone path now requires receipt-v3 and explicit contract field
+`audio_input_topology`: 1 for the unchanged zero-audio-input profile, or 2 for
+one disabled mono external-input bus. Receipts-v1/v2 are private fixture-only and
+cannot select topology2. Request-v3 carries topology after query policy;
+request-v1/v2 imply topology1. The parent checks this before launching, and binds
+the actual receipt topology and frozen contract hash to the expectation.
+
+For topology2 the parent additionally requires the frozen render protocol header
+`CS80RPRT`, version2, topology2, along with the exact externally expected protocol
+hash. The canonical A-D lifecycle must contain exactly three successful
+`external-input-disable` calls, one before each component activation and each
+immediately followed by successful output-bus activation. Missing, duplicate,
+failed or reordered disable calls fail admission. Topology1 requires no such
+calls. Native descriptor/metadata checks remain the frozen producer's
+responsibility; a receipt alone is not proof of arbitrary plugin behavior.
+
+No input is enabled, no samples are routed from the external input, and no
+production plugin/SDK change or CPU timing claim is authorized by this profile.

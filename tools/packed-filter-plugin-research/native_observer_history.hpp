@@ -18,7 +18,7 @@ struct HistoryObservation {
 // External module and handler must remain live until this owner is destroyed.
 class HistoryOwner final {
     const std::thread::id ui_=std::this_thread::get_id();
-    const packed_filter_workload::Case case_;const ControllerStatePolicy policy_;
+    const packed_filter_workload::Case case_;const ControllerStatePolicy policy_;const AudioInputTopology inputTopology_;
     ProcessingInstanceOwner owner_;HistoryObservation evidence_;
     std::shared_ptr<const HistoryObservation> final_;
     HistoryStage stage_=HistoryStage::NotStarted;bool attempted_=false,running_=false;
@@ -51,8 +51,8 @@ class HistoryOwner final {
         evidence_.cleanup=owner_.cleanupReceipt();evidence_.joined=owner_.joinReceipt();if(evidence_.cleanup->error && !cleanupError_)cleanupError_=evidence_.cleanup->error;
     }
 public:
-    HistoryOwner(InjectedModule& module,Handler& handler,packed_filter_workload::Case c,ControllerStatePolicy policy,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk)
-        :case_(c),policy_(policy),owner_(module,handler,q){}
+    HistoryOwner(InjectedModule& module,Handler& handler,packed_filter_workload::Case c,ControllerStatePolicy policy,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput)
+        :case_(c),policy_(policy),inputTopology_(topology),owner_(module,handler,q,topology){}
     ControllerQueryObservation controllerQueryObservation()const noexcept{return owner_.controllerQueryObservation();}
     HistoryOwner(const HistoryOwner&)=delete;HistoryOwner& operator=(const HistoryOwner&)=delete;
     template<class Pump> void run(worker::WaitPolicy budget,Pump&& pump){run(budget,std::forward<Pump>(pump),[]{});}
@@ -67,7 +67,7 @@ public:
             evidence_.caseIdentity=packed_filter_workload::encode_draft(case_);
             evidence_.attemptedOperation="initialize-connected";owner_.initializeConnected();checkpoint();evidence_.attemptedOperation="capture-connected";owner_.captureConnected();checkpoint();advance(HistoryStage::Connected);checkpoint();
             evidence_.roster=owner_.connectedRoster();checkpoint();
-            const auto plan=workload_detail::planFromRoster(case_,evidence_.roster);
+            auto plan=workload_detail::planFromRoster(case_,evidence_.roster);plan.render.topology=inputTopology_;
             evidence_.initialProtocol=encodeFlushProtocol(plan.initial).data;evidence_.alterProtocol=encodeFlushProtocol(plan.alter).data;evidence_.renderProtocol=encodeRenderProtocol(plan.render).data;
             evidence_.attemptedOperation="prepare-start";owner_.prepareAndStart(plan.setup,true);checkpoint();const auto metadata=owner_.connectedSnapshot();checkpoint();evidence_.connectedMetadata=metadata.metadata;evidence_.setupMetrics=metadata.setupMetrics;require(metadata.roster.ids==evidence_.roster.ids && metadata.roster.declaredCount==evidence_.roster.declaredCount,"owned metadata roster drift");advance(HistoryStage::Prepared);checkpoint();
             evidence_.attemptedOperation="initial-flush";evidence_.initialFlush=owner_.flush(plan.initial,budget,pump);task(0,worker::Kind::Flush);checkpoint();evidence_.encodedInitialFlush=encodeFlush(plan.initial,evidence_.initialFlush);advance(HistoryStage::InitialFlushed);checkpoint();

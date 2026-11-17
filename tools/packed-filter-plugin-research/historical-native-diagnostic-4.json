@@ -1,0 +1,62 @@
+{
+  "schema": "cs80-historical-stock-diagnostic-v1",
+  "classification": "diagnostic-only-not-qualification",
+  "attempt": 4,
+  "source_commit": "0c351b9c509e2d3e8ae1ff978fbc0a3a739974e3",
+  "github_run_id": 44106223099,
+  "artifact_id": 14352965049,
+  "artifact_zip_sha256": "a4b3602edf300ff5906b1c29360553c8526ebd5cbc5364e9856de3c86ba93155",
+  "module_sha256": "baec79cbe2c8667b92312c858d40fb9d308ca5433bbf337b01c1257a4ded8d35",
+  "driver_sha256": "6be3371a470e25d953e252d81ff2b817487395044b2e4dd27ce7301648d1ee94",
+  "request_sha256": "36e417e3036c719e96f02f8d3cef5461168d04211bc8e2373035435aad6d8798",
+  "raw_component_cid": "abcdef019182faeb5265664943733830",
+  "workload": {
+    "policy": "legacy",
+    "sample_rate": 48000,
+    "processing_mode": "realtime",
+    "voices": 8,
+    "block": 64
+  },
+  "controller_state_policy": "JuceUnsupported",
+  "native_worker_deadline_seconds": 5,
+  "outer_process_group_deadline_seconds": 25,
+  "outcome": "rejected",
+  "returncode": 24,
+  "wall_seconds_not_cpu_benchmark": 0.346500665997155,
+  "diagnostic_stderr": "CS80_PROCESS_LIFETIME_FAILURE v1 stage=module-history module_step=instance-history primary=full flush complete ID-set binding opens=1 closes=0 provider_absent=0 host_refs=4 registrations=0 failed_module_calls=0 query_policy=2 query_attempted=1 query_normal=1 query_result=1 query_pointer=0 cleanup_retried=0 exit=24",
+  "receipt_bytes": 0,
+  "process_group_empty_after_wait": true,
+  "watchdog_reason": null,
+  "input_hashes_unchanged": true,
+  "production_qualified": false,
+  "runtime_closure_complete": false,
+  "cpu_timing_claim": false,
+  "notes": [
+    "Separately preselected diagnostic passed optional-controller, topology and setup gates.",
+    "Rejected at full flush complete ID-set binding before complete A-D evidence.",
+    "Pinned JUCE exposes framework parameters in addition to intended synth controls; exact observed extra IDs were not retained, so source diagnosis remains unconfirmed at ID detail.",
+    "A correct next step must retain and classify full native metadata, bind the complete intended synth controls separately, and explicitly handle bypass/program/MIDI parameters.",
+    "Do not allow arbitrary subsets or blindly flush wrapper defaults, which can alter behavior.",
+    "No retry, production qualification or CPU claim."
+  ],
+  "controller_query": {
+    "policy": "PinnedJuceFalseNull",
+    "attempted": true,
+    "normal": true,
+    "raw_result": 1,
+    "pointer_present": false
+  },
+  "audio_input_topology": "DisabledMonoExternalInput",
+  "source_roster_diagnosis": {
+    "generated_synth_control_ids": 192,
+    "synth_enum_parameters": 190,
+    "hardware_controls": 2,
+    "comparison": "set equality, not enumeration ordering",
+    "known_framework_ids_from_pinned_source": {
+      "bypass": "0x62797073",
+      "program": "0x70727374"
+    },
+    "actual_extra_ids_recorded": false,
+    "actual_native_parameter_count_recorded": false
+  }
+}

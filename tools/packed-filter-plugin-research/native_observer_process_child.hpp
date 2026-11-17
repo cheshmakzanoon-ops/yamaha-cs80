@@ -10,17 +10,17 @@ class ProcessLifetimeChild final {
     static std::string digest(const auto& b){cs80_identity::detail::Hash hash;hash.update(b.data(),b.size());return hash.finish();}
 public:
     ProcessLifetimeChild()=delete;
-    [[noreturn]] static void run(std::shared_ptr<const cs80_identity::PinnedModule> pin,const TUID cid,packed_filter_workload::Case c,ControllerStatePolicy policy,worker::WaitPolicy wait,const std::string& nonce,const std::string& output,ControllerQueryPolicy queryPolicy=ControllerQueryPolicy::StrictSdk,bool recordQueryEvidence=false){
+    [[noreturn]] static void run(std::shared_ptr<const cs80_identity::PinnedModule> pin,const TUID cid,packed_filter_workload::Case c,ControllerStatePolicy policy,worker::WaitPolicy wait,const std::string& nonce,const std::string& output,ControllerQueryPolicy queryPolicy=ControllerQueryPolicy::StrictSdk,bool recordQueryEvidence=false,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput){
         int fd=-1;ModuleHistoryOwner* owner=nullptr;const char* step="request/output-setup";
         try{
             require(nonce.size()==64 && nonce.find_first_not_of("0123456789abcdef")==std::string::npos,"explicit supervisor 32-byte nonce");
-            validateControllerQueryPolicy(queryPolicy);require(recordQueryEvidence || queryPolicy==ControllerQueryPolicy::StrictSdk,"compatibility query requires v2 receipt");require(bool(pin),"verified module pin");cs80_identity::detail::absolute(output,{4096,4096,4096,4096});
+            validateAudioInputTopology(topology);require(recordQueryEvidence || topology==AudioInputTopology::ZeroAudioInput,"input topology requires v3 receipt");validateControllerQueryPolicy(queryPolicy);require(recordQueryEvidence || queryPolicy==ControllerQueryPolicy::StrictSdk,"compatibility query requires v2 receipt");require(bool(pin),"verified module pin");cs80_identity::detail::absolute(output,{4096,4096,4096,4096});
             // Anchor every parent directory without symlinks, create final name exclusively.
             const auto slash=output.rfind('/');const auto parent=output.substr(0,slash);require(!parent.empty(),"receipt parent directory");
             cs80_identity::detail::Fd directory(cs80_identity::detail::openRoot(parent));
             fd=::openat(directory.n,output.substr(slash+1).c_str(),O_WRONLY|O_CREAT|O_EXCL|O_NOFOLLOW|O_CLOEXEC,0600);require(fd>=0,"exclusive receipt create failed");outputIdentity(fd);
             step="graph-create";owner=new ModuleHistoryOwner(pin,ModuleLifetimeProfile::ProcessLifetime);
-            step="module-history";owner->run(cid,c,policy,wait,queryPolicy);require(owner->admitted(),"process history not admitted");
+            step="module-history";owner->run(cid,c,policy,wait,queryPolicy,topology);require(owner->admitted(),"process history not admitted");
             step="receipt-encode";auto& graph=*owner->graph_;const auto& sealed=graph.loader.evidence();const auto& history=owner->history();const auto& provider=sealed.providerEvidence();
             require(sealed.lifecycleClosedCleanly() && sealed.nativeCloseReturnedZero() && (sealed.disposition()==ProviderDisposition::Removed || sealed.disposition()==ProviderDisposition::Retained),"checked process-lifetime completion");
             require(history.canonicalPayload.data.size()<=payloadCap && !history.canonicalPayload.data.empty(),"bounded complete A-D payload");
@@ -33,10 +33,10 @@ public:
             for(const auto* objects:{&provider.beforeObjects,&provider.afterObjects})for(const auto& object:*objects)account(object.size()+8);
             account(graph.baseline.size()*16);account(graph.after.size()*16);
             for(std::size_t i=0;i<graph.module.calls.count;++i){require(graph.module.calls.rows[i].name,"module call name");account(std::strlen(graph.module.calls.rows[i].name)+16);}
-            Bytes receipt;receipt.data.reserve(encodedBound);receipt.text(recordQueryEvidence?"cs80-process-lifetime-child-v2":"cs80-process-lifetime-child-v1");receipt.text("process-lifetime");receipt.text(nonce);receipt.u64(static_cast<std::uint64_t>(::getpid()));
+            Bytes receipt;receipt.data.reserve(encodedBound);receipt.text(recordQueryEvidence?"cs80-process-lifetime-child-v3":"cs80-process-lifetime-child-v1");receipt.text("process-lifetime");receipt.text(nonce);receipt.u64(static_cast<std::uint64_t>(::getpid()));
             receipt.text(pin->identity()->arm());receipt.text(pin->identity()->expectedManifestDigest());receipt.text(pin->identity()->evidenceDigest());receipt.text(pin->stamp().sha256);
             receipt.text("cs80-instance-history-A-D-v1");receipt.blob(history.caseIdentity.data(),history.caseIdentity.size());
-            if(recordQueryEvidence){const auto q=graph.history->controllerQueryObservation();require(q.attempted && q.normal && q.policy==queryPolicy,"actual controller query evidence");receipt.u32(static_cast<std::uint32_t>(q.policy));receipt.u32(static_cast<std::uint32_t>(q.result));receipt.u32(q.pointerPresent?1:0);}receipt.u32(1);receipt.text(sealed.disposition()==ProviderDisposition::Removed?"provider_removed":"provider_retained");
+            if(recordQueryEvidence){const auto q=graph.history->controllerQueryObservation();require(q.attempted && q.normal && q.policy==queryPolicy,"actual controller query evidence");receipt.u32(static_cast<std::uint32_t>(q.policy));receipt.u32(static_cast<std::uint32_t>(q.result));receipt.u32(q.pointerPresent?1:0);receipt.u32(static_cast<std::uint32_t>(topology));}receipt.u32(1);receipt.text(sealed.disposition()==ProviderDisposition::Removed?"provider_removed":"provider_retained");
             receipt.text(digest(history.canonicalPayload.data));receipt.blob(history.canonicalPayload.data.data(),history.canonicalPayload.data.size());
             for(const auto* maps:{&provider.beforeMaps,&provider.loadedMaps,&provider.afterMaps})receipt.text(*maps);
             for(const auto* objects:{&provider.beforeObjects,&provider.afterObjects}){receipt.u64(objects->size());for(const auto& object:*objects)receipt.text(object);}

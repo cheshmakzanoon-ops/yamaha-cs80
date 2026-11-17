@@ -1,6 +1,7 @@
 #pragma once
 // Bounded correctness observer only. No loader, CLI, audio device or CPU clock.
 #include "native_observer_sdk.hpp"
+#include "native_observer_topology.hpp"
 #include <pluginterfaces/vst/ivstevents.h>
 #include <pluginterfaces/vst/ivstparameterchanges.h>
 #include <pluginterfaces/vst/ivstprocesscontext.h>
@@ -14,6 +15,7 @@ struct RenderProtocol {
     bool legacyCCFixtureConvention=false; // SDK defines this event as output-only. Explicit research opt-in.
     std::vector<TimedEvent> events;
     std::vector<TimedParameter> parameters;
+    AudioInputTopology topology=AudioInputTopology::ZeroAudioInput;
 };
 inline bool normalizedValue(double v){return std::isfinite(v) && v>=0 && v<=1;}
 inline void validateEvent(const Event& e) {
@@ -26,6 +28,7 @@ inline void validateEvent(const Event& e) {
     else require(false,"unsupported event type");
 }
 inline void validateProtocol(const RenderProtocol& p) {
+    validateAudioInputTopology(p.topology);
     require((p.rate==44100 || p.rate==48000 || p.rate==96000) && (p.mode==kRealtime || p.mode==kOffline),"unsupported rate/mode");
     require(p.block>0 && p.block<=4096 && p.frames>0 && p.frames<=1048576,"bounded positive render dimensions");
     require(p.events.size()<=65536 && p.parameters.size()<=4096,"bounded input stream");
@@ -92,7 +95,7 @@ struct RenderObservation {
     std::vector<TimedParameter> outputParameters;
 };
 // Caller must have initialized/setup/activated/started this processor with the
-// SAME rate/mode/max block and complete frozen state. This helper does not do so.
+// SAME rate/mode/max block, explicitly selected input topology and complete frozen state. This helper does not do so.
 inline RenderObservation renderObserved(IAudioProcessor& processor,const RenderProtocol& p) {
     validateProtocol(p);RenderObservation out;
     out.interleaved.reserve(static_cast<std::size_t>(p.frames)*2);
@@ -104,12 +107,19 @@ inline RenderObservation renderObserved(IAudioProcessor& processor,const RenderP
         while(parameter<p.parameters.size() && p.parameters[parameter].frame<start+count){const auto& q=p.parameters[parameter++];int32 index=0;auto* queue=input.appendQueue(q.id,index);queue->points.emplace_back(static_cast<int32>(q.frame-start),q.value);}
         std::vector<float> left(static_cast<std::size_t>(count),0),right(static_cast<std::size_t>(count),0);
         float* channels[]{left.data(),right.data()};AudioBusBuffers bus{};bus.numChannels=2;bus.channelBuffers32=channels;
+        // VST3 requires an AudioBusBuffers descriptor and channel-pointer array
+        // for inactive buses too. The inactive mono sample pointer may be null.
+        // This profile is legal only after the owner has disabled the input bus.
+        float* inputChannels[]{nullptr};AudioBusBuffers inputBus{};
+        inputBus.numChannels=1;inputBus.channelBuffers32=inputChannels;
+        const bool disabledInput=p.topology==AudioInputTopology::DisabledMonoExternalInput;
         ProcessContext context{};context.sampleRate=p.rate;context.projectTimeSamples=start;
         ProcessData data{};data.processMode=p.mode;data.symbolicSampleSize=kSample32;data.numSamples=count;data.numOutputs=1;data.outputs=&bus;
+        data.numInputs=disabledInput?1:0;data.inputs=disabledInput?&inputBus:nullptr;
         data.inputEvents=&inputEvents;data.inputParameterChanges=&input;data.outputParameterChanges=&output;data.processContext=&context;
         const auto result=processor.process(data);out.callbacks.push_back({start,count,result,bus.silenceFlags});
         require(result==kResultOk,"native process failed");
-        require(data.numSamples==count && data.numInputs==0 && data.inputs==nullptr && data.numOutputs==1 && data.outputs==&bus && bus.numChannels==2 && bus.channelBuffers32==channels && channels[0]==left.data() && channels[1]==right.data(),"process buffer descriptor mutation");require(!inputEvents.mutationAttempted && input.valid() && output.valid(),"invalid host queue mutation/output");
+        require(data.numSamples==count && data.numInputs==(disabledInput?1:0) && data.inputs==(disabledInput?&inputBus:nullptr) && (!disabledInput || (inputBus.numChannels==1 && inputBus.channelBuffers32==inputChannels && inputChannels[0]==nullptr && inputBus.silenceFlags==0)) && data.numOutputs==1 && data.outputs==&bus && bus.numChannels==2 && bus.channelBuffers32==channels && channels[0]==left.data() && channels[1]==right.data(),"process buffer descriptor mutation");require(!inputEvents.mutationAttempted && input.valid() && output.valid(),"invalid host queue mutation/output");
         require(data.processMode==p.mode && data.symbolicSampleSize==kSample32 && data.inputEvents==&inputEvents && data.outputEvents==nullptr && data.inputParameterChanges==&input && data.outputParameterChanges==&output && data.processContext==&context,"process interface descriptor mutation");
         require(context.state==0 && context.sampleRate==p.rate && context.projectTimeSamples==start && context.systemTime==0 && context.continousTimeSamples==0 && context.projectTimeMusic==0 && context.barPositionMusic==0 && context.cycleStartMusic==0 && context.cycleEndMusic==0 && context.tempo==0 && context.timeSigNumerator==0 && context.timeSigDenominator==0 && context.chord.keyNote==0 && context.chord.rootNote==0 && context.chord.chordMask==0 && context.smpteOffsetSubframes==0 && context.frameRate.framesPerSecond==0 && context.frameRate.flags==0 && context.samplesToNextClock==0,"process context mutation");
         require((bus.silenceFlags & ~uint64{3})==0,"invalid stereo silence mask");

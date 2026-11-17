@@ -4,11 +4,14 @@
 
 namespace cs80_observer {
 static_assert(sizeof(float)==4 && sizeof(double)==8 && std::numeric_limits<float>::is_iec559 && std::numeric_limits<double>::is_iec559,"v1 encoding requires IEEE binary32/binary64");
-// Version 1 is encode-only. No ABI structs, padding, pointers or host endian bytes.
+// Version 1 (zero input) stays byte-identical. Version 2 adds explicit input
+// topology immediately after the version field. No ABI structs/pointers/padding.
 inline void renderSigned32(Bytes& b,std::int32_t v){b.u32(std::bit_cast<std::uint32_t>(v));}
 inline void renderSigned64(Bytes& b,std::int64_t v){b.u64(std::bit_cast<std::uint64_t>(v));}
 inline Bytes encodeRenderProtocol(const RenderProtocol& p){
-    validateProtocol(p);Bytes b;b.raw("CS80RPRT",8);b.u32(1);
+    validateProtocol(p);Bytes b;b.raw("CS80RPRT",8);
+    const bool topologyV2=p.topology!=AudioInputTopology::ZeroAudioInput;
+    b.u32(topologyV2?2:1);if(topologyV2)b.u32(static_cast<std::uint32_t>(p.topology));
     b.f64(p.rate);renderSigned32(b,p.mode);renderSigned32(b,p.block);renderSigned64(b,p.frames);
     b.u32(p.legacyCCFixtureConvention?1:0);b.u64(p.events.size());
     for(const auto& row:p.events){const auto& e=row.value;

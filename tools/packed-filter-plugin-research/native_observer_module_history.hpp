@@ -104,14 +104,14 @@ class ModuleHistoryOwner final {
 public:
     explicit ModuleHistoryOwner(std::shared_ptr<const cs80_identity::PinnedModule> pin):ModuleHistoryOwner(std::move(pin),ModuleLifetimeProfile::StrictUnmap){}
     ModuleHistoryOwner(const ModuleHistoryOwner&)=delete;ModuleHistoryOwner& operator=(const ModuleHistoryOwner&)=delete;
-    void run(const TUID cid,packed_filter_workload::Case c,ControllerStatePolicy policy,worker::WaitPolicy wait,ControllerQueryPolicy queryPolicy=ControllerQueryPolicy::StrictSdk){
+    void run(const TUID cid,packed_filter_workload::Case c,ControllerStatePolicy policy,worker::WaitPolicy wait,ControllerQueryPolicy queryPolicy=ControllerQueryPolicy::StrictSdk,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput){
         if(std::this_thread::get_id()!=ui_){violation_=true;processTerminal_=true;throw std::runtime_error("module history wrong thread");}
         if(running_ || attempted_){violation_=true;processTerminal_=true;throw std::runtime_error("module history reentry/retry");}
         running_=true;struct Reset{bool& running;~Reset(){running=false;}} reset{running_};attempted_=true;
-        try{check();require(bool(graph_),"owned graph required");validateControllerQueryPolicy(queryPolicy);
+        try{check();require(bool(graph_),"owned graph required");validateControllerQueryPolicy(queryPolicy);validateAudioInputTopology(topology);
             attemptedStep_="thread-baseline";graph_->baseline=module_history_detail::threads();
             attemptedStep_="module-load";graph_->module.load(graph_->pin->identity()->modulePath().c_str(),cid,static_cast<IHostApplication&>(graph_->host));check();
-            attemptedStep_="history-construction";graph_->history=std::make_unique<HistoryOwner>(graph_->module,graph_->handler,c,policy,queryPolicy);
+            attemptedStep_="history-construction";graph_->history=std::make_unique<HistoryOwner>(graph_->module,graph_->handler,c,policy,queryPolicy,topology);
             const auto deadline=static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(wait.deadline.time_since_epoch()).count());
             attemptedStep_="instance-history";graph_->history->run(wait,[&]{check();graph_->host.pump(deadline);check();},[&]{check();});check();require(graph_->history->admitted(),"instance history not admitted");graph_->historyClosed=true;
             attemptedStep_="module-close";graph_->module.close();check();require(graph_->module.closedCleanly && graph_->loader.admitted() && graph_->host.finalGate(),"module/provider/host close not admitted");admitted_=true;ownsActive_=false;activeOwner_=false;
