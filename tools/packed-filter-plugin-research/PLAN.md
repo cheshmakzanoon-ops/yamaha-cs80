@@ -24,5 +24,10 @@ A Stage A pass permits proposing a reviewed source integration with explicitly s
 ## Safe execution and budget
 Read-only permissions, public standard free runner only, no paid addons. One explicitly selected first attempt, concurrency cancel-in-progress false, bounded deadlines, own-child-process cleanup, artifacts uploaded on failure. Retain original failed evidence; stop rather than silently repeat. Estimate full baseline+candidate test time from current build before choosing and freezing budget. Don't let an arbitrary short budget force skipped tests.
 
-## Present implementation status
+## Initial implementation checkpoint (historical)
 Current dirty sparse checkout was not modified. Pure identity.py admission helper is implemented with 58 passing synthetic positive/negative tests across identity capture, complete roster and JUnit checks; it explicitly cannot declare production qualification. Its maps must come from actual captured bytes and independently frozen complete inventories, so identical omissions cannot satisfy cross-arm equality. Compile-database object capture and a fail-closed x86-64 relocation-aware IgBatch function proof are implemented. The latter passed checks on the retained GNU13 standalone binaries and rejects a stale opposite-arm binary; it has not yet been exercised against an actual plugin. Complete source/dependency/link roster capture, archive/live-map binding and the orchestration/clean preflight still need implementation. A launchable orchestrator requires current clean-source preflight and independent review. No new job dispatched and production unchanged.
+
+
+## Current preparation boundary
+
+The reviewed configuration-only preflight completed as recorded in CHECKPOINT.md. Capture inventory and observer support are documented separately in `capture_roster-notes.md` and `native_observer_STATUS.md`; fake SDK adapter testing, when included, is described in `native_observer_fake_STATUS.md`. None of these documents claims a real native observer run. Actual module initialization, repeatable restore/render scenarios, complete orchestration and first-attempt launch review remain outstanding. Do not infer production admission from the helper-test count or configuration success.

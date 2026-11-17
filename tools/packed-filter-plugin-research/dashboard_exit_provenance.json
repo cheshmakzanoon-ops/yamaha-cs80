@@ -1,0 +1,18 @@
+{
+  "scope": "inert toy only, no project tests or module load",
+  "ctest_version": "ctest version 3.31.6",
+  "ctest_distribution": "official cmake==3.31.6 PyPI Linux wheel",
+  "local_ctest_sha256": "4757644d13a4460c2d46f591ff0693d7c66e73f01b92519850ef4b00cd21554e",
+  "source_url": "https://raw.githubusercontent.com/Kitware/CMake/v3.31.6/Source/CTest/cmCTestTestHandler.cxx",
+  "source_sha256": "4961936dfa0070554124434c70d43db17e592b8933c15acbf084394b9395e716",
+  "source_predicate": "status != NOT_RUN; emit Exit Code/Exit Value if status != COMPLETED or ReturnValue != 0",
+  "source_lines": [
+    1478,
+    1520
+  ],
+  "limitations": [
+    "No field absence inference for another CTest version",
+    "Requires same-attempt trusted command, fresh Test.xml and archived logs",
+    "No suite execution, no submission and no plugin qualification"
+  ]
+}
