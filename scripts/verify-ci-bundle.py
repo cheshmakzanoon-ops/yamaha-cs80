@@ -136,11 +136,15 @@ def validate_virtual_links(items, system, product='CS-80 Reference'):
     roots = {('VST3', product + '.vst3')}
     if system == 'macos':
         roots |= {('AU', product + '.component'), ('Standalone', product + '.app')}
-    for path in inventory:
-        for end in range(1, len(path)):
-            parent = inventory.get(path[:end])
-            require(parent is None or parent['type'] == 'directory',
+    # In lexicographic order, the first descendant immediately follows its
+    # ancestor. Checking adjacent entries avoids constructing every prefix of
+    # a deeply nested path (quadratic work even without any symlinks).
+    previous = None
+    for path in sorted(inventory):
+        if previous is not None and inventory[previous]['type'] != 'directory':
+            require(path[:len(previous)] != previous,
                     'Archived member beneath a non-directory: ' + '/'.join(path))
+        previous = path
 
     def target_parts(target):
         require(isinstance(target, str) and target and not target.startswith('/')

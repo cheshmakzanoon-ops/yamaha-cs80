@@ -69,6 +69,24 @@ class VerificationTests(unittest.TestCase):
                 t.addfile(entry, io.BytesIO(data) if data is not None else None)
         self.sums(archive)
 
+    def test_deep_implicit_parents_do_not_require_prefix_expansion(self):
+        # Valid metadata may omit directory entries. This inert input has no
+        # filesystem operations; the old prefix walk performed quadratic work.
+        v.validate_virtual_links([{'path': '/'.join(['x'] * 100000),
+                                   'type': 'file'}], 'linux')
+
+    def test_non_directory_ancestor_check_is_order_independent(self):
+        for kind in ('file', 'symlink'):
+            parent = {'path': 'a/b', 'type': kind, 'target': '.'}
+            child = {'path': 'a/b/c/d', 'type': 'file'}
+            sibling = {'path': 'a/bb', 'type': 'file'}
+            for items in ([parent, sibling, child], [child, sibling, parent]):
+                with self.subTest(kind=kind, items=items):
+                    with self.assertRaisesRegex(ValueError, 'beneath a non-directory'):
+                        v.validate_virtual_links(items, 'linux')
+        v.validate_virtual_links([{'path': 'a/b', 'type': 'file'},
+                                  {'path': 'a/bb/c', 'type': 'file'}], 'linux')
+
     def test_valid_platforms(self):
         for system, arch in [('linux', 'x86_64'), ('linux', 'arm64'), ('macos', 'arm64'), ('macos', 'x86_64'), ('windows', 'x86_64')]:
             with self.subTest(system=system, arch=arch):
