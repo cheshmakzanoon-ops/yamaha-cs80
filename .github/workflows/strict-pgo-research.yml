@@ -1,0 +1,35 @@
+name: One-shot strict Engine PGO study
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/strict-pgo-research/**'
+      - '.github/workflows/strict-pgo-research.yml'
+permissions:
+  contents: read
+concurrency:
+  group: strict-pgo-first-study
+  cancel-in-progress: false
+jobs:
+  study:
+    if: github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify frozen study gates
+        run: python3 -m unittest discover -s tools/strict-pgo-research -p 'test_*.py' -v
+      - name: One training, qualification, calibration and conditional cost study
+        run: >-
+          python3 tools/strict-pgo-research/run.py --repo "$GITHUB_WORKSPACE"
+          --work "$RUNNER_TEMP/strict-pgo-build" --out "$GITHUB_WORKSPACE/strict-pgo-results"
+      - name: Preserve raw receipts even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: strict-pgo-study-${{ github.run_id }}-${{ github.run_attempt }}
+          path: strict-pgo-results/
+          if-no-files-found: warn
+          retention-days: 14
