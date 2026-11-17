@@ -96,3 +96,7 @@ The identity verifier now retains a typed module stamp from its original admitte
 ## Dedicated processing-worker preparation
 
 The separate real-thread worker has 32 reviewed controls, bringing the isolated suite to 700. It guards queue/await sequencing and UI pumping, retains callback failures and completion timestamps, and distinguishes actual joined cleanup from healthy consumed-task admission. It never detaches hung callbacks. This is not native processing evidence: the current synchronous instance wrapper must not run on the worker because its failure cleanup would invoke UI-only teardown there. A private UI-owned in-flight lease and the full case coordinator remain required.
+
+## Joined inert-library provider checks
+
+The retained-file capability now joins a concrete normal-path loader and bounded ELF/maps checks.63 new controls, including 16 actual inert-library load/close cases, bring this isolated checkpoint to 763. The checks reject preloaded/replaced-path providers and bind actual handle/export mapping offsets to the retained file. They do not prove in-memory code-byte integrity or detect all private/COW modifications, and do not establish complete runtime closure. A sole native owner must keep loader operations inaccessible while instances or callbacks are live. No CS80 module or qualification driver is launched.
