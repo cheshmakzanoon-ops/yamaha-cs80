@@ -31,3 +31,16 @@ actual logs/artifacts, and run original plugin checks. Tests use synthetic fixtu
 fixtures. Separate read-only proof checks used the retained GNU13 standalone
 benchmark object/binary pairs (32 stock and 36 candidate relocations). Neither
 establishes actual plugin speed, sound or release qualification.
+
+## Configuration-only preflight
+
+The manually dispatched packed-filter-plugin-preflight workflow captures normal
+current Linux configuration without applying the candidate or building/running
+the synth. It checks the exact reviewed main SHA before setup, uses the same
+standard Linux dependency list and CMake flags, records compiler/dependency
+identities and compile/link/test plans, and preserves failures. CMake compiler
+checks and JUCE's own setup helper are not synth qualification. Unresolved
+prebuild test commands are explicitly recorded, never accepted as passed tests.
+
+A configuration capture is only input to the next implementation/review step.
+The workflow cannot ship production changes or launch plugin timing.

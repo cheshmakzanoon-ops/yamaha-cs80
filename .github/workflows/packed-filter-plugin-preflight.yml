@@ -1,0 +1,60 @@
+name: Packed filter plugin configuration preflight
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Exact reviewed main commit to configure (40-character SHA)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: packed-filter-plugin-configuration-preflight
+  cancel-in-progress: false
+jobs:
+  configure:
+    if: github.event.repository.private == false && github.run_attempt == 1 && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Verify reviewed revision before setup
+        env:
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+        run: |
+          set -euo pipefail
+          test "$EXPECTED_SHA" = "$GITHUB_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Standard free Linux configuration dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build pkg-config \
+            libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
+            libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
+            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb xauth openbox x11-utils
+      - name: Offline evidence-gate tests (inert compiler fixtures only)
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest discover -s tools/packed-filter-plugin-research -v
+      - name: Configure and capture only (no synth build or execution)
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+        run: >-
+          python3 tools/packed-filter-plugin-research/configure_preflight.py
+          --repo "$GITHUB_WORKSPACE"
+          --work "$RUNNER_TEMP/packed-filter-plugin-preflight-work"
+          --out "$RUNNER_TEMP/packed-filter-plugin-preflight-evidence"
+          --expected-sha "$EXPECTED_SHA"
+      - name: Preserve configuration evidence including failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: packed-filter-plugin-preflight-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/packed-filter-plugin-preflight-evidence/
+          if-no-files-found: warn
+          retention-days: 14

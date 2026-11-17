@@ -27,3 +27,11 @@ Outstanding: complete current source/dependency/link
 inventory preflight, archive/live-map/fresh-link binding, owned single-attempt
 orchestration, real plugin host equivalence, full exact-candidate suite and
 pluginval, and separately frozen actual-plugin timing. No new study launched.
+
+## Configuration preflight checkpoint
+
+Added a manual-only exact-SHA public Ubuntu 24.04 configuration capture and ten
+offline controls, for 68 reviewed tests. Independent review reproduced those
+controls and approved one explicitly selected configuration-only dispatch. The
+normal workflow's dependency list and CMake flags are preserved. No candidate
+patch, synth target build, training, rendering or timing is performed.
