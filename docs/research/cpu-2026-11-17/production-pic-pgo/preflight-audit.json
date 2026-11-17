@@ -1,0 +1,36 @@
+{
+  "result": "CONFIGURATION_PREFLIGHT_PASS independently corroborated",
+  "zip_sha256": "76e87e8aeb3480adf33de127007fa3e04c5ac706424b3c101272697a783b48ef",
+  "run": 44067129187,
+  "source_commit": "9467d903c68d3015f0bd92c78cd8dca3dfd63048",
+  "modes": {
+    "normal": {
+      "compile_commands": 587,
+      "profiled_translation_units": 0
+    },
+    "baseline": {
+      "compile_commands": 587,
+      "profiled_translation_units": 0
+    },
+    "generate": {
+      "compile_commands": 587,
+      "profiled_translation_units": 1
+    },
+    "use": {
+      "compile_commands": 587,
+      "profiled_translation_units": 1
+    }
+  },
+  "configured_tests": 569,
+  "missing_executable_commands": 509,
+  "juce_manifest_files": 4377,
+  "ledger_commands": 61,
+  "toy_negative_controls": "both fail for expected diagnostic; use symbols no gcov",
+  "limitations": [
+    "Remote compiler/JUCE file hashes and absent Engine object are recorded runner assertions, not independently rehashed remote binaries; artifact contains manifests, not those files.",
+    "569 configured tests include 509 absent executable commands. No host/test execution established.",
+    "Generation-mode final plugin/standalone links contain no gcov runtime. Do not build these with generation Engine; use an explicitly linked training driver, then profile-use rebuild.",
+    "VST3 final Ninja rule includes manifest helper execution and moduleinfo regeneration; treat as executable post-link work and preserve artifact/hash identity afterward.",
+    "Require fresh final ELF/map/archive linkage proof plus runtime host path hashing before later qualification; Ninja command text alone is not linking evidence."
+  ]
+}
