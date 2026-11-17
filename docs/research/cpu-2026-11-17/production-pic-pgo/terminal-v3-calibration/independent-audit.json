@@ -1,0 +1,76 @@
+{
+  "decision": "TERMINAL_UNUSABLE_CALIBRATION",
+  "artifact_sha256": "b2974e2fa8307ce72d1e2d9227ab9d5287b3cfed4c2eb9864be18c795e4f8eeb",
+  "calibration_raw_rows": 600,
+  "calibration": [
+    {
+      "pair": 0,
+      "groups": {
+        "primary": 1.004255919364103,
+        "source_performance": 1.004655675439365,
+        "all": 1.0034106990992198,
+        "isolation": 1.0055127566936748,
+        "legacy": 1.0049087228505822
+      },
+      "pass": true,
+      "out_of_bounds_rows": {}
+    },
+    {
+      "pair": 1,
+      "groups": {
+        "primary": 1.004013428299929,
+        "source_performance": 1.0055244062045359,
+        "all": 1.0035011148711817,
+        "isolation": 1.003966168229607,
+        "legacy": 1.0007580329640773
+      },
+      "pass": true,
+      "out_of_bounds_rows": {}
+    },
+    {
+      "pair": 2,
+      "groups": {
+        "primary": 0.9990758438725901,
+        "source_performance": 0.9998084221845782,
+        "all": 0.9993013414374605,
+        "isolation": 1.0060045307837076,
+        "legacy": 0.9925762865330257
+      },
+      "pass": false,
+      "out_of_bounds_rows": {
+        "('44100', '256', 'legacy', 'paired_tones', '10', 'release_tail')": 0.6180998694459842
+      }
+    }
+  ],
+  "candidate_cost_executions": 0,
+  "qualification": {
+    "baseline": {
+      "calls": 9617,
+      "frames": 2461952,
+      "pcm_sha256": "041033044c651d58955d01356706e44b0badf9d0df7334eb3247a443592fb52b",
+      "fp_sha256": "761092d3cfae74c0fc857f7357e5206be85b26c165384adfe7a96406c8f76612",
+      "rows": 51,
+      "pcm_bytes": 19695616,
+      "fp_bytes": 230808
+    },
+    "performance": {
+      "calls": 22819,
+      "frames": 5841664,
+      "pcm_sha256": "9f393ff416774f8bf55ea65067fecc1c18d05ef933a377af65c511987d77dc95",
+      "fp_sha256": "c22d6906d497ee4daadbd3c94634625d711e2b358ab5eae36361e3754e97bc6b",
+      "rows": 100,
+      "pcm_bytes": 46733312,
+      "fp_bytes": 547656
+    }
+  },
+  "matched_host_captures_per_arm": 462,
+  "matched_host_bytes_per_arm": 15138816,
+  "filter_corpus": {
+    "bytes": 22400288,
+    "sha256": "ed310ea3b9dcef3c8e70b17d1530b6b55880ac6b7f0a55b11787493d3c233330"
+  },
+  "successful_ledger_commands": 128,
+  "last_elapsed_seconds": 1580.767075987,
+  "coverage": "Both arms passed retained core and12host compatibility checks; full569/demo/UI/pluginval/package not run.",
+  "interpretation": "Third A/A row gate failure is terminal despite passing aggregates. No candidate CPU comparison or production qualification. No retry."
+}

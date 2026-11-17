@@ -1,0 +1,129 @@
+{
+  "audit": "Independent read-only binary/linkage/profile/provenance audit",
+  "zip_sha256": "b2974e2fa8307ce72d1e2d9227ab9d5287b3cfed4c2eb9864be18c795e4f8eeb",
+  "commit": "2101bc343394e1da54236b16fe9cc6f8ce5fe8f2",
+  "research_files_rehashed": 45,
+  "arms": {
+    "baseline": {
+      "sealed_files_rehashed": 12,
+      "bundle_entries": 6,
+      "transport_mode_differences": [],
+      "engine_sha256": "f49a5005af06eb2a03ec0585c88404fcb6eca2592e9cb6e9e1b30816de0469af",
+      "archive_sha256": "f2e8ece890c9ea80f0593900d24d781a8435bb103a1d4460d0faec444ed81fa1",
+      "linkage": {
+        "CS80Reference_VST3": {
+          "final_binary_sha256": "49ea115cbd9a655d5e6bd2670cf810d4e6b3aaf2f0c0668ef244c9d51112ff5e",
+          "object_render": {
+            "address": 154944,
+            "size": 3459,
+            "section": ".text"
+          },
+          "final_render": {
+            "address": 10097184,
+            "size": 3459,
+            "section": ".text"
+          }
+        },
+        "CS80Reference_Standalone": {
+          "final_binary_sha256": "2eef086752be9141b16a0057d0fcc0e58150b0f60327a7d6a0e2adf909216f63",
+          "object_render": {
+            "address": 154944,
+            "size": 3459,
+            "section": ".text"
+          },
+          "final_render": {
+            "address": 9699984,
+            "size": 3459,
+            "section": ".text"
+          }
+        }
+      },
+      "no_profile_runtime_binary_count": 11
+    },
+    "candidate": {
+      "sealed_files_rehashed": 12,
+      "bundle_entries": 6,
+      "transport_mode_differences": [],
+      "engine_sha256": "eb63b676ff9a0b72428843d32436fe2f4b9158dd3204415a252aac8926da2615",
+      "archive_sha256": "625488f33ccc751f7de69fdf14fcfebe1b76201f444464fef04d236202a9a93b",
+      "linkage": {
+        "CS80Reference_VST3": {
+          "final_binary_sha256": "c2cf0b1f339ab843c6ec5b7a2b23cffba610adb70ae2a708a9ad1ab170031f34",
+          "object_render": {
+            "address": 15648,
+            "size": 802,
+            "section": ".text.hot"
+          },
+          "final_render": {
+            "address": 1498896,
+            "size": 802,
+            "section": ".text"
+          }
+        },
+        "CS80Reference_Standalone": {
+          "final_binary_sha256": "9ec6d245679cb5715e0a8f99dcc3619c3f70b8e1ef99056530e9a710354f2e5c",
+          "object_render": {
+            "address": 15648,
+            "size": 802,
+            "section": ".text.hot"
+          },
+          "final_render": {
+            "address": 1392864,
+            "size": 802,
+            "section": ".text"
+          }
+        }
+      },
+      "no_profile_runtime_binary_count": 11
+    }
+  },
+  "limits": [
+    "No retained binaries were executed. Read-only ar, objdump and nm inspect ELF/archive structure.",
+    "Compiler executables/frontends and 88 ordinary objects are not retained: their remote identity/invariance remains runner hash receipts, not independently rehashed bytes.",
+    "Canonical active remote build paths are not retained; their recorded hashes match retained sealed candidate artifacts. Runtime before/after checks remain execution-code/ledger evidence.",
+    "Profile-use/plugin compatibility evidence does not establish CPU gain: calibration terminally unusable, zero candidate cost; full release suite and later checks were not run.",
+    "Linux GNU13.3 on this host only; no Windows/macOS or DAW/target-hardware inference."
+  ],
+  "archive_ordinary_members_unchanged": {
+    "FactoryPresets.cpp.o": "f626545b7e1025b2ce9f5e72a6535c69738fb131f604cf8f7874f89c44637236",
+    "Ig00156Batch.cpp.o": "f831b12bd93890f4c1acf5b214c4d0dbf2f821a430bc8b12c726700d9ef577d6"
+  },
+  "canonical_candidate_hash_bindings_recomputed": 11,
+  "host_driver_bytes_rehashed": 2,
+  "normal_objects": {
+    "recorded_unchanged": 97,
+    "retained_and_rehashed": 9,
+    "unretained_remote_receipts": 88
+  },
+  "profile": {
+    "contract_rederived_from_actual_instrumented_object": true,
+    "training_artifacts_rehashed": 3,
+    "relative_gcda": "#home#runner#work#_temp#production-pic-pgo-v3#build#CMakeFiles#cs80_core.dir#src#core#Engine.cpp.gcda",
+    "manifest": {
+      "#home#runner#work#_temp#production-pic-pgo-v3#build#CMakeFiles#cs80_core.dir#src#core#Engine.cpp.gcda": {
+        "bytes": 66136,
+        "sha256": "9fbb536d9bc72e5941cfdbd3fb2764a696281cc32a3f149fb0faafb956c105ee"
+      }
+    },
+    "initial_final_bytes_identical": true,
+    "final_capture_label": "unvalidated retention; bytes independently match initially accepted profile"
+  },
+  "provenance": {
+    "compile_entries": 587,
+    "engine_only_PGO_delta": true,
+    "C_CXX_driver_frontend_receipts_equal_pinned": true,
+    "FP_options_equal": true,
+    "dependency_content_receipts_equal": true,
+    "CTest_raw_definition_receipts_equal": true,
+    "source_objects": {
+      "src": "702bf5ee4e375c7b13da7ec95b01b56587bbf75c",
+      "tests": "64b7f72ed0139d846e8107c47c62f190cb13eefa",
+      "CMakeLists.txt": "288b80b965363547c0851815c95e6bbc17fa84c2",
+      "cmake": "22c04e90f3245ccd8a17e7640122fa949948cec3",
+      "scripts": "7f93b589a5a591da004d1d55378f4ca448d7d889",
+      ".github/workflows/build.yml": "7b577e8c59328a8171c6fe26a4020a9d7a05e1fe"
+    }
+  },
+  "source_receipt_commands_verified": 7,
+  "ledger_success_commands": 128
+}
