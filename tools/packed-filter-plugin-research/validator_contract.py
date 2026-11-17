@@ -32,9 +32,11 @@ def linux_validations(*, repo, validator, bundle, output):
     return result
 
 
-def admit_validation(*, name, expected_argv, record, stdout, stderr):
+def admit_validation(*, name, expected_argv, record, stdout, stderr, arm=None):
     require(name in ('headless','gui','gui-seed-regression'), 'unknown validation case')
-    require(record.get('label')==name and record.get('argv')==expected_argv,
+    require(arm in (None,'stock','candidate'), 'unknown validation arm')
+    label=name if arm is None else arm+'-'+name
+    require(record.get('label')==label and record.get('argv')==expected_argv,
             'validator command/identity drift')
     require(record.get('exit')==0 and not record.get('error'), 'validator failed including unload')
     require(isinstance(stdout,str) and isinstance(stderr,str), 'complete validator logs required')
