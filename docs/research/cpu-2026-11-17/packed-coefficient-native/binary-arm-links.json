@@ -1,0 +1,58 @@
+{
+  "stock-driver": {
+    "binary": "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/stock/driver",
+    "sha256": "8ae213fd8bc8aaa752fc4cf4435c4c651d5232df7fb5b1145f4b7d334a17705b",
+    "objects": {
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/Engine.o": "f49a5005af06eb2a03ec0585c88404fcb6eca2592e9cb6e9e1b30816de0469af",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/FactoryPresets.o": "f626545b7e1025b2ce9f5e72a6535c69738fb131f604cf8f7874f89c44637236",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/driver.o": "e3f8371d1ea0effc4fde6eb4dd8a4d6f4c441f676cfd98ad7e56b2dd52d280d2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/stock/Ig00156Batch.o": "f831b12bd93890f4c1acf5b214c4d0dbf2f821a430bc8b12c726700d9ef577d6"
+    }
+  },
+  "stock-batch-tests": {
+    "binary": "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/stock/batch-tests",
+    "sha256": "8332301a445fb3fcc2df0fe2ca91c88e5a9e55ca87c0996bbaf98b5b38b73833",
+    "objects": {
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/batch-tests.o": "6c4e719dedb5f7f30353c34bb73b969fdc6879f06d9c95ce510bdcace91a39a8",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/stock/Ig00156Batch.o": "f831b12bd93890f4c1acf5b214c4d0dbf2f821a430bc8b12c726700d9ef577d6"
+    }
+  },
+  "stock-engine-tests": {
+    "binary": "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/stock/engine-tests",
+    "sha256": "a08acb7d4f66e93429dedf2ee97aab85a7c754a1c569b79e92dfd67ae8ee1d38",
+    "objects": {
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/Engine.o": "f49a5005af06eb2a03ec0585c88404fcb6eca2592e9cb6e9e1b30816de0469af",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/FactoryPresets.o": "f626545b7e1025b2ce9f5e72a6535c69738fb131f604cf8f7874f89c44637236",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/engine-tests.o": "5553ed6ead7c3cd6dc138010dfeb89fd92281f54a45cc44f160996928cba0c19",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/stock/Ig00156Batch.o": "f831b12bd93890f4c1acf5b214c4d0dbf2f821a430bc8b12c726700d9ef577d6"
+    }
+  },
+  "candidate-driver": {
+    "binary": "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/candidate/driver",
+    "sha256": "f6d4fa5d2ffdf6072a10c1e5e38c4759257a463e1d27b2fde8c0c8c2a2a4e252",
+    "objects": {
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/Engine.o": "f49a5005af06eb2a03ec0585c88404fcb6eca2592e9cb6e9e1b30816de0469af",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/FactoryPresets.o": "f626545b7e1025b2ce9f5e72a6535c69738fb131f604cf8f7874f89c44637236",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/driver.o": "e3f8371d1ea0effc4fde6eb4dd8a4d6f4c441f676cfd98ad7e56b2dd52d280d2",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/candidate/Ig00156Batch.o": "cd1c8b06f8f287be984b9f1ca535755874ea5dabed466437a22151be3e1a9754"
+    }
+  },
+  "candidate-batch-tests": {
+    "binary": "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/candidate/batch-tests",
+    "sha256": "e4828760d336c9071e63ba4f7144b04ea3e620fe1af534a373b3fe0dc9c36ad5",
+    "objects": {
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/batch-tests.o": "6c4e719dedb5f7f30353c34bb73b969fdc6879f06d9c95ce510bdcace91a39a8",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/candidate/Ig00156Batch.o": "cd1c8b06f8f287be984b9f1ca535755874ea5dabed466437a22151be3e1a9754"
+    }
+  },
+  "candidate-engine-tests": {
+    "binary": "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/candidate/engine-tests",
+    "sha256": "b066ebdc41b2edc51a21cc99d1444750a2d62c98cf8b18442e6ba65099c3ed7a",
+    "objects": {
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/Engine.o": "f49a5005af06eb2a03ec0585c88404fcb6eca2592e9cb6e9e1b30816de0469af",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/FactoryPresets.o": "f626545b7e1025b2ce9f5e72a6535c69738fb131f604cf8f7874f89c44637236",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/common/engine-tests.o": "5553ed6ead7c3cd6dc138010dfeb89fd92281f54a45cc44f160996928cba0c19",
+      "/home/runner/work/yamaha-cs80/yamaha-cs80/packed-coefficient-cpu-results/build/candidate/Ig00156Batch.o": "cd1c8b06f8f287be984b9f1ca535755874ea5dabed466437a22151be3e1a9754"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "revision": "0c351b9c509e2d3e8ae1ff978fbc0a3a739974e3",
+  "source": "702bf5ee4e375c7b13da7ec95b01b56587bbf75c",
+  "tests": "64b7f72ed0139d846e8107c47c62f190cb13eefa",
+  "candidate": "a612510e598be7471aa8ced68b57e56868cd7345335dc475d44bfab3758bb6fd",
+  "unit_flags": {
+    "Engine": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "FactoryPresets": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ],
+    "Ig00156Batch": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC",
+      "-ffp-contract=off"
+    ],
+    "driver": [
+      "-std=gnu++20",
+      "-O3",
+      "-DNDEBUG",
+      "-fPIC"
+    ]
+  },
+  "affinity_available": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "affinity_selected": [
+    0
+  ],
+  "uname": [
+    "Linux",
+    "runnervm8axu0",
+    "7.0.0-1017-azure",
+    "#17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 18:46:57 UTC 2026",
+    "x86_64",
+    "x86_64"
+  ],
+  "thread_clock_resolution": 1e-09,
+  "wall_clock_resolution": 1e-09,
+  "environment": {
+    "ImageOS": "ubuntu24",
+    "ImageVersion": "20261111.370.1",
+    "RUNNER_ARCH": "X64",
+    "RUNNER_ENVIRONMENT": "github-hosted",
+    "GITHUB_SHA": "0c351b9c509e2d3e8ae1ff978fbc0a3a739974e3",
+    "GITHUB_RUN_ID": "44106223173",
+    "GITHUB_RUN_NUMBER": "1",
+    "GITHUB_RUN_ATTEMPT": "1"
+  },
+  "sanitizer_scope": "Prior local GNU14 O1 address/undefined only, leaks unqualified; not a GNU13 sanitized build",
+  "compiler_version": "x86_64-linux-gnu-g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+}
