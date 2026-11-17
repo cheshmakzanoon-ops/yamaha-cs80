@@ -87,3 +87,39 @@ SDK absence is an explicit skip, not a native evidence pass. Build flags remain
 C++20, pthread, Wall/Wextra/Werror/pedantic. UBSan is supplementary, not TSan or a
 proof across arbitrary scheduling. Actual plugin loading, host/runloop advertisement,
 full A-D stages, cross-arm identity and CPU timing remain unapproved.
+
+## Complete versus known-subset controls and deep snapshots
+
+`flush` proves complete native ID-set equality and cardinality against the owned
+connected roster; metadata enumeration order is not imposed on the control stream.
+`validateFlush` still binds each control to its positional expected ID, and actual
+queue ordering plus encoded protocol bytes are preserved exactly. Reordering a
+protocol produces different evidence, not an equivalent canonical recipe.
+
+`flushKnownSubset` is a distinct API, not a caller boolean. It requires this owner's
+successful complete flush first, then a strict nonempty set of unique known IDs,
+and retains the same Processing/worker-lease gates. A failed complete flush cannot
+authorize it. This API does NOT itself establish the A-D alter stage: higher
+HistoryOwner must submit and bind the exact frozen two-ID bridge recipe.
+
+`connectedSnapshot()` returns deep-owned metadata, setup metrics and roster only
+in prepared Processing/Suspended phases with accepted capture/setup evidence.
+`savedStateSnapshot()` returns a deep StateObservation only after accepted owned
+save. Unattempted, rejected or wrong-phase reads fail rather than manufacture
+empty successful receipts. Copy allocation failures are terminal. Returned value
+mutation cannot change the private native-owned observations. No live SDK handle
+or instance reference is returned.
+
+`restoreStateSnapshot()` likewise returns a deep copy only after the owner's
+actual restore was attempted and accepted, in Suspended/Processing. It preserves
+component, component-sync and optional controller API statuses; it does not
+establish where that restore belongs in the history. Higher HistoryOwner must
+bind it at its exact restore stage. Early/failed/post-close reads are rejected.
+
+The additive control/snapshot suite has 25 returning cases, including reordered
+full-protocol golden bytes, missing/extra/duplicate/positional full failures,
+subset-before-full and failed-full authorization rejection, subset unknown/duplicate/
+complete/empty failures, deep snapshot mutation independence, snapshot copy OOM,
+wrong thread and restore early/failed/post-close gates. Together with the 26 prior
+worker-lease controls, current processing suites contain 51 tests. The 25 new
+returning cases also pass a separate UBSan build; this is supplementary evidence.

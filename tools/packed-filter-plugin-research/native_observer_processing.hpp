@@ -4,6 +4,7 @@
 #include "native_observer_flush.hpp"
 namespace cs80_observer {
 // UI-owned native instance + worker. External module/handler must outlive owner.
+struct ProcessingConnectedSnapshot {Bytes metadata,setupMetrics;ConnectedParameterRoster roster;};
 struct ProcessingCleanupSnapshot {
     InitializerCalls<96> lifecycle;std::array<NativeCloseResult,15> interfaces{};
     std::size_t interfaceCount=0;std::exception_ptr error;
@@ -18,7 +19,7 @@ class ProcessingInstanceOwner {
         RenderObservation render;FlushReceipt flush;
     } results_;
     worker::ProcessingWorker worker_; // destroyed before results_/instance_
-    bool operation_=false,leaseHeld_=false,closed_=false;
+    bool operation_=false,leaseHeld_=false,closed_=false,completeFlushAccepted_=false;
     std::exception_ptr firstError_,cleanupError_;
     std::optional<worker::TaskReceipt> taskReceipt_;
     std::optional<worker::JoinReceipt> joinReceipt_;
@@ -77,6 +78,20 @@ class ProcessingInstanceOwner {
         instance_.operation_=true;leaseHeld_=true;
         return Task{&results_,instance_.own.audio,instance_.setup_,ui_,kind};
     }
+    void bindFlush(const FlushProtocol& protocol,bool complete) {
+        validateFlush(protocol);const auto& roster=instance_.connectedRoster_;
+        require(!roster.ids.empty() && roster.declaredCount==static_cast<int32>(roster.ids.size()),"owned complete native roster required");
+        const std::set<ParamID> known(roster.ids.begin(),roster.ids.end()),ids(protocol.expectedIds.begin(),protocol.expectedIds.end());
+        require(known.size()==roster.ids.size() && ids.size()==protocol.expectedIds.size(),"owned/flush ID uniqueness");
+        if(complete)require(ids==known,"full flush complete ID-set binding");
+        else require(completeFlushAccepted_ && !ids.empty() && ids.size()<known.size() && std::includes(known.begin(),known.end(),ids.begin(),ids.end()),"known subset requires prior complete flush");
+    }
+    template<class Pump> FlushReceipt flushImpl(const FlushProtocol& protocol,worker::WaitPolicy policy,Pump&& pump,bool complete){
+        Guard guard(*this);try{
+            auto task=begin(worker::Kind::Flush);bindFlush(protocol,complete);results_.flushProtocol=protocol;results_.flush={};
+            execute(task,policy,std::forward<Pump>(pump));releaseLease();if(complete)completeFlushAccepted_=true;return std::move(results_.flush);
+        }catch(...){abort(std::current_exception());}
+    }
     template<class Pump> void execute(Task task,worker::WaitPolicy policy,Pump&& pump){
         check();const auto sequence=worker_.submit(task.kind,task);check();
         auto receipt=worker_.await(sequence,policy,std::forward<Pump>(pump));
@@ -100,11 +115,22 @@ public:
             execute(task,policy,std::forward<Pump>(pump));releaseLease();return std::move(results_.render);
         }catch(...){abort(std::current_exception());}
     }
-    template<class Pump> FlushReceipt flush(const FlushProtocol& protocol,worker::WaitPolicy policy,Pump&& pump){
-        Guard guard(*this);try{
-            auto task=begin(worker::Kind::Flush);results_.flushProtocol=protocol;results_.flush={};
-            require(!instance_.connectedRoster_.ids.empty() && instance_.connectedRoster_.declaredCount==static_cast<int32>(instance_.connectedRoster_.ids.size()) && protocol.expectedIds==instance_.connectedRoster_.ids,"flush binds owned complete parameter roster");
-            execute(task,policy,std::forward<Pump>(pump));releaseLease();return std::move(results_.flush);
+    template<class Pump> FlushReceipt flush(const FlushProtocol& protocol,worker::WaitPolicy policy,Pump&& pump){return flushImpl(protocol,policy,std::forward<Pump>(pump),true);}
+    template<class Pump> FlushReceipt flushKnownSubset(const FlushProtocol& protocol,worker::WaitPolicy policy,Pump&& pump){return flushImpl(protocol,policy,std::forward<Pump>(pump),false);}
+    ProcessingConnectedSnapshot connectedSnapshot(){
+        Guard guard(*this);try{check();require(instance_.phase_==InjectedInstance::Phase::Processing || instance_.phase_==InjectedInstance::Phase::Suspended,"connected snapshot requires prepared phase");
+            require(instance_.metadataAttempted_ && !instance_.connectedMetadata_.data.empty() && !instance_.setupMetrics_.data.empty() && instance_.initializationSucceeded,"accepted owned metadata/setup snapshot required");
+            return {instance_.connectedMetadata_,instance_.setupMetrics_,instance_.connectedRoster_};
+        }catch(...){abort(std::current_exception());}
+    }
+    StateObservation savedStateSnapshot(){
+        Guard guard(*this);try{check();require(instance_.phase_==InjectedInstance::Phase::Processing || instance_.phase_==InjectedInstance::Phase::Suspended,"state snapshot requires prepared phase");
+            require(instance_.saved_.attempted,"state snapshot unattempted");validateStateObservation(instance_.saved_);require(instance_.saved_.accepted,"state snapshot rejected");return instance_.saved_;
+        }catch(...){abort(std::current_exception());}
+    }
+    StateRestoreReceipt restoreStateSnapshot(){
+        Guard guard(*this);try{check();require(instance_.phase_==InjectedInstance::Phase::Processing || instance_.phase_==InjectedInstance::Phase::Suspended,"restore snapshot requires prepared phase");
+            require(instance_.restored_.attempted,"restore snapshot unattempted");require(instance_.restored_.accepted,"restore snapshot rejected");return instance_.restored_;
         }catch(...){abort(std::current_exception());}
     }
     void close(){Guard guard(*this);try{check();cleanup();}catch(...){abort(std::current_exception());}}

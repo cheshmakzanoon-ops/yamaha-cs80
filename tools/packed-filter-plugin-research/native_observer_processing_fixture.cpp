@@ -24,6 +24,7 @@ struct InitFake final : IComponent, IAudioProcessor, IEditController, IConnectio
     std::string name;uint32 refs;int terminated=0;bool throwStop=false,failStop=false,failActive=false,failDisconnect=false,failTerminate=false;
     bool combined=true;bool busActive[2]{false,false};
     ObserverPhase phase=ObserverPhase::Created;int classQueries=0,metricsQueries=0;
+    std::vector<ParamID> parameterIds;
     bool badStream=false;double normalized=.25,defaultNormalized=.5;int parameterCount=1,parameterCountQueries=0,parameterInfoQueries=0;
     explicit InitFake(std::string n,uint32 r):name(std::move(n)),refs(r){}
     tresult PLUGIN_API queryInterface(const TUID id,void** p) override {
@@ -65,8 +66,8 @@ struct InitFake final : IComponent, IAudioProcessor, IEditController, IConnectio
     }
     uint32 PLUGIN_API getTailSamples() override {++metricsQueries;require(phase==ObserverPhase::Setup,"fake metrics before setup");return 23;}
     tresult PLUGIN_API setComponentState(IBStream* stream) override {int64 pos=-1;require(stream && stream->tell(&pos)==kResultOk && pos==0,"rewound component state");return pass(restoreTracing?"restore-sync":"controller-state")?kResultOk:kResultFalse;}
-    int32 PLUGIN_API getParameterCount() override {++parameterCountQueries;require(phase==ObserverPhase::Connected,"fake parameter phase");return parameterCount;}
-    tresult PLUGIN_API getParameterInfo(int32,ParameterInfo& p) override {++parameterInfoQueries;p={};p.id=31;p.title[0]='P';p.defaultNormalizedValue=defaultNormalized;return kResultOk;}
+    int32 PLUGIN_API getParameterCount() override {++parameterCountQueries;require(phase==ObserverPhase::Connected,"fake parameter phase");return parameterIds.empty()?parameterCount:static_cast<int32>(parameterIds.size());}
+    tresult PLUGIN_API getParameterInfo(int32 index,ParameterInfo& p) override {++parameterInfoQueries;p={};p.id=parameterIds.empty()?31:parameterIds.at(static_cast<std::size_t>(index));p.title[0]='P';p.defaultNormalizedValue=defaultNormalized;return kResultOk;}
     tresult PLUGIN_API getParamStringByValue(ParamID,ParamValue,String128) override {return kNotImplemented;}
     tresult PLUGIN_API getParamValueByString(ParamID,TChar*,ParamValue&) override {return kNotImplemented;}
     ParamValue PLUGIN_API normalizedParamToPlain(ParamID,ParamValue v) override {return v;}

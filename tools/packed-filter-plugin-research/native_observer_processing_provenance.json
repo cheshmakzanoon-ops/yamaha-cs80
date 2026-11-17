@@ -1,8 +1,8 @@
 {
   "scope": "real dedicated worker plus actual flush/render helpers against inert SDK native interfaces; no module loaded",
   "native_plugin_loaded": false,
-  "tests": 26,
-  "returning_cases": 23,
+  "tests": 51,
+  "returning_cases": 48,
   "watchdog_cases": 1,
   "invalid_destructor_termination_cases": 2,
   "sdk_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
@@ -31,11 +31,13 @@
     "pluginterfaces/vst/ivstnoteexpression.h": "4422cd750b64c33f04f6772fc324f38c81d237a04c74ef01df158c01cda72a9d"
   },
   "sources": {
-    "native_observer_processing.hpp": "f7127e494a22c86cc9c5e75ff9ede012333bd12d3d9bf590a929326e5a71d0c3",
-    "native_observer_processing_fixture.cpp": "76a3a6476a45890f5471bfa4b8715f121831fd957f450e8bc3be0deb697b2478",
+    "native_observer_processing.hpp": "edefe3b33ac2242dc8c0cfe0336d2b7e461e6e41bac776fe2a0f6b95a15a33ae",
+    "native_observer_processing_fixture.cpp": "37ec3194b0b180dde89cea46f48580e69f9767965f6e0b2ab0ffdbbbdedf2968",
     "native_observer_processing_PLAN.md": "7a347536f4bfb9ceafc9a18f038bd158ad60aee940bec559d3ea09ac8d933da8",
-    "native_observer_processing_STATUS.md": "b63c84c29aff85cd49909fc4f9194b4342a44195a801ce20d8af08259b4078c7",
-    "test_native_observer_processing.py": "99fa28e272e4d51d69dff8a0d8281199e585d4a0dccaa29521544e42453f58c2"
+    "native_observer_processing_STATUS.md": "f6492dad9b2b87f413fa8db70dc9900879247f9f0a43071008fc63c43b318b51",
+    "test_native_observer_processing.py": "99fa28e272e4d51d69dff8a0d8281199e585d4a0dccaa29521544e42453f58c2",
+    "native_observer_processing_controls_fixture.cpp": "cc53a50f98dc6dbcf437a5c8ed4424e1ddd0f2a671063920adf3ae51cd0cba1e",
+    "test_native_observer_processing_controls.py": "c014bb10954b86af1130e82063d81d9b3c1b7fddb99205ecf4f7e72dc462ed43"
   },
   "dependencies": {
     "native_observer_initializer.hpp": "5424cd3ed14259271463725401843eee123ac88690bc7eec743d9740ef6a8323",
@@ -59,5 +61,6 @@
     "<research>/native_observer_processing_fixture.cpp",
     "-ldl",
     "-o<temporary-fixture>"
-  ]
+  ],
+  "control_snapshot_cases": 25
 }
