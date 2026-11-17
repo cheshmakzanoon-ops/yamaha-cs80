@@ -26,7 +26,9 @@ inline std::vector<ThreadStamp> threads(){
 }
 struct ModuleHistoryFailure {const char* attempted="none";uint32 hostReferences=0;std::size_t registrations=0;bool providerAbsent=false;unsigned opens=0,closes=0;InitializerCalls<128> module;};
 // Private advertised views share one FUnknown identity; Dispatcher never escapes.
+class ProcessLifetimeChild;
 class ModuleHistoryOwner final {
+    friend class ProcessLifetimeChild;
     static inline std::atomic<bool> processTerminal_{false};static inline std::atomic<bool> activeOwner_{false};
     class Host final:public IHostApplication,public Steinberg::Linux::IRunLoop {
         std::atomic<uint32> refs_{1};std::atomic<bool> valid_{true};
@@ -60,7 +62,7 @@ class ModuleHistoryOwner final {
     class Loader final:public LoaderOps {
         SealedLoader sealed_;Host& host_;InjectedModule* module_=nullptr;const bool* historyClosed_=nullptr;const std::vector<module_history_detail::ThreadStamp>* baseline_=nullptr;std::vector<module_history_detail::ThreadStamp>* after_=nullptr;bool refused_=false;
     public:
-        Loader(std::shared_ptr<const cs80_identity::PinnedModule> pin,Host& host):sealed_(std::move(pin),SealedCleanupPolicy::ExplicitOnly),host_(host){}
+        Loader(std::shared_ptr<const cs80_identity::PinnedModule> pin,Host& host,ModuleLifetimeProfile profile):sealed_(std::move(pin),SealedCleanupPolicy::ExplicitOnly,profile),host_(host){}
         void bind(InjectedModule& module,const bool& historyClosed,const std::vector<module_history_detail::ThreadStamp>& baseline,std::vector<module_history_detail::ThreadStamp>& after){require(!module_,"single private module binding");module_=&module;historyClosed_=&historyClosed;baseline_=&baseline;after_=&after;}
         void* open(const char* path)override{return sealed_.open(path);}
         ModuleBindings resolve(void* handle)override{return sealed_.resolve(handle);}
@@ -80,16 +82,16 @@ class ModuleHistoryOwner final {
             if(processTerminal_ || !historyClosed_ || !*historyClosed_ || !factorySeen || (factory3Needed && !factory3Seen) || !exitSeen || !exitOk || !releasesOk || !baseline_ || *after_!=*baseline_ || !host_.unloadGate()){refused_=true;throw std::runtime_error("unsafe module unload refused");}
             const auto status=sealed_.close(handle);refused_=false;return status;
         }
-        bool admitted()const{return !refused_ && sealed_.providerClosedCleanly();}
+        bool admitted()const{return !refused_ && sealed_.lifecycleClosedCleanly();}
         bool refused()const{return refused_;}
         const SealedLoader& evidence()const{return sealed_;}
     };
     struct Graph {
         const std::shared_ptr<const cs80_identity::PinnedModule> pin;
         bool historyClosed=false;std::vector<module_history_detail::ThreadStamp> baseline,after;Host host;Loader loader;InjectedModule module;Handler handler;std::unique_ptr<HistoryOwner> history;
-        explicit Graph(std::shared_ptr<const cs80_identity::PinnedModule> p):pin(std::move(p)),loader(pin,host),module(loader){loader.bind(module,historyClosed,baseline,after);}
+        explicit Graph(std::shared_ptr<const cs80_identity::PinnedModule> p,ModuleLifetimeProfile profile):pin(std::move(p)),loader(pin,host,profile),module(loader){loader.bind(module,historyClosed,baseline,after);}
     };
-    static std::unique_ptr<Graph> allocate(std::shared_ptr<const cs80_identity::PinnedModule> pin){require(!processTerminal_,"child process terminal after quarantine");bool expected=false;require(activeOwner_.compare_exchange_strong(expected,true),"one active module history graph per child");try{require(!processTerminal_,"terminal child cannot allocate graph");return std::make_unique<Graph>(std::move(pin));}catch(...){activeOwner_=false;throw;}}
+    static std::unique_ptr<Graph> allocate(std::shared_ptr<const cs80_identity::PinnedModule> pin,ModuleLifetimeProfile profile){require(!processTerminal_,"child process terminal after quarantine");bool expected=false;require(activeOwner_.compare_exchange_strong(expected,true),"one active module history graph per child");try{require(!processTerminal_,"terminal child cannot allocate graph");return std::make_unique<Graph>(std::move(pin),profile);}catch(...){activeOwner_=false;throw;}}
     const std::thread::id ui_=std::this_thread::get_id();std::unique_ptr<Graph> graph_;
     std::atomic<bool> violation_{false};bool running_=false;
     bool ownsActive_=true;bool attempted_=false,admitted_=false,quarantined_=false,providerAbsent_=false;std::exception_ptr error_;
@@ -98,8 +100,9 @@ class ModuleHistoryOwner final {
     void receiptAccess()const{require(std::this_thread::get_id()==ui_ && !running_,"module history UI idle receipt");}
     void check(){require(!violation_ && !processTerminal_,"module history terminal violation");}
     void quarantine()noexcept{processTerminal_=true;if(graph_){providerAbsent_=graph_->loader.evidence().providerClosedCleanly();lastHostRefs_=graph_->host.refs();lastRegistrations_=graph_->host.registrations();failure_.attempted=attemptedStep_;failure_.hostReferences=lastHostRefs_;failure_.registrations=lastRegistrations_;failure_.providerAbsent=providerAbsent_;failure_.opens=graph_->loader.evidence().nativeOpenCalls();failure_.closes=graph_->loader.evidence().nativeCloseCalls();failure_.module=graph_->module.calls;graph_.release();}quarantined_=true;}
+    ModuleHistoryOwner(std::shared_ptr<const cs80_identity::PinnedModule> pin,ModuleLifetimeProfile profile):graph_(allocate(std::move(pin),profile)){}
 public:
-    explicit ModuleHistoryOwner(std::shared_ptr<const cs80_identity::PinnedModule> pin):graph_(allocate(std::move(pin))){}
+    explicit ModuleHistoryOwner(std::shared_ptr<const cs80_identity::PinnedModule> pin):ModuleHistoryOwner(std::move(pin),ModuleLifetimeProfile::StrictUnmap){}
     ModuleHistoryOwner(const ModuleHistoryOwner&)=delete;ModuleHistoryOwner& operator=(const ModuleHistoryOwner&)=delete;
     void run(const TUID cid,packed_filter_workload::Case c,ControllerStatePolicy policy,worker::WaitPolicy wait){
         if(std::this_thread::get_id()!=ui_){violation_=true;processTerminal_=true;throw std::runtime_error("module history wrong thread");}
@@ -122,7 +125,7 @@ public:
     const SealedProviderEvidence& providerEvidence()const{receiptAccess();require(admitted_ && graph_,"closed provider evidence");return graph_->loader.evidence().providerEvidence();}
     bool admitted()const{receiptAccess();return admitted_ && !violation_ && !processTerminal_;}
     bool quarantined()const{receiptAccess();return quarantined_;}
-    bool providerAbsenceConfirmed()const{receiptAccess();return providerAbsent_ || admitted_;}
+    bool providerAbsenceConfirmed()const{receiptAccess();return providerAbsent_ || (admitted_ && graph_ && graph_->loader.evidence().providerClosedCleanly());}
     uint32 retainedHostReferences()const{receiptAccess();return lastHostRefs_;}
     std::size_t retainedRegistrations()const{receiptAccess();return lastRegistrations_;}
     std::exception_ptr error()const{receiptAccess();return error_;}

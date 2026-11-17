@@ -91,3 +91,9 @@ separate `-z nodelete` variant deliberately proves retained mappings are rejecte
 These test build flags do not change production build flags. Successful receipts
 bind only this inert execution and do not by themselves establish production
 sound equivalence, module safety or authorization to run the real synth.
+
+A private constructor now supports the separately preselected terminal-child
+process-lifetime profile. It is accessible only to `ProcessLifetimeChild`, whose
+success and failure paths exit without destroying the ownership graph. Existing
+public owners remain strict-unmap. See `native_observer_process_child_STATUS.md`;
+this does not grant E/state-transfer authority or relax native lifecycle gates.

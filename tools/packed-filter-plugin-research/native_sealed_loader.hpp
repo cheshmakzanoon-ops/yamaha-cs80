@@ -18,12 +18,14 @@ inline bool pathMatches(std::string path,const std::string& target){
     if(path.empty() || path[0]!='/' )return false;
     representable(path);std::error_code ec;auto canonical=std::filesystem::canonical(path,ec);return !ec && canonical.string()==target;
 }
-inline void rejectLoadedPath(const std::string& target,const std::string& maps,std::vector<std::string>& retained){
+inline bool inventoryPath(const std::string& target,const std::string& maps,std::vector<std::string>& retained,bool allowTarget=false){
+    bool mapped=false,loaded=false;
     // Leading maps fields already parsed; preserve path including spaces.
     std::size_t at=0;while(at<maps.size()){const auto end=maps.find('\n',at);auto line=std::string_view(maps).substr(at,end-at);std::size_t p=0;
         for(int i=0;i<5;++i){while(p<line.size() && line[p]==' ')++p;while(p<line.size() && line[p]!=' ')++p;}
         while(p<line.size() && line[p]==' ')++p;
-        require(!pathMatches(std::string(line.substr(p)),target),"target pathname already mapped");at=end+1;
+        if(pathMatches(std::string(line.substr(p)),target))mapped=true;
+        at=end+1;
     }
     struct Inventory {std::vector<std::string> paths;std::exception_ptr failure;};Inventory inventory;
     const auto visitor=[](dl_phdr_info* info,std::size_t,void* data)->int {auto& state=*static_cast<Inventory*>(data);try{
@@ -32,8 +34,11 @@ inline void rejectLoadedPath(const std::string& target,const std::string& maps,s
     const int status=::dl_iterate_phdr(visitor,&inventory);if(inventory.failure)std::rethrow_exception(inventory.failure);require(status==0 && !inventory.paths.empty(),"loaded object inventory failed");
     retained=std::move(inventory.paths);
     for(const auto& name:retained){if(name.empty() || name.starts_with("linux-vdso.so."))continue;
-        std::error_code ec;auto path=std::filesystem::canonical(name,ec);require(!ec,"unresolvable loaded object pathname");representable(path.string());require(name!=target && path.string()!=target,"target pathname already loaded");}
+        std::error_code ec;auto path=std::filesystem::canonical(name,ec);require(!ec,"unresolvable loaded object pathname");representable(path.string());if(name==target || path.string()==target)loaded=true;}
+    if(allowTarget){require(mapped==loaded,"mixed mapped/loaded target inventory");return mapped;}
+    require(!mapped && !loaded,"target pathname already mapped/loaded");return false;
 }
+inline void rejectLoadedPath(const std::string& target,const std::string& maps,std::vector<std::string>& retained){(void)inventoryPath(target,maps,retained);}
 }
 struct SealedProviderEvidence {
     std::string beforeMaps,loadedMaps,afterMaps;std::vector<std::string> beforeObjects,afterObjects;
@@ -42,8 +47,13 @@ struct SealedProviderEvidence {
 // Joined provider identity only. Does not execute ModuleEntry/Exit or establish
 // factory/instance lifecycle, full runtime closure, HistoryOwner or ReloadToken.
 enum class SealedCleanupPolicy {Automatic,ExplicitOnly};
+enum class ModuleLifetimeProfile {StrictUnmap,ProcessLifetime};
+enum class ProviderDisposition {Unchecked,Removed,Retained};
+class ModuleHistoryOwner;
 class SealedLoader final:public LoaderOps {
+    friend class ModuleHistoryOwner;
     const SealedCleanupPolicy policy_;
+    const ModuleLifetimeProfile lifetime_;ProviderDisposition disposition_=ProviderDisposition::Unchecked;bool nativeCloseZero_=false;
     const std::shared_ptr<const cs80_identity::PinnedModule> pin_;
     DlopenOps loader_;void* handle_=nullptr;bool attempted_=false,resolved_=false,closed_=false,failed_=false,closeOk_=false;
     cs80_provider::Layout elf_;std::uintptr_t base_=0;std::array<cs80_provider::U,3> offsets_{};
@@ -53,13 +63,29 @@ class SealedLoader final:public LoaderOps {
     void absent(std::string& text,std::vector<std::string>& objects)const{text=sealed_detail::mapsText();auto maps=cs80_provider::parseMaps(text);cs80_provider::rejectExistingInode(maps,stamp());sealed_detail::rejectLoadedPath(pin_->identity()->modulePath(),text,objects);}
     void closeOwned(){
         require(!closed_,"sealed close retry forbidden");closed_=true;auto* h=std::exchange(handle_,nullptr);
-        try{require(h,"no owned sealed handle");const auto status=loader_.close(h);require(status==0,"native dlclose failed (not retried)");absent(evidence_.afterMaps,evidence_.afterObjects);recheck();closeOk_=true;}
+        try{require(h,"no owned sealed handle");const auto status=loader_.close(h);require(status==0,"native dlclose failed (not retried)");nativeCloseZero_=true;
+            if(lifetime_==ModuleLifetimeProfile::StrictUnmap){absent(evidence_.afterMaps,evidence_.afterObjects);disposition_=ProviderDisposition::Removed;}
+            else{
+                evidence_.afterMaps=sealed_detail::mapsText();const auto maps=cs80_provider::parseMaps(evidence_.afterMaps);
+                const bool pathPresent=sealed_detail::inventoryPath(pin_->identity()->modulePath(),evidence_.afterMaps,evidence_.afterObjects,true);
+                const auto before=cs80_provider::parseMaps(evidence_.loadedMaps);std::vector<cs80_provider::Mapping> oldTarget,newTarget;
+                for(const auto& m:before)if(cs80_provider::sameFile(m,stamp()))oldTarget.push_back(m);
+                for(const auto& m:maps)if(cs80_provider::sameFile(m,stamp()))newTarget.push_back(m);
+                require(pathPresent==!newTarget.empty(),"mixed provider path/inode inventory");
+                if(pathPresent){require(!oldTarget.empty() && oldTarget.size()==newTarget.size(),"partial retained provider");
+                    const auto targetRows=[&](const std::string& text,const auto& parsed){std::vector<std::string> rows;std::size_t at=0;for(const auto& m:parsed){const auto end=text.find('\n',at);require(end!=text.npos,"complete target mapping line");if(cs80_provider::sameFile(m,stamp()))rows.push_back(text.substr(at,end-at));at=end+1;}return rows;};
+                    require(targetRows(evidence_.loadedMaps,before)==targetRows(evidence_.afterMaps,maps),"retained provider raw mapping/permissions changed");
+                    for(std::size_t i=0;i<oldTarget.size();++i){const auto& a=oldTarget[i];const auto& b=newTarget[i];require(a.begin==b.begin && a.end==b.end && a.offset==b.offset && a.executable==b.executable,"retained provider mapping changed");}
+                    require(cs80_provider::checkExportOffsets(elf_,maps,stamp(),base_,evidence_.exportAddresses)==offsets_,"retained exports changed");disposition_=ProviderDisposition::Retained;
+                }else disposition_=ProviderDisposition::Removed;
+            }recheck();closeOk_=true;}
         catch(...){failed_=true;cleanup_=std::current_exception();throw;}
     }
     [[noreturn]] void fail(){failed_=true;if(!primary_)primary_=std::current_exception();if(policy_==SealedCleanupPolicy::ExplicitOnly && !handle_)handle_=loader_.live;
         if(policy_==SealedCleanupPolicy::Automatic && handle_ && !closed_){try{closeOwned();}catch(...){}}std::rethrow_exception(primary_);}
+    explicit SealedLoader(std::shared_ptr<const cs80_identity::PinnedModule> pin,SealedCleanupPolicy policy,ModuleLifetimeProfile lifetime):policy_(policy),lifetime_(lifetime),pin_(std::move(pin)),loader_(policy==SealedCleanupPolicy::ExplicitOnly){require(bool(pin_),"verified pinned module required");require(lifetime==ModuleLifetimeProfile::StrictUnmap || (lifetime==ModuleLifetimeProfile::ProcessLifetime && policy==SealedCleanupPolicy::ExplicitOnly),"supported preselected lifetime profile");require(policy==SealedCleanupPolicy::Automatic || policy==SealedCleanupPolicy::ExplicitOnly,"supported sealed cleanup policy");}
 public:
-    explicit SealedLoader(std::shared_ptr<const cs80_identity::PinnedModule> pin,SealedCleanupPolicy policy=SealedCleanupPolicy::Automatic):policy_(policy),pin_(std::move(pin)),loader_(policy==SealedCleanupPolicy::ExplicitOnly){require(bool(pin_),"verified pinned module required");require(policy==SealedCleanupPolicy::Automatic || policy==SealedCleanupPolicy::ExplicitOnly,"supported sealed cleanup policy");}
+    explicit SealedLoader(std::shared_ptr<const cs80_identity::PinnedModule> pin,SealedCleanupPolicy policy=SealedCleanupPolicy::Automatic):SealedLoader(std::move(pin),policy,ModuleLifetimeProfile::StrictUnmap){}
     SealedLoader(const SealedLoader&)=delete;SealedLoader& operator=(const SealedLoader&)=delete;
     void* open(const char* exactPath)override{
         try{require(!attempted_ && !closed_ && !failed_,"sealed load retry forbidden");attempted_=true;
@@ -79,7 +105,10 @@ public:
         }catch(...){fail();}
     }
     int close(void* h)override{try{require(!closed_ && h && h==handle_,"sealed close ownership");closeOwned();return 0;}catch(...){failed_=true;if(!primary_)primary_=std::current_exception();throw;}}
-    bool providerClosedCleanly()const noexcept{return attempted_ && resolved_ && closed_ && closeOk_ && !failed_;}
+    bool lifecycleClosedCleanly()const noexcept{return attempted_ && resolved_ && closed_ && closeOk_ && !failed_;}
+    bool providerClosedCleanly()const noexcept{return lifecycleClosedCleanly() && disposition_==ProviderDisposition::Removed;}
+    ProviderDisposition disposition()const noexcept{return disposition_;}
+    bool nativeCloseReturnedZero()const noexcept{return nativeCloseZero_;}
     bool terminalFailure()const noexcept{return failed_;}
     unsigned nativeOpenCalls()const noexcept{return loader_.nativeOpenCalls;}
     unsigned nativeCloseCalls()const noexcept{return loader_.nativeCloseCalls;}

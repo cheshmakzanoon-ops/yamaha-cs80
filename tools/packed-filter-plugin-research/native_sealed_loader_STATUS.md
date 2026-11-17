@@ -78,3 +78,10 @@ does not unload. This is not permission to discard a failed object and continue:
 the child must retain every native/host lifetime together and terminate nonzero.
 An explicit close still runs the usual checked close proof. The joined owner
 places its lifecycle/thread/callback gate in front of that explicit call.
+
+The process-lifetime child adds a privately selectable retained-provider
+classification; the public constructor and strict-unmap outcome are unchanged.
+`nativeCloseReturnedZero`, `ProviderDisposition` and strict
+`providerClosedCleanly` are distinct. Only the terminal child can reach the new
+profile via its private module owner. Complete classification and limitations
+are in `native_observer_process_child_STATUS.md`.
