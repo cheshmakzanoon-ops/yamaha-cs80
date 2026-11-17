@@ -1,0 +1,21 @@
+{
+  "decision": "FIXTURE_STOP independently corroborated",
+  "artifact_sha256": "f61e3333eebe87712ec29a99704e4d06f2177e6a26df1004c557a42b4ada91a4",
+  "commands": 13,
+  "integer_executions": 1,
+  "successful_relative_profile_bytes": 96,
+  "relative_path_contract_and_retained_gcda_valid": true,
+  "profile_use_compile_passed": true,
+  "specific_missing_and_mismatch_errors_verified": true,
+  "absolute_object_embedded_raw_path": "/home/runner/work/_temp/production-pic-profile-fixture-v2/absolute-profile//home/runner/work/_temp/production-pic-profile-fixture-v2/absolute-object/Engine.cpp.gcda",
+  "helper_expected_normalized_path": "/home/runner/work/_temp/production-pic-profile-fixture-v2/absolute-profile/home/runner/work/_temp/production-pic-profile-fixture-v2/absolute-object/Engine.cpp.gcda",
+  "cause": "Absolute-output compiler string contains profile-root//home/...; helper PurePosixPath removes the duplicate slash before exact embedded-string comparison. Filesystem equivalence does not satisfy frozen exact string contract.",
+  "synth_executions": 0,
+  "candidate_cost_executions": 0,
+  "limits": [
+    "Only unrelated integer relative-output plumbing passed.",
+    "Absolute contrast was compiled only, never linked or executed.",
+    "Workflow prerequisite failed before synth study; no production PGO/compatibility/performance result.",
+    "No retry or result reclassification authorized by this audit."
+  ]
+}
