@@ -1,0 +1,47 @@
+{
+  "scope": "independent bounded host services; inert tests only",
+  "native_plugin_loaded": false,
+  "production_admission": false,
+  "sdk_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "headers": {
+    "pluginterfaces/vst/ivstmessage.h": "cbd141fbd77264fa623b8de43aff795059599ead17c70a0ac4349c9647b42b64",
+    "pluginterfaces/base/falignpop.h": "c612b740f92c0d7426723af12d09083f26009e40a7cafe985801e6f3f706b60b",
+    "pluginterfaces/base/falignpush.h": "464d603bf4ece2d09e0f59a6830eac2d34c2cd66ad42a872831c5f30ae86675b",
+    "pluginterfaces/vst/ivstattributes.h": "61b70959f234145033c986847e1bdd45c45a8f244c927b2eb48d838c2e6054b3",
+    "pluginterfaces/vst/vsttypes.h": "5f1158d3b10d08494d72011c86c41dcf69ee16f6ffb360e76fe3013cc34c0652",
+    "pluginterfaces/base/fstrdefs.h": "c13810a921cfba8a2f20531b60b831f17e67c978ac368b7c2060ef976f5cd18e",
+    "pluginterfaces/base/conststringtable.h": "d081dd449e46059f75d3f47fb922d975611b13f6148fba58790f785d22b9b819",
+    "pluginterfaces/base/ftypes.h": "2a9273012944c30ff6bf2975066057cdba39464afffdc5d65a9bff5cd6264fd9",
+    "pluginterfaces/base/fplatform.h": "9b6f36614b73ed48de1a39d25e98d2d988063774e02f878b7de5e7da78824f57",
+    "pluginterfaces/base/funknown.h": "e0d9609224fe15491c9ccd1463d964c303f1d5a6149fabf849e87f2c14be1951",
+    "pluginterfaces/base/smartpointer.h": "f690163a2d5fa71e76cce1909ae719561031b897f79342ddf38190b2ed9613b3",
+    "pluginterfaces/vst/ivsteditcontroller.h": "a1aba69d8d411fdae6f7bee422fa9eb747a312a9fb517ff3436ee06d45a4e051",
+    "pluginterfaces/base/ipluginbase.h": "e10e9a4b9b0811c392af5758542e1f72875b56ebe7e1673d5075bc1160d9fd0b",
+    "pluginterfaces/vst/ivstcomponent.h": "cc587e34c009388d4187948c14a651df1481a01920abe895023094ca5b13faee",
+    "pluginterfaces/vst/ivstaudioprocessor.h": "6289b19c8300fb381da7688414fae52d5ca139371f910830532204b860bd6549",
+    "pluginterfaces/vst/vstspeaker.h": "f7942918bc52e78c2f061f77d2d28761f8a7b38a364cc3985bc22da21c8418d4",
+    "pluginterfaces/base/ibstream.h": "9530d37a36ceab42f7b03771f78337d5892e3328e805a9ff4e219409a1766c1e",
+    "pluginterfaces/vst/ivsthostapplication.h": "b7ef5b02f24c103e952e18b3e974e97b3c23d19c870a46c7c3aad36af8832332"
+  },
+  "cases": 32,
+  "sources": {
+    "native_observer_bounded_host.hpp": "ef81589982c1093865d8d4d86576a02e1b13b98d427fa6db6a07ffd42f92cbe9",
+    "native_observer_bounded_host_fixture.cpp": "db73e43651ef7e82796bc7ad2c6a810dc09a28b0715bc79065f1ea5489f7c93b",
+    "native_observer_bounded_host_PLAN.md": "3e9676d2b9ba373eed3214e6e09f01c0fa3fb81beb5f4dee1d544a3e95c4cd88",
+    "native_observer_bounded_host_STATUS.md": "8300feb621a0f6dfb8e808015583cb160e7763a14a95abdfb6c13e434afc0ba1",
+    "test_native_observer_bounded_host.py": "2b0664aabcb7206e0451cbabc76e3e94fdef49642f841c6fe796d46e63967543"
+  },
+  "compile_argv": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-pthread",
+    "-I<research>",
+    "-I<verified-sdk>",
+    "<research>/native_observer_bounded_host_fixture.cpp",
+    "-o<temporary-fixture>"
+  ]
+}

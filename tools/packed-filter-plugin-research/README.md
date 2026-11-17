@@ -68,3 +68,11 @@ The pinned official SDK host attribute helper has independently reproduced overw
 The pinned JUCE controller intentionally has no separate serialized controller state. `native_observer_state.hpp` records its exact unsupported/empty result under a preselected policy, while requiring full successful component state and supported controller synchronization. It never treats arbitrary failures as optional. Restore does not restore RNG/DSP history: eventual audio equivalence must compare identical full histories across arms, not assert that one arm returns to initial PCM.
 
 See each `native_observer_*_STATUS.md` for precise limits. Still outstanding: complete conforming host integration, frozen workload and state/reset/transport semantics, UI-thread/message handling, immutable actual module/runtime identity, same-attempt subprocess evidence, production clean-link proof, full original release tests/validators and separately reviewed timing. No production integration or real qualification launch is justified by this checkpoint.
+
+## Bounded host and control workload checkpoint
+
+A separate bounded host implementation now has32 independently reviewed inert controls, including transactional attribute replacement, zero-size data, allocation failure rollback, references, concurrency and exact null-message-ID clear semantics. The original SDK defect-control wrapper remains inadmissible and unchanged. The new host still requires real integration, externally guaranteed quiescence and explicit health/accounting checks; it is not full native interoperability proof.
+
+The data-only workload manifest covers108 configurations and validates complete generated control IDs against a supplied native metadata inventory. Its private offline enum must be explicitly mapped to SDK kOffline, never cast.29 inert flush controls verify exact zero-audio parameter processing and versioned evidence. The flush requires an owned Processing-phase wrapper; real lifecycle/thread integration remains unfinished.
+
+The isolated checkpoint suite totals515 controls with explicit pinned SDK/CTest. No real plugin was loaded, and lifecycle/runloop drafts are deliberately excluded from this checkpoint.
