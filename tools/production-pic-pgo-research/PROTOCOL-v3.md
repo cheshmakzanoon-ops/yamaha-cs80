@@ -1,0 +1,11 @@
+# Corrected version-3 production-PIC PGO qualification
+
+Run44072518871 remains STOP_NO_RETRY after its successful synth training and literal-basename guard failure, with no held-out/cost observations. Run44077183905 remains FIXTURE_STOP before any synth execution. Its actual GNU13.3 relative-CMake integer contract, one integer run, profile-use build and missing/mismatch controls passed; its absolute-output compile-only contrast stopped because GCC embeds a literal double slash while the version2 contract normalized it. Neither terminal result is reopened or reclassified.
+
+All PROTOCOL.md and PROTOCOL-v2.md workload, scope, fidelity, strict compiler/source identities, calibration/cost thresholds, full569tests, pluginval, preservation and budget requirements remain unchanged. This version corrects only the distinction between compiler-embedded raw path spelling and canonical filesystem location.
+
+Before training, compute and separately record the exact raw embedded compiler string and exact relative filesystem destination from the same frozen argv/cwd/object. For absolute output, require GCC's literal profile-root + '/' + absoluteGCDA spelling, including its doubled joining slash; independently resolve its on-disk hierarchy. For relative CMake output, require the unchanged full slash-to-# encoding. Never normalize the embedded bytes before comparison, accept arbitrary alternate slash sequences, discover a path by suffix, relocate a profile or relax single-file validation. Test both exact rules against retained actual GNU13.3 instrumented objects from the failed v2 prerequisite.
+
+A new mandatory bounded pinned-GNU13 integer fixture must pass the same relative-generation/use/negative controls and absolute compile-only contrast before any synth step. Fresh owned paths, distinct run_v3.py/workflow and first run/attempt only. Original v1/v2 helpers, runners, protocols and workflows stay immutable. The independently reviewed eight additive files retain all original study gates,300-minute hard experiment budget,330-minute job ceiling and90-minute progress milestone; no retries.
+
+No CPU improvement follows from path-correction tests. Any later qualified result remains Linux/GNU13.3 production-PIC core evidence, not measured DAW CPU or Windows/macOS support. No automatic production/default enablement.
