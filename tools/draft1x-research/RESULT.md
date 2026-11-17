@@ -2,7 +2,7 @@
 
 Research only. Four-file isolated prototype; no production files, parameter IDs, defaults or serialized enums changed. GNU14.2 strict O3/PIC builds, Ig00156Batch alone contractionoff. No native timing/cost experiment performed.
 
-- 3965 structural checks pass, including576factor-selection combinations; component1↔2/4/8reprepare; EXT sanitization/disconnection; source/HQ/offline/Legacy gate behavior; postprepare setter rejection; sounding-note policy/offline/HQ reset behavior.
+- 3965 structural checks pass, including288factor-selection combinations; component1↔2/4/8reprepare; EXT sanitization/disconnection; source/HQ/offline/Legacy gate behavior; postprepare setter rejection; sounding-note policy/offline/HQ reset behavior.
 - 24 frozen PANEL scenes at four rates, fourarms(stock2x/candidateoff2x/Draft1x/offlineHQ),96captures total, allfinite.
 - All24stock/candidateoff capture pairs are byte-identical. This is a bounded default compatibility result, not entire original suite qualification or FPflag equivalence.
 - Draft total source latency8samples vs2x67samples; HQ64/65samples byrate. This is reported/core structural latency, not measured hostPDC or plugin certification.
