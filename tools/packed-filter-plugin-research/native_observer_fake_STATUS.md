@@ -2,7 +2,7 @@
 
 This follow-up exercises the phase-separated support/adapter revision. It compiles and links one in-process fake SDK program using exactly the17 pinned headers already recorded in `native_observer_sdk_provenance.json`. `INIT_CLASS_IID` supplies header-defined interface identifiers. No SDK source library, synth core, plugin, module loader or real `dlclose` is invoked. The fixture defines its own `dlclose` symbol as an inert status-returning stub.
 
-33 optional, explicitly selected runtime cases pass with `CS80_OBSERVER_SDK=/tmp/cs80-observer-sdk`. Without a selected SDK, the fake-runtime test class reports a clear skip and provides no runtime evidence. With it selected, absent/mismatched headers or compiler failure is an error, not a skip.
+34 optional, explicitly selected runtime cases pass with `CS80_OBSERVER_SDK=/tmp/cs80-observer-sdk`. Without a selected SDK, the fake-runtime test class reports a clear skip and provides no runtime evidence. With it selected, absent/mismatched headers or compiler failure is an error, not a skip.
 
 Coverage:
 - Real adapter Stream methods: binary round trip/seek/tell, invalid-write sticky failure, interface query IDs.
@@ -15,3 +15,5 @@ Combined-object assumption tested: component/audio/controller/connection queries
 No new adapter defect was found by these cases. They do not establish real native-module behavior, correct real initialization/restoration, bus activation/deactivation, audio processing, deterministic DSP histories, resource identity, complete SDK interoperability, or the108-case observer. A fake method is intentionally simpler than JUCE/plugin implementations. Real driver linking/lifecycle remains unimplemented and unlaunched.
 
 Phase-separated API coverage adds a correct Created→Connected→Setup sequence, separate and combined identity caches, rejection of a cache from another live component, helper-declared wrong phases, and independent fake guards that reject late getControllerClassId or early latency/tail even when the caller lies about phase. The fake sequence is not the full initializer and does not establish host-context/loader provenance.
+
+The later initializer follow-up adds a const typed cached separate-CID accessor test; combined misuse is rejected. The accessor performs no new native query.

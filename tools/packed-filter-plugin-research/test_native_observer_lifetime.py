@@ -7,7 +7,7 @@ import hashlib,json,os,pathlib,shutil,subprocess,tempfile,unittest
 ROOT=pathlib.Path(__file__).parent
 CASES=('stream-roundtrip','stream-invalid','query-interface','handler','handler-nonfinite','handler-threads','state','state-invalid',
        'metadata','metadata-range','metadata-empty','metadata-no-class','metadata-default-range','partial','partial-uninitialized','combined','combined-double-init',
-       'phase-correct-sequence','phase-late-identity','phase-late-identity-declared','phase-early-metrics','phase-early-metrics-declared','phase-combined-cache','identity-other-component',
+       'phase-correct-sequence','phase-late-identity','phase-late-identity-declared','phase-early-metrics','phase-early-metrics-declared','phase-combined-cache','cached-controller-cid','identity-other-component',
        'full-close','stop-failure','stop-exception','deactivate-failure','disconnect-failure','terminate-failure','exit-failure','dlclose-failure','retry')
 class NativeFakeLifetimeTests(unittest.TestCase):
     @classmethod

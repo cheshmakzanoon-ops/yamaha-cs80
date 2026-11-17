@@ -1,0 +1,39 @@
+{
+  "scope": "injected loader and SDK-interface fakes only, bounded combined/separate initializer; no real loader implementation",
+  "juce_revision": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "additional_headers": {
+    "pluginterfaces/vst/ivsthostapplication.h": "b7ef5b02f24c103e952e18b3e974e97b3c23d19c870a46c7c3aad36af8832332"
+  },
+  "additional_headers_match_authentic_preflight_dependency_manifest": true,
+  "passed_injected_cases": 50,
+  "compiler_version": "g++ (Debian 14.2.0-19) 14.2.0",
+  "native_module_loaded": false,
+  "rendered_audio": false,
+  "production_qualified": false,
+  "compile_argv": [
+    "g++",
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-pthread",
+    "-I<research-directory>",
+    "-I<pinned-sdk-root>",
+    "<research-directory>/native_observer_initializer_fixture.cpp",
+    "-o",
+    "<temporary-injected-initializer>"
+  ],
+  "source_sha256": {
+    "native_observer_initializer.hpp": "8958d31edf5bcdba2d3174eb4c0f9cd84858ef350d7ce16f42d7369b6792ab49",
+    "native_observer_initializer_fixture.cpp": "ffaba6fccfd95dc01717ca5cb494299f22392f0856ff710186779689519f3acb",
+    "test_native_observer_initializer.py": "e1827b93a25ff64df5c216a13c32304a78512dda934ed37b321e27db45de6fda",
+    "native_observer_sdk.hpp": "5bbfccc6432caf0c405a08c5e559125209f014939dded0bee86b4070bcc2c112"
+  },
+  "sanitizer_probe": {
+    "cases": 8,
+    "address_undefined_sanitizers": "passed",
+    "leak_sanitizer": "unavailable: ptrace restriction",
+    "ASAN_OPTIONS": "detect_leaks=0"
+  }
+}

@@ -118,8 +118,13 @@ int main(int argc,char** argv) {
         }
         else if(name=="phase-combined-cache") {
             Fake c("combined",1);TUID cid{};std::memset(cid,5,16);auto identity=CreatedIdentity::capture(c,cid,ControllerKind::Combined,ObserverPhase::Created);
-            require(c.classQueries==0,"combined cache has no separate controller CID");c.initialize(nullptr);c.phase=ObserverPhase::Connected;Bytes b;
+            bool rejected=false;try{(void)identity.separateControllerCid();}catch(...){rejected=true;}require(rejected && c.classQueries==0,"combined cache has no separate controller CID");c.initialize(nullptr);c.phase=ObserverPhase::Connected;Bytes b;
             captureConnectedMetadata(c,c,c,identity,ObserverPhase::Connected,b);require(c.classQueries==0 && c.metricsQueries==0,"combined metadata phase");
+        }
+        else if(name=="cached-controller-cid") {
+            Fake c("core",1);TUID cid{};std::memset(cid,5,16);auto identity=CreatedIdentity::capture(c,cid,ControllerKind::Separate,ObserverPhase::Created);
+            c.phase=ObserverPhase::Connected;const auto& cached=identity.separateControllerCid();
+            require(std::all_of(cached.begin(),cached.end(),[](auto b){return b==7;}) && c.classQueries==1,"const cached CID without late query");
         }
         else if(name=="identity-other-component") {
             Fake c("core",1),other("other",1),d("controller",1);TUID cid{};std::memset(cid,5,16);auto identity=CreatedIdentity::capture(c,cid,ControllerKind::Separate,ObserverPhase::Created);

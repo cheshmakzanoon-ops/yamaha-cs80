@@ -99,6 +99,10 @@ public:
         }
         return result;
     }
+    const std::array<std::uint8_t,16>& separateControllerCid() const {
+        require(kind==ControllerKind::Separate,"combined controller has no separate CID");
+        return controllerCid;
+    }
     void encodeFor(const IComponent& component,Bytes& out) const {
         require(owner==&component,"Created identity belongs to another component");
         out.text("native-observer-created-identity-v1");out.raw(componentCid.data(),componentCid.size());
