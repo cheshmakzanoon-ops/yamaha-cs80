@@ -1,6 +1,6 @@
 import copy,tempfile,unittest
 from pathlib import Path
-from compile_inventory import compile_inventory,capture_objects
+from compile_inventory import compile_inventory,capture_objects,filter_outputs
 class CompileTests(unittest.TestCase):
     def setUp(self):self.d=[{'directory':'/build','file':'/source/a.cpp','command':'/usr/bin/c++ -O3 -o a.o -c /source/a.cpp'}]
     def call(self):return compile_inventory(self.d,source_root='/source',build_root='/build')
@@ -38,4 +38,26 @@ class CompileTests(unittest.TestCase):
     def test_conflicting_argv(self):
         self.d[0]['arguments']=['/usr/bin/c++','-o','b.o','-c','/source/a.cpp']
         with self.assertRaises(ValueError):self.call()
+class FilterOutputTests(unittest.TestCase):
+    def setUp(self):
+        self.core='CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o'
+        self.test='CMakeFiles/cs80_filter_batch_cap_tests.dir/src/core/Ig00156Batch.cpp.o'
+        self.source='/source/src/core/Ig00156Batch.cpp'
+        self.d=[{'directory':'/build','file':self.source,'arguments':['/usr/bin/c++',flag,'-o',out,'-c',self.source]} for out,flag in [(self.core,'-fPIC'),(self.test,'-DCS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY=1')]]
+    def call(self):return filter_outputs(self.d,source_root='/source',build_root='/build')
+    def test_exact_derived_outputs(self):
+        self.assertEqual(self.call(),{'all_filter_objects':sorted([self.core,self.test]),'plugin_filter_object':self.core})
+    def test_missing_core(self):
+        self.d.pop(0)
+        with self.assertRaises(ValueError):self.call()
+    def test_non_pic(self):
+        self.d[0]['arguments'][1]='-fPIE'
+        with self.assertRaises(ValueError):self.call()
+    def test_experimental_core(self):
+        self.d[0]['arguments'].insert(1,'-DCS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY=1')
+        with self.assertRaises(ValueError):self.call()
+    def test_same_basename_other_source_not_admitted(self):
+        self.d[1]['file']='/source/other/Ig00156Batch.cpp'
+        self.d[1]['arguments'][-1]=self.d[1]['file']
+        self.assertEqual(self.call()['all_filter_objects'],[self.core])
 if __name__=='__main__':unittest.main()

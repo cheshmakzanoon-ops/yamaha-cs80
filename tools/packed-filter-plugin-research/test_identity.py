@@ -5,7 +5,29 @@ class IdentityTests(unittest.TestCase):
     def setUp(self):
         self.s={'source':{FILTER:'a'*64,'Engine.cpp':'b'*64},'objects':{'filter.o':'a'*64,'engine.o':'b'*64},'compile_commands':{'commands':'a'*64},'dependencies':{'juce':'a'*64},'test_definitions':{'ctest':'a'*64}}
         self.expected={k:list(v) for k,v in self.s.items()};self.c=copy.deepcopy(self.s);self.c['source'][FILTER]='c'*64;self.c['objects']['filter.o']='c'*64
-    def call(self): return verify_pair(self.s,self.c,filter_object='filter.o',candidate_source='c'*64,expected_inventories=self.expected)
+    def call(self): return verify_pair(self.s,self.c,filter_objects=getattr(self,'filter_objects',['filter.o']),candidate_source='c'*64,expected_inventories=self.expected)
+    def add_test_variant(self):
+        self.s['objects']['filter_test.o']='a'*64
+        self.c['objects']['filter_test.o']='d'*64
+        self.expected['objects'].append('filter_test.o')
+        self.filter_objects=['filter.o','filter_test.o']
+    def test_exact_two_filter_outputs(self):
+        self.add_test_variant();self.assertFalse(self.call()['production_qualified'])
+    def test_omitted_filter_variant(self):
+        self.add_test_variant();self.filter_objects=['filter.o']
+        with self.assertRaises(ValueError):self.call()
+    def test_stale_filter_variant(self):
+        self.add_test_variant();self.c['objects']['filter_test.o']='a'*64
+        with self.assertRaises(ValueError):self.call()
+    def test_extra_unlisted_output(self):
+        self.add_test_variant();self.c['objects']['engine.o']='e'*64
+        with self.assertRaises(ValueError):self.call()
+    def test_duplicate_filter_outputs(self):
+        self.filter_objects=['filter.o','filter.o']
+        with self.assertRaises(ValueError):self.call()
+    def test_unknown_filter_output(self):
+        self.filter_objects=['missing.o']
+        with self.assertRaises(ValueError):self.call()
     def test_valid_is_not_qualification(self):self.assertEqual(self.call(),{'identity_admission':'PASS','production_qualified':False})
     def test_engine_source_change(self):
         self.c['source']['Engine.cpp']='c'*64

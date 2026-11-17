@@ -44,3 +44,5 @@ prebuild test commands are explicitly recorded, never accepted as passed tests.
 
 A configuration capture is only input to the next implementation/review step.
 The workflow cannot ship production changes or launch plugin timing.
+
+`filter_outputs` derives the exact changed-source output set from the frozen full compile database. The normal core PIC object is named separately for plugin binding; experimental test variants must never substitute for it. `link_binding.py` joins a unique exact archive member, live GNU map provider and relocation-aware ELF proof. `clean_relink.py` removes only frozen owned outputs after verifying equivalent sealed copies, then requires one successful bounded Commands-ledger build and fresh output hashes. Both require a reviewed orchestrator, quiescent roots and independent full input/lifecycle gates; neither is production admission. See CHECKPOINT.md for the authentic configuration-only result and its unresolved prebuild tests.

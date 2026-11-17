@@ -35,3 +35,13 @@ offline controls, for 68 reviewed tests. Independent review reproduced those
 controls and approved one explicitly selected configuration-only dispatch. The
 normal workflow's dependency list and CMake flags are preserved. No candidate
 patch, synth target build, training, rendering or timing is performed.
+
+## Configuration-only preflight, 2026-11-17
+
+Run [44123289466](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/44123289466), attempt 1, completed successfully at exact revision `6ef4d109bdfa6d976818c2ac033be5ffd4825d67`. This was the separately reviewed one-shot configuration capture, not a production-plugin experiment. No duplicate dispatch or retry was made.
+
+Artifact `14347365131`, 795114 bytes, SHA256 `9fe19b246c6ab9471171d93406653cd50567df6ae2e8501d6b634bfc8d3a7516`, was downloaded and verified against the service digest. All 41 manifest entries were independently rehashed; the complete 587-entry compile database reparses identically. There are 569 unique enabled configured tests, of which 509 executable commands are unresolved before build. These are **not passed tests**. Six raw CTest definitions enumerate exactly the same 569 identities. An independent reviewer checked all 7059 tracked source names against the exact commit and SHA256-verified 839 relevant Git blobs. All 14 command ledger entries exited zero; clean-before/after receipts are empty. GNU 13.3.0 and pinned JUCE 8.0.11 identities were captured. Compiler and dependency byte hashes are runner receipts, not locally reverified binaries/dependency copies.
+
+The fresh inventory exposes two filter outputs: the normal PIC core object and an experimental-recovery cap-test object. Identity admission now requires exactly the independently derived set of changed filter outputs; production archive/map/ELF binding must select only the normal core output. This corrects the earlier single-object assumption without allowing unrelated changes.
+
+The new pure archive/live-map binding and recoverable clean-relink receipt helpers remain preparation, not qualification. They cannot establish source/object inventory completeness or actual host lifecycle/audio equivalence by themselves. The relink helper has no CLI entry point and is not called by either configuration-only workflow. No candidate was applied to production source and no synth/plugin target was built, loaded, or timed by this preflight.

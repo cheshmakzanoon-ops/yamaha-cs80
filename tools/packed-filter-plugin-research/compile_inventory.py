@@ -55,3 +55,21 @@ def compile_inventory(database, *, source_root, build_root):
 def capture_objects(database, *, source_root, build_root):
     rows = compile_inventory(database, source_root=source_root, build_root=build_root)
     return {'inventory':rows,'sha256':capture_files(build_root,list(rows))}
+
+
+def filter_outputs(database, *, source_root, build_root):
+    """Derive ALL filter outputs from the complete, frozen compile database.
+
+    The normal PIC core output is separately identified, never selected by a
+    basename shared with experimental test variants. This is inventory only.
+    """
+    from identity import FILTER
+    rows = compile_inventory(database, source_root=source_root, build_root=build_root)
+    source = str(Path(source_root).absolute() / FILTER)
+    outputs = sorted(k for k,v in rows.items() if v['source'] == source)
+    core = 'CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o'
+    require(core in outputs, 'normal core filter output missing')
+    require('-fPIC' in rows[core]['arguments'], 'normal core filter must be PIC')
+    require(not any(a.startswith('-DCS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY')
+                    for a in rows[core]['arguments']), 'experimental normal core forbidden')
+    return {'all_filter_objects':outputs, 'plugin_filter_object':core}

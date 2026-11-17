@@ -28,9 +28,12 @@ def inventory(values):
     require(len(set(values)) == len(values), 'duplicate frozen inventory entry')
     return set(values)
 
-def verify_pair(stock, candidate, *, filter_object, candidate_source, expected_inventories):
+def verify_pair(stock, candidate, *, filter_objects, candidate_source, expected_inventories):
     """Expected inventories must be independently frozen from full source/link rosters.
 
+    filter_objects must contain every output derived from the exact filter source
+    in the independently frozen complete compile inventory, including test variants.
+    The production plugin archive proof must still use its normal core object only.
     Cross-arm equality cannot establish that the same omitted input is absent.
     Objects are all compiler inputs, not final archives/executables. This checks
     evidence maps, NOT the actual linker or native-module bytes; those are separate
@@ -48,8 +51,10 @@ def verify_pair(stock, candidate, *, filter_object, candidate_source, expected_i
     require(changed(stock['source'], candidate['source']) == {FILTER},
             'only filter source may change')
     require(candidate['source'][FILTER] == candidate_source, 'candidate source identity differs')
-    require(changed(stock['objects'], candidate['objects']) == {filter_object},
-            'only filter input object may change')
+    allowed = inventory(filter_objects)
+    require(allowed <= set(expected_inventories['objects']), 'filter outputs absent from complete inventory')
+    require(changed(stock['objects'], candidate['objects']) == allowed,
+            'exact frozen filter input objects must change')
     for kind in ('compile_commands', 'dependencies', 'test_definitions'):
         require(not changed(stock[kind], candidate[kind]), kind + ' changed')
     return {'identity_admission': 'PASS', 'production_qualified': False}
