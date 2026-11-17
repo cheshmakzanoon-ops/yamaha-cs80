@@ -28,6 +28,7 @@ MAX_FILE = 256 * 1024 * 1024
 MAX_TOTAL = 1024 * 1024 * 1024
 MAX_METADATA = 2 * 1024 * 1024
 MAX_MEMBERS = 4096
+MAX_LINK_STEPS = MAX_MEMBERS * 64
 
 
 def require(condition, message):
@@ -147,8 +148,15 @@ def validate_virtual_links(items, system, product='CS-80 Reference'):
                 and ':' not in target.split('/')[0], 'Unsafe symlink target')
         return target.split('/')
 
+    remaining_steps = MAX_LINK_STEPS
+
     def resolve(current, pending, root, visiting):
+        nonlocal remaining_steps
         for part in pending:
+            # A shallow, acyclic alias graph can expand exponentially. Bound
+            # total component visits across all links, not only stack depth.
+            remaining_steps -= 1
+            require(remaining_steps >= 0, 'Symlink resolution work limit exceeded')
             # Even file/.. is invalid: POSIX must traverse file as a directory.
             parent = inventory.get(current)
             require(parent is not None and parent['type'] == 'directory',

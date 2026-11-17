@@ -72,6 +72,12 @@ or executed; no network access or CI reruns occur. ZIP verification does not
 assert Unix executable modes. Unsupported archive variants, resource-limit
 violations and unsafe/ambiguous paths fail closed.
 
+Symlink validation allows at most 64 nested links and 262,144 total path-component
+visits across the manifest. The total-work limit also rejects shallow acyclic
+alias graphs that repeatedly expand; a small inventory alone does not bound
+resolution work. Exceeding this limit is a verification failure, not a reason to
+extract or run the unverified bundle.
+
 This proves consistency with the supplied checksum/manifest evidence, **not**
 publisher authenticity, that the binary was built from the declared source,
 signing/notarization, a CI pass, or DAW qualification. Obtain the checksum file

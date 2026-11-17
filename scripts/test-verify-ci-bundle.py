@@ -280,6 +280,33 @@ class VerificationTests(unittest.TestCase):
         valid = dict(manifest, files=manifest['files'] + [dict(template, path='notes/license notice.txt')])
         self.assertEqual(v.validate_manifest(valid, SHA)[1], 'windows')
 
+    def test_virtual_link_work_budget(self):
+        root = 'VST3/CS-80 Reference.vst3'
+        parent = root + '/Resources'
+        items = [{'path': root, 'type': 'directory'},
+                 {'path': parent, 'type': 'directory'},
+                 {'path': parent + '/l0', 'type': 'symlink', 'target': '.'}]
+        # Each alias resolves back to Resources twice via its predecessor.
+        # No cycles or deep chains, but traversal work doubles at each level.
+        items += [{'path': parent + f'/l{i}', 'type': 'symlink',
+                   'target': f'l{i-1}/l{i-1}'} for i in range(1, 9)]
+        with mock.patch.object(v, 'MAX_LINK_STEPS', 128):
+            with self.assertRaisesRegex(ValueError, 'work limit'):
+                v.validate_virtual_links(items, 'macos')
+        # Budget is local to one validation, and ordinary links still work.
+        v.validate_virtual_links(items[:3], 'macos')
+
+    def test_virtual_link_budget_boundary(self):
+        root = 'VST3/CS-80 Reference.vst3'
+        items = [{'path': root, 'type': 'directory'},
+                 {'path': root + '/link', 'type': 'symlink', 'target': '.'}]
+        with mock.patch.object(v, 'MAX_LINK_STEPS', 1):
+            v.validate_virtual_links(items, 'macos')
+            v.validate_virtual_links(items, 'macos')
+        with mock.patch.object(v, 'MAX_LINK_STEPS', 0):
+            with self.assertRaisesRegex(ValueError, 'work limit'):
+                v.validate_virtual_links(items, 'macos')
+
     def test_virtual_links(self):
         R='VST3/CS-80 Reference.vst3'
         def d(p):return {'path':p,'type':'directory'}
