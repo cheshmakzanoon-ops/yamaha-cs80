@@ -1,0 +1,53 @@
+{
+  "schema": "cs80-steady-callback-study-plan-v1",
+  "scope": "exploratory matched GNU14 normal VST3 whole-plugin workload; not qualification",
+  "policies": [
+    0,
+    1,
+    2
+  ],
+  "policy_labels": [
+    "Legacy scalar guard, 16-note cohort",
+    "Circuit, 16-note cohort",
+    "Pure, 16-note cohort with source-enforced 8-voice limit"
+  ],
+  "sample_rate": 48000,
+  "mode": "realtime",
+  "block_frames": 64,
+  "note_cohort": 16,
+  "warmup_frames": 65536,
+  "measured_frames": 524288,
+  "warmup_note_frames": "17+n, n=0..15",
+  "warmup_note_pitches": "48+n",
+  "warmup_note_ids": "96+n; previous D IDs48+n all off by3087",
+  "warmup_velocity": 0.75,
+  "warmup_note_offs": false,
+  "measured_events": [],
+  "clock": "CLOCK_THREAD_CPUTIME_ID around actual process only",
+  "empty_clock_pairs_per_segment": 128,
+  "subtract_clock_overhead": false,
+  "aa_blocks_per_policy": 2,
+  "comparison_blocks_per_policy": 6,
+  "slots": [
+    "A",
+    "B",
+    "B",
+    "A"
+  ],
+  "order": "all A/A baseline blocks first, policies0,1,2; then comparison blocks0..5 each policies0,1,2",
+  "fresh_process_per_slot": true,
+  "process_wall_cap_seconds": 25,
+  "worker_deadline_ms": 24000,
+  "process_retained_byte_cap": 33554432,
+  "campaign_retained_byte_cap": 1073741824,
+  "pcm_gate": "exact full PCM hashes across all6segments, same policy and complete history; every measured callback nonzero; finite allPCM",
+  "invalid_run": "stop campaign; retain evidence; no automatic retry, correction, dropping or replacement",
+  "inference": "whole-ABBA-block deterministic10000 bootstrap95%; positive exploratory claim only lowerCI gain exceeds max absolute A/A block gain and3xmaximum clock fraction; always report effect and interval",
+  "production_qualified": false,
+  "attempt_revision": 2,
+  "prior_attempt": "campaign-v1 rejected firststockLegacy atsteady-measured: genericownedhostpumpfailed; retained invalid, not timed evidence",
+  "runloop_receipt_capacity": 32768,
+  "worker_max_pump_steps": 1000000,
+  "worker_wake_quantum_ms": 1,
+  "runloop_capacity_rationale": "4096 default idle records reproduced exhaustion at4097 pumps;32768 accommodates approximate24k 1ms idle wakes plus bounded activity; fullcapacity remains terminal, not a guarantee of completion"
+}

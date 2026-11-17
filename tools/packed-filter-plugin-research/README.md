@@ -1,8 +1,22 @@
 # Packed filter plugin qualification preparation
 
 Research only; no production default change or runnable qualification workflow. This is not a
-completed plugin qualification or benchmark. See PLAN.md for the prospective
+completed plugin qualification or demonstrated CPU improvement. See PLAN.md for the prospective
 stages and remaining implementation/review gates.
+
+## Matched native-plugin timing result
+
+The frozen 96-process stock/candidate study completed and was independently
+redecoded from all raw receipts. All six PCM histories matched exactly within
+each policy, but no policy demonstrated a CPU gain beyond its confidence interval
+and A/A noise floor. **The candidate was not promoted.** See the
+[results and retained callback series](evidence/paired-plugin-timing/README.md)
+for the GNU14/Xeon scope, three policy intervals, failed first-attempt history,
+matched-build proof and sanitized evidence. This does not contradict or extend
+the earlier GNU13/AMD standalone result.
+
+The frozen timing implementation passed 1,392 preparation tests in 338.771 seconds
+with no skips; 12 additional public-evidence integrity tests passed separately.
 
 ## Real-plugin diagnostic checkpoint
 
