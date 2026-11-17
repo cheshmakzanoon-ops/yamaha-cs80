@@ -12,7 +12,7 @@ REPO = '/source'; BUILD = '/build'
 def document():
     contract = p.selected_contract(REPO, BUILD)
     tests = [{'name': name, 'command': value['command'],
-              'properties': [{'name': 'TIMEOUT', 'value': 180}]} for name, value in contract.items()]
+              'properties': [{'name': 'TIMEOUT', 'value': 180}, {'name': 'WORKING_DIRECTORY', 'value': BUILD}]} for name, value in contract.items()]
     tests += [{'name': f'other-{i}', 'command': ['/build/other-' + str(i)], 'properties': []}
               for i in range(569 - len(tests))]
     return {'tests': tests}
@@ -32,12 +32,13 @@ class HostTests(unittest.TestCase):
         self.assertNotIn('voices8-source13-lane20-noqueue.pcm', p.capture_names('sub'))
 
     def test_missing_commands_or_weakened_host_mode(self):
-        for kind in ('missing', 'compat', 'timeout', 'disabled', 'module'):
+        for kind in ('missing', 'compat', 'timeout', 'disabled', 'module', 'cwd'):
             data = document(); row = data['tests'][0]
             if kind == 'missing': row.pop('command')
             elif kind == 'compat': row['command'].append('--compat-only')
             elif kind == 'timeout': row['properties'][0]['value'] = 181
             elif kind == 'disabled': row['properties'].append({'name': 'DISABLED', 'value': True})
+            elif kind == 'cwd': row['properties'][1]['value'] = '/elsewhere'
             else: row['command'][1] = '/another/plugin.so'
             with self.subTest(kind=kind), self.assertRaises(ValueError): p.validate_selected(data, REPO, BUILD)
 

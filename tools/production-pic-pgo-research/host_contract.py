@@ -52,6 +52,7 @@ def validate_selected(document, repo, build):
         require(actual.get('command') == expected['command'], 'original host command changed or not built: ' + name)
         props = {x['name']: x['value'] for x in actual.get('properties', [])}
         require(props.get('TIMEOUT') == expected['timeout'], 'host timeout changed')
+        require(props.get('WORKING_DIRECTORY') == str(Path(build).resolve()), 'host working directory changed')
         require(not props.get('DISABLED', False), 'host test disabled')
     return contract
 

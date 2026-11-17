@@ -1,0 +1,69 @@
+name: One-shot production PIC PGO qualification
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/production-pic-pgo-research/run.py'
+      - 'tools/production-pic-pgo-research/production.py'
+      - 'tools/production-pic-pgo-research/frozen-compiler.json'
+      - 'tools/production-pic-pgo-research/PROTOCOL.md'
+      - '.github/workflows/production-pic-pgo-study.yml'
+permissions:
+  contents: read
+concurrency:
+  group: production-pic-pgo-first-study
+  cancel-in-progress: false
+jobs:
+  qualify:
+    if: github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Normal free Linux build and validation dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake ninja-build pkg-config libxml2-dev \
+            libasound2-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxinerama-dev libxrender-dev libxcomposite-dev libgl1-mesa-dev \
+            libfreetype-dev libfontconfig1-dev libcurl4-openssl-dev \
+            libwebkit2gtk-4.1-dev fonts-dejavu-core xvfb xauth openbox x11-utils unzip
+      - name: Freeze official pluginval 1.0.4
+        timeout-minutes: 5
+        run: |
+          set -euo pipefail
+          mkdir -p production-pic-setup-evidence
+          curl --location --fail \
+            --output pluginval.zip \
+            https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_Linux.zip
+          sha256sum pluginval.zip > production-pic-setup-evidence/pluginval-download.sha256
+          unzip -q pluginval.zip -d pluginval
+          test -x pluginval/pluginval
+          ./pluginval/pluginval --version > production-pic-setup-evidence/pluginval-version.txt
+          grep -qx 'pluginval - 1.0.4' production-pic-setup-evidence/pluginval-version.txt
+          sha256sum pluginval/pluginval > production-pic-setup-evidence/pluginval-binary.sha256
+      - name: Offline research negative controls
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest discover -s tools/production-pic-pgo-research -p 'test_*.py' -v
+      - name: One profile, compatibility, calibrated cost and full normal qualification
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: >-
+          python3 tools/production-pic-pgo-research/run.py --repo "$GITHUB_WORKSPACE"
+          --work "$RUNNER_TEMP/production-pic-pgo"
+          --out "$GITHUB_WORKSPACE/production-pic-results"
+          --pluginval "$GITHUB_WORKSPACE/pluginval/pluginval"
+      - name: Retain all raw results and actual experimental artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: production-pic-pgo-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            production-pic-results/
+            production-pic-setup-evidence/
+          if-no-files-found: warn
+          retention-days: 14
