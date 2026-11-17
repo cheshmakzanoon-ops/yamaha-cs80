@@ -1,0 +1,33 @@
+{
+  "run": 44072518871,
+  "commit": "76c33faec6e054c8cb47a4a1465f5cae78ce2203",
+  "artifact_sha256": "587206c42df219cdac6b68624794ca99b164a99b42f822c7148e5b0041f6a38a",
+  "decision": "STOP_NO_RETRY",
+  "release_qualified": false,
+  "ledger_successful_commands": 46,
+  "training_invocations": 1,
+  "training_cases": 15,
+  "training_rows": 36,
+  "last_command_elapsed_seconds": 352.94163967,
+  "candidate_cost_executions": 0,
+  "retained_file_hashes_checked": 15,
+  "baseline_bundle_manifest_verified": true,
+  "compile_scope": "587 entries; Engine-only generation delta; compiler/FP/dependency/CTest definitions match",
+  "embedded_profile_path": "/home/runner/work/_temp/production-pic-pgo/profiles/#home#runner#work#_temp#production-pic-pgo#build#CMakeFiles#cs80_core.dir#src#core#Engine.cpp.gcda",
+  "cause": "Production GCC embeds a flattened #path#Engine.cpp.gcda basename, incompatible with profile_manifest exact Engine.cpp.gcda basename rule. Real Ninja uses relative -o; earlier toy used absolute -o. Actual profile directory not retained, so its exact inventory cannot be independently reconstructed.",
+  "not_tested": [
+    "profile-use compilation",
+    "candidate plugin/Standalone linkage",
+    "held-out PCM/FP/core/host compatibility",
+    "A/A calibration or A/C CPU cost",
+    "full569 test execution",
+    "demo/UI/pluginval validation",
+    "packaging"
+  ],
+  "limits": [
+    "Training CSV timing values are not calibrated cost evidence.",
+    "Baseline binaries built/sealed but not independently runtime-qualified.",
+    "LastTest.log is empty start/end inventory-related log, not evidence of tests run.",
+    "Terminal result must not be retried under this frozen protocol."
+  ]
+}
