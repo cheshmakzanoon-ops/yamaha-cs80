@@ -1,7 +1,7 @@
 """Fixed A-D actual owner/worker plus inert SDK integration; no native module."""
 import hashlib,json,os,pathlib,shutil,subprocess,tempfile,unittest
 ROOT=pathlib.Path(__file__).parent
-CASES=('fail-A-and-close','final-encoding-allocation','invalid-case','fail-setup','fail-metadata','allocation-after-A','history','reordered-roster','retry','expired','fail-initial','fail-A','fail-state','fail-alter','fail-B','fail-suspend','fail-restore','fail-resume','fail-C','fail-D','fail-close')
+CASES=('boundary-after-flush','fail-A-and-close','final-encoding-allocation','invalid-case','fail-setup','fail-metadata','allocation-after-A','history','reordered-roster','retry','expired','fail-initial','fail-A','fail-state','fail-alter','fail-B','fail-suspend','fail-restore','fail-resume','fail-C','fail-D','fail-close')
 class HistoryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

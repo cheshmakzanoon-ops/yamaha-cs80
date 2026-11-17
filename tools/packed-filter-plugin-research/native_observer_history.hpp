@@ -54,35 +54,37 @@ public:
     HistoryOwner(InjectedModule& module,Handler& handler,packed_filter_workload::Case c,ControllerStatePolicy policy)
         :case_(c),policy_(policy),owner_(module,handler){}
     HistoryOwner(const HistoryOwner&)=delete;HistoryOwner& operator=(const HistoryOwner&)=delete;
-    template<class Pump> void run(worker::WaitPolicy budget,Pump&& pump){
+    template<class Pump> void run(worker::WaitPolicy budget,Pump&& pump){run(budget,std::forward<Pump>(pump),[]{});}
+    template<class Pump,class Boundary> void run(worker::WaitPolicy budget,Pump&& pump,Boundary&& boundary){
         if(std::this_thread::get_id()!=ui_){violation_=true;throw std::runtime_error("history wrong thread");}
         if(running_){violation_=true;throw std::runtime_error("history reentry");}
         running_=true;struct Reset {bool& flag;~Reset(){flag=false;}} reset{running_};
+        const auto checkpoint=[&]{check();boundary();check();};
         try{
-            check();require(!attempted_,"history retry forbidden");attempted_=true;
+            checkpoint();require(!attempted_,"history retry forbidden");attempted_=true;
             packed_filter_workload::validate(case_);validateStatePolicy(policy_);
             evidence_.caseIdentity=packed_filter_workload::encode_draft(case_);
-            evidence_.attemptedOperation="initialize-connected";owner_.initializeConnected();evidence_.attemptedOperation="capture-connected";owner_.captureConnected();advance(HistoryStage::Connected);check();
-            evidence_.roster=owner_.connectedRoster();
+            evidence_.attemptedOperation="initialize-connected";owner_.initializeConnected();checkpoint();evidence_.attemptedOperation="capture-connected";owner_.captureConnected();checkpoint();advance(HistoryStage::Connected);checkpoint();
+            evidence_.roster=owner_.connectedRoster();checkpoint();
             const auto plan=workload_detail::planFromRoster(case_,evidence_.roster);
             evidence_.initialProtocol=encodeFlushProtocol(plan.initial).data;evidence_.alterProtocol=encodeFlushProtocol(plan.alter).data;evidence_.renderProtocol=encodeRenderProtocol(plan.render).data;
-            evidence_.attemptedOperation="prepare-start";owner_.prepareAndStart(plan.setup,true);const auto metadata=owner_.connectedSnapshot();evidence_.connectedMetadata=metadata.metadata;evidence_.setupMetrics=metadata.setupMetrics;require(metadata.roster.ids==evidence_.roster.ids && metadata.roster.declaredCount==evidence_.roster.declaredCount,"owned metadata roster drift");advance(HistoryStage::Prepared);check();
-            evidence_.attemptedOperation="initial-flush";evidence_.initialFlush=owner_.flush(plan.initial,budget,pump);task(0,worker::Kind::Flush);evidence_.encodedInitialFlush=encodeFlush(plan.initial,evidence_.initialFlush);advance(HistoryStage::InitialFlushed);check();
+            evidence_.attemptedOperation="prepare-start";owner_.prepareAndStart(plan.setup,true);checkpoint();const auto metadata=owner_.connectedSnapshot();checkpoint();evidence_.connectedMetadata=metadata.metadata;evidence_.setupMetrics=metadata.setupMetrics;require(metadata.roster.ids==evidence_.roster.ids && metadata.roster.declaredCount==evidence_.roster.declaredCount,"owned metadata roster drift");advance(HistoryStage::Prepared);checkpoint();
+            evidence_.attemptedOperation="initial-flush";evidence_.initialFlush=owner_.flush(plan.initial,budget,pump);task(0,worker::Kind::Flush);checkpoint();evidence_.encodedInitialFlush=encodeFlush(plan.initial,evidence_.initialFlush);advance(HistoryStage::InitialFlushed);checkpoint();
             const auto render=[&](std::size_t index,std::size_t sequence,HistoryStage stage){
                 const char* names[]{"render-A","render-B","render-C","render-D"};evidence_.attemptedOperation=names[index];
-                evidence_.rendered[index]=owner_.render(plan.render,budget,pump);evidence_.renderPresent[index]=true;task(sequence,worker::Kind::Render);
-                evidence_.encodedRender[index]=encodeRenderObservation(plan.render,evidence_.rendered[index]);advance(stage);check();
+                checkpoint();evidence_.rendered[index]=owner_.render(plan.render,budget,pump);evidence_.renderPresent[index]=true;task(sequence,worker::Kind::Render);checkpoint();
+                evidence_.encodedRender[index]=encodeRenderObservation(plan.render,evidence_.rendered[index]);advance(stage);checkpoint();
             };
             render(0,1,HistoryStage::A);
-            evidence_.attemptedOperation="post-A-state";owner_.saveState(policy_);evidence_.postAState=owner_.savedStateSnapshot();evidence_.encodedPostAState=encodeStates(evidence_.postAState);advance(HistoryStage::PostASaved);check();
+            evidence_.attemptedOperation="post-A-state";owner_.saveState(policy_);checkpoint();evidence_.postAState=owner_.savedStateSnapshot();checkpoint();evidence_.encodedPostAState=encodeStates(evidence_.postAState);advance(HistoryStage::PostASaved);checkpoint();
             // This is EXACT bridge alter (two IDs/values), never caller-supplied subset.
-            evidence_.attemptedOperation="alter-flush";evidence_.alterFlush=owner_.flushKnownSubset(plan.alter,budget,pump);task(2,worker::Kind::Flush);evidence_.encodedAlterFlush=encodeFlush(plan.alter,evidence_.alterFlush);advance(HistoryStage::AlterFlushed);check();
+            evidence_.attemptedOperation="alter-flush";evidence_.alterFlush=owner_.flushKnownSubset(plan.alter,budget,pump);task(2,worker::Kind::Flush);checkpoint();evidence_.encodedAlterFlush=encodeFlush(plan.alter,evidence_.alterFlush);advance(HistoryStage::AlterFlushed);checkpoint();
             render(1,3,HistoryStage::B);
-            evidence_.attemptedOperation="first-suspend";owner_.suspend();evidence_.attemptedOperation="first-restore";owner_.restoreSavedState();evidence_.restoredState=owner_.restoreStateSnapshot();evidence_.attemptedOperation="first-resume";owner_.resume();advance(HistoryStage::FirstRestored);check();
+            evidence_.attemptedOperation="first-suspend";owner_.suspend();checkpoint();evidence_.attemptedOperation="first-restore";owner_.restoreSavedState();checkpoint();evidence_.restoredState=owner_.restoreStateSnapshot();checkpoint();evidence_.attemptedOperation="first-resume";owner_.resume();checkpoint();advance(HistoryStage::FirstRestored);checkpoint();
             render(2,4,HistoryStage::C);
-            evidence_.attemptedOperation="second-suspend";owner_.suspend();evidence_.attemptedOperation="second-resume";owner_.resume();advance(HistoryStage::SecondResumed);check();
+            evidence_.attemptedOperation="second-suspend";owner_.suspend();checkpoint();evidence_.attemptedOperation="second-resume";owner_.resume();checkpoint();advance(HistoryStage::SecondResumed);checkpoint();
             render(3,5,HistoryStage::D);
-            evidence_.attemptedOperation="joined-close";cleanup();require(owner_.acceptedClosure() && evidence_.joined && evidence_.joined->submitted()==6 && evidence_.joined->attempted()==6 && evidence_.joined->completed()==6 && evidence_.joined->consumed()==6 && evidence_.joined->canceled()==0,"history requires six actual joined tasks and successful instance close");advance(HistoryStage::Closed);check();freeze();
+            evidence_.attemptedOperation="joined-close";cleanup();require(owner_.acceptedClosure() && evidence_.joined && evidence_.joined->submitted()==6 && evidence_.joined->attempted()==6 && evidence_.joined->completed()==6 && evidence_.joined->consumed()==6 && evidence_.joined->canceled()==0,"history requires six actual joined tasks and successful instance close");advance(HistoryStage::Closed);checkpoint();freeze();checkpoint();
         }catch(...){if(!primary_)primary_=std::current_exception();stage_=HistoryStage::Failed;
             try{cleanup();}catch(...){cleanupError_=std::current_exception();}
             std::rethrow_exception(primary_);

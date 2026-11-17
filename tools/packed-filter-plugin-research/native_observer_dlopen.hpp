@@ -8,6 +8,8 @@
 
 namespace cs80_observer {
 class DlopenOps final : public LoaderOps {
+    friend class SealedLoader;
+    const bool deferOpenFailureCleanup_;
     void* live=nullptr;
     std::uintptr_t base=0;
     bool opened=false,resolved=false,closeAttempted=false;
@@ -31,7 +33,7 @@ public:
     unsigned nativeOpenCalls=0,nativeCloseCalls=0;
     bool resolutionSucceeded=false;
     int closeStatus=0;
-    DlopenOps()=default;DlopenOps(const DlopenOps&)=delete;DlopenOps& operator=(const DlopenOps&)=delete;
+    explicit DlopenOps(bool deferOpenFailureCleanup=false):deferOpenFailureCleanup_(deferOpenFailureCleanup){}DlopenOps(const DlopenOps&)=delete;DlopenOps& operator=(const DlopenOps&)=delete;
     void* open(const char* exactPath) override {
         require(!opened && !closeAttempted,"loader open retry forbidden");opened=true;
         require(exactPath && *exactPath,"module path required");
@@ -46,6 +48,7 @@ public:
             base=static_cast<std::uintptr_t>(map->l_addr);return live;
         }catch(...) {
             // No handle escaped open(), so the loader owns this failure cleanup.
+            if(deferOpenFailureCleanup_)throw;
             auto* h=std::exchange(live,nullptr);closeAttempted=true;++nativeCloseCalls;closeStatus=::dlclose(h);throw;
         }
     }

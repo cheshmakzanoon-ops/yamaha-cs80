@@ -83,3 +83,15 @@ allocation failure, final encoding allocation after clean close, and combined
 process+cleanup errors. Assertions after expected-failure catches check that the
 requested injection occurred and later render stages did not execute. Fakes enforce
 native processing off the UI thread and cleanup on UI after process completion.
+
+### Joined-owner cancellation boundary
+
+The additive three-argument run overload accepts a cancellation-only boundary
+check; the original two-argument API uses a no-op check. The private module owner
+supplies its atomic misuse/terminal latch. It cannot attest stage success. Checks
+surround concrete owner operations, snapshots and final freeze, including when a
+worker finishes before any UI pump. An already-active owner operation may finish;
+this does not promise interruption between individual SDK calls inside it. No
+boundary callback runs during required failure cleanup. One additional control
+(22 total) cancels after a completed initial flush, retains its actual task/flush
+receipt, and proves no render runs even though the pump itself does not cancel.

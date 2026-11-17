@@ -9,3 +9,11 @@ A ModuleSession, not the loader destructor, owns ModuleExit and object teardown.
 Tests cover valid inert callbacks, factory-null failure, missing exports, data/dependency export rejection, failed entry/exit, invalid ELF, missing/noncanonical/symlink paths, foreign handles and close/reopen prohibition. Constructor/entry/exit/destructor events are checked against exact expected sequences. They are not real-plugin lifecycle or symbol/linkage qualification.
 
 Caller-owned quiescent roots and prior full bundle/module hashes remain mandatory. The loader does not independently seal bytes or prevent an adversarial file replacement between verification and dlopen. It does not replace archived core/map/ELF binding or the complete release/host/render gates. Other OS/libc/32-bit targets and IFUNC exports are unsupported rather than guessed.
+
+The joined child owner now uses an explicit deferred-open-failure cleanup mode
+through SealedLoader. Default DlopenOps behavior remains unchanged. In deferred
+mode a successful dlopen handle is retained even if the subsequent link-map check
+fails; only the owning guarded lifecycle may explicitly close it. This prevents
+constructor-created native state from being unloaded before the child owner can
+quarantine its entire lifetime graph. It is not safe to discard such a failed
+loader and continue a long-lived process.

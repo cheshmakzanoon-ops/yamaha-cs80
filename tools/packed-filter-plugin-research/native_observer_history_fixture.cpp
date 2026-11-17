@@ -130,12 +130,12 @@ int main(int argc,char** argv){try{
  if(test=="reordered-roster")std::reverse(fullIds.begin(),fullIds.end());
  InitFake component("component",0),controller("controller",0);component.parameterCount=static_cast<int>(fullIds.size());InitFactory f(component,controller);factory=&f;Host host;FakeLoader loader;TUID cid{};std::memset(cid,5,16);
  InjectedModule module(loader);module.load("/sealed/fake.so",cid,host);Handler handler;
- int renderStage=0,flushes=0;bool injectionObserved=false;std::vector<std::vector<TimedParameter>> actualFlushes;
+ int renderStage=0,flushes=0;bool injectionObserved=false;std::atomic<bool> cancelBoundary=false;std::vector<std::vector<TimedParameter>> actualFlushes;
  lifecycleHook=[&](const char* operation){const std::string op=operation;if(op=="component-state" && count("component-state")>0)require(renderStage==1,"state snapshot precisely post-A");if(op=="restore-sync")require(renderStage==2,"restore precisely post-B before C");};
  processHook=[&](ProcessData& data)->tresult {
     if(data.numSamples==0){++flushes;std::vector<TimedParameter> points;
         for(int i=0;i<data.inputParameterChanges->getParameterCount();++i){auto* q=data.inputParameterChanges->getParameterData(i);require(q->getPointCount()==1,"one point per control");int32 offset=-1;double value=0;require(q->getPoint(0,offset,value)==kResultOk,"read flushed control");points.push_back({offset,q->getParameterId(),value});}
-        actualFlushes.push_back(std::move(points));
+        actualFlushes.push_back(std::move(points));if(test=="boundary-after-flush")cancelBoundary=true;
         if((test=="fail-initial" && flushes==1)||(test=="fail-alter" && flushes==2)){injectionObserved=true;return kResultFalse;}
         return kResultOk;
     }
@@ -150,7 +150,7 @@ int main(int argc,char** argv){try{
  if(test=="fail-setup")failure="setup";
  auto requested=c;if(test=="invalid-case")requested.voices=7;
  bool failed=false;HistoryOwner history(module,handler,requested,ControllerStatePolicy::Supported);
- try{auto policy=worker::WaitPolicy{worker::Clock::now()+std::chrono::seconds(5),100000,std::chrono::milliseconds(1)};if(test=="expired")policy.deadline=worker::Clock::now()-std::chrono::seconds(1);history.run(policy,[]{});}catch(...){failed=true;}
+ try{auto policy=worker::WaitPolicy{worker::Clock::now()+std::chrono::seconds(5),100000,std::chrono::milliseconds(1)};if(test=="expired")policy.deadline=worker::Clock::now()-std::chrono::seconds(1);history.run(policy,[]{},[&]{require(!cancelBoundary,"owned boundary cancellation after completed worker task");});}catch(...){failed=true;}
  if(test.starts_with("fail-") && test!="fail-metadata")require(faultObserved || injectionObserved,"requested failure injection actually reached");
  const bool good=test=="history" || test=="reordered-roster" || test=="retry";
  require(failed!=good,"expected fixed history acceptance/rejection");require(history.admitted()==good,"owned history admission matches full success");
@@ -164,10 +164,11 @@ int main(int argc,char** argv){try{
     for(std::size_t fidx=0;fidx<2;++fidx){const auto& expected=fidx?plan.alter.controls:plan.initial.controls;require(actualFlushes[fidx].size()==expected.size(),"exact initial/alter control count");for(std::size_t i=0;i<expected.size();++i)require(actualFlushes[fidx][i].id==expected[i].id && actualFlushes[fidx][i].value==expected[i].value,"exact generated controls not substitute recipe");}
     require(count("setup")==1 && count("activate")==3 && count("restore-sync")==1,"one setup first restore three activations");
  }else {require(history.stage()==HistoryStage::Failed && history.primaryError() && component.refs==0 && controller.refs==0 && !processActive,"failure terminal and worker joined before cleanup");
+    if(test=="boundary-after-flush")require(e.initialFlush.accepted && e.tasks[0] && flushes==1 && renderStage==0,"boundary cancellation retains completed flush/task and prevents next stage without pump cancellation");
     if(test=="fail-A-and-close")require(history.primaryError() && history.cleanupError() && e.cleanup && e.cleanup->error,"primary process failure and secondary cleanup error both retained");
     if(test=="final-encoding-allocation")require(e.renderPresent[3] && e.canonicalPayload.data.empty() && component.refs==0,"final encoding failure after clean native close cannot admit");
     if(test=="allocation-after-A")require(e.renderPresent[0] && e.tasks[1] && e.encodedRender[0].data.empty(),"postprocess allocation failure retains raw A/task without admitted encoding");
-    const int limit=test=="invalid-case" || test=="fail-setup" || test=="fail-metadata" || test=="fail-initial" || test=="expired"?0:test=="fail-A-and-close" || test=="allocation-after-A" || test=="fail-A" || test=="fail-state" || test=="fail-alter"?1:test=="fail-B" || test=="fail-suspend" || test=="fail-restore" || test=="fail-resume"?2:test=="fail-C"?3:4;
+    const int limit=test=="boundary-after-flush" || test=="invalid-case" || test=="fail-setup" || test=="fail-metadata" || test=="fail-initial" || test=="expired"?0:test=="fail-A-and-close" || test=="allocation-after-A" || test=="fail-A" || test=="fail-state" || test=="fail-alter"?1:test=="fail-B" || test=="fail-suspend" || test=="fail-restore" || test=="fail-resume"?2:test=="fail-C"?3:4;
     require(renderStage==limit,"failure never runs later render stage");
  }
  if(test=="invalid-case")require(count("component-create")==0,"invalid frozen case rejected before native creation");

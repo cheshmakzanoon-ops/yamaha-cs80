@@ -67,3 +67,14 @@ methods inaccessible while any native instance, interface or callback can exist;
 it must close those objects and call ModuleExit before the loader close boundary.
 Public exposure of LoaderOps during live-instance operation is not safe and is
 not authorized by a successful provider proof.
+
+### Explicit-only cleanup for a guarded child owner
+
+The default standalone policy remains Automatic. `SealedCleanupPolicy::ExplicitOnly`
+is an additive contract for the private joined child owner: failures in either
+underlying dlopen/link-map checks or later sealed proof/resolve do NOT dlclose;
+the owned handle remains live for whole-graph quarantine. Its destructor also
+does not unload. This is not permission to discard a failed object and continue:
+the child must retain every native/host lifetime together and terminate nonzero.
+An explicit close still runs the usual checked close proof. The joined owner
+places its lifecycle/thread/callback gate in front of that explicit call.

@@ -41,7 +41,9 @@ struct SealedProviderEvidence {
 };
 // Joined provider identity only. Does not execute ModuleEntry/Exit or establish
 // factory/instance lifecycle, full runtime closure, HistoryOwner or ReloadToken.
+enum class SealedCleanupPolicy {Automatic,ExplicitOnly};
 class SealedLoader final:public LoaderOps {
+    const SealedCleanupPolicy policy_;
     const std::shared_ptr<const cs80_identity::PinnedModule> pin_;
     DlopenOps loader_;void* handle_=nullptr;bool attempted_=false,resolved_=false,closed_=false,failed_=false,closeOk_=false;
     cs80_provider::Layout elf_;std::uintptr_t base_=0;std::array<cs80_provider::U,3> offsets_{};
@@ -54,9 +56,10 @@ class SealedLoader final:public LoaderOps {
         try{require(h,"no owned sealed handle");const auto status=loader_.close(h);require(status==0,"native dlclose failed (not retried)");absent(evidence_.afterMaps,evidence_.afterObjects);recheck();closeOk_=true;}
         catch(...){failed_=true;cleanup_=std::current_exception();throw;}
     }
-    [[noreturn]] void fail(){failed_=true;if(!primary_)primary_=std::current_exception();if(handle_ && !closed_){try{closeOwned();}catch(...){}}std::rethrow_exception(primary_);}
+    [[noreturn]] void fail(){failed_=true;if(!primary_)primary_=std::current_exception();if(policy_==SealedCleanupPolicy::ExplicitOnly && !handle_)handle_=loader_.live;
+        if(policy_==SealedCleanupPolicy::Automatic && handle_ && !closed_){try{closeOwned();}catch(...){}}std::rethrow_exception(primary_);}
 public:
-    explicit SealedLoader(std::shared_ptr<const cs80_identity::PinnedModule> pin):pin_(std::move(pin)){require(bool(pin_),"verified pinned module required");}
+    explicit SealedLoader(std::shared_ptr<const cs80_identity::PinnedModule> pin,SealedCleanupPolicy policy=SealedCleanupPolicy::Automatic):policy_(policy),pin_(std::move(pin)),loader_(policy==SealedCleanupPolicy::ExplicitOnly){require(bool(pin_),"verified pinned module required");require(policy==SealedCleanupPolicy::Automatic || policy==SealedCleanupPolicy::ExplicitOnly,"supported sealed cleanup policy");}
     SealedLoader(const SealedLoader&)=delete;SealedLoader& operator=(const SealedLoader&)=delete;
     void* open(const char* exactPath)override{
         try{require(!attempted_ && !closed_ && !failed_,"sealed load retry forbidden");attempted_=true;
@@ -85,6 +88,6 @@ public:
     const auto& exportFileOffsets()const noexcept{return offsets_;}
     const auto& primaryError()const noexcept{return primary_;}
     const auto& cleanupError()const noexcept{return cleanup_;}
-    ~SealedLoader(){if(handle_ && !closed_){try{closeOwned();}catch(...){}}}
+    ~SealedLoader(){if(policy_==SealedCleanupPolicy::Automatic && handle_ && !closed_){try{closeOwned();}catch(...){}}}
 };
 }
