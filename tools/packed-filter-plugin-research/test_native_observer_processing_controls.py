@@ -10,7 +10,7 @@ class NativeProcessingControlsTests(unittest.TestCase):
         bootstrap.NativeProcessingOwnerTests.setUpClass();cls.temp=bootstrap.NativeProcessingOwnerTests.temp;cls.exe=pathlib.Path(cls.temp.name)/'controls'
         import os,shutil
         sdk=os.environ['CS80_OBSERVER_SDK'];compiler=shutil.which('g++')
-        result=subprocess.run([compiler,'-std=c++20','-Wall','-Wextra','-Werror','-pedantic','-pthread','-I',str(ROOT),'-I',sdk,str(ROOT/'native_observer_processing_controls_fixture.cpp'),'-ldl','-o',str(cls.exe)],capture_output=True,text=True,timeout=30)
+        result=subprocess.run([compiler,'-std=c++20','-Wall','-Wextra','-Werror','-pedantic','-pthread','-ffp-contract=off','-I',str(ROOT.parents[1]/'src'),'-I',str(ROOT),'-I',sdk,str(ROOT/'native_observer_processing_controls_fixture.cpp'),'-ldl','-o',str(cls.exe)],capture_output=True,text=True,timeout=30)
         if result.returncode:raise RuntimeError(result.stderr)
     @classmethod
     def tearDownClass(cls):cls.temp.cleanup()

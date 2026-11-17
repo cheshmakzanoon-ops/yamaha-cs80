@@ -6,7 +6,7 @@ constexpr std::size_t maxBytes=8u*1024u*1024u;
 struct Request {
  cs80_identity::ExpectedIdentity identity;cs80_identity::Caps caps{};
  std::array<char,16> cid{};packed_filter_workload::Case workload{};
- AudioInputTopology topology=AudioInputTopology::ZeroAudioInput;ControllerQueryPolicy query=ControllerQueryPolicy::StrictSdk;ControllerStatePolicy state{};std::uint64_t timeoutMs=0;
+ ParameterBindingPolicy binding=ParameterBindingPolicy::ExactNative;AudioInputTopology topology=AudioInputTopology::ZeroAudioInput;ControllerQueryPolicy query=ControllerQueryPolicy::StrictSdk;ControllerStatePolicy state{};std::uint64_t timeoutMs=0;
 };
 class Reader {
  const std::string& bytes_;std::size_t at_=0;
@@ -19,14 +19,15 @@ public:
  void end(){require(at_==bytes_.size(),"trailing request bytes");}
 };
 inline Request parse(const std::string& bytes){
- Reader r(bytes);const auto schema=r.text(64);require(schema=="cs80-process-lifetime-request-v1" || schema=="cs80-process-lifetime-request-v2" || schema=="cs80-process-lifetime-request-v3","request schema");require(r.text(32)=="process-lifetime","request lifetime profile");Request q;
+ Reader r(bytes);const auto schema=r.text(64);require(schema=="cs80-process-lifetime-request-v1" || schema=="cs80-process-lifetime-request-v2" || schema=="cs80-process-lifetime-request-v3" || schema=="cs80-process-lifetime-request-v4","request schema");require(r.text(32)=="process-lifetime","request lifetime profile");Request q;
  q.identity.arm=r.text(16);require(q.identity.arm=="stock"||q.identity.arm=="candidate","request arm");
  const auto hex=r.text(32);require(hex.size()==32 && hex.find_first_not_of("0123456789abcdef")==hex.npos && hex!=std::string(32,'0'),"request exact nonzero raw CID hex");
  const auto digit=[](char c){return c<='9'?c-'0':c-'a'+10;};for(std::size_t i=0;i<16;++i)q.cid[i]=static_cast<char>(digit(hex[i*2])*16+digit(hex[i*2+1]));
  q.workload.policy=static_cast<packed_filter_workload::Policy>(r.number(2));q.workload.rate=r.number(96000);q.workload.mode=static_cast<packed_filter_workload::Mode>(r.number(1));q.workload.voices=r.number(16);q.workload.block=r.number(1024);packed_filter_workload::validate(q.workload);
  const auto state=r.number(2);require(state==1||state==2,"request controller state policy");q.state=static_cast<ControllerStatePolicy>(state);
  if(schema!="cs80-process-lifetime-request-v1"){q.query=static_cast<ControllerQueryPolicy>(r.number(2));validateControllerQueryPolicy(q.query);}
- if(schema=="cs80-process-lifetime-request-v3"){q.topology=static_cast<AudioInputTopology>(r.number(2));validateAudioInputTopology(q.topology);}
+ if(schema=="cs80-process-lifetime-request-v3" || schema=="cs80-process-lifetime-request-v4"){q.topology=static_cast<AudioInputTopology>(r.number(2));validateAudioInputTopology(q.topology);}
+ if(schema=="cs80-process-lifetime-request-v4"){q.binding=static_cast<ParameterBindingPolicy>(r.number(2));validateParameterBindingPolicy(q.binding);}
  q.timeoutMs=r.number(600000);require(q.timeoutMs>0,"request worker deadline");
  q.caps={r.number(16384),r.number(16384),r.number(8ull*1024*1024*1024),r.number(4096)};
  q.identity.bundle=r.root();q.identity.module=r.text();

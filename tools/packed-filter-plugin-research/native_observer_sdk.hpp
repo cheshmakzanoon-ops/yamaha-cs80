@@ -118,7 +118,8 @@ inline void captureFactoryMetadata(IPluginFactory& factory,Bytes& out) {
     const auto classes=factory.countClasses();require(classes>0 && classes<=1024,"factory class count");out.u32(classes);
     for(int32 i=0;i<classes;++i) {PClassInfo c{};require(factory.getClassInfo(i,&c)==kResultOk,"getClassInfo");out.raw(c.cid,sizeof(TUID));out.u32(c.cardinality);out.terminated(c.category);out.terminated(c.name);}
 }
-struct ConnectedParameterRoster {int32 declaredCount=0;std::vector<ParamID> ids;};
+struct ConnectedParameterSnapshot {ParameterInfo info{};double current=0;};
+struct ConnectedParameterRoster {int32 declaredCount=0;std::vector<ParamID> ids;std::vector<ConnectedParameterSnapshot> parameters;};
 inline void captureConnectedMetadata(IComponent& component,IAudioProcessor& audio,IEditController& controller,
                                       const CreatedIdentity& identity,ObserverPhase phase,Bytes& out,ConnectedParameterRoster* roster=nullptr) {
     require(phase==ObserverPhase::Connected,"metadata requires Connected checkpoint");
@@ -131,11 +132,12 @@ inline void captureConnectedMetadata(IComponent& component,IAudioProcessor& audi
         }
     }
     const auto n=controller.getParameterCount();require(n>0 && n<=1000000,"parameter count");out.u32(n);
-    if(roster){require(roster->ids.empty() && roster->declaredCount==0,"fresh metadata roster required");roster->declaredCount=n;roster->ids.reserve(static_cast<std::size_t>(n));}
+    if(roster){require(roster->ids.empty() && roster->parameters.empty() && roster->declaredCount==0,"fresh metadata roster required");roster->declaredCount=n;roster->ids.reserve(static_cast<std::size_t>(n));roster->parameters.reserve(static_cast<std::size_t>(n));}
     for(int32 i=0;i<n;++i) {ParameterInfo p{};require(controller.getParameterInfo(i,p)==kResultOk,"parameter metadata");
         if(roster){require(p.id!=kNoParamId && std::find(roster->ids.begin(),roster->ids.end(),p.id)==roster->ids.end(),"unique non-sentinel metadata parameter ID");roster->ids.push_back(p.id);}
         const auto value=controller.getParamNormalized(p.id);
         require(p.defaultNormalizedValue>=0.0 && p.defaultNormalizedValue<=1.0 && value>=0.0 && value<=1.0,"normalized parameter range");
+        if(roster)roster->parameters.push_back({p,value});
         out.u32(p.id);out.terminated(p.title);out.terminated(p.shortTitle);out.terminated(p.units);out.u32(p.stepCount);out.f64(p.defaultNormalizedValue);out.u32(p.unitId);out.u32(p.flags);out.f64(value);}
 }
 inline void captureSetupMetrics(IAudioProcessor& audio,ObserverPhase phase,Bytes& out) {

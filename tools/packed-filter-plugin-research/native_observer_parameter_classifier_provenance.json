@@ -1,0 +1,26 @@
+{
+  "schema": "cs80-source-parameter-classifier-provenance-v1",
+  "sources": {
+    "native_observer_parameter_classifier.hpp": "f57c9b1f61deccf8715f6cd501008a0a5286409d6cb4a2ecef928dd1cf00aea9",
+    "native_observer_parameter_classifier_fixture.cpp": "4f7c65256c883aa3d405f9a7af3eae16db1c20407542be697f375e68c5f4e3d0",
+    "test_native_observer_parameter_classifier.py": "74c1729d07055c072a3976343c3f603f4aafaa61e187068e5349564393de5044",
+    "../../src/core/Params.h": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2",
+    "../../src/core/FactoryPresets.h": "74c5a30269cdb4306984e55b5e9f9d12ad8467a9570dce49b5aadcf8c039a379",
+    "../../src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+    "../../src/plugin/PluginProcessor.cpp": "a1d6cfb4c7cd9840f4af59a548ee719ef832de37046fa137475510455419118a",
+    "../../src/plugin/PluginProcessor.h": "767159893c86ec7a57b68479f8edcd05f05702dc7b8febf1c9588a517f8b9b2b",
+    "workload_manifest.hpp": "7445afee78840b471f6908deba3a9efad3514a5587857f3e778a3a78b7650ea2",
+    "../../src/core/CuratedLibrary.inc": "75721a25d21ea49d1bdd84612f255b3bbc22138757fc6040b6742370c5ac5e17",
+    "../../src/core/CuratedLibraryLevels.inc": "5790d29c3ce74968e292c15915d09e2c2481b858d4a376d19df8242c30929bd6",
+    "native_observer_parameter_classifier_STATUS.md": "0d6c93da8e6ffb06c03e5fa31654ec5ecf4b53b3b2db87a1db24e12df0cf18aa"
+  },
+  "pinned_juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "external_sources": {
+    "https://raw.githubusercontent.com/juce-framework/JUCE/c352e2489000ffeb9e397051377d75eef2efe641/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp": "16031325b31be2e32b23689f07338bd6c631941475b9bbf87d176d1f2565c202",
+    "https://raw.githubusercontent.com/juce-framework/JUCE/c352e2489000ffeb9e397051377d75eef2efe641/modules/juce_core/maths/juce_NormalisableRange.h": "dcd8ff586b564904fdac5a1f4b5b67d6778df490a35c31cf46222b6f756a6937",
+    "https://raw.githubusercontent.com/juce-framework/JUCE/c352e2489000ffeb9e397051377d75eef2efe641/modules/juce_audio_processors_headless/utilities/juce_AudioParameterFloat.cpp": "01ff3d6481104402d58176973099da7a9e76fa2751a2320c931594c5edfc28a6",
+    "https://raw.githubusercontent.com/juce-framework/JUCE/c352e2489000ffeb9e397051377d75eef2efe641/modules/juce_audio_processors_headless/utilities/juce_AudioParameterChoice.cpp": "285f5ebf78ff80bc6728c006bcade77836988b7e0a23f973e5b80379e809677d",
+    "https://raw.githubusercontent.com/juce-framework/JUCE/c352e2489000ffeb9e397051377d75eef2efe641/modules/juce_audio_processors_headless/utilities/juce_AudioParameterBool.cpp": "0f65e57c867c0baed67dad6cc8383c3f84cf70ac814b23d2ad484c43af011109",
+    "https://raw.githubusercontent.com/juce-framework/JUCE/c352e2489000ffeb9e397051377d75eef2efe641/modules/juce_audio_processors_headless/utilities/juce_AudioProcessorParameterWithID.cpp": "ec760a0287f9753937b2328249ad2f5cf67144917e0409be9e82eddb28142b4b"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "cs80-historical-stock-history-diagnostic-v1",
+  "production_qualified": false,
+  "candidate_compared": false,
+  "CPU_timing_claim": false,
+  "whole_grid_run": false,
+  "case_count": 1,
+  "payload_bytes": 504090,
+  "payload_sha256": "42b824e15aa9bf8e4540e87b522ff8a945aca91378feffe04c671f30aa4566e5",
+  "raw_receipt_sha256": "85d104be2a7adb2ba56abc41fd71461acb7ef04a54efc5d284e5af79637ec8ec",
+  "raw_receipt_retained": false,
+  "raw_receipt_reason": "Private provider maps/object paths; original remains local, only digest retained.",
+  "original_execution_sha256": "9933bb1d587a758a93f03e570da7e9abe27ba02a8695622692e387a7f85c5e0a",
+  "original_report_sha256": "6356687bd36cfc96ad29cbaabc7cb12f0b659da2b5b448742ad68344b3434021",
+  "files": {
+    "execution.json": {
+      "bytes": 2027,
+      "sha256": "6e715e6bee76da9e9ec1b3d8c1c9484f10c6e1b050dda246c2855c315488f5cd"
+    },
+    "payload-contract.json": {
+      "bytes": 12276,
+      "sha256": "da284cd31d7886959519e9961a5c32fb33a64c2359e59ce93ae512f338911d1e"
+    },
+    "payload.bin.gz": {
+      "bytes": 95156,
+      "sha256": "b6e73e35159bdf40039fed0aff27f23be395606f71f57766aaaf4b1f0d50b22d"
+    },
+    "report.json": {
+      "bytes": 3929,
+      "sha256": "d08604619e3af1d8d06a526fb6ebeff5e531e4a694c9ec0e5789d15760fa3187"
+    },
+    "source-expectations.txt": {
+      "bytes": 11906,
+      "sha256": "350219dcf9894b268d44cbaf013d4412f627bc0471b2e977893dcc07534cd000"
+    }
+  },
+  "decoder_files": {
+    "process_lifetime_transaction.py": "eedba41eebc314a0fa0b5769358acadf567569707e5ccb201a157b650a412ce0",
+    "source_parameter_proof.py": "5e7fd4ea98ae0e1ed26abfb986136761d7af164c724bbf4297f44a1733517b1c",
+    "source_parameter_roles.py": "b37a678903a59923c309302584469fab5bbaa0ff64b6a4d53bbdffd772848994",
+    "failure_metadata_decode.py": "894b39c545863fc8dd9e5420cfe8f3590be7e9f46160f3055a1e0382d75a04a6",
+    "inspect_stock_history_diagnostic.py": "5a4395acc7db9bc618b1276d36faa2fe2d00c543299fa0c1124e7bf268cdf5c8"
+  },
+  "source_derivation": "Immutable source-only parameter expectations, not derived from diagnostic capture."
+}

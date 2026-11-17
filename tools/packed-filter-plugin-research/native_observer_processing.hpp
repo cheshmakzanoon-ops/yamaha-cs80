@@ -2,6 +2,9 @@
 #include "native_observer_initializer.hpp"
 #include "native_observer_worker.hpp"
 #include "native_observer_flush.hpp"
+#include "native_observer_parameter_policy.hpp"
+#include "native_observer_parameter_classifier.hpp"
+#include "workload_bridge.hpp"
 namespace cs80_observer {
 // UI-owned native instance + worker. External module/handler must outlive owner.
 struct ProcessingConnectedSnapshot {Bytes metadata,setupMetrics;ConnectedParameterRoster roster;};
@@ -15,6 +18,25 @@ class ProcessingInstanceOwner {
     const std::thread::id ui_=std::this_thread::get_id();
     std::atomic<Violation> violation_{Violation::None};
     InjectedInstance instance_;bool connectedCaptured_=false;
+    const ParameterBindingPolicy bindingPolicy_;
+    std::optional<SourceAwareBinding> sourceBinding_;
+    Bytes sourceInitial_,sourceAlter_;
+    void bindSourceAwarePanel(packed_filter_workload::Case c){
+        Guard guard(*this);try{check();require(bindingPolicy_==ParameterBindingPolicy::SourceAwarePanel && !sourceBinding_ && connectedCaptured_,"fresh source-aware binding required");
+            instance_.phaseGuard(InjectedInstance::Phase::Connected);
+            auto binding=classifySourceAwarePanel(instance_.connectedRoster_,c);
+            const auto plan=workload_detail::planFromRoster(c,instance_.connectedRoster_);
+            sourceInitial_=encodeFlushProtocol(plan.initial);sourceAlter_=encodeFlushProtocol(plan.alter);sourceBinding_=std::move(binding);
+        }catch(...){abort(std::current_exception());}
+    }
+    void observeSourceAwarePanel(std::size_t stage,Bytes& out){
+        uiCall([&]{require(out.data.empty(),"fresh readback evidence required");require(bindingPolicy_==ParameterBindingPolicy::SourceAwarePanel && sourceBinding_ && completeFlushAccepted_ && stage<4,"source-aware readback preconditions");instance_.phaseGuard(InjectedInstance::Phase::Processing);
+            out.text("cs80-observe-only-readback-v1");out.u32(static_cast<std::uint32_t>(stage));out.u64(sourceBinding_->residual.size()+sourceBinding_->panelIds.size());
+            const auto observe=[&](ParamID id,double expected,const char* role){const double value=instance_.own.controller->getParamNormalized(id);out.u32(id);out.u64(std::bit_cast<std::uint64_t>(value));if(!std::isfinite(value) || std::bit_cast<std::uint64_t>(value)!=std::bit_cast<std::uint64_t>(expected))throw std::runtime_error(std::string("observe-only ")+role+" stage="+std::to_string(stage)+" id="+std::to_string(id)+" observed_bits="+std::to_string(std::bit_cast<std::uint64_t>(value))+" expected_bits="+std::to_string(std::bit_cast<std::uint64_t>(expected)));};
+            for(const auto& item:sourceBinding_->residual)observe(item.first,item.second,"residual");
+            for(const auto id:sourceBinding_->panelIds)observe(id,1.0,"Panel");
+        });
+    }
     const Bytes* diagnosticConnectedMetadata()const noexcept{return std::this_thread::get_id()==ui_ && !operation_ && connectedCaptured_?&instance_.connectedMetadata_:nullptr;}
     struct Results {
         RenderProtocol renderProtocol;FlushProtocol flushProtocol;
@@ -85,7 +107,11 @@ class ProcessingInstanceOwner {
         require(!roster.ids.empty() && roster.declaredCount==static_cast<int32>(roster.ids.size()),"owned complete native roster required");
         const std::set<ParamID> known(roster.ids.begin(),roster.ids.end()),ids(protocol.expectedIds.begin(),protocol.expectedIds.end());
         require(known.size()==roster.ids.size() && ids.size()==protocol.expectedIds.size(),"owned/flush ID uniqueness");
-        if(complete)require(ids==known,"full flush complete ID-set binding");
+        if(bindingPolicy_==ParameterBindingPolicy::SourceAwarePanel){
+            require(sourceBinding_ && encodeFlushProtocol(protocol).data==(complete?sourceInitial_.data:sourceAlter_.data),"exact source-aware frozen flush required");
+            require(complete?!completeFlushAccepted_:completeFlushAccepted_,"source-aware flush order");
+        }
+        else if(complete)require(ids==known,"full flush complete ID-set binding");
         else require(completeFlushAccepted_ && !ids.empty() && ids.size()<known.size() && std::includes(known.begin(),known.end(),ids.begin(),ids.end()),"known subset requires prior complete flush");
     }
     template<class Pump> FlushReceipt flushImpl(const FlushProtocol& protocol,worker::WaitPolicy policy,Pump&& pump,bool complete){
@@ -102,7 +128,7 @@ class ProcessingInstanceOwner {
         require(instance_.phase_==InjectedInstance::Phase::Processing && !instance_.primaryError,"leased instance became terminal");
     }
 public:
-    ProcessingInstanceOwner(InjectedModule& module,Handler& handler,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput):instance_(module,handler,q,topology){instance_.deferFailureCleanup_=true;}
+    ProcessingInstanceOwner(InjectedModule& module,Handler& handler,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput,ParameterBindingPolicy binding=ParameterBindingPolicy::ExactNative):instance_(module,handler,q,topology),bindingPolicy_(binding){validateParameterBindingPolicy(binding);instance_.deferFailureCleanup_=true;}
     ControllerQueryObservation controllerQueryObservation()const noexcept{return instance_.controllerQueryObservation();}
     ProcessingInstanceOwner(const ProcessingInstanceOwner&)=delete;ProcessingInstanceOwner& operator=(const ProcessingInstanceOwner&)=delete;
     void initializeConnected(){uiCall([&]{instance_.initializeConnected();});}

@@ -4,6 +4,17 @@ Research only; no production default change or runnable qualification workflow. 
 completed plugin qualification or benchmark. See PLAN.md for the prospective
 stages and remaining implementation/review gates.
 
+## Real-plugin diagnostic checkpoint
+
+The explicit source-aware binding now validates all 2,378 native parameters while
+writing only the frozen workload controls and guarding every residual/Panel
+readback. One historical stock Legacy case completed genuine A–D processing with
+finite, nonzero PCM. See [retained evidence](evidence/stock-history-diagnostic/README.md)
+for the lossless history payload and privacy-redacted execution report. This is
+not a candidate comparison, CPU benchmark, complete runtime closure or release
+qualification. The frozen implementation passed 1,350 preparation tests; nine
+additional evidence integrity tests pass.
+
 Run preparation checks (GNU compilers required; ELF proof fixtures are not
 executed, while explicit SDK/CTest controls execute inert fake programs only):
 

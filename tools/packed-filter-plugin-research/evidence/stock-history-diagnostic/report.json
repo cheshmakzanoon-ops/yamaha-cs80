@@ -1,0 +1,152 @@
+{
+  "body_sha256": "7b78c1e1391507b67c08f35e3e2c98e491a932dfbd16e979e7b394bba9ddabf7",
+  "payload_sha256": "42b824e15aa9bf8e4540e87b522ff8a945aca91378feffe04c671f30aa4566e5",
+  "payload_bytes": 504090,
+  "native_dlclose_returned_zero": true,
+  "provider_disposition": "provider_retained",
+  "provider_removed": false,
+  "provider_retained": true,
+  "provider_maps_sha256": [
+    "e3163fdf72ec421f830c77efe8b2cf037c67b4996e61c4084a7caf34a1e9cff9",
+    "fc4c0e88fe79c5e83180884682a8b2861ab2123eb3c975c953cc131862ed8381",
+    "d18ffec9cf7872af1f1b3e2733384d814392106cb5af1f2d82d38973d29cd7d2"
+  ],
+  "provider_base": 140102875947008,
+  "export_addresses": [
+    140102877482176,
+    140102877482256,
+    140102877482224
+  ],
+  "export_offsets": [
+    1535168,
+    1535248,
+    1535216
+  ],
+  "threads": [
+    [
+      [
+        10,
+        7414254
+      ]
+    ],
+    [
+      [
+        10,
+        7414254
+      ]
+    ]
+  ],
+  "module_calls": [
+    [
+      "host-query",
+      0
+    ],
+    [
+      "loader-open",
+      1
+    ],
+    [
+      "loader-resolve",
+      1
+    ],
+    [
+      "ModuleEntry",
+      1
+    ],
+    [
+      "GetPluginFactory",
+      1
+    ],
+    [
+      "factory3-query",
+      0
+    ],
+    [
+      "factory3-host",
+      0
+    ],
+    [
+      "class-count",
+      2
+    ],
+    [
+      "class-info",
+      0
+    ],
+    [
+      "class-info",
+      0
+    ],
+    [
+      "factory3-release",
+      1
+    ],
+    [
+      "factory-release",
+      0
+    ],
+    [
+      "ModuleExit",
+      1
+    ],
+    [
+      "loader-close",
+      0
+    ],
+    [
+      "host-release",
+      1
+    ]
+  ],
+  "render_sha256": [
+    "091dddc10f366d92fa0063ef763458584180238059b5da167bfebb78cca694e9",
+    "98880c4f7ab583460199a0447bd238f6013ced952425dc6d5fef8c22dd8ac515",
+    "99f781d70c5ad3ca5cc84144f83d917f71bb0296ec5bc91f6d18237c4a688a99",
+    "aa2a7bce2e8fe80cf4209e5d4e1771ef75fdbe787010fad414ae84ad75d8556d"
+  ],
+  "post_A_state_sha256": "ab965d60e7549ae09622455cdc6417dadf28564d71ecb2814a669902b1b414fc",
+  "controller_state_policy": 2,
+  "inner_semantics_trusted_native_producer_required": true,
+  "complete_parameter_count": 2378,
+  "source_role_counts": {
+    "generated_workload_control": 192,
+    "source_memory_control": 104,
+    "pinned_juce_wrapper_bypass_pattern": 1,
+    "pinned_juce_wrapper_program_pattern": 1,
+    "pinned_juce_midi_emulation_pattern": 2080
+  },
+  "connected_metadata_sha256": "5c4719ed323b2dcbec34430329dde20a5d5211040a4addc919b45a18ecdc85bc",
+  "initial_write_count": 192,
+  "alter_write_count": 2,
+  "residual_write_count": 0,
+  "native_full_metadata_conformance_still_required": true,
+  "observe_only_readback_sha256": [
+    "815d0a0fd49d5adcd25dbb66074029c3858312f7c48e398ca4aa92746cc163de",
+    "77df52304d5b14d402c9d1040316c6c3d24ad0c8304fc31b2ca06b89c54bb474",
+    "bd1a3ba378ac794f3bba2d33ffac89447a65981f8643ed57351da0b55ee66437",
+    "6ea7942733e2dbf7562b20bc0607f2ec65a976c07b0cb2e928dd85a2e2b6a3a8"
+  ],
+  "controller_query_policy": 2,
+  "controller_query_result": 1,
+  "controller_query_pointer_present": false,
+  "audio_input_topology": 2,
+  "parameter_binding_policy": 2,
+  "receipt_sha256": "85d104be2a7adb2ba56abc41fd71461acb7ef04a54efc5d284e5af79637ec8ec",
+  "kind": "independently-decoded-historical-stock-only-diagnostic",
+  "observed_exit": 0,
+  "production_qualified": false,
+  "candidate_compared": false,
+  "CPU_timing_claim": false,
+  "case_count": 1,
+  "whole_grid_run": false,
+  "complete_runtime_closure": false,
+  "external_execution_ledger_checked": true,
+  "export_redaction": {
+    "kind": "provider-paths-omitted-portable-export",
+    "original_report_sha256": "6356687bd36cfc96ad29cbaabc7cb12f0b659da2b5b448742ad68344b3434021",
+    "omitted_fields": [
+      "provider_objects"
+    ],
+    "scope": "Provider path list omitted. Raw receipt and its actual maps/object paths stay local; retained hashes do not allow independent revalidation of that omitted evidence."
+  }
+}

@@ -48,8 +48,8 @@ maps=[other,target+other,target+other if disposition=='provider_retained' else o
 if bad=='bad-retained':maps[2]='not a mapping\n'
 if bad=='path-inode-mixed':maps[2]=f'100000-101000 r-xp 00000000 {dev} {s.st_ino+1} {module}\n'+other
 if bad=='partial-retained':disposition='provider_retained'
-body=t('cs80-process-lifetime-child-v3')+t('strict-unmap' if bad=='profile' else 'process-lifetime')+t('0'*64 if bad=='nonce' else nonce)+u(os.getpid()+1 if bad=='pid' else os.getpid())+t('candidate' if bad=='arm' else 'stock')
-body+=t(m['expected_manifest_digest'])+t(m['expected_evidence_digest'])+t(m['module_sha256'])+t('cs80-instance-history-A-D-v1')+b(b'other' if bad=='case' else case)+v(2 if bad=='query-policy' else m.get('query_policy',1))+v(1 if bad=='query-result' else m.get('query_result',0))+v(0 if bad=='query-pointer' else m.get('query_pointer',1))+v(2 if bad=='topology' else m.get('topology',1))+v(1)+t(disposition)+t('0'*64 if bad=='payload-hash' else h(payload))+b(payload)
+body=t('cs80-process-lifetime-child-v4')+t('strict-unmap' if bad=='profile' else 'process-lifetime')+t('0'*64 if bad=='nonce' else nonce)+u(os.getpid()+1 if bad=='pid' else os.getpid())+t('candidate' if bad=='arm' else 'stock')
+body+=t(m['expected_manifest_digest'])+t(m['expected_evidence_digest'])+t(m['module_sha256'])+t('cs80-instance-history-A-D-v1')+b(b'other' if bad=='case' else case)+v(2 if bad=='query-policy' else m.get('query_policy',1))+v(1 if bad=='query-result' else m.get('query_result',0))+v(0 if bad=='query-pointer' else m.get('query_pointer',1))+v(2 if bad=='topology' else m.get('topology',1))+v(2 if bad=='binding-policy' else m.get('binding',1))+v(1)+t(disposition)+t('0'*64 if bad=='payload-hash' else h(payload))+b(payload)
 for x in maps:body+=t(x)
 body+=u(1)+t('')
 objects=['',module] if disposition=='provider_retained' else [''];body+=u(len(objects))+b''.join(t(x) for x in objects)
@@ -78,7 +78,7 @@ class ProcessLifetimeTransactionTests(unittest.TestCase):
   self.m={'case_identity_hex':b'inert-case'.hex(),'selected_cid_hex':'05'*16,'expected_manifest_digest':'a'*64,'expected_evidence_digest':'b'*64,'module_sha256':H(self.module),'module':str(self.module)};self.manifest.write_text(json.dumps(self.m))
   import process_lifetime_transaction as implementation
   helper=pathlib.Path(implementation.__file__).resolve()
-  self.c={**{k:v for k,v in self.m.items() if k!='module'},'controller_cid_hex':None,'controller_query_policy':1,'controller_query_result':0,'controller_query_pointer_present':True,'audio_input_topology':1,'protocol_sha256':[hashlib.sha256(x).hexdigest() for x in (b'initial',b'alter',b'CS80RPRT'+V(1)+b'inert')],'controller_state_policy':1,'controller_state_result':0,'arm':'stock','profile':PROFILE,'schema':SCHEMA,'history_schema':HISTORY,'driver':str(self.python),'driver_script':str(self.script),'driver_mode':'process-lifetime','manifest':str(self.manifest),'manifest_sha256':H(self.manifest),'runtime_hashes':{str(p):H(p) for p in (self.python,self.script)},'helper_hashes':{str(helper):H(helper)},'inputs':[],'module_root':str(self.bundle),'module_relative':'module.so','module_hashes':{'module.so':H(self.module)},'module_directories':[],'module_modes':{'.':self.bundle.stat().st_mode&0o777,'module.so':self.module.stat().st_mode&0o777},'module_entry_cap':16,'module_byte_cap':1024**2,'receipt_cap':1024**2,'timeout':5,'cwd':str(self.work),'output':str(self.out),'environment':{'PATH':'/usr/bin:/bin','HOME':str(self.work),'LANG':'C'}}
+  self.c={**{k:v for k,v in self.m.items() if k!='module'},'controller_cid_hex':None,'controller_query_policy':1,'controller_query_result':0,'controller_query_pointer_present':True,'audio_input_topology':1,'parameter_binding_policy':1,'protocol_sha256':[hashlib.sha256(x).hexdigest() for x in (b'initial',b'alter',b'CS80RPRT'+V(1)+b'inert')],'controller_state_policy':1,'controller_state_result':0,'arm':'stock','profile':PROFILE,'schema':SCHEMA,'history_schema':HISTORY,'driver':str(self.python),'driver_script':str(self.script),'driver_mode':'process-lifetime','manifest':str(self.manifest),'manifest_sha256':H(self.manifest),'runtime_hashes':{str(p):H(p) for p in (self.python,self.script)},'helper_hashes':{str(helper):H(helper)},'inputs':[],'module_root':str(self.bundle),'module_relative':'module.so','module_hashes':{'module.so':H(self.module)},'module_directories':[],'module_modes':{'.':self.bundle.stat().st_mode&0o777,'module.so':self.module.stat().st_mode&0o777},'module_entry_cap':16,'module_byte_cap':1024**2,'receipt_cap':1024**2,'timeout':5,'cwd':str(self.work),'output':str(self.out),'environment':{'PATH':'/usr/bin:/bin','HOME':str(self.work),'LANG':'C'}}
   self.commands=Commands(self.log,total_seconds=30)
  def call(self):return _process_lifetime(self.c,self.commands,allow_script=True)
  def mutate(self,name):self.m['mutation']=name;self.manifest.write_text(json.dumps(self.m));self.c['manifest_sha256']=H(self.manifest)
@@ -100,6 +100,9 @@ class ProcessLifetimeTransactionTests(unittest.TestCase):
   self.topology_disabled();data=b'CS80RPRT'+V(1)+V(2)+b'inert';self.m['render_override']=data.hex();self.c['protocol_sha256'][2]=hashlib.sha256(data).hexdigest();self.manifest.write_text(json.dumps(self.m));self.c['manifest_sha256']=H(self.manifest);self.failed()
  def test_zero_input_rejects_disabled_protocol_even_with_matching_hash(self):
   data=b'CS80RPRT'+V(2)+V(2)+b'inert';self.m['render_override']=data.hex();self.c['protocol_sha256'][2]=hashlib.sha256(data).hexdigest();self.manifest.write_text(json.dumps(self.m));self.c['manifest_sha256']=H(self.manifest);self.failed()
+ def test_binding_implicit_forbidden(self):del self.c['parameter_binding_policy'];self.failed()
+ def test_binding_unknown_forbidden(self):self.c['parameter_binding_policy']=3;self.failed()
+ def test_binding_history_mismatch(self):self.c['parameter_binding_policy']=2;self.failed()
  def test_topology_implicit_forbidden(self):del self.c['audio_input_topology'];self.failed()
  def test_topology_unknown_forbidden(self):self.c['audio_input_topology']=3;self.failed()
  def test_disabled_missing(self):self.topology_disabled();self.mutate('disable-missing');self.failed()
@@ -157,19 +160,25 @@ class ProcessLifetimeTransactionTests(unittest.TestCase):
   self.assertEqual(result.returncode,0,result.stderr)
  def test_terminal_retry(self):self.mutate('nonce');self.failed();n=len([r for r in self.commands.ledger if 'argv' in r]);self.failed();self.assertEqual(len([r for r in self.commands.ledger if 'argv' in r]),n)
 
-for mutation in ('nonce','pid','arm','profile','query-policy','query-result','query-pointer','topology','case','cid','protocol','payload-case','policy','payload-tail','payload-hash','body-hash','bad-retained','path-inode-mixed','partial-retained','truncated','oversized','trailing','mode','extra','symlink','directory','missing','module','module-inode','nonzero','live-group'):
+for mutation in ('nonce','pid','arm','profile','query-policy','query-result','query-pointer','topology','binding-policy','case','cid','protocol','payload-case','policy','payload-tail','payload-hash','body-hash','bad-retained','path-inode-mixed','partial-retained','truncated','oversized','trailing','mode','extra','symlink','directory','missing','module','module-inode','nonzero','live-group'):
  setattr(ProcessLifetimeTransactionTests,'test_reject_'+mutation.replace('-','_'),lambda self,m=mutation:(self.mutate(m),self.failed(),None)[2])
 class RequestPreselectionTests(unittest.TestCase):
  def setUp(self):
   self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=pathlib.Path(self.temp.name);self.request=self.root/'request';self.commands=Commands(self.root/'logs',total_seconds=10)
   text32=lambda s:struct.pack('<I',len(s))+s.encode()
   case=text32('packed-filter-workload-draft-v1')+text32('a'*64)+text32('b'*64)+b''.join(V(x) for x in (0,48000,0,8,64))
-  self.c={'arm':'stock','selected_cid_hex':'05'*16,'case_identity_hex':case.hex(),'controller_state_policy':1,'controller_query_policy':1,'audio_input_topology':1}
- def check(self,version=2,query=1,topology=1,selectors=(0,48000,0,8,64),state=1,arm='stock',cid='05'*16):
-  data=T('cs80-process-lifetime-request-v'+str(version))+T(PROFILE)+T(arm)+T(cid)+b''.join(U(x) for x in selectors)+U(state)+(U(query) if version>=2 else b'')+(U(topology) if version>=3 else b'')
+  self.c={'arm':'stock','selected_cid_hex':'05'*16,'case_identity_hex':case.hex(),'controller_state_policy':1,'controller_query_policy':1,'audio_input_topology':1,'parameter_binding_policy':1}
+ def check(self,version=2,query=1,topology=1,binding=1,selectors=(0,48000,0,8,64),state=1,arm='stock',cid='05'*16):
+  data=T('cs80-process-lifetime-request-v'+str(version))+T(PROFILE)+T(arm)+T(cid)+b''.join(U(x) for x in selectors)+U(state)+(U(query) if version>=2 else b'')+(U(topology) if version>=3 else b'')+(U(binding) if version>=4 else b'')
   self.request.write_bytes(data);self.request.chmod(0o600);self.c['manifest_sha256']=H(self.request)
   from process_lifetime_transaction import _request_preselection
   _request_preselection(self.c,self.request,self.commands)
+ def test_v4_source_binding(self):self.c['parameter_binding_policy']=2;self.check(version=4,binding=2)
+ def test_v4_binding_mismatch(self):
+  with self.assertRaisesRegex(ValueError,'binding policy mismatch'):self.check(version=4,binding=2)
+ def test_old_request_cannot_enable_source_binding(self):
+  self.c['parameter_binding_policy']=2
+  with self.assertRaisesRegex(ValueError,'binding policy mismatch'):self.check(version=3)
  def test_v3_disabled(self):self.c['audio_input_topology']=2;self.check(version=3,topology=2)
  def test_v3_topology_mismatch(self):
   with self.assertRaisesRegex(ValueError,'topology mismatch'):self.check(version=3,topology=2)

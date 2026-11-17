@@ -16,7 +16,7 @@ class NativeProcessingOwnerTests(unittest.TestCase):
         compiler=shutil.which('g++')
         if not compiler:raise RuntimeError('Selected native worker lease tests require compiler')
         cls.temp=tempfile.TemporaryDirectory();cls.exe=pathlib.Path(cls.temp.name)/'fixture'
-        result=subprocess.run([compiler,'-std=c++20','-Wall','-Wextra','-Werror','-pedantic','-pthread','-I',str(ROOT),'-I',str(sdk),str(ROOT/'native_observer_processing_fixture.cpp'),'-ldl','-o',str(cls.exe)],capture_output=True,text=True,timeout=30)
+        result=subprocess.run([compiler,'-std=c++20','-Wall','-Wextra','-Werror','-pedantic','-pthread','-ffp-contract=off','-I',str(ROOT.parents[1]/'src'),'-I',str(ROOT),'-I',str(sdk),str(ROOT/'native_observer_processing_fixture.cpp'),'-ldl','-o',str(cls.exe)],capture_output=True,text=True,timeout=30)
         if result.returncode:raise RuntimeError(result.stderr)
     @classmethod
     def tearDownClass(cls):cls.temp.cleanup()

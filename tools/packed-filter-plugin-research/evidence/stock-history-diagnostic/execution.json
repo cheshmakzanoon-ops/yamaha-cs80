@@ -1,0 +1,51 @@
+{
+  "kind": "historical-stock-only-diagnostic-not-qualification",
+  "argv": [
+    "DIAGNOSTIC_ROOT/observer-source-aware-v4",
+    "DIAGNOSTIC_ROOT/request-source-aware-v4.bin",
+    "f497255e5ac370f511e164cd9d4e0c955976a943cc53545c98c99e237960c6a9",
+    "7a57124b57963004835a86581cc2797b7a75936dc932be11bdaa2d6f3ba61ef5",
+    "DIAGNOSTIC_ROOT/attempt-6-source-aware/receipt"
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "DIAGNOSTIC_ROOT/attempt-6-source-aware/home",
+    "LANG": "C",
+    "LC_ALL": "C"
+  },
+  "pid": 10,
+  "returncode": 0,
+  "seconds": 0.6129131260095164,
+  "watchdog_reason": null,
+  "group_empty_after_wait": true,
+  "input_hashes_before": {
+    "request-source-aware-v4.bin": "f497255e5ac370f511e164cd9d4e0c955976a943cc53545c98c99e237960c6a9",
+    "observer-source-aware-v4": "f89c424664fbbb59113baff8da06321bd628242bad71936f02d753cff78ae0ac",
+    "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "baec79cbe2c8667b92312c858d40fb9d308ca5433bbf337b01c1257a4ded8d35",
+    "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4"
+  },
+  "input_hashes_unchanged": true,
+  "files": {
+    "receipt": {
+      "size": 542410,
+      "sha256": "85d104be2a7adb2ba56abc41fd71461acb7ef04a54efc5d284e5af79637ec8ec"
+    },
+    "stdout": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "production_qualified": false,
+  "runtime_closure_complete": false,
+  "CPU_timing_claim": false,
+  "export_redaction": {
+    "kind": "path-redacted-portable-export",
+    "original_execution_json_sha256": "9933bb1d587a758a93f03e570da7e9abe27ba02a8695622692e387a7f85c5e0a",
+    "path_label": "DIAGNOSTIC_ROOT",
+    "scope": "Internal absolute argv/HOME paths replaced. This is not exact raw argv/environment evidence. Original stays local."
+  }
+}

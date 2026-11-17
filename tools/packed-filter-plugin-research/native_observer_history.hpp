@@ -10,6 +10,7 @@ struct HistoryObservation {
     std::array<RenderObservation,4> rendered;std::array<Bytes,4> encodedRender;
     std::array<bool,4> renderPresent{};
     FlushReceipt initialFlush,alterFlush;Bytes encodedInitialFlush,encodedAlterFlush;
+    std::array<Bytes,4> parameterReadbacks;
     StateObservation postAState;Bytes encodedPostAState;StateRestoreReceipt restoredState;Bytes canonicalPayload;
     std::array<std::optional<worker::TaskReceipt>,6> tasks;
     std::optional<ProcessingCleanupSnapshot> cleanup;std::optional<worker::JoinReceipt> joined;
@@ -21,7 +22,7 @@ class HistoryOwner final {
     const Bytes* diagnosticConnectedMetadata()const noexcept{return std::this_thread::get_id()==ui_ && !running_?owner_.diagnosticConnectedMetadata():nullptr;}
     const char* diagnosticAttemptedOperation()const noexcept{return std::this_thread::get_id()==ui_ && !running_?evidence_.attemptedOperation:"unavailable";}
     const std::thread::id ui_=std::this_thread::get_id();
-    const packed_filter_workload::Case case_;const ControllerStatePolicy policy_;const AudioInputTopology inputTopology_;
+    const packed_filter_workload::Case case_;const ControllerStatePolicy policy_;const AudioInputTopology inputTopology_;const ParameterBindingPolicy bindingPolicy_;
     ProcessingInstanceOwner owner_;HistoryObservation evidence_;
     std::shared_ptr<const HistoryObservation> final_;
     HistoryStage stage_=HistoryStage::NotStarted;bool attempted_=false,running_=false;
@@ -34,7 +35,7 @@ class HistoryOwner final {
         evidence_.tasks[index]=std::move(receipt);
     }
     void freeze(){
-        Bytes b;b.text("cs80-instance-history-A-D-v1");
+        Bytes b;b.text(historySchema(bindingPolicy_));
         const auto blob=[&](const auto& bytes){b.blob(bytes.data(),bytes.size());};
         blob(evidence_.caseIdentity);blob(evidence_.initialProtocol);blob(evidence_.alterProtocol);blob(evidence_.renderProtocol);
         blob(evidence_.connectedMetadata.data);blob(evidence_.setupMetrics.data);blob(evidence_.encodedInitialFlush.data);blob(evidence_.encodedAlterFlush.data);blob(evidence_.encodedPostAState.data);
@@ -47,6 +48,7 @@ class HistoryOwner final {
         b.u64(close.lifecycle.count);for(std::size_t i=0;i<close.lifecycle.count;++i){const auto& r=close.lifecycle.rows[i];require(r.name && r.normal && r.ok && !r.error,"successful lifecycle evidence");b.text(r.name);b.u64(static_cast<std::uint64_t>(r.returned));}
         b.u64(close.interfaceCount);for(std::size_t i=0;i<close.interfaceCount;++i){const auto& r=close.interfaces[i];require(r.operation && r.returnedNormally && r.ok,"successful interface close evidence");b.text(r.operation);b.u64(static_cast<std::uint64_t>(r.returned));}
         b.u64(evidence_.joined->submitted());b.u64(evidence_.joined->attempted());b.u64(evidence_.joined->completed());b.u64(evidence_.joined->consumed());b.u64(evidence_.joined->canceled());
+        if(bindingPolicy_==ParameterBindingPolicy::SourceAwarePanel){b.u32(static_cast<std::uint32_t>(bindingPolicy_));for(const auto& readback:evidence_.parameterReadbacks){require(!readback.data.empty(),"all source-aware readbacks required");blob(readback.data);}}
         evidence_.canonicalPayload=std::move(b);final_=std::make_shared<const HistoryObservation>(std::move(evidence_));
     }
     void cleanup(){
@@ -54,8 +56,8 @@ class HistoryOwner final {
         evidence_.cleanup=owner_.cleanupReceipt();evidence_.joined=owner_.joinReceipt();if(evidence_.cleanup->error && !cleanupError_)cleanupError_=evidence_.cleanup->error;
     }
 public:
-    HistoryOwner(InjectedModule& module,Handler& handler,packed_filter_workload::Case c,ControllerStatePolicy policy,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput)
-        :case_(c),policy_(policy),inputTopology_(topology),owner_(module,handler,q,topology){}
+    HistoryOwner(InjectedModule& module,Handler& handler,packed_filter_workload::Case c,ControllerStatePolicy policy,ControllerQueryPolicy q=ControllerQueryPolicy::StrictSdk,AudioInputTopology topology=AudioInputTopology::ZeroAudioInput,ParameterBindingPolicy binding=ParameterBindingPolicy::ExactNative)
+        :case_(c),policy_(policy),inputTopology_(topology),bindingPolicy_(binding),owner_(module,handler,q,topology,binding){}
     ControllerQueryObservation controllerQueryObservation()const noexcept{return owner_.controllerQueryObservation();}
     HistoryOwner(const HistoryOwner&)=delete;HistoryOwner& operator=(const HistoryOwner&)=delete;
     template<class Pump> void run(worker::WaitPolicy budget,Pump&& pump){run(budget,std::forward<Pump>(pump),[]{});}
@@ -70,13 +72,15 @@ public:
             evidence_.caseIdentity=packed_filter_workload::encode_draft(case_);
             evidence_.attemptedOperation="initialize-connected";owner_.initializeConnected();checkpoint();evidence_.attemptedOperation="capture-connected";owner_.captureConnected();checkpoint();advance(HistoryStage::Connected);checkpoint();
             evidence_.roster=owner_.connectedRoster();checkpoint();
+            if(bindingPolicy_==ParameterBindingPolicy::SourceAwarePanel){evidence_.attemptedOperation="source-aware-roster-bind";owner_.bindSourceAwarePanel(case_);checkpoint();}
             auto plan=workload_detail::planFromRoster(case_,evidence_.roster);plan.render.topology=inputTopology_;
             evidence_.initialProtocol=encodeFlushProtocol(plan.initial).data;evidence_.alterProtocol=encodeFlushProtocol(plan.alter).data;evidence_.renderProtocol=encodeRenderProtocol(plan.render).data;
             evidence_.attemptedOperation="prepare-start";owner_.prepareAndStart(plan.setup,true);checkpoint();const auto metadata=owner_.connectedSnapshot();checkpoint();evidence_.connectedMetadata=metadata.metadata;evidence_.setupMetrics=metadata.setupMetrics;require(metadata.roster.ids==evidence_.roster.ids && metadata.roster.declaredCount==evidence_.roster.declaredCount,"owned metadata roster drift");advance(HistoryStage::Prepared);checkpoint();
             evidence_.attemptedOperation="initial-flush";evidence_.initialFlush=owner_.flush(plan.initial,budget,pump);task(0,worker::Kind::Flush);checkpoint();evidence_.encodedInitialFlush=encodeFlush(plan.initial,evidence_.initialFlush);advance(HistoryStage::InitialFlushed);checkpoint();
             const auto render=[&](std::size_t index,std::size_t sequence,HistoryStage stage){
                 const char* names[]{"render-A","render-B","render-C","render-D"};evidence_.attemptedOperation=names[index];
-                checkpoint();evidence_.rendered[index]=owner_.render(plan.render,budget,pump);evidence_.renderPresent[index]=true;task(sequence,worker::Kind::Render);checkpoint();
+                checkpoint();if(bindingPolicy_==ParameterBindingPolicy::SourceAwarePanel){evidence_.attemptedOperation="observe-only-parameter-readback";owner_.observeSourceAwarePanel(index,evidence_.parameterReadbacks[index]);checkpoint();evidence_.attemptedOperation=names[index];}
+                evidence_.rendered[index]=owner_.render(plan.render,budget,pump);evidence_.renderPresent[index]=true;task(sequence,worker::Kind::Render);checkpoint();
                 evidence_.encodedRender[index]=encodeRenderObservation(plan.render,evidence_.rendered[index]);advance(stage);checkpoint();
             };
             render(0,1,HistoryStage::A);

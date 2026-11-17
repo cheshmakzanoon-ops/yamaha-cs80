@@ -76,7 +76,7 @@ tail. Header checks do not replace that parser or prove runtime closure.
 
 ## Explicit disabled-mono-input topology (receipt v3)
 
-The public standalone path now requires receipt-v3 and explicit contract field
+The topology checkpoint introduced receipt-v3 and explicit contract field
 `audio_input_topology`: 1 for the unchanged zero-audio-input profile, or 2 for
 one disabled mono external-input bus. Receipts-v1/v2 are private fixture-only and
 cannot select topology2. Request-v3 carries topology after query policy;
@@ -94,3 +94,16 @@ responsibility; a receipt alone is not proof of arbitrary plugin behavior.
 
 No input is enabled, no samples are routed from the external input, and no
 production plugin/SDK change or CPU timing claim is authorized by this profile.
+
+## Explicit source-aware parameter binding (receipt v4)
+
+The public standalone path now requires receipt-v4 and explicit contract
+`parameter_binding_policy`: 1 ExactNative, or 2 SourceAwarePanel. Request-v4
+carries this after topology; older requests imply1. The parent checks equality
+before native execution and binds the receipt and contract hash. Policy2 requires
+history-v2 with actual full readbacks; policy1 retains history-v1. Earlier receipt
+versions are private fixtures only and cannot activate policy2.
+
+See `source_parameter_proof_STATUS.md` for the independent source-derived full
+metadata comparison, exact write-domain gates and four ordered residual/Panel
+readback checks. No captured metadata template is accepted as role authority.
