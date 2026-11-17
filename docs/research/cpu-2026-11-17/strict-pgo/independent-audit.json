@@ -1,0 +1,93 @@
+{
+  "audit": "SCOPED_COST_PASS independently reproduced",
+  "zip_sha256": "aa75e27b8357d7ae1eb0ff1a637fdca345c88c1f854f1b9de1db19bfaa4bbd36",
+  "commit": "58523b0982b3bdd5009a188f175db601eb886203",
+  "compiler_version": "13.3.0",
+  "cpu": "Intel(R) Xeon(R) 6975P-C",
+  "cost_calibration_rows": 1200,
+  "calibration": [
+    {
+      "groups": {
+        "primary": 0.9966708190244699,
+        "source_performance": 0.9967516055266724,
+        "all": 0.9976402210324381,
+        "isolation": 0.9958633453107949,
+        "legacy": 1.0015889238009266
+      },
+      "row_min": 0.9891625678685202,
+      "row_max": 1.008552572138198
+    },
+    {
+      "groups": {
+        "primary": 0.9959934963653801,
+        "source_performance": 0.996215013252859,
+        "all": 0.9928204659364823,
+        "isolation": 0.9944853319587679,
+        "legacy": 0.9879429828822037
+      },
+      "row_min": 0.9719834233622224,
+      "row_max": 1.0017251715321818
+    },
+    {
+      "groups": {
+        "primary": 1.0037620367053723,
+        "source_performance": 1.0039384420460675,
+        "all": 1.000673804005446,
+        "isolation": 1.0029931001779846,
+        "legacy": 1.0034204791451224
+      },
+      "row_min": 0.9927478590479992,
+      "row_max": 1.0102657253561327
+    }
+  ],
+  "groups": {
+    "primary": 0.9282907746418348,
+    "source_performance": 0.9280716950069291,
+    "all": 0.9223263544409518,
+    "isolation": 0.9064899724564247,
+    "legacy": 0.9923396241714465
+  },
+  "primary_pair_ratios": [
+    0.9285637078324568,
+    0.9280444175287988,
+    0.9282642717540918
+  ],
+  "primary_gain_percent": 7.170922535816516,
+  "required_gain_percent": 0.8013007269239703,
+  "row_ratio_range": [
+    0.8884011922697879,
+    0.9979758768378952
+  ],
+  "qualification": {
+    "baseline": {
+      "calls": 9617,
+      "frames": 2461952,
+      "pcm_bytes": 19695616,
+      "pcm_sha256": "041033044c651d58955d01356706e44b0badf9d0df7334eb3247a443592fb52b",
+      "fp_sha256": "761092d3cfae74c0fc857f7357e5206be85b26c165384adfe7a96406c8f76612"
+    },
+    "performance": {
+      "calls": 22819,
+      "frames": 5841664,
+      "pcm_bytes": 46733312,
+      "pcm_sha256": "9f393ff416774f8bf55ea65067fecc1c18d05ef933a377af65c511987d77dc95",
+      "fp_sha256": "c22d6906d497ee4daadbd3c94634625d711e2b358ab5eae36361e3754e97bc6b"
+    }
+  },
+  "filter_corpus": {
+    "bytes": 22400288,
+    "sha256": "ed310ea3b9dcef3c8e70b17d1530b6b55880ac6b7f0a55b11787493d3c233330"
+  },
+  "training_profile": {
+    "home/runner/work/_temp/strict-pgo-build/optimized/Engine.gcda": {
+      "bytes": 65960,
+      "sha256": "56a45fe56372e9163a578b570067f6f836a511e14fec9be7b65bf716f850e779"
+    }
+  },
+  "limitations": [
+    "No retained executable/object bytes to independently rehash: hashes, commands, symbol logs and runner integrity guards are evidence.",
+    "Production PIC/plugin linkage not qualified.",
+    "Windows/macOS and target hardware not qualified.",
+    "Three pairs on one shared host; screening evidence, not statistical/general speed guarantee."
+  ]
+}

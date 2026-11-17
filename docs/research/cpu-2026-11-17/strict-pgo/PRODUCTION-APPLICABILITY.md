@@ -1,0 +1,9 @@
+# Production applicability assessment (read-only, while feasibility runs)
+
+Frozen study 44061057792 at 58523b0982b3bdd5009a188f175db601eb886203 measures Linux x86-64 GCC 13.3 standalone Engine objects only. The study returned SCOPED_COST_PASS; independent raw audit reproduced the result without discrepancies.
+
+CMakeLists.txt line 6 enables CMAKE_POSITION_INDEPENDENT_CODE for the production static core. The research command deliberately retains prior standalone benchmark flags and does not add -fPIC. Consequently even a scoped passing study cannot qualify production shared-library code generation; plugin-compatible PIC builds and actual production linking must be checked separately, without changing or rerunning this frozen study.
+
+The production core is Engine.cpp, FactoryPresets.cpp and Ig00156Batch.cpp. GCC alone has the qualified optional AVX2 filter batch; non-GCC builds explicitly disable it. Linux uses Ubuntu 24.04 Release, macOS has separate Intel/ARM configurations, and Windows uses Visual Studio 2022 x64. GNU gcda/profile-use data must not be assumed usable with AppleClang/MSVC or different compiler versions, architectures, source revisions or CFGs. The current study has no flags or profiles for those builds.
+
+A feasibility pass would justify a separate prospective production-build compatibility proposal, not installing this profile, modifying CMake, or claiming DAW-wide CPU savings. Required unresolved topics: matching production compiler/flags/object paths and PIC, representative training and reproducible profile generation, strict profile invalidation when code/compiler changes, baseline fallback on unqualified configurations, full ordinary test/plugin validation and target-hardware/DAW measurement. Do not silently accept missing-profile warnings or reuse assessed training after seeing results.
