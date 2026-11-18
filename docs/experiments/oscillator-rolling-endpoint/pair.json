@@ -1,0 +1,60 @@
+{
+  "baseline": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "build_object_inventory_count": 85,
+  "bundle_changed_files": [
+    "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so"
+  ],
+  "candidate_bundle_files_sha256": {
+    "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+    "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "e8ba89a644ff15b4b9930f744b250c9f28287949be5b186e09fa150eb6434b06"
+  },
+  "changed_archives": [
+    "libcs80_core.a"
+  ],
+  "changed_objects": [
+    "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+  ],
+  "changed_sources": [
+    "src/core/ReconstructedOscillator.h"
+  ],
+  "core_engine_reached_both_plugin_link_maps": true,
+  "engine_member_in_both_core_archives_matches_hashed_object": true,
+  "frozen_build_contract_equal": [
+    "CMakeCache.txt",
+    "build.ninja",
+    "compile_commands.json",
+    "ninja-commands.txt",
+    "runtime-libs.json"
+  ],
+  "full_runtime_closure_or_release_qualification_claimed": false,
+  "header_consuming_compiler_objects": [
+    "CMakeFiles/CS80Reference.dir/src/plugin/AdvancedPanel.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/CentreRow.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/ChannelRow.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/KeyboardTuningPage.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/MemoryLid.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/ModernLayerState.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/ModernModulationUi.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/PanelWidgets.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/ParameterComboBox.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/ParameterContextButton.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/PerformanceDeck.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/PluginEditor.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessor.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessorAutomation.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/PluginProcessorLibrary.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/PresetBrowser.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/StudioDrawers.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/StudioToolbar.cpp.o",
+    "CMakeFiles/CS80Reference.dir/src/plugin/UiComponents.cpp.o",
+    "CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o"
+  ],
+  "matched_source_count": 7357,
+  "metadata_identical": true,
+  "runtime_ldd_hash_count": 14,
+  "schema": "cs80-nodes-verified-build-v1",
+  "stock_bundle_files_sha256": {
+    "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+    "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so": "b558341875ee60ab465560c8e842edf219e733730b19e1e5b5d01c703ce0cfc1"
+  }
+}

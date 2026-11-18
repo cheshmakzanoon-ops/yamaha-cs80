@@ -1,0 +1,17 @@
+{
+  "analysis": "admission explicitly scoped to tested workload/hardware; stricter production CI/release not implied",
+  "authorization_to_start": "after independent build pair and exactness checks; lead approves material component signal and grants exclusive timing window; otherwise leave timing unrun. Preserve first failure.",
+  "baseline_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "candidate_header_sha256": "27e41efc08d5a8809a3cb4667402a29d662d417bcd1e8805f8fd3ca709954714",
+  "control": "Legacy default scalar; active cohort 16 notes, not instrumented active-voice count",
+  "correctness": "full matched history PCM across six segments, 3 policies, finite/nonzero and source protocol guards. Independent stock/candidate reports for post-A serialized state, parameters and workload protocol, in addition to component, host tests and audio comparison. No claim every state/DAW/sample rate matches.",
+  "only_candidate_production_file": "src/core/ReconstructedOscillator.h",
+  "platform": "local GNU14.2 Debian13 Linux x86-64; actual VST3 with retained vetted diagnostic host. Not DAW or cross-platform measurement.",
+  "primary": "Circuit, fixed known steady 16-note held workload (48 kHz block 64 realtime)",
+  "promotion_metric": "Circuit lower end of 95% whole-block bootstrap gain must exceed max absolute A/A gain and 3x maximum overhead fraction; require Pure/Legacy lower ends >= -3%, not merely no significant regression. No data-dependent switch to another target or partial effect after a failed/uncertain gate.",
+  "schedule": "Unmodified retained timing driver, identical source-derived encoded protocol. 2 stock A/A blocks then 6 ABBA per mode, 4 slots each, fresh processes, warmup 65536, measured 524288 (8192 callbacks). Steady thread CPU only inside plugin. No automatic retries or dropped/replacements; 25s wall cap per slot, 24s worker deadline, 1GiB evidence cap.",
+  "schema": "cs80-nodes-inplace-native-admission-v1",
+  "secondary": "Pure, 16-note cohort and built-in 8-voice limit",
+  "stock_header_sha256": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373",
+  "treatment": "in-place retained Nodes endpoint, const reference to preadvance endpoint; no floating-point arithmetic change intended"
+}

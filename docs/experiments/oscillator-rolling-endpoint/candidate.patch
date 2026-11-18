@@ -1,0 +1,33 @@
+--- a/src/core/ReconstructedOscillator.h
++++ b/src/core/ReconstructedOscillator.h
+@@ -273,7 +273,10 @@
+         }
+         if(event)before=endNodesValid?endNodes:nodes(1);
+         state.heldFrequencyHz=f;state.heldThresholdVolts=threshold;state.sawEnabled=controls.sawEnabled;state.pulseEnabled=controls.pulseEnabled;
+-        auto after=refresh?nodes(1):endNodes;
++        // The cached endpoint is also this tick's working right-sided node.
++        // Keep an independent 'before' only for events that actually need it.
++        auto& after=endNodes;
++        if(refresh)after=nodes(1);
+         if(event)recordEvent(0.,controlChange,before,after);
+         double elapsed=0.;
+         for(std::size_t iteration=0;iteration<maximumEventsPerTick&&elapsed<dt;++iteration){
+@@ -285,7 +288,8 @@
+             const bool inReset=state.resetRemainingSeconds>0.;
+             const double physical=inReset?state.resetRemainingSeconds:(f>0.?std::max(0.,state.charge)/f:std::numeric_limits<double>::infinity());
+             double span=std::min(dt-elapsed,physical);
+-            const auto start=after;
++            // Both readers finish before the endpoint is replaced below.
++            const auto& start=after;
+             bool branchEvent=false;
+             span=nextBranchEvent(start,span,branchEvent);
+             // Roots closer than round-off to the previous event are represented
+@@ -306,7 +310,7 @@
+             diagnostics.eventCapacityExceeded=true;advance(dt-elapsed,after);after=nodes(1);
+         }
+         state.elapsedSeconds+=dt;
+-        endNodes=after;endNodesValid=true;
++        endNodesValid=true;
+         const auto& raw=endNodes;
+         diagnostics.rawPin7Volts=raw.pin7;diagnostics.coupledInputVolts=raw.u;
+         diagnostics.trianglePin3Volts=raw.triangle;diagnostics.shaperInputVolts=raw.w;diagnostics.raw=raw.ungatedValue;
