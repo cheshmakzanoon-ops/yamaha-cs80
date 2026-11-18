@@ -1,0 +1,13 @@
+# Saturated IG00156 cutoff: correctness rejection
+
+**Do not ship or time this revision.** A cutoff can continue changing above the filter's own upper clamp while the internal coefficients are unchanged. A real, moving eight-voice factory patch at 48 kHz/64 repeatedly hit this condition. A narrow [candidate](candidate.patch) kept the original full-key return, and attempted to skip a complete redundant coefficient calculation only on bounded built-in LP inputs with compatible masked FP controls and existing inexact status.
+
+On the measured late moving window, a [diagnostic copy](observed-hits.json) took the new return **903,712 times**. The same held factory chord after settling took it **zero times**, as did the tested moving panel case. The [stock census](stock-census.csv) distinguishes original full-key returns, actual full recalculations and eligibility in onset and late windows. These are counts, **not CPU percentages**.
+
+The new return was not the failure. With a standard low-pass stage set to `(cutoff=1000, Q=2, rate=96000)`, request `(100001, 2, 96000)` while SSE precision is unmasked. Stock and candidate raise the same precision signal (saved MXCSR `0x0fa0`). After the trap is caught, stock records raw cutoff `100001`, while this candidate still records `1000`. The optimized fallback schedules a potentially trapping division before the metadata store on this branch; the original build stores the new raw key first. Identical final PCM on masked hosts does not establish identical behavior here.
+
+On GNU C++ 14.2.0 Release/PIC Linux x86-64, eight [engine trace pairs](engine-trace-summary.json) matched over 15,516,864 bytes per arm. A separate bounded masked-environment stage differential also matched 62,784 events, 24,109,056 bytes, including original stage fields, outputs, floating-point state and errno; a diagnostic variant took 4,000 new returns. The [complete first-failure record](RESULT.json) retains the relevant exact source and evidence hashes. The trap gate failed **before timing**, so this revision has no measured speed change and no native plug-in qualification. The recorded trace hashes and lengths are included; raw trace bytes and compiled binaries are not redistributed. Stock `src/` is unchanged.
+
+## Reproduce the first rejection
+
+From a Linux x86-64 checkout with the baseline DSP sources (`e9e8175f4278d2457279fcb8809cbba1ddb7be2b`), run `python3 reproduce.py` in this directory. It compiles the same [stage observation driver](differential.cpp) and [synchronous-trap cases](traps.cpp) against stock and a patched temporary copy. This checks the observed compiler-dependent failure; it is not a portable requirement about all compilers' partial writes after signals.

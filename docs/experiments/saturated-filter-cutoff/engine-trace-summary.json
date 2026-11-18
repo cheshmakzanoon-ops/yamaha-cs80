@@ -1,0 +1,59 @@
+{
+  "source_files_checked": 193,
+  "stock_archive_exact": true,
+  "candidate_archive_sha256": "7b671e02ed25b9ec1955a8f60770799de7afa18996c2c656ada1d128ecbcc37e",
+  "driver_sha256": "8fecf96c28198e306afb5d60788b36150c8fd79a5a7f83e571993c5286d7d0d0",
+  "candidate_header_sha256": "39733b08f96f3730ba054b00fb371b993f3fe8166d5bb848235b95dfa2a756f8",
+  "archives": {
+    "stock": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+    "candidate": "7b671e02ed25b9ec1955a8f60770799de7afa18996c2c656ada1d128ecbcc37e"
+  },
+  "exact_trace_pairs": {
+    "observed-factory_held.bin": {
+      "bytes": 1939608,
+      "sha256": "ff81e953ee78713af5b1fc8c4f3d8a12fa486abd53ab0ed92ab9c407f9af87be"
+    },
+    "observed-factory_moving.bin": {
+      "bytes": 1939608,
+      "sha256": "05ea255bf2636fc88aa939b4ff23a8bf3377695905a16781e8fd12e4061054e1"
+    },
+    "observed-factory_quiet.bin": {
+      "bytes": 1939608,
+      "sha256": "066ae3dd404c6f6e610dcd70a87cd1d1cbc982c2a657b0fffbc8e03c34f2af43"
+    },
+    "observed-legacy_held.bin": {
+      "bytes": 1939608,
+      "sha256": "26873a74b50b7d0dfb29cc46b04ebfcf586d3ea0f01d5b9f9ad61c99c9ab123c"
+    },
+    "observed-panel_held.bin": {
+      "bytes": 1939608,
+      "sha256": "61826060354c1dac9bf00d69aa995b58305b2605dc781bdb967dd39dafffa532"
+    },
+    "observed-panel_quiet.bin": {
+      "bytes": 1939608,
+      "sha256": "7d7c0ad0dfdfc3ff39b69db110d1a6a090543c219d66bf1826c4c4428cf289ce"
+    },
+    "observed-pure_held.bin": {
+      "bytes": 1939608,
+      "sha256": "1a42a09008fc8f7640c118579e0f501c8bf52e44a6b0e6f495ca196d8eaa88fe"
+    },
+    "observed-release_wake.bin": {
+      "bytes": 1939608,
+      "sha256": "88152eecaf43c12362c0730f462d8af7893ab24596e4a58b569e32bfba6c9942"
+    }
+  },
+  "objects": {
+    "Engine.cpp": {
+      "stock": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+      "candidate": "8db7b5d96ee9a4dfb2e9b80bb69ed5853e0e84f990ad1d0be9940e65783d6571"
+    },
+    "FactoryPresets.cpp": {
+      "stock": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+      "candidate": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b"
+    },
+    "Ig00156Batch.cpp": {
+      "stock": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+      "candidate": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33"
+    }
+  }
+}

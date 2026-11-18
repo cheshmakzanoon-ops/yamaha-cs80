@@ -1,0 +1,74 @@
+{
+  "cases": {
+    "factory-moving": {
+      "output": [
+        "3138066e62079bac",
+        "65536",
+        "4096",
+        "9fe0"
+      ],
+      "shared_hits_late": 0
+    },
+    "panel-moving": {
+      "output": [
+        "bf8b8ae7bb52eb09",
+        "65536",
+        "4096",
+        "9fe0"
+      ],
+      "shared_hits_late": 0
+    },
+    "factory-held": {
+      "output": [
+        "b1b4aedf8b07915d",
+        "65536",
+        "4096",
+        "9fe0"
+      ],
+      "shared_hits_late": 65535
+    },
+    "pure-held": {
+      "output": [
+        "1d1d2f5abd768411",
+        "65536",
+        "4096",
+        "9fe0"
+      ],
+      "shared_hits_late": 0
+    }
+  },
+  "cpu": 0,
+  "driver_sha256": "1d0715224938a736aff97c36df0c3565ec437c7667905778e3e500a516d4494f",
+  "source_files_verified": 193,
+  "patch_sha256": "722b257644e94ae6f38e02257297a785ff351506550b2a07f0cd866e84ad5ed0",
+  "stock_matches_shipping_archive": true,
+  "arms": {
+    "stock": {
+      "probe": "6d8c829cfc8ef0cd8502082c419e7fbe92e39bbf1d31d4df7c8deef22ca1f497",
+      "archive": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314"
+    },
+    "candidate": {
+      "probe": "f1106bea1303c219d2a9201ba429d8a985ccd5f514c9db6b11ffaaa054a6ffaa",
+      "archive": "e6fc010ac3b0aa73a707c210857d57ef57fa23dd4af859e6a25342f95504e8c5"
+    },
+    "counted": {
+      "probe": "3dbe9d9001d402e906aad3edc34b8ec7da15dbefb22423be0540f3d15405182a",
+      "archive": "9c59e76927aed37aed24a8f81bb2785f1db9918b2858c81529be144179919502"
+    }
+  },
+  "objects": {
+    "Engine.cpp": {
+      "stock": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+      "candidate": "51b6d27b0be984dab36c2628361683315083449ef0da1bc4184e4c5f4f4991ec"
+    },
+    "FactoryPresets.cpp": {
+      "stock": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+      "candidate": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b"
+    },
+    "Ig00156Batch.cpp": {
+      "stock": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+      "candidate": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33"
+    }
+  },
+  "timed_slots_launched": 0
+}

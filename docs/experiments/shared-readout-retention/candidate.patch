@@ -1,0 +1,184 @@
+--- a/src/core/Engine.h
++++ b/src/core/Engine.h
+@@ -1,4 +1,11 @@
+ #pragma once
++
++// Isolated research candidate: shared receiver retention, strict SSE2 only.
++#if defined(__GNUC__) && !defined(__clang__) && defined(__x86_64__) && defined(__SSE2_MATH__) && !defined(__FAST_MATH__)
++#define CS80_RESEARCH_SHARED_READOUT_RETENTION 1
++#else
++#define CS80_RESEARCH_SHARED_READOUT_RETENTION 0
++#endif
+ 
+ #include "Dsp.h"
+ #include "ModernLayer.h"
+@@ -572,6 +579,19 @@
+     float filterInitialTarget(int rank) const noexcept;
+     float filterAttackTarget(int rank) const noexcept;
+     void updateSourceReadouts(float sampleRate) noexcept;
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++    // Internal return distinguishes an original solve from exact retention for
++    // bounded research admission; the audio caller ignores it.
++    enum class SharedReadoutUpdate { failed, solved, retained };
++    SharedReadoutUpdate updateSourceSharedReadout(const source_factory::BothRankDrives& drives) noexcept;
++    void invalidateSourceSharedReadout() noexcept
++    {
++        sourceSharedMemo.valid = false;
++        // A public operation can trap after changing the live readout. Publish
++        // invalidity before its existing writes/FP work, without changing FP state.
++        asm volatile("" : : "m"(sourceSharedMemo.valid) : "memory");
++    }
++#endif
+     void processInternalSample(float& outL, float& outR, float externalModulation);
+     template<bool BatchFilters>
+     void processInternalSampleImpl(float& outL, float& outR, float externalModulation);
+@@ -809,6 +829,16 @@
+     bool arpWasOn = false;
+     float arpClock = 0.0f;
+     float arpGateTime = 0.0f;
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++    // Appended: all existing Engine field offsets stay unchanged. The live
++    // sourceShared object is the only retained result, not a duplicate buffer.
++    struct SourceSharedMemo {
++        std::array<std::array<std::array<std::uint64_t, 2>, kNumVoices>, kNumRanks> touchBits {};
++        std::uint64_t resonanceBits = 0;
++        unsigned postCsr = 0;
++        bool valid = false;
++    } sourceSharedMemo;
++#endif
+ };
+ 
+ } // namespace cs80
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -3,6 +3,9 @@
+ 
+ #include <algorithm>
+ #include <cmath>
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++#include <bit>
++#endif
+ 
+ namespace cs80
+ {
+@@ -115,6 +118,9 @@
+ 
+ void Engine::configureInternalRate()
+ {
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++    invalidateSourceSharedReadout();
++#endif
+     internalRate = hostRate * (double) oversample;
+     initialPitchDecay = std::exp(-1.0 / (kNominalInitialPitchDecaySeconds * internalRate));
+     // The historical per-sample 10 Hz DC pole, with the same float cast,
+@@ -252,6 +258,9 @@
+ 
+ void Engine::reset()
+ {
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++    invalidateSourceSharedReadout();
++#endif
+     // Circuit engine: every circuit starts cold but free-running (Phase 2.1).
+     const bool freeRunning = freeRunningVoices();
+     Rng coldPhases(kColdPhaseSeed);
+@@ -404,6 +413,9 @@
+ 
+ void Engine::setParams(const ParamValues& values)
+ {
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++    invalidateSourceSharedReadout();
++#endif
+     hardwareSources = {13, 13};
+     sourceRoutes.fill(source_factory::Route::panel_or_memory);
+     sourceActive.fill(false);
+@@ -458,6 +470,9 @@
+             ++compilations;
+         }
+     }
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++    invalidateSourceSharedReadout();
++#endif
+     hardwareSources = frame.hardwareSources;
+     sourceRoutes = routes;
+     sourceTones = tones;
+@@ -607,6 +622,9 @@
+ 
+ void Engine::buildSettings()
+ {
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++    invalidateSourceSharedReadout();
++#endif
+     auto p = [this](int i) { return params.v[(size_t) i]; };
+ 
+     global.parityMode = p(P_parityMode) >= 0.5f;
+@@ -902,8 +920,69 @@
+             source_factory::evaluateCutoff(sourceTones[rank], drives[rank], sourceCutoff[rank]);
+     // One 32-Q/16-LC network. Shared RES/AM/KB use the documented nominal
+     // stiff boundaries; no independent per-voice or per-rank master copies.
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++    (void) updateSourceSharedReadout(drives);
++#else
+     source_factory::evaluateShared(sourceBoundaries, global.resonance, drives, sourceShared);
+-}
++#endif
++}
++
++
++#if CS80_RESEARCH_SHARED_READOUT_RETENTION
++// Noinline plus the explicit input/output memory operands prevents the observed
++// FP status from floating across the original scalar solve in this qualification.
++[[gnu::noinline]] Engine::SharedReadoutUpdate Engine::updateSourceSharedReadout(
++    const source_factory::BothRankDrives& drives) noexcept
++{
++    auto& memo = sourceSharedMemo;
++    if (global.renderPolicy != RenderPolicy::sourcePerformance)
++    {
++        invalidateSourceSharedReadout();
++        return source_factory::evaluateShared(sourceBoundaries, global.resonance, drives, sourceShared)
++            ? SharedReadoutUpdate::solved : SharedReadoutUpdate::failed;
++    }
++    const auto bits = [](double value) { return std::bit_cast<std::uint64_t>(value); };
++    // Z is used by Shared only for validation and saturation. The admission
++    // predicate is integer-only, rejects denormals/nonfinite/out-of-range Z,
++    // and never substitutes a new saturation or sanitization law.
++    bool ordinaryZ = true;
++    for (const auto& rank : drives)
++        for (const auto& d : rank)
++        {
++            const auto magnitude = bits(d.filterEnvelopeZ) & UINT64_C(0x7fffffffffffffff);
++            ordinaryZ &= magnitude == 0
++                || (magnitude >= UINT64_C(0x0010000000000000)
++                    && magnitude <= UINT64_C(0x4008000000000000));
++        }
++    const double resonance = global.resonance;
++    bool same = memo.valid && ordinaryZ && memo.resonanceBits == bits(resonance);
++    for (std::size_t rank = 0; same && rank < kNumRanks; ++rank)
++        for (std::size_t voice = 0; same && voice < kNumVoices; ++voice)
++            same = memo.touchBits[rank][voice][0] == bits(drives[rank][voice].velocity)
++                && memo.touchBits[rank][voice][1] == bits(drives[rank][voice].pressure);
++    unsigned before;
++    asm volatile("stmxcsr %0" : "=m"(before)
++        : "m"(drives), "m"(sourceBoundaries), "m"(sourceShared), "m"(resonance) : "memory");
++    constexpr unsigned controlMask = 0xffc0u, statusMask = 0x3fu, masks = 0x1f80u;
++    const bool masked = (before & masks) == masks;
++    if (same && masked && (before & controlMask) == (memo.postCsr & controlMask)
++        && ((before & statusMask) & (memo.postCsr & statusMask)) == (memo.postCsr & statusMask))
++        return SharedReadoutUpdate::retained;
++    const bool success = source_factory::evaluateShared(sourceBoundaries, resonance, drives, sourceShared);
++    unsigned after;
++    asm volatile("stmxcsr %0" : "=m"(after) : "m"(sourceShared) : "memory");
++    memo.valid = success && ordinaryZ && masked && (before & controlMask) == (after & controlMask);
++    if (memo.valid)
++    {
++        for (std::size_t rank = 0; rank < kNumRanks; ++rank)
++            for (std::size_t voice = 0; voice < kNumVoices; ++voice)
++                memo.touchBits[rank][voice] = { bits(drives[rank][voice].velocity), bits(drives[rank][voice].pressure) };
++        memo.resonanceBits = bits(resonance);
++        memo.postCsr = after;
++    }
++    return success ? SharedReadoutUpdate::solved : SharedReadoutUpdate::failed;
++}
++#endif
+ 
+ int Engine::chooseVoice()
+ {

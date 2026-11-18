@@ -1,0 +1,60 @@
+{
+  "outcome": "REJECT_FULL_FP_CONTRACT_FIRST_TRAP_PARTIAL_STATE_DIVERGENCE",
+  "candidate_header_sha256": "39733b08f96f3730ba054b00fb371b993f3fe8166d5bb848235b95dfa2a756f8",
+  "stock_header_sha256": "140f703f69e856b9c117405ca5d6fff58b756f6acc54c39a1a0417fee8c17a05",
+  "compiler": "GNU c++ 14.2.0",
+  "flags": "-O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic",
+  "masked_differential": {
+    "events": 62784,
+    "constructions": 6192,
+    "bytes": 24109056,
+    "bit_exact": true,
+    "sha256": "bb30bfd94803340eb7acfb3004b54141a7fee0906a4005d079b5e3edf80a5cb0",
+    "instrumented_cache_returns": 4000,
+    "instrumentation_observations_identical_to_frozen_candidate": true
+  },
+  "first_trap_difference": {
+    "event": 1,
+    "network": "built-in LP",
+    "prelude": [
+      1000,
+      2,
+      96000,
+      false
+    ],
+    "attempt": [
+      100001,
+      2,
+      96000,
+      false
+    ],
+    "attempt_MXCSR": "0x0f80",
+    "signal_code_both": 6,
+    "trapped_MXCSR_both": "0x0fa0",
+    "different_field": "lastCutoff",
+    "stock_bits": "0x47c35080",
+    "candidate_bits": "0x447a0000",
+    "stock_value": 100001,
+    "candidate_value": 1000,
+    "all_other_compared_fields_equal_at_first_mismatch": true,
+    "mechanism": "Compiler moved qSiemens division before raw metadata writes in the candidate fallback, whereas the stock changed-cutoff branch writes them first."
+  },
+  "qualifications": [
+    "No timing collected.",
+    "No production changes.",
+    "Stopped further qualification after first detected mechanism.",
+    "Masked pass does not imply unmasked-trap/partial-state equivalence.",
+    "Candidate preprocessor gate is broader than the strict tested compiler flags; it does not exclude every individually enabled unsafe-math mode or FMA."
+  ],
+  "files": {
+    "differential.cpp": "2bf53735c6dad3c08c8d48b1a579e6dea65a3625311d74359aa605852eb10742",
+    "traps.cpp": "26df59bfd65c102707dfdc31fa1d3158887e7f7bd5388849a31dceac0e19b48d",
+    "stock": "acf5f1b687b29ffc77f74a37ac0c0d1824be544d6cf9283b13c3cbaac99bfd34",
+    "candidate": "48cf312be92f5ede88d698f164b65f13e660bbd8db7603f530621bddb5be664e",
+    "instrumented-candidate": "d7c145aab3fc4de1dd9a134388ae1ea0ec2b08e5c8efb7f994a7b105b5a7e00c",
+    "traps-stock": "1854cd5f0ec2f8544db345116ac741234147d736452da3082ff1c6d7a23a8e54",
+    "traps-candidate": "b51d6eb87d6aa921e517f9da0efc1f8d6ffc7e067838d16f0211560d5b10110f",
+    "traps-stock.bin": "ee0a731572231a9aa1ca995a145afaa33368f381c2b3e396c8c90ac6d8e9096b",
+    "traps-candidate.bin": "0fd201f65445e9f868056345f297fea4a4b2543fae13aa40692b390835e82e87"
+  }
+}

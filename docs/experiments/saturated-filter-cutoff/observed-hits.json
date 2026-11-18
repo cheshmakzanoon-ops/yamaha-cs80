@@ -1,0 +1,41 @@
+{
+  "cases": {
+    "factory-moving": {
+      "output": [
+        "3138066e62079bac",
+        "65536",
+        "4096",
+        "9fe0"
+      ],
+      "late_actual_hits": 903712
+    },
+    "panel-moving": {
+      "output": [
+        "bf8b8ae7bb52eb09",
+        "65536",
+        "4096",
+        "9fe0"
+      ],
+      "late_actual_hits": 0
+    },
+    "factory-held": {
+      "output": [
+        "b1b4aedf8b07915d",
+        "65536",
+        "4096",
+        "9fe0"
+      ],
+      "late_actual_hits": 0
+    }
+  },
+  "driver_sha256": "b2bef45087588094b4819e31c6187c98260626472c694097b94a915c003665d7",
+  "candidate_header_sha256": "39733b08f96f3730ba054b00fb371b993f3fe8166d5bb848235b95dfa2a756f8",
+  "probe_sha256": {
+    "stock": "2c2c4dedd6c405d180b860c1d4b113e57fdc08fa3f1f858751c389a1e604c501",
+    "candidate": "85a318612679599662c30f968e911ef06d47773e68622afcd87181208aa033a2",
+    "counted": "ae249e735bdce1083d060e56600edfcf73cca563de093c6b7a8ddcfc77773934"
+  },
+  "counted_header_sha256": "10c095a7fbb0e08ded17bd26e279f2e7a76107585499e96ebbafce0f421e17ba",
+  "cpu": 0,
+  "tag": "all cases untimed; no callback clock read"
+}

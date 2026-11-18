@@ -1,0 +1,36 @@
+{
+  "schema": "source-shared-cache-whole-core-cost-screen-v1",
+  "primary": "factory-held",
+  "case_order": [
+    "factory-held",
+    "factory-moving",
+    "panel-moving",
+    "pure-held"
+  ],
+  "schedule": "2 stock AAAA + 6 ABBA",
+  "bootstrap_seed": 2026111802,
+  "predeclared_admission": "Primary lower 95% must exceed max(0.02, max absolute A/A block gain, three times largest primary empty clock fraction). All three controls lower 95% >= -0.03. No retry or selection.",
+  "bounds": "12s wall / 10s CPU per slot, 360s global. No timing resume or deletion on interruption. Full completion -> native study only; no product claim.",
+  "utc_frozen": "2026-11-18T01:08:45.599343+00:00",
+  "cpu": 0,
+  "baseline": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "shipping_source_unchanged_through": "5b4084e8a3d466bb978d02eb6ffe8700ab6269a8",
+  "frozen_source_plan_sha256": "8d70ae22fef33ce8a64023617c1acd1327c624b4080162204c1b1850b08381c6",
+  "original_input_sha256": {
+    "qualification": "6b1a460c6976277974f7639db1504f1e5f660c0bdab28a152a8e8ea7d8bddec0",
+    "stock": "6d8c829cfc8ef0cd8502082c419e7fbe92e39bbf1d31d4df7c8deef22ca1f497",
+    "candidate": "f1106bea1303c219d2a9201ba429d8a985ccd5f514c9db6b11ffaaa054a6ffaa",
+    "counted_reference_only": "3dbe9d9001d402e906aad3edc34b8ec7da15dbefb22423be0540f3d15405182a",
+    "stock_archive": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+    "candidate_archive": "e6fc010ac3b0aa73a707c210857d57ef57fa23dd4af859e6a25342f95504e8c5",
+    "method": "cd98a6cb288558c26057c999d4ff21aeec95ccf8fad7f0c791fec9a0e9f49464",
+    "design": "b8a9742f7e264b00063a61aa8fc573e7100c24c8f0a22330779862a8ba41193d",
+    "cost_source": "1d0715224938a736aff97c36df0c3565ec437c7667905778e3e500a516d4494f",
+    "patch": "722b257644e94ae6f38e02257297a785ff351506550b2a07f0cd866e84ad5ed0",
+    "direct_gate": "324dced99c6862f0b2acf8b8a81c5e588945c13e3698bcf068ea24de463457e6",
+    "trace_gate": "3a8bb082546ca39c8a22773d68f9ed435f7d36aa0e689f3c1decc5def3124d42",
+    "exclusive": "ae6178a04590acf9775c1be23fac3c789d4497aabc48c3fc9b6ed704109aeb7f"
+  },
+  "primary_workload": "Source Performance, factory selector zero on both ranks, eight distinct active notes, dry/held, 48 kHz and 64-frame blocks. 1024 warm blocks, 512 measured blocks (from 1.365 s after onset).",
+  "scope": "Real Engine event/control/render thread CPU; not a plugin/DAW or absolute CPU percentage. Full admission permits a separate properly matched native plugin study only."
+}

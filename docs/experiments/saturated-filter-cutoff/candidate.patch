@@ -1,0 +1,115 @@
+--- a/src/core/Ig00156Filter.h
++++ b/src/core/Ig00156Filter.h
+@@ -49,6 +49,15 @@
+ #include <algorithm>
+ #include <cmath>
+ 
++#if defined(__GNUC__) && !defined(__clang__) && defined(__x86_64__) && defined(__SSE2_MATH__) && !defined(__FAST_MATH__)
++#include <bit>
++#include <cstdint>
++#include <xmmintrin.h>
++#define CS80_RESEARCH_SATURATED_LP_CACHE 1
++#else
++#define CS80_RESEARCH_SATURATED_LP_CACHE 0
++#endif
++
+ namespace cs80
+ {
+ struct Ig00156BatchAccess;
+@@ -100,6 +109,20 @@
+ public:
+     explicit Ig00156Stage(const Ig00156Network& n = kIg00156HighPassNetwork) noexcept : net(n)
+     {
++#if CS80_RESEARCH_SATURATED_LP_CACHE
++        // Only the built-in LP network has the bounded intermediate range
++        // used by this optimization. Use integer comparisons even for a
++        // user-supplied exceptional or signaling network.
++        const auto same = [](double a, double b) {
++            return std::bit_cast<std::uint64_t>(a) == std::bit_cast<std::uint64_t>(b);
++        };
++        constexpr auto p = kIg00156LowPassNetwork;
++        if (same(n.sourceOhms,p.sourceOhms) && same(n.groundOhms,p.groundOhms)
++            && same(n.inputFarads,p.inputFarads) && same(n.feedbackOhms,p.feedbackOhms)
++            && same(n.feedbackFarads,p.feedbackFarads) && same(n.integratorFarads,p.integratorFarads)
++            && same(n.feedforwardOhms,p.feedforwardOhms))
++            saturatedLp = isBuiltInLp;
++#endif
+         gs = 1.0 / net.sourceOhms;
+         gg = 1.0 / net.groundOhms;
+         gf = 1.0 / net.feedbackOhms;
+@@ -143,6 +166,9 @@
+         kHalf = m.halfIntegrators; kHalfCoupling = m.halfCouplings;
+         lastCutoff = lastQ = lastRate = -1.0f;
+         cutoffCoefficientsValid = false;
++#if CS80_RESEARCH_SATURATED_LP_CACHE
++        saturatedLp &= isBuiltInLp;
++#endif
+     }
+     // Half steps of the present coefficients: integrators (p * T / 2) and the
+     // two coupling capacitors (equal unless couplingsUnwarped).
+@@ -182,6 +208,35 @@
+         q = clampf(q, 0.35f, 9.0f);
+         if (gmCutoffHz == lastCutoff && q == lastQ && sampleRate == lastRate && couplingsUnwarped == lastUnwarped)
+             return;
++#if CS80_RESEARCH_SATURATED_LP_CACHE
++        const unsigned prior = saturatedLp;
++        // An ordinary finite input >= fs/2 is unambiguously above the
++        // existing 0.45*fs - feedforward clamp, in any rounding mode.
++        // Positive normal float order and halving use only integer bits.
++        const auto u32 = [](float x) { return std::bit_cast<std::uint32_t>(x); };
++        const auto srKey=u32(sampleRate), gmKey=u32(gmCutoffHz), qKey=u32(q);
++        const bool ordinarySaturation = (prior & isBuiltInLp) != 0 && !couplingsUnwarped
++            && srKey>=u32(8000.0f) && srKey<=u32(1536000.0f)
++            && gmKey<0x7f800000u && gmKey>=srKey-0x00800000u
++            && qKey>=u32(0.35f) && qKey<=u32(9.0f);
++        if (ordinarySaturation && (prior & hasCompleteCoefficients) != 0
++            && srKey==u32(lastRate) && qKey==u32(lastQ)) {
++            const unsigned csr = _mm_getcsr();
++            if ((csr & 0xffc0u)==(prior & 0xffc0u) && (csr & 0x1fa0u)==0x1fa0u) {
++                // Same bounded coefficient transaction. With this network
++                // and ranges, its only possible newly raised flag is inexact,
++                // which is already sticky. Preserve the raw request metadata.
++                lastCutoff=gmCutoffHz;
++                return;
++            }
++        }
++        // Never authorize reuse via a Q-only update, a restore, or a
++        // partially completed/trapped slow path.
++        if (prior & hasCompleteCoefficients) {
++            saturatedLp=static_cast<std::uint16_t>(prior & isBuiltInLp);
++            asm volatile("" ::: "memory");
++        }
++#endif
+         // Q does not enter the cutoff calibration or capacitor half steps.
+         // Reuse those existing fields, but keep the original linear elimination
+         // below in one common path. Extra coefficient-cache doubles grow every
+@@ -220,6 +275,17 @@
+         xFromBp = (a11 * kf * (qSiemensValue - gs - gg) + a21 * kiGs) / det;
+         inFromX = kiGs / a11;
+         invA11 = 1.0 / a11;
++#if CS80_RESEARCH_SATURATED_LP_CACHE
++        if (ordinarySaturation && !cutoffUnchanged) {
++            // The stamp describes the controls for this complete coefficient
++            // computation, not the last call's controls. Publish it last.
++            asm volatile("" ::: "memory");
++            const unsigned csr = _mm_getcsr();
++            if ((csr & 0x1f80u)==0x1f80u)
++                saturatedLp=static_cast<std::uint16_t>((csr & 0xffc0u)
++                                                      | isBuiltInLp | hasCompleteCoefficients);
++        }
++#endif
+     }
+ 
+     struct Output { float lp = 0.0f, hp = 0.0f, bp = 0.0f; };
+@@ -295,6 +361,11 @@
+     float lastCutoff = -1.0f, lastQ = -1.0f, lastRate = -1.0f;
+     bool lastUnwarped = false;
+     bool cutoffCoefficientsValid = false;
++#if CS80_RESEARCH_SATURATED_LP_CACHE
++    static constexpr unsigned isBuiltInLp=1, hasCompleteCoefficients=2;
++    // The 16-bit stamp occupies original trailing padding on the target ABI.
++    std::uint16_t saturatedLp=0;
++#endif
+ };
+ 
+ // Q-block conductance of the selected affine law at a Q-pin voltage, for the
