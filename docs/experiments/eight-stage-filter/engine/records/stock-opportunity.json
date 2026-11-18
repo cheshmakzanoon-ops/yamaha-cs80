@@ -1,0 +1,133 @@
+{
+  "scope": "New bounded STOCK ONLY wrapper census. No candidate DSP or timing. All source and core archive unchanged. Observer installed through existing private kernel pointer, normal archive executes original kernels.",
+  "warm_callbacks": 1024,
+  "counted_callbacks": 16,
+  "continuation_callbacks": 1,
+  "internal_samples_counted": 2048,
+  "pairs_per_internal_sample": 4,
+  "rate": 48000,
+  "block": 64,
+  "drift": 0.37,
+  "dispersion": 0.18,
+  "rows": [
+    {
+      "scene": "factory-held",
+      "counts": {
+        "calls": 16384,
+        "accepted": 16257,
+        "pairs": 8192,
+        "both_accepted": 8067,
+        "distinct_eight": 8192,
+        "heterogeneous_inputs": 8192,
+        "future_raw_noops": 8192,
+        "bad_numbered_order": 0
+      },
+      "bytes_per_arm": 566304,
+      "sha256": "a07be7f83af85c2b007c73b4f282083ed65d93008f30b1155ec0f16d693f3695",
+      "fp_tuples": [
+        [
+          40928,
+          40928,
+          895,
+          895,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "scene": "factory-moving",
+      "counts": {
+        "calls": 16384,
+        "accepted": 16208,
+        "pairs": 8192,
+        "both_accepted": 8017,
+        "distinct_eight": 8192,
+        "heterogeneous_inputs": 8192,
+        "future_raw_noops": 170,
+        "bad_numbered_order": 0
+      },
+      "bytes_per_arm": 566304,
+      "sha256": "3fda2df5b2625a729b6f93c4c14edab7453cf2b853508728ea1370e1ebba9472",
+      "fp_tuples": [
+        [
+          40928,
+          40928,
+          895,
+          895,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "scene": "panel-moving",
+      "counts": {
+        "calls": 16384,
+        "accepted": 16384,
+        "pairs": 8192,
+        "both_accepted": 8192,
+        "distinct_eight": 8192,
+        "heterogeneous_inputs": 8192,
+        "future_raw_noops": 0,
+        "bad_numbered_order": 0
+      },
+      "bytes_per_arm": 566304,
+      "sha256": "443dc4c38074f171663b6be61002dcd217ddc2651e7c9d7db8d5c18f0694945b",
+      "fp_tuples": [
+        [
+          40928,
+          40928,
+          895,
+          895,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "scene": "pure-held",
+      "counts": {
+        "calls": 16384,
+        "accepted": 16244,
+        "pairs": 8192,
+        "both_accepted": 8053,
+        "distinct_eight": 8192,
+        "heterogeneous_inputs": 8192,
+        "future_raw_noops": 8192,
+        "bad_numbered_order": 0
+      },
+      "bytes_per_arm": 566304,
+      "sha256": "c81dc85aaaf31cd7295cd1c4a67b6abce22552cae176fa886e8ae3a525d55b07",
+      "fp_tuples": [
+        [
+          40928,
+          40928,
+          895,
+          895,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "limitations": [
+    "Actual second quartet is observed only at its genuine later stock dispatch; this is retrospective opportunity, not eight-kernel admission.",
+    "State snapshots are not captured; parity covers full PCM and before/after FP/errno only.",
+    "No exception, signal, eight-lane arithmetic or reordered-caller qualification.",
+    "Future raw-noop observations use fixture-specific positive finite controls; any future guard must explicitly reject nonfinite controls and inspect actual rate.",
+    "The unchanged cost fixture prefix includes unused clock code but only Work::step is called. No clock function is executed.",
+    "No speed forecast; no CPU or wall-time measurements."
+  ],
+  "normal_archive_sha256": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+  "stock_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "integration_eight_success_is_not_stock_quartet_eligibility": true
+}

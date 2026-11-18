@@ -1,0 +1,336 @@
+{
+  "trap_cases": 22,
+  "real_SIGFPE": 7,
+  "post_target_continuation_samples": 4,
+  "includes_precision_only_CSR": "0x0f80",
+  "normalized_signal_columns": [
+    "case",
+    "signal",
+    "code",
+    "function",
+    "offset",
+    "mxcsr",
+    "x87_cw",
+    "x87_sw",
+    "errno"
+  ],
+  "normalized_signals": [
+    [
+      0,
+      8,
+      7,
+      "cs80::ReconstructedOscillator::tick(double, cs80::WscControls const&)",
+      10638,
+      7969,
+      895,
+      0,
+      23
+    ],
+    [
+      1,
+      8,
+      7,
+      "cs80::ReconstructedOscillator::tick(double, cs80::WscControls const&)",
+      10701,
+      7969,
+      895,
+      0,
+      23
+    ],
+    [
+      2,
+      8,
+      7,
+      "cs80::ReconstructedOscillator::recordEvent(double, unsigned int, cs80::ReconstructedOscillator::Nodes const&, cs80::ReconstructedOscillator::Nodes const&)",
+      1178,
+      7969,
+      895,
+      0,
+      23
+    ],
+    [
+      3,
+      8,
+      7,
+      "cs80::ReconstructedOscillator::tick(double, cs80::WscControls const&)",
+      10226,
+      7969,
+      895,
+      0,
+      23
+    ],
+    [
+      4,
+      8,
+      7,
+      "cs80::ReconstructedOscillator::tick(double, cs80::WscControls const&)",
+      10226,
+      7969,
+      895,
+      0,
+      23
+    ],
+    [
+      5,
+      8,
+      7,
+      "cs80::ReconstructedOscillator::recordEvent(double, unsigned int, cs80::ReconstructedOscillator::Nodes const&, cs80::ReconstructedOscillator::Nodes const&)",
+      1306,
+      7969,
+      895,
+      0,
+      23
+    ],
+    [
+      6,
+      8,
+      6,
+      "void cs80::Engine::processInternalSampleImpl<false>(float&, float&, float)",
+      58,
+      4000,
+      895,
+      0,
+      23
+    ],
+    [
+      7,
+      0,
+      0,
+      null,
+      0,
+      8096,
+      894,
+      0,
+      23
+    ],
+    [
+      8,
+      0,
+      0,
+      null,
+      0,
+      49120,
+      1919,
+      0,
+      23
+    ],
+    [
+      9,
+      0,
+      0,
+      null,
+      0,
+      8097,
+      895,
+      0,
+      23
+    ],
+    [
+      10,
+      0,
+      0,
+      null,
+      0,
+      8097,
+      895,
+      0,
+      23
+    ],
+    [
+      11,
+      0,
+      0,
+      null,
+      0,
+      8097,
+      895,
+      0,
+      23
+    ],
+    [
+      12,
+      0,
+      0,
+      null,
+      0,
+      8097,
+      895,
+      0,
+      23
+    ],
+    [
+      13,
+      0,
+      0,
+      null,
+      0,
+      8097,
+      895,
+      0,
+      23
+    ],
+    [
+      14,
+      0,
+      0,
+      null,
+      0,
+      8097,
+      895,
+      0,
+      23
+    ],
+    [
+      15,
+      0,
+      0,
+      null,
+      0,
+      8097,
+      895,
+      0,
+      23
+    ],
+    [
+      16,
+      0,
+      0,
+      null,
+      0,
+      8096,
+      895,
+      0,
+      23
+    ],
+    [
+      17,
+      0,
+      0,
+      null,
+      0,
+      8096,
+      895,
+      0,
+      23
+    ],
+    [
+      18,
+      0,
+      0,
+      null,
+      0,
+      8096,
+      895,
+      0,
+      23
+    ],
+    [
+      19,
+      0,
+      0,
+      null,
+      0,
+      8096,
+      895,
+      0,
+      23
+    ],
+    [
+      20,
+      0,
+      0,
+      null,
+      0,
+      8096,
+      895,
+      0,
+      23
+    ],
+    [
+      21,
+      0,
+      0,
+      null,
+      0,
+      8096,
+      895,
+      0,
+      23
+    ]
+  ],
+  "equal_signal_arms": [
+    "stock",
+    "normal",
+    "reverse",
+    "observed"
+  ],
+  "trap_rows": [
+    {
+      "fixture": "traps",
+      "arm": "stock",
+      "bytes": 17019552,
+      "sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec",
+      "stock_equal": true,
+      "normalized_signal_equal": true,
+      "selected_tick_bytes": 12063
+    },
+    {
+      "fixture": "traps",
+      "arm": "normal",
+      "bytes": 17019552,
+      "sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec",
+      "stock_equal": true,
+      "normalized_signal_equal": true,
+      "selected_tick_bytes": 12063
+    },
+    {
+      "fixture": "traps",
+      "arm": "reverse",
+      "bytes": 17019552,
+      "sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec",
+      "stock_equal": true,
+      "normalized_signal_equal": true,
+      "selected_tick_bytes": 12063
+    }
+  ],
+  "observed_gate": {
+    "stock_equal": true,
+    "bytes": 17019552,
+    "sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec",
+    "nine_unsupported_fp_target_samples_zero_attempts": true,
+    "stdout": "case 0 eight attempts=0 hits=0 consumed=0\ncase 1 eight attempts=0 hits=0 consumed=0\ncase 2 eight attempts=0 hits=0 consumed=0\ncase 3 eight attempts=0 hits=0 consumed=0\ncase 4 eight attempts=0 hits=0 consumed=0\ncase 5 eight attempts=0 hits=0 consumed=0\ncase 6 eight attempts=0 hits=0 consumed=0\ncase 7 eight attempts=0 hits=0 consumed=0\ncase 8 eight attempts=0 hits=0 consumed=0\ntwenty-two cases, seven real SIGFPE plus twelve ordinal/mixed cases; partial state and four masked continuation samples archived\n"
+  },
+  "directed_cases": 16,
+  "directed_callbacks": 2064,
+  "idle_callbacks": 768,
+  "enabled_bbd_callbacks": 1032,
+  "directed_rows": [
+    {
+      "fixture": "directed",
+      "arm": "stock",
+      "bytes": 64267367,
+      "sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442",
+      "stock_equal": true,
+      "normalized_signal_equal": true,
+      "selected_tick_bytes": 12063
+    },
+    {
+      "fixture": "directed",
+      "arm": "normal",
+      "bytes": 64267367,
+      "sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442",
+      "stock_equal": true,
+      "normalized_signal_equal": true,
+      "selected_tick_bytes": 12063
+    },
+    {
+      "fixture": "directed",
+      "arm": "reverse",
+      "bytes": 64267367,
+      "sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442",
+      "stock_equal": true,
+      "normalized_signal_equal": true,
+      "selected_tick_bytes": 12063
+    }
+  ]
+}

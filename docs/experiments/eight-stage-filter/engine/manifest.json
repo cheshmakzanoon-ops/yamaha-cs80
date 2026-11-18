@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "scope": "Research-only eight-stage Engine exactness checkpoint; no performance approval",
+  "files": {
+    "README.md": {
+      "bytes": 7539,
+      "sha256": "440b93d8ca98199efcc1da748eebde343ccc99e597d1173d7628d074fe83d262"
+    },
+    "REPRODUCE.md": {
+      "bytes": 5486,
+      "sha256": "2afecdd22b2c882b1eddf4d98f5240fe81c9998c487e32c3da67c8c550766568"
+    },
+    "bridge-v1-to-v2.patch": {
+      "bytes": 1381,
+      "sha256": "5c5779277c15e77e443975bbd5e97062f1243b789024f04cf0a81669dcea33c3"
+    },
+    "candidate.patch": {
+      "bytes": 57436,
+      "sha256": "9dd76b78b706548820cccdd61fc432dae1d61c2ebc13d352153baebe0b304b13"
+    },
+    "fixtures/ObserverRuntime.inc": {
+      "bytes": 5301,
+      "sha256": "83898fa6da21d037feab465ee400b434504898bd4ecd96e52d4510e4b7adab1a"
+    },
+    "fixtures/directed.cpp": {
+      "bytes": 27486,
+      "sha256": "d71ca8b4be357ca21e4880a5c6ca1b410f1724db9e2888d26c7ada778ec2b0d5"
+    },
+    "fixtures/fixture.inc": {
+      "bytes": 7230,
+      "sha256": "1a095df7ae3321346b504abe86df7e66e754ae888cb7f26ad612ab5d28e54efa"
+    },
+    "fixtures/held-trace.cpp": {
+      "bytes": 4715,
+      "sha256": "e7c34f4952835af115468373fe5e742c33b326252f63a65bc76a9d74f78b470c"
+    },
+    "fixtures/observe_engine.h": {
+      "bytes": 8287,
+      "sha256": "ed7e47d4de2437fdd3a5135460c1cf92fafc63ff07102632e0515358caa64a19"
+    },
+    "fixtures/scene-trace.cpp": {
+      "bytes": 4879,
+      "sha256": "063727c48f98d0b5ad056c1154e56b40bcafe66d36393c51b4975dca671651ce"
+    },
+    "fixtures/stock-census.cpp": {
+      "bytes": 3193,
+      "sha256": "067e54dbcaf08322769638414f282abb6c0d9e3da095537a0aef71b9e2af7667"
+    },
+    "fixtures/traps.cpp": {
+      "bytes": 6613,
+      "sha256": "2466613bd6d3636ebdb66223b100432c4800ef4e805a6c0ec58182b74af46746"
+    },
+    "observer.patch": {
+      "bytes": 1260,
+      "sha256": "83252378d330ace78da87d3ce35120747a933e6e76cc5fe66e5dac82ab83978c"
+    },
+    "offline-validation.json": {
+      "bytes": 366,
+      "sha256": "c189e4c5cc2f51b16d9a6a03864bbbd80454bd61885c91ec49e76b30bdfeacc8"
+    },
+    "prepare.py": {
+      "bytes": 1527,
+      "sha256": "233779aacc0dc27d8b62bf2cee87b95f5a957ca54aabd0f62aa9d0e1e8016690"
+    },
+    "provenance.json": {
+      "bytes": 4662,
+      "sha256": "2ac87b1db7f15000e29bf9ea330e883e3fbd81ab06b69123aba11e044fb96793"
+    },
+    "records/exceptional.json": {
+      "bytes": 5879,
+      "sha256": "4ba9f84d91b5649fb996efbf3e5973fbec397f39d61440bb7969bdee272ba6dc"
+    },
+    "records/held.json": {
+      "bytes": 495,
+      "sha256": "7e8da6474c389344f6644954bc7604e90fa29671f940de36d846f77deaae04e0"
+    },
+    "records/rejected-v1.json": {
+      "bytes": 1097,
+      "sha256": "7d1bebe025f128f22f305c587f9886ad1e480a2fda8b9c3c4b38bc02d39e9518"
+    },
+    "records/scenes.json": {
+      "bytes": 5274,
+      "sha256": "e01afbc391de9557b5f80d7c08ce184369e39891d26121b1873ff07c7a254ff8"
+    },
+    "records/static-v2.json": {
+      "bytes": 6528,
+      "sha256": "4beed54ad7535a9991886fb3cdd7e3367193eff7f6b98b13dbd92d219e7db429"
+    },
+    "records/stock-opportunity.json": {
+      "bytes": 3760,
+      "sha256": "b4c53049deaa49f1ba97c004479dc39fc2a3283106cd4b2c8112e27856e10579"
+    },
+    "source-inventory.json": {
+      "bytes": 20369,
+      "sha256": "fd6052e6c010f71d3d0a88ec42ad6f4976763493d27abb1f7fcda69b8101714c"
+    },
+    "test_verify.py": {
+      "bytes": 2820,
+      "sha256": "7a2e25a670bac89554bd0e38c2d08b5e36fcc799311637b6bf7c91e062cfdd26"
+    },
+    "verify.py": {
+      "bytes": 8768,
+      "sha256": "0f13116959845b9f4352c3421d1bc8c4648c5ec41adce9c7b5f8057669250a72"
+    }
+  }
+}

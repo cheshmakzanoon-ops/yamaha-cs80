@@ -1,0 +1,37 @@
+{
+  "stock_dependencies": {
+    "core/Dsp.h": "8a217f1ac7800eacb4f2691e34cab99694e873fef446d3292a3a10d030d03dd2",
+    "core/FastMath.h": "a8e87ed8e4d19a03dc99327036f401cd5d2e49c6ca8e3a5356a33d4689347ea0",
+    "core/Ig00156Batch.cpp": "f4fc11314d415a7581a0e495a5faee80e2444bca9f0044882ea3b5ea14bb2752",
+    "core/Ig00156Batch.h": "2c8d452ff2423820c56b5b994f805775e5159920840dbc8334c89ca8102a0985",
+    "core/Ig00156Filter.h": "140f703f69e856b9c117405ca5d6fff58b756f6acc54c39a1a0417fee8c17a05",
+    "core/Ig00156RootFallback.h": "311be1754f56a63646e0c98f468ea0ca21932bb21c4823ce2c2c1cfdb92f4eed"
+  },
+  "candidate_changes": {
+    "core/Ig00156Eight.h": "ad538a096a8b5fd05f3d909e3cf584ea3f955b93d786a98c2192697fb7dd9322",
+    "core/Ig00156Eight.cpp": "3487dbc28f491f0c53f5d42871e2c59ddb87b1839db2aaddd1bf82c573adb8a1",
+    "core/Ig00156Filter.h": "ad25f4a954919062ff22539f895e6462fc6f4ad45e31210f5d1c4b807b25896e"
+  },
+  "original_reference_cpp": "f4fc11314d415a7581a0e495a5faee80e2444bca9f0044882ea3b5ea14bb2752",
+  "original_and_shared_friend_reference_object_sha256": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+  "original_reference_object_equals_shared_friend_reference_object": true,
+  "candidate_normal_object_sha256": "434949e1f49f3ea6934de42861f969d9642f67a786880de219f2afab1442e081",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "common_flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-ffp-contract=off"
+  ],
+  "function_target": "avx2,avx512f,avx512vl,avx512dq,no-fma",
+  "recovery_define": "CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY=1",
+  "payload_sha256": {
+    "prototype.patch": "7815ddfa2186220ccc6c59bc5f0074b8253ba9a8eda6d5f57d227387deb6a1a8",
+    "direct-test.cpp": "a7dacea82e0259f82b589e9ce168081ab6ef50021f6ae0734887363d8e0a416c",
+    "dispatch-probe.cpp": "92e52ebc67d0040855678d4b55340c96e44135c8a7fd8715b2430b34293ed36b"
+  }
+}

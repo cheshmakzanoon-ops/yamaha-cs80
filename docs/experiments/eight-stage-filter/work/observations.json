@@ -1,0 +1,336 @@
+{
+  "schema": 1,
+  "timing": false,
+  "fixture": {
+    "scene": "factory-held",
+    "sample_rate": 48000,
+    "frames": 64,
+    "internal_oversampling": 2,
+    "warm_callbacks": 1024,
+    "counted_callbacks": 16,
+    "continuation_callbacks": 1,
+    "drift": 0.37,
+    "dispersion": 0.18,
+    "eight_notes": [
+      36,
+      43,
+      48,
+      55,
+      60,
+      64,
+      67,
+      72
+    ],
+    "source_frame_before_midi": true
+  },
+  "warmup": {
+    "callbacks": 1024,
+    "event_counts": "not recorded; executed and included in byte-exact trace"
+  },
+  "phases": {
+    "window": {
+      "stock": {
+        "kernel_calls": 16384,
+        "accepted": 16257,
+        "declined": 127,
+        "loop_body_passes": 21025,
+        "newton_update_passes": 4768,
+        "width_weighted_loop_slots": 84100,
+        "active_lane_loop_slots": 70478,
+        "histogram": {
+          "4-wide/accepted/1-passes": 11696,
+          "4-wide/accepted/2-passes": 4354,
+          "4-wide/accepted/3-passes": 207,
+          "4-wide/declined/0-passes": 127
+        }
+      },
+      "candidate": {
+        "kernel_calls": 8473,
+        "accepted": 8190,
+        "declined": 283,
+        "loop_body_passes": 12254,
+        "newton_update_passes": 4064,
+        "width_weighted_loop_slots": 97448,
+        "active_lane_loop_slots": 70478,
+        "histogram": {
+          "4-wide/accepted/1-passes": 100,
+          "4-wide/accepted/2-passes": 23,
+          "4-wide/declined/0-passes": 127,
+          "8-wide/accepted/1-passes": 4231,
+          "8-wide/accepted/2-passes": 3631,
+          "8-wide/accepted/3-passes": 205,
+          "8-wide/declined/0-passes": 156
+        }
+      },
+      "candidate_four": {
+        "kernel_calls": 250,
+        "accepted": 123,
+        "declined": 127,
+        "loop_body_passes": 146,
+        "newton_update_passes": 23,
+        "width_weighted_loop_slots": 584,
+        "active_lane_loop_slots": 516,
+        "histogram": {
+          "4-wide/accepted/1-passes": 100,
+          "4-wide/accepted/2-passes": 23,
+          "4-wide/declined/0-passes": 127
+        }
+      },
+      "candidate_eight": {
+        "kernel_calls": 8223,
+        "accepted": 8067,
+        "declined": 156,
+        "loop_body_passes": 12108,
+        "newton_update_passes": 4041,
+        "width_weighted_loop_slots": 96864,
+        "active_lane_loop_slots": 69962,
+        "histogram": {
+          "8-wide/accepted/1-passes": 4231,
+          "8-wide/accepted/2-passes": 3631,
+          "8-wide/accepted/3-passes": 205,
+          "8-wide/declined/0-passes": 156
+        }
+      },
+      "matched_pair_pass_histogram": {
+        "1+1->1": 4231,
+        "1+2->2": 1670,
+        "1+3->3": 75,
+        "2+1->2": 1345,
+        "2+2->2": 616,
+        "2+3->3": 55,
+        "3+1->3": 44,
+        "3+2->3": 29,
+        "3+3->3": 2
+      },
+      "eight_decline_matched_stock_statuses": {
+        "[0, 0]": 2,
+        "[0, 1]": 91,
+        "[1, 0]": 63
+      },
+      "uneven_eight_groups": 3218
+    },
+    "continuation": {
+      "stock": {
+        "kernel_calls": 1024,
+        "accepted": 1013,
+        "declined": 11,
+        "loop_body_passes": 1269,
+        "newton_update_passes": 256,
+        "width_weighted_loop_slots": 5076,
+        "active_lane_loop_slots": 4308,
+        "histogram": {
+          "4-wide/accepted/1-passes": 767,
+          "4-wide/accepted/2-passes": 236,
+          "4-wide/accepted/3-passes": 10,
+          "4-wide/declined/0-passes": 11
+        }
+      },
+      "candidate": {
+        "kernel_calls": 534,
+        "accepted": 511,
+        "declined": 23,
+        "loop_body_passes": 742,
+        "newton_update_passes": 231,
+        "width_weighted_loop_slots": 5888,
+        "active_lane_loop_slots": 4308,
+        "histogram": {
+          "4-wide/accepted/1-passes": 6,
+          "4-wide/accepted/2-passes": 3,
+          "4-wide/declined/0-passes": 11,
+          "8-wide/accepted/1-passes": 284,
+          "8-wide/accepted/2-passes": 208,
+          "8-wide/accepted/3-passes": 10,
+          "8-wide/declined/0-passes": 12
+        }
+      },
+      "candidate_four": {
+        "kernel_calls": 20,
+        "accepted": 9,
+        "declined": 11,
+        "loop_body_passes": 12,
+        "newton_update_passes": 3,
+        "width_weighted_loop_slots": 48,
+        "active_lane_loop_slots": 39,
+        "histogram": {
+          "4-wide/accepted/1-passes": 6,
+          "4-wide/accepted/2-passes": 3,
+          "4-wide/declined/0-passes": 11
+        }
+      },
+      "candidate_eight": {
+        "kernel_calls": 514,
+        "accepted": 502,
+        "declined": 12,
+        "loop_body_passes": 730,
+        "newton_update_passes": 228,
+        "width_weighted_loop_slots": 5840,
+        "active_lane_loop_slots": 4269,
+        "histogram": {
+          "8-wide/accepted/1-passes": 284,
+          "8-wide/accepted/2-passes": 208,
+          "8-wide/accepted/3-passes": 10,
+          "8-wide/declined/0-passes": 12
+        }
+      },
+      "matched_pair_pass_histogram": {
+        "1+1->1": 284,
+        "1+2->2": 164,
+        "1+3->3": 10,
+        "2+1->2": 19,
+        "2+2->2": 25
+      },
+      "eight_decline_matched_stock_statuses": {
+        "[0, 1]": 8,
+        "[1, 0]": 4
+      },
+      "uneven_eight_groups": 193
+    },
+    "combined": {
+      "stock": {
+        "kernel_calls": 17408,
+        "accepted": 17270,
+        "declined": 138,
+        "loop_body_passes": 22294,
+        "newton_update_passes": 5024,
+        "width_weighted_loop_slots": 89176,
+        "active_lane_loop_slots": 74786,
+        "histogram": {
+          "4-wide/accepted/1-passes": 12463,
+          "4-wide/accepted/2-passes": 4590,
+          "4-wide/accepted/3-passes": 217,
+          "4-wide/declined/0-passes": 138
+        }
+      },
+      "candidate": {
+        "kernel_calls": 9007,
+        "accepted": 8701,
+        "declined": 306,
+        "loop_body_passes": 12996,
+        "newton_update_passes": 4295,
+        "width_weighted_loop_slots": 103336,
+        "active_lane_loop_slots": 74786,
+        "histogram": {
+          "4-wide/accepted/1-passes": 106,
+          "4-wide/accepted/2-passes": 26,
+          "4-wide/declined/0-passes": 138,
+          "8-wide/accepted/1-passes": 4515,
+          "8-wide/accepted/2-passes": 3839,
+          "8-wide/accepted/3-passes": 215,
+          "8-wide/declined/0-passes": 168
+        }
+      },
+      "candidate_four": {
+        "kernel_calls": 270,
+        "accepted": 132,
+        "declined": 138,
+        "loop_body_passes": 158,
+        "newton_update_passes": 26,
+        "width_weighted_loop_slots": 632,
+        "active_lane_loop_slots": 555,
+        "histogram": {
+          "4-wide/accepted/1-passes": 106,
+          "4-wide/accepted/2-passes": 26,
+          "4-wide/declined/0-passes": 138
+        }
+      },
+      "candidate_eight": {
+        "kernel_calls": 8737,
+        "accepted": 8569,
+        "declined": 168,
+        "loop_body_passes": 12838,
+        "newton_update_passes": 4269,
+        "width_weighted_loop_slots": 102704,
+        "active_lane_loop_slots": 74231,
+        "histogram": {
+          "8-wide/accepted/1-passes": 4515,
+          "8-wide/accepted/2-passes": 3839,
+          "8-wide/accepted/3-passes": 215,
+          "8-wide/declined/0-passes": 168
+        }
+      },
+      "matched_pair_pass_histogram": {
+        "1+1->1": 4515,
+        "1+2->2": 1834,
+        "1+3->3": 85,
+        "2+1->2": 1364,
+        "2+2->2": 641,
+        "2+3->3": 55,
+        "3+1->3": 44,
+        "3+2->3": 29,
+        "3+3->3": 2
+      },
+      "eight_decline_matched_stock_statuses": {
+        "[0, 0]": 2,
+        "[0, 1]": 99,
+        "[1, 0]": 67
+      },
+      "uneven_eight_groups": 3411
+    }
+  },
+  "observed_trace": {
+    "bytes_per_arm": 24109781,
+    "sha256": "7c2d6b931a77175f3ca200e20e80bdefba3a6ab15ce544c918ec41fb6bfc21e6",
+    "stock_counted_matches": true,
+    "candidate_counted_matches": true,
+    "original_v2_observer_window": {
+      "attempts": 8223,
+      "accepted": 8067,
+      "consumed": 8067,
+      "duplicate_owners": 0
+    },
+    "original_v2_observer_with_continuation": {
+      "attempts": 8737,
+      "accepted": 8569,
+      "consumed": 8569,
+      "duplicate_owners": 0
+    }
+  },
+  "full_raw_matching": {
+    "passed": true,
+    "matched_quartets": 17408,
+    "all_stage_ids_and_input_bits_match": true,
+    "all_explicit_field_fingerprints_match": true,
+    "fingerprint": "FNV64 over explicitly serialized byte representations; not a collision-free full pre-state proof",
+    "all_split_active_mask_sequences_match": true
+  },
+  "raw_artifacts": {
+    "stock.jsonl": {
+      "sha256": "801888f38b38bf56aa568e762358787d3ea064949801f9585ff9e4c98b0e4b0f",
+      "bytes": 3771764,
+      "bundled": false,
+      "count_projection_sha256": "ce717d55bfd37401d86ad84ba6c0df2a7d42b74092e111b0f1dbb4d69606484f"
+    },
+    "candidate.jsonl": {
+      "sha256": "aa339b0c214e47c42dc86210070030ccdfa24a648c9cc47c1e94ae901c584abd",
+      "bytes": 3221191,
+      "bundled": false,
+      "count_projection_sha256": "ba8b8d11bbeac2622c1884c48e1e86941b6df98ac288319c04210d92621c22e1"
+    },
+    "stock.bin": {
+      "sha256": "7c2d6b931a77175f3ca200e20e80bdefba3a6ab15ce544c918ec41fb6bfc21e6",
+      "bytes": 24109781,
+      "bundled": false
+    },
+    "candidate.bin": {
+      "sha256": "7c2d6b931a77175f3ca200e20e80bdefba3a6ab15ce544c918ec41fb6bfc21e6",
+      "bytes": 24109781,
+      "bundled": false
+    }
+  },
+  "negative_controls": [
+    "removed_event",
+    "wrong_stage",
+    "wrong_input",
+    "wrong_state_fingerprint",
+    "forged_pass_count",
+    "forged_active_mask",
+    "discard_declines"
+  ],
+  "limitations": [
+    "No CPU, clock, latency, energy, or throughput inference.",
+    "No kernel-event counts collected during warmup.",
+    "No scalar-fallback loop counters.",
+    "Only this held factory scene; general integration qualification is separate.",
+    "Compact count projections omit input words and pre-state fingerprints; full replay requires the pinned raw files."
+  ]
+}

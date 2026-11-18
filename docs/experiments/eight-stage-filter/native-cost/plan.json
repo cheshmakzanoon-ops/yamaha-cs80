@@ -1,0 +1,1903 @@
+{
+  "action": "native-eight-average-cost-v1-96",
+  "expected": {
+    "512": "0909d8d9107e7ad9e1f021f009f9fe014e742cb8016195d8a6bce32976366a69",
+    "544": "b22f307e8495f99101f235ed0d5ad4483fd1ec0b5f2c6dc3f4132b4ebcebb755"
+  },
+  "limits": {
+    "affinity_cpu": 0,
+    "child_cpu_ns": 4000000000,
+    "child_wall_ns": 6000000000,
+    "cpu_reserve_ns": 5000000000,
+    "global_cpu_ns": 240000000000,
+    "global_wall_ns": 360000000000
+  },
+  "loader_environment": {
+    "CS80_NATIVE_AVERAGE_AUTH": "<original authorization SHA256>",
+    "HOME": "<fresh per-process empty directory>",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "LD_LIBRARY_PATH": "<pinned native prefix>",
+    "PATH": "/usr/bin:/bin"
+  },
+  "loader_libraries": [
+    {
+      "name": "libX11.so.6.4.0",
+      "sha256": "b03e563b316b8b53c7988f0ee91d6656cc425538e00947a8b14482d179e80099"
+    },
+    {
+      "name": "libXau.so.6.0.0",
+      "sha256": "4275ec5b14bec21770c44447b3a52977e211c7ba08745008f3a1783878e091bb"
+    },
+    {
+      "name": "libXcomposite.so.1.0.0",
+      "sha256": "b80f2a638fc5bb3ed9a400d48e758135687f10ee8e3b236c89bf0687250858db"
+    },
+    {
+      "name": "libXcursor.so.1.0.2",
+      "sha256": "0a860c0162ffa5b37d88d2075d143e4e24295416fe85bb868e2daff07d2732fd"
+    },
+    {
+      "name": "libXdmcp.so.6.0.0",
+      "sha256": "761409b24c818719f8c8a2a64a61c8ac6a3067f3d8882485dca64a98d7500040"
+    },
+    {
+      "name": "libXext.so.6.4.0",
+      "sha256": "74cef58f0855cbbe23fce87566249f717e5c8ebeceee09efee393616a9b17697"
+    },
+    {
+      "name": "libXfixes.so.3.1.0",
+      "sha256": "85e29f4739a349d94d61db7a696f764d21dfe5c8db6ba7444af21416a0339187"
+    },
+    {
+      "name": "libXinerama.so.1.0.0",
+      "sha256": "d09736be08221c8040cab2b0d407a6b8197d3e337f9b81d9b48515e9e02b09b0"
+    },
+    {
+      "name": "libXrandr.so.2.2.0",
+      "sha256": "c99f3f78690b66428f91b5d66fa8531bcce8166e2324d34c911b61206b11ff52"
+    },
+    {
+      "name": "libXrender.so.1.3.0",
+      "sha256": "39fed75f787ac251cba86e30ccd979e3df1f84dd73c63a75eeb86a18fd413e64"
+    },
+    {
+      "name": "libasound.so.2.0.0",
+      "sha256": "0faa79c7a37189b9efcd9bff5874cd1af1c05b0cc66831733087d84cbe87e811"
+    },
+    {
+      "name": "libbrotlicommon.so.1.1.0",
+      "sha256": "7b0b0de90d8d3d4f07b99738c0285c6a0dbb6611d774ca44e7ea53a19a01ea68"
+    },
+    {
+      "name": "libbrotlidec.so.1.1.0",
+      "sha256": "06530583d5927000480f4214d80d0213fec3d34cc448527f932a6eceb50cefef"
+    },
+    {
+      "name": "libbrotlienc.so.1.1.0",
+      "sha256": "9d2f1fd742dee91f7247e9402157f69b2fc1001806eea595ede4924c54b78bcd"
+    },
+    {
+      "name": "libbsd.so.0.12.2",
+      "sha256": "167e3fa2b6320ce61534a48002e6d0921f61d61eae88a669c117e23ed3de9f37"
+    },
+    {
+      "name": "libbz2.so.1.0.4",
+      "sha256": "c630f057efedc12f848710d71f40283895591e5b4608539f387895c64e0553da"
+    },
+    {
+      "name": "libdrm.so.2.124.0",
+      "sha256": "eb7a0ac1a08aa514ed9615c137d72b4b5b84dc252aa2da30b6ae712ec6378e00"
+    },
+    {
+      "name": "libdrm_amdgpu.so.1.124.0",
+      "sha256": "d3e622a93c82b44a33eab334bbb9d4b283f262b678dfd6fa1fbb458a5ba079eb"
+    },
+    {
+      "name": "libdrm_intel.so.1.124.0",
+      "sha256": "b00cda27eb75459c505dadcb345c8f1137378446b237a5e85ff330d200db109d"
+    },
+    {
+      "name": "libexpat.so.1.12.3",
+      "sha256": "0fd7d092bd0bf5dcc29f31daaba2bad993b0d18a1ab771fb844e0a6dfa8efe18"
+    },
+    {
+      "name": "libexpatw.so.1.12.3",
+      "sha256": "6f6c1f68a47cb4bcfec35168be4c6c250a2d1ff1d5c8b5c0b860430200efeec1"
+    },
+    {
+      "name": "libfontconfig.so.1.12.1",
+      "sha256": "d6344f71a0cfd5fcb154278f0be706021f75f79d1fcc973fc4ddb1dff40ab0ee"
+    },
+    {
+      "name": "libfreetype.so.6.20.2",
+      "sha256": "9e376992a91e92d86809893a3b9eea22a4e27849db1686f6ca58032f79cdafb5"
+    },
+    {
+      "name": "libpng16.so.16.48.0",
+      "sha256": "56485ea502d222fa8b0d99f899470c1bacdca815a958d83c1b349d4e8f605255"
+    },
+    {
+      "name": "libuuid.so.1.3.0",
+      "sha256": "632fd43a9d8d6f3496833b7e62e7840f397163373dddf8b8eb0b2b7f36593117"
+    },
+    {
+      "name": "libxcb.so.1.1.0",
+      "sha256": "a1cde2cec9b7b8b38e4cca450c55c63651efb80a2458d76964b56b763043f533"
+    },
+    {
+      "name": "libz.so.1.3.1",
+      "sha256": "85590dd58edf5445e18bc7193e5ebc01ac5841f1ae187e97705a662e90c6421e"
+    }
+  ],
+  "no_exclusions": true,
+  "no_retries": true,
+  "outcome_access_only_after_complete96": true,
+  "protocol_sha256": "b6870de88d996f4793ae3b84f63fbc510f4d55186f4d4e6d65cd8424f1e577b7",
+  "redactions": "Only native host/module/loader paths, device/inode bindings and host filesystem details removed. Original private plan SHA retained in provenance.json.",
+  "roles": {
+    "candidate": {
+      "bytes": 17159800,
+      "physical_aliases": [
+        "C"
+      ],
+      "sha256": "0219b4b53e20844ca04264288f48ad04acb08a12471f87b58809af1ea71ca851"
+    },
+    "host": {
+      "bytes": 155800,
+      "physical_aliases": [
+        "all96"
+      ],
+      "sha256": "09498706e38a76868a263d50a4a5b505042530be7aeff034ef07db70df2d2ef9"
+    },
+    "stock": {
+      "bytes": 17096784,
+      "physical_aliases": [
+        "S0",
+        "S1",
+        "S+"
+      ],
+      "sha256": "b558341875ee60ab465560c8e842edf219e733730b19e1e5b5d01c703ce0cfc1"
+    }
+  },
+  "schedule": {
+    "balance": {
+      "between_block_carryover": "retained and reported, not forced balanced; fresh process per treatment",
+      "each_directed_distinct_within_block_predecessor_pair": 6,
+      "each_treatment_per_position": 6
+    },
+    "base_rows": [
+      [
+        0,
+        1,
+        3,
+        2
+      ],
+      [
+        1,
+        2,
+        0,
+        3
+      ],
+      [
+        2,
+        3,
+        1,
+        0
+      ],
+      [
+        3,
+        0,
+        2,
+        1
+      ]
+    ],
+    "blocks": [
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "block": 0,
+        "labels": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "replicate": 0,
+        "row": 0,
+        "slot_ids": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "block": 1,
+        "labels": [
+          "S0",
+          "C",
+          "S1",
+          "S+"
+        ],
+        "replicate": 0,
+        "row": 1,
+        "slot_ids": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "block": 2,
+        "labels": [
+          "C",
+          "S+",
+          "S0",
+          "S1"
+        ],
+        "replicate": 0,
+        "row": 2,
+        "slot_ids": [
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "block": 3,
+        "labels": [
+          "S+",
+          "S1",
+          "C",
+          "S0"
+        ],
+        "replicate": 0,
+        "row": 3,
+        "slot_ids": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 4,
+        "labels": [
+          "S+",
+          "C",
+          "S0",
+          "S1"
+        ],
+        "replicate": 1,
+        "row": 2,
+        "slot_ids": [
+          16,
+          17,
+          18,
+          19
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 5,
+        "labels": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "replicate": 1,
+        "row": 0,
+        "slot_ids": [
+          20,
+          21,
+          22,
+          23
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 6,
+        "labels": [
+          "S0",
+          "S+",
+          "S1",
+          "C"
+        ],
+        "replicate": 1,
+        "row": 1,
+        "slot_ids": [
+          24,
+          25,
+          26,
+          27
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 7,
+        "labels": [
+          "C",
+          "S1",
+          "S+",
+          "S0"
+        ],
+        "replicate": 1,
+        "row": 3,
+        "slot_ids": [
+          28,
+          29,
+          30,
+          31
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "block": 8,
+        "labels": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "replicate": 2,
+        "row": 0,
+        "slot_ids": [
+          32,
+          33,
+          34,
+          35
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "block": 9,
+        "labels": [
+          "S+",
+          "S1",
+          "C",
+          "S0"
+        ],
+        "replicate": 2,
+        "row": 3,
+        "slot_ids": [
+          36,
+          37,
+          38,
+          39
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "block": 10,
+        "labels": [
+          "S0",
+          "C",
+          "S1",
+          "S+"
+        ],
+        "replicate": 2,
+        "row": 1,
+        "slot_ids": [
+          40,
+          41,
+          42,
+          43
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "block": 11,
+        "labels": [
+          "C",
+          "S+",
+          "S0",
+          "S1"
+        ],
+        "replicate": 2,
+        "row": 2,
+        "slot_ids": [
+          44,
+          45,
+          46,
+          47
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 12,
+        "labels": [
+          "C",
+          "S1",
+          "S+",
+          "S0"
+        ],
+        "replicate": 3,
+        "row": 3,
+        "slot_ids": [
+          48,
+          49,
+          50,
+          51
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 13,
+        "labels": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "replicate": 3,
+        "row": 0,
+        "slot_ids": [
+          52,
+          53,
+          54,
+          55
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 14,
+        "labels": [
+          "S+",
+          "C",
+          "S0",
+          "S1"
+        ],
+        "replicate": 3,
+        "row": 2,
+        "slot_ids": [
+          56,
+          57,
+          58,
+          59
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 15,
+        "labels": [
+          "S0",
+          "S+",
+          "S1",
+          "C"
+        ],
+        "replicate": 3,
+        "row": 1,
+        "slot_ids": [
+          60,
+          61,
+          62,
+          63
+        ]
+      },
+      {
+        "assignment": [
+          "S+",
+          "C",
+          "S0",
+          "S1"
+        ],
+        "block": 16,
+        "labels": [
+          "S1",
+          "S+",
+          "S0",
+          "C"
+        ],
+        "replicate": 4,
+        "row": 3,
+        "slot_ids": [
+          64,
+          65,
+          66,
+          67
+        ]
+      },
+      {
+        "assignment": [
+          "S+",
+          "C",
+          "S0",
+          "S1"
+        ],
+        "block": 17,
+        "labels": [
+          "S+",
+          "C",
+          "S1",
+          "S0"
+        ],
+        "replicate": 4,
+        "row": 0,
+        "slot_ids": [
+          68,
+          69,
+          70,
+          71
+        ]
+      },
+      {
+        "assignment": [
+          "S+",
+          "C",
+          "S0",
+          "S1"
+        ],
+        "block": 18,
+        "labels": [
+          "C",
+          "S0",
+          "S+",
+          "S1"
+        ],
+        "replicate": 4,
+        "row": 1,
+        "slot_ids": [
+          72,
+          73,
+          74,
+          75
+        ]
+      },
+      {
+        "assignment": [
+          "S+",
+          "C",
+          "S0",
+          "S1"
+        ],
+        "block": 19,
+        "labels": [
+          "S0",
+          "S1",
+          "C",
+          "S+"
+        ],
+        "replicate": 4,
+        "row": 2,
+        "slot_ids": [
+          76,
+          77,
+          78,
+          79
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 20,
+        "labels": [
+          "S0",
+          "S+",
+          "S1",
+          "C"
+        ],
+        "replicate": 5,
+        "row": 1,
+        "slot_ids": [
+          80,
+          81,
+          82,
+          83
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 21,
+        "labels": [
+          "C",
+          "S1",
+          "S+",
+          "S0"
+        ],
+        "replicate": 5,
+        "row": 3,
+        "slot_ids": [
+          84,
+          85,
+          86,
+          87
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 22,
+        "labels": [
+          "S+",
+          "C",
+          "S0",
+          "S1"
+        ],
+        "replicate": 5,
+        "row": 2,
+        "slot_ids": [
+          88,
+          89,
+          90,
+          91
+        ]
+      },
+      {
+        "assignment": [
+          "S1",
+          "S0",
+          "S+",
+          "C"
+        ],
+        "block": 23,
+        "labels": [
+          "S1",
+          "S0",
+          "C",
+          "S+"
+        ],
+        "replicate": 5,
+        "row": 0,
+        "slot_ids": [
+          92,
+          93,
+          94,
+          95
+        ]
+      }
+    ],
+    "randomization": "independent treatment bijection and row permutation within each of six complete Williams sets",
+    "rng": "SHA256(seed + slash + decimal counter), unbiased rejection and descending Fisher-Yates",
+    "schema": 1,
+    "seed": "cs80-eight-native-average-v1/0x80305124",
+    "slots": [
+      {
+        "block": 0,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 0,
+        "slot": 0,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 0,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 0,
+        "slot": 1,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 0,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 0,
+        "slot": 2,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 0,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 0,
+        "slot": 3,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 1,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 0,
+        "slot": 4,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 1,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 0,
+        "slot": 5,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 1,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 0,
+        "slot": 6,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 1,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 0,
+        "slot": 7,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 2,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 0,
+        "slot": 8,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 2,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 0,
+        "slot": 9,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 2,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 0,
+        "slot": 10,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 2,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 0,
+        "slot": 11,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 3,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 0,
+        "slot": 12,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 3,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 0,
+        "slot": 13,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 3,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 0,
+        "slot": 14,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 3,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 0,
+        "slot": 15,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 4,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 1,
+        "slot": 16,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 4,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 1,
+        "slot": 17,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 4,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 1,
+        "slot": 18,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 4,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 1,
+        "slot": 19,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 5,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 1,
+        "slot": 20,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 5,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 1,
+        "slot": 21,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 5,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 1,
+        "slot": 22,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 5,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 1,
+        "slot": 23,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 6,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 1,
+        "slot": 24,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 6,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 1,
+        "slot": 25,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 6,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 1,
+        "slot": 26,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 6,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 1,
+        "slot": 27,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 7,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 1,
+        "slot": 28,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 7,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 1,
+        "slot": 29,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 7,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 1,
+        "slot": 30,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 7,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 1,
+        "slot": 31,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 8,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 2,
+        "slot": 32,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 8,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 2,
+        "slot": 33,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 8,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 2,
+        "slot": 34,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 8,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 2,
+        "slot": 35,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 9,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 2,
+        "slot": 36,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 9,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 2,
+        "slot": 37,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 9,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 2,
+        "slot": 38,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 9,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 2,
+        "slot": 39,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 10,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 2,
+        "slot": 40,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 10,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 2,
+        "slot": 41,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 10,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 2,
+        "slot": 42,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 10,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 2,
+        "slot": 43,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 11,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 2,
+        "slot": 44,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 11,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 2,
+        "slot": 45,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 11,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 2,
+        "slot": 46,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 11,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 2,
+        "slot": 47,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 12,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 3,
+        "slot": 48,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 12,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 3,
+        "slot": 49,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 12,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 3,
+        "slot": 50,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 12,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 3,
+        "slot": 51,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 13,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 3,
+        "slot": 52,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 13,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 3,
+        "slot": 53,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 13,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 3,
+        "slot": 54,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 13,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 3,
+        "slot": 55,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 14,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 3,
+        "slot": 56,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 14,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 3,
+        "slot": 57,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 14,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 3,
+        "slot": 58,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 14,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 3,
+        "slot": 59,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 15,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 3,
+        "slot": 60,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 15,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 3,
+        "slot": 61,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 15,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 3,
+        "slot": 62,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 15,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 3,
+        "slot": 63,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 16,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 4,
+        "slot": 64,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 16,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 4,
+        "slot": 65,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 16,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 4,
+        "slot": 66,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 16,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 4,
+        "slot": 67,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 17,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 4,
+        "slot": 68,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 17,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 4,
+        "slot": 69,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 17,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 4,
+        "slot": 70,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 17,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 4,
+        "slot": 71,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 18,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 4,
+        "slot": 72,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 18,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 4,
+        "slot": 73,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 18,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 4,
+        "slot": 74,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 18,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 4,
+        "slot": 75,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 19,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 4,
+        "slot": 76,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 19,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 4,
+        "slot": 77,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 19,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 4,
+        "slot": 78,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 19,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 4,
+        "slot": 79,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 20,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 5,
+        "slot": 80,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 20,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 5,
+        "slot": 81,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 20,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 5,
+        "slot": 82,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 20,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 5,
+        "slot": 83,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 21,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 5,
+        "slot": 84,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 21,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 5,
+        "slot": 85,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 21,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 5,
+        "slot": 86,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 21,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 5,
+        "slot": 87,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 22,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 5,
+        "slot": 88,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 22,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 5,
+        "slot": 89,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 22,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 5,
+        "slot": 90,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 22,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 5,
+        "slot": 91,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 23,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 0,
+        "replicate": 5,
+        "slot": 92,
+        "treatment": "S1",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 23,
+        "measured_callbacks": 512,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 1,
+        "replicate": 5,
+        "slot": 93,
+        "treatment": "S0",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 23,
+        "measured_callbacks": 512,
+        "module_role": "candidate",
+        "normalization_callbacks": 512,
+        "position": 2,
+        "replicate": 5,
+        "slot": 94,
+        "treatment": "C",
+        "warm_callbacks": 1024
+      },
+      {
+        "block": 23,
+        "measured_callbacks": 544,
+        "module_role": "stock",
+        "normalization_callbacks": 512,
+        "position": 3,
+        "replicate": 5,
+        "slot": 95,
+        "treatment": "S+",
+        "warm_callbacks": 1024
+      }
+    ]
+  },
+  "schedule_sha256": "e411f3b45439b80b5b61d48eebb7bb86f55a326d62f55cdd77a5d3543856fe62",
+  "schema": 1,
+  "statistical_plan": {
+    "block_contrasts": {
+      "candidate_S0": "log(S0/C)",
+      "candidate_S1": "log(S1/C)",
+      "candidate_pooled": "(log(S0/C)+log(S1/C))/2",
+      "extra": "(log(S+/S0)+log(S+/S1))/2",
+      "placebo": "log(S1/S0)"
+    },
+    "blocks": 24,
+    "blocks_per_set": 4,
+    "bootstrap": {
+      "constant_columns": "exact constant mean/interval; all-constant group skips identical resamples",
+      "draws": 20000,
+      "group_keys": [
+        "all",
+        "first12",
+        "last12",
+        "C-position-0",
+        "C-position-1",
+        "C-position-2",
+        "C-position-3",
+        "S1-before-S0",
+        "S1-after-S0"
+      ],
+      "quantile": "linear interpolation at (draws-1)*p; p=.025,.975",
+      "rng": "SHA256(seed + slash + group_key + slash + decimal_counter), big-endian256-bit integer, reject >=2^256-(2^256 mod n), then mod n; one draw per sampled block index",
+      "seed": "cs80-eight-native-average-v1/bootstrap/0x80305125",
+      "unit": "one complete four-treatment block, all five contrasts resampled jointly"
+    },
+    "correlation_limit": "set-t allows within-set correlation; six-set independence and t approximation are not guarantees against arbitrary whole-VM temporal correlation",
+    "estimator": "equal-weight mean of complete block log contrasts",
+    "gate_numeric_precision": "round transformed percentage or percentage-point difference to12 decimal places before comparison",
+    "main_gates": {
+      "candidate_comparisons": [
+        "pooled",
+        "S0",
+        "S1"
+      ],
+      "candidate_lower_95_saving_strictly_above_percent": 3,
+      "extra_entire_95_percent": [
+        3,
+        10
+      ],
+      "extra_target_is_exact_CPU_null": false,
+      "extra_work_target_percent": 6.25,
+      "placebo_entire_95_percent": [
+        -2,
+        2
+      ]
+    },
+    "order_gates": {
+      "candidate_by_position_each_point_strictly_above_percent": 0,
+      "candidate_position_point_range_pp_max": 5,
+      "placebo_each_twin_temporal_order_point_inside_percent": [
+        -2,
+        2
+      ]
+    },
+    "outcome": "unnormalized sum of actual process() thread-CPU nanoseconds; all arms use512-callback baseline denominator",
+    "policy": "all96 chronological processes and24 complete blocks required; all gates AND; no exclusion, retries, replacement, subset admission or post-outcome rule changes",
+    "processes": 96,
+    "schema": 1,
+    "scope": "48kHz/64-frame held-eight-voice real-VST3 average thread CPU only",
+    "scope_exclusions": [
+      "deadline or tail-latency admission",
+      "callback-level independent replicates",
+      "96 independent treatment comparisons",
+      "other scenes or machines",
+      "repairing old failed studies"
+    ],
+    "set_sensitivity": {
+      "gates": "main placebo, extra and all three candidate comparisons must pass BOTH block-bootstrap and set-t intervals",
+      "interval": "mean +/- t(.975,df5)*sample_sd/sqrt(6)",
+      "leave_one_set": "all six omission point estimates reported descriptively; never select an omission",
+      "mandatory": true,
+      "t_critical": 2.570581835636305,
+      "unit": "six complete four-block Williams-set mean log contrasts"
+    },
+    "split_gates": {
+      "absolute_point_saving_gap_pp_max": 3,
+      "first12_and_last12_candidate_pooled_bootstrap_lower_95_strictly_above": 0
+    },
+    "transform": {
+      "candidate_saving": "-100*expm1(-log contrast)",
+      "placebo_extra": "100*expm1(log contrast)"
+    },
+    "williams_sets": 6
+  },
+  "statistical_plan_sha256": "31d2dc410c5869dbab897bce11ca3fe9de89c9135868705024611e7f4f07cf80"
+}

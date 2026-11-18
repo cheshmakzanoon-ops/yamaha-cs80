@@ -1,0 +1,11 @@
+--- a/tests/Vst3AutomationTests.cpp
++++ b/native/sdk_scaffold.cpp
+@@ -218,7 +218,7 @@
+         require(component->initialize(nullptr) == kResultOk, "VST3 initialize");
+         require(component->queryInterface(IAudioProcessor::iid, reinterpret_cast<void**>(&audio)) == kResultOk,
+                 "VST3 IAudioProcessor");
+-        ProcessSetup setup { testProcessMode, kSample32, 4096, testSampleRate };
++        ProcessSetup setup { testProcessMode, kSample32, 64, testSampleRate };
+         require(audio->setupProcessing(setup) == kResultOk, "VST3 setupProcessing");
+         component->activateBus(kAudio, kOutput, 0, true);
+         component->activateBus(kEvent, kInput, 0, true);

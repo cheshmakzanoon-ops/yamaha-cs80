@@ -1,0 +1,74 @@
+{
+  "independent_native_cost": {
+    "comparison": {
+      "admission": false,
+      "all20_gate_decisions_identical": true,
+      "all96_observations_and_receipt_pins_identical": true,
+      "all_numerical_values_bit_equal": false,
+      "failed_gates": 17,
+      "independent_sha256": "67fb41e1fbcfeb3a62627f8415d9fcc9ce667d6efc7f9fdab11e166691bd8116",
+      "largest_absolute_difference": 1.7763568394002505e-15,
+      "numerical_values_compared": 1473,
+      "official_sha256": "d3c02cf6c2b4983da4a45463986aeeaaea38a2a1d514bbd955b8b373150dcae9",
+      "ordering": "Independent raw replay/result completed before official-decision.json was read.",
+      "pass": true,
+      "schema": 1,
+      "tolerance": 1e-12
+    },
+    "comparison_program_sha256": "e44d0c7235ae53394a00936e99d50431d4200c57a5e9f966bf20e169034463bf",
+    "complete_processes": 96,
+    "freeze_sha256": "0f2ac9bbb0ae25f01acf3b7114bae6331303a0867c6061ae28eb92bdb74fbd5d",
+    "independent_assertions_passed": 207954,
+    "independent_program_sha256": "f6217ce2dd148b127f093aa28862c2461a4bff4d85e5af37b17e512148c9a8e9",
+    "independent_review_scope": "Raw original process identity and complete clock/PCM/FP/public-state and ledger validation plus independent, separately implemented analysis, without importing the original estimator. Absolute inference differences are rounded only at the prospectively specified gate precision; individual floating-point intermediate results are not all bit-identical.",
+    "internal_full_audit_manifest_sha256": "a795dbefac56b8ad765959b036ab5e59d68584e290e572fadf6694f4dd2499a7",
+    "latch_sha256": "6f50610dce6ed668fbd73c04eab3bde917e64679c7564dcac45f102625d32a1a",
+    "ledger_sha256": "e7fcc788f085681ef54c25df53c2334500c703501e08310edd9b42febbdb1a53",
+    "nested_clock_endpoint_count": 199680,
+    "plan_sha256": "3b76fc50d133d72f5afb77e92afb20ab542423a959efe2e92eb79e0c771d9408",
+    "process_callback_count": 49920,
+    "terminal_sha256": "75fdc542c75ec7be8275dd3b92241a4ede1095e5f9e1f9f7618c168ffd4d4824"
+  },
+  "independently_rerun_public_tests": {
+    "engine_package_tests_passed": 15,
+    "public_vst3_package_tests_passed": 8,
+    "work_replay": {
+      "all_phase_counts_and_active_masks_replayed": true,
+      "candidate_events": 9007,
+      "full_raw_input_and_stage_fingerprints_replayed": false,
+      "negative_controls_passed": [
+        "removed_event",
+        "wrong_stage",
+        "forged_pass_count",
+        "forged_active_mask",
+        "discard_declines",
+        "duplicate_json_key"
+      ],
+      "ordered_quartet_matches": 17408,
+      "scope": "deterministic work counts only; no CPU or speed admission",
+      "status": "PASS",
+      "stock_events": 17408,
+      "timing": false,
+      "trace_files_hashed": []
+    }
+  },
+  "schema": 1,
+  "scope": "Offline checks on saved local evidence, no new DSP execution or measure. Public exports provide their own replay. The original private full campaign and large internal Engine traces are not bundled.",
+  "source_reconstruction": {
+    "all_files_match": true,
+    "archive": "ae34d6a4899a03fdbddf204520ea01644b77f379a38e611b84bdaedfcd689005",
+    "changed_or_new": {
+      "core/Engine.cpp": "45a36e101c35416cfa7393dfe3f67661785a795225bc07276c082ede33268648",
+      "core/Engine.h": "d733b36d798883e2515f9b5da66df689ba8a5ee2e5f1eaa79e52dbe0fb770023",
+      "core/EngineFilterEight.cpp": "9ecae42b359fe3da3ca87b18062eb95416cc2e62b363231af3d0569c6351d3f8",
+      "core/Ig00156Eight.cpp": "3487dbc28f491f0c53f5d42871e2c59ddb87b1839db2aaddd1bf82c573adb8a1",
+      "core/Ig00156Eight.h": "ad538a096a8b5fd05f3d909e3cf584ea3f955b93d786a98c2192697fb7dd9322",
+      "core/Ig00156Filter.h": "b6ac6391c04c270b9aa7e060a00589523cfb836974987fabdfc323b87f4ce211"
+    },
+    "integrated": 196,
+    "integrated_patch_sha256": "9dd76b78b706548820cccdd61fc432dae1d61c2ebc13d352153baebe0b304b13",
+    "src_tree": "702bf5ee4e375c7b13da7ec95b01b56587bbf75c",
+    "stock": 193,
+    "stock_commit": "7a8bf53e1b6e9e60b307176a68f3653d767a2952"
+  }
+}

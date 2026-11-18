@@ -1,0 +1,108 @@
+{
+  "scope": "Research-only exact eight-stage Engine integration, V2; no timing or native-module evidence in this leaf",
+  "baseline_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "actual_recorded_patch_sha256": "9dd76b78b706548820cccdd61fc432dae1d61c2ebc13d352153baebe0b304b13",
+  "source_freeze_sha256": "9ba05e1f7978484cafabf74b468ddbd8bb3a7770320e9c519004b2f7220fec47",
+  "component_cpp_sha256": "3487dbc28f491f0c53f5d42871e2c59ddb87b1839db2aaddd1bf82c573adb8a1",
+  "normal_sha256": {
+    "Engine.cpp.o": "2ca5e6ac9fe057c853cac81199ab440fcfd3cbbfad4952183822146b2f76c2c5",
+    "FactoryPresets.cpp.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+    "Ig00156Batch.cpp.o": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+    "EngineFilterEight.cpp.o": "75f4dea834fefae5b4b10c0f2d9ffdc4823bf7e62d29a3baaa763e6f4a14f29d",
+    "Ig00156Eight.cpp.o": "434949e1f49f3ea6934de42861f969d9642f67a786880de219f2afab1442e081",
+    "libcs80_core.a": "ae34d6a4899a03fdbddf204520ea01644b77f379a38e611b84bdaedfcd689005"
+  },
+  "observer_object_sha256": "4e01d2035bfecc19c47817cdf97e7f12a7b44f967f8720dc17fe8196cf3b33bb",
+  "observer_source_sha256": "6735fd4d7806a4c031b89fce447bb6b59856f77a838c69a793a5972ed697e0ad",
+  "observer_patch_sha256": "83252378d330ace78da87d3ce35120747a933e6e76cc5fe66e5dac82ab83978c",
+  "fixture_provenance": {
+    "held-trace.cpp": {
+      "recorded_source_sha256": "e7c34f4952835af115468373fe5e742c33b326252f63a65bc76a9d74f78b470c",
+      "portable_sha256": "e7c34f4952835af115468373fe5e742c33b326252f63a65bc76a9d74f78b470c",
+      "include_changes": []
+    },
+    "scene-trace.cpp": {
+      "recorded_source_sha256": "8305d948780865328dc9b66af09921ec2d048b72ce222a3fe8408f3ab244c551",
+      "portable_sha256": "063727c48f98d0b5ad056c1154e56b40bcafe66d36393c51b4975dca671651ce",
+      "include_changes": [
+        {
+          "operation": "normalize one recorded include location",
+          "portable_include": "fixture.inc",
+          "occurrences": 1
+        }
+      ]
+    },
+    "stock-census.cpp": {
+      "recorded_source_sha256": "067e54dbcaf08322769638414f282abb6c0d9e3da095537a0aef71b9e2af7667",
+      "portable_sha256": "067e54dbcaf08322769638414f282abb6c0d9e3da095537a0aef71b9e2af7667",
+      "include_changes": []
+    },
+    "fixture.inc": {
+      "recorded_source_sha256": "3cce709fcf9d8d47b130095b90099cf43a7ac2d3e48bc2154c945ef7c17c3c7e",
+      "portable_sha256": "1a095df7ae3321346b504abe86df7e66e754ae888cb7f26ad612ab5d28e54efa",
+      "include_changes": [
+        {
+          "operation": "normalize one recorded include location",
+          "portable_include": "fixture/source_factory_benchmark.cpp",
+          "occurrences": 1
+        }
+      ]
+    },
+    "traps.cpp": {
+      "recorded_source_sha256": "e7a62b986410a217313ed3bc38040eb4ad52eccc544dc8330d5cea9d24489020",
+      "portable_sha256": "2466613bd6d3636ebdb66223b100432c4800ef4e805a6c0ec58182b74af46746",
+      "include_changes": [
+        {
+          "operation": "normalize one recorded include location",
+          "portable_include": "observe_engine.h",
+          "occurrences": 1
+        }
+      ]
+    },
+    "observe_engine.h": {
+      "recorded_source_sha256": "ed7e47d4de2437fdd3a5135460c1cf92fafc63ff07102632e0515358caa64a19",
+      "portable_sha256": "ed7e47d4de2437fdd3a5135460c1cf92fafc63ff07102632e0515358caa64a19",
+      "include_changes": []
+    },
+    "directed.cpp": {
+      "recorded_source_sha256": "d71ca8b4be357ca21e4880a5c6ca1b410f1724db9e2888d26c7ada778ec2b0d5",
+      "portable_sha256": "d71ca8b4be357ca21e4880a5c6ca1b410f1724db9e2888d26c7ada778ec2b0d5",
+      "include_changes": []
+    },
+    "ObserverRuntime.inc": {
+      "recorded_source_sha256": "83898fa6da21d037feab465ee400b434504898bd4ecd96e52d4510e4b7adab1a",
+      "portable_sha256": "83898fa6da21d037feab465ee400b434504898bd4ecd96e52d4510e4b7adab1a",
+      "include_changes": []
+    }
+  },
+  "build": {
+    "compiler": "GNU C++ 14.2.0",
+    "platform": "Linux x86-64",
+    "normal_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic"
+    ],
+    "backend_extra_flags": [
+      "-ffp-contract=off"
+    ],
+    "source_tus": [
+      "core/Engine.cpp",
+      "core/FactoryPresets.cpp",
+      "core/Ig00156Batch.cpp",
+      "core/EngineFilterEight.cpp",
+      "core/Ig00156Eight.cpp"
+    ],
+    "global_native_or_AVX_flags": false
+  },
+  "normal_reporting_hooks": false,
+  "fresh_engine_invocations": 26,
+  "cpu_timing_invocations": 0,
+  "native_module_invocations": 0,
+  "original_raw_captures_bundled": false,
+  "portable_replay_compiled_or_executed": false
+}

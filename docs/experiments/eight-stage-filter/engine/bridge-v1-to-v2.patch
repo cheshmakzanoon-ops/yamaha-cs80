@@ -1,0 +1,33 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -3443,4 +3443,11 @@
+     return { circuit.getState(), nodes, circuit.sampleRate(), circuit.getMode() };
+ }
+ 
++// Research-only bridge: this TU remains the sole owner of the original tick.
++[[gnu::noinline]] WscOutputVolts filterEightOriginalTick(ReconstructedOscillator& oscillator,
++    double hz,const WscControls& controls) noexcept
++{
++    return oscillator.tick(hz,controls);
++}
++
+ } // namespace cs80
+--- a/src/core/EngineFilterEight.cpp
++++ b/src/core/EngineFilterEight.cpp
+@@ -6,6 +6,7 @@
+ #include <bit>
+ #include <cstdint>
+ namespace cs80 {
++WscOutputVolts filterEightOriginalTick(ReconstructedOscillator&,double,const WscControls&) noexcept;
+ #if CS80_IG00156_EXACT_BATCH_BUILD
+ namespace {
+ // Immutable setup selection, initialized before any renderer call.
+@@ -377,7 +378,7 @@
+                 wscControls.pulseThresholdVolts = ReconstructedOscillator::panelThresholdVoltsInferred(pw);
+                 wscControls.sawEnabled = rs.saw;
+                 wscControls.pulseEnabled = rs.pulse;
+-                const auto pins = r.wsc.tick(freq, wscControls);
++                const auto pins = filterEightOriginalTick(r.wsc, freq, wscControls);
+                 sawPulse = voice_continuity::sawPulseUnits(pins);
+                 sineWave = static_cast<float>(pins.sinePin2 * kWscEngineUnitsPerVolt);
+             }

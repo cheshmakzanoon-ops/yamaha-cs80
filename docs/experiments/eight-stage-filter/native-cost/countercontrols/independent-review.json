@@ -1,0 +1,51 @@
+{
+  "balance": {
+    "between_block_transitions": {
+      "C>C": 2,
+      "C>S+": 2,
+      "C>S0": 1,
+      "C>S1": 1,
+      "S+>C": 2,
+      "S+>S+": 1,
+      "S+>S0": 2,
+      "S0>C": 1,
+      "S0>S+": 2,
+      "S0>S0": 1,
+      "S0>S1": 2,
+      "S1>C": 1,
+      "S1>S+": 1,
+      "S1>S0": 2,
+      "S1>S1": 2
+    },
+    "blocks": 24,
+    "each_directed_distinct_within_block_adjacency": 6,
+    "each_half_balanced": true,
+    "each_treatment_each_position": 6,
+    "sets": 6,
+    "slots": 96
+  },
+  "bootstrap_unit": "one complete four-treatment block",
+  "correlation_sensitivity": "mandatory six complete-set means, df5 two-sided95% t",
+  "final_data_access": false,
+  "final_synthetic_tests": {
+    "passed": 56,
+    "tests": 56
+  },
+  "first_synthetic_run": {
+    "failure": "No-op digest tamper in synthetic fixture, corrected before final tests.",
+    "passed": 55,
+    "tests": 56
+  },
+  "native_loads": 0,
+  "new_DSP_runs": 0,
+  "randomization": {
+    "between_block_transitions_not_claimed_balanced": true,
+    "hash_counter_rejection_sampling_unbiased": true,
+    "independent_label_and_row_shuffle_per_set": true,
+    "seed_fixed_before_outcomes": true
+  },
+  "schedule_sha256": "e411f3b45439b80b5b61d48eebb7bb86f55a326d62f55cdd77a5d3543856fe62",
+  "schema": 1,
+  "status": "PASS blinded schedule/source/statistical software review",
+  "timing_runs": 0
+}

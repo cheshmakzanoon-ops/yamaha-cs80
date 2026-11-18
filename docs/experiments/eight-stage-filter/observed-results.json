@@ -1,0 +1,68 @@
+{
+  "scope": "Frozen direct stage prototype only; no Engine/native integration or CPU measurement",
+  "normal": {
+    "result": "PASS actual-eight cohorts=12288 accepted=12276 fallback=12 original-four-calls=24576 original-four-fallbacks=12 fields=1474560 complete-stage-bytes=296 FP/errno exact",
+    "cohorts": 12288,
+    "actual_eight": 12276,
+    "declined_eight": 12,
+    "original_four_reference_calls": 24576,
+    "original_four_scalar_fallback_decisions": 12
+  },
+  "recovery_enabled": {
+    "result": "PASS actual-eight cohorts=12288 accepted=12191 fallback=97 original-four-calls=24576 original-four-fallbacks=98 fields=1474560 complete-stage-bytes=296 FP/errno exact",
+    "cohorts": 12288,
+    "actual_eight": 12191,
+    "declined_eight": 97,
+    "original_four_reference_calls": 24576,
+    "original_four_scalar_fallback_decisions": 98
+  },
+  "checks_per_run": {
+    "field_comparisons": 1474560,
+    "complete_stage_bytes_per_lane": 296,
+    "state_and_output_before_eight_fallback": true,
+    "sse_x87_status_and_errno_equal": true
+  },
+  "rates_hz": [
+    8000,
+    44100,
+    48000,
+    96000,
+    192000,
+    384000,
+    768000,
+    1536000
+  ],
+  "control_cells": {
+    "x87_cw": "0x037f",
+    "mxcsr_initial": [
+      "0x1f80",
+      "0x9fc0",
+      "0x1fc0",
+      "0x9f80"
+    ],
+    "errno_initial": "EDOM"
+  },
+  "actual_feature_probe": "avx2=1 avx512f=1 avx512vl=1 avx512dq=1",
+  "static_machine_evidence": {
+    "true_zmm_double_arithmetic": true,
+    "zmm_divide_sites": 6,
+    "fma_instructions_found": 0,
+    "kernel_bytes_eight": 4886,
+    "kernel_bytes_four": 2895
+  },
+  "initial_harness_stop": {
+    "result": "FAIL admission rate=8000 seed=2 n=3 results=100",
+    "interpretation": "Harness initially assumed every finite case must admit; the same second original quartet and the eight kernel both declined. This was an admission expectation, not an observed value mismatch. The corrected retained test preserves and validates original quartet scalar fallback."
+  },
+  "limits": [
+    "Direct-stage only, no Engine integration or scheduling claim",
+    "No performance measurements",
+    "No fresh unsupported-control/real-trap/negative-compiler matrix",
+    "Caller-specific strict-build gate must be added by integration; direct API itself has backend-only compile gate",
+    "Distinct8 owners required; rejected8 caller must invoke original ordered quartet wrappers",
+    "CPU migration and other compiler/CPU families unqualified",
+    "No exact convergence-iteration counters were recorded",
+    "No dispatcher-negative CPU/OS or unsupported-control execution matrix was run",
+    "No raw binaries included in this package"
+  ]
+}

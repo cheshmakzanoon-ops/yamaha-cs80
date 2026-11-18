@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "scene": "factory-held",
+  "rate": 48000,
+  "host_block": 64,
+  "warm_callbacks": 1024,
+  "counted_callbacks": 16,
+  "continuation_callbacks": 1,
+  "bytes_per_arm": 24109781,
+  "trace_sha256": "7c2d6b931a77175f3ca200e20e80bdefba3a6ab15ce544c918ec41fb6bfc21e6",
+  "arms": [
+    "stock",
+    "normal",
+    "observed"
+  ],
+  "observer": "window attempts=8223 hits=8067 consumed=8067 bad=0\nwith_continuation attempts=8737 hits=8569 consumed=8569 bad=0\n",
+  "timing": false
+}

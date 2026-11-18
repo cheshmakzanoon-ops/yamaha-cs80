@@ -1,0 +1,25 @@
+{
+  "decision": "STOP before first candidate Engine execution: additional conflicting weak oscillator tick emitted by isolated filter TU",
+  "direct_helper_cpp_sha256": "3487dbc28f491f0c53f5d42871e2c59ddb87b1839db2aaddd1bf82c573adb8a1",
+  "original_Engine_protected_paths": {
+    "scalar_false_bytes": 32154,
+    "batch_true_bytes": 37511,
+    "WSC_tick_bytes": 12063,
+    "all_bytes_and_resolved_relocations_identical": true
+  },
+  "additional_tick": {
+    "object": "normal/EngineFilterEight.cpp.o",
+    "bytes": 17523,
+    "stock_bytes": 12063,
+    "bytes_equal": false,
+    "relocations_equal": false
+  },
+  "candidate_Engine_renders": 0,
+  "timings": 0,
+  "production_edits": false,
+  "cpu_work_stopped": true,
+  "v1_patch_sha256": "d971dda3013115aa38c8f03b312c2bc932a34e5ce8b4a1ad34bb88d5211546e4",
+  "v1_source_freeze_sha256": "36357d9192e85d260a43248249821e3064b316be88c53b2c57bd6e7efc6186f8",
+  "v1_static_receipt_sha256": "75b1fe250af81d0dd007a3af919d96053ad6318e0440d6b6feb91f4c464648b0",
+  "v2_bridge_patch_sha256": "5c5779277c15e77e443975bbd5e97062f1243b789024f04cf0a81669dcea33c3"
+}

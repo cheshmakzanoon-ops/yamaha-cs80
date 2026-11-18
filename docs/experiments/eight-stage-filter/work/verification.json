@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "compact_replay": {
+    "status": "PASS",
+    "timing": false,
+    "stock_events": 17408,
+    "candidate_events": 9007,
+    "ordered_quartet_matches": 17408,
+    "all_phase_counts_and_active_masks_replayed": true,
+    "full_raw_input_and_stage_fingerprints_replayed": false,
+    "trace_files_hashed": [],
+    "negative_controls_passed": [
+      "removed_event",
+      "wrong_stage",
+      "forged_pass_count",
+      "forged_active_mask",
+      "discard_declines",
+      "duplicate_json_key"
+    ],
+    "scope": "deterministic work counts only; no CPU or speed admission"
+  },
+  "full_raw_replay": {
+    "status": "PASS",
+    "timing": false,
+    "stock_events": 17408,
+    "candidate_events": 9007,
+    "ordered_quartet_matches": 17408,
+    "all_phase_counts_and_active_masks_replayed": true,
+    "full_raw_input_and_stage_fingerprints_replayed": true,
+    "trace_files_hashed": [
+      "stock.bin",
+      "candidate.bin"
+    ],
+    "negative_controls_passed": [
+      "removed_event",
+      "wrong_stage",
+      "forged_pass_count",
+      "forged_active_mask",
+      "discard_declines",
+      "duplicate_json_key",
+      "wrong_input_bits",
+      "wrong_state_fingerprint"
+    ],
+    "scope": "deterministic work counts only; no CPU or speed admission"
+  },
+  "new_dsp_runs_during_export": 0,
+  "timing_observations": 0,
+  "public_privacy_scan": "PASS; no private absolute paths, user identifiers, access links, raw addresses or ELF binaries",
+  "full_raw_inputs_unbundled": true
+}

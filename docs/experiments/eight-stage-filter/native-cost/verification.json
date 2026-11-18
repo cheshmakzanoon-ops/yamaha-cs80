@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "normal_replay": {
+    "evidence_replay": "PASS",
+    "processes": 96,
+    "blocks": 24,
+    "independent_randomized_sets": 6,
+    "callback_clock_rows": 49920,
+    "callback_clock_reads": 199680,
+    "official_admission": false,
+    "calibration_pass": false,
+    "failed_gates": 17,
+    "negative_controls_passed": [],
+    "measurement_or_DSP_reruns": 0,
+    "scope": "complete normalized timing evidence/statistics replay; omitted native binaries and raw identity/PCM artifacts are hash-bound receipts, not re-proved here"
+  },
+  "self_test_replay": {
+    "evidence_replay": "PASS",
+    "processes": 96,
+    "blocks": 24,
+    "independent_randomized_sets": 6,
+    "callback_clock_rows": 49920,
+    "callback_clock_reads": 199680,
+    "official_admission": false,
+    "calibration_pass": false,
+    "failed_gates": 17,
+    "negative_controls_passed": [
+      "missing_process",
+      "changed_process_identity",
+      "wrong_module",
+      "wrong_total",
+      "wrong_FP",
+      "fake_extra_calls",
+      "missing_clock",
+      "wrong_endpoint_order",
+      "wrong_callback_index",
+      "wrong_ledger_pin",
+      "dropped_ledger_event",
+      "duplicate_JSON_key"
+    ],
+    "measurement_or_DSP_reruns": 0,
+    "scope": "complete normalized timing evidence/statistics replay; omitted native binaries and raw identity/PCM artifacts are hash-bound receipts, not re-proved here"
+  },
+  "new_native_loads": 0,
+  "new_DSP_runs": 0,
+  "new_measurements": 0,
+  "privacy_scan": "PASS: no private absolute paths, raw process IDs, device/inode identities, user identifiers, access links or ELF binaries in exported data",
+  "normalized_clock_rows": 49920,
+  "clock_shards": 6,
+  "original_official_decision_sha256": "d3c02cf6c2b4983da4a45463986aeeaaea38a2a1d514bbd955b8b373150dcae9"
+}

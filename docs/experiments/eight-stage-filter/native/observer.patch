@@ -1,0 +1,60 @@
+--- a/src/core/EngineFilterEight.cpp
++++ b/src/core/EngineFilterEight.cpp
+@@ -6,6 +6,8 @@
+ #include <bit>
+ #include <cstdint>
+ namespace cs80 {
++extern "C" void filterEightObserve(unsigned,const Ig00156Eight::Stages&) noexcept;
++extern "C" void filterEightConsumed() noexcept;
+ WscOutputVolts filterEightOriginalTick(ReconstructedOscillator&,double,const WscControls&) noexcept;
+ #if CS80_IG00156_EXACT_BATCH_BUILD
+ namespace {
+@@ -585,6 +587,7 @@
+                     if (followingReady)
+                     {
+                         outputs = followingOutputs;
++                        filterEightConsumed();
+                         followingReady = false;
+                     }
+                     else
+@@ -619,6 +622,7 @@
+                             {
+                                 Ig00156Eight::Outputs allOutputs;
+                                 const bool eightSolved=eightKernel(allStages,allInputs,allOutputs);
++                                filterEightObserve(unsigned(eightSolved),allStages);
+                                 if (eightSolved)
+                                 {
+                                     for(int j=0;j<4;++j) { outputs[(size_t)j]=allOutputs[(size_t)j]; followingOutputs[(size_t)j]=allOutputs[(size_t)(j+4)]; }
+--- a/native/host.cpp
++++ b/native/host.cpp
+@@ -64,6 +64,8 @@
+ int run(const char*modulePath,const std::filesystem::path&out){
+  require(!std::filesystem::exists(out),"new capture directory");std::filesystem::create_directories(out);
+  const auto p=controls();writeControls(out/"controls.csv",p);Module module(modulePath);Instance i(module,p,0,0);
++ using Snapshot=void(*)(std::uint64_t*) noexcept;auto snapshot=reinterpret_cast<Snapshot>(dlsym(module.handle,"filterEightNativeCounts"));require(snapshot!=nullptr,"diagnostic k8 counts export");std::ofstream counts(out/"counts.jsonl");
++
+  require(i.audio->canProcessSampleSize(kSample32)==kResultTrue,"sample32 supported");
+  require(i.component->getBusCount(kAudio,kInput)==1&&i.component->getBusCount(kAudio,kOutput)==1&&i.component->getBusCount(kEvent,kInput)==1,"native bus count");
+  BusInfo inInfo{},outInfo{};require(i.component->getBusInfo(kAudio,kInput,0,inInfo)==kResultOk&&inInfo.channelCount==1,"mono external input");require(i.component->getBusInfo(kAudio,kOutput,0,outInfo)==kResultOk&&outInfo.channelCount==2,"stereo native output");
+@@ -79,8 +81,9 @@
+  std::fesetenv(FE_DFL_ENV);_mm_setcsr(0x9fc0);errno=41;unsigned nonzero=0,eventReads=0;
+  for(unsigned b=0;b<blocks;++b){
+   const unsigned mode=0;const double rate=48000;left.fill(0);right.fill(0);output.silenceFlags=0;context.projectTimeSamples=int64(b)*64;events.count=b==0?8:0;events.reads=events.countReads=0;
+-  const auto before=fp();const auto result=i.audio->process(data);const auto after=fp();require(result==kResultOk,"actual IAudioProcessor process");
++  std::uint64_t beginCount[3]{},endCount[3]{};snapshot(beginCount);const auto before=fp();const auto result=i.audio->process(data);const auto after=fp();require(result==kResultOk,"actual IAudioProcessor process");
+   std::fenv_t saved;std::fegetenv(&saved);const int oldErrno=errno;volatile double one=1.,delta=0x1p-54;volatile double probe=one+delta;const auto next=fp();
++  snapshot(endCount);counts<<"{\"block\":"<<b<<",\"before\":["<<beginCount[0]<<","<<beginCount[1]<<","<<beginCount[2]<<"],\"after\":["<<endCount[0]<<","<<endCount[1]<<","<<endCount[2]<<"]}\n";
+   put(trace,b);put(trace,mode);put(trace,rate);put(trace,result);put(trace,output.silenceFlags);putFP(trace,before);putFP(trace,after);putFP(trace,next);const double value=probe;put(trace,value);
+   require(events.reads==(b==0?8u:0u),"eight actual event reads, no later note events");eventReads+=events.reads;
+   inputs<<"{\"event\":\"callback\",\"block\":"<<b<<",\"event_reads\":"<<events.reads<<",\"event_count_reads\":"<<events.countReads<<",\"parameter_points\":0,\"project_samples\":"<<context.projectTimeSamples<<"}\n";
+--- /dev/null
++++ b/native/Counter.cpp
+@@ -0,0 +1,8 @@
++#include "core/Ig00156Eight.h"
++#include <cstdint>
++namespace {std::uint64_t counts[3]{};}
++namespace cs80 {
++extern "C" __attribute__((noinline)) void filterEightObserve(unsigned success,const Ig00156Eight::Stages&) noexcept {++counts[0];counts[1]+=success!=0;}
++extern "C" __attribute__((noinline)) void filterEightConsumed() noexcept {++counts[2];}
++}
++extern "C" __attribute__((noinline,visibility("default"))) void filterEightNativeCounts(std::uint64_t* out) noexcept {for(unsigned i=0;i<3;++i)out[i]=counts[i];}

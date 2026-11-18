@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "order": "six prespecified complete Williams sets, increasing set index; concatenate data rows only, retaining one CSV header",
+  "combined_uncompressed_sha256": "42e5094ccd5116cbfd47f2b213548b8296f6b3032dbfd65dd2ff68d1c8c83c79",
+  "total_rows": 49920,
+  "shards": [
+    {
+      "set": 0,
+      "file": "callback-clocks-set-0.csv.gz",
+      "first_slot": 0,
+      "last_slot": 15,
+      "rows": 8320,
+      "uncompressed_sha256": "f97f883f428df5f6d1215c1e25664096df41751479ff07497a464fca2f1a827d"
+    },
+    {
+      "set": 1,
+      "file": "callback-clocks-set-1.csv.gz",
+      "first_slot": 16,
+      "last_slot": 31,
+      "rows": 8320,
+      "uncompressed_sha256": "73091c1d3087cc08a49663c6a74cc4051b3b957524e103fcb0ac1061e8aacb33"
+    },
+    {
+      "set": 2,
+      "file": "callback-clocks-set-2.csv.gz",
+      "first_slot": 32,
+      "last_slot": 47,
+      "rows": 8320,
+      "uncompressed_sha256": "72b089d81ebb5d7aa0ee13df3e7b7cc93e5b048108808e2b0c730ede4f78d480"
+    },
+    {
+      "set": 3,
+      "file": "callback-clocks-set-3.csv.gz",
+      "first_slot": 48,
+      "last_slot": 63,
+      "rows": 8320,
+      "uncompressed_sha256": "bffa60f39810125f92e86db701dc2bf43d067e07bfb73eb28d5301d009ab2ae9"
+    },
+    {
+      "set": 4,
+      "file": "callback-clocks-set-4.csv.gz",
+      "first_slot": 64,
+      "last_slot": 79,
+      "rows": 8320,
+      "uncompressed_sha256": "d5b8bcf8d724d27a6a4080a39d66963d5dc46c6e262a63b2ba6c86387354de9f"
+    },
+    {
+      "set": 5,
+      "file": "callback-clocks-set-5.csv.gz",
+      "first_slot": 80,
+      "last_slot": 95,
+      "rows": 8320,
+      "uncompressed_sha256": "0e8be55a23cde63ac81156416a7891a2deafdf3d7a4409108646f5710a680f00"
+    }
+  ]
+}

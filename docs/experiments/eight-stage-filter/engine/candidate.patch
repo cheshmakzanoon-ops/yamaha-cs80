@@ -1,0 +1,1129 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -2539,6 +2539,7 @@
+         const int lpRanks = (rankSettings[0].lpfOn ? 1 : 0) + (rankSettings[1].lpfOn ? 1 : 0);
+         if (activeCount * std::max(hpRanks, lpRanks) >= 4)
+         {
++            if (filterEightEligible()) { processInternalSampleFilterEight(outL, outR, externalModulation); return; }
+             processInternalSampleImpl<true>(outL, outR, externalModulation);
+             return;
+         }
+@@ -3442,4 +3443,11 @@
+     return { circuit.getState(), nodes, circuit.sampleRate(), circuit.getMode() };
+ }
+ 
++// Research-only bridge: this TU remains the sole owner of the original tick.
++[[gnu::noinline]] WscOutputVolts filterEightOriginalTick(ReconstructedOscillator& oscillator,
++    double hz,const WscControls& controls) noexcept
++{
++    return oscillator.tick(hz,controls);
++}
++
+ } // namespace cs80
+--- a/src/core/Engine.h
++++ b/src/core/Engine.h
+@@ -573,6 +573,8 @@
+     float filterAttackTarget(int rank) const noexcept;
+     void updateSourceReadouts(float sampleRate) noexcept;
+     void processInternalSample(float& outL, float& outR, float externalModulation);
++    bool filterEightEligible() const noexcept;
++    void processInternalSampleFilterEight(float& outL, float& outR, float externalModulation);
+     template<bool BatchFilters>
+     void processInternalSampleImpl(float& outL, float& outR, float externalModulation);
+     void startVoice(Voice& voice, int note, float velocity, int midiChannel, bool keyboardOrigin = false, uint64_t coordinatedReleaseOrder = 0);
+--- /dev/null
++++ b/src/core/EngineFilterEight.cpp
+@@ -0,0 +1,856 @@
++#include "Engine.h"
++#include "RingModulatorCircuit.h"
++#include "Ig00156Eight.h"
++#include <algorithm>
++#include <cmath>
++#include <bit>
++#include <cstdint>
++namespace cs80 {
++WscOutputVolts filterEightOriginalTick(ReconstructedOscillator&,double,const WscControls&) noexcept;
++#if CS80_IG00156_EXACT_BATCH_BUILD
++namespace {
++// Immutable setup selection, initialized before any renderer call.
++const Ig00156Eight::Kernel eightKernel=Ig00156Eight::selectKernel();
++}
++struct Ig00156EightNoopAccess {
++ static bool unchanged(const Ig00156Stage& s,float clock,float cutoff,float q,float rate) noexcept {
++  const auto bits=[](float x){return std::bit_cast<std::uint32_t>(x);};
++  const auto ordinary=[](std::uint32_t x){return x>=0x00800000U && x<0x7f800000U;};
++  const auto c=bits(cutoff),qb=bits(q),r=bits(rate);
++  if(!ordinary(c)||!ordinary(qb)||r<bits(8000.f)||r>bits(1536000.f))return false;
++  const auto canonicalQ=qb<bits(.35f)?bits(.35f):qb>bits(9.f)?bits(9.f):qb;
++  // Same positive finite operands make the actual stock clamp/comparisons
++  // exact and non-signaling. No future set or reReference is executed here.
++  return bits(s.lastCutoff)==c && bits(s.lastQ)==canonicalQ && bits(s.lastRate)==r
++      && !s.lastUnwarped && s.cutoffCoefficientsValid && bits(clock)==r;
++ }
++};
++bool Engine::filterEightEligible() const noexcept {
++ return eightKernel && global.renderPolicy==RenderPolicy::sourcePerformance
++    && Ig00156Eight::environmentSupported();
++}
++void Engine::processInternalSampleFilterEight(float& outL,float& outR,float externalModulation)
++
++{
++    const float sr = (float) internalRate;
++    const float invSr = 1.0f / sr;
++
++    // KAS scan instants (Phase 2.2, opt-in). Switching the option off flushes
++    // anything still queued at once.
++    if (scanTimingActive() || scanner.pending() > 0)
++    {
++        auto dispatch = [this](const kas::Scanner::Event& e) {
++            if (e.on) applyNoteOn(e.note, e.velocity, e.channel, e.keyboardOrigin, e.onsetOrder, false);
++            else applyNoteOff(e.note, e.channel, e.keyboardOrigin, false);
++        };
++        if (! scanTimingActive())
++            while (! scanner.tick(dispatch)) {}
++        else
++            scanner.tick(dispatch);
++    }
++
++    updateArpeggiator(invSr);
++    // Circuit engine: smoothed settings and controllers for this sample.
++    const bool smoothControls = usesSourceModels(global.renderPolicy);
++    if (smoothControls)
++        beginSmoothedControls();
++
++    // Plan 2.5 (circuit engine): tolerance ratios for the present VOICE DISPERSION
++    // (recomputed only when it moves) and every channel's thermal drift, silent or
++    // not, so the drift's time base never depends on activity. Legacy and PURE
++    // CS-80 keep identity ratios (scale 0) and do not clock the drift.
++    {
++        // Dispersion is smoothed per internal sample. Its envelope R*C ratios
++        // must reach the live timing ports on the same sample, not wait for a
++        // repeated host control frame (which made timing depend on block size).
++        // setTimes preserves capacitor value, stage and elapsed time. Static
++        // ratios take no extra path; Legacy and PURE keep their identity ratios.
++        if (refreshToleranceRatios())
++            refreshEnvelopeTimes();
++        if (global.renderPolicy == RenderPolicy::sourcePerformance)
++            for (auto& voice : voices)
++                for (auto& rank : voice.ranks)
++                    rank.driftCents = rank.thermal.tick();
++    }
++
++    // Global modulation oscillators.
++    for (int i = 0; i < 3; ++i)
++        lfoValues[i] = modLfos[i].tick(global.lfoRate[i], sr, global.lfoWave[i]);
++
++    lfoPitch = lfoFilter = lfoAmp = 0.0f;
++    lfoPwm = lfoPan = 0.0f;
++    for (int i = 0; i < 3; ++i)
++    {
++        const float v = lfoValues[i] * global.lfoDepth[i];
++        switch (global.lfoDest[i])
++        {
++            case 1: lfoPitch += v * 2.0f; break;
++            case 2: lfoFilter += v * 1.6f; break;
++            case 3: lfoAmp += v * 0.25f; break;
++            case 4: lfoPan += v * 0.7f; break;
++            case 5: lfoPwm += v * 0.18f; break;
++            default: break;
++        }
++    }
++
++    pwmPhase[0] += rankSettings[0].pwmSpeed * invSr;
++    pwmPhase[1] += rankSettings[1].pwmSpeed * invSr;
++    pwmPhase[0] -= std::floor(pwmPhase[0]);
++    pwmPhase[1] -= std::floor(pwmPhase[1]);
++    // PWM is one shared sine per rank; evaluate it once, not once per voice.
++    const float pwmSine[2] = { std::sin(kTwoPi * pwmPhase[0]), std::sin(kTwoPi * pwmPhase[1]) };
++
++    // TRG5 positive diode-OR -> SP. Legacy: normalized ideal maximum of held
++    // voices, not event memory (physical release removes it even if a pedal or
++    // release tail sounds; the arpeggiator uses its generated held gates).
++    // Circuit engine: the diode bus below. Either way SP enters the SUB speed
++    // converter exactly once, scaled there by AT SPEED (VC4): the IG00150
++    // exponential converter (ws4) adds octaves for it; the bus only shapes it.
++    float sharedPressure = 0.0f;
++    if (usesSourceModels(global.renderPolicy))
++    {
++        // Circuit engine (Phase 2.4): every channel's TWS nodes advance each
++        // sample. The key's force drives a only while it is held (a released
++        // or pedal-held key exerts none); b holds the initial touch; C is the
++        // initial pitch transient. TRG5 joins every a through a 1S1555 onto one
++        // 47k bus, normalised to one full-pressure key (TouchCircuit.h).
++        std::array<double, kNumVoices> a {};
++        double top = 0.0;
++        for (int vi = 0; vi < kNumVoices; ++vi)
++        {
++            auto& voice = voices[(size_t) vi];
++            const auto t = voice.touch.tick(touchCoefficients, voice.active && voice.held ? voice.pressure : 0.0);
++            voice.touchA = (float) t.a;
++            voice.touchB = (float) t.b;
++            voice.touchC = (float) t.c;
++            voice.initialPitchTransient = t.c;
++            a[(size_t) vi] = t.a;
++            top = std::max(top, t.a);
++        }
++        trg5BusVolts = top > 0.0 ? touch::busVolts(a, trg5BusVolts, 2) : 0.0;
++        sharedPressure = (float) std::clamp(trg5BusVolts / trg5FullScaleVolts, 0.0, 1.0);
++    }
++    else
++    for (const auto& voice : voices)
++        if (voice.active && voice.held)
++            sharedPressure = std::max(sharedPressure, voice.pressure);
++
++    // Modern layer (Phase 6): MSEGs and matrix evaluated once per sample. Identity offsets
++    // (0, or ratios of exactly 1) when nothing is routed or under PURE CS-80.
++    // Keep wheel position separate from its semitone destination: changing
++    // the bend range is not a new gesture. The existing lower-master source
++    // selection remains unchanged.
++    modern.beginSample({ modWheel, ribbon + params[P_ribbon], lastChannelPressure, sharedPressure, expression,
++                         globalPitchWheel,
++                         subValue, ringEnv, { lfoValues[0], lfoValues[1], lfoValues[2] } });
++    const auto& modernGlobal = modern.getGlobalOffsets();
++
++    if (global.subOriginalMode && usesSourceModels(global.renderPolicy))
++    {
++        // Circuit engine: IG00150 exponential converter (touch adds octaves) smoothed on
++        // the control node, band-limited resets. ws4-circuits.md Step 1.
++        const double rate = originalSub.circuitRate(OriginalSubOscillator::circuitTargetRate(
++            global.subOriginalSpeed, global.subAtSpeed, sharedPressure) * (double) modernGlobal.subSpeedRatio,
++            originalSubSmoothing);
++        originalSubSpeedSmoothed = (float) rate;
++        subValue = originalSub.tickCircuit(rate, sr, global.subOriginalFunction,
++                                           -global.subExtLevel * externalModulation);
++    }
++    else if (global.subOriginalMode)
++    {
++        const float speed = OriginalSubOscillator::targetRate(
++            global.subOriginalSpeed, global.subAtSpeed, sharedPressure) * modernGlobal.subSpeedRatio;
++        originalSubSpeedSmoothed += (speed - originalSubSpeedSmoothed) * originalSubSmoothing;
++        // EJ/SUB input chain inverts. Peak1 digital input at fullLEVEL maps
++        // to nominal peak1 modulation, NOT a claim of volts-per-full-scale.
++        subValue = originalSub.tick(originalSubSpeedSmoothed, sr, global.subOriginalFunction,
++                                    -global.subExtLevel * externalModulation);
++    }
++    else
++    {
++        // Preserve the shipped waveform mapping, smoothing and RNG stream.
++        float speed = global.subSpeed;
++        speed *= 1.0f + global.subAtSpeed * sharedPressure * 2.0f;
++        speed *= modernGlobal.subSpeedRatio;
++        // Legacy keeps its per-sample constant; the circuit engine its time constant.
++        subSpeedSmoothed += (speed - subSpeedSmoothed)
++                            * (usesSourceModels(global.renderPolicy) ? subSpeedSmoothing : 0.0015f);
++        subValue = subLfo.tick(subSpeedSmoothed, sr, global.subWave, modRng);
++    }
++    subValue *= modernGlobal.subDepthGain;
++    driftPhase += 0.031f * invSr;
++    driftPhase -= std::floor(driftPhase);
++
++    float mixL = 0.0f;
++    float mixR = 0.0f;
++    int stillHeld = 0;
++
++    // Double accumulator avoids long-glide float rounding stalling before target.
++    // An open assigned footswitch suppresses new glides and snaps running ones to target.
++    const bool glideActive = global.glideGate && global.portamento > 0.0001f;
++    const double glideCoef = glideActive
++                                ? glideExp(-1.0 / ((double) global.portamento * sr))
++                                : 0.0;
++
++    if (sourceActive[0] || sourceActive[1])
++        updateSourceReadouts(sr);
++
++    // Circuit engine: ONE shared panel-noise generator sample for every voice
++    // (SUB29 fan-out, NoiseSource.h). Legacy draws per rank below, as before.
++    const bool sharedNoise = usesSourceModels(global.renderPolicy);
++    const float panelNoise = sharedNoise ? circuitNoise.panel() : 0.0f;
++
++    const bool freeRunning = freeRunningVoices();
++#if CS80_IG00156_EXACT_BATCH_BUILD
++    // Only the independent active-rank filters/VCA mix are deferred. All
++    // oscillators, RNG draws, controls, envelopes and modern modulation keep
++    // their original voice/rank order. Silent idle/replay clocks stay scalar.
++    struct PendingRank
++    {
++        Rank* rank;
++        float filtered, sine, vcfLevel, levelCv, amp, chGain, pan;
++    };
++    std::array<PendingRank, kNumVoices * kNumRanks> pending;
++    int pendingCount = 0;
++    constexpr bool batchFilters = true;
++#endif
++    for (int vi = 0; vi < kNumVoices; ++vi)
++    {
++        auto& v = voices[(size_t) vi];
++        // Circuit engine (Phase 2.1): a silent circuit keeps running. It is
++        // clocked once per idle step rather than every sample, and caught up
++        // exactly when it is next assigned (ContinuousVoiceCircuit.h).
++        int idleSamples = 0;
++        if (! v.active)
++        {
++            if (! freeRunning || ++v.idleClock < idleStepSamples)
++                continue;
++            idleSamples = v.idleClock;
++            v.idleClock = 0;
++            if (++v.idleSteps >= voice_continuity::kIdleStepWrap)
++                v.idleSteps -= voice_continuity::kIdleStepWrap
++                               - voice_continuity::kHistoryStride * voice_continuity::kHistoryLength;
++            // Released key: no pressure, MIDI member expression or held EG
++            // gate (also after a hard panic). The TWS b hold (velocity) stays.
++            v.pressure = v.timbre = v.mpeBend = 0.0f;
++            for (int ch = 0; ch < kNumRanks; ++ch)
++            {
++                auto& fenv = v.ranks[ch].fenv;
++                const auto stage = fenv.getState().stage;
++                if (! sourceActive[ch] && (stage == FilterEnv::Stage::Attack
++                    || stage == FilterEnv::Stage::Decay || stage == FilterEnv::Stage::Sustain))
++                    fenv.noteOff();
++            }
++        }
++        const bool idle = idleSamples > 0;
++        const float rate = idle ? sr / (float) idleSamples : sr;
++
++        if (v.held || v.pedalHeld)
++            ++stillHeld;
++
++        // SH7/SH8 K hold (Phase 2.2, circuit engine): NAND(TR, SUS). TR is high
++        // once the key (or, as a MIDI extension, the CC64 pedal) lets go; SUS is
++        // high in SUSTAIN I. Holding freezes the key voltage, glide included,
++        // and lets it droop (KasScanner.h). Legacy never holds: ratio 1.
++        float keyRatio = 1.0f;
++        if (freeRunning)
++        {
++            if (kas::shHolds(! (v.held || v.pedalHeld), global.sustainMode == 0))
++            {
++                if (! v.keyNode.holding)
++                    v.keyNode.hold(filterKeyVolts((float) v.glidePitch));
++                else
++                    v.keyNode.advance((double) (idle ? idleSamples : 1) / internalRate);
++                keyRatio = (float) v.keyNode.ratio();
++            }
++            else
++                v.keyNode.track();
++        }
++
++        // A held K node freezes the glide (portamento acts upstream on KI).
++        if (idle)
++        {
++            if (! v.keyNode.holding)
++            {
++                if (glideActive)
++                    v.glidePitch = v.targetPitch + (v.glidePitch - v.targetPitch)
++                                   * std::exp(-(double) idleSamples / ((double) global.portamento * sr));
++                else
++                    v.glidePitch = v.targetPitch;
++            }
++
++        }
++        else
++        {
++        if (! v.keyNode.holding)
++        {
++        if (glideActive)
++            v.glidePitch = v.targetPitch + (v.glidePitch - v.targetPitch) * glideCoef;
++        else
++            v.glidePitch = v.targetPitch;
++        }
++
++        // Conditional TWS C positive-step response: 1 uF * (100k || 100k).
++        // Coefficient is computed at prepare, not in this sample loop. Do not
++        // freeze a permanent detuning residual; snap only a negligible state
++        // to zero well before double-precision denormals are approached.
++        if (! freeRunning) // circuit engine: C comes from the TWS model (Phase 2.4)
++            v.initialPitchTransient *= initialPitchDecay;
++        }
++        if (std::abs(v.initialPitchTransient) < 1.0e-15)
++            v.initialPitchTransient = 0.0;
++
++        // Sustain I holds each released voice's last ribbon pitch. Sustain II
++        // keeps release tails coupled to subsequent ribbon gestures.
++        if (v.held || v.pedalHeld || (global.sustainMode == 1 && global.sustainGate))
++            v.ribbonRatio = ribbonFrequencyRatio(ribbon + params[P_ribbon]);
++
++        const float glideOffset = v.glidePitch - (float) v.note;
++        // Touch drives: Legacy uses the MIDI values; the circuit engine the TWS
++        // held initial touch b and the smoothed aftertouch a (Phase 2.4).
++        const float touchVelocity = freeRunning ? v.touchB : v.velocity;
++        const float touchPressure = freeRunning ? v.touchA : v.pressure;
++        const float dispersion = global.voiceDispersion;
++        const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
++        // Envelope sources are the previous sample's values of each rank.
++        modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
++                                  { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
++                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, ! idle);
++
++        // A gap channel is not an implicit member of the lower MPE zone.
++        // Keep channel 1's existing own-channel fallback when its zone is off,
++        // and retain captured-upper routing for channels still in either zone.
++        const float masterBend = global.mpe && v.midiChannel != 1
++            && mpeZones.role(v.midiChannel) == MpeZoneLayout::Role::none
++                ? 0.0f : (v.upperZone ? upperZoneBend : globalBend);
++        for (int ch = 0; ch < 2; ++ch)
++        {
++            auto& r = v.ranks[ch];
++            auto& rs = rankSettings[ch];
++            const auto& mod = modern.rankOffsets(vi, ch);
++            // Tune trim and drift. Legacy: uniform trims and the historical sine,
++            // unchanged. Circuit engine (plan 2.5): the declared alignment
++            // residual and the thermal 1/f drift, or the sine as the "worn unit".
++            const bool circuitVariation = global.renderPolicy == RenderPolicy::sourcePerformance;
++            const float tuneTrim = circuitVariation ? r.tol.tuneSemitones
++                                                    : r.trimTune * dispersion * (kProvisionalVoiceTuneSpreadCents / 100.0f);
++            const float driftTerm = circuitVariation && global.driftModel == 0
++                                        ? global.drift / tolerance::kDefaultDrift * r.driftCents * 0.01f
++                                        : driftVoice;
++
++            float pitch = (float) v.note
++                          + global.masterTune
++                          + (ch == 1 ? global.detuneCents / 100.0f : 0.0f)
++                          + masterBend
++                          + v.mpeBend
++                          + glideOffset
++                          + (float) (global.initBend * v.initialPitchTransient)
++                          + lfoPitch
++                          + subValue * (global.subVco + global.subAtVco * touchPressure) * 1.5f
++                          + subValue * modWheel * global.modWheelSub * 2.0f
++                          + tuneTrim
++                          + driftTerm
++                          + v.unisonOffset
++                          + mod.pitch;
++
++            if (global.glideMode == 2 && global.glideGate)
++                pitch = std::round(pitch);
++
++            // Transposition is a separate nominal harmonic ratio, not rounded
++            // equal-tempered fifths and not part of the shared filter key CV.
++            const float freq = midiToHz(pitch, global.tuningRef) * v.ribbonRatio
++                               * kFeetRatios[std::clamp(rs.feet, 0, 5)] * keyRatio;
++            const float pwm = pwmSine[ch];
++            const float pw = clampf(rs.pulseWidth + rs.pwmDepth * 0.35f * pwm + lfoPwm + mod.pulseWidth, 0.05f, 0.95f);
++
++            // Circuit engine: WSC pin volts from one charge/reset trajectory
++            // through the fixed inferred adapter; 8 internal samples of
++            // linear-phase antialias delay. Legacy: PolyBLEP, unchanged.
++            // An idle step (Phase 2.1) advances the oscillator below, without
++            // a per-sample tick and without drawing from the shared noise stream.
++            float sawPulse = 0.0f, sineWave = 0.0f;
++            float x = 0.0f;
++            if (! idle)
++            {
++            if (usesSourceModels(global.renderPolicy))
++            {
++                WscControls wscControls;
++                wscControls.pulseThresholdVolts = ReconstructedOscillator::panelThresholdVoltsInferred(pw);
++                wscControls.sawEnabled = rs.saw;
++                wscControls.pulseEnabled = rs.pulse;
++                const auto pins = filterEightOriginalTick(r.wsc, freq, wscControls);
++                sawPulse = voice_continuity::sawPulseUnits(pins);
++                sineWave = static_cast<float>(pins.sinePin2 * kWscEngineUnitsPerVolt);
++            }
++            else
++            {
++                const auto osc = r.osc.tick(freq, sr, pw, rs.saw, rs.pulse, 0.0f, audioRng);
++                sawPulse = osc.saw + osc.pulse;
++                sineWave = osc.sine;
++            }
++
++            x = sawPulse;
++            // The shared RNG draw is consumed in both engines so oscillator start
++            // phases keep their sequence; the circuit engine hears the SUB29 sample.
++            const float rankNoise = audioRng.nextBipolar();
++            x += (sharedNoise ? panelNoise : rankNoise) * rs.noise * 0.8f;
++            x *= 0.9f;
++            }
++
++            // Shared key-voltage domain precedes VCO footage/vibrato. Master
++            // pitch and key portamento move it; ribbon routing is unverified.
++            const float keyVolts = filterKeyVolts(v.glidePitch + global.masterTune, r.keyVoltsExp) * keyRatio;
++            const float brillOct = global.brilliance
++                                   + (sourceActive[ch] ? 0.0f : rs.initBrill * touchVelocity * 2.0f)
++                                   + (sourceActive[ch] ? 0.0f : rs.afterBrill * touchPressure * 2.0f)
++                                   + v.timbre * 0.8f
++                                   + modWheel * global.modWheelVcf * 1.5f
++                                   // Owner manual p39: pressure adds SUB VCF depth,
++                                   // not a static cutoff offset. The 1.5-octave scale
++                                   // is provisional, not a measured circuit gain.
++                                   + subValue * (global.subVcf + global.subAtVcf * touchPressure) * 1.5f
++                                   + lfoFilter
++                                   // Keyboard contour: zero (exactly) when both levers are centred.
++                                   // Legacy: frozen per-key weights. Circuit engine: the KBC
++                                   // network, added per filter side below (Phase 2.3).
++                                   + (freeRunning ? 0.0f : keyboardBrillianceOctaves(global.kbdBrillianceLow,
++                                                               global.kbdBrillianceHigh, v.contour));
++            const float contourHp = v.kbcCv[ch][0], contourLp = v.kbcCv[ch][1];
++
++            const float fenv = sourceActive[ch] ? sourceFilterValues[ch][vi]
++                : r.fenv.tick(rate, true, usesSourceModels(global.renderPolicy));
++            const float envLp = fenv;
++            const float envHp = fenv * kProvisionalHpfEnvelopeGain;
++
++            // Plan 2.5: the channel's component ratios (exactly 1 in Legacy and PURE CS-80).
++            const float cutoffLp = r.tol.lpCutoff * (sourceActive[ch]
++                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][1]) + brillOct + contourLp + mod.lpCutoff, r.lpCutoffExp)
++                : nominalFilterCutoff(keyVolts, rs.lpfEffectiveCv + brillOct + envLp + contourLp + mod.lpCutoff, r.lpCutoffExp));
++            const float cutoffHp = r.tol.hpCutoff * (sourceActive[ch]
++                ? nominalFilterCutoff(keyVolts, static_cast<float>(sourceCutoff[ch].effectiveCv[vi][0]) + brillOct + contourHp + mod.hpCutoff, r.hpCutoffExp)
++                : nominalFilterCutoff(keyVolts, rs.hpfEffectiveCv + brillOct + envHp + contourHp + mod.hpCutoff, r.hpCutoffExp));
++            const float qLp = r.tol.lpQ * (sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][1])
++                : provisionalFilterQ(rs.lpfRes * 0.8f + global.resonance * 0.6f));
++            const float qHp = r.tol.hpQ * (sourceActive[ch] ? static_cast<float>(sourceShared.q[ch][vi][0])
++                : provisionalFilterQ(rs.hpfRes * 0.8f + global.resonance * 0.6f));
++
++            // Circuit engine: IG00156 nodal stages (input networks, 180 pF
++            // branch, 1 uF couplings, in-loop OTA saturation; the 4.7 MOhm
++            // feedforward is internal), free-running (Phase 2.1). Legacy:
++            // unchanged Svf.
++            const float hpQ = modern::modulatedQ(qHp, mod.hpQ), lpQ = modern::modulatedQ(qLp, mod.lpQ);
++            if (freeRunning)
++            {
++                const voice_continuity::IdleRankControls controls { freq, pw, rs.noise, rs.saw, rs.pulse,
++                    cutoffHp, hpQ, cutoffLp, lpQ, rs.hpfOn, rs.lpfOn };
++                if (idle)
++                {
++                    // Silent circuit: closed-form oscillator advance, one
++                    // decimated step of both stages, the VCA's output coupling
++                    // discharging, and no contribution to the mix.
++                    voice_continuity::idleStepRank(r, controls, sr, idleSamples, v.idleSteps);
++                    r.vca.relaxIdle((double) idleSamples / sr);
++                    r.info = { cutoffHp, cutoffLp, fenv, 0.0f, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
++                    continue;
++                }
++                r.idle = controls;
++            }
++            float filtered = x;
++            if (freeRunning)
++            {
++                // Same stage clocking as the idle path (re-referencing a stage
++                // whose histories were last clocked at the idle step rate).
++#if CS80_IG00156_EXACT_BATCH_BUILD
++                if (! batchFilters)
++#endif
++                    filtered = voice_continuity::clockStages(r.hpStage, r.lpStage, r.idleRefs, filtered, r.idle, sr);
++            }
++            else
++            {
++                if (rs.hpfOn)
++                {
++                    r.hpf.set(cutoffHp, hpQ, sr);
++                    filtered = r.hpf.process(filtered).hp;
++                }
++                if (rs.lpfOn)
++                {
++                    r.lpf.set(cutoffLp, lpQ, sr);
++                    filtered = r.lpf.process(filtered).lp;
++                }
++            }
++
++            const float sine = sineWave * rs.sine;
++            // Legacy: SUB VCA modulation adds to the level CV. Circuit engine:
++            // it drives the IG00151 exponential input (Vca.h) instead, so it is
++            // left out of the linear LC sum.
++            const bool circuitVca = usesSourceModels(global.renderPolicy);
++            const float subLevel = circuitVca ? 0.0f : subValue * global.subVca * 0.45f;
++            // Source LC/LI is linear in its explicit unit scale. Retain global
++            // effective transports once; floor negative total gain at zero,
++            // but do NOT apply the legacy 2.6 cap or per-tone normalization.
++            // Keyboard level contour: Legacy frozen weights; circuit engine the
++            // KBC2 -> KB -> 270k -> LC branch (Phase 2.3).
++            const float contourLevel = freeRunning ? v.kbcLevelGain[ch]
++                : keyboardLevelOffset(global.kbdLevelLow, global.kbdLevelHigh, v.contour);
++            const float levelCv = r.tol.level * (sourceActive[ch]
++                ? std::max(0.0f, static_cast<float>(sourceShared.levelGain[ch][vi])
++                             + subLevel + lfoAmp
++                             + contourLevel + mod.level)
++                : clampf(rs.vLevel
++                                             + rs.initLevel * touchVelocity
++                                             + rs.afterLevel * touchPressure
++                                             + subLevel
++                                             + lfoAmp
++                                             + contourLevel
++                                             + mod.level,
++                                         0.0f, 2.6f));
++            const float amp = r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
++            r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
++            const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
++#if CS80_IG00156_EXACT_BATCH_BUILD
++            if (batchFilters)
++            {
++                const float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan + mod.pan, -1.0f, 1.0f);
++                pending[(size_t) pendingCount++] = { &r, filtered, sine, rs.vcfLevel, levelCv, amp, chGain, pan };
++                continue;
++            }
++#endif
++            // Velocity acts through the selected initial-touch destinations.
++            // An unconditional velocity gain made disabled touch controls audible.
++            const float vcaInput = filtered * rs.vcfLevel + sine;
++            float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan + mod.pan, -1.0f, 1.0f);
++            float voiceOut, panLeft, panRight;
++            if (circuitVca)
++            {
++                // IG00151: LC on the linear input through its 10 nF node, SUB on
++                // the exponential input; constant-power rank pan.
++                if (r.vcaCold)
++                {
++                    r.vca.reset(levelCv);
++                    r.vcaCold = false;
++                }
++                voiceOut = r.vca.process(vcaInput, levelCv, subValue * global.subVca * kIg00151SubOctaves, amp)
++                           * chGain * 0.17f;
++                constantPowerPan(pan, panLeft, panRight);
++            }
++            else
++            {
++                voiceOut = vcaInput * levelCv * amp * chGain * 0.17f;
++                panLeft = 0.5f - 0.5f * pan;
++                panRight = 0.5f + 0.5f * pan;
++            }
++            mixL += voiceOut * panLeft;
++            mixR += voiceOut * panRight;
++        }
++
++        if (v.ranks[0].aenv.isIdle() && v.ranks[1].aenv.isIdle())
++        {
++            v.active = false;
++            v.held = false;
++            v.sustained = false;
++        }
++    }
++
++#if CS80_IG00156_EXACT_BATCH_BUILD
++    if (batchFilters)
++    {
++        // Ordinary set/reReference remain the only coefficient/clock owners.
++        // Finish every HP before its own LP; packs may omit bypassed stages.
++        // Nothing reads another rank's filter/VCA state during this interval.
++        for (bool highPass : { true, false })
++        {
++            Ig00156Batch::Stages stages;
++            Ig00156Batch::Inputs inputs;
++            std::array<int, 4> indices;
++            int count = 0;
++            bool followingReady = false;
++            Ig00156Batch::Outputs followingOutputs;
++            for (int i = 0; i < pendingCount; ++i)
++            {
++                auto& p = pending[(size_t) i];
++                auto& r = *p.rank;
++                const auto& c = r.idle;
++                if (! (highPass ? c.hpOn : c.lpOn))
++                    continue;
++                auto& stage = highPass ? r.hpStage : r.lpStage;
++                auto& rate = highPass ? r.idleRefs.hpRate : r.idleRefs.lpRate;
++                voice_continuity::prepareStageClock(stage, rate, highPass ? c.hpCutoff : c.lpCutoff,
++                                                    highPass ? c.hpQ : c.lpQ, sr, false);
++                stages[(size_t) count] = &stage;
++                inputs[(size_t) count] = p.filtered;
++                indices[(size_t) count++] = i;
++                if (count == 4)
++                {
++                    Ig00156Batch::Outputs outputs;
++                    if (followingReady)
++                    {
++                        outputs = followingOutputs;
++                        followingReady = false;
++                    }
++                    else
++                    {
++                        Ig00156Eight::Stages allStages{};
++                        Ig00156Eight::Inputs allInputs{};
++                        for (int j=0;j<4;++j) { allStages[(size_t)j]=stages[(size_t)j]; allInputs[(size_t)j]=inputs[(size_t)j]; }
++                        int futureCount=0;
++                        bool noOp=Ig00156Eight::environmentSupported();
++                        for (int k=i+1;noOp && k<pendingCount && futureCount<4;++k)
++                        {
++                            auto& future=pending[(size_t)k];
++                            auto& rank=*future.rank;
++                            const auto& control=rank.idle;
++                            if (!(highPass ? control.hpOn : control.lpOn)) continue;
++                            auto& next=highPass ? rank.hpStage : rank.lpStage;
++                            const float clock=highPass ? rank.idleRefs.hpRate : rank.idleRefs.lpRate;
++                            noOp=Ig00156EightNoopAccess::unchanged(next,clock,
++                                highPass ? control.hpCutoff : control.lpCutoff,
++                                highPass ? control.hpQ : control.lpQ,sr);
++                            allStages[(size_t)(4+futureCount)]=&next;
++                            allInputs[(size_t)(4+futureCount)]=future.filtered;
++                            ++futureCount;
++                        }
++                        bool solved=false;
++                        if (noOp && futureCount==4)
++                        {
++                            bool distinct=true;
++                            for (int j=0;j<8;++j) for(int k=0;k<j;++k)
++                                distinct=distinct && allStages[(size_t)j]!=allStages[(size_t)k];
++                            if (distinct)
++                            {
++                                Ig00156Eight::Outputs allOutputs;
++                                const bool eightSolved=eightKernel(allStages,allInputs,allOutputs);
++                                if (eightSolved)
++                                {
++                                    for(int j=0;j<4;++j) { outputs[(size_t)j]=allOutputs[(size_t)j]; followingOutputs[(size_t)j]=allOutputs[(size_t)(j+4)]; }
++                                    followingReady=true;
++                                    solved=true;
++                                }
++                            }
++                        }
++                        if (!solved) processIg00156Four(stages, inputs, outputs, filterBatchKernel);
++                    }
++                    for (int j = 0; j < 4; ++j)
++                        pending[(size_t) indices[(size_t) j]].filtered = highPass ? outputs[(size_t) j].hp : outputs[(size_t) j].lp;
++                    count = 0;
++                }
++            }
++            for (int j = 0; j < count; ++j)
++            {
++                const auto output = stages[(size_t) j]->process(inputs[(size_t) j]);
++                pending[(size_t) indices[(size_t) j]].filtered = highPass ? output.hp : output.lp;
++            }
++        }
++        // Preserve the original rank order and the exact multiply/add order
++        // of the VCA and mix. There is no block queue or additional latency.
++        for (int i = 0; i < pendingCount; ++i)
++        {
++            const auto& p = pending[(size_t) i];
++            auto& r = *p.rank;
++            if (r.vcaCold)
++            {
++                r.vca.reset(p.levelCv);
++                r.vcaCold = false;
++            }
++            const float vcaInput = p.filtered * p.vcfLevel + p.sine;
++            const float voiceOut = r.vca.process(vcaInput, p.levelCv, subValue * global.subVca * kIg00151SubOctaves, p.amp)
++                                   * p.chGain * 0.17f;
++            float panLeft, panRight;
++            constantPowerPan(p.pan, panLeft, panRight);
++            mixL += voiceOut * panLeft;
++            mixR += voiceOut * panRight;
++        }
++    }
++#endif
++
++    heldCount = stillHeld;
++
++    // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
++    // so enabling MODULATION does not resurrect a frozen envelope.
++    ringEnv = ringAdsr.tick(sr, false, usesSourceModels(global.renderPolicy));
++    // Circuit engine: ADJ p19-anchored exponential converter and offset multiplier
++    // (RingModulatorCircuit.h, ws4-circuits.md Step 2). Legacy: provisional law, ideal multiply.
++    ringFrequency = clampf(usesSourceModels(global.renderPolicy)
++                               ? RingModulatorCircuit::frequency(global.ringSpeed, global.ringDepth, ringEnv)
++                               : ringModulationFrequency(global.ringSpeed, global.ringDepth, ringEnv),
++                           0.0f, sr * 0.4f);
++    ringPhase += ringFrequency * invSr;
++    ringPhase -= std::floor(ringPhase);
++    if (global.ringAmount > 0.001f)
++    {
++        const float carrier = std::sin(kTwoPi * ringPhase);
++        const float amount = clampf(global.ringAmount, 0.0f, 1.0f);
++        if (usesSourceModels(global.renderPolicy))
++        {
++            mixL = RingModulatorCircuit::blend(mixL, carrier, amount);
++            mixR = RingModulatorCircuit::blend(mixR, carrier, amount);
++        }
++        else
++        {
++            mixL = lerp(mixL, mixL * carrier, amount);
++            mixR = lerp(mixR, mixR * carrier, amount);
++        }
++    }
++
++    // PRA EXP-WAH: documented ring -> PRA -> OE1/OE2 -> expression order
++    // (docs/OE1_SIGNAL_ROUTING_EVIDENCE.md). The 12ms switching crossfade is
++    // an inferred de-click policy, not a recovered FET transient law.
++    {
++        const float wahTarget = global.pedalWah ? 1.0f : 0.0f;
++        if (wahMix != wahTarget)
++        {
++            wahMix += (wahTarget - wahMix) * wahSmoothing;
++            if (std::abs(wahMix - wahTarget) < 1.0e-4f)
++                wahMix = wahTarget;
++        }
++        if (usesSourceModels(global.renderPolicy))
++        {
++            praWahL.setPedal(expression);
++            praWahR.setPedal(expression);
++            // Always clock all four physical capacitor states, including when
++            // EXP selects dry. Dry X includes input coupling/source loading;
++            // wet Y already includes VR2 gain: no SVF or extra normalization.
++            const auto left = praWahL.process(mixL);
++            const auto right = praWahR.process(mixR);
++            mixL = lerp((float) left.x, (float) left.y, wahMix);
++            mixR = lerp((float) right.x, (float) right.y, wahMix);
++        }
++        else if (wahMix > 0.0f)
++        {
++            const float pedalHz = wahCentreHz(expression);
++            // Start on the pedal position rather than sweeping up from a stale value.
++            wahFrequency = wahRunning ? wahFrequency + (pedalHz - wahFrequency) * wahSmoothing : pedalHz;
++            wahRunning = true;
++            wahL.set(wahFrequency, kProvisionalWahQ, sr);
++            wahR.set(wahFrequency, kProvisionalWahQ, sr);
++            // Svf's band-pass peaks at Q; normalise to unity before make-up gain.
++            constexpr float bandGain = kProvisionalWahMakeup / kProvisionalWahQ;
++            mixL = lerp(mixL, wahL.process(mixL).bp * bandGain, wahMix);
++            mixR = lerp(mixR, wahR.process(mixR).bp * bandGain, wahMix);
++        }
++        else if (wahRunning)
++        {
++            wahL.reset();
++            wahR.reset();
++            wahRunning = false;
++        }
++    }
++
++    // Shared RNG draws consumed in both engines (start-phase sequence kept).
++    float hissL = audioRng.nextBipolar();
++    float hissR = audioRng.nextBipolar();
++    // Circuit engine: declared mix-bus hiss PSD, one independent source per channel.
++    if (sharedNoise)
++        circuitNoise.hiss(hissL, hissR);
++    mixL += hissL * global.analogNoise * 0.0008f;
++    mixR += hissR * global.analogNoise * 0.0008f;
++
++    // Legacy: provisional generic delay-line chorus/tremolo. Source policies: OE2 BBD
++    // delay path (docs/BBD_CHORUS_MODEL.md); its inferred constants are not calibrated.
++    const auto ch = usesSourceModels(global.renderPolicy)
++        ? bbdChorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
++                            global.chorusOn, global.chorusTremolo)
++        : chorus.process(mixL, mixR, global.chorusSpeed, global.chorusDepth,
++                         global.chorusOn, global.chorusTremolo);
++    mixL = ch.l;
++    mixR = ch.r;
++
++    // Three modern FX slots, processed in series after the provisional CS-80
++    // chorus. The type numbers are fixed by the UI: 1 chorus, 2 phaser,
++    // 3 tape delay, 4 plate reverb, 5 drive.
++    for (int slot = 0; slot < 3; ++slot)
++    {
++        // A modern model (ws5) replaces the classic type of its slot; model 0 is classic.
++        fx::SlotControls controls;
++        controls.type = global.fxType[slot];
++        controls.model = global.fxModel[slot];
++        controls.mix = clampf(global.fxMix[slot] + modernGlobal.fxMix[(std::size_t) slot], 0.0f, 1.0f);
++        controls.a = global.fxParamA[slot];
++        controls.b = global.fxParamB[slot];
++        controls.oversampling = global.fxOversampling[slot];
++        controls.gainComp = global.fxGainComp;
++        const auto out = fxSlots[(std::size_t) slot].process(controls, mixL, mixR, driftPhase, sr);
++        mixL = out.l;
++        mixR = out.r;
++    }
++
++    // 10 Hz DC blocker. It removes the offset from asymmetric oscillator
++    // resets without eating the low end of the instrument.
++    const float dcCoeff = dcCoefficient;
++    const float dcOutL = mixL - dcInL + dcCoeff * dcL;
++    const float dcOutR = mixR - dcInR + dcCoeff * dcR;
++    dcInL = mixL;
++    dcInR = mixR;
++    dcL = dcOutL;
++    dcR = dcOutR;
++
++    // Legacy keeps its historical per-sample constant. The circuit engine's
++    // volume is already smoothed with the other controls, in time.
++    smoothedVolume = usesSourceModels(global.renderPolicy)
++                         ? global.volume : smoothedVolume + (global.volume - smoothedVolume) * 0.003f;
++    const float gain = smoothedVolume * 4.0f
++                       * (smoothControls ? controllerSmoothing.expressionGain : expression);
++    // Source policies remove the arbitrary output conditioner, not the
++    // provisional filter saturation law. No calibrated output/headroom claim.
++    outL = usesSourceModels(global.renderPolicy) ? mixL * gain : softClip(dcOutL * gain);
++    outR = usesSourceModels(global.renderPolicy) ? mixR * gain : softClip(dcOutR * gain);
++
++    if (usesSourceModels(global.renderPolicy))
++    {
++        // Existing float post-volume/expression values define normalized ideal
++        // LEFT/RIGHT preamp-source units, not calibrated LI/RI voltages. GENERAL
++        // is formed before separate coupling/loading and always clocked, even
++        // when no voice sounds. Only LEFT/RIGHT reach the host in source policies.
++        // Phase 1.5 gain staging: fixed digital reference, then the inferred
++        // driver headroom, then the passive tap/coupling network.
++        const double driveL = circuitOutputDriver(outL * kCircuitOutputReference);
++        const double driveR = circuitOutputDriver(outR * kCircuitOutputReference);
++        outputNodes = outputCircuit.process(driveL, driveR);
++        // HL/HR leave the preamps before the coupling capacitors and HIGH/LOW
++        // switch. The headphone stage is always clocked, like the three jacks.
++        const double phonesLeft = phonesL.process(driveL), phonesRight = phonesR.process(driveR);
++        // LISTENING OUTPUT (Phase 3): which physical output the host hears.
++        switch (listeningOutput)
++        {
++            case 1:
++                outL = outR = (float) outputNodes.general.audibleJackVolts;
++                break;
++            case 2:
++                outL = (float) phonesLeft;
++                outR = (float) phonesRight;
++                break;
++            default:
++                outL = (float) outputNodes.left.audibleJackVolts;
++                outR = (float) outputNodes.right.audibleJackVolts;
++                break;
++        }
++        listeningSample = { outL, outR };
++    }
++    else
++    {
++        // Historical scalar HIGH/LOW policy; arithmetic and order unchanged.
++        // Do not apply this extra attenuation to the reconstructed output graph.
++        const float outputTarget = outputLevelGain(global.outputHigh);
++        if (outputGain != outputTarget)
++        {
++            outputGain += (outputTarget - outputGain) * outputGainSmoothing;
++            if (std::abs(outputGain - outputTarget) < 1.0e-6f)
++                outputGain = outputTarget;
++        }
++        outL *= outputGain;
++        outR *= outputGain;
++    }
++
++    if (! global.stereo)
++    {
++        const float m = (outL + outR) * 0.5f;
++        outL = outR = m;
++    }
++    if (smoothControls)
++        endSmoothedControls();
++}
++
++#else
++bool Engine::filterEightEligible() const noexcept {return false;}
++void Engine::processInternalSampleFilterEight(float& l,float& r,float x){processInternalSample(l,r,x);}
++#endif
++}
+--- /dev/null
++++ b/src/core/Ig00156Eight.cpp
+@@ -0,0 +1,208 @@
++#include "Ig00156Eight.h"
++
++#if CS80_IG00156_EXACT_BATCH_BUILD
++#include <bit>
++#include <cstdint>
++#include <immintrin.h>
++
++// The translation unit is compiled with contraction disabled, but NOT with a
++// global AVX target. Only these functions may contain AVX instructions.
++#define CS80_AVX512 __attribute__((target("avx2,avx512f,avx512vl,avx512dq,no-fma")))
++#define CS80_AVX512_INLINE CS80_AVX512 __attribute__((always_inline)) inline
++
++namespace cs80
++{
++namespace
++{
++struct V
++{
++    __m512d x;
++    CS80_AVX512_INLINE V() : x(_mm512_setzero_pd()) {}
++    CS80_AVX512_INLINE V(double a) : x(_mm512_set1_pd(a)) {}
++    CS80_AVX512_INLINE V(__m512d a) : x(a) {}
++    friend CS80_AVX512_INLINE V operator+(V a, V b) { return _mm512_add_pd(a.x,b.x); }
++    friend CS80_AVX512_INLINE V operator-(V a, V b) { return _mm512_sub_pd(a.x,b.x); }
++    friend CS80_AVX512_INLINE V operator*(V a, V b) { return _mm512_mul_pd(a.x,b.x); }
++    friend CS80_AVX512_INLINE V operator/(V a, V b) { return _mm512_div_pd(a.x,b.x); }
++};
++CS80_AVX512_INLINE V select(V mask,V yes,V no) { return _mm512_mask_blend_pd(_mm512_movepi64_mask(_mm512_castpd_si512(mask.x)),no.x,yes.x); }
++CS80_AVX512_INLINE V absolute(V x) { return _mm512_andnot_pd(_mm512_set1_pd(-0.0),x.x); }
++CS80_AVX512_INLINE V less(V a,V b) { return _mm512_castsi512_pd(_mm512_movm_epi64(_mm512_cmp_pd_mask(a.x,b.x,_CMP_LT_OQ))); }
++CS80_AVX512_INLINE V greater(V a,V b) { return _mm512_castsi512_pd(_mm512_movm_epi64(_mm512_cmp_pd_mask(a.x,b.x,_CMP_GT_OQ))); }
++CS80_AVX512_INLINE __m512i outsideStateBound(V value)
++{
++    const auto magnitude=_mm512_and_si512(_mm512_castpd_si512(value.x),
++                                          _mm512_set1_epi64(0x7fffffffffffffffLL));
++    return _mm512_movm_epi64(_mm512_cmpgt_epi64_mask(magnitude,
++        _mm512_set1_epi64(std::bit_cast<std::int64_t>(1024.0))));
++}
++CS80_AVX512_INLINE V tanh(V original)
++{
++    // The scalar branches do not evaluate the polynomial outside its clamp.
++    const V x=select(greater(absolute(original),4.97),0.0,original);
++    const V x2=x*x;
++    V result=x*(135135.0+x2*(17325.0+x2*(378.0+x2)))
++                /(135135.0+x2*(62370.0+x2*(3150.0+x2*28.0)));
++    result=select(greater(original,4.97),1.0,result);
++    return select(less(original,-4.97),-1.0,result);
++}
++
++// Bit inspection cannot raise invalid for a signaling NaN. These are
++// optimization eligibility limits, NOT clamps: outside them scalar behavior
++// is retained. The tested physical stage domain is much smaller.
++bool bounded(double x,double limit) noexcept
++{
++    return (std::bit_cast<std::uint64_t>(x)&0x7fffffffffffffffULL)
++        <= std::bit_cast<std::uint64_t>(limit);
++}
++bool bounded(float x,float limit) noexcept
++{
++    return (std::bit_cast<std::uint32_t>(x)&0x7fffffffU)
++        <= std::bit_cast<std::uint32_t>(limit);
++}
++} // namespace
++
++struct Ig00156EightAccess
++{
++    static bool eligible(const Ig00156Eight::Stages& stages,
++                         const Ig00156Eight::Inputs& input) noexcept
++    {
++        // Nearest rounding and masked traps only. Never change FTZ/DAZ or
++        // clear existing status flags. Arithmetic may raise sticky flags;
++        // exact flag equality with the scalar calculation is not promised.
++        if (!Ig00156Eight::environmentSupported()) return false;
++        for(std::size_t i=0;i<8;++i)
++        {
++            const auto& s=*stages[i];
++            if(!bounded(input[i],64.0f) || !bounded(s.lastRate,1536000.0f)
++               || s.lastRate<8000.0f || s.lastUnwarped || !s.cutoffCoefficientsValid)
++                return false;
++            for(double value : {s.inputScale,s.gmPart,s.ffPart,s.xFromFb,s.xFromIn,
++                                 s.xFromU,s.xFromBp,s.kiGs,s.invA11,s.inFromX})
++                if(!bounded(value,1000000.0)) return false;
++            // Positive physical gains make both Newton denominators >= 1.
++            // Arbitrary restored slopes/custom networks must not turn a
++            // discarded vector lane into a division by zero. These are still
++            // eligibility checks: unsupported states keep the scalar solver.
++            if(s.gmPart<0.0 || s.ffPart<0.0 || s.xFromBp < -1.0)
++                return false;
++        }
++        return true;
++    }
++
++    static CS80_AVX512 bool process(const Ig00156Eight::Stages& stages,
++                                  const Ig00156Eight::Inputs& input,
++                                  Ig00156Eight::Outputs& output) noexcept
++    {
++        for (std::size_t i=0;i<8;++i) {
++            if(stages[i]==nullptr) return false;
++            for (std::size_t j=0;j<i;++j) if(stages[i]==stages[j]) return false;
++        }
++        if(!eligible(stages,input)) return false;
++        const auto gather=[&](double Ig00156Stage::*member) CS80_AVX512 {
++            return V(_mm512_setr_pd(stages[0]->*member,stages[1]->*member,
++                                   stages[2]->*member,stages[3]->*member,
++                                   stages[4]->*member,stages[5]->*member,stages[6]->*member,stages[7]->*member));
++        };
++        const V scale=gather(&Ig00156Stage::inputScale);
++        const V g1=gather(&Ig00156Stage::gmPart),f1=gather(&Ig00156Stage::ffPart),g2=g1,f2=f1;
++        const V fromFb=gather(&Ig00156Stage::xFromFb),fromIn=gather(&Ig00156Stage::xFromIn);
++        const V fromU=gather(&Ig00156Stage::xFromU),fromBp=gather(&Ig00156Stage::xFromBp);
++        const V kiGs=gather(&Ig00156Stage::kiGs),invA11=gather(&Ig00156Stage::invA11),inFromX=gather(&Ig00156Stage::inFromX);
++        const V zIn=gather(&Ig00156Stage::zIn),zFb=gather(&Ig00156Stage::zFb);
++        const V zBp=gather(&Ig00156Stage::zBp),zLp=gather(&Ig00156Stage::zLp);
++        const V slope1=gather(&Ig00156Stage::slope1),slope2=gather(&Ig00156Stage::slope2);
++        // Reuse gathered state for the dynamic admission gate. Integer bit
++        // comparisons reject NaN (including signalling NaN) and infinities
++        // without evaluating them or altering any authoritative state.
++        auto bad=_mm512_or_si512(outsideStateBound(zIn),outsideStateBound(zFb));
++        bad=_mm512_or_si512(bad,outsideStateBound(zBp));
++        bad=_mm512_or_si512(bad,outsideStateBound(zLp));
++        bad=_mm512_or_si512(bad,outsideStateBound(slope1));
++        bad=_mm512_or_si512(bad,outsideStateBound(slope2));
++        if(_mm512_movepi64_mask(bad)!=0) return false;
++        // Bounds above prove both slope vectors finite before FP comparisons.
++        auto badSlope=_mm512_or_pd(less(slope1,0.0).x,greater(slope1,1.0).x);
++        badSlope=_mm512_or_pd(badSlope,less(slope2,0.0).x);
++        badSlope=_mm512_or_pd(badSlope,greater(slope2,1.0).x);
++        if(_mm512_movepi64_mask(_mm512_castpd_si512(badSlope))!=0) return false;
++
++        const V u=V(_mm512_setr_pd(input[0],input[1],input[2],input[3],input[4],input[5],input[6],input[7]))*scale;
++        const V level=kIg00156OtaLevel,inv=1.0/kIg00156OtaLevel;
++        const V x0=fromFb*zFb+fromIn*zIn+fromU*u;
++        const V c0=2.0*x0-zLp,c1=2.0*(fromBp+1.0);
++        const V e1=g1*slope1+f1,e2=g2*slope2+f2;
++        V bp=(zBp-e1*c0)/(1.0+e1*(c1+e2)),hp,t1,t2;
++        V active=_mm512_castsi512_pd(_mm512_set1_epi64(-1));
++        for(int iteration=0;;++iteration)
++        {
++            const V nextT2=tanh(bp*inv);
++            const V nextHp=c0+c1*bp+g2*level*nextT2+f2*bp;
++            const V nextT1=tanh(nextHp*inv);
++            t2=select(active,nextT2,t2);hp=select(active,nextHp,hp);t1=select(active,nextT1,t1);
++            const V f=bp-zBp+g1*level*t1+f1*hp;
++#if CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY
++            if(iteration==4) {
++                // No histories have been written yet. Let the caller redo all
++                // lanes through the authoritative scalar recovery path.
++                const V failed=_mm512_andnot_pd(less(absolute(f),1.0e-7).x,active.x);
++                if(_mm512_movepi64_mask(_mm512_castpd_si512(failed.x))!=0) return false;
++                break;
++            }
++#else
++            if(iteration==4) break;
++#endif
++            active=_mm512_andnot_pd(less(absolute(f),1.0e-7).x,active.x);
++            if(_mm512_movepi64_mask(_mm512_castpd_si512(active.x))==0) break;
++            const V dh=c1+g2*(1.0-t2*t2)+f2;
++            // Inactive lanes must not evaluate an unused hazardous division.
++            const V numerator=select(active,f,0.0);
++            const V denominator=select(active,1.0+(g1*(1.0-t1*t1)+f1)*dh,1.0);
++            bp=select(active,bp-numerator/denominator,bp);
++        }
++        const V lp=zLp-g2*level*t2-f2*bp;
++        const V x=x0+fromBp*bp;
++        const V vin=(zIn+kiGs*u-kiGs*bp)*invA11-inFromX*x;
++        const V use1=greater(absolute(hp*inv),1.0e-9),use2=greater(absolute(bp*inv),1.0e-9);
++        const V newSlope1=select(use1,t1/select(use1,hp*inv,1.0),1.0);
++        const V newSlope2=select(use2,t2/select(use2,bp*inv,1.0),1.0);
++        const auto scatter=[&](double Ig00156Stage::*member,V value) CS80_AVX512 {
++            alignas(64) double values[8];_mm512_store_pd(values,value.x);
++            for(std::size_t i=0;i<8;++i)stages[i]->*member=values[i];
++        };
++        scatter(&Ig00156Stage::zIn,2.0*vin-zIn);scatter(&Ig00156Stage::zFb,2.0*x-zFb);
++        scatter(&Ig00156Stage::zBp,2.0*bp-zBp);scatter(&Ig00156Stage::zLp,2.0*lp-zLp);
++        scatter(&Ig00156Stage::vIn,vin);scatter(&Ig00156Stage::vFb,x);
++        scatter(&Ig00156Stage::vBp,bp);scatter(&Ig00156Stage::vLp,lp);
++        scatter(&Ig00156Stage::slope1,newSlope1);scatter(&Ig00156Stage::slope2,newSlope2);
++        alignas(64) double l[8],h[8],b[8];
++        _mm512_store_pd(l,lp.x);_mm512_store_pd(h,hp.x);_mm512_store_pd(b,bp.x);
++        for(std::size_t i=0;i<8;++i)
++            output[i]={static_cast<float>(l[i]),static_cast<float>(h[i]),static_cast<float>(-b[i])};
++        return true;
++    }
++};
++
++Ig00156Eight::Kernel Ig00156Eight::selectKernel(bool allowAcceleration) noexcept
++{
++    if(!allowAcceleration) return nullptr;
++    __builtin_cpu_init();
++    return __builtin_cpu_supports("avx2") && __builtin_cpu_supports("avx512f")
++        && __builtin_cpu_supports("avx512vl") && __builtin_cpu_supports("avx512dq")
++        ? &Ig00156EightAccess::process : nullptr;
++}
++bool Ig00156Eight::environmentSupported() noexcept
++{
++    unsigned short cw; asm volatile("fnstcw %0" : "=m"(cw));
++    if(cw!=0x037f) return false;
++    const auto csr=_mm_getcsr();
++    return (csr & 0x6000U) == 0 && (csr & 0x1f80U) == 0x1f80U;
++}
++} // namespace cs80
++#else
++namespace cs80
++{
++Ig00156Eight::Kernel Ig00156Eight::selectKernel(bool) noexcept { return nullptr; }
++bool Ig00156Eight::environmentSupported() noexcept { return false; }
++}
++#endif
+--- /dev/null
++++ b/src/core/Ig00156Eight.h
+@@ -0,0 +1,12 @@
++#pragma once
++#include "Ig00156Batch.h"
++namespace cs80 {
++struct Ig00156Eight {
++    using Stages=std::array<Ig00156Stage*,8>;
++    using Inputs=std::array<float,8>;
++    using Outputs=std::array<Ig00156Stage::Output,8>;
++    using Kernel=bool(*)(const Stages&,const Inputs&,Outputs&) noexcept;
++    static Kernel selectKernel(bool allow=true) noexcept;
++    static bool environmentSupported() noexcept;
++};
++}
+--- a/src/core/Ig00156Filter.h
++++ b/src/core/Ig00156Filter.h
+@@ -284,6 +284,8 @@
+     // Stateless batch processing reads/writes these same authoritative fields.
+     // It owns no parallel coefficient cache, clock metadata or snapshot state.
+     friend struct Ig00156BatchAccess;
++    friend struct Ig00156EightAccess;
++    friend struct Ig00156EightNoopAccess;
+     Ig00156Network net;
+     double gs = 0.0, gg = 0.0, gf = 0.0, gTotal = 0.0, inputScale = 1.0, feedforwardHz = 0.0;
+     double kHalf = 0.0, kHalfCoupling = 0.0, gmPart = 0.0, ffPart = 0.0, qSiemensValue = 0.0;

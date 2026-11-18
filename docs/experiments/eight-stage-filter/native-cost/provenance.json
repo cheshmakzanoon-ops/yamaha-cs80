@@ -1,0 +1,88 @@
+{
+  "callback_clock_reads": 199680,
+  "frozen_sources": {
+    "host/factory8_base.cpp": "7faebdee8ce40314317e73a15c11fe2cce09cb2f9a2d364445cb31353c041e5e",
+    "host/host.cpp": "e27857fa6dac9d6c8a54f41388edbe932ae9b8f7a0ee3b068792cd270c06d2fe",
+    "host/sdk_scaffold.cpp": "39f9e01f631120002e86750b8d5b480bfa1e7679bc958c69b33445818e00c019",
+    "procedure/analyze_campaign-original.py": "3db506232f41b6dcc186755b97b74f2c6410c8c2465c296ea2718a4460b7cbcf",
+    "procedure/collector-original.py": "08dc71057dd652fb2e0ecf2cc14b823739539163727bb2703fbd117b3ce911b0",
+    "procedure/host_contract-original.py": "5bc7e70b171afd9854bd27a61c9eca338be9d679464202f2a94cc661fba5b9ad",
+    "study_statistics.py": "a7c3e177adbdc6351c67280a5e9e3fade1b3d349ce607d822bc80e8fc12a665d"
+  },
+  "host_build_command": [
+    "/usr/bin/c++",
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-I<STOCK_SRC>",
+    "-I<REPO_TESTS>",
+    "-I<VST3_SDK>",
+    "<HOST_DIR>/host.cpp",
+    "<VST3_SDK>/pluginterfaces/base/coreiids.cpp",
+    "<VST3_SDK>/pluginterfaces/base/funknown.cpp",
+    "<VST3_SDK>/public.sdk/source/vst/vstinitiids.cpp",
+    "-ldl",
+    "-o",
+    "<HOST_DIR>/build/native_host"
+  ],
+  "native_admission": {
+    "actual_packed_attribution_receipt_sha256": "4dd93cf6db12cac66292f91c4ee273cfac10dce018d4babfbbf2033da490dcd7",
+    "host_freeze_sha256": "f7b88de47ea24a8390c58f05afc1b1b711b33679dc75e432f129095d252d7450",
+    "host_gate_sha256": "655f990ad8e93a5a68edb5f4db4c846495c349e9b20a3795b374d08f585716d7",
+    "isa_os_capability_receipt_sha256": "217a2ff8861f49ac469e7082d379d22c964965c6f8c500d4aab572ff3236e96d",
+    "measured_private_backend_counts": false,
+    "normal_candidate_512_equals_both_stock_twins": true,
+    "original1041_callback_native_prefix_equal": true,
+    "passed": true,
+    "stock544_genuine_continuation_prefix_equals_ordinary_lifetime": true,
+    "zero_host_measurement_clocks": true
+  },
+  "native_binary_bundled": false,
+  "new_dsp_runs": 0,
+  "new_measurements": 0,
+  "normalization": {
+    "omitted_identity": "host paths, HOME paths, loader paths, raw device/inode values removed; role/alias equality retained",
+    "omitted_raw": "Full raw private receipts/stdout/clocks, actual loader mapping, native binaries and large PCM/FP/state files not bundled. Original SHA256 bindings identify retained evidence, not independently reconstructable original bytes from redacted content.",
+    "precision": "integer-only lossless differences; no rounding, smoothing, dropping or reordering",
+    "process_identifiers": "unique original PIDs replaced by chronological ordinals1..96; no PID retained",
+    "thread_cpu_clock": "each process first measured CPU-start integer subtracted from both CPU endpoints of all its callbacks;96 origins not bundled",
+    "wall_clock": "one common original terminal wall-begin integer subtracted from every wall timestamp, including ledger/process/window/callback fields; origin not bundled"
+  },
+  "original_private_bindings": {
+    "original_authorization_sha256": "779bbc9693d96680457c0c2b422ca0d31ecb4407e96d696ef399bf6121d398c9",
+    "original_freeze_sha256": "0f2ac9bbb0ae25f01acf3b7114bae6331303a0867c6061ae28eb92bdb74fbd5d",
+    "original_latch_sha256": "6f50610dce6ed668fbd73c04eab3bde917e64679c7564dcac45f102625d32a1a",
+    "original_ledger_sha256": "e7fcc788f085681ef54c25df53c2334500c703501e08310edd9b42febbdb1a53",
+    "original_official_decision_sha256": "d3c02cf6c2b4983da4a45463986aeeaaea38a2a1d514bbd955b8b373150dcae9",
+    "original_plan_sha256": "3b76fc50d133d72f5afb77e92afb20ab542423a959efe2e92eb79e0c771d9408",
+    "original_terminal_sha256": "75fdc542c75ec7be8275dd3b92241a4ede1095e5f9e1f9f7618c168ffd4d4824"
+  },
+  "raw_clock_rows": 49920,
+  "retained_original_sha_per_slot": "records.jsonl.gz holds exact original receipt/stdout/clocks/outcome SHA256; common immutable raw artifact SHA256/bytes are in expected/512.json and expected/544.json.",
+  "roles": {
+    "candidate": {
+      "bytes": 17159800,
+      "physical_aliases": [
+        "C"
+      ],
+      "sha256": "0219b4b53e20844ca04264288f48ad04acb08a12471f87b58809af1ea71ca851"
+    },
+    "host": {
+      "bytes": 155800,
+      "physical_aliases": [
+        "all96"
+      ],
+      "sha256": "09498706e38a76868a263d50a4a5b505042530be7aeff034ef07db70df2d2ef9"
+    },
+    "stock": {
+      "bytes": 17096784,
+      "physical_aliases": [
+        "S0",
+        "S1",
+        "S+"
+      ],
+      "sha256": "b558341875ee60ab465560c8e842edf219e733730b19e1e5b5d01c703ce0cfc1"
+    }
+  },
+  "schema": 1
+}

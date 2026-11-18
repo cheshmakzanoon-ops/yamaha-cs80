@@ -1,0 +1,212 @@
+{
+  "critical": {
+    "critical": [
+      {
+        "symbol": "_ZN4cs806Engine25processInternalSampleImplILb0EEEvRfS2_f",
+        "stock_bytes": 32154,
+        "candidate_bytes": 32154,
+        "bytes_identical": true,
+        "resolved_symbolic_relocations_identical": true,
+        "relocations": 646,
+        "stock_sha256": "22766b6fabe4089a44de7bf0d11218511a8faf4ad3fefd92a5d505c12b7c8b90",
+        "candidate_sha256": "22766b6fabe4089a44de7bf0d11218511a8faf4ad3fefd92a5d505c12b7c8b90"
+      },
+      {
+        "symbol": "_ZN4cs806Engine25processInternalSampleImplILb1EEEvRfS2_f",
+        "stock_bytes": 37511,
+        "candidate_bytes": 37511,
+        "bytes_identical": true,
+        "resolved_symbolic_relocations_identical": true,
+        "relocations": 693,
+        "stock_sha256": "5c887d63d97ec9c2175d43f2a2a7b91bbdb1bb2fef43ad4f8467f8f2124a0a61",
+        "candidate_sha256": "5c887d63d97ec9c2175d43f2a2a7b91bbdb1bb2fef43ad4f8467f8f2124a0a61"
+      },
+      {
+        "symbol": "_ZN4cs8023ReconstructedOscillator4tickEdRKNS_11WscControlsE",
+        "stock_bytes": 12063,
+        "candidate_bytes": 12063,
+        "bytes_identical": true,
+        "resolved_symbolic_relocations_identical": true,
+        "relocations": 136,
+        "stock_sha256": "72742614725b224688a8b9d16d47651e69583ae1c2606608f086e5847e1c2a90",
+        "candidate_sha256": "72742614725b224688a8b9d16d47651e69583ae1c2606608f086e5847e1c2a90"
+      }
+    ],
+    "extra_protected_definitions": {
+      "EngineFilterEight.cpp.o": [],
+      "FactoryPresets.cpp.o": [],
+      "Ig00156Batch.cpp.o": [],
+      "Ig00156Eight.cpp.o": []
+    },
+    "passed": true
+  },
+  "selected_first_held_symbols": {
+    "stock": [
+      {
+        "symbol": "_ZN4cs8023ReconstructedOscillator4tickEdRKNS_11WscControlsE",
+        "address": "000000000004c9e0",
+        "bytes": 12063,
+        "kind": "W"
+      },
+      {
+        "symbol": "_ZN4cs806Engine25processInternalSampleImplILb0EEEvRfS2_f",
+        "address": "000000000006a540",
+        "bytes": 32154,
+        "kind": "W"
+      },
+      {
+        "symbol": "_ZN4cs806Engine25processInternalSampleImplILb1EEEvRfS2_f",
+        "address": "0000000000060740",
+        "bytes": 37511,
+        "kind": "W"
+      }
+    ],
+    "normal": [
+      {
+        "symbol": "_ZN4cs8023ReconstructedOscillator4tickEdRKNS_11WscControlsE",
+        "address": "000000000004ca60",
+        "bytes": 12063,
+        "kind": "W"
+      },
+      {
+        "symbol": "_ZN4cs806Engine25processInternalSampleImplILb0EEEvRfS2_f",
+        "address": "000000000006a5c0",
+        "bytes": 32154,
+        "kind": "W"
+      },
+      {
+        "symbol": "_ZN4cs806Engine25processInternalSampleImplILb1EEEvRfS2_f",
+        "address": "00000000000607c0",
+        "bytes": 37511,
+        "kind": "W"
+      }
+    ],
+    "observed": [
+      {
+        "symbol": "_ZN4cs8023ReconstructedOscillator4tickEdRKNS_11WscControlsE",
+        "address": "00000000000605e0",
+        "bytes": 12063,
+        "kind": "W"
+      },
+      {
+        "symbol": "_ZN4cs806Engine25processInternalSampleImplILb0EEEvRfS2_f",
+        "address": "0000000000078580",
+        "bytes": 32154,
+        "kind": "W"
+      },
+      {
+        "symbol": "_ZN4cs806Engine25processInternalSampleImplILb1EEEvRfS2_f",
+        "address": "000000000006e780",
+        "bytes": 37511,
+        "kind": "W"
+      }
+    ]
+  },
+  "shared_weak": {
+    "shared_weak_functions": [
+      {
+        "symbol": "_ZN4cs8012Ig00156Stage7processEf",
+        "stock_bytes": 1145,
+        "new_bytes": 1145,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs8013PraWahCircuit7processEd",
+        "stock_bytes": 925,
+        "new_bytes": 925,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs8016voice_continuity12idleStepRankINS_6Engine4RankEEEvRT_RKNS0_16IdleRankControlsEfii",
+        "stock_bytes": 4615,
+        "new_bytes": 7149,
+        "bytes_equal": false,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs802fx10TapeEchoFx7processEffff",
+        "stock_bytes": 1906,
+        "new_bytes": 1906,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs802fx12ModernFxSlot7processEifffffi",
+        "stock_bytes": 7065,
+        "new_bytes": 7065,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs802fx13PlateReverbFx7processEffff",
+        "stock_bytes": 3305,
+        "new_bytes": 3305,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs802fx14SpringReverbFx7processEffff",
+        "stock_bytes": 2749,
+        "new_bytes": 2749,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs804Adsr4tickEfbb",
+        "stock_bytes": 2147,
+        "new_bytes": 2147,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs806Chorus7processEffffbb",
+        "stock_bytes": 977,
+        "new_bytes": 977,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs806modern11ModernLayer11beginSampleERKNS0_12GlobalInputsE",
+        "stock_bytes": 6315,
+        "new_bytes": 6315,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs806modern11ModernLayer12processVoiceEiRKNS0_11VoiceInputsEb",
+        "stock_bytes": 6242,
+        "new_bytes": 6242,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs809BbdChorus7processEffffbb",
+        "stock_bytes": 2806,
+        "new_bytes": 2806,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZN4cs809FilterEnv4tickEfbb",
+        "stock_bytes": 2836,
+        "new_bytes": 2836,
+        "bytes_equal": true,
+        "relocations_equal": false
+      },
+      {
+        "symbol": "_ZNK4cs809DelayLine4readEf",
+        "stock_bytes": 157,
+        "new_bytes": 157,
+        "bytes_equal": true,
+        "relocations_equal": true
+      }
+    ],
+    "limitations": "Differences require genuine reverse-object link qualification. Identical code alone is not proof across all symbol/rodata bindings."
+  },
+  "shared_weak_count": 14,
+  "equal_byte_shared_weak_count": 13,
+  "arbitrary_link_safety_proved": false,
+  "normal_relocations_all_proven_equivalent": false
+}

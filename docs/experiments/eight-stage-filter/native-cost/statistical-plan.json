@@ -1,0 +1,88 @@
+{
+  "block_contrasts": {
+    "candidate_S0": "log(S0/C)",
+    "candidate_S1": "log(S1/C)",
+    "candidate_pooled": "(log(S0/C)+log(S1/C))/2",
+    "extra": "(log(S+/S0)+log(S+/S1))/2",
+    "placebo": "log(S1/S0)"
+  },
+  "blocks": 24,
+  "blocks_per_set": 4,
+  "bootstrap": {
+    "constant_columns": "exact constant mean/interval; all-constant group skips identical resamples",
+    "draws": 20000,
+    "group_keys": [
+      "all",
+      "first12",
+      "last12",
+      "C-position-0",
+      "C-position-1",
+      "C-position-2",
+      "C-position-3",
+      "S1-before-S0",
+      "S1-after-S0"
+    ],
+    "quantile": "linear interpolation at (draws-1)*p; p=.025,.975",
+    "rng": "SHA256(seed + slash + group_key + slash + decimal_counter), big-endian256-bit integer, reject >=2^256-(2^256 mod n), then mod n; one draw per sampled block index",
+    "seed": "cs80-eight-native-average-v1/bootstrap/0x80305125",
+    "unit": "one complete four-treatment block, all five contrasts resampled jointly"
+  },
+  "correlation_limit": "set-t allows within-set correlation; six-set independence and t approximation are not guarantees against arbitrary whole-VM temporal correlation",
+  "estimator": "equal-weight mean of complete block log contrasts",
+  "gate_numeric_precision": "round transformed percentage or percentage-point difference to12 decimal places before comparison",
+  "main_gates": {
+    "candidate_comparisons": [
+      "pooled",
+      "S0",
+      "S1"
+    ],
+    "candidate_lower_95_saving_strictly_above_percent": 3,
+    "extra_entire_95_percent": [
+      3,
+      10
+    ],
+    "extra_target_is_exact_CPU_null": false,
+    "extra_work_target_percent": 6.25,
+    "placebo_entire_95_percent": [
+      -2,
+      2
+    ]
+  },
+  "order_gates": {
+    "candidate_by_position_each_point_strictly_above_percent": 0,
+    "candidate_position_point_range_pp_max": 5,
+    "placebo_each_twin_temporal_order_point_inside_percent": [
+      -2,
+      2
+    ]
+  },
+  "outcome": "unnormalized sum of actual process() thread-CPU nanoseconds; all arms use512-callback baseline denominator",
+  "policy": "all96 chronological processes and24 complete blocks required; all gates AND; no exclusion, retries, replacement, subset admission or post-outcome rule changes",
+  "processes": 96,
+  "schema": 1,
+  "scope": "48kHz/64-frame held-eight-voice real-VST3 average thread CPU only",
+  "scope_exclusions": [
+    "deadline or tail-latency admission",
+    "callback-level independent replicates",
+    "96 independent treatment comparisons",
+    "other scenes or machines",
+    "repairing old failed studies"
+  ],
+  "set_sensitivity": {
+    "gates": "main placebo, extra and all three candidate comparisons must pass BOTH block-bootstrap and set-t intervals",
+    "interval": "mean +/- t(.975,df5)*sample_sd/sqrt(6)",
+    "leave_one_set": "all six omission point estimates reported descriptively; never select an omission",
+    "mandatory": true,
+    "t_critical": 2.570581835636305,
+    "unit": "six complete four-block Williams-set mean log contrasts"
+  },
+  "split_gates": {
+    "absolute_point_saving_gap_pp_max": 3,
+    "first12_and_last12_candidate_pooled_bootstrap_lower_95_strictly_above": 0
+  },
+  "transform": {
+    "candidate_saving": "-100*expm1(-log contrast)",
+    "placebo_extra": "100*expm1(log contrast)"
+  },
+  "williams_sets": 6
+}

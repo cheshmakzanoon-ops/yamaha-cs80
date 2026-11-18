@@ -1,0 +1,130 @@
+{
+  "constant_fields": {
+    "block_size": 64,
+    "common512_fp_fnv64": "b7586cc043550783",
+    "common512_pcm_fnv64": "954ae0ac456dbace",
+    "common512_state_fnv64": "6864d87066531134",
+    "component_cid": "abcdef019182faeb5265664943733830",
+    "continuation_calls": 1,
+    "continuation_pcm_fnv64": "f70a466493388fcb",
+    "continuation_state_fnv64": "6864d87066531134",
+    "endpoint_fp": [
+      40928,
+      895,
+      0,
+      41
+    ],
+    "final_window_state_fnv64": "6864d87066531134",
+    "finite_pcm": true,
+    "max_block_size": 64,
+    "nonzero_stereo_frames": 100416,
+    "note_event_reads": 8,
+    "postwarm_pcm_fnv64": "55500cbb7623eb84",
+    "postwarm_state_fnv64": "6864d87066531134",
+    "private_backend_counts_observed": false,
+    "private_voice_counts_observed": false,
+    "process_calls": 1569,
+    "sample_rate": 48000,
+    "schema": "native-factory8-paired-clock-v1",
+    "warm_calls": 1024,
+    "window_calls": 544,
+    "window_frames": 34816,
+    "window_pcm_fnv64": "dbd19d12ef7e89c8"
+  },
+  "files": {
+    "callbacks.bin": {
+      "bytes": 112968,
+      "sha256": "a2b2f72bff97a73e1be53a3b7517cd8a831161cd29bf7440fbbe6ab293ca0f74"
+    },
+    "common512.state": {
+      "bytes": 14276,
+      "sha256": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+    },
+    "continuation.state": {
+      "bytes": 14276,
+      "sha256": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+    },
+    "controls.csv": {
+      "bytes": 7852,
+      "sha256": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca"
+    },
+    "final-metadata.csv": {
+      "bytes": 62279,
+      "sha256": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33"
+    },
+    "final-window.state": {
+      "bytes": 14276,
+      "sha256": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+    },
+    "initial-metadata.csv": {
+      "bytes": 62279,
+      "sha256": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33"
+    },
+    "initial.state": {
+      "bytes": 14276,
+      "sha256": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+    },
+    "inputs.jsonl": {
+      "bytes": 183341,
+      "sha256": "9285fa5c17d3f308e3fa0384662cabeac038aabcf263526d929097c0e79e7d21"
+    },
+    "pcm.bin": {
+      "bytes": 803328,
+      "sha256": "8bfb8a7040ad1bc2ca67ad667dcd26a6cb451d9d515fc1f3bd72e82815dc0f0c"
+    },
+    "postwarm.state": {
+      "bytes": 14276,
+      "sha256": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+    }
+  },
+  "measured_callbacks": 544,
+  "positive_prefix_equal": true,
+  "same512_twin_and_candidate_full_artifacts_equal": false,
+  "schema": 1,
+  "schema_keys": [
+    "affinity_after",
+    "affinity_before",
+    "authorization",
+    "block_size",
+    "clock_reads",
+    "common512_fp_fnv64",
+    "common512_pcm_fnv64",
+    "common512_state_fnv64",
+    "component_cid",
+    "continuation_calls",
+    "continuation_pcm_fnv64",
+    "continuation_state_fnv64",
+    "cpu_after",
+    "cpu_before",
+    "cpu_ns_sum",
+    "enclosing_wall_ns",
+    "endpoint_fp",
+    "final_window_state_fnv64",
+    "finite_pcm",
+    "loaded_module_path",
+    "max_block_size",
+    "mode",
+    "module_device",
+    "module_inode",
+    "module_path",
+    "module_size",
+    "nonzero_stereo_frames",
+    "note_event_reads",
+    "pid",
+    "postwarm_pcm_fnv64",
+    "postwarm_state_fnv64",
+    "private_backend_counts_observed",
+    "private_voice_counts_observed",
+    "process_calls",
+    "sample_rate",
+    "schema",
+    "wall_ns_sum",
+    "warm_calls",
+    "window_calls",
+    "window_frames",
+    "window_pcm_fnv64",
+    "window_wall_end_ns",
+    "window_wall_start_ns"
+  ],
+  "untimed_clock_reads": 0
+}

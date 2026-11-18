@@ -1,0 +1,241 @@
+{
+  "bootstrap_draws_in_correlation_test": 20000,
+  "measurement_clock_reads": 0,
+  "native_loads": 0,
+  "new_DSP_runs": 0,
+  "passed": true,
+  "records": [
+    {
+      "pass": true,
+      "test": "complete96 synthetic positive all gates and6-set sensitivity"
+    },
+    {
+      "pass": true,
+      "test": "known extra total +6.25 not normalized away"
+    },
+    {
+      "pass": true,
+      "test": "candidate savings sign9%, not reciprocal speedup"
+    },
+    {
+      "pass": true,
+      "test": "schedule positions and ordered carryovers balance"
+    },
+    {
+      "pass": true,
+      "test": "missing process"
+    },
+    {
+      "pass": true,
+      "test": "extra process"
+    },
+    {
+      "pass": true,
+      "test": "duplicate temporal slot"
+    },
+    {
+      "pass": true,
+      "test": "wrong label role"
+    },
+    {
+      "pass": true,
+      "test": "same pid reused"
+    },
+    {
+      "pass": true,
+      "test": "zero CPU"
+    },
+    {
+      "pass": true,
+      "test": "negative CPU"
+    },
+    {
+      "pass": true,
+      "test": "fractional normalized CPU"
+    },
+    {
+      "pass": true,
+      "test": "bool CPU"
+    },
+    {
+      "pass": true,
+      "test": "failed integrity"
+    },
+    {
+      "pass": true,
+      "test": "physical stock twin swapped"
+    },
+    {
+      "pass": true,
+      "test": "candidate actually stock"
+    },
+    {
+      "pass": true,
+      "test": "fake known extra count"
+    },
+    {
+      "pass": true,
+      "test": "known extra divided by544"
+    },
+    {
+      "pass": true,
+      "test": "warm count changed"
+    },
+    {
+      "pass": true,
+      "test": "warm data substituted for measured"
+    },
+    {
+      "pass": true,
+      "test": "process order swapped"
+    },
+    {
+      "pass": true,
+      "test": "placebo interval overlapping zero is not equivalence"
+    },
+    {
+      "pass": true,
+      "test": "negative placebo sign boundary"
+    },
+    {
+      "pass": true,
+      "test": "known extra CI not merely positive point"
+    },
+    {
+      "pass": true,
+      "test": "known extra upper bound fails"
+    },
+    {
+      "pass": true,
+      "test": "primary lower exactly3 is not above3"
+    },
+    {
+      "pass": true,
+      "test": "individual stock twin contradiction"
+    },
+    {
+      "pass": true,
+      "test": "six-set correlation sensitivity mandatory"
+    },
+    {
+      "pass": true,
+      "test": "first half interval includes zero"
+    },
+    {
+      "pass": true,
+      "test": "split drift exceeds3pp"
+    },
+    {
+      "pass": true,
+      "test": "candidate position reversal"
+    },
+    {
+      "pass": true,
+      "test": "candidate order spread exceeds5pp"
+    },
+    {
+      "pass": true,
+      "test": "placebo order cancellation cannot hide bias"
+    },
+    {
+      "pass": true,
+      "test": "inclusive placebo and positive boundaries"
+    },
+    {
+      "pass": true,
+      "test": "declared rounding makes3% strict boundary stable"
+    },
+    {
+      "pass": true,
+      "test": "joint resampling preserves contrasts and deterministic seed"
+    },
+    {
+      "pass": true,
+      "test": "linear percentile interpolation convention"
+    },
+    {
+      "pass": true,
+      "test": "actual20000-draw block interval can pass while df5 set gate fails"
+    },
+    {
+      "pass": true,
+      "test": "complete96 synthetic journal"
+    },
+    {
+      "pass": true,
+      "test": "journal missing finish"
+    },
+    {
+      "pass": true,
+      "test": "journal extra retry"
+    },
+    {
+      "pass": true,
+      "test": "journal wrong attempt order"
+    },
+    {
+      "pass": true,
+      "test": "journal reused pid"
+    },
+    {
+      "pass": true,
+      "test": "journal interrupted process"
+    },
+    {
+      "pass": true,
+      "test": "journal overlapping temporal process"
+    },
+    {
+      "pass": true,
+      "test": "journal wrong finish digest"
+    },
+    {
+      "pass": true,
+      "test": "journal child CPU cap breach"
+    },
+    {
+      "pass": true,
+      "test": "journal child wall cap breach"
+    },
+    {
+      "pass": true,
+      "test": "journal incomplete terminal"
+    },
+    {
+      "pass": true,
+      "test": "journal interrupted terminal"
+    },
+    {
+      "pass": true,
+      "test": "journal analysis before completed collection"
+    },
+    {
+      "pass": true,
+      "test": "journal whole CPU cap breach"
+    },
+    {
+      "pass": true,
+      "test": "journal whole wall cap breach"
+    },
+    {
+      "pass": true,
+      "test": "journal global CPU omitted children"
+    },
+    {
+      "pass": true,
+      "test": "duplicate JSON key rejected"
+    },
+    {
+      "pass": true,
+      "test": "nonfinite JSON rejected"
+    }
+  ],
+  "schema": 1,
+  "scope": "synthetic statistics and journal checks only; no timing data",
+  "source_sha256": {
+    "analyze_campaign.py": "3db506232f41b6dcc186755b97b74f2c6410c8c2465c296ea2718a4460b7cbcf",
+    "study_statistics.py": "a7c3e177adbdc6351c67280a5e9e3fade1b3d349ce607d822bc80e8fc12a665d",
+    "test_statistics.py": "c96a219cdde5bd8c975c27011ec3d67ce0bde037a15a3da77cd50996d1f1b628"
+  },
+  "tests": 56
+}

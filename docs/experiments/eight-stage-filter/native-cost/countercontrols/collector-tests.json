@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "real_clock_calls": 0,
+  "real_subprocesses": 0,
+  "tests": [
+    {
+      "mode": "success",
+      "passed": true,
+      "mock_launches": 96,
+      "attempt_receipts": 96,
+      "resume_rejected": true
+    },
+    {
+      "mode": "integrity",
+      "passed": true,
+      "mock_launches": 4,
+      "attempt_receipts": 4,
+      "resume_rejected": true
+    },
+    {
+      "mode": "interrupt",
+      "passed": true,
+      "mock_launches": 8,
+      "attempt_receipts": 8,
+      "resume_rejected": true
+    },
+    {
+      "mode": "wrong_auth",
+      "passed": true,
+      "mock_launches": 0
+    }
+  ]
+}

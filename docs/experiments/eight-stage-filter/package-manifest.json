@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "scope": "Research-only direct eight-stage solver; integration/native evidence is separate",
+  "offline_checks": {
+    "stock_dependencies_verified": 6,
+    "patch_apply_check": true,
+    "patched_source_hashes_match_frozen_candidate": true,
+    "direct_and_dispatch_sources_verbatim": true,
+    "reproduction_bash_syntax": true,
+    "private_absolute_path_scan": true,
+    "new_compilation_execution_timing": false,
+    "raw_binaries_included": false
+  },
+  "files": {
+    "README.md": "9e9babc6b03c996f9ea6359f6d1d2c2596ac6683a7fe448eeac070902d89404d",
+    "direct-test.cpp": "a7dacea82e0259f82b589e9ce168081ab6ef50021f6ae0734887363d8e0a416c",
+    "dispatch-probe.cpp": "92e52ebc67d0040855678d4b55340c96e44135c8a7fd8715b2430b34293ed36b",
+    "observed-results.json": "489c8a31a65b4dcd5c6512d71da46c7667d4884b2416041af9307fb27d7c581b",
+    "pinned-hashes.json": "77fedf2c3ebf04f0e99313c6eb06603f31b1fdc88acd9eecd562aea789d45a9e",
+    "prototype.patch": "7815ddfa2186220ccc6c59bc5f0074b8253ba9a8eda6d5f57d227387deb6a1a8",
+    "reproduce.sh": "4549d26cc08cd8e6608cb71aa17e4c95f946215bffcfc62171b9a6d17cdd4976"
+  },
+  "manifest_self_hash_excluded": true
+}
