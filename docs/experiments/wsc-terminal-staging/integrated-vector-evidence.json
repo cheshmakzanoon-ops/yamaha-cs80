@@ -1,0 +1,2338 @@
+{
+  "scope": "Integrated V1b normal/counting/reverse Engine qualification; separate from standalone component counts and cost",
+  "status": "PASS bounded integrated qualification",
+  "source_freeze_sha256": "31fedb0323a0f99b0fc87adb040650bf879f226664199472e7aedae3778a77dc",
+  "trace_driver_sha256": "7356e6b617699e990b1f3bc0cc5dedc4bee7809d0c5f88a22098db01d5189a93",
+  "trace_receipt_sha256": "aa59443bcb4a05f191f910648d67c4903ca1d4ce522efe72b339384a0e3e17d8",
+  "timing": false,
+  "scenes": [
+    {
+      "scene": "factory_held",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "e453ebd3c257592d70494ddbf3bb64b99290db7bab1bd7fe1f576c08b5f4c54c",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23771493,
+          "sha256": "77f5fa5d5e8713ec98e5ca25a39a0578598148d1e81e46ce4ed4c592b143f15b",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 3147776,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 32768,
+            "groups": 131072,
+            "bad": 0,
+            "numbered": [
+              32768,
+              32768,
+              32768,
+              32768
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 256,
+            "selected": 256,
+            "bad": 0,
+            "preparations": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "valid": [
+              256,
+              256,
+              256,
+              256
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "successes": [
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              131072,
+              131072,
+              131072,
+              131072
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              32768,
+              32768,
+              32768,
+              32768
+            ]
+          },
+          "full_pending_mask_groups": [
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 65536,
+            "groups": 262144,
+            "bad": 0,
+            "numbered": [
+              65536,
+              65536,
+              65536,
+              65536
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 512,
+            "selected": 512,
+            "bad": 0,
+            "preparations": [
+              512,
+              512,
+              512,
+              512
+            ],
+            "valid": [
+              512,
+              512,
+              512,
+              512
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              65536,
+              65536,
+              65536,
+              65536
+            ],
+            "successes": [
+              65536,
+              65536,
+              65536,
+              65536
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              262144,
+              262144,
+              262144,
+              262144
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              65536,
+              65536,
+              65536,
+              65536
+            ]
+          },
+          "full_pending_mask_groups": [
+            65536,
+            65536,
+            65536,
+            65536
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            65536,
+            65536,
+            65536,
+            65536
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "factory_moving",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "33af48d6c1d7bd90d023ef75b732f05e8c76943349f5a1d764510dc0739239c6",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 24335903,
+          "sha256": "e27f02155b09cdffa3cf401d364351ccbe63789abbadd8b52cac7cb6418f9c81",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 3147776,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 32768,
+            "groups": 131072,
+            "bad": 0,
+            "numbered": [
+              32768,
+              32768,
+              32768,
+              32768
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 256,
+            "selected": 256,
+            "bad": 0,
+            "preparations": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "valid": [
+              256,
+              256,
+              256,
+              256
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "successes": [
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              131072,
+              131072,
+              131072,
+              131072
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              32768,
+              32768,
+              32768,
+              32768
+            ]
+          },
+          "full_pending_mask_groups": [
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 65536,
+            "groups": 262144,
+            "bad": 0,
+            "numbered": [
+              65536,
+              65536,
+              65536,
+              65536
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 512,
+            "selected": 512,
+            "bad": 0,
+            "preparations": [
+              512,
+              512,
+              512,
+              512
+            ],
+            "valid": [
+              512,
+              512,
+              512,
+              512
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              65536,
+              65536,
+              65536,
+              65536
+            ],
+            "successes": [
+              65536,
+              65536,
+              65536,
+              65536
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              262144,
+              262144,
+              262144,
+              262144
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              65536,
+              65536,
+              65536,
+              65536
+            ]
+          },
+          "full_pending_mask_groups": [
+            65536,
+            65536,
+            65536,
+            65536
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            65536,
+            65536,
+            65536,
+            65536
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "panel_held",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "1c5662bd86d1ac522110f44f29e9c37bb3a206c4378d7bc3a36fabfda4d62fae",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23776344,
+          "sha256": "f100cd2df7aea3e773fd74442b4f2576911efeccdbe8018637dd63ca4b01e4c1",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 3147776,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 32768,
+            "groups": 131072,
+            "bad": 0,
+            "numbered": [
+              32768,
+              32768,
+              32768,
+              32768
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 256,
+            "selected": 256,
+            "bad": 0,
+            "preparations": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "valid": [
+              256,
+              256,
+              256,
+              256
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "successes": [
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              131072,
+              131072,
+              131072,
+              131072
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              32768,
+              32768,
+              32768,
+              32768
+            ]
+          },
+          "full_pending_mask_groups": [
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 65536,
+            "groups": 262144,
+            "bad": 0,
+            "numbered": [
+              65536,
+              65536,
+              65536,
+              65536
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 512,
+            "selected": 512,
+            "bad": 0,
+            "preparations": [
+              512,
+              512,
+              512,
+              512
+            ],
+            "valid": [
+              512,
+              512,
+              512,
+              512
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              65536,
+              65536,
+              65536,
+              65536
+            ],
+            "successes": [
+              65536,
+              65536,
+              65536,
+              65536
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              262144,
+              262144,
+              262144,
+              262144
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              65536,
+              65536,
+              65536,
+              65536
+            ]
+          },
+          "full_pending_mask_groups": [
+            65536,
+            65536,
+            65536,
+            65536
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            65536,
+            65536,
+            65536,
+            65536
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "panel_moving",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "f8942dcdcb4021727d5374dd964ab19a1d88a1739ea0aac5cc5e99f8d9ff3ec5",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 24341216,
+          "sha256": "81e8d14dea978d85ef93a63e4da94e0f485265ef1055e49674ab01ffcfafbda5",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 3147776,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 32768,
+            "groups": 131072,
+            "bad": 0,
+            "numbered": [
+              32768,
+              32768,
+              32768,
+              32768
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 256,
+            "selected": 256,
+            "bad": 0,
+            "preparations": [
+              256,
+              256,
+              256,
+              256
+            ],
+            "valid": [
+              256,
+              256,
+              256,
+              256
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "successes": [
+              32768,
+              32768,
+              32768,
+              32768
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              131072,
+              131072,
+              131072,
+              131072
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              32768,
+              32768,
+              32768,
+              32768
+            ]
+          },
+          "full_pending_mask_groups": [
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 65536,
+            "groups": 262144,
+            "bad": 0,
+            "numbered": [
+              65536,
+              65536,
+              65536,
+              65536
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 512,
+            "selected": 512,
+            "bad": 0,
+            "preparations": [
+              512,
+              512,
+              512,
+              512
+            ],
+            "valid": [
+              512,
+              512,
+              512,
+              512
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              65536,
+              65536,
+              65536,
+              65536
+            ],
+            "successes": [
+              65536,
+              65536,
+              65536,
+              65536
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              262144,
+              262144,
+              262144,
+              262144
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              65536,
+              65536,
+              65536,
+              65536
+            ]
+          },
+          "full_pending_mask_groups": [
+            65536,
+            65536,
+            65536,
+            65536
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            65536,
+            65536,
+            65536,
+            65536
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "pure_held",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "3af3e1a6f22d2a63d298a8c7a4e7510c1eca232d8b7bd955251b2b6fab646f48",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23650295,
+          "sha256": "e05a89e40473908a8f116c7fc9af998e1249fb8147141db776f3dcd5e3be8e5b",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 3147776,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 0,
+            "groups": 0,
+            "bad": 0,
+            "numbered": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 0,
+            "selected": 0,
+            "bad": 0,
+            "preparations": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "valid": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "full_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 0,
+            "groups": 0,
+            "bad": 0,
+            "numbered": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 0,
+            "selected": 0,
+            "bad": 0,
+            "preparations": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "valid": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "full_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "legacy_held",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "0ff4e303fc28658bc84d7174b2058fc5f6bb10b5fe004c722a5f8759b10fe6fa",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23563747,
+          "sha256": "5f4d29e83807e7c9deea025a68fa49af6107705883cf8e3e7ddd4c4b6e90f95d",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 3147776,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 0,
+            "groups": 0,
+            "bad": 0,
+            "numbered": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 0,
+            "selected": 0,
+            "bad": 0,
+            "preparations": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "valid": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "full_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 0,
+            "groups": 0,
+            "bad": 0,
+            "numbered": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 0,
+            "selected": 0,
+            "bad": 0,
+            "preparations": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "valid": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "full_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "factory_quiet",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "853c2cfdecbf9fe578431f1552d2e90f1eef85fa235183cc7bd274ecc26efcf9",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23563747,
+          "sha256": "3888ac057e5ab9452d827734f1fdfaebd8ba3713f7296c87e0be5ed22512251d",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 12296,
+          "sha256": "8cb2c42197d2b72e1b23b93c40eb0b1962fb2031ae7bdc06503dcb12c029d86c",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 0,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 0,
+            "groups": 0,
+            "bad": 0,
+            "numbered": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 0,
+            "selected": 0,
+            "bad": 0,
+            "preparations": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "valid": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "full_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 0,
+            "groups": 0,
+            "bad": 0,
+            "numbered": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 0,
+            "selected": 0,
+            "bad": 0,
+            "preparations": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "valid": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "full_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "partial_three",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "3713fd11c37fdd4e9e16703b21421854b360ce4c1705fd2b60d5e4df23c426c1",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23621882,
+          "sha256": "f1ec6c978ec2b122dcebc635fc021589e72b57144d3ed19dc24daf7010c72f1f",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 14177288,
+          "sha256": "2752b1f0bcdc18a0622af8321ec4f67cbe0f7d8a9e7d4f3cae707928d724007a",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 1180416,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 0,
+            "groups": 0,
+            "bad": 0,
+            "numbered": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 0,
+            "selected": 0,
+            "bad": 0,
+            "preparations": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "valid": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "full_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 0,
+            "groups": 0,
+            "bad": 0,
+            "numbered": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 0,
+            "selected": 0,
+            "bad": 0,
+            "preparations": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "valid": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "successes": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "full_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "release_wake",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "ffdd0aaeff25568f521aee15d3aacc7473af1163366fa5f287ac6ccc47736c4d",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23666773,
+          "sha256": "24af329ad5f1f405b62fbc68532e81fcc921f03f0a380408d59c2627ce088f81",
+          "matched_arms": [
+            "vector",
+            "counted",
+            "rng-stock",
+            "reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 19149728,
+          "sha256": "dd9a2a469c5339b94cbfe29bb0e72a8fa4b79a38bfadd0ccd6e5644e63fe1255",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "callbacks": 1537,
+      "rank_rng_draws": 1594786,
+      "windows": [
+        {
+          "window": "onset",
+          "stage": {
+            "window": "onset",
+            "samples": 24576,
+            "groups": 98304,
+            "bad": 0,
+            "numbered": [
+              24576,
+              24576,
+              24576,
+              24576
+            ]
+          },
+          "span": {
+            "window": "onset",
+            "renders": 256,
+            "frames": 16384,
+            "selections": 192,
+            "selected": 192,
+            "bad": 0,
+            "preparations": [
+              192,
+              192,
+              192,
+              192
+            ],
+            "valid": [
+              192,
+              192,
+              192,
+              192
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              24576,
+              24576,
+              24576,
+              24576
+            ],
+            "successes": [
+              24576,
+              24576,
+              24576,
+              24576
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              98304,
+              98304,
+              98304,
+              98304
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              24576,
+              24576,
+              24576,
+              24576
+            ]
+          },
+          "full_pending_mask_groups": [
+            24576,
+            24576,
+            24576,
+            24576
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            24576,
+            24576,
+            24576,
+            24576
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "stage": {
+            "window": "late",
+            "samples": 2048,
+            "groups": 8192,
+            "bad": 0,
+            "numbered": [
+              2048,
+              2048,
+              2048,
+              2048
+            ]
+          },
+          "span": {
+            "window": "late",
+            "renders": 512,
+            "frames": 32768,
+            "selections": 16,
+            "selected": 16,
+            "bad": 0,
+            "preparations": [
+              16,
+              16,
+              16,
+              16
+            ],
+            "valid": [
+              16,
+              16,
+              16,
+              16
+            ]
+          },
+          "by_group": {
+            "attempts": [
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "successes": [
+              2048,
+              2048,
+              2048,
+              2048
+            ],
+            "rejections": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "known": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "scalar": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "bad": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "owner_checks": [
+              2048,
+              2048,
+              2048,
+              2048
+            ]
+          },
+          "full_pending_mask_groups": [
+            2048,
+            2048,
+            2048,
+            2048
+          ],
+          "other_pending_mask_groups": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "both_bindings_present": [
+            2048,
+            2048,
+            2048,
+            2048
+          ],
+          "missing_bindings": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "comparisons": 81,
+    "public_private_fp_bytes_per_arm": 253646285,
+    "raw_rank_association_bytes": 260052960,
+    "ordered_rank_rng_draws": 21661858
+  },
+  "supplements": {
+    "semantic": {
+      "cases": 6,
+      "comparisons": [
+        {
+          "arm": "vector",
+          "equal": true,
+          "stock_bytes": 923244,
+          "candidate_bytes": 923244,
+          "stock_sha256": "6284118619b558e6db0e003c5311d6de0b499a0abb7b5a5804d8965ad3c1c142",
+          "candidate_sha256": "6284118619b558e6db0e003c5311d6de0b499a0abb7b5a5804d8965ad3c1c142"
+        },
+        {
+          "arm": "counted",
+          "equal": true,
+          "stock_bytes": 923244,
+          "candidate_bytes": 923244,
+          "stock_sha256": "6284118619b558e6db0e003c5311d6de0b499a0abb7b5a5804d8965ad3c1c142",
+          "candidate_sha256": "6284118619b558e6db0e003c5311d6de0b499a0abb7b5a5804d8965ad3c1c142"
+        },
+        {
+          "arm": "reverse",
+          "equal": true,
+          "stock_bytes": 923244,
+          "candidate_bytes": 923244,
+          "stock_sha256": "6284118619b558e6db0e003c5311d6de0b499a0abb7b5a5804d8965ad3c1c142",
+          "candidate_sha256": "6284118619b558e6db0e003c5311d6de0b499a0abb7b5a5804d8965ad3c1c142"
+        }
+      ],
+      "scope": "ordinary, exact reset-end mixed, local qNaN fallback, one/all nonnominal prepared profiles, real numerical charge-bound rejection"
+    },
+    "blocks": {
+      "comparisons": [
+        {
+          "arm": "vector",
+          "equal": true,
+          "stock_bytes": 124904389,
+          "candidate_bytes": 124904389,
+          "stock_sha256": "9d6e0650109b8de86b679ad58ffdac1eed45c652357ac08250456f6791f7bc89",
+          "candidate_sha256": "9d6e0650109b8de86b679ad58ffdac1eed45c652357ac08250456f6791f7bc89"
+        },
+        {
+          "arm": "counted",
+          "equal": true,
+          "stock_bytes": 124904389,
+          "candidate_bytes": 124904389,
+          "stock_sha256": "9d6e0650109b8de86b679ad58ffdac1eed45c652357ac08250456f6791f7bc89",
+          "candidate_sha256": "9d6e0650109b8de86b679ad58ffdac1eed45c652357ac08250456f6791f7bc89"
+        },
+        {
+          "arm": "rng-stock",
+          "equal": true,
+          "stock_bytes": 124904389,
+          "candidate_bytes": 124904389,
+          "stock_sha256": "9d6e0650109b8de86b679ad58ffdac1eed45c652357ac08250456f6791f7bc89",
+          "candidate_sha256": "9d6e0650109b8de86b679ad58ffdac1eed45c652357ac08250456f6791f7bc89"
+        },
+        {
+          "arm": "reverse",
+          "equal": true,
+          "stock_bytes": 124904389,
+          "candidate_bytes": 124904389,
+          "stock_sha256": "9d6e0650109b8de86b679ad58ffdac1eed45c652357ac08250456f6791f7bc89",
+          "candidate_sha256": "9d6e0650109b8de86b679ad58ffdac1eed45c652357ac08250456f6791f7bc89"
+        }
+      ],
+      "rng": {
+        "equal": true,
+        "bytes": 4619136,
+        "sha256": "63e22d37d88de44ee262f7074897138ac65131430450d60619af78489b441be1"
+      },
+      "partition_checkpoint_tally": {
+        "counted": {
+          "equal_to_one_frame": 4,
+          "different_from_one_frame": 16
+        },
+        "reverse": {
+          "equal_to_one_frame": 4,
+          "different_from_one_frame": 16
+        },
+        "rng-stock": {
+          "equal_to_one_frame": 4,
+          "different_from_one_frame": 16
+        },
+        "stock": {
+          "equal_to_one_frame": 4,
+          "different_from_one_frame": 16
+        },
+        "vector": {
+          "equal_to_one_frame": 4,
+          "different_from_one_frame": 16
+        }
+      },
+      "scope": "small/irregular blocks, interleaved Engine owners, copy/reset; same-arm partition invariance is NOT claimed, stock has the same differences"
+    },
+    "reverse_idle_bbd": {
+      "comparisons": [
+        {
+          "arm": "vector",
+          "equal": true,
+          "stock_bytes": 64267367,
+          "candidate_bytes": 64267367,
+          "stock_sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442",
+          "candidate_sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442"
+        },
+        {
+          "arm": "reverse",
+          "equal": true,
+          "stock_bytes": 64267367,
+          "candidate_bytes": 64267367,
+          "stock_sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442",
+          "candidate_sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442"
+        }
+      ],
+      "scope": "directed rounding, idle/wake and BBD; normal and reverse-object order"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "scope": "Actual public Engine::render, integrated V1b normal and reverse link; NOT full nine-scene integrated trace",
+  "status": "PASS bounded public-render fallback/trap screen",
+  "baseline_AA_and_scalar_exact": true,
+  "cases": 22,
+  "expected_real_sigfpe": 7,
+  "continuation_public_frames": 4,
+  "frames_per_call": 1,
+  "internal_steps_per_call": 2,
+  "method": "Actual public Engine::render callback, one host frame/two internal steps, with no private bypass. Ten inherited cases plus twelve same-rank fallback/reset/future-tail probes. Seven true exceptions expected, fieldwise partial and four continued public frames. Distinct from earlier internal-sample 22-case test.",
+  "source_sha256": "e8b8058a80274f900f38787a556e3381089723564340987db7c51935e4cdbc7a",
+  "observer_sha256": "ed7e47d4de2437fdd3a5135460c1cf92fafc63ff07102632e0515358caa64a19",
+  "arms": [
+    {
+      "arm": "normal",
+      "all_state_fp_pcm_sample_bytes_equal": true,
+      "sig_status_sites_equal": true,
+      "disagreeing_cases": [],
+      "genuine_in_renderer_sigfpe": 7,
+      "bytes_per_arm": 17019552,
+      "sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec",
+      "executable_sha256": "d02371b0413c53c9ca1278f6ffd6d53029bb5b1f64e4df6b130c7f5f5d74bab7"
+    },
+    {
+      "arm": "reverse",
+      "all_state_fp_pcm_sample_bytes_equal": true,
+      "sig_status_sites_equal": true,
+      "disagreeing_cases": [],
+      "genuine_in_renderer_sigfpe": 7,
+      "bytes_per_arm": 17019552,
+      "sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec",
+      "executable_sha256": "69ff0f7ee786d081aa27a099d2ad44a35a942b0019ee088b6665df033537cc05"
+    }
+  ],
+  "static": {
+    "two_exact_patch_reconstructions": true,
+    "source_files": 201,
+    "critical_functions": {
+      "_ZN4cs806Engine25processInternalSampleImplILb0EEEvRfS2_f": {
+        "stock_bytes": 32154,
+        "candidate_bytes": 32154,
+        "bytes_equal": true,
+        "symbolic_relocations_equal": true,
+        "relocations": 646
+      },
+      "_ZN4cs806Engine25processInternalSampleImplILb1EEEvRfS2_f": {
+        "stock_bytes": 37511,
+        "candidate_bytes": 37511,
+        "bytes_equal": true,
+        "symbolic_relocations_equal": true,
+        "relocations": 693
+      },
+      "_ZN4cs8023ReconstructedOscillator4tickEdRKNS_11WscControlsE": {
+        "stock_bytes": 12063,
+        "candidate_bytes": 12063,
+        "bytes_equal": true,
+        "symbolic_relocations_equal": true,
+        "relocations": 136
+      }
+    },
+    "no_extra_critical_definitions": true,
+    "kernel_whole_object_equal": true,
+    "kernel_alloc_and_reloc_equal": true
+  },
+  "no_vector_success_census_in_this_fixture": true,
+  "scope_note": "Some diagnostic state seeds are sNaN/current or future residuals/elapsed fields and exact reset boundaries. They test matching real traps, partial state and continuation, not ordinary musical failures. This probe does not count successful vector calls."
+}

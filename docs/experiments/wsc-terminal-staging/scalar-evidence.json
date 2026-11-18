@@ -1,0 +1,1123 @@
+{
+  "scope": "S only; NOT integrated V1b nine-scene evidence",
+  "status": "PASS bounded scalar Engine qualification",
+  "source_freeze_sha256": "450a6b6aeff3b105534070e856b2a5659ddd69d3f4ff4d5356cdc8ff24c074b2",
+  "trace_driver_sha256": "6cc9ab775437c22f193380984c038ad7b2345555298879bf1b3ad84ea1feb51a",
+  "timing": false,
+  "scenes": [
+    {
+      "scene": "factory_held",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "e453ebd3c257592d70494ddbf3bb64b99290db7bab1bd7fe1f576c08b5f4c54c",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23771493,
+          "sha256": "77f5fa5d5e8713ec98e5ca25a39a0578598148d1e81e46ce4ed4c592b143f15b",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 3147776,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 32768,
+          "groups": 131072,
+          "bad": 0,
+          "numbered": [
+            32768,
+            32768,
+            32768,
+            32768
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 65536,
+          "groups": 262144,
+          "bad": 0,
+          "numbered": [
+            65536,
+            65536,
+            65536,
+            65536
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 524288,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            131072
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 1048576,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            262144
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "factory_moving",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "33af48d6c1d7bd90d023ef75b732f05e8c76943349f5a1d764510dc0739239c6",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 24335903,
+          "sha256": "e27f02155b09cdffa3cf401d364351ccbe63789abbadd8b52cac7cb6418f9c81",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 3147776,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 32768,
+          "groups": 131072,
+          "bad": 0,
+          "numbered": [
+            32768,
+            32768,
+            32768,
+            32768
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 65536,
+          "groups": 262144,
+          "bad": 0,
+          "numbered": [
+            65536,
+            65536,
+            65536,
+            65536
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 524288,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            131072
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 1048576,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            262144
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "panel_held",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "1c5662bd86d1ac522110f44f29e9c37bb3a206c4378d7bc3a36fabfda4d62fae",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23776344,
+          "sha256": "f100cd2df7aea3e773fd74442b4f2576911efeccdbe8018637dd63ca4b01e4c1",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 3147776,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 32768,
+          "groups": 131072,
+          "bad": 0,
+          "numbered": [
+            32768,
+            32768,
+            32768,
+            32768
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 65536,
+          "groups": 262144,
+          "bad": 0,
+          "numbered": [
+            65536,
+            65536,
+            65536,
+            65536
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 524288,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            131072
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 1048576,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            262144
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "panel_moving",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "f8942dcdcb4021727d5374dd964ab19a1d88a1739ea0aac5cc5e99f8d9ff3ec5",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 24341216,
+          "sha256": "81e8d14dea978d85ef93a63e4da94e0f485265ef1055e49674ab01ffcfafbda5",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 3147776,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 32768,
+          "groups": 131072,
+          "bad": 0,
+          "numbered": [
+            32768,
+            32768,
+            32768,
+            32768
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 65536,
+          "groups": 262144,
+          "bad": 0,
+          "numbered": [
+            65536,
+            65536,
+            65536,
+            65536
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 524288,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            131072
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 1048576,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            262144
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "pure_held",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "3af3e1a6f22d2a63d298a8c7a4e7510c1eca232d8b7bd955251b2b6fab646f48",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23650295,
+          "sha256": "e05a89e40473908a8f116c7fc9af998e1249fb8147141db776f3dcd5e3be8e5b",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 3147776,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 0,
+          "groups": 0,
+          "bad": 0,
+          "numbered": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 0,
+          "groups": 0,
+          "bad": 0,
+          "numbered": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 0,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 0,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "legacy_held",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "0ff4e303fc28658bc84d7174b2058fc5f6bb10b5fe004c722a5f8759b10fe6fa",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23563747,
+          "sha256": "5f4d29e83807e7c9deea025a68fa49af6107705883cf8e3e7ddd4c4b6e90f95d",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 37785608,
+          "sha256": "f53e532da0e892da2293c902ddf1c204872c78b27db75b315732bef9230477f7",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 3147776,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 0,
+          "groups": 0,
+          "bad": 0,
+          "numbered": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 0,
+          "groups": 0,
+          "bad": 0,
+          "numbered": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 0,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 0,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "factory_quiet",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "853c2cfdecbf9fe578431f1552d2e90f1eef85fa235183cc7bd274ecc26efcf9",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23563747,
+          "sha256": "3888ac057e5ab9452d827734f1fdfaebd8ba3713f7296c87e0be5ed22512251d",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 12296,
+          "sha256": "8cb2c42197d2b72e1b23b93c40eb0b1962fb2031ae7bdc06503dcb12c029d86c",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 0,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 0,
+          "groups": 0,
+          "bad": 0,
+          "numbered": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 0,
+          "groups": 0,
+          "bad": 0,
+          "numbered": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 0,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 0,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "partial_three",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "3713fd11c37fdd4e9e16703b21421854b360ce4c1705fd2b60d5e4df23c426c1",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23621882,
+          "sha256": "f1ec6c978ec2b122dcebc635fc021589e72b57144d3ed19dc24daf7010c72f1f",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 14177288,
+          "sha256": "2752b1f0bcdc18a0622af8321ec4f67cbe0f7d8a9e7d4f3cae707928d724007a",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 1180416,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 0,
+          "groups": 0,
+          "bad": 0,
+          "numbered": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 0,
+          "groups": 0,
+          "bad": 0,
+          "numbered": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 0,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 0,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "scene": "release_wake",
+      "streams": [
+        {
+          "stream": ".trace.bin",
+          "bytes": 4372765,
+          "sha256": "ffdd0aaeff25568f521aee15d3aacc7473af1163366fa5f287ac6ccc47736c4d",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".wsc.bin",
+          "bytes": 23666773,
+          "sha256": "24af329ad5f1f405b62fbc68532e81fcc921f03f0a380408d59c2627ce088f81",
+          "matched_arms": [
+            "candidate",
+            "counted",
+            "rng-stock",
+            "candidate-reverse"
+          ]
+        },
+        {
+          "stream": ".rng.bin",
+          "bytes": 19149728,
+          "sha256": "dd9a2a469c5339b94cbfe29bb0e72a8fa4b79a38bfadd0ccd6e5644e63fe1255",
+          "matched_arms": [
+            "rank_draw_association"
+          ]
+        }
+      ],
+      "rank_rng_draws": 1594786,
+      "callbacks": 1537,
+      "groups": [
+        {
+          "window": "onset",
+          "samples": 24576,
+          "groups": 98304,
+          "bad": 0,
+          "numbered": [
+            24576,
+            24576,
+            24576,
+            24576
+          ]
+        },
+        {
+          "window": "late",
+          "samples": 2048,
+          "groups": 8192,
+          "bad": 0,
+          "numbered": [
+            2048,
+            2048,
+            2048,
+            2048
+          ]
+        }
+      ],
+      "terminal": [
+        {
+          "window": "onset",
+          "bad": 0,
+          "deferred": 393216,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            98304
+          ]
+        },
+        {
+          "window": "late",
+          "bad": 0,
+          "deferred": 32768,
+          "completed": 0,
+          "fallback": 0,
+          "masks": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            8192
+          ]
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "comparisons": 81,
+    "public_private_fp_bytes_per_arm": 253646285,
+    "ordered_rank_rng_draws": 21661858,
+    "raw_rank_association_bytes": 260052960
+  },
+  "reverse_idle_bbd": {
+    "cases": 16,
+    "idle_callbacks": 768,
+    "bbd_callbacks": 1032,
+    "comparisons": [
+      {
+        "arm": "candidate",
+        "equal": true,
+        "stock_bytes": 64267367,
+        "candidate_bytes": 64267367,
+        "stock_sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442",
+        "candidate_sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442"
+      },
+      {
+        "arm": "reverse",
+        "equal": true,
+        "stock_bytes": 64267367,
+        "candidate_bytes": 64267367,
+        "stock_sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442",
+        "candidate_sha256": "9d1b142b514386c41937ae8ed5d6d68bdc4ec68eafbc82b1ac0ab15811d6a442"
+      }
+    ]
+  },
+  "mixed_engine": {
+    "cases": 3,
+    "masks": [
+      "0xf",
+      "0xe",
+      "0x3"
+    ],
+    "deferred_lanes": [
+      32,
+      31,
+      28
+    ],
+    "ordinary_scalar_completed_lanes": [
+      0,
+      1,
+      0
+    ],
+    "same_position_original_fallback_lanes": [
+      0,
+      0,
+      4
+    ],
+    "comparisons": [
+      {
+        "arm": "candidate",
+        "equal": true,
+        "stock_bytes": 461776,
+        "candidate_bytes": 461776,
+        "stock_sha256": "d5735a784ce45e5bb5ddf7e2876491604af0911d2bd27dd423f0cdcfec07f844",
+        "candidate_sha256": "d5735a784ce45e5bb5ddf7e2876491604af0911d2bd27dd423f0cdcfec07f844"
+      },
+      {
+        "arm": "counted",
+        "equal": true,
+        "stock_bytes": 461776,
+        "candidate_bytes": 461776,
+        "stock_sha256": "d5735a784ce45e5bb5ddf7e2876491604af0911d2bd27dd423f0cdcfec07f844",
+        "candidate_sha256": "d5735a784ce45e5bb5ddf7e2876491604af0911d2bd27dd423f0cdcfec07f844"
+      },
+      {
+        "arm": "reverse",
+        "equal": true,
+        "stock_bytes": 461776,
+        "candidate_bytes": 461776,
+        "stock_sha256": "d5735a784ce45e5bb5ddf7e2876491604af0911d2bd27dd423f0cdcfec07f844",
+        "candidate_sha256": "d5735a784ce45e5bb5ddf7e2876491604af0911d2bd27dd423f0cdcfec07f844"
+      }
+    ],
+    "initial_pure_fixture": "zero admissions retained as an unclaimed negative, not qualifying evidence"
+  }
+}

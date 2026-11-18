@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "status": "sealed-research-evidence",
+  "research_only": true,
+  "production_admission": false,
+  "performance_admission": false,
+  "checkpoint_id": "wsc-terminal-staging-v1b-2026-11-18",
+  "owned_files_including_manifest": 16,
+  "files": {
+    "METHOD.md": {
+      "bytes": 7861,
+      "sha256": "f0589e0bb8b7418090db3b1aaea378d21c1d5f3f9123574e32b393eb4c16d331"
+    },
+    "README.md": {
+      "bytes": 6555,
+      "sha256": "7517014a92e22fe9ec7c7192837120ed47708512ada542c22f97692516b4fcd5"
+    },
+    "component-evidence.json": {
+      "bytes": 9886,
+      "sha256": "a0575c3071ed6a6c7bacd5927cda7ec81a77e49fc29cc8956b78c22c7f5e88b8"
+    },
+    "integrated-public-probes.json": {
+      "bytes": 2989,
+      "sha256": "3ce7c45c6fe5d3f953a4cf18b2b5e9a0ca7c1e46eca2c75d07477433fb72e189"
+    },
+    "integrated-vector-evidence.json": {
+      "bytes": 50335,
+      "sha256": "1e0fd357b2fec91cde630f73fdd7d5af57ce93e7c5ae5d866ed19892e082fec8"
+    },
+    "integrator-hook.json": {
+      "bytes": 1723,
+      "sha256": "46908def8abc0a1042a67234acb56c410339139eacf175309e86312b4d53ab05"
+    },
+    "observe_engine.h": {
+      "bytes": 8287,
+      "sha256": "ed7e47d4de2437fdd3a5135460c1cf92fafc63ff07102632e0515358caa64a19"
+    },
+    "provenance.json": {
+      "bytes": 10969,
+      "sha256": "30486ced5ce2f98e26d6c8aef9c8107f0d938f6c170c03d5d39480ae85f79333"
+    },
+    "render-traps.cpp": {
+      "bytes": 6090,
+      "sha256": "e8b8058a80274f900f38787a556e3381089723564340987db7c51935e4cdbc7a"
+    },
+    "reproduce.py": {
+      "bytes": 5774,
+      "sha256": "65359e7c046a5833bcd506ada6bdb70ba7ad5f7196e72a9ddd5f3f534ca30655"
+    },
+    "scalar-evidence.json": {
+      "bytes": 23884,
+      "sha256": "ee1e5faf96173ddcd4b47e99e9a17ed282e8e1345b755b25f880e428a44595e4"
+    },
+    "scalar-to-vector-v1b.patch": {
+      "bytes": 25308,
+      "sha256": "06387e646e7bdc745630b803b9a7bf965bed4b06e1d3f2c85c81f0f6b517dc96"
+    },
+    "stock-to-scalar.patch": {
+      "bytes": 69108,
+      "sha256": "6e215743d2cead9474ebc6940af21a7d9533b67012186b39dd256f9a035bcd19"
+    },
+    "test_verify.py": {
+      "bytes": 3849,
+      "sha256": "ffc09115572f51d16054ede012e63b778f5e6a1d54d1dc26b4f996311f4ded91"
+    },
+    "verify.py": {
+      "bytes": 17324,
+      "sha256": "9e31fc1e56574771f7b63eff1ddc020592102bb0dae23ff58282c694d9cf4270"
+    }
+  },
+  "separate_subtrees": {
+    "cost": "cost/manifest.json"
+  },
+  "verification": {
+    "receipt_replay": "python3 -B verify.py",
+    "tests": "python3 -B -m unittest test_verify.py",
+    "test_cases": 22,
+    "negative_cases": 20,
+    "reproducer": "syntax and per-TU flag contract checked; C++ execution not rerun during package assembly"
+  },
+  "assembly_activity": {
+    "new_cpp_builds": 0,
+    "new_dsp_runs": 0,
+    "new_timing_runs": 0,
+    "native_loads": 0,
+    "network_actions": 0
+  }
+}

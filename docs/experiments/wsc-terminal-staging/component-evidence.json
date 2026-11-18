@@ -1,0 +1,359 @@
+{
+  "scope": "Numerical/component evidence; NOT full integrated V1b Engine qualification",
+  "kernel_adapter": {
+    "kind": "source-only adapter; no Engine integration or timing",
+    "shipping_header_sha256": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373",
+    "canonical_header_change": "one inert friend declaration only",
+    "record_field_order": [
+      "pin7",
+      "u",
+      "uSlope",
+      "triangle",
+      "triangleSlope",
+      "w",
+      "wSlope",
+      "triangleGain",
+      "value.sawPin5",
+      "value.pulsePin7",
+      "value.sinePin2",
+      "slope.sawPin5",
+      "slope.pulsePin7",
+      "slope.sinePin2",
+      "constant.sawPin5",
+      "constant.pulsePin7",
+      "constant.sinePin2",
+      "ungatedValue.sawPin5",
+      "ungatedValue.pulsePin7",
+      "ungatedValue.sinePin2"
+    ],
+    "prepared_bytes_qualified_target": 168,
+    "outputs_bytes_qualified_target": 640,
+    "abi_sizes_compile_time_asserted": true,
+    "component_matrix": {
+      "result": "component matrix passed",
+      "cohorts": 2354,
+      "node_fields": 188320,
+      "transactional_rejections": 30,
+      "supported_mxcsr_controls": [
+        8064,
+        40896
+      ],
+      "timing": false
+    },
+    "component_setup": {
+      "result": "prepare and CPU/OS selection are bit/FP/errno-neutral",
+      "cases": 192,
+      "control_pairs": 24,
+      "successful_and_failed_bindings": true,
+      "timing": false
+    },
+    "five_mutants_caught": true,
+    "kernel_identity": {
+      "all_allocatable_sections_identical": true,
+      "all_normalized_allocatable_relocations_identical": true,
+      "component_object_sha256": "6f78fc1b44afe455fc21767f353f316ba6be05efceb953a0355761e050555445",
+      "adapter_object_sha256": "0489dfca376f3ccdc330f53d5a9bf6dc8143a7446f477baaa60df2aaf134b3cc",
+      "allocatable_digest": "0ae78c358bec191f15777ae3259f3bb2b9e1f20ee0d816b1c3faa020dcff31e1",
+      "relocation_digest": "23cad9dd98c2b172ba50156bca5ded2776908781b2ec27c6a5e77f63443226ac",
+      "kernel_original_oscillator_method_symbols_absent": true,
+      "kernel_test_or_allocation_dependency_absent": true,
+      "packed_instruction_counts": {
+        "vaddpd": 9,
+        "vsubpd": 11,
+        "vmulpd": 14,
+        "vdivpd": 7,
+        "vgatherdpd": 4
+      },
+      "setup_original_oscillator_method_symbols_absent": true,
+      "setup_test_or_allocation_dependency_absent": true
+    },
+    "prepare_identity": {
+      "prepare_instruction_bytes_identical": true,
+      "prepare_function_bytes": 758,
+      "prepare_function_sha256": "7d2e1dc2ae150555bed2c7931ddbee2501761e223f7480855d13bbb3b372db54",
+      "old_relocations": [],
+      "new_relocations": []
+    },
+    "caller_wrappers": [
+      {
+        "case": "strict",
+        "compile_flags": [],
+        "observed": {
+          "passed": true,
+          "caller_exact_build": true,
+          "forwarded_witness_calls": 1,
+          "timing": false
+        }
+      },
+      {
+        "case": "disabled",
+        "compile_flags": [
+          "-DWSC_DISABLE_NODE_KERNEL"
+        ],
+        "observed": {
+          "passed": true,
+          "caller_exact_build": false,
+          "forwarded_witness_calls": 0,
+          "timing": false
+        }
+      },
+      {
+        "case": "fma-caller",
+        "compile_flags": [
+          "-mfma"
+        ],
+        "observed": {
+          "passed": true,
+          "caller_exact_build": false,
+          "forwarded_witness_calls": 0,
+          "timing": false
+        }
+      },
+      {
+        "case": "fast-math-caller",
+        "compile_flags": [
+          "-ffast-math"
+        ],
+        "observed": {
+          "passed": true,
+          "caller_exact_build": false,
+          "forwarded_witness_calls": 0,
+          "timing": false
+        }
+      },
+      {
+        "case": "no-signed-zero",
+        "compile_flags": [
+          "-fno-signed-zeros"
+        ],
+        "observed": {
+          "passed": true,
+          "caller_exact_build": false,
+          "forwarded_witness_calls": 0,
+          "timing": false
+        }
+      },
+      {
+        "case": "reciprocal-caller",
+        "compile_flags": [
+          "-freciprocal-math"
+        ],
+        "observed": {
+          "passed": true,
+          "caller_exact_build": false,
+          "forwarded_witness_calls": 0,
+          "timing": false
+        }
+      },
+      {
+        "case": "unsafe-math-caller",
+        "compile_flags": [
+          "-funsafe-math-optimizations"
+        ],
+        "observed": {
+          "passed": true,
+          "caller_exact_build": false,
+          "forwarded_witness_calls": 0,
+          "timing": false
+        }
+      }
+    ],
+    "limits": [
+      "GNU 14.2 x86-64 normal Release/PIC only numerically qualified here",
+      "Nominal immutable per-span binding; no lifecycle integration",
+      "Only masked-nearest MXCSR controls 0x1f80 or 0x9fc0 and x87 0x037f",
+      "Source adapter is not whole-Engine, native plugin, performance or full trap-order qualification"
+    ]
+  },
+  "kernel_negatives": [
+    {
+      "mutant": "WSC_MUTANT_SWAP",
+      "expected": "node bits",
+      "caught": true,
+      "exit_code": 1,
+      "structural_packed_work_check": true,
+      "observed": {
+        "mismatch": "node bits",
+        "case": "ordinary-mixed",
+        "lane": 1,
+        "field": "pin7",
+        "mode": 8064,
+        "sticky": 0,
+        "x87_invalid_seed": 0,
+        "stock_bits": "0x3ffebdc30b4f4bd6",
+        "packed_bits": "0x3ff271db6d2f93e6",
+        "stock_env": {
+          "mxcsr": 8096,
+          "x87cw": 895,
+          "x87sw": 0,
+          "errno": 33
+        },
+        "packed_env": {
+          "mxcsr": 8096,
+          "x87cw": 895,
+          "x87sw": 0,
+          "errno": 33
+        }
+      }
+    },
+    {
+      "mutant": "WSC_MUTANT_KNOT_VALUE",
+      "expected": "node bits",
+      "caught": true,
+      "exit_code": 1,
+      "structural_packed_work_check": true,
+      "observed": {
+        "mismatch": "node bits",
+        "case": "mixed-187",
+        "lane": 0,
+        "field": "value.sine",
+        "mode": 8064,
+        "sticky": 0,
+        "x87_invalid_seed": 0,
+        "stock_bits": "0xbff6330a24607779",
+        "packed_bits": "0xbff6330a245ead50",
+        "stock_env": {
+          "mxcsr": 8096,
+          "x87cw": 895,
+          "x87sw": 0,
+          "errno": 33
+        },
+        "packed_env": {
+          "mxcsr": 8096,
+          "x87cw": 895,
+          "x87sw": 0,
+          "errno": 33
+        }
+      }
+    },
+    {
+      "mutant": "WSC_MUTANT_ZERO_SIGN",
+      "expected": "node bits",
+      "caught": true,
+      "exit_code": 1,
+      "structural_packed_work_check": true,
+      "observed": {
+        "mismatch": "node bits",
+        "case": "ordinary-mixed",
+        "lane": 0,
+        "field": "triangleSlope",
+        "mode": 8064,
+        "sticky": 0,
+        "x87_invalid_seed": 0,
+        "stock_bits": "0x8000000000000000",
+        "packed_bits": "0x0",
+        "stock_env": {
+          "mxcsr": 8096,
+          "x87cw": 895,
+          "x87sw": 0,
+          "errno": 33
+        },
+        "packed_env": {
+          "mxcsr": 8096,
+          "x87cw": 895,
+          "x87sw": 0,
+          "errno": 33
+        }
+      }
+    },
+    {
+      "mutant": "WSC_MUTANT_INACTIVE_DIV",
+      "expected": "FP or errno",
+      "caught": true,
+      "exit_code": 1,
+      "structural_packed_work_check": true,
+      "observed": {
+        "mismatch": "FP or errno",
+        "case": "ordinary-mixed",
+        "mode": 8064,
+        "sticky": 0,
+        "x87_invalid_seed": 0,
+        "stock_env": {
+          "mxcsr": 8096,
+          "x87cw": 895,
+          "x87sw": 0,
+          "errno": 33
+        },
+        "packed_env": {
+          "mxcsr": 8097,
+          "x87cw": 895,
+          "x87sw": 0,
+          "errno": 33
+        }
+      }
+    },
+    {
+      "mutant": "WSC_MUTANT_SCALAR",
+      "expected": "forged scalar work",
+      "caught": true,
+      "exit_code": 0,
+      "structural_packed_work_check": false,
+      "observed": {
+        "result": "component matrix passed",
+        "cohorts": 2354,
+        "node_fields": 188320,
+        "transactional_rejections": 30,
+        "supported_mxcsr_controls": [
+          8064,
+          40896
+        ],
+        "timing": false
+      }
+    }
+  ],
+  "vector_finish": {
+    "status": "PASS bounded standalone optional vector-finish integration",
+    "source_hashes_verified": true,
+    "normal_objects_byte_identical": true,
+    "canonical_kernel_and_setup_entire_objects_identical": true,
+    "backend_original_oscillator_symbols_absent": true,
+    "cohort_bytes": 192,
+    "object_bytes": 5984,
+    "focused_cases": 7,
+    "vector_matrix": {
+      "checks": 42772633,
+      "counted_ticks": 356256,
+      "fp_pairs": 99034,
+      "kernel_attempts": 9414,
+      "kernel_successes": 9411,
+      "kernel_rejections": 3
+    },
+    "scalar_binding_matrix": {
+      "checks": 42769259,
+      "counted_ticks": 356256,
+      "fp_pairs": 99027,
+      "kernel_attempts": 0
+    },
+    "original_only_null": {
+      "checks": 39833425,
+      "counted_ticks": 331776,
+      "fp_pairs": 92880
+    },
+    "reverse_link_pass": true,
+    "admission": {
+      "cases": 116,
+      "checks": 696
+    },
+    "actual_sigfpe": {
+      "seed_pairs": 5,
+      "ab_signals": 10,
+      "aa_signals": 10,
+      "whole_object_differences": 0,
+      "trap_pc_fp_errno_differences": 0,
+      "continuation_audio_differences": 0,
+      "continuation_diagnostic_differences": 0,
+      "real_packed_successes_in_output_probe": 25,
+      "real_packed_successes_in_elapsed_probe": 17
+    },
+    "record_consumption_negative": {
+      "test_only_poison": "flip successful record[0][0] sign bit",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "caught": "raw diagnostics"
+    },
+    "source_edited_after_first_compile": false,
+    "engine_edits": false,
+    "timing": false,
+    "published": false
+  }
+}

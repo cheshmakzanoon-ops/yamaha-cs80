@@ -10,3 +10,13 @@ Two interventions tested those findings:
 The production DSP is unchanged by this research checkpoint. A hotspot percentage gives the next experiment a reason to exist; it is not evidence that eliminating that percentage is possible.
 
 A separate [nine-scene stock oscillator census](../experiments/wsc-terminal-occupancy/README.md) found that all 262,144 late fixed four-rank groups in each eight-voice factory fixture reached an ordinary final node-evaluation request. Earlier controls and boundary events still had to run in scalar order. Only 83.49% of held groups and 11.25% of moving groups had an unchanged, uninterrupted *whole* tick. This documents a potential meeting point for four scalar tasks; it is not a prediction of vector eligibility, a timing result, or a production change.
+
+### A real four-rank implementation, not a CPU win
+
+[Scalar staging and the four-lane implementation](../experiments/wsc-terminal-staging/README.md) preserved the tested audio, internal state, ordered RNG draws and floating-point fault continuations. The four-lane backend actually ran in the intended eight-voice fixtures; the measured Pure control never entered it.
+
+In the [complete, one-shot 216-observation standalone cost screen](../experiments/wsc-terminal-staging/cost/README.md), held factory stock / staged scalar / vector used **0.575 / 0.521 / 0.557 CPU seconds per audio second**. The primary vector-versus-stock estimate was **3.10% less CPU** (95% whole-round interval **1.83% to 4.37%**), below the preregistered rule's **21.48%** superiority floor from same-binary calibration. Moving factory and Pure did not meet their secondary noninferiority bounds. All observations are retained; nothing was rerun to improve the result.
+
+The staged scalar arm's **9.45% lower** held-factory point estimate versus stock was descriptive, not the primary test. Adding the packed backend **cost 7.02% more** than that scalar arm in the same held case. These are contrasts between entire implementations, not isolated arithmetic costs. Neither experimental arm was promoted; this is not a plugin or DAW measurement. Production DSP remains unchanged.
+
+As a separate release check, the two exported patches were applied to clean copies of the shipping commit. All 193 / 196 / 201 source files matched the tested stock / scalar / vector trees. The bundled [public-render reproducer](../experiments/wsc-terminal-staging/METHOD.md) was then run on those fresh trees. Stock twice, scalar, vector and reverse-linked vector each matched the archived 17,019,552-byte observation stream and its seven real floating-point exceptions with the same normalized sites and continuations. This validates that particular reproducer, not the cost result or unbundled test suites.

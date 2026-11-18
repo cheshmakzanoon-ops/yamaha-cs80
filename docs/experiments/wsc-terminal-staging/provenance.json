@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "as_of_utc": "2026-11-18T03:39:52Z",
+  "cut_id": "wsc-terminal-staging-v1b-2026-11-18",
+  "baseline_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "arms": {
+    "B": "untouched shipping baseline",
+    "S": "original-position scalar terminal staging, scalar V2",
+    "V": "S plus optional AVX2 terminal finish and render-call-local binding, integrated V1b"
+  },
+  "patches": {
+    "stock_to_S": {
+      "file": "stock-to-scalar.patch",
+      "sha256": "6e215743d2cead9474ebc6940af21a7d9533b67012186b39dd256f9a035bcd19"
+    },
+    "S_to_V": {
+      "file": "scalar-to-vector-v1b.patch",
+      "sha256": "06387e646e7bdc745630b803b9a7bf965bed4b06e1d3f2c85c81f0f6b517dc96"
+    },
+    "unbundled_direct_B_to_V_sha256": "29b940e81972bff4ab5389f57e576a8d37b7e7553a0f89bdfc6502d044fdd65c"
+  },
+  "source_freezes": {
+    "S": "450a6b6aeff3b105534070e856b2a5659ddd69d3f4ff4d5356cdc8ff24c074b2",
+    "V": "31fedb0323a0f99b0fc87adb040650bf879f226664199472e7aedae3778a77dc"
+  },
+  "source_fingerprints_scope": "All changed source files in the two patches, plus FactoryPresets.cpp and Ig00156Batch.cpp. Remaining source requires the clean baseline commit, not an arbitrary checkout.",
+  "source_fingerprints": {
+    "B": {
+      "src/core/Engine.cpp": "27418070012931bc96ebb8937f016d4ae4fe1e239e97f6dc8959d5cc63bc994f",
+      "src/core/Engine.h": "90464b59cab9b303c68d424cb8f416b4ca1a4bb579ef94e33e936f68ac30261d",
+      "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+      "src/core/Ig00156Batch.cpp": "f4fc11314d415a7581a0e495a5faee80e2444bca9f0044882ea3b5ea14bb2752",
+      "src/core/ReconstructedOscillator.h": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373"
+    },
+    "S": {
+      "src/core/Engine.cpp": "c7f1f8fe3aeff4bcf0ef241ce50d2d196ff720dc6cd104b125abd2aa9dcfbd1b",
+      "src/core/Engine.h": "85cc3631e2a90202d51cc0d7980b005c44b2a88a569bc5853a2eb8497f5c094b",
+      "src/core/EngineWscTerminalStaging.cpp": "a1cddeb275dc3e0d4f5316baba3a60543d1097a8846c8627729c99e97fc27aa4",
+      "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+      "src/core/Ig00156Batch.cpp": "f4fc11314d415a7581a0e495a5faee80e2444bca9f0044882ea3b5ea14bb2752",
+      "src/core/ReconstructedOscillator.h": "893b79417145109e7b1696ccaff7ae7fc7e3da61be9ca1d57f6db0e2c82417a5",
+      "src/core/WscTerminalCohort.cpp": "4874b5192d4eddebfcfcae818641ac0cce3583d7b3eb6ff75e3fd5199ff7dfce",
+      "src/core/WscTerminalCohort.h": "19bf920e90bda38c4df558bbe0c12777d1c59451a132e703d974ba1d0f9a7f01"
+    },
+    "V": {
+      "src/core/Engine.cpp": "b073ad0f0b44f936028db8b6f919bba08ae58cb8756b3651c3dafbf74261a0eb",
+      "src/core/Engine.h": "4c8f95e7c6499b06910f5c95a1be1dbe4d2c63fa505dc6f97e63991ce3438eb1",
+      "src/core/EngineWscTerminalStaging.cpp": "f4d3f90553e5e312547ff18411c646ecc92cf1b1360f2dedbc5cc9f026e56226",
+      "src/core/EngineWscVectorRender.cpp": "c820ffa02af57d3fdb2e0b16024c7ccfee2572734ce47345a9c4fe1cf6bcccaa",
+      "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+      "src/core/Ig00156Batch.cpp": "f4fc11314d415a7581a0e495a5faee80e2444bca9f0044882ea3b5ea14bb2752",
+      "src/core/ReconstructedOscillator.h": "2b651983d04066e3326f3c4273c384bc16b9886206a9922526f363528ab39923",
+      "src/core/WscNodeKernel.h": "b8f4abcf2e930193946499e50e2138553c407f3c1cc44af0dddd20529af8781c",
+      "src/core/WscNodeKernelAvx2.cpp": "162513f9d7bdb1153469ea5e2cec2c05db582be11c180828ab76c1e8158f5192",
+      "src/core/WscNodeKernelSetup.cpp": "7cf7cae26423094566ca5be7fa099caecee1fff8859c16376fc72cf334c7256a",
+      "src/core/WscNodeRenderSpan.h": "4db1c4fd9bd3a05a8e6599ce4e270304d9cd080863a1d00a780279c38a8ba6b3",
+      "src/core/WscTerminalCohort.cpp": "f87caf669e0c38bacc2883ae9b80c7ad02740c90bbd34dd8ed04744545bd477c",
+      "src/core/WscTerminalCohort.h": "88b1528ac27cbe6b1445a215a72b9b051234db59eaf30ff0dad7bf34889788ea"
+    }
+  },
+  "normal_archives": {
+    "B": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+    "S": "95047fd858b3145ec8655ee4c4fe930faab4ed8cbfc93d811ba8cc31ac7a8094",
+    "V": "82ba3c4c0ecd0bb52d67cec8b05b8da332e40dc8e3166a56392a785e4db237ae"
+  },
+  "normal_V_objects": {
+    "Engine": "79bc93e07bb4448de36288882c29b00c388e88da2f7d00fddd0c3b5007dde4c4",
+    "FactoryPresets": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+    "Ig00156Batch": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+    "EngineWscTerminalStaging": "c9c1f155569c512b013bde3c44a084596544727467435c6e41f98d91c69cde9f",
+    "WscTerminalCohort": "741c88db0100c055177bb93a0535ea78345139e7b72048d2452e1ff6b7c9dc25",
+    "WscNodeKernelSetup": "74da42a1451c5e18b99dddf2f8da67f8faca3063f3390a260538b4c8375b2704",
+    "WscNodeKernelAvx2": "0489dfca376f3ccdc330f53d5a9bf6dc8143a7446f477baaa60df2aaf134b3cc",
+    "EngineWscVectorRender": "23d57cfaa17fc51b491038428a50258c1649b685ebc72bc884b69fbc7f53e5ff"
+  },
+  "kernel_source_sha256": "162513f9d7bdb1153469ea5e2cec2c05db582be11c180828ab76c1e8158f5192",
+  "scalar_trace": {
+    "driver_sha256": "6cc9ab775437c22f193380984c038ad7b2345555298879bf1b3ad84ea1feb51a",
+    "freeze_sha256": "1d8ddd91731effc6efc2d5ca5bcb202bd3c0743b5370bbfeb61dc113e701cbf4",
+    "executables": {
+      "trace-stock": "1940c9b1e2f5ad0ac578c8b07e125ef8bc0e535d1a0a73cd7f25386b1ba34150",
+      "trace-candidate": "83d9a7cc69d4c56a7b369c3fefebcfc1e24600ccdbd784613b24dd4d0d22db3b",
+      "trace-counted": "adba57231de4a1c3a7ece4c3c69de38b4fef0eb6dccfaf1a9608aa717e0097de",
+      "trace-rng-stock": "f62a2631aef8718864eb5bc125016561424a19f751cf3c4f14fb2505e1f0ce13",
+      "trace-candidate-reverse": "8807f6fa2b6eca7cc9b4719689cbbf4beaee67afd134713f14fd93c85245cb88"
+    }
+  },
+  "public_probe_sources": {
+    "render-traps.cpp": "e8b8058a80274f900f38787a556e3381089723564340987db7c51935e4cdbc7a",
+    "observe_engine.h": "ed7e47d4de2437fdd3a5135460c1cf92fafc63ff07102632e0515358caa64a19"
+  },
+  "strict_build": {
+    "compiler": "GNU 14.2.0, Linux x86-64",
+    "normal_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20",
+      "-fPIC",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic"
+    ],
+    "diagnostic_only_flags": [
+      "-fno-access-control",
+      "-no-pie"
+    ],
+    "global_fast_math": false,
+    "global_fma": false,
+    "global_native": false,
+    "lto_qualified": false,
+    "translation_unit_extra_flags": {
+      "src/core/Ig00156Batch.cpp": [
+        "-ffp-contract=off"
+      ],
+      "src/core/WscNodeKernelAvx2.cpp": [
+        "-ffp-contract=off"
+      ]
+    }
+  },
+  "receipt_fingerprints": {
+    "scalar/source-freeze": "450a6b6aeff3b105534070e856b2a5659ddd69d3f4ff4d5356cdc8ff24c074b2",
+    "scalar/manifest": "3b2ec01a9f75b48aa8f459986beb9cf1feef32dd9b28ea3ea8dc90908c7760b2",
+    "scalar/trace-freeze": "1d8ddd91731effc6efc2d5ca5bcb202bd3c0743b5370bbfeb61dc113e701cbf4",
+    "scalar/trace-parity": "e00fdb132b00758618c11210f2f1bf77e91c1e9f1c873f39754a5e45660c69d8",
+    "scalar/group-witnesses": "4a69a1f2f75f7de130a01a44cd8b455eea88408777aecf84c5448391d9c2d75a",
+    "scalar/reverse-controls": "c6ca7ac025fffc688d200aad6ee44849a68af652c24687301956f41f6a370dd5",
+    "scalar/mixed-controls": "57ca43738b6818c465560832a7bcdd912ad3e86b26fa382338cb1b68d09f3c23",
+    "vector/source-freeze": "31fedb0323a0f99b0fc87adb040650bf879f226664199472e7aedae3778a77dc",
+    "vector/normal-arms": "ac3e9d73e49d31ba34ccd27fd081bd4eb8efdabed7b6de73a85d75c28dc15233",
+    "vector/public-probes": "46e8cf62361e2bfd7ea3ca5579c8c09810c41cf57cc4c54bd4dcbdcdad508012",
+    "vector/public-probe-commands": "8fed8d4405ca52e7a867a35a86adea3f7c1f6b81a0e65ad4691f5aaceccc0c0d",
+    "vector/diagnostic-freeze": "c49090a057b5e074948e0fcef8223a2c731564c5da185e83576ed4c69d289076",
+    "public-probe/protocol": "811fdb0323aed198777e14c9a09da9e83d79c5b79531a96be95e52af3e5f857c",
+    "public-probe/source": "e8b8058a80274f900f38787a556e3381089723564340987db7c51935e4cdbc7a",
+    "public-probe/observer": "ed7e47d4de2437fdd3a5135460c1cf92fafc63ff07102632e0515358caa64a19",
+    "kernel/adapter-receipt": "9169c91be31ded91bf6d87ed9b2593ab6fb7ada837df43f40f829e48f7da225d",
+    "kernel/negative-results": "e4c081263412b488b71a6777a8a83603f66f6960df4fc8a85fe1c945d31a5fd3",
+    "vector-finish/observations": "2475cbcbb3dc76caa4348b82a8f6f4669da605881ff237fc2e1f932a29e2b12b",
+    "vector-finish/freeze": "3f3e0fc5037c3df1712bb2611ce0b1d1ae249200deb08daa527b334fa93850dd",
+    "rejected/header-v1-report": "721c2e6cd7edefe9f6bfdc12fa4fcc87513d2b22054855de2a49893fd07da768",
+    "rejected/combined-v1-static": "3873af4d35895efb3281445966b23e7abbdd19f8de98eb440239d5f0b6c758d7",
+    "vector/trace-freeze": "cc2ee6f6bd55077f8009a414b088e10be2dbeea355a3688cc87d0376e538d0aa",
+    "vector/trace-parity": "aa59443bcb4a05f191f910648d67c4903ca1d4ce522efe72b339384a0e3e17d8",
+    "vector/trace-witnesses": "0211ab13f3d93028d3ac78b4fac7829ee6e476456ba12b6e8dedaf297a79ef6e",
+    "vector/semantic-results": "93073a6d63d6a7da0d360646fcc1e5203d48fa85a92dee51bd067b904e38e7c1",
+    "vector/blocks-results": "3f6607a33c75ad8e6ecf732cfc60cfdea2b4ac58c3e14ea699c9456c16c82d96",
+    "vector/blocks-rng": "7cedfc4c7ab4de10befb339206698285753c504d78554b6299dc5d37cb7f285a",
+    "vector/blocks-partitions": "3712795f2c2f07ee0750464b3e667690f4cdea00234ba21e9704fd17fd975b51",
+    "vector/reverse-results": "56d22de827bb9922eee52d9ce0704d89f06fcb09005b8f6155cb47a5a5a2f652",
+    "cost/actual-analysis": "3ae3c12134590b070ef1ed55169002303220958b0b550ff6aa328d179522a14a"
+  },
+  "omitted": [
+    "binaries",
+    "raw audio/state/RNG trace streams",
+    "giant disassembly",
+    "full duplicated source trees",
+    "absolute machine paths",
+    "raw cost data/details delegated to the separate cost subtree"
+  ],
+  "vector_trace": {
+    "driver_sha256": "7356e6b617699e990b1f3bc0cc5dedc4bee7809d0c5f88a22098db01d5189a93",
+    "diagnostic_freeze_sha256": "c49090a057b5e074948e0fcef8223a2c731564c5da185e83576ed4c69d289076",
+    "observer_patch_sha256": "c96514a728f3eef65fce421f48c1b8835258f450bfdf777d39600091ee7033bb",
+    "parent_source_freeze_sha256": "31fedb0323a0f99b0fc87adb040650bf879f226664199472e7aedae3778a77dc",
+    "status": "PASS bounded integrated nine-scene and supplemental qualification",
+    "trace_freeze_sha256": "cc2ee6f6bd55077f8009a414b088e10be2dbeea355a3688cc87d0376e538d0aa",
+    "executables": {
+      "trace-stock": "ef7d1da3b84c065f2341210480cbb92d6c635163c6075ae9701a996dfac59213",
+      "trace-vector": "ce16fff4c4b4c93094f154f29bfec03a2f74999d0baadd96a030b5d290671bc9",
+      "trace-counted": "c4a94a9f9869171de5548a87ba9d989e107563a0341f4edbcbdff6aebec3b8cf",
+      "trace-rng-stock": "eda4c06f1bddff5dcd65c3a06d3cbfe26abc32505e9be551f239a3a9e4d96dab",
+      "trace-reverse": "b4028f0bc8a4d7d6a7808727fcc94d8ec9231d880d2d90443055c319dde8ae81"
+    }
+  },
+  "research_only": true,
+  "publication_ready": true
+}

@@ -1,0 +1,2269 @@
+{
+  "schema": "wsc-portable-cost-protocol-v1",
+  "mode": "three-arm",
+  "cpu": 0,
+  "primary": "factory-held",
+  "scenes": [
+    "factory-held",
+    "factory-moving",
+    "panel-moving",
+    "pure-held"
+  ],
+  "schedule": [
+    {
+      "slot": 0,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 1,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 2,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 3,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 4,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 5,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 6,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 7,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 8,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 9,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 10,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 11,
+      "family": "calibration",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 12,
+      "family": "calibration",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 13,
+      "family": "calibration",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 14,
+      "family": "calibration",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 15,
+      "family": "calibration",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 16,
+      "family": "calibration",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 17,
+      "family": "calibration",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 18,
+      "family": "calibration",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 19,
+      "family": "calibration",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 20,
+      "family": "calibration",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 21,
+      "family": "calibration",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 22,
+      "family": "calibration",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 23,
+      "family": "calibration",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 24,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 25,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 26,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 27,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 28,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 29,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 30,
+      "family": "calibration",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 31,
+      "family": "calibration",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 32,
+      "family": "calibration",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 33,
+      "family": "calibration",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 34,
+      "family": "calibration",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 35,
+      "family": "calibration",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 36,
+      "family": "calibration",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 37,
+      "family": "calibration",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 38,
+      "family": "calibration",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 39,
+      "family": "calibration",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 40,
+      "family": "calibration",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 41,
+      "family": "calibration",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 42,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 43,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 44,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 45,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 46,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 47,
+      "family": "calibration",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 48,
+      "family": "calibration",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 49,
+      "family": "calibration",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 50,
+      "family": "calibration",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 51,
+      "family": "calibration",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 52,
+      "family": "calibration",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 53,
+      "family": "calibration",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 54,
+      "family": "calibration",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 55,
+      "family": "calibration",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 56,
+      "family": "calibration",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 57,
+      "family": "calibration",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 58,
+      "family": "calibration",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 59,
+      "family": "calibration",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 60,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 61,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 62,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 63,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 64,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 65,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 66,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 67,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 68,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 69,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 70,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 71,
+      "family": "calibration",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 72,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 73,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 74,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 75,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 76,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 77,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 78,
+      "family": "comparison",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 79,
+      "family": "comparison",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 80,
+      "family": "comparison",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 81,
+      "family": "comparison",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 82,
+      "family": "comparison",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 83,
+      "family": "comparison",
+      "round": 0,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 84,
+      "family": "comparison",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 85,
+      "family": "comparison",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 86,
+      "family": "comparison",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 87,
+      "family": "comparison",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 88,
+      "family": "comparison",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 89,
+      "family": "comparison",
+      "round": 0,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 90,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 91,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 92,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 93,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 94,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 95,
+      "family": "comparison",
+      "round": 0,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 96,
+      "family": "comparison",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 97,
+      "family": "comparison",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 98,
+      "family": "comparison",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 99,
+      "family": "comparison",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 100,
+      "family": "comparison",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 101,
+      "family": "comparison",
+      "round": 1,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 102,
+      "family": "comparison",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 103,
+      "family": "comparison",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 104,
+      "family": "comparison",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 105,
+      "family": "comparison",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 106,
+      "family": "comparison",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 107,
+      "family": "comparison",
+      "round": 1,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 108,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 109,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 110,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 111,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 112,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 113,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 114,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 115,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 116,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 117,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 118,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 119,
+      "family": "comparison",
+      "round": 1,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 120,
+      "family": "comparison",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 121,
+      "family": "comparison",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 122,
+      "family": "comparison",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 123,
+      "family": "comparison",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 124,
+      "family": "comparison",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 125,
+      "family": "comparison",
+      "round": 2,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 126,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 127,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 128,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 129,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 130,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 131,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 132,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 133,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 134,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 135,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 136,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 137,
+      "family": "comparison",
+      "round": 2,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 138,
+      "family": "comparison",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 139,
+      "family": "comparison",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 140,
+      "family": "comparison",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 141,
+      "family": "comparison",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 142,
+      "family": "comparison",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 143,
+      "family": "comparison",
+      "round": 2,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 144,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 145,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 146,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 147,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 148,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 149,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 150,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 151,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 152,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 153,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 154,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 155,
+      "family": "comparison",
+      "round": 3,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 156,
+      "family": "comparison",
+      "round": 3,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 157,
+      "family": "comparison",
+      "round": 3,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 158,
+      "family": "comparison",
+      "round": 3,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 159,
+      "family": "comparison",
+      "round": 3,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 160,
+      "family": "comparison",
+      "round": 3,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 161,
+      "family": "comparison",
+      "round": 3,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 162,
+      "family": "comparison",
+      "round": 3,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 163,
+      "family": "comparison",
+      "round": 3,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 164,
+      "family": "comparison",
+      "round": 3,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 165,
+      "family": "comparison",
+      "round": 3,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 166,
+      "family": "comparison",
+      "round": 3,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 167,
+      "family": "comparison",
+      "round": 3,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 168,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 169,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 170,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 171,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 172,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 173,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 174,
+      "family": "comparison",
+      "round": 4,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 175,
+      "family": "comparison",
+      "round": 4,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 176,
+      "family": "comparison",
+      "round": 4,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 177,
+      "family": "comparison",
+      "round": 4,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 178,
+      "family": "comparison",
+      "round": 4,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 179,
+      "family": "comparison",
+      "round": 4,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 180,
+      "family": "comparison",
+      "round": 4,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 181,
+      "family": "comparison",
+      "round": 4,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 182,
+      "family": "comparison",
+      "round": 4,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 183,
+      "family": "comparison",
+      "round": 4,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 184,
+      "family": "comparison",
+      "round": 4,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 185,
+      "family": "comparison",
+      "round": 4,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 186,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 187,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 188,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 189,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 190,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 191,
+      "family": "comparison",
+      "round": 4,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 192,
+      "family": "comparison",
+      "round": 5,
+      "scene": "panel-moving",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 193,
+      "family": "comparison",
+      "round": 5,
+      "scene": "panel-moving",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 194,
+      "family": "comparison",
+      "round": 5,
+      "scene": "panel-moving",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 195,
+      "family": "comparison",
+      "round": 5,
+      "scene": "panel-moving",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 196,
+      "family": "comparison",
+      "round": 5,
+      "scene": "panel-moving",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 197,
+      "family": "comparison",
+      "round": 5,
+      "scene": "panel-moving",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 198,
+      "family": "comparison",
+      "round": 5,
+      "scene": "pure-held",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 199,
+      "family": "comparison",
+      "round": 5,
+      "scene": "pure-held",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 200,
+      "family": "comparison",
+      "round": 5,
+      "scene": "pure-held",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 201,
+      "family": "comparison",
+      "round": 5,
+      "scene": "pure-held",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 202,
+      "family": "comparison",
+      "round": 5,
+      "scene": "pure-held",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 203,
+      "family": "comparison",
+      "round": 5,
+      "scene": "pure-held",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 204,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-held",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 205,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-held",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 206,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-held",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 207,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-held",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 208,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-held",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 209,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-held",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 210,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-moving",
+      "position": 0,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    },
+    {
+      "slot": 211,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-moving",
+      "position": 1,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 212,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-moving",
+      "position": 2,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 213,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-moving",
+      "position": 3,
+      "label": "B",
+      "actual_arm": "BASE"
+    },
+    {
+      "slot": 214,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-moving",
+      "position": 4,
+      "label": "S",
+      "actual_arm": "SCALAR-STAGED"
+    },
+    {
+      "slot": 215,
+      "family": "comparison",
+      "round": 5,
+      "scene": "factory-moving",
+      "position": 5,
+      "label": "V",
+      "actual_arm": "VECTOR-STAGED"
+    }
+  ],
+  "settings": {
+    "rate": 48000,
+    "block_frames": 64,
+    "warm_blocks": 1024,
+    "measured_blocks": 512,
+    "continuation_blocks": 1,
+    "notes": [
+      36,
+      43,
+      48,
+      55,
+      60,
+      64,
+      67,
+      72
+    ],
+    "velocity": 0.8,
+    "drift": 0.37,
+    "dispersion": 0.18,
+    "drift_model": 0,
+    "internal_rate_factor": 2,
+    "normal_frame_before_new_midi_every_block": true
+  },
+  "limits": {
+    "slot_cpu_s": 10,
+    "slot_wall_s": 12,
+    "campaign_wall_s": 600
+  },
+  "thresholds": {
+    "minimum_gain": 0.02,
+    "historical_policy_floor": 0.117,
+    "secondary_noninferiority": -0.03,
+    "calibration": "maximum absolute individual round/pair effect across every scene",
+    "clock_multiplier": 3,
+    "primary_comparison": "B_to_V",
+    "primary_relation": "lower95 strictly greater than global floor"
+  },
+  "bootstrap": {
+    "round_clusters": 6,
+    "draws": 10000,
+    "seed": 20261118017,
+    "unit": "whole comparison round, all scenes and contrasts together",
+    "percentile": [
+      0.025,
+      0.975
+    ],
+    "quantiles": "linear interpolation",
+    "shared_index_sha256": "f42afd24a357904f93cdd405d800b345f1318f96e4233df259a48902611cf38a"
+  },
+  "expected_identity": {
+    "factory-held": {
+      "frame": "3cf1aa1de3b01585",
+      "measured_last_pcm": "02218e51645a5b5c",
+      "continuation_pcm": "585b1bd69e672cac",
+      "initial_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "measured_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "continuation_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      }
+    },
+    "factory-moving": {
+      "frame": "011767aae5039f23",
+      "measured_last_pcm": "03e0f458fa7e9216",
+      "continuation_pcm": "bb12d14ba23a2bab",
+      "initial_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "measured_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "continuation_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      }
+    },
+    "panel-moving": {
+      "frame": "8815a44534b5c9d9",
+      "measured_last_pcm": "909c621ee9ee29b7",
+      "continuation_pcm": "1aa61d9533d36de1",
+      "initial_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "measured_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "continuation_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      }
+    },
+    "pure-held": {
+      "frame": "9f28775348b01585",
+      "measured_last_pcm": "d04126d74fa0305d",
+      "continuation_pcm": "4af7e284b09db341",
+      "initial_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "measured_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "continuation_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      }
+    }
+  },
+  "diagnostic_efficacy": {
+    "S": {
+      "factory-held": {
+        "stage_invocations": 65536,
+        "scalar_invocations": 1048576,
+        "vector_invocations": 0
+      },
+      "factory-moving": {
+        "stage_invocations": 65536,
+        "scalar_invocations": 1048576,
+        "vector_invocations": 0
+      },
+      "panel-moving": {
+        "stage_invocations": 65536,
+        "scalar_invocations": 1048576,
+        "vector_invocations": 0
+      },
+      "pure-held": {
+        "stage_invocations": 0,
+        "scalar_invocations": 0,
+        "vector_invocations": 0
+      }
+    },
+    "V": {
+      "factory-held": {
+        "stage_invocations": 65536,
+        "scalar_invocations": 0,
+        "vector_invocations": 262144
+      },
+      "factory-moving": {
+        "stage_invocations": 65536,
+        "scalar_invocations": 0,
+        "vector_invocations": 262144
+      },
+      "panel-moving": {
+        "stage_invocations": 65536,
+        "scalar_invocations": 0,
+        "vector_invocations": 262144
+      },
+      "pure-held": {
+        "stage_invocations": 0,
+        "scalar_invocations": 0,
+        "vector_invocations": 0
+      }
+    }
+  },
+  "frozen_original_hashes": {
+    "design_freeze": "2565df7fdfb918c4be9be3ded36e6114593d2affb80f63484675662bccb6b78d",
+    "predeclared_design": "9f8911dae40125c420f49c94161e7220958de25cb8bd2636b35d6e14e08c1cbf",
+    "all_mode_schedule_document": "423978c446cd872ec264092d616f69d9a3b53d9d96759aa1c716b5e1c6027b81",
+    "selected_plan": "93ec108b24e69e0bf7577b8e2fed9a786f6a37fb5e25e769014eea81ba8bb3be",
+    "collector_implementation_freeze": "60e63b1cf49b916480e99957c8b59e6652c6bf3048a5ec1026a823e7017d9e38"
+  },
+  "method": {
+    "calibration": "Three independent B-only rounds, labels B/S/V retained to test all three pairs; not comparison baselines.",
+    "comparison": "Six rounds use BSV,SVB,VBS,BVS,SBV,VSB, each palindrome p+reverse(p), with rotating scene order.",
+    "summary": "Two log CPU observations per arm within a complete scene/round; average six round contrasts before transforming.",
+    "staging_tax": "exp(mean(s-b))-1",
+    "vector_arithmetic_saving": "1-exp(mean(v-s))",
+    "net_vector_saving": "1-exp(mean(v-b))",
+    "net_identity": "V/B = (S/B)*(V/S), never add percentages",
+    "clock": "CLOCK_THREAD_CPUTIME_ID around the complete control-frame + MIDI + render step in 512 callbacks; sum raw ns, no subtraction.",
+    "order": "Normal unchanged control frame applied BEFORE each block's new pressure/bend/CC74; then Engine.render.",
+    "moving_events": "At block b divisible by4: member=(b//4)%8+2, x=float((b*13)%97)/96.f, pressure=x, bend=x*.1f, CC74=x at offset0.",
+    "startup": "One fresh process per slot, 8 Note Ons before warm block0, no release within the window.",
+    "no_adaptation": "No discarded valid observation, window slide, extra calibration, resumption, replacement, rerun or endpoint/arm substitution.",
+    "precision": "Six clusters only. Nominal intervals and palindrome balancing do not remove nonstationary/workload-correlated VM bias.",
+    "scope": "Offline whole-core proxy, not a VST3/plugin callback, DAW meter, native result or realtime-capacity guarantee.",
+    "scalar_choice": "The scalar-only fallback was a pre-cost choice if V was absent. This completed run chose three arms, so S is not a replacement primary."
+  },
+  "scene_settings": {
+    "factory-held": {
+      "selectors": [
+        0,
+        0
+      ],
+      "source_performance": true,
+      "pure": false,
+      "mpe": false,
+      "performance_profile": 0,
+      "note_channels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "factory-moving": {
+      "selectors": [
+        0,
+        0
+      ],
+      "source_performance": true,
+      "pure": false,
+      "mpe": true,
+      "performance_profile": 1,
+      "note_channels": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "panel-moving": {
+      "selectors": [
+        13,
+        13
+      ],
+      "source_performance": true,
+      "pure": false,
+      "mpe": true,
+      "performance_profile": 1,
+      "note_channels": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "pure-held": {
+      "selectors": [
+        0,
+        0
+      ],
+      "source_performance": false,
+      "pure": true,
+      "mpe": false,
+      "performance_profile": 0,
+      "note_channels": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "fixture_sources": {
+    "core_cost_fixture.cpp": {
+      "sha256": "b1da4fc6d0149a72b139b4cb042a9e3aa883b9bb67edca5dc5f6f05baa0006c7",
+      "text": "// Isolated whole-core cost fixture, not a plugin callback or a DAW benchmark.\n// The imported shipping fixture supplies the exact parameter adapter and notes.\n#define main shipping_fixture_main_not_called\n#include \"fixture/source_factory_benchmark.cpp\"\n#undef main\n#include <bit>\n#include <cerrno>\n#include <cfenv>\n#include <cstdio>\n#include <cstring>\n#include <memory>\n#include <sched.h>\n\n#ifndef LANE_COST_DIAGNOSTIC\n#define LANE_COST_DIAGNOSTIC 0\n#endif\n#ifndef LANE_COST_OBSERVERS\n#define LANE_COST_OBSERVERS 0\n#endif\nstatic_assert(!LANE_COST_OBSERVERS || LANE_COST_DIAGNOSTIC);\n#if LANE_COST_OBSERVERS\n// Supplied by a separate counted-only --wrap link. Never ordinary core objects.\nextern \"C\" void cs80_lane_count_reset();\nextern \"C\" unsigned long long cs80_lane_count_hits();\n#endif\n\nnamespace lane_cost {\nconstexpr unsigned warm = 1024, measured = 512, blockSize = 64;\nconstexpr const char* labels[] = {\"factory-moving\", \"factory-held\", \"panel-moving\", \"pure-held\"};\nconstexpr std::uint64_t hashInitial = 1469598103934665603ull;\nusing Pcm = std::array<float, blockSize * 2>;\nstruct Fp { unsigned csr; unsigned short cw, sw; int error; };\nFp fp() noexcept {\n    Fp result{};\n    asm volatile(\"stmxcsr %0; fnstcw %1; fnstsw %2\" : \"=m\"(result.csr), \"=m\"(result.cw), \"=m\"(result.sw) : : \"memory\");\n    result.error = errno;\n    return result;\n}\nbool same(Fp a, Fp b) noexcept { return a.csr == b.csr && a.cw == b.cw && a.sw == b.sw && a.error == b.error; }\nvoid hashWord(std::uint64_t& h, std::uint64_t word) noexcept { h ^= word; h *= 1099511628211ull; }\nstd::uint64_t pcmHash(const Pcm& pcm) noexcept {\n    auto h = hashInitial;\n    for (float x : pcm) hashWord(h, std::bit_cast<std::uint32_t>(x));\n    return h;\n}\nstd::uint64_t frameHash(const ControlFrame& frame) noexcept {\n    auto h = hashInitial;\n    for (int p = 0; p < P_numParams; ++p) hashWord(h, std::bit_cast<std::uint32_t>(frame.effectiveValues[p]));\n    for (int selector : frame.hardwareSources) hashWord(h, selector);\n    hashWord(h, frame.modelVersion);\n    return h;\n}\n[[gnu::noinline]] std::uint64_t cpuNs() {\n    timespec time{};\n    if (clock_gettime(CLOCK_THREAD_CPUTIME_ID, &time)) std::abort();\n    return static_cast<std::uint64_t>(time.tv_sec) * 1000000000ull + time.tv_nsec;\n}\nvoid printFp(Fp f) {\n    std::printf(\"{\\\"mxcsr\\\":%u,\\\"x87_cw\\\":%u,\\\"x87_sw\\\":%u,\\\"errno\\\":%d}\", f.csr, f.cw, f.sw, f.error);\n}\nstruct Work {\n    const int index;\n    const bool moving;\n    Case config;\n    ControlFrame frame;\n    std::unique_ptr<Engine> engine;\n    Pcm pcm{};\n    explicit Work(int i) : index(i), moving(i == 0 || i == 2), engine(std::make_unique<Engine>()) {\n        config.rate = 48000; config.block = blockSize; config.selector = i == 2 ? 13 : 0;\n        config.isolated = i == 3; config.sourcePerformance = i != 3;\n        config.performanceProfile = moving ? 1 : 0;\n        frame = makeFrame(config, config.selector);\n        frame.effectiveValues[P_drift] = .37f;\n        frame.effectiveValues[P_voiceDispersion] = .18f;\n        frame.effectiveValues[P_driftModel] = 0.f;\n        engine->prepare(config.rate);\n        if (!engine->setControlFrame(frame)) std::abort();\n        engine->reset();\n        for (int voice = 0; voice < 8; ++voice) engine->noteOn(notes[voice], .8f, moving ? voice + 2 : 1);\n    }\n    // Cadence and event formula come from profile.cpp. Order is deliberately\n    // corrected to shipping PluginProcessor.cpp: normal frame BEFORE new MIDI.\n    // EVERY callback includes the frame, not sparse no-op repeats. No bypass.\n    [[gnu::noinline]] void step(unsigned b) {\n        if (!engine->setControlFrame(frame)) std::abort();\n        if (moving && b % 4 == 0) {\n            const int voice = (b / 4) % 8;\n            const float x = float((b * 13) % 97) / 96.f;\n            engine->channelPressure(voice + 2, x);\n            engine->pitchBend(voice + 2, x * .1f);\n            engine->controlChange(74, x, voice + 2);\n        }\n        engine->render(pcm.data(), blockSize);\n    }\n};\n\n#if LANE_COST_DIAGNOSTIC\nstruct Diagnostic {\n    FILE* file{};\n    std::uint64_t pcmAll = hashInitial, pcmMeasured = hashInitial, nonzeroMeasured{}, voiceChecks{}, routeChecks{};\n    explicit Diagnostic(const char* path) {\n        file = std::fopen(path, \"wbx\");\n        if (!file) throw std::runtime_error(\"trace must be a new writable file\");\n    }\n    ~Diagnostic() { if (file) std::fclose(file); }\n    template<class T> void put(const T& v) { if (std::fwrite(&v, sizeof v, 1, file) != 1) std::abort(); }\n    void putFp(Fp f) { put(f.csr); put(f.cw); put(f.sw); put(f.error); }\n    void observe(Work& w, unsigned b, Fp before, Fp after) {\n        // Read-only getters and the next-FP probe cannot seed flags for the next\n        // render. Preserve all original fenv state, including x87 and errno.\n        fenv_t saved{};\n        if (fegetenv(&saved)) std::abort();\n        const int savedErrno = errno;\n        put(b); putFp(before); putFp(after);\n        volatile double one = 1.0, ten = 10.0;\n        volatile double probe = one / ten;\n        put(std::bit_cast<std::uint64_t>(double(probe))); putFp(fp());\n        for (float x : w.pcm) {\n            const auto bits = std::bit_cast<std::uint32_t>(x);\n            require((bits & 0x7f800000U) != 0x7f800000U, \"nonfinite PCM\");\n            put(bits); hashWord(pcmAll, bits);\n            if (b >= warm && b < warm + measured) {\n                hashWord(pcmMeasured, bits); nonzeroMeasured += (bits & 0x7fffffffU) != 0;\n            }\n        }\n        require(w.engine->activeVoices() == 8, \"wrong active voice count\");\n        for (int voice = 0; voice < 8; ++voice) {\n            const auto v = w.engine->getVoiceInfo(voice);\n            require(v.active && v.held && !v.pedalHeld && v.note == notes[voice]\n                    && v.channel == (w.moving ? voice + 2 : 1), \"wrong held note/channel\");\n            put(std::uint8_t(v.active)); put(v.note); put(v.channel); put(std::uint8_t(v.held)); put(std::uint8_t(v.pedalHeld));\n            for (float x : {v.velocity, v.pressure, v.bend, v.ribbonRatio, v.touchA, v.touchB, v.touchC, v.timbre})\n                put(std::bit_cast<std::uint32_t>(x));\n            ++voiceChecks;\n        }\n        for (int rank = 0; rank < 2; ++rank) {\n            const auto s = w.engine->getSourceToneInfo(rank);\n            require(s.selector == w.config.selector && s.route == source_factory::route(rank, w.config.selector, true), \"wrong route\");\n            put(s.selector); put(static_cast<int>(s.route)); ++routeChecks;\n        }\n        require(w.engine->getRenderPolicy() == (w.index == 3 ? RenderPolicy::isolation : RenderPolicy::sourcePerformance), \"wrong policy\");\n        require(w.engine->getOversamplingFactor() == 2 && w.engine->hasFilterBatchingKernel(), \"unexpected internal rate or no batch kernel\");\n        put(w.engine->getSourceCompileCount());\n        put(static_cast<int>(w.engine->getRenderPolicy())); put(w.engine->getOversamplingFactor());\n        require((after.csr & 0xffc0U) == 0x9fc0U && after.cw == 0x037fU, \"FP controls changed\");\n        if (fesetenv(&saved)) std::abort();\n        errno = savedErrno;\n        require(same(after, fp()), \"diagnostic perturbed caller FP/errno\");\n    }\n};\n#endif\n} // namespace lane_cost\n\nint main(int argc, char** argv) {\n    using namespace lane_cost;\n    try {\n        if (argc != 4) return 2;\n        int scene = -1;\n        for (int i = 0; i < 4; ++i) if (!std::strcmp(argv[1], labels[i])) scene = i;\n        if (scene < 0) return 2;\n#if LANE_COST_DIAGNOSTIC\n        if (std::strcmp(argv[2], \"diagnose\")) return 2;\n        constexpr bool timed = false;\n#else\n        if (std::strcmp(argv[3], \"lane-core-cost-v1\")) return 2;\n        const bool timed = !std::strcmp(argv[2], \"time\");\n        if (!timed && std::strcmp(argv[2], \"identity\")) return 2;\n#endif\n        // Fresh-process ordinary audio environment, intentionally not a stress\n        // exactness qualification. The latter is a mandatory separate input.\n        if (fesetenv(FE_DFL_ENV)) return 3;\n        _mm_setcsr(0x9fc0U); errno = 0;\n        Work work(scene);\n#if LANE_COST_DIAGNOSTIC\n        Diagnostic diagnostics(argv[3]);\n#endif\n        const int cpuStart = sched_getcpu();\n        const Fp initialFp = fp();\n        std::uint64_t cpuSum = 0, emptySum = 0;\n        for (unsigned b = 0; b < warm + measured; ++b) {\n#if LANE_COST_OBSERVERS\n            if (b == warm) cs80_lane_count_reset();\n#endif\n#if LANE_COST_DIAGNOSTIC\n            const auto beforeFp = fp();\n#endif\n            const auto before = timed && b >= warm ? cpuNs() : 0;\n            work.step(b);\n            if (timed && b >= warm) { const auto after = cpuNs(); if (after <= before) return 4; cpuSum += after - before; }\n#if LANE_COST_DIAGNOSTIC\n            diagnostics.observe(work, b, beforeFp, fp());\n#endif\n        }\n#if LANE_COST_OBSERVERS\n        const auto measuredHits = cs80_lane_count_hits();\n#endif\n        const auto lastFp = fp();\n        const auto lastPcm = pcmHash(work.pcm);\n        // One deterministic untimed continuation checks the next render result\n        // and caller flags. It is never in a clock interval or efficacy window.\n        work.step(warm + measured);\n        const auto nextFp = fp();\n        const auto nextPcm = pcmHash(work.pcm);\n#if LANE_COST_DIAGNOSTIC\n        diagnostics.observe(work, warm + measured, lastFp, nextFp);\n        require(diagnostics.nonzeroMeasured != 0, \"silent measured fixture\");\n#endif\n        if (timed) for (unsigned i = 0; i < measured; ++i) {\n            const auto a = cpuNs(), b = cpuNs();\n            if (b <= a) return 4;\n            emptySum += b - a;\n        }\n        const int cpuEnd = sched_getcpu();\n        if (cpuStart < 0 || cpuStart != cpuEnd || !same(nextFp, fp())) return 5;\n        if (timed && (cpuSum <= emptySum || !emptySum)) return 6;\n        std::printf(\"{\\\"schema\\\":\\\"lane-core-cost-v1\\\",\\\"scene\\\":\\\"%s\\\",\\\"diagnostic\\\":%s,\\\"observers\\\":%s,\\\"timed\\\":%s,\\\"cpu_start\\\":%d,\\\"cpu_end\\\":%d,\\\"cpu_ns\\\":%llu,\\\"empty_cpu_ns\\\":%llu,\\\"warm_blocks\\\":%u,\\\"measured_blocks\\\":%u,\\\"block_frames\\\":%u,\\\"identity\\\":{\\\"frame\\\":\\\"%016llx\\\",\\\"measured_last_pcm\\\":\\\"%016llx\\\",\\\"continuation_pcm\\\":\\\"%016llx\\\",\\\"initial_fp\\\":\",\n            labels[scene], LANE_COST_DIAGNOSTIC ? \"true\" : \"false\", LANE_COST_OBSERVERS ? \"true\" : \"false\", timed ? \"true\" : \"false\", cpuStart, cpuEnd,\n            (unsigned long long)cpuSum, (unsigned long long)emptySum, warm, measured, blockSize,\n            (unsigned long long)frameHash(work.frame), (unsigned long long)lastPcm, (unsigned long long)nextPcm);\n        printFp(initialFp); std::printf(\",\\\"measured_fp\\\":\"); printFp(lastFp); std::printf(\",\\\"continuation_fp\\\":\"); printFp(nextFp); std::printf(\"}\");\n#if LANE_COST_DIAGNOSTIC\n        std::printf(\",\\\"diagnostics\\\":{\\\"all_pcm\\\":\\\"%016llx\\\",\\\"measured_pcm\\\":\\\"%016llx\\\",\\\"nonzero_measured\\\":%llu,\\\"voice_checks\\\":%llu,\\\"route_checks\\\":%llu}\",\n            (unsigned long long)diagnostics.pcmAll, (unsigned long long)diagnostics.pcmMeasured,\n            (unsigned long long)diagnostics.nonzeroMeasured, (unsigned long long)diagnostics.voiceChecks, (unsigned long long)diagnostics.routeChecks);\n#endif\n#if LANE_COST_OBSERVERS\n        std::printf(\",\\\"efficacy\\\":{\\\"measured_hits\\\":%llu,\\\"window\\\":\\\"512 blocks after 1024 warm blocks, excluding continuation\\\"}\", measuredHits);\n#endif\n        std::printf(\"}\\n\");\n        return 0;\n    } catch (const std::exception& e) { std::fprintf(stderr, \"%s\\n\", e.what()); return 10; }\n}\n"
+    },
+    "fixture/source_factory_benchmark.cpp": {
+      "sha256": "48db138c7b6d8bd9ba6d0fbb4f819ec3bd4d8c7a7fcf4de661465a1c28b96c4e",
+      "text": "// Bounded offline core timing. Not a DAW, audio-driver or hard-real-time test.\n#include \"core/Engine.h\"\n#include \"core/FactoryPresets.h\"\n#include \"CallbackCpuMeasurement.h\"\n\n#include <algorithm>\n#include <array>\n#include <chrono>\n#include <cmath>\n#include <cstdint>\n#include <ctime>\n#include <filesystem>\n#include <fstream>\n#include <iomanip>\n#include <iostream>\n#include <locale>\n#include <numeric>\n#include <random>\n#include <stdexcept>\n#include <string>\n#include <vector>\n#if defined(__linux__)\n#include <time.h>\n#endif\n#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)\n#include <xmmintrin.h>\n#endif\n\nnamespace {\nusing namespace cs80;\nusing Clock = std::chrono::steady_clock;\nnamespace fs = std::filesystem;\nconstexpr std::array<int, 8> notes {36, 43, 48, 55, 60, 64, 67, 72};\nconstexpr double warmupSeconds = 1.0, minimumTailSeconds = 1.0, maximumTailSeconds = 40.0;\nconstexpr double pedalHoldSeconds = 0.25, fxTailSeconds = 3.0;\nconstexpr unsigned orderSeed = 803010;\n\nstruct ScopedDenormals {\n#if defined(__SSE__) || defined(_M_X64) || defined(_M_IX86)\n    unsigned before = _mm_getcsr();\n    ScopedDenormals() { _mm_setcsr(before | 0x8040u); }\n    ~ScopedDenormals() { _mm_setcsr(before); }\n    static constexpr const char* description = \"x86 MXCSR FTZ/DAZ enabled locally, restored at exit\";\n#else\n    static constexpr const char* description = \"unchanged; no platform-specific denormal setup\";\n#endif\n};\n\nstruct Case {\n    int rate = 48000, block = 128, selector = 0;\n    bool isolated = true, moving = false, idle = false, noise = false;\n    bool sourcePerformance = false;\n    int performanceProfile = 0; // 0 dry, 1 MPE+chorus/reverb, 2 MPE+phaser/delay/drive\n};\n\nconst char* modeName(const Case& c) {\n    return c.isolated ? \"isolation\" : c.sourcePerformance ? \"source_performance\" : \"legacy\";\n}\n\ndouble threadCpuSeconds() {\n#if defined(__linux__)\n    timespec time {};\n    if (clock_gettime(CLOCK_THREAD_CPUTIME_ID, &time) == 0)\n        return static_cast<double>(time.tv_sec) + static_cast<double>(time.tv_nsec) * 1.0e-9;\n#endif\n    return -1.0;\n}\n\nstruct Stats {\n    std::vector<double> micros, eventMicros;\n    std::uint64_t frames = 0, overBudget = 0, nonfinite = 0, outsideUnit = 0;\n    double checksum = 0.0, peak = 0.0, power = 0.0, cpu = 0.0;\n    int minimumVoices = 8, maximumVoices = 0, finalVoices = 0;\n    std::uint64_t compileDelta = 0;\n    std::uint64_t controllerEvents = 0, memberChecks = 0, pedalHeldCallbacks = 0;\n    double threadCpu = -1.0, lastBlockPeak = 0.0;\n    double pedalTargetMin = 1.0e30, pedalTargetMax = 0.0;\n    benchmark::CallbackCpuMeasurement callbackCpu;\n    bool tailComplete = false;\n    void observe(const std::vector<float>& audio, int voices) {\n        lastBlockPeak = 0.0;\n        minimumVoices = std::min(minimumVoices, voices);\n        maximumVoices = std::max(maximumVoices, voices);\n        finalVoices = voices;\n        for (float x : audio) {\n            if (!std::isfinite(x)) { ++nonfinite; continue; }\n            const double value = x;\n            checksum += value;\n            peak = std::max(peak, std::abs(value));\n            lastBlockPeak = std::max(lastBlockPeak, std::abs(value));\n            power += value * value;\n            if (std::abs(value) >= 1.0) ++outsideUnit;\n        }\n    }\n};\n\nvoid require(bool condition, const char* message) {\n    if (!condition) throw std::runtime_error(message);\n}\n\nstd::string jsonString(const std::string& text) {\n    std::string result = \"\\\"\";\n    for (unsigned char c : text) {\n        if (c == '\"' || c == '\\\\') result += '\\\\';\n        require(c >= 32, \"Control character in metadata\");\n        result += static_cast<char>(c);\n    }\n    return result + '\"';\n}\n\nstd::ofstream output(const fs::path& path) {\n    std::ofstream file;\n    file.exceptions(std::ios::badbit | std::ios::failbit);\n    file.open(path);\n    file.imbue(std::locale::classic());\n    file << std::setprecision(12);\n    return file;\n}\n\nControlFrame makeFrame(const Case& c, int selector) {\n    ControlFrame frame;\n    auto& p = frame.effectiveValues;\n    p[P_parityMode] = c.isolated ? 1.0f : 0.0f;\n    p[P_sourcePerformance] = c.sourcePerformance ? 1.0f : 0.0f;\n    p[P_mix] = 0.5f;\n    p[P_volume] = 0.12f; // fixed headroom, never per-tone normalization\n    p[P_masterSustain] = p[P_keyRelease] = p[P_sustainMode] = 0.0f;\n    p[P_chorusOn] = p[P_ringAmount] = 0.0f;\n    p[P_subOriginalMode] = 1.0f;\n    p[P_subVco] = p[P_subVcf] = p[P_subVca] = 0.0f;\n    p[P_subAtVco] = p[P_subAtVcf] = p[P_subAtSpeed] = p[P_subExtLevel] = 0.0f;\n    p[P_voiceDispersion] = p[P_drift] = 0.0f;\n    p[P_analogNoise] = c.noise ? 0.12f : 0.0f;\n    p[P_lfo1Depth] = p[P_lfo2Depth] = p[P_lfo3Depth] = 0.0f;\n    p[P_fx1Type] = p[P_fx2Type] = p[P_fx3Type] = 0.0f;\n    p[P_fx1Mix] = p[P_fx2Mix] = p[P_fx3Mix] = 0.0f;\n    p[P_mpeOn] = p[P_arpOn] = 0.0f;\n    p[P_footMode] = c.moving ? 1.0f : 0.0f;\n    p[P_outputLevel] = p[P_outputMode] = 1.0f;\n    if (c.performanceProfile != 0) {\n        p[P_mpeOn] = 1.0f;\n        p[P_mpeBendRange] = 12.0f;\n        p[P_pitchBendRange] = 2.0f;\n        p[P_footMode] = 1.0f;\n        p[P_modWheelSub] = 0.15f;\n        p[P_modWheelVcf] = 0.20f;\n        if (c.performanceProfile == 1) {\n            p[P_fx1Type] = 1.0f; p[P_fx1Mix] = 0.20f;\n            p[P_fx2Type] = 4.0f; p[P_fx2Mix] = 0.15f;\n        } else {\n            p[P_fx1Type] = 2.0f; p[P_fx1Mix] = 0.20f;\n            p[P_fx2Type] = 3.0f; p[P_fx2Mix] = 0.15f;\n            p[P_fx3Type] = 5.0f; p[P_fx3Mix] = 0.10f;\n        }\n    }\n    for (int rank = 0; rank < 2; ++rank) {\n        frame.hardwareSources[rank] = selector;\n        ParamValues legacy;\n        applyHardwareTone(legacy, rank, selector);\n        // Match the processor's physical selector adapter. Footage, pan and\n        // software bypasses are not among the 26 replaced programmer controls.\n        for (int local = 0; local < CP_count; ++local)\n            if (local != CP_feet && local != CP_pan && local != CP_hpfOn && local != CP_lpfOn)\n                p[chParam(rank, local)] = legacy[chParam(rank, local)];\n        p[chParam(rank, CP_feet)] = 1.0f;\n        p[chParam(rank, CP_pan)] = 0.0f;\n        p[chParam(rank, CP_hpfOn)] = p[chParam(rank, CP_lpfOn)] = 1.0f;\n    }\n    return frame;\n}\n\ndouble quantile(const std::vector<double>& sorted, double q) {\n    return sorted[std::min(sorted.size() - 1,\n                          static_cast<std::size_t>(std::ceil(q * static_cast<double>(sorted.size() - 1))))];\n}\n\nvoid writeRow(std::ostream& out, const Case& c, const char* phase, Stats& s) {\n    require(!s.micros.empty(), \"Empty timing distribution\");\n    const double budget = 1.0e6 * c.block / c.rate;\n    const double sum = std::accumulate(s.micros.begin(), s.micros.end(), 0.0);\n    std::sort(s.micros.begin(), s.micros.end());\n    std::sort(s.eventMicros.begin(), s.eventMicros.end());\n    const char* scenario = c.idle ? (c.noise ? \"idle_noise\" : \"idle_quiet\")\n                                  : c.moving ? \"moving_tabs_pressure_wah\"\n                                  : c.performanceProfile == 1 ? \"mpe_chorus_reverb\"\n                                  : c.performanceProfile == 2 ? \"mpe_phaser_delay_drive\" : \"paired_tones\";\n    out << c.rate << ',' << c.block << ',' << c.isolated << ',' << scenario << ','\n        << c.selector << ',' << hardwareToneName(c.selector, 0) << ',' << hardwareToneName(c.selector, 1)\n        << ',' << phase << ',' << s.micros.size() << ',' << static_cast<double>(s.frames) / c.rate\n        << ',' << budget << ',' << s.micros.front() << ',' << quantile(s.micros, 0.5)\n        << ',' << quantile(s.micros, 0.95) << ',' << quantile(s.micros, 0.99) << ',' << s.micros.back()\n        << ',' << sum / (s.micros.size() * budget) << ',' << quantile(s.micros, 0.5) / budget\n        << ',' << quantile(s.micros, 0.99) / budget << ',' << s.micros.back() / budget\n        << ',' << s.overBudget << ',' << s.eventMicros.size()\n        << ',' << (s.eventMicros.empty() ? 0.0 : quantile(s.eventMicros, 0.5))\n        << ',' << (s.eventMicros.empty() ? 0.0 : s.eventMicros.back())\n        << ',' << s.minimumVoices << ',' << s.maximumVoices << ',' << s.finalVoices\n        << ',' << s.tailComplete << ',' << s.compileDelta << ',' << s.nonfinite\n        << ',' << s.outsideUnit << ',' << s.peak << ',' << std::sqrt(s.power / (2.0 * s.frames))\n        << ',' << s.checksum << ',' << s.cpu << ',' << modeName(c) << ',' << c.sourcePerformance\n        << ',' << s.threadCpu << ',' << s.controllerEvents << ',' << s.memberChecks\n        << ',' << s.pedalHeldCallbacks << ',' << s.lastBlockPeak\n        << ',' << (s.pedalTargetMin == 1.0e30 ? 0.0 : s.pedalTargetMin) << ',' << s.pedalTargetMax\n        << ',' << s.callbackCpu.status() << ',';\n    if (s.callbackCpu.available()) out << s.callbackCpu.seconds;\n    else out << \"unavailable\";\n    out << ',';\n    if (s.callbackCpu.available()) out << s.callbackCpu.seconds / (static_cast<double>(s.frames) / c.rate);\n    else out << \"unavailable\";\n    out << ',' << s.callbackCpu.calls << '\\n';\n    out.flush();\n    std::cout << c.rate << '/' << c.block << \" mode=\" << modeName(c) << ' ' << scenario\n              << \" pair=\" << c.selector << ' ' << phase << \" medianRTF=\" << quantile(s.micros, 0.5) / budget\n              << \" p99RTF=\" << quantile(s.micros, 0.99) / budget << \" misses=\" << s.overBudget\n              << '/' << s.micros.size() << '\\n' << std::flush;\n}\n\nint run(const Case& c, int callbacks, std::ostream& csv, bool callbackCpu) {\n    Engine engine;\n    engine.prepare(c.rate);\n    std::array<ControlFrame, 11> frames;\n    for (int selector = 0; selector < 11; ++selector) frames[selector] = makeFrame(c, selector);\n    require(engine.setControlFrame(frames[c.selector]), \"Initial ControlFrame rejected\");\n    engine.reset();\n    engine.setExpression(0.8f);\n    const bool expressive = c.performanceProfile != 0;\n    if (!c.idle) for (int i = 0; i < static_cast<int>(notes.size()); ++i)\n        engine.noteOn(notes[i], 0.8f, expressive ? i + 2 : 1);\n    require(engine.getRenderPolicy() == renderPolicy(c.isolated ? 1.0f : 0.0f,\n                                                   c.sourcePerformance ? 1.0f : 0.0f),\n            \"Requested render policy was not accepted\");\n    for (int rank = 0; rank < 2; ++rank) {\n        const auto info = engine.getSourceToneInfo(rank);\n        require(info.selector == c.selector\n                    && info.route == source_factory::route(rank, c.selector, c.isolated || c.sourcePerformance),\n                \"Requested route was not accepted by Engine\");\n    }\n    std::vector<float> audio(static_cast<std::size_t>(c.block) * 2);\n    const int warmup = static_cast<int>(std::ceil(warmupSeconds * c.rate / c.block));\n    for (int i = 0; i < warmup; ++i) {\n        require(engine.setControlFrame(frames[c.selector]), \"Warmup frame rejected\");\n        engine.render(audio.data(), c.block);\n    }\n    require(engine.activeVoices() == (c.idle ? 0 : 8), \"Unexpected warmup voice count\");\n\n    int currentSelector = c.selector;\n    enum class Phase { held, sustain, release };\n    auto measure = [&](Phase measurementPhase) {\n        const bool tail = measurementPhase == Phase::release;\n        const bool sustain = measurementPhase == Phase::sustain;\n        Stats stats;\n        stats.callbackCpu.requested = callbackCpu;\n        // Member expression belongs to the physically held note. Once Note Off\n        // transfers it to the sustain pedal, later member messages seed future\n        // notes instead of changing this released voice's expression.\n        std::array<float, 8> releasedPressure {}, releasedBend {};\n        const int maxCallbacks = tail ? static_cast<int>(std::ceil(maximumTailSeconds * c.rate / c.block))\n                               : sustain ? static_cast<int>(std::ceil(pedalHoldSeconds * c.rate / c.block)) : callbacks;\n        stats.micros.reserve(static_cast<std::size_t>(maxCallbacks));\n        stats.eventMicros.reserve(static_cast<std::size_t>(maxCallbacks / 32 + 2));\n        const auto compilationStart = engine.getSourceCompileCount();\n        const auto cpuStart = std::clock();\n        const double threadCpuStart = threadCpuSeconds();\n        for (int i = 0; i < maxCallbacks; ++i) {\n            const bool event = c.moving && !tail && !sustain && i % 32 == 0;\n            if (event) currentSelector = (currentSelector + 1) % 11;\n            const double phase = std::fmod(static_cast<double>(i) * c.block / c.rate * 0.75, 1.0);\n            const float expression = 0.15f + 0.8f * static_cast<float>(1.0 - std::abs(2.0 * phase - 1.0));\n            const float pressure = 0.1f + 0.8f * static_cast<float>(phase);\n            std::array<float, 8> memberPressure {}, memberBend {}, memberTimbre {};\n            if (expressive && !tail) for (int member = 0; member < 8; ++member) {\n                const float offset = static_cast<float>(std::fmod(phase + member / 8.0, 1.0));\n                memberPressure[member] = 0.1f + 0.7f * offset;\n                memberBend[member] = 0.1f * (2.0f * offset - 1.0f);\n                memberTimbre[member] = 0.15f + 0.35f * offset;\n            }\n            const double callbackCpuBefore = callbackCpu ? threadCpuSeconds() : -1.0;\n            const auto before = Clock::now();\n            const bool accepted = engine.setControlFrame(frames[currentSelector]);\n            if (c.moving && !tail) {\n                engine.setExpression(expression);\n                for (int note : notes) engine.polyPressure(note, pressure);\n            }\n            if (expressive && !tail) {\n                engine.controlChange(11, expression, 1);\n                engine.controlChange(1, 0.15f + 0.15f * static_cast<float>(phase), 1);\n                engine.pitchBend(1, 0.05f * (2.0f * static_cast<float>(phase) - 1.0f));\n                for (int member = 0; member < 8; ++member) {\n                    engine.channelPressure(member + 2, memberPressure[member]);\n                    engine.pitchBend(member + 2, memberBend[member]);\n                    engine.controlChange(74, memberTimbre[member], member + 2);\n                }\n                if (!sustain && i % 64 == 0)\n                    engine.controlChange(64, (i / 64) % 2 == 0 ? 1.0f : 0.0f, 1);\n            }\n            if (sustain && i == 0) {\n                releasedPressure = memberPressure;\n                releasedBend = memberBend;\n                engine.controlChange(64, 1.0f, 1);\n                for (int member = 0; member < 8; ++member) engine.noteOff(notes[member], member + 2);\n            }\n            if (tail && i == 0) {\n                if (expressive) engine.controlChange(64, 0.0f, 1);\n                else for (int note : notes) engine.noteOff(note);\n            }\n            engine.render(audio.data(), c.block);\n            const auto after = Clock::now();\n            const double callbackCpuAfter = callbackCpu ? threadCpuSeconds() : -1.0;\n            if (callbackCpu) stats.callbackCpu.observe(callbackCpuBefore, callbackCpuAfter);\n            require(accepted, \"Timed ControlFrame rejected\");\n            const double elapsed = std::chrono::duration<double, std::micro>(after - before).count();\n            stats.micros.push_back(elapsed);\n            if (event) stats.eventMicros.push_back(elapsed);\n            if (elapsed > 1.0e6 * c.block / c.rate) ++stats.overBudget;\n            stats.frames += static_cast<unsigned>(c.block);\n            stats.observe(audio, engine.activeVoices());\n            if (expressive && !tail) {\n                stats.controllerEvents += 27 + (!sustain && i % 64 == 0 ? 1 : 0) + (sustain && i == 0 ? 1 : 0);\n                for (int member = 0; member < 8; ++member) {\n                    const auto voice = engine.getVoiceInfo(member);\n                    const float expectedPressure = sustain ? releasedPressure[member] : memberPressure[member];\n                    const float expectedBend = sustain ? releasedBend[member] : memberBend[member];\n                    require(voice.channel == member + 2\n                                && std::abs(voice.pressure - expectedPressure) < 1.0e-6f\n                                && std::abs(voice.bend - expectedBend * 12.0f) < 1.0e-5f,\n                            sustain ? \"Released MPE member expression changed under sustain\"\n                                    : \"Live MPE member identity/pressure/bend did not reach voice state\");\n                    if (sustain) require(voice.pedalHeld && !voice.held, \"CC64 did not hold released MPE notes\");\n                    ++stats.memberChecks;\n                }\n                if (sustain) ++stats.pedalHeldCallbacks;\n                const double target = engine.getPraWahState(0).targetOhms;\n                stats.pedalTargetMin = std::min(stats.pedalTargetMin, target);\n                stats.pedalTargetMax = std::max(stats.pedalTargetMax, target);\n            }\n            if (expressive && tail && i == 0) ++stats.controllerEvents;\n            require(stats.nonfinite == 0, \"Nonfinite output in measured capture\");\n            if (!tail) require(engine.activeVoices() == (c.idle ? 0 : 8), \"Measured voice count changed\");\n            if (tail && engine.activeVoices() == 0\n                && stats.frames >= (expressive ? fxTailSeconds : minimumTailSeconds) * c.rate) {\n                stats.tailComplete = true;\n                break;\n            }\n        }\n        stats.cpu = static_cast<double>(std::clock() - cpuStart) / CLOCKS_PER_SEC;\n        const double threadCpuEnd = threadCpuSeconds();\n        if (threadCpuStart >= 0.0 && threadCpuEnd >= 0.0) stats.threadCpu = threadCpuEnd - threadCpuStart;\n        stats.compileDelta = engine.getSourceCompileCount() - compilationStart;\n        require(tail || c.moving || stats.compileDelta == 0, \"Unchanged selectors unexpectedly recompiled\");\n        require(!c.moving || tail || !(c.isolated || c.sourcePerformance)\n                    || stats.compileDelta == 2 * stats.eventMicros.size(),\n                \"Moving source fixture did not compile both ranks at every selector event\");\n        if (!c.idle && !tail) require(stats.peak > 0.0, \"Silent held-note fixture\");\n        if (expressive && !tail)\n            require(stats.pedalTargetMax > stats.pedalTargetMin, \"CC11 did not move the source PRA target\");\n        writeRow(csv, c, tail ? \"release_tail\" : sustain ? \"sustain_pedal_hold\" : \"warmed_held\", stats);\n    };\n    measure(Phase::held);\n    if (expressive) measure(Phase::sustain);\n    if (!c.idle) measure(Phase::release);\n    return c.idle ? 1 : expressive ? 3 : 2;\n}\n\nvoid usage() {\n    std::cout << \"Usage: cs80_source_factory_benchmark --out NEW_DIRECTORY --source-commit HEX \"\n                 \"[--callbacks 1024] [--suite baseline|performance] [--include-64] [--quick] [--callback-cpu] \"\n                 \"[--rate 44100|48000] [--block 64|128|256]\\n\"\n                 \"Full sweep: 44.1/48 kHz, 64/128/256 frames, all 22 tabs as 11 two-rank pairs, \"\n                 \"8 notes, source/legacy held and release, moving controls, idle/noise.\\n\"\n                 \"Performance suite: 128/256 frames, Source Performance all22 dry/live MPE+FX profiles, \"\n                 \"pedal-held release and FX windows; explicit legacy/isolation dry anchors.\\n\"\n                 \"Timing is diagnostic; budget misses are reported, never a platform pass/fail.\\n\";\n}\n} // namespace\n\nint main(int argc, char** argv) {\n    try {\n        fs::path directory;\n        std::string commit;\n        int callbacks = 1024;\n        bool quick = false, include64 = false, callbackCpu = false;\n        int onlyRate = 0, onlyBlock = 0; // optional sweep filters; 0 keeps every value\n        std::string suite = \"baseline\";\n        const auto filterInteger = [](const std::string& value) {\n            require(!value.empty() && value.find_first_not_of(\"0123456789\") == std::string::npos,\n                    \"Rate and block filters must be whole positive integers\");\n            return std::stoi(value);\n        };\n        for (int i = 1; i < argc; ++i) {\n            const std::string arg = argv[i];\n            if (arg == \"--help\") { usage(); return 0; }\n            if (arg == \"--callback-cpu\") { callbackCpu = true; continue; }\n            if (arg == \"--quick\") { quick = true; continue; }\n            if (arg == \"--include-64\") { include64 = true; continue; }\n            require(i + 1 < argc, \"Missing option value; use --help\");\n            if (arg == \"--out\") directory = argv[++i];\n            else if (arg == \"--source-commit\") commit = argv[++i];\n            else if (arg == \"--suite\") suite = argv[++i];\n            else if (arg == \"--rate\") {\n                onlyRate = filterInteger(argv[++i]);\n                require(onlyRate == 44100 || onlyRate == 48000, \"Rate must be 44100 or 48000\");\n            }\n            else if (arg == \"--block\") {\n                onlyBlock = filterInteger(argv[++i]);\n                require(onlyBlock == 64 || onlyBlock == 128 || onlyBlock == 256, \"Block must be 64, 128 or 256\");\n            }\n            else if (arg == \"--callbacks\") {\n                const std::string value = argv[++i];\n                require(!value.empty() && value.find_first_not_of(\"0123456789\") == std::string::npos,\n                        \"Callbacks must be an integer\");\n                callbacks = std::stoi(value);\n            }\n            else throw std::runtime_error(\"Unknown option: \" + arg);\n        }\n        require(!directory.empty() && commit.size() >= 7 && commit.size() <= 40\n                    && commit.find_first_not_of(\"0123456789abcdefABCDEF\") == std::string::npos,\n                \"A new output directory and caller-verified source commit are required; use --help\");\n        require(callbacks >= 16 && callbacks <= 1000000, \"Callbacks must be in 16..1000000\");\n        require(suite == \"baseline\" || suite == \"performance\", \"Suite must be baseline or performance\");\n        std::vector<Case> cases;\n        for (int rate : {44100, 48000}) for (int block : {64, 128, 256}) {\n            if (quick && (rate != 48000 || block != 128)) continue;\n            if ((onlyRate && rate != onlyRate) || (onlyBlock && block != onlyBlock)) continue;\n            if (suite == \"performance\") {\n                if (block == 64 && !include64) continue;\n                for (int selector = 0; selector < 11; ++selector) {\n                    if (quick && selector != 0 && selector != 1 && selector != 10) continue;\n                    for (int profile = 0; profile < 3; ++profile)\n                        cases.push_back({rate, block, selector, false, false, false, false, true, profile});\n                    if (selector == 0 || selector == 1 || selector == 10) {\n                        cases.push_back({rate, block, selector, true});\n                        cases.push_back({rate, block, selector, false});\n                    }\n                }\n                continue;\n            }\n            for (int selector = 0; selector < 11; ++selector) {\n                if (quick && selector != 0 && selector != 1 && selector != 10) continue;\n                cases.push_back({rate, block, selector, true});\n                cases.push_back({rate, block, selector, false});\n            }\n            cases.push_back({rate, block, 0, true, true});\n            cases.push_back({rate, block, 0, false, true});\n            cases.push_back({rate, block, 0, true, false, true, false});\n            cases.push_back({rate, block, 0, false, false, true, false});\n            cases.push_back({rate, block, 0, false, false, true, true});\n        }\n        require(!cases.empty(), \"Selected filters produce no benchmark cases; use --help\");\n        require(!fs::exists(directory), \"Output already exists; refusing to overwrite\");\n        require(fs::create_directories(directory), \"Cannot create output directory\");\n        ScopedDenormals denormals;\n        const auto started = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());\n        auto meta = output(directory / \"metadata.json\");\n        meta << \"{\\n  \\\"schema_version\\\": 3,\\n  \\\"fixture_id\\\": \\\"source-core-timing-v2\\\",\\n\"\n             << \"  \\\"suite\\\": \" << jsonString(suite) << \",\\n\"\n             << \"  \\\"source_commit_caller_verified\\\": \" << jsonString(commit) << \",\\n\"\n             << \"  \\\"started_unix_seconds\\\": \" << started << \",\\n\"\n#ifdef __VERSION__\n             << \"  \\\"compiler\\\": \" << jsonString(__VERSION__) << \",\\n\"\n#else\n             << \"  \\\"compiler\\\": \\\"record compiler externally\\\",\\n\"\n#endif\n             << \"  \\\"denormals\\\": \" << jsonString(ScopedDenormals::description) << \",\\n\"\n             << \"  \\\"clock_is_steady\\\": \" << (Clock::is_steady ? \"true\" : \"false\") << \",\\n\"\n             << \"  \\\"quick_subset\\\": \" << (quick ? \"true\" : \"false\") << \",\\n\"\n             << \"  \\\"callbacks_per_held_phase\\\": \" << callbacks << \",\\n\"\n             << \"  \\\"warmup_seconds\\\": \" << warmupSeconds << \",\\n\"\n             << \"  \\\"tail_minimum_seconds\\\": \" << minimumTailSeconds << \",\\n\"\n             << \"  \\\"tail_cap_seconds\\\": \" << maximumTailSeconds << \",\\n\"\n             << \"  \\\"performance_fx_tail_seconds\\\": \" << fxTailSeconds << \",\\n\"\n             << \"  \\\"performance_pedal_hold_seconds\\\": \" << pedalHoldSeconds << \",\\n\"\n             << \"  \\\"performance_include_64\\\": \" << (include64 ? \"true\" : \"false\") << \",\\n\"\n             << \"  \\\"thread_cpu_clock_available\\\": \" << (threadCpuSeconds() >= 0.0 ? \"true\" : \"false\") << \",\\n\"\n             << \"  \\\"callback_cpu_requested\\\": \" << (callbackCpu ? \"true\" : \"false\") << \",\\n\"\n             << \"  \\\"callback_cpu_clock\\\": \\\"CLOCK_THREAD_CPUTIME_ID on Linux; unavailable elsewhere\\\",\\n\"\n             << \"  \\\"callback_cpu_scope\\\": \\\"existing timed callback plus its two wall-clock reads; excludes controller synthesis, Stats, verification and warmup\\\",\\n\"\n             << \"  \\\"callback_cpu_rtf_definition\\\": \\\"callback thread CPU seconds / rendered audio seconds; not system CPU percent\\\",\\n\"\n             << \"  \\\"callback_cpu_comparison_rule\\\": \\\"instrument baseline and candidate identically; extra clock reads add overhead\\\",\\n\"\n             << \"  \\\"order_seed\\\": \" << orderSeed << \",\\n\"\n             << \"  \\\"timed_scope\\\": \\\"setControlFrame, active control events, render; no JUCE/DAW/driver\\\",\\n\"\n             << \"  \\\"source_model_version\\\": \" << source_factory::modelVersion << \",\\n\"\n             << \"  \\\"source_fingerprint\\\": \\\"\" << std::hex << source_factory::sourceFingerprint << std::dec << \"\\\",\\n\"\n             << \"  \\\"hardware_equivalence_or_realtime_qualification\\\": false\\n}\\n\";\n        meta.close();\n        auto csv = output(directory / \"results.csv\");\n        csv << \"rate,block,isolation,scenario,initial_selector,rank_i_name,rank_ii_name,phase,callbacks,audio_seconds,\"\n               \"budget_us,min_us,median_us,p95_us,p99_us,max_us,mean_rtf,median_rtf,p99_rtf,max_rtf,\"\n               \"budget_exceedances,selector_events,event_median_us,event_max_us,min_active_voices,max_active_voices,\"\n               \"final_active_voices,tail_voices_complete,source_compilations,nonfinite_count,abs_at_or_above_one,\"\n               \"peak,rms,checksum,process_cpu_seconds_including_checks,mode,source_performance,\"\n               \"thread_cpu_seconds_including_checks,controller_events,mpe_member_state_checks,\"\n               \"pedal_held_callbacks,last_block_peak,pra_target_min_ohms,pra_target_max_ohms,callback_cpu_status,callback_cpu_seconds,callback_cpu_rtf,callback_cpu_call_count\\n\";\n        std::mt19937 random(orderSeed);\n        std::shuffle(cases.begin(), cases.end(), random);\n        int rows = 0;\n        for (const auto& c : cases) rows += run(c, callbacks, csv, callbackCpu);\n        csv.close();\n        auto complete = output(directory / \"completed.json\");\n        complete << \"{\\\"completed\\\":true,\\\"cases\\\":\" << cases.size() << \",\\\"rows\\\":\" << rows << \"}\\n\";\n        complete.close();\n        return 0;\n    } catch (const std::exception& error) {\n        std::cerr << \"Benchmark error: \" << error.what() << '\\n';\n        return 2;\n    }\n}\n"
+    },
+    "fixture/CallbackCpuMeasurement.h": {
+      "sha256": "d8196e224bc6e825cab1290fce717ab8f28719f036aefdbc0eca6dad254a8a3d",
+      "text": "#pragma once\n#include <cmath>\n#include <cstdint>\nnamespace cs80::benchmark {\n// Diagnostic only: a failed clock read invalidates the entire aggregate.\nstruct CallbackCpuMeasurement {\n    bool requested = false, failed = false;\n    double seconds = 0.0;\n    std::uint64_t calls = 0;\n    void observe(double before, double after) noexcept {\n        if (!requested) return;\n        if (!std::isfinite(before) || !std::isfinite(after) || before < 0.0 || after < before) {\n            failed = true;\n            return;\n        }\n        seconds += after - before;\n        ++calls;\n    }\n    const char* status() const noexcept {\n        return !requested ? \"disabled\" : failed || calls == 0 ? \"unavailable\" : \"available\";\n    }\n    bool available() const noexcept { return requested && !failed && calls != 0; }\n};\n}\n"
+    }
+  },
+  "fixture_note": "Embedded sources are data for hash/audit completeness; replay.py never compiles or runs them. Engine source is identified separately.",
+  "rtf_note": "Geometric means of complete comparison rounds only, denominator 32768 external audio frames / 48000 Hz; absolute engineering target0.15 is not a relative gain threshold."
+}

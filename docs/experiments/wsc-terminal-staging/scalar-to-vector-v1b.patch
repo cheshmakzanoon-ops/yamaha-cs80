@@ -1,0 +1,504 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -3329,7 +3329,7 @@
+         endSmoothedControls();
+ }
+ 
+-void Engine::render(float* interleavedStereo, int numFrames, const float* externalMono)
++void Engine::renderStockWscFallback(float* interleavedStereo, int numFrames, const float* externalMono)
+ {
+     if (interleavedStereo == nullptr || numFrames <= 0)
+         return;
+--- a/src/core/Engine.h
++++ b/src/core/Engine.h
+@@ -36,6 +36,7 @@
+ 
+ namespace cs80
+ {
++struct WscNodeRenderSpan;
+ 
+ // Source-performance policy v1: current source models plus explicit software
+ // performance overlays. Isolation retains priority and its original contract.
+@@ -575,6 +576,9 @@
+     void processInternalSample(float& outL, float& outR, float externalModulation);
+     bool wscTerminalStagingEligible(float externalModulation) const noexcept;
+     void processInternalSampleWscTerminalStaged(float& outL, float& outR, float externalModulation);
++    void renderStockWscFallback(float* interleavedStereo, int numFrames, const float* externalMono);
++    void processInternalSampleWscTerminalStagedWithSpan(float& outL, float& outR, float externalModulation, const WscNodeRenderSpan* nodeSpan);
++
+     template<bool BatchFilters>
+     void processInternalSampleImpl(float& outL, float& outR, float externalModulation);
+     void startVoice(Voice& voice, int note, float velocity, int midiChannel, bool keyboardOrigin = false, uint64_t coordinatedReleaseOrder = 0);
+--- a/src/core/EngineWscTerminalStaging.cpp
++++ b/src/core/EngineWscTerminalStaging.cpp
+@@ -1,4 +1,5 @@
+ #include "Engine.h"
++#include "WscNodeRenderSpan.h"
+ #include "RingModulatorCircuit.h"
+ #include "WscTerminalCohort.h"
+ #include <algorithm>
+@@ -37,6 +38,11 @@
+ 
+ // Generated experimental alternative, preserving both original sample bodies.
+ void Engine::processInternalSampleWscTerminalStaged(float& outL, float& outR, float externalModulation)
++{
++    processInternalSampleWscTerminalStagedWithSpan(outL,outR,externalModulation,nullptr);
++}
++
++void Engine::processInternalSampleWscTerminalStagedWithSpan(float& outL, float& outR, float externalModulation, const WscNodeRenderSpan* nodeSpan)
+ 
+ {
+     const float sr = (float) internalRate;
+@@ -223,7 +229,12 @@
+     // Output storage outlives every cohort, including its draining destructor.
+     std::array<WscOutputVolts, 4> terminalPins;
+     std::optional<WscTerminalCohort> terminalCohort;
+-    terminalCohort.emplace();
++    auto beginTerminalCohort=[&](unsigned group) noexcept {
++        if(nodeSpan && nodeSpan->prepared[group].valid)
++            terminalCohort.emplace(&nodeSpan->prepared[group],nodeSpan->kernel);
++        else terminalCohort.emplace();
++    };
++    beginTerminalCohort(0);
+     struct TerminalRequest { float noise, sine; int pendingIndex; bool deferred; };
+     std::array<TerminalRequest, 4> terminalRequests;
+     int terminalRequestCount = 0;
+@@ -246,7 +257,7 @@
+         }
+         terminalCohort.reset();
+         terminalRequestCount = 0;
+-        if (pendingCount < kNumVoices * kNumRanks) terminalCohort.emplace();
++        if (pendingCount < kNumVoices * kNumRanks) beginTerminalCohort(static_cast<unsigned>(pendingCount)/4);
+     };
+ #endif
+     for (int vi = 0; vi < kNumVoices; ++vi)
+--- /dev/null
++++ b/src/core/EngineWscVectorRender.cpp
+@@ -0,0 +1,60 @@
++#include "Engine.h"
++#include "WscNodeRenderSpan.h"
++
++namespace cs80 {
++void Engine::render(float* interleavedStereo, int numFrames, const float* externalMono)
++{
++    if (interleavedStereo == nullptr || numFrames <= 0)
++        return;
++
++#if CS80_IG00156_EXACT_BATCH_BUILD && WSC_NODE_EXACT_BUILD
++    if (filterBatchKernel==nullptr || !wscTerminalStagingEligible(0.0f)
++        || !WscNodeKernelAccess::environmentSupported())
++    { renderStockWscFallback(interleavedStereo,numFrames,externalMono);return; }
++    auto kernel=selectWscNodeKernel();
++    if(kernel==nullptr) { renderStockWscFallback(interleavedStereo,numFrames,externalMono);return; }
++    WscNodeRenderSpan localSpan;localSpan.kernel=kernel;
++    bool any=false;
++    for(unsigned group=0;group<4;++group){
++        WscNodeKernelAccess::Owners owners{};
++        for(unsigned lane=0;lane<4;++lane){const auto rank=group*4+lane;owners[lane]=&voices[rank/2].ranks[rank%2].wsc;}
++        const bool ok=WscNodeKernelAccess::prepare(owners,localSpan.prepared[group]);any|=ok;
++    }
++    if(!any) { renderStockWscFallback(interleavedStereo,numFrames,externalMono);return; }
++    externalInput.setConnected(externalMono != nullptr);
++    for (int i = 0; i < numFrames; ++i)
++    {
++        const auto external = externalInput.tick(externalMono != nullptr ? externalMono[i] : 0.0f);
++        float lastL = 0.0f, lastR = 0.0f;
++        const int retainedPhase = decL.getRetainedPhase();
++        for (int os = 0; os < oversample; ++os)
++        {
++            float l = 0.0f, r = 0.0f;
++            const float ext=external[(size_t) os];
++            // Same dispatch intersection as original. No standalone oscillator path is forced
++            // when filters, voice policy, event/rate or the actual FP controls declined.
++            const bool enabledFilter=rankSettings[0].hpfOn||rankSettings[1].hpfOn
++                                    ||rankSettings[0].lpfOn||rankSettings[1].lpfOn;
++            if (filterBatchKernel!=nullptr && usesSourceModels(global.renderPolicy)
++                && Ig00156Batch::environmentSupported() && enabledFilter
++                && wscTerminalStagingEligible(ext))
++                processInternalSampleWscTerminalStagedWithSpan(l,r,ext,&localSpan);
++            else
++                processInternalSample(l,r,ext);
++            decL.push(l);
++            decR.push(r);
++            // Evaluate only the retained last phase, using symmetric tap pairs.
++            if (os == retainedPhase)
++            {
++                lastL = decL.output();
++                lastR = decR.output();
++            }
++        }
++        interleavedStereo[i * 2] = lastL;
++        interleavedStereo[i * 2 + 1] = lastR;
++    }
++#else
++    renderStockWscFallback(interleavedStereo,numFrames,externalMono);
++#endif
++}
++}
+--- a/src/core/ReconstructedOscillator.h
++++ b/src/core/ReconstructedOscillator.h
+@@ -409,6 +409,7 @@
+     }
+ private:
+     friend class WscTerminalCohortBackend;
++    friend struct WscNodeKernelAccess;
+     struct Nodes {
+         double pin7=0.,u=0.,uSlope=0.,triangle=0.,triangleSlope=0.,w=0.,wSlope=0.;
+         double triangleGain=0.;
+--- /dev/null
++++ b/src/core/WscNodeKernel.h
+@@ -0,0 +1,58 @@
++#pragma once
++#include "ReconstructedOscillator.h"
++#include <array>
++#include <cstdint>
++
++#if defined(__x86_64__) && defined(__GNUC__) && !defined(__clang__) \
++ && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) \
++ && !defined(__NVCOMPILER) && !defined(__PGI) && !defined(__ibmxl__) \
++ && !defined(_MSC_VER) && !defined(__FMA__) && !defined(__FAST_MATH__) \
++ && !defined(__ASSOCIATIVE_MATH__) && !defined(__RECIPROCAL_MATH__) \
++ && !defined(__NO_SIGNED_ZEROS__) \
++ && (!defined(__FINITE_MATH_ONLY__) || !__FINITE_MATH_ONLY__) \
++ && (!defined(__FLT_EVAL_METHOD__) || __FLT_EVAL_METHOD__ == 0) \
++ && !defined(WSC_DISABLE_NODE_KERNEL)
++#define WSC_NODE_EXACT_BUILD 1
++#else
++#define WSC_NODE_EXACT_BUILD 0
++#endif
++
++namespace cs80 {
++struct WscNodeKernelAccess {
++    using O=ReconstructedOscillator;
++    using Owners=std::array<const O*,4>;
++    using Record=std::array<double,20>;
++    using Outputs=std::array<Record,4>;
++    // Immutable after setup. No precomputed divisions, shaper slopes or state.
++    struct Prepared {
++        Owners owners{};
++        OscillatorNominalProfile profile{};
++        double converterGain=0.,rampHalf=0.;
++        bool valid=false;
++    };
++    using Kernel=bool (*)(const Prepared&,const Owners&,Outputs&) noexcept;
++    static bool prepare(const Owners&,Prepared&) noexcept;
++    static Kernel selectKernel(bool allow=true) noexcept;
++    static bool environmentSupported() noexcept;
++    static bool packed(const Prepared&,const Owners&,Outputs&) noexcept;
++};
++// Caller-specific build guards, with internal linkage. A strict backend does
++// not authorize an unsafe-math/FMA caller to change its scalar contract.
++static inline WscNodeKernelAccess::Kernel selectWscNodeKernel(bool allow=true) noexcept {
++#if WSC_NODE_EXACT_BUILD
++    return WscNodeKernelAccess::selectKernel(allow);
++#else
++    (void)allow;return nullptr;
++#endif
++}
++static inline bool tryWscNodesPlusFour(const WscNodeKernelAccess::Prepared& prepared,
++                                     const WscNodeKernelAccess::Owners& owners,
++                                     WscNodeKernelAccess::Outputs& output,
++                                     WscNodeKernelAccess::Kernel kernel) noexcept {
++#if WSC_NODE_EXACT_BUILD
++    return kernel!=nullptr && kernel(prepared,owners,output);
++#else
++    (void)prepared;(void)owners;(void)output;(void)kernel;return false;
++#endif
++}
++} // namespace cs80
+--- /dev/null
++++ b/src/core/WscNodeKernelAvx2.cpp
+@@ -0,0 +1,151 @@
++#include "WscNodeKernel.h"
++#include <bit>
++#if WSC_NODE_EXACT_BUILD
++#include <cpuid.h>
++#include <immintrin.h>
++#define WSC_AVX __attribute__((target("avx2,no-fma")))
++#define WSC_INLINE WSC_AVX __attribute__((always_inline)) inline
++
++namespace cs80 {
++namespace {
++struct V {
++    __m256d x;
++    WSC_INLINE explicit V(double a):x(_mm256_set1_pd(a)){}
++    WSC_INLINE V(__m256d a):x(a){}
++    friend WSC_INLINE V operator+(V a,V b){return _mm256_add_pd(a.x,b.x);}
++    friend WSC_INLINE V operator-(V a,V b){return _mm256_sub_pd(a.x,b.x);}
++    friend WSC_INLINE V operator*(V a,V b){return _mm256_mul_pd(a.x,b.x);}
++    friend WSC_INLINE V operator/(V a,V b){return _mm256_div_pd(a.x,b.x);}
++};
++WSC_INLINE V choose(V m,V yes,V no){return _mm256_blendv_pd(no.x,yes.x,m.x);}
++WSC_INLINE V land(V a,V b){return _mm256_and_pd(a.x,b.x);}
++WSC_INLINE V lnot(V a){return _mm256_xor_pd(a.x,_mm256_castsi256_pd(_mm256_set1_epi64x(-1)));}
++WSC_INLINE V abs(V x){return _mm256_andnot_pd(_mm256_set1_pd(-0.0),x.x);}
++WSC_INLINE V neg(V x){return _mm256_xor_pd(_mm256_set1_pd(-0.0),x.x);}
++WSC_INLINE V sign(V magnitude,V source){return _mm256_or_pd(_mm256_andnot_pd(_mm256_set1_pd(-0.0),magnitude.x),_mm256_and_pd(_mm256_set1_pd(-0.0),source.x));}
++WSC_INLINE V lt(V a,V b){return _mm256_cmp_pd(a.x,b.x,_CMP_LT_OQ);}
++WSC_INLINE V gt(V a,V b){return _mm256_cmp_pd(a.x,b.x,_CMP_GT_OQ);}
++WSC_INLINE V ge(V a,V b){return _mm256_cmp_pd(a.x,b.x,_CMP_GE_OQ);}
++WSC_INLINE V ne(V a,V b){return _mm256_cmp_pd(a.x,b.x,_CMP_NEQ_OQ);}
++WSC_INLINE V sided(V x,V derivative){
++    const V nonzero=ne(derivative,V(0.0));
++    const V near=land(nonzero,lt(abs(choose(nonzero,x,V(0.0))),V(2e-11)));
++    return choose(near,sign(V(2e-11),derivative),x);
++}
++WSC_INLINE V bools(bool a,bool b,bool c,bool d){return _mm256_castsi256_pd(_mm256_setr_epi64x(a?-1:0,b?-1:0,c?-1:0,d?-1:0));}
++WSC_INLINE V gather4(double a,double b,double c,double d){return _mm256_setr_pd(a,b,c,d);}
++bool bounded(double x,double limit) noexcept {
++    return (std::bit_cast<std::uint64_t>(x)&0x7fffffffffffffffULL)<=std::bit_cast<std::uint64_t>(limit);
++}
++bool finiteBits(double x) noexcept {return (std::bit_cast<std::uint64_t>(x)&0x7fffffffffffffffULL)<0x7ff0000000000000ULL;}
++bool cpuAndOs() noexcept {
++    __builtin_cpu_init();
++    if(!__builtin_cpu_supports("avx2"))return false;
++    unsigned a=0,b=0,c=0,d=0;
++    if(!__get_cpuid(1,&a,&b,&c,&d)||(c&((1u<<26)|(1u<<27)|(1u<<28)))!=((1u<<26)|(1u<<27)|(1u<<28)))return false;
++    unsigned lo=0,hi=0;
++    __asm__ volatile("xgetbv":"=a"(lo),"=d"(hi):"c"(0));
++    (void)hi;return (lo&6u)==6u;
++}
++}
++
++bool WscNodeKernelAccess::environmentSupported() noexcept {
++    const unsigned csr=_mm_getcsr();unsigned short cw=0;
++    __asm__ volatile("fnstcw %0":"=m"(cw));
++    const unsigned control=csr&~0x3fu;
++    return (control==0x1f80u||control==0x9fc0u)&&cw==0x037fu;
++}
++WscNodeKernelAccess::Kernel WscNodeKernelAccess::selectKernel(bool allow) noexcept {
++    return allow&&cpuAndOs()?&packed:nullptr;
++}
++
++WSC_AVX __attribute__((noinline,noclone))
++bool WscNodeKernelAccess::packed(const Prepared& p,const Owners& owners,Outputs& out) noexcept {
++    if(!environmentSupported()||!p.valid)return false;
++    for(std::size_t i=0;i<4;++i){
++        if(!owners[i]||owners[i]!=p.owners[i])return false;
++        for(std::size_t j=0;j<i;++j)if(owners[i]==owners[j])return false;
++        const auto& s=owners[i]->state;
++        if(!bounded(s.charge,16.)||!finiteBits(s.resetRemainingSeconds)
++           ||!bounded(s.inputBaselineVolts,16384.)||!bounded(s.triangleBaselineVolts,16384.)
++           ||!bounded(s.heldFrequencyHz,1000000.)||!bounded(s.heldThresholdVolts,16384.))return false;
++    }
++    const auto& a=owners[0]->state;const auto& b=owners[1]->state;
++    const auto& c=owners[2]->state;const auto& d=owners[3]->state;
++    const V zero(0.0),one(1.0),four(4.0),eps(2e-11);
++    const V reset=gt(gather4(a.resetRemainingSeconds,b.resetRemainingSeconds,c.resetRemainingSeconds,d.resetRemainingSeconds),zero);
++    const V saw=bools(a.sawEnabled,b.sawEnabled,c.sawEnabled,d.sawEnabled);
++    const V pulse=bools(a.pulseEnabled,b.pulseEnabled,c.pulseEnabled,d.pulseEnabled);
++    const V hz=gather4(a.heldFrequencyHz,b.heldFrequencyHz,c.heldFrequencyHz,d.heldFrequencyHz);
++    const V charge=gather4(a.charge,b.charge,c.charge,d.charge);
++    const V tau(p.profile.couplingSecondsNominal),span(p.profile.triangleSpanVoltsNominal),ramp(p.rampHalf),gain(p.converterGain);
++    const V pinSlope=choose(reset,one,neg(gain))*choose(reset,zero,hz);
++    const V pin7=choose(reset,V(p.profile.resetVoltsNominal),choose(reset,one,gain)*choose(reset,zero,charge));
++    const V u=pin7-gather4(a.inputBaselineVolts,b.inputBaselineVolts,c.inputBaselineVolts,d.inputBaselineVolts);
++    const V uSlope=pinSlope-u/tau;
++    const V fold=u-V(p.profile.sliceVoltsInferred);
++    const V oriented=sided(fold,uSlope);
++    const V nonzero=ne(uSlope,zero);
++    const V foldedDerivative=choose(ge(choose(nonzero,oriented,zero),zero),uSlope,neg(uSlope));
++    const V limited=ge(sided(abs(fold)-ramp,foldedDerivative),zero);
++    const V ratio=abs(fold)/ramp;
++    const V triangle=span*choose(lt(ratio,one),ratio,one);
++    const V gainRatio=choose(limited,zero,span)/choose(limited,one,ramp);
++    const V triangleGain=choose(limited,zero,sign(gainRatio,oriented));
++    const V triangleSlope=triangleGain*uSlope;
++    const V w=triangle-gather4(a.triangleBaselineVolts,b.triangleBaselineVolts,c.triangleBaselineVolts,d.triangleBaselineVolts);
++    const V wSlope=triangleSlope-w/tau;
++    const V half=span*V(.5),x=w/half,originalA=abs(x);
++    const V aSlope=(sign(one,x)*wSlope)/half;
++    V adjustedA=originalA,remaining=_mm256_castsi256_pd(_mm256_set1_epi64x(-1));
++    for(int k=1;k<=4;++k){
++        const V knot(.25*double(k));
++        const V distance=choose(remaining,adjustedA,knot)-knot;
++        const V hit=land(remaining,lt(abs(distance),eps));
++        const V bump=choose(hit,knot,zero)+sign(choose(hit,eps,zero),aSlope);
++        adjustedA=choose(hit,bump,adjustedA);remaining=land(remaining,lnot(hit));
++    }
++    const V slopeActive=lt(adjustedA,one);
++    const V slopeA=choose(slopeActive,adjustedA,zero);
++    const V scaledSlope=choose(gt(slopeA,zero),slopeA,zero)*four;
++    const __m128i slopeIndex=_mm_min_epi32(_mm256_cvttpd_epi32(scaledSlope.x),_mm_set1_epi32(3));
++    const double* table=p.profile.shaperOrdinateInferred.data();
++    const V slopeLo=choose(slopeActive,V(_mm256_i32gather_pd(table,slopeIndex,8)),zero);
++    const V slopeHi=choose(slopeActive,V(_mm256_i32gather_pd(table,_mm_add_epi32(slopeIndex,_mm_set1_epi32(1)),8)),zero);
++    const V shapeSlope=four*(slopeHi-slopeLo);
++    const V comparator=choose(gt(sided(u-gather4(a.heldThresholdVolts,b.heldThresholdVolts,c.heldThresholdVolts,d.heldThresholdVolts),uSlope),zero),V(p.profile.pulseHalfSpanVoltsInferred),V(-p.profile.pulseHalfSpanVoltsInferred));
++    const V valueA=originalA;
++    const V valueActive=lt(valueA,one);
++    const V scaledValue=choose(valueActive,valueA,zero)*four;
++    const __m128i valueIndex=_mm_min_epi32(_mm256_cvttpd_epi32(scaledValue.x),_mm_set1_epi32(3));
++    const V fraction=scaledValue-V(_mm256_cvtepi32_pd(valueIndex));
++    const V valueLo=choose(valueActive,V(_mm256_i32gather_pd(table,valueIndex,8)),zero);
++    const V valueHi=choose(valueActive,V(_mm256_i32gather_pd(table,_mm_add_epi32(valueIndex,_mm_set1_epi32(1)),8)),zero);
++    const V shaped=sign(choose(valueActive,valueLo+fraction*(valueHi-valueLo),one),x);
++    const V negativeSineGain(-p.profile.sineGainVoltsInferred);
++    const V sine=negativeSineGain*shaped;
++    const V sawValue=choose(saw,neg(u),zero),pulseValue=choose(pulse,comparator,zero);
++    const V gainShape=negativeSineGain*shapeSlope;
++    const V sineSlope=(gainShape*wSlope)/half;
++    const V sawConstant=choose(saw,neg(choose(saw,pinSlope,zero))*choose(saw,tau,one),zero);
++    const V sineConstant=sine-gainShape*x;
++    const std::array<V,20> values{pin7,u,uSlope,triangle,triangleSlope,w,wSlope,triangleGain,
++        sawValue,pulseValue,sine,choose(saw,neg(uSlope),zero),zero,sineSlope,
++        sawConstant,pulseValue,sineConstant,neg(u),comparator,sine};
++    alignas(32) double scratch[20][4];
++    for(std::size_t field=0;field<20;++field)_mm256_store_pd(scratch[field],values[field].x);
++    for(std::size_t lane=0;lane<4;++lane)for(std::size_t field=0;field<20;++field){
++        const std::size_t source=lane;
++        double value=scratch[field][source];
++        out[lane][field]=value;
++    }
++    return true;
++}
++} // namespace cs80
++#else
++namespace cs80 {
++bool WscNodeKernelAccess::environmentSupported() noexcept{return false;}
++WscNodeKernelAccess::Kernel WscNodeKernelAccess::selectKernel(bool) noexcept{return nullptr;}
++bool WscNodeKernelAccess::packed(const Prepared&,const Owners&,Outputs&) noexcept{return false;}
++}
++#endif
+--- /dev/null
++++ b/src/core/WscNodeKernelSetup.cpp
+@@ -0,0 +1,27 @@
++#include "WscNodeKernel.h"
++#include <bit>
++
++namespace cs80 {
++namespace {
++std::uint64_t bits(double x) noexcept { return std::bit_cast<std::uint64_t>(x); }
++bool sameProfile(const OscillatorNominalProfile& a,const OscillatorNominalProfile& b) noexcept {
++    const std::array<double,9> aa{a.resetSecondsNominal,a.referenceHzNominal,a.resetVoltsNominal,a.resetExcessVoltsNominal,a.couplingSecondsNominal,a.triangleSpanVoltsNominal,a.sliceVoltsInferred,a.pulseHalfSpanVoltsInferred,a.sineGainVoltsInferred};
++    const std::array<double,9> bb{b.resetSecondsNominal,b.referenceHzNominal,b.resetVoltsNominal,b.resetExcessVoltsNominal,b.couplingSecondsNominal,b.triangleSpanVoltsNominal,b.sliceVoltsInferred,b.pulseHalfSpanVoltsInferred,b.sineGainVoltsInferred};
++    for(std::size_t i=0;i<aa.size();++i)if(bits(aa[i])!=bits(bb[i]))return false;
++    for(std::size_t i=0;i<a.shaperOrdinateInferred.size();++i)if(bits(a.shaperOrdinateInferred[i])!=bits(b.shaperOrdinateInferred[i]))return false;
++    return true;
++}
++}
++bool WscNodeKernelAccess::prepare(const Owners& owners,Prepared& destination) noexcept {
++    const OscillatorNominalProfile nominal{};
++    for(std::size_t i=0;i<owners.size();++i){
++        if(!owners[i]||!owners[i]->basis||!sameProfile(owners[i]->profile,nominal))return false;
++        for(std::size_t j=0;j<i;++j)if(owners[i]==owners[j])return false;
++        if(i && (bits(owners[i]->converterGain)!=bits(owners[0]->converterGain)
++              ||bits(owners[i]->rampHalf)!=bits(owners[0]->rampHalf)))return false;
++    }
++    Prepared next;next.owners=owners;next.profile=owners[0]->profile;
++    next.converterGain=owners[0]->converterGain;next.rampHalf=owners[0]->rampHalf;next.valid=true;
++    destination=next;return true;
++}
++} // namespace cs80
+--- /dev/null
++++ b/src/core/WscNodeRenderSpan.h
+@@ -0,0 +1,11 @@
++#pragma once
++#include "WscNodeKernel.h"
++#include <array>
++namespace cs80 {
++// Lives exactly for one synchronous public render invocation. Never stored in
++// Engine/voice state; mutations between render calls cannot leave dangling bindings.
++struct WscNodeRenderSpan {
++    std::array<WscNodeKernelAccess::Prepared,4> prepared{};
++    WscNodeKernelAccess::Kernel kernel=nullptr;
++};
++}
+--- a/src/core/WscTerminalCohort.cpp
++++ b/src/core/WscTerminalCohort.cpp
+@@ -258,10 +258,68 @@
+         self.state.residualCursor=(self.state.residualCursor+1)%OscillatorResidualKernel::length;
+         return output;
+     }
++    static WscOutputVolts finishFromRecord(O& self,Token& continuation,
++                                          const WscNodeKernelAccess::Record& record) noexcept {
++        const double inverseTauSamples=continuation.inverseTauSamples;
++        const double weightedArea=continuation.weightedArea;
++        const double weightedMoment=continuation.weightedMoment;
++        continuation.owner=nullptr;
++        Nodes after;
++        after.pin7=record[0];
++        after.u=record[1];
++        after.uSlope=record[2];
++        after.triangle=record[3];
++        after.triangleSlope=record[4];
++        after.w=record[5];
++        after.wSlope=record[6];
++        after.triangleGain=record[7];
++        after.value.sawPin5=record[8];
++        after.value.pulsePin7=record[9];
++        after.value.sinePin2=record[10];
++        after.slope.sawPin5=record[11];
++        after.slope.pulsePin7=record[12];
++        after.slope.sinePin2=record[13];
++        after.constant.sawPin5=record[14];
++        after.constant.pulsePin7=record[15];
++        after.constant.sinePin2=record[16];
++        after.ungatedValue.sawPin5=record[17];
++        after.ungatedValue.pulsePin7=record[18];
++        after.ungatedValue.sinePin2=record[19];
++        self.state.elapsedSeconds+=self.dt;
++        self.endNodes=after;self.endNodesValid=true;
++        const auto& raw=self.endNodes;
++        self.diagnostics.rawPin7Volts=raw.pin7;self.diagnostics.coupledInputVolts=raw.u;
++        self.diagnostics.trianglePin3Volts=raw.triangle;self.diagnostics.shaperInputVolts=raw.w;self.diagnostics.raw=raw.ungatedValue;
++        WscOutputVolts output;
++        double* destinations[3]={&output.sawPin5,&output.pulsePin7,&output.sinePin2};
++        const auto values=asArray(raw.value),slopes=asArray(raw.slope),constants=asArray(raw.constant);
++        for(std::size_t branch=0;branch<3;++branch){const double a=values[branch]-constants[branch],b=slopes[branch]/self.rate+inverseTauSamples*a;*destinations[branch]=constants[branch]+a*weightedArea-b*weightedMoment+self.state.residual[branch][self.state.residualCursor];self.state.residual[branch][self.state.residualCursor]=0.;}
++        self.state.residualCursor=(self.state.residualCursor+1)%OscillatorResidualKernel::length;
++        return output;
++    }
+ };
+ WscTerminalCohort::WscTerminalCohort() noexcept=default;
++WscTerminalCohort::WscTerminalCohort(const WscNodeKernelAccess::Prepared* prepared,
++                                     WscNodeKernelAccess::Kernel kernel) noexcept
++    :nodesPrepared(prepared),nodesKernel(kernel){}
+ WscTerminalCohort::~WscTerminalCohort(){(void)finishCohort();}
+ unsigned WscTerminalCohort::finishCohort() noexcept {
++    // Only currently armed, distinct owners may enter a four-lane evaluator.
++    // Successful kernel calls fill all 80 doubles; rejected scratch is unread.
++    if(pendingMask==0xfu&&nodesPrepared&&nodesKernel){
++        const WscNodeKernelAccess::Owners owners{
++            tokens[0].owner,tokens[1].owner,tokens[2].owner,tokens[3].owner};
++        WscNodeKernelAccess::Outputs records;
++        const bool vectorNodes=tryWscNodesPlusFour(*nodesPrepared,owners,records,nodesKernel);
++        if(vectorNodes){
++            for(unsigned i=0;i<4;++i){
++                auto& t=tokens[i];auto* destination=t.destination;
++                *destination=WscTerminalCohortBackend::finishFromRecord(*t.owner,t,records[i]);
++                pendingMask&=~(1u<<i);
++            }
++            return terminalMask;
++        }
++    }
+     for(unsigned i=0;i<4;++i)if(pendingMask&(1u<<i)){
+         auto& t=tokens[i];auto* destination=t.destination;
+         *destination=WscTerminalCohortBackend::finish(*t.owner,t);
+--- a/src/core/WscTerminalCohort.h
++++ b/src/core/WscTerminalCohort.h
+@@ -1,5 +1,6 @@
+ #pragma once
+ #include "ReconstructedOscillator.h"
++#include "WscNodeKernel.h"
+ 
+ namespace cs80 {
+ // Scratch-only one-shot cohort. Outputs and owners must outlive this object.
+@@ -11,6 +12,9 @@
+     using OriginalTick=WscOutputVolts (*)(ReconstructedOscillator&,double,const WscControls&) noexcept;
+     enum class SubmitResult { Deferred, Completed, OriginalFallback };
+     WscTerminalCohort() noexcept;
++    // Optional immutable setup binding; ownership stays with the caller.
++    WscTerminalCohort(const WscNodeKernelAccess::Prepared* prepared,
++                      WscNodeKernelAccess::Kernel kernel) noexcept;
+     ~WscTerminalCohort();
+     WscTerminalCohort(const WscTerminalCohort&)=delete;
+     WscTerminalCohort& operator=(const WscTerminalCohort&)=delete;
+@@ -32,5 +36,7 @@
+     };
+     std::array<Token,4> tokens{};
+     unsigned nextOrdinal=0,pendingMask=0,terminalMask=0;
++    const WscNodeKernelAccess::Prepared* nodesPrepared=nullptr;
++    WscNodeKernelAccess::Kernel nodesKernel=nullptr;
+ };
+ } // namespace cs80

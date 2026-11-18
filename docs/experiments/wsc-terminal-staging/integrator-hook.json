@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "cut_id": "wsc-terminal-staging-v1b-2026-11-18",
+  "required_source_freezes": {
+    "S": "450a6b6aeff3b105534070e856b2a5659ddd69d3f4ff4d5356cdc8ff24c074b2",
+    "V": "31fedb0323a0f99b0fc87adb040650bf879f226664199472e7aedae3778a77dc"
+  },
+  "integrated_V1b_full_trace": {
+    "status": "PASS_BOUNDED",
+    "receipt": "integrated-vector-evidence.json",
+    "comparisons": 81,
+    "source_freeze_sha256": "31fedb0323a0f99b0fc87adb040650bf879f226664199472e7aedae3778a77dc"
+  },
+  "cpu_timing": {
+    "status": "COMPLETE_NO_ADMISSION",
+    "receipt": "cost/result.json",
+    "readme": "cost/README.md",
+    "analysis_sha256": "3ae3c12134590b070ef1ed55169002303220958b0b550ff6aa328d179522a14a",
+    "slots": 216,
+    "complete": true,
+    "decision": "inconclusive / no performance admission in this environment",
+    "threshold_gate_passes": false,
+    "real_core_threshold_admission": false,
+    "predeclared_rule_result_floor": 0.21484557952526984,
+    "hint_scope": "Descriptive S versus B contrasts, NOT incremental vector arithmetic or an admitted speedup",
+    "descriptive_scalar_saving_percent": {
+      "factory-held": 9.453532744613637,
+      "factory-moving": 6.6740134832387055
+    },
+    "primary_V_vs_B_saving_percent": 3.1002078736994805,
+    "primary_V_vs_B_ci95_percent": [
+      1.828537484619738,
+      4.37186936291983
+    ],
+    "cost_subtree_manifest": "cost/manifest.json"
+  },
+  "production_promotion": false,
+  "native_plugin_qualification": false,
+  "instruction": "Final bounded research cut, not production admission. The cost subtree owns complete protocol/raw/replay/negative tests. Any later study must preserve this cut and declare new sources, endpoints and gates."
+}
