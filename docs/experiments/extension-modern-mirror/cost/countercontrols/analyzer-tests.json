@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "tests": [
+    {
+      "test": "valid synthetic80 with known-work directions",
+      "pass": true
+    },
+    {
+      "test": "five independent comparison batches per scene",
+      "pass": true
+    },
+    {
+      "test": "signed arithmetic scale",
+      "pass": true
+    },
+    {
+      "test": "missing slot",
+      "pass": true
+    },
+    {
+      "test": "wrong main calls",
+      "pass": true
+    },
+    {
+      "test": "fake extra work count",
+      "pass": true
+    },
+    {
+      "test": "changed PCM",
+      "pass": true
+    },
+    {
+      "test": "changed FP",
+      "pass": true
+    },
+    {
+      "test": "backward clock",
+      "pass": true
+    },
+    {
+      "test": "zero clock",
+      "pass": true
+    },
+    {
+      "test": "wrong CPU",
+      "pass": true
+    },
+    {
+      "test": "missing empty probe",
+      "pass": true
+    },
+    {
+      "test": "sham false advantage",
+      "pass": true
+    },
+    {
+      "test": "wrong positive sign",
+      "pass": true
+    },
+    {
+      "test": "clock overhead too large",
+      "pass": true
+    },
+    {
+      "test": "stock-loop-false.txt actual direct call / omitted-call negative",
+      "pass": true
+    },
+    {
+      "test": "candidate-loop-false.txt actual direct call / omitted-call negative",
+      "pass": true
+    }
+  ],
+  "measurement_clock_reads": 0,
+  "dsp_executions": 0,
+  "synthetic_only": true
+}

@@ -1,0 +1,112 @@
+{
+  "development_note": "An initial harness expected x87 condition flags to be zero after fnclex; it was corrected to compare captured pre-call flags. No candidate correction is represented by that harness fix.",
+  "guards": {
+    "negative_new_TU_flags": {
+      "-ffast-math": {
+        "accepted": 0,
+        "cells": 48,
+        "rejected": 48
+      },
+      "-ffinite-math-only": {
+        "accepted": 0,
+        "cells": 48,
+        "rejected": 48
+      },
+      "-mfma": {
+        "accepted": 0,
+        "cells": 48,
+        "rejected": 48
+      }
+    },
+    "pending_case_scope": "Control/status and destination ModernLayer bytes; the pending-case branches do not independently assert errno after the call. The 48-cell rejection matrix and real-trap differential do compare errno.",
+    "pending_rejection_cases": [
+      "x87 invalid pending + unmasked x87 control",
+      "SSE invalid pending + unmasked SSE control"
+    ],
+    "strict": {
+      "accepted": 2,
+      "cells": 48,
+      "rejected": 46
+    }
+  },
+  "mirror": {
+    "accepted": 96,
+    "attempts": 512,
+    "checks": 27873,
+    "continuation_steps": 12288,
+    "continuation_steps_per_attempt": 24,
+    "engine_bytes": 290120,
+    "fp_contexts": 8,
+    "full_engine_render_or_audio_observed": false,
+    "modern_config_bytes": 1480,
+    "modern_layer_bytes": 3992,
+    "seeds": 64,
+    "transactional_fallbacks": 416
+  },
+  "not_claimed": [
+    "Full CTest",
+    "Integrated 16-voice native wrapper execution",
+    "Actual audio/PCM equality",
+    "Cross-compiler or arbitrary-link equivalence",
+    "Performance/CPU/DAW benefit",
+    "Production readiness"
+  ],
+  "rejected_revision": {
+    "first_different_byte_offset_hex": "214",
+    "name": "V2 shared-tail extraction",
+    "reason": "Original setter instruction bytes and relocation positions changed; static fallback identity gate failed before execution.",
+    "runtime_executed": false,
+    "stock_setter_bytes": 4034,
+    "v2_setter_bytes": 4034
+  },
+  "saved_stdout": {
+    "guard-fast": [
+      "PASS controls48 accepted=0 rejected=48 +pending x87/SSE"
+    ],
+    "guard-finite": [
+      "PASS controls48 accepted=0 rejected=48 +pending x87/SSE"
+    ],
+    "guard-fma": [
+      "PASS controls48 accepted=0 rejected=48 +pending x87/SSE"
+    ],
+    "guard-strict": [
+      "PASS controls48 accepted=2 rejected=46 +pending x87/SSE"
+    ],
+    "mirror": [
+      "PASS checks=27873 accepted=96 rejected=416 ModernConfig=1480 ModernLayer=3992 Engine=290120"
+    ],
+    "traps": [
+      "PASS actual SIGFPE seed=0 code=7 csr=1f01 all3992statebytes + original PC + FP + errno; A/A passed",
+      "PASS actual SIGFPE seed=1 code=5 csr=1e82 all3992statebytes + original PC + FP + errno; A/A passed"
+    ]
+  },
+  "schema": 1,
+  "scope": "Saved bounded direct-correctness observations only; no native, timing, calibration or production admission.",
+  "traps": {
+    "cases": 2,
+    "children_per_case": 3,
+    "compared": [
+      "signal code",
+      "same original trap PC within the forked executable",
+      "saved ucontext MXCSR/x87 control/status",
+      "errno",
+      "all 3,992 ModernLayer bytes"
+    ],
+    "comparison": "stock A/A plus candidate rejection followed by stock fallback",
+    "observed": [
+      {
+        "kind": "SSE invalid",
+        "mxcsr_hex": "1f01",
+        "seed": 0,
+        "signal_code": 7
+      },
+      {
+        "kind": "SSE denormal exception",
+        "mxcsr_hex": "1e82",
+        "seed": 1,
+        "signal_code": 5
+      }
+    ],
+    "require_actual_SIGFPE": true
+  }
+}

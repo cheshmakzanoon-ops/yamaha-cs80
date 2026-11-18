@@ -1,0 +1,88 @@
+{
+  "Ig00156Batch_extra_flags": [
+    "-ffp-contract=off"
+  ],
+  "bundled_test_sources_sha256": {
+    "GuardTests.cpp": "98c620cfa32014b19688354d07e4cebb02e6f1f20a3582ee7267f236d1e65b7d",
+    "MirrorTests.cpp": "3bf7c362d35b0aefea24ceed6f43fec3a03fd3bb546f91b5ce944ed50781fee5",
+    "StockOracle.cpp": "43b6e15bfe0b5e825acccee55903dad204022b525d60fd1b1d2a852bda462e0d",
+    "TrapTests.cpp": "86a73d5e2a31d9245f4b742910ae5b3a34f91180036405fc479e2d05a359f578"
+  },
+  "candidate_patch_sha256": "dd30ad65f9eaeb8944b6f64637cd063252f93e5e39416156271314a492c37dc5",
+  "changed_source_paths": [
+    "src/core/Engine.h",
+    "src/core/ModernLayer.h",
+    "src/core/ModernLayerMirror.cpp",
+    "src/plugin/ModernLayerState.cpp"
+  ],
+  "compiler": "GCC 14.2.0, Linux x86-64 GNU ABI",
+  "core_flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "direct_TU_flags_recorded": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC"
+  ],
+  "export_verification": {
+    "native_loads": 0,
+    "new_Cpp_builds": 0,
+    "new_DSP_executions": 0,
+    "status": "Static source, saved fields/hashes and patch applicability only.",
+    "timing_runs": 0
+  },
+  "historical_direct_link_contract": {
+    "additional_FP_contract_or_vectorization_flags": false,
+    "detail_source": "Original qualification worker supplied historical command details from retained context; no new command execution.",
+    "driver_compiled_and_linked_in_one_command": true,
+    "explicit_no_pie": false,
+    "explicit_objects": [
+      "StockOracle.o",
+      "ModernLayerMirror.o",
+      "stock libcs80_core.a"
+    ],
+    "guard_omits_unused_stock_oracle": true,
+    "stock_archive_rebuilt_for_direct_test": false
+  },
+  "historical_omitted_artifacts_sha256": {
+    "ModernLayerMirror.o": "c38b430669ec87e163de878d09fd3a12f4e4d4c5cb7a32b37231745ed3696ca9",
+    "StockOracle.o": "b87bd55470559749b9690deff5730dd96cc3ca138a18805733f7c7af84210db4",
+    "guard-fast": "267fc29f3d1791c360634198ae968773e9e8e97008869b9b70c0a37de833b0ee",
+    "guard-fast.o": "3f7ef0a082059ebebbefcf05adf682cfaad758c27268e8b0d7736e241541d572",
+    "guard-finite": "267fc29f3d1791c360634198ae968773e9e8e97008869b9b70c0a37de833b0ee",
+    "guard-finite.o": "3f7ef0a082059ebebbefcf05adf682cfaad758c27268e8b0d7736e241541d572",
+    "guard-fma": "267fc29f3d1791c360634198ae968773e9e8e97008869b9b70c0a37de833b0ee",
+    "guard-fma.o": "3f7ef0a082059ebebbefcf05adf682cfaad758c27268e8b0d7736e241541d572",
+    "guard-tests": "51af911811926de18d63b6ef4641495171bc80156cb47a7a6fef75e2b8648400",
+    "mirror-tests": "e1ff38a5c925ab50e7c3d3146fae1f827a9f9c3a4d943f9cc659fdfdf9196e86",
+    "setter-relocations.txt": "4f73045a78c0e522c688b82a65568332868434845499089d428ca149f0396d86",
+    "stock-setter.bin": "3a3ae3e7d76237ff86ca1ea1826acdc748336a8a50b0bd4eb4c7166afcc641ec",
+    "trap-tests": "097739975007657fe4c6b972bfacf90a0ad0d9d9a79a71bb227654c7c470764a"
+  },
+  "limits": [
+    "Historical hashes identify omitted artifacts, not public downloads or independent proof of omitted bytes.",
+    "Portable reproduction recipe is not a new compiled/run result.",
+    "Source/ABI preservation does not establish arbitrary compiler, linker or plugin behavior."
+  ],
+  "original_small_receipts_sha256": {
+    "V1_notes": "fe1624adc64bbae2c3eaef0e92fffe3e7f49406426694397c9723054c075f17e",
+    "V1_receipt": "044585efc5a87194d5db31c3652e9f5bb352f9d37695f96982b244375168dc32",
+    "V2_rejection_notes": "e1d833b75887eb2949fd944fa9be5a2778b9bc5583f63e3d44a58f750fd86f12",
+    "stock_input_binding": "3ea1b6bfa0b588a4ddbcb1203aae1f7c45ac95c27c61e9fefaac6d6424df4f56"
+  },
+  "prototype": "frozen V1, research only",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "schema": 1,
+  "source_binding": "All 193 retained source blobs independently matched this commit during export. The historical layered stock core archive is byte-identical to the direct-test archive. No remote operation occurred during export.",
+  "stock_commit": "fe13c25f354203838697b35adf3962bbe46735a4",
+  "stock_core_archive_sha256": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+  "stock_source_tree": "702bf5ee4e375c7b13da7ec95b01b56587bbf75c",
+  "stock_tree": "ceb83333a386c90bc42ec675cf9ea75dd62bb802"
+}

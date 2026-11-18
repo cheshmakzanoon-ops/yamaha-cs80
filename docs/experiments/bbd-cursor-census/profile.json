@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "scope": "Single-process stock standalone core, normal GCC14 Release/PIC code. No native plugin/DAW or speedup inference. Exclusive PC self samples only; inline parents are annotations, not added; library PCs are NOT assigned to callers. Requested ITIMER_PROF intervals are quantized by Linux; use actual sample counts.",
+  "rows": [
+    {
+      "capture": "01-s0-p1999",
+      "scene": "factory-held",
+      "requested_period_us": 1999,
+      "self_samples": 59,
+      "total_samples": 4970,
+      "descriptive_percent": 1.187122736418511
+    },
+    {
+      "capture": "02-s1-p5003",
+      "scene": "factory-moving",
+      "requested_period_us": 5003,
+      "self_samples": 32,
+      "total_samples": 3522,
+      "descriptive_percent": 0.9085746734809768
+    },
+    {
+      "capture": "03-s2-p1999",
+      "scene": "panel-moving",
+      "requested_period_us": 1999,
+      "self_samples": 42,
+      "total_samples": 4997,
+      "descriptive_percent": 0.840504302581549
+    },
+    {
+      "capture": "04-s0-p5003",
+      "scene": "factory-held",
+      "requested_period_us": 5003,
+      "self_samples": 49,
+      "total_samples": 3586,
+      "descriptive_percent": 1.366424986056888
+    },
+    {
+      "capture": "05-s1-p1999",
+      "scene": "factory-moving",
+      "requested_period_us": 1999,
+      "self_samples": 32,
+      "total_samples": 4994,
+      "descriptive_percent": 0.6407689227072487
+    },
+    {
+      "capture": "06-s2-p5003",
+      "scene": "panel-moving",
+      "requested_period_us": 5003,
+      "self_samples": 29,
+      "total_samples": 3544,
+      "descriptive_percent": 0.8182844243792325
+    }
+  ],
+  "descriptive_min_percent": 0.6407689227072487,
+  "descriptive_max_percent": 1.366424986056888,
+  "confidence_bound": false,
+  "speed_forecast": false,
+  "new_sampling_runs": 0
+}

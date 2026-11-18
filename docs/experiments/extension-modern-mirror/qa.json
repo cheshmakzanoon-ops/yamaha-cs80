@@ -1,0 +1,106 @@
+{
+  "git_apply_check": true,
+  "git_apply_output_hashes_match_all_four_candidate_paths": true,
+  "native_loads": 0,
+  "new_Cpp_builds": 0,
+  "new_DSP_executions": 0,
+  "receipt_checks": {
+    "new_runtime_evidence": false,
+    "status": "PASS offline receipts and hashes only",
+    "stock_patch_check": {
+      "continuation_source_equal": true,
+      "original_setter_source_unchanged": true,
+      "patch_paths": 4,
+      "source_files": 193
+    }
+  },
+  "recipe_preview": {
+    "compiler_or_executable_invoked": false,
+    "explicit_no_pie": false,
+    "negative_flags_only_on_helper_objects": true,
+    "normal_historical_flags_and_link_order_verified": true,
+    "steps": 17
+  },
+  "recipe_status": "AST and historical flags/link-order checks only; not compiled or executed during export.",
+  "schema": 1,
+  "software_tests": {
+    "negatives": 16,
+    "new_Cpp_builds": 0,
+    "new_DSP_executions": 0,
+    "records": [
+      {
+        "pass": true,
+        "test": "saved-field positive control"
+      },
+      {
+        "pass": true,
+        "test": "wrong accepted count"
+      },
+      {
+        "pass": true,
+        "test": "missing fallback"
+      },
+      {
+        "pass": true,
+        "test": "inflated checks"
+      },
+      {
+        "pass": true,
+        "test": "wrong continuation count"
+      },
+      {
+        "pass": true,
+        "test": "direct proof mislabeled as audio"
+      },
+      {
+        "pass": true,
+        "test": "negative guard accepted"
+      },
+      {
+        "pass": true,
+        "test": "fake actual trap"
+      },
+      {
+        "pass": true,
+        "test": "wrong trap signaled state"
+      },
+      {
+        "pass": true,
+        "test": "V2 execution invented"
+      },
+      {
+        "pass": true,
+        "test": "wrong stock revision"
+      },
+      {
+        "pass": true,
+        "test": "missing source pin"
+      },
+      {
+        "pass": true,
+        "test": "stock per-TU FP contract removed"
+      },
+      {
+        "pass": true,
+        "test": "unobserved no-PIE recipe"
+      },
+      {
+        "pass": true,
+        "test": "fabricated export runtime"
+      },
+      {
+        "pass": true,
+        "test": "escaping patch path"
+      },
+      {
+        "pass": true,
+        "test": "missing patch section"
+      }
+    ],
+    "status": "PASS software-only receipt tests",
+    "tests": 17
+  },
+  "status": "PASS offline export checks only",
+  "timing_runs": 0,
+  "v2_static_first_difference_hex": "0x214"
+}

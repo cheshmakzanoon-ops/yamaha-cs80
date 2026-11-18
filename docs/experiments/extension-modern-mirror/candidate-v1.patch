@@ -1,0 +1,134 @@
+diff --git a/src/core/Engine.h b/src/core/Engine.h
+--- a/src/core/Engine.h
++++ b/src/core/Engine.h
+@@ -298,6 +298,8 @@
+     // shapes and matrix routing are session data, not parameters; the host transport
+     // drives tempo sync. Render thread: copies only, no allocation or locking.
+     void setModernConfig(const modern::ModernConfig& config) noexcept { modern.setConfig(config); }
++    // False leaves all destination state and FP state unchanged; caller uses the original setter.
++    bool tryMirrorModernConfigFrom(const Engine& first) noexcept;
+     const modern::ModernConfig& getModernConfig() const noexcept { return modern.getConfig(); }
+     void setTransport(const modern::Transport& transport) noexcept { modern.setTransport(transport); }
+     const modern::Transport& getModernTransport() const noexcept { return modern.getTransport(); }
+diff --git a/src/core/ModernLayer.h b/src/core/ModernLayer.h
+--- a/src/core/ModernLayer.h
++++ b/src/core/ModernLayer.h
+@@ -15,6 +15,8 @@
+ //
+ // Inert by construction: with no live slot (the default) or under PURE CS-80 nothing is
+ // evaluated and every offset is the identity (0 or a ratio of exactly 1).
++namespace cs80 { class Engine; }
++
+ namespace cs80::modern
+ {
+ 
+@@ -82,6 +84,8 @@
+ 
+ class ModernLayer
+ {
++    friend class cs80::Engine; // Trusted engine-to-engine canonical configuration copy.
++
+ public:
+     static constexpr int kVoices = 8;
+ 
+diff --git a/src/core/ModernLayerMirror.cpp b/src/core/ModernLayerMirror.cpp
+new file mode 100644
+--- /dev/null
++++ b/src/core/ModernLayerMirror.cpp
+@@ -0,0 +1,83 @@
++#include "Engine.h"
++#include <bit>
++#include <cstdint>
++
++#if defined(__x86_64__) && defined(__GNUC__) && !defined(__clang__) \
++ && !defined(__FMA__) && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) \
++ && !defined(__NVCOMPILER) && !defined(__PGI) && !defined(_MSC_VER) \
++ && !defined(__FAST_MATH__) && !defined(__ASSOCIATIVE_MATH__) \
++ && !defined(__RECIPROCAL_MATH__) && !defined(__NO_SIGNED_ZEROS__) \
++ && (!defined(__FINITE_MATH_ONLY__) || !__FINITE_MATH_ONLY__) \
++ && (!defined(__FLT_EVAL_METHOD__) || __FLT_EVAL_METHOD__ == 0)
++#include <xmmintrin.h>
++#define CS80_CANONICAL_MIRROR_BUILD 1
++#else
++#define CS80_CANONICAL_MIRROR_BUILD 0
++#endif
++
++namespace cs80 {
++bool Engine::tryMirrorModernConfigFrom(const Engine& first) noexcept
++{
++#if !CS80_CANONICAL_MIRROR_BUILD
++    (void) first;
++    return false;
++#else
++    // No floating arithmetic or comparison precedes admission. Ignore sticky flags.
++    unsigned short cw;
++    asm volatile("fnstcw %0" : "=m" (cw));
++    const unsigned control = _mm_getcsr() & 0xffc0u;
++    if (cw != 0x037fu || (control != 0x1f80u && control != 0x9fc0u))
++        return false;
++
++    // The source is an Engine-owned, previously sanitized configuration, not an
++    // arbitrary caller-provided ModernConfig. Reject fields whose second
++    // normalization could alter bits or raise denormal/invalid status.
++    const auto& incoming = first.modern.config;
++    for (const auto& shape : incoming.msegs)
++        for (int i = 0; i < shape.count; ++i)
++        {
++            const auto& point = shape.points[(std::size_t) i];
++            for (const float value : { point.time, point.level, point.curve })
++            {
++                const auto bits = std::bit_cast<std::uint32_t>(value);
++                const auto magnitude = bits & 0x7fffffffu;
++                const auto exponent = bits & 0x7f800000u;
++                if (exponent == 0x7f800000u || (exponent == 0 && magnitude != 0))
++                    return false;
++            }
++        }
++
++    using namespace modern;
++    auto& config = modern.config;
++    auto& transportRatePhase = modern.transportRatePhase;
++    auto& freeStarted = modern.freeStarted;
++    auto& monoRestartPending = modern.monoRestartPending;
++    auto& globalRunners = modern.globalRunners;
++    auto& voices = modern.voices;
++    const auto previous = config;
++    config = incoming;
++        for (int m = 0; m < kMsegCount; ++m)
++        {
++            if (config.msegs[(std::size_t) m].sync != previous.msegs[(std::size_t) m].sync
++                || config.msegs[(std::size_t) m].trigger != previous.msegs[(std::size_t) m].trigger)
++                transportRatePhase[(std::size_t) m] = 0.0;
++            if (config.msegs[(std::size_t) m].trigger != previous.msegs[(std::size_t) m].trigger)
++            {
++                // Restart only the changed envelope, using the next sample's
++                // gates. Keeping each voice's age preserves its latched note
++                // values, but means a held poly note needs an explicit restart.
++                freeStarted[(std::size_t) m] = false;
++                monoRestartPending[(std::size_t) m] = config.msegs[(std::size_t) m].trigger == MsegTrigger::mono;
++                globalRunners[(std::size_t) m].clear();
++                for (auto& voice : voices)
++                {
++                    voice.runners[(std::size_t) m].clear();
++                    voice.restartPending[(std::size_t) m] = config.msegs[(std::size_t) m].trigger == MsegTrigger::poly;
++                }
++            }
++        }
++        modern.rebuild();
++    return true;
++#endif
++}
++} // namespace cs80
+diff --git a/src/plugin/ModernLayerState.cpp b/src/plugin/ModernLayerState.cpp
+--- a/src/plugin/ModernLayerState.cpp
++++ b/src/plugin/ModernLayerState.cpp
+@@ -230,7 +230,8 @@
+ 
+ void ModernLayerState::mirrorToEngine(const Engine& first, Engine& second) noexcept
+ {
+-    second.setModernConfig(first.getModernConfig());
++    if (! second.tryMirrorModernConfigFrom(first))
++        second.setModernConfig(first.getModernConfig());
+     second.setTransport(first.getModernTransport());
+ }
+ 

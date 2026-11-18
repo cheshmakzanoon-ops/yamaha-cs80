@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "scope": "stock-only observational census; no cache or candidate arithmetic",
+  "fixture": {
+    "sample_rate": 48000,
+    "block_frames": 64,
+    "oversampling": 2,
+    "held_voices": 8,
+    "drift": 0.37,
+    "dispersion": 0.18,
+    "frame_before_midi_every_block": true,
+    "callbacks": 385,
+    "chorus_on": false,
+    "moving_means": "voice pressure/bend/timbre, not BBD clock modulation"
+  },
+  "common_counts_for_every_scene": {
+    "buckets": {
+      "all": {
+        "passes": 49280,
+        "taps": 344960,
+        "adjacent_same_cursor": 147840,
+        "eligible_rebuild_reuses": 147840,
+        "bad": 0,
+        "pass_hit_histogram": [
+          0,
+          0,
+          0,
+          49280,
+          0,
+          0,
+          0
+        ],
+        "per_tap_hits": [
+          0,
+          0,
+          49280,
+          0,
+          49280,
+          0,
+          49280
+        ]
+      },
+      "startup": {
+        "passes": 1024,
+        "taps": 7168,
+        "adjacent_same_cursor": 3072,
+        "eligible_rebuild_reuses": 3072,
+        "bad": 0,
+        "pass_hit_histogram": [
+          0,
+          0,
+          0,
+          1024,
+          0,
+          0,
+          0
+        ],
+        "per_tap_hits": [
+          0,
+          0,
+          1024,
+          0,
+          1024,
+          0,
+          1024
+        ]
+      },
+      "middle": {
+        "passes": 31744,
+        "taps": 222208,
+        "adjacent_same_cursor": 95232,
+        "eligible_rebuild_reuses": 95232,
+        "bad": 0,
+        "pass_hit_histogram": [
+          0,
+          0,
+          0,
+          31744,
+          0,
+          0,
+          0
+        ],
+        "per_tap_hits": [
+          0,
+          0,
+          31744,
+          0,
+          31744,
+          0,
+          31744
+        ]
+      },
+      "steady": {
+        "passes": 16384,
+        "taps": 114688,
+        "adjacent_same_cursor": 49152,
+        "eligible_rebuild_reuses": 49152,
+        "bad": 0,
+        "pass_hit_histogram": [
+          0,
+          0,
+          0,
+          16384,
+          0,
+          0,
+          0
+        ],
+        "per_tap_hits": [
+          0,
+          0,
+          16384,
+          0,
+          16384,
+          0,
+          16384
+        ]
+      },
+      "continuation": {
+        "passes": 128,
+        "taps": 896,
+        "adjacent_same_cursor": 384,
+        "eligible_rebuild_reuses": 384,
+        "bad": 0,
+        "pass_hit_histogram": [
+          0,
+          0,
+          0,
+          128,
+          0,
+          0,
+          0
+        ],
+        "per_tap_hits": [
+          0,
+          0,
+          128,
+          0,
+          128,
+          0,
+          128
+        ]
+      }
+    },
+    "shared_tap_passes_not_per_chain": true,
+    "downstream_chains": 2
+  },
+  "parity": {
+    "factory-held": {
+      "bytes_per_arm": 5203660,
+      "sha256": "d283d3878667c8c49e66c525928d280264b0f7d7de480303eeb57f20e8f770e9",
+      "stock_observed_equal": true
+    },
+    "factory-moving": {
+      "bytes_per_arm": 5203660,
+      "sha256": "fed86260a848a6da020eeb5a7788bbf296ec89a89742ca5ea0846e7698f9a629",
+      "stock_observed_equal": true
+    },
+    "panel-moving": {
+      "bytes_per_arm": 5203660,
+      "sha256": "95a2566a2cfda8d7afdf6e8f754730c3c7ccd67119fae38dc99641e74adcb15e",
+      "stock_observed_equal": true
+    },
+    "pure-held": {
+      "bytes_per_arm": 5203660,
+      "sha256": "45a5a8c7ab65d76e70e3570a34e54305f845c2a8475ab8766b9d6af67c02e8b6",
+      "stock_observed_equal": true
+    }
+  },
+  "whole_four_scene_totals": {
+    "passes": 197120,
+    "taps": 1379840,
+    "eligible_adjacent_repeats": 591360
+  },
+  "observer_normality": "all four source floats and three coefficients are finite zero/normal; cursor and raw bits equal to immediately prior tap; CW 0x037f, MXCSR controls 0x1f80 or 0x9fc0 unchanged",
+  "coverage": [
+    "every callback PCM/FP controls/status/errno",
+    "public voice/routing/preparation observations",
+    "all explicitly serialized BBD DSP fields, sample/stamp buffers, two chain filter states and both RNG states"
+  ],
+  "omitted": [
+    "pointer values and allocator capacity/padding",
+    "unrelated private Engine fields",
+    "chorus-on/modulated-clock, unusual-rate and exception/trap qualification"
+  ],
+  "compiles_and_links": 5,
+  "fresh_renderer_invocations": 8,
+  "all_command_exits_zero": true,
+  "candidate_DSP_runs": 0,
+  "timing_runs": 0,
+  "native_plugin_loads": 0
+}

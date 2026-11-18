@@ -1,0 +1,21 @@
+0000000000040b40 <void isolated::run<false>(isolated::Pair&, isolated::Pair&, unsigned int) [clone .isra.0]>:
+   40b40:	85 f6                	test   %esi,%esi
+   40b42:	74 26                	je     40b6a <void isolated::run<false>(isolated::Pair&, isolated::Pair&, unsigned int) [clone .isra.0]+0x2a>
+   40b44:	41 54                	push   %r12
+   40b46:	41 89 f4             	mov    %esi,%r12d
+   40b49:	55                   	push   %rbp
+   40b4a:	48 89 fd             	mov    %rdi,%rbp
+   40b4d:	53                   	push   %rbx
+   40b4e:	31 db                	xor    %ebx,%ebx
+   40b50:	48 8b 75 08          	mov    0x8(%rbp),%rsi
+   40b54:	48 8b 7d 00          	mov    0x0(%rbp),%rdi
+   40b58:	83 c3 01             	add    $0x1,%ebx
+   40b5b:	e8 a0 af ff ff       	call   3bb00 <cs80::ModernLayerState::mirrorToEngine(cs80::Engine const&, cs80::Engine&)>
+   40b60:	44 39 e3             	cmp    %r12d,%ebx
+   40b63:	75 eb                	jne    40b50 <void isolated::run<false>(isolated::Pair&, isolated::Pair&, unsigned int) [clone .isra.0]+0x10>
+   40b65:	5b                   	pop    %rbx
+   40b66:	5d                   	pop    %rbp
+   40b67:	41 5c                	pop    %r12
+   40b69:	c3                   	ret
+   40b6a:	c3                   	ret
+   40b6b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)

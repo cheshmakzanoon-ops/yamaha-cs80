@@ -1,0 +1,40 @@
+000000000004c740 <void isolated::run<true>(isolated::Pair&, isolated::Pair&, unsigned int)>:
+   4c740:	85 d2                	test   %edx,%edx
+   4c742:	74 5c                	je     4c7a0 <void isolated::run<true>(isolated::Pair&, isolated::Pair&, unsigned int)+0x60>
+   4c744:	41 55                	push   %r13
+   4c746:	49 89 f5             	mov    %rsi,%r13
+   4c749:	41 54                	push   %r12
+   4c74b:	41 89 d4             	mov    %edx,%r12d
+   4c74e:	55                   	push   %rbp
+   4c74f:	48 89 fd             	mov    %rdi,%rbp
+   4c752:	53                   	push   %rbx
+   4c753:	31 db                	xor    %ebx,%ebx
+   4c755:	48 83 ec 08          	sub    $0x8,%rsp
+   4c759:	eb 0d                	jmp    4c768 <void isolated::run<true>(isolated::Pair&, isolated::Pair&, unsigned int)+0x28>
+   4c75b:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)
+   4c760:	83 c3 01             	add    $0x1,%ebx
+   4c763:	41 39 dc             	cmp    %ebx,%r12d
+   4c766:	74 2a                	je     4c792 <void isolated::run<true>(isolated::Pair&, isolated::Pair&, unsigned int)+0x52>
+   4c768:	48 8b 75 08          	mov    0x8(%rbp),%rsi
+   4c76c:	48 8b 7d 00          	mov    0x0(%rbp),%rdi
+   4c770:	e8 8b f3 fe ff       	call   3bb00 <cs80::ModernLayerState::mirrorToEngine(cs80::Engine const&, cs80::Engine&)>
+   4c775:	89 d8                	mov    %ebx,%eax
+   4c777:	f7 d0                	not    %eax
+   4c779:	a8 07                	test   $0x7,%al
+   4c77b:	75 e3                	jne    4c760 <void isolated::run<true>(isolated::Pair&, isolated::Pair&, unsigned int)+0x20>
+   4c77d:	49 8b 75 08          	mov    0x8(%r13),%rsi
+   4c781:	49 8b 7d 00          	mov    0x0(%r13),%rdi
+   4c785:	83 c3 01             	add    $0x1,%ebx
+   4c788:	e8 73 f3 fe ff       	call   3bb00 <cs80::ModernLayerState::mirrorToEngine(cs80::Engine const&, cs80::Engine&)>
+   4c78d:	41 39 dc             	cmp    %ebx,%r12d
+   4c790:	75 d6                	jne    4c768 <void isolated::run<true>(isolated::Pair&, isolated::Pair&, unsigned int)+0x28>
+   4c792:	48 83 c4 08          	add    $0x8,%rsp
+   4c796:	5b                   	pop    %rbx
+   4c797:	5d                   	pop    %rbp
+   4c798:	41 5c                	pop    %r12
+   4c79a:	41 5d                	pop    %r13
+   4c79c:	c3                   	ret
+   4c79d:	0f 1f 00             	nopl   (%rax)
+   4c7a0:	c3                   	ret
+   4c7a1:	66 2e 0f 1f 84 00 00 00 00 00 	cs nopw 0x0(%rax,%rax,1)
+   4c7ab:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)

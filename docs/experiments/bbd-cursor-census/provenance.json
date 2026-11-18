@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "baseline_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "compiler": "GNU C++ 14.2.0; Linux x86-64",
+  "flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "Ig00156Batch_extra_flags": [
+    "-ffp-contract=off"
+  ],
+  "stock_objects_sha256": {
+    "Engine.cpp.o": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+    "FactoryPresets.cpp.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+    "Ig00156Batch.cpp.o": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33"
+  },
+  "stock_archive_sha256": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+  "stock_BbdChorus_header_sha256": "559adda6ec5da6334ba19592e05189cb5f8dc953608937a483a3da9e4557c4c1",
+  "observed_BbdChorus_header_sha256": "dc4a06bb77328a226a2bc62e4e5f2fbfe93d5eff5ccb237d46e2371c9587431d",
+  "observer_patch_sha256": "2153851fefcbe449d7e2eb8caebdef9ca2eae8d9a2c9ebed78a366cee4a42246",
+  "driver_sha256": "2068ca50486ce452485a8792b0825a7d94aa929209fa5e780c7ecaa8f9263b94",
+  "observer_sha256": "18be57a000f8141ca940227e12d3d4ae88d6313c3a572553416d66b85b8339c1",
+  "retained_cost_sha256": "a5a9835cad2a7b057bfcd0bf8527009fc95b27d23224e50bb274027f8358b611",
+  "committed_inputs": {
+    "cost": "docs/experiments/lp-cross-lane-reuse/cost/cost.cpp",
+    "cost_sha256": "b1da4fc6d0149a72b139b4cb042a9e3aa883b9bb67edca5dc5f6f05baa0006c7",
+    "fixture": "src/tools/source_factory_benchmark.cpp",
+    "fixture_sha256": "48db138c7b6d8bd9ba6d0fbb4f819ec3bd4d8c7a7fcf4de661465a1c28b96c4e",
+    "clock_header": "src/tools/CallbackCpuMeasurement.h",
+    "clock_header_sha256": "d8196e224bc6e825cab1290fce717ab8f28719f036aefdbc0eca6dad254a8a3d"
+  },
+  "original_small_receipts_sha256": {
+    "census_manifest": "9a7681416e108d406a3407942fcdd04fdf74058df668c6c4931368c1c38f8893",
+    "census_freeze": "cd7fe33a18e5982afc6fdb0d18396949617819a9f877f7adb0448dc2f33b223e",
+    "census_commands": "869482f0f72ee55455fa2881fd6d816e8a06d477bffcf8615e0d6953b632c745",
+    "census_result": "8434e2af30a06ec094e1f72adfcf9eea678388f96ae49573e880ea6986d57ffb",
+    "stock_profile_analysis": "a0ee19ff9f7f07cd5d59ffdba65ee61ea0c29ec4b08da3acba2659ef951722d9"
+  },
+  "scope_limits": [
+    "Saved hashes identify omitted receipts/captures, not hosted downloads or proof independent of those records.",
+    "Portable replay source has been offline checked only; no new compile/render was performed when packaging.",
+    "The imported cost helper contains timing code in unused functions; the census main only calls Work::step and observations, never a timing entry."
+  ]
+}

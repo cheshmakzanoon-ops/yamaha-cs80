@@ -1,0 +1,1497 @@
+{
+  "batches": [
+    {
+      "A_ns_per_call": 360.4157371520996,
+      "B_ns_per_call": 346.1427879333496,
+      "effect_percent": -4.009516576214919,
+      "extra_label": null,
+      "id": 0,
+      "kind": "sham",
+      "log_B_over_A": -0.040921130436296416,
+      "order": "ABBA",
+      "replicate": 0,
+      "round": 0,
+      "scene": "default",
+      "slots": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "wall_A_ns_per_call": 360.39514923095703,
+      "wall_B_ns_per_call": 346.1240692138672
+    },
+    {
+      "A_ns_per_call": 603.8638191223145,
+      "B_ns_per_call": 587.0155639648438,
+      "effect_percent": -2.869667505151778,
+      "extra_label": null,
+      "id": 1,
+      "kind": "sham",
+      "log_B_over_A": -0.02911647538555684,
+      "order": "BAAB",
+      "replicate": 0,
+      "round": 0,
+      "scene": "dense",
+      "slots": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "wall_A_ns_per_call": 603.8415031433105,
+      "wall_B_ns_per_call": 587.2368469238281
+    },
+    {
+      "A_ns_per_call": 617.2866249084473,
+      "B_ns_per_call": 295.3989372253418,
+      "effect_percent": -52.30608012563312,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.2414157657623291,
+      "id": 2,
+      "kind": "compare",
+      "log_B_over_A": -0.7403662621644571,
+      "order": "BAAB",
+      "replicate": 0,
+      "round": 1,
+      "scene": "dense",
+      "slots": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "stock_minus_candidate_ns": 321.88768768310547,
+      "wall_A_ns_per_call": 618.2241554260254,
+      "wall_B_ns_per_call": 295.24061584472656
+    },
+    {
+      "A_ns_per_call": 324.8025932312012,
+      "B_ns_per_call": 82.92117691040039,
+      "effect_percent": -74.46234352270322,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.18141106224060058,
+      "id": 3,
+      "kind": "compare",
+      "log_B_over_A": -1.3650160985093578,
+      "order": "ABBA",
+      "replicate": 0,
+      "round": 1,
+      "scene": "default",
+      "slots": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "stock_minus_candidate_ns": 241.88141632080078,
+      "wall_A_ns_per_call": 324.7830123901367,
+      "wall_B_ns_per_call": 82.94625854492188
+    },
+    {
+      "A_ns_per_call": 611.3239593505859,
+      "B_ns_per_call": 326.59241104125977,
+      "effect_percent": -42.98625412058349,
+      "extra_label": "A",
+      "extra_over_ordinary": 1.753962986601494,
+      "id": 4,
+      "kind": "positive",
+      "log_B_over_A": -0.5618777914476851,
+      "order": "ABBA",
+      "replicate": 0,
+      "round": 2,
+      "scene": "default",
+      "slots": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "wall_A_ns_per_call": 611.966178894043,
+      "wall_B_ns_per_call": 326.5745391845703
+    },
+    {
+      "A_ns_per_call": 657.2852325439453,
+      "B_ns_per_call": 672.8939743041992,
+      "effect_percent": 2.3932345558592654,
+      "extra_label": "A",
+      "extra_over_ordinary": 0.9766270245662211,
+      "id": 5,
+      "kind": "positive",
+      "log_B_over_A": 0.02365045564424051,
+      "order": "BAAB",
+      "replicate": 0,
+      "round": 2,
+      "scene": "dense",
+      "slots": [
+        20,
+        21,
+        22,
+        23
+      ],
+      "wall_A_ns_per_call": 657.2617034912109,
+      "wall_B_ns_per_call": 672.8700904846191
+    },
+    {
+      "A_ns_per_call": 568.5457954406738,
+      "B_ns_per_call": 283.8659553527832,
+      "effect_percent": -50.0428650356484,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.21350988006591798,
+      "id": 6,
+      "kind": "compare",
+      "log_B_over_A": -0.6940048489653332,
+      "order": "ABBA",
+      "replicate": 1,
+      "round": 3,
+      "scene": "dense",
+      "slots": [
+        24,
+        25,
+        26,
+        27
+      ],
+      "stock_minus_candidate_ns": 284.6798400878906,
+      "wall_A_ns_per_call": 568.7243003845215,
+      "wall_B_ns_per_call": 283.88414764404297
+    },
+    {
+      "A_ns_per_call": 323.98701095581055,
+      "B_ns_per_call": 95.4099349975586,
+      "effect_percent": -70.46488774313391,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.17143280696868896,
+      "id": 7,
+      "kind": "compare",
+      "log_B_over_A": -1.219590384428055,
+      "order": "BAAB",
+      "replicate": 1,
+      "round": 3,
+      "scene": "default",
+      "slots": [
+        28,
+        29,
+        30,
+        31
+      ],
+      "stock_minus_candidate_ns": 228.57707595825195,
+      "wall_A_ns_per_call": 323.96755599975586,
+      "wall_B_ns_per_call": 95.39703750610352
+    },
+    {
+      "A_ns_per_call": 358.30215072631836,
+      "B_ns_per_call": 333.21135330200195,
+      "effect_percent": -6.724313621606863,
+      "extra_label": null,
+      "id": 8,
+      "kind": "sham",
+      "log_B_over_A": -0.06961070825457405,
+      "order": "BAAB",
+      "replicate": 1,
+      "round": 4,
+      "scene": "default",
+      "slots": [
+        32,
+        33,
+        34,
+        35
+      ],
+      "wall_A_ns_per_call": 358.28131103515625,
+      "wall_B_ns_per_call": 334.31320571899414
+    },
+    {
+      "A_ns_per_call": 617.2892112731934,
+      "B_ns_per_call": 560.0639610290527,
+      "effect_percent": -9.254418848620691,
+      "extra_label": null,
+      "id": 9,
+      "kind": "sham",
+      "log_B_over_A": -0.09711040657543624,
+      "order": "ABBA",
+      "replicate": 1,
+      "round": 4,
+      "scene": "dense",
+      "slots": [
+        36,
+        37,
+        38,
+        39
+      ],
+      "wall_A_ns_per_call": 617.2629051208496,
+      "wall_B_ns_per_call": 560.0425872802734
+    },
+    {
+      "A_ns_per_call": 595.2976417541504,
+      "B_ns_per_call": 268.36180114746094,
+      "effect_percent": -54.84706535538682,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.2452018804550171,
+      "id": 10,
+      "kind": "compare",
+      "log_B_over_A": -0.7951149105715025,
+      "order": "BAAB",
+      "replicate": 2,
+      "round": 5,
+      "scene": "dense",
+      "slots": [
+        40,
+        41,
+        42,
+        43
+      ],
+      "stock_minus_candidate_ns": 326.93584060668945,
+      "wall_A_ns_per_call": 595.2774505615234,
+      "wall_B_ns_per_call": 268.3468246459961
+    },
+    {
+      "A_ns_per_call": 328.42602920532227,
+      "B_ns_per_call": 90.76839065551758,
+      "effect_percent": -72.90332755311594,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.1782432289123535,
+      "id": 11,
+      "kind": "compare",
+      "log_B_over_A": -1.3057592535793496,
+      "order": "ABBA",
+      "replicate": 2,
+      "round": 5,
+      "scene": "default",
+      "slots": [
+        44,
+        45,
+        46,
+        47
+      ],
+      "stock_minus_candidate_ns": 237.6576385498047,
+      "wall_A_ns_per_call": 328.40742111206055,
+      "wall_B_ns_per_call": 90.75638580322266
+    },
+    {
+      "A_ns_per_call": 327.5055809020996,
+      "B_ns_per_call": 459.59223556518555,
+      "effect_percent": 39.67054986279383,
+      "extra_label": "B",
+      "extra_over_ordinary": 1.3967054986279384,
+      "id": 12,
+      "kind": "positive",
+      "log_B_over_A": 0.33411624819299135,
+      "order": "BAAB",
+      "replicate": 1,
+      "round": 6,
+      "scene": "default",
+      "slots": [
+        48,
+        49,
+        50,
+        51
+      ],
+      "wall_A_ns_per_call": 327.4863510131836,
+      "wall_B_ns_per_call": 459.57270431518555
+    },
+    {
+      "A_ns_per_call": 614.2009925842285,
+      "B_ns_per_call": 661.4125099182129,
+      "effect_percent": 7.640517362838874,
+      "extra_label": "B",
+      "extra_over_ordinary": 1.0764051736283888,
+      "id": 13,
+      "kind": "positive",
+      "log_B_over_A": 0.07362694627711264,
+      "order": "ABBA",
+      "replicate": 1,
+      "round": 6,
+      "scene": "dense",
+      "slots": [
+        52,
+        53,
+        54,
+        55
+      ],
+      "wall_A_ns_per_call": 614.2591896057129,
+      "wall_B_ns_per_call": 661.4632530212402
+    },
+    {
+      "A_ns_per_call": 591.5493850708008,
+      "B_ns_per_call": 291.83870697021484,
+      "effect_percent": -51.24073580948365,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.22478300857543945,
+      "id": 14,
+      "kind": "compare",
+      "log_B_over_A": -0.7182749719212786,
+      "order": "ABBA",
+      "replicate": 3,
+      "round": 7,
+      "scene": "dense",
+      "slots": [
+        56,
+        57,
+        58,
+        59
+      ],
+      "stock_minus_candidate_ns": 299.71067810058594,
+      "wall_A_ns_per_call": 591.5572547912598,
+      "wall_B_ns_per_call": 328.26404190063477
+    },
+    {
+      "A_ns_per_call": 337.9542541503906,
+      "B_ns_per_call": 84.13441848754883,
+      "effect_percent": -75.06907084639657,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.19036487674713135,
+      "id": 15,
+      "kind": "compare",
+      "log_B_over_A": -1.3890610186456112,
+      "order": "BAAB",
+      "replicate": 3,
+      "round": 7,
+      "scene": "default",
+      "slots": [
+        60,
+        61,
+        62,
+        63
+      ],
+      "stock_minus_candidate_ns": 253.8198356628418,
+      "wall_A_ns_per_call": 337.93572998046875,
+      "wall_B_ns_per_call": 84.12181091308594
+    },
+    {
+      "A_ns_per_call": 333.7084732055664,
+      "B_ns_per_call": 332.25993728637695,
+      "effect_percent": -0.4810640949536746,
+      "extra_label": null,
+      "id": 16,
+      "kind": "sham",
+      "log_B_over_A": -0.0048222493268292865,
+      "order": "ABBA",
+      "replicate": 2,
+      "round": 8,
+      "scene": "default",
+      "slots": [
+        64,
+        65,
+        66,
+        67
+      ],
+      "wall_A_ns_per_call": 333.7914848327637,
+      "wall_B_ns_per_call": 332.27995681762695
+    },
+    {
+      "A_ns_per_call": 630.7974586486816,
+      "B_ns_per_call": 559.510181427002,
+      "effect_percent": -11.139572917853796,
+      "extra_label": null,
+      "id": 17,
+      "kind": "sham",
+      "log_B_over_A": -0.11810328225570732,
+      "order": "BAAB",
+      "replicate": 2,
+      "round": 8,
+      "scene": "dense",
+      "slots": [
+        68,
+        69,
+        70,
+        71
+      ],
+      "wall_A_ns_per_call": 659.0999336242676,
+      "wall_B_ns_per_call": 559.5240058898926
+    },
+    {
+      "A_ns_per_call": 596.7115135192871,
+      "B_ns_per_call": 269.1874809265137,
+      "effect_percent": -54.89145727443736,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.24564302444458008,
+      "id": 18,
+      "kind": "compare",
+      "log_B_over_A": -0.7960985399984324,
+      "order": "BAAB",
+      "replicate": 4,
+      "round": 9,
+      "scene": "dense",
+      "slots": [
+        72,
+        73,
+        74,
+        75
+      ],
+      "stock_minus_candidate_ns": 327.52403259277344,
+      "wall_A_ns_per_call": 596.6917877197266,
+      "wall_B_ns_per_call": 269.49039459228516
+    },
+    {
+      "A_ns_per_call": 330.55944061279297,
+      "B_ns_per_call": 94.49868774414062,
+      "effect_percent": -71.52685147462459,
+      "extra_label": null,
+      "hot_assumption_ms_per_audio_second": 0.17704556465148927,
+      "id": 19,
+      "kind": "compare",
+      "log_B_over_A": -1.256208699826737,
+      "order": "ABBA",
+      "replicate": 4,
+      "round": 9,
+      "scene": "default",
+      "slots": [
+        76,
+        77,
+        78,
+        79
+      ],
+      "stock_minus_candidate_ns": 236.06075286865234,
+      "wall_A_ns_per_call": 330.5397529602051,
+      "wall_B_ns_per_call": 94.48505401611328
+    }
+  ],
+  "control_pass": false,
+  "failures": [
+    "sham batch 0",
+    "positive batch 4",
+    "positive batch 5",
+    "sham batch 8",
+    "sham batch 9",
+    "positive batch 12",
+    "positive batch 13",
+    "sham batch 17",
+    "mean sham default",
+    "mean sham dense"
+  ],
+  "freeze_sha256": "cb4e956598ed65cdfe22969f81ee9e67292c3e5f385f3a80525f680964ca8713",
+  "no_exclusions": true,
+  "plan_sha256": "a6ea37225e27bb4f8e19974bfe8485d1857ab3030d0d816fc8bc7973df37d64b",
+  "processes": [
+    {
+      "cpu_ns": 47411787,
+      "empty_cpu_ns": [
+        5329,
+        241,
+        222
+      ],
+      "ns_per_main_call": 361.72322845458984,
+      "overhead_pass": true,
+      "wall_ns": 47409078,
+      "wall_ns_per_main_call": 361.7025604248047
+    },
+    {
+      "cpu_ns": 46833627,
+      "empty_cpu_ns": [
+        4892,
+        236,
+        217
+      ],
+      "ns_per_main_call": 357.31221771240234,
+      "overhead_pass": true,
+      "wall_ns": 46830877,
+      "wall_ns_per_main_call": 357.2912368774414
+    },
+    {
+      "cpu_ns": 43905628,
+      "empty_cpu_ns": [
+        19142,
+        245,
+        219
+      ],
+      "ns_per_main_call": 334.9733581542969,
+      "overhead_pass": true,
+      "wall_ns": 43903471,
+      "wall_ns_per_main_call": 334.95690155029297
+    },
+    {
+      "cpu_ns": 47069036,
+      "empty_cpu_ns": [
+        5450,
+        238,
+        226
+      ],
+      "ns_per_main_call": 359.1082458496094,
+      "overhead_pass": true,
+      "wall_ns": 47066348,
+      "wall_ns_per_main_call": 359.0877380371094
+    },
+    {
+      "cpu_ns": 80274851,
+      "empty_cpu_ns": [
+        5501,
+        230,
+        215
+      ],
+      "ns_per_main_call": 612.4485092163086,
+      "overhead_pass": true,
+      "wall_ns": 80304676,
+      "wall_ns_per_main_call": 612.6760559082031
+    },
+    {
+      "cpu_ns": 80377505,
+      "empty_cpu_ns": [
+        5510,
+        222,
+        221
+      ],
+      "ns_per_main_call": 613.2316970825195,
+      "overhead_pass": true,
+      "wall_ns": 80374583,
+      "wall_ns_per_main_call": 613.2094039916992
+    },
+    {
+      "cpu_ns": 77921772,
+      "empty_cpu_ns": [
+        4743,
+        225,
+        217
+      ],
+      "ns_per_main_call": 594.4959411621094,
+      "overhead_pass": true,
+      "wall_ns": 77918844,
+      "wall_ns_per_main_call": 594.4736022949219
+    },
+    {
+      "cpu_ns": 73607757,
+      "empty_cpu_ns": [
+        18064,
+        292,
+        213
+      ],
+      "ns_per_main_call": 561.5826187133789,
+      "overhead_pass": true,
+      "wall_ns": 73635940,
+      "wall_ns_per_main_call": 561.7976379394531
+    },
+    {
+      "cpu_ns": 35379672,
+      "empty_cpu_ns": [
+        5184,
+        251,
+        224
+      ],
+      "ns_per_main_call": 269.92547607421875,
+      "overhead_pass": true,
+      "wall_ns": 35377393,
+      "wall_ns_per_main_call": 269.90808868408203
+    },
+    {
+      "cpu_ns": 78701074,
+      "empty_cpu_ns": [
+        5017,
+        241,
+        219
+      ],
+      "ns_per_main_call": 600.4415435791016,
+      "overhead_pass": true,
+      "wall_ns": 78950929,
+      "wall_ns_per_main_call": 602.347785949707
+    },
+    {
+      "cpu_ns": 83116911,
+      "empty_cpu_ns": [
+        5340,
+        248,
+        215
+      ],
+      "ns_per_main_call": 634.131706237793,
+      "overhead_pass": true,
+      "wall_ns": 83112824,
+      "wall_ns_per_main_call": 634.1005249023438
+    },
+    {
+      "cpu_ns": 42057387,
+      "empty_cpu_ns": [
+        5750,
+        261,
+        228
+      ],
+      "ns_per_main_call": 320.87239837646484,
+      "overhead_pass": true,
+      "wall_ns": 42018163,
+      "wall_ns_per_main_call": 320.5731430053711
+    },
+    {
+      "cpu_ns": 40631353,
+      "empty_cpu_ns": [
+        20003,
+        239,
+        226
+      ],
+      "ns_per_main_call": 309.9926223754883,
+      "overhead_pass": true,
+      "wall_ns": 40628681,
+      "wall_ns_per_main_call": 309.9722366333008
+    },
+    {
+      "cpu_ns": 10453618,
+      "empty_cpu_ns": [
+        5285,
+        258,
+        232
+      ],
+      "ns_per_main_call": 79.75477600097656,
+      "overhead_pass": true,
+      "wall_ns": 10452194,
+      "wall_ns_per_main_call": 79.74391174316406
+    },
+    {
+      "cpu_ns": 11283671,
+      "empty_cpu_ns": [
+        5987,
+        234,
+        224
+      ],
+      "ns_per_main_call": 86.08757781982422,
+      "overhead_pass": true,
+      "wall_ns": 11291670,
+      "wall_ns_per_main_call": 86.14860534667969
+    },
+    {
+      "cpu_ns": 44513698,
+      "empty_cpu_ns": [
+        5480,
+        232,
+        217
+      ],
+      "ns_per_main_call": 339.61256408691406,
+      "overhead_pass": true,
+      "wall_ns": 44511237,
+      "wall_ns_per_main_call": 339.59378814697266
+    },
+    {
+      "cpu_ns": 108125532,
+      "empty_cpu_ns": [
+        5864,
+        269,
+        211
+      ],
+      "ns_per_main_call": 824.9323425292969,
+      "overhead_pass": true,
+      "wall_ns": 108296389,
+      "wall_ns_per_main_call": 826.2358779907227
+    },
+    {
+      "cpu_ns": 43318965,
+      "empty_cpu_ns": [
+        68163,
+        262,
+        483
+      ],
+      "ns_per_main_call": 330.49747467041016,
+      "overhead_pass": true,
+      "wall_ns": 43316514,
+      "wall_ns_per_main_call": 330.47877502441406
+    },
+    {
+      "cpu_ns": 42295276,
+      "empty_cpu_ns": [
+        5245,
+        271,
+        240
+      ],
+      "ns_per_main_call": 322.6873474121094,
+      "overhead_pass": true,
+      "wall_ns": 42293042,
+      "wall_ns_per_main_call": 322.67030334472656
+    },
+    {
+      "cpu_ns": 52129376,
+      "empty_cpu_ns": [
+        5609,
+        609,
+        222
+      ],
+      "ns_per_main_call": 397.715576171875,
+      "overhead_pass": true,
+      "wall_ns": 52126873,
+      "wall_ns_per_main_call": 397.6964797973633
+    },
+    {
+      "cpu_ns": 89600577,
+      "empty_cpu_ns": [
+        5720,
+        229,
+        219
+      ],
+      "ns_per_main_call": 683.5981521606445,
+      "overhead_pass": true,
+      "wall_ns": 89597624,
+      "wall_ns_per_main_call": 683.5756225585938
+    },
+    {
+      "cpu_ns": 88287130,
+      "empty_cpu_ns": [
+        4902,
+        240,
+        206
+      ],
+      "ns_per_main_call": 673.5773468017578,
+      "overhead_pass": true,
+      "wall_ns": 88284127,
+      "wall_ns_per_main_call": 673.5544357299805
+    },
+    {
+      "cpu_ns": 84016250,
+      "empty_cpu_ns": [
+        20789,
+        337,
+        273
+      ],
+      "ns_per_main_call": 640.9931182861328,
+      "overhead_pass": true,
+      "wall_ns": 84013085,
+      "wall_ns_per_main_call": 640.9689712524414
+    },
+    {
+      "cpu_ns": 86794541,
+      "empty_cpu_ns": [
+        4802,
+        245,
+        223
+      ],
+      "ns_per_main_call": 662.1897964477539,
+      "overhead_pass": true,
+      "wall_ns": 86791233,
+      "wall_ns_per_main_call": 662.1645584106445
+    },
+    {
+      "cpu_ns": 71975223,
+      "empty_cpu_ns": [
+        5713,
+        266,
+        227
+      ],
+      "ns_per_main_call": 549.1273727416992,
+      "overhead_pass": true,
+      "wall_ns": 71981975,
+      "wall_ns_per_main_call": 549.1788864135742
+    },
+    {
+      "cpu_ns": 37051413,
+      "empty_cpu_ns": [
+        6073,
+        226,
+        216
+      ],
+      "ns_per_main_call": 282.67984771728516,
+      "overhead_pass": true,
+      "wall_ns": 37058883,
+      "wall_ns_per_main_call": 282.7368392944336
+    },
+    {
+      "cpu_ns": 37362344,
+      "empty_cpu_ns": [
+        4786,
+        243,
+        233
+      ],
+      "ns_per_main_call": 285.05206298828125,
+      "overhead_pass": true,
+      "wall_ns": 37359643,
+      "wall_ns_per_main_call": 285.03145599365234
+    },
+    {
+      "cpu_ns": 77065646,
+      "empty_cpu_ns": [
+        18023,
+        236,
+        221
+      ],
+      "ns_per_main_call": 587.9642181396484,
+      "overhead_pass": true,
+      "wall_ns": 77105688,
+      "wall_ns_per_main_call": 588.2697143554688
+    },
+    {
+      "cpu_ns": 12333134,
+      "empty_cpu_ns": [
+        5888,
+        234,
+        216
+      ],
+      "ns_per_main_call": 94.09434509277344,
+      "overhead_pass": true,
+      "wall_ns": 12331183,
+      "wall_ns_per_main_call": 94.07946014404297
+    },
+    {
+      "cpu_ns": 39167346,
+      "empty_cpu_ns": [
+        5986,
+        252,
+        228
+      ],
+      "ns_per_main_call": 298.82313537597656,
+      "overhead_pass": true,
+      "wall_ns": 39164817,
+      "wall_ns_per_main_call": 298.80384063720703
+    },
+    {
+      "cpu_ns": 45763905,
+      "empty_cpu_ns": [
+        5298,
+        240,
+        223
+      ],
+      "ns_per_main_call": 349.15088653564453,
+      "overhead_pass": true,
+      "wall_ns": 45761334,
+      "wall_ns_per_main_call": 349.1312713623047
+    },
+    {
+      "cpu_ns": 12678008,
+      "empty_cpu_ns": [
+        4774,
+        246,
+        225
+      ],
+      "ns_per_main_call": 96.72552490234375,
+      "overhead_pass": true,
+      "wall_ns": 12676578,
+      "wall_ns_per_main_call": 96.71461486816406
+    },
+    {
+      "cpu_ns": 46027414,
+      "empty_cpu_ns": [
+        4344,
+        250,
+        229
+      ],
+      "ns_per_main_call": 351.1613006591797,
+      "overhead_pass": true,
+      "wall_ns": 46318761,
+      "wall_ns_per_main_call": 353.3841018676758
+    },
+    {
+      "cpu_ns": 42546656,
+      "empty_cpu_ns": [
+        5410,
+        227,
+        213
+      ],
+      "ns_per_main_call": 324.605224609375,
+      "overhead_pass": true,
+      "wall_ns": 42543950,
+      "wall_ns_per_main_call": 324.58457946777344
+    },
+    {
+      "cpu_ns": 51380103,
+      "empty_cpu_ns": [
+        5289,
+        226,
+        228
+      ],
+      "ns_per_main_call": 391.9990768432617,
+      "overhead_pass": true,
+      "wall_ns": 51377346,
+      "wall_ns_per_main_call": 391.97804260253906
+    },
+    {
+      "cpu_ns": 41321943,
+      "empty_cpu_ns": [
+        8204,
+        250,
+        210
+      ],
+      "ns_per_main_call": 315.2614059448242,
+      "overhead_pass": true,
+      "wall_ns": 41319440,
+      "wall_ns_per_main_call": 315.2423095703125
+    },
+    {
+      "cpu_ns": 79152940,
+      "empty_cpu_ns": [
+        8667,
+        286,
+        272
+      ],
+      "ns_per_main_call": 603.8890075683594,
+      "overhead_pass": true,
+      "wall_ns": 79149696,
+      "wall_ns_per_main_call": 603.8642578125
+    },
+    {
+      "cpu_ns": 72608436,
+      "empty_cpu_ns": [
+        5344,
+        243,
+        226
+      ],
+      "ns_per_main_call": 553.9584045410156,
+      "overhead_pass": true,
+      "wall_ns": 72605761,
+      "wall_ns_per_main_call": 553.9379959106445
+    },
+    {
+      "cpu_ns": 74208971,
+      "empty_cpu_ns": [
+        5532,
+        246,
+        236
+      ],
+      "ns_per_main_call": 566.1695175170898,
+      "overhead_pass": true,
+      "wall_ns": 74206043,
+      "wall_ns_per_main_call": 566.1471786499023
+    },
+    {
+      "cpu_ns": 82665723,
+      "empty_cpu_ns": [
+        5299,
+        235,
+        229
+      ],
+      "ns_per_main_call": 630.6894149780273,
+      "overhead_pass": true,
+      "wall_ns": 82662071,
+      "wall_ns_per_main_call": 630.6615524291992
+    },
+    {
+      "cpu_ns": 35158319,
+      "empty_cpu_ns": [
+        5372,
+        248,
+        236
+      ],
+      "ns_per_main_call": 268.23668670654297,
+      "overhead_pass": true,
+      "wall_ns": 35156165,
+      "wall_ns_per_main_call": 268.22025299072266
+    },
+    {
+      "cpu_ns": 82451809,
+      "empty_cpu_ns": [
+        5400,
+        256,
+        218
+      ],
+      "ns_per_main_call": 629.0573806762695,
+      "overhead_pass": true,
+      "wall_ns": 82449159,
+      "wall_ns_per_main_call": 629.0371627807617
+    },
+    {
+      "cpu_ns": 73601896,
+      "empty_cpu_ns": [
+        5604,
+        237,
+        204
+      ],
+      "ns_per_main_call": 561.5379028320312,
+      "overhead_pass": true,
+      "wall_ns": 73599253,
+      "wall_ns_per_main_call": 561.5177383422852
+    },
+    {
+      "cpu_ns": 35191117,
+      "empty_cpu_ns": [
+        17938,
+        230,
+        212
+      ],
+      "ns_per_main_call": 268.4869155883789,
+      "overhead_pass": true,
+      "wall_ns": 35189345,
+      "wall_ns_per_main_call": 268.47339630126953
+    },
+    {
+      "cpu_ns": 41605502,
+      "empty_cpu_ns": [
+        6320,
+        261,
+        219
+      ],
+      "ns_per_main_call": 317.42478942871094,
+      "overhead_pass": true,
+      "wall_ns": 41603276,
+      "wall_ns_per_main_call": 317.4078063964844
+    },
+    {
+      "cpu_ns": 14271434,
+      "empty_cpu_ns": [
+        4558,
+        226,
+        215
+      ],
+      "ns_per_main_call": 108.88240051269531,
+      "overhead_pass": true,
+      "wall_ns": 14269212,
+      "wall_ns_per_main_call": 108.86544799804688
+    },
+    {
+      "cpu_ns": 9522955,
+      "empty_cpu_ns": [
+        4298,
+        251,
+        224
+      ],
+      "ns_per_main_call": 72.65438079833984,
+      "overhead_pass": true,
+      "wall_ns": 9522030,
+      "wall_ns_per_main_call": 72.64732360839844
+    },
+    {
+      "cpu_ns": 44489411,
+      "empty_cpu_ns": [
+        5303,
+        237,
+        220
+      ],
+      "ns_per_main_call": 339.4272689819336,
+      "overhead_pass": true,
+      "wall_ns": 44486759,
+      "wall_ns_per_main_call": 339.4070358276367
+    },
+    {
+      "cpu_ns": 53326186,
+      "empty_cpu_ns": [
+        4887,
+        235,
+        208
+      ],
+      "ns_per_main_call": 406.8465118408203,
+      "overhead_pass": true,
+      "wall_ns": 53323905,
+      "wall_ns_per_main_call": 406.82910919189453
+    },
+    {
+      "cpu_ns": 40275437,
+      "empty_cpu_ns": [
+        5421,
+        255,
+        216
+      ],
+      "ns_per_main_call": 307.2771987915039,
+      "overhead_pass": true,
+      "wall_ns": 40273364,
+      "wall_ns_per_main_call": 307.2613830566406
+    },
+    {
+      "cpu_ns": 45578186,
+      "empty_cpu_ns": [
+        5210,
+        235,
+        228
+      ],
+      "ns_per_main_call": 347.7339630126953,
+      "overhead_pass": true,
+      "wall_ns": 45575218,
+      "wall_ns_per_main_call": 347.71131896972656
+    },
+    {
+      "cpu_ns": 67153161,
+      "empty_cpu_ns": [
+        4736,
+        241,
+        220
+      ],
+      "ns_per_main_call": 512.3379592895508,
+      "overhead_pass": true,
+      "wall_ns": 67150322,
+      "wall_ns_per_main_call": 512.3162994384766
+    },
+    {
+      "cpu_ns": 78858665,
+      "empty_cpu_ns": [
+        4690,
+        234,
+        220
+      ],
+      "ns_per_main_call": 601.6438674926758,
+      "overhead_pass": true,
+      "wall_ns": 78876955,
+      "wall_ns_per_main_call": 601.7834091186523
+    },
+    {
+      "cpu_ns": 83597906,
+      "empty_cpu_ns": [
+        5746,
+        236,
+        221
+      ],
+      "ns_per_main_call": 637.8014068603516,
+      "overhead_pass": true,
+      "wall_ns": 83594939,
+      "wall_ns_per_main_call": 637.7787704467773
+    },
+    {
+      "cpu_ns": 89787415,
+      "empty_cpu_ns": [
+        5833,
+        230,
+        213
+      ],
+      "ns_per_main_call": 685.0236129760742,
+      "overhead_pass": true,
+      "wall_ns": 89803684,
+      "wall_ns_per_main_call": 685.1477355957031
+    },
+    {
+      "cpu_ns": 82150440,
+      "empty_cpu_ns": [
+        5177,
+        244,
+        206
+      ],
+      "ns_per_main_call": 626.7581176757812,
+      "overhead_pass": true,
+      "wall_ns": 82147406,
+      "wall_ns_per_main_call": 626.7349700927734
+    },
+    {
+      "cpu_ns": 78949337,
+      "empty_cpu_ns": [
+        5117,
+        252,
+        219
+      ],
+      "ns_per_main_call": 602.3356399536133,
+      "overhead_pass": true,
+      "wall_ns": 78945499,
+      "wall_ns_per_main_call": 602.3063583374023
+    },
+    {
+      "cpu_ns": 32386256,
+      "empty_cpu_ns": [
+        5338,
+        241,
+        225
+      ],
+      "ns_per_main_call": 247.0875244140625,
+      "overhead_pass": true,
+      "wall_ns": 32393047,
+      "wall_ns_per_main_call": 247.13933563232422
+    },
+    {
+      "cpu_ns": 44117510,
+      "empty_cpu_ns": [
+        4957,
+        234,
+        215
+      ],
+      "ns_per_main_call": 336.5898895263672,
+      "overhead_pass": true,
+      "wall_ns": 53659402,
+      "wall_ns_per_main_call": 409.3887481689453
+    },
+    {
+      "cpu_ns": 76121785,
+      "empty_cpu_ns": [
+        5129,
+        278,
+        226
+      ],
+      "ns_per_main_call": 580.7631301879883,
+      "overhead_pass": true,
+      "wall_ns": 76127686,
+      "wall_ns_per_main_call": 580.8081512451172
+    },
+    {
+      "cpu_ns": 11341516,
+      "empty_cpu_ns": [
+        5113,
+        262,
+        218
+      ],
+      "ns_per_main_call": 86.52890014648438,
+      "overhead_pass": true,
+      "wall_ns": 11340151,
+      "wall_ns_per_main_call": 86.51848602294922
+    },
+    {
+      "cpu_ns": 41612433,
+      "empty_cpu_ns": [
+        5573,
+        251,
+        212
+      ],
+      "ns_per_main_call": 317.47766876220703,
+      "overhead_pass": true,
+      "wall_ns": 41610263,
+      "wall_ns_per_main_call": 317.4611129760742
+    },
+    {
+      "cpu_ns": 46980247,
+      "empty_cpu_ns": [
+        4651,
+        237,
+        220
+      ],
+      "ns_per_main_call": 358.4308395385742,
+      "overhead_pass": true,
+      "wall_ns": 46977561,
+      "wall_ns_per_main_call": 358.4103469848633
+    },
+    {
+      "cpu_ns": 10713817,
+      "empty_cpu_ns": [
+        4484,
+        240,
+        232
+      ],
+      "ns_per_main_call": 81.73993682861328,
+      "overhead_pass": true,
+      "wall_ns": 10711877,
+      "wall_ns_per_main_call": 81.72513580322266
+    },
+    {
+      "cpu_ns": 45717561,
+      "empty_cpu_ns": [
+        5760,
+        241,
+        219
+      ],
+      "ns_per_main_call": 348.7973098754883,
+      "overhead_pass": true,
+      "wall_ns": 45742033,
+      "wall_ns_per_main_call": 348.98401641845703
+    },
+    {
+      "cpu_ns": 41170123,
+      "empty_cpu_ns": [
+        5786,
+        220,
+        210
+      ],
+      "ns_per_main_call": 314.10311126708984,
+      "overhead_pass": true,
+      "wall_ns": 41168002,
+      "wall_ns_per_main_call": 314.08692932128906
+    },
+    {
+      "cpu_ns": 45929826,
+      "empty_cpu_ns": [
+        4915,
+        235,
+        224
+      ],
+      "ns_per_main_call": 350.41676330566406,
+      "overhead_pass": true,
+      "wall_ns": 45937195,
+      "wall_ns_per_main_call": 350.47298431396484
+    },
+    {
+      "cpu_ns": 41762113,
+      "empty_cpu_ns": [
+        5167,
+        221,
+        222
+      ],
+      "ns_per_main_call": 318.61963653564453,
+      "overhead_pass": true,
+      "wall_ns": 41759402,
+      "wall_ns_per_main_call": 318.5989532470703
+    },
+    {
+      "cpu_ns": 76787955,
+      "empty_cpu_ns": [
+        6107,
+        237,
+        212
+      ],
+      "ns_per_main_call": 585.8456039428711,
+      "overhead_pass": true,
+      "wall_ns": 76785077,
+      "wall_ns_per_main_call": 585.8236465454102
+    },
+    {
+      "cpu_ns": 88998509,
+      "empty_cpu_ns": [
+        4988,
+        222,
+        220
+      ],
+      "ns_per_main_call": 679.0047378540039,
+      "overhead_pass": true,
+      "wall_ns": 96420797,
+      "wall_ns_per_main_call": 735.6323013305664
+    },
+    {
+      "cpu_ns": 76361260,
+      "empty_cpu_ns": [
+        4685,
+        230,
+        204
+      ],
+      "ns_per_main_call": 582.5901794433594,
+      "overhead_pass": true,
+      "wall_ns": 76358296,
+      "wall_ns_per_main_call": 582.5675659179688
+    },
+    {
+      "cpu_ns": 69884282,
+      "empty_cpu_ns": [
+        5627,
+        234,
+        221
+      ],
+      "ns_per_main_call": 533.1747589111328,
+      "overhead_pass": true,
+      "wall_ns": 69890784,
+      "wall_ns_per_main_call": 533.224365234375
+    },
+    {
+      "cpu_ns": 35891228,
+      "empty_cpu_ns": [
+        4574,
+        246,
+        222
+      ],
+      "ns_per_main_call": 273.8283386230469,
+      "overhead_pass": true,
+      "wall_ns": 35888732,
+      "wall_ns_per_main_call": 273.8092956542969
+    },
+    {
+      "cpu_ns": 79174957,
+      "empty_cpu_ns": [
+        4140,
+        216,
+        211
+      ],
+      "ns_per_main_call": 604.0569839477539,
+      "overhead_pass": true,
+      "wall_ns": 79172263,
+      "wall_ns_per_main_call": 604.0364303588867
+    },
+    {
+      "cpu_ns": 77249386,
+      "empty_cpu_ns": [
+        5978,
+        234,
+        221
+      ],
+      "ns_per_main_call": 589.3660430908203,
+      "overhead_pass": true,
+      "wall_ns": 77246909,
+      "wall_ns_per_main_call": 589.3471450805664
+    },
+    {
+      "cpu_ns": 34674655,
+      "empty_cpu_ns": [
+        4931,
+        224,
+        223
+      ],
+      "ns_per_main_call": 264.54662322998047,
+      "overhead_pass": true,
+      "wall_ns": 34756558,
+      "wall_ns_per_main_call": 265.17149353027344
+    },
+    {
+      "cpu_ns": 43237821,
+      "empty_cpu_ns": [
+        4658,
+        242,
+        219
+      ],
+      "ns_per_main_call": 329.8783950805664,
+      "overhead_pass": true,
+      "wall_ns": 43235128,
+      "wall_ns_per_main_call": 329.85784912109375
+    },
+    {
+      "cpu_ns": 13493183,
+      "empty_cpu_ns": [
+        5104,
+        236,
+        217
+      ],
+      "ns_per_main_call": 102.94481658935547,
+      "overhead_pass": true,
+      "wall_ns": 13491037,
+      "wall_ns_per_main_call": 102.9284439086914
+    },
+    {
+      "cpu_ns": 11279081,
+      "empty_cpu_ns": [
+        5819,
+        226,
+        209
+      ],
+      "ns_per_main_call": 86.05255889892578,
+      "overhead_pass": true,
+      "wall_ns": 11277653,
+      "wall_ns_per_main_call": 86.04166412353516
+    },
+    {
+      "cpu_ns": 43416353,
+      "empty_cpu_ns": [
+        4910,
+        233,
+        218
+      ],
+      "ns_per_main_call": 331.24048614501953,
+      "overhead_pass": true,
+      "wall_ns": 43413885,
+      "wall_ns_per_main_call": 331.2216567993164
+    }
+  ],
+  "scope": "Settled-hot genuine production mirror method plus loop/call overhead ONLY; not whole-plugin, callback-separated, DAW or real-time performance. 750 calls/s conversion is an assumption-based arithmetic scale.",
+  "summary": {
+    "default": {
+      "candidate_ns_per_mirror_batch_means": [
+        82.92117691040039,
+        95.4099349975586,
+        90.76839065551758,
+        84.13441848754883,
+        94.49868774414062
+      ],
+      "independent_batches": 5,
+      "median_difference_ns": 237.6576385498047,
+      "median_hot_assumption_ms_per_audio_second": 0.1782432289123535,
+      "range_difference_ns": [
+        228.57707595825195,
+        253.8198356628418
+      ],
+      "stock_minus_candidate_ns_all": [
+        241.88141632080078,
+        228.57707595825195,
+        237.6576385498047,
+        253.8198356628418,
+        236.06075286865234
+      ],
+      "stock_ns_per_mirror_batch_means": [
+        324.8025932312012,
+        323.98701095581055,
+        328.42602920532227,
+        337.9542541503906,
+        330.55944061279297
+      ]
+    },
+    "dense": {
+      "candidate_ns_per_mirror_batch_means": [
+        295.3989372253418,
+        283.8659553527832,
+        268.36180114746094,
+        291.83870697021484,
+        269.1874809265137
+      ],
+      "independent_batches": 5,
+      "median_difference_ns": 321.88768768310547,
+      "median_hot_assumption_ms_per_audio_second": 0.2414157657623291,
+      "range_difference_ns": [
+        284.6798400878906,
+        327.52403259277344
+      ],
+      "stock_minus_candidate_ns_all": [
+        321.88768768310547,
+        284.6798400878906,
+        326.93584060668945,
+        299.71067810058594,
+        327.52403259277344
+      ],
+      "stock_ns_per_mirror_batch_means": [
+        617.2866249084473,
+        568.5457954406738,
+        595.2976417541504,
+        591.5493850708008,
+        596.7115135192871
+      ]
+    }
+  },
+  "terminal": {
+    "completed_slots": 80,
+    "cpu_elapsed_ns": 31654395000,
+    "error": null,
+    "no_resume": true,
+    "status": "complete",
+    "wall_elapsed_ns": 31980070638
+  }
+}

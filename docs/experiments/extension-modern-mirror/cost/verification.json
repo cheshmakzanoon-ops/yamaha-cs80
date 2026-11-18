@@ -1,0 +1,99 @@
+{
+  "all_original_control_failures": [
+    "sham batch 0",
+    "positive batch 4",
+    "positive batch 5",
+    "sham batch 8",
+    "sham batch 9",
+    "positive batch 12",
+    "positive batch 13",
+    "sham batch 17",
+    "mean sham default",
+    "mean sham dense"
+  ],
+  "evidence_replay": "PASS",
+  "independent_ABBA_batches": 20,
+  "new_DSP_executions": 0,
+  "new_timing_runs": 0,
+  "no_new_CPP_builds": true,
+  "performance_admission": false,
+  "records": 80,
+  "software_self_tests": [
+    {
+      "pass": true,
+      "test": "missing slot"
+    },
+    {
+      "pass": true,
+      "test": "duplicate slot"
+    },
+    {
+      "pass": true,
+      "test": "reordered slots"
+    },
+    {
+      "pass": true,
+      "test": "wrong physical image"
+    },
+    {
+      "pass": true,
+      "test": "reused process identity"
+    },
+    {
+      "pass": true,
+      "test": "wrong extra call count"
+    },
+    {
+      "pass": true,
+      "test": "changed PCM identity"
+    },
+    {
+      "pass": true,
+      "test": "changed FP flags"
+    },
+    {
+      "pass": true,
+      "test": "zero CPU interval"
+    },
+    {
+      "pass": true,
+      "test": "missing clock control"
+    },
+    {
+      "pass": true,
+      "test": "wrong receipt binding"
+    },
+    {
+      "pass": true,
+      "test": "partial terminal"
+    },
+    {
+      "pass": true,
+      "test": "duplicate JSON key"
+    },
+    {
+      "pass": true,
+      "test": "nonfinite JSON"
+    },
+    {
+      "pass": true,
+      "test": "synthetic valid80 including both positive directions"
+    },
+    {
+      "pass": true,
+      "test": "synthetic real-count but no extra duration fails positive gate"
+    },
+    {
+      "pass": true,
+      "test": "synthetic2pct shams fail1.5pct mean floor"
+    },
+    {
+      "pass": true,
+      "test": "synthetic overhead maximum equality fails strict bound"
+    },
+    {
+      "pass": true,
+      "test": "synthetic overhead mean equality fails strict bound"
+    }
+  ]
+}

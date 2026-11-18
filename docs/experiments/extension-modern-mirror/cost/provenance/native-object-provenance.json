@@ -1,0 +1,12 @@
+{
+  "shipping_native_map_sha256": "b8bef673929e4df990100e7c4210f2a9c799384bb365fa17b39b107c7be41850",
+  "shipping_setConfig_selection": [
+    "                0x00000000002d4960      0xfc2 CS80Reference_artefacts/Release/libCS-80 Reference_SharedCode.a(ModernLayerState.cpp.o)\n                0x00000000002d4960                cs80::modern::ModernLayer::setConfig(cs80::modern::ModernConfig const&)",
+    "cs80::modern::ModernLayer::processVoice(int, cs80::modern::VoiceInputs const&, bool) libcs80_core.a(Engine.cpp.o)\ncs80::modern::ModernLayer::setConfig(cs80::modern::ModernConfig const&) CS80Reference_artefacts/Release/libCS-80 Reference_SharedCode.a(ModernLayerState.cpp.o)"
+  ],
+  "shipping_wrapper_sha256": "9ed0d5bee64e0432e6ad080136af946caa496950c1b3577c51ea1ba773e3cae0",
+  "candidate_wrapper_sha256": "c49d1ae1bfcf0ec461b2b1891120d8b5ea8e1d6681a21b97f4ebf6ffa003b3f3",
+  "helper_exact_normal_flags_object_byte_identical": true,
+  "helper_sha256": "c38b430669ec87e163de878d09fd3a12f4e4d4c5cb7a32b37231745ed3696ca9",
+  "method_scope": "genuine native wrapper and its selected setConfig implementation; settled loop only; no timing yet"
+}

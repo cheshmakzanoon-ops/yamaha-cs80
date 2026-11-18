@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+#include <xmmintrin.h>
+#define private public
+#include "core/Engine.h"
+#undef private
+extern "C" void stock_set(cs80::Engine*,const cs80::modern::ModernConfig*);
+extern "C" void stock_mirror(cs80::Engine*,const cs80::Engine*);
+extern "C" unsigned long stock_size();
+using namespace cs80; using namespace cs80::modern;
+static unsigned long checks=0, accepted=0,rejected=0;
+static void check(bool v,const char* tag,int seed=0,int fp=0) { ++checks; if(!v){std::cerr<<"FAIL "<<tag<<" seed="<<seed<<" fp="<<std::hex<<fp<<"\n";std::exit(1);} }
+static void fp(unsigned csr,unsigned short cw=0x037f) { asm volatile("fnclex; fldcw %0"::"m"(cw)); _mm_setcsr(csr); errno=EDOM; }
+static unsigned status(){ unsigned short s;asm volatile("fnstsw %0":"=am"(s));return (_mm_getcsr()&0xffffu)|(unsigned(s)<<16);}
+static void advance(ModernLayer& m,int n) { GlobalInputs g;g.modWheel=.6f;g.lfo={.2f,-.3f,.7f};m.beginSample(g); for(int v=0;v<8;++v){VoiceInputs i;i.age=1+v+(n/13)*8;i.note=40+v;i.gate=(n%19)<16;i.velocity=.4f+.05f*v;i.pressure=.6f;i.filterEnvelope={.1f,.2f};i.ampEnvelope={.8f,.7f};m.processVoice(v,i);} }
+static ModernConfig cfg(int seed) { ModernConfig c; for(int m=0;m<3;++m){auto& s=c.msegs[m];s.trigger=MsegTrigger((seed+m)%3);s.sync=(seed+m)&1;s.bipolar=seed&2;if(seed&4){s.count=32; for(int i=0;i<32;++i)s.points[i]={i*.03125f,(i%3)*.4f,(i%3-1)*.5f};}if(seed&8){s.points[1].level=-0.f;s.points[1].curve=-0.f;}} for(int j=0;j<16;++j){auto& s=c.slots[j];s.source=ModSource(int(ModSource::mseg1)+j%3);s.via=ModSource::modWheel;s.destination=ModDestination(1+(seed+j)%(int(ModDestination::count)-1));}if(seed&16){c.msegs[1].points[1].curve=std::bit_cast<float>(uint32_t(1));}if(seed&32){c.msegs[0].points[1].level=std::numeric_limits<float>::quiet_NaN();c.msegs[1].count=-20;c.msegs[2].loopStart=999;c.slots[7].source=ModSource(999);} return c; }
+int main(){ auto source=std::make_unique<Engine>(),a=std::make_unique<Engine>(),b=std::make_unique<Engine>();check(sizeof(Engine)==stock_size(),"ABI"); std::array<unsigned,8> csrs={0x1f80,0x9fc0,0x3f80,0x5f80,0x7f80,0x1fc0,0x9f80,0x1fa1};
+for(int seed=0;seed<64;++seed){fp(0x1f80);auto c=cfg(seed);stock_set(source.get(),&c);Transport tr{123.,14.25,true,true};source->setTransport(tr);auto old=cfg((seed+3)&15);stock_set(a.get(),&old);ModernControls control;control.enabled=seed%5;for(int i=0;i<16;++i)control.amount[i]=((seed+i)%4)*.2f;control.msegRate={.5f,1.f,2.f};a->modern.setControls(control);a->modern.setTransport(tr);for(int k=0;k<31;++k)advance(a->modern,k);
+for(unsigned csr:csrs){b->modern=a->modern; auto before=b->modern; auto untouched=source->modern;fp(csr);stock_mirror(a.get(),source.get());const auto ast=status();const int ae=errno;fp(csr);const auto initialStatus=status();const bool ok=b->tryMirrorModernConfigFrom(*source);if(ok)++accepted;else{++rejected;check(!std::memcmp(&b->modern,&before,sizeof before),"transactional rejection",seed,csr);check(status()==initialStatus,"rejection FP",seed,csr);check(errno==EDOM,"rejection errno",seed,csr);stock_set(b.get(),&source->getModernConfig());}b->setTransport(source->getModernTransport());check(status()==ast,"FP",seed,csr);check(errno==ae,"errno",seed,csr);check(!std::memcmp(&source->modern,&untouched,sizeof untouched),"source untouched",seed,csr);check(!std::memcmp(&a->modern,&b->modern,sizeof before),"all modern bytes",seed,csr);for(int k=0;k<24;++k){fp(0x1f80);advance(a->modern,k);const auto as=status();const auto er=errno;fp(0x1f80);advance(b->modern,k);check(status()==as&&errno==er,"continuation FP",seed,csr);check(!std::memcmp(&a->modern,&b->modern,sizeof before),"continuation bytes",seed,csr);}a->modern=before;}}
+fp(0x1f80);std::cout<<"PASS checks="<<checks<<" accepted="<<accepted<<" rejected="<<rejected<<" ModernConfig="<<sizeof(ModernConfig)<<" ModernLayer="<<sizeof(ModernLayer)<<" Engine="<<sizeof(Engine)<<"\n";}
