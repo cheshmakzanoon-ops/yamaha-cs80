@@ -1,0 +1,29 @@
+{
+  "schema": "thermal-bank-bounded-core-cost-v1",
+  "primary": "geometric matched whole-block gain across factory-quiet and panel-quiet, Circuit at 48k/64; both per-case lower bounds positive.",
+  "scope": "CPU around real Engine::render only (not plugin or DAW), each fresh process, one inherited eligible CPU pinned. All seven sums and all output hashes retained. No time claim on other platforms.",
+  "criteria": "pooled primary lower95 > max(2%, max absolute pooled A/A gain, 3x maximum measured empty clock fraction in primary). Every nonprimary lower CI >= -3%. No switch to held workload, retry, replacement, or deletion on failure.",
+  "cases": [
+    "factory-quiet",
+    "panel-quiet",
+    "factory-held",
+    "factory-moving",
+    "panel-held",
+    "pure-held",
+    "legacy-held"
+  ],
+  "baseline": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b shipping sources, identical to new research-only main tree.",
+  "schedule": "2 stock-only ABBA blocks then 6 ABBA comparisons, for each block cases in listed order, 4 slots per case (224 fresh processes).",
+  "per_slot": "warm 8192 frames + measure 65536 frames (1024 64-frame calls) and 1024 empty clock pairs, no clock subtraction. 12 s wall per slot / 600 s global.",
+  "analysis": "unadjusted thread CPU per frame, blocks of log A/B ratios -> reduction; shared-block 10000 draws, seed 20261118, linear 2.5/97.5 percentiles",
+  "cpu": 0,
+  "sha256": {
+    "bench/stock": "468afe04e6bbe9cf3bdeed63041c3c6f7c97485bfdf27bf26aaf4f9836f8c72d",
+    "bench/candidate": "5aa8ae34ffcf1924210ba44c553f2a6e309d4583358ff7155f45c3a458ac6ee8",
+    "cost.cpp": "09d62eb6a95e9d1e87549e0dd8e1a61d655278f6a3942e29139cb24d7970d14a",
+    "bench-run.py": "a42e7c9002cec893ffac92f766dd074c95bb16c7278100b540bf9eecb9d24a02",
+    "tail/candidate.patch": "80296f8d696298b4496bce93215a535ea4f290662aefe469cb1eb9242d7fcbce",
+    "tail/identity.json": "1b1f6a59ad833c402710ef502ed2d5ebbedd7c1bb46e8d848504d7b570ec2ee0",
+    "tail/exact-traces.json": "a443ba4be0d35aace7feb57907607101f37e8dfbfa7103691a4e97da64733e15"
+  }
+}

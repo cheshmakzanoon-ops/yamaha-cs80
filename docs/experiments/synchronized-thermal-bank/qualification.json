@@ -1,0 +1,18 @@
+{
+  "schema": "cs80-thermal-bank-recovery-v1",
+  "stock_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "compiler": "GNU C++ 14.2.0; Linux x86-64; -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic",
+  "core_archive_sha256": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+  "observed_rows_sha256": "43c0ac984667e0d4737ae58a1399a09ee97e005e64c32c0acc0ec6db427828d4",
+  "recorded_timing_plan_sha256": "da19880c27be31ce2f3b7bf15db1b07d443db994f6522c2ce1174078b4e6f0af",
+  "trace_driver_sha256": "21aa8b3aab667468cdfaf4e0a75286e02b102ff58ef20b72fa6bfc0749737761",
+  "drift_differential_driver_sha256": "70bbb6db1bf349f40fe510464fc75758a50cebd956c8572c27abdc3a1d3aa939",
+  "drift_differential": {
+    "observation": "samples=203072 rank_outputs=3249152 visits=43125 skipped=159947 copies=16 paused=4928 bad=0",
+    "negative_control": "Removed only the stored floating-point control comparison (csr&0xffc0u)==control && from the candidate header.",
+    "negative_control_observation": "samples=203072 rank_outputs=3249152 visits=42289 skipped=160783 copies=16 paused=4928 bad=3038",
+    "negative_control_exit": 1
+  },
+  "terminal_state": "Observed prefix only; no complete summary, replacement observations, or native admission.",
+  "archived_trace_note": "The six stock and final candidate trace pairs were re-read and checked byte for byte before export. tail/exact-traces.json records their common lengths and SHA-256 identities; the full trace bytes and native binaries are not included."
+}
