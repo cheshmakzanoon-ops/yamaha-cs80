@@ -1,0 +1,108 @@
+{
+  "schema": "exclusive-stock-node-workload-scope-v1",
+  "rows": [
+    {
+      "scene": "factory-held",
+      "period_us": 1999,
+      "samples": 4970,
+      "counts": {
+        "outside_candidate": 3941,
+        "all_nodes_including_inlined_descendants": 539,
+        "line309_endpoint_materialize": 324,
+        "tick_output_epilogue_lines313to318": 166
+      },
+      "pct": {
+        "outside_candidate": 79.29577464788733,
+        "all_nodes_including_inlined_descendants": 10.845070422535212,
+        "line309_endpoint_materialize": 6.519114688128773,
+        "tick_output_epilogue_lines313to318": 3.3400402414486923
+      }
+    },
+    {
+      "scene": "factory-moving",
+      "period_us": 5003,
+      "samples": 3522,
+      "counts": {
+        "outside_candidate": 2838,
+        "all_nodes_including_inlined_descendants": 439,
+        "line309_endpoint_materialize": 161,
+        "tick_output_epilogue_lines313to318": 84
+      },
+      "pct": {
+        "outside_candidate": 80.57921635434413,
+        "all_nodes_including_inlined_descendants": 12.46450880181715,
+        "line309_endpoint_materialize": 4.571266325951164,
+        "tick_output_epilogue_lines313to318": 2.385008517887564
+      }
+    },
+    {
+      "scene": "panel-moving",
+      "period_us": 1999,
+      "samples": 4997,
+      "counts": {
+        "outside_candidate": 4076,
+        "all_nodes_including_inlined_descendants": 529,
+        "line309_endpoint_materialize": 278,
+        "tick_output_epilogue_lines313to318": 114
+      },
+      "pct": {
+        "outside_candidate": 81.5689413648189,
+        "all_nodes_including_inlined_descendants": 10.586351811086653,
+        "line309_endpoint_materialize": 5.5633380028016814,
+        "tick_output_epilogue_lines313to318": 2.2813688212927756
+      }
+    },
+    {
+      "scene": "factory-held",
+      "period_us": 5003,
+      "samples": 3586,
+      "counts": {
+        "outside_candidate": 2852,
+        "all_nodes_including_inlined_descendants": 380,
+        "line309_endpoint_materialize": 243,
+        "tick_output_epilogue_lines313to318": 111
+      },
+      "pct": {
+        "outside_candidate": 79.53151143335192,
+        "all_nodes_including_inlined_descendants": 10.596765197992191,
+        "line309_endpoint_materialize": 6.776352481873954,
+        "tick_output_epilogue_lines313to318": 3.0953708867819296
+      }
+    },
+    {
+      "scene": "factory-moving",
+      "period_us": 1999,
+      "samples": 4994,
+      "counts": {
+        "outside_candidate": 4020,
+        "all_nodes_including_inlined_descendants": 633,
+        "line309_endpoint_materialize": 229,
+        "tick_output_epilogue_lines313to318": 112
+      },
+      "pct": {
+        "outside_candidate": 80.49659591509811,
+        "all_nodes_including_inlined_descendants": 12.675210252302763,
+        "line309_endpoint_materialize": 4.585502603123748,
+        "tick_output_epilogue_lines313to318": 2.2426912294753705
+      }
+    },
+    {
+      "scene": "panel-moving",
+      "period_us": 5003,
+      "samples": 3544,
+      "counts": {
+        "outside_candidate": 2921,
+        "all_nodes_including_inlined_descendants": 368,
+        "line309_endpoint_materialize": 169,
+        "tick_output_epilogue_lines313to318": 86
+      },
+      "pct": {
+        "outside_candidate": 82.42099322799098,
+        "all_nodes_including_inlined_descendants": 10.383747178329571,
+        "line309_endpoint_materialize": 4.7686230248307,
+        "tick_output_epilogue_lines313to318": 2.4266365688487586
+      }
+    }
+  ],
+  "metadata": "Existing release samples only. Nodes includes all paths (not just terminal) and inline descendants; epilogue/existing materialization do not overlap that region. Do not multiply retrospective occupancy by these shares, or infer gain."
+}

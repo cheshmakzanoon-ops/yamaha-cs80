@@ -1,0 +1,20 @@
+--- a/core/Engine.h
++++ b/core/Engine.h
+@@ -198,6 +198,7 @@
+ 
+ class Engine
+ {
++    friend struct WscCensusAccess;
+ public:
+     Engine();
+ 
+--- a/core/ReconstructedOscillator.h
++++ b/core/ReconstructedOscillator.h
+@@ -151,6 +151,7 @@
+ };
+ 
+ class ReconstructedOscillator {
++    friend struct WscCensusAccess;
+ public:
+     // Bound on the antialias residual omitted for a tiny frequency change (one
+     // float-ulp pitch steps, slow drift): below -123 dB re the 1.5 V pins.

@@ -1,0 +1,17 @@
+# Stock-only four-adjacent-WSC occupancy census
+
+Baseline e9e8175. No candidate DSP, timing, native-host test or publication. Reference adds only inert friend declarations, with Engine object byte-identity to shipping required. Observed source changes only integer/report hooks around genuine stock control, scheduler, root, reset, physical, fallback and terminal-node branches. Original arithmetic expressions and state stores remain in place; both arms must match full PCM/public readouts/FP traces and sampled explicit private WSC state including all sixteen endpoint caches.
+
+48 kHz external, block 64, original 2x internal rate, drift .37 / dispersion .18 / driftModel 0; eight notes {36,43,48,55,60,64,67,72}. EVERY callback reapplies the normal control frame BEFORE new MIDI. Moving fixture uses the original four-block pressure/bend/CC74 cadence. Scenes: factory held/moving, Panel held/moving, Pure held, Legacy held, quiet, three-voice partial-pack negative, release/wake with policy transitions/reset/re-entry. Onset blocks 0..255; late 1024..1535; middle advances normally but is uncounted. All 1536 PCM/readout/FP blocks are captured.
+
+Fixed group IDs are voice*2+rank: 0..3, 4..7, 8..11, 12..15. No repacking or selection of lucky lanes. Count incomplete/absent groups explicitly. Cross-lane common profile/rate/gate/threshold/requested frequency counts are separate from each lane's own unchanged controls. Profile and all pre-gates use integer representations only, not repeated FP predictions.
+
+Two distinct retrospective occupancies:
+1. Strong unchanged stable whole-tick pack: four completed lanes, per-lane requested frequency and threshold/gates unchanged, pre-valid endpoint, no refresh/control event, one scheduler iteration, no physical/branch/reset interruption or failure. Same frequency across different notes is not required and is reported independently.
+2. Terminal ordinary nodes pack: each lane's LAST actual `after=nodes(1)` came from the successful nonphysical, non-branch-event segment and is followed by the ordinary epilogue. Earlier controls/events/independent scheduling are allowed. No same-controls/profile/frequency requirement. This is terminal work occupancy, not eligibility of a new SIMD evaluator.
+
+Near-gate counters are strictly distinguished: pre-existing endpoint + unchanged own controls + positive ordinary state + current masked nearest environment, with an additional separate first-full-span observation from the actual stock scheduler. Neither establishes absence of a future branch/root, nor implements a lookahead predictor. FTZ/DAZ ON is preserved and reported; later historical experiments relaxed the earlier FTZ/DAZ exclusion, but current stock has no branch-event cache and no admission is claimed for either history revision.
+
+`diagnostics.eventCount==0` is merely an independently reported coarse statistic. Actual accepted root/turn/knee decisions, branchEvent, physicalReached and reset branches are counted, as are recordEvent calls with zero residual that the diagnostics count omits. A known reporting-only perturbation will change a single terminal output counter after rendering; its trace must remain identical and the comparison must detect exactly that count change.
+
+Caps: serial compilation 100 CPU / 120 wall seconds per command; serial execution 35 CPU / 50 wall seconds per scene/arm. Fixed nine-scene matrix, one reporting-only repeat, no parameter search or timing. Stop on parity mismatch before interpreting occupancy as trustworthy.

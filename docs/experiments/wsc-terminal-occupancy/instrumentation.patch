@@ -1,0 +1,147 @@
+--- a/core/Engine.cpp
++++ b/core/Engine.cpp
+@@ -1,3 +1,4 @@
++#include "WscCensusHooks.h"
+ #include "Engine.h"
+ #include "RingModulatorCircuit.h"
+ 
+@@ -2554,6 +2555,7 @@
+ void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+ #endif
+ {
++    wsc_census_sample_begin();
+     const float sr = (float) internalRate;
+     const float invSr = 1.0f / sr;
+ 
+@@ -2900,7 +2902,9 @@
+                 wscControls.pulseThresholdVolts = ReconstructedOscillator::panelThresholdVoltsInferred(pw);
+                 wscControls.sawEnabled = rs.saw;
+                 wscControls.pulseEnabled = rs.pulse;
++                wsc_census_lane(vi * 2 + ch);
+                 const auto pins = r.wsc.tick(freq, wscControls);
++                wsc_census_lane(-1);
+                 sawPulse = voice_continuity::sawPulseUnits(pins);
+                 sineWave = static_cast<float>(pins.sinePin2 * kWscEngineUnitsPerVolt);
+             }
+@@ -3321,6 +3325,7 @@
+     }
+     if (smoothControls)
+         endSmoothedControls();
++    wsc_census_sample_end();
+ }
+ 
+ void Engine::render(float* interleavedStereo, int numFrames, const float* externalMono)
+--- a/core/ReconstructedOscillator.h
++++ b/core/ReconstructedOscillator.h
+@@ -1,4 +1,5 @@
+ #pragma once
++#include "WscCensusHooks.h"
+ // Source-informed topology; all opaque-IC transfer choices are an INFERRED
+ // nominal instrument, not recovered Yamaha die parameters or a specimen fit.
+ // See docs/OSCILLATOR_REALTIME_PROPOSAL.md, profile w3-current-fold-v1.
+@@ -244,6 +245,7 @@
+         diagnostics.eventCount=0;
+     }
+     WscOutputVolts tick(double requestedHz,const WscControls& controls={}) noexcept {
++        wsc_census_pre(*this, requestedHz, controls);
+         diagnostics.eventCount=0;
+         if(!basis)return {}; // never prepared (basis pool exhausted at construction)
+         const double inverseTauSamples=basis->inverseTauSamples,weightedArea=basis->weightedArea,weightedMoment=basis->weightedMoment;
+@@ -272,39 +274,45 @@
+             const double a=u-state.heldThresholdVolts,b=u-threshold;
+             if((a>0.)!=(b>0.)||std::abs(a)<1e-9||std::abs(b)<1e-9)event=refresh=true;
+         }
++        wsc_census_flag(10U, unsigned(event) | (unsigned(refresh)<<1) | (unsigned(gates)<<2));
+         if(event)before=endNodesValid?endNodes:nodes(1);
+         state.heldFrequencyHz=f;state.heldThresholdVolts=threshold;state.sawEnabled=controls.sawEnabled;state.pulseEnabled=controls.pulseEnabled;
+         auto after=refresh?nodes(1):endNodes;
+         if(event)recordEvent(0.,controlChange,before,after);
+         double elapsed=0.;
+         for(std::size_t iteration=0;iteration<maximumEventsPerTick&&elapsed<dt;++iteration){
++            wsc_census_flag(11U, 0U);
+             // A stopped q=0 capacitor does NOT retrigger the one-shot.
+             if(state.resetRemainingSeconds==0.&&state.charge<=0.&&f>0.){
++                wsc_census_flag(12U, 0U);
+                 before=after;state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;
+-                after=nodes(1);recordEvent(elapsed,resetStart,before,after);
++                after=nodes(1);wsc_census_flag(16U,3U);recordEvent(elapsed,resetStart,before,after);
+             }
+             const bool inReset=state.resetRemainingSeconds>0.;
+             const double physical=inReset?state.resetRemainingSeconds:(f>0.?std::max(0.,state.charge)/f:std::numeric_limits<double>::infinity());
+             double span=std::min(dt-elapsed,physical);
+             const auto start=after;
+             bool branchEvent=false;
++            wsc_census_span(span,physical,inReset);
+             span=nextBranchEvent(start,span,branchEvent);
+             // Roots closer than round-off to the previous event are represented
+             // by its right-sided branch derivative, never a zero-progress loop.
+-            if(!(span>0.)){diagnostics.eventCapacityExceeded=true;break;}
++            if(!(span>0.)){wsc_census_flag(14U,0U);diagnostics.eventCapacityExceeded=true;break;}
+             advance(span,start);
+             elapsed+=span;
+             const bool physicalReached=std::abs(span-physical)<=2e-15;
++            wsc_census_flag(15U, unsigned(branchEvent) | (unsigned(physicalReached)<<1) | (unsigned(inReset)<<2));
+             if(physicalReached&&inReset)state.resetRemainingSeconds=std::numeric_limits<double>::min();
+             if(physicalReached||branchEvent)before=nodes(-1);
+             if(physicalReached){
+-                if(inReset){state.resetRemainingSeconds=0.;after=nodes(1);recordEvent(elapsed,resetEnd,before,after);}
+-                else {state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;after=nodes(1);recordEvent(elapsed,resetStart,before,after);}
+-            } else {after=nodes(1);if(branchEvent)recordEvent(elapsed,branchCorner,before,after);}
++                if(inReset){state.resetRemainingSeconds=0.;after=nodes(1);wsc_census_flag(16U,3U);recordEvent(elapsed,resetEnd,before,after);}
++                else {state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;after=nodes(1);wsc_census_flag(16U,3U);recordEvent(elapsed,resetStart,before,after);}
++            } else {after=nodes(1);wsc_census_flag(16U,branchEvent?2U:1U);if(branchEvent)recordEvent(elapsed,branchCorner,before,after);}
+             if(dt-elapsed<=2e-15)elapsed=dt;
+         }
+         if(elapsed<dt){ // Explicit diagnostic, bounded numerical failure policy.
+-            diagnostics.eventCapacityExceeded=true;advance(dt-elapsed,after);after=nodes(1);
++            wsc_census_flag(17U,0U);
++            diagnostics.eventCapacityExceeded=true;advance(dt-elapsed,after);after=nodes(1);wsc_census_flag(16U,5U);
+         }
+         state.elapsedSeconds+=dt;
+         endNodes=after;endNodesValid=true;
+@@ -316,6 +324,7 @@
+         const auto values=asArray(raw.value),slopes=asArray(raw.slope),constants=asArray(raw.constant);
+         for(std::size_t branch=0;branch<3;++branch){const double a=values[branch]-constants[branch],b=slopes[branch]/rate+inverseTauSamples*a;*destinations[branch]=constants[branch]+a*weightedArea-b*weightedMoment+state.residual[branch][state.residualCursor];state.residual[branch][state.residualCursor]=0.;}
+         state.residualCursor=(state.residualCursor+1)%OscillatorResidualKernel::length;
++        wsc_census_post(*this);
+         return output;
+     }
+     // Idle evolution of a silent circuit (plan step 2.1, circuit engine; see
+@@ -472,11 +481,11 @@
+         const double base=pinSlope*tau,b=n.u-base;
+         const double end=base+b*decay(limit/tau);
+         const std::array<double,4> levels {profile.sliceVoltsInferred-rampHalf,profile.sliceVoltsInferred,profile.sliceVoltsInferred+rampHalf,state.heldThresholdVolts};
+-        for(double level:levels){if((level-n.u)*(level-end)<=0.&&level!=n.u&&b!=0.){const double root=-tau*std::log1p((level-n.u)/b);if(root>epsilon&&root<=limit){limit=root;event=true;}}}
++        for(double level:levels){if((level-n.u)*(level-end)<=0.&&level!=n.u&&b!=0.){const double root=-tau*std::log1p((level-n.u)/b);if(root>epsilon&&root<=limit){limit=root;event=true;wsc_census_flag(30U,0U);}}}
+         const double triangleB=n.triangleGain*b;
+         const auto w=[&](double t){return (n.w-triangleB*t/tau)*decay(t/tau);};
+         // w has at most one turning point within an analytic fold segment.
+-        if(triangleB!=0.){const double turn=tau*(n.w+triangleB)/triangleB;if(turn>epsilon&&turn<limit){limit=turn;event=true;}}
++        if(triangleB!=0.){const double turn=tau*(n.w+triangleB)/triangleB;if(turn>epsilon&&turn<limit){limit=turn;event=true;wsc_census_flag(31U,0U);}}
+         const double searchLimit=limit,wEnd=w(searchLimit),half=profile.triangleSpanVoltsNominal*.5;
+         const bool increasing=wEnd>n.w;
+         const double spacing=.25*half;
+@@ -497,13 +506,14 @@
+                 // fixed-count long-double bisection, never an unbounded loop.
+                 const double ev=decay(t/tau),rv=(n.w-triangleB*t/tau)*ev-level,rd=(-triangleB-n.w+triangleB*t/tau)*ev/tau;
+                 if(std::abs(rd)<1e-3||std::abs(rv)>1e-13||std::abs(rv)>std::abs(rd)*1e-11){
++                    wsc_census_flag(33U,0U);
+                     long double lower=0.,upper=searchLimit;
+                     for(int iteration=0;iteration<48;++iteration){const long double mid=(lower+upper)*.5L;
+                         const long double value=(static_cast<long double>(n.w)-static_cast<long double>(triangleB)*mid/tau)*std::exp(-mid/tau);
+                         if((value<level)==increasing)lower=mid;else upper=mid;}
+                     t=static_cast<double>((lower+upper)*.5L);
+                 }
+-                if(t>epsilon&&t<=limit){limit=t;event=true;}
++                if(t>epsilon&&t<=limit){limit=t;event=true;wsc_census_flag(32U,0U);}
+             }
+         }
+         return limit;
+@@ -537,6 +547,7 @@
+         std::array<double,3> dc{},da{},db{};
+         bool nonzero=false;
+         for(std::size_t branch=0;branch<3;++branch){dc[branch]=c1[branch]-c0[branch];da[branch]=(v1[branch]-v0[branch])-dc[branch];db[branch]=(s1[branch]-s0[branch])/rate+inverseTauSamples*da[branch];nonzero|=dc[branch]!=0.||da[branch]!=0.||db[branch]!=0.;}
++        wsc_census_flag(20U+kind, unsigned(nonzero));
+         if(nonzero||kind==resetStart||kind==resetEnd){if(diagnostics.eventCount<maximumEventsPerTick){auto& e=diagnostics.events[diagnostics.eventCount++];e={time,state.elapsedSeconds+time,state.charge,kind,state.resetRemainingSeconds>0.,before.ungatedValue,after.ungatedValue};}else diagnostics.eventCapacityExceeded=true;}
+         if(!nonzero)return;
+         const auto& exponentialResidual=basis->exponential;const auto& timeExponentialResidual=basis->timeExponential;
