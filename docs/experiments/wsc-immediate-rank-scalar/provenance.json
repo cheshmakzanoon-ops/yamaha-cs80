@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "arm": "C-immediate-one-rank-scalar",
+  "baseline_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "patch_sha256": "53946c97a462851fcec156a0afe94164bc3a4fa1233b39b6fffda4f5e7f8cecf",
+  "component_cpp_sha256": "0beda1833b75bc9986abb958063954e73576ffe2d7a07afa90b58de41f206cf8",
+  "normal_artifacts_sha256": {
+    "Engine.cpp.o": "60418a07d8c5b40abb3948fb3380e507f817d006570cfd4cb63233c2a856c7bd",
+    "FactoryPresets.cpp.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+    "Ig00156Batch.cpp.o": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+    "EngineWscImmediate.cpp.o": "a64ab2df9d2e2c64117b6b797718d88051a715372b5f463ed1f87f9741187f24",
+    "WscImmediateScalar.cpp.o": "4f03a4c41c1d57d548518668408f058c45f01d8fa55f74896ab6375cd512d047",
+    "libcs80_core.a": "eeba3a3b635b05f8f7eb797564a26511ce738291acf6c60b5d5ba915e79869a0"
+  },
+  "stock_engine_object_sha256": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+  "stock_archive_sha256": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+  "compiler": "GNU C++ 14.2.0, Linux x86-64",
+  "flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "ig00156_batch_extra_flags": [
+    "-ffp-contract=off"
+  ],
+  "normal_archive_members": [
+    "Engine.cpp.o",
+    "FactoryPresets.cpp.o",
+    "Ig00156Batch.cpp.o",
+    "EngineWscImmediate.cpp.o",
+    "WscImmediateScalar.cpp.o"
+  ],
+  "receipt_origins": {
+    "direct_observations": {
+      "receipt": "direct_observations",
+      "sha256": "d4b96b0fb7d1bb0658592dbdd57b049dcecb32b58fcb8f6e32d3901fd508b77e"
+    },
+    "direct_manifest": {
+      "receipt": "direct_manifest",
+      "sha256": "97294b2cf17c9976263d695497aaa091a7d59e18a75971425fceb3401ff25782"
+    },
+    "direct_selected_oracle": {
+      "receipt": "direct_selected_oracle",
+      "sha256": "859d4b0a7acbd720495a303645a7a2899d6cf8e0764fe7cc67bf3e77fa33bdc8"
+    },
+    "engine_release": {
+      "receipt": "engine_release",
+      "sha256": "997254d9c0afcaf889f63ef4de5bc91df3de2256620d40eb45b1acd7ed924ec7"
+    },
+    "engine_manifest": {
+      "receipt": "engine_manifest",
+      "sha256": "76a55d971266ab06e5e25fa16bd12da938f5c80c1cbb33c226295db2643a8828"
+    },
+    "engine_source_freeze": {
+      "receipt": "engine_source_freeze",
+      "sha256": "36cb3515ff669cf0ac0a58092eebeace9fc9859a681849d369c0af8d4d7a3e04"
+    },
+    "engine_trace_parity": {
+      "receipt": "engine_trace_parity",
+      "sha256": "31bc1222cdbdbd11257f3b31c07fd0537b65eee69a991580998103ab17e7164c"
+    },
+    "engine_witnesses": {
+      "receipt": "engine_witnesses",
+      "sha256": "4266f7d30df839093ad2b252a6b24cd55ccaecbc7cbfc318e8b93d3be6081a76"
+    },
+    "engine_rng": {
+      "receipt": "engine_rng",
+      "sha256": "90c8551a885a1012bd795e17b40b3966dbb36eaa3592b1d7f1742031f32ccb95"
+    },
+    "engine_seeds": {
+      "receipt": "engine_seeds",
+      "sha256": "9162857cd0d6f0e5a4567afba4fa2b5ea7af7fb81eef630ceecac65a88afb8a3"
+    },
+    "engine_seed_rng": {
+      "receipt": "engine_seed_rng",
+      "sha256": "28ef18f508f9ee5cb929e961779da05482d8b10242971a0d6ed18ba8a388fc0b"
+    },
+    "engine_public_traps": {
+      "receipt": "engine_public_traps",
+      "sha256": "ee2d214b7e8727af9c6ccdf8b4c30df0de8fdecebd48eba09e2546512876f7c3"
+    },
+    "independent_reconstruction": {
+      "receipt": "independent_reconstruction",
+      "sha256": "8dd090570cfd358b2b5ce4d86503d8cca010ee3be9b7f70ea7b8ea00a800e5df"
+    },
+    "independent_weak_audit": {
+      "receipt": "independent_weak_audit",
+      "sha256": "c63db2ce66fede644981df740a8393bc92cdd8c9b33d6afb2ab11b9f0a3fff55"
+    },
+    "independent_directed": {
+      "receipt": "independent_directed",
+      "sha256": "35024ca1d30024969e9fb1bc3c77f57db2511b50fe1f54d1f4fafffcbe845129"
+    },
+    "intended_fixture": {
+      "receipt": "intended_fixture",
+      "sha256": "a3f7a7402e540837df9e710fa1d5b15726b781ce8f340a502f682600543ac2e9"
+    },
+    "instruction_feasibility": {
+      "receipt": "instruction_feasibility",
+      "sha256": "7768fca3903febf60ef39c1c34871c0fbc185ffe684ac5a07e1230e0f17d737a"
+    },
+    "static_review": {
+      "receipt": "static_review",
+      "sha256": "620020c52eeed880a6652ed284b0327c93317cf97aefcb9229eccd13a054ab65"
+    }
+  },
+  "limits": [
+    "Saved receipt hashes identify omitted originals; they are not retrieval links or independent proof of raw traces.",
+    "The checkpoint verifier never compiles, renders, profiles or accesses the network.",
+    "Future paired measurement/control evidence is separate; no C CPU improvement is accepted here."
+  ]
+}

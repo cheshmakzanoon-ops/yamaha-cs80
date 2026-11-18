@@ -1,0 +1,318 @@
+{
+  "schema": "paired-stock-clock-portable-protocol-v1",
+  "scope": {
+    "metric": "thread CPU",
+    "wall": "complete descriptive records, not an admission or realtime metric",
+    "scenes": [
+      "factory-held",
+      "panel-moving"
+    ],
+    "chunks": [
+      16,
+      32
+    ],
+    "arms": [
+      "stock-A",
+      "stock-B"
+    ],
+    "candidate_admission": false,
+    "native_or_DAW_admission": false,
+    "other_scene_admission": false,
+    "old_216_slot_decision_changed": false
+  },
+  "limits": {
+    "pairs": 20,
+    "process_cpu_ns": 15000000000,
+    "process_wall_ns": 20000000000,
+    "trial_cpu_ns": 160000000000,
+    "trial_wall_ns": 240000000000,
+    "warm_callbacks": 1024,
+    "measured_callbacks": 512,
+    "continuation_callbacks": 1,
+    "extra_callbacks": 32,
+    "sham_abs_effect_pct": 1.5,
+    "cell_sham_abs_effect_pct": 0.75,
+    "cell_sham_range_pp": 2.0,
+    "sham_cycle_p90_pct": 4.0,
+    "sham_cycle_max_pct": 10.0,
+    "positive_ratio_min": 1.03,
+    "positive_ratio_max": 1.1,
+    "positive_direction_log_gap_max": 0.02,
+    "overhead_max_ratio_strict": 0.01,
+    "overhead_mean_ratio_strict": 0.0025,
+    "cpu": 0,
+    "affinity_mask": "1"
+  },
+  "slots": [
+    {
+      "slot": 0,
+      "round": 0,
+      "position": 0,
+      "scene": "factory-held",
+      "chunk": 16,
+      "role": "sham0",
+      "control": "sham",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 1,
+      "round": 0,
+      "position": 1,
+      "scene": "panel-moving",
+      "chunk": 32,
+      "role": "sham0",
+      "control": "sham",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 2,
+      "round": 0,
+      "position": 2,
+      "scene": "factory-held",
+      "chunk": 32,
+      "role": "sham0",
+      "control": "sham",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 3,
+      "round": 0,
+      "position": 3,
+      "scene": "panel-moving",
+      "chunk": 16,
+      "role": "sham0",
+      "control": "sham",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 4,
+      "round": 1,
+      "position": 0,
+      "scene": "panel-moving",
+      "chunk": 32,
+      "role": "A-extra",
+      "control": "A-extra",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 5,
+      "round": 1,
+      "position": 1,
+      "scene": "factory-held",
+      "chunk": 32,
+      "role": "A-extra",
+      "control": "A-extra",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 6,
+      "round": 1,
+      "position": 2,
+      "scene": "panel-moving",
+      "chunk": 16,
+      "role": "A-extra",
+      "control": "A-extra",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 7,
+      "round": 1,
+      "position": 3,
+      "scene": "factory-held",
+      "chunk": 16,
+      "role": "A-extra",
+      "control": "A-extra",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 8,
+      "round": 2,
+      "position": 0,
+      "scene": "factory-held",
+      "chunk": 32,
+      "role": "sham1",
+      "control": "sham",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 9,
+      "round": 2,
+      "position": 1,
+      "scene": "panel-moving",
+      "chunk": 16,
+      "role": "sham1",
+      "control": "sham",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 10,
+      "round": 2,
+      "position": 2,
+      "scene": "factory-held",
+      "chunk": 16,
+      "role": "sham1",
+      "control": "sham",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 11,
+      "round": 2,
+      "position": 3,
+      "scene": "panel-moving",
+      "chunk": 32,
+      "role": "sham1",
+      "control": "sham",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 12,
+      "round": 3,
+      "position": 0,
+      "scene": "panel-moving",
+      "chunk": 16,
+      "role": "B-extra",
+      "control": "B-extra",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 13,
+      "round": 3,
+      "position": 1,
+      "scene": "factory-held",
+      "chunk": 16,
+      "role": "B-extra",
+      "control": "B-extra",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 14,
+      "round": 3,
+      "position": 2,
+      "scene": "panel-moving",
+      "chunk": 32,
+      "role": "B-extra",
+      "control": "B-extra",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 15,
+      "round": 3,
+      "position": 3,
+      "scene": "factory-held",
+      "chunk": 32,
+      "role": "B-extra",
+      "control": "B-extra",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 16,
+      "round": 4,
+      "position": 0,
+      "scene": "factory-held",
+      "chunk": 16,
+      "role": "sham2",
+      "control": "sham",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 17,
+      "round": 4,
+      "position": 1,
+      "scene": "panel-moving",
+      "chunk": 32,
+      "role": "sham2",
+      "control": "sham",
+      "orientation": "BA",
+      "attempt": 1
+    },
+    {
+      "slot": 18,
+      "round": 4,
+      "position": 2,
+      "scene": "factory-held",
+      "chunk": 32,
+      "role": "sham2",
+      "control": "sham",
+      "orientation": "AB",
+      "attempt": 1
+    },
+    {
+      "slot": 19,
+      "round": 4,
+      "position": 3,
+      "scene": "panel-moving",
+      "chunk": 16,
+      "role": "sham2",
+      "control": "sham",
+      "orientation": "BA",
+      "attempt": 1
+    }
+  ],
+  "caller_fp": {
+    "cw": 1919,
+    "error": 99,
+    "mxcsr": 24481,
+    "sw": 0
+  },
+  "clock_order": [
+    "thread_begin_ns",
+    "wall_begin_ns",
+    "work",
+    "wall_end_ns",
+    "thread_end_ns"
+  ],
+  "percentile": "nearest rank ceil(0.9*n), per sham and pooled",
+  "overhead": {
+    "denominator": "per-process smallest complete ordinary measured span",
+    "per_type_all_phases": true,
+    "pre_and_post": [
+      "empty-clock",
+      "empty-clock",
+      "empty-clock",
+      "empty-clock",
+      "zero-boundary:A",
+      "zero-boundary:B",
+      "zero-boundary:A",
+      "zero-boundary:B",
+      "zero-boundary:A",
+      "zero-boundary:B",
+      "zero-boundary:A",
+      "zero-boundary:B"
+    ],
+    "subtract": false
+  },
+  "numeric_arithmetic": "exact integer/rational inclusive ratio and strict overhead limits; Decimal 80-digit direction-log and cell-range checks; float descriptive effects",
+  "failure_policy": "one attempt per slot; any invalid observation/interruption consumes whole trial; no resume/retry/replacement/subset admission",
+  "terminal": {
+    "status": "complete",
+    "completed_pairs": 20,
+    "failure": null,
+    "no_resume": true,
+    "wall_elapsed_ns": 104998317237,
+    "total_cpu_ns": 104591882000
+  },
+  "official_decision_verified": true,
+  "official_all_process_integrity_pass": true,
+  "normalized_records_sha256": "cf7b0d4acff3cc0d8a98a5e293da48fabb8905f7817d85444a1154f9e762bf87",
+  "normalization": "Each slot thread origin and the common trial wall origin removed by integer subtraction, first origin set to 1 ns. Every interval, order and within-domain gap preserved. Absolute origins are not exported.",
+  "raw_row_count": 3400,
+  "timed_row_count": 1440,
+  "receipt_count": 395
+}

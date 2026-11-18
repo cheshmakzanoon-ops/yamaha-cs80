@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "scope": "offline checkpoint verification only, not DSP qualification replay",
+  "package_and_receipt_checks": "PASS",
+  "portable_unittest_cases": 30,
+  "portable_unittest_result": "PASS",
+  "authenticated_stock_files": 193,
+  "exact_reconstructed_candidate_files": 196,
+  "source_corruption_checks": [
+    {
+      "mutation": "altered-stock-byte",
+      "rejected": true,
+      "reason": "source inventory mismatch"
+    },
+    {
+      "mutation": "missing-stock-file",
+      "rejected": true,
+      "reason": "source inventory mismatch"
+    },
+    {
+      "mutation": "unexpected-stock-file",
+      "rejected": true,
+      "reason": "source inventory mismatch"
+    }
+  ],
+  "source_writes": 0,
+  "compiler_invocations": 0,
+  "DSP_invocations": 0,
+  "profiling_or_timing": false,
+  "raw_capture_reads_or_hashing": false,
+  "network_actions": 0,
+  "note": "All retained evidence is bounded and separate from upcoming paired measurement-control work."
+}

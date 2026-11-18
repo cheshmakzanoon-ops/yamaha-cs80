@@ -1,0 +1,52 @@
+{
+  "schema": "paired-stock-clock-portable-v1",
+  "offline_only": true,
+  "files": {
+    "README.md": {
+      "bytes": 9584,
+      "sha256": "85d4f7588722b8b2ac105f4bf5aabf08bea082898d61a3eb0121d0842ba604f6"
+    },
+    "analyze.py": {
+      "bytes": 16830,
+      "sha256": "be99182f75f261b933798d3b55217faa2c8108f5a60e08cc41f8f5e11f3610ac"
+    },
+    "contract.py": {
+      "bytes": 6321,
+      "sha256": "7435391b41bf34bd564e2b407f3d168a3d310f2c427837481acb5b0a580a0815"
+    },
+    "export.py": {
+      "bytes": 12574,
+      "sha256": "a42f6b7b5e3b9fabbdfb89988607974f6a6ea78e9a43d9c0d79e8820a7bfaa29"
+    },
+    "numerical-result.json.gz": {
+      "bytes": 118745,
+      "sha256": "47aabff5dd41d21ccea6df473bfbea49906c2febe4f5b4a5664af02978667050"
+    },
+    "protocol.json": {
+      "bytes": 7243,
+      "sha256": "11085be7d2373f4d93b9f0f68f1161e2b311fe0a31e6d468419df4ae28af6085"
+    },
+    "provenance.json": {
+      "bytes": 38412,
+      "sha256": "4f0d40b0c1e5bf5b34b344cf0e39de2c4f15a5212dec0bfa684958dcd05f1d15"
+    },
+    "replay.py": {
+      "bytes": 8787,
+      "sha256": "044aafd2e494db7f4fbd20a1deabca1262798a9120eb2a0e348cd0f53b0ad0e0"
+    },
+    "spans.csv": {
+      "bytes": 197080,
+      "sha256": "451911ae8e41643659ea3c100e5536f789b05404ff675c75fd5b4a526a48f751"
+    },
+    "tests.json": {
+      "bytes": 491,
+      "sha256": "88e25661bef7eb493d325d73487f7e1f65cd97541c7c5ba9ed586dc2d99d2ac5"
+    },
+    "work-receipts.json.gz": {
+      "bytes": 18354,
+      "sha256": "c3df6cad34f180170db7432fd4c320e2718f7e474da0104c1c05e414675b2b70"
+    }
+  },
+  "official_decision_sha256": "11f6f6bec370d50fac0348eb154aa31a61ec1cc8838ca24a3ad0da636dbe3ce7",
+  "disposition": "FAIL / no precision admission; stock-only"
+}
