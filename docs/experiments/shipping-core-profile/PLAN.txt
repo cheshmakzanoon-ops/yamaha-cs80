@@ -1,0 +1,58 @@
+Portable transcription of the frozen stock-only statistical PC profile plan.
+No new sampling was performed for this export.
+
+BASE AND CODE IDENTITY
+Shipping e9e8175 production sources, also unchanged by the 052ed457 documentation-only tip.
+GCC 14.2 normal flags: -O3 -DNDEBUG -std=gnu++20 -fPIC.
+Ig00156Batch.cpp additionally uses -ffp-contract=off.
+Separate -g mapping must pass all-allocatable-section and normalized-relocation identity,
+and final executable code/address identity, before profiling.
+No native plugin load, candidate timing, public production changes, privileged profiler,
+or system setting changes.
+
+THREE SCENES
+Realtime 48 kHz / 64 frames: factory-held, factory-moving, panel-moving.
+Factory selectors 0/0: String 1 / String 2, Source Performance on.
+Panel selectors 13/13. Eight held notes: 36, 43, 48, 55, 60, 64, 67, 72.
+Velocity 0.8; drift 0.37; dispersion 0.18; drift model 0.
+Held: dry, ordinary MIDI channel. Moving: performanceProfile 1 (MPE plus FX),
+with one member's pressure, bend and CC74 updated every four blocks.
+The full unchanged control frame is reapplied every 64 frames.
+Held versus moving is not a one-factor comparison.
+
+ACQUISITION
+Warm up 1,024 blocks. Each scene samples 20 process-CPU seconds.
+Sample the event/control/render region; count outside-region SIGPROFs separately.
+The async handler records only interrupted RIP, without unwinding or attribution.
+Requested periods: 1,999 microseconds and 5,003 microseconds.
+Fixed order: held 1999, moving 5003, panel 1999, held 5003, moving 1999, panel 5003.
+Pin one allowed CPU. No retries, sample deletion, selective continuation or slot replacement.
+The first 4,096 measured blocks' PCM hash must match between each scene's replicates.
+Check every PCM value is finite; require nonzero signal over each complete capture.
+Check eight active/held voices and their expected note/channel identity every block.
+
+SAMPLER VALIDATION
+A 150 ms own-CPU arithmetic loop validates recorded PCs before each scene.
+Retain calibration PCs and check containment in that known loop.
+This is not candidate timing. Report actual counts, not merely requested frequency.
+Linux timer granularity/coalescing, phase aliasing and handler overhead remain limitations.
+Two distinct periods and reversed scene ordering expose gross instability, not guarantees
+of statistical independence or precise instruction-cycle attribution.
+
+BOUNDS
+Per child: 30 CPU seconds / 45 wall seconds.
+All measurement children: at most 150 CPU seconds / 300 wall seconds.
+Setup compilation is logged separately. Failure or interruption is terminal;
+retain evidence and do not resume or reselect. No ns/frame or gain inference.
+
+ATTRIBUTION
+Each interrupt is counted exactly once: main-ELF physical symbol and DWARF annotation,
+or a separately retained library/unknown bucket.
+Inline ancestry is an annotation, never additional self samples.
+No attribution of unresolved libm PCs to a guessed caller.
+
+EXPORTED SCOPE CLARIFICATION
+Only frame cadence matches the plugin. The standalone moving fixture sends its events
+before setControlFrame; real processBlock applies its frame before event dispatch.
+Host-event decoding, identical callback ordering and full-plugin cost are not represented.
+The portable verifier checks saved receipts, not a fresh audio render or causal speedup.

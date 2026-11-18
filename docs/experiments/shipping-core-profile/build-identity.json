@@ -1,0 +1,63 @@
+{
+  "batch_extra_flags": [
+    "-ffp-contract=off"
+  ],
+  "collector_export_adaptation": "Explicit new-study start guard and identity-receipt filename only; six captured slots not rerun.",
+  "compiler": "GCC 14.2.0 (Debian 14.2.0-19)",
+  "debug_extra_flags": [
+    "-g"
+  ],
+  "exported_collector_sha256": "2dab4047b4903de3e8b6d9fe12ecce4db807fe8ef7138c0e5ffb8b0501e66d6d",
+  "exported_plan_sha256": "92bb61cd1053cb0095a64525be339b952ce14256d1b297837371f5b2d793b15d",
+  "host_object_sha256": "acfc60e0ec4ada8b1172768751f3b33532f94f0748bd9b5ddfd406f4fc13b7f3",
+  "linked_pair": {
+    "debug_sha256": "85aa172f5213270da7d08de5c233b10ec79003c149acdc546b2755b665ac4122",
+    "excluded_section": ".note.gnu.build-id",
+    "identical_remaining_allocatable_sections_and_addresses": true,
+    "normal_sha256": "cc551097fa4eb4b1b3579b496fd23d65fc34ca7afb83808d36f841162b601377",
+    "remaining_allocatable_digest": "3db3211cd1a645d2f332d83f81a45c15b2e106ccf463a8387becdd656a5f009d"
+  },
+  "method_source_sha256": "cbcdd484b2b369ee561a11d6a5fceee2c919ed53232049dab69c1c2e8a650487",
+  "normal_archive_sha256": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+  "normal_flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "objects": {
+    "Engine": {
+      "all_allocatable_bytes_and_relocations_identical": true,
+      "allocatable_section_count": 98,
+      "allocatable_sections_digest": "2791d7a4c75c5dc86f6c45e36db5dec6ebbe601f0285a0acdaeeb4b478892017",
+      "debug_sha256": "09501da59dc785f0a75e7f62fa012faf4018ca1fb499a750825f7d8164b9d808",
+      "normal_sha256": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+      "normalized_allocatable_relocations_digest": "e74ae2d918f3b1e60468e81debe63aad073e280afe1eebf108acb6d13f1911fb"
+    },
+    "FactoryPresets": {
+      "all_allocatable_bytes_and_relocations_identical": true,
+      "allocatable_section_count": 23,
+      "allocatable_sections_digest": "cc03c7bdc605b653fc6de885cfe641937e40eb62b87f72dcd7fdf67ef252957d",
+      "debug_sha256": "7c675d57e72ddce0fe943682e9c622029fd470a952ddff253b927d18ac8df82c",
+      "normal_sha256": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+      "normalized_allocatable_relocations_digest": "b0cd01f2497f964343c8e693e2f629e259d26b9a03282f40bb032bdf75f7db2c"
+    },
+    "Ig00156Batch": {
+      "all_allocatable_bytes_and_relocations_identical": true,
+      "allocatable_section_count": 9,
+      "allocatable_sections_digest": "d358b344e26670e282d501e3f1d22b569a0f59f6ec574241b2971b59ae2de2df",
+      "debug_sha256": "9e079c010f287e816c38172f5eb0acc81b2a1a018b3c260d94d0eabe7bbc6171",
+      "normal_sha256": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+      "normalized_allocatable_relocations_digest": "bf4ee01f61ac66dc66907e6569fef4e2e9b977348091c68f694e54bdd08e8b66"
+    }
+  },
+  "original_collector_sha256": "8f9d1618e0195569b8972a2fd3e9b6c6fa93b0a5e4fe2323517b46f2a32e8f47",
+  "original_plan_sha256": "1dd56cae31acf8779cbd35348e9447aa025d5664d864fde31b6ac6f4a3d1711a",
+  "plan_export_note": "Portable transcription with typography and explicit ordering/signal-scope clarification; acquired samples unchanged.",
+  "schema": "stock-pic-debug-identity-receipt-v1",
+  "source_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "source_equivalence_note": "Parent verified 052ed457 changes documentation only; production sources unchanged."
+}

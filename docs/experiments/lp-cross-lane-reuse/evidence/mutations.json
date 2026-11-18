@@ -1,0 +1,54 @@
+{
+  "frozen_source": "src/core/Ig00156Batch.cpp",
+  "frozen_source_sha256": "51a5786f86daf150c0cd158b761ed941160445dc80501fbe53bcdfb519539c0f",
+  "constraints": {
+    "untimed": true,
+    "one_process_at_a_time": true,
+    "per_process_cpu_limit_seconds": 20,
+    "per_process_timeout_seconds": 30
+  },
+  "all_four_negative_controls_detected": true,
+  "results": [
+    {
+      "name": "drop-sticky-eligibility",
+      "source_sha256": "cc31fe27cb9ea684afc63a19f60df0383d2b61e75447a901325a2acdc2379662",
+      "compile_exit": 0,
+      "link_exit": 0,
+      "test_exit": 1,
+      "negative_control_detected": true,
+      "last_line": "checks=88982 failures=169 hits=508 misses=1527 donors=524 negative_controls_caught=2",
+      "log": "mutations/drop-sticky-eligibility.log"
+    },
+    {
+      "name": "allow-raw-q-only-donor",
+      "source_sha256": "e6070770e12fb5cf2f0f2b5b00ee40346592d3f247865385f592376d93bb869e",
+      "compile_exit": 0,
+      "link_exit": 0,
+      "test_exit": 1,
+      "negative_control_detected": true,
+      "last_line": "checks=88982 failures=4 hits=339 misses=1696 donors=524 negative_controls_caught=2",
+      "log": "mutations/allow-raw-q-only-donor.log"
+    },
+    {
+      "name": "corrupt-shared-kHalf-one-ulp",
+      "source_sha256": "b926516c913c030a5bc8d988cbf69a72b2a20c16617a661e3824a7fb06a3fed6",
+      "compile_exit": 0,
+      "link_exit": 0,
+      "test_exit": 1,
+      "negative_control_detected": true,
+      "last_line": "checks=88982 failures=1683 hits=339 misses=1696 donors=524 negative_controls_caught=2",
+      "log": "mutations/corrupt-shared-kHalf-one-ulp.log"
+    },
+    {
+      "name": "drop-derived-identity",
+      "source_sha256": "02cb0e16f933b411bdccc4d786d0af7c522e86f6a19611e0abf47cbd79fae5b4",
+      "compile_exit": 0,
+      "link_exit": 0,
+      "test_exit": 1,
+      "negative_control_detected": true,
+      "last_line": "checks=88982 failures=2 hits=340 misses=1695 donors=524 negative_controls_caught=2",
+      "log": "mutations/drop-derived-identity.log"
+    }
+  ],
+  "export_note": "Machine-local compile/link command paths removed. Portable mutation generator and full test logs are included."
+}

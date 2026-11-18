@@ -1,0 +1,169 @@
+{
+  "schema": "lane-cost-qualification-v1",
+  "passed": true,
+  "scope": "these four cost workloads only; separate wider gate acceptance still required before timing",
+  "timing_invocations": 0,
+  "cases": {
+    "factory-moving": {
+      "identity": {
+        "frame": "011767aae5039f23",
+        "measured_last_pcm": "03e0f458fa7e9216",
+        "continuation_pcm": "bb12d14ba23a2bab",
+        "initial_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        },
+        "measured_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        },
+        "continuation_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        }
+      },
+      "diagnostics": {
+        "all_pcm": "f7b779edb28afc37",
+        "measured_pcm": "3138066e62079bac",
+        "nonzero_measured": 65536,
+        "voice_checks": 12296,
+        "route_checks": 3074
+      },
+      "counted_measured_hits": 838176,
+      "trace_sha256": {
+        "stock-diagnostic": "4fcb93b0439d78ed03880ffb24d8d0fb81eae1b79dd6797e300563657125bf03",
+        "candidate-diagnostic": "4fcb93b0439d78ed03880ffb24d8d0fb81eae1b79dd6797e300563657125bf03",
+        "candidate-counted": "4fcb93b0439d78ed03880ffb24d8d0fb81eae1b79dd6797e300563657125bf03"
+      }
+    },
+    "factory-held": {
+      "identity": {
+        "frame": "3cf1aa1de3b01585",
+        "measured_last_pcm": "02218e51645a5b5c",
+        "continuation_pcm": "585b1bd69e672cac",
+        "initial_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        },
+        "measured_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        },
+        "continuation_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        }
+      },
+      "diagnostics": {
+        "all_pcm": "40a88a2dd4448c91",
+        "measured_pcm": "b1b4aedf8b07915d",
+        "nonzero_measured": 65536,
+        "voice_checks": 12296,
+        "route_checks": 3074
+      },
+      "counted_measured_hits": 0,
+      "trace_sha256": {
+        "stock-diagnostic": "949a61dfc94282d37c9cde89406878124eb9b6376a1bb1543bf26fe25968ba37",
+        "candidate-diagnostic": "949a61dfc94282d37c9cde89406878124eb9b6376a1bb1543bf26fe25968ba37",
+        "candidate-counted": "949a61dfc94282d37c9cde89406878124eb9b6376a1bb1543bf26fe25968ba37"
+      }
+    },
+    "panel-moving": {
+      "identity": {
+        "frame": "8815a44534b5c9d9",
+        "measured_last_pcm": "909c621ee9ee29b7",
+        "continuation_pcm": "1aa61d9533d36de1",
+        "initial_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        },
+        "measured_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        },
+        "continuation_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        }
+      },
+      "diagnostics": {
+        "all_pcm": "bc75571c502c71bd",
+        "measured_pcm": "bf8b8ae7bb52eb09",
+        "nonzero_measured": 65536,
+        "voice_checks": 12296,
+        "route_checks": 3074
+      },
+      "counted_measured_hits": 0,
+      "trace_sha256": {
+        "stock-diagnostic": "4425d98f291e2053465c53e31308ae2a16345de059adc3a621c38640c16c8187",
+        "candidate-diagnostic": "4425d98f291e2053465c53e31308ae2a16345de059adc3a621c38640c16c8187",
+        "candidate-counted": "4425d98f291e2053465c53e31308ae2a16345de059adc3a621c38640c16c8187"
+      }
+    },
+    "pure-held": {
+      "identity": {
+        "frame": "9f28775348b01585",
+        "measured_last_pcm": "d04126d74fa0305d",
+        "continuation_pcm": "4af7e284b09db341",
+        "initial_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        },
+        "measured_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        },
+        "continuation_fp": {
+          "mxcsr": 40928,
+          "x87_cw": 895,
+          "x87_sw": 0,
+          "errno": 0
+        }
+      },
+      "diagnostics": {
+        "all_pcm": "08c9e61be90e73bf",
+        "measured_pcm": "1d1d2f5abd768411",
+        "nonzero_measured": 65536,
+        "voice_checks": 12296,
+        "route_checks": 3074
+      },
+      "counted_measured_hits": 0,
+      "trace_sha256": {
+        "stock-diagnostic": "e61e5cb0cef6fae85de9bdbb143d4c4618dee67e1f067feed120866c2a2ee3c2",
+        "candidate-diagnostic": "e61e5cb0cef6fae85de9bdbb143d4c4618dee67e1f067feed120866c2a2ee3c2",
+        "candidate-counted": "e61e5cb0cef6fae85de9bdbb143d4c4618dee67e1f067feed120866c2a2ee3c2"
+      }
+    }
+  },
+  "matching_driver_object_bytes": true,
+  "normal_counter_symbols_absent": true,
+  "driver_sha256": "b1da4fc6d0149a72b139b4cb042a9e3aa883b9bb67edca5dc5f6f05baa0006c7",
+  "archive_sha256": {
+    "stock": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+    "candidate": "c305cab6ba26c18721c683e6a338664b56349aaa26b4d902c60b1b6378ac3b2c"
+  },
+  "original_receipt_sha256": "5eb36f803829929d25917312560a54f883c175780ee47a05851ff63e10906513",
+  "export_note": "Compact untimed fixture-identity receipt. Machine-local paths, per-source maps, executable paths and build command ledger omitted. This is not a CPU timing decision."
+}

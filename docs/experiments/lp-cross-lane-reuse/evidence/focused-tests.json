@@ -1,0 +1,48 @@
+{
+  "patch_sha256": "0979c5279ecb5d7dbcdb2c4791c806c18d8d8ed93e9ddcd81d9b7927a975e8b4",
+  "candidate_archive_sha256": "c305cab6ba26c18721c683e6a338664b56349aaa26b4d902c60b1b6378ac3b2c",
+  "scope": "three standard in-tree target sources; no optional benchmark mode; not full CTest",
+  "sources": {
+    "tests/Ig00156BatchTests.cpp": "be5973ef91572cf8378a201d31c9bf73c7e918c94c55b941d1f796b7b367677d",
+    "tests/FilterBatchEngineTests.cpp": "7432317444846a50c1025301cd51e89b4c8e21d5dd02fb731a5e1a406499015e",
+    "tests/FilterBatchSchedulingTests.cpp": "80cfdb4597d9452774b0fa36df5a2785b4c76c1059fcdc8e1747323184195852"
+  },
+  "records": [
+    {
+      "test": "Ig00156BatchTests",
+      "phase": "compile",
+      "exit": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "test": "Ig00156BatchTests",
+      "phase": "test",
+      "exit": 0,
+      "log_sha256": "66d051ce1c802bf65f1fb4835e34da2822b5be858333ffbfe4a56ad73a7d6ca0"
+    },
+    {
+      "test": "FilterBatchEngineTests",
+      "phase": "compile",
+      "exit": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "test": "FilterBatchEngineTests",
+      "phase": "test",
+      "exit": 0,
+      "log_sha256": "11935e701a37ce375f6a0b8b928a009df31789876d1bc1faa5a28959737ca305"
+    },
+    {
+      "test": "FilterBatchSchedulingTests",
+      "phase": "compile",
+      "exit": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "test": "FilterBatchSchedulingTests",
+      "phase": "test",
+      "exit": 0,
+      "log_sha256": "870fed96c268973da07d1d99b11649f961a10d7a00f94b13c09884a30ac1e388"
+    }
+  ]
+}

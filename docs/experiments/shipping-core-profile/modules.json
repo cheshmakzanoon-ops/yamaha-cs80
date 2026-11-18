@@ -1,0 +1,74 @@
+{
+  "calibration_loop": [
+    "main",
+    "0xe840",
+    "0xe86e"
+  ],
+  "modules": {
+    "libm": {
+      "bytes": 977112,
+      "elf_type": 3,
+      "executable_ranges": [
+        [
+          ".init",
+          "0x11000",
+          "0x11017"
+        ],
+        [
+          ".plt",
+          "0x11020",
+          "0x11280"
+        ],
+        [
+          ".plt.got",
+          "0x11280",
+          "0x11288"
+        ],
+        [
+          ".text",
+          "0x112c0",
+          "0x8ddc6"
+        ],
+        [
+          ".fini",
+          "0x8ddc8",
+          "0x8ddd1"
+        ]
+      ],
+      "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3"
+    },
+    "main": {
+      "bytes": 5576504,
+      "elf_type": 3,
+      "executable_ranges": [
+        [
+          ".init",
+          "0xb000",
+          "0xb017"
+        ],
+        [
+          ".plt",
+          "0xb020",
+          "0xb730"
+        ],
+        [
+          ".plt.got",
+          "0xb730",
+          "0xb738"
+        ],
+        [
+          ".text",
+          "0xb740",
+          "0x8ebef"
+        ],
+        [
+          ".fini",
+          "0x8ebf0",
+          "0x8ebf9"
+        ]
+      ],
+      "sha256": "85aa172f5213270da7d08de5c233b10ec79003c149acdc546b2755b665ac4122"
+    }
+  },
+  "schema": "pinned-elf-modules-v1"
+}

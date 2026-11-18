@@ -1,0 +1,225 @@
+--- a/src/core/Engine.cpp
++++ b/src/core/Engine.cpp
+@@ -3076,7 +3076,9 @@
+ #if CS80_IG00156_EXACT_BATCH_BUILD
+     if (batchFilters)
+     {
+-        // Ordinary set/reReference remain the only coefficient/clock owners.
++        // Fresh for this sample's LP pass; no retained per-stage or Engine cache.
++        Ig00156LpCoefficientMemo lpCoefficientMemo;
++        // Ordinary set/reReference remain the fallback coefficient/clock owners.
+         // Finish every HP before its own LP; packs may omit bypassed stages.
+         // Nothing reads another rank's filter/VCA state during this interval.
+         for (bool highPass : { true, false })
+@@ -3094,8 +3096,16 @@
+                     continue;
+                 auto& stage = highPass ? r.hpStage : r.lpStage;
+                 auto& rate = highPass ? r.idleRefs.hpRate : r.idleRefs.lpRate;
++                Ig00156LpStockRefresh stockRefresh;
++                if (!highPass)
++                    (void) tryReuseIg00156LpCoefficients(stage, c.lpCutoff, c.lpQ, sr, rate,
++                                                        lpCoefficientMemo, stockRefresh);
++                // Retain the original invocation and its genuine Q clamp/key
++                // tests even on a memo hit. Matching clocks exclude reReference.
+                 voice_continuity::prepareStageClock(stage, rate, highPass ? c.hpCutoff : c.lpCutoff,
+                                                     highPass ? c.hpQ : c.lpQ, sr, false);
++                if (!highPass)
++                    captureIg00156LpStockRefresh(stage, stockRefresh, lpCoefficientMemo);
+                 stages[(size_t) count] = &stage;
+                 inputs[(size_t) count] = p.filtered;
+                 indices[(size_t) count++] = i;
+--- a/src/core/Ig00156Batch.h
++++ b/src/core/Ig00156Batch.h
+@@ -3,6 +3,7 @@
+ #include "Ig00156Filter.h"
+ #include <array>
+ #include <cassert>
++#include <cstdint>
+ 
+ // Exactness is a build contract, not merely a CPU capability. In particular,
+ // an FMA-enabled caller may contract the existing inline scalar expressions.
+@@ -27,6 +28,30 @@
+ 
+ namespace cs80
+ {
++// Transient preparation memo for one existing masked active-LP pass. Only
++// valid/donor are initialized until a genuine stock full refresh is captured.
++// Numeric payloads never borrow mutable coefficient/state storage.
++struct Ig00156LpCoefficientMemo
++{
++    bool valid = false;
++    const Ig00156Stage* donor = nullptr;
++    std::uint32_t rateBits, fpControl, fpFlags;
++    std::array<double, 6> derived;
++    std::array<double, 10> coefficient;
++};
++struct Ig00156LpStockRefresh
++{
++    const Ig00156Stage* stage = nullptr;
++    std::uint32_t cutoffBits, qBits, rateBits, fpControl;
++};
++// Try-only: rejects without FP arithmetic or stage writes. On false, the
++// caller must execute its ORIGINAL prepareStageClock, then optionally capture
++// the completed stock full refresh. Never call this on a scalar/idle path.
++bool tryReuseIg00156LpCoefficients(Ig00156Stage&, float cutoff, float q,
++    float sampleRate, float clockRate, Ig00156LpCoefficientMemo&, Ig00156LpStockRefresh&) noexcept;
++void captureIg00156LpStockRefresh(const Ig00156Stage&, const Ig00156LpStockRefresh&,
++    Ig00156LpCoefficientMemo&) noexcept;
++
+ // A bounded four-lane operation, not a replacement for Stage::set or its
+ // lifecycle API. Call ordinary set/reReference first. Every processed field is
+ // written back to the actual scalar objects before returning.
+--- a/src/core/Ig00156Batch.cpp
++++ b/src/core/Ig00156Batch.cpp
+@@ -176,7 +176,136 @@
+             output[i]={static_cast<float>(l[i]),static_cast<float>(h[i]),static_cast<float>(-b[i])};
+         return true;
+     }
++    static bool ordinaryPositive(std::uint32_t bits) noexcept
++    {
++        return bits >= 0x00800000U && bits < 0x7f800000U;
++    }
++    static bool standardLp(const Ig00156Stage& stage) noexcept
++    {
++        const auto& n = stage.net;
++        const auto& k = kIg00156LowPassNetwork;
++        const std::array<double, 7> a { n.sourceOhms, n.groundOhms, n.inputFarads,
++            n.feedbackOhms, n.feedbackFarads, n.integratorFarads, n.feedforwardOhms };
++        const std::array<double, 7> b { k.sourceOhms, k.groundOhms, k.inputFarads,
++            k.feedbackOhms, k.feedbackFarads, k.integratorFarads, k.feedforwardOhms };
++        for (std::size_t i = 0; i < a.size(); ++i)
++            if (std::bit_cast<std::uint64_t>(a[i]) != std::bit_cast<std::uint64_t>(b[i]))
++                return false;
++        return true;
++    }
++    static std::array<double, 6> derivedFields(const Ig00156Stage& s) noexcept
++    {
++        return { s.gs, s.gg, s.gf, s.gTotal, s.inputScale, s.feedforwardHz };
++    }
++    static bool ordinaryDerived(const std::array<double, 6>& d) noexcept
++    {
++        for (double x : d)
++        {
++            const auto bits = std::bit_cast<std::uint64_t>(x);
++            if (bits < 0x0010000000000000ULL || bits >= 0x7ff0000000000000ULL)
++                return false;
++        }
++        return true;
++    }
++    static bool tryReuseLp(Ig00156Stage& s, float cutoff, float q, float sampleRate,
++                           float clockRate, Ig00156LpCoefficientMemo& memo,
++                           Ig00156LpStockRefresh& refresh) noexcept
++    {
++        refresh.stage = nullptr;
++        const auto cb = std::bit_cast<std::uint32_t>(cutoff);
++        const auto previousCutoff = std::bit_cast<std::uint32_t>(s.lastCutoff);
++        // Unchanged raw keys and existing Q-only behavior never participate.
++        // This also avoids new FP-environment work on the static held path.
++        if (cb == previousCutoff || !ordinaryPositive(cb))
++            return false;
++        const auto rb = std::bit_cast<std::uint32_t>(sampleRate);
++        auto qb = std::bit_cast<std::uint32_t>(q);
++        if (!ordinaryPositive(qb)
++            || rb < std::bit_cast<std::uint32_t>(8000.0f)
++            || rb > std::bit_cast<std::uint32_t>(1536000.0f))
++            return false;
++        // Conservative integer-only saturation proof: normal rate/2 is exact
++        // by exponent decrement, and exceeds the stock .45*fs - positive ff.
++        // No replacement cutoff is ever passed to the original setter.
++        if (cb < rb - 0x00800000U || !standardLp(s))
++            return false;
++        const auto derived = derivedFields(s);
++        if (!ordinaryDerived(derived))
++            return false;
++        const auto csr = _mm_getcsr();
++        if ((csr & 0x6000U) != 0 || (csr & 0x1f80U) != 0x1f80U)
++            return false;
++        const auto control = csr & 0xffc0U;
++        qb = std::max(std::bit_cast<std::uint32_t>(0.35f),
++                      std::min(qb, std::bit_cast<std::uint32_t>(9.0f)));
++        // A false return now certifies that the following original setter
++        // performs a full refresh, never a raw-key or Q-only cache return.
++        refresh = { &s, cb, qb, rb, control };
++        if (!memo.valid || memo.donor == &s || memo.rateBits != rb
++            || memo.fpControl != control || (csr & memo.fpFlags) != memo.fpFlags
++            || !s.cutoffCoefficientsValid || s.lastUnwarped
++            || std::bit_cast<std::uint32_t>(s.lastRate) != rb
++            || std::bit_cast<std::uint32_t>(clockRate) != rb
++            || !ordinaryPositive(previousCutoff)
++            || !ordinaryPositive(std::bit_cast<std::uint32_t>(s.lastQ)))
++            return false;
++        for (std::size_t i = 0; i < derived.size(); ++i)
++            if (std::bit_cast<std::uint64_t>(derived[i])
++                != std::bit_cast<std::uint64_t>(memo.derived[i]))
++                return false;
++
++        // All rejection paths above are integer-only and write no stage data.
++        // From here the same masked scalar arithmetic contract applies.
++        const float clampedQ = std::bit_cast<float>(qb);
++        s.lastCutoff = cutoff; s.lastQ = clampedQ; s.lastRate = sampleRate; s.lastUnwarped = false;
++        s.qSiemensValue = std::max(0.0, s.gTotal / (2.0 * clampedQ) - s.gf);
++        s.kHalf = memo.coefficient[0]; s.kHalfCoupling = memo.coefficient[1];
++        s.gmPart = memo.coefficient[2]; s.ffPart = memo.coefficient[3];
++        s.kiGs = memo.coefficient[4]; s.xFromFb = memo.coefficient[5];
++        s.xFromIn = memo.coefficient[6]; s.xFromU = memo.coefficient[7];
++        s.inFromX = memo.coefficient[8]; s.invA11 = memo.coefficient[9];
++        s.cutoffCoefficientsValid = true;
++        // Preserve the original operation order for the only Q-dependent
++        // eliminated coefficient and its necessary shared intermediates.
++        const double kf = s.kHalfCoupling / s.net.feedbackFarads;
++        const double a11 = 1.0 + s.kiGs, a21 = kf * s.gs, a22 = 1.0 + kf * s.gTotal;
++        const double det = a11 * a22 - s.kiGs * a21;
++        s.xFromBp = (a11 * kf * (s.qSiemensValue - s.gs - s.gg) + a21 * s.kiGs) / det;
++        refresh.stage = nullptr;
++        return true;
++    }
++    static void captureLp(const Ig00156Stage& s, const Ig00156LpStockRefresh& refresh,
++                          Ig00156LpCoefficientMemo& memo) noexcept
++    {
++        if (memo.valid || refresh.stage != &s || !s.cutoffCoefficientsValid || s.lastUnwarped
++            || std::bit_cast<std::uint32_t>(s.lastCutoff) != refresh.cutoffBits
++            || std::bit_cast<std::uint32_t>(s.lastQ) != refresh.qBits
++            || std::bit_cast<std::uint32_t>(s.lastRate) != refresh.rateBits)
++            return;
++        const auto csr = _mm_getcsr();
++        if ((csr & 0xffc0U) != refresh.fpControl)
++            return;
++        memo.donor = &s;
++        memo.rateBits = refresh.rateBits; memo.fpControl = refresh.fpControl;
++        memo.fpFlags = csr & 0x3fU;
++        memo.derived = derivedFields(s);
++        memo.coefficient = { s.kHalf, s.kHalfCoupling, s.gmPart, s.ffPart, s.kiGs,
++            s.xFromFb, s.xFromIn, s.xFromU, s.inFromX, s.invA11 };
++        // Publish only a fully copied realization produced by stock set().
++        memo.valid = true;
++    }
+ };
++
++bool tryReuseIg00156LpCoefficients(Ig00156Stage& stage, float cutoff, float q,
++    float sampleRate, float clockRate, Ig00156LpCoefficientMemo& memo, Ig00156LpStockRefresh& refresh) noexcept
++{
++    return Ig00156BatchAccess::tryReuseLp(stage, cutoff, q, sampleRate, clockRate, memo, refresh);
++}
++void captureIg00156LpStockRefresh(const Ig00156Stage& stage, const Ig00156LpStockRefresh& refresh,
++    Ig00156LpCoefficientMemo& memo) noexcept
++{
++    Ig00156BatchAccess::captureLp(stage, refresh, memo);
++}
+ 
+ Ig00156Batch::Kernel Ig00156Batch::selectKernel(bool allowAcceleration) noexcept
+ {
+@@ -193,6 +322,14 @@
+ #else
+ namespace cs80
+ {
++bool tryReuseIg00156LpCoefficients(Ig00156Stage&, float, float, float, float,
++    Ig00156LpCoefficientMemo&, Ig00156LpStockRefresh& refresh) noexcept
++{
++    refresh.stage = nullptr;
++    return false;
++}
++void captureIg00156LpStockRefresh(const Ig00156Stage&, const Ig00156LpStockRefresh&,
++    Ig00156LpCoefficientMemo&) noexcept {}
+ Ig00156Batch::Kernel Ig00156Batch::selectKernel(bool) noexcept { return nullptr; }
+ bool Ig00156Batch::environmentSupported() noexcept { return false; }
+ }

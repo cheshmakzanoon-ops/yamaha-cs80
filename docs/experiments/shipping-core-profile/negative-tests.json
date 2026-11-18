@@ -1,0 +1,127 @@
+{
+  "all_rejected": true,
+  "negative_tests": 24,
+  "positive_replay_passed": true,
+  "tests": [
+    {
+      "reason": "module SHA required",
+      "rejected": true,
+      "test": "missing module SHA"
+    },
+    {
+      "reason": "pinned module SHA mismatch",
+      "rejected": true,
+      "test": "changed pinned module SHA"
+    },
+    {
+      "reason": "exact module roster",
+      "rejected": true,
+      "test": "missing module"
+    },
+    {
+      "reason": "unknown PC module",
+      "rejected": true,
+      "test": "unknown PC module"
+    },
+    {
+      "reason": "PC outside executable coverage",
+      "rejected": true,
+      "test": "ASLR-like PC outside executable ranges"
+    },
+    {
+      "reason": "DWARF annotation coverage",
+      "rejected": true,
+      "test": "missing DWARF annotation"
+    },
+    {
+      "reason": "inline-chain coverage",
+      "rejected": true,
+      "test": "invalid frame reference"
+    },
+    {
+      "reason": "duplicate normalized PC",
+      "rejected": true,
+      "test": "duplicate normalized PC"
+    },
+    {
+      "reason": "sample/owner count conservation",
+      "rejected": true,
+      "test": "dropped sample input"
+    },
+    {
+      "reason": "unique counted PC index",
+      "rejected": true,
+      "test": "duplicate counted PC"
+    },
+    {
+      "reason": "positive sample count",
+      "rejected": true,
+      "test": "zero sample count"
+    },
+    {
+      "reason": "positive sample count",
+      "rejected": true,
+      "test": "negative sample count"
+    },
+    {
+      "reason": "exclusive ownership replay mismatch",
+      "rejected": true,
+      "test": "invented exclusive owner"
+    },
+    {
+      "reason": "library caller attribution forbidden",
+      "rejected": true,
+      "test": "double-charged library caller"
+    },
+    {
+      "reason": "calibration PC evidence",
+      "rejected": true,
+      "test": "calibration PC outside known loop"
+    },
+    {
+      "reason": "calibration count conservation",
+      "rejected": true,
+      "test": "calibration count changed"
+    },
+    {
+      "reason": "matching fixed-prefix PCM receipts",
+      "rejected": true,
+      "test": "changed prefix PCM receipt"
+    },
+    {
+      "reason": "eight-voice check conservation",
+      "rejected": true,
+      "test": "missing eight-voice check"
+    },
+    {
+      "reason": "recorded capture has nonzero PCM signal",
+      "rejected": true,
+      "test": "empty capture signal"
+    },
+    {
+      "reason": "recorded source routes",
+      "rejected": true,
+      "test": "changed source route"
+    },
+    {
+      "reason": "portable source category",
+      "rejected": true,
+      "test": "private absolute source path"
+    },
+    {
+      "reason": "predeclared scene/period order",
+      "rejected": true,
+      "test": "changed planned slot order"
+    },
+    {
+      "reason": "every exported PC must have capture coverage",
+      "rejected": true,
+      "test": "unused annotation/PC coverage"
+    },
+    {
+      "reason": "content anchor mismatch: pc-counts.json",
+      "rejected": true,
+      "test": "byte/content-anchor mutation"
+    }
+  ]
+}

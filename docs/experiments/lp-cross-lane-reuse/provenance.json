@@ -1,0 +1,33 @@
+{
+  "version": "transient-active-lp-q-independent-v2",
+  "baseline_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "normal_candidate_patch_sha256": "0979c5279ecb5d7dbcdb2c4791c806c18d8d8ed93e9ddcd81d9b7927a975e8b4",
+  "changed_source_sha256": {
+    "src/core/Engine.cpp": "00be2b658f618ca61de2ed47fb0248dabad75af32a38e8297ed476563c06463e",
+    "src/core/Ig00156Batch.h": "a95584e42a746d42c9fc2a77a864ce03e05b33c6805511c7746264faa04780b7",
+    "src/core/Ig00156Batch.cpp": "51a5786f86daf150c0cd158b761ed941160445dc80501fbe53bcdfb519539c0f"
+  },
+  "unchanged_header_sha256": {
+    "src/core/Engine.h": "90464b59cab9b303c68d424cb8f416b4ca1a4bb579ef94e33e936f68ac30261d",
+    "src/core/Ig00156Filter.h": "140f703f69e856b9c117405ca5d6fff58b756f6acc54c39a1a0417fee8c17a05"
+  },
+  "normal_archives": {
+    "stock": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+    "candidate": "c305cab6ba26c18721c683e6a338664b56349aaa26b4d902c60b1b6378ac3b2c"
+  },
+  "v1_patch_sha256": "3c98fed6cdc8ea526ee8be7621cfb424c2e6851651e01091ea347a0329b6bc50",
+  "original_receipt_sha256": {
+    "normal-arms.json": "b7488717cbe600930b6038edb9e5fbbe2527440e275f062f341e40f92327ab4c",
+    "trace-report.json": "f9a2d2bd56a110487f675912d7636b1ac1e354c4d5c45debe25069ebce670108",
+    "focused-tests.json": "1f87b95413588f4a5d6ac20f2914812f6b399dbdea09d48ee29216cecb2f97fa",
+    "direct-controls.json": "e4abc27c785265f51748bc5aa04815a286221aa97194e578d11191acd326160c",
+    "mutations.json": "735c01bac296757bf55c898aa9317765f5b37a8c0dff0f9d88d5b756b2ddbd18",
+    "scalar-isolation-v1.json": "9761a521bb990725015edf5435b223283114876197eaa371784c6d86b81bcff6",
+    "scalar-isolation-v2.json": "634c5e830d3a0c66719b8f2458bd994dac4aa006eff49a6c5011620dc9da855c"
+  },
+  "timing_decision": "REJECT_CORE_COST_GATE",
+  "export_scope": "Editorial/source export of existing receipts; no new compile, DSP execution, native loading or timing.",
+  "timing_raw_sha256": "dedac6a47df502dc44371174ccf16bd0606cc98e6e820d6178235aa3e615f746",
+  "timing_result": "cost/result.json",
+  "timing_scope": "Offline whole core plus control/event handling only; not measured plugin/DAW CPU, callback latency, or realtime capacity"
+}

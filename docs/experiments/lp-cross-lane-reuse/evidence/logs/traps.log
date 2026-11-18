@@ -1,0 +1,19 @@
+case,csr,signal,code,trap_csr,AA_equal,AB_equal,hit,token,expected_route
+precision new high,0f80,8,6,0fa0,1,1,0,0,1
+precision Q-only,0f80,8,6,0fa0,1,1,0,0,1
+precision raw return,0f80,0,0,0f80,1,1,0,0,1
+precision after restore,0f80,8,6,0fa0,1,1,0,0,1
+invalid ordinary,1f00,0,0,1f20,1,1,0,0,1
+denormal ordinary,1e80,0,0,1ea0,1,1,0,0,1
+divide zero ordinary,1d80,0,0,1da0,1,1,0,0,1
+overflow ordinary,1b80,0,0,1ba0,1,1,0,0,1
+underflow ordinary,1780,0,0,17a0,1,1,0,0,1
+invalid signaling raw,1f00,8,7,1f01,1,1,0,0,1
+invalid signaling Q,1f00,8,7,1f01,1,1,0,0,1
+divide by zero rate,1d80,8,3,1da4,1,1,0,0,1
+denormal Q,1e80,8,5,1e82,1,1,0,0,1
+overflow custom network,1b80,8,4,1baa,1,1,0,0,1
+underflow custom network,1780,8,5,17b0,1,1,0,0,1
+precision HP network,0f80,8,6,0fa0,1,1,0,0,1
+masked valid hit,1fa0,0,0,1fa0,1,1,1,0,1
+cases=17 AA=17 AB=17 actual_SIGFPE=10 failures=0 record_bytes=328

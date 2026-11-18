@@ -1,0 +1,47 @@
+--- a/src/core/ReconstructedOscillator.h
++++ b/src/core/ReconstructedOscillator.h
+@@ -306,13 +306,43 @@
+             diagnostics.eventCapacityExceeded=true;advance(dt-elapsed,after);after=nodes(1);
+         }
+         state.elapsedSeconds+=dt;
+-        endNodes=after;endNodesValid=true;
++#if defined(__GNUC__) && !defined(__clang__)
++        // Commit existing node values fieldwise, without rematerializing the
++        // scalarized local endpoint solely for an aggregate copy.
++        endNodes.pin7=after.pin7;
++        endNodes.u=after.u;
++        endNodes.uSlope=after.uSlope;
++        endNodes.triangle=after.triangle;
++        endNodes.triangleSlope=after.triangleSlope;
++        endNodes.w=after.w;
++        endNodes.wSlope=after.wSlope;
++        endNodes.triangleGain=after.triangleGain;
++        endNodes.value.sawPin5=after.value.sawPin5;
++        endNodes.value.pulsePin7=after.value.pulsePin7;
++        endNodes.value.sinePin2=after.value.sinePin2;
++        endNodes.slope.sawPin5=after.slope.sawPin5;
++        endNodes.slope.pulsePin7=after.slope.pulsePin7;
++        endNodes.slope.sinePin2=after.slope.sinePin2;
++        endNodes.constant.sawPin5=after.constant.sawPin5;
++        endNodes.constant.pulsePin7=after.constant.pulsePin7;
++        endNodes.constant.sinePin2=after.constant.sinePin2;
++        endNodes.ungatedValue.sawPin5=after.ungatedValue.sawPin5;
++        endNodes.ungatedValue.pulsePin7=after.ungatedValue.pulsePin7;
++        endNodes.ungatedValue.sinePin2=after.ungatedValue.sinePin2;
++#else
++        endNodes=after;
++#endif
++        endNodesValid=true;
+         const auto& raw=endNodes;
+         diagnostics.rawPin7Volts=raw.pin7;diagnostics.coupledInputVolts=raw.u;
+         diagnostics.trianglePin3Volts=raw.triangle;diagnostics.shaperInputVolts=raw.w;diagnostics.raw=raw.ungatedValue;
+         WscOutputVolts output;
+         double* destinations[3]={&output.sawPin5,&output.pulsePin7,&output.sinePin2};
+         const auto values=asArray(raw.value),slopes=asArray(raw.slope),constants=asArray(raw.constant);
++#if defined(__GNUC__) && !defined(__clang__)
++#pragma GCC novector
++#pragma GCC unroll 1
++#endif
+         for(std::size_t branch=0;branch<3;++branch){const double a=values[branch]-constants[branch],b=slopes[branch]/rate+inverseTauSamples*a;*destinations[branch]=constants[branch]+a*weightedArea-b*weightedMoment+state.residual[branch][state.residualCursor];state.residual[branch][state.residualCursor]=0.;}
+         state.residualCursor=(state.residualCursor+1)%OscillatorResidualKernel::length;
+         return output;

@@ -1,0 +1,80 @@
+{
+  "scope": "Untimed GNU x86-64/Linux component/FP qualification; bounded accepted/rejected inputs, not universal platform proof.",
+  "component": {
+    "checks": 88982,
+    "failures": 0,
+    "hits": 339,
+    "misses": 1696,
+    "donors": 524,
+    "negative_controls_caught": 2
+  },
+  "aa": {
+    "checks": 86886,
+    "failures": 0,
+    "hits": 0,
+    "misses": 2034,
+    "donors": 522,
+    "negative_controls_caught": 0
+  },
+  "disabled": {
+    "checks": 88704,
+    "failures": 0,
+    "hits": 0,
+    "misses": 2016,
+    "donors": 0,
+    "negative_controls_caught": 0
+  },
+  "traps": {
+    "cases": 17,
+    "AA": 17,
+    "AB": 17,
+    "actual_SIGFPE": 10,
+    "failures": 0,
+    "record_bytes": 328
+  },
+  "source_sha256": {
+    "component.cpp": "86a2e7597b87698e9a3d6a2e499ee218248a2b6664863dd2d97f22ac39f573b5",
+    "traps.cpp": "5e6a3027b019b2b67bbaf494f17f582688fa4838363b83fb362492d595ffd1a2",
+    "aa.cpp": "77a729c7b4af210dd8472b1eb6be4738c592d4029228b11a9bea446d93959ce7",
+    "disabled.cpp": "fd3c962c3fbc5f12f54b36b1865acd90de85681a5b088bd022bbbbf0014b0758"
+  },
+  "logs": {
+    "direct.log": "5c17d73a3872d39ce18511f57227d0e0ec88cd9b24d7bdbd526144c3539d5729",
+    "traps.log": "993b02f94c115069c41fb1d5db0511f0c75fb2e17efa4f145c4fa75c9ad07f19",
+    "aa.log": "4d374c1a6ede502f52b857b937cd221a7f5b044b26159a4deeac2088c5992eb7",
+    "disabled.log": "7aba4699902c91ec160ea92fe63798460d44e34e21aa6416a52925ba0d225477"
+  },
+  "control_steps": [
+    {
+      "name": "candidate-v2-aa-build",
+      "exit": 0,
+      "cpu_cap_seconds": 20,
+      "wall_cap_seconds": 30
+    },
+    {
+      "name": "candidate-v2-aa",
+      "exit": 0,
+      "cpu_cap_seconds": 20,
+      "wall_cap_seconds": 30
+    },
+    {
+      "name": "candidate-v2-disabled-backend-build",
+      "exit": 0,
+      "cpu_cap_seconds": 20,
+      "wall_cap_seconds": 30
+    },
+    {
+      "name": "candidate-v2-disabled-build",
+      "exit": 0,
+      "cpu_cap_seconds": 20,
+      "wall_cap_seconds": 30
+    },
+    {
+      "name": "candidate-v2-disabled",
+      "exit": 0,
+      "cpu_cap_seconds": 20,
+      "wall_cap_seconds": 30
+    }
+  ],
+  "export_note": "Machine-local command paths removed. Original C++ fixtures and full result text retained. Trap binary records are not distributed."
+}

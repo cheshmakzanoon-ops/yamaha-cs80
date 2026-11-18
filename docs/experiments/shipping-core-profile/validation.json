@@ -1,0 +1,34 @@
+{
+  "all_negative_tests_rejected": true,
+  "external_binary_checks": {
+    "core_object_pairs": 3,
+    "dwarf_source_mapping_verified": true,
+    "linked_pair_code_and_addresses_identical": true,
+    "main_pcs_checked": 3322,
+    "module_bytes_verified": true,
+    "module_sha256": {
+      "libm": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+      "main": "85aa172f5213270da7d08de5c233b10ec79003c149acdc546b2755b665ac4122"
+    },
+    "physical_symbols_verified": true,
+    "supplied_build_identity_verified": true,
+    "wrong_external_module_rejected": true
+  },
+  "negative_test_count": 24,
+  "portable_export_scan": {
+    "no_private_workspace_paths_or_user_ids": true,
+    "no_raw_aslr_maps_or_elf_binaries": true,
+    "no_stale_prior_study_paths": true
+  },
+  "receipt_replay": {
+    "captures": 6,
+    "causal_performance_claim": false,
+    "core_samples": 25613,
+    "mode": "receipt-and-count-replay",
+    "module_bytes_verified": false,
+    "normalized_pc_count": 3584,
+    "outside_core_samples": 36
+  },
+  "sampling_rerun": false,
+  "schema": "portable-export-validation-v1"
+}

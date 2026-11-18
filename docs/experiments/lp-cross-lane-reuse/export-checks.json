@@ -1,0 +1,23 @@
+{
+  "scope": "Light editorial/export checks only; no C++ compilation, DSP/native execution, timing or heavy replay.",
+  "checks": {
+    "exported_json_parse": true,
+    "portable_python_ast_parse": true,
+    "local_documentation_links_resolve": true,
+    "private_project_paths_absent": true,
+    "executable_or_raw_binary_files_absent": true,
+    "normal_patch_exact_frozen_sha256": true,
+    "trace_counter_and_cost_cpp_exact_recorded_sha256": true,
+    "trace_record_count_and_byte_sum_consistent": true
+  },
+  "runtime_requalification_performed": false,
+  "portable_adaptations_runtime_tested": false,
+  "timing_decision": "REJECT_CORE_COST_GATE",
+  "notes": [
+    "Coordinator-owned cost protocol/replay files are not edited by this export.",
+    "Omitted raw streams, binaries, archive/object inputs and large disassemblies are disclosed in README."
+  ],
+  "timing_raw_sha256": "dedac6a47df502dc44371174ccf16bd0606cc98e6e820d6178235aa3e615f746",
+  "timing_result": "cost/result.json",
+  "timing_scope": "Offline whole core plus control/event handling only; not measured plugin/DAW CPU, callback latency, or realtime capacity"
+}

@@ -1,0 +1,29 @@
+{
+  "source_files": 193,
+  "stock_commit": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "candidate_patch_sha256": "0979c5279ecb5d7dbcdb2c4791c806c18d8d8ed93e9ddcd81d9b7927a975e8b4",
+  "changes": [
+    "src/core/Engine.cpp",
+    "src/core/Ig00156Batch.cpp",
+    "src/core/Ig00156Batch.h"
+  ],
+  "exact_patch_reconstruction": true,
+  "objects": {
+    "Engine.cpp.o": {
+      "stock": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+      "candidate": "97fe3c1b88ba61379ae0065c0e842af17b1891b42d217c9177b4793591a42cf7"
+    },
+    "FactoryPresets.cpp.o": {
+      "stock": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+      "candidate": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b"
+    },
+    "Ig00156Batch.cpp.o": {
+      "stock": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+      "candidate": "c0bfd7b518017634e9a8daf2de21e984ea76e51802a560200df9836978dbc3cf"
+    }
+  },
+  "archives": {
+    "stock": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+    "candidate": "c305cab6ba26c18721c683e6a338664b56349aaa26b4d902c60b1b6378ac3b2c"
+  }
+}

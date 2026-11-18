@@ -1,0 +1,144 @@
+{
+  "primary": "factory-moving",
+  "cases": [
+    "factory-moving",
+    "factory-held",
+    "panel-moving",
+    "pure-held"
+  ],
+  "schedule": {
+    "stock_aa_reversal_pairs": 2,
+    "comparison_reversal_pairs": 6,
+    "processes_per_pair_and_case": 8,
+    "cases": 4
+  },
+  "expected_identity": {
+    "factory-moving": {
+      "frame": "011767aae5039f23",
+      "measured_last_pcm": "03e0f458fa7e9216",
+      "continuation_pcm": "bb12d14ba23a2bab",
+      "initial_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "measured_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "continuation_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      }
+    },
+    "factory-held": {
+      "frame": "3cf1aa1de3b01585",
+      "measured_last_pcm": "02218e51645a5b5c",
+      "continuation_pcm": "585b1bd69e672cac",
+      "initial_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "measured_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "continuation_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      }
+    },
+    "panel-moving": {
+      "frame": "8815a44534b5c9d9",
+      "measured_last_pcm": "909c621ee9ee29b7",
+      "continuation_pcm": "1aa61d9533d36de1",
+      "initial_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "measured_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "continuation_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      }
+    },
+    "pure-held": {
+      "frame": "9f28775348b01585",
+      "measured_last_pcm": "d04126d74fa0305d",
+      "continuation_pcm": "4af7e284b09db341",
+      "initial_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "measured_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      },
+      "continuation_fp": {
+        "mxcsr": 40928,
+        "x87_cw": 895,
+        "x87_sw": 0,
+        "errno": 0
+      }
+    }
+  },
+  "diagnostic_late_hits": {
+    "factory-moving": 838176,
+    "factory-held": 0,
+    "panel-moving": 0,
+    "pure-held": 0
+  },
+  "pinned_cpu": 0,
+  "plan_sha256": "448869c157cde5594b4a29bfba72e804a2dbe78208d53dbf4a8cc21dcb6631d0",
+  "qualification_sha256": "5eb36f803829929d25917312560a54f883c175780ee47a05851ff63e10906513",
+  "scope": "whole offline standalone control/event/core CPU; not native/plugin/DAW",
+  "warmup_blocks": 1024,
+  "work_blocks": 512,
+  "frames_per_block": 64,
+  "clock": "CLOCK_THREAD_CPUTIME_ID",
+  "observations": 256,
+  "machine": {
+    "os": "Linux x86_64",
+    "cpu_model": "Intel Xeon Platinum 8573C",
+    "compiler": "GCC 14.2 normal Release/PIC",
+    "clock_limit": "Project activity coordinated; physical load, CPU frequency and governor not fully controlled."
+  },
+  "elapsed_seconds": 463.123321,
+  "utc_start": "2026-11-18T01:44:03.752306+00:00",
+  "utc_end": "2026-11-18T01:51:46.875627+00:00",
+  "input_sha256": {
+    "stock-normal": "f679de883f7458c3c531a99506d5613607163500f7f3fa1d58f54e66748f40fe",
+    "candidate-normal": "f33fa9c7e27ca2f42115e5998f7659b714b998afa4ebac8e972d30d190b54a5d",
+    "candidate-counted": "c3e0ea5fab7633f47546d8abe6914f88fec12f4e57b8965096df80104c8140e3",
+    "candidate_patch": "0979c5279ecb5d7dbcdb2c4791c806c18d8d8ed93e9ddcd81d9b7927a975e8b4",
+    "stock_archive": "323db1f6f973508b9192f310f4bef66efd45e6c6178afc164dd5819b72b5e314",
+    "candidate_archive": "c305cab6ba26c18721c683e6a338664b56349aaa26b4d902c60b1b6378ac3b2c"
+  },
+  "effect": "100 * (1 - candidate / stock); positive uses less core CPU",
+  "measurements": "A/A and comparison each warm separately. No retries, appended rows or deletions.",
+  "pass_rules": "Moving factory sole primary; lower 95% must exceed max(2%, largest absolute A/A quartet or whole pair, three times primary maximum empty-clock fraction). All three controls lower 95% >= -3%. Passing only admits a new matched native study."
+}

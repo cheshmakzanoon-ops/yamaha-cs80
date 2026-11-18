@@ -1,0 +1,227 @@
+{
+  "schema": "oscillator-endpoint-copy-rejections-v1",
+  "decision": {
+    "v1": "rejected: residual continuation differs",
+    "v2": "rejected: public diagnostic continuation differs",
+    "timing_collected": false
+  },
+  "baseline": "e9e8175f4278d2457279fcb8809cbba1ddb7be2b",
+  "build": "GNU C++ 14.2.0, Linux x86-64, -O3 -DNDEBUG -std=gnu++20 -fPIC; no fast-math, LTO or native-ISA flag",
+  "object_bytes": 5984,
+  "all_trap_observations": {
+    "signal": 8,
+    "signal_name": "SIGFPE",
+    "si_code": 7,
+    "si_code_name": "FPE_FLTINV",
+    "mxcsr": "0x1f21",
+    "x87_status": "0x0",
+    "x87_control": "0x37e",
+    "errno": 19
+  },
+  "seed_signaling_nan_bits": "0x7ff0000000000123",
+  "null_control": "Two distinct byte-identical objects call the same stock DSO; not two separate compiler builds.",
+  "output": {
+    "case_order": [
+      "saw residual",
+      "pulse residual",
+      "sine residual"
+    ],
+    "stock_trap_offsets": [
+      "0x298e",
+      "0x29cd",
+      "0x2a0c"
+    ],
+    "stock_stock": {
+      "exit": 0,
+      "traps": 6,
+      "whole_object_differing_bytes": [
+        0,
+        0,
+        0
+      ],
+      "nodes20_equal": [
+        true,
+        true,
+        true
+      ],
+      "validity_equal": [
+        true,
+        true,
+        true
+      ],
+      "own_restored_output_mismatches": [
+        0,
+        0,
+        0
+      ],
+      "common_restored_mismatches": [
+        0,
+        0,
+        0
+      ]
+    },
+    "stock_v1": {
+      "exit": 1,
+      "traps": 6,
+      "candidate_trap_offsets": [
+        "0x29fb",
+        "0x29fb",
+        "0x2a46"
+      ],
+      "whole_object_differing_bytes": [
+        6,
+        4,
+        0
+      ],
+      "nodes20_equal": [
+        true,
+        true,
+        true
+      ],
+      "validity_equal": [
+        true,
+        true,
+        true
+      ],
+      "own_restored_output_mismatches": [
+        1,
+        1,
+        0
+      ],
+      "common_restored_mismatches": [
+        0,
+        0,
+        0
+      ]
+    },
+    "stock_v2": {
+      "exit": 0,
+      "traps": 6,
+      "candidate_trap_offsets": [
+        "0x29d3",
+        "0x29d3",
+        "0x29d3"
+      ],
+      "whole_object_differing_bytes": [
+        0,
+        0,
+        0
+      ],
+      "nodes20_equal": [
+        true,
+        true,
+        true
+      ],
+      "validity_equal": [
+        true,
+        true,
+        true
+      ],
+      "own_restored_output_mismatches": [
+        0,
+        0,
+        0
+      ],
+      "common_restored_mismatches": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "elapsed": {
+    "case_order": [
+      "public State restore: cache invalid",
+      "test-only exceptional insertion: cache remains valid"
+    ],
+    "stock_trap_offsets": [
+      "0x27f2",
+      "0x27f2"
+    ],
+    "stock_stock": {
+      "exit": 0,
+      "traps": 4,
+      "whole_object_differing_bytes": [
+        0,
+        0
+      ],
+      "nodes20_equal": [
+        true,
+        true
+      ],
+      "validity_equal": [
+        true,
+        true
+      ],
+      "direct_output_mismatches": [
+        0,
+        0
+      ],
+      "direct_diagnostic_mismatches": [
+        0,
+        0
+      ],
+      "own_restored_output_mismatches": [
+        0,
+        0
+      ],
+      "common_restored_output_mismatches": [
+        0,
+        0
+      ]
+    },
+    "stock_v2": {
+      "exit": 1,
+      "traps": 4,
+      "candidate_trap_offsets": [
+        "0x2858",
+        "0x2858"
+      ],
+      "whole_object_differing_bytes": [
+        5,
+        5
+      ],
+      "nodes20_equal": [
+        false,
+        false
+      ],
+      "validity_equal": [
+        true,
+        true
+      ],
+      "direct_output_mismatches": [
+        0,
+        0
+      ],
+      "direct_diagnostic_mismatches": [
+        0,
+        4
+      ],
+      "own_restored_output_mismatches": [
+        0,
+        0
+      ],
+      "common_restored_output_mismatches": [
+        0,
+        0
+      ]
+    },
+    "valid_cache_first_public_control_change": {
+      "event_counts": [
+        1,
+        1
+      ],
+      "field": "getDiagnostics().events[0].before.sawPin5",
+      "stock": "-0x1.efbebbe542775p+0",
+      "v2": "-0x1.efb1f30e69ecbp+0",
+      "audio_equal": true,
+      "diagnostic_difference_retained_for_calls": 4
+    }
+  },
+  "limits": [
+    "Diagnostic exceptional seeds, not claimed reachable from ordinary finite musical histories.",
+    "siglongjmp observes interrupted objects and later calls, not a resumed faulting instruction.",
+    "Relative PCs describe the observed build and are not portable addresses.",
+    "No broader V2 correctness, other compiler/platform, full CTest, performance or release claim."
+  ]
+}
