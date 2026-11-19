@@ -18,6 +18,14 @@
 #define CS80_ENGINE_TRACKS_EXACT_FIR_ZERO 0
 #endif
 
+#if CS80_ENGINE_TRACKS_EXACT_FIR_ZERO && defined(__OPTIMIZE__) && !defined(__OPTIMIZE_SIZE__) \
+    && !defined(__NO_MATH_ERRNO__) && !defined(__ROUNDING_MATH__) && !defined(__SUPPORT_SNAN__) \
+    && ((__GNUC__ == 14 && __GNUC_MINOR__ == 2) || (__GNUC__ == 13 && __GNUC_MINOR__ == 3 && __GNUC_PATCHLEVEL__ == 0)) \
+    && !defined(CS80_DISABLE_WIDENED_FIR)
+#define CS80_ENGINE_WIDENS_FIR 1
+#else
+#define CS80_ENGINE_WIDENS_FIR 0
+#endif
 #ifdef CS80_FIR_ZERO_REACH_ONLY
 extern "C" void cs80_observe_fir_reach(bool) noexcept;
 #endif
@@ -28,6 +36,9 @@ void EngineOutputFir::prepare(int factor) noexcept
     scalar.prepare(factor);
 #if CS80_ENGINE_TRACKS_EXACT_FIR_ZERO
     uniformZeroRun = scalar.getTaps();
+#if CS80_ENGINE_WIDENS_FIR
+    samplesToWidened = 0;
+#endif
     safeZeroCoefficients = true;
     hasNegativeWitness = false;
     const int center = scalar.getCenter();
@@ -45,6 +56,15 @@ void EngineOutputFir::prepare(int factor) noexcept
             else hasNegativeWitness = true;
         }
     }
+#if CS80_ENGINE_WIDENS_FIR
+    // A signed zero or finite normal binary32 coefficient widens exactly.
+    // The two private shadow mirrors must fit entirely outside the raw ring.
+    static_assert(sizeof(double) == 2 * sizeof(float) && std::numeric_limits<double>::is_iec559
+                  && std::numeric_limits<double>::digits == 53);
+    static_assert(3 * OversamplingDecimator::tapsFor(2) <= OversamplingDecimator::kMaxTaps);
+    if (safeZeroCoefficients && scalar.hasWideningScratch())
+        scalar.cacheWidenedCoefficients();
+#endif
 #endif
 }
 
@@ -53,15 +73,42 @@ void EngineOutputFir::reset() noexcept
     scalar.reset();
 #if CS80_ENGINE_TRACKS_EXACT_FIR_ZERO
     uniformZeroRun = scalar.getTaps();
+#if CS80_ENGINE_WIDENS_FIR
+    samplesToWidened = 0;
+#endif
 #endif
 }
 
 void EngineOutputFir::push(float x) noexcept
 {
-    scalar.push(x); // Both mirrors and the original cursor always advance.
+#if !CS80_ENGINE_WIDENS_FIR
+    scalar.push(x); // Unsupported translation units retain the original ordering.
+#endif
 #if CS80_ENGINE_TRACKS_EXACT_FIR_ZERO
     const auto bits = std::bit_cast<std::uint32_t>(x);
     const int taps = scalar.getTaps();
+#if CS80_ENGINE_WIDENS_FIR
+    // An already uniform raw window and its widened copy are unchanged by
+    // another zero of that exact sign. Only the common ring cursor moves.
+    if ((bits == 0u && uniformZeroRun == taps) || (bits == 0x80000000u && uniformZeroRun == -taps))
+    {
+        scalar.advanceUnchangedHistory();
+        return;
+    }
+    if (scalar.getFactor() == 2)
+    {
+        const auto mag = bits & 0x7fffffffu;
+        const bool zero = mag == 0u;
+        // Normal or signed zero widens exactly with all rounding and DAZ/FTZ
+        // modes. Signalling NaNs and subnormals never move exception timing.
+        if (zero || (mag - 0x00800000u < 0x7f800000u - 0x00800000u))
+        {
+            scalar.rememberWidenedPush(x);
+            if (samplesToWidened != 0) --samplesToWidened;
+        }
+        else samplesToWidened = static_cast<std::uint16_t>(taps);
+    }
+#endif
     if ((bits & 0x7fffffffu) != 0u) uniformZeroRun = 0;
     else if (bits == 0u)
     {
@@ -69,6 +116,9 @@ void EngineOutputFir::push(float x) noexcept
     }
     else if (uniformZeroRun != -taps)
         uniformZeroRun = std::min(0, uniformZeroRun) - 1;
+#endif
+#if CS80_ENGINE_WIDENS_FIR
+    scalar.push(x);
 #endif
 }
 
@@ -97,7 +147,18 @@ float EngineOutputFir::output() const noexcept
 #endif
     if (fast) return 0.0f;
 #endif
+#if CS80_ENGINE_WIDENS_FIR
+    // Nonstandard or trapping FP retains the literal original arithmetic.
+    // 8x has no scratch tail; it always uses the ordinary coefficient source.
+    if (scalar.hasWideningScratch() && safeZeroCoefficients && (_mm_getcsr() & 0x7f80u) == 0x1f80u)
+    {
+        if (scalar.getFactor() == 2 && samplesToWidened == 0)
+            return scalar.outputWithWidenedHistory();
+        return scalar.outputWithWidenedCoefficients();
+    }
+#endif
     return scalar.output();
 }
 } // namespace cs80
+#undef CS80_ENGINE_WIDENS_FIR
 #undef CS80_ENGINE_TRACKS_EXACT_FIR_ZERO

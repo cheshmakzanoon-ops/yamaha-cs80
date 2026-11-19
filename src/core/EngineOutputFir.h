@@ -29,6 +29,7 @@ private:
     // preserve the history, cursor and the corresponding certificate together.
     int uniformZeroRun = OversamplingDecimator::tapsFor(2);
     bool safeZeroCoefficients = true, hasNegativeWitness = false;
+    std::uint16_t samplesToWidened = 0; // outstanding raw-only exceptional history
     CS80_OUTPUT_FIR_INTERNAL bool qualifies() const noexcept;
     friend struct EngineOutputFirTestAccess;
 };

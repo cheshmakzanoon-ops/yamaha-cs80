@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstring>
 #include <limits>
 #include <cstddef>
 #include <cstdint>
@@ -1243,6 +1244,88 @@ public:
     { return tap >= 0 && tap < taps ? coeffs[(size_t) tap] : 0.0f; }
 
 private:
+    friend class EngineOutputFir;
+    // Admitted only by the Engine-owned wrapper. A full same-sign-zero window
+    // already contains the incoming bit pattern in both mirrors.
+    void advanceUnchangedHistory() noexcept
+    {
+        if (++idx >= taps) idx = 0;
+    }
+
+    // At 2x the raw mirror occupies slots [0,510) of 2,046. A binary64
+    // mirror uses [510,1530). Byte copies require neither alignment nor a
+    // double* alias of the underlying float array.
+    void rememberWidenedPush(float x) noexcept
+    {
+        const double wide = static_cast<double>(x);
+        float* cache = hist.data() + 2 * taps;
+        std::memcpy(cache + 2 * idx, &wide, sizeof(wide));
+        std::memcpy(cache + 2 * (idx + taps), &wide, sizeof(wide));
+    }
+    float outputWithWidenedHistory() const noexcept
+    {
+        // Only the 2x caller has this second history. Widened packed storage
+        // is byte-copied: never alias float[] as double[] or assume alignment.
+        constexpr int active = tapsFor(2), mid = centerFor(2);
+        const float* newest = hist.data() + 2 * active + 2 * (idx - 1 + active);
+        const float* ascending = newest - 2 * (active - 1);
+        const float* coefficient = coeffs.data() + active;
+        const auto peek = [](const float* p) noexcept {
+            double value;
+            std::memcpy(&value, p, sizeof(value));
+            return value;
+        };
+        double y = peek(coefficient + 2 * mid) * peek(newest - 2 * mid);
+        const auto term = [&](int offset) noexcept {
+            y += peek(coefficient + 2 * offset)
+                 * (peek(newest - 2 * offset) + peek(ascending + 2 * offset));
+        };
+        // Group address advancement only. Every floating-point accumulation
+        // still occurs in the original increasing tap index, one at a time.
+        int i = 0;
+        for (; i + 4 <= mid; i += 4)
+        {
+            term(0); term(1); term(2); term(3);
+            newest -= 8; ascending += 8; coefficient += 8;
+        }
+        for (; i < mid; ++i)
+        {
+            term(0);
+            newest -= 2; ascending += 2; coefficient += 2;
+        }
+        return static_cast<float>(y);
+    }
+    // The inactive tail of the 1,023-float coefficient array fits the full
+    // independent binary64 design at 2x and 4x, but not at 8x. Keep all
+    // active binary32 coefficients and the ordinary scalar output intact.
+    bool hasWideningScratch() const noexcept
+    {
+        return taps + 2 * (center + 1) <= kMaxTaps;
+    }
+    void cacheWidenedCoefficients() noexcept
+    {
+        for (int i = 0; i <= center; ++i)
+        {
+            const double x = static_cast<double>(coeffs[(size_t) i]);
+            std::memcpy(coeffs.data() + taps + 2 * i, &x, sizeof(x));
+        }
+    }
+    float outputWithWidenedCoefficients() const noexcept
+    {
+        const float* newest = hist.data() + idx - 1 + taps;
+        const float* cache = coeffs.data() + taps;
+        const auto coefficient = [cache](int tap) noexcept {
+            double value;
+            std::memcpy(&value, cache + 2 * tap, sizeof(value));
+            return value;
+        };
+        double y = coefficient(center) * newest[-center];
+        for (int i = 0; i < center; ++i)
+            y += coefficient(i)
+                 * ((double) newest[-i] + (double) newest[-(taps - 1 - i)]);
+        return (float) y;
+    }
+
     static double besselI0(double x) noexcept
     {
         double sum = 1.0, term = 1.0;

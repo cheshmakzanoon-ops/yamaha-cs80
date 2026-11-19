@@ -90,6 +90,73 @@ void testEngineOutputFirSignedSilence()
     }
 }
 
+// Compare the Engine-owned FIR with the public, unchanged scalar decimator.
+// This runs on the unqualified platforms too: no ISA or private cache is used
+// by the oracle. The same source also exercises the explicit disabled build.
+void testEngineOutputFirHistoryBoundaries()
+{
+    using Bits = std::uint32_t;
+    const auto same = [](float a, float b) {
+        return std::bit_cast<Bits>(a) == std::bit_cast<Bits>(b);
+    };
+    const std::array<Bits, 10> probes { 0u, 0x80000000u, 1u, 0x80000001u,
+        0x007fffffu, 0x807fffffu, 0x00800000u, 0x80800000u, 0x7f7fffffu, 0xff7fffffu };
+    EngineOutputFir engine;
+    OversamplingDecimator scalar;
+    Bits rng = 0x8a31744bu;
+    const auto normal = [&]() {
+        rng = 1664525u * rng + 1013904223u;
+        return std::bit_cast<float>((rng & 0x807fffffu) | ((113u + (rng >> 28)) << 23));
+    };
+    const auto push = [&](float x) {
+        engine.push(x);
+        scalar.push(x);
+        return same(engine.output(), scalar.output());
+    };
+    const int savedRound = std::fegetround();
+    for (const int rounding : { FE_TONEAREST, FE_DOWNWARD, FE_UPWARD, FE_TOWARDZERO })
+    {
+        if (savedRound == -1 || std::fesetround(rounding) != 0) continue;
+        for (const int requested : { 2, 4, 8, 4, 2, 3 }) // invalid 3 resets to 2
+        {
+            engine.prepare(requested);
+            scalar.prepare(requested);
+            const int taps = scalar.getTaps();
+            bool sameOutput = true;
+            for (int i = 0; i < taps + taps / 2; ++i) sameOutput &= push(normal());
+            // Copy and assignment during an active, wrapped normal window.
+            EngineOutputFir copy = engine, assigned;
+            OversamplingDecimator oracle = scalar;
+            assigned = copy;
+            for (int i = 0; i < 19; ++i)
+            {
+                const float x = normal();
+                copy.push(x); assigned.push(x); oracle.push(x);
+                const float expected = oracle.output();
+                sameOutput &= same(expected, copy.output()) && same(expected, assigned.output());
+            }
+            sameOutput &= same(engine.output(), scalar.output());
+            // Rank one exceptional word against exact zero: it can change both
+            // the tiny output and its sign. Check its entry, whole tail, and
+            // precisely when the last exceptional word leaves at either wrap.
+            for (const Bits word : probes)
+            {
+                for (int i = 0; i < taps + 3; ++i) sameOutput &= push(0.0f);
+                sameOutput &= push(std::bit_cast<float>(word));
+                for (int i = 0; i < taps + 2; ++i)
+                    sameOutput &= push(i == taps - 1 ? -0.0f : 0.0f);
+            }
+            for (int i = 0; i < taps + 1; ++i) sameOutput &= push(-0.0f);
+            for (int i = 0; i < taps + 2; ++i) sameOutput &= push(normal());
+            engine.reset(); scalar.reset();
+            sameOutput &= same(engine.output(), scalar.output());
+            for (int i = 0; i < 7; ++i) sameOutput &= push(normal());
+            check(sameOutput, "FIR every output bit survives exceptional windows, copies, reset and factor cycling");
+        }
+    }
+    if (savedRound != -1) check(std::fesetround(savedRound) == 0, "restore rounding after FIR history test");
+}
+
 void testFactorRule()
 {
     using M = OversamplingMode;
@@ -438,6 +505,7 @@ int main()
     testFactorRule();
     testDecimatorDesign();
     testEngineOutputFirSignedSilence();
+    testEngineOutputFirHistoryBoundaries();
     testDcRateLifecycle();
     testEngine();
     std::printf("%d checks, %d failures\n", checks, failures);

@@ -1,0 +1,168 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "8476ce91c848bd1354869fc29c62248d1585de4694b863ded9b17bb7c60f3952",
+  "genuine_host_runs": 70,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Matched local GCC Release/PIC, JUCE and runtime. All header-dependent product objects were recompiled for the paired build.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4972167,
+        1264555,
+        700611
+      ],
+      "delta": [
+        -248,
+        1536,
+        -516
+      ],
+      "percent_change": [
+        -0.004987516126469733,
+        0.12161337240374057,
+        -0.07359579648194978
+      ],
+      "stock": [
+        4972415,
+        1263019,
+        701127
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        22368572,
+        6351353,
+        2614278
+      ],
+      "delta": [
+        -529912,
+        8192,
+        4092
+      ],
+      "percent_change": [
+        -2.314179401570864,
+        0.12914696631537495,
+        0.15677043704931373
+      ],
+      "stock": [
+        22898484,
+        6343161,
+        2610186
+      ]
+    },
+    "queues-1": {
+      "candidate": [
+        27417054,
+        7339542,
+        3169799
+      ],
+      "delta": [
+        -529660,
+        8192,
+        3588
+      ],
+      "percent_change": [
+        -1.895249652606743,
+        0.11173931131374167,
+        0.11332156953532156
+      ],
+      "stock": [
+        27946714,
+        7331350,
+        3166211
+      ]
+    },
+    "queues-120": {
+      "candidate": [
+        56453893,
+        13965285,
+        5085897
+      ],
+      "delta": [
+        -529660,
+        8192,
+        3588
+      ],
+      "percent_change": [
+        -0.9294962706168919,
+        0.0586941707703746,
+        0.07059783259931657
+      ],
+      "stock": [
+        56983553,
+        13957093,
+        5082309
+      ]
+    },
+    "queues-6": {
+      "candidate": [
+        40425091,
+        9567313,
+        4003987
+      ],
+      "delta": [
+        -529660,
+        8192,
+        3588
+      ],
+      "percent_change": [
+        -1.2932809675732126,
+        0.08569825614719177,
+        0.08969105331743159
+      ],
+      "stock": [
+        40954751,
+        9559121,
+        4000399
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        22707542,
+        6384582,
+        2641255
+      ],
+      "delta": [
+        -529912,
+        8192,
+        4092
+      ],
+      "percent_change": [
+        -2.28042194295468,
+        0.12847394842536294,
+        0.15516674547610443
+      ],
+      "stock": [
+        23237454,
+        6376390,
+        2637163
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30821511,
+        8473959,
+        3541076
+      ],
+      "delta": [
+        -529912,
+        8192,
+        4092
+      ],
+      "percent_change": [
+        -1.6902326889596049,
+        0.0967661878716955,
+        0.11569178712711169
+      ],
+      "stock": [
+        31351423,
+        8465767,
+        3536984
+      ]
+    }
+  },
+  "stock_sha256": "662020ac22a915e4d7cfafe7cf3b7dbf64ec4810a56618c81cd12b67a9811118",
+  "timing": false
+}
