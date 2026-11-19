@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "1ddcc2f5328344a25814064364e02d1fc70ebe04beb2c815f088dd60464e2f05",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "GCC 14.2 Release/PIC Linux VST3, matching pinned JUCE and system libraries, clean original build and fully rebuilt affected candidate objects.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4341433,
+        1127646,
+        670490
+      ],
+      "delta": [
+        -3013288,
+        -441552,
+        -228924
+      ],
+      "percent_change": [
+        -40.970799572138766,
+        -28.13870524943315,
+        -25.452572452730333
+      ],
+      "stock": [
+        7354721,
+        1569198,
+        899414
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        21720601,
+        6059447,
+        2369210
+      ],
+      "delta": [
+        -3609298,
+        -666026,
+        -886632
+      ],
+      "percent_change": [
+        -14.249160646080744,
+        -9.90303581621694,
+        -27.232033986907226
+      ],
+      "stock": [
+        25329899,
+        6725473,
+        3255842
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        21895288,
+        6083035,
+        2369584
+      ],
+      "delta": [
+        -3433319,
+        -642013,
+        -886179
+      ],
+      "percent_change": [
+        -13.555103918663983,
+        -9.546593570781948,
+        -27.218780973922243
+      ],
+      "stock": [
+        25328607,
+        6725048,
+        3255763
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30252672,
+        8198780,
+        3404229
+      ],
+      "delta": [
+        -3630173,
+        -687537,
+        -987313
+      ],
+      "percent_change": [
+        -10.713896663636126,
+        -7.73702986287795,
+        -22.482148639361753
+      ],
+      "stock": [
+        33882845,
+        8886317,
+        4391542
+      ]
+    }
+  },
+  "stock_sha256": "bf50e0f32f69dfaf798619193bd00587fd599100eaaff5a715b48d45e62b1208",
+  "timing": false
+}
