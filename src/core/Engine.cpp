@@ -433,37 +433,42 @@ bool Engine::setControlFrame(const ControlFrame& frame)
             return false;
         }
 
-    // Validate/compile both ranks before publishing any part of the transaction.
-    // Originally incomplete columns use the separate, versioned inference
-    // manifest. Their source_inferred identity and original unknown masks remain
-    // explicit; PANEL/memory/off routes never reuse a stale source adapter.
-    auto tones = sourceTones;
-    auto routes = sourceRoutes;
-    std::uint64_t compilations = 0;
-    for (int rank = 0; rank < kNumRanks; ++rank)
+    // Only these two inputs identify the immutable source-routing transaction.
+    // Ordinary host callbacks still apply every effective control below, but
+    // need not copy the two compiled tone descriptors out and back each time.
+    const bool sourceModels = usesSourceModels(renderPolicy(frame.effectiveValues[P_parityMode],
+                                                            frame.effectiveValues[P_sourcePerformance]));
+    const bool policyRoutesChanged = sourceModels != usesSourceModels(global.renderPolicy);
+    if (frame.hardwareSources != hardwareSources || policyRoutesChanged)
     {
-        const int selector = frame.hardwareSources[rank];
-        const bool sourceModels = usesSourceModels(renderPolicy(frame.effectiveValues[P_parityMode],
-                                                                frame.effectiveValues[P_sourcePerformance]));
-        if (selector != hardwareSources[rank] || sourceModels != usesSourceModels(global.renderPolicy))
-            routes[rank] = source_factory::route(rank, selector, sourceModels);
-        if (source_factory::isSourceDriven(routes[rank])
-            && (!tones[rank].compiled || tones[rank].source.selector != selector))
+        // Validate/compile both ranks before publishing either. Inferred tones
+        // retain their provenance; PANEL/memory/legacy routes do not use them.
+        auto tones = sourceTones;
+        auto routes = sourceRoutes;
+        std::uint64_t compilations = 0;
+        for (int rank = 0; rank < kNumRanks; ++rank)
         {
-            if (!source_factory::compileTone(rank, selector, tones[rank]))
+            const int selector = frame.hardwareSources[rank];
+            if (selector != hardwareSources[rank] || policyRoutesChanged)
+                routes[rank] = source_factory::route(rank, selector, sourceModels);
+            if (source_factory::isSourceDriven(routes[rank])
+                && (!tones[rank].compiled || tones[rank].source.selector != selector))
             {
-                controlFrameStatus = ControlFrameStatus::compileFailure;
-                return false;
+                if (!source_factory::compileTone(rank, selector, tones[rank]))
+                {
+                    controlFrameStatus = ControlFrameStatus::compileFailure;
+                    return false;
+                }
+                ++compilations;
             }
-            ++compilations;
         }
+        hardwareSources = frame.hardwareSources;
+        sourceRoutes = routes;
+        sourceTones = tones;
+        sourceCompileCount += compilations;
+        for (int rank = 0; rank < kNumRanks; ++rank)
+            sourceActive[rank] = source_factory::isSourceDriven(routes[rank]);
     }
-    hardwareSources = frame.hardwareSources;
-    sourceRoutes = routes;
-    sourceTones = tones;
-    sourceCompileCount += compilations;
-    for (int rank = 0; rank < kNumRanks; ++rank)
-        sourceActive[rank] = source_factory::isSourceDriven(routes[rank]);
     sourceCutoff = {};
     sourceShared = {};
     applyParams(frame.effectiveValues);

@@ -60,6 +60,58 @@ bool same(Engine::RankEnvelopeState a, Engine::RankEnvelopeState b)
         && a.amplitude.elapsed == b.amplitude.elapsed && a.filter.stage == b.filter.stage
         && a.filter.value == b.filter.value && a.filter.elapsed == b.filter.elapsed;
 }
+void repeatedSourceRoute()
+{
+    auto f = fixture();
+    Engine e;
+    init(e, 48000.0, f);
+    const auto compiled = e.getSourceCompileCount();
+    e.noteOn(60, .8f);
+    render(e, 64);
+    const auto trace = e.getSourceCutoffReadout(0).pinVolts;
+    const auto levels = e.getSourceSharedReadout().levelGain;
+    const source_factory::CutoffReadout emptyCutoff {};
+    const source_factory::SharedReadout emptyShared {};
+    check(trace != emptyCutoff.pinVolts && levels != emptyShared.levelGain,
+          "unchanged source route fixture has live cutoff and level traces");
+
+    // Same source identity is not permission to accept a bad frame, to skip
+    // controls, or to leave the previous interval's readouts published.
+    auto invalid = f;
+    invalid.effectiveValues[P_volume] = std::numeric_limits<float>::infinity();
+    check(!e.setControlFrame(invalid)
+              && e.getControlFrameStatus() == Engine::ControlFrameStatus::nonfiniteParameter
+              && e.getSourceCutoffReadout(0).pinVolts == trace
+              && e.getSourceSharedReadout().levelGain == levels,
+          "invalid repeat leaves live source readouts untouched");
+    f.effectiveValues[P_volume] = .37f;
+    const auto state = e.getRankEnvelopeState(0, 0);
+    check(e.setControlFrame(f) && e.getControlFrameStatus() == Engine::ControlFrameStatus::accepted
+              && e.getParams()[P_volume] == .37f && same(state, e.getRankEnvelopeState(0, 0))
+              && e.getSourceCutoffReadout(0).pinVolts == emptyCutoff.pinVolts
+              && e.getSourceSharedReadout().levelGain == emptyShared.levelGain
+              && e.getSourceCompileCount() == compiled,
+          "valid repeat applies controls, keeps envelope state and clears completed-interval traces");
+
+    f.effectiveValues[P_parityMode] = 1;
+    check(e.setControlFrame(f) && e.isParityMode() && e.activeVoices() == 0
+              && e.getSourceCompileCount() == compiled,
+          "source to PURE retains compiled tones but applies policy reset");
+    f.hardwareSources[1] = 0;
+    check(e.setControlFrame(f) && e.getSourceCompileCount() == compiled + 1
+              && e.getSourceToneInfo(0).selector == 1 && e.getSourceToneInfo(1).selector == 0,
+          "single selector edit updates only its tone");
+    e.prepare(44100.0);
+    check(e.setControlFrame(f) && e.getSourceCompileCount() == compiled + 1
+              && source_factory::isSourceDriven(e.getSourceToneInfo(1).route),
+          "reprepare retains the accepted selector transaction");
+    e.setParams(f.effectiveValues);
+    check(e.getSourceToneInfo(0).selector == 13 && e.getSourceToneInfo(1).selector == 13
+              && e.setControlFrame(f) && e.getSourceCompileCount() == compiled + 1
+              && source_factory::isSourceDriven(e.getSourceToneInfo(0).route)
+              && source_factory::isSourceDriven(e.getSourceToneInfo(1).route),
+          "setParams selects PANEL and re-selection restores both cached source routes");
+}
 void controllerTransports(double rate)
 {
     auto f = fixture(); f.effectiveValues[P_mpeOn] = 1.0f;
@@ -238,6 +290,7 @@ int main()
           "core parameter indexes are append-only");
     check(paramId(P_sourcePerformance) == "source_performance" && ParamValues{}[P_sourcePerformance] == 0,
           "source-performance has stable ID and legacy default");
+    repeatedSourceRoute();
     for (double rate : {44100.0, 48000.0, 96000.0})
     { controllerTransports(rate); macroTransports(rate); routingAndExtensions(rate); }
     std::printf("Source performance: %d checks, %d failures\n", checks, failures);
