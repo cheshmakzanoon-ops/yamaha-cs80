@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "03bdc93b6f7f7489bebe4a269428915ea99825136dce7f39d3f50aa8a6369f42",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Same GCC 14.2 Release/PIC and JUCE source; linked from the same library/object inputs except Ig00156Batch.cpp.o, recompiled with the original CMake command and -ffp-contract=off.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4631673,
+        1177478,
+        722182
+      ],
+      "delta": [
+        0,
+        0,
+        0
+      ],
+      "percent_change": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stock": [
+        4631673,
+        1177478,
+        722182
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        22377655,
+        6090926,
+        2382040
+      ],
+      "delta": [
+        -150250,
+        -98304,
+        -96816
+      ],
+      "percent_change": [
+        -0.6669506108091277,
+        -1.5883074308112641,
+        -3.9056726167231983
+      ],
+      "stock": [
+        22527905,
+        6189230,
+        2478856
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        22552375,
+        6114525,
+        2382422
+      ],
+      "delta": [
+        -150313,
+        -98304,
+        -96888
+      ],
+      "percent_change": [
+        -0.6620934049747765,
+        -1.582274355209197,
+        -3.907861461455002
+      ],
+      "stock": [
+        22702688,
+        6212829,
+        2479310
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30906002,
+        8250789,
+        3422364
+      ],
+      "delta": [
+        -151195,
+        -98304,
+        -97896
+      ],
+      "percent_change": [
+        -0.48682757816167377,
+        -1.1774213079193152,
+        -2.7809309539636278
+      ],
+      "stock": [
+        31057197,
+        8349093,
+        3520260
+      ]
+    }
+  },
+  "stock_sha256": "47131d68d29a4660b8e4297d964748cace3e6b0a839ac8c28784fea9686e7b2c",
+  "timing": false
+}

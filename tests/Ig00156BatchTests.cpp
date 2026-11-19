@@ -1,10 +1,13 @@
 #include "core/Ig00156Batch.h"
+#include <algorithm>
 #include <bit>
+#include <cstddef>
 #include <cfenv>
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
 #include <limits>
+#include <memory>
 #if defined(__x86_64__) || defined(_M_X64)
 #include <xmmintrin.h>
 #define BATCH_TEST_MXCSR 1
@@ -137,6 +140,55 @@ void fallbackCases(Batch::Kernel kernel) {
   for(int i=0;i<4;++i){check(same(want[i].lp,got[i].lp)&&same(want[i].hp,got[i].hp)&&same(want[i].bp,got[i].bp),"duplicate-lane output bits");stateEqual(a[i],b[i]);}
  }
 }
+// A quartet can name unrelated stages in any order. Exercise every legal
+// byte offset modulo 64 on this ABI, including rows crossing a cache line.
+// Guard bytes flank each live Stage; no aligned-load or neighboring-object
+// assumption is part of the batch API.
+void independentStageLayouts(Batch::Kernel kernel) {
+ constexpr std::size_t line = std::max<std::size_t>(64,alignof(Stage));
+ struct alignas(line) Slot { unsigned char bytes[sizeof(Stage)+3*line]; };
+ for(std::size_t shift=0; shift<line; shift+=alignof(Stage)) {
+  std::array<Slot,4> slots;
+  std::array<std::size_t,4> offsets;
+  std::array<Stage*,4> actual;
+  auto expected=makeStages();
+  for(std::size_t i=0;i<4;++i) {
+   auto& bytes=slots[i].bytes;
+   std::fill(std::begin(bytes),std::end(bytes),0xa5);
+   offsets[i]=line+(shift+i*alignof(Stage))%line;
+   actual[i]=std::construct_at(reinterpret_cast<Stage*>(bytes+offsets[i]),expected[i]);
+   const float cutoff=460.f+1234.f*static_cast<float>(i);
+   const float q=.75f+static_cast<float>(i);
+   actual[i]->set(cutoff,q,96000.f);
+   expected[i].set(cutoff,q,96000.f);
+  }
+  std::array<int,4> order{0,1,2,3};
+  constexpr Batch::Inputs input{.03125f,-.1875f,.4375f,-.5625f};
+  do {
+   Batch::Stages group;
+   Batch::Outputs got,want;
+   for(std::size_t j=0;j<4;++j) {
+    group[j]=actual[order[j]];
+    want[j]=expected[order[j]].process(input[j]);
+   }
+   const bool used=cs80::processIg00156Four(group,input,got,kernel);
+   check(used==(kernel!=nullptr && Batch::environmentSupported()),"layout test executes selected path");
+   accelerated+=used;
+   for(std::size_t j=0;j<4;++j) {
+    check(same(got[j].lp,want[j].lp) && same(got[j].hp,want[j].hp) && same(got[j].bp,want[j].bp),
+          "permuted stage outputs retain lane identity");
+    stateEqual(*actual[j],expected[j]);
+   }
+  } while(std::next_permutation(order.begin(),order.end()));
+  for(std::size_t i=0;i<4;++i) {
+   const auto& bytes=slots[i].bytes;
+   auto intact=[](unsigned char value) {return value==0xa5;};
+   check(std::all_of(std::begin(bytes),bytes+offsets[i],intact) &&
+         std::all_of(bytes+offsets[i]+sizeof(Stage),std::end(bytes),intact),"stage layout guard bytes untouched");
+   std::destroy_at(actual[i]);
+  }
+ }
+}
 void dynamicAdmissionEdges(Batch::Kernel kernel) {
  if(kernel==nullptr) return;
  const double snan=std::bit_cast<double>(std::uint64_t{0x7ff0000000000001ULL});
@@ -264,7 +316,7 @@ void environments(Batch::Kernel kernel) {
 }
 int main() {
  const auto kernel=Batch::selectKernel(true);
- movement(kernel);fallbackCases(kernel);dynamicAdmissionEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
+ movement(kernel);fallbackCases(kernel);independentStageLayouts(kernel);dynamicAdmissionEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
 #if CS80_IG00156_EXACT_BATCH_BUILD
  __builtin_cpu_init();
  const bool capable = __builtin_cpu_supports("avx2");

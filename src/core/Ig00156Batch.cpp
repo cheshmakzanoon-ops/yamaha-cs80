@@ -2,7 +2,10 @@
 
 #if CS80_IG00156_EXACT_BATCH_BUILD
 #include <bit>
+#include <cstddef>
 #include <cstdint>
+#include <cstring>
+#include <type_traits>
 #include <immintrin.h>
 
 // The translation unit is compiled with contraction disabled, but NOT with a
@@ -25,6 +28,14 @@ struct V
     friend CS80_AVX2_INLINE V operator*(V a, V b) { return _mm256_mul_pd(a.x,b.x); }
     friend CS80_AVX2_INLINE V operator/(V a, V b) { return _mm256_div_pd(a.x,b.x); }
 };
+struct Tile { V a, b, c, d; };
+CS80_AVX2_INLINE Tile transpose(V a, V b, V c, V d) noexcept
+{
+    const auto ab0 = _mm256_unpacklo_pd(a.x, b.x), ab1 = _mm256_unpackhi_pd(a.x, b.x);
+    const auto cd0 = _mm256_unpacklo_pd(c.x, d.x), cd1 = _mm256_unpackhi_pd(c.x, d.x);
+    return { _mm256_permute2f128_pd(ab0, cd0, 0x20), _mm256_permute2f128_pd(ab1, cd1, 0x20),
+             _mm256_permute2f128_pd(ab0, cd0, 0x31), _mm256_permute2f128_pd(ab1, cd1, 0x31) };
+}
 CS80_AVX2_INLINE V select(V mask,V yes,V no) { return _mm256_blendv_pd(no.x,yes.x,mask.x); }
 CS80_AVX2_INLINE V absolute(V x) { return _mm256_andnot_pd(_mm256_set1_pd(-0.0),x.x); }
 CS80_AVX2_INLINE V less(V a,V b) { return _mm256_cmp_pd(a.x,b.x,_CMP_LT_OQ); }
@@ -79,6 +90,44 @@ bool bounded(float x,float limit) noexcept
 
 struct Ig00156BatchAccess
 {
+    // The stage vectors are lane-major; histories and nodes are contiguous
+    // within each authoritative scalar stage. Transfer each four-member row
+    // as bytes of its complete object, not through pointer arithmetic across
+    // adjacent double members. Loads, shuffles and copies perform no FP math.
+    using Stage = Ig00156Stage;
+    static_assert(std::is_standard_layout_v<Stage> && std::is_trivially_copyable_v<Stage>);
+    static_assert(offsetof(Stage, xFromIn) == offsetof(Stage, xFromFb) + sizeof(double) &&
+                  offsetof(Stage, xFromU) == offsetof(Stage, xFromFb) + 2 * sizeof(double) &&
+                  offsetof(Stage, xFromBp) == offsetof(Stage, xFromFb) + 3 * sizeof(double));
+    static_assert(offsetof(Stage, zFb) == offsetof(Stage, zIn) + sizeof(double) &&
+                  offsetof(Stage, zBp) == offsetof(Stage, zIn) + 2 * sizeof(double) &&
+                  offsetof(Stage, zLp) == offsetof(Stage, zIn) + 3 * sizeof(double));
+    static_assert(offsetof(Stage, vFb) == offsetof(Stage, vIn) + sizeof(double) &&
+                  offsetof(Stage, vBp) == offsetof(Stage, vIn) + 2 * sizeof(double) &&
+                  offsetof(Stage, vLp) == offsetof(Stage, vIn) + 3 * sizeof(double));
+
+    template<std::size_t Offset>
+    static CS80_AVX2_INLINE Tile gatherTile(const Ig00156Batch::Stages& stages) noexcept
+    {
+        static_assert(Offset == offsetof(Stage, xFromFb) || Offset == offsetof(Stage, zIn));
+        const auto load = [](const Stage* s) CS80_AVX2 {
+            V row;
+            std::memcpy(&row.x, reinterpret_cast<const unsigned char*>(s) + Offset, sizeof(row.x));
+            return row;
+        };
+        return transpose(load(stages[0]), load(stages[1]), load(stages[2]), load(stages[3]));
+    }
+    template<std::size_t Offset>
+    static CS80_AVX2_INLINE void scatterTile(const Ig00156Batch::Stages& stages, V a, V b, V c, V d) noexcept
+    {
+        static_assert(Offset == offsetof(Stage, zIn) || Offset == offsetof(Stage, vIn));
+        const auto rows = transpose(a, b, c, d);
+        const auto store = [](Stage* s, V row) CS80_AVX2 {
+            std::memcpy(reinterpret_cast<unsigned char*>(s) + Offset, &row.x, sizeof(row.x));
+        };
+        store(stages[0], rows.a); store(stages[1], rows.b);
+        store(stages[2], rows.c); store(stages[3], rows.d);
+    }
 #if defined(__NO_TRAPPING_MATH__)
     // This compiler profile may speculate even short-circuited scalar FP
     // comparisons. Retain its original admission and call site, including
@@ -134,8 +183,7 @@ struct Ig00156BatchAccess
         };
         const V scale=gather(&Ig00156Stage::inputScale);
         const V g1=gather(&Ig00156Stage::gmPart),f1=gather(&Ig00156Stage::ffPart),g2=g1,f2=f1;
-        const V fromFb=gather(&Ig00156Stage::xFromFb),fromIn=gather(&Ig00156Stage::xFromIn);
-        const V fromU=gather(&Ig00156Stage::xFromU),fromBp=gather(&Ig00156Stage::xFromBp);
+        const auto [fromFb, fromIn, fromU, fromBp] = gatherTile<offsetof(Stage, xFromFb)>(stages);
         const V kiGs=gather(&Ig00156Stage::kiGs),invA11=gather(&Ig00156Stage::invA11),inFromX=gather(&Ig00156Stage::inFromX);
 #if !defined(__NO_TRAPPING_MATH__)
         // Prove the usual admission case using integer operations on the
@@ -170,8 +218,7 @@ struct Ig00156BatchAccess
             && !stages[3]->lastUnwarped && stages[3]->cutoffCoefficientsValid);
         if(!ordinary && !orderedEligible(stages,input)) return false;
 #endif
-        const V zIn=gather(&Ig00156Stage::zIn),zFb=gather(&Ig00156Stage::zFb);
-        const V zBp=gather(&Ig00156Stage::zBp),zLp=gather(&Ig00156Stage::zLp);
+        const auto [zIn, zFb, zBp, zLp] = gatherTile<offsetof(Stage, zIn)>(stages);
         const V slope1=gather(&Ig00156Stage::slope1),slope2=gather(&Ig00156Stage::slope2);
         // Reuse gathered state for the dynamic admission gate. Integer bit
         // comparisons reject NaN (including signalling NaN) and infinities
@@ -227,14 +274,15 @@ struct Ig00156BatchAccess
         const V use1=greater(absolute(hp*inv),1.0e-9),use2=greater(absolute(bp*inv),1.0e-9);
         const V newSlope1=select(use1,t1/select(use1,hp*inv,1.0),1.0);
         const V newSlope2=select(use2,t2/select(use2,bp*inv,1.0),1.0);
+        // Snapshot the four destination pointers before writing object bytes;
+        // the public wrapper guarantees that lanes refer to distinct stages.
+        const auto destinations = stages;
         const auto scatter=[&](double Ig00156Stage::*member,V value) CS80_AVX2 {
             alignas(32) double values[4];_mm256_store_pd(values,value.x);
-            for(std::size_t i=0;i<4;++i)stages[i]->*member=values[i];
+            for(std::size_t i=0;i<4;++i)destinations[i]->*member=values[i];
         };
-        scatter(&Ig00156Stage::zIn,2.0*vin-zIn);scatter(&Ig00156Stage::zFb,2.0*x-zFb);
-        scatter(&Ig00156Stage::zBp,2.0*bp-zBp);scatter(&Ig00156Stage::zLp,2.0*lp-zLp);
-        scatter(&Ig00156Stage::vIn,vin);scatter(&Ig00156Stage::vFb,x);
-        scatter(&Ig00156Stage::vBp,bp);scatter(&Ig00156Stage::vLp,lp);
+        scatterTile<offsetof(Stage, zIn)>(destinations, 2.0*vin-zIn, 2.0*x-zFb, 2.0*bp-zBp, 2.0*lp-zLp);
+        scatterTile<offsetof(Stage, vIn)>(destinations, vin, x, bp, lp);
         scatter(&Ig00156Stage::slope1,newSlope1);scatter(&Ig00156Stage::slope2,newSlope2);
         alignas(32) double l[4],h[4],b[4];
         _mm256_store_pd(l,lp.x);_mm256_store_pd(h,hp.x);_mm256_store_pd(b,bp.x);
