@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Dsp.h"
+#include "EngineOutputFir.h"
 #include "ModernLayer.h"
 #include "ModulationLfo.h"
 #include "Ig00156Filter.h"
@@ -759,7 +760,7 @@ private:
 
     Chorus chorus;
     BbdChorus bbdChorus;
-    OversamplingDecimator decL, decR;
+    EngineOutputFir decL, decR;
     Rng audioRng { 0x51c80u };
     Rng modRng { 0x9e3779b9u };
 

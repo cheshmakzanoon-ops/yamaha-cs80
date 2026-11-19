@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "RingModulatorCircuit.h"
+#include "EngineOutputFir.cpp.inc"
 #include "UniformSourceCutoff.h"
 
 #include <algorithm>

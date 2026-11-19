@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <atomic>
 #include <bit>
+#include <cfenv>
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
@@ -45,6 +46,48 @@ bool exactDcPole(const Engine& engine)
     const float original = std::exp(-kTwoPi * 10.0f * invSr);
     return std::bit_cast<std::uint32_t>(engine.getDcBlockCoefficient())
            == std::bit_cast<std::uint32_t>(original);
+}
+
+void testEngineOutputFirSignedSilence()
+{
+    const auto sameBits = [](float a, float b) {
+        return std::bit_cast<std::uint32_t>(a) == std::bit_cast<std::uint32_t>(b);
+    };
+    const auto originalRounding = std::fegetround();
+    for (const int factor : {2, 4, 8})
+    {
+        OversamplingDecimator scalar;
+        EngineOutputFir engine;
+        const auto compare = [&](float sample, const char* message) {
+            scalar.push(sample);
+            engine.push(sample);
+            check(sameBits(scalar.output(), engine.output()), message);
+        };
+        for (int i = 0; i < scalar.getTaps()+2; ++i)
+            compare(-0.0f, "unprepared all-negative zero keeps the original sign");
+        scalar.prepare(factor);
+        engine.prepare(factor);
+        const int taps = scalar.getTaps();
+        for (int i = 0; i < 2*taps; ++i)
+            compare(i == taps ? 0.125f : 0.0f, "positive-zero history, impulse and complete tail");
+        for (int i = 0; i < 2*taps; ++i)
+            compare(i == taps ? 0.0f : -0.0f, "negative and mixed signed-zero histories");
+        auto scalarCopy = scalar;
+        auto engineCopy = engine;
+        check(sameBits(scalarCopy.output(), engineCopy.output()), "decimator copy retains the history and proof");
+        if (originalRounding != -1 && std::fesetround(FE_DOWNWARD) == 0)
+        {
+            for (int i = 0; i < taps+1; ++i)
+                compare(-0.0f, "directed rounding has the original scalar zero sign");
+            check(std::fesetround(originalRounding) == 0, "rounding mode restored");
+        }
+        scalar.reset();
+        engine.reset();
+        check(sameBits(scalar.output(), engine.output()), "reset clears physical FIR history and certificate");
+        for (int i = 0; i < taps+1; ++i)
+            compare(i == 1 ? std::numeric_limits<float>::denorm_min() : 0.0f,
+                    "subnormal input uses original advancement until flushed");
+    }
 }
 
 void testFactorRule()
@@ -394,6 +437,7 @@ int main()
 {
     testFactorRule();
     testDecimatorDesign();
+    testEngineOutputFirSignedSilence();
     testDcRateLifecycle();
     testEngine();
     std::printf("%d checks, %d failures\n", checks, failures);
