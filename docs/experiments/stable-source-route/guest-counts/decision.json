@@ -1,0 +1,282 @@
+{
+  "fresh-quiet": {
+    "candidate_minus_stock": [
+      -3452,
+      -3200,
+      -3152
+    ],
+    "counts": {
+      "A": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          7354721,
+          1569198,
+          899414
+        ],
+        "route_inclusive": [
+          56560,
+          13648,
+          8656
+        ],
+        "stub_plus_plugin": [
+          7354741,
+          1569210,
+          899418
+        ]
+      },
+      "A2": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          7354721,
+          1569198,
+          899414
+        ],
+        "route_inclusive": [
+          56560,
+          13648,
+          8656
+        ],
+        "stub_plus_plugin": [
+          7354741,
+          1569210,
+          899418
+        ]
+      },
+      "C": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          7351269,
+          1565998,
+          896262
+        ],
+        "route_inclusive": [
+          53108,
+          10448,
+          5504
+        ],
+        "stub_plus_plugin": [
+          7351289,
+          1566010,
+          896266
+        ]
+      },
+      "P": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          9195647,
+          1962114,
+          1124477
+        ],
+        "route_inclusive": [
+          70700,
+          17060,
+          10820
+        ],
+        "stub_plus_plugin": [
+          9195672,
+          1962129,
+          1124482
+        ]
+      },
+      "S": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          1840926,
+          392916,
+          225063
+        ],
+        "route_inclusive": [
+          14140,
+          3412,
+          2164
+        ],
+        "stub_plus_plugin": [
+          1840931,
+          392919,
+          225064
+        ]
+      }
+    },
+    "cross_runtime_differing_fields": {
+      "after.mxcsr": 38,
+      "before.mxcsr": 38,
+      "next.mxcsr": 38
+    },
+    "events": [
+      "Ir",
+      "Dr",
+      "Dw"
+    ],
+    "guest_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "xcr0": 7
+    },
+    "native_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 1,
+      "xcr0": 231
+    },
+    "per_callback_delta": [
+      -863.0,
+      -800.0,
+      -788.0
+    ],
+    "percent_change": [
+      -0.046935838898579565,
+      -0.20392582707854587,
+      -0.3504504043744038
+    ],
+    "sha256": {
+      "guest_fp": "9dab22a7a1491624c672611debb6285098674deea3bbe3906055cc22e16b7b67",
+      "native_fp": "69a728e9a175f055d3544e143e99a174e63402fc090988fcf7ab216f9c65e4e0",
+      "pcm": "c597b1b463b7cec49548fac00d7588c9652bb67cc2b1b0c88676bf8f1558571e",
+      "states": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    }
+  },
+  "held-short": {
+    "candidate_minus_stock": [
+      -3452,
+      -3200,
+      -3152
+    ],
+    "counts": {
+      "A": {
+        "batch_self_ir": 2895732,
+        "plugin_edge": [
+          25329899,
+          6725473,
+          3255842
+        ],
+        "route_inclusive": [
+          59440,
+          14312,
+          8912
+        ],
+        "stub_plus_plugin": [
+          25329919,
+          6725485,
+          3255846
+        ]
+      },
+      "A2": {
+        "batch_self_ir": 2895732,
+        "plugin_edge": [
+          25329899,
+          6725473,
+          3255842
+        ],
+        "route_inclusive": [
+          59440,
+          14312,
+          8912
+        ],
+        "stub_plus_plugin": [
+          25329919,
+          6725485,
+          3255846
+        ]
+      },
+      "C": {
+        "batch_self_ir": 2895732,
+        "plugin_edge": [
+          25326447,
+          6722273,
+          3252690
+        ],
+        "route_inclusive": [
+          55988,
+          11112,
+          5760
+        ],
+        "stub_plus_plugin": [
+          25326467,
+          6722285,
+          3252694
+        ]
+      },
+      "P": {
+        "batch_self_ir": 3624515,
+        "plugin_edge": [
+          31651426,
+          8404989,
+          4068661
+        ],
+        "route_inclusive": [
+          74300,
+          17890,
+          11140
+        ],
+        "stub_plus_plugin": [
+          31651451,
+          8405004,
+          4068666
+        ]
+      },
+      "S": {
+        "batch_self_ir": 728783,
+        "plugin_edge": [
+          6321527,
+          1679516,
+          812819
+        ],
+        "route_inclusive": [
+          14860,
+          3578,
+          2228
+        ],
+        "stub_plus_plugin": [
+          6321532,
+          1679519,
+          812820
+        ]
+      }
+    },
+    "cross_runtime_differing_fields": {
+      "after.mxcsr": 38,
+      "before.mxcsr": 38,
+      "next.mxcsr": 38
+    },
+    "events": [
+      "Ir",
+      "Dr",
+      "Dw"
+    ],
+    "guest_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "xcr0": 7
+    },
+    "native_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 1,
+      "xcr0": 231
+    },
+    "per_callback_delta": [
+      -863.0,
+      -800.0,
+      -788.0
+    ],
+    "percent_change": [
+      -0.013628163302190821,
+      -0.047580296582857444,
+      -0.09681059461730637
+    ],
+    "sha256": {
+      "guest_fp": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+      "native_fp": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+      "pcm": "9d8625d97c5b07973ec1a533aee87708545f91c312fb4e6179ada22773df7a95",
+      "states": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    }
+  }
+}

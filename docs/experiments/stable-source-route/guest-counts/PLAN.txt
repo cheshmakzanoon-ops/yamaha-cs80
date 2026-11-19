@@ -1,0 +1,19 @@
+Frozen before any product Valgrind runs. Diagnostic counts only; never interpreted as time.
+48 kHz, 64 stereo frames/call; ordinary public Factory8 controls (factory selectors 0/0).
+Two scenes: 32 uncounted callbacks starting either silent or with 8 simultaneous notes;
+five possible measured callbacks, plus one uncounted continuation. Every arm runs all
+38 callbacks. This is a short held onset and a fresh quiet history, NOT long steady state.
+Measure guest x86 retired-instruction simulation (Ir), data-read references (Dr), data-write
+references (Dw). Ignore simulated misses entirely. Same noinline boundary/stub wraps every
+measured call. Plugin binaries unmodified. Callgrind instruments only the five-slot window;
+collect-atstart=no plus --toggle-collect=cs80_counted_process filters to selected calls.
+A=stock first four; A2=same physical stock first four; P=stock all five;
+S=stock fifth alone; C=route-only candidate first four. A=A2 and P=A+S EXACT on all three
+integers, S strictly positive. All renders each have identical event/PCM, callback FP records,
+public states within same runtime, including uncounted callback 5. Require finite PCM,
+all-zero quiet (unless nonzero noise of amplitude <=1e-6, separately visible);
+audible 8-note response. Native stocks and candidates run separately outside emulator
+and must match one another. Also report native vs translated PCM independently, do not
+assume identical paths or FP. Report any failed controls; no hidden retries for drift.
+Run fresh refs and scenes in fixed interleaved arm order. One smoke test of the mechanism
+before real files permitted; a harness/instrumentation failure must be fixed and documented.

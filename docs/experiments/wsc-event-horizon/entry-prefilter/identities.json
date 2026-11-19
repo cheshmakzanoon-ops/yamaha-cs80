@@ -1,0 +1,19 @@
+{
+  "old_engine_sha256": "788be9631565735229a7ebe6853b5e357612c2508150af0301ee59200d8ac59b",
+  "new_engine_sha256": "55644b73e7a2115181c9cd3ba7dfd5a24f2f97344abaabdfbcd17e869fff13f0",
+  "reference_stock_commit": "db02cd8fa56892c6ea2cf7df084bcf190204968e",
+  "old_text_byte_sizes": {
+    "ReconstructedOscillator::tick(double,": 814,
+    "ReconstructedOscillator::tickStock(double,": 11562,
+    "ReconstructedOscillator::certifyHorizon()": 1094
+  },
+  "new_text_byte_sizes": {
+    "ReconstructedOscillator::tick(double,": 720,
+    "ReconstructedOscillator::tickStock(double,": 11562,
+    "ReconstructedOscillator::certifyHorizon()": 1094
+  },
+  "old_tick_entry_mxcsr_store_offset_hex": "c",
+  "old_tick_entry_x87_control_store_offset_hex": "1a",
+  "new_tick_entry_mxcsr_store_offset_hex": "81",
+  "new_tick_entry_x87_control_store_offset_hex": "86"
+}

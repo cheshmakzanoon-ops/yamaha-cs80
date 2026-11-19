@@ -1,0 +1,94 @@
+{
+  "fresh-idle": {
+    "artifacts": {
+      "all.fp": {
+        "bytes_equal": 1114112,
+        "sha256": "5a32babe7be9fc1278412eaa72da3f6622782e9a3d904fc6ce468827495e8e9f"
+      },
+      "all.pcm": {
+        "bytes_equal": 8912896,
+        "sha256": "aba5081a5f67fef5e25e934d19ff22af66da317bf949a8cb6a32f7c3a8e39b7c"
+      },
+      "scene.json": {
+        "bytes_equal": 462,
+        "sha256": "277b83b407e05caa3aeea732c6ab50eb60dcc61c8efae7b69176fd493fa666aa"
+      },
+      "states.bin": {
+        "bytes_equal": 42852,
+        "sha256": "dfe5af661696f8dca5c74d31a54620e468244cb971c47cd84158962bba3b388e"
+      }
+    },
+    "snapshots": 3,
+    "stereo_frames": 1114112,
+    "total_callbacks_per_arm": 17408
+  },
+  "held8": {
+    "artifacts": {
+      "all.fp": {
+        "bytes_equal": 327680,
+        "sha256": "c7e03c6ffdf759c285adf989cf51d47e9fe72d10a06f05b603675ecb1e39490c"
+      },
+      "all.pcm": {
+        "bytes_equal": 2621440,
+        "sha256": "b8028ef28b14f1c5156530190c5d3c3bbaa381b087a8d631c95e223c8b51fd20"
+      },
+      "scene.json": {
+        "bytes_equal": 515,
+        "sha256": "dafcc543d72104cedf61d28b93b2abdadbc7f733bac908943c3b48447a536028"
+      },
+      "states.bin": {
+        "bytes_equal": 42852,
+        "sha256": "dfe5af661696f8dca5c74d31a54620e468244cb971c47cd84158962bba3b388e"
+      }
+    },
+    "snapshots": 3,
+    "stereo_frames": 327680,
+    "total_callbacks_per_arm": 5120
+  },
+  "post-release": {
+    "artifacts": {
+      "all.fp": {
+        "bytes_equal": 1638400,
+        "sha256": "f86b8b0e11cfbe28ee800c1f605ff21ec656739e8a1e3c6d90993b9faf13e150"
+      },
+      "all.pcm": {
+        "bytes_equal": 13107200,
+        "sha256": "2bd7de46602aaab499c3c62aebbfe42566d1533b5b9c54e717a70c63957dfdd0"
+      },
+      "scene.json": {
+        "bytes_equal": 486,
+        "sha256": "eea01c14f0aa3b6b078c794044a67f26b385cbc716ab0d0de75082da1ddcc5c4"
+      },
+      "states.bin": {
+        "bytes_equal": 57136,
+        "sha256": "2a8f1d6f8679d3b5d7302998029ee026a1aeed40fe1ed834b04be9e738d4ec73"
+      }
+    },
+    "snapshots": 4,
+    "stereo_frames": 1638400,
+    "total_callbacks_per_arm": 25600
+  },
+  "wake": {
+    "artifacts": {
+      "all.fp": {
+        "bytes_equal": 1081344,
+        "sha256": "8e349d8949d2451fe16fc33a369f3791a0eb6aa1f608307a3e7149af1614b65c"
+      },
+      "all.pcm": {
+        "bytes_equal": 8650752,
+        "sha256": "d494234009d188bf6545bbf7d71ba34a0ac50713eccb02fa0b02a933258196b5"
+      },
+      "scene.json": {
+        "bytes_equal": 499,
+        "sha256": "a8897e41ad69aada60d1b4eecbb2fc1fe6ff1001ee6c8e4013a77cf3cb8b832e"
+      },
+      "states.bin": {
+        "bytes_equal": 685632,
+        "sha256": "b19ab82c1fc4f23559aca053324d768f66ab9342a071f272b57b3e95c75eeda0"
+      }
+    },
+    "snapshots": 48,
+    "stereo_frames": 1081344,
+    "total_callbacks_per_arm": 16896
+  }
+}

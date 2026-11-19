@@ -1,0 +1,85 @@
+{
+  "baseline_git_commit": "db02cd8fa56892c6ea2cf7df084bcf190204968e",
+  "raw_stock_oscillator_sha256": "c037a8970f939bdcd7d98ea56348006f82f2412cc64cd912fbf0f85b5ffa9373",
+  "stock_engine_sha256": "27418070012931bc96ebb8937f016d4ae4fe1e239e97f6dc8959d5cc63bc994f",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "cpu": "Intel Xeon Platinum 8573C (Linux x86-64); no CPU speed estimated",
+  "flags": [
+    "-O3",
+    "-DNDEBUG",
+    "-std=gnu++20",
+    "-fPIC",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic"
+  ],
+  "filter_object_extra_flags": [
+    "-ffp-contract=off"
+  ],
+  "engine_observed_inputs": {
+    "immutable": {
+      "stock_src_files_checked": 193,
+      "divergent_relative_files_after_removing_test_friends": []
+    },
+    "stock": {
+      "stock_src_files_checked": 193,
+      "divergent_relative_files_after_removing_test_friends": [],
+      "binary_sha256": {
+        "Engine.o": "3267ee443c5612ac8babea935882c7de541facfc67d78b01c8149f5eddf2960e",
+        "FactoryPresets.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+        "Ig00156Batch.o": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+        "harness.o": "ab6d2a9e19053fca238f5970be9b0be82a9d348ffe17cac114092903ee52abbb",
+        "probe": "0798428df49c154fb1a7c7fb8a8ca30310b708370740eb14b55d55af2ca6a6eb"
+      }
+    },
+    "normal": {
+      "stock_src_files_checked": 193,
+      "divergent_relative_files_after_removing_test_friends": [
+        "src/core/ReconstructedOscillator.h"
+      ],
+      "binary_sha256": {
+        "Engine.o": "788be9631565735229a7ebe6853b5e357612c2508150af0301ee59200d8ac59b",
+        "FactoryPresets.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+        "Ig00156Batch.o": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+        "harness.o": "ab6d2a9e19053fca238f5970be9b0be82a9d348ffe17cac114092903ee52abbb",
+        "probe": "a4c2f37c421cafeef68f2ccee157add299493eed10bf3fecc5ce06c4786e504c"
+      }
+    },
+    "witness": {
+      "stock_src_files_checked": 193,
+      "divergent_relative_files_after_removing_test_friends": [
+        "src/core/ReconstructedOscillator.h"
+      ],
+      "binary_sha256": {
+        "Engine.o": "c66a03d394a67fa19080573719a224786104c9b9d6f7c5799ba7ca443e91d60f",
+        "FactoryPresets.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+        "Ig00156Batch.o": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+        "harness.o": "ae15655f63c1c68d5b18eb21ef3e361891135f4e32a2554f8a84aa78585c705a",
+        "probe": "a9728a7fb8db5ff1739c17726ae94c1da4c5aa538d513edc14451d06a0e1a22e"
+      }
+    },
+    "off": {
+      "stock_src_files_checked": 193,
+      "divergent_relative_files_after_removing_test_friends": [
+        "src/core/ReconstructedOscillator.h"
+      ],
+      "binary_sha256": {
+        "Engine.o": "b2b733ffb3d07cbffc8acbf661f8ce289b79cd220e440041d29b6b6758385c10",
+        "FactoryPresets.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+        "Ig00156Batch.o": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+        "harness.o": "83fed4cbb229c7051a8e7bee9e4dabdd50b3babded307ab260aafaa6dbe4d55f",
+        "probe": "f1d27e3e169b2bfe6be3df74ed773fd80781a3208a815b049bfcb7b41470cc03"
+      }
+    }
+  },
+  "oscillator_experiment_patch_sha256": "19cef5dcbeaf9c40fe511e0fbd364a8518c48376a4a654e37a1c645b553b5f40",
+  "project_test_git_blobs": {
+    "ReconstructedOscillatorTests.cpp": "6e280f59bc9f9259a2b2532911ceebeb863006b9",
+    "OscillatorPromotionTests.cpp": "cf66b93637f65754a2b4d79e5a4c611e3b3ff4b8",
+    "ContinuousVoiceCircuitTests.cpp": "9f91f0d8d5f16d625423dc8d0f56ad8420b33bc8",
+    "ContinuousVoiceCircuitAuditTests.cpp": "c1d5ae36be36d4ad980367849da0f3480a7780b2",
+    "Ws1Tolerances.h": "22b3ce08570fd5038549cbe684e1b36c603b2bbe",
+    "parity/tolerances-v2/ws1-voice.json": "54e995c974dee6d869022a95042bb02a749b6e1c"
+  },
+  "receipts_scope": "Clean immutable synthesis, raw traces compared locally then discarded after byte match; included digests are not the raw observations."
+}

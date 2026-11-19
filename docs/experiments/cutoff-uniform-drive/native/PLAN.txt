@@ -1,0 +1,7 @@
+Same fixed diagnostic as route work, now isolate the uniform-drive cutoff v2 change atop 67b9915.
+Comparator binaries: established 67b9915 route-only 6b32ef..., v2 901c9618...; identical previously built host binary.
+Two scenes: short held eight equal velocity notes and fresh never-played quiet. Fixed A,A2,P,S,C order;
+all five arms have 38 real callbacks, selecting 4,4,5,1,4 around the same history as before.
+A/A and four+one=five required on all guest-counter events, full PCM/public/FP matching in each runtime.
+Counts targeted to real VST3 callback; store and report adverse counters too, do not infer CPU time.
+Repeat all original controls, using the new 0ed90e44 product ELF; do not replace v2 data or use an old arm as a substitute.
