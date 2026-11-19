@@ -1,0 +1,44 @@
+{
+  "default-O3": {
+    "code": 0,
+    "original": "6654ec9450f04fff33228443a0e16c242609e6f730db15b7f56d964b6e583f33",
+    "guarded": "3f224665945a3c8c5663eec0c63cd06000d64119c2c16b98393564406edae077",
+    "object_identical": false,
+    "summary": "cases=279792 accepted=73027 rejected=206765 wrapper_fallback=32154 new_sticky=77092 directly_rejected_new_denormal=3613 unsupported_controls=432 mismatches=0"
+  },
+  "nontrapping-O3": {
+    "code": 0,
+    "original": "92a6752b71706b0169257b188a2f3dd11d82839d02135aa69689b23d9cbcf65f",
+    "guarded": "92a6752b71706b0169257b188a2f3dd11d82839d02135aa69689b23d9cbcf65f",
+    "object_identical": true,
+    "summary": "cases=279792 accepted=73027 rejected=206765 wrapper_fallback=32154 new_sticky=78605 directly_rejected_new_denormal=3618 unsupported_controls=432 mismatches=0"
+  },
+  "nontrapping-O2": {
+    "code": 0,
+    "original": "c652b34342778de78da7cf9a4b95434701328d804e43d2efdbb33d709009ea97",
+    "guarded": "c652b34342778de78da7cf9a4b95434701328d804e43d2efdbb33d709009ea97",
+    "object_identical": true,
+    "summary": "cases=279792 accepted=73027 rejected=206765 wrapper_fallback=32154 new_sticky=77094 directly_rejected_new_denormal=3615 unsupported_controls=432 mismatches=0"
+  },
+  "nontrapping-O0": {
+    "code": 0,
+    "original": "88178d53b863f46ee8d58b863308b89dd7976c56229e324da9a70a9cbcb4bf30",
+    "guarded": "90ccdbfd28217792f9a4caa2ad5f087f7de162f0a292974c6a8a7fe399a21ed8",
+    "object_identical": false,
+    "summary": "cases=279792 accepted=73027 rejected=206765 wrapper_fallback=32154 new_sticky=77092 directly_rejected_new_denormal=3613 unsupported_controls=432 mismatches=0"
+  },
+  "O2": {
+    "code": 0,
+    "original": "466350c29f772185ec89057d0037a42151b262233743115f0de1e668832d161d",
+    "guarded": "132cf690ccfc1879b8aca86923037defff83cfce32c4f2f9b4ad4952a13ddc05",
+    "object_identical": false,
+    "summary": "cases=279792 accepted=73027 rejected=206765 wrapper_fallback=32154 new_sticky=77092 directly_rejected_new_denormal=3613 unsupported_controls=432 mismatches=0"
+  },
+  "mavx2": {
+    "code": 0,
+    "original": "265a96b4cc9f7d3a6cdb834a8fb30533618d452be570cfe7af6938b2c9689392",
+    "guarded": "59f8f1028d8904c87ad02e5882500926bd2936c7a86b6c20e2ae9e6b18c98ef6",
+    "object_identical": false,
+    "summary": "cases=279792 accepted=73027 rejected=206765 wrapper_fallback=32154 new_sticky=77092 directly_rejected_new_denormal=3613 unsupported_controls=432 mismatches=0"
+  }
+}

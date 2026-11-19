@@ -170,6 +170,60 @@ void dynamicAdmissionEdges(Batch::Kernel kernel) {
    }
   }
 }
+// Exercise ordered static rejection through the public stage API. This
+// synthetic network produces a finite subnormal feedforward coefficient;
+// it is not an audio model or an accuracy tolerance.
+void staticAdmissionOrder(Batch::Kernel kernel) {
+#if CS80_IG00156_EXACT_BATCH_BUILD && BATCH_TEST_MXCSR
+ if(!kernel || !Batch::environmentSupported())return;
+ const unsigned saved=_mm_getcsr();
+ const unsigned base=(saved&~(0xe040u|0x3fu))|0x1f80u;
+ _mm_setcsr(base); // build subnormal coefficients with DAZ/FTZ disabled
+ for(bool negative:{false,true}){
+  auto network=cs80::kIg00156HighPassNetwork;
+  network.integratorFarads=1.;
+  network.feedforwardOhms=negative?-1.e306:1.e306;
+  auto normal=makeStages();
+  auto unusual=normal; unusual[0]=Stage(network); prepare(unusual);
+  const double ff=unusual[0].halfSteps().integrators*
+                  (1./(network.feedforwardOhms*network.integratorFarads));
+  const auto bits=std::bit_cast<std::uint64_t>(ff);
+  const auto magnitude=bits&0x7fffffffffffffffULL;
+  check(magnitude>0 && magnitude<0x0010000000000000ULL && (bits>>63)==negative,
+        "fixture has genuine signed subnormal static gain");
+  prepare(normal);
+  for(unsigned mode:{0u,0x40u,0x8000u,0x8040u})for(unsigned seed:{0u,0x15u})
+   for(unsigned earlier=0;earlier<3;++earlier){
+    // 0 valid pack; 1 a later bad input; 2 an earlier bad input. Start
+    // with the already-prepared stage rather than recomputing under DAZ.
+    auto a=normal; a[earlier==2?1:0]=unusual[0];const auto before=a;
+    Batch::Inputs x{.1f,.2f,.3f,.4f};
+    if(earlier)x[earlier==2?0:1]=std::bit_cast<float>(0x7f800001u);
+    Batch::Outputs out;for(auto& y:out)y={123.f,456.f,789.f};
+    _mm_setcsr(base|mode|seed);const bool used=kernel(pointers(a),x,out);const auto csr=_mm_getcsr();
+    _mm_setcsr(base);
+    const bool daz=(mode&0x40u)!=0;
+    const bool allow=earlier==0&&(!negative||daz);
+    check(used==allow,"ordered admission obeys DAZ for signed subnormal gain");
+    check((csr&~63u)==((base|mode)&~63u)&&(csr&seed)==seed,
+          "static eligibility preserves host controls and sticky seed");
+    if(!used){
+     check(((csr&2u)!=0)==(!daz&&earlier!=2),"prior denormal comparison observed only if executed");
+     check((csr&1u)==(seed&1u),"rejected signalling NaN input is not compared or converted");
+     for(int i=0;i<4;++i){
+      stateEqual(a[i],before[i]);
+      check(out[i].lp==123.f&&out[i].hp==456.f&&out[i].bp==789.f,
+            "rejected static gate did not commit output");
+     }
+    }
+   }
+ }
+ _mm_setcsr(saved);
+#else
+ (void)kernel;
+#endif
+}
+
 void environments(Batch::Kernel kernel) {
  const int original=std::fegetround();
  for(int mode:{FE_DOWNWARD,FE_UPWARD,FE_TOWARDZERO}){
@@ -210,7 +264,7 @@ void environments(Batch::Kernel kernel) {
 }
 int main() {
  const auto kernel=Batch::selectKernel(true);
- movement(kernel);fallbackCases(kernel);dynamicAdmissionEdges(kernel);environments(kernel);
+ movement(kernel);fallbackCases(kernel);dynamicAdmissionEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
 #if CS80_IG00156_EXACT_BATCH_BUILD
  __builtin_cpu_init();
  const bool capable = __builtin_cpu_supports("avx2");

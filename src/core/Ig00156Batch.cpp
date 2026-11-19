@@ -29,12 +29,27 @@ CS80_AVX2_INLINE V select(V mask,V yes,V no) { return _mm256_blendv_pd(no.x,yes.
 CS80_AVX2_INLINE V absolute(V x) { return _mm256_andnot_pd(_mm256_set1_pd(-0.0),x.x); }
 CS80_AVX2_INLINE V less(V a,V b) { return _mm256_cmp_pd(a.x,b.x,_CMP_LT_OQ); }
 CS80_AVX2_INLINE V greater(V a,V b) { return _mm256_cmp_pd(a.x,b.x,_CMP_GT_OQ); }
-CS80_AVX2_INLINE __m256i outsideStateBound(V value)
+CS80_AVX2_INLINE __m256i outsideMagnitudeBound(V value,double limit)
 {
     const auto magnitude=_mm256_and_si256(_mm256_castpd_si256(value.x),
                                           _mm256_set1_epi64x(0x7fffffffffffffffLL));
     return _mm256_cmpgt_epi64(magnitude,
-        _mm256_set1_epi64x(std::bit_cast<std::int64_t>(1024.0)));
+        _mm256_set1_epi64x(std::bit_cast<std::int64_t>(limit)));
+}
+CS80_AVX2_INLINE __m256i outsideStateBound(V value)
+{
+    return outsideMagnitudeBound(value,1024.0);
+}
+
+// For the fast certificate only: signed integer comparisons of the raw
+// encoding admit strictly positive normals in [DBL_MIN,upper]. Negative
+// values, both zeros, NaNs, infinities and subnormals take ordered admission.
+CS80_AVX2_INLINE __m256i outsidePositiveNormal(V value,double upper)
+{
+    const auto bits=_mm256_castpd_si256(value.x);
+    return _mm256_or_si256(
+        _mm256_cmpgt_epi64(_mm256_set1_epi64x(0x0010000000000000LL),bits),
+        _mm256_cmpgt_epi64(bits,_mm256_set1_epi64x(std::bit_cast<std::int64_t>(upper))));
 }
 CS80_AVX2_INLINE V tanh(V original)
 {
@@ -64,6 +79,10 @@ bool bounded(float x,float limit) noexcept
 
 struct Ig00156BatchAccess
 {
+#if defined(__NO_TRAPPING_MATH__)
+    // This compiler profile may speculate even short-circuited scalar FP
+    // comparisons. Retain its original admission and call site, including
+    // their observable sticky flags. The four-lane solver remains enabled.
     static bool eligible(const Ig00156Batch::Stages& stages,
                          const Ig00156Batch::Inputs& input) noexcept
     {
@@ -71,6 +90,14 @@ struct Ig00156BatchAccess
         // clear existing status flags. Arithmetic may raise sticky flags;
         // exact flag equality with the scalar calculation is not promised.
         if (!Ig00156Batch::environmentSupported()) return false;
+#else
+    // Exact fallback for anything the common-case bit certificate does not
+    // prove. In particular, preserve DAZ and the order of the FP comparisons
+    // for custom networks, exceptional rates and any short-circuit rejection.
+    static __attribute__((cold,noinline)) bool orderedEligible(const Ig00156Batch::Stages& stages,
+                                                               const Ig00156Batch::Inputs& input) noexcept
+    {
+#endif
         for(std::size_t i=0;i<4;++i)
         {
             const auto& s=*stages[i];
@@ -94,7 +121,13 @@ struct Ig00156BatchAccess
                                   const Ig00156Batch::Inputs& input,
                                   Ig00156Batch::Outputs& output) noexcept
     {
+#if defined(__NO_TRAPPING_MATH__)
         if(!eligible(stages,input)) return false;
+#else
+        // Eligibility is reassessed for this audio thread; never change host
+        // rounding, masks, FTZ/DAZ, or pre-existing sticky flags.
+        if(!Ig00156Batch::environmentSupported()) return false;
+#endif
         const auto gather=[&](double Ig00156Stage::*member) CS80_AVX2 {
             return V(_mm256_setr_pd(stages[0]->*member,stages[1]->*member,
                                    stages[2]->*member,stages[3]->*member));
@@ -104,6 +137,39 @@ struct Ig00156BatchAccess
         const V fromFb=gather(&Ig00156Stage::xFromFb),fromIn=gather(&Ig00156Stage::xFromIn);
         const V fromU=gather(&Ig00156Stage::xFromU),fromBp=gather(&Ig00156Stage::xFromBp);
         const V kiGs=gather(&Ig00156Stage::kiGs),invA11=gather(&Ig00156Stage::invA11),inFromX=gather(&Ig00156Stage::inFromX);
+#if !defined(__NO_TRAPPING_MATH__)
+        // Prove the usual admission case using integer operations on the
+        // coefficient vectors the solver already needs. No FP comparisons
+        // may run on a rejected sNaN or on a denormal an earlier lane would
+        // have skipped. Unproven does NOT mean rejected: orderedEligible
+        // supplies exactly the historical verdict and FP side effects.
+        auto uncertain=outsideMagnitudeBound(scale,1000000.0);
+        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(fromFb,1000000.0));
+        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(fromIn,1000000.0));
+        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(fromU,1000000.0));
+        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(kiGs,1000000.0));
+        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(invA11,1000000.0));
+        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(inFromX,1000000.0));
+        uncertain=_mm256_or_si256(uncertain,outsidePositiveNormal(g1,1000000.0));
+        uncertain=_mm256_or_si256(uncertain,outsidePositiveNormal(f1,1000000.0));
+        // |xFromBp| in [DBL_MIN,1] implies the original [-1,1e6] bound;
+        // values outside this smaller common range are not clamped or lost.
+        uncertain=_mm256_or_si256(uncertain,outsidePositiveNormal(absolute(fromBp),1.0));
+        const auto rate=_mm_castps_si128(_mm_setr_ps(stages[0]->lastRate,stages[1]->lastRate,
+                                                      stages[2]->lastRate,stages[3]->lastRate));
+        const auto inputBits=_mm_and_si128(_mm_castps_si128(_mm_loadu_ps(input.data())),
+                                           _mm_set1_epi32(0x7fffffff));
+        auto badHeader=_mm_cmpgt_epi32(inputBits,_mm_set1_epi32(std::bit_cast<std::int32_t>(64.0f)));
+        badHeader=_mm_or_si128(badHeader,_mm_cmpgt_epi32(_mm_set1_epi32(std::bit_cast<std::int32_t>(8000.0f)),rate));
+        badHeader=_mm_or_si128(badHeader,_mm_cmpgt_epi32(rate,_mm_set1_epi32(std::bit_cast<std::int32_t>(1536000.0f))));
+        const bool ordinary=(_mm256_movemask_pd(_mm256_castsi256_pd(uncertain))==0
+            && _mm_movemask_ps(_mm_castsi128_ps(badHeader))==0
+            && !stages[0]->lastUnwarped && stages[0]->cutoffCoefficientsValid
+            && !stages[1]->lastUnwarped && stages[1]->cutoffCoefficientsValid
+            && !stages[2]->lastUnwarped && stages[2]->cutoffCoefficientsValid
+            && !stages[3]->lastUnwarped && stages[3]->cutoffCoefficientsValid);
+        if(!ordinary && !orderedEligible(stages,input)) return false;
+#endif
         const V zIn=gather(&Ig00156Stage::zIn),zFb=gather(&Ig00156Stage::zFb);
         const V zBp=gather(&Ig00156Stage::zBp),zLp=gather(&Ig00156Stage::zLp);
         const V slope1=gather(&Ig00156Stage::slope1),slope2=gather(&Ig00156Stage::slope2);
