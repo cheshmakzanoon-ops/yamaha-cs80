@@ -1,0 +1,184 @@
+{
+  "baseline": "0658d1b3afeb09099d89e58694e19b8f5a41ddea",
+  "native_direct_ui_all_7_from_0658_A_to_latest_C": true,
+  "note": "All windows are host-supplied at 48k/64. Guest instructions/read/write events only; native CPU time, physical power or deadlines not measured. Physical DAW/realtime advisability cannot be inferred from these guest counts.",
+  "stages": [
+    "oscillator scratch",
+    "zero control smoothing",
+    "filter occupancy gathering",
+    "UI accepted-prefix snapshot"
+  ],
+  "vst3": {
+    "fresh-none": {
+      "Ir_Dr_Dw_all_four": [
+        5472121,
+        1306502,
+        759558
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        5713765,
+        1306006,
+        844038
+      ],
+      "delta": [
+        -241644,
+        496,
+        -84480
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -4.229155381784165
+    },
+    "held-16": {
+      "Ir_Dr_Dw_all_four": [
+        39387925,
+        9339773,
+        4360370
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        40671002,
+        9579774,
+        4591704
+      ],
+      "delta": [
+        -1283077,
+        -240001,
+        -231334
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -3.154771057767399
+    },
+    "held-32": {
+      "Ir_Dr_Dw_all_four": [
+        41485912,
+        9778698,
+        4534813
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        42770593,
+        10020255,
+        4766211
+      ],
+      "delta": [
+        -1284681,
+        -241557,
+        -231398
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -3.003654870999801
+    },
+    "held-33": {
+      "Ir_Dr_Dw_all_four": [
+        41612654,
+        9833943,
+        4535150
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        42897173,
+        10075389,
+        4766542
+      ],
+      "delta": [
+        -1284519,
+        -241446,
+        -231392
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -2.994414107428478
+    },
+    "held-64": {
+      "Ir_Dr_Dw_all_four": [
+        46010238,
+        10768065,
+        4901331
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        47294806,
+        11008451,
+        5132709
+      ],
+      "delta": [
+        -1284568,
+        -240386,
+        -231378
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -2.71608683625851
+    },
+    "held-cross": {
+      "Ir_Dr_Dw_all_four": [
+        28274793,
+        7357032,
+        3506784
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        29556982,
+        7596314,
+        3738084
+      ],
+      "delta": [
+        -1282189,
+        -239282,
+        -231300
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -4.338024091904917
+    },
+    "held-dense": {
+      "Ir_Dr_Dw_all_four": [
+        57220077,
+        13679309,
+        5543592
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        58504829,
+        13919946,
+        5774978
+      ],
+      "delta": [
+        -1284752,
+        -240637,
+        -231386
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -2.195975993708143
+    },
+    "held-none": {
+      "Ir_Dr_Dw_all_four": [
+        23513789,
+        6441735,
+        2961440
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        24795466,
+        6681017,
+        3192740
+      ],
+      "delta": [
+        -1281677,
+        -239282,
+        -231300
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -5.168997428804121
+    },
+    "held-one": {
+      "Ir_Dr_Dw_all_four": [
+        28106018,
+        7321225,
+        3496937
+      ],
+      "Ir_Dr_Dw_baseline0658": [
+        29388207,
+        7560507,
+        3728237
+      ],
+      "delta": [
+        -1282189,
+        -239282,
+        -231300
+      ],
+      "four_pairs_public_bytes_exact": true,
+      "guest_Ir_percent": -4.362937146863025
+    }
+  }
+}

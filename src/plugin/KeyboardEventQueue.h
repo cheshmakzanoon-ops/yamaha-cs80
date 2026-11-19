@@ -23,6 +23,8 @@ struct KeyPressureToken
     { return a.queue == b.queue && a.onset == b.onset && a.epoch == b.epoch
           && a.channel == b.channel && a.note == b.note; }
 };
+template <std::size_t Capacity> class CapturedKeyboardEvents;
+
 // Multiple non-audio producers, one audio consumer. Only producers take mutex.
 // Lifecycle calls are consumer operations and require stopped audio processing.
 template <std::size_t Capacity = 256>
@@ -114,7 +116,19 @@ public:
         acknowledged.store(clearedEpoch, std::memory_order_release);
     }
 
-    std::size_t take(Batch& destination) noexcept
+    std::size_t take(Batch& destination) noexcept { return takeInto(destination); }
+
+    static int samplePosition(const Batch& batch, std::size_t count,
+                              std::size_t index, int frames) noexcept
+    {
+        return samplePositionOf(batch, count, index, frames);
+    }
+
+private:
+    friend class CapturedKeyboardEvents<Capacity>;
+
+    template <typename Slot>
+    std::size_t takeInto(std::array<Slot, Capacity>& destination) noexcept
     {
         auto r = read.load(std::memory_order_relaxed);
         const auto end = write.load(std::memory_order_acquire);
@@ -132,8 +146,9 @@ public:
 
     // JUCE 8.0.6 stretches indirect events over first..last+1 milliseconds.
     // Unsigned deltas keep a batch crossing the 32-bit millisecond wrap ordered.
-    static int samplePosition(const Batch& batch, std::size_t count,
-                              std::size_t index, int frames) noexcept
+    template <typename Source>
+    static int samplePositionOf(const Source& batch, std::size_t count,
+                                std::size_t index, int frames) noexcept
     {
         if (frames <= 0 || count == 0) return 0;
         const auto first = batch[0].milliseconds;

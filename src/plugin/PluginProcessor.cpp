@@ -1,4 +1,5 @@
 #include "PresetXml.h"
+#include "CapturedKeyboardEvents.h"
 #include "PluginProcessor.h"
 
 #include "PluginEditor.h"
@@ -1011,8 +1012,8 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         uiHeldMasks.fill(0);
         keyPressureOwnership.clear();
     }
-    cs80::KeyboardEventQueue<>::Batch uiEvents;
-    auto uiCount = keyboardEvents.take(uiEvents);
+    const cs80::CapturedKeyboardEvents uiEvents(keyboardEvents);
+    auto uiCount = uiEvents.size();
 
     if (hostAutomationVst3)
         applyVst3MidiLearn(midi);
@@ -1197,7 +1198,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     };
     auto uiPosition = [&]
     {
-        return cs80::KeyboardEventQueue<>::samplePosition(uiEvents, uiCount, uiIndex, numSamples);
+        return uiEvents.samplePosition(uiIndex, numSamples);
     };
     auto dispatchUI = [&]
     {

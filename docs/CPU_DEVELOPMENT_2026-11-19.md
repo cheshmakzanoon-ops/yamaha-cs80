@@ -17,6 +17,11 @@ not add up across rows. These are scoped Linux Release observations.
 | [Equal source cutoff drives](UNIFORM_SOURCE_CUTOFF.md) | 9.855% fewer guest instructions in fresh quiet and 1.385% fewer in the short equal-velocity held example. | Varied-velocity release often does not qualify. |
 | [Exact signed-zero FIR](EXACT_SILENT_OUTPUT_FIR.md) | 13.71% fewer guest instructions in fresh silence and 13.43% fewer after the selected release settles. | 0.037% higher guest instruction count in the short held case; signed mixed/dirty histories and unsupported arithmetic use original output. |
 | [Packed heterogeneous cutoff](HETEROGENEOUS_SOURCE_CUTOFF.md) | 5.092% fewer guest instructions after varied-velocity release, 1.438% fewer varied held and 0.942% fewer in the varied wake fixture. | 0.060% higher fresh quiet guest instruction count. Scoped to the qualified Linux/x86-64/GCC arithmetic. |
+| [Sparse host automation lanes](ACTIVE_HOST_AUTOMATION_LANES.md) | Up to 1.09% fewer guest instructions with one or six queues. | 0.081% more at 120 lanes. |
+| [Oscillator event scratch](experiments/oscillator-event-scratch/README.md) | Eliminates the redundant 160-byte scratch clear per active tick; 5.39% fewer guest writes with eight held. | Counts expand the repeated store. No native time claim. |
+| [Positive-zero voice smoothing](experiments/zero-control-smoothing/README.md) | 3.15% fewer guest instructions fresh quiet and 0.73% fewer with eight held notes. | 0.080% more with all eight controls moving in the test. |
+| [Four-lane filter admission](experiments/four-lane-filter-admission/README.md) | 3.36% fewer guest instructions equal held, 2.49% fewer varied wake. | Fresh idle unchanged; 0.82% more guest writes equal held; explicit nontrapping GNU keeps original admission. |
+| [Lazy keyboard event capture](experiments/lazy-keyboard-capture/README.md) | Removes 14 KiB unconditional per-callback initialization; 1.13% fewer guest instructions fresh quiet and 0.27% fewer held. | Emulated instruction count includes expanded repeated stores, not a native time result. |
 
 Release builds were compared through a real VST3 host for the listed
 changes. The individual reports retain byte comparisons, numeric controls

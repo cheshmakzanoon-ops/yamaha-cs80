@@ -107,6 +107,41 @@ void testTrajectory(double rate, float quality, bool source)
     }
 }
 
+// An MPE member uses the per-voice bend smoother, not either master
+// smoother. A zero target is not enough to prove its history is zero.
+void testMemberBendLeavingAndReturningToZero()
+{
+    constexpr double rate = 48000.0;
+    Engine e;
+    e.prepare(rate);
+    auto p = controls(1.0f, 0.0f);
+    p[P_mpeBendRange] = 48.0f;
+    e.setParams(p);
+    startZones(e);
+    render(e, 32);
+    const double lower = e.getRankInfo(0, 0).oscillatorHz;
+    const double upper = e.getRankInfo(1, 0).oscillatorHz;
+    const double decay = std::exp(-1.0 / (0.005 * rate));
+    double expected = 0.0;
+    for (float target : { 0.25f, 0.0f, -0.125f, -0.0f })
+    {
+        e.pitchBend(3, target);
+        double worst = 0.0;
+        bool otherStayedPut = true;
+        for (int n = 0; n < 64; ++n)
+        {
+            render(e, 1);
+            expected = 48.0 * target + (expected - 48.0 * target) * decay;
+            const double actual = pitchDelta(e, 0, lower);
+            worst = std::isfinite(actual) ? std::max(worst, std::abs(actual - expected))
+                                          : std::numeric_limits<double>::infinity();
+            otherStayedPut &= e.getRankInfo(1, 0).oscillatorHz == upper;
+        }
+        check(worst < 2.0e-5, "member bend follows the full trajectory to and from zero");
+        check(otherStayedPut, "a member bend never advances the untouched voice's pitch");
+    }
+}
+
 void testSnapAndReset()
 {
     Engine e;
@@ -158,6 +193,7 @@ int main()
         testTrajectory(rate, quality, true);
     testTrajectory(48000.0, 1.0f, false);
     testSnapAndReset();
+    testMemberBendLeavingAndReturningToZero();
     const auto whole = partitionedRender(1024);
     check(whole == partitionedRender(1), "master bend rendering is sample/block partition invariant");
     check(whole == partitionedRender(127), "master bend rendering is irregular-block partition invariant");
