@@ -71,14 +71,21 @@ bool Cs80AudioProcessor::attachHostAutomationQueue(juce::AudioProcessorParameter
                                                   cs80::HostAutomationQueue queue) noexcept
 {
     if (!hostAutomationBlock || queue.count <= 0 || queue.readPoint == nullptr) return false;
-    for (size_t i = 0; i < automationParameters.size(); ++i)
-        if (automationParameters[i] == &parameter)
-        {
-            markHostAutomationLane(i, true); // begin publishes the queue before calling readPoint.
-            automationCurves[i].begin(queue, automationCurrent[i]);
-            return true;
-        }
-    return false;
+    // Hosts can submit queues in any order. A contiguous prefix often
+    // predicts the next parameter; trust this hint only after checking its
+    // exact object identity. Duplicates, gaps and foreign parameters retain
+    // the full lookup and the same borrowed queue callbacks.
+    auto lane = size_t{0};
+    if (automationParameters[0] != &parameter) lane = static_cast<size_t>(activeHostCurveCount);
+    if (lane >= automationParameters.size() || automationParameters[lane] != &parameter)
+    {
+        const auto found = std::find(automationParameters.begin() + 1, automationParameters.end(), &parameter);
+        if (found == automationParameters.end()) return false;
+        lane = static_cast<size_t>(found - automationParameters.begin());
+    }
+    markHostAutomationLane(lane, true); // begin publishes the queue before calling readPoint.
+    automationCurves[lane].begin(queue, automationCurrent[lane]);
+    return true;
 }
 
 void Cs80AudioProcessor::endHostAutomationBlock() noexcept

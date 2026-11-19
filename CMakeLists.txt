@@ -2203,6 +2203,14 @@ if (CS80_BUILD_PLUGIN)
         target_link_libraries(cs80_mpe_poly_pressure_host_tests PRIVATE CS80Reference)
         add_test(NAME cs80_mpe_poly_pressure_host_tests COMMAND cs80_mpe_poly_pressure_host_tests)
         set_tests_properties(cs80_mpe_poly_pressure_host_tests PROPERTIES TIMEOUT 120)
+        add_executable(cs80_host_automation_lookup_tests tests/HostAutomationLookupTests.cpp)
+        target_include_directories(cs80_host_automation_lookup_tests PRIVATE src
+            "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")
+        target_compile_definitions(cs80_host_automation_lookup_tests PRIVATE
+            "$<TARGET_PROPERTY:CS80Reference,COMPILE_DEFINITIONS>")
+        target_link_libraries(cs80_host_automation_lookup_tests PRIVATE CS80Reference)
+        add_test(NAME cs80_host_automation_lookup_tests COMMAND cs80_host_automation_lookup_tests)
+        set_tests_properties(cs80_host_automation_lookup_tests PROPERTIES TIMEOUT 120)
         add_executable(cs80_mpe_program_routing_host_tests tests/MpeProgramRoutingHostTests.cpp)
         target_include_directories(cs80_mpe_program_routing_host_tests PRIVATE src
             "$<TARGET_PROPERTY:CS80Reference,INCLUDE_DIRECTORIES>")

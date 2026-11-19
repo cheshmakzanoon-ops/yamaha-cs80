@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "765198eb15b2668a88ecb8be8d9ae633a04e7c334d2d6ea8604eeeeec54bddf4",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "caller must independently establish from same toolchain/flags and link closure",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4341433,
+        1127646,
+        670490
+      ],
+      "delta": [
+        0,
+        0,
+        0
+      ],
+      "percent_change": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stock": [
+        4341433,
+        1127646,
+        670490
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        21720601,
+        6059447,
+        2369210
+      ],
+      "delta": [
+        0,
+        0,
+        0
+      ],
+      "percent_change": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stock": [
+        21720601,
+        6059447,
+        2369210
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        21895288,
+        6083035,
+        2369584
+      ],
+      "delta": [
+        0,
+        0,
+        0
+      ],
+      "percent_change": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stock": [
+        21895288,
+        6083035,
+        2369584
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30252672,
+        8198780,
+        3404229
+      ],
+      "delta": [
+        0,
+        0,
+        0
+      ],
+      "percent_change": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stock": [
+        30252672,
+        8198780,
+        3404229
+      ]
+    }
+  },
+  "stock_sha256": "1ddcc2f5328344a25814064364e02d1fc70ebe04beb2c815f088dd60464e2f05",
+  "timing": false
+}

@@ -115,6 +115,22 @@ inline constexpr std::array kSampleAccurateParameters {
     int(P_unisonDetune)
 };
 
+// A successful attachment hint selects the same unique core lane as the
+// original pointer scan. The real-processor test also checks the bound JUCE
+// parameter objects and rejects identical-index parameters of another owner.
+static_assert([]
+{
+    if (kSampleAccurateParameters.empty()) return false;
+    for (std::size_t i = 0; i < kSampleAccurateParameters.size(); ++i)
+    {
+        if (kSampleAccurateParameters[i] < 0 || kSampleAccurateParameters[i] >= P_numParams)
+            return false;
+        for (std::size_t j = 0; j < i; ++j)
+            if (kSampleAccurateParameters[i] == kSampleAccurateParameters[j]) return false;
+    }
+    return true;
+}(), "Host automation lanes must be nonempty, valid and unique");
+
 // The wrapper owns the queue for the entire synchronous process call. Borrow
 // its points instead of imposing a fixed event-count limit or allocating on
 // the audio thread. The number of parameter lanes is fixed by the enum list.

@@ -1,0 +1,80 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "765198eb15b2668a88ecb8be8d9ae633a04e7c334d2d6ea8604eeeeec54bddf4",
+  "genuine_host_runs": 30,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "caller must independently establish from same toolchain/flags and link closure",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "queues-1": {
+      "candidate": [
+        26490760,
+        6963215,
+        2904684
+      ],
+      "delta": [
+        -12,
+        0,
+        0
+      ],
+      "percent_change": [
+        -4.5298793104255324e-05,
+        0.0,
+        0.0
+      ],
+      "stock": [
+        26490772,
+        6963215,
+        2904684
+      ]
+    },
+    "queues-120": {
+      "candidate": [
+        56818859,
+        13680040,
+        5486664
+      ],
+      "delta": [
+        -140432,
+        -27608,
+        0
+      ],
+      "percent_change": [
+        -0.24654801268505958,
+        -0.20140581374718697,
+        0.0
+      ],
+      "stock": [
+        56959291,
+        13707648,
+        5486664
+      ]
+    },
+    "queues-6": {
+      "candidate": [
+        40876334,
+        9537440,
+        4378866
+      ],
+      "delta": [
+        -212,
+        -20,
+        0
+      ],
+      "percent_change": [
+        -0.0005186348181179496,
+        -0.00020969943779580727,
+        0.0
+      ],
+      "stock": [
+        40876546,
+        9537460,
+        4378866
+      ]
+    }
+  },
+  "stock_sha256": "1ddcc2f5328344a25814064364e02d1fc70ebe04beb2c815f088dd60464e2f05",
+  "timing": false
+}
