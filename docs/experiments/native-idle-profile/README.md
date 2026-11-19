@@ -1,0 +1,37 @@
+# What the native CS-80 callback does while quiet
+
+**Stock-only attribution, not a speedup or a DAW CPU reading.** In a real loaded Linux VST3, `Engine::updateSourceReadouts` was the largest physical routine during both quiet histories: **28–32% of sampled callback PCs**, against **8–9%** with eight notes held. Held audio instead spent about **44%** of samples in the oscillator family. This changes which subsystem is worth inspecting for idle CPU. It does not justify skipping a whole callback, a circuit, or a state update when the output is silent.
+
+| Window | Callback PCs, 997 / 3,109 µs requests | Source readouts¹ | Oscillator family¹ | Four-stage filter batch¹ | Decimator output² |
+|---|---:|---:|---:|---:|---:|
+| Fresh idle, never played | 993 / 979 | 27.8–32.2% | 2.6–3.8% | 0 sampled | 6.8–8.7% |
+| Settled output, after a chord release | 1,018 / 981 | 29.3–31.0% | 4.3–4.6% | 0 sampled | 6.3–7.5% |
+| Eight held notes | 1,015 / 1,009 | 8.2–8.8% | 43.9% / 43.9% | 13.4–15.2% | 1.3–2.4% |
+| First 32 callbacks after idle, repeated 16 times | 140 / 143 | 6.4–9.1% | 37.9–44.1% | 13.6–15.4% | 0.7–2.9% |
+
+¹ Physical bounded symbol ownership, oscillator functions grouped by class. ² Innermost DWARF annotation in the machine-code-identical Engine mapping; not an additional count on top of its physical owner. The table shows selected exclusive groups (not all callback work). Ranges are two observations, **not** confidence intervals. External library PCs are not charged to a guessed caller. “0 sampled” does not prove a function never ran.
+
+The quiet profiles also distinguish the work *inside* the readout. As exclusive inline leaves, `evaluateCutoff`, `sanitizeDrive` and `evaluateShared` respectively accounted for **7.8–9.3%, 5.7–7.4% and 5.4–7.0%** of all fresh-idle PCs. Do not add those leaves to the enclosing readout share. The older [per-call sanitation reuse](../../research/cpu-2026-11-17/lazy-drive-reuse/RESULT.md) already fell below its instruction screen, and the [shared-readout memo](../shared-readout-retention/README.md) failed its whole-engine cost gate. Repeating either unchanged is not a new optimization. A separate experiment could investigate strictly unchanged **rank cutoff** drives in quiet states, or establish whether the decimator sees an exactly zero *input history*. Quiet output alone proves neither. Protect the transition back to sound and measure the cost of new bookkeeping on an active chord.
+
+## What actually ran
+
+- Fresh complete stock VST3 from baseline `db02cd8fa56892c6ea2cf7df084bcf190204968e`, normal GCC 14.2.0 Linux x86-64 Release. Module SHA-256 `8d4078be629d097e6470ec90fb12ccfdb7ad486663f14bb8e3aaef3076bd8725`. The shipped DSP/module was **not** instrumented. A separate minimal host supplied actual VST3 buses, events and the `IAudioProcessor::process` call. No DAW, GUI, or private voice counters.
+- Public factory String 1 / String 2, Circuit/Source Performance, dry, drift 0.37, dispersion 0.18, analog noise off, two filters on, 48 kHz/64 frames. See the linked [frozen controls/input adapter](../eight-stage-filter/native-cost/host/factory8_base.cpp). This is **not** the older 256-frame *Isolation* median-RTF fixture. No comparison of absolute costs on the two setups is valid.
+- For each fresh instance, 1,024 preparation callbacks. Held: eight note-ons at frame zero, then 4,096 profiled-region calls. Fresh idle: never played; 16,384 quiet calls. Post-release: same first chord and full warmup, eight genuine note-offs, then 8,192 calls (10.923 seconds of rendered audio, including the release callback) before 16,384 quiet calls. Wake: **16 fresh instances**, each quiet for 1,024 calls, then eight note-ons and 32 onset-window calls. It is a repeat of wake *from fresh silence*, not wake after every possible previous tail.
+- Each quiet measurement window contained 2,097,152 floating-point output samples, all numerically zero; post-release had been audibly nonzero before the measured window. The 64-block pre-window quiet guard was also zero. Every held/wake output sample was nonzero. All buffers inspected for finiteness. Each scene's independent zero-timer control and two profiled runs agreed on measured-region PCM FNV-1a64, sample/nonzero counts, peak, RMS, and public event receipts. This is fingerprint agreement, **not** a collision-proof byte/state comparison of all plug-in state.
+- CPU 0 within the permitted VM affinity; dedicated fresh home per process. Two requested timer periods per scene plus one no-timer control: 12/12 scheduled processes completed, no excluded capture. Stock correctness jobs overlapped part of collection. The capture was completed before comparative timing began. Statistical attribution from an oversubscribed VM does not qualify physical hardware.
+
+## Sampling and replay
+
+This test-only host uses a Linux `CLOCK_THREAD_CPUTIME_ID` timer with `SIGEV_THREAD_ID` delivery to the same thread. Only an interrupted PC while the marker brackets the public plug-in call is counted toward callback shares. A separate known arithmetic loop validates sampling; **296/296** calibration PCs belonged to it. The handler stores only a tagged RIP in fixed-capacity lock-free storage; no unwind, symbol lookup, allocation, or clock reads. One count per delivered interrupt. Outside the handler, executable ELF segments give ASLR-independent virtual addresses. The stock ELF was bound to the actually loaded entry point/build ID. Engine source lines were resolved using a separately relinked debug-symbol twin after checking **all allocated sections and addresses** against the release module, except the build-ID note; the normal/debug Engine objects also had identical allocated sections and normalized relocations. [Hashes](code-identity.json).
+
+**Limits:** 6,278 callback PCs, 4,638 separately counted signals outside calibration/callback windows, zero buffer drops or foreign signals. The timer reported 18,681 overruns, across preparation and measurement, demonstrating heavy timer coalescing. The two requested periods consequently did not yield independent high-resolution instruction traces. The sampler itself perturbs execution. Only **12 and 14 PCs** landed in the very first note-on callback over the 16 wake placements at each period: insufficient to identify the cost or latency of that first callback. Region shares are not removable fractions, cycle counts, hardware readings or deadline statistics.
+
+The [tool and build/recollection instructions](../../../tools/native-vst3-profile/README.md) are separate from the timed qualification host. From repository root, use **offline** replay to inspect the actual recorded inputs, not to start another performance run:
+
+```sh
+python3 -B tools/native-vst3-profile/profile.py replay --json
+python3 -B tools/native-vst3-profile/test_profile.py
+```
+
+[`captures.json.gz`](captures.json.gz) contains all eight profiled and four control receipts, the full normalized PC-count rows and symbol/annotation dictionary. Its SHA-256 is `011efd7504577d5c78673099e36110e573d7f098bf315cff4a70f623b60aeae4`. Host/module binaries, private paths, process/ASLR addresses, and raw PCM are not bundled. Offline replay checks counts, ownership/region invariants, scene geometry/events, quiet checks, fingerprints and the entire recorded order. It does not authenticate omitted binaries or synthesize new audio. Replay against the original stock module, host and mapping twin independently reproduced the bounded physical symbols and all exported DWARF annotations.
