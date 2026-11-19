@@ -1,0 +1,124 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "7e52c1d6b3af9f4061818070335861d7d535f6be540204ac2ff29b5d9a8e9a98",
+  "genuine_host_runs": 50,
+  "host_sha256": "ccd0365157c2bc5b5dcee454b6e6a4b0baa008b81f91686c2da8cc2f900792f0",
+  "matched_build_configuration": "caller must independently establish from same toolchain/flags and link closure",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "legacy-control": {
+      "candidate": [
+        12407949,
+        4164966,
+        1011516
+      ],
+      "delta": [
+        -608548,
+        13020,
+        -43032
+      ],
+      "percent_change": [
+        -4.675205625599576,
+        0.3135878934841638,
+        -4.080610839904869
+      ],
+      "stock": [
+        13016497,
+        4151946,
+        1054548
+      ]
+    },
+    "legacy-wah": {
+      "candidate": [
+        12656221,
+        4236302,
+        1039164
+      ],
+      "delta": [
+        -628516,
+        10460,
+        -42008
+      ],
+      "percent_change": [
+        -4.731113608045082,
+        0.2475246353271135,
+        -3.8854132367467895
+      ],
+      "stock": [
+        13284737,
+        4225842,
+        1081172
+      ]
+    },
+    "source-control": {
+      "candidate": [
+        21583125,
+        6037689,
+        2361453
+      ],
+      "delta": [
+        -3773210,
+        -693095,
+        -896310
+      ],
+      "percent_change": [
+        -14.880738876497727,
+        -10.297388833158218,
+        -27.513051133553915
+      ],
+      "stock": [
+        25356335,
+        6730784,
+        3257763
+      ]
+    },
+    "source-fixed": {
+      "candidate": [
+        21587857,
+        6039737,
+        2361965
+      ],
+      "delta": [
+        -3772910,
+        -693095,
+        -896310
+      ],
+      "percent_change": [
+        -14.876955417002964,
+        -10.29425656246881,
+        -27.50872777773515
+      ],
+      "stock": [
+        25360767,
+        6732832,
+        3258275
+      ]
+    },
+    "source-wah": {
+      "candidate": [
+        21589781,
+        6040249,
+        2361965
+      ],
+      "delta": [
+        -3772698,
+        -693095,
+        -896310
+      ],
+      "percent_change": [
+        -14.87511532291461,
+        -10.293473792516764,
+        -27.50872777773515
+      ],
+      "stock": [
+        25362479,
+        6733344,
+        3258275
+      ]
+    }
+  },
+  "stock_sha256": "bf50e0f32f69dfaf798619193bd00587fd599100eaaff5a715b48d45e62b1208",
+  "timing": false
+}

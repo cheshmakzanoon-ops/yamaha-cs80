@@ -65,3 +65,12 @@ Direct native captures matched public bytes between these two builds. At
 48 kHz Standard the plugin still reports 67 samples, about 1.40 ms algorithmic
 delay, not DAW round-trip. None of these data verifies the absolute physical
 CPU-use goals.
+
+The separate direct [original-to-current pedal work](original-pedal-work.json)
+and [native connected-pedal capture](original-pedal-parity.json) pin the same
+original and final images. Over the original, live Source moving wah saves
+14.875% guest instructions. Legacy moving wah saves 4.731% and moving dry
+saves 4.675%, despite the small adverse later increment described above.
+Legacy writes decrease versus original by 3.89–4.08%, and reads increase
+by 0.25–0.31%. All six complete native connected-pedal histories matched
+captured audio, FP, state and latency (67 Source or 63 Legacy samples).
