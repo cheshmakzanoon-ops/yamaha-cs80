@@ -58,3 +58,7 @@ the identical original ELF. No optimized build was timed. The Linux cloud
 results above are reproducible instruction diagnostics, not a measured
 audio-thread speedup. A [physical-target test proposal](q0-evidence/PHYSICAL-TARGET.md)
 distinguishes whole-process CPU use, callback CPU budget and deadlines.
+
+A [later integrated before/after](envelope-main/README.md) adds the
+shared receiver and envelope-dispatch changes. Its release and diagnostic
+identities remain separate from the earlier measurements on this page.
