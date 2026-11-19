@@ -1,0 +1,994 @@
+{
+  "baseline": "ecf3ef538e85ca0abd90fa0806276b23725d7796",
+  "native_time_measured": false,
+  "pick": "v2",
+  "prototypes": {
+    "candidate": "bab0ad6782140bcf6cd9a8d90d58f84c6372a5d8ec36f7e7740fc50bc67e419c",
+    "counted": "48416a1659f7bba1b031382adc2ad3b47367b9c159b40b4cf655c2efee50a62c",
+    "stock": "21513fd48aa95593ce44e52352d83434419ab27c3a10e6cbd786eb98755d4095",
+    "v2": "cdc825de45605e73b865564310463071db930416cb3b4da959fd889ab94cbc89",
+    "v2count": "b6b2fb8c2fddf8bc04578a0d382c2fb52edede6ad73a3266e23623ead3227738"
+  },
+  "relative_to_v1_percent_gain_retained_primary_or_dense_penalty_removed": {
+    "fresh-quiet": 112.82051282,
+    "held-short": 112.82051282,
+    "moving-eight": 61.53846154,
+    "moving-one": 116.53846154,
+    "varied-held-short": 112.82051282,
+    "varied-wake-short": 112.81178003
+  },
+  "scenes": {
+    "fresh-quiet": {
+      "candidate_minus_stock": [
+        -159744,
+        0,
+        -24576
+      ],
+      "candidate_percent": [
+        -2.795211199042786,
+        0.0,
+        -2.913484587315625
+      ],
+      "equal_bytes_within_each_runtime": 78992,
+      "group_hits": 4096,
+      "guest_vs_native_differing_FP_fields": {
+        "after.csr": 38,
+        "before.csr": 38,
+        "next.csr": 38
+      },
+      "v2_minus_stock": [
+        -180224,
+        0,
+        -24576
+      ],
+      "v2_percent": [
+        -3.1535716091764763,
+        0.0,
+        -2.913484587315625
+      ],
+      "voice_groups_in_4_callbacks": 4096,
+      "whole_guest_plugin_event_counts": {
+        "A": {
+          "batch_self_ir": 0,
+          "plugin_edge": [
+            5714917,
+            1306518,
+            843526
+          ],
+          "route_inclusive": [
+            53108,
+            10448,
+            5504
+          ],
+          "smoother_self_ir": 411136,
+          "stub_plus_plugin": [
+            5714937,
+            1306530,
+            843530
+          ]
+        },
+        "A2": {
+          "batch_self_ir": 0,
+          "plugin_edge": [
+            5714917,
+            1306518,
+            843526
+          ],
+          "route_inclusive": [
+            53108,
+            10448,
+            5504
+          ],
+          "smoother_self_ir": 411136,
+          "stub_plus_plugin": [
+            5714937,
+            1306530,
+            843530
+          ]
+        },
+        "C": {
+          "batch_self_ir": 0,
+          "plugin_edge": [
+            5555173,
+            1306518,
+            818950
+          ],
+          "route_inclusive": [
+            53108,
+            10448,
+            5504
+          ],
+          "smoother_self_ir": 251392,
+          "stub_plus_plugin": [
+            5555193,
+            1306530,
+            818954
+          ]
+        },
+        "P": {
+          "batch_self_ir": 0,
+          "plugin_edge": [
+            7145892,
+            1633764,
+            1054617
+          ],
+          "route_inclusive": [
+            66385,
+            13060,
+            6880
+          ],
+          "smoother_self_ir": 513920,
+          "stub_plus_plugin": [
+            7145917,
+            1633779,
+            1054622
+          ]
+        },
+        "S": {
+          "batch_self_ir": 0,
+          "plugin_edge": [
+            1430975,
+            327246,
+            211091
+          ],
+          "route_inclusive": [
+            13277,
+            2612,
+            1376
+          ],
+          "smoother_self_ir": 102784,
+          "stub_plus_plugin": [
+            1430980,
+            327249,
+            211092
+          ]
+        },
+        "V": {
+          "batch_self_ir": 0,
+          "plugin_edge": [
+            5534693,
+            1306518,
+            818950
+          ],
+          "route_inclusive": [
+            53108,
+            10448,
+            5504
+          ],
+          "smoother_self_ir": 230912,
+          "stub_plus_plugin": [
+            5534713,
+            1306530,
+            818954
+          ]
+        }
+      },
+      "within_guest_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "9dab22a7a1491624c672611debb6285098674deea3bbe3906055cc22e16b7b67",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "c597b1b463b7cec49548fac00d7588c9652bb67cc2b1b0c88676bf8f1558571e",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      },
+      "within_native_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "69a728e9a175f055d3544e143e99a174e63402fc090988fcf7ab216f9c65e4e0",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "c597b1b463b7cec49548fac00d7588c9652bb67cc2b1b0c88676bf8f1558571e",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "held-short": {
+      "candidate_minus_stock": [
+        -159744,
+        0,
+        -24576
+      ],
+      "candidate_percent": [
+        -0.6500143089901189,
+        0.0,
+        -0.8135841001513553
+      ],
+      "equal_bytes_within_each_runtime": 78992,
+      "group_hits": 4096,
+      "guest_vs_native_differing_FP_fields": {
+        "after.csr": 38,
+        "before.csr": 38,
+        "next.csr": 38
+      },
+      "v2_minus_stock": [
+        -180224,
+        0,
+        -24576
+      ],
+      "v2_percent": [
+        -0.733349476809365,
+        0.0,
+        -0.8135841001513553
+      ],
+      "voice_groups_in_4_callbacks": 4096,
+      "whole_guest_plugin_event_counts": {
+        "A": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            24575459,
+            6639287,
+            3020708
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 411136,
+          "stub_plus_plugin": [
+            24575479,
+            6639299,
+            3020712
+          ]
+        },
+        "A2": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            24575459,
+            6639287,
+            3020708
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 411136,
+          "stub_plus_plugin": [
+            24575479,
+            6639299,
+            3020712
+          ]
+        },
+        "C": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            24415715,
+            6639287,
+            2996132
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 251392,
+          "stub_plus_plugin": [
+            24415735,
+            6639299,
+            2996136
+          ]
+        },
+        "P": {
+          "batch_self_ir": 3624515,
+          "plugin_edge": [
+            30708459,
+            8297350,
+            3774766
+          ],
+          "route_inclusive": [
+            69985,
+            13890,
+            7200
+          ],
+          "smoother_self_ir": 513920,
+          "stub_plus_plugin": [
+            30708484,
+            8297365,
+            3774771
+          ]
+        },
+        "S": {
+          "batch_self_ir": 728783,
+          "plugin_edge": [
+            6133000,
+            1658063,
+            754058
+          ],
+          "route_inclusive": [
+            13997,
+            2778,
+            1440
+          ],
+          "smoother_self_ir": 102784,
+          "stub_plus_plugin": [
+            6133005,
+            1658066,
+            754059
+          ]
+        },
+        "V": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            24395235,
+            6639287,
+            2996132
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 230912,
+          "stub_plus_plugin": [
+            24395255,
+            6639299,
+            2996136
+          ]
+        }
+      },
+      "within_guest_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "9d8625d97c5b07973ec1a533aee87708545f91c312fb4e6179ada22773df7a95",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      },
+      "within_native_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "9d8625d97c5b07973ec1a533aee87708545f91c312fb4e6179ada22773df7a95",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "moving-eight": {
+      "candidate_minus_stock": [
+        53248,
+        4096,
+        0
+      ],
+      "candidate_percent": [
+        0.20817253111690262,
+        0.059218863289870985,
+        0.0
+      ],
+      "equal_bytes_within_each_runtime": 78992,
+      "group_hits": 0,
+      "guest_vs_native_differing_FP_fields": {
+        "after.csr": 38,
+        "before.csr": 38,
+        "next.csr": 38
+      },
+      "v2_minus_stock": [
+        20480,
+        0,
+        0
+      ],
+      "v2_percent": [
+        0.08006635812188563,
+        0.0,
+        0.0
+      ],
+      "voice_groups_in_4_callbacks": 4096,
+      "whole_guest_plugin_event_counts": {
+        "A": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            25578783,
+            6916715,
+            3090424
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 423424,
+          "stub_plus_plugin": [
+            25578803,
+            6916727,
+            3090428
+          ]
+        },
+        "A2": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            25578783,
+            6916715,
+            3090424
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 423424,
+          "stub_plus_plugin": [
+            25578803,
+            6916727,
+            3090428
+          ]
+        },
+        "C": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            25632031,
+            6920811,
+            3090424
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 476672,
+          "stub_plus_plugin": [
+            25632051,
+            6920823,
+            3090428
+          ]
+        },
+        "P": {
+          "batch_self_ir": 3624515,
+          "plugin_edge": [
+            31962614,
+            8644135,
+            3861911
+          ],
+          "route_inclusive": [
+            69985,
+            13890,
+            7200
+          ],
+          "smoother_self_ir": 529280,
+          "stub_plus_plugin": [
+            31962639,
+            8644150,
+            3861916
+          ]
+        },
+        "S": {
+          "batch_self_ir": 728783,
+          "plugin_edge": [
+            6383831,
+            1727420,
+            771487
+          ],
+          "route_inclusive": [
+            13997,
+            2778,
+            1440
+          ],
+          "smoother_self_ir": 105856,
+          "stub_plus_plugin": [
+            6383836,
+            1727423,
+            771488
+          ]
+        },
+        "V": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            25599263,
+            6916715,
+            3090424
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 443904,
+          "stub_plus_plugin": [
+            25599283,
+            6916727,
+            3090428
+          ]
+        }
+      },
+      "within_guest_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "3e8642cb3b51baf10ae8a88567b1c628ec453f9f3b227a6fcae99b71907a1388",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "e9a7cc2042cf335a3ab8abbfb8262d5d5f3e09af0bb3d27947949056bf8a5447",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      },
+      "within_native_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "bbef19e33fdea889645edd925d2408b016dffc4c035172df4a55167fbe3ae8cc",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "e9a7cc2042cf335a3ab8abbfb8262d5d5f3e09af0bb3d27947949056bf8a5447",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "moving-one": {
+      "candidate_minus_stock": [
+        -133120,
+        512,
+        -21504
+      ],
+      "candidate_percent": [
+        -0.522596467472433,
+        0.00741015298058207,
+        -0.697278977739213
+      ],
+      "equal_bytes_within_each_runtime": 78992,
+      "group_hits": 3584,
+      "guest_vs_native_differing_FP_fields": {
+        "after.csr": 38,
+        "before.csr": 38,
+        "next.csr": 38
+      },
+      "v2_minus_stock": [
+        -155136,
+        0,
+        -21504
+      ],
+      "v2_percent": [
+        -0.60902588324672,
+        0.0,
+        -0.697278977739213
+      ],
+      "voice_groups_in_4_callbacks": 4096,
+      "whole_guest_plugin_event_counts": {
+        "A": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            25472809,
+            6909439,
+            3083988
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 412672,
+          "stub_plus_plugin": [
+            25472829,
+            6909451,
+            3083992
+          ]
+        },
+        "A2": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            25472809,
+            6909439,
+            3083988
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 412672,
+          "stub_plus_plugin": [
+            25472829,
+            6909451,
+            3083992
+          ]
+        },
+        "C": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            25339689,
+            6909951,
+            3062484
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 279552,
+          "stub_plus_plugin": [
+            25339709,
+            6909963,
+            3062488
+          ]
+        },
+        "P": {
+          "batch_self_ir": 3624515,
+          "plugin_edge": [
+            31830328,
+            8635040,
+            3853866
+          ],
+          "route_inclusive": [
+            69985,
+            13890,
+            7200
+          ],
+          "smoother_self_ir": 515840,
+          "stub_plus_plugin": [
+            31830353,
+            8635055,
+            3853871
+          ]
+        },
+        "S": {
+          "batch_self_ir": 728783,
+          "plugin_edge": [
+            6357519,
+            1725601,
+            769878
+          ],
+          "route_inclusive": [
+            13997,
+            2778,
+            1440
+          ],
+          "smoother_self_ir": 103168,
+          "stub_plus_plugin": [
+            6357524,
+            1725604,
+            769879
+          ]
+        },
+        "V": {
+          "batch_self_ir": 2895732,
+          "plugin_edge": [
+            25317673,
+            6909439,
+            3062484
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 257536,
+          "stub_plus_plugin": [
+            25317693,
+            6909451,
+            3062488
+          ]
+        }
+      },
+      "within_guest_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "bc71e1ac1bea199243f28014671f4426b15f7a5098f29cb56b82838b47bbb678",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "47749ace36ee73200ed82d3433919fc7138748ba896fc9eddc49bf1cdb722c59",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      },
+      "within_native_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "1069ef876ca3111be91387c5a9963957b22fb1a006e948829b5ac5556345b91e",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "47749ace36ee73200ed82d3433919fc7138748ba896fc9eddc49bf1cdb722c59",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "varied-held-short": {
+      "candidate_minus_stock": [
+        -159744,
+        0,
+        -24576
+      ],
+      "candidate_percent": [
+        -0.6453665747107639,
+        0.0,
+        -0.8133223901935347
+      ],
+      "equal_bytes_within_each_runtime": 78992,
+      "group_hits": 4096,
+      "guest_vs_native_differing_FP_fields": {
+        "after.csr": 38,
+        "before.csr": 38,
+        "next.csr": 38
+      },
+      "v2_minus_stock": [
+        -180224,
+        0,
+        -24576
+      ],
+      "v2_percent": [
+        -0.7281058791608619,
+        0.0,
+        -0.8133223901935347
+      ],
+      "voice_groups_in_4_callbacks": 4096,
+      "whole_guest_plugin_event_counts": {
+        "A": {
+          "batch_self_ir": 2896799,
+          "plugin_edge": [
+            24752444,
+            6665069,
+            3021680
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 411136,
+          "stub_plus_plugin": [
+            24752464,
+            6665081,
+            3021684
+          ]
+        },
+        "A2": {
+          "batch_self_ir": 2896799,
+          "plugin_edge": [
+            24752444,
+            6665069,
+            3021680
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 411136,
+          "stub_plus_plugin": [
+            24752464,
+            6665081,
+            3021684
+          ]
+        },
+        "C": {
+          "batch_self_ir": 2896799,
+          "plugin_edge": [
+            24592700,
+            6665069,
+            2997104
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 251392,
+          "stub_plus_plugin": [
+            24592720,
+            6665081,
+            2997108
+          ]
+        },
+        "P": {
+          "batch_self_ir": 3624612,
+          "plugin_edge": [
+            30933322,
+            8330624,
+            3776146
+          ],
+          "route_inclusive": [
+            69985,
+            13890,
+            7200
+          ],
+          "smoother_self_ir": 513920,
+          "stub_plus_plugin": [
+            30933347,
+            8330639,
+            3776151
+          ]
+        },
+        "S": {
+          "batch_self_ir": 727813,
+          "plugin_edge": [
+            6180878,
+            1665555,
+            754466
+          ],
+          "route_inclusive": [
+            13997,
+            2778,
+            1440
+          ],
+          "smoother_self_ir": 102784,
+          "stub_plus_plugin": [
+            6180883,
+            1665558,
+            754467
+          ]
+        },
+        "V": {
+          "batch_self_ir": 2896799,
+          "plugin_edge": [
+            24572220,
+            6665069,
+            2997104
+          ],
+          "route_inclusive": [
+            55988,
+            11112,
+            5760
+          ],
+          "smoother_self_ir": 230912,
+          "stub_plus_plugin": [
+            24572240,
+            6665081,
+            2997108
+          ]
+        }
+      },
+      "within_guest_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "f68017674f9ebdf86a0a28d4f28910b4bb699ef96f1210a09b0cb4f4fa3197ee",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      },
+      "within_native_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "f68017674f9ebdf86a0a28d4f28910b4bb699ef96f1210a09b0cb4f4fa3197ee",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "varied-wake-short": {
+      "candidate_minus_stock": [
+        -159728,
+        -16,
+        -24576
+      ],
+      "candidate_percent": [
+        -0.4828214756046959,
+        -0.00018197877808984612,
+        -0.6059211932623811
+      ],
+      "equal_bytes_within_each_runtime": 78992,
+      "group_hits": 4096,
+      "guest_vs_native_differing_FP_fields": {
+        "after.csr": 38,
+        "before.csr": 38,
+        "next.csr": 38
+      },
+      "v2_minus_stock": [
+        -180192,
+        -8,
+        -24576
+      ],
+      "v2_percent": [
+        -0.5446795009776706,
+        -9.098938904492306e-05,
+        -0.6059211932623811
+      ],
+      "voice_groups_in_4_callbacks": 4096,
+      "whole_guest_plugin_event_counts": {
+        "A": {
+          "batch_self_ir": 2940158,
+          "plugin_edge": [
+            33082207,
+            8792234,
+            4055973
+          ],
+          "route_inclusive": [
+            55268,
+            10946,
+            5696
+          ],
+          "smoother_self_ir": 411184,
+          "stub_plus_plugin": [
+            33082227,
+            8792246,
+            4055977
+          ]
+        },
+        "A2": {
+          "batch_self_ir": 2940158,
+          "plugin_edge": [
+            33082207,
+            8792234,
+            4055973
+          ],
+          "route_inclusive": [
+            55268,
+            10946,
+            5696
+          ],
+          "smoother_self_ir": 411184,
+          "stub_plus_plugin": [
+            33082227,
+            8792246,
+            4055977
+          ]
+        },
+        "C": {
+          "batch_self_ir": 2940158,
+          "plugin_edge": [
+            32922479,
+            8792218,
+            4031397
+          ],
+          "route_inclusive": [
+            55268,
+            10946,
+            5696
+          ],
+          "smoother_self_ir": 251456,
+          "stub_plus_plugin": [
+            32922499,
+            8792230,
+            4031401
+          ]
+        },
+        "P": {
+          "batch_self_ir": 3677574,
+          "plugin_edge": [
+            39431975,
+            10492027,
+            4826330
+          ],
+          "route_inclusive": [
+            69265,
+            13724,
+            7136
+          ],
+          "smoother_self_ir": 513968,
+          "stub_plus_plugin": [
+            39432000,
+            10492042,
+            4826335
+          ]
+        },
+        "S": {
+          "batch_self_ir": 737416,
+          "plugin_edge": [
+            6349768,
+            1699793,
+            770357
+          ],
+          "route_inclusive": [
+            13997,
+            2778,
+            1440
+          ],
+          "smoother_self_ir": 102784,
+          "stub_plus_plugin": [
+            6349773,
+            1699796,
+            770358
+          ]
+        },
+        "V": {
+          "batch_self_ir": 2940158,
+          "plugin_edge": [
+            32902015,
+            8792226,
+            4031397
+          ],
+          "route_inclusive": [
+            55268,
+            10946,
+            5696
+          ],
+          "smoother_self_ir": 230992,
+          "stub_plus_plugin": [
+            32902035,
+            8792238,
+            4031401
+          ]
+        }
+      },
+      "within_guest_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "c6413108fd8df193b5d8b0620b8f945062ccbbc1dd7dfa7280920615aa64aa97",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "5b91e50a060d8b408d6fb8c5bda314a6d6b9ad5c2b0e8a179bc36d3585b4d865",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      },
+      "within_native_sha256": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "fb73e07cd7bfb7a6c0da659948bfbdfb64edc63dea3c615946c9d228407e0895",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "5b91e50a060d8b408d6fb8c5bda314a6d6b9ad5c2b0e8a179bc36d3585b4d865",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    }
+  }
+}

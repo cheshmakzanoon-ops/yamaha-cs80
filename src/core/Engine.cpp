@@ -4,6 +4,7 @@
 #include "UniformSourceCutoff.h"
 
 #include <algorithm>
+#include <bit>
 #include <cmath>
 
 namespace cs80
@@ -2507,6 +2508,23 @@ void Engine::beginSmoothedControls() noexcept
             c.pressure[(size_t) vi].snap(v.pressure);
             c.mpeBend[(size_t) vi].snap(v.mpeBend);
             c.timbre[(size_t) vi].snap(v.timbre);
+        }
+        // These three controls are often unused. Only raw positive zero in
+        // all six inputs qualifies, never negative zero, a subnormal, or a
+        // trajectory still returning to zero. The engine's k is finite normal.
+        // Stock arithmetic then has exact zero operands/results throughout,
+        // except for 1e-9 * 1 (also exact), and explicitly snaps to +0.
+        const auto slot = static_cast<std::size_t>(vi);
+        const auto targetBits = std::bit_cast<std::uint32_t>(v.pressure)
+                              | std::bit_cast<std::uint32_t>(v.mpeBend)
+                              | std::bit_cast<std::uint32_t>(v.timbre);
+        if (targetBits == 0)
+        {
+            const auto stateBits = std::bit_cast<std::uint64_t>(c.pressure[slot].value())
+                                 | std::bit_cast<std::uint64_t>(c.mpeBend[slot].value())
+                                 | std::bit_cast<std::uint64_t>(c.timbre[slot].value());
+            if (stateBits == 0)
+                continue;
         }
         v.pressure = (float) c.pressure[(size_t) vi].advance(v.pressure, k);
         v.mpeBend = (float) c.mpeBend[(size_t) vi].advance(v.mpeBend, k);
