@@ -1,0 +1,75 @@
+{
+  "linux_x86_64_GCC14_2": true,
+  "ELF": {
+    "stock": {
+      "sha256": "6b5aa28e3cb31381b21068790e549a09eb7b5a2fe7052f65015da375e10e92d3",
+      "symbol_ranges": [
+        10037024,
+        12041,
+        10033792,
+        3232,
+        10028336,
+        5437
+      ]
+    },
+    "candidate": {
+      "sha256": "755ce5cd20a0228fd5c4b2c0772c1d6967d7e6898a158fc2e2554564dfd34b1d",
+      "symbol_ranges": [
+        10037088,
+        12041,
+        10033856,
+        3232,
+        10028400,
+        5437
+      ]
+    }
+  },
+  "tests": {
+    "exception-stock": {
+      "exit": 0,
+      "lines": [
+        "pairs=17472 trapped_pairs=3180 returned_pairs=14292 object_mismatch=0 result_flags_errno_mismatch=0 continued_pairs=34944 continuation_mismatch=0",
+        "stock_trap_by_mask none=0 invalid=384 denormal=192 divzero=0 overflow=28 underflow=80 inexact=2496",
+        "stock_terminal_fault_pcs elapsed=0 saw=0 pulse=0 sine=0",
+        "stock_sigfpe_code4=28",
+        "stock_sigfpe_code5=272",
+        "stock_sigfpe_code6=2496",
+        "stock_sigfpe_code7=384"
+      ]
+    },
+    "exception-candidate": {
+      "exit": 0,
+      "lines": [
+        "pairs=17472 trapped_pairs=3180 returned_pairs=14292 object_mismatch=0 result_flags_errno_mismatch=0 continued_pairs=34944 continuation_mismatch=0",
+        "stock_trap_by_mask none=0 invalid=384 denormal=192 divzero=0 overflow=28 underflow=80 inexact=2496",
+        "stock_terminal_fault_pcs elapsed=0 saw=0 pulse=0 sine=0",
+        "stock_sigfpe_code4=28",
+        "stock_sigfpe_code5=272",
+        "stock_sigfpe_code6=2496",
+        "stock_sigfpe_code7=384"
+      ]
+    },
+    "event-stock": {
+      "exit": 0,
+      "lines": [
+        "scene=0 expected_event=8 returned=10994 trap_in_tick=1944 trap_in_record=558 trap_in_search=0 trap_other=0 record_trap_after_residual_change=542",
+        "scene=1 expected_event=1 returned=10722 trap_in_tick=1930 trap_in_record=844 trap_in_search=0 trap_other=0 record_trap_after_residual_change=826",
+        "scene=2 expected_event=1 returned=10744 trap_in_tick=1930 trap_in_record=822 trap_in_search=0 trap_other=0 record_trap_after_residual_change=804",
+        "scene=3 expected_event=2 returned=11270 trap_in_tick=1962 trap_in_record=264 trap_in_search=0 trap_other=0 record_trap_after_residual_change=248",
+        "scene=4 expected_event=4 returned=11256 trap_in_tick=1962 trap_in_record=278 trap_in_search=0 trap_other=0 record_trap_after_residual_change=260",
+        "pairs=67480 trapped_pairs=12494 two_step_continued_pairs=134960 record_trap_with_partial_residual=2680 failures=0"
+      ]
+    },
+    "event-candidate": {
+      "exit": 0,
+      "lines": [
+        "scene=0 expected_event=8 returned=10994 trap_in_tick=1944 trap_in_record=558 trap_in_search=0 trap_other=0 record_trap_after_residual_change=542",
+        "scene=1 expected_event=1 returned=10722 trap_in_tick=1930 trap_in_record=844 trap_in_search=0 trap_other=0 record_trap_after_residual_change=826",
+        "scene=2 expected_event=1 returned=10744 trap_in_tick=1930 trap_in_record=822 trap_in_search=0 trap_other=0 record_trap_after_residual_change=804",
+        "scene=3 expected_event=2 returned=11270 trap_in_tick=1962 trap_in_record=264 trap_in_search=0 trap_other=0 record_trap_after_residual_change=248",
+        "scene=4 expected_event=4 returned=11256 trap_in_tick=1962 trap_in_record=278 trap_in_search=0 trap_other=0 record_trap_after_residual_change=260",
+        "pairs=67480 trapped_pairs=12494 two_step_continued_pairs=134960 record_trap_with_partial_residual=2680 failures=0"
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "exact": {
+    "exit": 0,
+    "summary": "pairs=114688 checks=573467 failures=0 admitted=88846 total=114688",
+    "first": []
+  },
+  "wrong-key": {
+    "exit": 1,
+    "summary": "pairs=114688 checks=573467 failures=163005 admitted=93493 total=114688",
+    "first": [
+      "FAIL continuation scene=2 i=3",
+      "FAIL continuation scene=2 i=4"
+    ]
+  },
+  "skip-clean-bound": {
+    "exit": 0,
+    "summary": "pairs=114688 checks=573467 failures=0 admitted=88846 total=114688",
+    "first": []
+  }
+}

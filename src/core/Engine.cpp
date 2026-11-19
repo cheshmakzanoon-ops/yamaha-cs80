@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "EngineWscHeld.h"
 #include "RingModulatorCircuit.h"
 #include "EngineOutputFir.cpp.inc"
 #include "UniformSourceCutoff.h"
@@ -2995,7 +2996,13 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 wscControls.pulseThresholdVolts = ReconstructedOscillator::panelThresholdVoltsInferred(pw);
                 wscControls.sawEnabled = rs.saw;
                 wscControls.pulseEnabled = rs.pulse;
+#if CS80_WSC_BORROW_HELD
+                const auto pins = sourceActive[ch] && EngineWscHeldAccess::canBorrow(r.wsc, freq, wscControls)
+                    ? EngineWscHeldAccess::run(r.wsc, freq)
+                    : r.wsc.tick(freq, wscControls);
+#else
                 const auto pins = r.wsc.tick(freq, wscControls);
+#endif
                 sawPulse = voice_continuity::sawPulseUnits(pins);
                 sineWave = static_cast<float>(pins.sinePin2 * kWscEngineUnitsPerVolt);
             }

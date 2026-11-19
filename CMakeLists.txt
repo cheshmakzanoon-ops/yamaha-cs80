@@ -13,9 +13,13 @@ option(CS80_ENABLE_AVX2_FILTER_BATCH "Enable runtime-dispatched exact GCC AVX2 s
 
 add_library(cs80_core STATIC
     src/core/Engine.cpp
+    src/core/EngineWscHeld.cpp
     src/core/FactoryPresets.cpp
     src/core/Ig00156Batch.cpp
 )
+# Only these two linked translation units may use the optional held-WSC entry.
+# Standalone Engine.cpp consumers keep the scalar path without an extra link dependency.
+set_property(SOURCE src/core/Engine.cpp src/core/EngineWscHeld.cpp APPEND PROPERTY COMPILE_DEFINITIONS CS80_ENABLE_BORROWED_HELD=1)
 # Do not alter the existing scalar arithmetic contract. The optional AVX2
 # function is isolated; dispatch and every unsupported build remain baseline ISA.
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -49,6 +53,10 @@ if (CS80_BUILD_TESTS)
         target_compile_options(cs80_tests PRIVATE -Wall -Wextra)
     endif()
     enable_testing()
+    add_executable(cs80_wsc_held_endpoint_tests tests/WscHeldEndpointTests.cpp)
+    target_link_libraries(cs80_wsc_held_endpoint_tests PRIVATE cs80_core)
+    target_compile_definitions(cs80_wsc_held_endpoint_tests PRIVATE CS80_ENABLE_BORROWED_HELD=1)
+    add_test(NAME cs80_wsc_held_endpoint_tests COMMAND cs80_wsc_held_endpoint_tests)
     add_executable(cs80_legacy_sub_lfo_oracle_tests tests/LegacySubLfoOracleTests.cpp)
     target_link_libraries(cs80_legacy_sub_lfo_oracle_tests PRIVATE cs80_core)
     add_test(NAME cs80_legacy_sub_lfo_oracle_tests COMMAND cs80_legacy_sub_lfo_oracle_tests)

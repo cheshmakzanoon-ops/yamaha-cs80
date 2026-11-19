@@ -1,0 +1,21 @@
+{
+  "exact": {
+    "exit": 0,
+    "summary": "populations=54 pairs=8640 checks=75816 failures=0 admits=2592 refusals=6048 checked_bounds=2592 accrued_inexact=2592 clean_to_dirty=1296",
+    "first": []
+  },
+  "skip-clean-bound": {
+    "exit": 1,
+    "summary": "populations=54 pairs=8640 checks=75816 failures=1296 admits=2592 refusals=6048 checked_bounds=2592 accrued_inexact=2592 clean_to_dirty=1296",
+    "first": [
+      "FAIL checkpoint: skipped stock bound FP flags scene=1 i=0",
+      "FAIL checkpoint: skipped stock bound FP flags scene=1 i=0",
+      "FAIL checkpoint: skipped stock bound FP flags scene=1 i=0",
+      "FAIL checkpoint: skipped stock bound FP flags scene=1 i=0",
+      "FAIL checkpoint: skipped stock bound FP flags scene=1 i=0",
+      "FAIL checkpoint: skipped stock bound FP flags scene=1 i=0",
+      "FAIL checkpoint: skipped stock bound FP flags scene=1 i=0",
+      "FAIL checkpoint: skipped stock bound FP flags scene=1 i=0"
+    ]
+  }
+}
