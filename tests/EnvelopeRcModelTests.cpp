@@ -152,10 +152,72 @@ void filterEnvelopeContinuesOnReuse()
     // Legacy keeps its historical reset; that path is pinned byte-for-byte by
     // the legacy-compatibility probe rather than asserted here.
 }
+
+// All factory filter receivers continue to clock, and active amplitude envelopes
+// retain independent clocks. Unequal onsets, release and two source ranks
+// catch a shortcut which advances an RC by the wrong interval or copies time
+// from a neighbouring lane. A transition can reset elapsed and is not tested
+// against the uninterrupted increment.
+void independentFactoryEnvelopeClocks()
+{
+    for (double hz : { 44100.0, 48000.0, 96000.0 })
+    {
+        Engine engine;
+        engine.prepare(hz);
+        ControlFrame frame;
+        auto& values = frame.effectiveValues;
+        values[P_sourcePerformance] = 1.0f;
+        values[P_parityMode] = values[P_voiceMode] = values[P_arpOn] = values[P_kasScanTiming] = 0.0f;
+        frame.hardwareSources[0] = frame.hardwareSources[1] = 0;
+        check(engine.setControlFrame(frame), "factory clock frame is accepted");
+        engine.reset();
+        std::array<std::array<Engine::RankEnvelopeState, 2>, 8> prior {};
+        std::array<bool, 8> started {};
+        int amplitudeSamples = 0, filterSamples = 0, unequalOnsets = 0;
+        const double expected = 1.0 / hz;
+        auto checkStep = [&](auto before, auto after, int& observations, const char* message) {
+            if (before.stage != after.stage) return;
+            const double delta = static_cast<double>(after.elapsed) - before.elapsed;
+            // Each published endpoint is a float; the shorter of these fixtures
+            // lasts <6 ms, where two endpoint roundings cost <1.0e-9 s.
+            check(std::abs(delta - expected) < 1.0e-9, message);
+            ++observations;
+        };
+        for (int frameIndex = 0; frameIndex < 256; ++frameIndex)
+        {
+            if (frameIndex % 11 == 0 && frameIndex / 11 < 8)
+            {
+                const int lane = frameIndex / 11;
+                engine.noteOn(48 + lane, 0.5f + 0.05f * static_cast<float>(lane));
+                started[lane] = true;
+            }
+            if (frameIndex == 143) engine.noteOff(51);
+            for (int v = 0; v < 8; ++v)
+                for (int rank = 0; rank < 2; ++rank)
+                    prior[v][rank] = engine.getRankEnvelopeState(v, rank);
+            float stereo[2] {};
+            engine.render(stereo, 1);
+            for (int v = 0; v < 8; ++v)
+                for (int rank = 0; rank < 2; ++rank)
+                {
+                    const auto next = engine.getRankEnvelopeState(v, rank);
+                    checkStep(prior[v][rank].filter, next.filter, filterSamples, "factory receiver clock");
+                    if (started[v] && next.amplitude.stage != Adsr::Stage::Idle)
+                        checkStep(prior[v][rank].amplitude, next.amplitude, amplitudeSamples, "active rank amplitude clock");
+                }
+            if (frameIndex > 80 && engine.getRankEnvelopeState(0, 0).amplitude.elapsed
+                                    != engine.getRankEnvelopeState(7, 0).amplitude.elapsed)
+                ++unequalOnsets;
+        }
+        check(filterSamples > 3900 && amplitudeSamples > 3000 && unequalOnsets > 50,
+              "clock test covers both source ranks and distinguishable started voices");
+    }
+}
 } // namespace
 
 int main()
 {
+    independentFactoryEnvelopeClocks();
     attackReachesPeakAtT();
     attackIsConcaveCharge();
     settleIsMinus60dBAtT();

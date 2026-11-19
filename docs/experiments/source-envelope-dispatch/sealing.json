@@ -1,0 +1,46 @@
+{
+  "base": "4b442e17e2ba901b590fc5638618aaaf17ac07fa",
+  "patch": "358f2acc427d5b8d26f54a0947fffb03127bf31248139651829e5df7f1ae094a",
+  "files": {
+    "src/core/Engine.cpp": "5a2346e225318de9def085f3e5d41509ae1feb780a89603f325b2b5fedb73fc1",
+    "src/core/Dsp.h": "52bd77661cc7e969dc731d9ff6f4e1195343ff4c13423a5ff2dbc5e6cb440b99",
+    "src/core/AdsrRcReconstruction.inc": "5f20c167a9f4b24d050117ecf721fae1acba3942494b645a70f26b0e5aabbaf2",
+    "src/core/FilterEnvRcReconstruction.inc": "648e22701eb70b449625a43131938d1ae5a0e9bff19a783100f37aadda71c530"
+  },
+  "unchanged_source_blobs": 3,
+  "objects": {
+    "default": {
+      "compiler": "GCC 14.2 GNU/Linux x86-64",
+      "flags": [
+        "-O3"
+      ],
+      "same_as": "already qualified candidate object",
+      "sha256": "ed509996d64086b80b0bfd8d931391e32c1b362d0a0f04f369d86295d628e056"
+    },
+    "scalar": {
+      "compiler": "GCC 14.2 GNU/Linux x86-64",
+      "flags": [
+        "-O3",
+        "-DCS80_DISABLE_AVX2_FILTER_BATCH=1"
+      ],
+      "same_as": "already qualified candidate object",
+      "sha256": "c5785887630306abe55835d5a9b7d01cc5760271c05ba6360aac838c67d23495"
+    },
+    "Debug": {
+      "compiler": "GCC 14.2 GNU/Linux x86-64",
+      "flags": [
+        "-O0"
+      ],
+      "same_as": "published stock object for the same flags",
+      "sha256": "c46819de5a38fcc81a0fb4268549388c9a1dc3c77f0b39f9367d42e9099f0640"
+    },
+    "size": {
+      "compiler": "GCC 14.2 GNU/Linux x86-64",
+      "flags": [
+        "-Os"
+      ],
+      "same_as": "published stock object for the same flags",
+      "sha256": "b3e041fa235f345e70bc7bdbba1f480c23101743f8cd9b78f1a0e0e38020f461"
+    }
+  }
+}

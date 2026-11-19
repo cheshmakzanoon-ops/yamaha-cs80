@@ -7,6 +7,48 @@
 #include <bit>
 #include <cmath>
 
+// This optional call specialization is internal to Engine.cpp. It does not
+// change either envelope, its arithmetic or its clock. Even a source-only
+// call through tick() emits a combined legacy/reconstruction dispatcher on
+// the qualified build. Inline the existing reconstruction member only under
+// the environment checked below. Unmasked exceptions can expose the order in
+// which the compiler commits the tick's intermediate state.
+#if defined(__OPTIMIZE__) && !defined(__OPTIMIZE_SIZE__) \
+    && defined(__linux__) && defined(__x86_64__) && defined(__GNUC__) && defined(__SSE2_MATH__) \
+    && !defined(__clang__) && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) \
+    && !defined(__NVCOMPILER) && !defined(__PGI) && !defined(__ibmxl__) && !defined(_MSC_VER) \
+    && !defined(__AVX__) && !defined(__FMA__) && !defined(__FMA4__) && !defined(__FP_FAST_FMA) \
+    && !defined(__FP_FAST_FMAF) && !defined(__FAST_MATH__) && !defined(__ASSOCIATIVE_MATH__) \
+    && !defined(__RECIPROCAL_MATH__) && !defined(__NO_SIGNED_ZEROS__) && !defined(__NO_TRAPPING_MATH__) \
+    && !defined(__NO_MATH_ERRNO__) && !defined(__ROUNDING_MATH__) && !defined(__SUPPORT_SNAN__) \
+    && (!defined(__FINITE_MATH_ONLY__) || __FINITE_MATH_ONLY__ == 0) \
+    && defined(__FLT_EVAL_METHOD__) && __FLT_EVAL_METHOD__ == 0 && !defined(CS80_DISABLE_INLINE_RC_ENVELOPES)
+#include <xmmintrin.h>
+#define CS80_ENGINE_INLINE_RC_ENVELOPES 1
+namespace cs80 {
+struct EngineRcAccess
+{
+    static inline bool admitted() noexcept
+    {
+        const unsigned mx = _mm_getcsr();
+        unsigned short cw;
+        asm volatile("fnstcw %0" : "=m"(cw) :: "memory");
+        return (mx & 0x7f80u) == 0x1f80u && (cw & 0x0f3fu) == 0x033fu;
+    }
+
+    // The reconstruction path deliberately ignores the legacy bend argument.
+    // There is no duplicate RC equation, coefficient cache or stage shortcut.
+    template<class Envelope>
+    static __attribute__((always_inline)) inline float tick(Envelope& env, float rate) noexcept
+    {
+        return env.tickRcWithStep(rate, 1.0 / static_cast<double>(rate));
+    }
+};
+} // namespace cs80
+#else
+#define CS80_ENGINE_INLINE_RC_ENVELOPES 0
+#endif
+
 namespace cs80
 {
 
@@ -876,6 +918,9 @@ float Engine::filterAttackTarget(int rank) const noexcept
 
 void Engine::updateSourceReadouts(float sampleRate) noexcept
 {
+#if CS80_ENGINE_INLINE_RC_ENVELOPES
+    const bool inlineRc = EngineRcAccess::admitted();
+#endif
     source_factory::BothRankDrives drives {};
     for (int rank = 0; rank < kNumRanks; ++rank)
         for (int voice = 0; voice < kNumVoices; ++voice)
@@ -897,7 +942,12 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
                     fenv.noteOff();
             }
             const float z = sourceActive[rank]
-                ? fenv.tick(sampleRate, true, true) : fenv.getValue();
+#if CS80_ENGINE_INLINE_RC_ENVELOPES
+                ? (inlineRc ? EngineRcAccess::tick(fenv, sampleRate) : fenv.tick(sampleRate, true, true))
+#else
+                ? fenv.tick(sampleRate, true, true)
+#endif
+                : fenv.getValue();
             sourceFilterValues[rank][voice] = z;
             // Continuous control-state inference: a source-selected filter EG
             // continues to relax after VCA retirement, avoiding a permanently
@@ -2616,6 +2666,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     updateArpeggiator(invSr);
     // Circuit engine: smoothed settings and controllers for this sample.
     const bool smoothControls = usesSourceModels(global.renderPolicy);
+#if CS80_ENGINE_INLINE_RC_ENVELOPES
+    const bool inlineRc = smoothControls && EngineRcAccess::admitted();
+#endif
     if (smoothControls)
         beginSmoothedControls();
 
@@ -3068,7 +3121,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                                              + contourLevel
                                              + mod.level,
                                          0.0f, 2.6f));
-            const float amp = r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
+            const float amp =
+#if CS80_ENGINE_INLINE_RC_ENVELOPES
+                inlineRc ? EngineRcAccess::tick(r.aenv, sr) :
+#endif
+                r.aenv.tick(sr, true, usesSourceModels(global.renderPolicy));
             r.info = { cutoffHp, cutoffLp, fenv, amp, freq, keyVolts, qHp, qLp, rs.hpfOn, rs.lpfOn };
             const float chGain = ch == 0 ? (1.0f - global.mix) : global.mix;
 #if CS80_IG00156_EXACT_BATCH_BUILD
@@ -3182,7 +3239,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
 
     // Ring AD controls oscillator FREQUENCY. Keep it clocking while bypassed
     // so enabling MODULATION does not resurrect a frozen envelope.
-    ringEnv = ringAdsr.tick(sr, false, usesSourceModels(global.renderPolicy));
+    ringEnv =
+#if CS80_ENGINE_INLINE_RC_ENVELOPES
+        inlineRc ? EngineRcAccess::tick(ringAdsr, sr) :
+#endif
+        ringAdsr.tick(sr, false, usesSourceModels(global.renderPolicy));
     // Circuit engine: ADJ p19-anchored exponential converter and offset multiplier
     // (RingModulatorCircuit.h, ws4-circuits.md Step 2). Legacy: provisional law, ideal multiply.
     ringFrequency = clampf(usesSourceModels(global.renderPolicy)
@@ -3485,3 +3546,5 @@ Engine::OutputTapState Engine::getOutputTapState(int tap) const noexcept
 }
 
 } // namespace cs80
+
+#undef CS80_ENGINE_INLINE_RC_ENVELOPES

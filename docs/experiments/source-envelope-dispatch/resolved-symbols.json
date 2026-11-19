@@ -1,0 +1,160 @@
+{
+  "stock": {
+    "_ZN4cs8023ReconstructedOscillator4tickEdRKNS_11WscControlsE": {
+      "stock_object": "8ad3a8c28d9c5aefedfb197f898da8fc02f14bcac54d64e673edc36d852a7934",
+      "candidate_object": "ed509996d64086b80b0bfd8d931391e32c1b362d0a0f04f369d86295d628e056",
+      "identical_text_bytes": 12041,
+      "text_sha256": "987527fac15fe37ac0b561082e48229b7789856757c398f6ce790ea0bfd1ec97",
+      "normalized_relocations": 136,
+      "normalized_operand_digest": "a49d1afc6a36e1adad5104221930971ef9072df888e70e2f514db103418d8c68",
+      "stock_section_relative": [
+        {
+          "site": 972,
+          "section": ".text",
+          "raw_addend": 4700,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        },
+        {
+          "site": 7720,
+          "section": ".text",
+          "raw_addend": 4700,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        },
+        {
+          "site": 11279,
+          "section": ".text",
+          "raw_addend": 4700,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        },
+        {
+          "site": 11416,
+          "section": ".text",
+          "raw_addend": 4700,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        }
+      ],
+      "candidate_section_relative": [
+        {
+          "site": 972,
+          "section": ".text",
+          "raw_addend": 4796,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        },
+        {
+          "site": 7720,
+          "section": ".text",
+          "raw_addend": 4796,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        },
+        {
+          "site": 11279,
+          "section": ".text",
+          "raw_addend": 4796,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        },
+        {
+          "site": 11416,
+          "section": ".text",
+          "raw_addend": 4796,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        }
+      ]
+    },
+    "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0": {
+      "stock_object": "8ad3a8c28d9c5aefedfb197f898da8fc02f14bcac54d64e673edc36d852a7934",
+      "candidate_object": "ed509996d64086b80b0bfd8d931391e32c1b362d0a0f04f369d86295d628e056",
+      "identical_text_bytes": 1395,
+      "text_sha256": "d0f04d29e9eea16fb958557da8b4044b2feaceaa29be40ed0659cade57f6be7f",
+      "normalized_relocations": 20,
+      "normalized_operand_digest": "18fc2369262397cc6de68f9be4169ab390c79e33fc588e2f3f4c03a8f5876dae",
+      "stock_section_relative": [],
+      "candidate_section_relative": []
+    },
+    "_ZN4cs804Adsr4tickEfbb": {
+      "stock_object": "8ad3a8c28d9c5aefedfb197f898da8fc02f14bcac54d64e673edc36d852a7934",
+      "candidate_object": "ed509996d64086b80b0bfd8d931391e32c1b362d0a0f04f369d86295d628e056",
+      "identical_text_bytes": 2147,
+      "text_sha256": "fd8d7057b32b0a409c55667dc2fb640e3d38cb45e919ea14173dd1ae5b0d1697",
+      "normalized_relocations": 56,
+      "normalized_operand_digest": "aff48206cdd89ef43d1587007fc9051820665783ac1cecb316d998c1efd06a2c",
+      "stock_section_relative": [],
+      "candidate_section_relative": []
+    },
+    "_ZN4cs809FilterEnv4tickEfbb": {
+      "stock_object": "8ad3a8c28d9c5aefedfb197f898da8fc02f14bcac54d64e673edc36d852a7934",
+      "candidate_object": "ed509996d64086b80b0bfd8d931391e32c1b362d0a0f04f369d86295d628e056",
+      "identical_text_bytes": 2836,
+      "text_sha256": "83151f32b85d1a4a3d3dbeaba6820ce3a1ff8b018d0bbc6d0394486968f0fe61",
+      "normalized_relocations": 63,
+      "normalized_operand_digest": "42b05be807a47368a8e08f369332bd7f29f31cf79bc1dfe4fb46894e2bad4e36",
+      "stock_section_relative": [],
+      "candidate_section_relative": []
+    }
+  },
+  "scalarstock": {
+    "_ZN4cs8023ReconstructedOscillator4tickEdRKNS_11WscControlsE": {
+      "stock_object": "5128655534c16cf5b529d72d4ab351ef2373fdbb3ef8d6e8b263332bd6ee37be",
+      "candidate_object": "c5785887630306abe55835d5a9b7d01cc5760271c05ba6360aac838c67d23495",
+      "identical_text_bytes": 16174,
+      "text_sha256": "5620f7a39d6ed1694040064d96dac89c89bb49dc88b2192cc63b66da70d10afa",
+      "normalized_relocations": 215,
+      "normalized_operand_digest": "ffbb5c445905344f90cc485bdb95fe28f459f26ab6112fab19993dfe3e0ea2a1",
+      "stock_section_relative": [
+        {
+          "site": 13234,
+          "section": ".text",
+          "raw_addend": 2268,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        }
+      ],
+      "candidate_section_relative": [
+        {
+          "site": 13234,
+          "section": ".text",
+          "raw_addend": 2268,
+          "resolved_symbol": "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0",
+          "callee_offset": 0
+        }
+      ]
+    },
+    "_ZNK4cs8023ReconstructedOscillator5nodesEi.constprop.0": {
+      "stock_object": "5128655534c16cf5b529d72d4ab351ef2373fdbb3ef8d6e8b263332bd6ee37be",
+      "candidate_object": "c5785887630306abe55835d5a9b7d01cc5760271c05ba6360aac838c67d23495",
+      "identical_text_bytes": 1395,
+      "text_sha256": "d0f04d29e9eea16fb958557da8b4044b2feaceaa29be40ed0659cade57f6be7f",
+      "normalized_relocations": 20,
+      "normalized_operand_digest": "18fc2369262397cc6de68f9be4169ab390c79e33fc588e2f3f4c03a8f5876dae",
+      "stock_section_relative": [],
+      "candidate_section_relative": []
+    },
+    "_ZN4cs804Adsr4tickEfbb": {
+      "stock_object": "5128655534c16cf5b529d72d4ab351ef2373fdbb3ef8d6e8b263332bd6ee37be",
+      "candidate_object": "c5785887630306abe55835d5a9b7d01cc5760271c05ba6360aac838c67d23495",
+      "identical_text_bytes": 2147,
+      "text_sha256": "fd8d7057b32b0a409c55667dc2fb640e3d38cb45e919ea14173dd1ae5b0d1697",
+      "normalized_relocations": 56,
+      "normalized_operand_digest": "aff48206cdd89ef43d1587007fc9051820665783ac1cecb316d998c1efd06a2c",
+      "stock_section_relative": [],
+      "candidate_section_relative": []
+    },
+    "_ZN4cs809FilterEnv4tickEfbb": {
+      "stock_object": "5128655534c16cf5b529d72d4ab351ef2373fdbb3ef8d6e8b263332bd6ee37be",
+      "candidate_object": "c5785887630306abe55835d5a9b7d01cc5760271c05ba6360aac838c67d23495",
+      "identical_text_bytes": 2836,
+      "text_sha256": "83151f32b85d1a4a3d3dbeaba6820ce3a1ff8b018d0bbc6d0394486968f0fe61",
+      "normalized_relocations": 63,
+      "normalized_operand_digest": "42b05be807a47368a8e08f369332bd7f29f31cf79bc1dfe4fb46894e2bad4e36",
+      "stock_section_relative": [],
+      "candidate_section_relative": []
+    }
+  }
+}
