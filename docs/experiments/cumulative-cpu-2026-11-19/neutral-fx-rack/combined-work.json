@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "0e63dd1b6ebe78d1f32e88228e44423219eac8860df1502540472eb0a904af51",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Matched GCC 14.2 Release/PIC and pinned JUCE; the combined filter, wrapper and rack changes replace four recompiled objects.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4516529,
+        1139934,
+        697630
+      ],
+      "delta": [
+        -115144,
+        -37544,
+        -24552
+      ],
+      "percent_change": [
+        -2.486013153346534,
+        -3.188509679161734,
+        -3.399697029280708
+      ],
+      "stock": [
+        4631673,
+        1177478,
+        722182
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        22283441,
+        6054091,
+        2370350
+      ],
+      "delta": [
+        -244464,
+        -135139,
+        -108506
+      ],
+      "percent_change": [
+        -1.0851608260954582,
+        -2.183454161503127,
+        -4.377261123679633
+      ],
+      "stock": [
+        22527905,
+        6189230,
+        2478856
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        22458158,
+        6077680,
+        2370729
+      ],
+      "delta": [
+        -244530,
+        -135149,
+        -108581
+      ],
+      "percent_change": [
+        -1.0770971261200435,
+        -2.1753214195980606,
+        -4.379484614671017
+      ],
+      "stock": [
+        22702688,
+        6212829,
+        2479310
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30811787,
+        8213838,
+        3410619
+      ],
+      "delta": [
+        -245410,
+        -135255,
+        -109641
+      ],
+      "percent_change": [
+        -0.7901872148990136,
+        -1.6199963277448222,
+        -3.114571082817746
+      ],
+      "stock": [
+        31057197,
+        8349093,
+        3520260
+      ]
+    }
+  },
+  "stock_sha256": "47131d68d29a4660b8e4297d964748cace3e6b0a839ac8c28784fea9686e7b2c",
+  "timing": false
+}

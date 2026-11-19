@@ -1,0 +1,80 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "0e63dd1b6ebe78d1f32e88228e44423219eac8860df1502540472eb0a904af51",
+  "genuine_host_runs": 30,
+  "host_sha256": "4d65ed19bd1365e2184f3d7738b6e0cb1fa79f1ee7eacc2d6e3a99f793c0a4d5",
+  "matched_build_configuration": "Same GCC 14.2 Release/PIC and JUCE; only the Engine object with the dry-rack shortcut differs.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "wet-classic": {
+      "candidate": [
+        23521334,
+        6343432,
+        2448553
+      ],
+      "delta": [
+        32571,
+        3767,
+        13883
+      ],
+      "percent_change": [
+        0.1386663060970899,
+        0.05941954346168134,
+        0.5702210155791134
+      ],
+      "stock": [
+        23488763,
+        6339665,
+        2434670
+      ]
+    },
+    "wet-modern": {
+      "candidate": [
+        24850927,
+        6731395,
+        2552489
+      ],
+      "delta": [
+        32571,
+        3767,
+        13883
+      ],
+      "percent_change": [
+        0.13123754047206027,
+        0.055992988910801844,
+        0.5468749384504724
+      ],
+      "stock": [
+        24818356,
+        6727628,
+        2538606
+      ]
+    },
+    "wet-one": {
+      "candidate": [
+        22816146,
+        6183672,
+        2412201
+      ],
+      "delta": [
+        32571,
+        3767,
+        13883
+      ],
+      "percent_change": [
+        0.1429582495284432,
+        0.06095562957683007,
+        0.5788640205343912
+      ],
+      "stock": [
+        22783575,
+        6179905,
+        2398318
+      ]
+    }
+  },
+  "stock_sha256": "8228a14c66de82f91590b9a60f2a6dbce2dd5847c2d6511574ce629d5cd5a7fa",
+  "timing": false
+}

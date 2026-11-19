@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "0e63dd1b6ebe78d1f32e88228e44423219eac8860df1502540472eb0a904af51",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Matched GCC 14.2 Release/PIC and pinned JUCE; marginal pair differs only in the Engine object containing this rack change.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4516529,
+        1139934,
+        697630
+      ],
+      "delta": [
+        -107136,
+        -35328,
+        -23552
+      ],
+      "percent_change": [
+        -2.3171228884445565,
+        -3.0059680309582033,
+        -3.26574983845964
+      ],
+      "stock": [
+        4623665,
+        1175262,
+        721182
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        22283441,
+        6054091,
+        2370350
+      ],
+      "delta": [
+        -86210,
+        -34623,
+        -10690
+      ],
+      "percent_change": [
+        -0.38538822085333385,
+        -0.5686422453082868,
+        -0.4489634781440043
+      ],
+      "stock": [
+        22369651,
+        6088714,
+        2381040
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        22458158,
+        6077680,
+        2370729
+      ],
+      "delta": [
+        -86213,
+        -34633,
+        -10693
+      ],
+      "percent_change": [
+        -0.3824147500056666,
+        -0.5666103813728125,
+        -0.4490174358009626
+      ],
+      "stock": [
+        22544371,
+        6112313,
+        2381422
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30811787,
+        8213838,
+        3410619
+      ],
+      "delta": [
+        -86255,
+        -34762,
+        -10735
+      ],
+      "percent_change": [
+        -0.2791600839949664,
+        -0.4214290909972601,
+        -0.3137646674386807
+      ],
+      "stock": [
+        30898042,
+        8248600,
+        3421354
+      ]
+    }
+  },
+  "stock_sha256": "8228a14c66de82f91590b9a60f2a6dbce2dd5847c2d6511574ce629d5cd5a7fa",
+  "timing": false
+}

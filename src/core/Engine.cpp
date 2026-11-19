@@ -3341,6 +3341,20 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // Three modern FX slots, processed in series after the provisional CS-80
     // chorus. The type numbers are fixed by the UI: 1 chorus, 2 phaser,
     // 3 tape delay, 4 plate reverb, 5 drive.
+    // When all six operands are raw +0, the three effective mixes are
+    // exactly +0 and computing/clamping them sets no floating-point flags.
+    // The original slot calls then do nothing unless a live tail or a
+    // gain-compensation transition still needs clearing. Do not bypass
+    // those transitions, signed -0, denormals, or nonzero modulation.
+    const auto neutralFx =
+        (std::bit_cast<std::uint32_t>(global.fxMix[0]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[0])
+       | std::bit_cast<std::uint32_t>(global.fxMix[1]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[1])
+       | std::bit_cast<std::uint32_t>(global.fxMix[2]) | std::bit_cast<std::uint32_t>(modernGlobal.fxMix[2])) == 0
+        && fxSlots[0].liveType == 0 && fxSlots[1].liveType == 0 && fxSlots[2].liveType == 0
+        && fxSlots[0].gainCompActive == global.fxGainComp
+        && fxSlots[1].gainCompActive == global.fxGainComp
+        && fxSlots[2].gainCompActive == global.fxGainComp;
+    if (!neutralFx)
     for (int slot = 0; slot < 3; ++slot)
     {
         // A modern model (ws5) replaces the classic type of its slot; model 0 is classic.

@@ -497,6 +497,12 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_arp_repeat_lifecycle_tests PRIVATE cs80_core)
     add_test(NAME cs80_arp_repeat_lifecycle_tests COMMAND cs80_arp_repeat_lifecycle_tests)
     set_tests_properties(cs80_arp_repeat_lifecycle_tests PROPERTIES TIMEOUT 60)
+    # Validate the dry-rack shortcut against an audible wet/dry lifecycle.
+    add_executable(cs80_quiet_fx_rack_tests tests/QuietFxRackTests.cpp)
+    target_link_libraries(cs80_quiet_fx_rack_tests PRIVATE cs80_core)
+    add_test(NAME cs80_quiet_fx_rack_tests COMMAND cs80_quiet_fx_rack_tests)
+    set_tests_properties(cs80_quiet_fx_rack_tests PROPERTIES TIMEOUT 60)
+
     # Direct tape-slot lifecycle, no Engine/plugin linkage.
     add_executable(cs80_fx_tape_lifecycle_tests tests/FxTapeLifecycleTests.cpp)
     target_include_directories(cs80_fx_tape_lifecycle_tests PRIVATE src)

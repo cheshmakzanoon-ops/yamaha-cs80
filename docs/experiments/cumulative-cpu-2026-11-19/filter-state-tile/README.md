@@ -24,7 +24,7 @@ the independent fifth-callback identity. All 40 real VST3 loads completed.
 | Varied wake | −0.487% | −1.177% | −2.781% |
 
 A separate native host compared four fresh instances across ten fixed histories,
-800 callbacks and 36,140 stereo frames per instance. Captured audio, public
+800 callbacks and 36,140 stereo frames per process run. Captured audio, public
 state, floating point observations, parameter/output events, latency and tail
 matched within the tested platform. Standard realtime at 48 kHz still reported
 67 samples. Component tests covered lane permutations and placements, including
