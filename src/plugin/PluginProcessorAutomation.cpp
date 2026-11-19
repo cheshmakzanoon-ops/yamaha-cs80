@@ -12,6 +12,7 @@ void Cs80AudioProcessor::resetHostAutomationState() noexcept
         automationParameterReadback[i] = automationParameters[i] != nullptr ? automationParameters[i]->getValue() : 0.0f;
         automationCurrent[i] = automationParameterReadback[i];
         automationCurves[i] = {};
+        markHostAutomationLane(i, false);
     }
 }
 
@@ -73,6 +74,7 @@ bool Cs80AudioProcessor::attachHostAutomationQueue(juce::AudioProcessorParameter
     for (size_t i = 0; i < automationParameters.size(); ++i)
         if (automationParameters[i] == &parameter)
         {
+            markHostAutomationLane(i, true); // begin publishes the queue before calling readPoint.
             automationCurves[i].begin(queue, automationCurrent[i]);
             return true;
         }
@@ -92,6 +94,7 @@ void Cs80AudioProcessor::endHostAutomationBlock() noexcept
             if (automationParameters[i] != nullptr)
                 automationParameterReadback[i] = automationParameters[i]->getValue();
             curve = {};
+            markHostAutomationLane(i, false);
         }
     }
     hostAutomationBlock = false;
@@ -120,9 +123,8 @@ void Cs80AudioProcessor::applyHostAutomationAt(int position, bool publish) noexc
     if (!hostAutomationBlock || position < 0 || position >= hostAutomationFrames) return;
     hostAutomationPosition = position;
     bool changed = false;
-    for (size_t i = 0; i < automationCurves.size(); ++i)
+    visitActiveHostAutomationLanes([&](size_t i)
     {
-        if (!automationCurves[i].active()) continue;
         const auto normalized = automationCurves[i].valueAt(position);
         automationCurrent[i] = normalized;
         const int parameter = cs80::kSampleAccurateParameters[i];
@@ -134,12 +136,12 @@ void Cs80AudioProcessor::applyHostAutomationAt(int position, bool publish) noexc
         {
             const int rank = parameter >= cs80::P_ch2Start ? 1 : 0;
             if (cachedHardwareSources[(size_t) rank] != 13
-                && parameter != cs80::chParam(rank, cs80::CP_pan)) continue;
+                && parameter != cs80::chParam(rank, cs80::CP_pan)) return;
         }
         const float physical = automationParameters[i]->convertFrom0to1(static_cast<float>(normalized));
         changed = changed || cached[parameter] != physical;
         cached[parameter] = physical;
-    }
+    });
     if (changed && publish)
     {
         engine.setControlFrame({ cached, cachedHardwareSources });
@@ -150,7 +152,8 @@ void Cs80AudioProcessor::applyHostAutomationAt(int position, bool publish) noexc
 int Cs80AudioProcessor::hostAutomationSpan(int position, int remaining) const noexcept
 {
     if (!hostAutomationBlock) return remaining;
-    for (const auto& curve : automationCurves)
-        if (curve.active()) remaining = curve.samplesUntilChange(position, remaining);
+    visitActiveHostAutomationLanes([&](size_t i) {
+        remaining = automationCurves[i].samplesUntilChange(position, remaining);
+    });
     return remaining;
 }

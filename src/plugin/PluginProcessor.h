@@ -1,4 +1,6 @@
 #pragma once
+#include <bit>
+#include <cstdint>
 
 #include "core/Engine.h"
 #include "core/FactoryPresets.h"
@@ -445,6 +447,46 @@ private:
     } };
     bool midiLearnLive = false;   // audio thread: mappings apply in this block (not PURE CS-80)
     EditorState editorState;
+
+    // Mirrors only queue attachment, not whether a pending knot remains. A queue
+    // stays active through its final held sample and public endpoint commit.
+    std::array<std::uint64_t, (cs80::kSampleAccurateParameters.size() + 63) / 64> activeHostCurveWords {};
+    unsigned activeHostCurveCount = 0;
+    void markHostAutomationLane(size_t lane, bool active) noexcept
+    {
+        const auto bit = std::uint64_t{1} << (lane % 64);
+        auto& word = activeHostCurveWords[lane / 64];
+        if (active != ((word & bit) != 0))
+        {
+            if (active) { word |= bit; ++activeHostCurveCount; }
+            else        { word &= ~bit; --activeHostCurveCount; }
+        }
+    }
+    template<class Visitor>
+    void visitActiveHostAutomationLanes(Visitor&& visit) const noexcept
+    {
+        if (activeHostCurveCount == 0) return;
+        // Dense queues are cheaper with the original linear scan. Re-check activity
+        // at the same point as that scan, including any earlier borrowed callback.
+        if (activeHostCurveCount > 32)
+        {
+            for (size_t lane = 0; lane < automationCurves.size(); ++lane)
+                if (automationCurves[lane].active()) visit(lane);
+            return;
+        }
+        for (size_t word = 0; word < activeHostCurveWords.size(); ++word)
+        {
+            std::uint64_t unvisited = ~std::uint64_t{0};
+            while (const auto live = activeHostCurveWords[word] & unvisited)
+            {
+                const auto first = live & (std::uint64_t{0} - live);
+                unvisited = ~((first - 1) | first);
+                visit(word * 64 + static_cast<size_t>(std::countr_zero(live)));
+                // A visit may invoke borrowed host readPoint. Re-read live bits,
+                // matching the original ascending scan even if later lanes change.
+            }
+        }
+    }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Cs80AudioProcessor)
 };

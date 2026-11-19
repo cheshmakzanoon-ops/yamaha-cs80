@@ -565,6 +565,21 @@ int main(int argc, char** argv)
         for (int block : {7, 64, 256, 1024, 4096})
             maxError = std::max(maxError, difference(scalar, render(module, parameters, curves, block)));
         check(maxError <= limits["audio_max_abs_error"], "real VST3 queues match independent per-sample control frames at every partition");
+        // Keep two neighboring indices on opposite sides of the bit-word
+        // boundary. Test sparse and both sides of the traversal crossover
+        // against the existing independent one-sample host delivery.
+        static_assert(cs80::kSampleAccurateParameters.size() > 64);
+        for (const size_t attached : {6u, 32u, 33u})
+        {
+            Curves selected;
+            selected[63] = curves[63];
+            selected[64] = curves[64];
+            for (size_t lane = 0; lane < attached - 2; ++lane)
+                selected[lane] = curves[lane];
+            check(difference(render(module, parameters, selected, 1),
+                             render(module, parameters, selected, 64)) <= limits["audio_max_abs_error"],
+                  "host automation crossing lanes 63/64 matches per-sample delivery at sparse/dense boundaries");
+        }
         const auto neutral = render(module, parameters, curves, 256, false);
         check(neutral == render(module, parameters, curves, 256, false, false, 13, true),
               "empty queue and original no-queue path are byte-identical");
