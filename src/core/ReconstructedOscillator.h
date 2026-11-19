@@ -14,6 +14,8 @@
 #include <cstdint>
 #include <limits>
 #include <mutex>
+#include <memory>
+#include <type_traits>
 
 namespace cs80 {
 struct OscillatorNominalProfile {
@@ -246,7 +248,15 @@ public:
         diagnostics.eventCount=0;
         if(!basis)return {}; // never prepared (basis pool exhausted at construction)
         const double inverseTauSamples=basis->inverseTauSamples,weightedArea=basis->weightedArea,weightedMoment=basis->weightedMoment;
-        Nodes before;
+        // Local only: every event overwrites the entire left edge before reading it.
+        // An ordinary Nodes would clear all twenty doubles on every active tick.
+        static_assert(std::is_trivially_destructible_v<Nodes>);
+        static_assert(sizeof(WscOutputVolts)==3*sizeof(double) && sizeof(Nodes)==20*sizeof(double));
+        union LeftSlot {
+            Nodes value;
+            LeftSlot() noexcept {} // intentionally no active member
+            void set(const Nodes& all) noexcept { std::construct_at(&value,all); }
+        } before;
         double f=state.heldFrequencyHz,threshold=state.heldThresholdVolts;
         if(std::isfinite(requestedHz)){f=std::clamp(requestedHz,0.,maximumFrequencyHz());if(f!=requestedHz)diagnostics.frequencyLimited=true;}
         else diagnostics.invalidControl=true;
@@ -271,16 +281,16 @@ public:
             const double a=u-state.heldThresholdVolts,b=u-threshold;
             if((a>0.)!=(b>0.)||std::abs(a)<1e-9||std::abs(b)<1e-9)event=refresh=true;
         }
-        if(event)before=endNodesValid?endNodes:nodes(1);
+        if(event)before.set(endNodesValid?endNodes:nodes(1));
         state.heldFrequencyHz=f;state.heldThresholdVolts=threshold;state.sawEnabled=controls.sawEnabled;state.pulseEnabled=controls.pulseEnabled;
         auto after=refresh?nodes(1):endNodes;
-        if(event)recordEvent(0.,controlChange,before,after);
+        if(event)recordEvent(0.,controlChange,before.value,after);
         double elapsed=0.;
         for(std::size_t iteration=0;iteration<maximumEventsPerTick&&elapsed<dt;++iteration){
             // A stopped q=0 capacitor does NOT retrigger the one-shot.
             if(state.resetRemainingSeconds==0.&&state.charge<=0.&&f>0.){
-                before=after;state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;
-                after=nodes(1);recordEvent(elapsed,resetStart,before,after);
+                before.set(after);state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;
+                after=nodes(1);recordEvent(elapsed,resetStart,before.value,after);
             }
             const bool inReset=state.resetRemainingSeconds>0.;
             const double physical=inReset?state.resetRemainingSeconds:(f>0.?std::max(0.,state.charge)/f:std::numeric_limits<double>::infinity());
@@ -295,11 +305,11 @@ public:
             elapsed+=span;
             const bool physicalReached=std::abs(span-physical)<=2e-15;
             if(physicalReached&&inReset)state.resetRemainingSeconds=std::numeric_limits<double>::min();
-            if(physicalReached||branchEvent)before=nodes(-1);
+            if(physicalReached||branchEvent)before.set(nodes(-1));
             if(physicalReached){
-                if(inReset){state.resetRemainingSeconds=0.;after=nodes(1);recordEvent(elapsed,resetEnd,before,after);}
-                else {state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;after=nodes(1);recordEvent(elapsed,resetStart,before,after);}
-            } else {after=nodes(1);if(branchEvent)recordEvent(elapsed,branchCorner,before,after);}
+                if(inReset){state.resetRemainingSeconds=0.;after=nodes(1);recordEvent(elapsed,resetEnd,before.value,after);}
+                else {state.charge=0.;state.resetRemainingSeconds=profile.resetSecondsNominal;++state.resetCount;after=nodes(1);recordEvent(elapsed,resetStart,before.value,after);}
+            } else {after=nodes(1);if(branchEvent)recordEvent(elapsed,branchCorner,before.value,after);}
             if(dt-elapsed<=2e-15)elapsed=dt;
         }
         if(elapsed<dt){ // Explicit diagnostic, bounded numerical failure policy.
