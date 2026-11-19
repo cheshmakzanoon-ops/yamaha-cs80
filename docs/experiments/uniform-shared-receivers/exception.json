@@ -1,0 +1,37 @@
+{
+  "stock": {
+    "module": "25281f677330f7e73a0fc695f43cdfc6eaf902ffb059218e0b3ac36188edae5a",
+    "raw": "50d012731d94a7fd753cdfb0275a673b2c08e7f56dfa4080e8b6872f067d93d4",
+    "bytes": 32701176,
+    "opcodes": {
+      "mulsd": 688,
+      "cvtss2sd": 256,
+      "cvtps2pd": 66,
+      "cvtsd2ss": 96,
+      "addsd": 176,
+      "divsd": 192,
+      "mulpd": 176,
+      "ucomisd": 144
+    }
+  },
+  "candidate": {
+    "module": "0f848ae0c8eb7629262395d457ff31662d3d8806b498848a6a6ee868b5ed56d1",
+    "raw": "50d012731d94a7fd753cdfb0275a673b2c08e7f56dfa4080e8b6872f067d93d4",
+    "bytes": 32701176,
+    "opcodes": {
+      "mulsd": 688,
+      "cvtss2sd": 256,
+      "cvtps2pd": 66,
+      "cvtsd2ss": 96,
+      "addsd": 176,
+      "divsd": 192,
+      "mulpd": 176,
+      "ucomisd": 144
+    }
+  },
+  "cases": 4608,
+  "traps": 1794,
+  "matching_interrupted_mnemonics": 1794,
+  "mismatches": [],
+  "scope": "actual symbol bound to each DLL in a separate process; signal si_code/MXCSR/x87 and partial receiver/FilterEnv state, resumed instruction with all SSE traps masked; after first call and next step, compare named arrays, FP + errno; not blanket FP/trap handling certification."
+}

@@ -872,6 +872,8 @@ float Engine::filterAttackTarget(int rank) const noexcept
         : filterAttackOffset(rankSettings[rank].fAl);
 }
 
+#include "SharedUniformReceivers.cpp.inc"
+
 void Engine::updateSourceReadouts(float sampleRate) noexcept
 {
     source_factory::BothRankDrives drives {};
@@ -905,9 +907,24 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
             // relaxes once the key is up). Formerly inactive touch was zero.
             drives[rank][voice] = {z, v.touchB, v.touchA};
         }
+#if defined(CS80_DETAIL_UNIFORM_RECEIVERS)
+    // A cutoff certificate means equal raw drive words, not necessarily a
+    // successful cutoff transaction. The shared network validates its own
+    // boundaries and drive and still computes a new result on this sample.
+    bool uniform[2] {};
+    for (int rank = 0; rank < kNumRanks; ++rank)
+        if (sourceActive[rank])
+            source_factory::uniform_cutoff::evaluate(sourceTones[rank], drives[rank], sourceCutoff[rank], &uniform[rank]);
+    if (uniform[0] && uniform[1] && uniformReceiverControls())
+    {
+        evaluateUniformReceivers(sourceBoundaries, global.resonance, drives, sourceShared);
+        return;
+    }
+#else
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
             source_factory::uniform_cutoff::evaluate(sourceTones[rank], drives[rank], sourceCutoff[rank]);
+#endif
     // One 32-Q/16-LC network. Shared RES/AM/KB use the documented nominal
     // stiff boundaries; no independent per-voice or per-rank master copies.
     source_factory::evaluateShared(sourceBoundaries, global.resonance, drives, sourceShared);

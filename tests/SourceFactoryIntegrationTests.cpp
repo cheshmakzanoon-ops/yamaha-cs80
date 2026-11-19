@@ -476,6 +476,71 @@ void panicControlGates(double rate)
     check(bridge.activeVoices() == 0 && bridge.getRankEnvelopeState(0, 0).filter.value == -3,
           "bridge-panic source control converges without audio resurrection");
 }
+
+// Public seam: exercise the shared receiver solve with equal idle drives and
+// after individual channels diverge. Compare each named field by bits; never
+// compare struct padding or assume that silent audio means equal touch state.
+bool receiverBits(double a, double b)
+{
+    return std::bit_cast<std::uint64_t>(a) == std::bit_cast<std::uint64_t>(b);
+}
+template<class T, std::size_t N>
+bool receiverBits(const std::array<T, N>& a, const std::array<T, N>& b)
+{
+    for (std::size_t i = 0; i < N; ++i)
+        if (!receiverBits(a[i], b[i])) return false;
+    return true;
+}
+
+void uniformReceiverHandoff(double rate)
+{
+    Engine e;
+    auto f = frame(false);
+    f.hardwareSources = {0, 3};
+    f.effectiveValues[P_sourcePerformance] = 1;
+    f.effectiveValues[P_resonance] = .25f;
+    f.effectiveValues[P_voiceDispersion] = f.effectiveValues[P_drift] = 0;
+    check(e.setControlFrame(f), "source fixture accepted");
+    e.prepare(rate);
+    std::array<sf::RankBoundary, 2> boundaries;
+    for (int r = 0; r < 2; ++r)
+    {
+        sf::ToneControls tone;
+        check(sf::compileTone(r, f.hardwareSources[r], tone), "compile both receiver loads");
+        boundaries[r] = tone.boundary;
+    }
+    const auto compare = [&](int frames)
+    {
+        render(e, frames);
+        sf::BothRankDrives drives {};
+        for (int r = 0; r < 2; ++r)
+            for (int v = 0; v < 8; ++v)
+            {
+                const auto voice = e.getVoiceInfo(v);
+                drives[r][v] = {e.getRankEnvelopeState(v, r).filter.value, voice.touchB, voice.touchA};
+            }
+        sf::SharedReadout expected;
+        check(sf::evaluateShared(boundaries, f.effectiveValues[P_resonance], drives, expected), "scalar shared oracle");
+        const auto got = e.getSourceSharedReadout();
+        check(receiverBits(got.qVolts, expected.qVolts) && receiverBits(got.q, expected.q)
+              && receiverBits(got.levelPinVolts, expected.levelPinVolts) && receiverBits(got.levelGain, expected.levelGain)
+              && receiverBits(got.qBusVolts, expected.qBusVolts) && receiverBits(got.levelBusVolts, expected.levelBusVolts)
+              && receiverBits(got.masterResVolts, expected.masterResVolts)
+              && got.saturatedVoices == expected.saturatedVoices && got.masterResSaturated == expected.masterResSaturated,
+              "complete current-sample shared receiver readout matches scalar");
+    };
+    compare(1); // fresh, both ranks uniform
+    for (int v = 0; v < 8; ++v) e.noteOn(48 + v, .75f);
+    compare(768); // all held strikes have crossed the acquisition window
+    e.polyPressure(52, .81f);
+    compare(39); // rank drives now differ within this sample
+    check(e.getVoiceInfo(4).touchA != e.getVoiceInfo(3).touchA, "exercise nonuniform pressure fallback");
+    for (int v = 0; v < 8; ++v) e.noteOff(48 + v);
+    compare(67);
+    check(e.setControlFrame(f), "repeat clears published readout before a new solve");
+    compare(1);
+}
+
 void defaultOff()
 {
     const auto& presets = factoryPresets();
@@ -503,7 +568,7 @@ int main()
 {
     routingAndAtomicity();
     for (double rate : {44100., 48000., 96000., 192000.})
-    { receiverRouting(rate); ownershipAndClearing(rate); transitions(rate); audioStressAndTailReuse(rate); inactiveControlRelaxation(rate); panicControlGates(rate); }
+    { uniformReceiverHandoff(rate); receiverRouting(rate); ownershipAndClearing(rate); transitions(rate); audioStressAndTailReuse(rate); inactiveControlRelaxation(rate); panicControlGates(rate); }
     defaultOff();
     std::cout << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;

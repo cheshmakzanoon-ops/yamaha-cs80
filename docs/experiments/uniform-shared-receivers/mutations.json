@@ -1,0 +1,18 @@
+{
+  "ordered-sum": {
+    "got_expected_failure": true,
+    "stderr": "mismatch rnd=0 ftz=0 flags=0 i=31 k=31 fast=1 ok=1/1 fp=1fa0/1fa0 sw=0/0 values=0"
+  },
+  "rank-shift": {
+    "got_expected_failure": true,
+    "stderr": "mismatch rnd=0 ftz=0 flags=0 i=1 k=0 fast=1 ok=1/1 fp=1fb2/1fb2 sw=0/0 values=0"
+  },
+  "level-local": {
+    "got_expected_failure": true,
+    "stderr": "mismatch rnd=0 ftz=0 flags=0 i=1 k=0 fast=1 ok=1/1 fp=1fb2/1fb2 sw=0/0 values=0"
+  },
+  "transaction": {
+    "got_expected_failure": true,
+    "stderr": "mismatch rnd=0 ftz=0 flags=0 i=20 k=19 fast=1 ok=0/0 fp=1f80/1f80 sw=0/0 values=0"
+  }
+}
