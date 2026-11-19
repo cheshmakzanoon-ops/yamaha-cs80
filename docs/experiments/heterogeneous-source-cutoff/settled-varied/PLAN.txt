@@ -1,0 +1,15 @@
+This follow-up is separate from the original four scenes / twenty native-plugin guest-work slots.
+Use the exact same frozen a3ee42d FIR+uniform stock and heterogeneous-cutoff ELF. Same 48 kHz,
+64 stereo frames per callback, Factory 0/0. Differ here: eight note-ons at t=0, distinct fixed
+MIDI velocities 44,54,64,74,84,94,104,114; 1,024 held callbacks. At callback 1,024 send all eight
+note-offs; render 8,192 post-release warm callbacks including that one. Observe five eligible calls
+and one continuation, 9,222 callbacks/render. Audible prior play, 16 exact event reads, settled
+peak <=1e-6 guard. Each arm has identical input and public history. Do not use clocks.
+Five arms, same binary A first four, A2 first four, P all five, S fifth alone, candidate first four.
+Require A=A2 and A+S=P exactly in all three actual-plugin guest edge counts. Keep positive and
+adverse counts. Callgrind process accounting not time. Require native stock/candidate, and all
+translated stock/candidate arms separately, byte-identical PCM, FP/event/return records, component
+states. DO NOT assume native vs translated PCM identity here: earlier stock itself had subnormal/
+FTZ differences. Report all cross-runtime differing float positions, maximum magnitude and whether
+the difference is only nonzero subnormals vs zero; report MXCSR differences. If outside native
+render equality, do not suppress the difference or invent an equivalence criterion after the run.

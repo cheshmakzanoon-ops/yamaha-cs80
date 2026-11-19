@@ -1,0 +1,257 @@
+{
+  "candidate_minus_stock": [
+    -334464,
+    -17408,
+    -51200
+  ],
+  "change_percent": [
+    -5.091682218647428,
+    -1.2307352950533745,
+    -5.697092702380316
+  ],
+  "controls": "A=A2; measured four plus independently measured fifth exactly equals all five, for all three guest counters",
+  "cross_runtime_fp_field_differences": {
+    "after.mxcsr": 9222,
+    "before.mxcsr": 9222,
+    "next.mxcsr": 9222
+  },
+  "cross_runtime_pcm": {
+    "diff_index_u64le_sha256": "52ae55a859ae4f2e8fff746cf00df9825081893c10bd5db7097ff06785734199",
+    "differing_float_words": 102034,
+    "first_differing_word": 600940,
+    "last_differing_word": 703115,
+    "max_abs_difference": 1.186595857646208e-38,
+    "max_delta_word": 606635,
+    "native_guest_value_classes": {
+      "native normal vs guest normal": 5624,
+      "native zero vs guest normal": 46,
+      "native zero vs guest subnormal": 96298,
+      "native zero vs guest zero": 66
+    },
+    "total_float_words": 1180416
+  },
+  "cross_runtime_states_exact": true,
+  "genuine_entries": {
+    "A": {
+      "batch_self_ir": 0,
+      "plugin_edge": [
+        6568831,
+        1414439,
+        898704
+      ],
+      "route_inclusive": [
+        53172,
+        10472,
+        5504
+      ],
+      "stub_plus_plugin": [
+        6568851,
+        1414451,
+        898708
+      ]
+    },
+    "A2": {
+      "batch_self_ir": 0,
+      "plugin_edge": [
+        6568831,
+        1414439,
+        898704
+      ],
+      "route_inclusive": [
+        53172,
+        10472,
+        5504
+      ],
+      "stub_plus_plugin": [
+        6568851,
+        1414451,
+        898708
+      ]
+    },
+    "C": {
+      "batch_self_ir": 0,
+      "plugin_edge": [
+        6234367,
+        1397031,
+        847504
+      ],
+      "route_inclusive": [
+        53172,
+        10472,
+        5504
+      ],
+      "stub_plus_plugin": [
+        6234387,
+        1397043,
+        847508
+      ]
+    },
+    "P": {
+      "batch_self_ir": 0,
+      "plugin_edge": [
+        8202540,
+        1765971,
+        1122871
+      ],
+      "route_inclusive": [
+        66465,
+        13090,
+        6880
+      ],
+      "stub_plus_plugin": [
+        8202565,
+        1765986,
+        1122876
+      ]
+    },
+    "S": {
+      "batch_self_ir": 0,
+      "plugin_edge": [
+        1633709,
+        351532,
+        224167
+      ],
+      "route_inclusive": [
+        13293,
+        2618,
+        1376
+      ],
+      "stub_plus_plugin": [
+        1633714,
+        351535,
+        224168
+      ]
+    }
+  },
+  "native_hashes": {
+    "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+    "fp.bin": "74554726df02211cc7fd53afea540c541c617c8b0c180e1e94c6aec355817fcb",
+    "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+    "pcm.bin": "416980c077be5b2aad1d00d55f3b14b014be0a064454db13902eb9372031c00d",
+    "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+    "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+  },
+  "no_timing": true,
+  "runtime": {
+    "guest-A": {
+      "arm_window": "first4",
+      "counted_calls": 4,
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "genuine_calls": 9222,
+      "note_event_reads": 16,
+      "peak": 0.07361524552106857,
+      "scene": "settled-varied-release",
+      "under_valgrind": 1,
+      "warm": 9216,
+      "window": 5,
+      "window_peak": 0,
+      "xcr0": 7
+    },
+    "guest-A2": {
+      "arm_window": "first4",
+      "counted_calls": 4,
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "genuine_calls": 9222,
+      "note_event_reads": 16,
+      "peak": 0.07361524552106857,
+      "scene": "settled-varied-release",
+      "under_valgrind": 1,
+      "warm": 9216,
+      "window": 5,
+      "window_peak": 0,
+      "xcr0": 7
+    },
+    "guest-C": {
+      "arm_window": "first4",
+      "counted_calls": 4,
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "genuine_calls": 9222,
+      "note_event_reads": 16,
+      "peak": 0.07361524552106857,
+      "scene": "settled-varied-release",
+      "under_valgrind": 1,
+      "warm": 9216,
+      "window": 5,
+      "window_peak": 0,
+      "xcr0": 7
+    },
+    "guest-P": {
+      "arm_window": "all5",
+      "counted_calls": 5,
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "genuine_calls": 9222,
+      "note_event_reads": 16,
+      "peak": 0.07361524552106857,
+      "scene": "settled-varied-release",
+      "under_valgrind": 1,
+      "warm": 9216,
+      "window": 5,
+      "window_peak": 0,
+      "xcr0": 7
+    },
+    "guest-S": {
+      "arm_window": "fifth",
+      "counted_calls": 1,
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "genuine_calls": 9222,
+      "note_event_reads": 16,
+      "peak": 0.07361524552106857,
+      "scene": "settled-varied-release",
+      "under_valgrind": 1,
+      "warm": 9216,
+      "window": 5,
+      "window_peak": 0,
+      "xcr0": 7
+    },
+    "native-c": {
+      "arm_window": "first4",
+      "counted_calls": 4,
+      "cpu_avx2": 1,
+      "cpu_avx512f": 1,
+      "genuine_calls": 9222,
+      "note_event_reads": 16,
+      "peak": 0.07361524552106857,
+      "scene": "settled-varied-release",
+      "under_valgrind": 0,
+      "warm": 9216,
+      "window": 5,
+      "window_peak": 0,
+      "xcr0": 231
+    },
+    "native-s": {
+      "arm_window": "first4",
+      "counted_calls": 4,
+      "cpu_avx2": 1,
+      "cpu_avx512f": 1,
+      "genuine_calls": 9222,
+      "note_event_reads": 16,
+      "peak": 0.07361524552106857,
+      "scene": "settled-varied-release",
+      "under_valgrind": 0,
+      "warm": 9216,
+      "window": 5,
+      "window_peak": 0,
+      "xcr0": 231
+    }
+  },
+  "scenario": "settled-varied-release; separately declared follow-up, not pooled with prior four scenes",
+  "translated_hashes": {
+    "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+    "fp.bin": "82d55a32666cb493750ea030d8a479157bd5af423f3fb75de80b18cb1ab513ba",
+    "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+    "pcm.bin": "b7a739dc48083d69590876c5fb2ee202eebb2a1b47f64f97196d3bda60e6cf53",
+    "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+    "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+  },
+  "units": [
+    "Ir",
+    "Dr",
+    "Dw"
+  ],
+  "within_runtime_exact": true
+}

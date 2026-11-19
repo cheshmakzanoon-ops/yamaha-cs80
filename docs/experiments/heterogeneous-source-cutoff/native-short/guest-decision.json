@@ -1,0 +1,562 @@
+{
+  "fresh-quiet": {
+    "counts": {
+      "A": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          5718493,
+          1307438,
+          844046
+        ],
+        "route_inclusive": [
+          53108,
+          10448,
+          5504
+        ],
+        "stub_plus_plugin": [
+          5718513,
+          1307450,
+          844050
+        ]
+      },
+      "A2": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          5718493,
+          1307438,
+          844046
+        ],
+        "route_inclusive": [
+          53108,
+          10448,
+          5504
+        ],
+        "stub_plus_plugin": [
+          5718513,
+          1307450,
+          844050
+        ]
+      },
+      "C": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          5721949,
+          1307438,
+          844046
+        ],
+        "route_inclusive": [
+          53108,
+          10448,
+          5504
+        ],
+        "stub_plus_plugin": [
+          5721969,
+          1307450,
+          844050
+        ]
+      },
+      "P": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          7150362,
+          1634914,
+          1055267
+        ],
+        "route_inclusive": [
+          66385,
+          13060,
+          6880
+        ],
+        "stub_plus_plugin": [
+          7150387,
+          1634929,
+          1055272
+        ]
+      },
+      "S": {
+        "batch_self_ir": 0,
+        "plugin_edge": [
+          1431869,
+          327476,
+          211221
+        ],
+        "route_inclusive": [
+          13277,
+          2612,
+          1376
+        ],
+        "stub_plus_plugin": [
+          1431874,
+          327479,
+          211222
+        ]
+      }
+    },
+    "cross_runtime_differing_fields": {
+      "after.mxcsr": 38,
+      "before.mxcsr": 38,
+      "next.mxcsr": 38
+    },
+    "events": [
+      "Ir",
+      "Dr",
+      "Dw"
+    ],
+    "guest_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "xcr0": 7
+    },
+    "native_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 1,
+      "xcr0": 231
+    },
+    "packet_minus_uniform": [
+      3456,
+      0,
+      0
+    ],
+    "per_callback_delta": [
+      864.0,
+      0.0,
+      0.0
+    ],
+    "percent_change": [
+      0.06043550285013902,
+      0.0,
+      0.0
+    ],
+    "sha256": {
+      "guest_fp": "9dab22a7a1491624c672611debb6285098674deea3bbe3906055cc22e16b7b67",
+      "native_fp": "69a728e9a175f055d3544e143e99a174e63402fc090988fcf7ab216f9c65e4e0",
+      "pcm": "c597b1b463b7cec49548fac00d7588c9652bb67cc2b1b0c88676bf8f1558571e",
+      "states": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    }
+  },
+  "held-short": {
+    "counts": {
+      "A": {
+        "batch_self_ir": 2895732,
+        "plugin_edge": [
+          24984935,
+          6693601,
+          3227098
+        ],
+        "route_inclusive": [
+          55988,
+          11112,
+          5760
+        ],
+        "stub_plus_plugin": [
+          24984955,
+          6693613,
+          3227102
+        ]
+      },
+      "A2": {
+        "batch_self_ir": 2895732,
+        "plugin_edge": [
+          24984935,
+          6693601,
+          3227098
+        ],
+        "route_inclusive": [
+          55988,
+          11112,
+          5760
+        ],
+        "stub_plus_plugin": [
+          24984955,
+          6693613,
+          3227102
+        ]
+      },
+      "C": {
+        "batch_self_ir": 2895732,
+        "plugin_edge": [
+          24803650,
+          6682449,
+          3192748
+        ],
+        "route_inclusive": [
+          55988,
+          11112,
+          5760
+        ],
+        "stub_plus_plugin": [
+          24803670,
+          6682461,
+          3192752
+        ]
+      },
+      "P": {
+        "batch_self_ir": 3624515,
+        "plugin_edge": [
+          31220221,
+          8365149,
+          4032731
+        ],
+        "route_inclusive": [
+          69985,
+          13890,
+          7200
+        ],
+        "stub_plus_plugin": [
+          31220246,
+          8365164,
+          4032736
+        ]
+      },
+      "S": {
+        "batch_self_ir": 728783,
+        "plugin_edge": [
+          6235286,
+          1671548,
+          805633
+        ],
+        "route_inclusive": [
+          13997,
+          2778,
+          1440
+        ],
+        "stub_plus_plugin": [
+          6235291,
+          1671551,
+          805634
+        ]
+      }
+    },
+    "cross_runtime_differing_fields": {
+      "after.mxcsr": 38,
+      "before.mxcsr": 38,
+      "next.mxcsr": 38
+    },
+    "events": [
+      "Ir",
+      "Dr",
+      "Dw"
+    ],
+    "guest_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "xcr0": 7
+    },
+    "native_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 1,
+      "xcr0": 231
+    },
+    "packet_minus_uniform": [
+      -181285,
+      -11152,
+      -34350
+    ],
+    "per_callback_delta": [
+      -45321.25,
+      -2788.0,
+      -8587.5
+    ],
+    "percent_change": [
+      -0.7255772328405097,
+      -0.16660688320083614,
+      -1.0644238259885508
+    ],
+    "sha256": {
+      "guest_fp": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+      "native_fp": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+      "pcm": "9d8625d97c5b07973ec1a533aee87708545f91c312fb4e6179ada22773df7a95",
+      "states": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    }
+  },
+  "varied-held-short": {
+    "counts": {
+      "A": {
+        "batch_self_ir": 2896799,
+        "plugin_edge": [
+          25345115,
+          6727992,
+          3253643
+        ],
+        "route_inclusive": [
+          55988,
+          11112,
+          5760
+        ],
+        "stub_plus_plugin": [
+          25345135,
+          6728004,
+          3253647
+        ]
+      },
+      "A2": {
+        "batch_self_ir": 2896799,
+        "plugin_edge": [
+          25345115,
+          6727992,
+          3253643
+        ],
+        "route_inclusive": [
+          55988,
+          11112,
+          5760
+        ],
+        "stub_plus_plugin": [
+          25345135,
+          6728004,
+          3253647
+        ]
+      },
+      "C": {
+        "batch_self_ir": 2896799,
+        "plugin_edge": [
+          24980635,
+          6708231,
+          3193720
+        ],
+        "route_inclusive": [
+          55988,
+          11112,
+          5760
+        ],
+        "stub_plus_plugin": [
+          24980655,
+          6708243,
+          3193724
+        ]
+      },
+      "P": {
+        "batch_self_ir": 3624612,
+        "plugin_edge": [
+          31674382,
+          8409394,
+          4066138
+        ],
+        "route_inclusive": [
+          69985,
+          13890,
+          7200
+        ],
+        "stub_plus_plugin": [
+          31674407,
+          8409409,
+          4066143
+        ]
+      },
+      "S": {
+        "batch_self_ir": 727813,
+        "plugin_edge": [
+          6329267,
+          1681402,
+          812495
+        ],
+        "route_inclusive": [
+          13997,
+          2778,
+          1440
+        ],
+        "stub_plus_plugin": [
+          6329272,
+          1681405,
+          812496
+        ]
+      }
+    },
+    "cross_runtime_differing_fields": {
+      "after.mxcsr": 38,
+      "before.mxcsr": 38,
+      "next.mxcsr": 38
+    },
+    "events": [
+      "Ir",
+      "Dr",
+      "Dw"
+    ],
+    "guest_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "xcr0": 7
+    },
+    "native_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 1,
+      "xcr0": 231
+    },
+    "packet_minus_uniform": [
+      -364480,
+      -19761,
+      -59923
+    ],
+    "per_callback_delta": [
+      -91120.0,
+      -4940.25,
+      -14980.75
+    ],
+    "percent_change": [
+      -1.438068045854201,
+      -0.2937131910977302,
+      -1.8417201887238397
+    ],
+    "sha256": {
+      "guest_fp": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+      "native_fp": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+      "pcm": "f68017674f9ebdf86a0a28d4f28910b4bb699ef96f1210a09b0cb4f4fa3197ee",
+      "states": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    }
+  },
+  "varied-wake-short": {
+    "counts": {
+      "A": {
+        "batch_self_ir": 2940158,
+        "plugin_edge": [
+          33763801,
+          8876205,
+          4379438
+        ],
+        "route_inclusive": [
+          55268,
+          10946,
+          5696
+        ],
+        "stub_plus_plugin": [
+          33763821,
+          8876217,
+          4379442
+        ]
+      },
+      "A2": {
+        "batch_self_ir": 2940158,
+        "plugin_edge": [
+          33763801,
+          8876205,
+          4379438
+        ],
+        "route_inclusive": [
+          55268,
+          10946,
+          5696
+        ],
+        "stub_plus_plugin": [
+          33763821,
+          8876217,
+          4379442
+        ]
+      },
+      "C": {
+        "batch_self_ir": 2940158,
+        "plugin_edge": [
+          33445917,
+          8861016,
+          4329493
+        ],
+        "route_inclusive": [
+          55268,
+          10946,
+          5696
+        ],
+        "stub_plus_plugin": [
+          33445937,
+          8861028,
+          4329497
+        ]
+      },
+      "P": {
+        "batch_self_ir": 3677574,
+        "plugin_edge": [
+          40263090,
+          10591446,
+          5207707
+        ],
+        "route_inclusive": [
+          69265,
+          13724,
+          7136
+        ],
+        "stub_plus_plugin": [
+          40263115,
+          10591461,
+          5207712
+        ]
+      },
+      "S": {
+        "batch_self_ir": 737416,
+        "plugin_edge": [
+          6499289,
+          1715241,
+          828269
+        ],
+        "route_inclusive": [
+          13997,
+          2778,
+          1440
+        ],
+        "stub_plus_plugin": [
+          6499294,
+          1715244,
+          828270
+        ]
+      }
+    },
+    "cross_runtime_differing_fields": {
+      "after.mxcsr": 38,
+      "before.mxcsr": 38,
+      "next.mxcsr": 38
+    },
+    "events": [
+      "Ir",
+      "Dr",
+      "Dw"
+    ],
+    "guest_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 0,
+      "xcr0": 7
+    },
+    "native_abi": {
+      "cpu_avx2": 1,
+      "cpu_avx512f": 1,
+      "xcr0": 231
+    },
+    "packet_minus_uniform": [
+      -317884,
+      -15189,
+      -49945
+    ],
+    "per_callback_delta": [
+      -79471.0,
+      -3797.25,
+      -12486.25
+    ],
+    "percent_change": [
+      -0.9414935243813337,
+      -0.17112042815595177,
+      -1.140443134484379
+    ],
+    "sha256": {
+      "guest_fp": "c6413108fd8df193b5d8b0620b8f945062ccbbc1dd7dfa7280920615aa64aa97",
+      "native_fp": "fb73e07cd7bfb7a6c0da659948bfbdfb64edc63dea3c615946c9d228407e0895",
+      "pcm": "5b91e50a060d8b408d6fb8c5bda314a6d6b9ad5c2b0e8a179bc36d3585b4d865",
+      "states": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    }
+  }
+}

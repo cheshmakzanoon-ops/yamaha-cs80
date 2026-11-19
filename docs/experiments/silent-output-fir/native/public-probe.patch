@@ -1,0 +1,87 @@
+--- a/host.cpp
++++ b/host.cpp
+@@ -23,7 +23,19 @@
+         nonzero+=x!=0; peak=std::max(peak,std::abs(double(x))); power+=double(x)*x;
+     }
+ };
++// Untimed proof driver: preserve the four original scene geometries, but save
++// *every* callback's actual outputs and FP environment, not only the regional
++// hash. Public component-state snapshots are outside the process call. Do not
++// use this observer for timings.
++struct Transcript {
++    std::ofstream pcm, status;
++    explicit Transcript(const std::filesystem::path& dir):
++        pcm(dir/"all.pcm",std::ios::binary),status(dir/"callback-status.bin",std::ios::binary) {
++        require(bool(pcm)&&bool(status),"open parity transcript");
++    }
++};
+ struct Driver {
++    Transcript& witness;
+     Instance i;
+     factory8::HeldEvents events;
+     std::array<float,64> l{},r{};
+@@ -31,7 +43,7 @@
+     AudioBusBuffers out{},in{};
+     ProcessContext context{}; ProcessData data{};
+     int64 cursor{};
+-    explicit Driver(Module& m):i(m,factory8::controls(),0,0) {
++    explicit Driver(Module& m,Transcript& t):witness(t),i(m,factory8::controls(),0,0) {
+         require(i.audio->canProcessSampleSize(kSample32)==kResultTrue,"native sample32");
+         require(i.component->activateBus(kAudio,kInput,0,false)==kResultOk,"disable external input");
+         out.numChannels=2;out.channelBuffers32=outs;in.numChannels=1;in.channelBuffers32=ins;in.silenceFlags=1;
+@@ -49,9 +61,19 @@
+                 e.noteOn.velocity=102.0f/127.0f;e.noteOn.noteId=v;}
+             else {e.type=Event::kNoteOffEvent;e.noteOff.channel=0;e.noteOff.pitch=int16(factory8::notes[v]);e.noteOff.noteId=v;}
+         }
++        const auto before=factory8::fp();
+         pcs::mark(region);
+         const auto result=i.audio->process(data);
+         pcs::mark(pcs::outside);
++        const auto after=factory8::fp();
++        factory8::put(witness.status,cursor);factory8::put(witness.status,result);
++        factory8::put(witness.status,events.count);factory8::put(witness.status,events.reads);
++        factory8::put(witness.status,out.silenceFlags);
++        factory8::putFP(witness.status,before);factory8::putFP(witness.status,after);
++        std::array<float,128> all;
++        for(int n=0;n<64;++n){all[2*n]=l[n];all[2*n+1]=r[n];}
++        witness.pcm.write(reinterpret_cast<const char*>(all.data()),sizeof(all));
++        require(bool(witness.pcm),"callback PCM write");
+         require(result==kResultOk && events.reads==unsigned(events.count),"failed process or wrong event read count");
+         if (s) {
+             for(int n=0;n<64;++n) {s->consume(l[n]);s->consume(r[n]);}
+@@ -85,24 +107,34 @@
+             std::filesystem::equivalent(modulePath,image.dli_fname),"loaded module identity");
+     pcs::Sampler sampler(period);
+     if(period) calibrate();
++    require(period==0,"parity driver requires sampler off");
++    Transcript transcript(dir);
+     Stats observed, warmHeld, quietGuard, transitions;
+     constexpr unsigned warm=1024, guard=64, releaseWait=8192, wakeCycles=16;
+     const unsigned take=held?4096u:wake?32u:16384u, repeats=wake?wakeCycles:1;
+     for(unsigned repeat=0;repeat<repeats;++repeat) {
+-        Driver d(module);
++        Driver d(module,transcript);
++        unsigned snap=0;
++        auto saveState=[&]{factory8::save(dir/("state-"+std::to_string(repeat)+"-"+std::to_string(snap++)),factory8::state(d.i));};
++        saveState();
+         for(unsigned b=0;b<warm;++b) {
+             const bool play=held||released;
+             d.render(play&&b==0?EventType::on:EventType::none,play?&warmHeld:(b>=warm-guard?&quietGuard:nullptr));
+         }
++        saveState();
+         if(released) {
+             for(unsigned b=0;b<releaseWait;++b)
+                 d.render(b==0?EventType::off:EventType::none,b==0?&transitions:(b>=releaseWait-guard?&quietGuard:nullptr));
+         }
++        saveState();
+         for(unsigned b=0;b<take;++b) {
+             const bool onset=wake&&b==0;
+             d.render(onset?EventType::on:EventType::none,&observed,onset?pcs::wakeFirst:pcs::callback);
+         }
++        saveState();
+     }
++    transcript.pcm.close();transcript.status.close();
++    require(bool(transcript.pcm)&&bool(transcript.status),"closing parity transcripts");
+     sampler.stop();
+     pcs::write(dir,entry);
+     require(observed.calls==take*repeats && observed.frames==std::uint64_t(take)*repeats*64 &&
