@@ -690,6 +690,28 @@ void uniformCutoffMatchesScalar() {
             check(!sf::uniform_cutoff::evaluate(tone, drives, uniform)
                 && sameReadout(last, uniform), "invalid drive leaves the completed readout intact");
         }
+        sf::RankDrives different;
+        for (std::size_t voice = 0; voice < different.size(); ++voice) {
+            const double i = double(voice);
+            different[voice] = {-2.75 + .5 * i, (i+1) / 9, i / 9};
+        }
+        const auto sameAsScalar = [&](const sf::ToneControls& controls, const sf::RankDrives& drives) {
+            sf::CutoffReadout a, b;
+            a.loadedBusVolts = b.loadedBusVolts = {-0.0, .5};
+            const bool scalarOk = sf::evaluateCutoff(controls, drives, a);
+            const bool optimizedOk = sf::uniform_cutoff::evaluate(controls, drives, b);
+            return scalarOk == optimizedOk && sameReadout(a, b);
+        };
+        check(sameAsScalar(tone, different), "different voice drives keep ordered scalar output bits");
+        different[2].pressure = std::numeric_limits<double>::denorm_min();
+        check(sameAsScalar(tone, different), "small out-of-packet drive uses original evaluation");
+        different[2].pressure = 0;
+        different[4].velocity = 1.25;
+        check(sameAsScalar(tone, different), "out-of-domain drive retains scalar saturation tracking");
+        different[4].velocity = .5;
+        auto nonordinary = tone;
+        nonordinary.cutoff[1].busBaseVolts = std::numeric_limits<double>::quiet_NaN();
+        check(sameAsScalar(nonordinary, different), "nonordinary cutoff map retains scalar rejection");
         sf::RankDrives invalid;
         invalid.fill({0.0, std::numeric_limits<double>::quiet_NaN(), 0.0});
         sf::CutoffReadout saved, changed;

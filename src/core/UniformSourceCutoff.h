@@ -3,6 +3,7 @@
 // No persistent state, no changed audio/control clock. Keep the validation and
 // ordered arithmetic in sync with source_factory::evaluateCutoff.
 #include "SourceFactoryTones.h"
+#include "HeterogeneousSourceCutoff.h"
 #include <bit>
 #if defined(__x86_64__) && defined(__GNUC__) && defined(__SSE2_MATH__) && !defined(__clang__) \
     && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) && !defined(__NVCOMPILER) \
@@ -48,7 +49,7 @@ static inline bool admitted(const sf::RankDrives& input) noexcept {
 
 static inline bool evaluate(const sf::ToneControls& tone, const sf::RankDrives& input,
                      sf::CutoffReadout& out, bool* tookFast = nullptr) noexcept {
-    if (!admitted(input)) return sf::evaluateCutoff(tone, input, out);
+    if (!admitted(input)) return sf::heterogeneous_cutoff::evaluateOrScalar(tone, input, out);
     if (tookFast) *tookFast = true;
 
     if (!tone.compiled || tone.provenance.version != sf::modelVersion
