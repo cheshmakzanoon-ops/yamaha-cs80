@@ -28,6 +28,8 @@
 
 #include <algorithm>
 #include <array>
+#include <bit>
+#include <cstdint>
 #include <cmath>
 
 namespace cs80::touch
@@ -68,7 +70,16 @@ class TouchVoice
 public:
     struct Output { double a = 0.0, b = 0.0, c = 0.0; };
 
-    void reset() noexcept { a = b = memory = 0.0; strike = 0.0; elapsed = 1 << 30; }
+    void reset() noexcept { a = b = memory = 0.0; strike = 0.0; elapsed = neverAcquired; }
+    // A trapped scalar tick can leave an intermediate negative zero (or
+    // another partially committed value) even on a never-assigned key.
+    // Test representations, not numeric equality affected by DAZ or sNaN.
+    bool isResetState() const noexcept
+    {
+        return elapsed == neverAcquired
+            && (std::bit_cast<std::uint64_t>(a) | std::bit_cast<std::uint64_t>(b)
+                | std::bit_cast<std::uint64_t>(memory)) == 0;
+    }
     // TR edge of a new assignment: the acquisition window opens.
     void trigger(double strikeValue) noexcept
     {
@@ -109,7 +120,8 @@ public:
 
 private:
     double a = 0.0, b = 0.0, memory = 0.0, strike = 0.0;
-    int elapsed = 1 << 30;
+    static constexpr int neverAcquired = 1 << 30;
+    int elapsed = neverAcquired;
 };
 
 // ---- TRG5 diode-OR pressure bus ---------------------------------------------

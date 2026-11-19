@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "0660f868eabee97011f03c86941eac7450bfbe0369c4dfd4887d703071561939",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Matched GCC 14.2 Release/PIC Linux VST3 with pinned JUCE, standard CMake compile and link options.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4342961,
+        1126110,
+        671006
+      ],
+      "delta": [
+        -173568,
+        -13824,
+        -26624
+      ],
+      "percent_change": [
+        -3.842951080353962,
+        -1.2127017879982525,
+        -3.816349640927139
+      ],
+      "stock": [
+        4516529,
+        1139934,
+        697630
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        22252049,
+        6051255,
+        2365118
+      ],
+      "delta": [
+        -31392,
+        -2836,
+        -5232
+      ],
+      "percent_change": [
+        -0.14087590870727731,
+        -0.04684435698108932,
+        -0.22072689687177
+      ],
+      "stock": [
+        22283441,
+        6054091,
+        2370350
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        22426736,
+        6074843,
+        2365492
+      ],
+      "delta": [
+        -31422,
+        -2837,
+        -5237
+      ],
+      "percent_change": [
+        -0.1399135227385968,
+        -0.046678995932658514,
+        -0.22090251563970406
+      ],
+      "stock": [
+        22458158,
+        6077680,
+        2370729
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30778187,
+        8211280,
+        3405019
+      ],
+      "delta": [
+        -33600,
+        -2558,
+        -5600
+      ],
+      "percent_change": [
+        -0.1090491765375374,
+        -0.03114256697051975,
+        -0.1641930687655232
+      ],
+      "stock": [
+        30811787,
+        8213838,
+        3410619
+      ]
+    }
+  },
+  "stock_sha256": "0e63dd1b6ebe78d1f32e88228e44423219eac8860df1502540472eb0a904af51",
+  "timing": false
+}

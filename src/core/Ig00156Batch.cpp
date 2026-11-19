@@ -65,12 +65,17 @@ CS80_AVX2_INLINE __m256i outsidePositiveNormal(V value,double upper)
 CS80_AVX2_INLINE V tanh(V original)
 {
     // The scalar branches do not evaluate the polynomial outside its clamp.
-    const V x=select(greater(absolute(original),4.97),0.0,original);
+    // |x| > limit is exactly the union of the original ordered positive and
+    // negative tests. Keep that FP comparison (including signaling/denormal
+    // observations), and select the sign bit of the endpoint without another
+    // FP compare. An unordered input leaves its polynomial result untouched.
+    const V outside=greater(absolute(original),4.97);
+    const V x=select(outside,0.0,original);
     const V x2=x*x;
     V result=x*(135135.0+x2*(17325.0+x2*(378.0+x2)))
                 /(135135.0+x2*(62370.0+x2*(3150.0+x2*28.0)));
-    result=select(greater(original,4.97),1.0,result);
-    return select(less(original,-4.97),-1.0,result);
+    const V endpoint=_mm256_or_pd(_mm256_and_pd(original.x,_mm256_set1_pd(-0.0)),_mm256_set1_pd(1.0));
+    return select(outside,endpoint,result);
 }
 
 // Bit inspection cannot raise invalid for a signaling NaN. These are

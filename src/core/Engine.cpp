@@ -2725,6 +2725,37 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     // converter exactly once, scaled there by AT SPEED (VC4): the IG00150
     // exponential converter (ws4) adds octaves for it; the bus only shapes it.
     float sharedPressure = 0.0f;
+#if CS80_ENGINE_INLINE_RC_ENVELOPES && !defined(CS80_DISABLE_COLD_TOUCH_BANK)
+#if CS80_IG00156_EXACT_BATCH_BUILD
+    // Entry to the packed scheduler already requires sounding ranks. Keep
+    // its source path unchanged; this shortcut is only for a cold bank.
+    constexpr bool canBeCold = !BatchFilters;
+#else
+    constexpr bool canBeCold = true;
+#endif
+    // A never-triggered keyboard has neither an open acquisition window nor
+    // a held key to drive the a node. Every internal capacitor is still at
+    // its exact reset value. Reproduce the signed C readback of the ordinary
+    // masked/nearest tick; the decimated idle voice can rewrite its pitch
+    // transient later in this very sample. A single prior strike, even one
+    // already released, restores the complete bank's original clock path.
+    // Age is only a cheap rejection in the ordinary played case, never the
+    // proof: require every key and the raw capacitor states checked below.
+    if (canBeCold && voices.front().age == 0 && inlineRc
+        && std::all_of(voices.begin(), voices.end(), [](const Voice& v) {
+               return !v.active && !v.held && v.touch.isResetState();
+           }))
+    {
+        for (auto& voice : voices)
+        {
+            voice.touchA = voice.touchB = 0.0f;
+            voice.touchC = -0.0f;
+            voice.initialPitchTransient = -0.0;
+        }
+        trg5BusVolts = 0.0;
+    }
+    else
+#endif
     if (usesSourceModels(global.renderPolicy))
     {
         // Circuit engine (Phase 2.4): every channel's TWS nodes advance each

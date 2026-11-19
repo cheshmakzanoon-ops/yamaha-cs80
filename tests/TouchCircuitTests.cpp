@@ -14,6 +14,8 @@
 
 #include <algorithm>
 #include <array>
+#include <bit>
+#include <cstdint>
 #include <cmath>
 #include <cstdio>
 #include <random>
@@ -143,6 +145,57 @@ std::vector<float> render(Engine& e, int frames)
     std::vector<float> out(static_cast<std::size_t>(frames) * 2);
     for (int i = 0; i < frames; i += 128) e.render(out.data() + static_cast<std::size_t>(i) * 2, std::min(128, frames - i));
     return out;
+}
+
+// A silent keyboard and a previously played keyboard need not have the
+// same touch state. In particular b holds the last strike, and the inactive
+// C readout changes from +0 at reset to -0 after the first physical tick.
+void testColdKeyboard()
+{
+    auto bits = [](float value) { return std::bit_cast<std::uint32_t>(value); };
+    touch::Coefficients k;
+    k.prepare(96000.0);
+    touch::TouchVoice node;
+    check(node.isResetState(), "unused touch node starts reset");
+    (void) node.tick(k, 0.4);
+    check(!node.isResetState(), "untriggered node driven by pressure is not at reset");
+    node.reset();
+    node.trigger(0.0);
+    check(!node.isResetState(), "even a zero strike opens the acquisition window");
+    for (int i = 0; i < k.windowSample + 16; ++i)
+        (void) node.tick(k, 0.0);
+    check(!node.isResetState(), "closed acquisition window does not become a virgin node");
+
+    for (const double host : { 44100.0, 48000.0, 96000.0 })
+    {
+        Engine e;
+        e.prepare(host);
+        e.setParams(circuit());
+        e.reset();
+        check(bits(e.getVoiceInfo(0).touchC) == bits(0.0f), "reset publishes positive-zero C");
+        for (int block : { 1, 2, 31, 64 })
+        {
+            render(e, block);
+            bool exact = true;
+            for (int v = 0; v < 8; ++v)
+            {
+                const auto readout = e.getVoiceInfo(v);
+                exact &= bits(readout.touchA) == bits(0.0f) && bits(readout.touchB) == bits(0.0f)
+                      && bits(readout.touchC) == bits(-0.0f);
+            }
+            check(exact, "cold circuit readbacks keep all three zero signs");
+        }
+        e.noteOn(60, 0.75f);
+        render(e, static_cast<int>(host * 0.02));
+        const float captured = e.getVoiceInfo(0).touchB;
+        check(captured > 0.7f, "first note after a cold render acquires its strike");
+        e.allNotesOff(false);
+        render(e, 32);
+        check(bits(e.getVoiceInfo(0).touchB) == bits(captured), "silent hard-release retains the acquired b node");
+        e.reset();
+        render(e, 1);
+        check(bits(e.getVoiceInfo(0).touchB) == bits(0.0f), "reset clears the previous acquisition");
+    }
 }
 
 void testEngineGate()
@@ -299,6 +352,7 @@ void testCurves()
 int main()
 {
     testGate();
+    testColdKeyboard();
     testEngineGate();
     testCurves();
     std::printf("Touch circuit: %d checks, %d failures\n", checks, failures);

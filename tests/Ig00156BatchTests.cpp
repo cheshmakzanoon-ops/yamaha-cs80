@@ -189,6 +189,32 @@ void independentStageLayouts(Batch::Kernel kernel) {
   }
  }
 }
+// A quartet can contain two opposite saturated nodes beside polynomial
+// lanes. The slope cache exposes the signed OTA endpoint independently of
+// the public float output; a signless +1 clamp is not an exact substitute.
+void mixedOtaEndpoints(Batch::Kernel kernel) {
+ auto actual=makeStages(),scalar=makeStages();
+ constexpr std::array<double,4> charge{48.0,-48.0,.03125,-.125};
+ for (std::size_t lane=0;lane<charge.size();++lane) {
+  auto m=actual[lane].getMemory();
+  m.z.bp=charge[lane];
+  actual[lane].restoreMemory(m); scalar[lane].restoreMemory(m);
+  actual[lane].set(300.f,1.f,96000.f); scalar[lane].set(300.f,1.f,96000.f);
+ }
+ constexpr Batch::Inputs input{.125f,-.25f,.03125f,-.0625f};
+ const bool used=compare(actual,scalar,input,kernel);
+ check(used==(kernel!=nullptr && Batch::environmentSupported()),"mixed OTA fixture executes selected path");
+ for (std::size_t lane=0;lane<charge.size();++lane) {
+  const auto m=actual[lane].getMemory();
+  const double x=m.v.bp*(1.0/cs80::kIg00156OtaLevel);
+  if (lane<2) {
+   check(lane==0 ? x>4.97 : x< -4.97,"opposite saturated OTA endpoints exercised");
+   check(same(m.slope2,(lane==0 ? 1.0 : -1.0)/x),"cached slope uses correct endpoint sign");
+  } else {
+   check(std::abs(x)<4.97 && std::abs(x)>1.0e-9,"neighboring OTA lanes stay in the polynomial");
+  }
+ }
+}
 void dynamicAdmissionEdges(Batch::Kernel kernel) {
  if(kernel==nullptr) return;
  const double snan=std::bit_cast<double>(std::uint64_t{0x7ff0000000000001ULL});
@@ -316,7 +342,7 @@ void environments(Batch::Kernel kernel) {
 }
 int main() {
  const auto kernel=Batch::selectKernel(true);
- movement(kernel);fallbackCases(kernel);independentStageLayouts(kernel);dynamicAdmissionEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
+ movement(kernel);fallbackCases(kernel);independentStageLayouts(kernel);mixedOtaEndpoints(kernel);dynamicAdmissionEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
 #if CS80_IG00156_EXACT_BATCH_BUILD
  __builtin_cpu_init();
  const bool capable = __builtin_cpu_supports("avx2");
