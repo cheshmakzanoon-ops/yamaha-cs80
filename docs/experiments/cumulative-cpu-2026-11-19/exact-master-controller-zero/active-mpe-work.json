@@ -1,0 +1,77 @@
+{
+  "all_controls_exact": true,
+  "base_replayed_from": "exact-verify-next/global-controls/cost/paired",
+  "callgrind_sha256": "340065228e4a322aacbc4e11fcd39162a3e20fba4b4aa965708e50012175a8c5",
+  "candidate_sha256": "2c0465614e086f7e8c39291a5245ad64d9a57995dcbff6bd624d2dd7cf42c769",
+  "counted_callback_indices": [
+    36,
+    37,
+    38,
+    39
+  ],
+  "counts": {
+    "base": {
+      "A": [
+        37095698,
+        8863074,
+        3924328
+      ],
+      "AA": [
+        37095698,
+        8863074,
+        3924328
+      ],
+      "P": [
+        46355589,
+        11075622,
+        4904456
+      ],
+      "S": [
+        9259891,
+        2212548,
+        980128
+      ]
+    },
+    "final": {
+      "A": [
+        37095259,
+        8861273,
+        3922853
+      ],
+      "AA": [
+        37095259,
+        8861273,
+        3922853
+      ],
+      "P": [
+        46355020,
+        11073401,
+        4902619
+      ],
+      "S": [
+        9259761,
+        2212128,
+        979766
+      ]
+    }
+  },
+  "host_sha256": "904c4a892850f762954f01e30897faad479269108ee22d9988656a765a8a6366",
+  "native_and_guest_within_runtime_byte_exact": true,
+  "new_host_processes_executed": 5,
+  "order": [
+    "Ir",
+    "Dr",
+    "Dw"
+  ],
+  "percentage_change": [
+    -0.0011834256360400606,
+    -0.020320263601545017,
+    -0.03758605294970247
+  ],
+  "scene": "fully active lower and upper MPE pitch, CC1, channel pressure, eight held notes; 48k/64",
+  "separate_extra_callback": 40,
+  "start_callback": 36,
+  "stock_sha256": "7e52c1d6b3af9f4061818070335861d7d535f6be540204ac2ff29b5d9a8e9a98",
+  "timing": false,
+  "width": 4
+}

@@ -1,0 +1,80 @@
+{
+  "actual_rendered_host_processes": 40,
+  "candidate_sha256": "2c0465614e086f7e8c39291a5245ad64d9a57995dcbff6bd624d2dd7cf42c769",
+  "prefix_stereo_frames": 256,
+  "results": {
+    "16/fresh-quiet": {
+      "candidate_Ir_Dr_Dw": [
+        4695144,
+        1214486,
+        695802
+      ],
+      "percentage_change": [
+        -41.69922366111934,
+        -28.63579686146665,
+        -38.278107863087435
+      ],
+      "stock_Ir_Dr_Dw": [
+        8053313,
+        1701814,
+        1127318
+      ]
+    },
+    "16/varied-held-short": {
+      "candidate_Ir_Dr_Dw": [
+        21997260,
+        6147939,
+        2390428
+      ],
+      "percentage_change": [
+        -15.513211135624294,
+        -10.375560449864338,
+        -31.397205926794122
+      ],
+      "stock_Ir_Dr_Dw": [
+        26036331,
+        6859668,
+        3484447
+      ]
+    },
+    "32/fresh-quiet": {
+      "candidate_Ir_Dr_Dw": [
+        4387296,
+        1138590,
+        670858
+      ],
+      "percentage_change": [
+        -42.17845343135931,
+        -29.429768181012438,
+        -31.220998542109655
+      ],
+      "stock_Ir_Dr_Dw": [
+        7587649,
+        1613414,
+        975382
+      ]
+    },
+    "32/varied-held-short": {
+      "candidate_Ir_Dr_Dw": [
+        21683316,
+        6070699,
+        2364964
+      ],
+      "percentage_change": [
+        -15.182190170235152,
+        -10.328508469509,
+        -29.022497359686746
+      ],
+      "stock_Ir_Dr_Dw": [
+        25564579,
+        6769932,
+        3331991
+      ]
+    }
+  },
+  "samples_latency_all_arms": 67,
+  "scope": "Only guest work; no native CPU/RTF/DAW claim.",
+  "stock_sha256": "bf50e0f32f69dfaf798619193bd00587fd599100eaaff5a715b48d45e62b1208",
+  "timing": false,
+  "warm_stereo_frames": 2048
+}

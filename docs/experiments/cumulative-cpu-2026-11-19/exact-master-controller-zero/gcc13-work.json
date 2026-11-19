@@ -1,0 +1,168 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "42b86123a5fcd73a923611ad767fac55fa9a74bbecdd8eb805eb1daf1dc5b3b8",
+  "genuine_host_runs": 70,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "caller must independently establish from same toolchain/flags and link closure",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4910008,
+        1251941,
+        690458
+      ],
+      "delta": [
+        -44800,
+        -3584,
+        -8704
+      ],
+      "percent_change": [
+        -0.9041722706510524,
+        -0.28545827442703253,
+        -1.244918917218041
+      ],
+      "stock": [
+        4954808,
+        1255525,
+        699162
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        22203776,
+        6402438,
+        2599745
+      ],
+      "delta": [
+        -43223,
+        -7064,
+        -4398
+      ],
+      "percent_change": [
+        -0.1942868788729662,
+        -0.11021137055577797,
+        -0.16888473482447008
+      ],
+      "stock": [
+        22246999,
+        6409502,
+        2604143
+      ]
+    },
+    "queues-1": {
+      "candidate": [
+        27252110,
+        7394294,
+        3155293
+      ],
+      "delta": [
+        -43101,
+        -6981,
+        -4371
+      ],
+      "percent_change": [
+        -0.15790682109033705,
+        -0.09432158648340995,
+        -0.13833749411329813
+      ],
+      "stock": [
+        27295211,
+        7401275,
+        3159664
+      ]
+    },
+    "queues-120": {
+      "candidate": [
+        56163490,
+        14009539,
+        5080702
+      ],
+      "delta": [
+        -38787,
+        -4804,
+        -2798
+      ],
+      "percent_change": [
+        -0.06901321809434874,
+        -0.03427916670799337,
+        -0.05504081833382512
+      ],
+      "stock": [
+        56202277,
+        14014343,
+        5083500
+      ]
+    },
+    "queues-6": {
+      "candidate": [
+        40261979,
+        9631071,
+        3989833
+      ],
+      "delta": [
+        -41068,
+        -5947,
+        -4029
+      ],
+      "percent_change": [
+        -0.10189800289789504,
+        -0.061709960487777445,
+        -0.1008798000531816
+      ],
+      "stock": [
+        40303047,
+        9637018,
+        3993862
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        22542862,
+        6439334,
+        2626749
+      ],
+      "delta": [
+        -43101,
+        -6981,
+        -4371
+      ],
+      "percent_change": [
+        -0.1908309156443761,
+        -0.10829442867746922,
+        -0.16612697254401168
+      ],
+      "stock": [
+        22585963,
+        6446315,
+        2631120
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30608806,
+        8570936,
+        3521887
+      ],
+      "delta": [
+        -40851,
+        -5841,
+        -3993
+      ],
+      "percent_change": [
+        -0.13328371015701743,
+        -0.06810250517181454,
+        -0.11324832382270525
+      ],
+      "stock": [
+        30649657,
+        8576777,
+        3525880
+      ]
+    }
+  },
+  "stock_sha256": "7807dbcc4e95c6186d9d041d1788b6e21662c9167d9f1531eeee6d34ffc786bc",
+  "timing": false
+}

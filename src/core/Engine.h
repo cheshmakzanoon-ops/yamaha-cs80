@@ -569,6 +569,7 @@ private:
     // internal sample and their event-set targets restored afterwards.
     void retargetSmoothedSettings() noexcept;
     void beginSmoothedControls() noexcept;
+    void beginMaskedSmoothedControls() noexcept;
     void endSmoothedControls() noexcept;
     float filterInitialTarget(int rank) const noexcept;
     float filterAttackTarget(int rank) const noexcept;

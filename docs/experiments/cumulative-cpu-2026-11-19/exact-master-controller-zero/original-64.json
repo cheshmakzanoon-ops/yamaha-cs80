@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "2c0465614e086f7e8c39291a5245ad64d9a57995dcbff6bd624d2dd7cf42c769",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "caller must independently establish from same toolchain/flags and link closure",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4233276,
+        1100626,
+        658386
+      ],
+      "delta": [
+        -3121445,
+        -468572,
+        -241028
+      ],
+      "percent_change": [
+        -42.44137880961086,
+        -29.86060395182762,
+        -26.7983375842493
+      ],
+      "stock": [
+        7354721,
+        1569198,
+        899414
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        21430409,
+        6018715,
+        2351858
+      ],
+      "delta": [
+        -3899490,
+        -706758,
+        -903984
+      ],
+      "percent_change": [
+        -15.394810693876039,
+        -10.508673516345988,
+        -27.764983681640572
+      ],
+      "stock": [
+        25329899,
+        6725473,
+        3255842
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        21526248,
+        6032063,
+        2352232
+      ],
+      "delta": [
+        -3802359,
+        -692985,
+        -903531
+      ],
+      "percent_change": [
+        -15.012112588742049,
+        -10.304536116322144,
+        -27.751743600501634
+      ],
+      "stock": [
+        25328607,
+        6725048,
+        3255763
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        29914062,
+        8151655,
+        3386883
+      ],
+      "delta": [
+        -3968783,
+        -734662,
+        -1004659
+      ],
+      "percent_change": [
+        -11.713251942096361,
+        -8.267339551357441,
+        -22.87713518395133
+      ],
+      "stock": [
+        33882845,
+        8886317,
+        4391542
+      ]
+    }
+  },
+  "stock_sha256": "bf50e0f32f69dfaf798619193bd00587fd599100eaaff5a715b48d45e62b1208",
+  "timing": false
+}

@@ -1,0 +1,58 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "2c0465614e086f7e8c39291a5245ad64d9a57995dcbff6bd624d2dd7cf42c769",
+  "genuine_host_runs": 20,
+  "host_sha256": "ccd0365157c2bc5b5dcee454b6e6a4b0baa008b81f91686c2da8cc2f900792f0",
+  "matched_build_configuration": "caller must independently establish from same toolchain/flags and link closure",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "legacy-control": {
+      "candidate": [
+        12403899,
+        4164974,
+        1011524
+      ],
+      "delta": [
+        -4050,
+        8,
+        8
+      ],
+      "percent_change": [
+        -0.03264036626843002,
+        0.00019207839871922123,
+        0.0007908920867292262
+      ],
+      "stock": [
+        12407949,
+        4164966,
+        1011516
+      ]
+    },
+    "legacy-wah": {
+      "candidate": [
+        12652171,
+        4236310,
+        1039172
+      ],
+      "delta": [
+        -4050,
+        8,
+        8
+      ],
+      "percent_change": [
+        -0.0320000733236248,
+        0.0001888439492746268,
+        0.0007698496098787102
+      ],
+      "stock": [
+        12656221,
+        4236302,
+        1039164
+      ]
+    }
+  },
+  "stock_sha256": "7e52c1d6b3af9f4061818070335861d7d535f6be540204ac2ff29b5d9a8e9a98",
+  "timing": false
+}
