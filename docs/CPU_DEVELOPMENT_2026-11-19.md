@@ -38,7 +38,20 @@ equivalence. No candidate was timed in that run. Translation tests offer
 useful reproducible differences in software work but do not substitute
 for a qualified native clock, particularly around tiny release tails.
 
-The next large-effect test calls the same musical indices in two independent
-native hosts. It uses fixed quiet, release, held and wake workloads and a
-stock-only gate before any candidate time. No DAW or physical-machine
-measurement is inferred from this shared-cloud design.
+The [separate native crossover](../tools/vst3-pair-crossover/README.md)
+used the same musical indices in two independent native hosts. The
+[stock-only qualification](../tools/vst3-pair-crossover/q-evidence/README.md)
+passed all 35 gates across 48 pairs. The [subsequent FIR-only comparison](../tools/vst3-pair-crossover/c-evidence/README.md)
+completed 48 treatment pairs and 48 fresh identical-stock sentinel pairs.
+The FIR-only treatment passed its 19 numerical gates; the **live** fresh-idle
+identical-build control did not. Its upper 95% endpoint was +2.6005%,
+outside the predeclared +2.5% equivalence bound.
+
+Fresh idle, equal-velocity release and varied-velocity release had
+descriptive treatment estimates of 9.68%, 8.24% and 10.39% less callback
+thread CPU, respectively. These are **unqualified** because the live
+control failed. No native CPU-time improvement, absolute product target
+or physical DAW result has been verified by this experiment. The failure
+and adverse observations are retained, not rounded away or replaced by
+a rerun. The FIR result is relative to the cutoff-only baseline, not
+to latest main.

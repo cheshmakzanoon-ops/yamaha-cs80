@@ -1,0 +1,34 @@
+{
+  "Q_gate": {
+    "decision_sha256": "a7c4f62745d9064617dd221cafa0a3f4ef61708d7ba6c32ab642bbffa4888e0e",
+    "full_normalized_sha256": "b7781459bc53d66918fcf79f8c8c2e23934daf40a2efb1c5476fd00a475ade1b",
+    "gate_count": 35,
+    "gates_passed": 35,
+    "raw_replay_cells": 240,
+    "seal_sha256": "48e3499addacc08e363f43c75e5888ceee98b52c76978f450191e7f4994dd8ae",
+    "terminal_sha256": "6bb182fcd91ccb6515c744be21ca3fa1b12dba9329f5d26272cbb86aefc305fa"
+  },
+  "build_ids": [
+    "9775d907e5c790f8a8bf8bf420b31ea4a4599940",
+    "270ab5e3bc6a7582fb174712564c9a9487cde578",
+    "4bb68550a4a7157177c4f69d57d52f84bb0f5d81"
+  ],
+  "callback_clock_reads": 0,
+  "complete": false,
+  "cpu": 0,
+  "empty_clock_reads": 0,
+  "error": "ValueError: wrong pinned worker/image identity",
+  "fir_sha256": "74f2507db4a7042a23a96b9a8c2249cc2f76d1f7f417ebb4838498d7f0578895",
+  "host_sha256": "a8d8f21f1bdf4f2ebdae0f5d234a40bce849fc7afbbbfc1ed01867ab3b400726",
+  "placement_scope": "16 independent wake placements; full five scenes",
+  "schema": "cs80-C-FIR-only-full-dry-v1",
+  "started_at_monotonic_ns": 7211800276257,
+  "stock_sha256": "0ed90e446f1faa6153b0e2f76f074b7da62201be49f76fc9183375e9ff20edf2",
+  "supervisor_cpu": 1,
+  "whole_resources": {
+    "isolated_0": {
+      "pooled_worker_cpu_ns": 13458253999,
+      "whole_stage_wall_ns": 13707505063
+    }
+  }
+}
