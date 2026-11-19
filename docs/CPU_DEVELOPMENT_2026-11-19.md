@@ -60,3 +60,13 @@ or physical DAW result has been verified by this experiment. The failure
 and adverse observations are retained, not rounded away or replaced by
 a rerun. The FIR result is relative to the cutoff-only baseline, not
 to latest main.
+
+## Integrated release versus the original
+
+The [end-to-end work comparison](experiments/cumulative-cpu-2026-11-19/README.md)
+uses actual original and integrated VST3 builds. The optional filter batch
+was also disabled in a separate pair. Both comparisons keep audio/state
+parity and show deterministic work reductions, not CPU-time savings.
+The [distinct original-only native admission](experiments/cumulative-cpu-2026-11-19/q0-evidence/README.md)
+failed six of 35 clock controls after all 48 pairs, so the final build was
+not timed there.
