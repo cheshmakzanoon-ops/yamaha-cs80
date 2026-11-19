@@ -1,0 +1,52 @@
+{
+  "acquisition_class": "cloud-diagnostic",
+  "gates": {
+    "same_stock_positive_common_calls": {
+      "interval_95_percent": [
+        -4.57312205492367,
+        1.3206569053229296
+      ],
+      "pass": false,
+      "point_percent": -1.670381065422579,
+      "required_interval_percent": [
+        -2,
+        2
+      ]
+    },
+    "same_stock_twins": {
+      "interval_95_percent": [
+        -6.315187953618113,
+        1.5266619705172744
+      ],
+      "pass": false,
+      "point_percent": -2.473048625498098,
+      "required_interval_percent": [
+        -2,
+        2
+      ]
+    },
+    "same_stock_with_extra_calls": {
+      "interval_95_percent": [
+        1.5581972878100034,
+        7.600109587082319
+      ],
+      "pass": false,
+      "point_percent": 4.535511466845001,
+      "required_interval_percent": [
+        3,
+        10
+      ]
+    }
+  },
+  "gates_pass": false,
+  "median_callback_thread_cpu_ns_descriptive": {
+    "S+": 961342.252757353,
+    "S0": 958090.9892578125,
+    "S1": 947146.3349609375
+  },
+  "qualified": false,
+  "schema": "cs80-vst3-stock-interleave-analysis-v1",
+  "scope": "cloud-only diagnostic; not dedicated-target qualification or a CPU saving",
+  "session_id": "92a1182e-8ba0-4360-8599-79ec1fa07773",
+  "triplet_count": 12
+}
