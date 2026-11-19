@@ -1283,10 +1283,11 @@ private:
         // Group address advancement only. Every floating-point accumulation
         // still occurs in the original increasing tap index, one at a time.
         int i = 0;
-        for (; i + 4 <= mid; i += 4)
+        for (; i + 8 <= mid; i += 8)
         {
             term(0); term(1); term(2); term(3);
-            newest -= 8; ascending += 8; coefficient += 8;
+            term(4); term(5); term(6); term(7);
+            newest -= 16; ascending += 16; coefficient += 16;
         }
         for (; i < mid; ++i)
         {

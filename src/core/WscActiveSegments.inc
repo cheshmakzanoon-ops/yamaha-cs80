@@ -35,8 +35,20 @@
         diagnostics.rawPin7Volts=raw.pin7;diagnostics.coupledInputVolts=raw.u;
         diagnostics.trianglePin3Volts=raw.triangle;diagnostics.shaperInputVolts=raw.w;diagnostics.raw=raw.ungatedValue;
         WscOutputVolts output;
+#if defined(CS80_WSC_BORROWED_EXPLICIT_TERMINAL)
+        const auto finish=[&](double& pin, double value, double slope, double constant,
+                              std::size_t branch) noexcept {
+            const double a=value-constant,b=slope/rate+inverseTauSamples*a;
+            pin=constant+a*weightedArea-b*weightedMoment+state.residual[branch][state.residualCursor];
+            state.residual[branch][state.residualCursor]=0.;
+        };
+        finish(output.sawPin5,raw.value.sawPin5,raw.slope.sawPin5,raw.constant.sawPin5,0);
+        finish(output.pulsePin7,raw.value.pulsePin7,raw.slope.pulsePin7,raw.constant.pulsePin7,1);
+        finish(output.sinePin2,raw.value.sinePin2,raw.slope.sinePin2,raw.constant.sinePin2,2);
+#else
         double* destinations[3]={&output.sawPin5,&output.pulsePin7,&output.sinePin2};
         const auto values=asArray(raw.value),slopes=asArray(raw.slope),constants=asArray(raw.constant);
         for(std::size_t branch=0;branch<3;++branch){const double a=values[branch]-constants[branch],b=slopes[branch]/rate+inverseTauSamples*a;*destinations[branch]=constants[branch]+a*weightedArea-b*weightedMoment+state.residual[branch][state.residualCursor];state.residual[branch][state.residualCursor]=0.;}
+#endif
         state.residualCursor=(state.residualCursor+1)%OscillatorResidualKernel::length;
         return output;

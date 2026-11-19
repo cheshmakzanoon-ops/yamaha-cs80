@@ -21,7 +21,10 @@ WscOutputVolts ReconstructedOscillator::tickBorrowedHeld(double f) noexcept {
         operator const Nodes&() const noexcept { return *node; }
         RightEdge& operator=(const Nodes& n) noexcept { scratch->set(n); node=&scratch->value; return *this; }
     } after{&endNodes,&right};
+// This emitted path already requires the BorrowedHeld masked/nearest gate.
+#define CS80_WSC_BORROWED_EXPLICIT_TERMINAL 1
 #include "WscActiveSegments.inc"
+#undef CS80_WSC_BORROWED_EXPLICIT_TERMINAL
 }
 }
 #endif
