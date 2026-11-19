@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "8228a14c66de82f91590b9a60f2a6dbce2dd5847c2d6511574ce629d5cd5a7fa",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Same GCC 14.2 Release/PIC baseline with filter tiles; same linked inputs except the two changed processor objects recompiled under the original CMake command.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4623665,
+        1175262,
+        721182
+      ],
+      "delta": [
+        -8008,
+        -2216,
+        -1000
+      ],
+      "percent_change": [
+        -0.17289648902243315,
+        -0.188198845328745,
+        -0.13846925013362282
+      ],
+      "stock": [
+        4631673,
+        1177478,
+        722182
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        22369651,
+        6088714,
+        2381040
+      ],
+      "delta": [
+        -8004,
+        -2212,
+        -1000
+      ],
+      "percent_change": [
+        -0.035767822857220744,
+        -0.036316317092015236,
+        -0.04198082315998052
+      ],
+      "stock": [
+        22377655,
+        6090926,
+        2382040
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        22544371,
+        6112313,
+        2381422
+      ],
+      "delta": [
+        -8004,
+        -2212,
+        -1000
+      ],
+      "percent_change": [
+        -0.03549071882673111,
+        -0.03617615432106337,
+        -0.04197409191150854
+      ],
+      "stock": [
+        22552375,
+        6114525,
+        2382422
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30898042,
+        8248600,
+        3421354
+      ],
+      "delta": [
+        -7960,
+        -2189,
+        -1010
+      ],
+      "percent_change": [
+        -0.025755515061443406,
+        -0.026530796024477173,
+        -0.029511764382748298
+      ],
+      "stock": [
+        30906002,
+        8250789,
+        3422364
+      ]
+    }
+  },
+  "stock_sha256": "03bdc93b6f7f7489bebe4a269428915ea99825136dce7f39d3f50aa8a6369f42",
+  "timing": false
+}

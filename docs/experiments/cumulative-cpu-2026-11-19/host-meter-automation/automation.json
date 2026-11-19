@@ -1,0 +1,80 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "8228a14c66de82f91590b9a60f2a6dbce2dd5847c2d6511574ce629d5cd5a7fa",
+  "genuine_host_runs": 30,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Same GCC 14.2 Release/PIC baseline with filter tiles; same linked inputs except the two changed processor objects recompiled under the original CMake command.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "queues-1": {
+      "candidate": [
+        27139603,
+        6992493,
+        2917026
+      ],
+      "delta": [
+        -6396,
+        -1952,
+        -940
+      ],
+      "percent_change": [
+        -0.023561483222628868,
+        -0.02790786116696893,
+        -0.032214220453562516
+      ],
+      "stock": [
+        27145999,
+        6994445,
+        2917966
+      ]
+    },
+    "queues-120": {
+      "candidate": [
+        57464280,
+        13725508,
+        5475012
+      ],
+      "delta": [
+        -2176,
+        -500,
+        20
+      ],
+      "percent_change": [
+        -0.0037865568045469867,
+        -0.003642719718653814,
+        0.000365297337420767
+      ],
+      "stock": [
+        57466456,
+        13726008,
+        5474992
+      ]
+    },
+    "queues-6": {
+      "candidate": [
+        41501991,
+        9594320,
+        4392436
+      ],
+      "delta": [
+        -6116,
+        -2052,
+        -920
+      ],
+      "percent_change": [
+        -0.014734471027551316,
+        -0.021383081022703164,
+        -0.020940711383279662
+      ],
+      "stock": [
+        41508107,
+        9596372,
+        4393356
+      ]
+    }
+  },
+  "stock_sha256": "03bdc93b6f7f7489bebe4a269428915ea99825136dce7f39d3f50aa8a6369f42",
+  "timing": false
+}

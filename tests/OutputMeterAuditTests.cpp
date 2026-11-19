@@ -121,6 +121,67 @@ void noDenormalsAccuracy() {
     std::puts("DAZ/FTZ-specific check not applicable on this architecture");
 #endif
 }
+// Exercise bulk reductions across different vector starts, tails and calls.
+// The oracle reads uint32_t encodings independently and never does float math.
+void bulkRepresentationAndFlags() {
+    constexpr std::array<std::uint32_t,16> special{
+        0u,0x80000000u,1u,0x807fffffu,0x00800000u,0xbf800000u,0x3f800001u,0xbf7fffffu,
+        0x7f7fffffu,0xff7fffffu,0x7f800000u,0xff800000u,
+        0x7f800001u,0xff800002u,0x7fc23456u,0xffd34567u};
+    std::array<std::uint32_t,520> raw{};
+    std::array<float,raw.size()> audio{};
+    std::uint32_t seed=0x2394a0c1u;
+    for (size_t i=0;i<raw.size();++i) {
+        seed ^= seed<<13; seed ^= seed>>17; seed ^= seed<<5;
+        raw[i]=i%3==0 ? special[(i/3)%special.size()] : seed;
+        audio[i]=sample(raw[i]);
+    }
+    auto run=[&] {
+        for(int offset=0;offset<8;++offset)
+            for(int n=0;n<=512;++n) {
+                // Make both earlier and later observations consequential (e.g.
+                // a short second channel after a long channel's invalid flag).
+                cs80::OutputMeterBlock block;
+                const auto prior=special[static_cast<size_t>(n+offset)%special.size()];
+                block.addSample(sample(prior));
+                const int cut=(n*13+offset)%(n+1);
+                block.addSamples(audio.data()+offset,cut);
+                block.addSamples(audio.data()+offset+cut,n-cut);
+                const auto result=block.reading();
+                std::uint32_t peak=0; bool nonFinite=false;
+                auto observe=[&](std::uint32_t word) {
+                    const auto mag=word&0x7fffffffu;
+                    if ((mag>>23)==255u) nonFinite=true;
+                    else if (mag>peak) peak=mag;
+                };
+                observe(prior);
+                for(int i=0;i<n;++i) observe(raw[static_cast<size_t>(i+offset)]);
+                check(bits(result.samplePeak)==peak && result.overRange==(peak>0x3f800000u)
+                      && result.nonFinite==nonFinite,"bulk peak and flags match integer oracle at all offsets and tails");
+            }
+    };
+    std::fenv_t caller{};
+    const bool held=std::feholdexcept(&caller)==0;
+    if(held) std::feraiseexcept(FE_DIVBYZERO);
+#ifdef CS80_AUDIT_X86_MXCSR
+    const auto original=_mm_getcsr();
+    for(unsigned seedFlags: {0u, 0x25u}) for(unsigned flush: {0u,0x8040u}) {
+        const auto requested=((original|0x1f80u)&~0x807fu)|seedFlags|flush;
+        _mm_setcsr(requested);
+        const auto before=std::fetestexcept(FE_ALL_EXCEPT);
+        run();
+        check(_mm_getcsr()==requested && std::fetestexcept(FE_ALL_EXCEPT)==before,
+              "bulk metering preserves MXCSR control/sticky bits and process exception flags");
+    }
+    _mm_setcsr(original);
+#else
+    const auto before=std::fetestexcept(FE_ALL_EXCEPT);
+    run();
+    check(std::fetestexcept(FE_ALL_EXCEPT)==before,"bulk metering preserves process exception flags");
+#endif
+    if(held) std::fesetenv(&caller);
+    check(std::memcmp(audio.data(),raw.data(),sizeof(audio))==0,"bulk processing preserves every sample payload");
+}
 void concurrentConservation() {
     cs80::OutputMeter meter;std::atomic<bool> done{false};
     std::uint32_t expected=0,observed=0;bool sawRange=false,sawInvalid=false,valid=true;
@@ -148,7 +209,7 @@ void concurrentConservation() {
 }
 }
 int main() {
-    interleavings();staleLoadValidation();exactRepresentationAndReadOnly();noDenormalsAccuracy();concurrentConservation();
+    interleavings();staleLoadValidation();exactRepresentationAndReadOnly();noDenormalsAccuracy();bulkRepresentationAndFlags();concurrentConservation();
     std::printf("Independent output-meter audit: %d checks, %d failures\n",checks,failures);
     return failures?1:0;
 }

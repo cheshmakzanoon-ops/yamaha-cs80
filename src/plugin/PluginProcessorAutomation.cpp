@@ -84,19 +84,18 @@ bool Cs80AudioProcessor::attachHostAutomationQueue(juce::AudioProcessorParameter
 void Cs80AudioProcessor::endHostAutomationBlock() noexcept
 {
     if (!hostAutomationBlock) return;
-    for (size_t i = 0; i < automationCurves.size(); ++i)
+    // The live ascending traversal rereads the mask after each borrowed
+    // callback, matching the original scan if a later lane changes.
+    visitActiveHostAutomationLanes([&](size_t i)
     {
         auto& curve = automationCurves[i];
-        if (curve.active())
-        {
-            automationCurrent[i] = curve.finalValue();
-            curve.commitFinalValue(automationCurrent[i]);
-            if (automationParameters[i] != nullptr)
-                automationParameterReadback[i] = automationParameters[i]->getValue();
-            curve = {};
-            markHostAutomationLane(i, false);
-        }
-    }
+        automationCurrent[i] = curve.finalValue();
+        curve.commitFinalValue(automationCurrent[i]);
+        if (automationParameters[i] != nullptr)
+            automationParameterReadback[i] = automationParameters[i]->getValue();
+        curve = {};
+        markHostAutomationLane(i, false);
+    });
     hostAutomationBlock = false;
     hostAutomationVst3 = false;
 }

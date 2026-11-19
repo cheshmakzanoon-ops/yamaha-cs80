@@ -38,7 +38,26 @@ public:
     void addSamples(const float* samples, int count) noexcept
     {
         if (samples == nullptr) return;
-        for (int sample = 0; sample < count; ++sample) addSample(samples[sample]);
+        // Short callbacks do not amortize a packed reduction and its tail.
+        if (count < 16)
+        {
+            for (int sample = 0; sample < count; ++sample) addSample(samples[sample]);
+            return;
+        }
+        // Magnitudes are nonnegative signed integers after removing the sign bit.
+        // A mask of all ones retains a finite magnitude; zero suppresses NaN/Inf.
+        // These independent integer max/AND reductions can run in SIMD without
+        // floating-point comparisons or touching exception flags, even for sNaN.
+        std::int32_t finitePeak = 0, allFinite = -1;
+        for (int sample = 0; sample < count; ++sample)
+        {
+            const auto magnitude = std::bit_cast<std::int32_t>(samples[sample]) & 0x7fffffff;
+            const auto finiteMask = -static_cast<std::int32_t>(magnitude < 0x7f800000);
+            finitePeak = std::max(finitePeak, magnitude & finiteMask);
+            allFinite &= finiteMask;
+        }
+        peakBits = std::max(peakBits, static_cast<std::uint32_t>(finitePeak));
+        invalid |= allFinite == 0;
     }
 
     OutputMeterReading reading() const noexcept

@@ -1807,8 +1807,7 @@ void Cs80AudioProcessor::applyMidiLearn(const juce::MidiBuffer& midi) noexcept
 
 void Cs80AudioProcessor::applyVst3MidiLearn(const juce::MidiBuffer& midi) noexcept
 {
-    if (std::none_of(automationCurves.begin(), automationCurves.end(),
-                     [](const auto& curve) { return curve.active(); }))
+    if (activeHostCurveCount == 0)
     {
         prepareHostAutomation();
         applyMidiLearn(midi);
