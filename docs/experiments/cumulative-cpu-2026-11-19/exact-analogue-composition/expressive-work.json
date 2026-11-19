@@ -1,0 +1,594 @@
+{
+  "comparison_module_sha256": "7e52c1d6b3af9f4061818070335861d7d535f6be540204ac2ff29b5d9a8e9a98",
+  "counter": "Callgrind 3.24.0, guest Ir/Dr/Dw into actual loaded VST3, 4x64 at 48k, host stub excluded; no clock",
+  "host_sha256": "b09deebcc4249f434e39df3ebac568eba148a90186da04ed6e5962726d72a99b",
+  "processes": 80,
+  "scenes": {
+    "fresh-quiet": {
+      "baseline": [
+        4340921,
+        1127646,
+        670490
+      ],
+      "candidate": [
+        4270558,
+        1105641,
+        665810
+      ],
+      "change_percent": [
+        -1.6209233017601565,
+        -1.9514102830143503,
+        -0.6979969872779609
+      ],
+      "counts": {
+        "A": [
+          4340921,
+          1127646,
+          670490
+        ],
+        "A2": [
+          4340921,
+          1127646,
+          670490
+        ],
+        "C": [
+          4270558,
+          1105641,
+          665810
+        ],
+        "C2": [
+          4270558,
+          1105641,
+          665810
+        ],
+        "CP": [
+          5340414,
+          1382467,
+          832471
+        ],
+        "CS": [
+          1069856,
+          276826,
+          166661
+        ],
+        "P": [
+          5428396,
+          1410174,
+          838321
+        ],
+        "S": [
+          1087475,
+          282528,
+          167831
+        ]
+      },
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "guest_fp_sha256": "9dab22a7a1491624c672611debb6285098674deea3bbe3906055cc22e16b7b67",
+      "native_hashes": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "69a728e9a175f055d3544e143e99a174e63402fc090988fcf7ab216f9c65e4e0",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "c597b1b463b7cec49548fac00d7588c9652bb67cc2b1b0c88676bf8f1558571e",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "held-short": {
+      "baseline": [
+        21640729,
+        6056375,
+        2369210
+      ],
+      "candidate": [
+        21474371,
+        6021020,
+        2358964
+      ],
+      "change_percent": [
+        -0.768726413976165,
+        -0.5837650409692267,
+        -0.43246483004883485
+      ],
+      "counts": {
+        "A": [
+          21640729,
+          6056375,
+          2369210
+        ],
+        "A2": [
+          21640729,
+          6056375,
+          2369210
+        ],
+        "C": [
+          21474371,
+          6021020,
+          2358964
+        ],
+        "C2": [
+          21474371,
+          6021020,
+          2358964
+        ],
+        "CP": [
+          26832133,
+          7524500,
+          2947792
+        ],
+        "CS": [
+          5357762,
+          1503480,
+          588828
+        ],
+        "P": [
+          27040088,
+          7568683,
+          2960597
+        ],
+        "S": [
+          5399359,
+          1512308,
+          591387
+        ]
+      },
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "guest_fp_sha256": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+      "native_hashes": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "9d8625d97c5b07973ec1a533aee87708545f91c312fb4e6179ada22773df7a95",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "pressure-duo": {
+      "baseline": [
+        22803576,
+        6322651,
+        2455600
+      ],
+      "candidate": [
+        22569113,
+        6279629,
+        2445357
+      ],
+      "change_percent": [
+        -1.028185228492233,
+        -0.6804424283421622,
+        -0.417128196774719
+      ],
+      "counts": {
+        "A": [
+          22803576,
+          6322651,
+          2455600
+        ],
+        "A2": [
+          22803576,
+          6322651,
+          2455600
+        ],
+        "C": [
+          22569113,
+          6279629,
+          2445357
+        ],
+        "C2": [
+          22569113,
+          6279629,
+          2445357
+        ],
+        "CP": [
+          28205333,
+          7849083,
+          3056123
+        ],
+        "CS": [
+          5636220,
+          1569454,
+          610766
+        ],
+        "P": [
+          28498399,
+          7902877,
+          3068931
+        ],
+        "S": [
+          5694823,
+          1580226,
+          613331
+        ]
+      },
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "guest_fp_sha256": "03def55a7dda5b4d27000730a6cdbf47e1bf58d34fab130703614bb7d34affc5",
+      "native_hashes": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "9db091549574c84f6b3ae774855307e513aca0754a3a7f028ae25449c46fec92",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "139dfecb24dd04e8653d77d538351ef286d30a30ca861cc844a95e551997381b",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "pressure-equal": {
+      "baseline": [
+        22590745,
+        6299063,
+        2455226
+      ],
+      "candidate": [
+        21910851,
+        6071196,
+        2393268
+      ],
+      "change_percent": [
+        -3.0096130074506173,
+        -3.617474535498375,
+        -2.523515146874463
+      ],
+      "counts": {
+        "A": [
+          22590745,
+          6299063,
+          2455226
+        ],
+        "A2": [
+          22590745,
+          6299063,
+          2455226
+        ],
+        "C": [
+          21910851,
+          6071196,
+          2393268
+        ],
+        "C2": [
+          21910851,
+          6071196,
+          2393268
+        ],
+        "CP": [
+          27378351,
+          7587220,
+          2990672
+        ],
+        "CS": [
+          5467500,
+          1516024,
+          597404
+        ],
+        "P": [
+          28228226,
+          7872043,
+          3068117
+        ],
+        "S": [
+          5637481,
+          1572980,
+          612891
+        ]
+      },
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "guest_fp_sha256": "03def55a7dda5b4d27000730a6cdbf47e1bf58d34fab130703614bb7d34affc5",
+      "native_hashes": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "9db091549574c84f6b3ae774855307e513aca0754a3a7f028ae25449c46fec92",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "96dbd1d014e8d03df7e42e6b03ebd1df1315c04ebb857075cdefc86a7cdd954a",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "pressure-poly": {
+      "baseline": [
+        22803576,
+        6322651,
+        2455600
+      ],
+      "candidate": [
+        22558873,
+        6278093,
+        2445357
+      ],
+      "change_percent": [
+        -1.0730904661619738,
+        -0.7047360355648288,
+        -0.417128196774719
+      ],
+      "counts": {
+        "A": [
+          22803576,
+          6322651,
+          2455600
+        ],
+        "A2": [
+          22803576,
+          6322651,
+          2455600
+        ],
+        "C": [
+          22558873,
+          6278093,
+          2445357
+        ],
+        "C2": [
+          22558873,
+          6278093,
+          2445357
+        ],
+        "CP": [
+          28192239,
+          7847163,
+          3056123
+        ],
+        "CS": [
+          5633366,
+          1569070,
+          610766
+        ],
+        "P": [
+          28498105,
+          7902877,
+          3068931
+        ],
+        "S": [
+          5694529,
+          1580226,
+          613331
+        ]
+      },
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "guest_fp_sha256": "03def55a7dda5b4d27000730a6cdbf47e1bf58d34fab130703614bb7d34affc5",
+      "native_hashes": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "9db091549574c84f6b3ae774855307e513aca0754a3a7f028ae25449c46fec92",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "eb0162d2be931a1ac6e5514b73b5ec1bb2eabbd539f452f0c496e8cee92c83f7",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "pressure-varied": {
+      "baseline": [
+        22802296,
+        6322651,
+        2455600
+      ],
+      "candidate": [
+        22042521,
+        6084557,
+        2393645
+      ],
+      "change_percent": [
+        -3.3320109518795826,
+        -3.7657305456208165,
+        -2.5230086333279034
+      ],
+      "counts": {
+        "A": [
+          22802296,
+          6322651,
+          2455600
+        ],
+        "A2": [
+          22802296,
+          6322651,
+          2455600
+        ],
+        "C": [
+          22042521,
+          6084557,
+          2393645
+        ],
+        "C2": [
+          22042521,
+          6084557,
+          2393645
+        ],
+        "CP": [
+          27547093,
+          7605243,
+          2991483
+        ],
+        "CS": [
+          5504572,
+          1520686,
+          597838
+        ],
+        "P": [
+          28496799,
+          7902877,
+          3068931
+        ],
+        "S": [
+          5694503,
+          1580226,
+          613331
+        ]
+      },
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "guest_fp_sha256": "03def55a7dda5b4d27000730a6cdbf47e1bf58d34fab130703614bb7d34affc5",
+      "native_hashes": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "9db091549574c84f6b3ae774855307e513aca0754a3a7f028ae25449c46fec92",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "ed734a443fdc53f938a282469c2cac0d656ff9f28753cf2a3a59f22b8311d23a",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "varied-held-short": {
+      "baseline": [
+        21815416,
+        6079963,
+        2369584
+      ],
+      "candidate": [
+        21570201,
+        6034381,
+        2359341
+      ],
+      "change_percent": [
+        -1.124044574717255,
+        -0.7497085097392863,
+        -0.43226996806190454
+      ],
+      "counts": {
+        "A": [
+          21815416,
+          6079963,
+          2369584
+        ],
+        "A2": [
+          21815416,
+          6079963,
+          2369584
+        ],
+        "C": [
+          21570201,
+          6034381,
+          2359341
+        ],
+        "C2": [
+          21570201,
+          6034381,
+          2359341
+        ],
+        "CP": [
+          26956075,
+          7542523,
+          2948603
+        ],
+        "CS": [
+          5385874,
+          1508142,
+          589262
+        ],
+        "P": [
+          27262581,
+          7599517,
+          2961411
+        ],
+        "S": [
+          5447165,
+          1519554,
+          591827
+        ]
+      },
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "guest_fp_sha256": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+      "native_hashes": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "f68017674f9ebdf86a0a28d4f28910b4bb699ef96f1210a09b0cb4f4fa3197ee",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    },
+    "varied-wake-short": {
+      "baseline": [
+        30172880,
+        8195708,
+        3404229
+      ],
+      "candidate": [
+        29957875,
+        8154137,
+        3394028
+      ],
+      "change_percent": [
+        -0.7125769896675425,
+        -0.5072289056662341,
+        -0.29965669172079784
+      ],
+      "counts": {
+        "A": [
+          30172880,
+          8195708,
+          3404229
+        ],
+        "A2": [
+          30172880,
+          8195708,
+          3404229
+        ],
+        "C": [
+          29957875,
+          8154137,
+          3394028
+        ],
+        "C2": [
+          29957875,
+          8154137,
+          3394028
+        ],
+        "CP": [
+          35513291,
+          9697058,
+          3999075
+        ],
+        "CS": [
+          5555416,
+          1542921,
+          605047
+        ],
+        "P": [
+          35789626,
+          9749989,
+          4011828
+        ],
+        "S": [
+          5616746,
+          1554281,
+          607599
+        ]
+      },
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "guest_fp_sha256": "c6413108fd8df193b5d8b0620b8f945062ccbbc1dd7dfa7280920615aa64aa97",
+      "native_hashes": {
+        "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "fp.bin": "fb73e07cd7bfb7a6c0da659948bfbdfb64edc63dea3c615946c9d228407e0895",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "pcm.bin": "5b91e50a060d8b408d6fb8c5bda314a6d6b9ad5c2b0e8a179bc36d3585b4d865",
+        "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+      }
+    }
+  },
+  "stock_module_sha256": "48f10c8fd18a46553fd1235b48e00697db603972a475754cf6f4aaa844aea2d9",
+  "verification": "independent per-arm repeat and 4 + 1 conservation; native stock/candidate and translated byte controls; drive-to-PCM positive controls"
+}

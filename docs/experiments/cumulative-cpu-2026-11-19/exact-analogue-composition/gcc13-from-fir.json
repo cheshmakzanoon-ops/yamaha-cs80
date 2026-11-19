@@ -1,0 +1,168 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "7807dbcc4e95c6186d9d041d1788b6e21662c9167d9f1531eeee6d34ffc786bc",
+  "genuine_host_runs": 70,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Matched Linux x86-64 GCC Release/PIC, pinned JUCE and shared runtime. Candidate pair built with full dependent link closure.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4954808,
+        1255525,
+        699162
+      ],
+      "delta": [
+        -17359,
+        -9030,
+        -1449
+      ],
+      "percent_change": [
+        -0.34912343048815536,
+        -0.7140851920240717,
+        -0.20681947614296664
+      ],
+      "stock": [
+        4972167,
+        1264555,
+        700611
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        22246999,
+        6409502,
+        2604143
+      ],
+      "delta": [
+        -121573,
+        58149,
+        -10135
+      ],
+      "percent_change": [
+        -0.5434991558692258,
+        0.9155372091584265,
+        -0.38767873959846655
+      ],
+      "stock": [
+        22368572,
+        6351353,
+        2614278
+      ]
+    },
+    "queues-1": {
+      "candidate": [
+        27295211,
+        7401275,
+        3159664
+      ],
+      "delta": [
+        -121843,
+        61733,
+        -10135
+      ],
+      "percent_change": [
+        -0.4444058796397308,
+        0.8411015292234856,
+        -0.3197363618324064
+      ],
+      "stock": [
+        27417054,
+        7339542,
+        3169799
+      ]
+    },
+    "queues-120": {
+      "candidate": [
+        56202277,
+        14014343,
+        5083500
+      ],
+      "delta": [
+        -251616,
+        49058,
+        -2397
+      ],
+      "percent_change": [
+        -0.4457017694067617,
+        0.3512853479180697,
+        -0.04713032922216081
+      ],
+      "stock": [
+        56453893,
+        13965285,
+        5085897
+      ]
+    },
+    "queues-6": {
+      "candidate": [
+        40303047,
+        9637018,
+        3993862
+      ],
+      "delta": [
+        -122044,
+        69705,
+        -10125
+      ],
+      "percent_change": [
+        -0.3019016085826498,
+        0.7285744701777813,
+        -0.25287294888819567
+      ],
+      "stock": [
+        40425091,
+        9567313,
+        4003987
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        22585963,
+        6446315,
+        2631120
+      ],
+      "delta": [
+        -121579,
+        61733,
+        -10135
+      ],
+      "percent_change": [
+        -0.5354124193626946,
+        0.966907465516145,
+        -0.38371910322933606
+      ],
+      "stock": [
+        22707542,
+        6384582,
+        2641255
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        30649657,
+        8576777,
+        3525880
+      ],
+      "delta": [
+        -171854,
+        102818,
+        -15196
+      ],
+      "percent_change": [
+        -0.557578114843234,
+        1.213340777315538,
+        -0.4291350990489896
+      ],
+      "stock": [
+        30821511,
+        8473959,
+        3541076
+      ]
+    }
+  },
+  "stock_sha256": "8476ce91c848bd1354869fc29c62248d1585de4694b863ded9b17bb7c60f3952",
+  "timing": false
+}

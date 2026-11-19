@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "7e52c1d6b3af9f4061818070335861d7d535f6be540204ac2ff29b5d9a8e9a98",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Matched Linux x86-64 GCC Release/PIC, pinned JUCE and shared runtime. Candidate pair built with full dependent link closure.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4270558,
+        1105641,
+        665810
+      ],
+      "delta": [
+        -3084163,
+        -463557,
+        -233604
+      ],
+      "percent_change": [
+        -41.934466310822664,
+        -29.541013944702964,
+        -25.972911251103497
+      ],
+      "stock": [
+        7354721,
+        1569198,
+        899414
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        21474371,
+        6021020,
+        2358964
+      ],
+      "delta": [
+        -3855528,
+        -704453,
+        -896878
+      ],
+      "percent_change": [
+        -15.221252954857814,
+        -10.474400833963648,
+        -27.546729847455744
+      ],
+      "stock": [
+        25329899,
+        6725473,
+        3255842
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        21570201,
+        6034381,
+        2359341
+      ],
+      "delta": [
+        -3758406,
+        -690667,
+        -896422
+      ],
+      "percent_change": [
+        -14.83858152957247,
+        -10.270067960853217,
+        -27.533392326161334
+      ],
+      "stock": [
+        25328607,
+        6725048,
+        3255763
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        29957875,
+        8154137,
+        3394028
+      ],
+      "delta": [
+        -3924970,
+        -732180,
+        -997514
+      ],
+      "percent_change": [
+        -11.58394461858206,
+        -8.239408969992855,
+        -22.71443606824209
+      ],
+      "stock": [
+        33882845,
+        8886317,
+        4391542
+      ]
+    }
+  },
+  "stock_sha256": "bf50e0f32f69dfaf798619193bd00587fd599100eaaff5a715b48d45e62b1208",
+  "timing": false
+}

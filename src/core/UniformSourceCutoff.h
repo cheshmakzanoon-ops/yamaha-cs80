@@ -47,16 +47,17 @@ static inline bool admitted(const sf::RankDrives& input) noexcept {
 #endif
 }
 
-static inline bool evaluate(const sf::ToneControls& tone, const sf::RankDrives& input,
-                     sf::CutoffReadout& out, bool* tookFast = nullptr) noexcept {
-    if (!admitted(input)) return sf::heterogeneous_cutoff::evaluateOrScalar(tone, input, out);
+namespace detail {
+static inline bool evaluateForEngine(const sf::ToneControls& tone, const sf::RankDrives& input,
+                     sf::CutoffReadout& out, bool* tookFast, bool precheckedEngineTone) noexcept {
+    if (!admitted(input)) return sf::heterogeneous_cutoff::detail::evaluateForEngine(tone, input, out, precheckedEngineTone);
     if (tookFast) *tookFast = true;
 
-    if (!tone.compiled || tone.provenance.version != sf::modelVersion
+    if (!precheckedEngineTone && (!tone.compiled || tone.provenance.version != sf::modelVersion
         || tone.provenance.sourceHash != sf::sourceFingerprint
         || (tone.provenance.inferredCells != 0
             && (tone.provenance.hypothesisVersion != cs80::factory_hypotheses::version
-                || tone.provenance.hypothesisHash != cs80::factory_hypotheses::fingerprint))) return false;
+                || tone.provenance.hypothesisHash != cs80::factory_hypotheses::fingerprint)))) return false;
 
     // All channel drive bits agree. Keep the first stock touch/envelope
     // calculation and the original ordered eight-step accumulations.
@@ -91,5 +92,10 @@ static inline bool evaluate(const sf::ToneControls& tone, const sf::RankDrives& 
     next.loadedBusVolts = buses;
     out = next;
     return true;
+}
+} // namespace detail
+static inline bool evaluate(const sf::ToneControls& tone,const sf::RankDrives& input,
+                            sf::CutoffReadout& out, bool* tookFast=nullptr) noexcept {
+    return detail::evaluateForEngine(tone,input,out,tookFast,false);
 }
 }

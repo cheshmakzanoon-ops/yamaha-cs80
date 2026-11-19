@@ -691,13 +691,17 @@ struct CutoffReadout {
     std::array<double, 2> loadedBusVolts {};
     std::uint32_t saturatedVoices = 0;
 };
+// The public evaluator always checks its actual argument. Only the engine
+// can supply a successful proof for the unchanged descriptor it owns.
+namespace detail {
+template <bool provenancePrechecked>
 inline bool evaluateCutoff(const ToneControls& tone, const RankDrives& drives,
                            CutoffReadout& result) noexcept {
-    if (!tone.compiled || tone.provenance.version != modelVersion
+    if (!provenancePrechecked && (!tone.compiled || tone.provenance.version != modelVersion
         || tone.provenance.sourceHash != sourceFingerprint
         || (tone.provenance.inferredCells != 0
             && (tone.provenance.hypothesisVersion != factory_hypotheses::version
-                || tone.provenance.hypothesisHash != factory_hypotheses::fingerprint))) return false;
+                || tone.provenance.hypothesisHash != factory_hypotheses::fingerprint)))) return false;
     std::array<double, voiceCount> touch {}, envelope {};
     double touchSum = 0.0, envelopeSum = 0.0;
     CutoffReadout next;
@@ -726,6 +730,11 @@ inline bool evaluateCutoff(const ToneControls& tone, const RankDrives& drives,
     }
     result = next;
     return true;
+}
+} // namespace detail
+inline bool evaluateCutoff(const ToneControls& tone, const RankDrives& drives,
+                           CutoffReadout& result) noexcept {
+    return detail::evaluateCutoff<false>(tone, drives, result);
 }
 struct SharedReadout {
     std::array<std::array<std::array<double, 2>, voiceCount>, 2> qVolts {}, q {};

@@ -136,31 +136,7 @@ inline constexpr double kDiodeEmissionThermal = 1.752 * 0.025852; // n * kT/q at
 template <std::size_t N>
 double busVolts(const std::array<double, N>& a, double guess, int iterations) noexcept
 {
-    double top = 0.0;
-    for (double x : a) top = std::max(top, x * kFullScaleVolts);
-    if (top <= 0.0) return 0.0;
-    // Newton on an exponential climbs only ~nVt per step from far below, so
-    // start from the single-diode drop estimate unless the guess is close.
-    const double estimate = std::max(0.0, top - kDiodeEmissionThermal
-        * std::log1p(top / kBusResistorOhms / kDiodeSaturationAmps));
-    double v = std::abs(guess - estimate) < 0.1 ? std::clamp(guess, 0.0, top) : estimate;
-    for (int i = 0; i < iterations; ++i)
-    {
-        double current = 0.0, slope = 0.0;
-        for (double x : a)
-        {
-            // A diode 0.9 V below conduction passes < 1e-17 A: skip it.
-            if (x * kFullScaleVolts < v - 0.9) continue;
-            const double e = std::exp((x * kFullScaleVolts - v) / kDiodeEmissionThermal);
-            current += kDiodeSaturationAmps * (e - 1.0);
-            slope += kDiodeSaturationAmps * e / kDiodeEmissionThermal;
-        }
-        const double f = current - v / kBusResistorOhms;
-        const double step = f / (slope + 1.0 / kBusResistorOhms);
-        v = std::clamp(v + step, 0.0, top);
-        if (std::abs(step) < 1.0e-12) break;
-    }
-    return v;
+#include "TouchBusNewton.cpp.inc"
 }
 
 // Bus voltage of one full-pressure key alone: the normalisation of the shared

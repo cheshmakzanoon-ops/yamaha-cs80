@@ -7,6 +7,9 @@
 #include <algorithm>
 #include <bit>
 #include <cmath>
+#include <cstring>
+#include <type_traits>
+#include <cstddef>
 
 // This optional call specialization is internal to Engine.cpp. It does not
 // change either envelope, its arithmetic or its clock. Even a source-only
@@ -24,7 +27,7 @@
     && !defined(__NO_MATH_ERRNO__) && !defined(__ROUNDING_MATH__) && !defined(__SUPPORT_SNAN__) \
     && (!defined(__FINITE_MATH_ONLY__) || __FINITE_MATH_ONLY__ == 0) \
     && defined(__FLT_EVAL_METHOD__) && __FLT_EVAL_METHOD__ == 0 && !defined(CS80_DISABLE_INLINE_RC_ENVELOPES)
-#include <xmmintrin.h>
+#include <emmintrin.h>
 #define CS80_ENGINE_INLINE_RC_ENVELOPES 1
 namespace cs80 {
 struct EngineRcAccess
@@ -53,8 +56,58 @@ struct EngineRcAccess
 namespace cs80
 {
 
+#if CS80_ENGINE_INLINE_RC_ENVELOPES && __GNUC__ == 14 && __GNUC_MINOR__ == 2 \
+    && !defined(CS80_DISABLE_STEREO_PRA) && !defined(CS80_DISABLE_AVX2_FILTER_BATCH)
+#define CS80_STEREO_PRA_BUILD 1
+#define CS80_PRA_CONFIG_PARAMETER , bool pairPra
+#define CS80_PRA_CONFIG_ARGUMENT , pairPra
+#else
+#define CS80_STEREO_PRA_BUILD 0
+#define CS80_PRA_CONFIG_PARAMETER
+#define CS80_PRA_CONFIG_ARGUMENT
+#endif
+#include "EngineStereoPra.cpp.inc"
+
 namespace
 {
+#if CS80_ENGINE_INLINE_RC_ENVELOPES && !defined(CS80_DISABLE_UNIFORM_PRESSURE_BUS)
+// Keep the original loop independent of the shared-key specialization;
+// heterogeneously driven keys must not pay its solver's register/stack cost.
+template <std::size_t N>
+static __attribute__((noinline, noclone)) double distinctPressureBus(const std::array<double, N>& a,
+                                                                    double guess) noexcept
+{
+    return touch::busVolts(a, guess, 2);
+}
+
+template <std::size_t N>
+static __attribute__((noinline)) double samePressureBus(const std::array<double, N>& a, double guess) noexcept
+{
+    using namespace touch;
+    static_assert(N >= 2);
+    constexpr std::uint64_t minNode = std::bit_cast<std::uint64_t>(1.0e-12);
+    constexpr std::uint64_t one = std::bit_cast<std::uint64_t>(1.0);
+    constexpr std::uint64_t full = std::bit_cast<std::uint64_t>(kFullScaleVolts);
+    const std::uint64_t first = std::bit_cast<std::uint64_t>(a[0]);
+    if (std::bit_cast<std::uint64_t>(a[1]) != first || first < minNode || first > one
+        || std::bit_cast<std::uint64_t>(guess) > full
+        || !std::all_of(a.begin() + 2, a.end(), [first](double x) {
+            return std::bit_cast<std::uint64_t>(x) == first;
+        }) || !EngineRcAccess::admitted())
+        return distinctPressureBus(a, guess);
+
+    // All eight finite, normal, per-key voltages have identical raw bits.
+    // The Newton candidate is always clamped to [0, top], so all conduct;
+    // their diode arguments coincide only WITHIN this Newton iteration.
+    // No temporal memo or reciprocal. Keep the eight additions in order:
+    // multiplying a single current by eight does not reproduce their rounding.
+    const int iterations = 2;
+#define CS80_DETAIL_EQUAL_TRG5_DRIVES 1
+#include "TouchBusNewton.cpp.inc"
+#undef CS80_DETAIL_EQUAL_TRG5_DRIVES
+}
+#endif
+
 // Every continuous control the circuit engine smooths, in ONE list (field order
 // is the SmootherBank slot order). Absent on purpose: switches and choices,
 // envelope times and levels (the RC envelopes already move continuously toward
@@ -453,6 +506,8 @@ void Engine::setParams(const ParamValues& values)
     hardwareSources = {13, 13};
     sourceRoutes.fill(source_factory::Route::panel_or_memory);
     sourceActive.fill(false);
+    if constexpr (source_factory::heterogeneous_cutoff::canPrecheckEngineTone)
+        packetTonePrechecked.fill(false);
     sourceCutoff = {};
     sourceShared = {};
     controlFrameStatus = ControlFrameStatus::accepted;
@@ -513,7 +568,12 @@ bool Engine::setControlFrame(const ControlFrame& frame)
         sourceTones = tones;
         sourceCompileCount += compilations;
         for (int rank = 0; rank < kNumRanks; ++rank)
+        {
             sourceActive[rank] = source_factory::isSourceDriven(routes[rank]);
+            if constexpr (source_factory::heterogeneous_cutoff::canPrecheckEngineTone)
+                packetTonePrechecked[rank] = sourceActive[rank]
+                    && source_factory::heterogeneous_cutoff::classifyImmutableTone(sourceTones[rank]);
+        }
     }
     sourceCutoff = {};
     sourceShared = {};
@@ -965,7 +1025,9 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
     bool uniform[2] {};
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
-            source_factory::uniform_cutoff::evaluate(sourceTones[rank], drives[rank], sourceCutoff[rank], &uniform[rank]);
+            source_factory::uniform_cutoff::detail::evaluateForEngine(
+                sourceTones[rank], drives[rank], sourceCutoff[rank], &uniform[rank],
+                source_factory::heterogeneous_cutoff::canPrecheckEngineTone && packetTonePrechecked[rank]);
     if (uniform[0] && uniform[1] && uniformReceiverControls())
     {
         evaluateUniformReceivers(sourceBoundaries, global.resonance, drives, sourceShared);
@@ -974,7 +1036,9 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
 #else
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
-            source_factory::uniform_cutoff::evaluate(sourceTones[rank], drives[rank], sourceCutoff[rank]);
+            source_factory::uniform_cutoff::detail::evaluateForEngine(
+                sourceTones[rank], drives[rank], sourceCutoff[rank], nullptr,
+                source_factory::heterogeneous_cutoff::canPrecheckEngineTone && packetTonePrechecked[rank]);
 #endif
     // One 32-Q/16-LC network. Shared RES/AM/KB use the documented nominal
     // stiff boundaries; no independent per-voice or per-rank master copies.
@@ -2620,7 +2684,7 @@ void Engine::endSmoothedControls() noexcept
 }
 
 #if CS80_IG00156_EXACT_BATCH_BUILD
-void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+void Engine::processInternalSample(float& outL, float& outR, float externalModulation CS80_PRA_CONFIG_PARAMETER)
 {
     if (filterBatchKernel != nullptr && usesSourceModels(global.renderPolicy)
         && Ig00156Batch::environmentSupported())
@@ -2632,19 +2696,19 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const int lpRanks = (rankSettings[0].lpfOn ? 1 : 0) + (rankSettings[1].lpfOn ? 1 : 0);
         if (activeCount * std::max(hpRanks, lpRanks) >= 4)
         {
-            processInternalSampleImpl<true>(outL, outR, externalModulation);
+            processInternalSampleImpl<true>(outL, outR, externalModulation CS80_PRA_CONFIG_ARGUMENT);
             return;
         }
     }
-    processInternalSampleImpl<false>(outL, outR, externalModulation);
+    processInternalSampleImpl<false>(outL, outR, externalModulation CS80_PRA_CONFIG_ARGUMENT);
 }
 
 template<bool BatchFilters>
-void Engine::processInternalSampleImpl(float& outL, float& outR, float externalModulation)
+void Engine::processInternalSampleImpl(float& outL, float& outR, float externalModulation CS80_PRA_CONFIG_PARAMETER)
 #else
 // Default/unsupported builds keep the original scalar function shape rather
 // than instantiating the optional scheduler, even when the CPU has AVX2.
-void Engine::processInternalSample(float& outL, float& outR, float externalModulation)
+void Engine::processInternalSample(float& outL, float& outR, float externalModulation CS80_PRA_CONFIG_PARAMETER)
 #endif
 {
     const float sr = (float) internalRate;
@@ -2776,7 +2840,11 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             a[(size_t) vi] = t.a;
             top = std::max(top, t.a);
         }
+#if CS80_ENGINE_INLINE_RC_ENVELOPES && !defined(CS80_DISABLE_UNIFORM_PRESSURE_BUS)
+        trg5BusVolts = top > 0.0 ? samePressureBus(a, trg5BusVolts) : 0.0;
+#else
         trg5BusVolts = top > 0.0 ? touch::busVolts(a, trg5BusVolts, 2) : 0.0;
+#endif
         sharedPressure = (float) std::clamp(trg5BusVolts / trg5FullScaleVolts, 0.0, 1.0);
     }
     else
@@ -3324,10 +3392,21 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             // Always clock all four physical capacitor states, including when
             // EXP selects dry. Dry X includes input coupling/source loading;
             // wet Y already includes VR2 gain: no SVF or extra normalization.
-            const auto left = praWahL.process(mixL);
-            const auto right = praWahR.process(mixR);
-            mixL = lerp((float) left.x, (float) left.y, wahMix);
-            mixR = lerp((float) right.x, (float) right.y, wahMix);
+#if CS80_STEREO_PRA_BUILD
+            if (inlineRc && pairPra && EngineStereoPra::boundedCaps(praWahL,praWahR))
+            {
+                const auto xy=EngineStereoPra::run(praWahL,praWahR,mixL,mixR);
+                mixL=lerp(static_cast<float>(xy.x[0]),static_cast<float>(xy.y[0]),wahMix);
+                mixR=lerp(static_cast<float>(xy.x[1]),static_cast<float>(xy.y[1]),wahMix);
+            }
+            else
+#endif
+            {
+                const auto left = praWahL.process(mixL);
+                const auto right = praWahR.process(mixR);
+                mixL = lerp((float) left.x, (float) left.y, wahMix);
+                mixR = lerp((float) right.x, (float) right.y, wahMix);
+            }
         }
         else if (wahMix > 0.0f)
         {
@@ -3483,6 +3562,14 @@ void Engine::render(float* interleavedStereo, int numFrames, const float* extern
     if (interleavedStereo == nullptr || numFrames <= 0)
         return;
 
+    // The only PRA parameter updated inside this render is the pedal. Equal
+    // heel/toe transforms and two unchanged setters preserve equal targets;
+    // equal optical state/step preserve equal optical state across every tick.
+    // No membership is retained across an event, block or interrupted call.
+#if CS80_STEREO_PRA_BUILD
+    const bool pairPra=usesSourceModels(global.renderPolicy) && EngineRcAccess::admitted()
+        && EngineStereoPra::common(praWahL,praWahR);
+#endif
     externalInput.setConnected(externalMono != nullptr);
     for (int i = 0; i < numFrames; ++i)
     {
@@ -3492,7 +3579,7 @@ void Engine::render(float* interleavedStereo, int numFrames, const float* extern
         for (int os = 0; os < oversample; ++os)
         {
             float l = 0.0f, r = 0.0f;
-            processInternalSample(l, r, external[(size_t) os]);
+            processInternalSample(l, r, external[(size_t) os] CS80_PRA_CONFIG_ARGUMENT);
             decL.push(l);
             decR.push(r);
             // Evaluate only the retained last phase, using symmetric tap pairs.

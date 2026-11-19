@@ -1,0 +1,102 @@
+{
+  "absolute_cpu_target_verified": false,
+  "all_compared_public_bytes_exact_within_runtime": true,
+  "all_controls_exact": true,
+  "candidate_sha256": "7e52c1d6b3af9f4061818070335861d7d535f6be540204ac2ff29b5d9a8e9a98",
+  "genuine_host_runs": 40,
+  "host_sha256": "ae4be6555d7a788e29be7cc58de799b503e8e1c930895ebce192331d543af4cb",
+  "matched_build_configuration": "Matched Linux x86-64 GCC Release/PIC, pinned JUCE and shared runtime. Candidate pair built with full dependent link closure.",
+  "measure": "guest instructions, reads, writes (Ir/Dr/Dw) exclusively attributable to plug-in entry",
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4270558,
+        1105641,
+        665810
+      ],
+      "delta": [
+        -70363,
+        -22005,
+        -4680
+      ],
+      "percent_change": [
+        -1.6209233017601565,
+        -1.9514102830143503,
+        -0.6979969872779609
+      ],
+      "stock": [
+        4340921,
+        1127646,
+        670490
+      ]
+    },
+    "held-short": {
+      "candidate": [
+        21474371,
+        6021020,
+        2358964
+      ],
+      "delta": [
+        -166358,
+        -35355,
+        -10246
+      ],
+      "percent_change": [
+        -0.768726413976165,
+        -0.5837650409692267,
+        -0.43246483004883485
+      ],
+      "stock": [
+        21640729,
+        6056375,
+        2369210
+      ]
+    },
+    "varied-held-short": {
+      "candidate": [
+        21570201,
+        6034381,
+        2359341
+      ],
+      "delta": [
+        -245215,
+        -45582,
+        -10243
+      ],
+      "percent_change": [
+        -1.124044574717255,
+        -0.7497085097392863,
+        -0.43226996806190454
+      ],
+      "stock": [
+        21815416,
+        6079963,
+        2369584
+      ]
+    },
+    "varied-wake-short": {
+      "candidate": [
+        29957875,
+        8154137,
+        3394028
+      ],
+      "delta": [
+        -215005,
+        -41571,
+        -10201
+      ],
+      "percent_change": [
+        -0.7125769896675425,
+        -0.5072289056662341,
+        -0.29965669172079784
+      ],
+      "stock": [
+        30172880,
+        8195708,
+        3404229
+      ]
+    }
+  },
+  "stock_sha256": "48f10c8fd18a46553fd1235b48e00697db603972a475754cf6f4aaa844aea2d9",
+  "timing": false
+}

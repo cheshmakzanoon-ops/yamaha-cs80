@@ -574,8 +574,11 @@ private:
     float filterAttackTarget(int rank) const noexcept;
     void updateSourceReadouts(float sampleRate) noexcept;
     void processInternalSample(float& outL, float& outR, float externalModulation);
+    void processInternalSample(float& outL, float& outR, float externalModulation, bool pairPra);
     template<bool BatchFilters>
     void processInternalSampleImpl(float& outL, float& outR, float externalModulation);
+    template<bool BatchFilters>
+    void processInternalSampleImpl(float& outL, float& outR, float externalModulation, bool pairPra);
     void startVoice(Voice& voice, int note, float velocity, int midiChannel, bool keyboardOrigin = false, uint64_t coordinatedReleaseOrder = 0);
     // Circuit engine: bring a silent free-running circuit exactly up to date
     // before its note-on (ContinuousVoiceCircuit.h catch-up).
@@ -650,6 +653,8 @@ private:
     std::array<source_factory::Route, kNumRanks> sourceRoutes {
         source_factory::Route::panel_or_memory, source_factory::Route::panel_or_memory };
     std::array<bool, kNumRanks> sourceActive {};
+    // Private derived certificate assigned in the same source transaction as sourceTones.
+    std::array<bool, kNumRanks> packetTonePrechecked {};
     // Immutable per-selection maps; compiled only when an active address changes.
     std::array<source_factory::ToneControls, kNumRanks> sourceTones;
     std::array<source_factory::RankBoundary, kNumRanks> sourceBoundaries;

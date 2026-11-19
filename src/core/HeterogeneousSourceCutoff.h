@@ -6,14 +6,19 @@
 #include <bit>
 #include <cstddef>
 #include <cstring>
-#if defined(__linux__) && defined(__x86_64__) && defined(__GNUC__) && __GNUC__==14 && __GNUC_MINOR__==2 && defined(__SSE2_MATH__) && !defined(__clang__) \
+#if defined(__linux__) && defined(__x86_64__) && defined(__GNUC__) && ((__GNUC__==14 && __GNUC_MINOR__==2) || (__GNUC__==13 && __GNUC_MINOR__==3)) && defined(__SSE2_MATH__) && !defined(__clang__) \
     && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) && !defined(__NVCOMPILER) && !defined(__PGI) && !defined(__ibmxl__) && !defined(_MSC_VER) \
     && !defined(__FMA__) && !defined(__FMA4__) && !defined(__AVX512F__) && !defined(__FP_FAST_FMA) && !defined(__FP_FAST_FMAF) && !defined(__FAST_MATH__) \
     && !defined(__ASSOCIATIVE_MATH__) && !defined(__RECIPROCAL_MATH__) && !defined(__NO_SIGNED_ZEROS__) && !defined(__NO_TRAPPING_MATH__) \
     && (!defined(__FINITE_MATH_ONLY__) || !__FINITE_MATH_ONLY__) && defined(__FLT_EVAL_METHOD__) && __FLT_EVAL_METHOD__==0 \
     && !defined(CS80_DISABLE_UNIFORM_CUTOFF) && !defined(CS80_DISABLE_HETEROGENEOUS_CUTOFF)
+// GCC 13.3 admits only the integer map proof here. Its numerical evaluator
+// remains the original scalar fallback for heterogeneous inputs.
+#define CS80_DETAIL_CUTOFF_MAP_PROOF 1
+#if __GNUC__ == 14
 #include <emmintrin.h>
 #define CS80_DETAIL_HETEROGENEOUS_CUTOFF 1
+#endif
 #endif
 
 namespace cs80::source_factory::heterogeneous_cutoff {
@@ -24,6 +29,8 @@ static inline bool qualifiedEnvironment() noexcept {
     asm volatile("fnstcw %0" : "=m"(cw) :: "memory");
     return (mx & 0x7f80u)==0x1f80u && (cw & 0x0c3fu)==0x003fu;
 }
+#endif
+#if defined(CS80_DETAIL_CUTOFF_MAP_PROOF)
 static inline bool coefficient(double x) noexcept {
     // Zero or [2^-32, 2^16). Absolute value by representation, never compare
     // a signaling NaN or denormal in the admission check.
@@ -31,12 +38,7 @@ static inline bool coefficient(double x) noexcept {
     const auto a=std::bit_cast<std::uint64_t>(x)&0x7fffffffffffffffULL;
     return a==0 || a-lo<hi-lo;
 }
-static inline bool driveWord(double x, double bound, bool allowNegative) noexcept {
-    constexpr auto lo=std::bit_cast<std::uint64_t>(0x1p-160);
-    const auto b=std::bit_cast<std::uint64_t>(x),a=b&std::uint64_t{0x7fffffffffffffff};
-    return a==0 || ((allowNegative || b==a) && a-lo<=std::bit_cast<std::uint64_t>(bound)-lo);
-}
-static inline bool bounded(const sf::ToneControls& t,const sf::RankDrives& in) noexcept {
+static inline bool boundedTone(const sf::ToneControls& t) noexcept {
     if(!t.compiled || t.provenance.version!=sf::modelVersion || t.provenance.sourceHash!=sf::sourceFingerprint ||
        (t.provenance.inferredCells && (t.provenance.hypothesisVersion!=factory_hypotheses::version ||
         t.provenance.hypothesisHash!=factory_hypotheses::fingerprint)))return false;
@@ -45,6 +47,16 @@ static inline bool bounded(const sf::ToneControls& t,const sf::RankDrives& in) n
         if(!coefficient(m.pinPerLoadedBus)||!coefficient(m.pinPerTouch)||!coefficient(m.pinPerEnvelopeVolt)||
            !coefficient(m.busBaseVolts)||!coefficient(m.busPerTouchSum)||!coefficient(m.busPerEnvelopeVoltSum)||
            !coefficient(m.effectiveCvPerPinVolt)||!coefficient(m.referencePinVolts)||!coefficient(m.effectiveCvOffset))return false;
+    return true;
+}
+#endif
+#if defined(CS80_DETAIL_HETEROGENEOUS_CUTOFF)
+static inline bool driveWord(double x, double bound, bool allowNegative) noexcept {
+    constexpr auto lo=std::bit_cast<std::uint64_t>(0x1p-160);
+    const auto b=std::bit_cast<std::uint64_t>(x),a=b&std::uint64_t{0x7fffffffffffffff};
+    return a==0 || ((allowNegative || b==a) && a-lo<=std::bit_cast<std::uint64_t>(bound)-lo);
+}
+static inline bool boundedDrives(const sf::RankDrives& in) noexcept {
     for(const auto& d:in)
         if(!driveWord(d.filterEnvelopeZ,3.,true)||!driveWord(d.velocity,1.,false)||!driveWord(d.pressure,1.,false))return false;
     return true;
@@ -88,11 +100,36 @@ template<class P> static inline __m128d both(const sf::ToneControls& t, P f) noe
     result=next;
 }
 #endif
-static inline bool evaluateOrScalar(const sf::ToneControls& t,const sf::RankDrives& in,sf::CutoffReadout& out) noexcept {
+#if defined(CS80_DETAIL_CUTOFF_MAP_PROOF)
+static constexpr bool canPrecheckEngineTone = true;
+#else
+static constexpr bool canPrecheckEngineTone = false;
+#endif
+// For engine-owned descriptors only: integer provenance and magnitude checks
+// depend on the map, not on the callback FP environment or per-voice drives.
+static inline bool classifyImmutableTone(const sf::ToneControls& t) noexcept {
+#if defined(CS80_DETAIL_CUTOFF_MAP_PROOF)
+    return boundedTone(t);
+#else
+    (void)t; return false;
+#endif
+}
+namespace detail {
+static inline bool evaluateForEngine(const sf::ToneControls& t,const sf::RankDrives& in,sf::CutoffReadout& out,
+                                     bool precheckedEngineTone) noexcept {
 #if defined(CS80_DETAIL_HETEROGENEOUS_CUTOFF)
-    if(qualifiedEnvironment() && bounded(t,in)) {packet(t,in,out);return true;}
+    if(qualifiedEnvironment() && (precheckedEngineTone || boundedTone(t)) && boundedDrives(in)) {packet(t,in,out);return true;}
+#elif defined(CS80_DETAIL_CUTOFF_MAP_PROOF)
+    if (precheckedEngineTone) return sf::detail::evaluateCutoff<true>(t,in,out);
+#else
+    (void)precheckedEngineTone;
 #endif
     return sf::evaluateCutoff(t,in,out);
 }
+} // namespace detail
+static inline bool evaluateOrScalar(const sf::ToneControls& t,const sf::RankDrives& in,sf::CutoffReadout& out) noexcept {
+    return detail::evaluateForEngine(t,in,out,false);
+}
 } // namespace cs80::source_factory::heterogeneous_cutoff
 #undef CS80_DETAIL_HETEROGENEOUS_CUTOFF
+#undef CS80_DETAIL_CUTOFF_MAP_PROOF

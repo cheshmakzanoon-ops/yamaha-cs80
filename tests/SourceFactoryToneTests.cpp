@@ -673,6 +673,54 @@ void uniformCutoffMatchesScalar() {
     for (int rank = 0; rank < 2; ++rank) for (int selector = 0; selector < 11; ++selector) {
         sf::ToneControls tone;
         check(sf::compileTone(rank, selector, tone), "uniform cutoff tone compiles");
+        namespace certificate = sf::heterogeneous_cutoff;
+        const bool valid = certificate::classifyImmutableTone(tone);
+        check(valid == certificate::canPrecheckEngineTone,
+              "nominal compiled map can be prechecked on the qualified evaluator only");
+        // The public evaluator must still inspect its actual mutable argument.
+        // A failed certificate may never bypass a failed original transaction.
+        const auto rejected = [&](const sf::ToneControls& bad) {
+            check(!certificate::classifyImmutableTone(bad), "malformed map cannot be prechecked");
+            for (bool stagger : {false, true}) {
+                sf::RankDrives drives {}; drives[3].pressure = stagger ? .625 : 0.;
+                sf::CutoffReadout a, b; a.loadedBusVolts = b.loadedBusVolts = {-0., .375};
+                bool fastA = false, fastB = false;
+                const bool okA = sf::uniform_cutoff::evaluate(bad, drives, a, &fastA);
+                const bool okB = sf::uniform_cutoff::detail::evaluateForEngine(
+                    bad, drives, b, &fastB, certificate::classifyImmutableTone(bad));
+                check(okA == okB && fastA == fastB && sameReadout(a, b),
+                      "rejected map follows the original bounded or scalar path");
+            }
+        };
+        { auto bad = tone; bad.compiled = false; rejected(bad); }
+        { auto bad = tone; ++bad.provenance.version; rejected(bad); }
+        { auto bad = tone; bad.provenance.sourceHash ^= 1; rejected(bad); }
+        { auto bad = tone; bad.provenance.inferredCells = 1; bad.provenance.hypothesisVersion ^= 1; rejected(bad); }
+        { auto bad = tone; bad.provenance.inferredCells = 1; bad.provenance.hypothesisHash ^= 1; rejected(bad); }
+        using M = sf::CutoffSideMap;
+        constexpr std::array coefficients {&M::pinPerLoadedBus, &M::pinPerTouch, &M::pinPerEnvelopeVolt,
+            &M::busBaseVolts, &M::busPerTouchSum, &M::busPerEnvelopeVoltSum,
+            &M::effectiveCvPerPinVolt, &M::referencePinVolts, &M::effectiveCvOffset};
+        // Shake every map field. Negative magnitudes are valid on either side
+        // of zero, but not at the exclusive upper or below the lower bound.
+        for (double outOfDomain : {0x1p16, -0x1p-33, std::numeric_limits<double>::quiet_NaN()}) {
+            auto bad = tone; bad.initialBrillianceVolts = outOfDomain; rejected(bad);
+            bad = tone; bad.afterBrillianceVolts = outOfDomain; rejected(bad);
+            for (int side = 0; side < 2; ++side) for (auto member : coefficients) {
+                bad = tone; bad.cutoff[side].*member = outOfDomain; rejected(bad);
+            }
+        }
+        for (bool stagger : {false, true}) for (auto drive : {sf::VoiceDrives{-.75, .5, .25},
+                 sf::VoiceDrives{-0., -0., 0.}, sf::VoiceDrives{4., 1.25, -.5},
+                 sf::VoiceDrives{.5, std::numeric_limits<double>::quiet_NaN(), .5}}) {
+            sf::RankDrives drives; drives.fill(drive); if (stagger) drives.back().pressure = .75;
+            sf::CutoffReadout a, b; a.loadedBusVolts = b.loadedBusVolts = {-.0, .25};
+            bool fastA = false, fastB = false;
+            const bool okA = sf::uniform_cutoff::evaluate(tone, drives, a, &fastA);
+            const bool okB = sf::uniform_cutoff::detail::evaluateForEngine(tone, drives, b, &fastB, valid);
+            check(okA == okB && fastA == fastB && sameReadout(a, b),
+                  "prechecked immutable map still checks each actual drive, including failures");
+        }
         for (const auto common : {sf::VoiceDrives{}, sf::VoiceDrives{-3.0, .8, -0.0},
                                    sf::VoiceDrives{4.0, 1.1, -.1}}) {
             sf::RankDrives drives;

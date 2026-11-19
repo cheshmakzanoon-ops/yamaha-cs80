@@ -82,37 +82,9 @@ public:
         opticalLog += (targetLog<opticalLog ? opticalStep : decayStep)*(targetLog-opticalLog);
         const double optical=std::exp(opticalLog);
         const double rt=profile.vr1Ohms+optical/(1.0+optical/profile.parallelOhms);
-        std::array<double,4> j;
-        for (std::size_t k=0;k<j.size();++k)
-            j[k]=-g[k]*caps[k].voltage-caps[k].current;
-
-        constexpr double R=10000.0, r=470.0;
-        const double aP=1.0/(1.0+rt*g[1]), bP=-rt*j[1]*aP;
-        const double aQ=1.0/(1.0+R*g[2]), bQ=-R*j[2]*aQ;
-        const double bN=1.0-2.0*aP, b0=2.0*bP;
-        const double cN=(2.0*aQ-1.0)*bN, c0=(2.0*aQ-1.0)*b0+2.0*bQ;
-        const double dN=2.0/R+(1.0-cN)/r;
-        const double nX=(1.0/R)/dN, n0=(c0/r)/dN;
-        const double sourceDenominator=1.0+profile.sourceOhms*g[0];
-        const double yI=g[0]/sourceDenominator, jSource=j[0]/sourceDenominator;
+        using Signal=double;
         Nodes out;
-        out.x=(yI*u+jSource+n0/R)/(yI+(2.0-nX)/R+profile.dryLoadSiemens);
-        out.n=nX*out.x+n0;
-        out.a=-out.n;
-        out.p=aP*out.a+bP;
-        out.b=2.0*out.p-out.a;
-        out.q=aQ*out.b+bQ;
-        out.c=2.0*out.q-out.b;
-        out.d=(g[3]*out.c-j[3])/(g[3]+2.0/R);
-        out.y=-(profile.vr2Ohms/R)*out.d;
-        const double inputCurrent=yI*(u-out.x)+jSource;
-        const std::array<double,4> voltage {
-            u-profile.sourceOhms*inputCurrent-out.x, out.p, out.q, out.d-out.c
-        };
-        for (std::size_t k=0;k<caps.size();++k) {
-            caps[k].voltage=voltage[k];
-            caps[k].current=g[k]*voltage[k]+j[k];
-        }
+#include "PraWahSolve.inc"
         return out;
     }
     const Capacitors& capacitorState() const noexcept { return caps; }
@@ -121,6 +93,7 @@ public:
     double sampleRate() const noexcept { return rate; }
     const Profile& getProfile() const noexcept { return profile; }
 private:
+    friend struct EngineStereoPra;
     inline static constexpr std::array<double,4> capacitance {10e-6,2.2e-9,33e-9,1e-6};
     Profile profile;
     Capacitors caps{};

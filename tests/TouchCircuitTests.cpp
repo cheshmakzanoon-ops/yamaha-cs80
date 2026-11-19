@@ -198,6 +198,67 @@ void testColdKeyboard()
     }
 }
 
+// Drive every physical TWS with actual key events. Rebuild the TRG5-to-SUB
+// path using the ordinary per-diode Newton accumulation, even on a compiler
+// that admits the equal-input operation. Check the public sample, not an
+// interpolated pressure proxy or an approximate hardware reference.
+void testEqualPressureBus()
+{
+    const auto bits = [](float x) { return std::bit_cast<std::uint32_t>(x); };
+    for (double host : { 44100.0, 48000.0 })
+    for (bool equal : { true, false })
+    {
+        auto p = circuit();
+        p[P_subOriginalSpeed] = 4.2f;
+        p[P_subAtSpeed] = 1.0f;
+        Engine e;
+        e.prepare(host);
+        e.setParams(p);
+        e.reset();
+        std::array<touch::TouchVoice, 8> nodes;
+        std::array<float, 8> pressure;
+        for (int n = 0; n < 8; ++n)
+        {
+            const float velocity = .4f + .06f * n;
+            pressure[n] = equal ? .8f : .17f + .1f * n;
+            nodes[n].reset();
+            nodes[n].trigger(velocity);
+            e.noteOn(48 + n, velocity);
+        }
+        if (equal)
+            e.channelPressure(1, pressure[0]);
+        else
+            for (int n = 0; n < 8; ++n) e.polyPressure(48 + n, pressure[n], 1);
+        touch::Coefficients k;
+        k.prepare(e.getInternalSampleRate());
+        OriginalSubOscillator sub;
+        sub.reset();
+        const float smooth = static_cast<float>(-std::expm1(-1.0 / (.010 * e.getInternalSampleRate())));
+        double bus = 0.0;
+        bool same = true;
+        std::array<double, 8> a;
+        for (int frame = 0; frame < 1024; ++frame)
+        {
+            float expectedRate = 0.0f;
+            for (int step = 0; step < e.getOversamplingFactor(); ++step)
+            {
+                for (int n = 0; n < 8; ++n) a[n] = nodes[n].tick(k, pressure[n]).a;
+                bus = touch::busVolts(a, bus, 2);
+                const float shared = static_cast<float>(std::clamp(bus / touch::fullScaleBusVolts(), 0.0, 1.0));
+                expectedRate = static_cast<float>(sub.circuitRate(
+                    OriginalSubOscillator::circuitTargetRate(p[P_subOriginalSpeed], p[P_subAtSpeed], shared), smooth));
+            }
+            float stereo[2];
+            e.render(stereo, 1);
+            same &= bits(e.getSubOscillatorRate()) == bits(expectedRate);
+            for (int n = 0; n < 8; ++n)
+                same &= bits(e.getVoiceInfo(n).touchA) == bits(static_cast<float>(a[n]));
+        }
+        check(same && bus > 0.0, equal ? "common aftertouch preserves the ordered TRG5-to-SUB source"
+                                      : "per-key aftertouch preserves the ordered TRG5-to-SUB source");
+    }
+}
+
 void testEngineGate()
 {
     for (double host : {48000.0, 96000.0})
@@ -353,6 +414,7 @@ int main()
 {
     testGate();
     testColdKeyboard();
+    testEqualPressureBus();
     testEngineGate();
     testCurves();
     std::printf("Touch circuit: %d checks, %d failures\n", checks, failures);
