@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "RingModulatorCircuit.h"
+#include "UniformSourceCutoff.h"
 
 #include <algorithm>
 #include <cmath>
@@ -904,7 +905,7 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
         }
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
-            source_factory::evaluateCutoff(sourceTones[rank], drives[rank], sourceCutoff[rank]);
+            source_factory::uniform_cutoff::evaluate(sourceTones[rank], drives[rank], sourceCutoff[rank]);
     // One 32-Q/16-LC network. Shared RES/AM/KB use the documented nominal
     // stiff boundaries; no independent per-voice or per-rank master copies.
     source_factory::evaluateShared(sourceBoundaries, global.resonance, drives, sourceShared);

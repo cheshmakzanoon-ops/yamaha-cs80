@@ -1,9 +1,11 @@
 // Source-derived topology, synthetic nominal boundaries, NOT hardware parity.
 #include "core/SourceFactoryTones.h"
+#include "core/UniformSourceCutoff.h"
 #include "reference/LoadedControlRank.h"
 #include "reference/ResonanceControl.h"
 #include "reference/LevelControl.h"
 
+#include <bit>
 #include <iostream>
 #include <limits>
 #include <random>
@@ -655,6 +657,48 @@ void sevenToneV1NumericalRegression() {
     check(count==16632 && hash==0x0704e37fcac8c19dull,"frozen seven-tone V1 numerical corpus unchanged");
 }
 
+void uniformCutoffMatchesScalar() {
+    const auto sameReadout = [](const sf::CutoffReadout& a, const sf::CutoffReadout& b) {
+        const auto bits = [](double value) { return std::bit_cast<std::uint64_t>(value); };
+        if (a.saturatedVoices != b.saturatedVoices) return false;
+        for (std::size_t side = 0; side < 2; ++side) {
+            if (bits(a.loadedBusVolts[side]) != bits(b.loadedBusVolts[side])) return false;
+            for (std::size_t voice = 0; voice < sf::voiceCount; ++voice)
+                if (bits(a.pinVolts[voice][side]) != bits(b.pinVolts[voice][side])
+                    || bits(a.effectiveCv[voice][side]) != bits(b.effectiveCv[voice][side]))
+                    return false;
+        }
+        return true;
+    };
+    for (int rank = 0; rank < 2; ++rank) for (int selector = 0; selector < 11; ++selector) {
+        sf::ToneControls tone;
+        check(sf::compileTone(rank, selector, tone), "uniform cutoff tone compiles");
+        for (const auto common : {sf::VoiceDrives{}, sf::VoiceDrives{-3.0, .8, -0.0},
+                                   sf::VoiceDrives{4.0, 1.1, -.1}}) {
+            sf::RankDrives drives;
+            drives.fill(common);
+            sf::CutoffReadout scalar, uniform;
+            check(sf::evaluateCutoff(tone, drives, scalar)
+                && sf::uniform_cutoff::evaluate(tone, drives, uniform)
+                && sameReadout(scalar, uniform), "equal drives retain all scalar output bits");
+            drives.back().velocity = std::nextafter(common.velocity, 2.0);
+            check(sf::evaluateCutoff(tone, drives, scalar)
+                && sf::uniform_cutoff::evaluate(tone, drives, uniform)
+                && sameReadout(scalar, uniform), "one different drive retains scalar arithmetic");
+            const auto last = uniform;
+            drives.back().pressure = std::numeric_limits<double>::quiet_NaN();
+            check(!sf::uniform_cutoff::evaluate(tone, drives, uniform)
+                && sameReadout(last, uniform), "invalid drive leaves the completed readout intact");
+        }
+        sf::RankDrives invalid;
+        invalid.fill({0.0, std::numeric_limits<double>::quiet_NaN(), 0.0});
+        sf::CutoffReadout saved, changed;
+        saved.loadedBusVolts = changed.loadedBusVolts = {2.0, -0.0};
+        check(!sf::uniform_cutoff::evaluate(tone, invalid, changed)
+            && sameReadout(saved, changed), "uniform invalid input is also transactional");
+    }
+}
+
 void safetyAndIdempotence() {
     static_assert(std::is_trivially_copyable_v<sf::ToneControls>);
     static_assert(noexcept(sf::compileTone(0,1,std::declval<sf::ToneControls&>())));
@@ -692,6 +736,7 @@ void safetyAndIdempotence() {
 int main() {
     sourceIdentity(); scalarLaws(); cutoffOracles(); sharedOracles();
     hypothesisManifest(); inferenceSensitivity(); sevenToneV1NumericalRegression(); safetyAndIdempotence();
+    uniformCutoffMatchesScalar();
     std::cout<<checks<<" source factory nominal-model checks; "<<failures<<" failures\n";
     return failures==0?0:1;
 }
