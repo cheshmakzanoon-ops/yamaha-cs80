@@ -62,3 +62,7 @@ distinguishes whole-process CPU use, callback CPU budget and deadlines.
 A [later integrated before/after](envelope-main/README.md) adds the
 shared receiver and envelope-dispatch changes. Its release and diagnostic
 identities remain separate from the earlier measurements on this page.
+
+The [held-oscillator release comparison](held-oscillator-main/README.md)
+updates the normal-build result after the endpoint change; the explicit
+filter-batch-disabled build is unchanged from the preceding comparison.
