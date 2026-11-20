@@ -2,10 +2,72 @@
 // (docs/BBD_CHORUS_MODEL.md). Agreement with these equations is not agreement with a CS-80.
 #include "core/BbdChorus.h"
 
+#include <bit>
 #include <cmath>
+#include <cstdint>
 #include <complex>
 #include <cstdio>
 #include <vector>
+
+namespace cs80
+{
+// Independent wrapped-address oracle. Read only the logical ring even if the
+// production representation carries extra mirrored samples at its boundary.
+struct BbdPacketWindowTestAccess
+{
+    static bool checkWindows(BbdChorus& b)
+    {
+        const auto size = static_cast<long long>(b.mask + 1);
+        const auto index = [size](long long cursor) {
+            const auto remainder = cursor % size;
+            return static_cast<std::size_t>(remainder < 0 ? remainder + size : remainder);
+        };
+        const auto oldest = b.newest - size + 2;
+        for (long long first = oldest - 2; first <= b.newest - 2; ++first)
+        {
+            const auto cell = std::max(first, oldest);
+            const auto start = b.stamps[index(cell)], end = b.stamps[index(cell + 1)];
+            for (double fraction : {0.0, 0.3125, 1.0, 1.75})
+            {
+                const auto target = start + (end - start) * fraction;
+                auto expectedCursor = cell;
+                while (expectedCursor + 2 < b.newest && b.stamps[index(expectedCursor + 1)] <= target)
+                    ++expectedCursor;
+                const double s0 = b.stamps[index(expectedCursor)], s1 = b.stamps[index(expectedCursor + 1)];
+                const float t = clampf(static_cast<float>((target - s0) / (s1 - s0)), 0.0f, 1.0f);
+                const float y0 = b.samples[index(expectedCursor - 1)], y1 = b.samples[index(expectedCursor)];
+                const float y2 = b.samples[index(expectedCursor + 1)], y3 = b.samples[index(expectedCursor + 2)];
+                const float c1 = 0.5f * (y2 - y0);
+                const float c2 = y0 - 2.5f * y1 + 2.0f * y2 - 0.5f * y3;
+                const float c3 = 0.5f * (y3 - y0) + 1.5f * (y1 - y2);
+                const float expected = ((c3 * t + c2) * t + c1) * t + y1;
+                auto actualCursor = first;
+                if (std::bit_cast<std::uint32_t>(b.readAt(target, actualCursor)) != std::bit_cast<std::uint32_t>(expected)
+                    || actualCursor != expectedCursor) return false;
+            }
+        }
+        return true;
+    }
+    static bool exercise(float rate)
+    {
+        BbdChorus b;
+        b.prepare(rate);
+        if (!checkWindows(b)) return false;
+        const std::size_t size = b.mask + 1;
+        Rng input(0x34d171u);
+        for (std::size_t n = 0; n < 2 * size + 3; ++n)
+        {
+            const float l = input.nextBipolar(), r = input.nextBipolar();
+            (void)b.process(l, r, 4.25f, 0.83f, (n & 32) != 0, (n & 64) != 0);
+            if (n == size - 1 || n == size + 1 || n == size + 3 || n == size + size / 2)
+                if (!checkWindows(b)) return false;
+        }
+        auto copy = b;
+        b.reset();
+        return checkWindows(b) && checkWindows(copy);
+    }
+};
+} // namespace cs80
 
 using cs80::BbdChorus;
 using cs80::Chorus;
@@ -285,6 +347,8 @@ int main()
     check(std::abs(BbdChorus::lowPassQ() - 0.8135) < 0.001, "printed Sallen-Key Q is 0.8135");
     check(std::abs(BbdChorus::kNominalClockHz - 1.0e6 / std::sqrt(7.0 * 12.5)) < 1.0,
           "nominal clock is the geometric centre of the 7-12.5 us interval");
+    for (float rate : {8000.0f, 44100.0f, 96000.0f, 1536000.0f})
+        check(cs80::BbdPacketWindowTestAccess::exercise(rate), "all BBD packet windows match individually wrapped taps");
     responseMatchesCircuit();
     delayFollowsIntegratedClock();
     policyCompatibility();

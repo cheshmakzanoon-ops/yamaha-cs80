@@ -124,8 +124,10 @@ public:
         std::size_t size = 64;
         while ((double) size < 0.01 * (double) sr + 8.0)
             size <<= 1;
-        samples.assign(size, 0.0f);
-        stamps.assign(size, 0.0);
+        // Mirror three samples and their clock stamps after the logical ring.
+        // One wrapped index now addresses the full four-point packet window.
+        samples.assign(size + 3, 0.0f);
+        stamps.assign(size + 3, 0.0);
         mask = size - 1;
         weights = tapWeights();
         inputLp.set((float) lowPassHz(), (float) lowPassQ(), sr);
@@ -156,12 +158,14 @@ public:
         // Empty chain: zeros, with history stamped at the nominal clock so each read
         // pointer starts where its tap delay ago would be.
         const double perSample = kNominalClockHz / (double) sr;
-        const std::size_t size = samples.size();
+        const std::size_t size = mask + 1;
         for (std::size_t k = 0; k < size; ++k)
         {
             samples[k] = 0.0f;
             stamps[k] = -(double) (size - 1 - k) * perSample;
         }
+        std::fill_n(samples.data() + size, 3, 0.0f);
+        std::copy_n(stamps.data(), 3, stamps.data() + size);
         newest = (long long) size - 1;
         for (int tap = 0; tap < kTaps; ++tap)
             cursors[(std::size_t) tap] = newest - (long long) std::ceil(tapOffset(tap) / perSample);
@@ -191,8 +195,15 @@ public:
 
         // Both MN3001 chains share input and clock on OE57: one packet history serves both.
         ++newest;
-        samples[(std::size_t) newest & mask] = inputLp.process(0.5f * (inL + inR));
-        stamps[(std::size_t) newest & mask] = clockPeriods;
+        const auto writeIndex = (std::size_t) newest & mask;
+        const float packet = inputLp.process(0.5f * (inL + inR));
+        samples[writeIndex] = packet;
+        stamps[writeIndex] = clockPeriods;
+        if (writeIndex < 3)
+        {
+            samples[mask + 1 + writeIndex] = packet;
+            stamps[mask + 1 + writeIndex] = clockPeriods;
+        }
 
         // A packet leaving the chain now entered 256 clock periods earlier; a moving clock is
         // integrated, not treated as an instantaneous delay.
@@ -260,6 +271,7 @@ public:
     float getTrim() const noexcept { return trim; }
 
 private:
+    friend struct BbdPacketWindowTestAccess;
     static double sallenKeyHz(double r1) noexcept
     {
         return 1.0 / (kTwoPi * std::sqrt(r1 * 1.0e4 * 1.8e-9 * 680.0e-12));
@@ -272,18 +284,20 @@ private:
     // Catmull-Rom between the two stored samples whose clock stamps straddle the target.
     float readAt(double target, long long& cursor) noexcept
     {
-        const long long oldest = newest - (long long) samples.size() + 2;
+        const long long oldest = newest - (long long) (mask + 1) + 2;
         if (cursor < oldest)
             cursor = oldest;
-        while (cursor + 2 < newest && stamps[(std::size_t) (cursor + 1) & mask] <= target)
+        auto base = (std::size_t) (cursor - 1) & mask;
+        while (cursor + 2 < newest && stamps[base + 2] <= target)
+        {
             ++cursor;
-        const double s0 = stamps[(std::size_t) cursor & mask];
-        const double s1 = stamps[(std::size_t) (cursor + 1) & mask];
+            base = (base + 1) & mask;
+        }
+        const double s0 = stamps[base + 1];
+        const double s1 = stamps[base + 2];
         const float t = clampf((float) ((target - s0) / (s1 - s0)), 0.0f, 1.0f);
-        const float y0 = samples[(std::size_t) (cursor - 1) & mask];
-        const float y1 = samples[(std::size_t) cursor & mask];
-        const float y2 = samples[(std::size_t) (cursor + 1) & mask];
-        const float y3 = samples[(std::size_t) (cursor + 2) & mask];
+        const float* p = samples.data() + base;
+        const float y0 = p[0], y1 = p[1], y2 = p[2], y3 = p[3];
         const float c1 = 0.5f * (y2 - y0);
         const float c2 = y0 - 2.5f * y1 + 2.0f * y2 - 0.5f * y3;
         const float c3 = 0.5f * (y3 - y0) + 1.5f * (y1 - y2);

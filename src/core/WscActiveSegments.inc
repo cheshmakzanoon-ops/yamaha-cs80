@@ -43,7 +43,13 @@
             state.residual[branch][state.residualCursor]=0.;
         };
         finish(output.sawPin5,raw.value.sawPin5,raw.slope.sawPin5,raw.constant.sawPin5,0);
-        finish(output.pulsePin7,raw.value.pulsePin7,raw.slope.pulsePin7,raw.constant.pulsePin7,1);
+        // nodes() gives the held comparator an identical finite value and
+        // constant, with exactly +0 slope. Its two basis coefficients are
+        // therefore +0 in this masked-nearest path, and every omitted
+        // operation is exact. The live residual (including gate transitions)
+        // must still be added and consumed, even when the pulse is muted.
+        output.pulsePin7=raw.value.pulsePin7+state.residual[1][state.residualCursor];
+        state.residual[1][state.residualCursor]=0.;
         finish(output.sinePin2,raw.value.sinePin2,raw.slope.sinePin2,raw.constant.sinePin2,2);
 #else
         double* destinations[3]={&output.sawPin5,&output.pulsePin7,&output.sinePin2};

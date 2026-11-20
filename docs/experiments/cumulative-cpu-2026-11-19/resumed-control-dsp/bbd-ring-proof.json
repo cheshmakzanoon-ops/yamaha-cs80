@@ -1,0 +1,299 @@
+{
+  "base_product_source": "9208eb6323207b5054055dd2e0549e45324c539a",
+  "caveat": "Guest instructions/loads/stores are not wall time, audio-thread CPU utilization or target-hardware qualification.",
+  "effect_guest": {
+    "gcc13": {
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "rows": {
+        "chorus": {
+          "candidate": [
+            4875897,
+            995889,
+            274520
+          ],
+          "pcm_and_final_mxcsr": "stream=c82e00282cbdc935 mxcsr=1f80",
+          "stock": [
+            5084873,
+            1008165,
+            278592
+          ]
+        },
+        "off": {
+          "candidate": [
+            4567289,
+            917937,
+            262104
+          ],
+          "pcm_and_final_mxcsr": "stream=8d8f6b92fb382cea mxcsr=1f80",
+          "stock": [
+            4776137,
+            926117,
+            266176
+          ]
+        },
+        "tremolo": {
+          "candidate": [
+            4718841,
+            954801,
+            270296
+          ],
+          "pcm_and_final_mxcsr": "stream=a3083bbd9dcb4036 mxcsr=1f80",
+          "stock": [
+            4927689,
+            967077,
+            274368
+          ]
+        }
+      },
+      "scope": "4,096 prepared effect samples, 96 kHz; non-plugin diagnostic, includes identical harness work. Both arms and all three scenes identically repeated."
+    },
+    "gcc14": {
+      "events": [
+        "Ir",
+        "Dr",
+        "Dw"
+      ],
+      "rows": {
+        "chorus": {
+          "candidate": [
+            4986500,
+            971378,
+            274522
+          ],
+          "pcm_and_final_mxcsr": "stream=c82e00282cbdc935 mxcsr=1f80",
+          "stock": [
+            5146324,
+            983654,
+            282690
+          ]
+        },
+        "off": {
+          "candidate": [
+            4678020,
+            881138,
+            262106
+          ],
+          "pcm_and_final_mxcsr": "stream=8d8f6b92fb382cea mxcsr=1f80",
+          "stock": [
+            4837716,
+            893414,
+            270274
+          ]
+        },
+        "tremolo": {
+          "candidate": [
+            4829572,
+            930290,
+            270298
+          ],
+          "pcm_and_final_mxcsr": "stream=a3083bbd9dcb4036 mxcsr=1f80",
+          "stock": [
+            4989268,
+            942566,
+            278466
+          ]
+        }
+      },
+      "scope": "4,096 prepared effect samples, 96 kHz; non-plugin diagnostic, includes identical harness work. Both arms and all three scenes identically repeated."
+    }
+  },
+  "isolated_bbd_fault_and_state": {
+    "compile_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-std=gnu++20"
+    ],
+    "edge_variants": 14,
+    "fixture_sha256": "d8e4a0cd4fd3d4d1abf1456096cb6a17d4831ac036da0893629b780d02a8a790",
+    "mxcsr_controls": [
+      "0x1f80",
+      "0x9fc0",
+      "0x3f80",
+      "0x5f80",
+      "0x7f80"
+    ],
+    "positions": [
+      "first sample",
+      "third sample",
+      "last sample before buffer endpoint",
+      "sample at buffer endpoint",
+      "third sample after endpoint"
+    ],
+    "rates_hz": [
+      8000,
+      44100,
+      96000,
+      1536000
+    ],
+    "results": {
+      "gcc13": {
+        "candidate_executable_sha256": "f85701881aa755dd19405a0e32477946784dce523fceae781946399d362fda84",
+        "cases_per_arm": 1400,
+        "compiler": "g++ (Debian 13.3.0-16) 13.3.0",
+        "record_bytes_per_arm": 161087520,
+        "same_record_sha256_both_arms": "3d7aa90f05fbd68a0c3dd991dc3768d92ae54f48a420e4bc46fb572318a21b53",
+        "stock_executable_sha256": "c2f10862e0ce935950e6b1caed6aacab8cb06cdf43a8d7d0781d22e2885b3c44",
+        "traps_per_arm": 980
+      },
+      "gcc14": {
+        "candidate_executable_sha256": "0b3d801aee319ca3fb0665de745046a75f6d6d5d2c6e65f7bff82464ddcec9ef",
+        "cases_per_arm": 1400,
+        "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+        "record_bytes_per_arm": 161087520,
+        "same_record_sha256_both_arms": "3d7aa90f05fbd68a0c3dd991dc3768d92ae54f48a420e4bc46fb572318a21b53",
+        "stock_executable_sha256": "4a2784899828c4df6ad96bb2b29fd57db6d3d12dd44e6b3e72c5915e8f8993b0",
+        "traps_per_arm": 980
+      }
+    },
+    "scope": "Actual SIGFPE signal code and interrupted MXCSR, full logical samples/stamps, cursors, filter and RNG histories, 64 masked post-fault samples and state. Includes injected private-coefficient exceptional cases; not a simulation of 1,400 distinct real user patches. Candidate mirror copies also checked directly."
+  },
+  "portable_tests": {
+    "bbd_oracle_and_specification": "74 checks passed with Release, also with AddressSanitizer+UndefinedBehaviorSanitizer.",
+    "oe2_stereo_specification": "97 checks passed."
+  },
+  "public_native": {
+    "all_public_bytes_exact": true,
+    "full_receipt_sha256": "b7d8dfb00227ffb4bd18aea0c7120627836c9fcded79cc9d584963ead357586d",
+    "host_sha256": "46c7ff83ad709452fdad4ab83810f132a53828c7c2f2b16849909e1c42a0e721",
+    "rates_hz": [
+      44100,
+      48000,
+      96000
+    ],
+    "scenes": [
+      "automation",
+      "effects",
+      "external",
+      "factory",
+      "legacy",
+      "mpe",
+      "pulse",
+      "pure",
+      "quiet"
+    ],
+    "sorted_case_and_file_sha256_ledger_digest": "fe815309e658e634b1537e3f4a9980922e156b53ea9fea0d2cb01d88b90b69ae",
+    "totals_per_arm": {
+      "genuine_callbacks": 82944,
+      "histories": 27,
+      "pcm_bytes": 26293248,
+      "public_bytes": 40595303,
+      "public_state_snapshots": 216,
+      "stereo_frames": 3286656
+    }
+  },
+  "release_gcc14_exact_bbd_only": {
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "plugin_baseline": "b496ac50672957627844de37d62ee6020014d2fd278f8de03f35e1a80a33dbb6",
+    "plugin_candidate": "c9e787cc3165ae4791f781f1693717edf0ff1667fa2980872e0f218f9358719b",
+    "rebuilt_translation_units": 20,
+    "renderer": "Original logical BBD taps; one wrapped index and three raw mirrors for each source/stamp history; 36 extra heap bytes per prepared unit."
+  },
+  "schema": "cs80-bbd-window-evidence-v1",
+  "source_base": "631b77080aa6a0192fe3493573fa6d63f827a2c4",
+  "whole_plugin_guest": {
+    "both_arms_repeat_and_4_plus_1_equals_5": true,
+    "counted_calls": 4,
+    "frames_per_call": 64,
+    "host_sha256": "cff95bba8fda694e17560a6cf543cc8b82f025631bc0230ab97081ad5b43296d",
+    "metrics": [
+      "Ir",
+      "Dr",
+      "Dw"
+    ],
+    "rows": {
+      "fresh-quiet": {
+        "candidate": [
+          4213320,
+          1099093,
+          657368
+        ],
+        "delta": [
+          -19956,
+          -1533,
+          -1018
+        ],
+        "percent_change": [
+          -0.47140795922590445,
+          -0.13928437089438192,
+          -0.15462054174906514
+        ],
+        "stock": [
+          4233276,
+          1100626,
+          658386
+        ]
+      },
+      "held-short": {
+        "candidate": [
+          21410453,
+          6017182,
+          2350840
+        ],
+        "delta": [
+          -19956,
+          -1533,
+          -1018
+        ],
+        "percent_change": [
+          -0.09312001464834385,
+          -0.025470553099789572,
+          -0.043284926215783434
+        ],
+        "stock": [
+          21430409,
+          6018715,
+          2351858
+        ]
+      },
+      "varied-held-short": {
+        "candidate": [
+          21506292,
+          6030530,
+          2351214
+        ],
+        "delta": [
+          -19956,
+          -1533,
+          -1018
+        ],
+        "percent_change": [
+          -0.09270542641708857,
+          -0.02541419080006293,
+          -0.043278044002462344
+        ],
+        "stock": [
+          21526248,
+          6032063,
+          2352232
+        ]
+      },
+      "varied-wake-short": {
+        "candidate": [
+          29894106,
+          8150122,
+          3385865
+        ],
+        "delta": [
+          -19956,
+          -1533,
+          -1018
+        ],
+        "percent_change": [
+          -0.0667111006188327,
+          -0.018805997064399806,
+          -0.030057135129852433
+        ],
+        "stock": [
+          29914062,
+          8151655,
+          3386883
+        ]
+      }
+    },
+    "sample_rate_hz": 48000
+  }
+}

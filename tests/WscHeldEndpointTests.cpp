@@ -40,6 +40,59 @@ bool same(const O::Diagnostics& a, const O::Diagnostics& b) {
     }
     return true;
 }
+#if CS80_WSC_BORROW_HELD
+// Warm the right endpoint through the scalar entry, leaving a chosen raw
+// value in the pulse slot that the next *borrowed* tick must consume. In
+// particular a muted comparator does not mute its outstanding residual.
+bool pulseResiduals() {
+    const auto originalMx = _mm_getcsr();
+    struct Restore { unsigned mx; ~Restore() { _mm_setcsr(mx); } } restore{originalMx};
+    constexpr std::array<std::uint64_t,12> raw{
+        0, 0x8000000000000000ull, 1, 0x8000000000000001ull,
+        0x3ff0000000000000ull, 0xbff0000000000000ull,
+        0x7ff0000000000000ull, 0xfff0000000000000ull,
+        0x7ff8000000001234ull, 0xfff8000000004321ull,
+        0x7ff0000000001234ull, 0xfff0000000004321ull};
+    constexpr double hz=128.;
+    for (double amplitude : {0.1,1.5,10.})
+    for (double threshold : {-4.,4.})
+    for (bool pulse : {false,true}) {
+        O seed;
+        cs80::OscillatorNominalProfile profile;
+        profile.pulseHalfSpanVoltsInferred=amplitude;
+        if (!seed.prepare(96000.,profile)) return false;
+        const C controls{threshold,true,pulse};
+        seed.reset(.4,hz);
+        for (int j=0;j<32;++j) seed.tick(hz,controls);
+        for (unsigned cursor=0;cursor<cs80::OscillatorResidualKernel::length;++cursor)
+        for (auto bits : raw)
+        for (unsigned mx : {0x1f80u,0x9fc0u,0x1fbfu}) {
+            O baseline(seed);
+            auto state=baseline.getState();
+            state.residualCursor=cursor;
+            const auto next=(cursor+1)%cs80::OscillatorResidualKernel::length;
+            state.residual[1][next]=std::bit_cast<double>(bits);
+            baseline.restoreState(state);
+            _mm_setcsr(mx);
+            baseline.tick(hz,controls); // restoreState invalidates the endpoint
+            if (baseline.getState().residualCursor!=next ||
+                std::bit_cast<std::uint64_t>(baseline.getState().residual[1][next])!=bits) return false;
+            O candidate(baseline);
+            _mm_setcsr(mx);
+            const auto expected=baseline.tick(hz,controls);
+            const auto flags=_mm_getcsr();
+            _mm_setcsr(mx);
+            if (!cs80::EngineWscHeldAccess::canBorrow(candidate,hz,controls)) return false;
+            const auto got=cs80::EngineWscHeldAccess::run(candidate,hz);
+            const auto gotFlags=_mm_getcsr();
+            if (flags!=gotFlags || !same(expected,got)
+                || !same(baseline.getState(),candidate.getState())
+                || !same(baseline.getDiagnostics(),candidate.getDiagnostics())) return false;
+        }
+    }
+    return true;
+}
+#endif
 }
 
 int main() {
@@ -72,6 +125,10 @@ int main() {
 #if CS80_WSC_BORROW_HELD
     // A default native test process has standard masks and nearest rounding.
     if (!borrowed || !fallback) return 3;
+    if (!pulseResiduals()) {
+        std::fprintf(stderr,"WSC held comparator residual or FP status differed\n");
+        return 4;
+    }
 #endif
     std::printf("WSC endpoint: %u ticks, %u borrowed, %u scalar\n",calls,borrowed,fallback);
     return 0;

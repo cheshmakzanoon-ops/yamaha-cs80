@@ -108,6 +108,23 @@ static __attribute__((noinline)) double samePressureBus(const std::array<double,
 }
 #endif
 
+#if CS80_ENGINE_INLINE_RC_ENVELOPES && !defined(CS80_DISABLE_LAZY_MODERN_VOICE)
+// Build no per-voice input record for an inactive matrix. Keep the large
+// aggregate and its cold loads out of the register/stack budget of the
+// rank DSP loop. This is not a clock bypass: beginSample() still advances
+// transport, and an enabled route still sees every original voice interval.
+template<class Voice>
+static __attribute__((noinline, noclone)) void processModernVoice(modern::ModernLayer& modern,
+                                                                  int vi, const Voice& v,
+                                                                  bool globalSourceEligible) noexcept
+{
+    if (modern.isActive())
+        modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
+                                  { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
+                                  { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, globalSourceEligible);
+}
+#endif
+
 // Every continuous control the circuit engine smooths, in ONE list (field order
 // is the SmootherBank slot order). Absent on purpose: switches and choices,
 // envelope times and levels (the RC envelopes already move continuously toward
@@ -2950,9 +2967,13 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
         const float dispersion = global.voiceDispersion;
         const float driftVoice = global.drift * std::sin(kTwoPi * (driftPhase + voiceDrift[vi])) * 0.9f;
         // Envelope sources are the previous sample's values of each rank.
+#if CS80_ENGINE_INLINE_RC_ENVELOPES && !defined(CS80_DISABLE_LAZY_MODERN_VOICE)
+        processModernVoice(modern, vi, v, !idle);
+#else
         modern.processVoice(vi, { v.age, v.held || v.pedalHeld, v.note, v.velocity, v.pressure, v.timbre, v.contour,
                                   { v.ranks[0].info.filterEnvelope, v.ranks[1].info.filterEnvelope },
                                   { v.ranks[0].info.ampEnvelope, v.ranks[1].info.ampEnvelope } }, ! idle);
+#endif
 
         // A gap channel is not an implicit member of the lower MPE zone.
         // Keep channel 1's existing own-channel fallback when its zone is off,
