@@ -4,7 +4,7 @@
 #include "EngineOutputFir.h"
 #include <bit>
 #if defined(__x86_64__)
-#include <xmmintrin.h>
+#include <immintrin.h>
 #endif
 #if defined(__linux__) && defined(__x86_64__) && defined(__GNUC__) && defined(__SSE2_MATH__) && !defined(__clang__) \
     && !defined(__INTEL_COMPILER) && !defined(__INTEL_LLVM_COMPILER) && !defined(__NVCOMPILER) \
@@ -31,6 +31,45 @@ extern "C" void cs80_observe_fir_reach(bool) noexcept;
 #endif
 namespace cs80
 {
+#if CS80_ENGINE_WIDENS_FIR
+namespace
+{
+// These loads read the byte representation of four widened values, not
+// float storage through a double pointer. Calculate independent tap products
+// together, but add them to the accumulator one at a time in stock order.
+__attribute__((target("avx2,no-fma")))
+float outputWideFir2x(const float* coefficient, const float* newest) noexcept
+{
+    constexpr int mid = OversamplingDecimator::centerFor(2);
+    const auto one = [](const float* p) noexcept {
+        double v;
+        std::memcpy(&v, p, sizeof(v));
+        return v;
+    };
+    const float* oldest = newest - 4 * mid;
+    double y = one(coefficient + 2 * mid) * one(newest - 2 * mid);
+    int i = 0;
+    #pragma GCC unroll 4
+    for (; i + 4 <= mid; i += 4)
+    {
+        __m256d a, b, c;
+        std::memcpy(&a, newest - 2 * (i + 3), sizeof(a));
+        std::memcpy(&b, oldest + 2 * i, sizeof(b));
+        std::memcpy(&c, coefficient + 2 * i, sizeof(c));
+        const auto p = _mm256_mul_pd(c, _mm256_add_pd(_mm256_permute4x64_pd(a, 0x1b), b));
+        const auto lo = _mm256_castpd256_pd128(p);
+        const auto hi = _mm256_extractf128_pd(p, 1);
+        y += _mm_cvtsd_f64(lo);
+        y += _mm_cvtsd_f64(_mm_unpackhi_pd(lo, lo));
+        y += _mm_cvtsd_f64(hi);
+        y += _mm_cvtsd_f64(_mm_unpackhi_pd(hi, hi));
+    }
+    for (; i < mid; ++i)
+        y += one(coefficient + 2 * i) * (one(newest - 2 * i) + one(oldest + 2 * i));
+    return static_cast<float>(y);
+}
+}
+#endif
 void EngineOutputFir::prepare(int factor) noexcept
 {
     scalar.prepare(factor);
@@ -153,7 +192,19 @@ float EngineOutputFir::output() const noexcept
     if (scalar.hasWideningScratch() && safeZeroCoefficients && (_mm_getcsr() & 0x7f80u) == 0x1f80u)
     {
         if (scalar.getFactor() == 2 && samplesToWidened == 0)
+        {
+            // The existing gate excludes exceptional history, non-nearest
+            // rounding and unmasked FP exceptions. Independent products can
+            // only add sticky flags; no individual tap can trap or affect
+            // any later tap's product.
+            if (__builtin_cpu_supports("avx2"))
+            {
+                constexpr int taps = OversamplingDecimator::tapsFor(2);
+                return outputWideFir2x(scalar.coeffs.data() + taps,
+                    scalar.hist.data() + 2 * taps + 2 * (scalar.idx - 1 + taps));
+            }
             return scalar.outputWithWidenedHistory();
+        }
         return scalar.outputWithWidenedCoefficients();
     }
 #endif
