@@ -1,9 +1,11 @@
-// Included in two functions: the ordinary public bus and the private
-// already-certified equal-key specialization. Keep one estimate/Newton
+// Included in the ordinary public bus and the private, already-certified
+// one- and two-population specializations. Keep one estimate/Newton
 // update law, and leave the unqualified scalar token stream intact.
     double top = 0.0;
 #if defined(CS80_DETAIL_EQUAL_TRG5_DRIVES)
     top = a[0] * kFullScaleVolts;
+#elif defined(CS80_DETAIL_TWO_TRG5_DRIVES)
+    top = std::max(volts0, volts1);
 #else
     for (double x : a) top = std::max(top, x * kFullScaleVolts);
 #endif
@@ -27,6 +29,34 @@
         {
             current += ci;
             slope += si;
+        }
+#elif defined(CS80_DETAIL_TWO_TRG5_DRIVES)
+        // Compute a diode's contribution only if the ordinary solver would
+        // conduct. Both represented voltage levels occur at least once.
+        struct Term { bool pass; double current, slope; };
+        const auto term = [v](double volts) -> Term {
+            if (volts < v - 0.9) return {false, 0.0, 0.0};
+            const double e = std::exp((volts - v) / kDiodeEmissionThermal);
+            return {true, kDiodeSaturationAmps * (e - 1.0),
+                          kDiodeSaturationAmps * e / kDiodeEmissionThermal};
+        };
+        const Term p = term(volts0), q = term(volts1);
+        if (p.pass && q.pass)
+        {
+            for (std::size_t j = 0; j < N; ++j)
+            {
+                const auto& t = mask & (1u << j) ? q : p;
+                current += t.current;
+                slope += t.slope;
+            }
+        }
+        else
+        {
+            // The order of the retained keys is unaltered: every passing
+            // key belongs to the same group and has the same term.
+            const auto& t = p.pass ? p : q;
+            const int n = p.pass ? static_cast<int>(N) - std::popcount(mask) : std::popcount(mask);
+            for (int j = 0; j < n; ++j) { current += t.current; slope += t.slope; }
         }
 #else
         for (double x : a)

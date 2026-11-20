@@ -75,7 +75,7 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
     vst3CurveRecallInProcess = vst3CurveRecall;
     // Finalize old endpoints before preset writes so they cannot overwrite a
     // recalled Legacy program. Same-policy modern curves remain attached.
-    const auto recalledPolicy = cs80::renderPolicy(cached[cs80::P_parityMode],
+    const auto recalledPolicy = cs80::renderPolicy(cachedFrame.effectiveValues[cs80::P_parityMode],
                                                    values[cs80::P_sourcePerformance]);
     if (hostAutomationVst3 && hostAutomationBlock && !cs80::usesSourceModels(recalledPolicy))
         endHostAutomationBlock();
@@ -104,18 +104,18 @@ bool Cs80AudioProcessor::handleProgramChange(int midiChannel, int program)
         forEachEngine([&](cs80::Engine& target)
         {
             const auto prior = target.getRenderPolicy();
-            target.setControlFrame({ cached, cachedHardwareSources });
+            target.setControlFrame(cachedFrame);
             if (target.getRenderPolicy() != prior)
                 target.setExpression(expressionValue.load(std::memory_order_relaxed));
         });
     }
     else
     {
-        engine.setControlFrame({ cached, cachedHardwareSources });
+        engine.setControlFrame(cachedFrame);
         if (extensionActive)
         {
             const auto prior = extensionEngine->getRenderPolicy();
-            extensionEngine->setControlFrame({ cached, cachedHardwareSources });
+            extensionEngine->setControlFrame(cachedFrame);
             if (extensionEngine->getRenderPolicy() != prior)
                 extensionEngine->setExpression(expressionValue.load(std::memory_order_relaxed));
         }

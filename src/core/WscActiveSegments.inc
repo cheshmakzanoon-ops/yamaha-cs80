@@ -11,11 +11,24 @@
             double span=std::min(dt-elapsed,physical);
             const auto start=after;
             bool branchEvent=false;
+#if defined(CS80_WSC_REUSE_HELD_SPAN)
+            const auto prepared=prepareSpan(start,span);
+            span=nextHeldEvent(start,span,branchEvent,prepared);
+#else
             span=nextBranchEvent(start,span,branchEvent);
+#endif
             // Roots closer than round-off to the previous event are represented
             // by its right-sided branch derivative, never a zero-progress loop.
             if(!(span>0.)){diagnostics.eventCapacityExceeded=true;break;}
+#if defined(CS80_WSC_REUSE_HELD_SPAN)
+            // The search still visits every reset, fold, comparator, turn and
+            // shaper knee. An event takes the original physical advance with
+            // its returned duration, including an event exactly on the limit.
+            if (branchEvent) advance(span,start);
+            else advanceHeld(span,start,prepared);
+#else
             advance(span,start);
+#endif
             elapsed+=span;
             const bool physicalReached=std::abs(span-physical)<=2e-15;
             if(physicalReached&&inReset)state.resetRemainingSeconds=std::numeric_limits<double>::min();

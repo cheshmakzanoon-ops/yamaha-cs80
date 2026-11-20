@@ -1,0 +1,326 @@
+{
+  "absolute_cpu_verified": false,
+  "baseline_product": "9208eb6323207b5054055dd2e0549e45324c539a",
+  "capture_semantics": "Both normal and SIGFPE paths record actual errno; the native signal observer also records si_code, MXCSR and x87 status/control. The real Engine archive captures partially committed state before four subsequent masked samples.",
+  "cross_compiler": {
+    "GCC_13_3": {
+      "calls_per_arm": 170752,
+      "component_calls_per_scene": 8192,
+      "component_workloads": [
+        {
+          "component_candidate": {
+            "Dr": 768341,
+            "Dw": 162132,
+            "Ir": 2985099
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": -0.1597
+          },
+          "component_stock": {
+            "Dr": 768341,
+            "Dw": 162132,
+            "Ir": 2989873
+          },
+          "name": "all_eight_common"
+        },
+        {
+          "component_candidate": {
+            "Dr": 1446481,
+            "Dw": 365313,
+            "Ir": 4533387
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": 0.3627
+          },
+          "component_stock": {
+            "Dr": 1446481,
+            "Dw": 365313,
+            "Ir": 4517003
+          },
+          "name": "first_key_only"
+        },
+        {
+          "component_candidate": {
+            "Dr": 1072656,
+            "Dw": 432335,
+            "Ir": 4557845
+          },
+          "component_percent": {
+            "Dr": -57.2434,
+            "Dw": -32.9535,
+            "Ir": -39.3452
+          },
+          "component_stock": {
+            "Dr": 2508749,
+            "Dw": 644829,
+            "Ir": 7514403
+          },
+          "name": "first_four_common_rest_zero"
+        },
+        {
+          "component_candidate": {
+            "Dr": 2639053,
+            "Dw": 696113,
+            "Ir": 7811043
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": 0.2102
+          },
+          "component_stock": {
+            "Dr": 2639053,
+            "Dw": 696113,
+            "Ir": 7794659
+          },
+          "name": "alternating_two_levels_first_two_differ"
+        },
+        {
+          "component_candidate": {
+            "Dr": 3241897,
+            "Dw": 847384,
+            "Ir": 9421958
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": 0.1742
+          },
+          "component_stock": {
+            "Dr": 3241897,
+            "Dw": 847384,
+            "Ir": 9405574
+          },
+          "name": "eight_distinct"
+        },
+        {
+          "component_candidate": {
+            "Dr": 1343490,
+            "Dw": 507905,
+            "Ir": 5459167
+          },
+          "component_percent": {
+            "Dr": -65.5462,
+            "Dw": -49.5934,
+            "Ir": -51.4548
+          },
+          "component_stock": {
+            "Dr": 3899394,
+            "Dw": 1007617,
+            "Ir": 11245541
+          },
+          "name": "last_key_only_low"
+        },
+        {
+          "component_candidate": {
+            "Dr": 1368066,
+            "Dw": 507905,
+            "Ir": 5492940
+          },
+          "component_percent": {
+            "Dr": -65.1248,
+            "Dw": -50.0,
+            "Ir": -51.7443
+          },
+          "component_stock": {
+            "Dr": 3922750,
+            "Dw": 1015809,
+            "Ir": 11382988
+          },
+          "name": "two_close_nonzero_halves"
+        },
+        {
+          "component_candidate": {
+            "Dr": 3899018,
+            "Dw": 1015809,
+            "Ir": 11251492
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": 0.1458
+          },
+          "component_stock": {
+            "Dr": 3899018,
+            "Dw": 1015809,
+            "Ir": 11235108
+          },
+          "name": "alternating_low_levels_first_two_differ"
+        }
+      ],
+      "direct_snapshot_sha256": "5d6a8a6cccf3ad413865f4a83565d6c1e673ba7a793f36eae894aef171367974",
+      "genuine_sigfpe_per_arm": 1440
+    },
+    "GCC_14_2": {
+      "calls_per_arm": 170752,
+      "component_calls_per_scene": 8192,
+      "component_workloads": [
+        {
+          "component_candidate": {
+            "Dr": 761858,
+            "Dw": 147457,
+            "Ir": 3010030
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": -0.4852
+          },
+          "component_stock": {
+            "Dr": 761858,
+            "Dw": 147457,
+            "Ir": 3024705
+          },
+          "name": "all_eight_common"
+        },
+        {
+          "component_candidate": {
+            "Dr": 1405522,
+            "Dw": 324353,
+            "Ir": 4566157
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": 0.0
+          },
+          "component_stock": {
+            "Dr": 1405522,
+            "Dw": 324353,
+            "Ir": 4566157
+          },
+          "name": "first_key_only"
+        },
+        {
+          "component_candidate": {
+            "Dr": 1037244,
+            "Dw": 369703,
+            "Ir": 4435487
+          },
+          "component_percent": {
+            "Dr": -57.9687,
+            "Dw": -38.7776,
+            "Ir": -41.3571
+          },
+          "component_stock": {
+            "Dr": 2467790,
+            "Dw": 603869,
+            "Ir": 7563557
+          },
+          "name": "first_four_common_rest_zero"
+        },
+        {
+          "component_candidate": {
+            "Dr": 2604242,
+            "Dw": 655153,
+            "Ir": 7849961
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": 0.0
+          },
+          "component_stock": {
+            "Dr": 2604242,
+            "Dw": 655153,
+            "Ir": 7849961
+          },
+          "name": "alternating_two_levels_first_two_differ"
+        },
+        {
+          "component_candidate": {
+            "Dr": 3206196,
+            "Dw": 814616,
+            "Ir": 9492754
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": 0.0
+          },
+          "component_stock": {
+            "Dr": 3206196,
+            "Dw": 814616,
+            "Ir": 9492754
+          },
+          "name": "eight_distinct"
+        },
+        {
+          "component_candidate": {
+            "Dr": 1294338,
+            "Dw": 417793,
+            "Ir": 5227108
+          },
+          "component_percent": {
+            "Dr": -66.4543,
+            "Dw": -57.1428,
+            "Ir": -53.8321
+          },
+          "component_stock": {
+            "Dr": 3858434,
+            "Dw": 974849,
+            "Ir": 11321956
+          },
+          "name": "last_key_only_low"
+        },
+        {
+          "component_candidate": {
+            "Dr": 1318914,
+            "Dw": 417793,
+            "Ir": 5288142
+          },
+          "component_percent": {
+            "Dr": -66.0337,
+            "Dw": -57.1428,
+            "Ir": -53.7432
+          },
+          "component_stock": {
+            "Dr": 3883010,
+            "Dw": 974849,
+            "Ir": 11432142
+          },
+          "name": "two_close_nonzero_halves"
+        },
+        {
+          "component_candidate": {
+            "Dr": 3858434,
+            "Dw": 974849,
+            "Ir": 11285164
+          },
+          "component_percent": {
+            "Dr": 0.0,
+            "Dw": 0.0,
+            "Ir": 0.0
+          },
+          "component_stock": {
+            "Dr": 3858434,
+            "Dw": 974849,
+            "Ir": 11285164
+          },
+          "name": "alternating_low_levels_first_two_differ"
+        }
+      ],
+      "direct_snapshot_sha256": "cd5214f0e7b934254ee02325ddc94e50b02a948609800fd6089eb87412329179",
+      "genuine_sigfpe_per_arm": 1440
+    }
+  },
+  "engine_tests": {
+    "touch_circuit_checks_per_arm": 77,
+    "touch_circuit_failures_per_arm": 0
+  },
+  "genuine_engine_interruption": {
+    "all_compared_raw_bytes_exact": true,
+    "bytes": 17019552,
+    "cases": 22,
+    "masked_continuations_per_case": 4,
+    "state_sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec",
+    "traps": 7
+  },
+  "native_timing": false,
+  "scope": "170752 native direct dispatches per arm/compiler with fixture mixed slots, all 8-bit group patterns including rejected ones, directed/nearest rounding, all FTZ/DAZ, initial sticky flags, finite/exceptional voltages, six selected trap masks; compares full result and errno / SIGFPE code, MXCSR, x87 flags/control. The 6 pressure VST3 scenes each use one real native and four guest histories per arm, 32 warmup blocks plus 5 measured-window blocks plus 1 continuation, actual note and poly-pressure events, matching public PCM/state/FP and repeated/additive controls in plugin-pressure.json.",
+  "unqualified_paths": "The two unique inputs must be +0 or normal finite physical values [1e-12,1], first and second physical slot words identical, guess [0,5], nearest/fully masked MXCSR + x87 and inherited compiler/build gate. Otherwise the historical ordered diode solver is retained. No temporal caching."
+}

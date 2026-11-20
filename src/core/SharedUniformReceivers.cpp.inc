@@ -28,43 +28,57 @@ static inline bool uniformReceiverControls() noexcept
     if (!std::isfinite(masterRes) || !sf::valid(boundaries[0]) || !sf::valid(boundaries[1]))
         return false;
 
-    // As in the public scalar oracle, publish only after both ranks finish.
-    sf::SharedReadout next;
+    // One solved value per rank feeds eight identical receivers. Stage
+    // only those distinct values so a rejection on rank II still preserves
+    // the caller's prior complete result. Expand them at final publication.
+    struct UniformRank {
+        std::array<double, 2> qBus, volts, q;
+        double levelBus, pin, gain;
+    };
+    std::array<UniformRank, 2> ranks;
+    std::uint32_t saturatedVoices = 0;
     const double r = std::clamp(masterRes, 0.0, 1.0);
-    next.masterResSaturated = r != masterRes;
-    next.masterResVolts = 10.0 * (1.0 - r);
-    for (std::size_t rank = 0; rank < 2; ++rank)
+    const bool masterSaturated = r != masterRes;
+    const double masterVolts = 10.0 * (1.0 - r);
+    for (std::size_t rank = 0; rank < ranks.size(); ++rank)
     {
+        auto& next = ranks[rank];
         const auto& b = boundaries[rank];
         sf::VoiceDrives drive;
         bool saturated = false;
         if (!sf::sanitizeDrive(drives[rank][0], drive, saturated))
             return false;
         if (saturated)
-            next.saturatedVoices |= ((1u << sf::voiceCount) - 1) << (rank * sf::voiceCount);
+            saturatedVoices |= ((1u << sf::voiceCount) - 1) << (rank * sf::voiceCount);
 
         const double touch = b.initialLevelVolts * drive.velocity + b.afterLevelVolts * drive.pressure;
         double sum = 0.0;
         for (int voice = 0; voice < sf::voiceCount; ++voice)
             sum += touch; // Preserve the scalar sequence, including signed zero.
 
-        next.qBusVolts[rank] = {sf::loadedQBus(b.qHp, next.masterResVolts),
-                                sf::loadedQBus(b.qLp, next.masterResVolts)};
-        next.levelBusVolts[rank] = sf::loadedLevelBus(b.level, sum);
-        std::array<double, 2> volts, q;
+        next.qBus = {sf::loadedQBus(b.qHp, masterVolts), sf::loadedQBus(b.qLp, masterVolts)};
+        next.levelBus = sf::loadedLevelBus(b.level, sum);
         for (std::size_t side = 0; side < 2; ++side)
         {
-            volts[side] = 0.5 * (next.qBusVolts[rank][side] + next.masterResVolts);
-            q[side] = sf::qFromVolts(volts[side]);
+            next.volts[side] = 0.5 * (next.qBus[side] + masterVolts);
+            next.q[side] = sf::qFromVolts(next.volts[side]);
         }
-        const double pin = sf::levelPinPerLoadedBus * next.levelBusVolts[rank] + sf::levelPinPerTouch * touch;
-        const double gain = pin / sf::levelUnitVolts;
-        next.qVolts[rank].fill(volts);
-        next.q[rank].fill(q);
-        next.levelPinVolts[rank].fill(pin);
-        next.levelGain[rank].fill(gain);
+        next.pin = sf::levelPinPerLoadedBus * next.levelBus + sf::levelPinPerTouch * touch;
+        next.gain = next.pin / sf::levelUnitVolts;
     }
-    result = next;
+    for (std::size_t rank = 0; rank < ranks.size(); ++rank)
+    {
+        const auto& next = ranks[rank];
+        result.qBusVolts[rank] = next.qBus;
+        result.levelBusVolts[rank] = next.levelBus;
+        result.qVolts[rank].fill(next.volts);
+        result.q[rank].fill(next.q);
+        result.levelPinVolts[rank].fill(next.pin);
+        result.levelGain[rank].fill(next.gain);
+    }
+    result.saturatedVoices = saturatedVoices;
+    result.masterResVolts = masterVolts;
+    result.masterResSaturated = masterSaturated;
     return true;
 }
 } // namespace

@@ -80,6 +80,41 @@ static __attribute__((noinline, noclone)) double distinctPressureBus(const std::
     return touch::busVolts(a, guess, 2);
 }
 
+// Mixed populations are common when channel aftertouch drives a chord
+// and the unused keys remain at rest. Prove exactly two distinct physical
+// node words in this sample; no temporal history or pressure approximation.
+template <std::size_t N>
+static __attribute__((noinline, noclone)) double twoPressureBus(const std::array<double, N>& a,
+                                                                double guess) noexcept
+{
+    using namespace touch;
+    static_assert(N == 8);
+    constexpr auto minNode = std::bit_cast<std::uint64_t>(1.0e-12);
+    constexpr auto one = std::bit_cast<std::uint64_t>(1.0);
+    const auto ordinary = [=](std::uint64_t w) { return w == 0 || (w >= minNode && w <= one); };
+    // The caller already proved that the first two words are identical and
+    // in range (including +0), and that the warm start is finite in [0, 5].
+    const auto first = std::bit_cast<std::uint64_t>(a[0]);
+    std::uint64_t second = first;
+    unsigned mask = 0;
+    for (std::size_t j = 2; j < N; ++j)
+    {
+        const auto word = std::bit_cast<std::uint64_t>(a[j]);
+        if (word == first) continue;
+        if (second == first) second = word;
+        if (word != second) return distinctPressureBus(a, guess);
+        mask |= 1u << j;
+    }
+    if (!mask || !ordinary(second) || !EngineRcAccess::admitted())
+        return distinctPressureBus(a, guess);
+    const double volts0 = a[0] * kFullScaleVolts;
+    const double volts1 = std::bit_cast<double>(second) * kFullScaleVolts;
+    const int iterations = 2;
+#define CS80_DETAIL_TWO_TRG5_DRIVES 1
+#include "TouchBusNewton.cpp.inc"
+#undef CS80_DETAIL_TWO_TRG5_DRIVES
+}
+
 template <std::size_t N>
 static __attribute__((noinline)) double samePressureBus(const std::array<double, N>& a, double guess) noexcept
 {
@@ -89,11 +124,18 @@ static __attribute__((noinline)) double samePressureBus(const std::array<double,
     constexpr std::uint64_t one = std::bit_cast<std::uint64_t>(1.0);
     constexpr std::uint64_t full = std::bit_cast<std::uint64_t>(kFullScaleVolts);
     const std::uint64_t first = std::bit_cast<std::uint64_t>(a[0]);
-    if (std::bit_cast<std::uint64_t>(a[1]) != first || first < minNode || first > one
-        || std::bit_cast<std::uint64_t>(guess) > full
-        || !std::all_of(a.begin() + 2, a.end(), [first](double x) {
+    // Preserve the cheap heterogeneous-key short circuit: no search for
+    // groups when the first two physical drive words already disagree.
+    if (std::bit_cast<std::uint64_t>(a[1]) != first || first > one
+        || std::bit_cast<std::uint64_t>(guess) > full)
+        return distinctPressureBus(a, guess);
+    if (first < minNode)
+        return first == 0 ? twoPressureBus(a, guess) : distinctPressureBus(a, guess);
+    if (!std::all_of(a.begin() + 2, a.end(), [first](double x) {
             return std::bit_cast<std::uint64_t>(x) == first;
-        }) || !EngineRcAccess::admitted())
+        }))
+        return twoPressureBus(a, guess);
+    if (!EngineRcAccess::admitted())
         return distinctPressureBus(a, guess);
 
     // All eight finite, normal, per-key voltages have identical raw bits.

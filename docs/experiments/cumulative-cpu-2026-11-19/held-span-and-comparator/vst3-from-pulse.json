@@ -1,0 +1,362 @@
+{
+  "candidate_duplicate_and_additive_controls": true,
+  "candidate_module_sha256": "b45b54b89d0b55eaac27ceb6a7af98451ee6a884b3e5a7a18739d2a49744ae23",
+  "controls_legend": {
+    "all5": "prefix plus the next actual call",
+    "duplicate": "repeated prefix",
+    "fifth": "only the next call",
+    "first4": "counted prefix"
+  },
+  "counted_prefix_callbacks": 4,
+  "counted_prefix_stereo_frames": 256,
+  "frames": 64,
+  "host_sha256": "cff95bba8fda694e17560a6cf543cc8b82f025631bc0230ab97081ad5b43296d",
+  "metrics": [
+    "Ir",
+    "Dr",
+    "Dw"
+  ],
+  "physical_cpu_budget_verified": false,
+  "sample_rate_hz": 48000,
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4233276,
+        1100626,
+        658386
+      ],
+      "candidate_controls": {
+        "all5": [
+          5293790,
+          1376155,
+          823191
+        ],
+        "duplicate": [
+          4233276,
+          1100626,
+          658386
+        ],
+        "fifth": [
+          1060514,
+          275529,
+          164805
+        ],
+        "first4": [
+          4233276,
+          1100626,
+          658386
+        ]
+      },
+      "delta": [
+        0,
+        0,
+        0
+      ],
+      "native_and_guest_public_sha256": {
+        "guest": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "9dab22a7a1491624c672611debb6285098674deea3bbe3906055cc22e16b7b67",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "c597b1b463b7cec49548fac00d7588c9652bb67cc2b1b0c88676bf8f1558571e",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        },
+        "native": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "69a728e9a175f055d3544e143e99a174e63402fc090988fcf7ab216f9c65e4e0",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "c597b1b463b7cec49548fac00d7588c9652bb67cc2b1b0c88676bf8f1558571e",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        }
+      },
+      "percent_change": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "stock": [
+        4233276,
+        1100626,
+        658386
+      ],
+      "stock_controls": {
+        "all5": [
+          5293790,
+          1376155,
+          823191
+        ],
+        "duplicate": [
+          4233276,
+          1100626,
+          658386
+        ],
+        "fifth": [
+          1060514,
+          275529,
+          164805
+        ],
+        "first4": [
+          4233276,
+          1100626,
+          658386
+        ]
+      }
+    },
+    "held-short": {
+      "candidate": [
+        20868324,
+        5850427,
+        2319005
+      ],
+      "candidate_controls": {
+        "all5": [
+          26074761,
+          7311255,
+          2897863
+        ],
+        "duplicate": [
+          20868324,
+          5850427,
+          2319005
+        ],
+        "fifth": [
+          5206437,
+          1460828,
+          578858
+        ],
+        "first4": [
+          20868324,
+          5850427,
+          2319005
+        ]
+      },
+      "delta": [
+        -463396,
+        -160096,
+        -24661
+      ],
+      "native_and_guest_public_sha256": {
+        "guest": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "9d8625d97c5b07973ec1a533aee87708545f91c312fb4e6179ada22773df7a95",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        },
+        "native": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "9d8625d97c5b07973ec1a533aee87708545f91c312fb4e6179ada22773df7a95",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        }
+      },
+      "percent_change": [
+        -2.172333032685597,
+        -2.663595164680345,
+        -1.0522403789618486
+      ],
+      "stock": [
+        21331720,
+        6010523,
+        2343666
+      ],
+      "stock_controls": {
+        "all5": [
+          26653834,
+          7511368,
+          2928667
+        ],
+        "duplicate": [
+          21331720,
+          6010523,
+          2343666
+        ],
+        "fifth": [
+          5322114,
+          1500845,
+          585001
+        ],
+        "first4": [
+          21331720,
+          6010523,
+          2343666
+        ]
+      }
+    },
+    "varied-held-short": {
+      "candidate": [
+        20964163,
+        5863775,
+        2319379
+      ],
+      "candidate_controls": {
+        "all5": [
+          26198694,
+          7329289,
+          2898677
+        ],
+        "duplicate": [
+          20964163,
+          5863775,
+          2319379
+        ],
+        "fifth": [
+          5234531,
+          1465514,
+          579298
+        ],
+        "first4": [
+          20964163,
+          5863775,
+          2319379
+        ]
+      },
+      "delta": [
+        -463396,
+        -160096,
+        -24661
+      ],
+      "native_and_guest_public_sha256": {
+        "guest": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "f68017674f9ebdf86a0a28d4f28910b4bb699ef96f1210a09b0cb4f4fa3197ee",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        },
+        "native": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "f68017674f9ebdf86a0a28d4f28910b4bb699ef96f1210a09b0cb4f4fa3197ee",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        }
+      },
+      "percent_change": [
+        -2.1626168431037804,
+        -2.6576930349272088,
+        -1.052072490230542
+      ],
+      "stock": [
+        21427559,
+        6023871,
+        2344040
+      ],
+      "stock_controls": {
+        "all5": [
+          26777767,
+          7529402,
+          2929481
+        ],
+        "duplicate": [
+          21427559,
+          6023871,
+          2344040
+        ],
+        "fifth": [
+          5350208,
+          1505531,
+          585441
+        ],
+        "first4": [
+          21427559,
+          6023871,
+          2344040
+        ]
+      }
+    },
+    "varied-wake-short": {
+      "candidate": [
+        29353461,
+        7983893,
+        3354179
+      ],
+      "candidate_controls": {
+        "all5": [
+          34757553,
+          9484112,
+          3949243
+        ],
+        "duplicate": [
+          29353461,
+          7983893,
+          3354179
+        ],
+        "fifth": [
+          5404092,
+          1500219,
+          595064
+        ],
+        "first4": [
+          29353461,
+          7983893,
+          3354179
+        ]
+      },
+      "delta": [
+        -462110,
+        -159586,
+        -24528
+      ],
+      "native_and_guest_public_sha256": {
+        "guest": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "c6413108fd8df193b5d8b0620b8f945062ccbbc1dd7dfa7280920615aa64aa97",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "5b91e50a060d8b408d6fb8c5bda314a6d6b9ad5c2b0e8a179bc36d3585b4d865",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        },
+        "native": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "fb73e07cd7bfb7a6c0da659948bfbdfb64edc63dea3c615946c9d228407e0895",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "5b91e50a060d8b408d6fb8c5bda314a6d6b9ad5c2b0e8a179bc36d3585b4d865",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        }
+      },
+      "percent_change": [
+        -1.549894851921501,
+        -1.9596784126292952,
+        -0.725958184595468
+      ],
+      "stock": [
+        29815571,
+        8143479,
+        3378707
+      ],
+      "stock_controls": {
+        "all5": [
+          35335358,
+          9683737,
+          3979920
+        ],
+        "duplicate": [
+          29815571,
+          8143479,
+          3378707
+        ],
+        "fifth": [
+          5519787,
+          1540258,
+          601213
+        ],
+        "first4": [
+          29815571,
+          8143479,
+          3378707
+        ]
+      }
+    }
+  },
+  "stock_module_sha256": "4bbba5d8f4005e522951ab5f866fa784c17eb9c972d5402d7b9a99f168161280",
+  "timing": false,
+  "warm_stereo_frames": 2048
+}

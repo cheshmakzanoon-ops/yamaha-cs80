@@ -1,0 +1,1475 @@
+{
+  "all_public_bytes_exact": true,
+  "baseline_module_sha256": "b496ac50672957627844de37d62ee6020014d2fd278f8de03f35e1a80a33dbb6",
+  "candidate_module_sha256": "3a1627c434d8b0d2953796c4d8680421c961f9398e45e4527219128f62e18d22",
+  "host_sha256": "46c7ff83ad709452fdad4ab83810f132a53828c7c2f2b16849909e1c42a0e721",
+  "observations": {
+    "44100-automation": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14309,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 251,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.1772443652153015,
+        "points_sent": 648,
+        "poly_pressure": 576,
+        "queues_sent": 216,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "automation"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "40483853f05a7961f9e8debeef78e83b7bfdf57ec3d0ef00d9c9052bc10e96fb",
+        "after-1919.state": "40483853f05a7961f9e8debeef78e83b7bfdf57ec3d0ef00d9c9052bc10e96fb",
+        "after-2879.state": "b13f9eaa365b9633efa96ef0bd37ca07f641b8fe6fe62ac91f92a7dfb9b0047c",
+        "after-3071.state": "4f8681aa78a79176de3ba044ef3d016fd1271911e025f2709d6667e21b795e19",
+        "after-512.state": "66ee194d88879df20180f88cec1d0313ed17e1c389b49e8da00c81ddb83fe3ba",
+        "after-513.state": "66ee194d88879df20180f88cec1d0313ed17e1c389b49e8da00c81ddb83fe3ba",
+        "callbacks.bin": "8de2fd9df098824f13e16fe6a5bd0eee568660fadab84380e78a5887c01ec8ed",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "866bc8fa5165c3989e681cc70df7f705b218eb8332d35e9fbb64d99826eeb650",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "ae8c4e720d0443a804efb4fd7581058b2381f010ac03b8a811c6245d7a2e5041",
+        "pcm.bin": "947b997fc52f7b05d2a299746b73a376b6356f40c405c1c74037a11f35e90778"
+      }
+    },
+    "44100-effects": {
+      "file_bytes": {
+        "after-1.state": 14307,
+        "after-1918.state": 14339,
+        "after-1919.state": 14339,
+        "after-2879.state": 14340,
+        "after-3071.state": 14339,
+        "after-512.state": 14339,
+        "after-513.state": 14339,
+        "callbacks.bin": 282624,
+        "controls.csv": 7960,
+        "final-metadata.csv": 62351,
+        "initial-metadata.csv": 62351,
+        "initial.state": 14307,
+        "outcome.json": 246,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243456,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.1161394938826561,
+        "points_sent": 1080,
+        "poly_pressure": 0,
+        "queues_sent": 360,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "effects"
+      },
+      "sha256": {
+        "after-1.state": "d67b4de5bea32b184f5a0fec7342116121e0480dcc3aaf8aa0751f795280ec10",
+        "after-1918.state": "cf885784dc4d30974ea56a92c7327c188f2c4084b98086bd82026fdc17d7dbd6",
+        "after-1919.state": "cf885784dc4d30974ea56a92c7327c188f2c4084b98086bd82026fdc17d7dbd6",
+        "after-2879.state": "04698c3dbbf5df0494da57f5f6a03b5748e0635b61e6e1611e0d593aed39361a",
+        "after-3071.state": "39d79e9a2384a9add063e322fa3d3cb26df9d3fe0188fa6e19b3e5073dfdacd4",
+        "after-512.state": "25df63e259245c633640ffbecd13564837bcd4b015d943c567c310a994c16be4",
+        "after-513.state": "25df63e259245c633640ffbecd13564837bcd4b015d943c567c310a994c16be4",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "45e6f8f21d23dd7c96ce5bc64a1c70c5f4a85f21ac576b820c535d15634fb564",
+        "final-metadata.csv": "da508bb90279778bfb400e0ff88182dead0538081e2813fa6de14be26ee62653",
+        "initial-metadata.csv": "58caec742eed853c280fbb4ddf6b8f8845327f36291d39197d1ea059e841dfbf",
+        "initial.state": "d67b4de5bea32b184f5a0fec7342116121e0480dcc3aaf8aa0751f795280ec10",
+        "outcome.json": "e91c0bbe9e29b31dc24deb83b87906969ee075ee7228c310b810a15e3822326e",
+        "pcm.bin": "48ad1907d1c280f6bceac553ac7a2d4dd5e23e00c6fa406567b3c72bb9e26058"
+      }
+    },
+    "44100-external": {
+      "file_bytes": {
+        "after-1.state": 14306,
+        "after-1918.state": 14306,
+        "after-1919.state": 14306,
+        "after-2879.state": 14306,
+        "after-3071.state": 14306,
+        "after-512.state": 14306,
+        "after-513.state": 14306,
+        "callbacks.bin": 282624,
+        "controls.csv": 7933,
+        "final-metadata.csv": 62333,
+        "initial-metadata.csv": 62333,
+        "initial.state": 14306,
+        "outcome.json": 244,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.07503844797611237,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "external"
+      },
+      "sha256": {
+        "after-1.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-1918.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-1919.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-2879.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-3071.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-512.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-513.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "0c7f337822548303e1b960ade888ebf3d588e10a487ace755d7eacb02ef83e3b",
+        "final-metadata.csv": "35ecb9c58874b76f1d4af478788905da760b882e80114fd0f2aaecc4c31a22b2",
+        "initial-metadata.csv": "35ecb9c58874b76f1d4af478788905da760b882e80114fd0f2aaecc4c31a22b2",
+        "initial.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "outcome.json": "8d59fd86b0919baf6fe79fc1c0e0b309b828f8206d5d9b9b4ec65e03916acf3a",
+        "pcm.bin": "f41198a7718e42fe1b0a0f092dcbcac79b0d08e928de3f407fc9a1da76d25b1b"
+      }
+    },
+    "44100-factory": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 243,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.07405691593885422,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "factory"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1919.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-2879.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-3071.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-512.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-513.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "54aeb3e1f992ba6e98874739533abbb517a808a82161a79f6e689d04ddbe73fc",
+        "pcm.bin": "a31777e38d5a0c76b589fce1c6f162cf667e63e8bf9dad11b681bbec0f225396"
+      }
+    },
+    "44100-legacy": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14309,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7825,
+        "final-metadata.csv": 62261,
+        "initial-metadata.csv": 62261,
+        "initial.state": 14276,
+        "outcome.json": 246,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.1889239400625229,
+        "points_sent": 648,
+        "poly_pressure": 0,
+        "queues_sent": 216,
+        "reported_latency_67_every_call": false,
+        "reported_latency_values_samples": [
+          63
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "legacy"
+      },
+      "sha256": {
+        "after-1.state": "ce0c62a4576df709c8ff397fbd03495c3261882667f5fd7cc752d03cee84384f",
+        "after-1918.state": "b25e080c8cb61978387e3893a7cdf11853f1677e93f17bfaae3e144f5cfc9876",
+        "after-1919.state": "b25e080c8cb61978387e3893a7cdf11853f1677e93f17bfaae3e144f5cfc9876",
+        "after-2879.state": "c55c1529fa5a9d67bb884ddc5d6cdba953d16ec6464bc3e9cd759ff1c296453f",
+        "after-3071.state": "e0579806ecc1ed72774cad0bb246f92985d2cd421c3767c1b0d3e0da6580e028",
+        "after-512.state": "41202bdd75a418ac7aef8d44559fd54ed49085bc9e21b44121369928bf5051ea",
+        "after-513.state": "41202bdd75a418ac7aef8d44559fd54ed49085bc9e21b44121369928bf5051ea",
+        "callbacks.bin": "0a0e2d2e042a1dd94ee7709a31d8bdb0fd9bf907e8a4c1d98dcb511c24f5ac36",
+        "controls.csv": "498c74c74ae9793337fb7fa80faa57925cd4df2c8b97bae455335207bc89fe30",
+        "final-metadata.csv": "0de0282144f348ddd3bafa6650482b3804fa9a506de84acf2ff5de440df19684",
+        "initial-metadata.csv": "154acf58dedc10e63236b79410ca7b280bf2c0a9f81e964a05cf537f4ce023fc",
+        "initial.state": "ce0c62a4576df709c8ff397fbd03495c3261882667f5fd7cc752d03cee84384f",
+        "outcome.json": "ee34a052074b437ae02a2b17568672f9ec4ad13bc2b9f9a0e609a2811ab55417",
+        "pcm.bin": "b69a20d4271fccea6f64ca4b180a2999d8d1cfe773750cfc94fa481a9ada62d5"
+      }
+    },
+    "44100-mpe": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7879,
+        "final-metadata.csv": 62297,
+        "initial-metadata.csv": 62297,
+        "initial.state": 14276,
+        "outcome.json": 241,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.07405691593885422,
+        "points_sent": 0,
+        "poly_pressure": 576,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "mpe"
+      },
+      "sha256": {
+        "after-1.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-1918.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-1919.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-2879.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-3071.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-512.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-513.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "callbacks.bin": "8de2fd9df098824f13e16fe6a5bd0eee568660fadab84380e78a5887c01ec8ed",
+        "controls.csv": "79611aa4329a0a0976de70053522a527615fc1cd1bf7f9d3c3f09c63b5b444cb",
+        "final-metadata.csv": "2365403b24f141c775e94a408289daadc6fbe885835521bd01fd6f3624da3060",
+        "initial-metadata.csv": "2365403b24f141c775e94a408289daadc6fbe885835521bd01fd6f3624da3060",
+        "initial.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "outcome.json": "d12e917ffebeda04fc9397f9899ca3834dbc903ca584942a08791172675c9492",
+        "pcm.bin": "a31777e38d5a0c76b589fce1c6f162cf667e63e8bf9dad11b681bbec0f225396"
+      }
+    },
+    "44100-pulse": {
+      "file_bytes": {
+        "after-1.state": 14308,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14308,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7888,
+        "final-metadata.csv": 62351,
+        "initial-metadata.csv": 62351,
+        "initial.state": 14308,
+        "outcome.json": 240,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.04684167355298996,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "pulse"
+      },
+      "sha256": {
+        "after-1.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-1918.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-1919.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-2879.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-3071.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-512.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-513.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "a145f07cf72257243c12d25916dd1228936e847f22d861484ee57f138d5f7998",
+        "final-metadata.csv": "df2be2d2a3117dd6c633e965e56e8f63f907c7150971b9016c2eef2c63bfe7ca",
+        "initial-metadata.csv": "df2be2d2a3117dd6c633e965e56e8f63f907c7150971b9016c2eef2c63bfe7ca",
+        "initial.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "outcome.json": "f03bcb2973995040aeced61241c4c1bba84123da7cf35c981c7dba9889e11848",
+        "pcm.bin": "08abcf22c59402ffaee5c5d8188c9fc10a47f2a42b1a151384621e288e206d2d"
+      }
+    },
+    "44100-pure": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7879,
+        "final-metadata.csv": 62297,
+        "initial-metadata.csv": 62297,
+        "initial.state": 14276,
+        "outcome.json": 240,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.08166985213756561,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "pure"
+      },
+      "sha256": {
+        "after-1.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-1918.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-1919.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-2879.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-3071.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-512.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-513.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "5685a2f675ed7cb58e829adb0cd5c5b200777546bee9e1fb981ddbb5709ad0d0",
+        "final-metadata.csv": "250d5b1fb93d43e257c7ab9cd85d5a0b7416a7450c0363da437930ce8318e1e7",
+        "initial-metadata.csv": "250d5b1fb93d43e257c7ab9cd85d5a0b7416a7450c0363da437930ce8318e1e7",
+        "initial.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "outcome.json": "27fed16c3da55d16be867567d3626d859bf7f66b5df1a3378ff5a58375bb51c6",
+        "pcm.bin": "f17852e0a253aa42267a021156dd1c02eb7da59c44457d21f64c91c5012af6b5"
+      }
+    },
+    "44100-quiet": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 215,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 0,
+        "note_offs": 0,
+        "note_ons": 0,
+        "peak": 0,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 44100,
+        "scene": "quiet"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1919.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-2879.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-3071.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-512.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-513.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "callbacks.bin": "1ceee4afea8e237aa26bc0ce30463b0ae195925cca777a847d0aa7405e61bfed",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "b3705fbcbf2f86edcd0a474fd4622adb639a9aaea4e950e15971cf59acdfc8b4",
+        "pcm.bin": "2d3f92fcab70c54681fff75b184450a0f03caff8f8875e30264df5759f898661"
+      }
+    },
+    "48000-automation": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14309,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 251,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.21730926632881165,
+        "points_sent": 648,
+        "poly_pressure": 576,
+        "queues_sent": 216,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "automation"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "40483853f05a7961f9e8debeef78e83b7bfdf57ec3d0ef00d9c9052bc10e96fb",
+        "after-1919.state": "40483853f05a7961f9e8debeef78e83b7bfdf57ec3d0ef00d9c9052bc10e96fb",
+        "after-2879.state": "b13f9eaa365b9633efa96ef0bd37ca07f641b8fe6fe62ac91f92a7dfb9b0047c",
+        "after-3071.state": "4f8681aa78a79176de3ba044ef3d016fd1271911e025f2709d6667e21b795e19",
+        "after-512.state": "66ee194d88879df20180f88cec1d0313ed17e1c389b49e8da00c81ddb83fe3ba",
+        "after-513.state": "66ee194d88879df20180f88cec1d0313ed17e1c389b49e8da00c81ddb83fe3ba",
+        "callbacks.bin": "8de2fd9df098824f13e16fe6a5bd0eee568660fadab84380e78a5887c01ec8ed",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "866bc8fa5165c3989e681cc70df7f705b218eb8332d35e9fbb64d99826eeb650",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "dc925eddee44121efc607c651ef7e70b5f7ac54c2ad5e2e90ee774cc74aacbc1",
+        "pcm.bin": "d6f6725ff16b3e805280de8bb83764a5123dc26d489b22ca4ba2dbaa8d5982f6"
+      }
+    },
+    "48000-effects": {
+      "file_bytes": {
+        "after-1.state": 14307,
+        "after-1918.state": 14339,
+        "after-1919.state": 14339,
+        "after-2879.state": 14340,
+        "after-3071.state": 14339,
+        "after-512.state": 14339,
+        "after-513.state": 14339,
+        "callbacks.bin": 282624,
+        "controls.csv": 7960,
+        "final-metadata.csv": 62351,
+        "initial-metadata.csv": 62351,
+        "initial.state": 14307,
+        "outcome.json": 247,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243456,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.11009696125984192,
+        "points_sent": 1080,
+        "poly_pressure": 0,
+        "queues_sent": 360,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "effects"
+      },
+      "sha256": {
+        "after-1.state": "d67b4de5bea32b184f5a0fec7342116121e0480dcc3aaf8aa0751f795280ec10",
+        "after-1918.state": "cf885784dc4d30974ea56a92c7327c188f2c4084b98086bd82026fdc17d7dbd6",
+        "after-1919.state": "cf885784dc4d30974ea56a92c7327c188f2c4084b98086bd82026fdc17d7dbd6",
+        "after-2879.state": "04698c3dbbf5df0494da57f5f6a03b5748e0635b61e6e1611e0d593aed39361a",
+        "after-3071.state": "39d79e9a2384a9add063e322fa3d3cb26df9d3fe0188fa6e19b3e5073dfdacd4",
+        "after-512.state": "25df63e259245c633640ffbecd13564837bcd4b015d943c567c310a994c16be4",
+        "after-513.state": "25df63e259245c633640ffbecd13564837bcd4b015d943c567c310a994c16be4",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "45e6f8f21d23dd7c96ce5bc64a1c70c5f4a85f21ac576b820c535d15634fb564",
+        "final-metadata.csv": "da508bb90279778bfb400e0ff88182dead0538081e2813fa6de14be26ee62653",
+        "initial-metadata.csv": "58caec742eed853c280fbb4ddf6b8f8845327f36291d39197d1ea059e841dfbf",
+        "initial.state": "d67b4de5bea32b184f5a0fec7342116121e0480dcc3aaf8aa0751f795280ec10",
+        "outcome.json": "3575ea102c1b4c91e2eb91fb3e2d70efedca69405fb369a8767067243e0361b2",
+        "pcm.bin": "aaaef4d52ca4d0ef5df35742529bc10378a79aa18ce36a8b90218138076fa759"
+      }
+    },
+    "48000-external": {
+      "file_bytes": {
+        "after-1.state": 14306,
+        "after-1918.state": 14306,
+        "after-1919.state": 14306,
+        "after-2879.state": 14306,
+        "after-3071.state": 14306,
+        "after-512.state": 14306,
+        "after-513.state": 14306,
+        "callbacks.bin": 282624,
+        "controls.csv": 7933,
+        "final-metadata.csv": 62333,
+        "initial-metadata.csv": 62333,
+        "initial.state": 14306,
+        "outcome.json": 244,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.09825833886861801,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "external"
+      },
+      "sha256": {
+        "after-1.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-1918.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-1919.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-2879.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-3071.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-512.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-513.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "0c7f337822548303e1b960ade888ebf3d588e10a487ace755d7eacb02ef83e3b",
+        "final-metadata.csv": "35ecb9c58874b76f1d4af478788905da760b882e80114fd0f2aaecc4c31a22b2",
+        "initial-metadata.csv": "35ecb9c58874b76f1d4af478788905da760b882e80114fd0f2aaecc4c31a22b2",
+        "initial.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "outcome.json": "b82f7182539fdb083bd7a6d0a9687cf40c8338e4a8a40dc02c1b05126ef364e6",
+        "pcm.bin": "4d8e11e64f0bda1fada8ea8c76fb56d69f7a2653d4ab5c826c0908b2558f1aef"
+      }
+    },
+    "48000-factory": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 242,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.09053359180688858,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "factory"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1919.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-2879.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-3071.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-512.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-513.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "99bd21760c193d767aa76a4d5ca8b09686f62e7ace1b0e4be7ff14f9ca5d8816",
+        "pcm.bin": "bfbf71291b840680f4cbbac9d5266679341ffecf8cd6270de67d89fd124c17d3"
+      }
+    },
+    "48000-legacy": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14309,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7825,
+        "final-metadata.csv": 62261,
+        "initial-metadata.csv": 62261,
+        "initial.state": 14276,
+        "outcome.json": 246,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.1830502152442932,
+        "points_sent": 648,
+        "poly_pressure": 0,
+        "queues_sent": 216,
+        "reported_latency_67_every_call": false,
+        "reported_latency_values_samples": [
+          63
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "legacy"
+      },
+      "sha256": {
+        "after-1.state": "ce0c62a4576df709c8ff397fbd03495c3261882667f5fd7cc752d03cee84384f",
+        "after-1918.state": "b25e080c8cb61978387e3893a7cdf11853f1677e93f17bfaae3e144f5cfc9876",
+        "after-1919.state": "b25e080c8cb61978387e3893a7cdf11853f1677e93f17bfaae3e144f5cfc9876",
+        "after-2879.state": "c55c1529fa5a9d67bb884ddc5d6cdba953d16ec6464bc3e9cd759ff1c296453f",
+        "after-3071.state": "e0579806ecc1ed72774cad0bb246f92985d2cd421c3767c1b0d3e0da6580e028",
+        "after-512.state": "41202bdd75a418ac7aef8d44559fd54ed49085bc9e21b44121369928bf5051ea",
+        "after-513.state": "41202bdd75a418ac7aef8d44559fd54ed49085bc9e21b44121369928bf5051ea",
+        "callbacks.bin": "0a0e2d2e042a1dd94ee7709a31d8bdb0fd9bf907e8a4c1d98dcb511c24f5ac36",
+        "controls.csv": "498c74c74ae9793337fb7fa80faa57925cd4df2c8b97bae455335207bc89fe30",
+        "final-metadata.csv": "0de0282144f348ddd3bafa6650482b3804fa9a506de84acf2ff5de440df19684",
+        "initial-metadata.csv": "154acf58dedc10e63236b79410ca7b280bf2c0a9f81e964a05cf537f4ce023fc",
+        "initial.state": "ce0c62a4576df709c8ff397fbd03495c3261882667f5fd7cc752d03cee84384f",
+        "outcome.json": "dfe190f4fa37e6ebce2e1a49b34b41ea09d7a449cd491e0430751dc13a0f67d6",
+        "pcm.bin": "eb1ee6af2dc1438ca7730bd0c8d002b849a6471645a59b34947837ac35c48bb7"
+      }
+    },
+    "48000-mpe": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7879,
+        "final-metadata.csv": 62297,
+        "initial-metadata.csv": 62297,
+        "initial.state": 14276,
+        "outcome.json": 240,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.09053359180688858,
+        "points_sent": 0,
+        "poly_pressure": 576,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "mpe"
+      },
+      "sha256": {
+        "after-1.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-1918.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-1919.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-2879.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-3071.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-512.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-513.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "callbacks.bin": "8de2fd9df098824f13e16fe6a5bd0eee568660fadab84380e78a5887c01ec8ed",
+        "controls.csv": "79611aa4329a0a0976de70053522a527615fc1cd1bf7f9d3c3f09c63b5b444cb",
+        "final-metadata.csv": "2365403b24f141c775e94a408289daadc6fbe885835521bd01fd6f3624da3060",
+        "initial-metadata.csv": "2365403b24f141c775e94a408289daadc6fbe885835521bd01fd6f3624da3060",
+        "initial.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "outcome.json": "aff50afb2ea0b665e25f6a797a4863f1cf687352a649bc16e82e945290cb57bd",
+        "pcm.bin": "bfbf71291b840680f4cbbac9d5266679341ffecf8cd6270de67d89fd124c17d3"
+      }
+    },
+    "48000-pulse": {
+      "file_bytes": {
+        "after-1.state": 14308,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14308,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7888,
+        "final-metadata.csv": 62351,
+        "initial-metadata.csv": 62351,
+        "initial.state": 14308,
+        "outcome.json": 241,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.04702536389231682,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "pulse"
+      },
+      "sha256": {
+        "after-1.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-1918.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-1919.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-2879.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-3071.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-512.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-513.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "a145f07cf72257243c12d25916dd1228936e847f22d861484ee57f138d5f7998",
+        "final-metadata.csv": "df2be2d2a3117dd6c633e965e56e8f63f907c7150971b9016c2eef2c63bfe7ca",
+        "initial-metadata.csv": "df2be2d2a3117dd6c633e965e56e8f63f907c7150971b9016c2eef2c63bfe7ca",
+        "initial.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "outcome.json": "4845c1c8da51051ed57ab71ec1df2d1a5ac1f770b3b5b54a8b676ba91dd0f677",
+        "pcm.bin": "be481327ccd70706290b9fc32844eb7d4635e4b2fdef0ea3106a2322b1da4826"
+      }
+    },
+    "48000-pure": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7879,
+        "final-metadata.csv": 62297,
+        "initial-metadata.csv": 62297,
+        "initial.state": 14276,
+        "outcome.json": 240,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.08343008905649185,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "pure"
+      },
+      "sha256": {
+        "after-1.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-1918.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-1919.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-2879.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-3071.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-512.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-513.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "5685a2f675ed7cb58e829adb0cd5c5b200777546bee9e1fb981ddbb5709ad0d0",
+        "final-metadata.csv": "250d5b1fb93d43e257c7ab9cd85d5a0b7416a7450c0363da437930ce8318e1e7",
+        "initial-metadata.csv": "250d5b1fb93d43e257c7ab9cd85d5a0b7416a7450c0363da437930ce8318e1e7",
+        "initial.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "outcome.json": "6446670e65d4e2c4b9df7605f0c6a10a8d4da4e20c5f3a2f133b78b888908b22",
+        "pcm.bin": "c6280ee01174a2b0c7870cbaca4a4fdd67c157267624d23d5b3bbeaca537a389"
+      }
+    },
+    "48000-quiet": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 215,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 0,
+        "note_offs": 0,
+        "note_ons": 0,
+        "peak": 0,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 48000,
+        "scene": "quiet"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1919.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-2879.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-3071.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-512.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-513.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "callbacks.bin": "1ceee4afea8e237aa26bc0ce30463b0ae195925cca777a847d0aa7405e61bfed",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "d698d31dd8217e774b7f57622a5bc58a40e20306f413cac498c5706cee25955b",
+        "pcm.bin": "2d3f92fcab70c54681fff75b184450a0f03caff8f8875e30264df5759f898661"
+      }
+    },
+    "96000-automation": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14309,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 251,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.1980748027563095,
+        "points_sent": 648,
+        "poly_pressure": 576,
+        "queues_sent": 216,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "automation"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "40483853f05a7961f9e8debeef78e83b7bfdf57ec3d0ef00d9c9052bc10e96fb",
+        "after-1919.state": "40483853f05a7961f9e8debeef78e83b7bfdf57ec3d0ef00d9c9052bc10e96fb",
+        "after-2879.state": "b13f9eaa365b9633efa96ef0bd37ca07f641b8fe6fe62ac91f92a7dfb9b0047c",
+        "after-3071.state": "4f8681aa78a79176de3ba044ef3d016fd1271911e025f2709d6667e21b795e19",
+        "after-512.state": "66ee194d88879df20180f88cec1d0313ed17e1c389b49e8da00c81ddb83fe3ba",
+        "after-513.state": "66ee194d88879df20180f88cec1d0313ed17e1c389b49e8da00c81ddb83fe3ba",
+        "callbacks.bin": "8de2fd9df098824f13e16fe6a5bd0eee568660fadab84380e78a5887c01ec8ed",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "866bc8fa5165c3989e681cc70df7f705b218eb8332d35e9fbb64d99826eeb650",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "a8e6716e6d8766f3763034a1a8946977476d7869e09bca2db86cded7d616750d",
+        "pcm.bin": "c036a158ebd1260dde8482ddd97b4781cdedb466bf36b35a374ce862c00e9adb"
+      }
+    },
+    "96000-effects": {
+      "file_bytes": {
+        "after-1.state": 14307,
+        "after-1918.state": 14339,
+        "after-1919.state": 14339,
+        "after-2879.state": 14340,
+        "after-3071.state": 14339,
+        "after-512.state": 14339,
+        "after-513.state": 14339,
+        "callbacks.bin": 282624,
+        "controls.csv": 7960,
+        "final-metadata.csv": 62351,
+        "initial-metadata.csv": 62351,
+        "initial.state": 14307,
+        "outcome.json": 247,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243456,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.14089299738407135,
+        "points_sent": 1080,
+        "poly_pressure": 0,
+        "queues_sent": 360,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "effects"
+      },
+      "sha256": {
+        "after-1.state": "d67b4de5bea32b184f5a0fec7342116121e0480dcc3aaf8aa0751f795280ec10",
+        "after-1918.state": "cf885784dc4d30974ea56a92c7327c188f2c4084b98086bd82026fdc17d7dbd6",
+        "after-1919.state": "cf885784dc4d30974ea56a92c7327c188f2c4084b98086bd82026fdc17d7dbd6",
+        "after-2879.state": "04698c3dbbf5df0494da57f5f6a03b5748e0635b61e6e1611e0d593aed39361a",
+        "after-3071.state": "39d79e9a2384a9add063e322fa3d3cb26df9d3fe0188fa6e19b3e5073dfdacd4",
+        "after-512.state": "25df63e259245c633640ffbecd13564837bcd4b015d943c567c310a994c16be4",
+        "after-513.state": "25df63e259245c633640ffbecd13564837bcd4b015d943c567c310a994c16be4",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "45e6f8f21d23dd7c96ce5bc64a1c70c5f4a85f21ac576b820c535d15634fb564",
+        "final-metadata.csv": "da508bb90279778bfb400e0ff88182dead0538081e2813fa6de14be26ee62653",
+        "initial-metadata.csv": "58caec742eed853c280fbb4ddf6b8f8845327f36291d39197d1ea059e841dfbf",
+        "initial.state": "d67b4de5bea32b184f5a0fec7342116121e0480dcc3aaf8aa0751f795280ec10",
+        "outcome.json": "d55c4a2c11357364a95eb0f4659ae5be5f10a4225bb6d4d4200676bb1c284f7b",
+        "pcm.bin": "f12359d5e3359c3c2f9bf5eff495527f9f61b6fabfd815b9535c61c6714de1c0"
+      }
+    },
+    "96000-external": {
+      "file_bytes": {
+        "after-1.state": 14306,
+        "after-1918.state": 14306,
+        "after-1919.state": 14306,
+        "after-2879.state": 14306,
+        "after-3071.state": 14306,
+        "after-512.state": 14306,
+        "after-513.state": 14306,
+        "callbacks.bin": 282624,
+        "controls.csv": 7933,
+        "final-metadata.csv": 62333,
+        "initial-metadata.csv": 62333,
+        "initial.state": 14306,
+        "outcome.json": 244,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.0723123848438263,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "external"
+      },
+      "sha256": {
+        "after-1.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-1918.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-1919.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-2879.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-3071.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-512.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "after-513.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "0c7f337822548303e1b960ade888ebf3d588e10a487ace755d7eacb02ef83e3b",
+        "final-metadata.csv": "35ecb9c58874b76f1d4af478788905da760b882e80114fd0f2aaecc4c31a22b2",
+        "initial-metadata.csv": "35ecb9c58874b76f1d4af478788905da760b882e80114fd0f2aaecc4c31a22b2",
+        "initial.state": "04788e9e97f7c849af6dec481cae07e70c5fe1e5937182b56992ac2769aae7df",
+        "outcome.json": "435461ed2ee19ea07ee16927441c03b601c40243439733269bd28b9fc4c06074",
+        "pcm.bin": "1f33430005f05a32a41e2e6a0ef5c478130d59f185847d95b98249912d800ceb"
+      }
+    },
+    "96000-factory": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 243,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.0692436546087265,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "factory"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1919.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-2879.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-3071.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-512.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-513.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "a62c3be6eccd7166e192d8a1f8707c5931d83d05a7022417f052282e3130483f",
+        "pcm.bin": "58b476cbaf429ef9f44314b8ad6c6548d8cd6de780f3256acd78c91cd4d7969b"
+      }
+    },
+    "96000-legacy": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14309,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7825,
+        "final-metadata.csv": 62261,
+        "initial-metadata.csv": 62261,
+        "initial.state": 14276,
+        "outcome.json": 246,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.17594292759895325,
+        "points_sent": 648,
+        "poly_pressure": 0,
+        "queues_sent": 216,
+        "reported_latency_67_every_call": false,
+        "reported_latency_values_samples": [
+          63
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "legacy"
+      },
+      "sha256": {
+        "after-1.state": "ce0c62a4576df709c8ff397fbd03495c3261882667f5fd7cc752d03cee84384f",
+        "after-1918.state": "b25e080c8cb61978387e3893a7cdf11853f1677e93f17bfaae3e144f5cfc9876",
+        "after-1919.state": "b25e080c8cb61978387e3893a7cdf11853f1677e93f17bfaae3e144f5cfc9876",
+        "after-2879.state": "c55c1529fa5a9d67bb884ddc5d6cdba953d16ec6464bc3e9cd759ff1c296453f",
+        "after-3071.state": "e0579806ecc1ed72774cad0bb246f92985d2cd421c3767c1b0d3e0da6580e028",
+        "after-512.state": "41202bdd75a418ac7aef8d44559fd54ed49085bc9e21b44121369928bf5051ea",
+        "after-513.state": "41202bdd75a418ac7aef8d44559fd54ed49085bc9e21b44121369928bf5051ea",
+        "callbacks.bin": "0a0e2d2e042a1dd94ee7709a31d8bdb0fd9bf907e8a4c1d98dcb511c24f5ac36",
+        "controls.csv": "498c74c74ae9793337fb7fa80faa57925cd4df2c8b97bae455335207bc89fe30",
+        "final-metadata.csv": "0de0282144f348ddd3bafa6650482b3804fa9a506de84acf2ff5de440df19684",
+        "initial-metadata.csv": "154acf58dedc10e63236b79410ca7b280bf2c0a9f81e964a05cf537f4ce023fc",
+        "initial.state": "ce0c62a4576df709c8ff397fbd03495c3261882667f5fd7cc752d03cee84384f",
+        "outcome.json": "6feea37534a04c4e1cbbd53029953a8d16d963603e4eba647b8a0ac5ff6e2079",
+        "pcm.bin": "51a0cb59f23a54ca8ee73b4018be0b89047593d4c7f7a1f912a917f6acf4e587"
+      }
+    },
+    "96000-mpe": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7879,
+        "final-metadata.csv": 62297,
+        "initial-metadata.csv": 62297,
+        "initial.state": 14276,
+        "outcome.json": 241,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.0692436546087265,
+        "points_sent": 0,
+        "poly_pressure": 576,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "mpe"
+      },
+      "sha256": {
+        "after-1.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-1918.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-1919.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-2879.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-3071.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-512.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "after-513.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "callbacks.bin": "8de2fd9df098824f13e16fe6a5bd0eee568660fadab84380e78a5887c01ec8ed",
+        "controls.csv": "79611aa4329a0a0976de70053522a527615fc1cd1bf7f9d3c3f09c63b5b444cb",
+        "final-metadata.csv": "2365403b24f141c775e94a408289daadc6fbe885835521bd01fd6f3624da3060",
+        "initial-metadata.csv": "2365403b24f141c775e94a408289daadc6fbe885835521bd01fd6f3624da3060",
+        "initial.state": "86ecdc45e68bd3d395738247d1efce58920320b03396a1d31a455bc0f1b3ea89",
+        "outcome.json": "e10b33b6f91161439cae45e538309b29cf3b84881d5e935c7fccb554d79aad91",
+        "pcm.bin": "58b476cbaf429ef9f44314b8ad6c6548d8cd6de780f3256acd78c91cd4d7969b"
+      }
+    },
+    "96000-pulse": {
+      "file_bytes": {
+        "after-1.state": 14308,
+        "after-1918.state": 14308,
+        "after-1919.state": 14308,
+        "after-2879.state": 14308,
+        "after-3071.state": 14308,
+        "after-512.state": 14308,
+        "after-513.state": 14308,
+        "callbacks.bin": 282624,
+        "controls.csv": 7888,
+        "final-metadata.csv": 62351,
+        "initial-metadata.csv": 62351,
+        "initial.state": 14308,
+        "outcome.json": 241,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.04258056357502937,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "pulse"
+      },
+      "sha256": {
+        "after-1.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-1918.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-1919.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-2879.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-3071.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-512.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "after-513.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "a145f07cf72257243c12d25916dd1228936e847f22d861484ee57f138d5f7998",
+        "final-metadata.csv": "df2be2d2a3117dd6c633e965e56e8f63f907c7150971b9016c2eef2c63bfe7ca",
+        "initial-metadata.csv": "df2be2d2a3117dd6c633e965e56e8f63f907c7150971b9016c2eef2c63bfe7ca",
+        "initial.state": "dd2c3a2c2b03502339c66653108386c859747da9e7e1d6258ff1170e55d2ef76",
+        "outcome.json": "edf2da9058a693a69665e447b4dd7bf276891478a5405e59d50675408bcd03ff",
+        "pcm.bin": "596014cc9cda0c666a26af2376cd644804170b382a17269addbe467e65e1321d"
+      }
+    },
+    "96000-pure": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7879,
+        "final-metadata.csv": 62297,
+        "initial-metadata.csv": 62297,
+        "initial.state": 14276,
+        "outcome.json": 240,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 243328,
+        "note_offs": 16,
+        "note_ons": 16,
+        "peak": 0.0709192156791687,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "pure"
+      },
+      "sha256": {
+        "after-1.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-1918.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-1919.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-2879.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-3071.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-512.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "after-513.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "callbacks.bin": "870e9016126dc80eedcba53370a8a9f7b67bc87f96fd5ab488d0749ba1e845de",
+        "controls.csv": "5685a2f675ed7cb58e829adb0cd5c5b200777546bee9e1fb981ddbb5709ad0d0",
+        "final-metadata.csv": "250d5b1fb93d43e257c7ab9cd85d5a0b7416a7450c0363da437930ce8318e1e7",
+        "initial-metadata.csv": "250d5b1fb93d43e257c7ab9cd85d5a0b7416a7450c0363da437930ce8318e1e7",
+        "initial.state": "c9d3ad1e0d0f613a26aabda009ff499ba7d8af4e7dbc2bbf585e534f4abc9738",
+        "outcome.json": "89bda90f5bc02c6a876c3cee4a3d419add95501dba6e2a006a2593d32b4f4f36",
+        "pcm.bin": "e7671ae48cf2b83889c168d044a8d2a2ff2cde357b8b356eac0953b42ac0ac40"
+      }
+    },
+    "96000-quiet": {
+      "file_bytes": {
+        "after-1.state": 14276,
+        "after-1918.state": 14276,
+        "after-1919.state": 14276,
+        "after-2879.state": 14276,
+        "after-3071.state": 14276,
+        "after-512.state": 14276,
+        "after-513.state": 14276,
+        "callbacks.bin": 282624,
+        "controls.csv": 7852,
+        "final-metadata.csv": 62279,
+        "initial-metadata.csv": 62279,
+        "initial.state": 14276,
+        "outcome.json": 215,
+        "pcm.bin": 973824
+      },
+      "observations": {
+        "callbacks": 3072,
+        "frames": 121728,
+        "nonzero_samples": 0,
+        "note_offs": 0,
+        "note_ons": 0,
+        "peak": 0,
+        "points_sent": 0,
+        "poly_pressure": 0,
+        "queues_sent": 0,
+        "reported_latency_67_every_call": true,
+        "reported_latency_values_samples": [
+          67
+        ],
+        "reported_tail_values_samples": [
+          4294967295
+        ],
+        "sample_rate": 96000,
+        "scene": "quiet"
+      },
+      "sha256": {
+        "after-1.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1918.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-1919.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-2879.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-3071.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-512.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "after-513.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "callbacks.bin": "1ceee4afea8e237aa26bc0ce30463b0ae195925cca777a847d0aa7405e61bfed",
+        "controls.csv": "fd8bd3d9b49f6cd4864e64c3f21eb300f8e63cf768676ea3d529fea17860f5ca",
+        "final-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial-metadata.csv": "5139841c8c4a3e5125251187bb6d173ca3b69bbd22d151ebaa447ef8f6de9f33",
+        "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+        "outcome.json": "175c8808dccd731dd4f895ac55fa469bb5ca3011cc8b7437c226d8eb10ff49b4",
+        "pcm.bin": "2d3f92fcab70c54681fff75b184450a0f03caff8f8875e30264df5759f898661"
+      }
+    }
+  },
+  "timing": false,
+  "totals_per_arm": {
+    "genuine_callbacks": 82944,
+    "histories": 27,
+    "pcm_bytes": 26293248,
+    "public_bytes": 40595303,
+    "public_state_snapshots": 216,
+    "stereo_frames": 3286656
+  }
+}

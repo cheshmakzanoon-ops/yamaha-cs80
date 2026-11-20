@@ -68,12 +68,12 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     // Fresh instances: factory program 0 with the original SUB panel, on the
     // circuit engine (plan 1.7).
     applyFreshInstancePatch();
-    cached = currentValues();
+    cachedFrame.effectiveValues = currentValues();
     resetHostAutomationState();
-    engine.setParams(cached);
+    engine.setParams(cachedFrame.effectiveValues);
     engine.prepare(48000.0);
     extensionEngine = std::make_unique<cs80::Engine>();
-    extensionEngine->setParams(cached);
+    extensionEngine->setParams(cachedFrame.effectiveValues);
     extensionEngine->prepare(48000.0);
     engine.bindReleaseOrderClock(releaseOrderClock);
     extensionEngine->bindReleaseOrderClock(releaseOrderClock);
@@ -436,7 +436,7 @@ void Cs80AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
     readParameters();
     resetHostAutomationState();
     const auto previousPolicy = engine.getRenderPolicy();
-    engine.setControlFrame({ cached, cachedHardwareSources });
+    engine.setControlFrame(cachedFrame);
     if (engine.getRenderPolicy() != previousPolicy)
     {
         engine.setExpression(expressionValue.load(std::memory_order_relaxed));
@@ -471,12 +471,12 @@ void Cs80AudioProcessor::readParameters()
     for (int i = 0; i < cs80::P_numParams; ++i)
     {
         if (auto* p = parameterValues[(size_t) i])
-            cached.v[(size_t) i] = p->load(std::memory_order_relaxed);
+            cachedFrame.effectiveValues.v[(size_t) i] = p->load(std::memory_order_relaxed);
     }
     for (int channel = 0; channel < 2; ++channel)
     {
         const int source = getHardwareSource(channel);
-        cachedHardwareSources[(size_t) channel] = source;
+        cachedFrame.hardwareSources[(size_t) channel] = source;
         if (source == 13) continue;
         for (int local = 0; local < cs80::CP_count; ++local)
         {
@@ -484,7 +484,7 @@ void Cs80AudioProcessor::readParameters()
             // are software extensions and remain live independent controls.
             if (local == cs80::CP_feet || local == cs80::CP_pan
                 || local == cs80::CP_hpfOn || local == cs80::CP_lpfOn) continue;
-            cached.v[(size_t) cs80::chParam(channel, local)] = source < 11
+            cachedFrame.effectiveValues.v[(size_t) cs80::chParam(channel, local)] = source < 11
                 ? hardwareFactoryValues[(size_t) channel][(size_t) source][(size_t) local]
                 : getMemoryValue(channel + (source == 12 ? 2 : 0), local);
         }
@@ -1031,7 +1031,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     // Offline and parameter updates are ordered: they can reset 8x -> 2x ->
     // 8x in one block. Keep the intermediate reset even if the final rate agrees.
     const bool offlineReset = engine.getOversamplingFactor() != previousFactor;
-    engine.setControlFrame({ cached, cachedHardwareSources });
+    engine.setControlFrame(cachedFrame);
     modernLayer.applyToEngine(engine, getPlayHead()); // MSEG shapes, routing, host tempo
     // A policy or oversampling-factor change resets the engine the same way.
     if (offlineReset || engine.getRenderPolicy() != previousPolicy
@@ -1050,7 +1050,7 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
         const int previousExtensionFactor = extensionEngine->getOversamplingFactor();
         extensionEngine->setNonRealtime(isNonRealtime());
         const bool extensionOfflineReset = extensionEngine->getOversamplingFactor() != previousExtensionFactor;
-        extensionEngine->setControlFrame({ cached, cachedHardwareSources });
+        extensionEngine->setControlFrame(cachedFrame);
         cs80::ModernLayerState::mirrorToEngine(engine, *extensionEngine);
         const bool restoreExpression = !extensionActive || extensionOfflineReset
             || extensionEngine->getRenderPolicy() != previousExtensionPolicy
@@ -1088,8 +1088,8 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     // MTS-ESP master (tuning_mode 2), when the client is compiled in.
     // MPE follows the upstream recommendation to use global tuning. PURE
     // retains the prior global polling path; tuning is inert in that policy.
-    const bool channelIndependent = engine.isMpeEnabled() || cached[cs80::P_parityMode] >= 0.5f;
-    const bool mtsMaster = cached[cs80::P_tuningMode] >= 1.5f
+    const bool channelIndependent = engine.isMpeEnabled() || cachedFrame.effectiveValues[cs80::P_parityMode] >= 0.5f;
+    const bool mtsMaster = cachedFrame.effectiveValues[cs80::P_tuningMode] >= 1.5f
         && mtsEsp.fillChannelTables(mtsEspTables, channelIndependent);
     mtsEspConnected.store(mtsMaster, std::memory_order_relaxed);
     if (mtsMaster)
@@ -1154,17 +1154,24 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
                 extensionEngine->render(extensionInterleaved.data(), n, input != nullptr ? externalScratch.data() : nullptr);
                 for (int i = 0; i < 2 * n; ++i) interleaved[(size_t) i] += extensionInterleaved[(size_t) i];
             }
-            for (int i = 0; i < n; ++i)
+            // Acquiring a write pointer marks the JUCE buffer non-clear once
+            // per channel rather than once per sample. Keep frame-major L/R
+            // store order, including when host channels share storage.
+            if (numChannels >= 2)
             {
-                const float left = interleaved[(size_t) i * 2];
-                const float right = interleaved[(size_t) i * 2 + 1];
-                if (numChannels >= 2)
+                float* const left = buffer.getWritePointer(0, start + offset);
+                float* const right = buffer.getWritePointer(1, start + offset);
+                for (int i = 0; i < n; ++i)
                 {
-                    buffer.setSample(0, start + offset + i, left);
-                    buffer.setSample(1, start + offset + i, right);
+                    left[i] = interleaved[(size_t) i * 2];
+                    right[i] = interleaved[(size_t) i * 2 + 1];
                 }
-                else if (numChannels == 1)
-                    buffer.setSample(0, start + offset + i, 0.5f * (left + right));
+            }
+            else if (numChannels == 1)
+            {
+                float* const mono = buffer.getWritePointer(0, start + offset);
+                for (int i = 0; i < n; ++i)
+                    mono[i] = 0.5f * (interleaved[(size_t) i * 2] + interleaved[(size_t) i * 2 + 1]);
             }
             offset += n;
             inspectionRenderedAfterEvents = true;

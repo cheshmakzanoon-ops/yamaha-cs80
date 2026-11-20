@@ -21,7 +21,7 @@ struct PresetSaveAccess
     static void publishExpectedExtension(Cs80AudioProcessor& p)
     {
         const auto prior = p.extensionEngine->getRenderPolicy();
-        p.extensionEngine->setControlFrame({p.cached, p.cachedHardwareSources});
+        p.extensionEngine->setControlFrame(p.cachedFrame);
         if (p.extensionEngine->getRenderPolicy() != prior)
             p.extensionEngine->setExpression(p.getExpressionValue());
     }

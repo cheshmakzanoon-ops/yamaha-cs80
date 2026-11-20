@@ -21,10 +21,31 @@ WscOutputVolts ReconstructedOscillator::tickBorrowedHeld(double f) noexcept {
         operator const Nodes&() const noexcept { return *node; }
         RightEdge& operator=(const Nodes& n) noexcept { scratch->set(n); node=&scratch->value; return *this; }
     } after{&endNodes,&right};
+    // These are operands of this segment's original crossing search, not
+    // physical history. No ratio, endpoint or exponential crosses a segment.
+    struct PreparedSpan {
+        double pinSlope, inputAmplitude, triangleAmplitude;
+        double secondsOverTau, decayFactor, inputEnd;
+    };
+    const auto prepareSpan = [&](const Nodes& n,double seconds) noexcept {
+        const double tau=profile.couplingSecondsNominal;
+        const double pinSlope=state.resetRemainingSeconds>0.?0.:-converterGain*state.heldFrequencyHz;
+        const double asymptote=pinSlope*tau,b=n.u-asymptote;
+        const double ratio=seconds/tau,e=decay(ratio);
+        return PreparedSpan{pinSlope,b,n.triangleGain*b,ratio,e,asymptote+b*e};
+    };
+#define CS80_WSC_REUSE_HELD_SPAN 1
+    const auto nextHeldEvent = [&](const Nodes& n,double limit,bool& event,const PreparedSpan& prepared) noexcept {
+#include "WscNextBranchEvent.inc"
+    };
+    const auto advanceHeld = [&](double seconds,const Nodes& start,const PreparedSpan& prepared) noexcept {
+#include "WscAdvanceSegment.inc"
+    };
 // This emitted path already requires the BorrowedHeld masked/nearest gate.
 #define CS80_WSC_BORROWED_EXPLICIT_TERMINAL 1
 #include "WscActiveSegments.inc"
 #undef CS80_WSC_BORROWED_EXPLICIT_TERMINAL
+#undef CS80_WSC_REUSE_HELD_SPAN
 }
 }
 #endif

@@ -141,17 +141,17 @@ void Cs80AudioProcessor::applyHostAutomationAt(int position, bool publish) noexc
         if (parameter >= cs80::P_ch1Start && parameter < cs80::P_legacyNumParams)
         {
             const int rank = parameter >= cs80::P_ch2Start ? 1 : 0;
-            if (cachedHardwareSources[(size_t) rank] != 13
+            if (cachedFrame.hardwareSources[(size_t) rank] != 13
                 && parameter != cs80::chParam(rank, cs80::CP_pan)) return;
         }
         const float physical = automationParameters[i]->convertFrom0to1(static_cast<float>(normalized));
-        changed = changed || cached[parameter] != physical;
-        cached[parameter] = physical;
+        changed = changed || cachedFrame.effectiveValues[parameter] != physical;
+        cachedFrame.effectiveValues[parameter] = physical;
     });
     if (changed && publish)
     {
-        engine.setControlFrame({ cached, cachedHardwareSources });
-        if (extensionActive) extensionEngine->setControlFrame({ cached, cachedHardwareSources });
+        engine.setControlFrame(cachedFrame);
+        if (extensionActive) extensionEngine->setControlFrame(cachedFrame);
     }
 }
 

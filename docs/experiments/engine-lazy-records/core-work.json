@@ -1,0 +1,1057 @@
+{
+  "scope": "standalone Engine::render, 48 kHz / 64 host frames, four renders, not native time",
+  "stock_commit": "9208eb6323207b5054055dd2e0549e45324c539a",
+  "work_fields": [
+    "Ir",
+    "Dr",
+    "Dw"
+  ],
+  "cases": [
+    {
+      "compiler": "GCC 14.2",
+      "change": "lazy",
+      "stock_engine_object_sha256": "b1b495de060ce092d7d00b2ca0eba6aa993ae3cb782be769661140ab1ddb1184",
+      "candidate_engine_object_sha256": "23a124610881e2fe9c5c72194a3bf8f547fe6ec5b664f641a41c3b5076bb3c94",
+      "scenes": {
+        "fresh factory quiet": {
+          "stock": [
+            4068684,
+            1054930,
+            645434
+          ],
+          "candidate": [
+            4045644,
+            1051730,
+            642106
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "1187f1459fbcc948b7a64cca659a792f642ca7b528b25eb1aafe534ee830edd3",
+          "translated_sha256_both": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+        },
+        "eight equal held": {
+          "stock": [
+            21981661,
+            6073312,
+            2756691
+          ],
+          "candidate": [
+            21812701,
+            5993440,
+            2672723
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "50f9f04be4e983b51fb78e9f6051a541ac112c7889ef96cfc7f1ed3f13e2796c",
+          "translated_sha256_both": "dda2b52802c9d1a835a43a63d8c0d46767a910a72d6c6419e146b7269b5645a0"
+        },
+        "eight varied held": {
+          "stock": [
+            22076108,
+            6086140,
+            2756837
+          ],
+          "candidate": [
+            21907148,
+            6006268,
+            2672869
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "c6275843101e243d978cbc78c0fd67a08e695c36c45f9c4b3ef2e07558ce3004",
+          "translated_sha256_both": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+        },
+        "factory, routed matrix": {
+          "stock": [
+            32057621,
+            7951779,
+            3534099
+          ],
+          "candidate": [
+            32072981,
+            7945635,
+            3523859
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "33236fcd5d33d13fe837f2bc3188f4c26066b367c447c5a1598fa65ccd54d89b",
+          "translated_sha256_both": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+        },
+        "panel, routed matrix": {
+          "stock": [
+            38600448,
+            9298495,
+            3876234
+          ],
+          "candidate": [
+            38615808,
+            9292351,
+            3865994
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "3756b9c186b0606e88966e637be53a7fdee58c95f751e80738b1c4cff421a86f",
+          "translated_sha256_both": "8f40bc504f57b55336c4c6eba16b054d21a1f25253cc92974733e9542f4d5ee1"
+        },
+        "one held": {
+          "stock": [
+            7534631,
+            1985627,
+            956896
+          ],
+          "candidate": [
+            7507143,
+            1973995,
+            944640
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "c5b63d0f33b7409b29a8c5139d708f66cbdba44e4f4ab4c7fbf1077a8d6beef6",
+          "translated_sha256_both": "f8a3ce2940d946d7040a642c9322cc521825749908827f68544ce95473f7c453"
+        },
+        "Pure, eight held": {
+          "stock": [
+            21903566,
+            6033267,
+            2733066
+          ],
+          "candidate": [
+            21737678,
+            5954419,
+            2650122
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "ea461ea38141656232a50a9e03f7d91825c464c20cf3ea96c03f5b21f2392c87",
+          "translated_sha256_both": "dd61c7ad39564b535249251ab24f68d8444dda5d1c79ed6d93cc510a92258bff"
+        },
+        "Legacy, eight held": {
+          "stock": [
+            12237969,
+            4097024,
+            999216
+          ],
+          "candidate": [
+            12038791,
+            4014592,
+            900400
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "630accbf0250b22ba97768780989e4f0d4c099064622d359217ddcf7b0374f30",
+          "translated_sha256_both": "e224d4ef65c4557592eb1e8ef51fa7a6375636ff1f34912b4ecb843f67d2698b"
+        },
+        "route off/on, release/reassign": {
+          "stock": [
+            28182389,
+            7226839,
+            3253511
+          ],
+          "candidate": [
+            28105589,
+            7183831,
+            3206407
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "972cb6031260d32a3152de56f9e114aec9dea337c80cdd4424b139ded6e2d11c",
+          "translated_sha256_both": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+        }
+      },
+      "long": {
+        "factory_held": {
+          "bytes": 1249792,
+          "sha256_both": "d259cecddb55b663564b9e12c5edc66d11c4a2d05a683ecfc9e9964a7288b78a"
+        },
+        "factory_moving": {
+          "bytes": 1249792,
+          "sha256_both": "f67eb4f73320b7a1443ff37a94c8d85f9c090ba7fb9ffb50b2cc684bccbbdc9b"
+        },
+        "factory_quiet": {
+          "bytes": 1249792,
+          "sha256_both": "29211178682995ce41f7a4fb37acba48656b8a50cb91ad58a4403ece0a56985c"
+        },
+        "factory_release_wake": {
+          "bytes": 1249792,
+          "sha256_both": "808890d9c82a9c6e0ce2d9daba9a3d5a56007bdca9cd817a53cfd5ba076381d8"
+        },
+        "panel_held": {
+          "bytes": 1249792,
+          "sha256_both": "46e687ad691c838abe89f55135152460f5cdac450d781393fc821d62247c6982"
+        },
+        "pure_held": {
+          "bytes": 1249792,
+          "sha256_both": "5c147380f06afb781e319897e7ea841d04b0fc0e0ad1333d1e849442d7544b1d"
+        }
+      },
+      "trap_fixture": {
+        "cases": 22,
+        "SIGFPE_per_arm": 7,
+        "bytes": 17019552,
+        "sha256_both": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec"
+      }
+    },
+    {
+      "compiler": "GCC 14.2",
+      "change": "uniform",
+      "stock_engine_object_sha256": "b1b495de060ce092d7d00b2ca0eba6aa993ae3cb782be769661140ab1ddb1184",
+      "candidate_engine_object_sha256": "40a7df70d552540a430d15cf634cad2b61d8ee3a5046cd1ab6fbd8c88eef4731",
+      "scenes": {
+        "fresh factory quiet": {
+          "stock": [
+            4068684,
+            1054930,
+            645434
+          ],
+          "candidate": [
+            3916108,
+            996562,
+            528698
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "1187f1459fbcc948b7a64cca659a792f642ca7b528b25eb1aafe534ee830edd3",
+          "translated_sha256_both": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+        },
+        "eight equal held": {
+          "stock": [
+            21981661,
+            6073312,
+            2756691
+          ],
+          "candidate": [
+            21981661,
+            6073312,
+            2756691
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "50f9f04be4e983b51fb78e9f6051a541ac112c7889ef96cfc7f1ed3f13e2796c",
+          "translated_sha256_both": "dda2b52802c9d1a835a43a63d8c0d46767a910a72d6c6419e146b7269b5645a0"
+        },
+        "eight varied held": {
+          "stock": [
+            22076108,
+            6086140,
+            2756837
+          ],
+          "candidate": [
+            22076108,
+            6086140,
+            2756837
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "c6275843101e243d978cbc78c0fd67a08e695c36c45f9c4b3ef2e07558ce3004",
+          "translated_sha256_both": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+        },
+        "factory, routed matrix": {
+          "stock": [
+            32057621,
+            7951779,
+            3534099
+          ],
+          "candidate": [
+            32057621,
+            7951779,
+            3534099
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "33236fcd5d33d13fe837f2bc3188f4c26066b367c447c5a1598fa65ccd54d89b",
+          "translated_sha256_both": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+        },
+        "panel, routed matrix": {
+          "stock": [
+            38600448,
+            9298495,
+            3876234
+          ],
+          "candidate": [
+            38600448,
+            9298495,
+            3876234
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "3756b9c186b0606e88966e637be53a7fdee58c95f751e80738b1c4cff421a86f",
+          "translated_sha256_both": "8f40bc504f57b55336c4c6eba16b054d21a1f25253cc92974733e9542f4d5ee1"
+        },
+        "one held": {
+          "stock": [
+            7534631,
+            1985627,
+            956896
+          ],
+          "candidate": [
+            7534631,
+            1985627,
+            956896
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "c5b63d0f33b7409b29a8c5139d708f66cbdba44e4f4ab4c7fbf1077a8d6beef6",
+          "translated_sha256_both": "f8a3ce2940d946d7040a642c9322cc521825749908827f68544ce95473f7c453"
+        },
+        "Pure, eight held": {
+          "stock": [
+            21903566,
+            6033267,
+            2733066
+          ],
+          "candidate": [
+            21903566,
+            6033267,
+            2733066
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "ea461ea38141656232a50a9e03f7d91825c464c20cf3ea96c03f5b21f2392c87",
+          "translated_sha256_both": "dd61c7ad39564b535249251ab24f68d8444dda5d1c79ed6d93cc510a92258bff"
+        },
+        "Legacy, eight held": {
+          "stock": [
+            12237969,
+            4097024,
+            999216
+          ],
+          "candidate": [
+            12237969,
+            4097024,
+            999216
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "630accbf0250b22ba97768780989e4f0d4c099064622d359217ddcf7b0374f30",
+          "translated_sha256_both": "e224d4ef65c4557592eb1e8ef51fa7a6375636ff1f34912b4ecb843f67d2698b"
+        },
+        "route off/on, release/reassign": {
+          "stock": [
+            28182389,
+            7226839,
+            3253511
+          ],
+          "candidate": [
+            28182389,
+            7226839,
+            3253511
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "972cb6031260d32a3152de56f9e114aec9dea337c80cdd4424b139ded6e2d11c",
+          "translated_sha256_both": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+        }
+      },
+      "long": {
+        "factory_held": {
+          "bytes": 1249792,
+          "sha256_both": "d259cecddb55b663564b9e12c5edc66d11c4a2d05a683ecfc9e9964a7288b78a"
+        },
+        "factory_moving": {
+          "bytes": 1249792,
+          "sha256_both": "f67eb4f73320b7a1443ff37a94c8d85f9c090ba7fb9ffb50b2cc684bccbbdc9b"
+        },
+        "factory_quiet": {
+          "bytes": 1249792,
+          "sha256_both": "29211178682995ce41f7a4fb37acba48656b8a50cb91ad58a4403ece0a56985c"
+        },
+        "factory_release_wake": {
+          "bytes": 1249792,
+          "sha256_both": "808890d9c82a9c6e0ce2d9daba9a3d5a56007bdca9cd817a53cfd5ba076381d8"
+        },
+        "panel_held": {
+          "bytes": 1249792,
+          "sha256_both": "46e687ad691c838abe89f55135152460f5cdac450d781393fc821d62247c6982"
+        },
+        "pure_held": {
+          "bytes": 1249792,
+          "sha256_both": "5c147380f06afb781e319897e7ea841d04b0fc0e0ad1333d1e849442d7544b1d"
+        }
+      },
+      "trap_fixture": {
+        "cases": 22,
+        "SIGFPE_per_arm": 7,
+        "bytes": 17019552,
+        "sha256_both": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec"
+      }
+    },
+    {
+      "compiler": "GCC 13.3",
+      "change": "lazy",
+      "stock_engine_object_sha256": "648b2830a6206f191f60e67f6fc9af9391251390251af6efb0853f4570e30b1d",
+      "candidate_engine_object_sha256": "1e30ea93a1ed64ce61d48320dc841e59a89bde581b6dde609e6f79e4807ef985",
+      "scenes": {
+        "fresh factory quiet": {
+          "stock": [
+            4695244,
+            1188037,
+            670146
+          ],
+          "candidate": [
+            4665036,
+            1185221,
+            664386
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "1187f1459fbcc948b7a64cca659a792f642ca7b528b25eb1aafe534ee830edd3",
+          "translated_sha256_both": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+        },
+        "eight equal held": {
+          "stock": [
+            21870057,
+            6278194,
+            2563229
+          ],
+          "candidate": [
+            21694957,
+            6235698,
+            2487965
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "50f9f04be4e983b51fb78e9f6051a541ac112c7889ef96cfc7f1ed3f13e2796c",
+          "translated_sha256_both": "dda2b52802c9d1a835a43a63d8c0d46767a910a72d6c6419e146b7269b5645a0"
+        },
+        "eight varied held": {
+          "stock": [
+            22207909,
+            6314498,
+            2590017
+          ],
+          "candidate": [
+            22032773,
+            6272002,
+            2514753
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "c6275843101e243d978cbc78c0fd67a08e695c36c45f9c4b3ef2e07558ce3004",
+          "translated_sha256_both": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+        },
+        "factory, routed matrix": {
+          "stock": [
+            31774677,
+            8080500,
+            3226325
+          ],
+          "candidate": [
+            31774133,
+            8103028,
+            3211477
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "33236fcd5d33d13fe837f2bc3188f4c26066b367c447c5a1598fa65ccd54d89b",
+          "translated_sha256_both": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+        },
+        "panel, routed matrix": {
+          "stock": [
+            37743017,
+            9226855,
+            3422751
+          ],
+          "candidate": [
+            37744297,
+            9249383,
+            3408927
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "3756b9c186b0606e88966e637be53a7fdee58c95f751e80738b1c4cff421a86f",
+          "translated_sha256_both": "8f40bc504f57b55336c4c6eba16b054d21a1f25253cc92974733e9542f4d5ee1"
+        },
+        "one held": {
+          "stock": [
+            7975733,
+            2125022,
+            990105
+          ],
+          "candidate": [
+            7944149,
+            2115838,
+            977897
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "c5b63d0f33b7409b29a8c5139d708f66cbdba44e4f4ab4c7fbf1077a8d6beef6",
+          "translated_sha256_both": "f8a3ce2940d946d7040a642c9322cc521825749908827f68544ce95473f7c453"
+        },
+        "Pure, eight held": {
+          "stock": [
+            22038871,
+            6266327,
+            2570529
+          ],
+          "candidate": [
+            21871907,
+            6225367,
+            2496801
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "ea461ea38141656232a50a9e03f7d91825c464c20cf3ea96c03f5b21f2392c87",
+          "translated_sha256_both": "dd61c7ad39564b535249251ab24f68d8444dda5d1c79ed6d93cc510a92258bff"
+        },
+        "Legacy, eight held": {
+          "stock": [
+            12348367,
+            4275199,
+            1095980
+          ],
+          "candidate": [
+            12211663,
+            4229631,
+            1038636
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "630accbf0250b22ba97768780989e4f0d4c099064622d359217ddcf7b0374f30",
+          "translated_sha256_both": "e224d4ef65c4557592eb1e8ef51fa7a6375636ff1f34912b4ecb843f67d2698b"
+        },
+        "route off/on, release/reassign": {
+          "stock": [
+            28123564,
+            7420114,
+            3030892
+          ],
+          "candidate": [
+            28034800,
+            7409874,
+            2985324
+          ],
+          "native_bytes": 649520,
+          "native_sha256_both": "972cb6031260d32a3152de56f9e114aec9dea337c80cdd4424b139ded6e2d11c",
+          "translated_sha256_both": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+        }
+      },
+      "long": {},
+      "trap_fixture": {
+        "cases": 22,
+        "SIGFPE_per_arm": 7,
+        "bytes": 17019552,
+        "sha256_both": "0461dce72890edbd128ecc693d0ad94e5df317914ffb4fb0f0a3023cd5ca7918"
+      }
+    }
+  ],
+  "window_controls": {
+    "base": {
+      "fresh factory quiet": {
+        "four": [
+          4068684,
+          1054930,
+          645434
+        ],
+        "repeat": [
+          4068684,
+          1054930,
+          645434
+        ],
+        "five": [
+          5088050,
+          1319035,
+          807001
+        ],
+        "fifth": [
+          1019366,
+          264105,
+          161567
+        ],
+        "translated_sha256_all_windows": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+      },
+      "eight varied held": {
+        "four": [
+          22076108,
+          6086140,
+          2756837
+        ],
+        "repeat": [
+          22076108,
+          6086140,
+          2756837
+        ],
+        "five": [
+          27588037,
+          7607140,
+          3445164
+        ],
+        "fifth": [
+          5511929,
+          1521000,
+          688327
+        ],
+        "translated_sha256_all_windows": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+      },
+      "factory, routed matrix": {
+        "four": [
+          32057621,
+          7951779,
+          3534099
+        ],
+        "repeat": [
+          32057621,
+          7951779,
+          3534099
+        ],
+        "five": [
+          40065203,
+          9939254,
+          4416899
+        ],
+        "fifth": [
+          8007582,
+          1987475,
+          882800
+        ],
+        "translated_sha256_all_windows": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+      },
+      "route off/on, release/reassign": {
+        "four": [
+          28182389,
+          7226839,
+          3253511
+        ],
+        "repeat": [
+          28182389,
+          7226839,
+          3253511
+        ],
+        "five": [
+          33834377,
+          8761777,
+          3952593
+        ],
+        "fifth": [
+          5651988,
+          1534938,
+          699082
+        ],
+        "translated_sha256_all_windows": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+      }
+    },
+    "lazy": {
+      "fresh factory quiet": {
+        "four": [
+          4045644,
+          1051730,
+          642106
+        ],
+        "repeat": [
+          4045644,
+          1051730,
+          642106
+        ],
+        "five": [
+          5059250,
+          1315035,
+          802841
+        ],
+        "fifth": [
+          1013606,
+          263305,
+          160735
+        ],
+        "translated_sha256_all_windows": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+      },
+      "eight varied held": {
+        "four": [
+          21907148,
+          6006268,
+          2672869
+        ],
+        "repeat": [
+          21907148,
+          6006268,
+          2672869
+        ],
+        "five": [
+          27376837,
+          7507300,
+          3340204
+        ],
+        "fifth": [
+          5469689,
+          1501032,
+          667335
+        ],
+        "translated_sha256_all_windows": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+      },
+      "factory, routed matrix": {
+        "four": [
+          32072981,
+          7945635,
+          3523859
+        ],
+        "repeat": [
+          32072981,
+          7945635,
+          3523859
+        ],
+        "five": [
+          40084403,
+          9931574,
+          4404099
+        ],
+        "fifth": [
+          8011422,
+          1985939,
+          880240
+        ],
+        "translated_sha256_all_windows": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+      },
+      "route off/on, release/reassign": {
+        "four": [
+          28105589,
+          7183831,
+          3206407
+        ],
+        "repeat": [
+          28105589,
+          7183831,
+          3206407
+        ],
+        "five": [
+          33715337,
+          8698801,
+          3884497
+        ],
+        "fifth": [
+          5609748,
+          1514970,
+          678090
+        ],
+        "translated_sha256_all_windows": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+      }
+    },
+    "base13": {
+      "fresh factory quiet": {
+        "four": [
+          4695244,
+          1188037,
+          670146
+        ],
+        "repeat": [
+          4695244,
+          1188037,
+          670146
+        ],
+        "five": [
+          5871460,
+          1485711,
+          837895
+        ],
+        "fifth": [
+          1176216,
+          297674,
+          167749
+        ],
+        "translated_sha256_all_windows": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+      },
+      "eight varied held": {
+        "four": [
+          22207909,
+          6314498,
+          2590017
+        ],
+        "repeat": [
+          22207909,
+          6314498,
+          2590017
+        ],
+        "five": [
+          27753920,
+          7892581,
+          3236932
+        ],
+        "fifth": [
+          5546011,
+          1578083,
+          646915
+        ],
+        "translated_sha256_all_windows": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+      },
+      "factory, routed matrix": {
+        "four": [
+          31774677,
+          8080500,
+          3226325
+        ],
+        "repeat": [
+          31774677,
+          8080500,
+          3226325
+        ],
+        "five": [
+          39713457,
+          10100230,
+          4032483
+        ],
+        "fifth": [
+          7938780,
+          2019730,
+          806158
+        ],
+        "translated_sha256_all_windows": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+      },
+      "route off/on, release/reassign": {
+        "four": [
+          28123564,
+          7420114,
+          3030892
+        ],
+        "repeat": [
+          28123564,
+          7420114,
+          3030892
+        ],
+        "five": [
+          33797323,
+          9012773,
+          3688699
+        ],
+        "fifth": [
+          5673759,
+          1592659,
+          657807
+        ],
+        "translated_sha256_all_windows": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+      }
+    },
+    "lazy13": {
+      "fresh factory quiet": {
+        "four": [
+          4665036,
+          1185221,
+          664386
+        ],
+        "repeat": [
+          4665036,
+          1185221,
+          664386
+        ],
+        "five": [
+          5833700,
+          1482191,
+          830695
+        ],
+        "fifth": [
+          1168664,
+          296970,
+          166309
+        ],
+        "translated_sha256_all_windows": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+      },
+      "eight varied held": {
+        "four": [
+          22032773,
+          6272002,
+          2514753
+        ],
+        "repeat": [
+          22032773,
+          6272002,
+          2514753
+        ],
+        "five": [
+          27535016,
+          7839461,
+          3142852
+        ],
+        "fifth": [
+          5502243,
+          1567459,
+          628099
+        ],
+        "translated_sha256_all_windows": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+      },
+      "factory, routed matrix": {
+        "four": [
+          31774133,
+          8103028,
+          3211477
+        ],
+        "repeat": [
+          31774133,
+          8103028,
+          3211477
+        ],
+        "five": [
+          39712821,
+          10128390,
+          4013923
+        ],
+        "fifth": [
+          7938688,
+          2025362,
+          802446
+        ],
+        "translated_sha256_all_windows": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+      },
+      "route off/on, release/reassign": {
+        "four": [
+          28034800,
+          7409874,
+          2985324
+        ],
+        "repeat": [
+          28034800,
+          7409874,
+          2985324
+        ],
+        "five": [
+          33664347,
+          8991781,
+          3624059
+        ],
+        "fifth": [
+          5629547,
+          1581907,
+          638735
+        ],
+        "translated_sha256_all_windows": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+      }
+    },
+    "compact": {
+      "fresh factory quiet": {
+        "four": [
+          3916108,
+          996562,
+          528698
+        ],
+        "repeat": [
+          3916108,
+          996562,
+          528698
+        ],
+        "five": [
+          4897330,
+          1246075,
+          661081
+        ],
+        "fifth": [
+          981222,
+          249513,
+          132383
+        ],
+        "translated_sha256_all_windows": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+      },
+      "eight varied held": {
+        "four": [
+          22076108,
+          6086140,
+          2756837
+        ],
+        "repeat": [
+          22076108,
+          6086140,
+          2756837
+        ],
+        "five": [
+          27588037,
+          7607140,
+          3445164
+        ],
+        "fifth": [
+          5511929,
+          1521000,
+          688327
+        ],
+        "translated_sha256_all_windows": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+      }
+    }
+  },
+  "discarded_inline_GCC14": {
+    "fresh factory quiet": {
+      "stock": [
+        4068684,
+        1054930,
+        645434
+      ],
+      "candidate": [
+        4080844,
+        1055698,
+        652090
+      ]
+    },
+    "eight equal held": {
+      "stock": [
+        21981661,
+        6073312,
+        2756691
+      ],
+      "candidate": [
+        22135700,
+        6116052,
+        2728466
+      ]
+    },
+    "eight varied held": {
+      "stock": [
+        22076108,
+        6086140,
+        2756837
+      ],
+      "candidate": [
+        22230159,
+        6128919,
+        2728621
+      ]
+    },
+    "factory, routed matrix": {
+      "stock": [
+        32057621,
+        7951779,
+        3534099
+      ],
+      "candidate": [
+        32410839,
+        8071869,
+        3582683
+      ]
+    },
+    "panel, routed matrix": {
+      "stock": [
+        38600448,
+        9298495,
+        3876234
+      ],
+      "candidate": [
+        38959872,
+        9455679,
+        3975050
+      ]
+    },
+    "one held": {
+      "stock": [
+        7534631,
+        1985627,
+        956896
+      ],
+      "candidate": [
+        7579511,
+        2000507,
+        963616
+      ]
+    },
+    "Pure, eight held": {
+      "stock": [
+        21903566,
+        6033267,
+        2733066
+      ],
+      "candidate": [
+        22068376,
+        6081700,
+        2710487
+      ]
+    },
+    "Legacy, eight held": {
+      "stock": [
+        12237969,
+        4097024,
+        999216
+      ],
+      "candidate": [
+        12591125,
+        4271104,
+        1095472
+      ]
+    },
+    "route off/on, release/reassign": {
+      "stock": [
+        28182389,
+        7226839,
+        3253511
+      ],
+      "candidate": [
+        28463315,
+        7323083,
+        3277502
+      ]
+    }
+  },
+  "direct_uniform": {
+    "cases": 65536,
+    "rejected": 27337,
+    "raw_value_or_return_or_FP_mismatches": 0,
+    "bytes_compared_per_case": 832,
+    "oracles": [
+      "previous specialized receiver",
+      "public evaluateShared"
+    ]
+  }
+}

@@ -206,7 +206,9 @@ void testEqualPressureBus()
 {
     const auto bits = [](float x) { return std::bit_cast<std::uint32_t>(x); };
     for (double host : { 44100.0, 48000.0 })
-    for (bool equal : { true, false })
+    // 0: uniform. 1: every key differs. 2/3: the lower or upper half
+    // alone has pressure. 4: two nonzero groups in noncontiguous slots.
+    for (int shape = 0; shape < 5; ++shape)
     {
         auto p = circuit();
         p[P_subOriginalSpeed] = 4.2f;
@@ -220,12 +222,15 @@ void testEqualPressureBus()
         for (int n = 0; n < 8; ++n)
         {
             const float velocity = .4f + .06f * n;
-            pressure[n] = equal ? .8f : .17f + .1f * n;
+            pressure[n] = shape == 0 ? .8f : shape == 1 ? .17f + .1f * n
+                        : shape == 2 ? (n < 4 ? .8f : 0.0f)
+                        : shape == 3 ? (n < 4 ? 0.0f : .8f)
+                                     : (n == 2 || n == 5 || n == 7 ? .17f : .79f);
             nodes[n].reset();
             nodes[n].trigger(velocity);
             e.noteOn(48 + n, velocity);
         }
-        if (equal)
+        if (shape == 0)
             e.channelPressure(1, pressure[0]);
         else
             for (int n = 0; n < 8; ++n) e.polyPressure(48 + n, pressure[n], 1);
@@ -237,7 +242,10 @@ void testEqualPressureBus()
         double bus = 0.0;
         bool same = true;
         std::array<double, 8> a;
-        for (int frame = 0; frame < 1024; ++frame)
+        // Let a zero-pressure diode first conduct, then cross the documented
+        // 0.9 V skip threshold, while the stronger keys continue to conduct.
+        const int frames = shape >= 2 ? 4096 : 1024;
+        for (int frame = 0; frame < frames; ++frame)
         {
             float expectedRate = 0.0f;
             for (int step = 0; step < e.getOversamplingFactor(); ++step)
@@ -254,8 +262,9 @@ void testEqualPressureBus()
             for (int n = 0; n < 8; ++n)
                 same &= bits(e.getVoiceInfo(n).touchA) == bits(static_cast<float>(a[n]));
         }
-        check(same && bus > 0.0, equal ? "common aftertouch preserves the ordered TRG5-to-SUB source"
-                                      : "per-key aftertouch preserves the ordered TRG5-to-SUB source");
+        check(same && bus > 0.0, "ordered TRG5-to-SUB source, pressure arrangement " + std::to_string(shape));
+        if (shape == 2 || shape == 3)
+            check(bus > 0.9, "resting diode passes through its conduction cutoff");
     }
 }
 

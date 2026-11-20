@@ -818,6 +818,54 @@ void testChannelPressureSourceSmoothing()
             }
 }
 
+// Switching the final route on must build fresh per-voice inputs, even if
+// the chord was allocated, or a circuit was reassigned, during bypass.
+void testLiveRouteAfterBypassedChord()
+{
+    const auto route = routed({ { ModSource::velocity, ModSource::none, ModDestination::pitch,
+                                  ModTarget::rankII } });
+    for (bool circuit : { false, true })
+    {
+        Engine e;
+        ParamValues p;
+        p[P_sourcePerformance] = circuit ? 1.0f : 0.0f;
+        p[P_parityMode] = p[P_kasScanTiming] = p[P_arpOn] = 0.0f;
+        p[P_mod1Amount] = 0.5f;
+        e.prepare(48000.0);
+        e.setParams(p);
+        std::array<float, 16> samples {};
+        std::array<float, 8> velocities {};
+        for (int i = 0; i < 8; ++i)
+        {
+            velocities[(std::size_t) i] = (float) (i + 1) / 16.0f;
+            e.noteOn(52 + i, velocities[(std::size_t) i]);
+        }
+        e.render(samples.data(), 8);
+        check(!e.isModernLayerActive() && e.activeVoices() == 8, "chord allocated with no live route");
+        const auto checkLive = [&] {
+            e.setModernConfig(route);
+            e.render(samples.data(), 1);
+            check(e.isModernLayerActive(), "last route enabled");
+            for (int i = 0; i < 8; ++i)
+                check(e.getModernRankOffsets(i, 0).pitch == 0.0f
+                      && e.getModernRankOffsets(i, 1).pitch ==
+                         velocities[(std::size_t) i] * (0.5f * kPitchSemitones),
+                      "reactivated matrix sees each circuit's current strike and only its selected rank");
+        };
+        checkLive();
+        e.setModernConfig({});
+        e.render(samples.data(), 1);
+        check(!e.isModernLayerActive(), "last route disabled again");
+        e.noteOff(52);
+        velocities[0] = 15.0f / 16.0f;
+        e.noteOn(76, velocities[0]);
+        e.render(samples.data(), 8);
+        check(e.getVoiceInfo(0).note == 76 && e.getModernRankOffsets(0, 1).pitch == 0.0f,
+              "reused circuit remains at identity during bypass");
+        checkLive();
+    }
+}
+
 void testEngineConsumption()
 {
     // velocity -> pitch, mod wheel -> LP cutoff on rank II: read the rank telemetry against
@@ -1447,6 +1495,7 @@ int main()
     testUnusableTransportPosition();
     testFiniteTransportPosition();
     testDefaultInvarianceAndPurity();
+    testLiveRouteAfterBypassedChord();
     testEngineConsumption();
     testPitchWheelSourceIndependentOfRange();
     testChannelPressureSourceSmoothing();
