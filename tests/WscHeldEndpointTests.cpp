@@ -4,6 +4,7 @@
 #include <array>
 #include <bit>
 #include <cstdint>
+#include <cmath>
 #include <cstdio>
 #include <limits>
 
@@ -92,6 +93,64 @@ bool pulseResiduals() {
     }
     return true;
 }
+// Seed the capacitor so the first scalar tick stops just *before* the
+// requested fold or comparator. The next held tick crosses that level.
+// Coincident and nearby comparator/fold cases exercise original root order;
+// a wholly unreachable, huge finite comparator must still raise overflow in
+// the screening products, including when its gate is closed.
+bool crossingBoundaries() {
+    const auto originalMx=_mm_getcsr();
+    struct Restore { unsigned mx; ~Restore() { _mm_setcsr(mx); } } restore{originalMx};
+    for (const double rate : {8000., 96000.}) {
+        constexpr double hz=512.;
+        cs80::OscillatorNominalProfile profile;
+        profile.sliceVoltsInferred=.125;
+        const double half=(profile.resetVoltsNominal-profile.resetExcessVoltsNominal)*.5;
+        const double gain=2.*half/(1.-profile.referenceHzNominal*profile.resetSecondsNominal);
+        const double step=gain*hz/rate;
+        for (const double threshold : {.625, profile.sliceVoltsInferred, profile.sliceVoltsInferred+.01,
+                                       -std::numeric_limits<double>::max(), std::numeric_limits<double>::max()}) {
+            const bool huge=std::abs(threshold)>10.;
+            const std::array<double,4> levels={profile.sliceVoltsInferred-half,profile.sliceVoltsInferred,
+                                                profile.sliceVoltsInferred+half,threshold};
+            for (unsigned level=0;level<(huge ? 3u : 4u);++level)
+            for (bool pulse : {false,true})
+            for (unsigned mx : {0x1f80u,0x9fc0u}) {
+                O seed;
+                if (!seed.prepare(rate,profile)) return false;
+                const C controls{threshold,true,pulse};
+                auto state=seed.getState();
+                state.charge=.875;state.resetRemainingSeconds=0.;state.heldFrequencyHz=hz;
+                state.heldThresholdVolts=threshold;state.pulseEnabled=pulse;
+                state.inputBaselineVolts=gain*state.charge-(levels[level]+1.5*step);
+                state.triangleBaselineVolts=.731;
+                seed.restoreState(state);
+                _mm_setcsr(mx);
+                seed.tick(hz,controls);
+                O baseline(seed),candidate(seed);
+                _mm_setcsr(mx);
+                const auto wanted=baseline.tick(hz,controls);
+                const auto flags=_mm_getcsr();
+                _mm_setcsr(mx);
+                if (!cs80::EngineWscHeldAccess::canBorrow(candidate,hz,controls)) return false;
+                const auto got=cs80::EngineWscHeldAccess::run(candidate,hz);
+                const auto gotFlags=_mm_getcsr();
+                if (!(seed.getDiagnostics().coupledInputVolts>levels[level]) ||
+                    !(baseline.getDiagnostics().coupledInputVolts<levels[level]) ||
+                    (huge && !(flags&_MM_EXCEPT_OVERFLOW)) ||
+                    flags!=gotFlags || !same(wanted,got) ||
+                    !same(baseline.getState(),candidate.getState()) ||
+                    !same(baseline.getDiagnostics(),candidate.getDiagnostics())) {
+                    std::fprintf(stderr,"WSC crossing: rate %.0f threshold %g level %u pulse %d mx=%x flags=%x/%x u=%g/%g cross=%g\n",
+                                 rate,threshold,level,pulse,mx,flags,gotFlags,seed.getDiagnostics().coupledInputVolts,
+                                 baseline.getDiagnostics().coupledInputVolts,levels[level]);
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
 #endif
 }
 
@@ -129,6 +188,7 @@ int main() {
         std::fprintf(stderr,"WSC held comparator residual or FP status differed\n");
         return 4;
     }
+    if (!crossingBoundaries()) return 5;
 #endif
     std::printf("WSC endpoint: %u ticks, %u borrowed, %u scalar\n",calls,borrowed,fallback);
     return 0;

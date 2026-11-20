@@ -160,6 +160,44 @@ void testUnchangedInterpolation()
     }
 }
 
+// Check both sides of the linear interpolator's adjacent-cell wrap with an
+// independent modulo oracle. Small even/odd capacities exhaustively exercise
+// every write head and both endpoint samples, also after an active-state copy.
+void testLinearNeighbourWrap()
+{
+    for (int want = 4; want <= 19; ++want)
+    {
+        cs80::DelayLine line;
+        line.prepare((float) (want - 2), 1.0f);
+        auto copy = line;
+        std::vector<float> cells((size_t) want);
+        int head = 0;
+        bool exact = line.capacity() == want;
+        for (int n = 0; n < want * 3; ++n)
+        {
+            const float x = ((n & 3) == 0 ? -1.0f : 1.0f) * (float) (1 + n * n);
+            line.write(x);
+            cells[(size_t) head] = x;
+            head = (head + 1) % want;
+            if (n == want) copy = line;
+            else if (n > want) copy.write(x);
+            for (int quarter = 4; quarter <= 4 * (want - 2); ++quarter)
+            {
+                const float delay = (float) quarter * 0.25f;
+                float pos = (float) head - delay;
+                if (pos < 0.0f) pos += (float) want;
+                const int i = (int) pos;
+                const auto word = std::bit_cast<std::uint32_t>(cs80::lerp(
+                    cells[(size_t) i], cells[(size_t) ((i + 1) % want)], pos - (float) i));
+                exact = exact && std::bit_cast<std::uint32_t>(line.read(delay)) == word;
+                if (n >= want)
+                    exact = exact && std::bit_cast<std::uint32_t>(copy.read(delay)) == word;
+            }
+        }
+        check(exact, "linear interpolation accesses the modulo neighbour for every small ring cell");
+    }
+}
+
 void testClassicChorus()
 {
     // These are the classic FX slot's production rate/depth, not the OE2 model.
@@ -189,6 +227,7 @@ int main()
     testUnchangedHermiteInterpolation();
     testRoundedWrap();
     testUnchangedInterpolation();
+    testLinearNeighbourWrap();
     testClassicChorus();
     std::printf("Delay line: %d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;

@@ -53,6 +53,43 @@ void render(Engine& engine, int frames)
 }
 int voicesFor(int mode) { return mode == 2 ? 2 : mode == 3 ? 4 : mode == 4 ? 8 : 1; }
 
+// The activity mailbox is keyed by physical slot, not MIDI channel, key,
+// or a count of held voices. Cover the complete eight-bit projection and
+// compare the narrow observation with the original full telemetry reader.
+void testPhysicalActivityMask()
+{
+    for (bool circuit : {false, true})
+    {
+        Engine engine;
+        engine.prepare(48000.0);
+        auto p = patch(0, circuit);
+        p[P_kasScanTiming] = 0.0f;
+        p[P_arpOn] = 0.0f;
+        p[P_mpeOn] = 0.0f;
+        engine.setParams(p);
+        for (unsigned pattern = 0; pattern < 256; ++pattern)
+        {
+            engine.allNotesOff(false, 0);
+            for (int ch = 1; ch <= 8; ++ch)
+                engine.noteOn(48 + ch, 0.75f, ch);
+            for (int slot = 0; slot < 8; ++slot)
+            {
+                const auto voice = engine.getVoiceInfo(slot);
+                check(voice.active && voice.held, "mask fixture filled every physical slot");
+                if ((pattern & (1u << slot)) == 0)
+                    engine.allNotesOff(false, voice.channel);
+                else
+                    engine.noteOff(voice.note, voice.channel); // keep the release tail active
+            }
+            unsigned original = 0;
+            for (int slot = 0; slot < 8; ++slot)
+                if (engine.getVoiceInfo(slot).active) original |= 1u << slot;
+            check(original == pattern, "mask fixture reached its intended release-tail pattern");
+            check(engine.activeVoiceMask() == original, "live activity bits match the full per-slot observation");
+        }
+    }
+}
+
 void testModeTransitions()
 {
     for (bool circuit : {false, true})
@@ -150,6 +187,7 @@ void testPartialUnisonAndReuse()
 }
 int main()
 {
+    testPhysicalActivityMask();
     testModeTransitions();
     testOverlappingOnsets();
     testPartialUnisonAndReuse();

@@ -1082,8 +1082,14 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
     // successful cutoff transaction. The shared network validates its own
     // boundaries and drive and still computes a new result on this sample.
     bool uniform[2] {};
+#if defined(CS80_DETAIL_CERTIFIED_SHARED_RECEIVERS)
+    bool cutoffAccepted[2] {};
+#endif
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
+#if defined(CS80_DETAIL_CERTIFIED_SHARED_RECEIVERS)
+            cutoffAccepted[rank] =
+#endif
             source_factory::uniform_cutoff::detail::evaluateForEngine(
                 sourceTones[rank], drives[rank], sourceCutoff[rank], &uniform[rank],
                 source_factory::heterogeneous_cutoff::canPrecheckEngineTone && packetTonePrechecked[rank]);
@@ -1092,6 +1098,18 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
         evaluateUniformReceivers(sourceBoundaries, global.resonance, drives, sourceShared);
         return;
     }
+#if defined(CS80_DETAIL_CERTIFIED_SHARED_RECEIVERS)
+    // A successful cutoff from this invocation covers that same rank's
+    // filterEnvelopeZ as well as both touch drives. An old published mask is
+    // not a certificate after a failed cutoff or when the rank is inactive.
+    if (cutoffAccepted[0] && cutoffAccepted[1]
+        && (sourceCutoff[0].saturatedVoices | sourceCutoff[1].saturatedVoices) == 0
+        && uniformReceiverControls())
+    {
+        evaluateCertifiedReceivers(sourceBoundaries, global.resonance, drives, sourceShared);
+        return;
+    }
+#endif
 #else
     for (int rank = 0; rank < kNumRanks; ++rank)
         if (sourceActive[rank])
@@ -3557,21 +3575,17 @@ void Engine::render(float* interleavedStereo, int numFrames, const float* extern
     for (int i = 0; i < numFrames; ++i)
     {
         const auto external = externalInput.tick(externalMono != nullptr ? externalMono[i] : 0.0f);
-        float lastL = 0.0f, lastR = 0.0f;
-        const int retainedPhase = decL.getRetainedPhase();
         for (int os = 0; os < oversample; ++os)
         {
             float l = 0.0f, r = 0.0f;
             processInternalSample(l, r, external[(size_t) os] CS80_PRA_CONFIG_ARGUMENT);
             decL.push(l);
             decR.push(r);
-            // Evaluate only the retained last phase, using symmetric tap pairs.
-            if (os == retainedPhase)
-            {
-                lastL = decL.output();
-                lastR = decR.output();
-            }
         }
+        // configureInternalRate always prepares both decimators with oversample;
+        // their retained phase is its final internal sample at every factor.
+        const float lastL = decL.output();
+        const float lastR = decR.output();
         interleavedStereo[i * 2] = lastL;
         interleavedStereo[i * 2 + 1] = lastR;
     }

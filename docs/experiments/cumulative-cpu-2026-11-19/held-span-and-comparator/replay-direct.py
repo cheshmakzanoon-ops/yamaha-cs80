@@ -6,14 +6,16 @@ import shutil
 import subprocess
 from pathlib import Path
 
-BASE = "9208eb6323207b5054055dd2e0549e45324c539a"
+DEFAULT_BASE = "9208eb6323207b5054055dd2e0549e45324c539a"
 parser = argparse.ArgumentParser()
 parser.add_argument("repo", type=Path)
 parser.add_argument("new_work", type=Path)
 parser.add_argument("--cxx", default="g++-14")
 parser.add_argument("--optimization", choices=["O1","O2","O3","Og"], default="O3")
 parser.add_argument("--mutation-check", action="store_true")
+parser.add_argument("--baseline", default=DEFAULT_BASE, help="Git source revision for the stock oscillator")
 args = parser.parse_args()
+BASE = args.baseline
 here = Path(__file__).resolve().parent
 r = args.repo.resolve()
 w = args.new_work.resolve()
@@ -28,7 +30,10 @@ for arm in ['stock','candidate']:
   src=show('src/core/'+name) if arm=='stock' else (r/'src/core'/name).read_text()
   if name=='ReconstructedOscillator.h':src=src.replace('    friend struct EngineWscHeldAccess;', '    friend struct EngineWscHeldAccess; friend struct HorizonObserver;')
   p=Path('p'+arm)/'core'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(src+'\n// separate '+arm+' proof input\n')
+# Older stock revisions inlined both bodies; newer ones share the include files.
+stock_core = set(subprocess.check_output(["git","-C",str(r),"ls-tree","--name-only",BASE+":src/core"], text=True).splitlines())
 for extra in ['WscAdvanceSegment.inc','WscNextBranchEvent.inc']:
+ if extra in stock_core: (Path('pstock/core')/extra).write_text(show('src/core/'+extra))
  source = r/'src/core'/extra
  if source.is_file(): (Path('pcandidate/core')/extra).write_bytes(source.read_bytes())
 s=show('docs/experiments/wsc-event-horizon/direct.cpp')

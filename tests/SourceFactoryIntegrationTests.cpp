@@ -534,11 +534,20 @@ void uniformReceiverHandoff(double rate)
     compare(768); // all held strikes have crossed the acquisition window
     e.polyPressure(52, .81f);
     compare(39); // rank drives now differ within this sample
-    check(e.getVoiceInfo(4).touchA != e.getVoiceInfo(3).touchA, "exercise nonuniform pressure fallback");
+    check(e.getVoiceInfo(4).touchA != e.getVoiceInfo(3).touchA, "exercise nonuniform pressure readout");
     for (int v = 0; v < 8; ++v) e.noteOff(48 + v);
     compare(67);
     check(e.setControlFrame(f), "repeat clears published readout before a new solve");
     compare(1);
+
+    // Distinct strikes repopulate both ranks after the quiet/release path.
+    // All sixteen physical level pins and both independent Q bus pairs must
+    // still agree with a fresh, scalar evaluation of this sample's inputs.
+    for (int v = 0; v < 8; ++v) e.noteOn(36 + v, (v + 1) / 9.f);
+    compare(768);
+    check(e.getVoiceInfo(0).touchB != e.getVoiceInfo(7).touchB, "fixture has unequal stored strikes");
+    for (int v = 0; v < 8; ++v) e.polyPressure(36 + v, (8 - v) / 9.f);
+    compare(11);
 }
 
 void defaultOff()

@@ -10,12 +10,14 @@ parser.add_argument('--cxx',default='g++-14')
 parser.add_argument('--valgrind',default='valgrind')
 parser.add_argument('--valgrind-includes',type=Path)
 parser.add_argument('--extra-debuginfo-path',type=Path)
+parser.add_argument('--baseline',default='9208eb6323207b5054055dd2e0549e45324c539a',help='Git source revision for the stock oscillator')
 args=parser.parse_args()
 repo=args.repo.resolve()
 work=args.new_work.resolve()
 work.mkdir(parents=True,exist_ok=False)
 src=['ReconstructedOscillator.h','WscActiveSegments.inc','EngineWscHeld.cpp','EngineWscHeld.h']
-base='9208eb6323207b5054055dd2e0549e45324c539a'
+base=args.baseline
+stock_core=set(subprocess.check_output(['git','-C',str(repo),'ls-tree','--name-only',base+':src/core'],text=True).splitlines())
 here=Path(__file__).resolve().parent
 def run(cmd,**kw):
     return subprocess.run(cmd,cwd=work,check=True,**kw)
@@ -28,9 +30,11 @@ for arm in ['stock','candidate']:
         if arm=='stock':
             p.write_bytes(subprocess.check_output(['git','-C',str(repo),'show',base+':src/core/'+name]))
         else: shutil.copy(repo/'src/core'/name,p)
-    if arm=='candidate':
-        for name in ['WscNextBranchEvent.inc','WscAdvanceSegment.inc']:
-            if (repo/'src/core'/name).exists(): shutil.copy(repo/'src/core'/name,d/name)
+    for name in ['WscNextBranchEvent.inc','WscAdvanceSegment.inc']:
+        if arm=='stock' and name in stock_core:
+            (d/name).write_bytes(subprocess.check_output(['git','-C',str(repo),'show',base+':src/core/'+name]))
+        if arm=='candidate' and (repo/'src/core'/name).is_file():
+            shutil.copy(repo/'src/core'/name,d/name)
     flags=[args.cxx,'-O3','-DNDEBUG','-std=gnu++20','-fPIC','-DCS80_ENABLE_BORROWED_HELD=1']
     run(flags+['-c',str(d/'EngineWscHeld.cpp'),'-o',arm+'.o'])
     if args.valgrind_includes: flags+=['-I'+str(args.valgrind_includes.resolve())]

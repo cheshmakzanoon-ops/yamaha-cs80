@@ -1,0 +1,356 @@
+{
+  "scope": "Ordinary Debian GCC 14.2 x86-64 Linux Release/PIC 48 kHz, 64-frame standalone Engine::render, four renders; not a CPU-time or whole-plugin measurement. Same-build comparisons within each runtime, binary state compared rather than hashes alone.",
+  "source": "5499056a60ee5044275ba17eb7dddded4c96e90d",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "engine_objects": {
+    "stock": "104df4a67abdc3c948e01ae89c352cc8baacfb3df3ffcc4dfed5773dbdbd9417",
+    "candidate": "501b9930b312894c961d5aa63fd66b7a8352956da3b615bf0ca8602544e11cbd"
+  },
+  "work_fields": [
+    "Ir",
+    "Dr",
+    "Dw"
+  ],
+  "cases": [
+    {
+      "index": 0,
+      "name": "fresh factory quiet",
+      "stock": [
+        3865432,
+        990293,
+        523840
+      ],
+      "candidate": [
+        3877208,
+        991829,
+        525888
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "1187f1459fbcc948b7a64cca659a792f642ca7b528b25eb1aafe534ee830edd3"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+      },
+      "work_controls": {
+        "stock": {
+          "repeat": [
+            3865432,
+            990293,
+            523840
+          ],
+          "five": [
+            4833982,
+            1238238,
+            655007
+          ],
+          "fifth": [
+            968550,
+            247945,
+            131167
+          ]
+        },
+        "candidate": {
+          "repeat": [
+            3877208,
+            991829,
+            525888
+          ],
+          "five": [
+            4848702,
+            1240158,
+            657567
+          ],
+          "fifth": [
+            971494,
+            248329,
+            131679
+          ]
+        }
+      }
+    },
+    {
+      "index": 1,
+      "name": "eight equal held",
+      "stock": [
+        21690342,
+        5922654,
+        2659100
+      ],
+      "candidate": [
+        20888550,
+        5807454,
+        2533148
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "50f9f04be4e983b51fb78e9f6051a541ac112c7889ef96cfc7f1ed3f13e2796c"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "dda2b52802c9d1a835a43a63d8c0d46767a910a72d6c6419e146b7269b5645a0"
+      }
+    },
+    {
+      "index": 2,
+      "name": "eight varied held",
+      "stock": [
+        21784116,
+        5935345,
+        2659219
+      ],
+      "candidate": [
+        20983860,
+        5820657,
+        2533779
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "c6275843101e243d978cbc78c0fd67a08e695c36c45f9c4b3ef2e07558ce3004"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+      },
+      "work_controls": {
+        "stock": {
+          "repeat": [
+            21784116,
+            5935345,
+            2659219
+          ],
+          "five": [
+            27222991,
+            7418395,
+            3323152
+          ],
+          "fifth": [
+            5438875,
+            1483050,
+            663933
+          ]
+        },
+        "candidate": {
+          "repeat": [
+            20983860,
+            5820657,
+            2533779
+          ],
+          "five": [
+            26222671,
+            7275035,
+            3166352
+          ],
+          "fifth": [
+            5238811,
+            1454378,
+            632573
+          ]
+        }
+      }
+    },
+    {
+      "index": 3,
+      "name": "factory three routes",
+      "stock": [
+        31949199,
+        7874757,
+        3510209
+      ],
+      "candidate": [
+        31148943,
+        7760069,
+        3384769
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "33236fcd5d33d13fe837f2bc3188f4c26066b367c447c5a1598fa65ccd54d89b"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+      }
+    },
+    {
+      "index": 4,
+      "name": "panel three routes",
+      "stock": [
+        38490360,
+        9216400,
+        3852688
+      ],
+      "candidate": [
+        38487288,
+        9211792,
+        3848592
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "3756b9c186b0606e88966e637be53a7fdee58c95f751e80738b1c4cff421a86f"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "8f40bc504f57b55336c4c6eba16b054d21a1f25253cc92974733e9542f4d5ee1"
+      }
+    },
+    {
+      "index": 5,
+      "name": "one held",
+      "stock": [
+        7477971,
+        1969902,
+        943110
+      ],
+      "candidate": [
+        6687955,
+        1859822,
+        821766
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "c5b63d0f33b7409b29a8c5139d708f66cbdba44e4f4ab4c7fbf1077a8d6beef6"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "f8a3ce2940d946d7040a642c9322cc521825749908827f68544ce95473f7c453"
+      },
+      "work_controls": {
+        "stock": {
+          "repeat": [
+            7477971,
+            1969902,
+            943110
+          ],
+          "five": [
+            9351678,
+            2463314,
+            1178952
+          ],
+          "fifth": [
+            1873707,
+            493412,
+            235842
+          ]
+        },
+        "candidate": {
+          "repeat": [
+            6687955,
+            1859822,
+            821766
+          ],
+          "five": [
+            8364158,
+            2325714,
+            1027272
+          ],
+          "fifth": [
+            1676203,
+            465892,
+            205506
+          ]
+        }
+      }
+    },
+    {
+      "index": 6,
+      "name": "Pure eight held",
+      "stock": [
+        21614739,
+        5883876,
+        2636457
+      ],
+      "candidate": [
+        20814483,
+        5769188,
+        2511017
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "ea461ea38141656232a50a9e03f7d91825c464c20cf3ea96c03f5b21f2392c87"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "dd61c7ad39564b535249251ab24f68d8444dda5d1c79ed6d93cc510a92258bff"
+      }
+    },
+    {
+      "index": 7,
+      "name": "Legacy eight held",
+      "stock": [
+        12038791,
+        4014592,
+        900400
+      ],
+      "candidate": [
+        12038791,
+        4014592,
+        900400
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "630accbf0250b22ba97768780989e4f0d4c099064622d359217ddcf7b0374f30"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "e224d4ef65c4557592eb1e8ef51fa7a6375636ff1f34912b4ecb843f67d2698b"
+      }
+    },
+    {
+      "index": 8,
+      "name": "live route edits",
+      "stock": [
+        27981016,
+        7112126,
+        3192640
+      ],
+      "candidate": [
+        27180760,
+        6997438,
+        3067200
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "972cb6031260d32a3152de56f9e114aec9dea337c80cdd4424b139ded6e2d11c"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+      }
+    }
+  ],
+  "interrupted_22": {
+    "bytes": 17019552,
+    "sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec"
+  },
+  "direct_handoff_20480": {
+    "bytes": 29839360,
+    "sha256": "187324a0edb6d09480b4b342b9f5dcb1d8b07105315f9c1a54e9968664cbb3ba"
+  },
+  "longer_histories": {
+    "factory_held": {
+      "bytes": 1249792,
+      "sha256": "d259cecddb55b663564b9e12c5edc66d11c4a2d05a683ecfc9e9964a7288b78a"
+    },
+    "factory_moving": {
+      "bytes": 1249792,
+      "sha256": "f67eb4f73320b7a1443ff37a94c8d85f9c090ba7fb9ffb50b2cc684bccbbdc9b"
+    },
+    "factory_quiet": {
+      "bytes": 1249792,
+      "sha256": "29211178682995ce41f7a4fb37acba48656b8a50cb91ad58a4403ece0a56985c"
+    },
+    "factory_release_wake": {
+      "bytes": 1249792,
+      "sha256": "808890d9c82a9c6e0ce2d9daba9a3d5a56007bdca9cd817a53cfd5ba076381d8"
+    },
+    "panel_held": {
+      "bytes": 1249792,
+      "sha256": "46e687ad691c838abe89f55135152460f5cdac450d781393fc821d62247c6982"
+    },
+    "pure_held": {
+      "bytes": 1249792,
+      "sha256": "5c147380f06afb781e319897e7ea841d04b0fc0e0ad1333d1e849442d7544b1d"
+    }
+  }
+}

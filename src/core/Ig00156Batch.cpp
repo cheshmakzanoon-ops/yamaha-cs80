@@ -40,6 +40,18 @@ CS80_AVX2_INLINE V select(V mask,V yes,V no) { return _mm256_blendv_pd(no.x,yes.
 CS80_AVX2_INLINE V absolute(V x) { return _mm256_andnot_pd(_mm256_set1_pd(-0.0),x.x); }
 CS80_AVX2_INLINE V less(V a,V b) { return _mm256_cmp_pd(a.x,b.x,_CMP_LT_OQ); }
 CS80_AVX2_INLINE V greater(V a,V b) { return _mm256_cmp_pd(a.x,b.x,_CMP_GT_OQ); }
+#if !defined(__NO_TRAPPING_MATH__)
+// Pure bit shuffle: take the upper 32 bits of every binary64 word.
+CS80_AVX2_INLINE __m256i highWords(V a, V b)
+{
+    return _mm256_castps_si256(_mm256_shuffle_ps(_mm256_castpd_ps(a.x), _mm256_castpd_ps(b.x),
+                                                  _MM_SHUFFLE(3,1,3,1)));
+}
+CS80_AVX2_INLINE __m256i magnitudeHighWords(V a, V b)
+{
+    return _mm256_and_si256(highWords(a,b),_mm256_set1_epi32(0x7fffffff));
+}
+#endif
 CS80_AVX2_INLINE __m256i outsideMagnitudeBound(V value,double limit)
 {
     const auto magnitude=_mm256_and_si256(_mm256_castpd_si256(value.x),
@@ -114,6 +126,19 @@ struct Ig00156BatchAccess
     static_assert(offsetof(Stage, ffPart) == offsetof(Stage, gmPart) + sizeof(double) &&
                   offsetof(Stage, invA11) == offsetof(Stage, inFromX) + sizeof(double) &&
                   offsetof(Stage, slope2) == offsetof(Stage, slope1) + sizeof(double));
+
+#if !defined(__NO_TRAPPING_MATH__)
+    // The current-clock flags are two adjacent bool object representations.
+    // Compare both at once without an unaligned typed read or touching padding.
+    static bool hasAudioCoefficients(const Stage& s) noexcept
+    {
+        static_assert(sizeof(bool) == 1 && std::has_unique_object_representations_v<bool>);
+        static_assert(offsetof(Stage, cutoffCoefficientsValid) == offsetof(Stage, lastUnwarped) + sizeof(bool));
+        const std::array<bool, 2> wanted{false, true};
+        return std::memcmp(reinterpret_cast<const unsigned char*>(&s) + offsetof(Stage, lastUnwarped),
+                           wanted.data(), 2 * sizeof(bool)) == 0;
+    }
+#endif
 
     struct Pair { V lo, hi; };
     // Four independent objects, two consecutive fields per object. Access
@@ -230,15 +255,23 @@ struct Ig00156BatchAccess
         // may run on a rejected sNaN or on a denormal an earlier lane would
         // have skipped. Unproven does NOT mean rejected: orderedEligible
         // supplies exactly the historical verdict and FP side effects.
-        auto uncertain=outsideMagnitudeBound(scale,1000000.0);
-        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(fromFb,1000000.0));
-        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(fromIn,1000000.0));
-        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(fromU,1000000.0));
-        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(kiGs,1000000.0));
-        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(invA11,1000000.0));
-        uncertain=_mm256_or_si256(uncertain,outsideMagnitudeBound(inFromX,1000000.0));
-        uncertain=_mm256_or_si256(uncertain,outsidePositiveNormal(g1,1000000.0));
-        uncertain=_mm256_or_si256(uncertain,outsidePositiveNormal(f1,1000000.0));
+        // 1e6 has a zero low word. Every magnitude strictly below it has
+        // a smaller unsigned high word, including subnormals and both signs.
+        // At exactly 1e6 we defer to the inclusive, ordered scalar checks.
+        // Pairing vectors of high words lets a single integer instruction
+        // inspect eight coefficients without loading anything twice.
+        const auto gains=highWords(g1,f1);
+        auto upper=_mm256_max_epu32(magnitudeHighWords(fromFb,fromIn),magnitudeHighWords(fromU,kiGs));
+        upper=_mm256_max_epu32(upper,magnitudeHighWords(invA11,inFromX));
+        upper=_mm256_max_epu32(upper,magnitudeHighWords(scale,scale));
+        upper=_mm256_max_epu32(upper,gains);
+        // Raw negative gains can dominate an unsigned maximum; the signed
+        // lower test rejects all of them along with zero and subnormal gains.
+        constexpr auto limitBits=std::bit_cast<std::uint64_t>(1000000.0);
+        static_assert((limitBits&0xffffffffu)==0);
+        constexpr auto highLimit=static_cast<std::int32_t>(limitBits>>32);
+        auto uncertain=_mm256_cmpgt_epi32(upper,_mm256_set1_epi32(highLimit-1));
+        uncertain=_mm256_or_si256(uncertain,_mm256_cmpgt_epi32(_mm256_set1_epi32(0x00100000),gains));
         // |xFromBp| in [DBL_MIN,1] implies the original [-1,1e6] bound;
         // values outside this smaller common range are not clamped or lost.
         uncertain=_mm256_or_si256(uncertain,outsidePositiveNormal(absolute(fromBp),1.0));
@@ -249,30 +282,44 @@ struct Ig00156BatchAccess
         auto badHeader=_mm_cmpgt_epi32(inputBits,_mm_set1_epi32(std::bit_cast<std::int32_t>(64.0f)));
         badHeader=_mm_or_si128(badHeader,_mm_cmpgt_epi32(_mm_set1_epi32(std::bit_cast<std::int32_t>(8000.0f)),rate));
         badHeader=_mm_or_si128(badHeader,_mm_cmpgt_epi32(rate,_mm_set1_epi32(std::bit_cast<std::int32_t>(1536000.0f))));
-        const bool ordinary=(_mm256_movemask_pd(_mm256_castsi256_pd(uncertain))==0
+        const bool ordinary=(_mm256_movemask_ps(_mm256_castsi256_ps(uncertain))==0
             && _mm_movemask_ps(_mm_castsi128_ps(badHeader))==0
-            && !stages[0]->lastUnwarped && stages[0]->cutoffCoefficientsValid
-            && !stages[1]->lastUnwarped && stages[1]->cutoffCoefficientsValid
-            && !stages[2]->lastUnwarped && stages[2]->cutoffCoefficientsValid
-            && !stages[3]->lastUnwarped && stages[3]->cutoffCoefficientsValid);
+            && hasAudioCoefficients(*stages[0]) && hasAudioCoefficients(*stages[1])
+            && hasAudioCoefficients(*stages[2]) && hasAudioCoefficients(*stages[3]));
         if(!ordinary && !orderedEligible(stages,input)) return false;
 #endif
         const auto [zIn, zFb, zBp, zLp] = gatherTile<offsetof(Stage, zIn)>(stages);
         const auto [slope1, slope2] = gatherPair<offsetof(Stage, slope1)>(stages);
-        // Reuse gathered state for the dynamic admission gate. Integer bit
-        // comparisons reject NaN (including signalling NaN) and infinities
-        // without evaluating them or altering any authoritative state.
-        auto bad=_mm256_or_si256(outsideStateBound(zIn),outsideStateBound(zFb));
-        bad=_mm256_or_si256(bad,outsideStateBound(zBp));
-        bad=_mm256_or_si256(bad,outsideStateBound(zLp));
-        bad=_mm256_or_si256(bad,outsideStateBound(slope1));
-        bad=_mm256_or_si256(bad,outsideStateBound(slope2));
-        if(_mm256_movemask_pd(_mm256_castsi256_pd(bad))!=0) return false;
-        // Bounds above prove both slope vectors finite before FP comparisons.
-        auto badSlope=_mm256_or_pd(less(slope1,0.0).x,greater(slope1,1.0).x);
-        badSlope=_mm256_or_pd(badSlope,less(slope2,0.0).x);
-        badSlope=_mm256_or_pd(badSlope,greater(slope2,1.0).x);
-        if(_mm256_movemask_pd(badSlope)!=0) return false;
+#if !defined(__NO_TRAPPING_MATH__)
+        // Four capacitor histories strictly inside the magnitude envelope
+        // and two positive normal slopes in [DBL_MIN,1] need no floating
+        // comparisons. At an envelope endpoint or for unusual slopes keep
+        // the original ordering, including DAZ/subnormal sticky effects.
+        const auto histories=_mm256_max_epu32(magnitudeHighWords(zIn,zFb),magnitudeHighWords(zBp,zLp));
+        constexpr auto stateBits=std::bit_cast<std::uint64_t>(1024.0);
+        static_assert((stateBits&0xffffffffu)==0);
+        constexpr auto stateLimit=static_cast<std::int32_t>(stateBits>>32);
+        auto edge=_mm256_cmpgt_epi32(histories,_mm256_set1_epi32(stateLimit-1));
+        edge=_mm256_or_si256(edge,outsidePositiveNormal(slope1,1.0));
+        edge=_mm256_or_si256(edge,outsidePositiveNormal(slope2,1.0));
+        if(_mm256_movemask_ps(_mm256_castsi256_ps(edge))!=0)
+#endif
+        {
+            // Reuse gathered state for the dynamic admission gate. Integer bit
+            // comparisons reject NaN (including signalling NaN) and infinities
+            // without evaluating them or altering any authoritative state.
+            auto bad=_mm256_or_si256(outsideStateBound(zIn),outsideStateBound(zFb));
+            bad=_mm256_or_si256(bad,outsideStateBound(zBp));
+            bad=_mm256_or_si256(bad,outsideStateBound(zLp));
+            bad=_mm256_or_si256(bad,outsideStateBound(slope1));
+            bad=_mm256_or_si256(bad,outsideStateBound(slope2));
+            if(_mm256_movemask_pd(_mm256_castsi256_pd(bad))!=0) return false;
+            // Bounds above prove both slope vectors finite before FP comparisons.
+            auto badSlope=_mm256_or_pd(less(slope1,0.0).x,greater(slope1,1.0).x);
+            badSlope=_mm256_or_pd(badSlope,less(slope2,0.0).x);
+            badSlope=_mm256_or_pd(badSlope,greater(slope2,1.0).x);
+            if(_mm256_movemask_pd(badSlope)!=0) return false;
+        }
 
         const V u=V(_mm256_setr_pd(input[0],input[1],input[2],input[3]))*scale;
         const V level=kIg00156OtaLevel,inv=1.0/kIg00156OtaLevel;

@@ -400,6 +400,7 @@ private:
     int hostAutomationFrames = 0, hostAutomationPosition = 0;
     void resetHostAutomationState() noexcept;
     void refreshHostAutomationParameter(size_t lane) noexcept;
+    void refreshAllHostAutomationParameters() noexcept;
     void prepareHostAutomation() noexcept;
     void applyVst3MidiLearn(const juce::MidiBuffer& midi) noexcept;
     void syncHostAutomationParameters() noexcept;

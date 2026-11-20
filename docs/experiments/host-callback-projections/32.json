@@ -1,0 +1,194 @@
+{
+  "candidate_duplicate_and_additive_controls": true,
+  "candidate_module_sha256": "d41b759091fc125972cee51c5247312ef0c12537311f58dec56f386a7effca6e",
+  "controls_legend": {
+    "all5": "prefix plus the next actual call",
+    "duplicate": "repeated prefix",
+    "fifth": "only the next call",
+    "first4": "counted prefix"
+  },
+  "counted_prefix_callbacks": 8,
+  "counted_prefix_stereo_frames": 256,
+  "frames": 32,
+  "host_sha256": "209259989de42bea316f1c52ef9cac19df5d5c981d46702f94cb0f06d7461226",
+  "metrics": [
+    "Ir",
+    "Dr",
+    "Dw"
+  ],
+  "physical_cpu_budget_verified": false,
+  "sample_rate_hz": 48000,
+  "scenes": {
+    "fresh-quiet": {
+      "candidate": [
+        4176596,
+        1070649,
+        547552
+      ],
+      "candidate_controls": {
+        "all5": [
+          4695108,
+          1203743,
+          615615
+        ],
+        "duplicate": [
+          4176596,
+          1070649,
+          547552
+        ],
+        "fifth": [
+          518512,
+          133094,
+          68063
+        ],
+        "first4": [
+          4176596,
+          1070649,
+          547552
+        ]
+      },
+      "delta": [
+        -5736,
+        -2040,
+        -640
+      ],
+      "native_and_guest_public_sha256": {
+        "guest": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "4363d47d58b24b679e6af695fb1cc4208084b9b0b56bd124b18a82b98160baa8",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "763e0f53f3cbb438b90fc14191d5d4a79fd1bd673004fdcb28cc8c3bb2837897",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        },
+        "native": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "d8a3de076972c969da89e93fdfb221e625609dbec2621bf16c81d1dab3c88f80",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "763e0f53f3cbb438b90fc14191d5d4a79fd1bd673004fdcb28cc8c3bb2837897",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        }
+      },
+      "percent_change": [
+        -0.13714836603119981,
+        -0.19017627662817463,
+        -0.11674741696339969
+      ],
+      "stock": [
+        4182332,
+        1072689,
+        548192
+      ],
+      "stock_controls": {
+        "all5": [
+          4701561,
+          1206038,
+          616335
+        ],
+        "duplicate": [
+          4182332,
+          1072689,
+          548192
+        ],
+        "fifth": [
+          519229,
+          133349,
+          68143
+        ],
+        "first4": [
+          4182332,
+          1072689,
+          548192
+        ]
+      }
+    },
+    "varied-held-short": {
+      "candidate": [
+        20809826,
+        5739815,
+        2228694
+      ],
+      "candidate_controls": {
+        "all5": [
+          23425400,
+          6460692,
+          2508057
+        ],
+        "duplicate": [
+          20809826,
+          5739815,
+          2228694
+        ],
+        "fifth": [
+          2615574,
+          720877,
+          279363
+        ],
+        "first4": [
+          20809826,
+          5739815,
+          2228694
+        ]
+      },
+      "delta": [
+        -5992,
+        -2040,
+        -640
+      ],
+      "native_and_guest_public_sha256": {
+        "guest": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "446bb08e1d0df09ff2949ba8de5773234698ab852c30e1dfd24cae970eefe832",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "d67e32f14d53f20c8cc8ac64011f78ffeca77db70beee30530169b3073e7b588",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        },
+        "native": {
+          "continuation.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "fp.bin": "5c5bc107c640083bdcb454250b3bef5a8560f4002fa19fa557deadda0bbe49b2",
+          "initial.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "pcm.bin": "d67e32f14d53f20c8cc8ac64011f78ffeca77db70beee30530169b3073e7b588",
+          "postwarm.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916",
+          "window.state": "3aa8117d7b1dcdcd2bf6063241a61d0b4edec607a7a9e4e4287e79acc35ba916"
+        }
+      },
+      "percent_change": [
+        -0.02878580125940763,
+        -0.03552858788666729,
+        -0.02870812538632614
+      ],
+      "stock": [
+        20815818,
+        5741855,
+        2229334
+      ],
+      "stock_controls": {
+        "all5": [
+          23432141,
+          6462987,
+          2508777
+        ],
+        "duplicate": [
+          20815818,
+          5741855,
+          2229334
+        ],
+        "fifth": [
+          2616323,
+          721132,
+          279443
+        ],
+        "first4": [
+          20815818,
+          5741855,
+          2229334
+        ]
+      }
+    }
+  },
+  "stock_module_sha256": "0749b78b218186ee220ae53f8b024c1f1ef17911d676c51bbad276c2ec65dbea",
+  "timing": false,
+  "warm_stereo_frames": 2048
+}

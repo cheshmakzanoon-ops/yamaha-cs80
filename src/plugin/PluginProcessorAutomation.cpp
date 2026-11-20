@@ -29,6 +29,12 @@ void Cs80AudioProcessor::refreshHostAutomationParameter(size_t lane) noexcept
     automationParameterReadback[lane] = current;
 }
 
+void Cs80AudioProcessor::refreshAllHostAutomationParameters() noexcept
+{
+    for (size_t i = 0; i < automationParameters.size(); ++i)
+        refreshHostAutomationParameter(i);
+}
+
 bool Cs80AudioProcessor::usesHostAutomationTiming() const noexcept
 {
     const auto policy = cs80::renderPolicy(
@@ -53,8 +59,7 @@ void Cs80AudioProcessor::beginHostAutomationBlock(int frameCount) noexcept
 {
     endHostAutomationBlock();
     // Resolve the implicit sample -1 value before any wrapper attaches a queue.
-    for (size_t lane = 0; lane < automationParameters.size(); ++lane)
-        refreshHostAutomationParameter(lane);
+    refreshAllHostAutomationParameters();
     hostAutomationBlock = true;
     hostAutomationVst3 = false;
     hostAutomationFrames = std::max(0, frameCount);
@@ -118,9 +123,14 @@ void Cs80AudioProcessor::prepareHostAutomation() noexcept
 
 void Cs80AudioProcessor::syncHostAutomationParameters() noexcept
 {
-    for (size_t i = 0; i < automationParameters.size(); ++i)
-        if (!automationCurves[i].active() && automationParameters[i] != nullptr)
-            refreshHostAutomationParameter(i);
+    // With no borrowed queues every lane is eligible. These are the processor's
+    // own JUCE parameter readbacks (no borrowed host callback or attachment).
+    // Keep all normalized reads in order, but don't touch 120 inactive curves.
+    if (activeHostCurveCount == 0)
+        refreshAllHostAutomationParameters();
+    else
+        for (size_t i = 0; i < automationParameters.size(); ++i)
+            if (!automationCurves[i].active()) refreshHostAutomationParameter(i);
     if (hostAutomationBlock) applyHostAutomationAt(hostAutomationPosition, false);
 }
 

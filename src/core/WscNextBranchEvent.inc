@@ -9,6 +9,18 @@
         const double end=base+b*decay(limit/tau);
 #endif
         const std::array<double,4> levels {profile.sliceVoltsInferred-rampHalf,profile.sliceVoltsInferred,profile.sliceVoltsInferred+rampHalf,state.heldThresholdVolts};
+#if defined(CS80_WSC_REUSE_HELD_SPAN)
+        // Every comparison uses the original endpoint, not a limit shortened
+        // by an earlier root. Evaluate the independent signs in pairs only
+        // on the existing masked held path. Roots still run in source order.
+        const auto potentialCrossing=[&](__m128d level) noexcept {
+            return _mm_cmple_pd(_mm_mul_pd(_mm_sub_pd(level,_mm_set1_pd(n.u)),
+                                           _mm_sub_pd(level,_mm_set1_pd(end))), _mm_setzero_pd());
+        };
+        const auto lo=potentialCrossing(_mm_loadu_pd(levels.data()));
+        const auto hi=potentialCrossing(_mm_loadu_pd(levels.data()+2));
+        if (_mm_movemask_pd(_mm_or_pd(lo,hi))!=0)
+#endif
         for(double level:levels){if((level-n.u)*(level-end)<=0.&&level!=n.u&&b!=0.){const double root=-tau*std::log1p((level-n.u)/b);if(root>epsilon&&root<=limit){limit=root;event=true;}}}
 #if defined(CS80_WSC_REUSE_HELD_SPAN)
         const double triangleB=prepared.triangleAmplitude;

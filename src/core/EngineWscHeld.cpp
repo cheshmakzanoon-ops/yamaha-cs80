@@ -1,6 +1,7 @@
 #include "EngineWscHeld.h"
 
 #if CS80_WSC_BORROW_HELD
+#include <emmintrin.h>
 namespace cs80 {
 WscOutputVolts ReconstructedOscillator::tickBorrowedHeld(double f) noexcept {
     diagnostics.eventCount=0;

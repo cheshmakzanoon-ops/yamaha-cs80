@@ -240,7 +240,7 @@ void dynamicAdmissionEdges(Batch::Kernel kernel) {
  if(kernel==nullptr) return;
  const double snan=std::bit_cast<double>(std::uint64_t{0x7ff0000000000001ULL});
  for(int lane=0;lane<4;++lane) for(int field=0;field<6;++field)
-  for(double value:{0.0,-0.0,1.0,1024.0,-1024.0,std::nextafter(1024.0,0.0),
+  for(double value:{0.0,-0.0,1.0,std::nextafter(1.0,0.0),std::nextafter(1.0,2.0),1024.0,-1024.0,std::nextafter(1024.0,0.0),
                    std::nextafter(1024.0,std::numeric_limits<double>::infinity()),
                    std::nextafter(-1024.0,-std::numeric_limits<double>::infinity()),
                    std::numeric_limits<double>::infinity(),-std::numeric_limits<double>::infinity(),
@@ -268,6 +268,38 @@ void dynamicAdmissionEdges(Batch::Kernel kernel) {
     }
    }
   }
+}
+// At 1e6 the high word alone no longer distinguishes the inclusive
+// coefficient limit from a slightly larger value. Exercise all lanes through
+// the public network constructor, not private-field modifications.
+void splitWordCoefficientEdges(Batch::Kernel kernel) {
+#if CS80_IG00156_EXACT_BATCH_BUILD
+ if(!kernel || !Batch::environmentSupported()) return;
+ auto network=cs80::kIg00156HighPassNetwork; network.sourceOhms=1.;
+ Stage model(network);
+ model.set(300.f,.6f,96000.f);
+ const double half=model.halfSteps().couplings;
+ const double center=half/1000000.;
+ for(std::size_t lane=0;lane<4;++lane) for(int direction:{-1,0,1}) {
+  auto a=makeStages(); prepare(a);
+  network.inputFarads=direction<0?std::nextafter(center,0.):
+                      direction>0?std::nextafter(center,std::numeric_limits<double>::infinity()):center;
+  a[lane]=Stage(network);
+  a[lane].set(300.f,.6f,96000.f);
+  // With unit source conductance, this is kiGs in Stage::set.
+  const double actual=a[lane].halfSteps().couplings/network.inputFarads;
+  check(direction<0 ? actual>1000000. : direction>0 ? actual<1000000. : actual==1000000.,
+        "custom clock straddles inclusive coupling limit");
+  if(direction<0)check((std::bit_cast<std::uint64_t>(actual)>>32)==
+                       (std::bit_cast<std::uint64_t>(1000000.)>>32),
+                       "out-of-range coupling shares the legal endpoint high word");
+  auto scalar=a;
+  const bool used=compare(a,scalar,{.125f,-.25f,.375f,-.5f},kernel);
+  check(used==(actual<=1000000.),"split-word coupling proof preserves endpoint and ordered fallback");
+ }
+#else
+ (void)kernel;
+#endif
 }
 // Exercise ordered static rejection through the public stage API. This
 // synthetic network produces a finite subnormal feedforward coefficient;
@@ -363,7 +395,7 @@ void environments(Batch::Kernel kernel) {
 }
 int main() {
  const auto kernel=Batch::selectKernel(true);
- movement(kernel);fallbackCases(kernel);independentStageLayouts(kernel);mixedOtaEndpoints(kernel);staggeredNewtonConvergence(kernel);dynamicAdmissionEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
+ movement(kernel);fallbackCases(kernel);independentStageLayouts(kernel);mixedOtaEndpoints(kernel);staggeredNewtonConvergence(kernel);dynamicAdmissionEdges(kernel);splitWordCoefficientEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
 #if CS80_IG00156_EXACT_BATCH_BUILD
  __builtin_cpu_init();
  const bool capable = __builtin_cpu_supports("avx2");

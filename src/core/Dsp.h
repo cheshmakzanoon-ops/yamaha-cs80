@@ -914,7 +914,8 @@ public:
             pos = 0.0f;
         const int i0 = (int) pos;
         const float frac = pos - (float) i0;
-        const int i1 = (i0 + 1) % size;
+        // i0 is already inside the logical ring; only its last cell wraps.
+        const int i1 = i0 + 1 == size ? 0 : i0 + 1;
         return lerp(buffer[(size_t) i0], buffer[(size_t) i1], frac);
     }
 

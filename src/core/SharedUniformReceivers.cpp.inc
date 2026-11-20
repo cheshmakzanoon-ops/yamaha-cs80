@@ -81,5 +81,60 @@ static inline bool uniformReceiverControls() noexcept
     result.masterResSaturated = masterSaturated;
     return true;
 }
+
+#if !defined(CS80_DISABLE_CERTIFIED_SHARED_RECEIVERS)
+#define CS80_DETAIL_CERTIFIED_SHARED_RECEIVERS 1
+// Called only after both cutoff transactions accepted these very drive arrays
+// without saturation. Engine constructs them from floats, so their promotion
+// cannot create a double subnormal. Thus sanitizeDrive is exactly the identity
+// (including a signed zero), and no bad drive can reject the transaction after
+// the independent shared boundaries have passed. No prior sample is reused.
+[[gnu::noipa]] bool evaluateCertifiedReceivers(
+    const std::array<source_factory::RankBoundary, 2>& boundaries, double masterRes,
+    const source_factory::BothRankDrives& drives, source_factory::SharedReadout& out) noexcept
+{
+    namespace sf = source_factory;
+    if (!std::isfinite(masterRes) || !sf::valid(boundaries[0]) || !sf::valid(boundaries[1]))
+        return false;
+
+    const double resonance = std::clamp(masterRes, 0.0, 1.0);
+    const double masterVolts = 10.0 * (1.0 - resonance);
+    for (std::size_t rank = 0; rank < boundaries.size(); ++rank)
+    {
+        const auto& b = boundaries[rank];
+        std::array<double, sf::voiceCount> touch;
+        double sum = 0.0;
+        for (std::size_t v = 0; v < touch.size(); ++v)
+        {
+            const auto& d = drives[rank][v];
+            touch[v] = b.initialLevelVolts * d.velocity + b.afterLevelVolts * d.pressure;
+            sum += touch[v]; // physical receiver order, no reassociation
+        }
+        auto& qBus = out.qBusVolts[rank];
+        qBus = {sf::loadedQBus(b.qHp, masterVolts), sf::loadedQBus(b.qLp, masterVolts)};
+        std::array<double, 2> volts, q;
+        for (std::size_t side = 0; side < 2; ++side)
+        {
+            volts[side] = 0.5 * (qBus[side] + masterVolts);
+            q[side] = sf::qFromVolts(volts[side]);
+        }
+        out.qVolts[rank].fill(volts);
+        out.q[rank].fill(q);
+
+        const double bus = sf::loadedLevelBus(b.level, sum);
+        out.levelBusVolts[rank] = bus;
+        for (std::size_t v = 0; v < touch.size(); ++v)
+        {
+            const double pin = sf::levelPinPerLoadedBus * bus + sf::levelPinPerTouch * touch[v];
+            out.levelPinVolts[rank][v] = pin;
+            out.levelGain[rank][v] = pin / sf::levelUnitVolts;
+        }
+    }
+    out.saturatedVoices = 0;
+    out.masterResVolts = masterVolts;
+    out.masterResSaturated = resonance != masterRes;
+    return true;
+}
+#endif
 } // namespace
 #endif

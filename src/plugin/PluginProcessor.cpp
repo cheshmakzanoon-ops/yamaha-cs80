@@ -1292,12 +1292,10 @@ void Cs80AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::Mi
     if (done < numSamples)
         renderSegment(done, numSamples - done);
 
-    unsigned primaryMask = 0, extensionMask = 0;
-    for (int i = 0; i < 8; ++i)
-    {
-        if (engine.getVoiceInfo(i).active) primaryMask |= 1u << i;
-        if (extensionActive && extensionEngine->getVoiceInfo(i).active) extensionMask |= 1u << i;
-    }
+    // Publishing activity needs no pitch, pressure or per-voice floating-point
+    // fields. Keep both current masks and the applied capacity in one store.
+    const auto primaryMask = engine.activeVoiceMask();
+    const auto extensionMask = extensionActive ? extensionEngine->activeVoiceMask() : 0u;
     voiceActivity.publish(primaryMask, extensionMask, extensionActive);
     const auto voiceRequest = voiceInspection.requested();
     if (cs80::VoiceInspection::enabled(voiceRequest))

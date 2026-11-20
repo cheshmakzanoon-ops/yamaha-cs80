@@ -316,6 +316,15 @@ public:
     void render(float* interleavedStereo, int numFrames, const float* externalMono = nullptr);
 
     int activeVoices() const noexcept;
+    // Read at the end of the callback, on the render thread. Project the live
+    // physical-slot flags only: released voices still count until retirement.
+    unsigned activeVoiceMask() const noexcept
+    {
+        unsigned mask = 0;
+        for (std::size_t slot = 0; slot < voices.size(); ++slot)
+            mask |= static_cast<unsigned>(voices[slot].active) << slot;
+        return mask;
+    }
     bool isParityMode() const noexcept { return global.parityMode; }
     // Render-thread accepted state, including PURE masking.
     bool isArpeggiatorEnabled() const noexcept { return global.arpOn; }

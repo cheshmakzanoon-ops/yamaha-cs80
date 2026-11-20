@@ -1,0 +1,37 @@
+{
+  "stock_commit": "5499056a60ee5044275ba17eb7dddded4c96e90d",
+  "stock_module_sha256": "0749b78b218186ee220ae53f8b024c1f1ef17911d676c51bbad276c2ec65dbea",
+  "candidate_module_sha256": "a5c5bb250de0ddc38e36c91404b89bf4216ad2ea893f0a1fcf0fe5632d0a5152",
+  "isolated_hybrid": true,
+  "floating_interruption_cases_per_render_arm": 22,
+  "real_SIGFPE_per_render_arm": 7,
+  "render_capture_bytes_per_arm": 17019552,
+  "render_capture_sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec",
+  "renderer_and_output_probe_summaries": [
+    "traps=6 whole_object_interrupt_mismatches=0 bytes_per_object=5984",
+    "traps=6 whole_object_interrupt_mismatches=0 bytes_per_object=5984",
+    "traps=4 whole_object_interrupt_mismatches=0 direct_public_continuation_mismatches=0 bytes_per_object=5984",
+    "traps=4 whole_object_interrupt_mismatches=0 direct_public_continuation_mismatches=0 bytes_per_object=5984",
+    "twenty-two cases, seven real SIGFPE plus twelve ordinal/mixed cases; partial state and four masked continuation samples archived",
+    "twenty-two cases, seven real SIGFPE plus twelve ordinal/mixed cases; partial state and four masked continuation samples archived",
+    "17019552 2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec"
+  ],
+  "core_object_sha256": {
+    "Engine.cpp.o": {
+      "baseline": "61b064cf8ea737e7dfc3050a9df9c7ac125ebaf83ecd18f2ba697424caf22c23",
+      "candidate": "61b064cf8ea737e7dfc3050a9df9c7ac125ebaf83ecd18f2ba697424caf22c23"
+    },
+    "EngineWscHeld.cpp.o": {
+      "baseline": "2689b02d5315f5e6dce81d26e13f92c6bfd93ce69961b504f8f67b6b3efe2c76",
+      "candidate": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060"
+    },
+    "FactoryPresets.cpp.o": {
+      "baseline": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+      "candidate": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b"
+    },
+    "Ig00156Batch.cpp.o": {
+      "baseline": "6e48a4a33f805103f087e735f0cf8b15fa99db8c35ef53dc611f25e106767858",
+      "candidate": "6e48a4a33f805103f087e735f0cf8b15fa99db8c35ef53dc611f25e106767858"
+    }
+  }
+}
