@@ -275,19 +275,20 @@ void dynamicAdmissionEdges(Batch::Kernel kernel) {
 void splitWordCoefficientEdges(Batch::Kernel kernel) {
 #if CS80_IG00156_EXACT_BATCH_BUILD
  if(!kernel || !Batch::environmentSupported()) return;
- auto network=cs80::kIg00156HighPassNetwork; network.sourceOhms=1.;
+ auto network=cs80::kIg00156HighPassNetwork; network.sourceOhms=65536.; // exact binary conductance; ordinary BP coefficient
  Stage model(network);
  model.set(300.f,.6f,96000.f);
  const double half=model.halfSteps().couplings;
- const double center=half/1000000.;
+ const double gs=1./network.sourceOhms;
+ const double center=(half*gs)/1000000.;
  for(std::size_t lane=0;lane<4;++lane) for(int direction:{-1,0,1}) {
   auto a=makeStages(); prepare(a);
   network.inputFarads=direction<0?std::nextafter(center,0.):
                       direction>0?std::nextafter(center,std::numeric_limits<double>::infinity()):center;
   a[lane]=Stage(network);
   a[lane].set(300.f,.6f,96000.f);
-  // With unit source conductance, this is kiGs in Stage::set.
-  const double actual=a[lane].halfSteps().couplings/network.inputFarads;
+  // Match the operations in Stage::set; gs is an exact power of two.
+  const double actual=(a[lane].halfSteps().couplings/network.inputFarads)*gs;
   check(direction<0 ? actual>1000000. : direction>0 ? actual<1000000. : actual==1000000.,
         "custom clock straddles inclusive coupling limit");
   if(direction<0)check((std::bit_cast<std::uint64_t>(actual)>>32)==

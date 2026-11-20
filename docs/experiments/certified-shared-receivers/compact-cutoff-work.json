@@ -1,0 +1,343 @@
+{
+  "scope": "Isolated staged vs direct uniform cutoff result publication inside Engine; both arms include the certified-shared-receiver treatment in this directory and otherwise use 5499056. No native CPU timing. Same compiler, host fixture and companion objects across each pair.",
+  "fields": [
+    "Ir",
+    "Dr",
+    "Dw"
+  ],
+  "staged_engine_sha256": "501b9930b312894c961d5aa63fd66b7a8352956da3b615bf0ca8602544e11cbd",
+  "direct_engine_sha256": "19f7f77f6bfb5191d89a92a435189cd716a3d6a1c94afb456d7b44a3e65dfcda",
+  "cases": [
+    {
+      "scene": "fresh factory quiet",
+      "staged": [
+        3877208,
+        991829,
+        525888
+      ],
+      "direct": [
+        3781976,
+        957013,
+        454208
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "1187f1459fbcc948b7a64cca659a792f642ca7b528b25eb1aafe534ee830edd3"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "ecdf2e96354dea56ae1cb9f71f9d13673cbd644950fc8b21d4c6b765e7c22a9e"
+      },
+      "controls": {
+        "staged": {
+          "repeat": [
+            3877208,
+            991829,
+            525888
+          ],
+          "five": [
+            4848702,
+            1240158,
+            657567
+          ],
+          "fifth": [
+            971494,
+            248329,
+            131679
+          ]
+        },
+        "direct": {
+          "repeat": [
+            3781976,
+            957013,
+            454208
+          ],
+          "five": [
+            4729662,
+            1196638,
+            567967
+          ],
+          "fifth": [
+            947686,
+            239625,
+            113759
+          ]
+        }
+      }
+    },
+    {
+      "scene": "eight equal held",
+      "staged": [
+        20888550,
+        5807454,
+        2533148
+      ],
+      "direct": [
+        20845030,
+        5790046,
+        2497308
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "50f9f04be4e983b51fb78e9f6051a541ac112c7889ef96cfc7f1ed3f13e2796c"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "dda2b52802c9d1a835a43a63d8c0d46767a910a72d6c6419e146b7269b5645a0"
+      },
+      "controls": {
+        "staged": {
+          "repeat": [
+            20888550,
+            5807454,
+            2533148
+          ],
+          "five": [
+            26098316,
+            7256887,
+            3165111
+          ],
+          "fifth": [
+            5209766,
+            1449433,
+            631963
+          ]
+        },
+        "direct": {
+          "repeat": [
+            20845030,
+            5790046,
+            2497308
+          ],
+          "five": [
+            26043916,
+            7235127,
+            3120311
+          ],
+          "fifth": [
+            5198886,
+            1445081,
+            623003
+          ]
+        }
+      }
+    },
+    {
+      "scene": "eight varied held",
+      "staged": [
+        20983860,
+        5820657,
+        2533779
+      ],
+      "direct": [
+        20983860,
+        5820657,
+        2533779
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "c6275843101e243d978cbc78c0fd67a08e695c36c45f9c4b3ef2e07558ce3004"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "3ffbdcbf39c79361dd26f9c705e7fe758e61f7b9952d691543f141632978d759"
+      }
+    },
+    {
+      "scene": "factory three routes",
+      "staged": [
+        31148943,
+        7760069,
+        3384769
+      ],
+      "direct": [
+        31148943,
+        7760069,
+        3384769
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "33236fcd5d33d13fe837f2bc3188f4c26066b367c447c5a1598fa65ccd54d89b"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "f314c04eb1552c5793aeda4ce76f8a21050a39dae9f97bb896f81451a19c2245"
+      }
+    },
+    {
+      "scene": "panel three routes",
+      "staged": [
+        38487288,
+        9211792,
+        3848592
+      ],
+      "direct": [
+        38487288,
+        9211792,
+        3848592
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "3756b9c186b0606e88966e637be53a7fdee58c95f751e80738b1c4cff421a86f"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "8f40bc504f57b55336c4c6eba16b054d21a1f25253cc92974733e9542f4d5ee1"
+      }
+    },
+    {
+      "scene": "one held",
+      "staged": [
+        6687955,
+        1859822,
+        821766
+      ],
+      "direct": [
+        6680787,
+        1859822,
+        821766
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "c5b63d0f33b7409b29a8c5139d708f66cbdba44e4f4ab4c7fbf1077a8d6beef6"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "f8a3ce2940d946d7040a642c9322cc521825749908827f68544ce95473f7c453"
+      },
+      "controls": {
+        "staged": {
+          "repeat": [
+            6687955,
+            1859822,
+            821766
+          ],
+          "five": [
+            8364158,
+            2325714,
+            1027272
+          ],
+          "fifth": [
+            1676203,
+            465892,
+            205506
+          ]
+        },
+        "direct": {
+          "repeat": [
+            6680787,
+            1859822,
+            821766
+          ],
+          "five": [
+            8355198,
+            2325714,
+            1027272
+          ],
+          "fifth": [
+            1674411,
+            465892,
+            205506
+          ]
+        }
+      }
+    },
+    {
+      "scene": "Pure eight held",
+      "staged": [
+        20814483,
+        5769188,
+        2511017
+      ],
+      "direct": [
+        20814483,
+        5769188,
+        2511017
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "ea461ea38141656232a50a9e03f7d91825c464c20cf3ea96c03f5b21f2392c87"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "dd61c7ad39564b535249251ab24f68d8444dda5d1c79ed6d93cc510a92258bff"
+      }
+    },
+    {
+      "scene": "Legacy eight held",
+      "staged": [
+        12038791,
+        4014592,
+        900400
+      ],
+      "direct": [
+        12038791,
+        4014592,
+        900400
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "630accbf0250b22ba97768780989e4f0d4c099064622d359217ddcf7b0374f30"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "e224d4ef65c4557592eb1e8ef51fa7a6375636ff1f34912b4ecb843f67d2698b"
+      }
+    },
+    {
+      "scene": "live route edits",
+      "staged": [
+        27180760,
+        6997438,
+        3067200
+      ],
+      "direct": [
+        27180760,
+        6997438,
+        3067200
+      ],
+      "native": {
+        "bytes": 649520,
+        "sha256": "972cb6031260d32a3152de56f9e114aec9dea337c80cdd4424b139ded6e2d11c"
+      },
+      "translated": {
+        "bytes": 649520,
+        "sha256": "877e312b666ec2c8d7cd13184207ac7e21566085b91fc2e642c1ec228d98c3be"
+      }
+    }
+  ],
+  "new_handoffs": {
+    "bytes": 29839360,
+    "sha256": "187324a0edb6d09480b4b342b9f5dcb1d8b07105315f9c1a54e9968664cbb3ba"
+  },
+  "interrupts": {
+    "bytes": 17019552,
+    "sha256": "2eb309790f0460b355a753fe9c3cd30ef91eae7572078a362419da743d7d96ec"
+  },
+  "longer_native": {
+    "factory_held": {
+      "bytes": 1249792,
+      "sha256": "d259cecddb55b663564b9e12c5edc66d11c4a2d05a683ecfc9e9964a7288b78a"
+    },
+    "factory_moving": {
+      "bytes": 1249792,
+      "sha256": "f67eb4f73320b7a1443ff37a94c8d85f9c090ba7fb9ffb50b2cc684bccbbdc9b"
+    },
+    "factory_quiet": {
+      "bytes": 1249792,
+      "sha256": "29211178682995ce41f7a4fb37acba48656b8a50cb91ad58a4403ece0a56985c"
+    },
+    "factory_release_wake": {
+      "bytes": 1249792,
+      "sha256": "808890d9c82a9c6e0ce2d9daba9a3d5a56007bdca9cd817a53cfd5ba076381d8"
+    },
+    "panel_held": {
+      "bytes": 1249792,
+      "sha256": "46e687ad691c838abe89f55135152460f5cdac450d781393fc821d62247c6982"
+    },
+    "pure_held": {
+      "bytes": 1249792,
+      "sha256": "5c147380f06afb781e319897e7ea841d04b0fc0e0ad1333d1e849442d7544b1d"
+    }
+  }
+}

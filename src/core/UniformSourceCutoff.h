@@ -48,6 +48,7 @@ static inline bool admitted(const sf::RankDrives& input) noexcept {
 }
 
 namespace detail {
+template<bool compactPublication = false>
 static inline bool evaluateForEngine(const sf::ToneControls& tone, const sf::RankDrives& input,
                      sf::CutoffReadout& out, bool* tookFast, bool precheckedEngineTone) noexcept {
     if (!admitted(input)) return sf::heterogeneous_cutoff::detail::evaluateForEngine(tone, input, out, precheckedEngineTone);
@@ -84,13 +85,22 @@ static inline bool evaluateForEngine(const sf::ToneControls& tone, const sf::Ran
         if (!std::isfinite(pin) || !std::isfinite(cv)) return false;
         pins[side] = pin; cvs[side] = cv; buses[side] = bus;
     }
-    // As in the scalar path, no public fields are touched on a failure.
-    sf::CutoffReadout next;
-    if (saturated) next.saturatedVoices = (1u << sf::voiceCount) - 1;
-    next.pinVolts.fill(pins);
-    next.effectiveCv.fill(cvs);
-    next.loadedBusVolts = buses;
-    out = next;
+    // All failure checks, even LP after an otherwise valid HP, have now
+    // completed. On the engine's qualified path publish the two distinct
+    // values of each field directly, without staging eight duplicate pairs.
+    if constexpr (compactPublication) {
+        out.pinVolts.fill(pins);
+        out.effectiveCv.fill(cvs);
+        out.loadedBusVolts = buses;
+        out.saturatedVoices = saturated ? (1u << sf::voiceCount) - 1u : 0u;
+    } else {
+        sf::CutoffReadout next;
+        if (saturated) next.saturatedVoices = (1u << sf::voiceCount) - 1;
+        next.pinVolts.fill(pins);
+        next.effectiveCv.fill(cvs);
+        next.loadedBusVolts = buses;
+        out = next;
+    }
     return true;
 }
 } // namespace detail

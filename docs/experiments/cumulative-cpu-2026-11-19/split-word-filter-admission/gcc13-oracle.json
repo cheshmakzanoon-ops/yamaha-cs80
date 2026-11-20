@@ -1,0 +1,38 @@
+{
+  "basis": "5499056a60ee5044275ba17eb7dddded4c96e90d",
+  "compiler": "x86_64-linux-gnu-g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "flags": [
+    "-std=gnu++20",
+    "-O3",
+    "-DNDEBUG",
+    "-fPIC",
+    "-ffp-contract=off"
+  ],
+  "source_sha256": {
+    "stock": "abf431331e0581af5a90a8180a5e54b82d0d2cf0babb5ba2c20a1624ab469c6b",
+    "candidate": "4e214518029a30f40b5def1efe25a590788afda711b182185a64ac3a341d2b4c"
+  },
+  "both_arms": {
+    "static": "PASS checks=25329954 admitted=14616 rejected=93870",
+    "dynamic": "PASS checks=12504064 admitted=6144 rejected=47104",
+    "permanent_suite": "Ig00156Batch: 1207674 checks, 0 failures, 15982 accelerated groups"
+  },
+  "identical_streams": {
+    "static.bin": {
+      "bytes": 133980210,
+      "sha256": "af13f05f7445ebfacdc607c36ed125e4386c7c522d78af0a8d02236a2fd55c0e"
+    },
+    "dynamic.bin": {
+      "bytes": 65761280,
+      "sha256": "03acc1756fdd136c8fa2d620aafdb0dd5f9e69411fe855e981f279b9c293c577"
+    },
+    "scalar-disabled.o": {
+      "bytes": 1368,
+      "sha256": "4a41c47134096e8a56eb7f3622200582ab28ba0db9223ab8e2115949dedd7247"
+    },
+    "nontrapping.o": {
+      "bytes": 6680,
+      "sha256": "113d037b4ccaa91e92443b3f371552282ee583205a7672adc13e4a6ba8a1579b"
+    }
+  }
+}

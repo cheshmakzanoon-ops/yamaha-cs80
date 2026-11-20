@@ -1,0 +1,110 @@
+{
+  "candidate_duplicate_and_additive_controls": true,
+  "candidate_module_sha256": "3a99b129c8c3415f8036232a39d64254207c504d5545a1f30c2acb34cca32682",
+  "controls_legend": {
+    "all5": "prefix plus the next actual call",
+    "duplicate": "repeated prefix",
+    "fifth": "only the next call",
+    "first4": "counted prefix"
+  },
+  "counted_prefix_callbacks": 4,
+  "counted_prefix_stereo_frames": 256,
+  "frames": 64,
+  "host_sha256": "260627ee1240119740023d3d1b505f6369b2d12c55cba2807c38d2e637670892",
+  "metrics": [
+    "Ir",
+    "Dr",
+    "Dw"
+  ],
+  "physical_cpu_budget_verified": false,
+  "sample_rate_hz": 48000,
+  "scenes": {
+    "plate-held": {
+      "candidate": [
+        19967366,
+        5492956,
+        2120047
+      ],
+      "candidate_controls": {
+        "all5": [
+          24952758,
+          6865586,
+          2649547
+        ],
+        "duplicate": [
+          19967366,
+          5492956,
+          2120047
+        ],
+        "fifth": [
+          4985392,
+          1372630,
+          529500
+        ],
+        "first4": [
+          19967366,
+          5492956,
+          2120047
+        ]
+      },
+      "delta": [
+        -1249160,
+        -316119,
+        -136835
+      ],
+      "native_and_guest_public_sha256": {
+        "guest": {
+          "continuation.state": "e10abf5a8e2e58c7d6f8a032cfffdb44c54ac79a4fbea9a261292abdc37ae45f",
+          "fp.bin": "5276a3d336b7d358279b4aee9ded36ce30c37c54717d07bcc20e5c909392e16b",
+          "initial.state": "e10abf5a8e2e58c7d6f8a032cfffdb44c54ac79a4fbea9a261292abdc37ae45f",
+          "pcm.bin": "0e5634f7153a7714ace8f3464bf86e2c9aeacae40b9b2dd8d70527995ee64a38",
+          "postwarm.state": "e10abf5a8e2e58c7d6f8a032cfffdb44c54ac79a4fbea9a261292abdc37ae45f",
+          "window.state": "e10abf5a8e2e58c7d6f8a032cfffdb44c54ac79a4fbea9a261292abdc37ae45f"
+        },
+        "native": {
+          "continuation.state": "e10abf5a8e2e58c7d6f8a032cfffdb44c54ac79a4fbea9a261292abdc37ae45f",
+          "fp.bin": "db5d9c1197e67463edeff72b7b14a416e803759800026c34d463ff1693a479a3",
+          "initial.state": "e10abf5a8e2e58c7d6f8a032cfffdb44c54ac79a4fbea9a261292abdc37ae45f",
+          "pcm.bin": "0e5634f7153a7714ace8f3464bf86e2c9aeacae40b9b2dd8d70527995ee64a38",
+          "postwarm.state": "e10abf5a8e2e58c7d6f8a032cfffdb44c54ac79a4fbea9a261292abdc37ae45f",
+          "window.state": "e10abf5a8e2e58c7d6f8a032cfffdb44c54ac79a4fbea9a261292abdc37ae45f"
+        }
+      },
+      "percent_change": [
+        -5.8876745420056045,
+        -5.441813025309537,
+        -6.063010826441081
+      ],
+      "stock": [
+        21216526,
+        5809075,
+        2256882
+      ],
+      "stock_controls": {
+        "all5": [
+          26514111,
+          7260676,
+          2820567
+        ],
+        "duplicate": [
+          21216526,
+          5809075,
+          2256882
+        ],
+        "fifth": [
+          5297585,
+          1451601,
+          563685
+        ],
+        "first4": [
+          21216526,
+          5809075,
+          2256882
+        ]
+      }
+    }
+  },
+  "stock_module_sha256": "0749b78b218186ee220ae53f8b024c1f1ef17911d676c51bbad276c2ec65dbea",
+  "timing": false,
+  "warm_stereo_frames": 2048
+}

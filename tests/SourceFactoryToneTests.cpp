@@ -677,6 +677,30 @@ void uniformCutoffMatchesScalar() {
         const bool valid = certificate::classifyImmutableTone(tone);
         check(valid == certificate::canPrecheckEngineTone,
               "nominal compiled map can be prechecked on the qualified evaluator only");
+        // Compact publication is transactional even when HP is valid and LP
+        // fails; successive saturated and unsaturated successes replace the
+        // entire prior output, including every voice bit.
+        {
+            sf::RankDrives d; d.fill({4., .5, .25});
+            sf::CutoffReadout direct, oracle;
+            bool uniform = false;
+            const auto compute = [&](const sf::ToneControls& t) {
+                return sf::uniform_cutoff::detail::evaluateForEngine<true>(
+                    t, d, direct, &uniform, certificate::classifyImmutableTone(t));
+            };
+            check(compute(tone) && sf::evaluateCutoff(tone, d, oracle)
+                && sameReadout(direct, oracle) && direct.saturatedVoices == 0xffu,
+                "compact cutoff publishes all saturated lanes");
+            const auto previous = direct;
+            auto malformed = tone;
+            malformed.cutoff[1].effectiveCvOffset = std::numeric_limits<double>::infinity();
+            d.fill({-.75, .125, 1.});
+            check(!compute(malformed) && sameReadout(direct, previous),
+                  "failed second cutoff side preserves the complete prior output");
+            check(compute(tone) && sf::evaluateCutoff(tone, d, oracle)
+                && sameReadout(direct, oracle) && direct.saturatedVoices == 0,
+                "unsaturated direct publication replaces prior mask and both sides");
+        }
         // The public evaluator must still inspect its actual mutable argument.
         // A failed certificate may never bypass a failed original transaction.
         const auto rejected = [&](const sf::ToneControls& bad) {

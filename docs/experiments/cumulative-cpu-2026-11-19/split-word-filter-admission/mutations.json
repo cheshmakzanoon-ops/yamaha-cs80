@@ -1,0 +1,32 @@
+{
+  "basis": "5499056a60ee5044275ba17eb7dddded4c96e90d",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": [
+    "-std=gnu++20",
+    "-O3",
+    "-DNDEBUG",
+    "-fPIC",
+    "-ffp-contract=off"
+  ],
+  "source_sha256": {
+    "stock": "abf431331e0581af5a90a8180a5e54b82d0d2cf0babb5ba2c20a1624ab469c6b",
+    "candidate": "4e214518029a30f40b5def1efe25a590788afda711b182185a64ac3a341d2b4c"
+  },
+  "detected": {
+    "too-wide-static": {
+      "exit": 1,
+      "suite": "Ig00156Batch: 1207674 checks, 4 failures, 15986 accelerated groups",
+      "first_mismatch": "FAIL split-word coupling proof preserves endpoint and ordered fallback"
+    },
+    "too-wide-dynamic": {
+      "exit": 1,
+      "suite": "Ig00156Batch: 1207674 checks, 7200 failures, 15982 accelerated groups",
+      "first_mismatch": "FAIL dynamic admission boundary verdict"
+    },
+    "no-ordered-fallback": {
+      "exit": 1,
+      "suite": "Ig00156Batch: 1208418 checks, 32 failures, 15978 accelerated groups",
+      "first_mismatch": "FAIL split-word coupling proof preserves endpoint and ordered fallback"
+    }
+  }
+}

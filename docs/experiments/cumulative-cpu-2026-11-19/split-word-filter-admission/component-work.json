@@ -1,0 +1,362 @@
+{
+  "basis": "5499056a60ee5044275ba17eb7dddded4c96e90d",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "flags": [
+    "-std=gnu++20",
+    "-O3",
+    "-DNDEBUG",
+    "-fPIC",
+    "-ffp-contract=off"
+  ],
+  "source_sha256": {
+    "stock": "abf431331e0581af5a90a8180a5e54b82d0d2cf0babb5ba2c20a1624ab469c6b",
+    "candidate": "4e214518029a30f40b5def1efe25a590788afda711b182185a64ac3a341d2b4c"
+  },
+  "valgrind": "valgrind-3.24.0",
+  "arms": {
+    "stock": {
+      "hp": {
+        "first": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=512 checksum=c2782b499857b1c1"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=512 checksum=c2782b499857b1c1"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            290101,
+            73942,
+            23515
+          ],
+          "output": "groups=768 checksum=53921dcef4384997"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=768 checksum=53921dcef4384997"
+        }
+      },
+      "lp": {
+        "first": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=512 checksum=e574ff4fc93e6411"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=512 checksum=e574ff4fc93e6411"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            290191,
+            73964,
+            23518
+          ],
+          "output": "groups=768 checksum=76a255a02ea4edcc"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            145141,
+            36993,
+            11761
+          ],
+          "output": "groups=768 checksum=76a255a02ea4edcc"
+        }
+      },
+      "mixed": {
+        "first": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=512 checksum=7cb9516677e604c0"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=512 checksum=7cb9516677e604c0"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            290191,
+            73964,
+            23518
+          ],
+          "output": "groups=768 checksum=b370dff6bf145cfc"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            145141,
+            36993,
+            11761
+          ],
+          "output": "groups=768 checksum=b370dff6bf145cfc"
+        }
+      },
+      "custom-large": {
+        "first": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=512 checksum=030fb3d1c13a0798"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            145051,
+            36971,
+            11758
+          ],
+          "output": "groups=512 checksum=030fb3d1c13a0798"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            290191,
+            73964,
+            23518
+          ],
+          "output": "groups=768 checksum=5938fa3900cdf6d1"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            145141,
+            36993,
+            11761
+          ],
+          "output": "groups=768 checksum=5938fa3900cdf6d1"
+        }
+      },
+      "custom-exact-ceiling": {
+        "first": {
+          "Ir_Dr_Dw": [
+            119054,
+            30469,
+            11011
+          ],
+          "output": "groups=512 checksum=53cc3d6151480325"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            119054,
+            30469,
+            11011
+          ],
+          "output": "groups=512 checksum=53cc3d6151480325"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            238107,
+            60938,
+            22021
+          ],
+          "output": "groups=768 checksum=acbb51eaeb5af325"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            119054,
+            30469,
+            11011
+          ],
+          "output": "groups=768 checksum=acbb51eaeb5af325"
+        }
+      }
+    },
+    "candidate": {
+      "hp": {
+        "first": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=512 checksum=c2782b499857b1c1"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=512 checksum=c2782b499857b1c1"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            278325,
+            69334,
+            23003
+          ],
+          "output": "groups=768 checksum=53921dcef4384997"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=768 checksum=53921dcef4384997"
+        }
+      },
+      "lp": {
+        "first": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=512 checksum=e574ff4fc93e6411"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=512 checksum=e574ff4fc93e6411"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            278415,
+            69356,
+            23006
+          ],
+          "output": "groups=768 checksum=76a255a02ea4edcc"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            139253,
+            34689,
+            11505
+          ],
+          "output": "groups=768 checksum=76a255a02ea4edcc"
+        }
+      },
+      "mixed": {
+        "first": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=512 checksum=7cb9516677e604c0"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=512 checksum=7cb9516677e604c0"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            278415,
+            69356,
+            23006
+          ],
+          "output": "groups=768 checksum=b370dff6bf145cfc"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            139253,
+            34689,
+            11505
+          ],
+          "output": "groups=768 checksum=b370dff6bf145cfc"
+        }
+      },
+      "custom-large": {
+        "first": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=512 checksum=030fb3d1c13a0798"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            139163,
+            34667,
+            11502
+          ],
+          "output": "groups=512 checksum=030fb3d1c13a0798"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            278415,
+            69356,
+            23006
+          ],
+          "output": "groups=768 checksum=5938fa3900cdf6d1"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            139253,
+            34689,
+            11505
+          ],
+          "output": "groups=768 checksum=5938fa3900cdf6d1"
+        }
+      },
+      "custom-exact-ceiling": {
+        "first": {
+          "Ir_Dr_Dw": [
+            239886,
+            52997,
+            18179
+          ],
+          "output": "groups=512 checksum=53cc3d6151480325"
+        },
+        "repeat": {
+          "Ir_Dr_Dw": [
+            239886,
+            52997,
+            18179
+          ],
+          "output": "groups=512 checksum=53cc3d6151480325"
+        },
+        "both": {
+          "Ir_Dr_Dw": [
+            479771,
+            105994,
+            36357
+          ],
+          "output": "groups=768 checksum=acbb51eaeb5af325"
+        },
+        "second": {
+          "Ir_Dr_Dw": [
+            239886,
+            52997,
+            18179
+          ],
+          "output": "groups=768 checksum=acbb51eaeb5af325"
+        }
+      }
+    }
+  }
+}

@@ -1081,6 +1081,11 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
     // A cutoff certificate means equal raw drive words, not necessarily a
     // successful cutoff transaction. The shared network validates its own
     // boundaries and drive and still computes a new result on this sample.
+#if defined(CS80_DISABLE_COMPACT_UNIFORM_CUTOFF)
+    constexpr bool compactUniformCutoff = false;
+#else
+    constexpr bool compactUniformCutoff = true;
+#endif
     bool uniform[2] {};
 #if defined(CS80_DETAIL_CERTIFIED_SHARED_RECEIVERS)
     bool cutoffAccepted[2] {};
@@ -1090,7 +1095,7 @@ void Engine::updateSourceReadouts(float sampleRate) noexcept
 #if defined(CS80_DETAIL_CERTIFIED_SHARED_RECEIVERS)
             cutoffAccepted[rank] =
 #endif
-            source_factory::uniform_cutoff::detail::evaluateForEngine(
+            source_factory::uniform_cutoff::detail::evaluateForEngine<compactUniformCutoff>(
                 sourceTones[rank], drives[rank], sourceCutoff[rank], &uniform[rank],
                 source_factory::heterogeneous_cutoff::canPrecheckEngineTone && packetTonePrechecked[rank]);
     if (uniform[0] && uniform[1] && uniformReceiverControls())
