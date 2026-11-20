@@ -111,6 +111,38 @@ struct Ig00156BatchAccess
                   offsetof(Stage, vBp) == offsetof(Stage, vIn) + 2 * sizeof(double) &&
                   offsetof(Stage, vLp) == offsetof(Stage, vIn) + 3 * sizeof(double));
 
+    static_assert(offsetof(Stage, ffPart) == offsetof(Stage, gmPart) + sizeof(double) &&
+                  offsetof(Stage, invA11) == offsetof(Stage, inFromX) + sizeof(double) &&
+                  offsetof(Stage, slope2) == offsetof(Stage, slope1) + sizeof(double));
+
+    struct Pair { V lo, hi; };
+    // Four independent objects, two consecutive fields per object. Access
+    // both fields as bytes of the complete Stage, not as a double array.
+    template<std::size_t Offset>
+    static CS80_AVX2_INLINE Pair gatherPair(const Ig00156Batch::Stages& stages) noexcept
+    {
+        static_assert(Offset == offsetof(Stage, gmPart) || Offset == offsetof(Stage, inFromX)
+                      || Offset == offsetof(Stage, slope1));
+        const auto row = [](const Stage* s) CS80_AVX2 {
+            __m128d r;
+            std::memcpy(&r, reinterpret_cast<const unsigned char*>(s) + Offset, sizeof(r));
+            return r;
+        };
+        const auto even = _mm256_insertf128_pd(_mm256_castpd128_pd256(row(stages[0])), row(stages[2]), 1);
+        const auto odd  = _mm256_insertf128_pd(_mm256_castpd128_pd256(row(stages[1])), row(stages[3]), 1);
+        return { _mm256_unpacklo_pd(even, odd), _mm256_unpackhi_pd(even, odd) };
+    }
+
+    static CS80_AVX2_INLINE void scatterSlopes(const Ig00156Batch::Stages& stages, V a, V b) noexcept
+    {
+        const auto even = _mm256_unpacklo_pd(a.x, b.x), odd = _mm256_unpackhi_pd(a.x, b.x);
+        const auto store = [](Stage* s, __m128d row) CS80_AVX2 {
+            std::memcpy(reinterpret_cast<unsigned char*>(s) + offsetof(Stage, slope1), &row, sizeof(row));
+        };
+        store(stages[0], _mm256_castpd256_pd128(even)); store(stages[1], _mm256_castpd256_pd128(odd));
+        store(stages[2], _mm256_extractf128_pd(even, 1)); store(stages[3], _mm256_extractf128_pd(odd, 1));
+    }
+
     template<std::size_t Offset>
     static CS80_AVX2_INLINE Tile gatherTile(const Ig00156Batch::Stages& stages) noexcept
     {
@@ -187,9 +219,11 @@ struct Ig00156BatchAccess
                                    stages[2]->*member,stages[3]->*member));
         };
         const V scale=gather(&Ig00156Stage::inputScale);
-        const V g1=gather(&Ig00156Stage::gmPart),f1=gather(&Ig00156Stage::ffPart),g2=g1,f2=f1;
+        const auto [g1, f1] = gatherPair<offsetof(Stage, gmPart)>(stages);
+        const V g2=g1,f2=f1;
         const auto [fromFb, fromIn, fromU, fromBp] = gatherTile<offsetof(Stage, xFromFb)>(stages);
-        const V kiGs=gather(&Ig00156Stage::kiGs),invA11=gather(&Ig00156Stage::invA11),inFromX=gather(&Ig00156Stage::inFromX);
+        const V kiGs=gather(&Ig00156Stage::kiGs);
+        const auto [inFromX, invA11] = gatherPair<offsetof(Stage, inFromX)>(stages);
 #if !defined(__NO_TRAPPING_MATH__)
         // Prove the usual admission case using integer operations on the
         // coefficient vectors the solver already needs. No FP comparisons
@@ -224,7 +258,7 @@ struct Ig00156BatchAccess
         if(!ordinary && !orderedEligible(stages,input)) return false;
 #endif
         const auto [zIn, zFb, zBp, zLp] = gatherTile<offsetof(Stage, zIn)>(stages);
-        const V slope1=gather(&Ig00156Stage::slope1),slope2=gather(&Ig00156Stage::slope2);
+        const auto [slope1, slope2] = gatherPair<offsetof(Stage, slope1)>(stages);
         // Reuse gathered state for the dynamic admission gate. Integer bit
         // comparisons reject NaN (including signalling NaN) and infinities
         // without evaluating them or altering any authoritative state.
@@ -249,10 +283,14 @@ struct Ig00156BatchAccess
         V active=_mm256_castsi256_pd(_mm256_set1_epi64x(-1));
         for(int iteration=0;;++iteration)
         {
-            const V nextT2=tanh(bp*inv);
-            const V nextHp=c0+c1*bp+g2*level*nextT2+f2*bp;
-            const V nextT1=tanh(nextHp*inv);
-            t2=select(active,nextT2,t2);hp=select(active,nextHp,hp);t1=select(active,nextT1,t1);
+            // Once a lane converges its BP word is frozen by the masked
+            // update below. All three evaluations are pure functions of that
+            // same BP word and the unchanged coefficients/history. The old
+            // blends merely selected the identical previous results there.
+            // Keep evaluating all lanes: no sticky exception is suppressed.
+            t2=tanh(bp*inv);
+            hp=c0+c1*bp+g2*level*t2+f2*bp;
+            t1=tanh(hp*inv);
             const V f=bp-zBp+g1*level*t1+f1*hp;
 #if CS80_ENABLE_EXPERIMENTAL_FILTER_RECOVERY
             if(iteration==4) {
@@ -282,13 +320,9 @@ struct Ig00156BatchAccess
         // Snapshot the four destination pointers before writing object bytes;
         // the public wrapper guarantees that lanes refer to distinct stages.
         const auto destinations = stages;
-        const auto scatter=[&](double Ig00156Stage::*member,V value) CS80_AVX2 {
-            alignas(32) double values[4];_mm256_store_pd(values,value.x);
-            for(std::size_t i=0;i<4;++i)destinations[i]->*member=values[i];
-        };
         scatterTile<offsetof(Stage, zIn)>(destinations, 2.0*vin-zIn, 2.0*x-zFb, 2.0*bp-zBp, 2.0*lp-zLp);
         scatterTile<offsetof(Stage, vIn)>(destinations, vin, x, bp, lp);
-        scatter(&Ig00156Stage::slope1,newSlope1);scatter(&Ig00156Stage::slope2,newSlope2);
+        scatterSlopes(destinations, newSlope1, newSlope2);
         alignas(32) double l[4],h[4],b[4];
         _mm256_store_pd(l,lp.x);_mm256_store_pd(h,hp.x);_mm256_store_pd(b,bp.x);
         for(std::size_t i=0;i<4;++i)

@@ -215,6 +215,27 @@ void mixedOtaEndpoints(Batch::Kernel kernel) {
   }
  }
 }
+// The original nearest-rounding Newton loop retires lanes of this first
+// quartet on iterations 0, 0, 1 and 2 respectively. In a frozen lane BP
+// and the OTA/HP values computed from it must remain the *same bits*, not
+// just close enough to the residual tolerance. Exercise every placement,
+// both signs and the following sample's saved slope/history.
+void staggeredNewtonConvergence(Batch::Kernel kernel) {
+ const Batch::Inputs magnitudes{.01f,.05f,.35f,4.5f};
+ std::array<int,4> order{0,1,2,3};
+ do {
+  for(float sign:{1.f,-1.f}) {
+   std::array<Stage,4> actual;
+   for(auto& stage:actual)stage.set(7000.f,.85f,96000.f);
+   auto scalar=actual;
+   Batch::Inputs x{};
+   for(std::size_t j=0;j<4;++j)x[j]=sign*magnitudes[order[j]];
+   const bool used=compare(actual,scalar,x,kernel);
+   check(used==(kernel!=nullptr && Batch::environmentSupported()),"staggered convergence executes selected path");
+   compare(actual,scalar,{-.37f,0.f,.19f,-.03125f},kernel);
+  }
+ } while(std::next_permutation(order.begin(),order.end()));
+}
 void dynamicAdmissionEdges(Batch::Kernel kernel) {
  if(kernel==nullptr) return;
  const double snan=std::bit_cast<double>(std::uint64_t{0x7ff0000000000001ULL});
@@ -342,7 +363,7 @@ void environments(Batch::Kernel kernel) {
 }
 int main() {
  const auto kernel=Batch::selectKernel(true);
- movement(kernel);fallbackCases(kernel);independentStageLayouts(kernel);mixedOtaEndpoints(kernel);dynamicAdmissionEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
+ movement(kernel);fallbackCases(kernel);independentStageLayouts(kernel);mixedOtaEndpoints(kernel);staggeredNewtonConvergence(kernel);dynamicAdmissionEdges(kernel);staticAdmissionOrder(kernel);environments(kernel);
 #if CS80_IG00156_EXACT_BATCH_BUILD
  __builtin_cpu_init();
  const bool capable = __builtin_cpu_supports("avx2");
