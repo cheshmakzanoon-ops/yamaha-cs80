@@ -22,7 +22,8 @@ effect history.
 
 ## Signal path
 
-Taken from the printed OE2 graph:
+This is the **shipping software** signal path. It uses the printed input and delay
+topology but retains a historical grouping of the final VCA branches:
 
 ```text
 mono sum of the stereo bus (OE1 O1 -> OE2 I(53))
@@ -37,6 +38,14 @@ mono sum of the stereo bus (OE1 O1 -> OE2 I(53))
                    O3 (IC8), O4 (IC10) on the lower chain -> OE1 I4/I5 -> RIGHT
   -> summed with the unchanged stereo dry signal
 ```
+
+The [OE55/OE57 wiring trace](OE1_SPEED_ENDPOINT_DESIGN.md) distinguishes the
+printed circuit from that last software stage. On OE57, upper IC5 feeds IC7/O1
+and IC10/O4; lower IC6 feeds IC9/O2 and IC8/O3. Both reconstruction nodes
+therefore reach both OE1 stereo sums. OE55 pairs LO1 with inverted LO3 and
+LO2 with inverted LO4, unlike the software’s crossed right-side phase assignment. These
+are wiring relationships, not calibrated VCA gains, absolute polarities or a
+reason to change existing sessions' sound. See the [source comparison](OE1_SPEED_SOURCE_CONFLICT.md).
 
 - One packet history serves both chains (tied inputs and clock on OE57); each chain has
   its own noise, recombination, coupling and reconstruction filters, so left and right
@@ -74,7 +83,7 @@ mono sum of the stereo bus (OE1 O1 -> OE2 I(53))
 | VCA trims | 0.65/0.58/0.58/0.65 proportions, referenced to 1 kHz | Proportions source-derived (adjustment procedure printed 21); the 1 kHz reference is INFERRED (the printed key label is not mapped to a pitch). |
 | Wet level | 0.5 of the dry level per side at rest | INFERRED: OE1 mixing gains are not recovered. |
 | Wet polarity | Inverted | IC5/IC6 are printed inverting stages. The IG00151 and OE1 summing polarities are not printed, so the net sign is unresolved; the opposite sign moves the comb notches. |
-| TREMOLO law | linear VCA control, index 1 at full DEPTH; LO1 = +DO1, LO2 = +DO2, LO3 = -DO2, LO4 = -DO1 | INFERRED: the four VCA control lines L1-L4 come from OE1 LO1-LO4 (OE58); phases and control law are not recovered. Left and right move in antiphase at two rates; the mono sum of the wet returns stays constant. |
+| TREMOLO law | linear VCA control, index 1 at full DEPTH; LO1 = +DO1, LO2 = +DO2, LO3 = -DO2, LO4 = -DO1 | INFERRED: the four VCA control lines L1-L4 come from OE1 LO1-LO4 (OE58); this is the software phase assignment, not the OE55 inversion pairing. Its opposing gain modulation cancels for coherent, identical wet inputs; actual branch signals and analog gains need not be identical. |
 | TREMOLO dry path and clock | dry kept, clock nominal | INFERRED "minimal switching": the 159 Hz interstage high-pass would make a wet-only tremolo bass-less. |
 
 Alternatives considered for the tremolo are in the [ws4 report](workstreams/ws4-circuits.md#step-3-oe1oe2-chorus-and-tremolo).
@@ -116,7 +125,7 @@ original CS-80.
 ## Next evidence gates
 
 1. BA617 control law and the clock-modulation resistors, to replace the +/-0.5 octave excursion.
-2. OE1 oscillator waveforms, the LO1-LO4 phase network and the IG00151 control law, to
-   replace the declared tremolo phases and linear index.
+2. OE1 oscillator amplitudes, offsets and startup phase, and the loaded IG00151 control
+   and gain laws. The documented relative LO inversion pairs alone do not predict the wet output.
 3. IG00151 gain laws and OE1 summing, to replace the wet level and polarity.
 4. MN3001 transfer efficiency, noise and pedestal data.

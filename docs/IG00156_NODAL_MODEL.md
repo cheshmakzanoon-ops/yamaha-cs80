@@ -27,28 +27,39 @@ Per stage, four capacitor states and ideal amplifiers:
 | 1.2 MOhm in parallel with 180 pF from BP (pin 13) to FB/AI (pins 9/1) | source-derived | M41 native crop |
 | 33 kOhm AI-node shunt (both stages) | source-derived | M41 |
 | HP input: passive mixing node of the 150 kOhm waveform branches, then 1 uF NP into AI1 | source-derived topology | M41, [oscillator evidence](OSCILLATOR_CIRCUIT_EVIDENCE.md) |
-| HP mixing-node Thevenin resistance 75 kOhm | **inferred** | two 150 kOhm branches in parallel; FET on-resistance, NI and the unvalued loading resistors neglected |
-| LP input: HP pin 15 -> 1 uF NP -> CP2 -> CP7 -> AI1 | source-derived | M41 + harness p44 |
-| LP series source 150 kOhm | **inferred** | see below |
+| HP mixing-node Thevenin resistance 75 kOhm | **conditional approximation** | one ideal selected waveform branch and the fixed 150 kOhm ground shunt; other FET and NI treated as open |
+| LP input: IC10 HP pin 15 -> 1 uF NP -> CP2 -> CP7 -> 150 kOhm -> IC11 AI pin 1 | source-derived | M41 and harness p44, see below |
+| LP series source 150 kOhm | source-derived connection | distinct from the IC11 AI-node 33 kOhm ground shunt |
 | Q block: unilateral current Iq = -gq * BP | conditional hypothesis | as in `IG00156Linear.h` |
 | Q-block law gq(VQ) | **inferred** | see below |
 | Integrator OTAs gm * L * tanh(v / L), L = 2.5 engine units | **inferred** | kept from the first stage; the Q block and the 4.7 MOhm paths are linear |
 | Cutoff calibration (180 pF compensation) | **inferred** | see below |
 | Stage drive normalized to unity passband gain | **inferred adapter** | no absolute port-voltage calibration exists |
 
-### LP series source (declared inference)
+### HP mixer and LP input: schematic correction (2026-11-21)
 
-The ledger reads a 150 kOhm resistor at the LP AI node as a shunt (parallel
-27.049 kOhm with the 33 kOhm). With an ideal op-amp at HP pin 15 and only the
-1 uF capacitor in series, the LP AI node would be held by a stiff source at
-audio frequencies and the LP stage would have no damping at all
-(Q = Gtotal / (2 (Gf + gq)) grows without bound as the source conductance
-grows). A finite series resistance is therefore required for the documented
-LP resonance to exist. The model reads the 150 kOhm as that series element,
-which mirrors the 150 kOhm waveform resistors at the HP input.
-Alternatives: (a) 150 kOhm shunt as the ledger states plus an unidentified
-series resistance; (b) a stiff source, rejected because it removes all LP
-damping. A focused native crop of the CP7 -> AI1 path would resolve it.
+On Yamaha’s [M circuit drawing, p41](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/41%20-%20M%20Circuit%20Diagram.jpg),
+the HP mixer has four distinct 150 kOhm legs: one from each of FET6 and FET7,
+one to ground, and one to NI terminal 43. With one ideal waveform selected,
+the other FET open and NI open, the ideal source resistance is 75 kOhm and
+the signal division is 1/2. Grounding the *far side* of the NI leg through
+an ideal zero-impedance, zero-volt source would instead give 50 kOhm and
+1/3. The drawing does not say that NI is silent or that either ideal case
+is its actual service condition.
+
+For the LP stage, the 150 kOhm resistor runs **from CP7 (53) to IC11 AI
+(pin 1)**. Only the separate 33 kOhm branch is directly grounded. The
+[evidence ledger](IG00156_MODEL_EVIDENCE.md#native-resolution-external-connectivity)
+previously mistook the CP7 branch for a second shunt; 27.049 kOhm is therefore not
+a pair of physical ground shunts. The [M11/M12 harness, p44](https://www.therogoffs.com/cs80/manuals/CS80_Service_Manual/44%20-%20M11-12%20Circuit%20Board%20%26%20Wiring.jpg)
+connects CP2 (46) to CP7 (53) and CP8 (56) to CP3 (29). IC10 pin 15 is the
+HP output; IC11 **pin 10** is the LP output connected to CP8.
+
+These are wiring identifications, not measurements of loaded node voltage,
+driver impedance or absolute gain. No model constant, service band or
+reported alignment verdict changes. Full-image SHA-256: p41
+`1278f17ff05cd82b2b84153838bf95109d3f1ea1e864119de0a3f4a4af4f0080`;
+p44 `3320dd2f625c79d7cca9b98abd5cade9d1b95477e6d8990a93a296c9cda71256`.
 
 ### Q-block law (declared inference)
 
@@ -171,7 +182,7 @@ HP passband roll-off near 20 kHz, the OTA limit now acting on the gm part only
 
 ## Still open
 
-- The LP series-resistance reading and the HP mixing-node loading resistors.
+- Actual switched-source impedances, NI signal/loading and interstage loading under service conditions.
 - A gm-versus-control-current law, finite amplifier effects, Q-block saturation.
 - Identification between the Q-block alternatives (needs pin-9 measurements).
 - Top-octave accuracy at 2x/4x (oversampling choice, ws2).

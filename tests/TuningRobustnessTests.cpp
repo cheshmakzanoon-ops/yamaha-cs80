@@ -247,6 +247,34 @@ void testValidMts()
             }
 }
 
+// Exercise the shipping core's scale/octave parser, not the optional vendor
+// parser. The existing endpoint fixture has no negative word after a positive
+// one and uses only 0x00/0x7f fine bytes. Each pair here is independent.
+void testMixedTwoByteScale()
+{
+    Bytes p { 0xF0, 0x7F, 0x7F, 0x08, 0x09, 0x03, 0x7F, 0x7F,
+              0x48, 0x48, 0x3F, 0x7F, 0x40, 0x00, 0x40, 0x01,
+              0x3E, 0x7F, 0x41, 0x02, 0x3F, 0x40, 0x40, 0x3F,
+              0x42, 0x23, 0x3D, 0x5C, 0x48, 0x48, 0x37, 0x38, 0xF7 };
+    // Hand-calculated offsets in the core's 1/8192-semitone units.
+    constexpr std::array<int, 12> units { 1096, -1, 0, 1, -129, 130,
+                                         -64, 63, 291, -292, 1096, -1096 };
+    auto expected = sentinel();
+    for (std::size_t n = 0; n < expected.pitch.size(); ++n)
+    {
+        expected.pitch[n] = static_cast<float>(n) + units[n % units.size()] / 8192.0f;
+        expected.mapped[n] = true;
+    }
+    for (const auto envelope : { 0x7E, 0x7F })
+    {
+        p[1] = static_cast<std::uint8_t>(envelope);
+        auto actual = sentinel();
+        check(tn::applyMtsSysEx(p.data(), static_cast<int>(p.size()), actual) && same(actual, expected),
+              "MTS scale/octave mixed 14-bit pairs retain independent signed offsets, envelope "
+                  + std::to_string(envelope));
+    }
+}
+
 void testInvalidMts()
 {
     const std::array<Bytes, 5> valid { bulk(), counted(0x02, 2), counted(0x07, 2), octave(0x08), octave(0x09) };
@@ -307,6 +335,7 @@ int main()
     testMapping();
     testNumericTokens();
     testValidMts();
+    testMixedTwoByteScale();
     testInvalidMts();
     std::printf("Tuning robustness: %d checks, %d failures\n", checks, failures);
     return failures == 0 ? 0 : 1;

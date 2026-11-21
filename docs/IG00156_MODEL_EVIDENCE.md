@@ -157,7 +157,7 @@ A subsequent [inspection run 40784517382, M-card job 123154243112](https://githu
 
 Consequently, the 4.7 MΩ resistors are **not parallel leakage resistors across the 1.5 nF capacitors**. The chip's internal terminal relationships must be included to interpret them.
 
-The AI/FB node also has a 33 kΩ shunt to ground in each filter; the LP node additionally has a 150 kΩ shunt. The latter two resistors have a passive parallel equivalent of approximately 27.049 kΩ. This is not the complete input impedance, because the connected IC and frequency-dependent feedback remain present.
+The AI/FB node has a 33 kΩ shunt to ground in each filter. On a second reading of the full M41 drawing, the LP stage’s adjacent 150 kΩ is a series feed from CP7, not a second shunt. See the [schematic correction](IG00156_NODAL_MODEL.md#hp-mixer-and-lp-input-schematic-correction-2026-11-21). The complete input impedance still depends on the connected IC and frequency-dependent feedback.
 
 HP pin 15 is AC-coupled through a nonpolar capacitor marked 1/50 to CP2, connector terminal 46. LP audio input AI1 receives CP7, terminal 53; LP output pin 10 is taken to CP8, terminal 56. This sheet does **not** directly join CP2 to CP7 locally. Trace those connector nets and any intervening circuitry before asserting an unloaded HP-to-LP cascade or assigning interstage gain. The earlier normalized SVF equations remain a mathematical baseline, not yet the full M-card equation set.
 
@@ -243,15 +243,17 @@ HP IG00156 IC10 pin15
   -> CP2 terminal46
   -> same-board harness wire
   -> CP7 terminal53
+  -> 150 kΩ series resistor
   -> LP IG00156 IC11 AI pin1 / FB pin9 external node
 ```
 
 This supersedes the earlier unresolved CP2/CP7 warning **for M11 and M12**. Other voice-board wiring sheets have not yet been individually checked. The physical harness wire is not an inserted gain stage.
 
-The LP AI/FB node also has its feedback branch and internal IC port attached. Therefore do not compute the entire coupling response using only 1 uF times the parallel 33k/150k ground resistors. A suitable circuit solver must include the capacitor current:
+The LP AI/FB node also has its feedback branch and internal IC port attached. There is no simple time constant from multiplying the coupling capacitance by parallel 33 kΩ and 150 kΩ shunts. A suitable circuit solver must include both the capacitor current and the series feed:
 
 ```
-iCouple = 1e-6 * d(V_HP15 - V_LP_AI)/dt
+iCouple = 1e-6 * d(V_HP15 - V_CP7)/dt
+iSeries = (V_CP7 - V_LP_AI) / 150e3
 ```
 
 and the complete KCL of both connected ports, including internal chip currents and external feedback. The passive capacitor relation itself is established; the resulting total transfer function is not yet closed.
@@ -334,7 +336,7 @@ For a bench prototype driven through an explicitly chosen source resistance Rs, 
     + Cfb*d(a-b)/dt + Iq(a,b,VQ) = 0
 ```
 
-This assumes negligible OP1 input current. Rs is a fixture/model parameter here, **not** an invented CS-80 component. Rg must represent the actual node's ground network: the observed LP ground resistors alone yield 33k||150k, while HP has its own input-source network to trace.
+This assumes negligible OP1 input current. Rs is a fixture/model parameter here, **not** an invented CS-80 component. Rg must represent the actual node's ground network: the LP node has a 33 kΩ ground shunt, and CP7 connects through the separate 150 kΩ series feed. The HP mixer has its own switched source and loading network.
 
 An explicit three-state implementation can use x=a-b:
 

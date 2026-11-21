@@ -27,6 +27,11 @@ The overall foldout additionally labels IC4 **BBD MN3001 / Analog Delay**, and I
 
 ## 3. Audio branch order
 
+Correction to the October 29 output-branch transcription: the [subsequent
+OE55/OE57 trace](OE1_SPEED_ENDPOINT_DESIGN.md) follows each reconstruction
+amplifier output across the crossed connections. The drawing below shows the
+circuit, not the historical grouping used by the [shipping model](BBD_CHORUS_MODEL.md).
+
 ```text
 OE1 O1(46) → OE2 I(53)
   → IC3 input active low-pass → AC coupling / MN3001 input-bias network
@@ -34,14 +39,14 @@ OE1 O1(46) → OE2 I(53)
        upper output pair pins14/13 → two 2.2k summing resistors
          → AC coupling → IC5 low-pass → IC5 amplifier
          ├→ IG00151 IC7 → O1(43) → OE1 I2(48)
-         └→ IG00151 IC9 → O2(38) → OE1 I3(49)
+         └→ IG00151 IC10 → O4(3) → OE1 I5(68)
        lower output pair pins9/8 → two 2.2k summing resistors
          → AC coupling → IC6 low-pass → IC6 amplifier
-         ├→ IG00151 IC8  → O3(8) → OE1 I4(67)
-         └→ IG00151 IC10 → O4(3) → OE1 I5(68)
+         ├→ IG00151 IC9 → O2(38) → OE1 I3(49)
+         └→ IG00151 IC8 → O3(8) → OE1 I4(67)
 ```
 
-Important: IC7/9 are **parallel branches**, as are IC8/10; this is not four independent delay lines or two serial VCA chains. A single MN3001 package has the two drawn output-pair paths. Its internal organization/stage count is now established by the manufacturer supplement below; exact tap transfer remains open. OE1 subsequently combines and switches these four returns with its direct input branch; see the separate routing ledger.
+IC7/10 are parallel loads of the upper reconstruction path, and IC9/8 of the lower path. Each reconstruction path thus reaches both stereo sums; this is not four independent delay lines or two serial VCA chains. A single MN3001 package has the two drawn output-pair paths. Its internal organization/stage count is now established by the manufacturer supplement below; exact tap transfer remains open. OE1 subsequently combines and switches these four returns with its direct input branch; see the separate routing ledger.
 
 The input low-pass and the two post-BBD low-pass sections show two 10 kΩ resistors, 0.0018 µF (1.8 nF) feedback capacitor and 680 pF shunt capacitor, with op-amp follower feedback. The post-filter amplifiers have 10 kΩ input resistors and visibly different feedback values: IC5 39 kΩ, IC6 100 kΩ. Do not assume equal branch gains. These are printed nominal component observations, not measured system response; a future ideal linear solve must retain coupling, bias, loading and compensation rather than identify a whole circuit with a single cutoff number.
 
