@@ -267,10 +267,9 @@ Row analyse(const Setup& s, const Rendered& r)
     row.subsonic = subsonicPeak(r);
     row.subsonicRel = row.subsonic / std::max(row.peak, 1.0e-9);
 
-    // Jump scores. A "jump" is the worst sample-to-sample step. For note-ons the reference is the worst
-    // step that the program's own playing makes in the whole chord window (attack included, so
-    // percussive programs are judged against their own attacks); a score above ~1 is a step bigger than
-    // that program ever makes on its own, i.e. a click. For note-offs the reference is the 60 ms before.
+    // Jump ratios compare the largest adjacent-sample step in the 8 ms event window
+    // with a reference: the played chord (including attack) for note-ons, or the
+    // preceding 60 ms for note-offs. Values above 1 do not identify cause or audibility.
     auto blockStart = [&](double t) { return (long) std::ceil(t * r.rate / kBlock) * kBlock; };
     const long win = (long) std::llround(0.008 * r.rate);
     const double steadyChord = std::max(maxJump(r, idx(r, T::chordOn), cb), 1.0e-7);

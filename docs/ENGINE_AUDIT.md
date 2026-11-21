@@ -60,10 +60,12 @@ shared core. It is a manual tool and is not registered with CTest.
 | `click_steal` | step in 8 ms after the stealing chord, over the largest step of the eight-voice chord |
 | `voices_at_end` | voices still active when the 12 s phrase ends, 2.35 s after the last release; nonzero only for programs whose release is longer than that (every factory program goes idle eventually) |
 
-A click score near or below 1 means the step is no bigger than the program itself
-makes; a step well above 1 is a discontinuity. Programs with a fast attack score near
-1 on a fresh chord by construction (the attack is the reference), so compare
-`click_steal` with `click_fresh_chord`, not with a threshold.
+The `click_*` ratios compare the largest adjacent-sample step in the event window
+with the reference listed above (denominator floor `1e-7`). A score above 1 flags
+a steeper step, not necessarily an audible click: a smooth pitched attack can exceed
+1, and a one-sample glitch can stay below 1. Compare `click_steal` with
+`click_fresh_chord`, then inspect or audition the event before attributing a
+discontinuity to voice stealing.
 
 **Alias suite.** One sustained saw or pulse (50 %) note of rank I with detune, drift,
 dispersion and noise off, the high-pass off and the low-pass open, 65 536 samples
