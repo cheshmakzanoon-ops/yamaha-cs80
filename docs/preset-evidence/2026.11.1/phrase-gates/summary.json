@@ -1,0 +1,494 @@
+{
+  "assignment": 42,
+  "status": "PASS",
+  "binary_source_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "observed_checkout_head": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+  "core_source_matches_binary_source_commit": true,
+  "library_revision": "2026.11.1",
+  "sample_rate": 48000,
+  "velocity": 0.8,
+  "pressure": 0,
+  "midi_channel": 1,
+  "factory_parameters_changed": false,
+  "runtime_checks": 100,
+  "runtime_failures": 0,
+  "captures": 12,
+  "generated_seconds": 86,
+  "total_generated_seconds_including_initial_observation": 140,
+  "highest_peak_dbfs": -12.2716193792,
+  "lowest_whole_capture_rms_dbfs": -43.750217615,
+  "all_captures_finite_below_full_scale_and_voices_retired": true,
+  "ring_method": {
+    "programs": [
+      "UFO Landing",
+      "Ring Sweep Bell"
+    ],
+    "seconds_per_capture": 8,
+    "lanes": [
+      "continuous",
+      "overlap",
+      "pedal",
+      "released"
+    ],
+    "events": [
+      {
+        "seconds": 0,
+        "action": "All lanes note-on MIDI60."
+      },
+      {
+        "seconds": 0.4,
+        "action": "Pedal lane CC64=1."
+      },
+      {
+        "seconds": 0.5,
+        "action": "Pedal lane releases key60; note remains pedal held."
+      },
+      {
+        "seconds": 0.6,
+        "action": "Overlap and pedal lanes note-on67."
+      },
+      {
+        "seconds": 0.9,
+        "action": "Overlap and pedal lanes note-off67."
+      },
+      {
+        "seconds": 1.0,
+        "action": "Overlap/released lanes note-off60; pedal lane CC64=0. Continuous lane still holds60."
+      },
+      {
+        "seconds": 1.2,
+        "action": "Overlap/pedal/released lanes start fresh note72."
+      },
+      {
+        "seconds": 1.6,
+        "action": "All remaining held notes release."
+      }
+    ],
+    "same_phrase_comparison_seconds": [
+      0.6,
+      1.0
+    ],
+    "new_phrase_comparison_seconds": [
+      1.2,
+      1.6
+    ],
+    "results": [
+      {
+        "program": "UFO Landing",
+        "overlap_env_error": 0.0,
+        "overlap_hz_error": 0.0,
+        "pedal_env_error": 0.0,
+        "pedal_hz_error": 0.0,
+        "fresh_env_error": 0.0,
+        "fresh_hz_error": 0.0,
+        "fresh_vs_continuous_env_difference": 0.906365156174,
+        "pedal_first": 1.0,
+        "pedal_both": 1.0,
+        "pedal_up": 1.0,
+        "fresh_held": 1.0
+      },
+      {
+        "program": "Ring Sweep Bell",
+        "overlap_env_error": 0.0,
+        "overlap_hz_error": 0.0,
+        "pedal_env_error": 0.0,
+        "pedal_hz_error": 0.0,
+        "fresh_env_error": 0.0,
+        "fresh_hz_error": 0.0,
+        "fresh_vs_continuous_env_difference": 0.989999601617,
+        "pedal_first": 1.0,
+        "pedal_both": 1.0,
+        "pedal_up": 1.0,
+        "fresh_held": 1.0
+      }
+    ],
+    "interpretation": "Overlap and pedal-held notes preserve the continuous shared ring envelope/carrier histories exactly. Pedal-up closes the gate; the subsequent new note matches a directly released/new-phrase control exactly and differs materially from the uninterrupted sweep."
+  },
+  "glide_method": {
+    "programs": [
+      "Glide Lead",
+      "Glissando Lead"
+    ],
+    "seconds_per_capture": 5.5,
+    "lanes": [
+      "overlap",
+      "separated"
+    ],
+    "events": [
+      {
+        "seconds": 0,
+        "action": "Both lanes note-on60."
+      },
+      {
+        "seconds": 0.45,
+        "action": "Separated lane note-off60."
+      },
+      {
+        "seconds": 0.5,
+        "action": "Both lanes note-on72."
+      },
+      {
+        "seconds": 0.75,
+        "action": "Overlap lane note-off60."
+      },
+      {
+        "seconds": 2.25,
+        "action": "Separated lane note-off72."
+      },
+      {
+        "seconds": 2.3,
+        "action": "Both lanes note-on55."
+      },
+      {
+        "seconds": 2.55,
+        "action": "Overlap lane note-off72."
+      },
+      {
+        "seconds": 4.3,
+        "action": "Both lanes note-off55."
+      }
+    ],
+    "measurement_windows_seconds": [
+      [
+        0.5,
+        2.2
+      ],
+      [
+        2.3,
+        4.2
+      ]
+    ],
+    "pitch_basis": "Nominal rank-I oscillator-Hz telemetry, converted in float64 using69+12*log2(hz/440).",
+    "results": [
+      {
+        "program": "Glide Lead",
+        "lane": "overlap",
+        "interval": 0.0,
+        "target": 72.0,
+        "samples": 81600.0,
+        "first_midi": 60.0099820733,
+        "last_midi": 71.9965292387,
+        "max_grid_error_cents": 49.9992470614,
+        "max_step_cents": 0.109877739619,
+        "fractional_samples": 81592.0,
+        "moving_steps": 27049.0,
+        "rounded_levels": 13.0,
+        "overlap_vs_separated_max_cents": 0.0
+      },
+      {
+        "program": "Glide Lead",
+        "lane": "overlap",
+        "interval": 1.0,
+        "target": 55.0,
+        "samples": 91200.0,
+        "first_midi": 72.0042654416,
+        "last_midi": 55.0094529688,
+        "max_grid_error_cents": 49.9999745673,
+        "max_step_cents": 0.178619796034,
+        "fractional_samples": 91193.0,
+        "moving_steps": 31020.0,
+        "rounded_levels": 18.0,
+        "overlap_vs_separated_max_cents": 0.0
+      },
+      {
+        "program": "Glide Lead",
+        "lane": "separated",
+        "interval": 0.0,
+        "target": 72.0,
+        "samples": 81600.0,
+        "first_midi": 60.0099820733,
+        "last_midi": 71.9965292387,
+        "max_grid_error_cents": 49.9992470614,
+        "max_step_cents": 0.109877739619,
+        "fractional_samples": 81592.0,
+        "moving_steps": 27049.0,
+        "rounded_levels": 13.0,
+        "overlap_vs_separated_max_cents": 0.0
+      },
+      {
+        "program": "Glide Lead",
+        "lane": "separated",
+        "interval": 1.0,
+        "target": 55.0,
+        "samples": 91200.0,
+        "first_midi": 72.0042654416,
+        "last_midi": 55.0094529688,
+        "max_grid_error_cents": 49.9999745673,
+        "max_step_cents": 0.178619796034,
+        "fractional_samples": 91193.0,
+        "moving_steps": 31020.0,
+        "rounded_levels": 18.0,
+        "overlap_vs_separated_max_cents": 0.0
+      },
+      {
+        "program": "Glissando Lead",
+        "lane": "overlap",
+        "interval": 0.0,
+        "target": 72.0,
+        "samples": 81600.0,
+        "first_midi": 59.9999989423,
+        "last_midi": 71.9999989423,
+        "max_grid_error_cents": 0.000105770928371,
+        "max_step_cents": 100.000210252,
+        "fractional_samples": 0.0,
+        "moving_steps": 12.0,
+        "rounded_levels": 13.0,
+        "overlap_vs_separated_max_cents": 0.0
+      },
+      {
+        "program": "Glissando Lead",
+        "lane": "overlap",
+        "interval": 1.0,
+        "target": 55.0,
+        "samples": 91200.0,
+        "first_midi": 71.9999989423,
+        "last_midi": 55.0000007463,
+        "max_grid_error_cents": 0.000128911018038,
+        "max_step_cents": 100.000210252,
+        "fractional_samples": 0.0,
+        "moving_steps": 17.0,
+        "rounded_levels": 18.0,
+        "overlap_vs_separated_max_cents": 0.0
+      },
+      {
+        "program": "Glissando Lead",
+        "lane": "separated",
+        "interval": 0.0,
+        "target": 72.0,
+        "samples": 81600.0,
+        "first_midi": 59.9999989423,
+        "last_midi": 71.9999989423,
+        "max_grid_error_cents": 0.000105770928371,
+        "max_step_cents": 100.000210252,
+        "fractional_samples": 0.0,
+        "moving_steps": 12.0,
+        "rounded_levels": 13.0,
+        "overlap_vs_separated_max_cents": 0.0
+      },
+      {
+        "program": "Glissando Lead",
+        "lane": "separated",
+        "interval": 1.0,
+        "target": 55.0,
+        "samples": 91200.0,
+        "first_midi": 71.9999989423,
+        "last_midi": 55.0000007463,
+        "max_grid_error_cents": 0.000128911018038,
+        "max_step_cents": 100.000210252,
+        "fractional_samples": 0.0,
+        "moving_steps": 17.0,
+        "rounded_levels": 18.0,
+        "overlap_vs_separated_max_cents": 0.0
+      }
+    ],
+    "interpretation": "Continuous glide traverses fractional pitches smoothly; glissando traverses the integer semitone grid in single-semitone jumps. Matching note histories have identical current-note oscillator trajectories whether the preceding note overlaps or has been released."
+  },
+  "capture_metrics": [
+    {
+      "kind": "ring",
+      "program": "UFO Landing",
+      "lane": "continuous",
+      "seconds": 8.0,
+      "samples": 768000.0,
+      "peak_dbfs": -23.2245613812,
+      "rms_dbfs": -39.3613349083,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "76d7262292c9ae14"
+    },
+    {
+      "kind": "ring",
+      "program": "UFO Landing",
+      "lane": "overlap",
+      "seconds": 8.0,
+      "samples": 768000.0,
+      "peak_dbfs": -19.1750313435,
+      "rms_dbfs": -37.4626483894,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "1cdfea28fc05a97d"
+    },
+    {
+      "kind": "ring",
+      "program": "UFO Landing",
+      "lane": "pedal",
+      "seconds": 8.0,
+      "samples": 768000.0,
+      "peak_dbfs": -19.1750313435,
+      "rms_dbfs": -37.2829139982,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "7c212190f9666442"
+    },
+    {
+      "kind": "ring",
+      "program": "UFO Landing",
+      "lane": "released",
+      "seconds": 8.0,
+      "samples": 768000.0,
+      "peak_dbfs": -22.2009524894,
+      "rms_dbfs": -38.6246229702,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "44b4e8bfbd085ce4"
+    },
+    {
+      "kind": "ring",
+      "program": "Ring Sweep Bell",
+      "lane": "continuous",
+      "seconds": 8.0,
+      "samples": 768000.0,
+      "peak_dbfs": -22.5845817002,
+      "rms_dbfs": -43.750217615,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "27c650901f3a67e5"
+    },
+    {
+      "kind": "ring",
+      "program": "Ring Sweep Bell",
+      "lane": "overlap",
+      "seconds": 8.0,
+      "samples": 768000.0,
+      "peak_dbfs": -19.0095339543,
+      "rms_dbfs": -39.0118165371,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "554c2382adbea983"
+    },
+    {
+      "kind": "ring",
+      "program": "Ring Sweep Bell",
+      "lane": "pedal",
+      "seconds": 8.0,
+      "samples": 768000.0,
+      "peak_dbfs": -18.891784482,
+      "rms_dbfs": -38.9655228065,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "256b232e69113f8b"
+    },
+    {
+      "kind": "ring",
+      "program": "Ring Sweep Bell",
+      "lane": "released",
+      "seconds": 8.0,
+      "samples": 768000.0,
+      "peak_dbfs": -21.1788060915,
+      "rms_dbfs": -40.9895838893,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "0af7d0788a648d1e"
+    },
+    {
+      "kind": "glide",
+      "program": "Glide Lead",
+      "lane": "overlap",
+      "seconds": 5.5,
+      "samples": 528000.0,
+      "peak_dbfs": -12.2716193792,
+      "rms_dbfs": -29.1742231691,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "191ca14915094257"
+    },
+    {
+      "kind": "glide",
+      "program": "Glide Lead",
+      "lane": "separated",
+      "seconds": 5.5,
+      "samples": 528000.0,
+      "peak_dbfs": -15.512977355,
+      "rms_dbfs": -29.9262905243,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "67e1d223a9449b04"
+    },
+    {
+      "kind": "glide",
+      "program": "Glissando Lead",
+      "lane": "overlap",
+      "seconds": 5.5,
+      "samples": 528000.0,
+      "peak_dbfs": -14.3444081308,
+      "rms_dbfs": -26.2386887984,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "895990c3d150834f"
+    },
+    {
+      "kind": "glide",
+      "program": "Glissando Lead",
+      "lane": "separated",
+      "seconds": 5.5,
+      "samples": 528000.0,
+      "peak_dbfs": -19.3194313976,
+      "rms_dbfs": -26.8614154083,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "final_active": 0.0,
+      "audio_float32_le_fnv1a64": "fce615ae10cccaab"
+    }
+  ],
+  "initial_short_capture": {
+    "path": "initial-4s/",
+    "runtime_checks": 100,
+    "failed_checks": 6,
+    "generated_seconds": 54,
+    "reason": "Six ring-lane voices remained active at the premature four-second cutoff. All ring gate and glide assertions already passed. Authored2.0/3.2-second amplitude releases make a longer observation appropriate; ring captures were extended to8seconds without changing factory parameters or assertions.",
+    "other_diagnostic_change": "Pitch conversion now explicitly promotes oscillator frequency and reference to double before logarithms; this avoids float-intermediate rounding in the semitone-grid measurements."
+  },
+  "reproduce_compile": "c++ -std=c++20 -O2 -I ../src probe.cpp ../build-audit/libcs80_core.a -pthread -o probe",
+  "reproduce_run": "./probe > run.log 2>&1 && python summarize.py",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "input_sha256": {
+    "src/core/Engine.h": "701e27b480be8145a86eb4a822e6b6c50e8a135a8118093b4a80f8d9f7b58221",
+    "src/core/Engine.cpp": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+    "src/core/Params.h": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2",
+    "src/core/FactoryPresets.h": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81",
+    "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+    "src/core/CuratedLibrary.inc": "f89ae54e9386d1e12b5b945b1f60f7e1e4667d79e91c5a63afcc63111e3aecf8",
+    "src/core/CuratedLibraryLevels.inc": "cb1f5689e7cfc58034241f2d8f4892cc70bde4530232defe5838bc1e5e89365e",
+    "src/core/curated/Leads.inc": "f353fa34ff2d7c81de09854aedb5b0a60e4ab0e8455a0b2dd0f71c74d06a3fc2",
+    "src/core/curated/Fx.inc": "5480939ebfcd3c42596bf0e3bd5aab408cd590db1c59db0b580adc2bbcbf8638",
+    "src/core/curated/Bells.inc": "0ef6b417dbd1d4d785af3b456c1e65003dcf54b260805232a07e94eb8b7d6afa",
+    "build-audit/libcs80_core.a": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+    "build-audit/inventory-final.json": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa"
+  },
+  "artifact_sha256": {
+    "probe.cpp": "65989ddb9201e5a30b1a76d74c9f16ec6a52711d2d89f2e6c6928a241b767b96",
+    "probe": "ba7d3b08c62702a3503882fa977c52c6cb5beeb0f894105328dad34413ddf643",
+    "summarize.py": "2cda63cc6cb6d569ef7778d016ac5b1d10950d4392e851c782ad0ae2cedca574",
+    "README.md": "f6ee41925ff928e7a2ec029f5cf7a8f80e6c7c1c9ecf8b2b66f7e49e843faa20",
+    "run.log": "fb4576bc8a053f87e18a7739a7e5528113eda1244135a895e1b92d10d0177d4f",
+    "captures.csv": "7e50a8d68f6f4ec5609399d45369c3a195abbcdd036ad9c7e1d18695aaa2a724",
+    "ring-results.csv": "3983ce4c78bf284bf4ffdabdd54375ef981b8ea80798d695120e11c6c5c09bf6",
+    "ring-points.csv": "875744714ebe8ba38b9f27ea9a531e243c1526ea8f9916e29ea4b81c27ec76e4",
+    "glide-results.csv": "0b1a7d9bc79443383ca7cea519ea62f81708c308ef0d2a798c925e746b14fa0a",
+    "glide-points.csv": "59da70ae236a706c1ddd1b66bf9b697a06aec2caa5b3661288d4cf8727adaf68",
+    "initial-4s/probe.cpp": "27250043dafefe9a212fac6ef75d11387c832975c3a7fe68d9544bf42d06bb26",
+    "initial-4s/run.log": "c8aebbef0b533f0b8c957b84689e1ea4ac93271de7847e6ce845c31a47cdcc97",
+    "initial-4s/captures.csv": "6fe06ea8544703933729f90e9536152d282e1300bd4ad1a880f4dce4ffffe32e",
+    "initial-4s/ring-results.csv": "3983ce4c78bf284bf4ffdabdd54375ef981b8ea80798d695120e11c6c5c09bf6",
+    "initial-4s/glide-results.csv": "a7b67cfe5ea68008ff253f3fbe4f31a4a8eda5d640fabd04fc3537ea0bfc7a28"
+  },
+  "limitations": [
+    "The ring equality claims concern shared envelope/carrier telemetry, not complete audio equality between different note arrangements.",
+    "Pitch-grid and glide claims concern actual oscillator-control telemetry. No independent acoustic-frequency or physical-instrument calibration is claimed.",
+    "CC64 is the implemented MIDI sustain extension; this does not characterize the original hardware footswitch circuit.",
+    "Zero active voices is not a claim of digital silence. Full-capture RMS is not a release-tail-only measurement.",
+    "Only these four programs and event histories are covered; this is not universal controller or DAW qualification.",
+    "Raw PCM/WAVs were not written. FNV-1a fingerprints summarize generated float32 sample streams; they are not cryptographic authenticity checks."
+  ]
+}

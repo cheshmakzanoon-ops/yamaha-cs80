@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "c++",
+    "-std=c++17",
+    "-O2",
+    "-pthread",
+    "-I",
+    "src",
+    "-I",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK",
+    "build-w10-program-queue/probe.cpp",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/coreiids.cpp",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/funknown.cpp",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK/public.sdk/source/vst/vstinitiids.cpp",
+    "build-audit/libcs80_core.a",
+    "-ldl",
+    "-o",
+    "build-w10-program-queue/probe"
+  ],
+  "exit_code": 0
+}

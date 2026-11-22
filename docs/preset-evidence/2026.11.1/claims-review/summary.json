@@ -1,0 +1,896 @@
+{
+  "assignment": 45,
+  "kind": "factual editorial audit, not a new sound-quality or listening test",
+  "status": "PASS",
+  "created_utc": "2026-11-22T16:25:21.757635+00:00",
+  "observed_checkout_head": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+  "public_docs_modified": false,
+  "blocking_factual_defects": [],
+  "automatic_cross_checks": {
+    "passed": 17,
+    "failed": 0,
+    "checks": [
+      {
+        "claim": "Dossier file records",
+        "actual": 81,
+        "expected": 81,
+        "pass": true
+      },
+      {
+        "claim": "Dossier stored hashes, sizes and Git tracking",
+        "actual": [],
+        "expected": [],
+        "pass": true
+      },
+      {
+        "claim": "Circuit inventory entries",
+        "actual": 301,
+        "expected": 301,
+        "pass": true
+      },
+      {
+        "claim": "Circuit parameter IDs",
+        "actual": 190,
+        "expected": 190,
+        "pass": true
+      },
+      {
+        "claim": "Parameter-ID order preserved",
+        "actual": [
+          "master_tune",
+          "detune",
+          "mix",
+          "brilliance",
+          "resonance",
+          "master_sustain",
+          "volume",
+          "init_bend",
+          "portamento",
+          "glide_mode",
+          "sustain_mode",
+          "key_release",
+          "ribbon",
+          "sub_wave",
+          "sub_speed",
+          "sub_vco",
+          "sub_vcf",
+          "sub_vca",
+          "sub_at_speed",
+          "sub_at_vco",
+          "ring_speed",
+          "ring_depth",
+          "ring_attack",
+          "ring_decay",
+          "ring_amount",
+          "chorus_on",
+          "chorus_mode",
+          "chorus_speed",
+          "chorus_depth",
+          "output_mode",
+          "voice_dispersion",
+          "drift",
+          "analog_noise",
+          "mpe_on",
+          "pitch_bend_range",
+          "mpe_bend_range",
+          "tuning_ref",
+          "modwheel_sub",
+          "modwheel_vcf",
+          "lfo1_rate",
+          "lfo1_depth",
+          "lfo1_dest",
+          "lfo2_rate",
+          "lfo2_depth",
+          "lfo2_dest",
+          "lfo3_rate",
+          "lfo3_depth",
+          "lfo3_dest",
+          "fx1_type",
+          "fx1_mix",
+          "fx2_type",
+          "fx2_mix",
+          "fx3_type",
+          "fx3_mix",
+          "arp_on",
+          "arp_mode",
+          "arp_rate",
+          "arp_octaves",
+          "macro1",
+          "macro2",
+          "macro3",
+          "macro4",
+          "ch1_saw",
+          "ch1_pulse",
+          "ch1_sine",
+          "ch1_noise",
+          "ch1_pw",
+          "ch1_pwm_speed",
+          "ch1_pwm_depth",
+          "ch1_feet",
+          "ch1_hpf_cutoff",
+          "ch1_hpf_res",
+          "ch1_hpf_on",
+          "ch1_lpf_cutoff",
+          "ch1_lpf_res",
+          "ch1_lpf_on",
+          "ch1_f_il",
+          "ch1_f_al",
+          "ch1_f_a",
+          "ch1_f_d",
+          "ch1_f_r",
+          "ch1_vcf_level",
+          "ch1_v_a",
+          "ch1_v_d",
+          "ch1_v_s",
+          "ch1_v_r",
+          "ch1_v_level",
+          "ch1_init_brill",
+          "ch1_init_level",
+          "ch1_after_brill",
+          "ch1_after_level",
+          "ch1_pan",
+          "ch2_saw",
+          "ch2_pulse",
+          "ch2_sine",
+          "ch2_noise",
+          "ch2_pw",
+          "ch2_pwm_speed",
+          "ch2_pwm_depth",
+          "ch2_feet",
+          "ch2_hpf_cutoff",
+          "ch2_hpf_res",
+          "ch2_hpf_on",
+          "ch2_lpf_cutoff",
+          "ch2_lpf_res",
+          "ch2_lpf_on",
+          "ch2_f_il",
+          "ch2_f_al",
+          "ch2_f_a",
+          "ch2_f_d",
+          "ch2_f_r",
+          "ch2_vcf_level",
+          "ch2_v_a",
+          "ch2_v_d",
+          "ch2_v_s",
+          "ch2_v_r",
+          "ch2_v_level",
+          "ch2_init_brill",
+          "ch2_init_level",
+          "ch2_after_brill",
+          "ch2_after_level",
+          "ch2_pan",
+          "sub_at_vcf",
+          "sub_original_mode",
+          "sub_original_function",
+          "sub_original_speed",
+          "sub_ext_level",
+          "kbd_brilliance_low",
+          "kbd_brilliance_high",
+          "kbd_level_low",
+          "kbd_level_high",
+          "footswitch_plugged",
+          "footswitch_pressed",
+          "sustain_assign",
+          "glide_assign",
+          "foot_mode",
+          "output_level",
+          "parity_mode",
+          "source_performance",
+          "drift_model",
+          "oversampling",
+          "output_jack",
+          "kas_scan_timing",
+          "velocity_curve",
+          "pressure_curve",
+          "pressure_threshold",
+          "ribbon_cc_enable",
+          "ribbon_cc",
+          "tuning_mode",
+          "voice_mode",
+          "unison_detune",
+          "lfo1_wave",
+          "lfo2_wave",
+          "lfo3_wave",
+          "mseg1_rate",
+          "mseg2_rate",
+          "mseg3_rate",
+          "mod1_amount",
+          "mod2_amount",
+          "mod3_amount",
+          "mod4_amount",
+          "mod5_amount",
+          "mod6_amount",
+          "mod7_amount",
+          "mod8_amount",
+          "mod9_amount",
+          "mod10_amount",
+          "mod11_amount",
+          "mod12_amount",
+          "mod13_amount",
+          "mod14_amount",
+          "mod15_amount",
+          "mod16_amount",
+          "mod_velocity_curve",
+          "mod_pressure_curve",
+          "mod_wheel_curve",
+          "mod_key_curve",
+          "fx1_model",
+          "fx1_param_a",
+          "fx1_param_b",
+          "fx1_oversampling",
+          "fx2_model",
+          "fx2_param_a",
+          "fx2_param_b",
+          "fx2_oversampling",
+          "fx3_model",
+          "fx3_param_a",
+          "fx3_param_b",
+          "fx3_oversampling",
+          "fx_gain_comp"
+        ],
+        "expected": [
+          "master_tune",
+          "detune",
+          "mix",
+          "brilliance",
+          "resonance",
+          "master_sustain",
+          "volume",
+          "init_bend",
+          "portamento",
+          "glide_mode",
+          "sustain_mode",
+          "key_release",
+          "ribbon",
+          "sub_wave",
+          "sub_speed",
+          "sub_vco",
+          "sub_vcf",
+          "sub_vca",
+          "sub_at_speed",
+          "sub_at_vco",
+          "ring_speed",
+          "ring_depth",
+          "ring_attack",
+          "ring_decay",
+          "ring_amount",
+          "chorus_on",
+          "chorus_mode",
+          "chorus_speed",
+          "chorus_depth",
+          "output_mode",
+          "voice_dispersion",
+          "drift",
+          "analog_noise",
+          "mpe_on",
+          "pitch_bend_range",
+          "mpe_bend_range",
+          "tuning_ref",
+          "modwheel_sub",
+          "modwheel_vcf",
+          "lfo1_rate",
+          "lfo1_depth",
+          "lfo1_dest",
+          "lfo2_rate",
+          "lfo2_depth",
+          "lfo2_dest",
+          "lfo3_rate",
+          "lfo3_depth",
+          "lfo3_dest",
+          "fx1_type",
+          "fx1_mix",
+          "fx2_type",
+          "fx2_mix",
+          "fx3_type",
+          "fx3_mix",
+          "arp_on",
+          "arp_mode",
+          "arp_rate",
+          "arp_octaves",
+          "macro1",
+          "macro2",
+          "macro3",
+          "macro4",
+          "ch1_saw",
+          "ch1_pulse",
+          "ch1_sine",
+          "ch1_noise",
+          "ch1_pw",
+          "ch1_pwm_speed",
+          "ch1_pwm_depth",
+          "ch1_feet",
+          "ch1_hpf_cutoff",
+          "ch1_hpf_res",
+          "ch1_hpf_on",
+          "ch1_lpf_cutoff",
+          "ch1_lpf_res",
+          "ch1_lpf_on",
+          "ch1_f_il",
+          "ch1_f_al",
+          "ch1_f_a",
+          "ch1_f_d",
+          "ch1_f_r",
+          "ch1_vcf_level",
+          "ch1_v_a",
+          "ch1_v_d",
+          "ch1_v_s",
+          "ch1_v_r",
+          "ch1_v_level",
+          "ch1_init_brill",
+          "ch1_init_level",
+          "ch1_after_brill",
+          "ch1_after_level",
+          "ch1_pan",
+          "ch2_saw",
+          "ch2_pulse",
+          "ch2_sine",
+          "ch2_noise",
+          "ch2_pw",
+          "ch2_pwm_speed",
+          "ch2_pwm_depth",
+          "ch2_feet",
+          "ch2_hpf_cutoff",
+          "ch2_hpf_res",
+          "ch2_hpf_on",
+          "ch2_lpf_cutoff",
+          "ch2_lpf_res",
+          "ch2_lpf_on",
+          "ch2_f_il",
+          "ch2_f_al",
+          "ch2_f_a",
+          "ch2_f_d",
+          "ch2_f_r",
+          "ch2_vcf_level",
+          "ch2_v_a",
+          "ch2_v_d",
+          "ch2_v_s",
+          "ch2_v_r",
+          "ch2_v_level",
+          "ch2_init_brill",
+          "ch2_init_level",
+          "ch2_after_brill",
+          "ch2_after_level",
+          "ch2_pan",
+          "sub_at_vcf",
+          "sub_original_mode",
+          "sub_original_function",
+          "sub_original_speed",
+          "sub_ext_level",
+          "kbd_brilliance_low",
+          "kbd_brilliance_high",
+          "kbd_level_low",
+          "kbd_level_high",
+          "footswitch_plugged",
+          "footswitch_pressed",
+          "sustain_assign",
+          "glide_assign",
+          "foot_mode",
+          "output_level",
+          "parity_mode",
+          "source_performance",
+          "drift_model",
+          "oversampling",
+          "output_jack",
+          "kas_scan_timing",
+          "velocity_curve",
+          "pressure_curve",
+          "pressure_threshold",
+          "ribbon_cc_enable",
+          "ribbon_cc",
+          "tuning_mode",
+          "voice_mode",
+          "unison_detune",
+          "lfo1_wave",
+          "lfo2_wave",
+          "lfo3_wave",
+          "mseg1_rate",
+          "mseg2_rate",
+          "mseg3_rate",
+          "mod1_amount",
+          "mod2_amount",
+          "mod3_amount",
+          "mod4_amount",
+          "mod5_amount",
+          "mod6_amount",
+          "mod7_amount",
+          "mod8_amount",
+          "mod9_amount",
+          "mod10_amount",
+          "mod11_amount",
+          "mod12_amount",
+          "mod13_amount",
+          "mod14_amount",
+          "mod15_amount",
+          "mod16_amount",
+          "mod_velocity_curve",
+          "mod_pressure_curve",
+          "mod_wheel_curve",
+          "mod_key_curve",
+          "fx1_model",
+          "fx1_param_a",
+          "fx1_param_b",
+          "fx1_oversampling",
+          "fx2_model",
+          "fx2_param_a",
+          "fx2_param_b",
+          "fx2_oversampling",
+          "fx3_model",
+          "fx3_param_a",
+          "fx3_param_b",
+          "fx3_oversampling",
+          "fx_gain_comp"
+        ],
+        "pass": true
+      },
+      {
+        "claim": "Init remains final program",
+        "actual": "Init Circuit",
+        "expected": "Init Circuit",
+        "pass": true
+      },
+      {
+        "claim": "Guide category counts",
+        "actual": {
+          "Brass": 33,
+          "Strings": 31,
+          "Pads": 32,
+          "Polysynth": 25,
+          "Keys": 25,
+          "Organ": 15,
+          "Winds": 14,
+          "Plucked": 17,
+          "Bass": 25,
+          "Leads": 32,
+          "Bells": 23,
+          "FX": 24,
+          "Sequences": 4,
+          "Init": 1
+        },
+        "expected": {
+          "Brass": 33,
+          "Strings": 31,
+          "Pads": 32,
+          "Polysynth": 25,
+          "Keys": 25,
+          "Organ": 15,
+          "Winds": 14,
+          "Plucked": 17,
+          "Bass": 25,
+          "Leads": 32,
+          "Bells": 23,
+          "FX": 24,
+          "Sequences": 4,
+          "Init": 1
+        },
+        "pass": true
+      },
+      {
+        "claim": "Changed Circuit value vectors",
+        "actual": 12,
+        "expected": 12,
+        "pass": true
+      },
+      {
+        "claim": "Unchanged Circuit value vectors",
+        "actual": 289,
+        "expected": 289,
+        "pass": true
+      },
+      {
+        "claim": "Unchanged complete Circuit records",
+        "actual": 288,
+        "expected": 288,
+        "pass": true
+      },
+      {
+        "claim": "Changed descriptions",
+        "actual": 5,
+        "expected": 5,
+        "pass": true
+      },
+      {
+        "claim": "Changed voicing floats",
+        "actual": 38,
+        "expected": 38,
+        "pass": true
+      },
+      {
+        "claim": "Changed master levels",
+        "actual": 4,
+        "expected": 4,
+        "pass": true
+      },
+      {
+        "claim": "UFO Landing metadata only",
+        "actual": true,
+        "expected": true,
+        "pass": true
+      },
+      {
+        "claim": "Harp documented 4\u201320 ms improvement bounds",
+        "actual": [
+          8.85,
+          8.99
+        ],
+        "expected": [
+          8.85,
+          8.99
+        ],
+        "pass": true
+      },
+      {
+        "claim": "Kalimba documented 4\u201320 ms improvement bounds",
+        "actual": [
+          8.08,
+          8.21
+        ],
+        "expected": [
+          8.08,
+          8.21
+        ],
+        "pass": true
+      },
+      {
+        "claim": "Kalimba documented early/late strike ratios",
+        "actual": [
+          -18.07,
+          -51.51
+        ],
+        "expected": [
+          -18.07,
+          -51.51
+        ],
+        "pass": true
+      }
+    ]
+  },
+  "changed_programs": [
+    "Noir Swell Brass",
+    "Brass Ensemble 16",
+    "Neo-Noir Pad",
+    "Ether Pad",
+    "Arctic Pad",
+    "Synthwave Chords",
+    "Flute",
+    "Breathy Flute",
+    "Harp",
+    "Kalimba",
+    "Sine Bass",
+    "Upright Pluck"
+  ],
+  "changed_descriptions": [
+    "Brass Ensemble 16",
+    "Neo-Noir Pad",
+    "Arctic Pad",
+    "Synthwave Chords",
+    "UFO Landing"
+  ],
+  "changed_values": [
+    {
+      "program": "Noir Swell Brass",
+      "parameter": "ch1_pan",
+      "before": 0,
+      "after": -0.239999995
+    },
+    {
+      "program": "Noir Swell Brass",
+      "parameter": "ch2_pan",
+      "before": 0,
+      "after": 0.340000004
+    },
+    {
+      "program": "Brass Ensemble 16",
+      "parameter": "ch1_pan",
+      "before": 0,
+      "after": -0.119999997
+    },
+    {
+      "program": "Brass Ensemble 16",
+      "parameter": "ch2_pan",
+      "before": 0,
+      "after": 0.379999995
+    },
+    {
+      "program": "Neo-Noir Pad",
+      "parameter": "ch1_pan",
+      "before": 0,
+      "after": -0.180000007
+    },
+    {
+      "program": "Neo-Noir Pad",
+      "parameter": "ch2_pan",
+      "before": 0,
+      "after": 0.400000006
+    },
+    {
+      "program": "Ether Pad",
+      "parameter": "mix",
+      "before": 0.189999998,
+      "after": 0.280000001
+    },
+    {
+      "program": "Ether Pad",
+      "parameter": "volume",
+      "before": 0.686999977,
+      "after": 0.768000007
+    },
+    {
+      "program": "Ether Pad",
+      "parameter": "ch2_noise",
+      "before": 0.649999976,
+      "after": 0.949999988
+    },
+    {
+      "program": "Arctic Pad",
+      "parameter": "ch1_pan",
+      "before": 0,
+      "after": -0.119999997
+    },
+    {
+      "program": "Arctic Pad",
+      "parameter": "ch2_pan",
+      "before": 0,
+      "after": 0.400000006
+    },
+    {
+      "program": "Synthwave Chords",
+      "parameter": "ch1_pan",
+      "before": 0,
+      "after": -0.239999995
+    },
+    {
+      "program": "Synthwave Chords",
+      "parameter": "ch2_pan",
+      "before": 0,
+      "after": 0.319999993
+    },
+    {
+      "program": "Flute",
+      "parameter": "mix",
+      "before": 0.159999996,
+      "after": 0.219999999
+    },
+    {
+      "program": "Flute",
+      "parameter": "ch2_noise",
+      "before": 0.159999996,
+      "after": 0.819999993
+    },
+    {
+      "program": "Flute",
+      "parameter": "ch2_hpf_cutoff",
+      "before": 1200,
+      "after": 950
+    },
+    {
+      "program": "Flute",
+      "parameter": "ch2_vcf_level",
+      "before": 0.800000012,
+      "after": 0.949999988
+    },
+    {
+      "program": "Flute",
+      "parameter": "ch2_v_s",
+      "before": 0.680000007,
+      "after": 0.819999993
+    },
+    {
+      "program": "Flute",
+      "parameter": "ch2_v_level",
+      "before": 0.180000007,
+      "after": 0.319999993
+    },
+    {
+      "program": "Flute",
+      "parameter": "ch2_init_level",
+      "before": 0.419999987,
+      "after": 0.439999998
+    },
+    {
+      "program": "Flute",
+      "parameter": "ch2_after_level",
+      "before": 0.239999995,
+      "after": 0.400000006
+    },
+    {
+      "program": "Breathy Flute",
+      "parameter": "mix",
+      "before": 0.239999995,
+      "after": 0.319999993
+    },
+    {
+      "program": "Breathy Flute",
+      "parameter": "ch2_noise",
+      "before": 0.379999995,
+      "after": 0.75
+    },
+    {
+      "program": "Breathy Flute",
+      "parameter": "ch2_hpf_cutoff",
+      "before": 950,
+      "after": 800
+    },
+    {
+      "program": "Breathy Flute",
+      "parameter": "ch2_vcf_level",
+      "before": 0.800000012,
+      "after": 0.980000019
+    },
+    {
+      "program": "Breathy Flute",
+      "parameter": "ch2_v_s",
+      "before": 0.819999993,
+      "after": 0.879999995
+    },
+    {
+      "program": "Breathy Flute",
+      "parameter": "ch2_v_level",
+      "before": 0.180000007,
+      "after": 0.300000012
+    },
+    {
+      "program": "Breathy Flute",
+      "parameter": "ch2_init_level",
+      "before": 0.449999988,
+      "after": 0.550000012
+    },
+    {
+      "program": "Breathy Flute",
+      "parameter": "ch2_after_level",
+      "before": 0.379999995,
+      "after": 0.5
+    },
+    {
+      "program": "Harp",
+      "parameter": "mix",
+      "before": 0.180000007,
+      "after": 0.239999995
+    },
+    {
+      "program": "Harp",
+      "parameter": "ch2_sine",
+      "before": 0.239999995,
+      "after": 0.460000008
+    },
+    {
+      "program": "Kalimba",
+      "parameter": "mix",
+      "before": 0.159999996,
+      "after": 0.230000004
+    },
+    {
+      "program": "Kalimba",
+      "parameter": "volume",
+      "before": 0.867999971,
+      "after": 0.934000015
+    },
+    {
+      "program": "Kalimba",
+      "parameter": "ch2_sine",
+      "before": 0.340000004,
+      "after": 0.540000021
+    },
+    {
+      "program": "Sine Bass",
+      "parameter": "mix",
+      "before": 0.140000001,
+      "after": 0.209999993
+    },
+    {
+      "program": "Sine Bass",
+      "parameter": "volume",
+      "before": 0.690999985,
+      "after": 0.751999974
+    },
+    {
+      "program": "Sine Bass",
+      "parameter": "ch2_hpf_cutoff",
+      "before": 650,
+      "after": 450
+    },
+    {
+      "program": "Sine Bass",
+      "parameter": "ch2_vcf_level",
+      "before": 0.779999971,
+      "after": 0.949999988
+    },
+    {
+      "program": "Upright Pluck",
+      "parameter": "mix",
+      "before": 0.140000001,
+      "after": 0.189999998
+    },
+    {
+      "program": "Upright Pluck",
+      "parameter": "volume",
+      "before": 0.980000019,
+      "after": 1
+    },
+    {
+      "program": "Upright Pluck",
+      "parameter": "ch2_hpf_cutoff",
+      "before": 450,
+      "after": 300
+    },
+    {
+      "program": "Upright Pluck",
+      "parameter": "ch2_vcf_level",
+      "before": 0.74000001,
+      "after": 0.949999988
+    }
+  ],
+  "input_sha256": [
+    {
+      "path": "README.md",
+      "sha256": "e22d56e648d2902ec0b8a2d01eb243ba87b5ef343377291b486a32fe5a997171"
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69"
+    },
+    {
+      "path": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "sha256": "975740ced5a070b005b2114a8e4153733d8c7ee15cfefdb5d15f64db0e5512ec"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.1/README.md",
+      "sha256": "4f712fcea8d9b9f88b2cf44d9cac3458725f26fdff3fb553d5994ac396d13453"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.1/provenance.json",
+      "sha256": "e1280ee94408006099ff4e7a73386267556cd8d9da318e883a1a11c768d89c5f"
+    },
+    {
+      "path": "build-baseline/inventory.json",
+      "sha256": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785"
+    },
+    {
+      "path": "build-audit/inventory-final.json",
+      "sha256": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa"
+    },
+    {
+      "path": "build-w05-native-recall/summary.json",
+      "sha256": "b629da0174ca2a7e4d0b657df0566dedee806e08b00343a97ecd2d88ba1a14ee"
+    },
+    {
+      "path": "build-w06-sample-rates/summary.json",
+      "sha256": "21f44b9568e3b3a64d70fc31bffd111a7b735353a8e5e89627a9805bcb1e76e5"
+    },
+    {
+      "path": "build-w06-final-auditions/summary.json",
+      "sha256": "4b03f65c85d9bd171fb0fad5eb665dcc5c845c695db954c1cea1b7c7bdf3c8a4"
+    },
+    {
+      "path": "build-w06-performance-controls/summary.json",
+      "sha256": "30945e723a5ef010a7a4e8a7548818a06ea8f2821741d5ccdb4855a9272fb2ed"
+    },
+    {
+      "path": "build-w07-modern-role/summary.json",
+      "sha256": "fda2443bb411d5a6be832444331873f7daa572c189793f095e3becd07f4ddda1"
+    },
+    {
+      "path": "build-w08-long-sustain/summary.json",
+      "sha256": "50c824f7a94a741de251afe69acc06b9da87e944bd54a8d502db5005282e58d4"
+    },
+    {
+      "path": "build-w08-rapid-strikes/summary.json",
+      "sha256": "4791da11de35e1cdcc62720fef2ab43a3f84c550ada409168e03c87f367b3469"
+    },
+    {
+      "path": "build-w09-arp-roles/summary.json",
+      "sha256": "03091fd495eafddc5c6b59648b52877e7e404d8a04f1d26670a504e8acc980e5"
+    },
+    {
+      "path": "build-w09-phrase-gates/summary.json",
+      "sha256": "98cf2d2669277ed35c1da86d29c34e55f8ea6a1e9fb806e131d38683eeb83c7c"
+    }
+  ],
+  "manual_review": "See recommended-wording.md for claim-to-evidence review, qualifications, and exact wording.",
+  "limits": [
+    "No acoustic reference, physical CS-80 measurement, listening panel or new audio execution was performed by this editorial review.",
+    "Local summaries and committed dossier were checked; CI completion, release assets and download availability are not certified here.",
+    "External VST3-boundary evidence was still pending at this review cut; native JUCE fixtures are described separately.",
+    "The 81 stored dossier hashes and sizes are verified. Original hashes are provenance assertions unless the original is still available.",
+    "Private raw audio may have been pruned after hashes and measurements were recorded; historical authoring snapshots are not rewritten."
+  ]
+}

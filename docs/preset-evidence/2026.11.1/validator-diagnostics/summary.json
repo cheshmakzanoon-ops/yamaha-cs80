@@ -1,0 +1,64 @@
+{
+  "assignment": 26,
+  "scope": "Existing Linux pluginval shutdown failure and diagnostic coverage",
+  "source_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "run_id": 45029235535,
+  "first_attempt": {
+    "job_id": 137263093053,
+    "seed": "0x5ba7253",
+    "lane": "headless",
+    "success_printed": true,
+    "raw_returncode": -11,
+    "signal": "SIGSEGV",
+    "normalized_exit": 139,
+    "core_available": false,
+    "causal_stack_available": false,
+    "gui_lanes": "not run"
+  },
+  "one_diagnostic_job_rerun": {
+    "job_id": 137263915334,
+    "run_attempt": 2,
+    "headless_seed": "0x50a3104",
+    "gui_seed": "0x75af02",
+    "fixed_gui_seed": "0x2da72db",
+    "all_three_raw_returncodes": [
+      0,
+      0,
+      0
+    ],
+    "wrapper_retry": false,
+    "conclusion": "success",
+    "qualification": "Different random seeds and timing. Does not repair or erase the first failure."
+  },
+  "diagnosis": "Crash ownership remains unproven. No core or stack from the failed invocation supports a production teardown or DSP repair.",
+  "change": "Extend existing bounded failure-only diagnostics to headless failures, preserving GUI/fixed priority and original lane flags.",
+  "required_gates_identical_except_outcome_id": {
+    "Validate VST3 headless": true,
+    "Validate VST3 GUI under Xvfb": true,
+    "Validate GUI state regression seed 0x2da72db": true
+  },
+  "unchanged_gate_helpers": [
+    "scripts/run-pluginval-linux.sh",
+    "scripts/run-pluginval-with-core.py",
+    "scripts/pluginval-diagnostic-seed.py"
+  ],
+  "local_validation": {
+    "selector_test_methods": 9,
+    "all_valid_outcome_triples": 125,
+    "legacy_two_outcome_pairs": 25,
+    "actual_shell_lane_and_exit_fixtures": 12,
+    "classification_test_methods": 7,
+    "wrapper_gate_cases": 13,
+    "linux_bash_syntax_blocks": 12
+  },
+  "changed_tracked_files": [
+    ".github/workflows/build.yml (Linux diagnostic block only; separate audition edits belong to parent)",
+    "scripts/pluginval-diagnostic-log.py",
+    "scripts/test-pluginval-diagnostic-log.py"
+  ],
+  "limits": [
+    "No new native pluginval runtime reproduction was run locally.",
+    "The older rerun is not validation of the current preset changes.",
+    "Diagnostic execution is supplementary: its success never substitutes for a failed required gate."
+  ]
+}

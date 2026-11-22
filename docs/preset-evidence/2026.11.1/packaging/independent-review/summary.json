@@ -1,0 +1,442 @@
+{
+  "assignment": 46,
+  "result": "PASS",
+  "blocking_findings": [],
+  "binary_source_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "pending_build_run": 45042166237,
+  "scope": "Independent review of the two packaging changes and install guide; production read-only.",
+  "existing_fixture_results": {
+    "notice_guide_test_methods": 7,
+    "synthetic_platform_shapes": 4,
+    "packager_fixture_rejection_checks": 46
+  },
+  "independent_check_count": 108,
+  "checks": [
+    "scripts/package-ci-artifacts.py: unchanged since binary source",
+    "scripts/test-packaging-notices.py: unchanged since binary source",
+    "src/core/FactoryPresets.h: unchanged since binary source",
+    "docs/INSTALL_AND_QUICKSTART.md: unchanged since binary source",
+    "docs/PRESET_GUIDE.md: unchanged since binary source",
+    "docs/CI_DISTRIBUTION_STATUS.md: unchanged since binary source",
+    "docs/INSTALL_AND_QUICKSTART.md: link count preserved",
+    "docs/INSTALL_AND_QUICKSTART.md: exact target for https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+    "docs/INSTALL_AND_QUICKSTART.md: exact target for https://support.apple.com/en-ie/102239",
+    "docs/INSTALL_AND_QUICKSTART.md: target exists at binary source: docs/PANIC_CONTROL.md",
+    "docs/INSTALL_AND_QUICKSTART.md: exact target for PANIC_CONTROL.md",
+    "docs/INSTALL_AND_QUICKSTART.md: target exists at binary source: docs/OUTPUT_METER.md",
+    "docs/INSTALL_AND_QUICKSTART.md: exact target for OUTPUT_METER.md",
+    "docs/INSTALL_AND_QUICKSTART.md: target exists at binary source: docs/PARITY_ISOLATION.md",
+    "docs/INSTALL_AND_QUICKSTART.md: exact target for PARITY_ISOLATION.md",
+    "docs/INSTALL_AND_QUICKSTART.md: target exists at binary source: docs/performance/2026-10-30-source-performance/SUMMARY.md",
+    "docs/INSTALL_AND_QUICKSTART.md: exact target for performance/2026-10-30-source-performance/SUMMARY.md",
+    "docs/INSTALL_AND_QUICKSTART.md: target exists at binary source: docs/PRESET_GUIDE.md",
+    "docs/INSTALL_AND_QUICKSTART.md: exact target for PRESET_GUIDE.md",
+    "docs/PRESET_GUIDE.md: link count preserved",
+    "docs/PRESET_GUIDE.md: target exists at binary source: docs/PRESET_REFINEMENT_2026_11_1.md",
+    "docs/PRESET_GUIDE.md: exact target for PRESET_REFINEMENT_2026_11_1.md",
+    "docs/PRESET_GUIDE.md: target exists at binary source: docs/PRESET_REVISION_2026_11.md",
+    "docs/PRESET_GUIDE.md: exact target for PRESET_REVISION_2026_11.md",
+    "docs/PRESET_GUIDE.md: target exists at binary source: docs/INSTALL_AND_QUICKSTART.md",
+    "docs/PRESET_GUIDE.md: exact target for INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Leads.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Leads.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/CuratedLibrary.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/CuratedLibrary.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Brass.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Brass.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Strings.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Strings.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Pads.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Pads.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Polysynth.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Polysynth.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Keys.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Keys.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Organ.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Organ.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Winds.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Winds.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Plucked.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Plucked.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Bass.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Bass.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Leads.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Leads.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Bells.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Bells.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Fx.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Fx.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Modern.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Modern.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/CuratedLibrary.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/CuratedLibrary.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Brass.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Brass.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Strings.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Strings.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Pads.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Pads.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Keys.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Keys.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Plucked.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Plucked.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Winds.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Winds.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Organ.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Organ.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Bells.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Bells.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Bass.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Bass.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/Engine.cpp",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/Engine.cpp",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/Params.h",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/Params.h",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Modern.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Modern.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Pads.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Pads.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/curated/Fx.inc",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/curated/Fx.inc",
+    "docs/PRESET_GUIDE.md: target exists at binary source: docs/PARITY_ISOLATION.md",
+    "docs/PRESET_GUIDE.md: exact target for PARITY_ISOLATION.md",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/core/FactoryPresets.h",
+    "docs/PRESET_GUIDE.md: exact target for ../src/core/FactoryPresets.h",
+    "docs/PRESET_GUIDE.md: target exists at binary source: docs/PRESET_REVISION_2026_11.md",
+    "docs/PRESET_GUIDE.md: exact target for PRESET_REVISION_2026_11.md",
+    "docs/PRESET_GUIDE.md: target exists at binary source: CMakeLists.txt",
+    "docs/PRESET_GUIDE.md: exact target for ../CMakeLists.txt",
+    "docs/PRESET_GUIDE.md: target exists at binary source: src/tools/preset_capture.cpp",
+    "docs/PRESET_GUIDE.md: exact target for ../src/tools/preset_capture.cpp",
+    "docs/PRESET_GUIDE.md: target exists at binary source: .github/workflows/build.yml",
+    "docs/PRESET_GUIDE.md: exact target for ../.github/workflows/build.yml",
+    "docs/CI_DISTRIBUTION_STATUS.md: link count preserved",
+    "docs/CI_DISTRIBUTION_STATUS.md: target exists at binary source: docs/release/RELEASE_QUALIFICATION.md",
+    "docs/CI_DISTRIBUTION_STATUS.md: exact target for release/RELEASE_QUALIFICATION.md",
+    "all 47 real guide links observed",
+    "CRLF revision declaration accepted",
+    "duplicate CRLF revision declarations rejected",
+    "CRLF, encoded Unicode/space, local rename, query/fragment, external URL and four-backtick fence fixture",
+    "unsafe relative target rejected: ../../outside.md",
+    "unsafe relative target rejected: %2e%2e/%2e%2e/outside.md",
+    "unsafe relative target rejected: ..%5Coutside.md"
+  ],
+  "actual_guide_links": 47,
+  "link_categories": {
+    "commit_pinned": 43,
+    "local_guide": 2,
+    "external": 2,
+    "fragment": 0
+  },
+  "links": [
+    {
+      "guide": "INSTALL_AND_QUICKSTART.md",
+      "original": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+      "packaged": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+      "kind": "external"
+    },
+    {
+      "guide": "INSTALL_AND_QUICKSTART.md",
+      "original": "https://support.apple.com/en-ie/102239",
+      "packaged": "https://support.apple.com/en-ie/102239",
+      "kind": "external"
+    },
+    {
+      "guide": "INSTALL_AND_QUICKSTART.md",
+      "original": "PANIC_CONTROL.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/PANIC_CONTROL.md",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "INSTALL_AND_QUICKSTART.md",
+      "original": "OUTPUT_METER.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/OUTPUT_METER.md",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "INSTALL_AND_QUICKSTART.md",
+      "original": "PARITY_ISOLATION.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/PARITY_ISOLATION.md",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "INSTALL_AND_QUICKSTART.md",
+      "original": "performance/2026-10-30-source-performance/SUMMARY.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/performance/2026-10-30-source-performance/SUMMARY.md",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "INSTALL_AND_QUICKSTART.md",
+      "original": "PRESET_GUIDE.md",
+      "packaged": "PRESET_GUIDE.md",
+      "kind": "local_guide"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "PRESET_REFINEMENT_2026_11_1.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/PRESET_REFINEMENT_2026_11_1.md",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "PRESET_REVISION_2026_11.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/PRESET_REVISION_2026_11.md",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing",
+      "packaged": "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing",
+      "kind": "local_guide"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Leads.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Leads.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/CuratedLibrary.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/CuratedLibrary.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Brass.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Brass.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Strings.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Strings.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Pads.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Pads.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Polysynth.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Polysynth.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Keys.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Keys.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Organ.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Organ.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Winds.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Winds.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Plucked.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Plucked.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Bass.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Bass.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Leads.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Leads.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Bells.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Bells.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Fx.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Fx.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Modern.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Modern.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/CuratedLibrary.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/CuratedLibrary.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Brass.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Brass.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Strings.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Strings.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Pads.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Pads.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Keys.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Keys.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Plucked.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Plucked.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Winds.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Winds.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Organ.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Organ.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Bells.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Bells.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Bass.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Bass.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/Engine.cpp",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/Engine.cpp",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/Params.h",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/Params.h",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Modern.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Modern.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Pads.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Pads.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/curated/Fx.inc",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/curated/Fx.inc",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "PARITY_ISOLATION.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/PARITY_ISOLATION.md",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/core/FactoryPresets.h",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/core/FactoryPresets.h",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "PRESET_REVISION_2026_11.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/PRESET_REVISION_2026_11.md",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../CMakeLists.txt",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/CMakeLists.txt",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../src/tools/preset_capture.cpp",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/src/tools/preset_capture.cpp",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "PRESET_GUIDE.md",
+      "original": "../.github/workflows/build.yml",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/.github/workflows/build.yml",
+      "kind": "commit_pinned"
+    },
+    {
+      "guide": "DISTRIBUTION_STATUS.md",
+      "original": "release/RELEASE_QUALIFICATION.md",
+      "packaged": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/be460b0b93bdcb8dce5eb8925b18b72706b25e19/docs/release/RELEASE_QUALIFICATION.md",
+      "kind": "commit_pinned"
+    }
+  ],
+  "findings": [
+    "Canonical calendar and positive-patch syntax remains strict; malformed month/patch/trailing/duplicate declarations are rejected.",
+    "All real guide links resolve to the intended existing file at the exact binary source, or to a bundled guide/external URL.",
+    "PurePosixPath, posixpath and URI operations keep packaged paths independent of host path separators; CRLF input is handled by text reading.",
+    "Only the three project guide payloads are transformed. License/notice bytes continue through the unchanged raw-byte paths and are verified inside all four synthetic archive shapes.",
+    "Source cleanliness, GITHUB_SHA and pinned JUCE evidence checks remain intact; package inventories hash the actual transformed bytes.",
+    "The corrected 67-sample default Circuit Standard guide statement agrees with existing core and native test contracts."
+  ],
+  "limitations": [
+    "These are local synthetic package and source/link checks, not verification of pending CI-produced native downloads.",
+    "Native Windows/macOS execution is not claimed; their archive shapes and host-independent path construction are covered.",
+    "The transformer intentionally covers the inline-link syntax in current project guides, not every Markdown construct.",
+    "No runtime test rerun was needed for the guide-only latency wording correction."
+  ],
+  "input_sha256": {
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+    "scripts/test-packaging-notices.py": "961e22ca665ec8f6fcad8abce672931beb802c9e9f65dcb4ea52a005b476ba47",
+    "src/core/FactoryPresets.h": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81",
+    "docs/INSTALL_AND_QUICKSTART.md": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+    "docs/PRESET_GUIDE.md": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+    "docs/CI_DISTRIBUTION_STATUS.md": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea"
+  },
+  "artifacts": {
+    "notices-tests.log": "41839401855d2826c60884571055d7a818838461bef276117ca4359bcbf6cc1a",
+    "package-self-test.log": "54b528192b824e6c80b7b24111c61bde1b5958ea46252e953ff6d675a454574c",
+    "review.py": "e03f84ce1bcf10fc5357454493120d713e417308e768e0575eb86c810b429356"
+  }
+}

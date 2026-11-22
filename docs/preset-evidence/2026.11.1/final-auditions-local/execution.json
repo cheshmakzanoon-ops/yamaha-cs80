@@ -1,0 +1,17 @@
+{
+  "assignment": 32,
+  "source_commit": "99f5ebd6b71283a56810d801df89c49ef62f3512",
+  "workflow_sha256": "a609f613be8876ca0a1b49cf7242723c535603aa419442b4df1f6b128c235e3e",
+  "original_block_sha256": "3116fe7a689053fc75d7e8b9c43393e62ab57fe3715ae60418e27296da2ca1fc",
+  "local_block_sha256": "3c3c79f6f00de7ba78efc08bd46b9e4dee23c1a2da98d89e96354ce62041e198",
+  "sole_block_substitution": {
+    "before": "capture = Path('build/cs80_preset_capture')",
+    "after": "capture = Path('build-audit/cs80_preset_capture')"
+  },
+  "execution_working_directory": "repository root",
+  "git_source_guard": "Unmodified exact HEAD == GITHUB_SHA guard; working directory is inside the repository.",
+  "GITHUB_RUN_ID": "local-assignment-32",
+  "GITHUB_RUN_ATTEMPT": "1",
+  "qualification": "Local prepublication executable built before source commit; this is not a GitHub Actions-produced artifact.",
+  "output_relocation": "The completed preset-audition directory was moved unchanged into build-w06-final-auditions/preset-audition after successful execution."
+}

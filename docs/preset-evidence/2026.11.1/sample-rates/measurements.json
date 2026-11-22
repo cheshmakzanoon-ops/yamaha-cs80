@@ -1,0 +1,3414 @@
+{
+  "summary": {
+    "assignment": 30,
+    "status": "PASS",
+    "library_revision": "2026.11.1",
+    "sample_rates": [
+      44100,
+      48000,
+      96000
+    ],
+    "case_count": 18,
+    "capture_count": 54,
+    "generated_seconds": 56.699999999999996,
+    "checks_passed": 183,
+    "checks_total": 183,
+    "full_capture_peak_dbfs": -19.29618680063252,
+    "nonfinite_captures": 0,
+    "over_full_scale_samples_all_ranks": 0,
+    "worst_reconstruction_relative_db": -142.7576238167634,
+    "role_comparisons": [
+      {
+        "name": "Flute",
+        "role_window_seconds": [
+          0.3,
+          0.5
+        ],
+        "role_db_by_rate": {
+          "44100": -26.70641193491841,
+          "48000": -26.852471385334656,
+          "96000": -26.816564840118197
+        },
+        "max_role_span_db": 0.1460594504162458,
+        "late_db_by_rate": {
+          "44100": -27.050533028303235,
+          "48000": -26.933035745577286,
+          "96000": -26.960696656344286
+        }
+      },
+      {
+        "name": "Breathy Flute",
+        "role_window_seconds": [
+          0.3,
+          0.5
+        ],
+        "role_db_by_rate": {
+          "44100": -19.477193507608778,
+          "48000": -19.616846421315348,
+          "96000": -19.5853760343441
+        },
+        "max_role_span_db": 0.13965291370656985,
+        "late_db_by_rate": {
+          "44100": -19.78211022192025,
+          "48000": -19.66647349584702,
+          "96000": -19.701341754945922
+        }
+      },
+      {
+        "name": "Harp",
+        "role_window_seconds": [
+          0.004,
+          0.02
+        ],
+        "role_db_by_rate": {
+          "44100": -18.082756474369535,
+          "48000": -18.074356967232823,
+          "96000": -18.209126882472525
+        },
+        "max_role_span_db": 0.13476991523970128,
+        "late_db_by_rate": {
+          "44100": -38.92341948930568,
+          "48000": -38.923160684479406,
+          "96000": -38.94558915801203
+        }
+      },
+      {
+        "name": "Kalimba",
+        "role_window_seconds": [
+          0.004,
+          0.02
+        ],
+        "role_db_by_rate": {
+          "44100": -18.2795643017954,
+          "48000": -18.310179379346607,
+          "96000": -18.297688360849907
+        },
+        "max_role_span_db": 0.030615077551207293,
+        "late_db_by_rate": {
+          "44100": -112.94719259365596,
+          "48000": -112.95846670008697,
+          "96000": -112.99856086127133
+        }
+      },
+      {
+        "name": "Sine Bass",
+        "role_window_seconds": [
+          0.004,
+          0.02
+        ],
+        "role_db_by_rate": {
+          "44100": -23.878233554612386,
+          "48000": -23.87635954433028,
+          "96000": -24.62627330594963
+        },
+        "max_role_span_db": 0.7499137616193501,
+        "late_db_by_rate": {
+          "44100": -143.29766880145178,
+          "48000": -143.24272797070066,
+          "96000": -142.9446624554535
+        }
+      },
+      {
+        "name": "Upright Pluck",
+        "role_window_seconds": [
+          0.004,
+          0.02
+        ],
+        "role_db_by_rate": {
+          "44100": -21.42624980636424,
+          "48000": -21.559555559640096,
+          "96000": -20.392320354113096
+        },
+        "max_role_span_db": 1.1672352055269997,
+        "late_db_by_rate": {
+          "44100": -110.64751456007967,
+          "48000": -110.62351376490243,
+          "96000": -110.68537145560558
+        }
+      }
+    ],
+    "hashes": {
+      "capture_binary": "8b26fb16d929d87c2991bb308b0e32cef91ffd33a4fd13da16c15ce063bbb03d",
+      "inventory": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+      "script": "1fa8dccec92601670a6c66bd5d2b18cb4f62ce0493c2bda6205fa0aa51d092b7"
+    },
+    "conditions": "Final calibrated actual factory values; one held note; velocity0.8, pressure0, no release tail. Rank isolation changes only actual mix control, with float32-weighted reconstruction. All outputs unnormalized stereo IEEEfloat. Core role thresholds match the existing character suite, with velocity0.8 for this matrix rather than its strike velocity0.9.",
+    "scope": "Tests air/strike roles at representative notes across rates, not arbitrary notes/polyphony or perceptual identity. Sample-rate waveforms are not expected to be bit-identical; noise and filter responses may differ."
+  },
+  "rows": [
+    {
+      "name": "Flute",
+      "note": 67,
+      "sample_rate": 44100,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 0.75,
+      "tail_seconds": 0,
+      "weights": [
+        0.7799999713897705,
+        0.2199999988079071
+      ],
+      "captures": [
+        {
+          "file": "captures/Flute-44100-r0/152-Flute.wav",
+          "sha256": "5efcc10222121f43ad33ec4ae97b75e3dd02ef615aed30a070136b0056014bdd",
+          "frames": 33075,
+          "finite": true,
+          "peak_dbfs": -21.97620155215356,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Flute-44100-r1/152-Flute.wav",
+          "sha256": "d7579a4cb2005a05ab033dbee289d34278a1e4d51b4a37e485bb419f84499ed2",
+          "frames": 33075,
+          "finite": true,
+          "peak_dbfs": -20.474859954226375,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Flute-44100-r2/152-Flute.wav",
+          "sha256": "f65b6a4994498dbcc307b3eab2220b49d299a08cc9fa38b6a120c8caa7bf468e",
+          "frames": 33075,
+          "finite": true,
+          "peak_dbfs": -27.225614131635908,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 0.75,
+          "body_rms": 0.04545971886381569,
+          "body_dbfs": -26.84746508813431,
+          "detail_rms": 0.002105330836425479,
+          "detail_body_ratio": 0.046312007400055595,
+          "detail_body_db": -26.68612788093291,
+          "full_dbfs": -26.837398446509585,
+          "reconstruction_error_relative": 6.688130529356641e-08,
+          "reconstruction_error_db": -143.49390519096772
+        },
+        {
+          "start_seconds": 0.3,
+          "end_seconds": 0.5,
+          "body_rms": 0.045896083976377754,
+          "body_dbfs": -26.76448736986628,
+          "detail_rms": 0.0021205818245498016,
+          "detail_body_ratio": 0.046203981708793355,
+          "detail_body_db": -26.70641193491841,
+          "full_dbfs": -26.75543321327256,
+          "reconstruction_error_relative": 6.668306224360138e-08,
+          "reconstruction_error_db": -143.51968929116936
+        },
+        {
+          "start_seconds": 0.5,
+          "end_seconds": 0.7,
+          "body_rms": 0.04584962934514098,
+          "body_dbfs": -26.773283417550143,
+          "detail_rms": 0.0020361472294610937,
+          "detail_body_ratio": 0.04440924078433971,
+          "detail_body_db": -27.050533028303235,
+          "full_dbfs": -26.763494527297368,
+          "reconstruction_error_relative": 6.679983468501778e-08,
+          "reconstruction_error_db": -143.5044922461398
+        }
+      ]
+    },
+    {
+      "name": "Flute",
+      "note": 67,
+      "sample_rate": 48000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 0.75,
+      "tail_seconds": 0,
+      "weights": [
+        0.7799999713897705,
+        0.2199999988079071
+      ],
+      "captures": [
+        {
+          "file": "captures/Flute-48000-r0/152-Flute.wav",
+          "sha256": "4cd8c27816cd7b2138fa68bf6642eb84e35b262394ff9c359751b9f8fa94c6d2",
+          "frames": 36000,
+          "finite": true,
+          "peak_dbfs": -22.08645441424308,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Flute-48000-r1/152-Flute.wav",
+          "sha256": "101673531a6d8b350e98d2824b5c2f3061234fa3d6e212ea2e84d11889ac402a",
+          "frames": 36000,
+          "finite": true,
+          "peak_dbfs": -20.46727011408681,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Flute-48000-r2/152-Flute.wav",
+          "sha256": "d3734f2ee7f05bbd685e7c7abb354305abe9a1c749c4724650e0f2ec1e538b8c",
+          "frames": 36000,
+          "finite": true,
+          "peak_dbfs": -27.2525414183485,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 0.75,
+          "body_rms": 0.04546341084029755,
+          "body_dbfs": -26.846759698859003,
+          "detail_rms": 0.00210926154904589,
+          "detail_body_ratio": 0.046394705325899066,
+          "detail_body_db": -26.67063158672555,
+          "full_dbfs": -26.83743620452209,
+          "reconstruction_error_relative": 6.756838231578829e-08,
+          "reconstruction_error_db": -143.40512957169634
+        },
+        {
+          "start_seconds": 0.3,
+          "end_seconds": 0.5,
+          "body_rms": 0.04588009106752899,
+          "body_dbfs": -26.767514574750155,
+          "detail_rms": 0.0020844942524814378,
+          "detail_body_ratio": 0.0454335247376331,
+          "detail_body_db": -26.852471385334656,
+          "full_dbfs": -26.759104318730994,
+          "reconstruction_error_relative": 6.749680885474978e-08,
+          "reconstruction_error_db": -143.4143351891674
+        },
+        {
+          "start_seconds": 0.5,
+          "end_seconds": 0.7,
+          "body_rms": 0.04583763061664512,
+          "body_dbfs": -26.775556789710038,
+          "detail_rms": 0.00206333798426017,
+          "detail_body_ratio": 0.04501406282354624,
+          "detail_body_db": -26.933035745577286,
+          "full_dbfs": -26.76774075100907,
+          "reconstruction_error_relative": 6.749469250758058e-08,
+          "reconstruction_error_db": -143.41460753754137
+        }
+      ]
+    },
+    {
+      "name": "Flute",
+      "note": 67,
+      "sample_rate": 96000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 0.75,
+      "tail_seconds": 0,
+      "weights": [
+        0.7799999713897705,
+        0.2199999988079071
+      ],
+      "captures": [
+        {
+          "file": "captures/Flute-96000-r0/152-Flute.wav",
+          "sha256": "0bffcb2268b94ac5e76ff666b8005dcd3801d7b31eeb617266b92fe80e73e129",
+          "frames": 72000,
+          "finite": true,
+          "peak_dbfs": -21.949993853295542,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Flute-96000-r1/152-Flute.wav",
+          "sha256": "70c8d809c807c1f1303eae7e7ed4c73d2e41a717133c037cd8697657c1d8d3a8",
+          "frames": 72000,
+          "finite": true,
+          "peak_dbfs": -20.45733389370134,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Flute-96000-r2/152-Flute.wav",
+          "sha256": "8461ddec0c07a23d46ef24819cd3b59ad2a635687e3e153b2768dc57e8e674a7",
+          "frames": 72000,
+          "finite": true,
+          "peak_dbfs": -27.370215571454363,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 0.75,
+          "body_rms": 0.04550237193150484,
+          "body_dbfs": -26.839319280082034,
+          "detail_rms": 0.002102491988144932,
+          "detail_body_ratio": 0.04620620637776496,
+          "detail_body_db": -26.705993729316354,
+          "full_dbfs": -26.829949660139256,
+          "reconstruction_error_relative": 6.683691791541197e-08,
+          "reconstruction_error_db": -143.49967170315853
+        },
+        {
+          "start_seconds": 0.3,
+          "end_seconds": 0.5,
+          "body_rms": 0.04594653946354157,
+          "body_dbfs": -26.75494385247067,
+          "detail_rms": 0.0020961606567712816,
+          "detail_body_ratio": 0.04562173084731611,
+          "detail_body_db": -26.816564840118197,
+          "full_dbfs": -26.745220090931852,
+          "reconstruction_error_relative": 6.683625346535103e-08,
+          "reconstruction_error_db": -143.4997580531694
+        },
+        {
+          "start_seconds": 0.5,
+          "end_seconds": 0.7,
+          "body_rms": 0.04582816272449365,
+          "body_dbfs": -26.777351070076307,
+          "detail_rms": 0.0020563527377055546,
+          "detail_body_ratio": 0.04487093995165775,
+          "detail_body_db": -26.960696656344286,
+          "full_dbfs": -26.768847241117907,
+          "reconstruction_error_relative": 6.683579147387447e-08,
+          "reconstruction_error_db": -143.4998180927533
+        }
+      ]
+    },
+    {
+      "name": "Breathy Flute",
+      "note": 67,
+      "sample_rate": 44100,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 0.75,
+      "tail_seconds": 0,
+      "weights": [
+        0.6800000071525574,
+        0.3199999928474426
+      ],
+      "captures": [
+        {
+          "file": "captures/Breathy-Flute-44100-r0/153-Breathy-Flute.wav",
+          "sha256": "fd64d4f403a53aefe4fc8fd18f1b1442871196463c59e614884d895c26ea832c",
+          "frames": 33075,
+          "finite": true,
+          "peak_dbfs": -22.935770915300445,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Breathy-Flute-44100-r1/153-Breathy-Flute.wav",
+          "sha256": "43344d6e5abcfad6a5e99c1f46b131ca1face700916a223e5cbd92e7ecb52a3f",
+          "frames": 33075,
+          "finite": true,
+          "peak_dbfs": -21.248439296291505,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Breathy-Flute-44100-r2/153-Breathy-Flute.wav",
+          "sha256": "337f5116dac545a1e6229e5a543e7a861d49a9a18ab8dfc4f20cebdb81c5d775",
+          "frames": 33075,
+          "finite": true,
+          "peak_dbfs": -25.456895817246874,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 0.75,
+          "body_rms": 0.034753921341237906,
+          "body_dbfs": -29.17992372318636,
+          "detail_rms": 0.003667505539710522,
+          "detail_body_ratio": 0.10552781954302164,
+          "detail_body_db": -19.532660706595067,
+          "full_dbfs": -29.12994499969045,
+          "reconstruction_error_relative": 6.156968069556553e-08,
+          "reconstruction_error_db": -144.21266197365145
+        },
+        {
+          "start_seconds": 0.3,
+          "end_seconds": 0.5,
+          "body_rms": 0.035233989872435284,
+          "body_dbfs": -29.060763496597083,
+          "detail_rms": 0.003741985926427038,
+          "detail_body_ratio": 0.10620386564152695,
+          "detail_body_db": -19.477193507608778,
+          "full_dbfs": -29.01300104860387,
+          "reconstruction_error_relative": 6.149838581307748e-08,
+          "reconstruction_error_db": -144.22272566552365
+        },
+        {
+          "start_seconds": 0.5,
+          "end_seconds": 0.7,
+          "body_rms": 0.03507259933168223,
+          "body_dbfs": -29.10064092213437,
+          "detail_rms": 0.0035963540721497406,
+          "detail_body_ratio": 0.10254027761498234,
+          "detail_body_db": -19.78211022192025,
+          "full_dbfs": -29.0517093179053,
+          "reconstruction_error_relative": 6.201615531061712e-08,
+          "reconstruction_error_db": -144.14990322670778
+        }
+      ]
+    },
+    {
+      "name": "Breathy Flute",
+      "note": 67,
+      "sample_rate": 48000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 0.75,
+      "tail_seconds": 0,
+      "weights": [
+        0.6800000071525574,
+        0.3199999928474426
+      ],
+      "captures": [
+        {
+          "file": "captures/Breathy-Flute-48000-r0/153-Breathy-Flute.wav",
+          "sha256": "a8efac49e1a4aacc36fce2198c294b5062a262b0ef68d0252fbbfda451272e37",
+          "frames": 36000,
+          "finite": true,
+          "peak_dbfs": -22.955660019189548,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Breathy-Flute-48000-r1/153-Breathy-Flute.wav",
+          "sha256": "776b175f61f33e7d18ac696489e3996d418dc71d883e671281d0aeab8b197e70",
+          "frames": 36000,
+          "finite": true,
+          "peak_dbfs": -21.24866718978476,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Breathy-Flute-48000-r2/153-Breathy-Flute.wav",
+          "sha256": "f2035ef2deacd4a49c62b7605b901e87da0d21a79683ebf6bb92a7820ac4906d",
+          "frames": 36000,
+          "finite": true,
+          "peak_dbfs": -25.463402792938552,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 0.75,
+          "body_rms": 0.03475696338580546,
+          "body_dbfs": -29.179163472082994,
+          "detail_rms": 0.003674156920889795,
+          "detail_body_ratio": 0.10570995170395983,
+          "detail_body_db": -19.51768251181357,
+          "full_dbfs": -29.131048977526717,
+          "reconstruction_error_relative": 6.195989200772133e-08,
+          "reconstruction_error_db": -144.15778695721454
+        },
+        {
+          "start_seconds": 0.3,
+          "end_seconds": 0.5,
+          "body_rms": 0.0352215928453827,
+          "body_dbfs": -29.063820151748494,
+          "detail_rms": 0.0036810072375073593,
+          "detail_body_ratio": 0.10450995937822595,
+          "detail_body_db": -19.616846421315348,
+          "full_dbfs": -29.018035671525585,
+          "reconstruction_error_relative": 6.247422048624539e-08,
+          "reconstruction_error_db": -144.08598308038376
+        },
+        {
+          "start_seconds": 0.5,
+          "end_seconds": 0.7,
+          "body_rms": 0.03506312448929632,
+          "body_dbfs": -29.102987727195163,
+          "detail_rms": 0.003643568500548164,
+          "detail_body_ratio": 0.10391454137695093,
+          "detail_body_db": -19.66647349584702,
+          "full_dbfs": -29.059252971513555,
+          "reconstruction_error_relative": 6.260991471619763e-08,
+          "reconstruction_error_db": -144.06713775573354
+        }
+      ]
+    },
+    {
+      "name": "Breathy Flute",
+      "note": 67,
+      "sample_rate": 96000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 0.75,
+      "tail_seconds": 0,
+      "weights": [
+        0.6800000071525574,
+        0.3199999928474426
+      ],
+      "captures": [
+        {
+          "file": "captures/Breathy-Flute-96000-r0/153-Breathy-Flute.wav",
+          "sha256": "80e7668b599d3ef7cba3a107751672a0689d978749ff955538c8412d41bfc80a",
+          "frames": 72000,
+          "finite": true,
+          "peak_dbfs": -23.44152794063986,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Breathy-Flute-96000-r1/153-Breathy-Flute.wav",
+          "sha256": "7095247c003e2f3157ad53b408bd06c70fdde9c7a7d51b3c37087af84a8fec36",
+          "frames": 72000,
+          "finite": true,
+          "peak_dbfs": -21.24409850665025,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Breathy-Flute-96000-r2/153-Breathy-Flute.wav",
+          "sha256": "28f47ba5e03ae32140d7c001da7dffaf3ce1098ca880fc2a24182b1a69d0fbd9",
+          "frames": 72000,
+          "finite": true,
+          "peak_dbfs": -25.615700044560704,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 0.75,
+          "body_rms": 0.03478730691066886,
+          "body_dbfs": -29.171583824649932,
+          "detail_rms": 0.003667286247730774,
+          "detail_body_ratio": 0.10542024012229761,
+          "detail_body_db": -19.5415199780027,
+          "full_dbfs": -29.123357362684466,
+          "reconstruction_error_relative": 6.142226455750565e-08,
+          "reconstruction_error_db": -144.23348351471392
+        },
+        {
+          "start_seconds": 0.3,
+          "end_seconds": 0.5,
+          "body_rms": 0.03527375172901831,
+          "body_dbfs": -29.050966923147076,
+          "detail_rms": 0.003699839222763451,
+          "detail_body_ratio": 0.10488930270832916,
+          "detail_body_db": -19.5853760343441,
+          "full_dbfs": -29.00175291322181,
+          "reconstruction_error_relative": 6.159185174466788e-08,
+          "reconstruction_error_db": -144.2095347750217
+        },
+        {
+          "start_seconds": 0.5,
+          "end_seconds": 0.7,
+          "body_rms": 0.035058724986873825,
+          "body_dbfs": -29.104077646894652,
+          "detail_rms": 0.0036285158952090394,
+          "detail_body_ratio": 0.10349822751875817,
+          "detail_body_db": -19.701341754945922,
+          "full_dbfs": -29.058278838724384,
+          "reconstruction_error_relative": 6.160526113185984e-08,
+          "reconstruction_error_db": -144.20764394405975
+        }
+      ]
+    },
+    {
+      "name": "Harp",
+      "note": 60,
+      "sample_rate": 44100,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7599999904632568,
+        0.23999999463558197
+      ],
+      "captures": [
+        {
+          "file": "captures/Harp-44100-r0/170-Harp.wav",
+          "sha256": "3771b118d9f0b1a337bd6ab916f458e0ee65008b38b810d8e7f5064b22d6135e",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -20.95892273587774,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Harp-44100-r1/170-Harp.wav",
+          "sha256": "0c822fce143e8e88b0e52475854be606cf6de779b27e1b3b9764908a710f0eb8",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -18.815459295843112,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Harp-44100-r2/170-Harp.wav",
+          "sha256": "600ec6fca4f3101b2a5da8a0b4ab2505c7ad34b095bf6e8c62494d2555e2c0c7",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -26.0065628174917,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.03360459801760535,
+          "body_dbfs": -29.47202590633827,
+          "detail_rms": 0.002256472855967373,
+          "detail_body_ratio": 0.06714774135328784,
+          "detail_body_db": -23.45937182202029,
+          "full_dbfs": -29.44831497213808,
+          "reconstruction_error_relative": 6.536356518300378e-08,
+          "reconstruction_error_db": -143.693285354397
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.05381676951341682,
+          "body_dbfs": -25.381647508110046,
+          "detail_rms": 0.006710885065107206,
+          "detail_body_ratio": 0.12469877188436858,
+          "detail_body_db": -18.082756474369535,
+          "full_dbfs": -25.332308508203603,
+          "reconstruction_error_relative": 6.328323626050467e-08,
+          "reconstruction_error_db": -143.97422638851964
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.02093854902466053,
+          "body_dbfs": -33.58106833701796,
+          "detail_rms": 0.0002370148780533604,
+          "detail_body_ratio": 0.011319546439164165,
+          "detail_body_db": -38.92341948930568,
+          "full_dbfs": -33.575467110637824,
+          "reconstruction_error_relative": 6.590634498946686e-08,
+          "reconstruction_error_db": -143.6214554528043
+        }
+      ]
+    },
+    {
+      "name": "Harp",
+      "note": 60,
+      "sample_rate": 48000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7599999904632568,
+        0.23999999463558197
+      ],
+      "captures": [
+        {
+          "file": "captures/Harp-48000-r0/170-Harp.wav",
+          "sha256": "d27d5797bb16759c817535d1fd8d7d3d69110a8d7eaf9f64c7c73bd19d9d4fbc",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -20.958507200487986,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Harp-48000-r1/170-Harp.wav",
+          "sha256": "a7603f2e09039e3d09853c9958849efc2535658e7cd9e68f224162d9743b1264",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -18.817260143306548,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Harp-48000-r2/170-Harp.wav",
+          "sha256": "fc09235560c7f8777154c81186e78354d54d26ce267194a04d7b86fdf45e7a94",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -26.039868652643033,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.03360507672123244,
+          "body_dbfs": -29.47190217513765,
+          "detail_rms": 0.002256371905231944,
+          "detail_body_ratio": 0.06714378080280703,
+          "detail_body_db": -23.459884153757095,
+          "full_dbfs": -29.448189255814917,
+          "reconstruction_error_relative": 6.587884309190974e-08,
+          "reconstruction_error_db": -143.6250807228967
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.053778009495239185,
+          "body_dbfs": -25.38790553025435,
+          "detail_rms": 0.006712539821499101,
+          "detail_body_ratio": 0.12481941753707607,
+          "detail_body_db": -18.074356967232823,
+          "full_dbfs": -25.33920987333637,
+          "reconstruction_error_relative": 6.43085581389984e-08,
+          "reconstruction_error_db": -143.83462455233362
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.020936895128146477,
+          "body_dbfs": -33.5817544461634,
+          "detail_rms": 0.0002370032183392521,
+          "detail_body_ratio": 0.011319883721471063,
+          "detail_body_db": -38.923160684479406,
+          "full_dbfs": -33.57612250082962,
+          "reconstruction_error_relative": 6.560469908940579e-08,
+          "reconstruction_error_db": -143.6613010431243
+        }
+      ]
+    },
+    {
+      "name": "Harp",
+      "note": 60,
+      "sample_rate": 96000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7599999904632568,
+        0.23999999463558197
+      ],
+      "captures": [
+        {
+          "file": "captures/Harp-96000-r0/170-Harp.wav",
+          "sha256": "d0acb50421e1d4c06c35177c10245cb169e85a826443c202c55dc597d629b1db",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -20.952651350010413,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Harp-96000-r1/170-Harp.wav",
+          "sha256": "d4104d48d378c74ab2be42e647c2a0569c0a232e72b9519e0a2990dce36eef20",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -18.821339265829767,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Harp-96000-r2/170-Harp.wav",
+          "sha256": "fb421c7970482d14b6d9db05e81ef55dbdee2d028d7945e195eea2f4a0ee5234",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -26.011748705455446,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.033607469875968334,
+          "body_dbfs": -29.47128363949263,
+          "detail_rms": 0.0022561994619704007,
+          "detail_body_ratio": 0.0671338684613012,
+          "detail_body_db": -23.46116653403412,
+          "full_dbfs": -29.44757272896302,
+          "reconstruction_error_relative": 6.584568400655131e-08,
+          "reconstruction_error_db": -143.62945373023788
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.054834338418135765,
+          "body_dbfs": -25.218947839390804,
+          "detail_rms": 0.006739012530631946,
+          "detail_body_ratio": 0.12289767187932558,
+          "detail_body_db": -18.209126882472525,
+          "full_dbfs": -25.179479885000575,
+          "reconstruction_error_relative": 6.53843902654998e-08,
+          "reconstruction_error_db": -143.6905184374051
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.020920008872927314,
+          "body_dbfs": -33.58876271209665,
+          "detail_rms": 0.00023620136686882827,
+          "detail_body_ratio": 0.01129069152425158,
+          "detail_body_db": -38.94558915801203,
+          "full_dbfs": -33.58258099795226,
+          "reconstruction_error_relative": 6.591791666954452e-08,
+          "reconstruction_error_db": -143.6199305387244
+        }
+      ]
+    },
+    {
+      "name": "Kalimba",
+      "note": 60,
+      "sample_rate": 44100,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7699999809265137,
+        0.23000000417232513
+      ],
+      "captures": [
+        {
+          "file": "captures/Kalimba-44100-r0/178-Kalimba.wav",
+          "sha256": "b71401c5a95f2b8e674b876b3181ca4a8e30a120cf435a091f94a86ca1702a3c",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -20.14979452424011,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Kalimba-44100-r1/178-Kalimba.wav",
+          "sha256": "143e0e2ffb1efd0407d672b094ca8e1b34c61ff03de1f2a9132657352b11face",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -18.841175234818504,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Kalimba-44100-r2/178-Kalimba.wav",
+          "sha256": "4ecc14fcddd602272709a37d05cc22301f560ef0becdbd6021a3a75dad1b3915",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -25.557395018055125,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.027097201523615763,
+          "body_dbfs": -31.341511175580404,
+          "detail_rms": 0.0012789980070544308,
+          "detail_body_ratio": 0.047200372552854135,
+          "detail_body_db": -26.521091469263062,
+          "full_dbfs": -31.331661394540372,
+          "reconstruction_error_relative": 7.083406241011172e-08,
+          "reconstruction_error_db": -142.99515700457943
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.06017140345313415,
+          "body_dbfs": -24.412197175902794,
+          "detail_rms": 0.007335199432389903,
+          "detail_body_ratio": 0.12190507469387993,
+          "detail_body_db": -18.2795643017954,
+          "full_dbfs": -24.331864383934718,
+          "reconstruction_error_relative": 6.772326758131385e-08,
+          "reconstruction_error_db": -143.3852419154858
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.008329731872994526,
+          "body_dbfs": -41.58737955878635,
+          "detail_rms": 1.8761665658910604e-08,
+          "detail_body_ratio": 2.252373299041835e-06,
+          "detail_body_db": -112.94719259365596,
+          "full_dbfs": -41.58737948289218,
+          "reconstruction_error_relative": 7.259470120791558e-08,
+          "reconstruction_error_db": -142.7819015584902
+        }
+      ]
+    },
+    {
+      "name": "Kalimba",
+      "note": 60,
+      "sample_rate": 48000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7699999809265137,
+        0.23000000417232513
+      ],
+      "captures": [
+        {
+          "file": "captures/Kalimba-48000-r0/178-Kalimba.wav",
+          "sha256": "8a6d15ff1ff6a1ae6a2cf1fe926c4e10b7ef755cf0555150422b321f06b96296",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -20.154331471739724,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Kalimba-48000-r1/178-Kalimba.wav",
+          "sha256": "4556baa018eeb46d065ecacb115f02d2b11a142864b859f72e779531a6b70b96",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -18.848933908057706,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Kalimba-48000-r2/178-Kalimba.wav",
+          "sha256": "b388627b72512cbded0d2cd8d6e81b90f40f3d285aa988aea00a76d20bc5cc37",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -25.41552253991557,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.027097741600593393,
+          "body_dbfs": -31.341338057988484,
+          "detail_rms": 0.0012788782113601703,
+          "detail_body_ratio": 0.04719501094261542,
+          "detail_body_db": -26.522078177577416,
+          "full_dbfs": -31.33149128296408,
+          "reconstruction_error_relative": 7.109437000700141e-08,
+          "reconstruction_error_db": -142.9632957974168
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.060281704024235896,
+          "body_dbfs": -24.396289593683335,
+          "detail_rms": 0.007322789520361898,
+          "detail_body_ratio": 0.12147615331872195,
+          "detail_body_db": -18.310179379346607,
+          "full_dbfs": -24.314402016738683,
+          "reconstruction_error_relative": 6.946034490201279e-08,
+          "reconstruction_error_db": -143.16526129102945
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.008330182233736836,
+          "body_dbfs": -41.586909954479765,
+          "detail_rms": 1.873834226430679e-08,
+          "detail_body_ratio": 2.2494516612634727e-06,
+          "detail_body_db": -112.95846670008697,
+          "full_dbfs": -41.58690988000557,
+          "reconstruction_error_relative": 7.227497193454142e-08,
+          "reconstruction_error_db": -142.82024136600702
+        }
+      ]
+    },
+    {
+      "name": "Kalimba",
+      "note": 60,
+      "sample_rate": 96000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7699999809265137,
+        0.23000000417232513
+      ],
+      "captures": [
+        {
+          "file": "captures/Kalimba-96000-r0/178-Kalimba.wav",
+          "sha256": "633071303be2b6d397ff714c669ca59d0dd14ff4053e248dfca081047687b634",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -20.141932100637643,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Kalimba-96000-r1/178-Kalimba.wav",
+          "sha256": "9413c715b212ef49d9d9bee39725c82acefa0f986e3ba576ec1c79d6972f1400",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -18.849141936340622,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Kalimba-96000-r2/178-Kalimba.wav",
+          "sha256": "763e5c9d1fa8d2b0ccd47b718837de4e3535841cb6208b892c785bd49d8cd416",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -25.44182806743934,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.027098233372108173,
+          "body_dbfs": -31.34118042734869,
+          "detail_rms": 0.0012781144778117037,
+          "detail_body_ratio": 0.04716597057309459,
+          "detail_body_db": -26.52742448594807,
+          "full_dbfs": -31.331356464567726,
+          "reconstruction_error_relative": 7.06359737233288e-08,
+          "reconstruction_error_db": -143.01948127342717
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.060473031473029445,
+          "body_dbfs": -24.368765199070438,
+          "detail_rms": 0.007356603035319897,
+          "detail_body_ratio": 0.12165097161700734,
+          "detail_body_db": -18.297688360849907,
+          "full_dbfs": -24.320491753022434,
+          "reconstruction_error_relative": 6.894816277069063e-08,
+          "reconstruction_error_db": -143.22954603550056
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.008314316802559,
+          "body_dbfs": -41.60346862959593,
+          "detail_rms": 1.8616521038072215e-08,
+          "detail_body_ratio": 2.2390920962191838e-06,
+          "detail_body_db": -112.99856086127133,
+          "full_dbfs": -41.60346869529201,
+          "reconstruction_error_relative": 7.262088838443231e-08,
+          "reconstruction_error_db": -142.77876885175726
+        }
+      ]
+    },
+    {
+      "name": "Sine Bass",
+      "note": 48,
+      "sample_rate": 44100,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7900000214576721,
+        0.20999999344348907
+      ],
+      "captures": [
+        {
+          "file": "captures/Sine-Bass-44100-r0/184-Sine-Bass.wav",
+          "sha256": "cc9c3201103d88678490450f025f48ca3e2dc757c7c8de96a8fdec89f948942a",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -22.91452955246461,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Sine-Bass-44100-r1/184-Sine-Bass.wav",
+          "sha256": "8c4fc7f87cec74f469595830e646ff908b47e6c8a4c48f115b063eb0f57c9887",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -20.89040540238684,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Sine-Bass-44100-r2/184-Sine-Bass.wav",
+          "sha256": "da7d906d1f9d1e7db52c2cfa49dd9aae146fbe82c0bbb1d4abfa83f187f7cd99",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -23.29866186889193,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.04769157003658445,
+          "body_dbfs": -26.431167601647132,
+          "detail_rms": 0.00038703542574423103,
+          "detail_body_ratio": 0.008115384447342248,
+          "detail_body_db": -41.813818033318114,
+          "full_dbfs": -26.430935736315732,
+          "reconstruction_error_relative": 7.2719627791586e-08,
+          "reconstruction_error_db": -142.7669670534979
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.046638187886444867,
+          "body_dbfs": -26.62516664620149,
+          "detail_rms": 0.0029842141820342503,
+          "detail_body_ratio": 0.06398649512927572,
+          "detail_body_db": -23.878233554612386,
+          "full_dbfs": -26.605066122144883,
+          "reconstruction_error_relative": 7.02963642006675e-08,
+          "reconstruction_error_db": -143.06134273101765
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.047700645938619904,
+          "body_dbfs": -26.429514798368,
+          "detail_rms": 3.263178418195845e-09,
+          "detail_body_ratio": 6.84095226382223e-08,
+          "detail_body_db": -143.29766880145178,
+          "full_dbfs": -26.429514810922402,
+          "reconstruction_error_relative": 7.2053827081102e-08,
+          "reconstruction_error_db": -142.84685894070182
+        }
+      ]
+    },
+    {
+      "name": "Sine Bass",
+      "note": 48,
+      "sample_rate": 48000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7900000214576721,
+        0.20999999344348907
+      ],
+      "captures": [
+        {
+          "file": "captures/Sine-Bass-48000-r0/184-Sine-Bass.wav",
+          "sha256": "10f6bf7a0a22c0d82fe77350244db4fadddb0f1755bcd7e82d6c25fc93eb3bd0",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -22.91289677643935,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Sine-Bass-48000-r1/184-Sine-Bass.wav",
+          "sha256": "0707cf9a2387ecc8810c53d207595c67e13a717e7522770005b4d538bef2231e",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -20.8887772272319,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Sine-Bass-48000-r2/184-Sine-Bass.wav",
+          "sha256": "b8dccf1967834ad9f2e1a85d6ade2ad69c18031ec66524c8716b36a1f176e4b1",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -23.31713425227396,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.047693917277067226,
+          "body_dbfs": -26.430740117920507,
+          "detail_rms": 0.0003869150809517384,
+          "detail_body_ratio": 0.008112461777967223,
+          "detail_body_db": -41.816946727485174,
+          "full_dbfs": -26.430510348173108,
+          "reconstruction_error_relative": 7.277320966070561e-08,
+          "reconstruction_error_db": -142.7605694021638
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.0466660503279772,
+          "body_dbfs": -26.619979098368248,
+          "detail_rms": 0.00298664131054346,
+          "detail_body_ratio": 0.06400030192297869,
+          "detail_body_db": -23.87635954433028,
+          "full_dbfs": -26.599008414042157,
+          "reconstruction_error_relative": 6.96443927749504e-08,
+          "reconstruction_error_db": -143.14227687695438
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.04770312814766529,
+          "body_dbfs": -26.429062820570728,
+          "detail_rms": 3.2840552914557107e-09,
+          "detail_body_ratio": 6.884360458060319e-08,
+          "detail_body_db": -143.24272797070066,
+          "full_dbfs": -26.429062835476774,
+          "reconstruction_error_relative": 7.243243834599928e-08,
+          "reconstruction_error_db": -142.80133789162616
+        }
+      ]
+    },
+    {
+      "name": "Sine Bass",
+      "note": 48,
+      "sample_rate": 96000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.7900000214576721,
+        0.20999999344348907
+      ],
+      "captures": [
+        {
+          "file": "captures/Sine-Bass-96000-r0/184-Sine-Bass.wav",
+          "sha256": "9dfbf0a0f7725ef67d6c98e9107c92fb153c7c1448180f8f5d9da6da7ca123ae",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -22.904192310728252,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Sine-Bass-96000-r1/184-Sine-Bass.wav",
+          "sha256": "73657db02eee34a8c868d12db67859937ea2cc2247368c7a029e3e835f01bb31",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -20.880128855904236,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Sine-Bass-96000-r2/184-Sine-Bass.wav",
+          "sha256": "be81ed362bbf4479cff3c708ba1431c228feef312232fdc5d539883e8821b458",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -23.299228601900328,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.04771198246562495,
+          "body_dbfs": -26.42745075664617,
+          "detail_rms": 0.00038599953299584493,
+          "detail_body_ratio": 0.008090201099355827,
+          "detail_body_db": -41.84081365859491,
+          "full_dbfs": -26.427233228638585,
+          "reconstruction_error_relative": 7.279789291873875e-08,
+          "reconstruction_error_db": -142.7576238167634
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.046582302224714545,
+          "body_dbfs": -26.635581025008417,
+          "detail_rms": 0.002734684842293358,
+          "detail_body_ratio": 0.05870651967996664,
+          "detail_body_db": -24.62627330594963,
+          "full_dbfs": -26.633311058060766,
+          "reconstruction_error_relative": 7.016720535066849e-08,
+          "reconstruction_error_db": -143.07731640784556
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.047739494786304126,
+          "body_dbfs": -26.422443626435005,
+          "detail_rms": 3.4012980955327164e-09,
+          "detail_body_ratio": 7.124704839793375e-08,
+          "detail_body_db": -142.9446624554535,
+          "full_dbfs": -26.42244362900078,
+          "reconstruction_error_relative": 7.218438968148408e-08,
+          "reconstruction_error_db": -142.83113422262136
+        }
+      ]
+    },
+    {
+      "name": "Upright Pluck",
+      "note": 48,
+      "sample_rate": 44100,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.8100000023841858,
+        0.1899999976158142
+      ],
+      "captures": [
+        {
+          "file": "captures/Upright-Pluck-44100-r0/198-Upright-Pluck.wav",
+          "sha256": "0fc1333c5d53f54859a63913072a095e89f737e90c37ec4a1e3111688f8ddbe6",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -19.311404269864674,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Upright-Pluck-44100-r1/198-Upright-Pluck.wav",
+          "sha256": "db66fd56360bfffbbdc5905f3c514ea761921fe765bba1832fb7a454d88ca772",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -17.46234903337323,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Upright-Pluck-44100-r2/198-Upright-Pluck.wav",
+          "sha256": "c3eeb3c9a8aedfa75b56f446a478a6297c111db699a0cf4b23fee60f39fc4465",
+          "frames": 52920,
+          "finite": true,
+          "peak_dbfs": -17.99602569183405,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.02709357146915828,
+          "body_dbfs": -31.342674851634595,
+          "detail_rms": 0.0010653912797117069,
+          "detail_body_ratio": 0.03932265928559789,
+          "detail_body_db": -28.107142393599535,
+          "full_dbfs": -31.271381510009107,
+          "reconstruction_error_relative": 6.481495478504006e-08,
+          "reconstruction_error_db": -143.76649555194263
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.052517729586560216,
+          "body_dbfs": -25.593881146450062,
+          "detail_rms": 0.004456495295117653,
+          "detail_body_ratio": 0.0848569679268487,
+          "detail_body_db": -21.42624980636424,
+          "full_dbfs": -25.44894879234892,
+          "reconstruction_error_relative": 6.384038036044376e-08,
+          "reconstruction_error_db": -143.89809068253572
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.01022969828390934,
+          "body_dbfs": -39.80274350477072,
+          "detail_rms": 3.002528211979178e-08,
+          "detail_body_ratio": 2.9351092560588643e-06,
+          "detail_body_db": -110.64751456007967,
+          "full_dbfs": -39.80274428458982,
+          "reconstruction_error_relative": 6.87158930457005e-08,
+          "reconstruction_error_db": -143.25885609904554
+        }
+      ]
+    },
+    {
+      "name": "Upright Pluck",
+      "note": 48,
+      "sample_rate": 48000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.8100000023841858,
+        0.1899999976158142
+      ],
+      "captures": [
+        {
+          "file": "captures/Upright-Pluck-48000-r0/198-Upright-Pluck.wav",
+          "sha256": "991f2998e14e4e0acdd9d1716738cd37854124d49e573660ea3c3ea175e8a0cf",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -19.301097295097158,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Upright-Pluck-48000-r1/198-Upright-Pluck.wav",
+          "sha256": "ffa550499b7be73e6e5f189ad0353a5c971bae3c3f9dcaf718bdd8b273c8f7e3",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -17.46231134429324,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Upright-Pluck-48000-r2/198-Upright-Pluck.wav",
+          "sha256": "02caae749139f947399888b3e9c655bc3829453be64bdf24d6ad584044536e06",
+          "frames": 57600,
+          "finite": true,
+          "peak_dbfs": -18.67016711698348,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.027093738737833155,
+          "body_dbfs": -31.342621227372966,
+          "detail_rms": 0.0010579290757804787,
+          "detail_body_ratio": 0.03904699480633906,
+          "detail_body_db": -28.168247706538608,
+          "full_dbfs": -31.27152783422062,
+          "reconstruction_error_relative": 6.560570692280304e-08,
+          "reconstruction_error_db": -143.6611676096577
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.05262601210539267,
+          "body_dbfs": -25.575990774171444,
+          "detail_rms": 0.004397670469904034,
+          "detail_body_ratio": 0.08356457755333885,
+          "detail_body_db": -21.559555559640096,
+          "full_dbfs": -25.424302946302806,
+          "reconstruction_error_relative": 6.563814089802285e-08,
+          "reconstruction_error_db": -143.65687456370247
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.010228206351312275,
+          "body_dbfs": -39.80401037565897,
+          "detail_rms": 3.010397141784137e-08,
+          "detail_body_ratio": 2.9432307468043056e-06,
+          "detail_body_db": -110.62351376490243,
+          "full_dbfs": -39.80401118351554,
+          "reconstruction_error_relative": 6.880702394636942e-08,
+          "reconstruction_error_db": -143.2473445185904
+        }
+      ]
+    },
+    {
+      "name": "Upright Pluck",
+      "note": 48,
+      "sample_rate": 96000,
+      "velocity": 0.8,
+      "pressure": 0,
+      "hold_seconds": 1.2,
+      "tail_seconds": 0,
+      "weights": [
+        0.8100000023841858,
+        0.1899999976158142
+      ],
+      "captures": [
+        {
+          "file": "captures/Upright-Pluck-96000-r0/198-Upright-Pluck.wav",
+          "sha256": "deec29662bcc94ab9c96667a868877c371d6670bcc0be5bbf7034120d0defef3",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -19.29618680063252,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Upright-Pluck-96000-r1/198-Upright-Pluck.wav",
+          "sha256": "5116edcf9de71baf70730f28a885fc32581ad23c2ef549f285498bc1f0e063b8",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -17.461749893004622,
+          "over_full_scale_samples": 0
+        },
+        {
+          "file": "captures/Upright-Pluck-96000-r2/198-Upright-Pluck.wav",
+          "sha256": "b18313cb7aede0ecf99ba4c23d166e52b5f64091da7a126b78893ddeb06d8261",
+          "frames": 115200,
+          "finite": true,
+          "peak_dbfs": -18.442510846748124,
+          "over_full_scale_samples": 0
+        }
+      ],
+      "windows": [
+        {
+          "start_seconds": 0.0,
+          "end_seconds": 1.2,
+          "body_rms": 0.027094782781264832,
+          "body_dbfs": -31.34228652748554,
+          "detail_rms": 0.001056874836530866,
+          "detail_body_ratio": 0.03900658090020419,
+          "detail_body_db": -28.17724231714349,
+          "full_dbfs": -31.27116818979944,
+          "reconstruction_error_relative": 6.535616157044606e-08,
+          "reconstruction_error_db": -143.69426924509605
+        },
+        {
+          "start_seconds": 0.004,
+          "end_seconds": 0.02,
+          "body_rms": 0.05271276461402154,
+          "body_dbfs": -25.56168411693465,
+          "detail_rms": 0.005038482754871464,
+          "detail_body_ratio": 0.09558373179181032,
+          "detail_body_db": -20.392320354113096,
+          "full_dbfs": -25.368767136300512,
+          "reconstruction_error_relative": 6.65176547315096e-08,
+          "reconstruction_error_db": -143.5412614293148
+        },
+        {
+          "start_seconds": 0.8,
+          "end_seconds": 1.1,
+          "body_rms": 0.010227500475634478,
+          "body_dbfs": -39.804609832650584,
+          "detail_rms": 2.988828085692494e-08,
+          "detail_body_ratio": 2.9223446068889846e-06,
+          "detail_body_db": -110.68537145560558,
+          "full_dbfs": -39.804610706367164,
+          "reconstruction_error_relative": 6.799591450212747e-08,
+          "reconstruction_error_db": -143.3503436171944
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "test": "Flute@44100: reconstruction 0.0-0.75s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: reconstruction 0.3-0.5s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: reconstruction 0.5-0.7s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: captures/Flute-44100-r0/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: captures/Flute-44100-r1/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: captures/Flute-44100-r2/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: body remains",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: supporting sustainedair",
+      "pass": true
+    },
+    {
+      "test": "Flute@44100: air sustained",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: reconstruction 0.0-0.75s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: reconstruction 0.3-0.5s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: reconstruction 0.5-0.7s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: captures/Flute-48000-r0/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: captures/Flute-48000-r1/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: captures/Flute-48000-r2/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: supporting sustainedair",
+      "pass": true
+    },
+    {
+      "test": "Flute@48000: air sustained",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: reconstruction 0.0-0.75s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: reconstruction 0.3-0.5s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: reconstruction 0.5-0.7s within1%",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: captures/Flute-96000-r0/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: captures/Flute-96000-r1/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: captures/Flute-96000-r2/152-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: supporting sustainedair",
+      "pass": true
+    },
+    {
+      "test": "Flute@96000: air sustained",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: reconstruction 0.0-0.75s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: reconstruction 0.3-0.5s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: reconstruction 0.5-0.7s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: captures/Breathy-Flute-44100-r0/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: captures/Breathy-Flute-44100-r1/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: captures/Breathy-Flute-44100-r2/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: body remains",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: supporting sustainedair",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@44100: air sustained",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: reconstruction 0.0-0.75s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: reconstruction 0.3-0.5s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: reconstruction 0.5-0.7s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: captures/Breathy-Flute-48000-r0/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: captures/Breathy-Flute-48000-r1/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: captures/Breathy-Flute-48000-r2/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: supporting sustainedair",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@48000: air sustained",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: reconstruction 0.0-0.75s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: reconstruction 0.3-0.5s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: reconstruction 0.5-0.7s within1%",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: captures/Breathy-Flute-96000-r0/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: captures/Breathy-Flute-96000-r1/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: captures/Breathy-Flute-96000-r2/153-Breathy-Flute.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: supporting sustainedair",
+      "pass": true
+    },
+    {
+      "test": "Breathy Flute@96000: air sustained",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: captures/Harp-44100-r0/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: captures/Harp-44100-r1/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: captures/Harp-44100-r2/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: body remains",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Harp@44100: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: captures/Harp-48000-r0/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: captures/Harp-48000-r1/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: captures/Harp-48000-r2/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Harp@48000: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: captures/Harp-96000-r0/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: captures/Harp-96000-r1/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: captures/Harp-96000-r2/170-Harp.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Harp@96000: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: captures/Kalimba-44100-r0/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: captures/Kalimba-44100-r1/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: captures/Kalimba-44100-r2/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: body remains",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@44100: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: captures/Kalimba-48000-r0/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: captures/Kalimba-48000-r1/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: captures/Kalimba-48000-r2/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@48000: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: captures/Kalimba-96000-r0/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: captures/Kalimba-96000-r1/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: captures/Kalimba-96000-r2/178-Kalimba.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Kalimba@96000: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: captures/Sine-Bass-44100-r0/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: captures/Sine-Bass-44100-r1/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: captures/Sine-Bass-44100-r2/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: body remains",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@44100: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: captures/Sine-Bass-48000-r0/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: captures/Sine-Bass-48000-r1/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: captures/Sine-Bass-48000-r2/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@48000: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: captures/Sine-Bass-96000-r0/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: captures/Sine-Bass-96000-r1/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: captures/Sine-Bass-96000-r2/184-Sine-Bass.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Sine Bass@96000: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: captures/Upright-Pluck-44100-r0/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: captures/Upright-Pluck-44100-r1/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: captures/Upright-Pluck-44100-r2/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: body remains",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@44100: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: captures/Upright-Pluck-48000-r0/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: captures/Upright-Pluck-48000-r1/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: captures/Upright-Pluck-48000-r2/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@48000: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: reconstruction 0.0-1.2s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: reconstruction 0.004-0.02s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: reconstruction 0.8-1.1s within1%",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: captures/Upright-Pluck-96000-r0/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: captures/Upright-Pluck-96000-r1/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: captures/Upright-Pluck-96000-r2/198-Upright-Pluck.wav finite",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: full remains belowfullscale",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: body remains",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: supporting strike",
+      "pass": true
+    },
+    {
+      "test": "Upright Pluck@96000: strike decaysbeforebody",
+      "pass": true
+    },
+    {
+      "test": "wind roleordering@44100",
+      "pass": true
+    },
+    {
+      "test": "wind roleordering@48000",
+      "pass": true
+    },
+    {
+      "test": "wind roleordering@96000",
+      "pass": true
+    }
+  ],
+  "commands": [
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-44100-r0",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-44100-r1",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-44100-r2",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-48000-r0",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-48000-r1",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-48000-r2",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-96000-r0",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-96000-r1",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Flute-96000-r2",
+      "--preset",
+      "Flute",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-44100-r0",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-44100-r1",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-44100-r2",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-48000-r0",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-48000-r1",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-48000-r2",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-96000-r0",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-96000-r1",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Breathy-Flute-96000-r2",
+      "--preset",
+      "Breathy Flute",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "67",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "0.75",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-44100-r0",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-44100-r1",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-44100-r2",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-48000-r0",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-48000-r1",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-48000-r2",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-96000-r0",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-96000-r1",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Harp-96000-r2",
+      "--preset",
+      "Harp",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-44100-r0",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-44100-r1",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-44100-r2",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-48000-r0",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-48000-r1",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-48000-r2",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-96000-r0",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-96000-r1",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Kalimba-96000-r2",
+      "--preset",
+      "Kalimba",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "60",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-44100-r0",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-44100-r1",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-44100-r2",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-48000-r0",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-48000-r1",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-48000-r2",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-96000-r0",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-96000-r1",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Sine-Bass-96000-r2",
+      "--preset",
+      "Sine Bass",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-44100-r0",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-44100-r1",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-44100-r2",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "44100",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-48000-r0",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-48000-r1",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-48000-r2",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "48000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-96000-r0",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-96000-r1",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "1"
+    ],
+    [
+      "build-w06-sample-rates/capture-snapshot",
+      "--out",
+      "build-w06-sample-rates/captures/Upright-Pluck-96000-r2",
+      "--preset",
+      "Upright Pluck",
+      "--wav",
+      "--rate",
+      "96000",
+      "--note",
+      "48",
+      "--velocity",
+      ".8",
+      "--pressure",
+      "0",
+      "--hold",
+      "1.2",
+      "--tail",
+      "0",
+      "--rank",
+      "2"
+    ]
+  ]
+}

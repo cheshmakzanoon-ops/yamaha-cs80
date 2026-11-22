@@ -1,0 +1,101 @@
+{
+  "assignment": 35,
+  "status": "DRAFT_READY_NOT_INSTALLED",
+  "binary_source_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "build_run_id": 45042166237,
+  "revision": "2026.11.1",
+  "tag": "presets-2026.11.1",
+  "publication_target": "Current default-branch publication commit, or the preserved exact target of an existing matching prerelease. Separate from the exact binary source in all artifacts.",
+  "permissions": {
+    "contents": "write",
+    "actions": "read"
+  },
+  "normal_permission_basis": "Release creation targets current main with ordinary contents:write. It does not attempt to obtain workflow-write permission or create a historical workflow-changing tag with GITHUB_TOKEN.",
+  "guards": [
+    "Exact source/run and main push in this repository",
+    "Six successful jobs with exact required test/validator/package steps",
+    "Binary source ancestor and docs/README/exact publisher-only comparison; reject truncated comparison and source renames",
+    "All five artifact API source identities, sizes and SHA-256 digests",
+    "Complete inner manifests and source/revision/JUCE/run metadata",
+    "All native payload binary headers",
+    "24 WAVs,117seconds,32hashes,final301-programinventory,rawfloatfinite/headroom/duration/metric checks",
+    "Existing tag, notes and asset identity preserved; no asset/tag delete or replacement",
+    "Publish a draft only after all seven release assets are present with matching digest,size,state"
+  ],
+  "local_validation": {
+    "test_methods_passed": 10,
+    "synthetic_platform_shapes": 4,
+    "metadata_rejection_variants_per_platform": 4,
+    "audition_wavs_verified": 24,
+    "audition_seconds": 117,
+    "audition_hashes": 32,
+    "audition_source_run_mismatch_rejections": 2,
+    "yaml_parse": "PASS",
+    "python_ast": "PASS"
+  },
+  "api_version": "2022-11-28",
+  "api_version_official_support_end": "2028-03-10",
+  "limits": [
+    "No release creation, tag creation, upload or other remote mutation was performed.",
+    "The fixed final native CI run is still pending; no pending binary artifact was certified.",
+    "Platform fixtures are inert synthetic headers, not native execution.",
+    "Audition replay uses earlier local final-bank source99f5ebd and explicitlocal-assignment-32, never relabeled as final CI.",
+    "Release API permission and real upload response behavior remain operational gates.",
+    "Published asset bytes still need independent credential-free GET/hash verification by root.",
+    "If normal release permission is denied or the workflow misses the completion event, retain pinned verified artifact links; do not increase credentials."
+  ],
+  "official_sources": [
+    {
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_run",
+      "claim": "Default-branch workflow at completion, default-branch GITHUB_SHA, conclusion filter and privileged workflow_run considerations"
+    },
+    {
+      "url": "https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs",
+      "claim": "Skip markers apply only to push and pull_request; do not suppress workflow_run"
+    },
+    {
+      "url": "https://docs.github.com/en/rest/releases/releases#create-a-release",
+      "claim": "Normal contents write and historical workflow-change restriction; draft/prerelease/current-target semantics"
+    },
+    {
+      "url": "https://docs.github.com/en/rest/releases/assets#upload-a-release-asset",
+      "claim": "Raw-byte upload, response digests, duplicate-name conflict"
+    },
+    {
+      "url": "https://docs.github.com/en/rest/about-the-rest-api/api-versions",
+      "claim": "2022-11-28 supported untilMarch10,2028;2026-03-10 also supported; additive fields available across supported versions"
+    }
+  ],
+  "files": [
+    {
+      "path": "publish-preset-refinement.yml",
+      "sha256": "ff0c3521ff6d7ff0e9212505952992ba189b757c6ddd4dcce0029b8bff1613b4",
+      "bytes": 1511
+    },
+    {
+      "path": "publish-preset-refinement.py",
+      "sha256": "236eea0da1a799e0972c80c53ff75af188ed1a39830ae2b0eb3f5a309daa986c",
+      "bytes": 28780
+    },
+    {
+      "path": "test-publish-preset-refinement.py",
+      "sha256": "4b0eb5d5ed6b7a788bc9d37fa7b43a6fb25364716fb05103ae5d2006c849e29c",
+      "bytes": 12150
+    },
+    {
+      "path": "README.md",
+      "sha256": "f8d47644d4c5fb349a2f8b1a74b012051a0f271df0c88150e6173d157b271790",
+      "bytes": 3809
+    },
+    {
+      "path": "tests.log",
+      "sha256": "5a7fd836fb6111e6bcbac3aa70c883d7426bd0256a8076afaa8fba91970160fe",
+      "bytes": 1531
+    },
+    {
+      "path": "audition-replay.json",
+      "sha256": "14cf5506986a497348d0072eabe6d4aea97f0497d2ad0d2f1c6cc3b8a4b6b9bc",
+      "bytes": 530
+    }
+  ]
+}

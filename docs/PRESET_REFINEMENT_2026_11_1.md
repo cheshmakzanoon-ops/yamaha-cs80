@@ -22,7 +22,7 @@ alone cannot identify a binary.
 | --- | --- |
 | Twelve authored refinements | Measured against the frozen baseline; implemented in the factory data |
 | Character regression suite | 128/128 checks pass on the final calibrated bank; baseline fails 16 checks |
-| Final calibrated bank and complete library audit | Two calibration passes converge; all 301 Circuit + 222 Legacy programs, 136 voicing checks and 9 capture-tool tests pass |
+| Final calibrated bank and complete library audit | Two applied calibration passes converge for the twelve refined programs; all 301 Circuit + 222 Legacy programs, 136 voicing checks and 9 capture-tool tests pass |
 | Windows x64 VST3 / Standalone | Pending this revision's CI and archive verification |
 | macOS Apple Silicon VST3 / AU / Standalone | Pending this revision's CI and archive verification |
 | macOS Intel VST3 / AU / Standalone | Pending this revision's CI and archive verification |
@@ -30,6 +30,7 @@ alone cannot identify a binary.
 | 24-excerpt audition artifact | Capture pipeline verified; revised-bank CI artifact pending |
 
 [Evidence index](preset-evidence/2026.11.1/README.md) ·
+[Additional native and performance evidence](preset-evidence/2026.11.1/INTEGRATION.md) ·
 [Evidence provenance](preset-evidence/2026.11.1/provenance.json)
 
 ## What changed and why
@@ -163,7 +164,8 @@ This prevents a local diagnostic mismatch from being hidden by a long average.
 The same 31.4-second, 44.1 kHz fixture covers eleven programs; Ether Pad has its
 separate authoring matrix. No character threshold was relaxed after execution.
 The final integrated run also passes the full 523-program audit, 136 voicing
-checks and nine capture-tool tests. Two level-calibration passes converged;
+checks and nine capture-tool tests. Two applied level-calibration passes converged
+for the twelve refined programs;
 only Ether Pad, Kalimba, Sine Bass and Upright Pluck needed master-level changes.
 These bounds describe the intended roles of these programs,
 not universal hearing thresholds or acoustic-instrument similarity scores.
@@ -178,7 +180,9 @@ correction, leaving 288 complete Circuit records unchanged. All names,
 categories, tags, ordering and host indexes remain stable. All **222 Legacy
 records**, including their complete 190 float bit patterns and metadata, match
 the baseline. All **49,152 tested MIDI addresses**, 830 index lookups, the
-296-parameter host layout and state schema 3 remain unchanged.
+296-parameter application layout and state schema 3 remain unchanged. The native
+VST3 wrapper separately exposes 2,378 parameters including wrapper and MIDI
+parameters; that is a different count from the application layout.
 [Final identity evidence](preset-evidence/2026.11.1/final-identity/summary.json)
 
 Saved sessions, user presets, A/B and browser Revert restore their serialized
@@ -194,6 +198,59 @@ follow-up captures distinguish the closest pairs through register response,
 decay or onset. This is a bounded distinctness check, not a perceptual quality
 score or proof that related instruments should sound unrelated.
 [Distinctness evidence](preset-evidence/2026.11.1/distinctness/summary.json)
+
+## Native recall and host-program qualification
+
+Four native JUCE processor/browser fixtures pass **6,607 checks** covering
+factory selection, serialized sessions, user presets, A/B, Revert and loaded
+identity. A separate external host loads the actual local Linux VST3 module and
+passes **45,115 assertions**: all 523 program names and their order, plus
+**4,560 normalized core-value comparisons** across selection and state restore
+of the twelve revised programs. All 42 revised values agree with the compiled
+factory inventory in both phases. That successful path explicitly synchronizes
+the VST3 controller and processing queue; it is not a named-DAW certification.
+[Native recall](preset-evidence/2026.11.1/native-recall/summary.json) ·
+[External VST3 evidence](preset-evidence/2026.11.1/external-vst3/summary.json)
+
+**A pre-existing Program automation limitation remains.** A Program value sent
+only through the VST3 processing queue does not select the factory sound in
+either tested native module. Installing a component handler, processing audio
+on a separate thread and allowing message-thread time do not change that
+observation; explicitly setting the controller Program value does select it.
+Ordinary parameter automation works in the same diagnostic. The Program
+parameter is advertised as automatable, so the failing queue cannot simply be
+dismissed as invalid. The relevant bridge/processor code and pinned JUCE wrapper
+are unchanged by this preset refinement. The earlier binary's exact compile
+commit is unknown and is not inferred from its workspace. The diagnostic
+records its binary hash and distinguishes its older factory data directly.
+[Program queue diagnosis](preset-evidence/2026.11.1/program-queue/method.txt)
+
+Library selection, controller-based selection and saved-state restoration are
+supported by their passing fixtures. Queue-only Program automation, sample-accurate
+program switching and arbitrary host integration are not certified. No runtime
+or pinned-wrapper repair is claimed in this release; MIDI Program Change routing
+is a separate source path and was not exercised by this external host fixture.
+
+## Additional performance checks
+
+The [additional evidence index](preset-evidence/2026.11.1/INTEGRATION.md) records
+bounded checks of the final bank at representative sample rates, performed
+pressure and velocity, long sustained chords, repeated strikes, phrase gates,
+glide modes and all four arpeggiators. Six refined layer roles retain their
+measured behavior at 44.1, 48 and 96 kHz. Twelve representative slow programs
+remain finite and below full scale through eight-note, ten-second holds with a
+pressure ramp and eight-second release; the highest sample peak is **−2.939 dBFS**.
+All four arpeggiators follow their documented order, timing and source-key gate
+behavior in the recorded free-running fixtures.
+[Sample-rate checks](preset-evidence/2026.11.1/sample-rates/summary.json) ·
+[Long sustained chords](preset-evidence/2026.11.1/long-sustain/summary.json) ·
+[Arpeggiator checks](preset-evidence/2026.11.1/arpeggiators/summary.json)
+
+These records retain each fixture's source or binary identity, event sequence,
+measurement window and limits. The original failed observations remain alongside
+the follow-up results: the old Linux validator crash, an Xvfb setup failure,
+too-short initial ring-release observations and the queue-only Program failures.
+Passing checks are not combined into a subjective sound-quality percentage.
 
 ## Playing instructions and audition delivery
 

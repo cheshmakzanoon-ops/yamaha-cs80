@@ -1,0 +1,16 @@
+[
+  {
+    "flag": "--modern-recall-host-tests",
+    "exit_code": 1,
+    "elapsed_seconds": 2.4518909270045697,
+    "log": "modern-recall-host-tests.log",
+    "command": [
+      "/workspace/scratch/ffe08111d1ce/yamaha-cs80/deps/sysroot/usr/bin/xvfb-run",
+      "-a",
+      "-s",
+      "-screen 0 1920x1200x24",
+      "build-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--modern-recall-host-tests"
+    ]
+  }
+]

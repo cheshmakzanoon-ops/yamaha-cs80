@@ -1,0 +1,140 @@
+{
+  "assignment": 41,
+  "status": "PASS",
+  "blocking_findings": [],
+  "scope": "Independent review of the frozen one-off prerelease publisher before installation; no release or other remote mutation performed.",
+  "contract": {
+    "repository": "cheshmakzanoon-ops/yamaha-cs80",
+    "binary_source": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+    "build_run_id": 45042166237,
+    "tag": "presets-2026.11.1",
+    "platform_bundles": 4,
+    "audition_programs": 24,
+    "publication_tag_target": "Current main documentation/publisher-only descendant; binary SHA remains explicit and separate."
+  },
+  "checks": {
+    "independent_publisher_fixture_methods_passed": 11,
+    "synthetic_platform_shapes_exercised": 4,
+    "independent_mocked_transaction_checks_passed": 9,
+    "actual_completed_baseline_jobs_accepted_for_schema_check": 6,
+    "baseline_api_source_qualification": "Run45029235535 confirms actual API schema and required step names only; it does not qualify the pending final build.",
+    "installed_layout_fixture_methods_passed": 11,
+    "installed_layout_qualification": "New publisher/test scripts copied into a temporary scripts/ directory; unchanged verifier/packaging helper modules referenced by symlink. No network or release operation."
+  },
+  "findings": [
+    "Required run identity, main push origin, six exact successful jobs and all named validation/package steps are checked before any release mutation.",
+    "Selected artifact names must appear exactly once, be unexpired and identify the fixed run/source; actual downloaded size and SHA-256 must match GitHub metadata.",
+    "Existing archive verifier checks source, full payload inventory, hashes, safe structure and format contract; publisher additionally checks revision, run, JUCE, SOURCE.txt and native binary headers.",
+    "Audition verification requires exact calibrated inventory,24 named programs,117seconds,32 hashes, actual WAV structure and samples, and factory parameter/controller/timing identity.",
+    "Cross-origin redirects remove authorization; mutation redirects fail. Artifact members are bounded and not executed.",
+    "Only documentation and three explicitly named publisher files may differ from binary source; source ancestry and comparison truncation are guarded.",
+    "No release is created until all five artifact payloads verify. Seven assets are verified before a draft becomes public; existing tags/assets are never moved, deleted or replaced.",
+    "Matching published release is a no-op; matching partial draft resumes missing assets; incomplete published or mismatching existing releases are refused."
+  ],
+  "operational_notes": [
+    "Keep main stable through first publication. If it advances after the event SHA was captured, the publisher intentionally refuses. A fresh workflow_dispatch uses the new SHA; rerunning the same stale event does not refresh GITHUB_SHA.",
+    "GitHub token permission success, final-run artifacts and public release GET checks remain operational gates. No future run or unrelated release is authorized by this fixed workflow."
+  ],
+  "limits": [
+    "All transaction tests use a fake API and mocked payload-verifier return values; separate independently executed fixtures exercise real synthetic archives and refusal helpers.",
+    "The author separately exercised the real local24-WAV fixture. This review inspected that result and code but did not repeat the same11-million-sample traversal.",
+    "No claim is made that the pending platform build or actual release upload has succeeded."
+  ],
+  "input_sha256": {
+    "build-w07-durable-release/publish-preset-refinement.py": "236eea0da1a799e0972c80c53ff75af188ed1a39830ae2b0eb3f5a309daa986c",
+    "build-w07-durable-release/publish-preset-refinement.yml": "ff0c3521ff6d7ff0e9212505952992ba189b757c6ddd4dcce0029b8bff1613b4",
+    "build-w07-durable-release/test-publish-preset-refinement.py": "bea54b37394502785117bbb2cc5a869775c24489962e2d26c13d1b97343fc60a",
+    ".github/workflows/build.yml": "a609f613be8876ca0a1b49cf7242723c535603aa419442b4df1f6b128c235e3e",
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "artifacts": {
+    "check_mutation_order.py": "1f7de0c98685814fda8b67440b6c621ec09fb3b06a9939d22f11552b3340247d",
+    "mutation-order.json": "7d13a70a226520246e527ee4d541432485510562334fa73690abab0844b19917",
+    "independent-fixtures.log": "d11848ca73b6d89be19f645c270475eace3bfb0e9d4bd6e776724607bf82c7be",
+    "actual-baseline-jobs.json": "9924cc819175002ae6d16abfce26cc17d37eed9a0c44280e51e2a258d6001fec",
+    "integrated-fixtures.log": "ade033de0a91756dfc262b2d17951e6a1431b06caa9bac92ae3f38a1be14894a",
+    "installed-layout-fixtures.log": "43023f0026b26176d54aea1626f44b15a02541a0c22ffd8ea7c124e1783ca3bb"
+  },
+  "actual_api_job_schema": [
+    {
+      "id": 137263916044,
+      "name": "Linux / VST3 + Standalone",
+      "conclusion": "success",
+      "required_steps": [
+        "Build",
+        "Capture curated preset auditions",
+        "Package Linux VST3 and Standalone",
+        "Test",
+        "Upload Linux install bundle",
+        "Upload curated preset auditions",
+        "Verify configured JUCE source"
+      ]
+    },
+    {
+      "id": 137263946049,
+      "name": "Windows / VST3 + Standalone",
+      "conclusion": "success",
+      "required_steps": [
+        "Build",
+        "Package Windows VST3 and Standalone",
+        "Test",
+        "Upload Windows install bundle",
+        "Verify configured JUCE source"
+      ]
+    },
+    {
+      "id": 137263954862,
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "conclusion": "success",
+      "required_steps": [
+        "Build",
+        "Package native macOS VST3, AU and Standalone",
+        "Test",
+        "Upload native macOS install bundle",
+        "Validate AU with pluginval",
+        "Validate AU with pluginval GUI",
+        "Validate VST3 with pluginval",
+        "Verify configured JUCE source"
+      ]
+    },
+    {
+      "id": 137263916796,
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "conclusion": "success",
+      "required_steps": [
+        "Build",
+        "Package native macOS VST3, AU and Standalone",
+        "Test",
+        "Upload native macOS install bundle",
+        "Validate AU with pluginval",
+        "Validate AU with pluginval GUI",
+        "Validate VST3 with pluginval",
+        "Verify configured JUCE source"
+      ]
+    },
+    {
+      "id": 137263915334,
+      "name": "pluginval / Linux VST3 (strictness 10)",
+      "conclusion": "success",
+      "required_steps": [
+        "Validate GUI state regression seed 0x2da72db",
+        "Validate VST3 GUI under Xvfb",
+        "Validate VST3 headless"
+      ]
+    },
+    {
+      "id": 137263953664,
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "conclusion": "success",
+      "required_steps": [
+        "Validate VST3 headless",
+        "Validate state regression seed 0x5037a0c"
+      ]
+    }
+  ],
+  "changes_by_reviewer": [
+    "Integrated nine independent transaction-order/resumption checks as one additional method in draft test-publish-preset-refinement.py at root request. Publisher implementation and workflow unchanged.",
+    "Workflow already runs offline fixtures before --publish."
+  ]
+}

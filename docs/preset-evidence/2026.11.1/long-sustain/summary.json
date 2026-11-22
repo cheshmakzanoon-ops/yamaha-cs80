@@ -1,0 +1,647 @@
+{
+  "assignment": 39,
+  "status": "PASS",
+  "library_revision": "2026.11.1",
+  "probe_compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "probe_compile_flags": [
+    "-std=c++20",
+    "-O2",
+    "-I",
+    "src"
+  ],
+  "repository_head_at_summary": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "source_qualification": "The exact local static library and complete inventory hashes identify the rendered final calibrated bank. Repository HEAD may include subsequent packaging/documentation changes; this is not a CI-produced binary.",
+  "selection": "Twelve representatives with amp attacks of at least 1.15 seconds in one rank: the longest attack cases plus broad family coverage, the late-filter Sweep Pad, and the explicitly requested Slow Pad, Cathedral Pad and Ether Pad. The five newly widened ensembles already have a separate chord audit and are excluded. This is not every slow factory program.",
+  "conditions": {
+    "sample_rate": 48000,
+    "note_on_seconds": 0,
+    "notes": [
+      36,
+      43,
+      48,
+      52,
+      55,
+      60,
+      64,
+      67
+    ],
+    "velocity": 0.9,
+    "channel": 1,
+    "note_off_seconds": 10,
+    "total_seconds": 18,
+    "pressure": "0 through one second; linear ramp to 1 from one to three seconds, delivered every 10 ms; remains at 1 through the held segment and entire release.",
+    "factory_parameter_overrides": [],
+    "render_block_maximum_frames": 128,
+    "windows_seconds": {
+      "early": [
+        0,
+        2
+      ],
+      "late_held": [
+        7,
+        10
+      ],
+      "tail": [
+        17,
+        18
+      ]
+    },
+    "measurement": "Sample peak and stereo mean-power RMS. Quarter-second nonoverlapping windows. Active voices sampled after each render block. Voice-retirement timing therefore has at most 128-frame granularity."
+  },
+  "captures": 12,
+  "generated_seconds": 216,
+  "checks": 96,
+  "failures": 0,
+  "bounds": {
+    "maximum_peak_dbfs": -2.93945042645,
+    "nonfinite_samples": 0,
+    "over_full_scale_samples": 0,
+    "minimum_tail_decline_db": 53.561304791,
+    "highest_tail_rms_dbfs": -78.7240942619,
+    "latest_voice_retirement_seconds": 16.82,
+    "all_reached_eight_and_held_eight": true,
+    "all_voices_retired": true,
+    "programs_with_higher_peak_after_two_seconds": 11
+  },
+  "results": [
+    {
+      "name": "Deep Space",
+      "peak_dbfs": -6.53450203858,
+      "peak_seconds": 8.48922916667,
+      "early_peak_dbfs": -12.373410657,
+      "later_held_peak_dbfs": -6.53450203858,
+      "release_peak_dbfs": -17.279502987,
+      "early_rms_dbfs": -26.0969279985,
+      "late_rms_dbfs": -20.4073911506,
+      "tail_rms_dbfs": -108.058309051,
+      "late_minus_early_db": 5.68953684795,
+      "tail_minus_late_db": -87.6509179005,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 16.82,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 497,
+        "category": "FX",
+        "amp_attacks_seconds": [
+          1.79999995,
+          2.70000005
+        ],
+        "filter_attacks_seconds": [
+          0.0250000004,
+          2.79999995
+        ],
+        "amp_releases_seconds": [
+          5.5,
+          4.80000019
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Deep Space",
+        "begin_seconds": "5.5",
+        "end_seconds": "5.75",
+        "rms_dbfs": "-16.5746262615",
+        "peak_dbfs": "-8.39217300527",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Sci-Fi Drone",
+      "peak_dbfs": -11.9502238448,
+      "peak_seconds": 3.853,
+      "early_peak_dbfs": -13.8234768512,
+      "later_held_peak_dbfs": -11.9502238448,
+      "release_peak_dbfs": -17.6580428906,
+      "early_rms_dbfs": -28.4571634238,
+      "late_rms_dbfs": -25.1627894709,
+      "tail_rms_dbfs": -78.7240942619,
+      "late_minus_early_db": 3.29437395284,
+      "tail_minus_late_db": -53.561304791,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 14.34,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 486,
+        "category": "FX",
+        "amp_attacks_seconds": [
+          1.10000002,
+          2
+        ],
+        "filter_attacks_seconds": [
+          1.60000002,
+          2.4000001
+        ],
+        "amp_releases_seconds": [
+          3.5,
+          2.79999995
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Sci-Fi Drone",
+        "begin_seconds": "8.75",
+        "end_seconds": "9",
+        "rms_dbfs": "-24.2474125285",
+        "peak_dbfs": "-11.9678113147",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Brass Crescendo",
+      "peak_dbfs": -2.93945042645,
+      "peak_seconds": 7.7470625,
+      "early_peak_dbfs": -7.40783976219,
+      "later_held_peak_dbfs": -2.93945042645,
+      "release_peak_dbfs": -7.68500150613,
+      "early_rms_dbfs": -20.9129863399,
+      "late_rms_dbfs": -16.3308750517,
+      "tail_rms_dbfs": -102.572036983,
+      "late_minus_early_db": 4.58211128821,
+      "tail_minus_late_db": -86.2411619315,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 11.5253333333,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 244,
+        "category": "Brass",
+        "amp_attacks_seconds": [
+          1.60000002,
+          1.95000005
+        ],
+        "filter_attacks_seconds": [
+          1.70000005,
+          2.04999995
+        ],
+        "amp_releases_seconds": [
+          1.20000005,
+          1
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Brass Crescendo",
+        "begin_seconds": "7.5",
+        "end_seconds": "7.75",
+        "rms_dbfs": "-15.1604555637",
+        "peak_dbfs": "-2.93945042645",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Low Drone",
+      "peak_dbfs": -4.21788139344,
+      "peak_seconds": 3.60916666667,
+      "early_peak_dbfs": -6.3692986238,
+      "later_held_peak_dbfs": -4.21788139344,
+      "release_peak_dbfs": -10.989261329,
+      "early_rms_dbfs": -18.8027388521,
+      "late_rms_dbfs": -15.8680042219,
+      "tail_rms_dbfs": -300.0,
+      "late_minus_early_db": 2.9347346302,
+      "tail_minus_late_db": -284.131995778,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 15.768,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 305,
+        "category": "Pads",
+        "amp_attacks_seconds": [
+          1.04999995,
+          1.54999995
+        ],
+        "filter_attacks_seconds": [
+          1.20000005,
+          1.79999995
+        ],
+        "amp_releases_seconds": [
+          4.5,
+          3.70000005
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Low Drone",
+        "begin_seconds": "7.25",
+        "end_seconds": "7.5",
+        "rms_dbfs": "-14.6994703231",
+        "peak_dbfs": "-5.68814018711",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Evolving Pad",
+      "peak_dbfs": -4.91668788446,
+      "peak_seconds": 8.4799375,
+      "early_peak_dbfs": -5.66764531114,
+      "later_held_peak_dbfs": -4.91668788446,
+      "release_peak_dbfs": -9.17492947321,
+      "early_rms_dbfs": -18.1276848625,
+      "late_rms_dbfs": -17.1106109601,
+      "tail_rms_dbfs": -81.9055774718,
+      "late_minus_early_db": 1.01707390235,
+      "tail_minus_late_db": -64.7949665117,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 14.6453333333,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 293,
+        "category": "Pads",
+        "amp_attacks_seconds": [
+          0.600000024,
+          1.5
+        ],
+        "filter_attacks_seconds": [
+          1.39999998,
+          2.79999995
+        ],
+        "amp_releases_seconds": [
+          3.0999999,
+          3.70000005
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Evolving Pad",
+        "begin_seconds": "1.25",
+        "end_seconds": "1.5",
+        "rms_dbfs": "-15.7150943663",
+        "peak_dbfs": "-5.66764531114",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Sweep Riser",
+      "peak_dbfs": -10.9582265555,
+      "peak_seconds": 3.79497916667,
+      "early_peak_dbfs": -13.9920829825,
+      "later_held_peak_dbfs": -10.9582265555,
+      "release_peak_dbfs": -16.2727609296,
+      "early_rms_dbfs": -27.375348982,
+      "late_rms_dbfs": -25.6045113984,
+      "tail_rms_dbfs": -300.0,
+      "late_minus_early_db": 1.77083758362,
+      "tail_minus_late_db": -274.395488602,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 12.2526666667,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 500,
+        "category": "FX",
+        "amp_attacks_seconds": [
+          0.75,
+          1.39999998
+        ],
+        "filter_attacks_seconds": [
+          5,
+          5.5
+        ],
+        "amp_releases_seconds": [
+          1.79999995,
+          1.20000005
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Sweep Riser",
+        "begin_seconds": "4.25",
+        "end_seconds": "4.5",
+        "rms_dbfs": "-24.5779593923",
+        "peak_dbfs": "-11.8743102838",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Night Pad",
+      "peak_dbfs": -5.14580206412,
+      "peak_seconds": 7.36477083333,
+      "early_peak_dbfs": -5.54228411835,
+      "later_held_peak_dbfs": -5.14580206412,
+      "release_peak_dbfs": -9.94922369735,
+      "early_rms_dbfs": -18.574681213,
+      "late_rms_dbfs": -17.0572007034,
+      "tail_rms_dbfs": -82.4361216728,
+      "late_minus_early_db": 1.51748050954,
+      "tail_minus_late_db": -65.3789209694,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 15.7753333333,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 310,
+        "category": "Pads",
+        "amp_attacks_seconds": [
+          0.899999976,
+          1.39999998
+        ],
+        "filter_attacks_seconds": [
+          1.29999995,
+          1.89999998
+        ],
+        "amp_releases_seconds": [
+          4,
+          4.5999999
+        ],
+        "volume": 0.967000008
+      },
+      "loudest_window": {
+        "name": "Night Pad",
+        "begin_seconds": "7.25",
+        "end_seconds": "7.5",
+        "rms_dbfs": "-15.5062575184",
+        "peak_dbfs": "-5.14580206412",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Cathedral Pad",
+      "peak_dbfs": -3.43744071255,
+      "peak_seconds": 2.3225625,
+      "early_peak_dbfs": -6.04051972811,
+      "later_held_peak_dbfs": -3.43744071255,
+      "release_peak_dbfs": -6.89743820156,
+      "early_rms_dbfs": -19.5150085442,
+      "late_rms_dbfs": -15.793933508,
+      "tail_rms_dbfs": -82.1699760338,
+      "late_minus_early_db": 3.72107503624,
+      "tail_minus_late_db": -66.3760425258,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 16.668,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 303,
+        "category": "Pads",
+        "amp_attacks_seconds": [
+          0.850000024,
+          1.39999998
+        ],
+        "filter_attacks_seconds": [
+          1.10000002,
+          0.00999999978
+        ],
+        "amp_releases_seconds": [
+          4.69999981,
+          5.19999981
+        ],
+        "volume": 0.971000016
+      },
+      "loudest_window": {
+        "name": "Cathedral Pad",
+        "begin_seconds": "6.75",
+        "end_seconds": "7",
+        "rms_dbfs": "-15.3194750357",
+        "peak_dbfs": "-4.69813373409",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Ether Pad",
+      "peak_dbfs": -4.9034103943,
+      "peak_seconds": 3.4501875,
+      "early_peak_dbfs": -8.40450733666,
+      "later_held_peak_dbfs": -4.9034103943,
+      "release_peak_dbfs": -9.53585978836,
+      "early_rms_dbfs": -19.6813221539,
+      "late_rms_dbfs": -16.9197982987,
+      "tail_rms_dbfs": -84.4367808528,
+      "late_minus_early_db": 2.76152385513,
+      "tail_minus_late_db": -67.5169825541,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 14.9726666667,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 306,
+        "category": "Pads",
+        "amp_attacks_seconds": [
+          0.649999976,
+          1.25
+        ],
+        "filter_attacks_seconds": [
+          0.00999999978,
+          1.70000005
+        ],
+        "amp_releases_seconds": [
+          3,
+          4
+        ],
+        "volume": 0.768000007
+      },
+      "loudest_window": {
+        "name": "Ether Pad",
+        "begin_seconds": "8.75",
+        "end_seconds": "9",
+        "rms_dbfs": "-16.7709695019",
+        "peak_dbfs": "-7.78368860276",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Brass Pad Swell",
+      "peak_dbfs": -5.13474468918,
+      "peak_seconds": 9.4510625,
+      "early_peak_dbfs": -7.46030619177,
+      "later_held_peak_dbfs": -5.13474468918,
+      "release_peak_dbfs": -9.65228741111,
+      "early_rms_dbfs": -19.6541697894,
+      "late_rms_dbfs": -17.2432974564,
+      "tail_rms_dbfs": -82.2792897372,
+      "late_minus_early_db": 2.41087233295,
+      "tail_minus_late_db": -65.0359922808,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 12.53,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 238,
+        "category": "Brass",
+        "amp_attacks_seconds": [
+          0.949999988,
+          1.25
+        ],
+        "filter_attacks_seconds": [
+          1.14999998,
+          1.54999995
+        ],
+        "amp_releases_seconds": [
+          2,
+          1.70000005
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Brass Pad Swell",
+        "begin_seconds": "7.75",
+        "end_seconds": "8",
+        "rms_dbfs": "-16.331664686",
+        "peak_dbfs": "-5.69109547639",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Sweep Pad",
+      "peak_dbfs": -5.32882481023,
+      "peak_seconds": 1.10120833333,
+      "early_peak_dbfs": -5.32882481023,
+      "later_held_peak_dbfs": -5.41728064783,
+      "release_peak_dbfs": -12.0209299327,
+      "early_rms_dbfs": -18.7203996706,
+      "late_rms_dbfs": -17.3668823332,
+      "tail_rms_dbfs": -81.9194798725,
+      "late_minus_early_db": 1.35351733745,
+      "tail_minus_late_db": -64.5525975393,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 14.8253333333,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 286,
+        "category": "Pads",
+        "amp_attacks_seconds": [
+          0.699999988,
+          1.20000005
+        ],
+        "filter_attacks_seconds": [
+          3,
+          3.9000001
+        ],
+        "amp_releases_seconds": [
+          3.29999995,
+          3.79999995
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Sweep Pad",
+        "begin_seconds": "1",
+        "end_seconds": "1.25",
+        "rms_dbfs": "-15.4938352271",
+        "peak_dbfs": "-5.32882481023",
+        "active_voices": "8"
+      }
+    },
+    {
+      "name": "Slow Pad",
+      "peak_dbfs": -3.588352302,
+      "peak_seconds": 3.99610416667,
+      "early_peak_dbfs": -5.04669902679,
+      "later_held_peak_dbfs": -3.588352302,
+      "release_peak_dbfs": -10.6682644338,
+      "early_rms_dbfs": -18.5211964708,
+      "late_rms_dbfs": -16.6913909425,
+      "tail_rms_dbfs": -82.0228281657,
+      "late_minus_early_db": 1.82980552831,
+      "tail_minus_late_db": -65.3314372232,
+      "nonfinite": 0,
+      "over_full_scale": 0,
+      "max_active_voices": 8,
+      "held_min_active_voices": 8,
+      "final_active_voices": 0,
+      "retired_seconds": 14.7053333333,
+      "checks": 8,
+      "failures": 0,
+      "factory_metadata": {
+        "host_index": 282,
+        "category": "Pads",
+        "amp_attacks_seconds": [
+          0.720000029,
+          1.14999998
+        ],
+        "filter_attacks_seconds": [
+          1.04999995,
+          1.54999995
+        ],
+        "amp_releases_seconds": [
+          3,
+          3.70000005
+        ],
+        "volume": 1
+      },
+      "loudest_window": {
+        "name": "Slow Pad",
+        "begin_seconds": "7.25",
+        "end_seconds": "7.5",
+        "rms_dbfs": "-15.398105883",
+        "peak_dbfs": "-4.30524317131",
+        "active_voices": "8"
+      }
+    }
+  ],
+  "input_sha256": {
+    "build-audit/libcs80_core.a": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+    "build-audit/inventory-final.json": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+    "src/core/FactoryPresets.h": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81",
+    "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+    "src/core/CuratedLibrary.inc": "f89ae54e9386d1e12b5b945b1f60f7e1e4667d79e91c5a63afcc63111e3aecf8",
+    "src/core/CuratedLibraryLevels.inc": "cb1f5689e7cfc58034241f2d8f4892cc70bde4530232defe5838bc1e5e89365e",
+    "src/core/curated/Pads.inc": "bfef354a1f795b335201a1f4ceec81ef643fdd6a5fb190a0f63f07838a6bd75d",
+    "src/core/curated/Brass.inc": "064a3933a286cf316715229946909347200fab96242350e9e4f73531dacdf529",
+    "src/core/curated/Fx.inc": "5480939ebfcd3c42596bf0e3bd5aab408cd590db1c59db0b580adc2bbcbf8638"
+  },
+  "output_sha256": {
+    "probe.cpp": "c985e9ec9aeea0ce876ed62b9ba0f7aeb9f0b4c53469aff7931fd0a76ec1a7ec",
+    "probe": "ce7ebddee64af0ef76ea9a160abb378a2422ae3b98cd6edb0289bf5372aef74e",
+    "results.csv": "bb29c6576463eddb6baa21b279e00391ac68a1db05dea585b5ff1dd02c8ec1c7",
+    "windows.csv": "b193e4dc5f6863bbfc33e5eab2f9d19cad213ad2e541d7546c784b1fc2db777c",
+    "run.log": "2fc3c98b66c44d7de6393931ef129a8a0c2aeeaddfe59f5a7496cd22cdaf8d03",
+    "analyze.py": "df6371d08723b9bb024ac4df6ecfcdd3643e81db4b9e26a30d5ed0814a5dd8b0"
+  },
+  "limitations": [
+    "This is one deterministic eight-note chord at one velocity, sample rate and pressure history. It does not prove universal no-clipping behavior or DAW compatibility.",
+    "The early and late windows differ in both envelope stage and pressure. Their RMS difference is a combined performance observation, not isolated envelope gain.",
+    "Zero active voices is not a claim of digital silence; the output floor/effects can remain.",
+    "The logarithmic reporting floor is -300 dBFS for RMS at or below 1e-15; it is not an acoustic noise measurement.",
+    "No raw audio files are persisted; the probe measures every generated sample and reproduces the matrix from the identified bank.",
+    "The measurements do not establish acoustic-instrument identity, calibrated CS-80 equivalence or a listening verdict."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checks": [
+    "failed job blocks every mutation",
+    "duplicate artifact blocks every mutation",
+    "fifth payload failure blocks every mutation",
+    "all five payloads verify before draft creation; seven assets precede publication",
+    "five artifact payloads are uploaded unchanged",
+    "matching published release is a no-op",
+    "incomplete published release is refused without mutation",
+    "matching partial draft resumes one missing asset without replacement",
+    "existing mismatched asset is refused without mutation"
+  ],
+  "count": 9,
+  "qualification": "Entire API and payload validators mocked; actual package-verifier tests separately executed. No network or release writes."
+}

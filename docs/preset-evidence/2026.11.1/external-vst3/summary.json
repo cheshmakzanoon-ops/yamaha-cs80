@@ -1,0 +1,528 @@
+{
+  "assignment": 44,
+  "status": "PASS_FOR_CONTROLLER_SELECTION_AND_STATE_RESTORE",
+  "generated_utc": "2026-11-22T16:27:12.131416+00:00",
+  "frozen_source_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "observed_head": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+  "qualification": "The local Linux VST3 was compiled before publication; the checked DSP/preset source is identical to frozen final be460b0. This is not a verification of a downloaded release asset.",
+  "sources_match_frozen_commit": true,
+  "library_revision": "2026.11.1",
+  "module": {
+    "path": "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+    "bytes": 17326728,
+    "sha256": "82eb87ac9e8562f2201b8c4e0b3328224ea44d87c4fd102f44e481f6739a46b2"
+  },
+  "native_program_count": 523,
+  "all_native_names_and_order_match": true,
+  "native_parameter_count": 2378,
+  "native_parameter_breakdown": {
+    "application_layout_controls": 296,
+    "wrapper_program_and_bypass": 2,
+    "midi_cc_emulation_controls": 2080,
+    "basis": "2378 measured from native controller; 296 application controls and 16 x 130 MIDI controls identified from the repository layout contract and pinned JUCE source."
+  },
+  "program_control": {
+    "id": 1886548852,
+    "id_hex": "0x70727374",
+    "flags": 32769,
+    "flags_hex": "0x8001",
+    "flag_names": [
+      "kCanAutomate",
+      "kIsProgramChange"
+    ],
+    "step_count": 522
+  },
+  "verification": {
+    "raw_process_exit": 0,
+    "checks": 45115,
+    "failures": 0,
+    "revised_programs": 12,
+    "core_parameters_per_program": 190,
+    "phases": [
+      "load",
+      "restore"
+    ],
+    "value_comparisons": 4560,
+    "changed_values_in_revision": 42,
+    "changed_value_phase_comparisons": 84,
+    "expected_values_float32_match_final_inventory": true,
+    "normalized_tolerance": 1e-06,
+    "max_load_error": 2.9802322387695312e-08,
+    "max_restore_error": 4.470348358154297e-08,
+    "max_roundtrip_error": 1.4901161193847656e-08,
+    "max_changed_value_error": 0.0
+  },
+  "selection_sequence": [
+    "Create actual native component and controller; connect both IConnectionPoint interfaces.",
+    "Set Program through IEditController::setParamNormalized(index/522); send matching offset-zero IParameterChanges in an active zero-frame IAudioProcessor::process call.",
+    "Read IComponent::getState; transfer with IEditController::setComponentState; inspect native values and save processor stream.",
+    "Select Init Circuit at index 522 using the same controller-plus-queue path; confirm its index.",
+    "Restore IComponent::setState, refresh native controller from processor state, confirm original index and all 190 core values."
+  ],
+  "fixture": {
+    "sample_rate": 48000,
+    "sample_type": "float32",
+    "process_mode": "kRealtime",
+    "max_block_size": 4096,
+    "selection_process_frames": 0,
+    "display_unset": true,
+    "native_editor_opened": false,
+    "notes_or_midi_program_change_sent": false,
+    "host_context": "nullptr",
+    "component_handler_installed": false,
+    "host_message_loop": false
+  },
+  "plain_api_qualification": "JUCE core Param::toPlain returns the normalized argument. parameters.csv actual_plain is raw native normalizedParamToPlain API output, not physical hertz/pan/etc. expected_plain is the source physical value. saved-state-physical.csv reads real physical values from processor XML; comparisons use normalized units.",
+  "programs": [
+    {
+      "name": "Flute",
+      "host_index": "374",
+      "native_parameter_count": "2378",
+      "state_bytes": "14442",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "1.4901161193847656e-08",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Breathy Flute",
+      "host_index": "375",
+      "native_parameter_count": "2378",
+      "state_bytes": "14433",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "1.4901161193847656e-08",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Harp",
+      "host_index": "392",
+      "native_parameter_count": "2378",
+      "state_bytes": "14305",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "0",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Kalimba",
+      "host_index": "400",
+      "native_parameter_count": "2378",
+      "state_bytes": "14270",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "1.4901161193847656e-08",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Sine Bass",
+      "host_index": "406",
+      "native_parameter_count": "2378",
+      "state_bytes": "14245",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "0",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Upright Pluck",
+      "host_index": "420",
+      "native_parameter_count": "2378",
+      "state_bytes": "14316",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "0",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Ether Pad",
+      "host_index": "306",
+      "native_parameter_count": "2378",
+      "state_bytes": "14358",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "0",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Noir Swell Brass",
+      "host_index": "226",
+      "native_parameter_count": "2378",
+      "state_bytes": "14530",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "0",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Brass Ensemble 16",
+      "host_index": "234",
+      "native_parameter_count": "2378",
+      "state_bytes": "14479",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "0",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Neo-Noir Pad",
+      "host_index": "301",
+      "native_parameter_count": "2378",
+      "state_bytes": "14470",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "0",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Arctic Pad",
+      "host_index": "311",
+      "native_parameter_count": "2378",
+      "state_bytes": "14498",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "2.9802322387695312e-08",
+      "max_roundtrip_error": "0",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    },
+    {
+      "name": "Synthwave Chords",
+      "host_index": "328",
+      "native_parameter_count": "2378",
+      "state_bytes": "14430",
+      "max_load_error": "2.9802322387695312e-08",
+      "max_restore_error": "4.4703483581542969e-08",
+      "max_roundtrip_error": "1.4901161193847656e-08",
+      "program_id": "1886548852",
+      "program_flags": "32769"
+    }
+  ],
+  "saved_states": [
+    {
+      "name": "Flute",
+      "host_index": 374,
+      "file": "374-state.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Breathy Flute",
+      "host_index": 375,
+      "file": "375-state.bin",
+      "bytes": 14433,
+      "sha256": "2adb73618099e69c2ab6a58f4d4334ce26d2e123e15146c6a64dd25b48390405",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Harp",
+      "host_index": 392,
+      "file": "392-state.bin",
+      "bytes": 14305,
+      "sha256": "38ddbf4b10151f896b8604983d92447c54e5f631efcdea698f096d28826e5f8a",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Kalimba",
+      "host_index": 400,
+      "file": "400-state.bin",
+      "bytes": 14270,
+      "sha256": "f34c24edc9854a02c90e0b7dd26812606343b8b6e4ccd7f97167d9121146bba1",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Sine Bass",
+      "host_index": 406,
+      "file": "406-state.bin",
+      "bytes": 14245,
+      "sha256": "ba4c7cdacac2089d571e921a726f6f862b1f1adb5a51ea705eb70e625e8686b8",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Upright Pluck",
+      "host_index": 420,
+      "file": "420-state.bin",
+      "bytes": 14316,
+      "sha256": "f11542c682c5d4445db84e5692af51287552c0b2ba6dd9a7733f3b864035c872",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Ether Pad",
+      "host_index": 306,
+      "file": "306-state.bin",
+      "bytes": 14358,
+      "sha256": "112f42d99250538c4c046cf8ddf2a923004a26e77281af9c8160ddf4ba00fee1",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Noir Swell Brass",
+      "host_index": 226,
+      "file": "226-state.bin",
+      "bytes": 14530,
+      "sha256": "1e8b889f05e39b00f143c1dc70463fc1db2fef183ed91b9fd5ea1dcf789e26bc",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Brass Ensemble 16",
+      "host_index": 234,
+      "file": "234-state.bin",
+      "bytes": 14479,
+      "sha256": "8559ace8d6a179db6785fde3facab8e2285aad7ecb6b4567efeca3119327000f",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Neo-Noir Pad",
+      "host_index": 301,
+      "file": "301-state.bin",
+      "bytes": 14470,
+      "sha256": "2ffac67f7ff8ef97847295c8f5bdbcd7e51d04088ff14410fc5c105e4f9be54f",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Arctic Pad",
+      "host_index": 311,
+      "file": "311-state.bin",
+      "bytes": 14498,
+      "sha256": "f37341caeb3ddaf8482048e8e523bc8cf404e77a091b41397b86c12db29196b5",
+      "state_schema_version": "3"
+    },
+    {
+      "name": "Synthwave Chords",
+      "host_index": 328,
+      "file": "328-state.bin",
+      "bytes": 14430,
+      "sha256": "496bdb967f185a84abe3067587918c41e80f134d5ed11e1a7618a740d17572d5",
+      "state_schema_version": "3"
+    }
+  ],
+  "queue_only_observation": {
+    "status": "UNRESOLVED_FIXTURE_OR_SUPPORTED_PATH_DEFECT",
+    "original_path": "initial-audio-queue-only",
+    "exact_reproduction_path": "queue-only-reproduction",
+    "raw_exit": 1,
+    "checks": 44592,
+    "failures": 1336,
+    "source_and_executable_reproduced": true,
+    "original_and_reproduction_outputs_identical": {
+      "parameters.csv": true,
+      "programs.csv": true,
+      "run.log": true
+    },
+    "invocation": "Active zero-frame process() with one Program queue point at offset 0 and value index/522; then processor state transferred to connected controller. No preceding controller setParamNormalized call.",
+    "observed_states": [
+      {
+        "requested_name": "Flute",
+        "requested_host_index": 374,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Breathy Flute",
+        "requested_host_index": 375,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Harp",
+        "requested_host_index": 392,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Kalimba",
+        "requested_host_index": 400,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Sine Bass",
+        "requested_host_index": 406,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Upright Pluck",
+        "requested_host_index": 420,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Ether Pad",
+        "requested_host_index": 306,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Noir Swell Brass",
+        "requested_host_index": 226,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Brass Ensemble 16",
+        "requested_host_index": 234,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Neo-Noir Pad",
+        "requested_host_index": 301,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Arctic Pad",
+        "requested_host_index": 311,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      },
+      {
+        "requested_name": "Synthwave Chords",
+        "requested_host_index": 328,
+        "observed_preset_name": "Brass Swell I",
+        "observed_factory_index": 222,
+        "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e",
+        "bytes": 14278,
+        "sample_physical_values": {
+          "mix": 0.5,
+          "volume": 0.6200000047683716,
+          "ch1_pan": 0.0,
+          "ch2_pan": 0.0,
+          "ch2_noise": 0.0
+        }
+      }
+    ],
+    "interpretation": "This fixture did not select the requested factory program. Because Program advertises kCanAutomate, this observation is not dismissed as an invalid or unsupported protocol. This task does not distinguish an incomplete host fixture from a supported-path defect. Controller selection passing does not resolve queue-only behavior."
+  },
+  "limits": [
+    "No named DAW was launched or certified.",
+    "MIDI Program Change routing was not exercised.",
+    "No rendered-audio or acoustic fidelity claim follows from this state/mapping probe.",
+    "No cross-platform binary or downloaded release archive tested here.",
+    "Restore is within the stated normalized tolerance, not bit-identical.",
+    "The initial queue-only result remains open for separate focused diagnosis."
+  ],
+  "source_and_input_sha256": {
+    "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+    "src/core/FactoryPresets.h": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81",
+    "src/core/Params.h": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2",
+    "src/plugin/PluginProcessor.cpp": "95f709baf46b9a83ce44725473aaed00aaa43b9e117deee8a72f29c362dd52d1",
+    "src/plugin/PluginProcessorLibrary.cpp": "28223afbb07ff6e342cd6ff292ae8c8b7b4f6e07e76ad6ff5a59ac118422326e",
+    "src/plugin/HostAutomationBridge.h": "f716257b6364fb38136999d2a85adbe3c810baa97ce6474249546cb2a7cdceae",
+    "tests/Vst3AutomationTests.cpp": "762d127bb45d9a0d8c65e2f662f19acb4eeb87cf959e8ffa2454f5cec64e4f19",
+    "deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp": "16031325b31be2e32b23689f07338bd6c631941475b9bbf87d176d1f2565c202",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/vst/ivsteditcontroller.h": "a1aba69d8d411fdae6f7bee422fa9eb747a312a9fb517ff3436ee06d45a4e051",
+    "build-audit/libcs80_core.a": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+    "build-audit/inventory-final.json": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+    "build-w05-final-identity/summary.json": "31890a447a15a3c737c5e473879a3fbf0eac46c2293da222bc724e4920947278"
+  }
+}

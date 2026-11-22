@@ -1,0 +1,136 @@
+{
+  "assignment": 30,
+  "status": "PASS",
+  "library_revision": "2026.11.1",
+  "sample_rates": [
+    44100,
+    48000,
+    96000
+  ],
+  "case_count": 18,
+  "capture_count": 54,
+  "generated_seconds": 56.699999999999996,
+  "checks_passed": 183,
+  "checks_total": 183,
+  "full_capture_peak_dbfs": -19.29618680063252,
+  "nonfinite_captures": 0,
+  "over_full_scale_samples_all_ranks": 0,
+  "worst_reconstruction_relative_db": -142.7576238167634,
+  "role_comparisons": [
+    {
+      "name": "Flute",
+      "role_window_seconds": [
+        0.3,
+        0.5
+      ],
+      "role_db_by_rate": {
+        "44100": -26.70641193491841,
+        "48000": -26.852471385334656,
+        "96000": -26.816564840118197
+      },
+      "max_role_span_db": 0.1460594504162458,
+      "late_db_by_rate": {
+        "44100": -27.050533028303235,
+        "48000": -26.933035745577286,
+        "96000": -26.960696656344286
+      }
+    },
+    {
+      "name": "Breathy Flute",
+      "role_window_seconds": [
+        0.3,
+        0.5
+      ],
+      "role_db_by_rate": {
+        "44100": -19.477193507608778,
+        "48000": -19.616846421315348,
+        "96000": -19.5853760343441
+      },
+      "max_role_span_db": 0.13965291370656985,
+      "late_db_by_rate": {
+        "44100": -19.78211022192025,
+        "48000": -19.66647349584702,
+        "96000": -19.701341754945922
+      }
+    },
+    {
+      "name": "Harp",
+      "role_window_seconds": [
+        0.004,
+        0.02
+      ],
+      "role_db_by_rate": {
+        "44100": -18.082756474369535,
+        "48000": -18.074356967232823,
+        "96000": -18.209126882472525
+      },
+      "max_role_span_db": 0.13476991523970128,
+      "late_db_by_rate": {
+        "44100": -38.92341948930568,
+        "48000": -38.923160684479406,
+        "96000": -38.94558915801203
+      }
+    },
+    {
+      "name": "Kalimba",
+      "role_window_seconds": [
+        0.004,
+        0.02
+      ],
+      "role_db_by_rate": {
+        "44100": -18.2795643017954,
+        "48000": -18.310179379346607,
+        "96000": -18.297688360849907
+      },
+      "max_role_span_db": 0.030615077551207293,
+      "late_db_by_rate": {
+        "44100": -112.94719259365596,
+        "48000": -112.95846670008697,
+        "96000": -112.99856086127133
+      }
+    },
+    {
+      "name": "Sine Bass",
+      "role_window_seconds": [
+        0.004,
+        0.02
+      ],
+      "role_db_by_rate": {
+        "44100": -23.878233554612386,
+        "48000": -23.87635954433028,
+        "96000": -24.62627330594963
+      },
+      "max_role_span_db": 0.7499137616193501,
+      "late_db_by_rate": {
+        "44100": -143.29766880145178,
+        "48000": -143.24272797070066,
+        "96000": -142.9446624554535
+      }
+    },
+    {
+      "name": "Upright Pluck",
+      "role_window_seconds": [
+        0.004,
+        0.02
+      ],
+      "role_db_by_rate": {
+        "44100": -21.42624980636424,
+        "48000": -21.559555559640096,
+        "96000": -20.392320354113096
+      },
+      "max_role_span_db": 1.1672352055269997,
+      "late_db_by_rate": {
+        "44100": -110.64751456007967,
+        "48000": -110.62351376490243,
+        "96000": -110.68537145560558
+      }
+    }
+  ],
+  "hashes": {
+    "capture_binary": "8b26fb16d929d87c2991bb308b0e32cef91ffd33a4fd13da16c15ce063bbb03d",
+    "inventory": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+    "script": "1fa8dccec92601670a6c66bd5d2b18cb4f62ce0493c2bda6205fa0aa51d092b7"
+  },
+  "conditions": "Final calibrated actual factory values; one held note; velocity0.8, pressure0, no release tail. Rank isolation changes only actual mix control, with float32-weighted reconstruction. All outputs unnormalized stereo IEEEfloat. Core role thresholds match the existing character suite, with velocity0.8 for this matrix rather than its strike velocity0.9.",
+  "scope": "Tests air/strike roles at representative notes across rates, not arbitrary notes/polyphony or perceptual identity. Sample-rate waveforms are not expected to be bit-identical; noise and filter responses may differ."
+}

@@ -1,0 +1,48 @@
+# Assignment 46: independent packaging review
+
+**PASS. No production changes or blocking findings.**
+
+Reviewed the packaging and installation-guide changes between
+`99f5ebd6b71283a56810d801df89c49ef62f3512` and final binary source
+`be460b0b93bdcb8dce5eb8925b18b72706b25e19`.
+
+The existing notice/guide suite passes seven methods, including actual payload
+bytes in four synthetic platform archive shapes. The existing packager
+self-test passes all 46 fixture/rejection checks. The four archive shapes use
+inert binary headers; the Linux notice fixture separately compiles harmless
+ELF inputs without executing them. These checks do not qualify native downloads.
+
+The independent audit makes 108 bounded assertions, including every original
+and generated target in the three real project guides. All 47 links match:
+43 point to the exact source commit, two remain local links between bundled
+guides, and two external links remain unchanged. Every referenced repository
+file exists at that commit. Additional small fixtures cover CRLF input,
+encoded Unicode and spaces, the renamed distribution guide, query strings,
+fragments, a four-backtick example containing three backticks, and rejection
+of paths outside the repository or containing encoded backslashes.
+
+The use of POSIX/URI path operations is independent of the host filesystem's
+separator. This review does not claim execution on native Windows or macOS.
+The guide transformer covers the inline-link syntax used by these documents;
+it is not a general Markdown parser. Third-party notice paths still copy raw
+bytes, and the archive fixture verifies those bytes and their manifest hashes.
+
+The 67-sample Circuit Standard latency wording agrees with existing core and
+native test contracts. Source cleanliness, full source SHA, workflow SHA and
+the pinned JUCE provenance checks remain unchanged. The separate publisher
+commit changes only its three named files after the binary source.
+
+## Reproduce
+
+From the repository root, with the reviewed files matching the binary source:
+
+```bash
+python scripts/test-packaging-notices.py > build-w10-packaging-review/notices-tests.log 2>&1
+python scripts/package-ci-artifacts.py --self-test > build-w10-packaging-review/package-self-test.log 2>&1
+python build-w10-packaging-review/review.py > build-w10-packaging-review/review.log
+```
+
+`summary.json` records all assertions, the complete before/after link map,
+input hashes, limitations and hashes of the reproduction script and fixture
+logs. No network call, release upload, native product execution or pending
+CI-artifact verification is performed by these commands.

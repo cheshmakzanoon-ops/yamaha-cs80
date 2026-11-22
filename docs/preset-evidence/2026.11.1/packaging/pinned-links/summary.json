@@ -1,0 +1,65 @@
+{
+  "assignment": 38,
+  "status": "PASS",
+  "scope": "Generated CI project-guide Markdown links only. No source Markdown, binary, DSP, release URL or third-party notice edits.",
+  "head_before_commit": "85b0b547ea11dfb15335dc3720bf59761abf29ff",
+  "fixture_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "tests": {
+    "notice_guide_methods_passed": 7,
+    "synthetic_platform_archives": 4,
+    "packager_fixture_rejection_checks_passed": 46,
+    "git_diff_check": "PASS"
+  },
+  "real_guide_payload_link_audit": [
+    {
+      "source": "docs/INSTALL_AND_QUICKSTART.md",
+      "destination": "INSTALL_AND_QUICKSTART.md",
+      "source_sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+      "payload_sha256": "4fa91afa96f4bd994af27dd45d287a9a6bcd430815b77ebfed74fe51f08b1b94",
+      "payload_bytes": 15885,
+      "links": 7,
+      "local_guides": [
+        "PRESET_GUIDE.md"
+      ],
+      "commit_pinned_link_count": 4,
+      "external_links_preserved": [
+        "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+        "https://support.apple.com/en-ie/102239"
+      ]
+    },
+    {
+      "source": "docs/PRESET_GUIDE.md",
+      "destination": "PRESET_GUIDE.md",
+      "source_sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+      "payload_sha256": "7ba98a3628e78f2f1fe459bcf1fa8e47e19dda6e5eef46c785f8dd0e2704d3d8",
+      "payload_bytes": 17675,
+      "links": 39,
+      "local_guides": [
+        "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing"
+      ],
+      "commit_pinned_link_count": 38,
+      "external_links_preserved": []
+    },
+    {
+      "source": "docs/CI_DISTRIBUTION_STATUS.md",
+      "destination": "DISTRIBUTION_STATUS.md",
+      "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+      "payload_sha256": "90429e8f93f121efb74ad451cd54ab3b7de7da55081bf4bf61a9b66de50f05ce",
+      "payload_bytes": 3707,
+      "links": 1,
+      "local_guides": [],
+      "commit_pinned_link_count": 1,
+      "external_links_preserved": []
+    }
+  ],
+  "source_hashes": {
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+    "scripts/test-packaging-notices.py": "961e22ca665ec8f6fcad8abce672931beb802c9e9f65dcb4ea52a005b476ba47"
+  },
+  "limitations": [
+    "The simple transform supports inline links used in the current project guides; it is not a general Markdown parser.",
+    "Third-party notices remain verbatim.",
+    "The four platform archive cases use inert synthetic products, not downloaded CI binaries.",
+    "The real-guide link audit uses an explicitly synthetic full SHA. Native publication will use the clean CI checkout SHA through read_ci_context."
+  ]
+}

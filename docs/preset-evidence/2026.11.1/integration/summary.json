@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "assignment": 48,
+  "status": "COMPLETED_LOCAL_VERIFICATION_ARCHIVED_FINAL_CI_AND_PUBLICATION_NOT_CERTIFIED",
+  "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "binary_source_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "installed_publisher_commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+  "pending_final_build_run_id": 45044040694,
+  "final_inventory_sha256": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+  "final_core_library_sha256": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+  "local_capture_executable_sha256": "8b26fb16d929d87c2991bb308b0e32cef91ffd33a4fd13da16c15ce063bbb03d",
+  "preserved_prior_manifest_entries": 81,
+  "archive_groups": [
+    {
+      "assignment": 26,
+      "source_directory": "build-w05-linux-validator",
+      "archive_directory": "validator-diagnostics",
+      "phase": "Historical native CI diagnostic and narrow wrapper coverage correction",
+      "qualification": "Historical d0c3c23 build/run, not final binary source. The post-SUCCESS Linux SIGSEGV is not fixed by the diagnostic coverage change; one subsequent job rerun passed with different random seeds."
+    },
+    {
+      "assignment": 31,
+      "source_directory": "build-w06-diagnostic-review",
+      "archive_directory": "validator-diagnostics/independent-review",
+      "phase": "Independent local review of diagnostic-only workflow change",
+      "qualification": "Required native validation gates were retained; this is local fixture coverage, not proof that the historical crash was resolved."
+    },
+    {
+      "assignment": 29,
+      "source_directory": "build-w05-native-recall",
+      "archive_directory": "native-recall",
+      "phase": "Final calibrated bank through local JUCE host recall fixtures",
+      "qualification": "6607 checks, four direct native children exit 0. The initial Xvfb wrapper exit 1 was independently reproduced with /bin/true; it was isolated as setup failure rather than suppressed as a plug-in test failure."
+    },
+    {
+      "assignment": 30,
+      "source_directory": "build-w06-sample-rates",
+      "archive_directory": "sample-rates",
+      "phase": "Local final-bank layer-role measurements at three sample rates",
+      "qualification": "183 checks, 54 captures, 56.7 seconds, 44.1/48/96 kHz; bounded six-program layer-role checks, not every program or host."
+    },
+    {
+      "assignment": 32,
+      "source_directory": "build-w06-final-auditions",
+      "archive_directory": "final-auditions-local",
+      "phase": "Locally produced final-bank audition artifact with explicit local provenance",
+      "qualification": "24 WAVs/117 seconds/32 manifest entries were measured locally at 99f5ebd6b71283a56810d801df89c49ef62f3512, run local-assignment-32. WAVs and duplicate full inventory are omitted from this compact archive. This is not a final CI or release download result."
+    },
+    {
+      "assignment": 33,
+      "source_directory": "build-w06-performance-controls",
+      "archive_directory": "performance-controls",
+      "phase": "Performed pressure, vibrato and velocity controls on the final calibrated bank",
+      "qualification": "60 checks, ten captures/64 seconds. Per-sample telemetry and raw audio are omitted; compact measurements, event history and exact sources are retained."
+    },
+    {
+      "assignment": 34,
+      "source_directory": "build-w06-release-plan",
+      "archive_directory": "packaging/revision-parser",
+      "phase": "Local package revision parser correction and fixture verification",
+      "qualification": "Six notice tests and 46 packaging fixtures; inert fixtures do not certify native binaries."
+    },
+    {
+      "assignment": 36,
+      "source_directory": "build-w07-install-guide",
+      "archive_directory": "packaging/install-guide",
+      "phase": "Source-backed installation and startup guide correction",
+      "qualification": "Default startup, actual latency calculation, Pure/Studio behavior and recall wording are source-backed documentation checks."
+    },
+    {
+      "assignment": 37,
+      "source_directory": "build-w07-modern-role",
+      "archive_directory": "modern-roles",
+      "phase": "Static final-bank modern-control role audit",
+      "qualification": "24 modern-tagged programs, 46 static checks. Studio exposes controls; Circuit effect routing is already active independently of UI visibility."
+    },
+    {
+      "assignment": 38,
+      "source_directory": "build-w07-packaged-links",
+      "archive_directory": "packaging/pinned-links",
+      "phase": "Local packaged-guide source-link correction",
+      "qualification": "Three packaged project guides rewritten to exact-source links; local and external targets retained and license notices unchanged."
+    },
+    {
+      "assignment": 35,
+      "source_directory": "build-w07-durable-release",
+      "archive_directory": "publisher-review/draft-authoring",
+      "phase": "Historical publisher draft and local fixture evidence",
+      "qualification": "The historical summary correctly retains DRAFT_READY_NOT_INSTALLED at its recorded stage. The publisher was subsequently installed by dd78677, with expanded tests; neither stage certifies a real release transaction."
+    },
+    {
+      "assignment": 41,
+      "source_directory": "build-w08-publisher-review",
+      "archive_directory": "publisher-review",
+      "phase": "Independent local publisher transaction and archive fixture review",
+      "qualification": "Eleven local test methods after nine transaction checks were integrated. Synthetic package headers and mocked API transactions are separate from final native CI, release creation, real upload and public download verification."
+    },
+    {
+      "assignment": 39,
+      "source_directory": "build-w08-long-sustain",
+      "archive_directory": "long-sustain",
+      "phase": "Long held eight-note final-bank chords with full pressure",
+      "qualification": "96 checks, twelve programs/216 seconds, 10-second holds and eight-second releases. All voices retire within the observed horizon; this does not assert universal digital silence."
+    },
+    {
+      "assignment": 40,
+      "source_directory": "build-w08-rapid-strikes",
+      "archive_directory": "rapid-strikes",
+      "phase": "Repeated final-bank strike programs with matched omission controls",
+      "qualification": "96 checks, eight captures/96 seconds. Released-slot reuse and matched omitted onsets are exercised; this is not a stress test with more than eight simultaneously held physical voices."
+    },
+    {
+      "assignment": 42,
+      "source_directory": "build-w09-phrase-gates",
+      "archive_directory": "phrase-gates",
+      "phase": "Final ring sustain phrase gates and glide roles, including initial shorter observation",
+      "qualification": "Final 100 checks, twelve captures/86 seconds. Initial four-second ring windows failed six voice-retirement checks; eight-second ring windows passed without changing factory settings, event histories or acceptance conditions. Final pitch-grid arithmetic also explicitly promotes frequency to double. The initial source and measurements remain archived."
+    },
+    {
+      "assignment": 43,
+      "source_directory": "build-w09-arp-roles",
+      "archive_directory": "arpeggiators",
+      "phase": "Four final-bank arpeggiator role and MIDI sustain fixtures",
+      "qualification": "64 checks, four captures/36 seconds. Rates, gates, note selection, source-key release and CC64 response are bounded engine observations."
+    },
+    {
+      "assignment": 44,
+      "source_directory": "build-w09-vst3-boundary",
+      "archive_directory": "external-vst3",
+      "phase": "Actual local Linux VST3 controller/state boundary; separate unresolved queue-only fixture",
+      "qualification": "45115 assertions and 4560 normalized core-value comparisons pass for controller selection plus the program queue, with state restore. Queue-only attempts return exit 1/1336 failures and were unresolved in the original assignment-44 record. The separately archived completed assignment47 establishes a bounded pre-existing controller dependency; no production fix is claimed. Raw normalizedParamToPlain results are normalized values; physical values are taken separately from native saved-state XML. No downloaded asset, named DAW or cross-platform host is certified."
+    },
+    {
+      "assignment": 45,
+      "source_directory": "build-w09-claims-review",
+      "archive_directory": "claims-review",
+      "phase": "Independent claim and then-current 81-file dossier review",
+      "qualification": "The 17 checks and 81-file integrity result apply to the dossier before this extension. This archive extension has a separate integrity pass; it does not relabel the earlier review as a review of new files."
+    },
+    {
+      "assignment": 46,
+      "source_directory": "build-w10-packaging-review",
+      "archive_directory": "packaging/independent-review",
+      "phase": "Independent final-source package fixtures and packaged guide links",
+      "qualification": "108 independent assertions, seven notice tests and 46 package fixtures; 47 guide links comprise 43 exact-source, two local and two external links. No final native package or publication result is certified."
+    },
+    {
+      "assignment": 47,
+      "source_directory": "build-w10-program-queue",
+      "archive_directory": "program-queue",
+      "phase": "Completed bounded native VST3 Program queue diagnosis; no production fix or queue-only certification",
+      "qualification": "26 checked logical observation groups across two local Linux modules, five modes each and 48 state snapshots. Queue-only Program selection remains unselected with a handler, 128-frame audio processing, separate audio thread and 250 ms wait, while ordinary queued volume changes apply. Controller synchronization loads Flute. Diagnostic exit0 records successful observation, not passing queue-only selection. The prior-workspace binary compile commit is unknown; unchanged relevant source and differing pre-refinement Flute values are separately documented. No production fix, named DAW or final CI/release certification."
+    }
+  ],
+  "operational_status": {
+    "publisher": "Historical installed dd78677 and local fixture/review evidence target the superseded be460b0/run45042166237 contract. Publication candidate is now6d3cc220/run45044040694; these records do not certify that the publisher has been retargeted, final CI has passed or any asset has been released/download-verified.",
+    "vst3_queue_only": "Completed assignment47 establishes pre-existing controller-dependent Program selection in two local Linux modules and bounded handler/thread/wait controls. Process-only Program queues fail to load the requested program; explicit controller synchronization succeeds. Original assignment44 failures remain unchanged. No production fix or arbitrary DAW/timing compatibility claim.",
+    "historical_linux_crash": "Original post-SUCCESS SIGSEGV retained. One changed-seed diagnostic rerun passed; no DSP or crash fix is claimed."
+  },
+  "measurement_scope": "Software preset roles, state/control behavior, bounded rendered signals and fixture integrity. No acoustic instrument equivalence, original-hardware calibration, listening-panel verdict, named-DAW certification or universal host/controller guarantee.",
+  "binary_source_commit_role": "Source of archived local verification, superseded as publication candidate; not a statement that the newer candidate has passed CI.",
+  "publication_candidate_source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "publication_transition": {
+    "publication_candidate_source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "pending_build_run_id": 45044040694,
+    "superseded_source_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+    "superseded_build_run_id": 45042166237,
+    "superseded_run_status": "cancelled",
+    "reason": "A one-file frozen Linux workflow fingerprint fixture correction supersedes the previous publication candidate. No runtime or preset source changed in this correction.",
+    "changed_paths_since_installed_publisher_commit": [
+      "scripts/test-pluginval-macos-download.py"
+    ],
+    "fixture_file_sha256": "724d979b435bbcf4d46ca1d15c983f3e35a340ba2ad9a0a1786327f6b39909e4",
+    "status": "PENDING_BUILD_AND_PUBLICATION_NOT_CERTIFIED",
+    "source_of_update": "Parent integration instruction and locally available Git commit6d3cc220; no final CI result asserted."
+  }
+}

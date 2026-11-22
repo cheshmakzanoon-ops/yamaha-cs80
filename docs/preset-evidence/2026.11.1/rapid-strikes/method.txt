@@ -1,0 +1,92 @@
+# Rapid articulation check — assignment 40
+
+**PASS: 96/96 checks, eight 12-second captures, 96 seconds of generated audio.**
+No production source or factory parameters were changed. The revised Harp,
+Kalimba, Sine Bass and Upright Pluck accept repeated strikes while prior notes
+are releasing, retain headroom through the allocation stress sequence, and
+retire every voice after the final release.
+
+## Factory sequence results
+
+| Program | MIDI base | Peak, dBFS | Released-slot reuses in the 16-onset burst | All voices retired by |
+| --- | ---: | ---: | ---: | ---: |
+| Harp | 60 | −9.4997 | 16 | 6.618 s |
+| Kalimba | 60 | −10.1608 | 11 | 4.6193 s |
+| Sine Bass | 48 | −16.8667 | 8 | 3.9787 s |
+| Upright Pluck | 48 | −15.4147 | 8 | 4.1140 s |
+
+Each factory performance accepts all 32 requested note-ons and reaches the
+eight-voice limit. The matched controls accept 31 note-ons because one is
+intentionally omitted. All eight captures have zero nonfinite samples, zero
+samples above full scale, and zero final active or held voices. The highest
+peak across factory and controls is −8.6744 dBFS. The final half-second RMS is
+below the diagnostic's −300 dBFS reporting floor.
+
+The burst exercises reuse of **released but still-active** slots. It does not
+claim more than eight physical voices or the stealing of held notes. Harp
+already retains eight active release tails when the burst begins, so all
+sixteen burst onsets reuse released circuits.
+
+## Performed conditions
+
+At 48 kHz, channel 1 and zero pressure, the unchanged factory presets perform:
+
+1. Four same-note strikes at 0, 0.45, 0.90 and 1.35 seconds, alternating velocity
+   0.3 and 0.95 and holding each for 120 ms.
+2. A twelve-note arpeggio starting at 2.00 seconds, with 90 ms between onsets,
+   35 ms holds, alternating velocities, and offsets
+   0/4/7/12/7/4/0/7/12/16/12/7 semitones from the base note.
+3. A separate sixteen-onset allocation stress burst starting at 3.60 seconds,
+   with 10 ms between onsets, 6 ms holds and offsets
+   0/2/4/5/7/9/11/12/14/16/17/19/16/14/12/11.
+4. Individual note-offs finish at 3.756 seconds. A releasing All Notes Off at
+   4.05 seconds is followed by uninterrupted rendering through 12 seconds.
+
+The rapid burst is deliberately faster than a normal musical phrase. It tests
+allocation while releases overlap. All four ordinary repeated strikes develop
+finite, nonzero body and strike envelopes in their first 40 ms. Their running
+mix levels are recorded in `onset-levels.csv`; those levels include earlier
+tails and are not isolated velocity-transfer measurements.
+
+## Matched boundary comparison
+
+Each control begins with the same preset, engine history, rendering blocks and
+events. Only the tenth burst onset, at 3.69 seconds, and its note-off are omitted.
+That onset reuses an active, released slot in all four factory captures.
+
+- Every preceding sample is bit-identical between the pair.
+- The immediate event-sample residual is at most **3.7253 × 10⁻⁹**.
+- The maximum residual during the first millisecond is **8.9594 × 10⁻⁶**.
+- During that millisecond, the residual derivative is at least **60.35 dB**
+  below the control waveform's own maximum derivative.
+- The later residual within the first 6 ms is nonzero in every pair, showing
+  that the additional onset actually contributes sound.
+
+This establishes a bounded, causal onset comparison. It does not treat the
+later, intended pick/ping/click transient as a defect or claim a universal
+perceptual absence of clicks. Allocation histories intentionally diverge after
+the omitted onset; later differences are not interpreted as a local boundary
+test.
+
+## Reproduction and provenance
+
+Run from the repository root, using the final calibrated core library:
+
+```sh
+mkdir -p build-w08-rapid-strikes
+c++ -std=c++20 -O2 -Isrc build-w08-rapid-strikes/probe.cpp build-audit/libcs80_core.a -o build-w08-rapid-strikes/probe
+./build-w08-rapid-strikes/probe > build-w08-rapid-strikes/run.log 2>&1
+python build-w08-rapid-strikes/summarize.py
+```
+
+`summary.json` includes the exact input, executable and evidence hashes, all
+per-capture statistics, envelope checkpoints and boundary measurements. The
+probe hashes raw little-endian float32 audio in memory using the repository's
+SHA-256 helper, then discards it. No raw WAV or PCM files were written.
+
+The local library was compiled before publication with the final sound data.
+Its inventory, library and executable hashes identify the tested artifact;
+this is not an execution of a GitHub Actions-produced plugin or an external
+DAW. Retirement is observed at render-block boundaries, at most 64 host frames
+apart. These results do not establish acoustic-instrument identity or a
+listening-panel quality verdict.

@@ -1,0 +1,625 @@
+{
+  "schema": 1,
+  "assignment": 48,
+  "policy": "Compact completed results from assignments 26 and 29-47. No numeric measurement was recalculated. Reproduction sources are exact originals. Large audio/binaries, full repeated inventories and per-sample controller telemetry are omitted. File-list checksum records describe their original experiment payloads, not the files contained in this compact dossier.",
+  "groups": [
+    {
+      "assignment": 26,
+      "source_directory": "build-w05-linux-validator",
+      "archive_directory": "validator-diagnostics",
+      "phase": "Historical native CI diagnostic and narrow wrapper coverage correction",
+      "qualification": "Historical d0c3c23 build/run, not final binary source. The post-SUCCESS Linux SIGSEGV is not fixed by the diagnostic coverage change; one subsequent job rerun passed with different random seeds.",
+      "files": [
+        "validator-diagnostics/summary.json",
+        "validator-diagnostics/observed-excerpts.txt",
+        "validator-diagnostics/exit-tests.log",
+        "validator-diagnostics/selector-tests.log",
+        "validator-diagnostics/retry-tests.log",
+        "validator-diagnostics/sha256.json"
+      ]
+    },
+    {
+      "assignment": 31,
+      "source_directory": "build-w06-diagnostic-review",
+      "archive_directory": "validator-diagnostics/independent-review",
+      "phase": "Independent local review of diagnostic-only workflow change",
+      "qualification": "Required native validation gates were retained; this is local fixture coverage, not proof that the historical crash was resolved.",
+      "files": [
+        "validator-diagnostics/independent-review/summary.json",
+        "validator-diagnostics/independent-review/shell-fixture.log"
+      ]
+    },
+    {
+      "assignment": 29,
+      "source_directory": "build-w05-native-recall",
+      "archive_directory": "native-recall",
+      "phase": "Final calibrated bank through local JUCE host recall fixtures",
+      "qualification": "6607 checks, four direct native children exit 0. The initial Xvfb wrapper exit 1 was independently reproduced with /bin/true; it was isolated as setup failure rather than suppressed as a plug-in test failure.",
+      "files": [
+        "native-recall/summary.json",
+        "native-recall/run-results.json",
+        "native-recall/modern-recall-host-tests.log",
+        "native-recall/preset-file-recall-tests.log",
+        "native-recall/preset-revert-tests.log",
+        "native-recall/preset-identity-tests.log",
+        "native-recall/attempt0-xvfb-modern-recall-host-tests.log",
+        "native-recall/attempt0-xvfb-results.json",
+        "native-recall/xvfb-true.log",
+        "native-recall/method.txt",
+        "reproduce/build-w05-native-recall/run-native-recall.py"
+      ]
+    },
+    {
+      "assignment": 30,
+      "source_directory": "build-w06-sample-rates",
+      "archive_directory": "sample-rates",
+      "phase": "Local final-bank layer-role measurements at three sample rates",
+      "qualification": "183 checks, 54 captures, 56.7 seconds, 44.1/48/96 kHz; bounded six-program layer-role checks, not every program or host.",
+      "files": [
+        "sample-rates/summary.json",
+        "sample-rates/measurements.json",
+        "sample-rates/capture.log",
+        "sample-rates/run.log",
+        "sample-rates/method.txt",
+        "reproduce/build-w06-sample-rates/verify.py"
+      ]
+    },
+    {
+      "assignment": 32,
+      "source_directory": "build-w06-final-auditions",
+      "archive_directory": "final-auditions-local",
+      "phase": "Locally produced final-bank audition artifact with explicit local provenance",
+      "qualification": "24 WAVs/117 seconds/32 manifest entries were measured locally at 99f5ebd6b71283a56810d801df89c49ef62f3512, run local-assignment-32. WAVs and duplicate full inventory are omitted from this compact archive. This is not a final CI or release download result.",
+      "files": [
+        "final-auditions-local/summary.json",
+        "final-auditions-local/execution.json",
+        "final-auditions-local/capture.log",
+        "final-auditions-local/method.txt",
+        "final-auditions-local/preset-audition/README.txt",
+        "final-auditions-local/preset-audition/SHA256SUMS",
+        "final-auditions-local/preset-audition/provenance.json",
+        "final-auditions-local/preset-audition/source-commit.txt",
+        "final-auditions-local/preset-audition/standard/metrics.csv",
+        "final-auditions-local/preset-audition/refined/metrics.csv",
+        "final-auditions-local/preset-audition/pressure/metrics.csv",
+        "final-auditions-local/preset-audition/slow/metrics.csv",
+        "reproduce/build-w06-final-auditions/verify.py",
+        "reproduce/build-w06-final-auditions/reproduce.py",
+        "reproduce/build-w06-final-auditions/workflow-audition-original.py",
+        "reproduce/build-w06-final-auditions/workflow-audition-local.py"
+      ]
+    },
+    {
+      "assignment": 33,
+      "source_directory": "build-w06-performance-controls",
+      "archive_directory": "performance-controls",
+      "phase": "Performed pressure, vibrato and velocity controls on the final calibrated bank",
+      "qualification": "60 checks, ten captures/64 seconds. Per-sample telemetry and raw audio are omitted; compact measurements, event history and exact sources are retained.",
+      "files": [
+        "performance-controls/summary.json",
+        "performance-controls/captures.csv",
+        "performance-controls/events.csv",
+        "performance-controls/run.log",
+        "performance-controls/analysis.log",
+        "performance-controls/method.txt",
+        "reproduce/build-w06-performance-controls/probe.cpp",
+        "reproduce/build-w06-performance-controls/analyze.py"
+      ]
+    },
+    {
+      "assignment": 34,
+      "source_directory": "build-w06-release-plan",
+      "archive_directory": "packaging/revision-parser",
+      "phase": "Local package revision parser correction and fixture verification",
+      "qualification": "Six notice tests and 46 packaging fixtures; inert fixtures do not certify native binaries.",
+      "files": [
+        "packaging/revision-parser/summary.json",
+        "packaging/revision-parser/changes.diff",
+        "packaging/revision-parser/notices-tests.log",
+        "packaging/revision-parser/package-self-test.log",
+        "packaging/revision-parser/parser-before.txt"
+      ]
+    },
+    {
+      "assignment": 36,
+      "source_directory": "build-w07-install-guide",
+      "archive_directory": "packaging/install-guide",
+      "phase": "Source-backed installation and startup guide correction",
+      "qualification": "Default startup, actual latency calculation, Pure/Studio behavior and recall wording are source-backed documentation checks.",
+      "files": [
+        "packaging/install-guide/summary.json",
+        "packaging/install-guide/changes.diff"
+      ]
+    },
+    {
+      "assignment": 37,
+      "source_directory": "build-w07-modern-role",
+      "archive_directory": "modern-roles",
+      "phase": "Static final-bank modern-control role audit",
+      "qualification": "24 modern-tagged programs, 46 static checks. Studio exposes controls; Circuit effect routing is already active independently of UI visibility.",
+      "files": [
+        "modern-roles/summary.json",
+        "modern-roles/method.txt",
+        "reproduce/build-w07-modern-role/audit.py"
+      ]
+    },
+    {
+      "assignment": 38,
+      "source_directory": "build-w07-packaged-links",
+      "archive_directory": "packaging/pinned-links",
+      "phase": "Local packaged-guide source-link correction",
+      "qualification": "Three packaged project guides rewritten to exact-source links; local and external targets retained and license notices unchanged.",
+      "files": [
+        "packaging/pinned-links/summary.json",
+        "packaging/pinned-links/changes.diff"
+      ]
+    },
+    {
+      "assignment": 35,
+      "source_directory": "build-w07-durable-release",
+      "archive_directory": "publisher-review/draft-authoring",
+      "phase": "Historical publisher draft and local fixture evidence",
+      "qualification": "The historical summary correctly retains DRAFT_READY_NOT_INSTALLED at its recorded stage. The publisher was subsequently installed by dd78677, with expanded tests; neither stage certifies a real release transaction.",
+      "files": [
+        "publisher-review/draft-authoring/summary.json",
+        "publisher-review/draft-authoring/tests.log",
+        "publisher-review/draft-authoring/audition-replay.json",
+        "publisher-review/draft-authoring/method.txt"
+      ]
+    },
+    {
+      "assignment": 41,
+      "source_directory": "build-w08-publisher-review",
+      "archive_directory": "publisher-review",
+      "phase": "Independent local publisher transaction and archive fixture review",
+      "qualification": "Eleven local test methods after nine transaction checks were integrated. Synthetic package headers and mocked API transactions are separate from final native CI, release creation, real upload and public download verification.",
+      "files": [
+        "publisher-review/summary.json",
+        "publisher-review/independent-fixtures.log",
+        "publisher-review/integrated-fixtures.log",
+        "publisher-review/installed-layout-fixtures.log",
+        "publisher-review/mutation-order.json",
+        "reproduce/build-w08-publisher-review/check_mutation_order.py"
+      ]
+    },
+    {
+      "assignment": 39,
+      "source_directory": "build-w08-long-sustain",
+      "archive_directory": "long-sustain",
+      "phase": "Long held eight-note final-bank chords with full pressure",
+      "qualification": "96 checks, twelve programs/216 seconds, 10-second holds and eight-second releases. All voices retire within the observed horizon; this does not assert universal digital silence.",
+      "files": [
+        "long-sustain/summary.json",
+        "long-sustain/results.csv",
+        "long-sustain/windows.csv",
+        "long-sustain/run.log",
+        "long-sustain/analysis.log",
+        "long-sustain/method.txt",
+        "reproduce/build-w08-long-sustain/probe.cpp",
+        "reproduce/build-w08-long-sustain/analyze.py"
+      ]
+    },
+    {
+      "assignment": 40,
+      "source_directory": "build-w08-rapid-strikes",
+      "archive_directory": "rapid-strikes",
+      "phase": "Repeated final-bank strike programs with matched omission controls",
+      "qualification": "96 checks, eight captures/96 seconds. Released-slot reuse and matched omitted onsets are exercised; this is not a stress test with more than eight simultaneously held physical voices.",
+      "files": [
+        "rapid-strikes/summary.json",
+        "rapid-strikes/captures.csv",
+        "rapid-strikes/boundaries.csv",
+        "rapid-strikes/envelopes.csv",
+        "rapid-strikes/events.csv",
+        "rapid-strikes/onset-levels.csv",
+        "rapid-strikes/run.log",
+        "rapid-strikes/method.txt",
+        "reproduce/build-w08-rapid-strikes/probe.cpp",
+        "reproduce/build-w08-rapid-strikes/summarize.py"
+      ]
+    },
+    {
+      "assignment": 42,
+      "source_directory": "build-w09-phrase-gates",
+      "archive_directory": "phrase-gates",
+      "phase": "Final ring sustain phrase gates and glide roles, including initial shorter observation",
+      "qualification": "Final 100 checks, twelve captures/86 seconds. Initial four-second ring windows failed six voice-retirement checks; eight-second ring windows passed without changing factory settings, event histories or acceptance conditions. Final pitch-grid arithmetic also explicitly promotes frequency to double. The initial source and measurements remain archived.",
+      "files": [
+        "phrase-gates/summary.json",
+        "phrase-gates/captures.csv",
+        "phrase-gates/ring-results.csv",
+        "phrase-gates/ring-points.csv",
+        "phrase-gates/glide-results.csv",
+        "phrase-gates/glide-points.csv",
+        "phrase-gates/run.log",
+        "phrase-gates/method.txt",
+        "phrase-gates/initial-4s/run.log",
+        "phrase-gates/initial-4s/captures.csv",
+        "phrase-gates/initial-4s/ring-results.csv",
+        "phrase-gates/initial-4s/ring-points.csv",
+        "phrase-gates/initial-4s/glide-results.csv",
+        "phrase-gates/initial-4s/glide-points.csv",
+        "reproduce/build-w09-phrase-gates/probe.cpp",
+        "reproduce/build-w09-phrase-gates/summarize.py",
+        "reproduce/build-w09-phrase-gates/initial-4s/probe.cpp"
+      ]
+    },
+    {
+      "assignment": 43,
+      "source_directory": "build-w09-arp-roles",
+      "archive_directory": "arpeggiators",
+      "phase": "Four final-bank arpeggiator role and MIDI sustain fixtures",
+      "qualification": "64 checks, four captures/36 seconds. Rates, gates, note selection, source-key release and CC64 response are bounded engine observations.",
+      "files": [
+        "arpeggiators/summary.json",
+        "arpeggiators/results.csv",
+        "arpeggiators/transitions.csv",
+        "arpeggiators/run.log",
+        "arpeggiators/method.txt",
+        "reproduce/build-w09-arp-roles/probe.cpp",
+        "reproduce/build-w09-arp-roles/summarize.py"
+      ]
+    },
+    {
+      "assignment": 44,
+      "source_directory": "build-w09-vst3-boundary",
+      "archive_directory": "external-vst3",
+      "phase": "Actual local Linux VST3 controller/state boundary; separate unresolved queue-only fixture",
+      "qualification": "45115 assertions and 4560 normalized core-value comparisons pass for controller selection plus the program queue, with state restore. Queue-only attempts return exit 1/1336 failures and were unresolved in the original assignment-44 record. The separately archived completed assignment47 establishes a bounded pre-existing controller dependency; no production fix is claimed. Raw normalizedParamToPlain results are normalized values; physical values are taken separately from native saved-state XML. No downloaded asset, named DAW or cross-platform host is certified.",
+      "files": [
+        "external-vst3/summary.json",
+        "external-vst3/run-result.json",
+        "external-vst3/run.log",
+        "external-vst3/programs.csv",
+        "external-vst3/parameters.csv",
+        "external-vst3/changed-values.csv",
+        "external-vst3/saved-state-physical.csv",
+        "external-vst3/native-programs.tsv",
+        "external-vst3/SHA256SUMS",
+        "external-vst3/method.txt",
+        "external-vst3/initial-audio-queue-only/run-result.json",
+        "external-vst3/initial-audio-queue-only/run.log",
+        "external-vst3/initial-audio-queue-only/parameters.csv",
+        "external-vst3/initial-audio-queue-only/programs.csv",
+        "external-vst3/queue-only-reproduction/run-result.json",
+        "external-vst3/queue-only-reproduction/run.log",
+        "reproduce/build-w09-vst3-boundary/probe.cpp",
+        "reproduce/build-w09-vst3-boundary/reproduce.py",
+        "reproduce/build-w09-vst3-boundary/summarize.py",
+        "reproduce/build-w09-vst3-boundary/initial-audio-queue-only/probe.cpp"
+      ]
+    },
+    {
+      "assignment": 45,
+      "source_directory": "build-w09-claims-review",
+      "archive_directory": "claims-review",
+      "phase": "Independent claim and then-current 81-file dossier review",
+      "qualification": "The 17 checks and 81-file integrity result apply to the dossier before this extension. This archive extension has a separate integrity pass; it does not relabel the earlier review as a review of new files.",
+      "files": [
+        "claims-review/summary.json",
+        "reproduce/build-w09-claims-review/audit.py"
+      ]
+    },
+    {
+      "assignment": 46,
+      "source_directory": "build-w10-packaging-review",
+      "archive_directory": "packaging/independent-review",
+      "phase": "Independent final-source package fixtures and packaged guide links",
+      "qualification": "108 independent assertions, seven notice tests and 46 package fixtures; 47 guide links comprise 43 exact-source, two local and two external links. No final native package or publication result is certified.",
+      "files": [
+        "packaging/independent-review/summary.json",
+        "packaging/independent-review/notices-tests.log",
+        "packaging/independent-review/package-self-test.log",
+        "packaging/independent-review/review.log",
+        "packaging/independent-review/method.txt",
+        "reproduce/build-w10-packaging-review/review.py"
+      ]
+    },
+    {
+      "assignment": 47,
+      "source_directory": "build-w10-program-queue",
+      "archive_directory": "program-queue",
+      "phase": "Completed bounded native VST3 Program queue diagnosis; no production fix or queue-only certification",
+      "qualification": "26 checked logical observation groups across two local Linux modules, five modes each and 48 state snapshots. Queue-only Program selection remains unselected with a handler, 128-frame audio processing, separate audio thread and 250 ms wait, while ordinary queued volume changes apply. Controller synchronization loads Flute. Diagnostic exit0 records successful observation, not passing queue-only selection. The prior-workspace binary compile commit is unknown; unchanged relevant source and differing pre-refinement Flute values are separately documented. No production fix, named DAW or final CI/release certification.",
+      "files": [
+        "program-queue/summary.json",
+        "program-queue/method.txt",
+        "program-queue/compile-command.json",
+        "program-queue/compile.log",
+        "program-queue/source-comparison.json",
+        "program-queue/revised/observations.csv",
+        "program-queue/revised/run-result.json",
+        "program-queue/revised/run.log",
+        "program-queue/prior_workspace/observations.csv",
+        "program-queue/prior_workspace/run-result.json",
+        "program-queue/prior_workspace/run.log",
+        "reproduce/build-w10-program-queue/probe.cpp",
+        "program-queue/omitted-state-hashes.json"
+      ]
+    }
+  ],
+  "repository_source_references": [
+    {
+      "repository_path": ".github/workflows/build.yml",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "a609f613be8876ca0a1b49cf7242723c535603aa419442b4df1f6b128c235e3e",
+      "bytes": 40807,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": ".github/workflows/publish-preset-refinement.yml",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "35fb9045fc784db4d9f4f39e308dc40dabbbd185fd098997d5f62904b31ab976",
+      "bytes": 1502,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/publish-preset-refinement.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "236eea0da1a799e0972c80c53ff75af188ed1a39830ae2b0eb3f5a309daa986c",
+      "bytes": 28780,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/test-publish-preset-refinement.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "bea54b37394502785117bbb2cc5a869775c24489962e2d26c13d1b97343fc60a",
+      "bytes": 20571,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/package-ci-artifacts.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "bytes": 29516,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/verify-ci-bundle.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+      "bytes": 18296,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "src/core/FactoryPresets.cpp",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+      "bytes": 24500,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "src/core/FactoryPresets.h",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81",
+      "bytes": 2851,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "src/core/Params.h",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2",
+      "bytes": 22766,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "src/plugin/PluginProcessor.cpp",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "95f709baf46b9a83ce44725473aaed00aaa43b9e117deee8a72f29c362dd52d1",
+      "bytes": 94410,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "src/plugin/PluginProcessorLibrary.cpp",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "28223afbb07ff6e342cd6ff292ae8c8b7b4f6e07e76ad6ff5a59ac118422326e",
+      "bytes": 22636,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "src/plugin/HostAutomationBridge.h",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "f716257b6364fb38136999d2a85adbe3c810baa97ce6474249546cb2a7cdceae",
+      "bytes": 12411,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "tests/Vst3AutomationTests.cpp",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "762d127bb45d9a0d8c65e2f662f19acb4eeb87cf959e8ffa2454f5cec64e4f19",
+      "bytes": 32871,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/pluginval-diagnostic-log.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "279198b0971b867547942c1f32a8b16bac6c9a11b0646b5c81b406f942d7bc34",
+      "bytes": 1385,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/test-pluginval-diagnostic-log.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "dc85d6da04d4b98e1d7743ed651564473599edc9f0082450704e0a7460cd028a",
+      "bytes": 10985,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/run-pluginval-linux.sh",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+      "bytes": 2542,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/run-pluginval-with-core.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea",
+      "bytes": 7044,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/pluginval-diagnostic-seed.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "32cd26915cbd57286d3cf39319e2b91bb4e88b0ea5ef4aed6026435dab048582",
+      "bytes": 1314,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/test-pluginval-exit-classification.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "ae466f90899b0a09615886458eff7b8dceb6120d8b7989dd0cee77a0d5448d18",
+      "bytes": 6533,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/test-pluginval-retry.sh",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "162e246d24559d144ea82312aaf07557bb5b2be0c4a0e265b0a1d2f7312550e4",
+      "bytes": 3599,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "scripts/test-packaging-notices.py",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "961e22ca665ec8f6fcad8abce672931beb802c9e9f65dcb4ea52a005b476ba47",
+      "bytes": 15700,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "docs/INSTALL_AND_QUICKSTART.md",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+      "bytes": 15481,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "docs/PRESET_GUIDE.md",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+      "bytes": 14109,
+      "working_copy_matches_reference": true
+    },
+    {
+      "repository_path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "commit": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+      "sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+      "bytes": 3606,
+      "working_copy_matches_reference": true
+    }
+  ],
+  "selected_omitted_input_hashes": [
+    {
+      "origin": "build-w05-linux-validator/jobs.json",
+      "bytes": 63977,
+      "sha256": "33cb86792bc78897226db0d3da34e6480d57ec52f129fcfccfee30ae76bbf8d0",
+      "reason": "Full historical API job inventory; compact observed excerpt and original hash are retained."
+    },
+    {
+      "origin": "build-w05-linux-validator/rerun.log",
+      "bytes": 81461,
+      "sha256": "3f8c6b67b86f4f75c0f175600caa5b9df48ccd20954751cb35dce494f8da69ee",
+      "reason": "Full historical job log; compact observed excerpt and original hash are retained."
+    },
+    {
+      "origin": "build-w06-final-auditions/preset-audition/inventory.json",
+      "bytes": 351317,
+      "sha256": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+      "reason": "Duplicate complete final-bank inventory; source and SHA-256 are retained in local audition metadata."
+    },
+    {
+      "origin": "build-w08-publisher-review/actual-baseline-jobs.json",
+      "bytes": 32015,
+      "sha256": "9924cc819175002ae6d16abfce26cc17d37eed9a0c44280e51e2a258d6001fec",
+      "reason": "Full historical API job inventory; required job/step schema is already preserved in the review summary."
+    },
+    {
+      "origin": "build-w09-vst3-boundary/queue-only-reproduction/parameters.csv",
+      "bytes": 324819,
+      "sha256": "a0aa295540b5dc4795a9631466ea41c3f642d01ccb0031be297031289a0bb65e",
+      "reason": "Byte-identical to the archived initial queue-only parameters.csv; exact reproduction status and hashes remain available."
+    },
+    {
+      "origin": "build-w09-vst3-boundary/queue-only-reproduction/programs.csv",
+      "bytes": 499,
+      "sha256": "9925a59c51214de11c3607793f53ae31c10ebd6b21f61450a416d3eae8304774",
+      "reason": "Byte-identical to the archived initial queue-only programs.csv; exact reproduction status and hashes remain available."
+    },
+    {
+      "origin": "build-w09-claims-review/recommended-wording.md",
+      "bytes": 11367,
+      "sha256": "f78d8facd28ea91f1881c56bd8047aaf108cc918c7a759f3d8303e8393004e82",
+      "reason": "Editorial recommendations remain integration-owned; audit summary and exact source are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/pressure_lead_control.csv",
+      "bytes": 59148,
+      "sha256": "fd12e61aedb1789954964b051debb7eca174cff284d4c56351ed1c9fb3c0e501",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/pressure_lead_performed.csv",
+      "bytes": 68022,
+      "sha256": "e4934564e6b97b2d3454b598028d8981349b082571e5e225c2f216c5b7f84e98",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/velocity_keys_control.csv",
+      "bytes": 34340,
+      "sha256": "014dc6c17cd5e2ac78fa5d7f032cc22825fd87c4be145dd7e3ccb7619a7a8530",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/velocity_keys_performed.csv",
+      "bytes": 34340,
+      "sha256": "cb631dbfe661565d66acfe67456da85520976435de5ac4d309f4a8a60e0b696b",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/velocity_lead_control.csv",
+      "bytes": 34203,
+      "sha256": "541adbe05c4e828446edc21fd68343e9d4cf2f22b506120a4bc705c9271c39b6",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/velocity_lead_performed.csv",
+      "bytes": 34195,
+      "sha256": "ecca3822276627f8309f77a430d9c37b362fa2af600e601b2b0915a5b43c1bc6",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/vibrato_lead_control.csv",
+      "bytes": 70348,
+      "sha256": "d30f335970fc6ac94da19ffe42648867ead6b565bc46f8e157a5afdc7a5cb771",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/vibrato_lead_performed.csv",
+      "bytes": 79240,
+      "sha256": "f83fb3874079fda70eb5255d8cd5206237c930289c8f5591ebc0fe87d926045e",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/wah_lead_control.csv",
+      "bytes": 69782,
+      "sha256": "59ff4e2f2d55f1d94a8ff57106478bafd74dd8bcece40e58252b33eb42e4dc72",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    },
+    {
+      "origin": "build-w06-performance-controls/wah_lead_performed.csv",
+      "bytes": 78649,
+      "sha256": "5f23aad15857d55597a410da8c87b158e0043ade4c91fe71ac1314e67790ef14",
+      "reason": "Per-sample telemetry omitted; compact analysis and verbatim generating/analyzing sources are archived."
+    }
+  ],
+  "omitted_artifact_classes": [
+    "WAV and raw float audio",
+    "compiled probes, capture binaries, plug-in modules and static libraries",
+    "native binary saved-state blobs (hashes and extracted physical parameter values are retained)",
+    "duplicate full factory inventories",
+    "redundant exact queue-only repetition readback CSVs",
+    "per-sample performed-control telemetry CSVs",
+    "Assignment47 native state blobs: all48 SHA-256 identities retained in program-queue/omitted-state-hashes.json."
+  ],
+  "reproduction_contract": "Restore each reproduce/build-* folder to the repository root and use the recorded source/core build and input names. Method text is the original author report, with only checkout-prefix normalization if required. Publisher independent review imports build-w07-durable-release/publish-preset-refinement.py: restore that path from the installed scripts/publish-preset-refinement.py reference, whose bytes match the original reviewed implementation. Exact local-audition reproduction explicitly requires checkout 99f5ebd and does not relabel its source as be460b0. For assignment47, restore reproduce/build-w10-program-queue at the repository root; compile using program-queue/compile-command.json and run with the actual module and output paths recorded in the two run-result.json files. The prior-workspace binary exact compile commit is unknown, so its historical behavior is not reproduced merely by checking out a presumed source commit."
+}

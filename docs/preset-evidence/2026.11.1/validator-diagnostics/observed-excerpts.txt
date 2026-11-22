@@ -1,0 +1,19 @@
+=== original failed job ===
+2026-11-22T15:48:49.2715862Z Random seed: 0x5ba7253
+2026-11-22T15:48:51.6496008Z SUCCESS
+2026-11-22T15:48:51.9217670Z ##[error]pluginval failed (exit 139); not eligible for a post-test retry; see pluginval-headless.log
+2026-11-22T15:48:51.9394355Z Local core capture enabled: False; child soft limit: 0
+2026-11-22T15:48:51.9398251Z Original validator termination: PID=2679; raw returncode=-11; kind=signal; signal_number=11; signal_name=SIGSEGV
+=== single diagnostic job rerun ===
+2026-11-22T15:52:14.8807647Z Random seed: 0x50a3104
+2026-11-22T15:52:17.5986151Z SUCCESS
+2026-11-22T15:52:18.0122579Z Random seed: 0x75af02
+2026-11-22T15:52:34.2987328Z SUCCESS
+2026-11-22T15:52:34.5114107Z Random seed: 0x2da72db
+2026-11-22T15:52:50.0913945Z SUCCESS
+2026-11-22T15:52:50.1500510Z Local core capture enabled: False; child soft limit: 0
+2026-11-22T15:52:50.1502348Z Original validator termination: PID=2668; raw returncode=0; kind=exit; exit_code=0
+2026-11-22T15:52:50.1510475Z Local core capture enabled: False; child soft limit: 0
+2026-11-22T15:52:50.1512487Z Original validator termination: PID=2698; raw returncode=0; kind=exit; exit_code=0
+2026-11-22T15:52:50.1517353Z Local core capture enabled: False; child soft limit: 0
+2026-11-22T15:52:50.1519611Z Original validator termination: PID=2740; raw returncode=0; kind=exit; exit_code=0

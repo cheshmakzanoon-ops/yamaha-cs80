@@ -1,0 +1,47 @@
+# Assignment 29: native factory/session/preset recall
+
+All four existing targeted native fixtures passed with process exit 0: **6,607
+checks, zero failures**. They run the actual `Cs80AudioProcessor`, its parameter
+state, serialized sessions, file recall, A/B, factory-program selection and
+browser identity/Revert logic through the JUCE `CS80Snapshots` executable.
+
+| Existing fixture | Checks | Failures |
+| --- | ---: | ---: |
+| Modern/session/preset/A-B, including program library | 2,355 | 0 |
+| User preset file/recall | 2,784 | 0 |
+| Opening-sound Revert | 1,387 | 0 |
+| Loaded preset identity | 81 | 0 |
+
+The fixtures include selected factory programs and compare their host values.
+This is not a native render of every factory program, an external DAW test or
+a VST3 loader test. Full-bank compiled identity and audio checks are recorded
+separately. The local Release executable predates publication; its exact binary
+and relevant source hashes are in `summary.json`.
+
+## Storage and display conditions
+
+The successful runs unset `DISPLAY`, set `JUCE_FONT_PATH` to the installed
+DejaVu font directory, redirect `XDG_CONFIG_HOME` and `CS80_FAVOURITES_FILE`
+inside this diagnostic directory, and use the fixture's existing temporary
+directories for preset writes. These selected fixtures do not require native
+window peers. No source or acceptance condition was changed.
+
+An initial attempt through the provided sysroot `xvfb-run` printed 2,355 checks
+and zero failures but returned 1. The same wrapper returned 1 for `/bin/true`:
+Xvfb could not bind any local/unix listening socket, and wrapper cleanup failed
+to kill its already exited server. The raw first attempt and `xvfb-true.log`
+are preserved. That attempt is not counted as a successful test execution.
+
+## Reproduction
+
+Build the current `CS80Snapshots` Release target, then run:
+
+```sh
+python run-native-recall.py --repo /path/to/yamaha-cs80 \
+  --binary /path/to/yamaha-cs80/build-native/CS80Snapshots_artefacts/Release/CS80Snapshots \
+  --out /path/to/new-native-recall-output
+```
+
+`run-results.json` and the four raw logs preserve the observed run. The replay
+script records each child exit status and fails if any count is missing, any
+assertion fails, or any child exits unsuccessfully.

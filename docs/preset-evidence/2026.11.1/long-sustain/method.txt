@@ -1,0 +1,75 @@
+# Long-sustain headroom check — assignment 39/60
+
+**PASS: 96/96 checks, 12 captures, 216 seconds of generated stereo audio.**
+No production files or factory values were modified. The probe retains only
+metrics, keeping its audio memory to a 128-frame block.
+
+## Why these programs
+
+The whole-bank audit and normal audition excerpts have bounded holds. This
+matrix checks late envelope peaks using twelve representatives with at least
+1.15 seconds of authored amplitude attack in one rank. It includes the longest
+attack cases, several synthesis families, Sweep Pad's slow filter crest, and the
+requested Slow Pad, Cathedral Pad and Ether Pad. The five recently widened
+ensembles were excluded because they already have a separate chord audit.
+This is not the entire slow-program roster.
+
+## Conditions
+
+All factory values are retained. At 48 kHz, eight notes—MIDI 36, 43, 48, 52, 55, 60, 64
+and 67—begin simultaneously at velocity 0.9 on channel 1. Pressure stays zero until
+one second, rises linearly to full pressure from 1–3 seconds in 10 ms events, and
+remains full through release. All eight notes release at 10 seconds; capture ends
+at 18 seconds. The early RMS window is 0–2 seconds, the late held window 7–10, and
+the tail window 17–18. Quarter-second windows record the whole phrase.
+
+The early/late comparison combines envelope development and pressure; it does
+not isolate envelope gain. Sample peak and RMS use actual output values without
+normalization. RMS is the square root of mean L/R sample power.
+
+## Results
+
+| Program | Largest sample peak | Peak at | Late held RMS | Tail RMS | Voices retire at |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Deep Space | -6.535 dBFS | 8.489 s | -20.407 dBFS | -108.058 dBFS | 16.820 s |
+| Sci-Fi Drone | -11.950 dBFS | 3.853 s | -25.163 dBFS | -78.724 dBFS | 14.340 s |
+| Brass Crescendo | -2.939 dBFS | 7.747 s | -16.331 dBFS | -102.572 dBFS | 11.525 s |
+| Low Drone | -4.218 dBFS | 3.609 s | -15.868 dBFS | -300.000 dBFS | 15.768 s |
+| Evolving Pad | -4.917 dBFS | 8.480 s | -17.111 dBFS | -81.906 dBFS | 14.645 s |
+| Sweep Riser | -10.958 dBFS | 3.795 s | -25.605 dBFS | -300.000 dBFS | 12.253 s |
+| Night Pad | -5.146 dBFS | 7.365 s | -17.057 dBFS | -82.436 dBFS | 15.775 s |
+| Cathedral Pad | -3.437 dBFS | 2.323 s | -15.794 dBFS | -82.170 dBFS | 16.668 s |
+| Ether Pad | -4.903 dBFS | 3.450 s | -16.920 dBFS | -84.437 dBFS | 14.973 s |
+| Brass Pad Swell | -5.135 dBFS | 9.451 s | -17.243 dBFS | -82.279 dBFS | 12.530 s |
+| Sweep Pad | -5.329 dBFS | 1.101 s | -17.367 dBFS | -81.919 dBFS | 14.825 s |
+| Slow Pad | -3.588 dBFS | 3.996 s | -16.691 dBFS | -82.023 dBFS | 14.705 s |
+
+Eleven of twelve programs have a larger held peak after two seconds than before.
+The highest observed peak is −2.939 dBFS, retaining 2.939 dB sample headroom in this
+fixture. No sample is nonfinite or above full scale. Every program holds all
+eight voices through the ten-second note and retires all of them during release.
+The last retirement is 16.820 seconds, measured after blocks of at most 128 frames.
+The final second is at least 53.561 dB below the late held RMS. Remaining output
+floor/effect histories mean that voice retirement does not imply digital silence;
+−300 dBFS denotes this report's logarithmic floor, not acoustic noise.
+
+## Reproduce
+
+Run from the repository root with the identified final calibrated core library:
+
+```sh
+g++ -std=c++20 -O2 -I src build-w08-long-sustain/probe.cpp build-audit/libcs80_core.a -o build-w08-long-sustain/probe
+./build-w08-long-sustain/probe > build-w08-long-sustain/run.log
+python build-w08-long-sustain/analyze.py
+```
+
+`summary.json` records exact input/output hashes, the source-state qualification,
+selection and all per-program factory attack/release values. The analyzer guards
+the original inventory/library hashes, checks unique programs and contiguous
+windows, and verifies the numerical summary. An intentionally different build
+requires new provenance rather than being labeled as this same measured binary.
+No WAV or raw-float audio files were created.
+
+This bounded deterministic chord does not establish universal no-clipping
+behavior, arbitrary DAW/performance compatibility, acoustic-instrument identity,
+physical-CS-80 equivalence or a listening verdict.

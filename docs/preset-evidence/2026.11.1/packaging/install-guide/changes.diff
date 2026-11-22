@@ -1,0 +1,103 @@
+diff --git a/docs/INSTALL_AND_QUICKSTART.md b/docs/INSTALL_AND_QUICKSTART.md
+index 213f37f..cd046aa 100644
+--- a/docs/INSTALL_AND_QUICKSTART.md
++++ b/docs/INSTALL_AND_QUICKSTART.md
+@@ -4,11 +4,12 @@ These are development artifacts, not a signed/notarized public release or a
+ promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
+ package. No calibrated hardware-match claim is made.
+ 
+-This revision describes the integrated tree of 2026-10-31: the circuit engine
+-as the fresh default, the toolbar (ENGINE, PURE CS-80, STUDIO), the 523-program
+-library, **PANIC** and the **SAMPLE PEAK** readout. Older artifacts may not
+-contain these changes. Use the guide bundled with your artifact and compare its
+-full manifest commit with the current-build table in the repository README.
++This guide covers Circuit preset library revision **2026.11.1**, the circuit
++engine as the fresh default, the toolbar (ENGINE, PURE CS-80, STUDIO), the
++523-program library, **PANIC** and the **SAMPLE PEAK** readout. Older artifacts
++may contain an earlier sound library. Use the guide bundled with your artifact
++and compare its full manifest commit with the current-build table in the
++repository README.
+ The project version string alone is not a build identifier: development builds
+ can share the same version while containing different source commits.
+ 
+@@ -45,9 +46,13 @@ and emulation layers are not qualified by these runner builds.
+    intact. Tar packaging preserves Unix executable permissions and internal
+    bundle symlinks; avoid copying only the binary inside a `.vst3` or `.app`.
+ 
+-`manifest.json` records the source commit, native architecture, JUCE provenance
+-and payload hashes. Checksums detect corruption; they are not a publisher
+-signature. `SOURCE.txt` identifies the corresponding repository commit.
++`manifest.json` records the source commit, `preset_library_revision`, native
++architecture, JUCE provenance and payload hashes. Checksums detect corruption;
++they are not a publisher signature. `SOURCE.txt` identifies the corresponding
++repository commit and preset library revision. For these revised sounds,
++confirm that both identify **2026.11.1** and that the full source commit matches
++the selected verified download. The sound-library revision is separate from
++the application's version string.
+ 
+ ### Offline inventory verification (Python 3.10+)
+ 
+@@ -100,8 +105,11 @@ identity inside those folders.
+ Create the destination folder if missing. Some Windows hosts may require their
+ documented system location, `%COMMONPROGRAMFILES%\VST3`, instead of the per-user
+ development location; that copy may require administrator permission. Use the
+-host's normal plug-in rescan. Do not put these inside a DAW's internal plug-in
+-bundle. VST3 locations follow the [Steinberg developer documentation](https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html).
++host's normal plug-in rescan after restarting it. If the previous build still
++appears, check for an older duplicate in its scan folders and follow that host's
++documented rescan/revalidation procedure. Do not put these inside a DAW's
++internal plug-in bundle. VST3 locations follow the [Steinberg developer documentation](https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html);
++Apple documents the [Audio Units component folders](https://support.apple.com/en-ie/102239).
+ 
+ Standalone needs no DAW scan: keep its file/application in a folder you own and
+ launch it there. On macOS, `~/Applications` is suitable for the `.app`. No helper
+@@ -126,8 +134,8 @@ distributions. No additional audio driver is bundled on any platform.
+    measured performance guarantee for your computer. In a DAW, create an
+    instrument track, load **CS-80 Reference**, enable monitoring and choose the
+    MIDI input. Start with low monitoring volume.
+-2. A fresh instance plays the circuit engine (toolbar **ENGINE CIRCUIT** lit)
+-   with the first library program: velocity, pressure, pitch bend, CC1
++2. A fresh instance plays **Brass Swell I** on the circuit engine (toolbar
++   **ENGINE CIRCUIT** lit): velocity, pressure, pitch bend, CC1
+    modulation, CC11 expression and CC64 pedal hold work here. Step through
+    programs with **PREV / NEXT** or open the **LIBRARY**, or play the hardware
+    tone tabs. Eight simultaneously held voices are available; a ninth held note
+@@ -140,8 +148,8 @@ distributions. No additional audio driver is bundled on any platform.
+ 4. **PURE CS-80** in the toolbar plays the circuit models with every software
+    addition masked (modern FX, LFOs, macros, MSEG, matrix, arpeggiator, MPE,
+    microtuning, voice modes; MIDI bend and CC1/11/64/74 ignored; voice
+-   dispersion and drift zeroed). Ribbon, pressure, the pedals and the on-screen
+-   controls stay. Source-model output uses a fixed -6 dB reference and an
++   dispersion and drift zeroed; rank pans centered). Ribbon, pressure, the
++   pedals and the on-screen controls stay. Source-model output uses a fixed -6 dB reference and an
+    inferred driver ceiling at full scale, so very dense loud chords can still
+    reach or slightly exceed 0 dBFS; keep normal monitoring headroom.
+ 5. Use **SAVE** (toolbar menu or Ctrl/Cmd+S) to name a user patch; an existing
+@@ -213,9 +221,11 @@ glitch-free guarantee, nor a
+ 64-frame/high-rate qualification. Start host checks at 256 samples and test your
+ intended patches; the older `932c6d4` dry-isolation audit remains separate.
+ 
+-The host receives 63 samples of output latency. Tail metadata is unbounded
+-because supported noise and retained effect histories have no universal finite
+-silence deadline. Use an explicit export end/selection with sufficient audible
++Default Circuit Standard mode reports **67 samples of plug-in latency**
++(**1.40 ms at 48 kHz**). Other engine/quality settings can report a different
++value; this excludes the audio interface and host buffer delays. Tail metadata
++is unbounded because supported noise and retained effect histories have no
++universal finite silence deadline. Use an explicit export end/selection with sufficient audible
+ release; do not depend on automatic finite-tail export termination. Hosts may
+ continue processing idle instances.
+ 
+@@ -223,6 +233,12 @@ continue processing idle instances.
+ 
+ - Back up sessions and user presets before changing builds. With the host closed,
+   replace only this instrument's complete bundle/file; rescan afterward.
++- To hear the revised factory sounds, open **LIBRARY**, choose **Circuit** and
++  select the desired program again. Existing sessions and user presets restore
++  their saved parameter values; A/B and Revert use their stored snapshots. A
++  host that restores only a program number, or sends Program Change after state
++  restoration, selects the current factory voicing at that address. See the
++  bundled [preset guide](PRESET_GUIDE.md).
+ - To uninstall, remove only the installed **CS-80 Reference** bundles/application
+   you copied. Do not remove shared plug-in folders or user presets. Restoring a
+   backup does not prove old/new session audio is identical.

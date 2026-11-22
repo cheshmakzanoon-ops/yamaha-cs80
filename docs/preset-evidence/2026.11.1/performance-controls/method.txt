@@ -1,0 +1,75 @@
+# Performed controller roles — assignment 33
+
+The final `2026.11.1` factory bank passes 60 bounded checks across five programs,
+ten renders and 64 seconds of audio. No production source was changed.
+
+## Scope and result
+
+- Pressure Lead: the first unpressed held note produces exact digital zero.
+  Full pressure reaches −26.90 dBFS RMS; easing pressure returns it to
+  −81.26 dBFS before note-off, a 54.36 dB reduction.
+- Wah Lead: pressure introduces rhythmic filter motion, with the observed
+  main-rank low-pass spanning 1,107–2,429 Hz. The fitted audio brightness
+  oscillation increases from 7.67 to 140.62 Hz peak-to-peak in the stated window.
+  Oscillator pitch history remains identical to its unpressed control.
+  The audio fundamental shows some phase modulation from the moving filter;
+  this is reported separately from oscillator vibrato.
+- Aftertouch Vibrato Lead: main-rank pitch reaches 47.94 cents peak-to-peak
+  under full pressure, versus 0.14 cents of background variation in the control.
+  Fundamental-demodulation analysis also observes the motion (44.58 cents
+  peak-to-peak at the fixed nominal-rate fit), supporting the description of
+  roughly a quarter-tone excursion.
+- Velocity Keys: hard versus matched soft strike gives +10.53 dB onset and
+  +10.47 dB held level. A following soft strike returns within 0.000003 dB of
+  its all-soft control.
+- Velocity Lead: the same comparison gives +11.41 dB onset and +11.48 dB held
+  level. The following soft strike returns within 0.000001 dB of its control.
+
+All captures are finite and below full scale; the highest sample peak is
+−16.49 dBFS. Every sequence retires all voices. Pressure presets exercise
+note-off both after pressure has returned to zero and while pressure remains
+full. Full-pressure release excerpts fall below −118.85 dBFS RMS by 0.6–0.8 s
+after note-off. There are no test, parameter, or acceptance-policy changes.
+
+## Exact method
+
+Use `events.csv` for every event. The `summary.json` method section records the
+timeline, analysis windows and formulas. All notes are MIDI 60, at 48 kHz.
+The pressure cases use velocity 0.8 and pressure ramps updated every 5 ms.
+Matched controls alter only controller events; factory parameters are intact.
+Raw output is stereo little-endian IEEE float32 with no normalization.
+
+Rank telemetry is captured every 10 ms. Pitch and filter cutoff are actual
+render-time rank diagnostics. Audio fundamental motion is estimated separately
+by complex demodulation around MIDI 60 and a fifth-order 70 Hz lowpass applied
+forward and backward. A sinusoidal least-squares fit with constant and linear
+trend measures amplitude at the nominal modulation frequency. It does **not**
+independently measure the exact modulation rate, especially because these
+presets include pressure-to-SUB-speed routing.
+
+Audio brightness uses the power-weighted centroid between 150 and 8,000 Hz,
+with a 4,096-sample STFT and 240-sample hop. All modulation comparisons use
+1.2–1.9 seconds, after the rising pressure ramp. Oscillator/filter modulation
+and audio metrics are kept separate; a moving filter can change audio phase
+without introducing oscillator pitch vibrato.
+
+## Reproduce
+
+From the repository root, with the final core target built:
+
+```sh
+mkdir -p build-w06-performance-controls
+g++ -std=c++20 -O2 -Isrc build-w06-performance-controls/probe.cpp build-audit/libcs80_core.a -o build-w06-performance-controls/probe
+./build-w06-performance-controls/probe > build-w06-performance-controls/run.log
+python build-w06-performance-controls/analyze.py > build-w06-performance-controls/analysis.log
+```
+
+The analyzer requires NumPy and SciPy. `summary.json` identifies every input,
+source, render and trace by SHA-256. Large raw renders are disposable and can
+be regenerated with the probe; preserve their hashes when omitting them from
+a published dossier. Compact evidence comprises this file, `summary.json`,
+`probe.cpp`, `analyze.py`, `captures.csv`, `events.csv` and the run log.
+
+This is a representative software-behavior audit, not a listening-panel result,
+a physical-CS80 calibration, a DAW compatibility test or coverage of all notes,
+controllers and performance histories.

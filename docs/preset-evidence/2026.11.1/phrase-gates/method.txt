@@ -1,0 +1,95 @@
+# Assignment 42: ring phrase gates and glide roles
+
+The final factory bank passes **100/100 checks** in **12 captures / 86 seconds**.
+No production parameters or DSP code were changed. The probe uses the final
+calibrated core library and compares its source files with binary source
+`be460b0b93bdcb8dce5eb8925b18b72706b25e19`.
+
+## Ring sweep under MIDI sustain
+
+UFO Landing and Ring Sweep Bell each run four identically initialized engine
+lanes: continuous, overlapping keys, MIDI CC64 pedal hold, and direct key release.
+All use MIDI channel 1, velocity 0.8, zero pressure, 48 kHz, and actual factory
+parameters. Every lane begins with MIDI 60 at zero seconds.
+
+| Time | Events |
+| --- | --- |
+| 0.4 s | Pedal lane receives CC64 down. |
+| 0.5 s | Pedal lane releases key 60; telemetry confirms pedal hold. |
+| 0.6 s | Overlap and pedal lanes add note 67. |
+| 0.9 s | Those lanes release key 67; both pedal-lane notes remain pedal held. |
+| 1.0 s | Overlap/direct lanes release key 60; pedal lane receives CC64 up. The continuous lane still holds 60. |
+| 1.2 s | Overlap, pedal and direct-release lanes start a fresh note 72. |
+| 1.6 s | All remaining held notes release. Rendering continues through 8 s. |
+
+Across 0.6–1.0 seconds, both the overlap lane and pedal lane have **exactly zero
+maximum difference** from the continuous lane in shared ring envelope and
+carrier-frequency telemetry. CC64 keeps the phrase gate open even after both
+physical keys have been released.
+
+Across 1.2–1.6 seconds, the pedal lane's new sweep matches the direct-release/new
+phrase control exactly. Its maximum envelope difference from the uninterrupted
+old sweep is **0.906365 for UFO Landing** and **0.9899996 for Ring Sweep Bell**.
+This exercises the previously source-inferred sustain qualification in the
+playing instructions. It does not compare complete audio equality between
+different note arrangements or characterize the original hardware footswitch.
+
+## Smooth portamento and semitone glissando
+
+Glide Lead and Glissando Lead each play MIDI **60 → 72 → 55** in overlapping and
+separated lanes. New notes begin at 0, 0.5 and 2.3 seconds. Separated old notes
+release at 0.45 and 2.25 seconds; overlapping old notes release at 0.75 and 2.55
+seconds. The final note releases at 4.3 seconds, and capture ends at 5.5 seconds.
+
+Nominal rank-I oscillator frequency is sampled at every host frame during
+0.5–2.2 and 2.3–4.2 seconds, then converted to MIDI pitch using float64 arithmetic.
+
+| Property | Glide Lead | Glissando Lead |
+| --- | ---: | ---: |
+| Maximum distance from semitone grid | 49.999975 cents | 0.000129 cents |
+| Largest within-window adjacent-sample pitch change | 0.178620 cents | 100.000210 cents |
+| Semitone transitions on the upward/downward glissando | Continuous intermediate pitches | 12 / 17 discrete transitions |
+| Maximum endpoint error from intended note | 0.945297 cents | 0.000106 cents |
+| Difference between overlap/separated current-note oscillator histories | 0 | 0 |
+
+More than 99.99% of sampled continuous-glide points are materially fractional
+pitch. Glissando points stay on the integer-semitone grid within the float
+telemetry's precision. These are oscillator-control measurements, not an
+independent frequency estimate of the mixed audio or physical CS-80 calibration.
+
+## Integrity and observation limit
+
+Every capture is finite, below full scale, and finishes with zero active voices.
+The highest sample peak is **−12.2716 dBFS**, and every complete-capture RMS is
+above −43.76 dBFS. Voice retirement does not imply digital silence.
+
+The first ring observation ended at four seconds and failed six retirement
+checks, while all phrase-gate and glide checks already passed. That endpoint
+was premature for the authored 2.0/3.2-second amplitude releases. The complete
+initial logs, metrics and source are preserved in `initial-4s/`. Extending the
+ring observation to eight seconds resolved the six checks without changing
+factory settings, event histories or acceptance conditions. The final probe
+also explicitly promotes frequency to double before the pitch logarithm,
+avoiding float-intermediate rounding in its grid measurements. Including the
+initial observation, **140 seconds** were generated.
+
+No raw audio files were written. Each stream receives a float32 little-endian
+FNV-1a fingerprint, which is a diagnostic fingerprint rather than a
+cryptographic authenticity check. Source, binary, metadata and result files have
+SHA-256 hashes in `summary.json`.
+
+## Reproduction
+
+From this directory, with the final core library built at `../build-audit`:
+
+```sh
+c++ -std=c++20 -O2 -I ../src probe.cpp ../build-audit/libcs80_core.a -pthread -o probe
+./probe > run.log 2>&1
+python summarize.py
+```
+
+The compact archive consists of `summary.json`, `probe.cpp`, `summarize.py`,
+`run.log`, five result/point CSVs, this README, and the preserved initial short
+observation. The executable and static library need not be archived. This is a
+bounded four-program performance check; no external DAW or universal controller
+qualification is claimed.

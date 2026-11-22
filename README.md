@@ -57,7 +57,7 @@ on-screen key to try pressure.
   separate software library has 301 Circuit and 222 Legacy programs.
 - **Pure CS-80** uses the Circuit engine and disables modern extensions.
   **Legacy** keeps the older voicing for saved sessions and Legacy presets.
-- **Studio** adds a modulation matrix, drawable envelopes, MPE, microtuning,
+- **Studio** exposes controls for a modulation matrix, drawable envelopes, MPE, microtuning,
   arpeggiation, effects and expanded voice modes. These are software additions,
   not features of the original hardware. See the [mode contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
@@ -98,6 +98,12 @@ data. Reload a Circuit factory program to hear its revised voicing; a host that
 restores only a program number selects the current factory sound. Instrument
 names describe synthesized interpretations; the measurements verify software
 behavior rather than an acoustic-instrument or physical-hardware match.
+
+Factory selection through Library and the VST3 controller, plus saved-state
+restore, passed the documented local checks. A pre-existing limitation remains
+for program changes sent only through the VST3 audio-processing queue; that
+route did not load the requested factory program in the tested native modules.
+See the [host-program qualification](docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification).
 
 ## From schematic to sound
 

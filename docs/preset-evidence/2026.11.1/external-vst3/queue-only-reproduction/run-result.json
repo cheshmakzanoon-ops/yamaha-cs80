@@ -1,0 +1,34 @@
+{
+  "mode": "queue-only",
+  "compile_argv": [
+    "c++",
+    "-std=c++17",
+    "-O2",
+    "-I",
+    "src",
+    "-I",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK",
+    "-I",
+    "build-w09-vst3-boundary",
+    "build-w09-vst3-boundary/initial-audio-queue-only/probe.cpp",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/coreiids.cpp",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK/pluginterfaces/base/funknown.cpp",
+    "deps/juce/modules/juce_audio_processors_headless/format_types/VST3_SDK/public.sdk/source/vst/vstinitiids.cpp",
+    "build-audit/libcs80_core.a",
+    "-ldl",
+    "-o",
+    "build-w09-vst3-boundary/queue-only-reproduction/probe"
+  ],
+  "run_argv": [
+    "build-w09-vst3-boundary/queue-only-reproduction/probe",
+    "build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+    "build-w09-vst3-boundary/queue-only-reproduction"
+  ],
+  "raw_exit_code": 1,
+  "elapsed_seconds": 0.5185122809925815,
+  "module_sha256": "82eb87ac9e8562f2201b8c4e0b3328224ea44d87c4fd102f44e481f6739a46b2",
+  "probe_sha256": "f8cb11a42982586160516115dae7c08bc320df85c0ed5307d464467c2563f2e0",
+  "source_sha256": "e50002003a8acb42c261fb2d4f7f20801aa1d73dab7b08127f172be0745f64b4",
+  "display_unset": true,
+  "isolated_config": "build-w09-vst3-boundary/queue-only-reproduction/config"
+}

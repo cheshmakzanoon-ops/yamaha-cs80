@@ -1,0 +1,43 @@
+{
+  "assignment": 31,
+  "status": "PASS",
+  "scope": "Independent focused review of Linux validator diagnostic change, not a crash repair or current-platform certification.",
+  "required_validation_step_bodies_unchanged": {
+    "Validate VST3 headless": true,
+    "Validate VST3 GUI under Xvfb": true,
+    "Validate GUI state regression seed 0x2da72db": true
+  },
+  "acceptance_helpers_unchanged": {
+    "scripts/run-pluginval-linux.sh": true,
+    "scripts/run-pluginval-with-core.py": true,
+    "scripts/pluginval-diagnostic-seed.py": true
+  },
+  "fixed_log_filename_whitelist": [
+    "pluginval-gui.log",
+    "pluginval-gui-seed-regression.log",
+    "pluginval-headless.log"
+  ],
+  "priority": "GUI, fixed GUI, headless; malformed or cancelled outcomes select nothing.",
+  "lane_preservation": "Headless diagnostics use --skip-gui-tests and no Xvfb; GUI diagnostics retain Xvfb.",
+  "failure_preservation": "Both supplemental diagnostic paths preserve process/pipeline exit status and remain failure-only; required failure is never replaced by diagnostic success.",
+  "bounds": "Existing strictness10,120000ms validator and240s outer bounds unchanged.",
+  "permissions": "No permission, token, checkout, or upload target change in reviewed diagnostic block.",
+  "cross_platform": "Portable selector and workflow wiring tests remain enabled on all platforms. New shell fixture requires POSIX Bash; Windows skips only that fixture before symlink/chmod/Unix-shell operations. macOS Bash arrays and intercepted timeout are supported.",
+  "independent_execution": {
+    "test_method": "test_actual_replay_shell_preserves_lane_seed_and_exit",
+    "cases": 12,
+    "result": "PASS; exit0/139 across all3lanes and bothdiagnostics"
+  },
+  "windows_native_execution": false,
+  "macos_native_execution": false,
+  "limits": [
+    "No native pluginval crash was reproduced by this review.",
+    "No Windows or macOS process execution occurred locally.",
+    "Reported first crash remains unresolved and must not be described as fixed."
+  ],
+  "inputs_sha256": {
+    ".github/workflows/build.yml": "a609f613be8876ca0a1b49cf7242723c535603aa419442b4df1f6b128c235e3e",
+    "scripts/pluginval-diagnostic-log.py": "279198b0971b867547942c1f32a8b16bac6c9a11b0646b5c81b406f942d7bc34",
+    "scripts/test-pluginval-diagnostic-log.py": "dc85d6da04d4b98e1d7743ed651564473599edc9f0082450704e0a7460cd028a"
+  }
+}

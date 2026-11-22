@@ -1,0 +1,1062 @@
+{
+  "assignment": 37,
+  "status": "PASS",
+  "method": "Complete compiled inventory-to-source routing audit; no new audio render or native host execution. Static derived-value checks are not sound-quality or physical-equivalence measurements.",
+  "source_commit": "85b0b547ea11dfb15335dc3720bf59761abf29ff",
+  "library_revision": "2026.11.1",
+  "inventory_sha256": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+  "modern_tagged_count": 24,
+  "active_modern_feature_count": 24,
+  "unexplained_tag_mismatches": [],
+  "checks": [
+    {
+      "program": "Rain Pad",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Rain Pad",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Random Filter",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Random Filter",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Random Pitch Blips",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Random Pitch Blips",
+      "check": "LFO2 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Random Pitch Blips",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Bubbles",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Bubbles",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Rain",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Rain",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Clockwork",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Clockwork",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Delay Brass",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Plate Pad",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Phaser Strings",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Drive Lead",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Arp Poly",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Arp Poly",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Arp Bells",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Arp Bass",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Arp Bass",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "LFO Sweep Pad",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "LFO Sweep Pad",
+      "check": "LFO2 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "LFO Sweep Pad",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "LFO Pan Keys",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "LFO Pan Keys",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "PWM LFO Strings",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "PWM LFO Strings",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Stereo Delay Pluck",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Ambient Bells",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Ensemble Plus",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Space Lead",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Random Arp",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Random Arp",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Drive Bass",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Phased Polysynth",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Tremolo LFO Organ",
+      "check": "LFO1 has audible source/destination route",
+      "pass": true
+    },
+    {
+      "program": "Tremolo LFO Organ",
+      "check": "sourcePerformance=1, parity=0, macros neutral, active modern feature",
+      "pass": true
+    },
+    {
+      "program": "Delay Brass",
+      "check": "nominal echo matches rounded description within 0.5 ms",
+      "actual_ms": 375.30261755515835,
+      "described_ms": 375,
+      "pass": true
+    },
+    {
+      "program": "Arp Bells",
+      "check": "nominal echo matches rounded description within 0.5 ms",
+      "actual_ms": 375.30261755515835,
+      "described_ms": 375,
+      "pass": true
+    },
+    {
+      "program": "Stereo Delay Pluck",
+      "check": "nominal echo matches rounded description within 0.5 ms",
+      "actual_ms": 250.01261620137345,
+      "described_ms": 250,
+      "pass": true
+    },
+    {
+      "program": "Ambient Bells",
+      "check": "nominal echo matches rounded description within 0.5 ms",
+      "actual_ms": 560.0144015476948,
+      "described_ms": 560,
+      "pass": true
+    },
+    {
+      "program": "Space Lead",
+      "check": "nominal echo matches rounded description within 0.5 ms",
+      "actual_ms": 400.03091396663206,
+      "described_ms": 400,
+      "pass": true
+    },
+    {
+      "check": "all active LFO/FX/arp programs tagged modern and every modern tag has active feature",
+      "pass": true
+    },
+    {
+      "check": "complete expected modern-tagged roster",
+      "pass": true
+    }
+  ],
+  "programs": [
+    {
+      "index": 80,
+      "host_index": 302,
+      "name": "Rain Pad",
+      "category": "Pads",
+      "description": "An 8 Hz modern sample-and-hold LFO flickers the filters over a soft pulse body and a little band-limited air. The stepped filter motion is inactive in Pure CS-80.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "sample and hold",
+          "waveform_index": 5,
+          "rate_hz": 8,
+          "depth": 0.189999998,
+          "destination": "filter cutoff",
+          "destination_index": 2,
+          "maximum_bipolar_offset": 0.3039999968,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 258,
+      "host_index": 480,
+      "name": "Random Filter",
+      "category": "FX",
+      "description": "Modern sample-and-hold steps the resonant filters at 7.5 Hz. A saw body and lighter octave pulse make each held random cutoff audible as a computer-like burble.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "sample and hold",
+          "waveform_index": 5,
+          "rate_hz": 7.5,
+          "depth": 0.649999976,
+          "destination": "filter cutoff",
+          "destination_index": 2,
+          "maximum_bipolar_offset": 1.0399999616000002,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 259,
+      "host_index": 481,
+      "name": "Random Pitch Blips",
+      "category": "FX",
+      "description": "Modern sample-and-hold picks small, unquantized pitch steps around the played key at 6.5 Hz. A matching square amplitude LFO separates the sine-and-pulse tone into blips.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "sample and hold",
+          "waveform_index": 5,
+          "rate_hz": 6.5,
+          "depth": 0.949999988,
+          "destination": "pitch",
+          "destination_index": 1,
+          "maximum_bipolar_offset": 1.899999976,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        },
+        {
+          "kind": "LFO",
+          "slot": 2,
+          "waveform": "square",
+          "waveform_index": 4,
+          "rate_hz": 6.5,
+          "depth": 1,
+          "destination": "level CV",
+          "destination_index": 3,
+          "maximum_bipolar_offset": 0.25,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 268,
+      "host_index": 490,
+      "name": "Bubbles",
+      "category": "FX",
+      "description": "An 11 Hz modern sample-and-hold LFO jumps two resonant filter bands. A soft pulse supplies the hollow bubble body and a little filtered noise adds the popping edge.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "sample and hold",
+          "waveform_index": 5,
+          "rate_hz": 11,
+          "depth": 0.699999988,
+          "destination": "filter cutoff",
+          "destination_index": 2,
+          "maximum_bipolar_offset": 1.1199999808,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 270,
+      "host_index": 492,
+      "name": "Rain",
+      "category": "FX",
+      "description": "A continuous midband rain bed sits below finer upper droplets. Modern sample-and-hold changes the noise level at 16 Hz, with the quieter upper band flickering more deeply.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "sample and hold",
+          "waveform_index": 5,
+          "rate_hz": 16,
+          "depth": 0.850000024,
+          "destination": "level CV",
+          "destination_index": 3,
+          "maximum_bipolar_offset": 0.212500006,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 274,
+      "host_index": 496,
+      "name": "Clockwork",
+      "category": "FX",
+      "description": "Six-Hz modern amplitude pulses form dry mechanical ticks from a high pulse and thin noise edge. Slower SUB filter steps add a tick-tock change of color.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "square",
+          "waveform_index": 4,
+          "rate_hz": 6,
+          "depth": 1,
+          "destination": "level CV",
+          "destination_index": 3,
+          "maximum_bipolar_offset": 0.25,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 282,
+      "host_index": 504,
+      "name": "Delay Brass",
+      "category": "Brass",
+      "description": "Play clipped midrange chords; the opening brass swell leaves gaps for 375 ms echoes. Lean into pressure to brighten held notes.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 3,
+          "classic_type": "classic tape delay",
+          "model_index": 4,
+          "effective_effect": "tape echo",
+          "mix": 0.219999999,
+          "parameter_a": 0.611999989,
+          "parameter_b": 0.5,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "nominal_echo_time_ms": 375.30261755515835
+        },
+        {
+          "kind": "FX",
+          "slot": 2,
+          "classic_type_index": 4,
+          "classic_type": "classic plate",
+          "model_index": 3,
+          "effective_effect": "plate",
+          "mix": 0.0799999982,
+          "parameter_a": 0.219999999,
+          "parameter_b": 0.419999987,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "plate_target_rt60_seconds_before_brightness_damping": 1.3276695228929765
+        }
+      ]
+    },
+    {
+      "index": 283,
+      "host_index": 505,
+      "name": "Plate Pad",
+      "category": "Pads",
+      "description": "Hold open chords around C3-C5; a soft lower pulse blooms beneath an octave sheen. Release between changes to hear the warm plate tail.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 4,
+          "classic_type": "classic plate",
+          "model_index": 3,
+          "effective_effect": "plate",
+          "mix": 0.25999999,
+          "parameter_a": 0.479999989,
+          "parameter_b": 0.400000006,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "plate_target_rt60_seconds_before_brightness_damping": 2.4159613151290906
+        }
+      ]
+    },
+    {
+      "index": 284,
+      "host_index": 506,
+      "name": "Phaser Strings",
+      "category": "Strings",
+      "description": "Bow connected chords in C3-C5 and hold the ends of phrases. A bright saw section and quieter pulse band expose the phaser's slow moving notches.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 2,
+          "classic_type": "classic six-stage phaser",
+          "model_index": 0,
+          "effective_effect": "classic six-stage phaser",
+          "mix": 0.340000004,
+          "parameter_a": 0.5,
+          "parameter_b": 0.5,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 285,
+      "host_index": 507,
+      "name": "Drive Lead",
+      "category": "Leads",
+      "description": "Play firm lines in C4-C6: a pulse body carries a shorter saw edge into warm drive. Pressure adds bite and restrained vibrato.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 5,
+          "classic_type": "classic drive",
+          "model_index": 5,
+          "effective_effect": "drive",
+          "mix": 0.430000007,
+          "parameter_a": 0.419999987,
+          "parameter_b": 0.360000014,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 286,
+      "host_index": 508,
+      "name": "Arp Poly",
+      "category": "Sequences",
+      "description": "Hold two to four notes around C3-C4 for eight notes per second across two octaves. A short octave accent and one-second filter cycle articulate the ascent.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "triangle",
+          "waveform_index": 1,
+          "rate_hz": 1,
+          "depth": 0.119999997,
+          "destination": "filter cutoff",
+          "destination_index": 2,
+          "maximum_bipolar_offset": 0.1919999952,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        },
+        {
+          "kind": "arpeggiator",
+          "mode_index": 0,
+          "mode": "up",
+          "rate_notes_per_second": 8,
+          "octaves": 2,
+          "gate_fraction": 0.58,
+          "ordinary_circuit": "held keys -> rebuilt octave sequence -> updateArpeggiator timed gate -> startVoice",
+          "pure": "effective arpOn=false, so input notes play directly; stored arp controls retained"
+        }
+      ]
+    },
+    {
+      "index": 287,
+      "host_index": 509,
+      "name": "Arp Bells",
+      "category": "Sequences",
+      "description": "Hold a small chord around C4 for four notes per second, rising and falling over two octaves. A short third-harmonic strike leaves space for 375 ms echoes.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 3,
+          "classic_type": "classic tape delay",
+          "model_index": 4,
+          "effective_effect": "tape echo",
+          "mix": 0.170000002,
+          "parameter_a": 0.611999989,
+          "parameter_b": 0.479999989,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "nominal_echo_time_ms": 375.30261755515835
+        },
+        {
+          "kind": "arpeggiator",
+          "mode_index": 2,
+          "mode": "up/down without repeated endpoints",
+          "rate_notes_per_second": 4,
+          "octaves": 2,
+          "gate_fraction": 0.58,
+          "ordinary_circuit": "held keys -> rebuilt octave sequence -> updateArpeggiator timed gate -> startVoice",
+          "pure": "effective arpOn=false, so input notes play directly; stored arp controls retained"
+        }
+      ]
+    },
+    {
+      "index": 288,
+      "host_index": 510,
+      "name": "Arp Bass",
+      "category": "Sequences",
+      "description": "Hold a root and fifth around C3 for a six-note-per-second bass pattern. A compact 16' body and short 8' snap follow a gentle four-step filter cycle.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "triangle",
+          "waveform_index": 1,
+          "rate_hz": 1.5,
+          "depth": 0.109999999,
+          "destination": "filter cutoff",
+          "destination_index": 2,
+          "maximum_bipolar_offset": 0.17599999840000002,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        },
+        {
+          "kind": "arpeggiator",
+          "mode_index": 0,
+          "mode": "up",
+          "rate_notes_per_second": 6,
+          "octaves": 1,
+          "gate_fraction": 0.58,
+          "ordinary_circuit": "held keys -> rebuilt octave sequence -> updateArpeggiator timed gate -> startVoice",
+          "pure": "effective arpOn=false, so input notes play directly; stored arp controls retained"
+        }
+      ]
+    },
+    {
+      "index": 289,
+      "host_index": 511,
+      "name": "LFO Sweep Pad",
+      "category": "Pads",
+      "description": "Hold spacious chords for at least ten seconds. A broad triangle filter sweep moves over a warm low body, with slower irregular stereo drift.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "triangle",
+          "waveform_index": 1,
+          "rate_hz": 0.100000001,
+          "depth": 0.400000006,
+          "destination": "filter cutoff",
+          "destination_index": 2,
+          "maximum_bipolar_offset": 0.6400000096,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        },
+        {
+          "kind": "LFO",
+          "slot": 2,
+          "waveform": "smooth random",
+          "waveform_index": 6,
+          "rate_hz": 0.0700000003,
+          "depth": 0.140000001,
+          "destination": "rank pan",
+          "destination_index": 4,
+          "maximum_bipolar_offset": 0.0980000007,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 290,
+      "host_index": 512,
+      "name": "LFO Pan Keys",
+      "category": "Keys",
+      "description": "Play relaxed C3-C6 chords and let them ring. The rounded body rocks left to right once per second while its brighter octave strike fades first.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "triangle",
+          "waveform_index": 1,
+          "rate_hz": 1,
+          "depth": 0.720000029,
+          "destination": "rank pan",
+          "destination_index": 4,
+          "maximum_bipolar_offset": 0.5040000203,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        },
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 4,
+          "classic_type": "classic plate",
+          "model_index": 3,
+          "effective_effect": "plate",
+          "mix": 0.0799999982,
+          "parameter_a": 0.119999997,
+          "parameter_b": 0.379999995,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "plate_target_rt60_seconds_before_brightness_damping": 1.0546053835601696
+        }
+      ]
+    },
+    {
+      "index": 291,
+      "host_index": 513,
+      "name": "PWM LFO Strings",
+      "category": "Strings",
+      "description": "Sustain midrange chords: two differently biased pulse ranks share a slow triangle width sweep. The later, brighter rank adds a gentle shimmer.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "triangle",
+          "waveform_index": 1,
+          "rate_hz": 0.219999999,
+          "depth": 0.560000002,
+          "destination": "pulse width",
+          "destination_index": 5,
+          "maximum_bipolar_offset": 0.10080000035999999,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 292,
+      "host_index": 514,
+      "name": "Stereo Delay Pluck",
+      "category": "Plucked",
+      "description": "Play sparse picked figures around C3-C5. A warm pulse string and short octave pick feed 250 ms stereo echoes; lift early for clean gaps.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 3,
+          "classic_type": "classic tape delay",
+          "model_index": 4,
+          "effective_effect": "tape echo",
+          "mix": 0.180000007,
+          "parameter_a": 0.476399988,
+          "parameter_b": 0.419999987,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "nominal_echo_time_ms": 250.01261620137345
+        }
+      ]
+    },
+    {
+      "index": 293,
+      "host_index": 515,
+      "name": "Ambient Bells",
+      "category": "Bells",
+      "description": "Strike widely spaced notes around C4-C6 and allow the decay to clear. A rounded fundamental outlasts the upper fifth; quiet 560 ms echoes open into a dark plate.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 3,
+          "classic_type": "classic tape delay",
+          "model_index": 4,
+          "effective_effect": "tape echo",
+          "mix": 0.159999996,
+          "parameter_a": 0.745599985,
+          "parameter_b": 0.660000026,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "nominal_echo_time_ms": 560.0144015476948
+        },
+        {
+          "kind": "FX",
+          "slot": 2,
+          "classic_type_index": 4,
+          "classic_type": "classic plate",
+          "model_index": 3,
+          "effective_effect": "plate",
+          "mix": 0.239999995,
+          "parameter_a": 0.579999983,
+          "parameter_b": 0.360000014,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "plate_target_rt60_seconds_before_brightness_damping": 3.0415150515075844
+        }
+      ]
+    },
+    {
+      "index": 294,
+      "host_index": 516,
+      "name": "Ensemble Plus",
+      "category": "Strings",
+      "description": "Use open midrange voicings and sustain through the staggered onset. Light original chorus and a shallow three-tap ensemble broaden the saw/pulse section.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 1,
+          "classic_type": "classic chorus",
+          "model_index": 1,
+          "effective_effect": "BBD ensemble",
+          "mix": 0.25,
+          "parameter_a": 0.319999993,
+          "parameter_b": 0.300000012,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 295,
+      "host_index": 517,
+      "name": "Space Lead",
+      "category": "Leads",
+      "description": "Connect single lines in C4-C6 with short slides and leave room for 400 ms echoes. Pressure introduces gentle vibrato; the dry release keeps phrase endings clear.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 3,
+          "classic_type": "classic tape delay",
+          "model_index": 4,
+          "effective_effect": "tape echo",
+          "mix": 0.219999999,
+          "parameter_a": 0.633300006,
+          "parameter_b": 0.550000012,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "nominal_echo_time_ms": 400.03091396663206
+        },
+        {
+          "kind": "FX",
+          "slot": 2,
+          "classic_type_index": 4,
+          "classic_type": "classic plate",
+          "model_index": 3,
+          "effective_effect": "plate",
+          "mix": 0.119999997,
+          "parameter_a": 0.330000013,
+          "parameter_b": 0.400000006,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "plate_target_rt60_seconds_before_brightness_damping": 1.7103697227993189
+        }
+      ]
+    },
+    {
+      "index": 296,
+      "host_index": 518,
+      "name": "Random Arp",
+      "category": "Sequences",
+      "description": "Hold a small chord near C3 for six random notes per second over two octaves. Sample-and-hold brightness changes at half the note rate; short releases separate the notes.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "sample and hold",
+          "waveform_index": 5,
+          "rate_hz": 3,
+          "depth": 0.129999995,
+          "destination": "filter cutoff",
+          "destination_index": 2,
+          "maximum_bipolar_offset": 0.20799999200000002,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        },
+        {
+          "kind": "arpeggiator",
+          "mode_index": 3,
+          "mode": "random",
+          "rate_notes_per_second": 6,
+          "octaves": 2,
+          "gate_fraction": 0.45,
+          "ordinary_circuit": "held keys -> rebuilt octave sequence -> updateArpeggiator timed gate -> startVoice",
+          "pure": "effective arpOn=false, so input notes play directly; stored arp controls retained"
+        }
+      ]
+    },
+    {
+      "index": 297,
+      "host_index": 519,
+      "name": "Drive Bass",
+      "category": "Bass",
+      "description": "Play short bass lines around C3. A firm 16' pulse-and-sine body anchors a brief 8' rasp; firmer strikes add level and bite, while parallel drive gently smooths the edge.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 5,
+          "classic_type": "classic drive",
+          "model_index": 5,
+          "effective_effect": "drive",
+          "mix": 0.280000001,
+          "parameter_a": 0.340000004,
+          "parameter_b": 0.239999995,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained"
+        }
+      ]
+    },
+    {
+      "index": 298,
+      "host_index": 520,
+      "name": "Phased Polysynth",
+      "category": "Polysynth",
+      "description": "Use compact rhythmic chords in C3-C5. A broad saw body follows a sharper pulse accent; the phaser animates the held tail, with a short plate after release.",
+      "features": [
+        {
+          "kind": "FX",
+          "slot": 1,
+          "classic_type_index": 2,
+          "classic_type": "classic six-stage phaser",
+          "model_index": 0,
+          "effective_effect": "classic six-stage phaser",
+          "mix": 0.379999995,
+          "parameter_a": 0.5,
+          "parameter_b": 0.5,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained"
+        },
+        {
+          "kind": "FX",
+          "slot": 2,
+          "classic_type_index": 4,
+          "classic_type": "classic plate",
+          "model_index": 3,
+          "effective_effect": "plate",
+          "mix": 0.0900000036,
+          "parameter_a": 0.159999996,
+          "parameter_b": 0.5,
+          "oversampling_stages": 2,
+          "ordinary_circuit": "Engine serial FX chain -> FxSlot::liveTypeFor -> selected classic or modern model",
+          "pure": "effective type/model/mix=0; stored values retained",
+          "plate_target_rt60_seconds_before_brightness_damping": 1.1563518059463485
+        }
+      ]
+    },
+    {
+      "index": 299,
+      "host_index": 521,
+      "name": "Tremolo LFO Organ",
+      "category": "Organ",
+      "description": "Hold chords around C3-C5 for a steady four-pulse-per-second tremolo. The 8' body has a little reed edge; pressure brings forward the sustained 4' stop.",
+      "features": [
+        {
+          "kind": "LFO",
+          "slot": 1,
+          "waveform": "triangle",
+          "waveform_index": 1,
+          "rate_hz": 4,
+          "depth": 0.800000012,
+          "destination": "level CV",
+          "destination_index": 3,
+          "maximum_bipolar_offset": 0.200000003,
+          "receiving_ranks": [
+            1,
+            2
+          ],
+          "ordinary_circuit": "ModulationLfo::tick -> Engine LFO destination accumulator -> rank oscillator/filter/VCA/pan computation",
+          "pure": "effective depth=0, destination=0, waveform=0; stored values retained"
+        }
+      ]
+    }
+  ],
+  "mode_contract": {
+    "ordinary_circuit": "sourcePerformance=1 and parity=0; source models and software LFO, FX and arp overlays are active.",
+    "pure": "parity takes precedence over sourcePerformance. LFO depth/destination, FX type/model/mix and arp enable are effectively masked. Raw parameters remain stored. Factory and user-preset recall preserve the session Pure flag.",
+    "studio_visibility": "PluginEditor::showAdvanced changes overlay visibility, focus and repaint only. Its open/closed state is not an audio-policy switch.",
+    "clocking": "The authored LFO and arpeggiator rates are free-running Hz/notes-per-second; no host-tempo synchronization is advertised or used by these routes.",
+    "model_zero": "Phaser Strings and Phased Polysynth use FX model0 with classic type2. Zero modern model means the classic phaser branch, not bypass."
+  },
+  "source_evidence": [
+    {
+      "path": "src/core/Engine.h",
+      "sha256": "701e27b480be8145a86eb4a822e6b6c50e8a135a8118093b4a80f8d9f7b58221"
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "sha256": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871"
+    },
+    {
+      "path": "src/core/ModulationLfo.h",
+      "sha256": "6c30258a7a77ef64eb9fbf9ebe201f060193a47c34764d124d150a97427d6400"
+    },
+    {
+      "path": "src/core/FxSlot.h",
+      "sha256": "458a60ae6ae594f87684a09594a5b0c5fb766f6c5ded4a0e505531328c6971fe"
+    },
+    {
+      "path": "src/core/FxModels.h",
+      "sha256": "b2cd5a53030e76d3ff6378404168adcc5d873a9a2820da3bf6bf0f1df1625282"
+    },
+    {
+      "path": "src/core/CuratedLibrary.inc",
+      "sha256": "f89ae54e9386d1e12b5b945b1f60f7e1e4667d79e91c5a63afcc63111e3aecf8"
+    },
+    {
+      "path": "src/core/curated/Modern.inc",
+      "sha256": "8143493b5eed4139ef6b0a7328a9f91293ad72d302432b4b9066d279a2b82fde"
+    },
+    {
+      "path": "src/core/curated/Fx.inc",
+      "sha256": "5480939ebfcd3c42596bf0e3bd5aab408cd590db1c59db0b580adc2bbcbf8638"
+    },
+    {
+      "path": "src/core/curated/Pads.inc",
+      "sha256": "bfef354a1f795b335201a1f4ceec81ef643fdd6a5fb190a0f63f07838a6bd75d"
+    },
+    {
+      "path": "src/plugin/PluginEditor.cpp",
+      "sha256": "8405e39729c7f90a57cf2706b62ff9f363b537933ab015dd73b0a99c14f5d566"
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "sha256": "95f709baf46b9a83ce44725473aaed00aaa43b9e117deee8a72f29c362dd52d1"
+    },
+    {
+      "path": "docs/PARITY_ISOLATION.md",
+      "sha256": "309a341cb43772ab56780f34cae62a7d5bf7976074b1324e70beefbf80f958a0"
+    }
+  ],
+  "limits": [
+    "An active control-flow route does not establish perceptual prominence, acoustic realism or arbitrary-performance quality.",
+    "Pure intentionally changes multiple controls, so it is not an isolated modern-effect A/B comparison.",
+    "The delay numbers are nominal target laws; tape wow/flutter and feedback decay remain active.",
+    "PARITY_ISOLATION.md has historical host-count and decimator-only latency wording. Current Engine and plugin code are authoritative for this audit; no documentation edits were made."
+  ]
+}

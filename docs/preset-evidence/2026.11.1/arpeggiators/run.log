@@ -1,0 +1,65 @@
+PASS Arp Poly: complete factory values preserved
+PASS Arp Poly: ordinary Circuit with active arp
+PASS Arp Poly: authored mode/rate/octave contract
+PASS Arp Poly: first generated gate begins within one host frame
+PASS Arp Poly: six-second onset count is consistent with rate and initial immediate note
+PASS Arp Poly: at most one generated held gate at a time
+PASS Arp Poly: source pitch-class velocity and MIDI channel retained
+PASS Arp Poly: generated gates do not become pedal-held tails
+PASS Arp Poly: all source releases stop generation even with pedal down; pedal-up does not revive it
+PASS Arp Poly: every generated note belongs to the authored chord/octave range
+PASS Arp Poly: exact ascending/up-down cycle matches authored mode
+PASS Arp Poly: note intervals remain within0.5ms of authored free-running rate
+PASS Arp Poly: gate fraction matches58% or random45% within0.2percentage points
+PASS Arp Poly: finite audio below full scale
+PASS Arp Poly: all active voices retire during the three-second release
+PASS Arp Poly: performance events leave factory parameters intact
+PASS Arp Bells: complete factory values preserved
+PASS Arp Bells: ordinary Circuit with active arp
+PASS Arp Bells: authored mode/rate/octave contract
+PASS Arp Bells: first generated gate begins within one host frame
+PASS Arp Bells: six-second onset count is consistent with rate and initial immediate note
+PASS Arp Bells: at most one generated held gate at a time
+PASS Arp Bells: source pitch-class velocity and MIDI channel retained
+PASS Arp Bells: generated gates do not become pedal-held tails
+PASS Arp Bells: all source releases stop generation even with pedal down; pedal-up does not revive it
+PASS Arp Bells: every generated note belongs to the authored chord/octave range
+PASS Arp Bells: exact ascending/up-down cycle matches authored mode
+PASS Arp Bells: note intervals remain within0.5ms of authored free-running rate
+PASS Arp Bells: gate fraction matches58% or random45% within0.2percentage points
+PASS Arp Bells: finite audio below full scale
+PASS Arp Bells: all active voices retire during the three-second release
+PASS Arp Bells: performance events leave factory parameters intact
+PASS Arp Bass: complete factory values preserved
+PASS Arp Bass: ordinary Circuit with active arp
+PASS Arp Bass: authored mode/rate/octave contract
+PASS Arp Bass: first generated gate begins within one host frame
+PASS Arp Bass: six-second onset count is consistent with rate and initial immediate note
+PASS Arp Bass: at most one generated held gate at a time
+PASS Arp Bass: source pitch-class velocity and MIDI channel retained
+PASS Arp Bass: generated gates do not become pedal-held tails
+PASS Arp Bass: all source releases stop generation even with pedal down; pedal-up does not revive it
+PASS Arp Bass: every generated note belongs to the authored chord/octave range
+PASS Arp Bass: exact ascending/up-down cycle matches authored mode
+PASS Arp Bass: note intervals remain within0.5ms of authored free-running rate
+PASS Arp Bass: gate fraction matches58% or random45% within0.2percentage points
+PASS Arp Bass: finite audio below full scale
+PASS Arp Bass: all active voices retire during the three-second release
+PASS Arp Bass: performance events leave factory parameters intact
+PASS Random Arp: complete factory values preserved
+PASS Random Arp: ordinary Circuit with active arp
+PASS Random Arp: authored mode/rate/octave contract
+PASS Random Arp: first generated gate begins within one host frame
+PASS Random Arp: six-second onset count is consistent with rate and initial immediate note
+PASS Random Arp: at most one generated held gate at a time
+PASS Random Arp: source pitch-class velocity and MIDI channel retained
+PASS Random Arp: generated gates do not become pedal-held tails
+PASS Random Arp: all source releases stop generation even with pedal down; pedal-up does not revive it
+PASS Random Arp: every generated note belongs to the authored chord/octave range
+PASS Random Arp: random ordering varies over at least four valid pitches
+PASS Random Arp: note intervals remain within0.5ms of authored free-running rate
+PASS Random Arp: gate fraction matches58% or random45% within0.2percentage points
+PASS Random Arp: finite audio below full scale
+PASS Random Arp: all active voices retire during the three-second release
+PASS Random Arp: performance events leave factory parameters intact
+Factory arpeggiator roles: 64/64 checks, 4 captures / 36 seconds.

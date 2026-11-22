@@ -1,0 +1,69 @@
+# Assignment 43 — factory arpeggiator runtime roles
+
+All **64 checks passed** across four final-bank captures / **36 seconds**.
+No factory parameters or production files were changed.
+
+| Program | Authored behavior | Actual notes in six seconds | Observed mean rate | Highest sample peak |
+| --- | --- | ---: | ---: | ---: |
+| Arp Poly | Up, two octave expansions, 8 notes/s | 48 | 7.999518 notes/s | −14.284 dBFS |
+| Arp Bells | Up/down, two octave expansions, 4 notes/s | 24 | 3.999739 notes/s | −17.411 dBFS |
+| Arp Bass | Up, one octave expansion, 6 notes/s | 36 | 5.999614 notes/s | −13.971 dBFS |
+| Random Arp | Random, two octave expansions, 6 notes/s | 36 | 5.999614 notes/s | −13.849 dBFS |
+
+Every interval differs from its nominal target by at most one 48 kHz host
+sample (approximately **20.83 microseconds**). Gate lengths follow the existing
+58% duty for the ordered modes and 45% for random mode. The largest observed
+gate-fraction discrepancy is **0.0001667**, or **0.01667 percentage points**.
+The initial generated gate begins in the first host sample.
+
+Ordered sequences match their exact ascending or up/down cycle. Random Arp
+visits all six permitted expanded notes; its actual sequence is recorded, but
+the fixture does not demand a fabricated exact random sequence.
+
+## Performance and measurement
+
+Each capture uses 48 kHz, ordinary Circuit, pressure zero, and all factory
+parameters. Arp Bells receives MIDI 60/64/67; the other programs receive
+48/52/55. Root/third/fifth velocities are respectively 0.45/0.7/0.9. Source
+notes enter in fifth/root/third order before audio begins, independently
+testing pitch sorting and preservation of source velocity/channel identity.
+
+The source chord holds for six seconds. CC64 goes down at 4.5 seconds, all
+source keys release at six seconds, and CC64 goes up at 7.5 seconds. Rendering
+ends at nine seconds. Generated gates never become pedal-held notes. Releasing
+all source notes stops generation immediately despite the pedal, and pedal-up
+does not restart it. Every program retires all voices by **6.153542 seconds**.
+All samples are finite and below full scale. Arp Bells still has a delay tail,
+with final half-second RMS **−77.655 dBFS**; voice retirement is not a claim of
+digital silence.
+
+The probe observes public `VoiceInfo` records after every host sample. These
+are actual generated note identities and held gates, not an estimate from a
+parameter dump. It also measures and hashes the generated audio in memory.
+No WAV or raw PCM files are written. The generated MIDI notes should not be
+confused with acoustic fundamental estimates: rank registrations still apply.
+
+Timing bounds were declared before execution: interval error at most 0.5 ms,
+and gate-fraction error at most 0.002. No acceptance bound was relaxed after
+execution. This is a bounded chord/phrase test, not a listening verdict,
+external DAW test, host-tempo qualification, or arbitrary-performance guarantee.
+
+## Reproduction
+
+From a checkout with the final calibrated core library built:
+
+```bash
+c++ -std=c++20 -O2 -I src build-w09-arp-roles/probe.cpp build-audit/libcs80_core.a -o build-w09-arp-roles/probe
+./build-w09-arp-roles/probe build-w09-arp-roles > build-w09-arp-roles/run.log 2>&1
+python build-w09-arp-roles/summarize.py
+```
+
+The binary-publication source is
+`be460b0b93bdcb8dce5eb8925b18b72706b25e19`. Relevant source files match it exactly;
+the local core was compiled before the publication commit. `summary.json`
+records that qualification, the exact core/inventory/probe/source hashes, all
+program measurements, actual note sequences, and limits.
+
+Compact evidence consists of `summary.json`, `results.csv`, `transitions.csv`,
+`probe.cpp`, `summarize.py`, `run.log`, and this note. The probe executable is
+local reproduction output, not a publication deliverable.

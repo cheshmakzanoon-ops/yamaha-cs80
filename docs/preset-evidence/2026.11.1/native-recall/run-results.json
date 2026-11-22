@@ -1,0 +1,42 @@
+[
+  {
+    "flag": "--modern-recall-host-tests",
+    "exit_code": 0,
+    "elapsed_seconds": 2.837541868997505,
+    "log": "modern-recall-host-tests.log",
+    "command": [
+      "build-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--modern-recall-host-tests"
+    ]
+  },
+  {
+    "flag": "--preset-file-recall-tests",
+    "exit_code": 0,
+    "elapsed_seconds": 0.5163086539978394,
+    "log": "preset-file-recall-tests.log",
+    "command": [
+      "build-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--preset-file-recall-tests"
+    ]
+  },
+  {
+    "flag": "--preset-revert-tests",
+    "exit_code": 0,
+    "elapsed_seconds": 1.4206245009991108,
+    "log": "preset-revert-tests.log",
+    "command": [
+      "build-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--preset-revert-tests"
+    ]
+  },
+  {
+    "flag": "--preset-identity-tests",
+    "exit_code": 0,
+    "elapsed_seconds": 0.21578585999668576,
+    "log": "preset-identity-tests.log",
+    "command": [
+      "build-native/CS80Snapshots_artefacts/Release/CS80Snapshots",
+      "--preset-identity-tests"
+    ]
+  }
+]

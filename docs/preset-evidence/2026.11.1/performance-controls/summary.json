@@ -1,0 +1,428 @@
+{
+  "assignment": 33,
+  "source_commit": "85b0b547ea11dfb15335dc3720bf59761abf29ff",
+  "library_revision": "2026.11.1",
+  "sample_rate": 48000,
+  "midi_note": 60,
+  "capture_count": 10,
+  "seconds": 64.0,
+  "highest_sample_peak_dbfs": -16.49140450786786,
+  "checks_passed": 60,
+  "checks_total": 60,
+  "checks": [
+    {
+      "check": "pressure_lead_performed: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "pressure_lead_performed: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "pressure_lead_performed: final_voices",
+      "pass": true
+    },
+    {
+      "check": "pressure_lead_performed: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "pressure_lead_control: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "pressure_lead_control: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "pressure_lead_control: final_voices",
+      "pass": true
+    },
+    {
+      "check": "pressure_lead_control: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "wah_lead_performed: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "wah_lead_performed: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "wah_lead_performed: final_voices",
+      "pass": true
+    },
+    {
+      "check": "wah_lead_performed: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "wah_lead_control: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "wah_lead_control: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "wah_lead_control: final_voices",
+      "pass": true
+    },
+    {
+      "check": "wah_lead_control: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead_performed: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead_performed: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead_performed: final_voices",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead_performed: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead_control: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead_control: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead_control: final_voices",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead_control: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys_performed: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys_performed: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys_performed: final_voices",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys_performed: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys_control: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys_control: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys_control: final_voices",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys_control: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead_performed: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead_performed: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead_performed: final_voices",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead_performed: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead_control: nonfinite",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead_control: over_full_scale",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead_control: final_voices",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead_control: output below full scale",
+      "pass": true
+    },
+    {
+      "check": "pressure_lead: matched audio before pressure",
+      "pass": true
+    },
+    {
+      "check": "Pressure Lead: unpressed silence",
+      "pass": true
+    },
+    {
+      "check": "Pressure Lead: pressure speaks",
+      "pass": true
+    },
+    {
+      "check": "Pressure Lead: easing pressure fades held note",
+      "pass": true
+    },
+    {
+      "check": "wah_lead: matched audio before pressure",
+      "pass": true
+    },
+    {
+      "check": "Wah Lead: no pressure-induced oscillator vibrato",
+      "pass": true
+    },
+    {
+      "check": "Wah Lead: filter modulation develops",
+      "pass": true
+    },
+    {
+      "check": "Wah Lead: audio brightness oscillation develops",
+      "pass": true
+    },
+    {
+      "check": "vibrato_lead: matched audio before pressure",
+      "pass": true
+    },
+    {
+      "check": "Aftertouch Vibrato Lead: oscillator excursion develops",
+      "pass": true
+    },
+    {
+      "check": "Aftertouch Vibrato Lead: control stable",
+      "pass": true
+    },
+    {
+      "check": "Aftertouch Vibrato Lead: audible fundamental excursion follows",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys: matched audio before hard strike",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys: wide attack dynamics",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys: wide held dynamics",
+      "pass": true
+    },
+    {
+      "check": "velocity_keys: soft repeat returns",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead: matched audio before hard strike",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead: wide attack dynamics",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead: wide held dynamics",
+      "pass": true
+    },
+    {
+      "check": "velocity_lead: soft repeat returns",
+      "pass": true
+    }
+  ],
+  "failures": [],
+  "measurements": {
+    "pressure_lead": {
+      "pre_pressure_max_abs_audio_difference": 0.0,
+      "oscillator_hz_max_abs_difference_first_hold": 1.8157348629999888,
+      "initial_unpressed_rms_dbfs": -300.0,
+      "full_pressure_rms_dbfs": -26.898100982253457,
+      "zero_pressure_control_same_window_rms_dbfs": -300.0,
+      "returned_zero_pressure_held_rms_dbfs": -81.25907795272909,
+      "returned_zero_pressure_control_rms_dbfs": -300.0,
+      "zero_pressure_release_tail_rms_dbfs": -227.40330207642688,
+      "full_pressure_release_tail_rms_dbfs": -118.90324438289367,
+      "final_200ms_rms_dbfs": -300.0,
+      "performed": {
+        "osc1_peak_to_peak_cents": 23.970645398100526,
+        "osc1_modulation_fit_peak_to_peak_cents": 20.61451780383528,
+        "lpf1_min_hz": 1871.89990234,
+        "lpf1_max_hz": 1894.6015625,
+        "lpf1_modulation_fit_peak_to_peak_octaves": 0.0021521384036117656,
+        "audio_fundamental_modulation_fit_peak_to_peak_cents": 20.721089380551252,
+        "audio_centroid_mean_hz": 545.2976090432577,
+        "audio_centroid_modulation_fit_peak_to_peak_hz": 2.994431766277613,
+        "fitted_modulation_hz": 5.0
+      },
+      "control": {
+        "osc1_peak_to_peak_cents": 0.14040148667836805,
+        "osc1_modulation_fit_peak_to_peak_cents": 0.033984461380384905,
+        "lpf1_min_hz": 1249.98449707,
+        "lpf1_max_hz": 1249.98449707,
+        "lpf1_modulation_fit_peak_to_peak_octaves": 1.9740498066949913e-15,
+        "audio_fundamental_modulation_fit_peak_to_peak_cents": 0.0,
+        "audio_centroid_mean_hz": 0.0,
+        "audio_centroid_modulation_fit_peak_to_peak_hz": 0.0,
+        "fitted_modulation_hz": 5.0
+      }
+    },
+    "wah_lead": {
+      "pre_pressure_max_abs_audio_difference": 0.0,
+      "oscillator_hz_max_abs_difference_first_hold": 0.0,
+      "initial_unpressed_rms_dbfs": -26.407220017595108,
+      "full_pressure_rms_dbfs": -27.037541323458942,
+      "zero_pressure_control_same_window_rms_dbfs": -29.43085455788951,
+      "returned_zero_pressure_held_rms_dbfs": -29.39730487074939,
+      "returned_zero_pressure_control_rms_dbfs": -29.40251602794411,
+      "zero_pressure_release_tail_rms_dbfs": -179.6858739614035,
+      "full_pressure_release_tail_rms_dbfs": -124.05095816327315,
+      "final_200ms_rms_dbfs": -300.0,
+      "performed": {
+        "osc1_peak_to_peak_cents": 0.14040148667836805,
+        "osc1_modulation_fit_peak_to_peak_cents": 0.05010708018410247,
+        "lpf1_min_hz": 1107.43164062,
+        "lpf1_max_hz": 2428.67260742,
+        "lpf1_modulation_fit_peak_to_peak_octaves": 1.0052557025154347,
+        "audio_fundamental_modulation_fit_peak_to_peak_cents": 6.801615757654074,
+        "audio_centroid_mean_hz": 525.974558497804,
+        "audio_centroid_modulation_fit_peak_to_peak_hz": 140.6200460016311,
+        "fitted_modulation_hz": 3.8
+      },
+      "control": {
+        "osc1_peak_to_peak_cents": 0.14040148667836805,
+        "osc1_modulation_fit_peak_to_peak_cents": 0.05010708018410247,
+        "lpf1_min_hz": 1427.91503906,
+        "lpf1_max_hz": 1427.91503906,
+        "lpf1_modulation_fit_peak_to_peak_octaves": 1.1920340324036848e-15,
+        "audio_fundamental_modulation_fit_peak_to_peak_cents": 0.10933288085361899,
+        "audio_centroid_mean_hz": 486.066715103592,
+        "audio_centroid_modulation_fit_peak_to_peak_hz": 7.665869199780748,
+        "fitted_modulation_hz": 3.8
+      }
+    },
+    "vibrato_lead": {
+      "pre_pressure_max_abs_audio_difference": 0.0,
+      "oscillator_hz_max_abs_difference_first_hold": 3.6510620120000112,
+      "initial_unpressed_rms_dbfs": -26.54330040499162,
+      "full_pressure_rms_dbfs": -26.55896729911206,
+      "zero_pressure_control_same_window_rms_dbfs": -29.1516626330873,
+      "returned_zero_pressure_held_rms_dbfs": -28.856187979336436,
+      "returned_zero_pressure_control_rms_dbfs": -28.857094643687155,
+      "zero_pressure_release_tail_rms_dbfs": -172.99068766083693,
+      "full_pressure_release_tail_rms_dbfs": -118.85456200911689,
+      "final_200ms_rms_dbfs": -300.0,
+      "performed": {
+        "osc1_peak_to_peak_cents": 47.94146747521095,
+        "osc1_modulation_fit_peak_to_peak_cents": 44.204815774232465,
+        "lpf1_min_hz": 2467.14672852,
+        "lpf1_max_hz": 2487.05395508,
+        "lpf1_modulation_fit_peak_to_peak_octaves": 0.0014347885359700886,
+        "audio_fundamental_modulation_fit_peak_to_peak_cents": 44.580083096961765,
+        "audio_centroid_mean_hz": 551.2878643492116,
+        "audio_centroid_modulation_fit_peak_to_peak_hz": 8.561340999295936,
+        "fitted_modulation_hz": 5.0
+      },
+      "control": {
+        "osc1_peak_to_peak_cents": 0.14040148667836805,
+        "osc1_modulation_fit_peak_to_peak_cents": 0.033984461380384905,
+        "lpf1_min_hz": 1884.84790039,
+        "lpf1_max_hz": 1884.84790039,
+        "lpf1_modulation_fit_peak_to_peak_octaves": 2.915164042740618e-15,
+        "audio_fundamental_modulation_fit_peak_to_peak_cents": 0.025262277216890863,
+        "audio_centroid_mean_hz": 490.008853964123,
+        "audio_centroid_modulation_fit_peak_to_peak_hz": 3.107818117040676,
+        "fitted_modulation_hz": 5.0
+      }
+    },
+    "velocity_keys": {
+      "pre_hard_strike_max_abs_audio_difference": 0.0,
+      "hard_vs_soft_attack_gain_db": 10.53171460745132,
+      "hard_vs_soft_held_gain_db": 10.472679364924527,
+      "subsequent_soft_attack_vs_control_db": 2.181067994665515e-06,
+      "initial_soft_held_rms_dbfs": -40.678167639785634,
+      "final_200ms_rms_dbfs": -191.55330948488125
+    },
+    "velocity_lead": {
+      "pre_hard_strike_max_abs_audio_difference": 0.0,
+      "hard_vs_soft_attack_gain_db": 11.409656694063003,
+      "hard_vs_soft_held_gain_db": 11.476101173064952,
+      "subsequent_soft_attack_vs_control_db": 3.8881667730532666e-07,
+      "initial_soft_held_rms_dbfs": -36.15264570418284,
+      "final_200ms_rms_dbfs": -188.59240616825707
+    }
+  },
+  "hashes": {
+    "analyze.py": "fa0e7f6ff7f563b4d897fdd838a89c73c5f8f996503f5684ea137fbbc94475f7",
+    "captures.csv": "470953dc5f83a2b296288405094ea10b7167b7bb577b23d8bbf986254882fe7f",
+    "events.csv": "c28b6cd420f55f541aa8ee86a51ff031f51dd58511076675c19bacfd39abe50e",
+    "pressure_lead_control.csv": "fd12e61aedb1789954964b051debb7eca174cff284d4c56351ed1c9fb3c0e501",
+    "pressure_lead_control.f32": "76ed5c9c326ba62322d464a22d3fcf7b76c7352c6d33badc36ccea7a33325e97",
+    "pressure_lead_performed.csv": "e4934564e6b97b2d3454b598028d8981349b082571e5e225c2f216c5b7f84e98",
+    "pressure_lead_performed.f32": "7d2119ea17ecbb4e108fedf542a7d7439471697dbf85f3820e33625525b28c91",
+    "probe.cpp": "ad6638e6a3b15234b7e45f92e721507e1c95eb544e2f2a33c73c24debfa88455",
+    "run.log": "12d9c1cf44762bc330b06f667dc1aec514d7a349b23055553680160858fc074b",
+    "velocity_keys_control.csv": "014dc6c17cd5e2ac78fa5d7f032cc22825fd87c4be145dd7e3ccb7619a7a8530",
+    "velocity_keys_control.f32": "313c2768ee10380bbb03bcb1c9d13441ec2a5bf9a1ba61acc4d152d2f86b320d",
+    "velocity_keys_performed.csv": "cb631dbfe661565d66acfe67456da85520976435de5ac4d309f4a8a60e0b696b",
+    "velocity_keys_performed.f32": "6c1447ebf02be834e51c8023c759be9bd4e73eefcaa5ef898e5a425ee09a91d6",
+    "velocity_lead_control.csv": "541adbe05c4e828446edc21fd68343e9d4cf2f22b506120a4bc705c9271c39b6",
+    "velocity_lead_control.f32": "bf69c438a5d5a4814b9a044740daa4f1eb521fcf894c83ec5b63883749087a4d",
+    "velocity_lead_performed.csv": "ecca3822276627f8309f77a430d9c37b362fa2af600e601b2b0915a5b43c1bc6",
+    "velocity_lead_performed.f32": "66c21af4848bdbcfe8892dc242d392133fb98ca2630d76f1372f78d7abfff546",
+    "vibrato_lead_control.csv": "d30f335970fc6ac94da19ffe42648867ead6b565bc46f8e157a5afdc7a5cb771",
+    "vibrato_lead_control.f32": "31a0564e5c8abede50f86556d1b678bf7f1cd0bc641298cc38a6c0b5b272ad88",
+    "vibrato_lead_performed.csv": "f83fb3874079fda70eb5255d8cd5206237c930289c8f5591ebc0fe87d926045e",
+    "vibrato_lead_performed.f32": "7ef91601f53a76b95eadb11a9c2bb038ec0d386c8f530264b469e5f784130bb2",
+    "wah_lead_control.csv": "59ff4e2f2d55f1d94a8ff57106478bafd74dd8bcece40e58252b33eb42e4dc72",
+    "wah_lead_control.f32": "447bcd5f861bd4046976eab38ae6ce5676a1ab5dd55a0ed9167d948228ec30df",
+    "wah_lead_performed.csv": "5f23aad15857d55597a410da8c87b158e0043ade4c91fe71ac1314e67790ef14",
+    "wah_lead_performed.f32": "ab1a7ee7bb58d52d5d3cf617d2395cf5eae8abb0c178484b91e4fcc91039d1ce"
+  },
+  "input_hashes": {
+    "build-audit/libcs80_core.a": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+    "build-audit/inventory-final.json": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+    "src/core/curated/Keys.inc": "40cf622bdbb1b4d3fc7ad7bce97cae05b5250de7404b89a7fc0005cd41b4b916",
+    "src/core/curated/Leads.inc": "f353fa34ff2d7c81de09854aedb5b0a60e4ab0e8455a0b2dd0f71c74d06a3fc2"
+  },
+  "method": {
+    "pressure_events": "Two eight-second renders per pressure voice. Performed: note60 velocity0.8 at0s; channelpressure0\u21921 at0.5\u20131.0s,1\u21920 at2.0\u20132.5s, noteoff3.2s; secondnote4.5s,pressure0\u21921 at4.6\u20135.1s,noteoff5.7s whilepressure1,pressure0 at6.5s. Matchedcontrol keepspressure0.",
+    "velocity_events": "Two four-second renders per velocity voice. Note60 at0,1.1,2.2s,offs0.6,1.7,2.8s. Performedvelocities0.2,1.0,0.2;control0.2 for all.",
+    "telemetry": "Rank oscillator/filter telemetry every10ms; no parameter mutation.",
+    "audio_analysis": "Fundamental demodulation aroundMIDI60, fifth-order70Hz lowpass applied forward/backward; least-squares sinusoidal amplitude with constant/lineartrend atnominal5Hz (vibrato) or3.8Hz(wah). Spectrum centroid150\u20138000Hz uses4096-sampleSTFT,240-samplehop. Fit window1.2\u20131.9s. These fixed-frequency fits measure response amplitude, not an independent exact modulation-rate estimate."
+  },
+  "limits": [
+    "Representative MIDI60 sequences; not every register, DAW, controller, or performance history.",
+    "Per-pressure roles use 0\u21921\u21920 channel pressure; polyphonic routing was tested separately in the wind assignment.",
+    "Factory parameters are unchanged; matched control differs only in event pressure or the second note velocity.",
+    "Wah filter modulation can cause small audio-phase modulation without pitch-oscillator modulation; oscillator telemetry and demodulated fundamental are reported separately.",
+    "No physical CS-80 measurement or listening-panel judgment."
+  ],
+  "raw_render_retention": {
+    "state": "Verified then omitted to conserve workspace capacity",
+    "files": 10,
+    "bytes": 24576000,
+    "hashes_preserved_in": "hashes",
+    "reproduction": "Run probe.cpp then analyze.py as documented in README.md."
+  }
+}

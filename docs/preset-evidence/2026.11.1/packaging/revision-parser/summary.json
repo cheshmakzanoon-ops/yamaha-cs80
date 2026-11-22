@@ -1,0 +1,159 @@
+{
+  "assignment": 34,
+  "scope": "Packaging and download publication review, with a discovered revision-parser blocker repaired before final CI publication.",
+  "reviewed_source_commit": "99f5ebd6b71283a56810d801df89c49ef62f3512",
+  "reviewed_run_id": 45041166825,
+  "publication_status": "No revised platform assets verified in this assignment. Run artifact API initially returned zero artifacts. Source commit must advance for the parser fix; verify the replacement run and source SHA.",
+  "blocker": {
+    "function": "read_preset_library_revision",
+    "before": "Only YYYY.MM accepted; current 2026.11.1 raises ValueError, blocking real package creation and actual payload notice fixture.",
+    "fix": "Accept YYYY.MM and YYYY.MM.PATCH, where PATCH is a positive canonical integer with no leading zero. Preserve one-declaration requirement, valid two-digit month, exact full-string match, and newline/trailing-junk rejection.",
+    "production_files": [
+      "scripts/package-ci-artifacts.py",
+      "scripts/test-packaging-notices.py"
+    ],
+    "local_results": {
+      "notice_test_methods": 6,
+      "notice_test_failures": 0,
+      "synthetic_platform_archive_variants": 4,
+      "accepted_synthetic_revisions": [
+        "2042.07",
+        "2042.07.1",
+        "2042.07.12"
+      ],
+      "rejected_declaration_cases": 15,
+      "packaging_fixture_checks": 46
+    },
+    "limitations": "All local archives are synthetic fixtures. These tests do not validate pending native assets."
+  },
+  "expected_artifacts": [
+    {
+      "label": "Windows x64",
+      "name": "cs80-windows-install-bundle",
+      "platform": "windows",
+      "architecture": "x86_64",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "outer_extension": ".zip",
+      "inner_extension": ".zip",
+      "inner_name_template": "cs80-reference-windows-x86_64-<source first12>.zip",
+      "rolling_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/workflows/build/main/cs80-windows-install-bundle.zip",
+      "verified_artifact_id": null
+    },
+    {
+      "label": "macOS Apple Silicon",
+      "name": "cs80-macos-15-install-bundle",
+      "platform": "macos",
+      "architecture": "arm64",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "outer_extension": ".zip",
+      "inner_extension": ".tar.gz",
+      "inner_name_template": "cs80-reference-macos-arm64-<source first12>.tar.gz",
+      "rolling_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/workflows/build/main/cs80-macos-15-install-bundle.zip",
+      "verified_artifact_id": null
+    },
+    {
+      "label": "macOS Intel",
+      "name": "cs80-macos-15-intel-install-bundle",
+      "platform": "macos",
+      "architecture": "x86_64",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "outer_extension": ".zip",
+      "inner_extension": ".tar.gz",
+      "inner_name_template": "cs80-reference-macos-x86_64-<source first12>.tar.gz",
+      "rolling_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/workflows/build/main/cs80-macos-15-intel-install-bundle.zip",
+      "verified_artifact_id": null
+    },
+    {
+      "label": "Linux x86-64",
+      "name": "cs80-linux-install-bundle",
+      "platform": "linux",
+      "architecture": "x86_64",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "outer_extension": ".zip",
+      "inner_extension": ".tar.gz",
+      "inner_name_template": "cs80-reference-linux-x86_64-<source first12>.tar.gz",
+      "rolling_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/workflows/build/main/cs80-linux-install-bundle.zip",
+      "verified_artifact_id": null
+    }
+  ],
+  "source_contract": {
+    "full_commit": "40 lowercase hexadecimal digits; git HEAD, clean tracked checkout, GITHUB_SHA and JUCE workflow_commit must agree.",
+    "sound_data_revision": "manifest.preset_library_revision and SOURCE.txt must both state 2026.11.1; source SHA remains the binary identifier.",
+    "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "juce_version": "8.0.11",
+    "manifest_schema_version": 1,
+    "inner_root": "cs80-reference-<platform>-<architecture>-<source first12>",
+    "outer_contents": [
+      "inner archive",
+      "same-stem .manifest.json",
+      "SHA256SUMS"
+    ],
+    "inner_metadata": [
+      "manifest.json",
+      "SOURCE.txt",
+      "PRESET_GUIDE.md",
+      "INSTALL_AND_QUICKSTART.md",
+      "DISTRIBUTION_STATUS.md",
+      "LICENSE",
+      "licenses/*",
+      "evidence/juce-provenance.txt"
+    ],
+    "integrity": "SHA256SUMS covers inner archive and sidecar manifest. Embedded manifest must equal sidecar. Every regular payload file has SHA256 and size; directory/symlink types, internal target containment and Unix tar modes are preserved and verified."
+  },
+  "verification_sequence": [
+    "Obtain replacement build run by full pushed SHA, then require every required platform job and Linux/Windows validator job to complete successfully; inspect macOS AU/VST3 validator steps inside their platform jobs. Artifact upload alone is not a pass.",
+    "List artifacts for that exact run. Record each artifact ID, exact name, API digest/size, source/run identity, expired=false and expires_at. Require one intended artifact per platform.",
+    "GET each pinned nightly.link artifact-ID URL without credentials, follow redirects, and verify the received outer ZIP bytes against API SHA256 and size. HEAD is not a substitute for GET.",
+    "Inspect outer ZIP without executing content; require expected three package files and safe names. Preserve hashes from the downloaded bytes.",
+    "Run scripts/verify-ci-bundle.py from the trusted fixed source checkout against the inner archive with --expected-commit <full source SHA>. Require exit0 and complete sidecar/embedded inventory agreement.",
+    "Additionally assert platform, architecture, formats, preset_library_revision=2026.11.1, SOURCE.txt full SHA/revision, workflow_run_id and JUCE SHA/version. The verifier validates source consistency, not whether every CI gate passed.",
+    "Check payload binary headers/roles and complete bundle layout for the advertised target; preserve Unix executable permissions and internal symlinks. Do not execute a foreign-platform binary locally.",
+    "Record final run/job/artifact IDs, outer and inner SHA256, actual expiration, verification logs and downloaded-source identity in the release evidence. Only then update README Downloads.",
+    "After the documentation commit, GET the exact links rendered in README again or compare them to the verified ID map; ensure all four identify the intended source. A documentation-only commit may have a newer SHA than the binaries and must name the binary source explicitly."
+  ],
+  "recommended_readme": {
+    "headline": "Verified Circuit library 2026.11.1 \u2014 source <full SHA>, build <run URL>.",
+    "primary_links": "Use pinned artifact-ID links for each verified platform, not the rolling workflow/main selector. Include source commit and the actual expiry date beside/under the table.",
+    "download_url_template": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/<verified_artifact_id>.zip",
+    "github_fallback_template": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/<verified_run_id>",
+    "secondary_rolling_links": "Optional separately labelled latest-development links may retain existing workflow/main URLs; their changing source must not be implied to equal the pinned revision.",
+    "expiry": "Workflow upload steps contain no retention-days override. Record API expires_at for the actual assets rather than assuming a retention duration. Pinned links stop working when their artifact is deleted or expires; nightly.link is a redirect service, not a durable archive.",
+    "durable_option": "A separately labelled GitHub prerelease/tag with the same verified archives and checksums is the durable distribution option; do not claim that it exists or is signed/notarized. This assignment did not create a release.",
+    "wording_to_retain": "Separate native Mac arm64/x86-64 packages; host-process architecture matters. Linux built on Ubuntu24.04 and requires compatible shared libraries. Development bundles have no release signing/notarization step. Checksums establish consistency, not publisher authenticity or all-DAW qualification."
+  },
+  "additional_doc_observation": "INSTALL_AND_QUICKSTART.md currently says host latency63 samples; README says67. Resolve against current implementation before publishing updated bundled guide. This assignment did not change that guide.",
+  "sources": [
+    ".github/workflows/build.yml",
+    "scripts/package-ci-artifacts.py",
+    "scripts/verify-ci-bundle.py",
+    "scripts/test-packaging-notices.py",
+    "README.md",
+    "docs/INSTALL_AND_QUICKSTART.md",
+    "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45041166825/artifacts?per_page=100",
+    "https://github.com/oprypin/nightly.link",
+    "https://docs.github.com/en/actions/tutorials/store-and-share-data",
+    "https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases"
+  ],
+  "input_hashes": {
+    ".github/workflows/build.yml": "a609f613be8876ca0a1b49cf7242723c535603aa419442b4df1f6b128c235e3e",
+    "scripts/package-ci-artifacts.py": "3f81f791233c8a9f60af0fc0c66e2961be8b0df5e286c88e45d77365745dac4d",
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/test-packaging-notices.py": "13317c773f90f351ef7073185a1c8e7d8d91cc944802e70a71585168b4654f26",
+    "README.md": "e22d56e648d2902ec0b8a2d01eb243ba87b5ef343377291b486a32fe5a997171",
+    "docs/INSTALL_AND_QUICKSTART.md": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057"
+  }
+}

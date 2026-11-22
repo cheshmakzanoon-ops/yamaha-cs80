@@ -1,0 +1,70 @@
+# Final-bank audition verification — assignment 32
+
+## Result
+
+The final calibrated bank produced all **24 unique audition WAVs**, totaling
+**117 seconds / 5,616,000 stereo frames**, through the exact Python capture block
+from source commit `99f5ebd6b71283a56810d801df89c49ef62f3512`.
+
+The sole change to that block was its capture executable path, from
+`build/cs80_preset_capture` to the absolute path of the already built final
+`build-audit/cs80_preset_capture`. Selection, timing, velocity, pressure, factory
+settings, source guard, failure handling and checksums were preserved. The
+block ran successfully in the repository root; its completed output directory
+was then moved unchanged into this assignment directory. `execution.json`
+records this arrangement. `GITHUB_RUN_ID` deliberately reads
+`local-assignment-32`.
+
+The capture executable was built locally before publication. **This is not a
+GitHub Actions-produced package**, and it must not be presented as verification
+of all platform bundles. The subsequent correction to the packaging revision
+parser may change the final release source commit without changing these sound
+data. The recorded source identifier here has not been relabeled.
+
+## Independent checks
+
+`verify.py` reads and measures the delivered WAV bytes independently:
+
+- All 32 SHA-256 manifest entries match; there are no missing or extra files.
+- The inventory contains 301 programs, 190 parameter IDs, and revision
+  `2026.11.1`. Its SHA-256 is
+  `fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa`.
+- All 24 complete factory parameter vectors reproduce their capture's FNV-1a
+  parameter digest. No rank-isolation setting was used.
+- Every category-specific note, velocity, pressure setting, hold, release
+  excerpt, sample rate and expected frame count matches the committed selection.
+  The float32 pressure and velocity values are compared as their serialized
+  float32 bit patterns.
+- Every WAV has a valid RIFF length, IEEE float stereo 48 kHz format, decoded
+  frame-count `fact` chunk and exact data length.
+- Every sample is finite; none exceeds full scale. The highest peak is
+  **−14.575833 dBFS**.
+- Sample-derived peak and RMS match the capture metrics within **5 × 10⁻⁹ dB**.
+  Together with the unchanged parameter digests and source export path, this
+  supports preservation of factory levels without audio normalization.
+
+These are single-note excerpts. They do not replace chord/performance tests,
+an external DAW check or listening evaluation. A bounded release excerpt can
+end while a long release remains active.
+
+## Files
+
+- `summary.json`: per-program measurements, hashes, conditions and limitations.
+- `verify.py`: independent byte/identity/level verification; run with
+  `python build-w06-final-auditions/verify.py` from this checkout.
+- `workflow-audition-original.py`: exact committed capture block.
+- `workflow-audition-local.py`: executed block with only its executable path
+  substituted.
+- `execution.json`, `capture.log`: execution provenance and raw output.
+- `preset-audition/`: unchanged complete artifact directory, including the 24
+  WAVs, metrics, inventory, provenance and checksums.
+- `reproduce.py`: portable runner for a new capture using the archived block.
+
+For exact-source reproduction, use a checkout of the recorded commit and build
+`cs80_preset_capture` with the repository's Release core configuration. Then run
+`reproduce.py --capture /absolute/path/to/cs80_preset_capture --workdir
+/absolute/path/inside/that/checkout/new-audition-directory`. The runner requires
+a new directory and preserves the exact-source guard. It creates a separate
+local provenance record rather than overwriting the evidence above.
+
+No production source files were edited by this assignment.

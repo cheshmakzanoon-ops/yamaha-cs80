@@ -1,0 +1,66 @@
+# One-off durable preset publication — design draft
+
+This draft is not installed and has not published any release. It is intended
+for an independently reviewed, single-run publisher for revision 2026.11.1.
+
+The draft is bound to binary source
+`be460b0b93bdcb8dce5eb8925b18b72706b25e19` and build run `45042166237`.
+It must be independently reviewed before installation. The publication tag targets the
+current default-branch commit using ordinary `contents: write` permission.
+The packages retain their separate, exact binary-source SHA. A comparison must
+prove that only documentation and the explicitly named publisher files differ.
+
+Official references:
+
+- https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_run
+- https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs
+- https://docs.github.com/en/rest/releases/releases#create-a-release
+- https://docs.github.com/en/rest/releases/assets#upload-a-release-asset
+
+`workflow_run` uses the current default-branch workflow and can receive the
+build completion event after a `[skip ci]` publication commit. Skip markers
+apply only to push and pull-request triggers. The file must already be on the
+default branch when the completion event arrives. A manual dispatch fallback
+must retain the same fixed source/run contract; it must not accept arbitrary
+release inputs.
+
+The existing `.github/workflows/release.yml` is a separate installer builder;
+it does not publish the already-verified four install artifacts. The new tag
+uses `presets-2026.11.1`, so it does not match that workflow's `v*` tag trigger.
+
+If normal release creation is denied, fail and use the verified pinned artifact
+links. Do not elevate permissions, add a personal token, move the binary tag,
+delete assets, or replace a failed build's artifacts.
+
+## Normal permission and source distinction
+
+Current GitHub documentation restricts release creation when the selected
+target commit adds or modifies workflow files relative to the default branch;
+the Actions token cannot obtain the additional workflow-write permission.
+This design uses the ordinary current default-branch commit as the tag target.
+It does not try to grant another token or bypass a denied historical-tag write.
+
+The publisher proves that the binary source is an ancestor of that publication
+commit and permits only `README.md`, `docs/**`, and the three exact publisher
+workflow/script/test paths to differ. Renames must have both paths allowed;
+truncated comparisons fail. Any change to source, build configuration, assets,
+dependencies or packaging scripts blocks publication. The release receipt and
+notes identify both commits explicitly. No existing tag or asset is moved,
+deleted or replaced. A draft becomes public only after its complete asset set
+and all returned SHA-256 digests match the verified inputs.
+
+## Draft files
+
+- `publish-preset-refinement.yml` — fixed run/source trigger, main-only context,
+  contents-write/actions-read permissions and a same-contract manual fallback.
+- `publish-preset-refinement.py` — verifies all six jobs and named required
+  steps; checks five original artifact ZIP digests, four full package inventories,
+  platform binary headers and the 24-WAV audition; publishes unchanged outer ZIP
+  bytes plus a provenance receipt and checksums into an unsigned prerelease.
+
+Normal release and artifact operations have not been executed by this draft.
+API permission success, GitHub upload responses and public GET verification
+remain operational gates after installation. An existing mismatching tag,
+asset or release note fails without mutation. An incomplete published release
+is not modified. Matching draft assets can be resumed, and a matching published
+release is a no-op after verification.

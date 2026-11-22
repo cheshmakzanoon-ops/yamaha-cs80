@@ -1,0 +1,70 @@
+# Assignment 30: character across sample rates
+
+**PASS — 183 of 183 checks.** Six refined Circuit programs preserve their
+specified body/detail roles at 44.1, 48, and 96 kHz in this representative-note
+fixture. No production files were edited.
+
+## Conditions
+
+The frozen `capture-snapshot` executable is copied from the final calibrated
+`build-audit/cs80_preset_capture`. `inventory.json` identifies the exact bank.
+Each program is captured at its factory settings, velocity 0.8 and zero
+pressure, as the complete patch and with rank I / II isolated through the actual
+mix control. No other sound parameters are changed; there is no normalization.
+
+| Programs | MIDI note | Held duration | Role window | Later comparison |
+| --- | ---: | ---: | --- | --- |
+| Flute, Breathy Flute | 67 | 0.75 s | 300–500 ms | 500–700 ms |
+| Harp, Kalimba | 60 | 1.2 s | 4–20 ms | 800–1100 ms |
+| Sine Bass, Upright Pluck | 48 | 1.2 s | 4–20 ms | 800–1100 ms |
+
+There is no release tail. This matrix totals 54 captures / 56.7 seconds of
+unnormalized stereo IEEE float audio. Weighted rank reconstruction uses the
+engine's float32 subtraction before promoting weights to float64 for analysis.
+Reconstruction must hold over each exact role window as well as the entire
+capture. The role limits are the existing character suite's authored bounds;
+its struck-note fixture uses velocity 0.9, while this matrix deliberately uses
+0.8 as requested.
+
+## Results
+
+| Program | Detail/body at 44.1 kHz | At 48 kHz | At 96 kHz | Range |
+| --- | ---: | ---: | ---: | ---: |
+| Flute | −26.706 dB | −26.852 dB | −26.817 dB | 0.146 dB |
+| Breathy Flute | −19.477 dB | −19.617 dB | −19.585 dB | 0.140 dB |
+| Harp | −18.083 dB | −18.074 dB | −18.209 dB | 0.135 dB |
+| Kalimba | −18.280 dB | −18.310 dB | −18.298 dB | 0.031 dB |
+| Sine Bass | −23.878 dB | −23.876 dB | −24.626 dB | 0.750 dB |
+| Upright Pluck | −21.426 dB | −21.560 dB | −20.392 dB | 1.167 dB |
+
+Breathy Flute retains more sustained air relative to its body than Flute at
+every rate. All four struck voices retain a present but subordinate onset,
+then lose at least 12 dB of relative upper-layer contribution while the key
+remains held. The wind air remains sustained. The body remains above the
+suite's silence floor in every measured role window.
+
+- Highest complete-patch sample peak: **−19.296 dBFS**.
+- Nonfinite captures and samples exceeding full scale: **zero**, including
+  isolated-rank captures.
+- Largest weighted reconstruction residual: **−142.758 dB relative RMS**.
+- All 183 checks pass; no threshold was changed after execution.
+
+These are bounded software behavior checks. They do not establish perceptual
+identity across sample rates, arbitrary-register behavior, polyphonic headroom,
+release behavior, or physical/acoustic instrument equivalence. Sample-rate
+waveforms are not expected to be bit-identical.
+
+## Reproduction and evidence
+
+From the repository root, with Python, NumPy and SciPy available:
+
+```sh
+python build-w06-sample-rates/verify.py
+```
+
+The script keeps existing frozen input copies when rerun. To capture a different
+build, intentionally use a new output directory or remove those two local input
+copies first. `summary.json` records the executable, inventory and script hashes.
+`measurements.json` includes every command, WAV hash, role window and assertion.
+`capture.log` contains the capture tool's raw output; `run.log` contains the
+aggregate result. WAVs are diagnostic intermediates and need not be committed.

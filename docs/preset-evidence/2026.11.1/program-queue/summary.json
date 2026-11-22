@@ -1,0 +1,284 @@
+{
+  "assignment": 47,
+  "preserved_original_assignment44": true,
+  "production_edits": false,
+  "scope": "Linux native VST3; Flute host program374; zero-frame flush and128-frame processing; current and prior-workspace native binaries",
+  "classification": "Pre-existing controller-dependent Program parameter selection; queue-only processor path does not load factory program. Missing controller synchronization explains the fixture failure; adding a component handler or waiting for the running JUCE message loop does not. No named DAW failure or universal host compatibility claim is established.",
+  "program_parameter": {
+    "id": 1886548852,
+    "flags": 32769,
+    "flags_hex": "0x8001",
+    "step_count": 522
+  },
+  "results": {
+    "modules": 2,
+    "modes_per_module": 5,
+    "state_snapshots_per_module": 24,
+    "logical_observation_groups": 26,
+    "passed_observation_groups": 26
+  },
+  "prior_binary_provenance_qualification": "Exact compile commit is not established. Its loaded Flute values match the pre-refinement values and differ from the revised module. Generated JUCE wrapper is byte-identical in both build directories; six relevant source files are byte-identical between7f55a95 and be460b0. Do not equate the current HEAD of its checkout with its compile commit.",
+  "flute_distinguishing_values": {
+    "revised": {
+      "mix": 0.2199999988079071,
+      "ch2_noise": 0.8199999928474426,
+      "ch2_hpf_cutoff": 949.9998779296875,
+      "ch2_vcf_level": 0.949999988079071,
+      "ch2_v_s": 0.8199999928474426,
+      "ch2_v_level": 0.3199999928474426,
+      "ch2_init_level": 0.4399999976158142,
+      "ch2_after_level": 0.4000000059604645
+    },
+    "prior_workspace": {
+      "mix": 0.1599999964237213,
+      "ch2_noise": 0.1599999964237213,
+      "ch2_hpf_cutoff": 1200.0,
+      "ch2_vcf_level": 0.800000011920929,
+      "ch2_v_s": 0.6800000071525574,
+      "ch2_v_level": 0.1800000071525574,
+      "ch2_init_level": 0.4199999868869781,
+      "ch2_after_level": 0.239999994635582
+    }
+  },
+  "checks": [
+    {
+      "module": "revised",
+      "mode": "flush_no_handler",
+      "stage": "after_queue",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "revised",
+      "mode": "flush_no_handler",
+      "stage": "after_250ms",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "revised",
+      "mode": "flush_no_handler",
+      "stage": "after_controller_sync",
+      "program_selected": true,
+      "controller_normalized_matches": true
+    },
+    {
+      "module": "revised",
+      "mode": "flush_handler",
+      "stage": "after_queue",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "revised",
+      "mode": "flush_handler",
+      "stage": "after_250ms",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "revised",
+      "mode": "flush_handler",
+      "stage": "after_controller_sync",
+      "program_selected": true,
+      "controller_normalized_matches": true
+    },
+    {
+      "module": "revised",
+      "mode": "audio_handler",
+      "stage": "after_queue",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "revised",
+      "mode": "audio_handler",
+      "stage": "after_250ms",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "revised",
+      "mode": "audio_handler",
+      "stage": "after_controller_sync",
+      "program_selected": true,
+      "controller_normalized_matches": true
+    },
+    {
+      "module": "revised",
+      "mode": "audio_thread_handler",
+      "stage": "after_queue",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "revised",
+      "mode": "audio_thread_handler",
+      "stage": "after_250ms",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "revised",
+      "mode": "audio_thread_handler",
+      "stage": "after_controller_sync",
+      "program_selected": true,
+      "controller_normalized_matches": true
+    },
+    {
+      "module": "revised",
+      "mode": "controller_then_queue",
+      "stage": "after_250ms",
+      "program_selected": true,
+      "background_message_delivery_observed": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "flush_no_handler",
+      "stage": "after_queue",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "flush_no_handler",
+      "stage": "after_250ms",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "flush_no_handler",
+      "stage": "after_controller_sync",
+      "program_selected": true,
+      "controller_normalized_matches": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "flush_handler",
+      "stage": "after_queue",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "flush_handler",
+      "stage": "after_250ms",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "flush_handler",
+      "stage": "after_controller_sync",
+      "program_selected": true,
+      "controller_normalized_matches": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "audio_handler",
+      "stage": "after_queue",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "audio_handler",
+      "stage": "after_250ms",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "audio_handler",
+      "stage": "after_controller_sync",
+      "program_selected": true,
+      "controller_normalized_matches": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "audio_thread_handler",
+      "stage": "after_queue",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "audio_thread_handler",
+      "stage": "after_250ms",
+      "queue_program_unselected": true,
+      "ordinary_volume_applied": true,
+      "no_handler_edit": true,
+      "no_handler_restart": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "audio_thread_handler",
+      "stage": "after_controller_sync",
+      "program_selected": true,
+      "controller_normalized_matches": true
+    },
+    {
+      "module": "prior_workspace",
+      "mode": "controller_then_queue",
+      "stage": "after_250ms",
+      "program_selected": true,
+      "background_message_delivery_observed": true
+    }
+  ],
+  "primary_sources": [
+    {
+      "title": "VST3 Parameters and Automation",
+      "url": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Parameters%2BAutomation/Index.html",
+      "relevant_sections": [
+        "Automation Playback",
+        "GUI playback",
+        "Parameter flags",
+        "Automation constraints"
+      ]
+    },
+    {
+      "title": "VST3 Communication FAQ",
+      "url": "https://steinbergmedia.github.io/vst3_dev_portal/pages/FAQ/Communication.html",
+      "relevant_sections": [
+        "How does the host send automation data",
+        "How are my parameter changes sent when host does not process"
+      ]
+    }
+  ],
+  "release_scope": {
+    "preset_library_selection": "Verified separately in assignment44 across twelve revised native controller selections and state restoration; this diagnostic does not invalidate that result.",
+    "queue_only_program_automation": "Not certified; confirmed pre-existing controller-dependent queue limitation.",
+    "production_fix": "None in this preset release. Audio-thread program loading would be a separate integration change requiring its own qualification."
+  }
+}

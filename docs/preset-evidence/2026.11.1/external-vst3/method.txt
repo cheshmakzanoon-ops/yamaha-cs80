@@ -1,0 +1,82 @@
+# Actual VST3 factory selection and state evidence — assignment 44
+
+**PASS for the controller-selection and processor-state path:** the actual local Linux VST3 exposes all **523 factory names in the expected order**; every core setting of the **12 revised Circuit programs** matches the final bank after native selection and state restoration. The process exited **0**, including component/controller destruction and module unload.
+
+This is a bounded native-module probe, based on the existing `tests/Vst3AutomationTests.cpp` host. It does not instantiate the plugin processor directly. Production source files were not edited and the full test suite was not rebuilt.
+
+## Coverage and numerical result
+
+| Check | Result |
+|---|---:|
+| Complete native factory list | 523 names and stable indices verified |
+| Revised programs | 12 |
+| Core values per program | 190 |
+| Native value comparisons, load and restore | 4,560 |
+| Changed values covered | All 42, in both phases |
+| Explicit internal checks | 45,115 |
+| Failures | 0 |
+| Maximum load error, normalized | 2.9802322387695312e-8 |
+| Maximum restored-versus-source error, normalized | 4.470348358154297e-8 |
+| Maximum restored-versus-loaded difference, normalized | 1.4901161193847656e-8 |
+| Prespecified normalized tolerance | 1e-6 |
+
+Expected values come from the compiled final core catalogue. All 4,560 expectations were separately checked for float32 identity against `build-audit/inventory-final.json`; all 42 changed values also match assignment 27's final identity diff. The native states contain the selected factory name/index and all 190 core physical values. Small float normalization and state serialization roundoff remains; the result is not a bit-identity claim.
+
+| Revised program | Stable host index |
+|---|---:|
+| Flute | 374 |
+| Breathy Flute | 375 |
+| Harp | 392 |
+| Kalimba | 400 |
+| Sine Bass | 406 |
+| Upright Pluck | 420 |
+| Ether Pad | 306 |
+| Noir Swell Brass | 226 |
+| Brass Ensemble 16 | 234 |
+| Neo-Noir Pad | 301 |
+| Arctic Pad | 311 |
+| Synthwave Chords | 328 |
+
+## Native boundary and state sequence
+
+The probe loads the actual `.so` with `dlopen`, obtains its VST3 factory, creates native `IComponent`, `IAudioProcessor`, and `IEditController` objects, and connects both `IConnectionPoint` interfaces. For each program it calls native `IEditController::setParamNormalized(Program, index / 522.0)`, sends the matching offset-zero Program parameter queue in a zero-frame `IAudioProcessor::process` call, captures processor state, transfers that state to the native controller, and reads every core parameter.
+
+It then selects Init Circuit at host index 522, verifies that index, restores the saved stream through `IComponent::setState`, transfers the restored processor state back into the controller, and verifies the original program index and all 190 values again. Twelve processor streams are retained. The fixture uses 48 kHz, float32, realtime process mode, maximum block size 4096, no editor, no host context/component handler/message loop, and isolated configuration paths.
+
+### Program metadata and parameter count
+
+The native Program ID is **1886548852 / 0x70727374**, with **522 steps** and flags **32769 / 0x8001 = kCanAutomate | kIsProgramChange**. It is explicitly advertised as automatable. The controller reports **2,378 native parameters**, with unique IDs verified per instance. The source-derived decomposition is 296 application controls, Program and bypass, and JUCE's 16 × 130 MIDI-controller emulation controls. The measured 2,378 count must not be mislabeled as the 296-control application layout.
+
+The pinned JUCE `Param::toPlain()` intentionally returns its normalized argument. Consequently, raw `parameters.csv` column `actual_plain` is the native API's reported value, while `expected_plain` is the factory's physical value; these columns are not directly comparable for pan, cutoff, and other scaled controls. The asserted comparison uses `expected_normalized` versus `actual_normalized`. `saved-state-physical.csv` extracts the actual physical values from saved processor XML, and `changed-values.csv` uses explicit column labels.
+
+## Separate unresolved queue-only observation
+
+The first run omitted the controller `setParamNormalized` call and supplied only a Program queue point at offset zero with `index / 522.0` to the active zero-frame processor call. It then captured the processor stream and refreshed the connected controller from that stream. That run exited **1** with **1,336 failures**: the requested factory programs were not selected. It remains a failed observation, separate from the passing result above.
+
+`initial-audio-queue-only/` preserves the original probe source, run log, exit result, parameter readbacks and per-program report. `queue-only-reproduction/` adds complete compiler/run argument arrays and the native state streams. The reproduced executable has the **same SHA256 as the original**, and its full run log, parameter CSV and program CSV are **byte-identical** to the original. All reproduced state snapshots retain `presetName="Brass Swell I"`, `factoryIndex="222"`, with the fixture's initialized core values (for example mix 0.5, volume approximately 0.62, and both pans 0).
+
+Because Program advertises `kCanAutomate`, this is not labeled an invalid or unsupported protocol. This bounded mapping task does **not** resolve whether the queue-only observation reflects an incomplete host fixture or a supported-path defect. The passing controller path does not settle that question. Separate focused diagnosis is required; production behavior was not changed to hide or bypass the result. This is also distinct from MIDI Program Change routing, which was not exercised.
+
+## Binary identity and scope
+
+Tested module: `build-native/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so`
+
+SHA256: `82eb87ac9e8562f2201b8c4e0b3328224ea44d87c4fd102f44e481f6739a46b2`
+
+Size: 17,326,728 bytes. Final bank revision: **2026.11.1**. The local binary was built before publication; DSP/preset source is identical to frozen final commit `be460b0b93bdcb8dce5eb8925b18b72706b25e19`. No source difference exists between that commit and the sources inspected here. This check does not identify the local binary as a downloaded release asset.
+
+No named DAW, native editor, MIDI Program Change, other operating system, or downloaded release bundle was tested by this probe. It verifies native selection, mapping, catalogue identity and state persistence; it does not establish acoustic fidelity or listening quality.
+
+## Files and reproduction
+
+- `summary.json`: machine-readable scope, results, limits, source hashes and state hashes.
+- `probe.cpp`: temporary native host based on the existing repository helper.
+- `run-result.json`, `run.log`, `programs.csv`: raw process result and final per-program evidence.
+- `parameters.csv`: all 4,560 native comparison rows.
+- `native-programs.tsv`: full 523-program native catalogue in host order.
+- `changed-values.csv`: all 42 revised values, after load and after restoration.
+- `saved-state-physical.csv`: all 2,280 physical core values read from saved processor XML.
+- `*-state.bin`: the 12 native processor streams.
+- `initial-audio-queue-only/`, `queue-only-reproduction/`: the retained unresolved negative observation.
+
+From the repository root, `python3 build-w09-vst3-boundary/reproduce.py` builds only the small native host and runs the controller/state check into `controller-reproduction/`. `python3 build-w09-vst3-boundary/reproduce.py --mode queue-only` reproduces the negative fixture, expected to exit 1 on this module. Both commands reuse the already-built module and `build-audit/libcs80_core.a`; neither compiles the full plugin or suite. `summarize.py` regenerates these compact reports from retained results. `SHA256SUMS` records all retained report, source, readback, and state files.

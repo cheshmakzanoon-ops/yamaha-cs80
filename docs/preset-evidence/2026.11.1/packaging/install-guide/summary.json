@@ -1,0 +1,71 @@
+{
+  "assignment": 36,
+  "status": "PASS",
+  "source_commit": "85b0b547ea11dfb15335dc3720bf59761abf29ff",
+  "owned_production_file": "docs/INSTALL_AND_QUICKSTART.md",
+  "changes": [
+    "Replace stale October integrated-tree wording with the current 2026.11.1 sound-library scope.",
+    "Identify preset_library_revision in the manifest and the revision/source pair in SOURCE.txt; retain the distinction from application version.",
+    "Clarify host restart/rescan and duplicate-path checks without prescribing cache deletion or a host-specific command.",
+    "Name Brass Swell I as the fresh default and explain Pure centers rank pans.",
+    "Correct Circuit Standard plug-in latency to67samples (1.40ms at48kHz), qualified by engine/quality rather than claiming every mode is67.",
+    "Explain explicit Circuit factory recall after updating versus saved session/user-preset values and A/B/Revert snapshots.",
+    "Add the official Apple AU component-location reference; retain existing verified platform paths and formats."
+  ],
+  "latency_evidence": {
+    "formula": "Engine::getLatencySamples = decimator63 host samples + circuit oscillator8 internal samples / effective oversampling factor.",
+    "default_standard_factor": 2,
+    "circuit_standard_samples": 67,
+    "milliseconds_at_48000": 1.3958333333333333,
+    "existing_tests": [
+      "tests/SourcePerformanceTests.cpp asserts63+4",
+      "tests/ParityModeTests.cpp asserts63+4",
+      "tests/EngineHostTests.h checks host equals63+(circuit?8/factor:0) across modes"
+    ]
+  },
+  "package_review": {
+    "platform_formats_unchanged": true,
+    "separate_mac_architectures_unchanged": true,
+    "whole_bundle_paths_and_preservation_unchanged": true,
+    "revision_source": "scripts/package-ci-artifacts.py read_ci_context includes preset_library_revision and matching SOURCE.txt line",
+    "download_urls_modified": false
+  },
+  "official_references": [
+    {
+      "url": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+      "retrieved_ref": "turn238913254view0",
+      "supports": "Existing macOS,Windows per-user/global,andLinux VST3 paths; first discovered duplicate identity priority."
+    },
+    {
+      "url": "https://support.apple.com/en-ie/102239",
+      "retrieved_ref": "turn238913254search1",
+      "supports": "Existing userandglobalAudioUnitsComponentsdirectories."
+    },
+    {
+      "url": "https://support.apple.com/en-ca/122179",
+      "retrieved_ref": "turn854676049search0",
+      "supports": "Use the hostplug-inmanageranditsdocumentedrescan procedure when an installedAU is missing."
+    }
+  ],
+  "validation": {
+    "source_and_existing_test_contract_review": "complete",
+    "new_runtime_tests": "none; this is a documentation-only correction",
+    "git_diff_check": "passed",
+    "new_relative_preset_guide_target_exists": true
+  },
+  "publication_qualification": "The running CI source85b0b547ea11dfb15335dc3720bf59761abf29ff predates this guide edit; its packaged guide will remain the older source snapshot unless a later build is selected. Parent was notified. No binary or current asset verification is claimed.",
+  "input_sha256": {
+    "src/core/Engine.h": "701e27b480be8145a86eb4a822e6b6c50e8a135a8118093b4a80f8d9f7b58221",
+    "src/core/Engine.cpp": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+    "src/core/Oversampling.h": "1c18c536c22c128c968e2c9c20b082087134bbd255d3b70e3500d6e718d2d646",
+    "src/core/FactoryPresets.h": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81",
+    "src/core/curated/Brass.inc": "064a3933a286cf316715229946909347200fab96242350e9e4f73531dacdf529",
+    "src/plugin/PluginProcessor.cpp": "95f709baf46b9a83ce44725473aaed00aaa43b9e117deee8a72f29c362dd52d1",
+    "src/plugin/PluginProcessorLibrary.cpp": "28223afbb07ff6e342cd6ff292ae8c8b7b4f6e07e76ad6ff5a59ac118422326e",
+    "scripts/package-ci-artifacts.py": "3f81f791233c8a9f60af0fc0c66e2961be8b0df5e286c88e45d77365745dac4d",
+    "tests/SourcePerformanceTests.cpp": "c587ca6cc85c92dba871cb7c54ee0d75ca7f8dfba25a631a86861636d5999120",
+    "tests/ParityModeTests.cpp": "289a33360bc628708c05ebb2f21d645a34e8d65b969633a7370fb10ffff28327",
+    "tests/EngineHostTests.h": "d77e68a49d6b3c8b8547c6f0d8821b87a95f4d48b75d09e6d114aeb6f961a4f6"
+  },
+  "updated_guide_sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8"
+}

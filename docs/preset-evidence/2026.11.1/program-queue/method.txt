@@ -1,0 +1,61 @@
+# Assignment 47 — native VST3 Program queue diagnosis
+
+## Finding
+
+**Confirmed pre-existing controller-dependent Program queue limitation.** A native VST3 Program change submitted only through `IAudioProcessor::process` does not load the requested factory program in the tested Linux module. Adding an `IComponentHandler`, allowing JUCE's running internal message thread 250 ms, using a nonzero audio block, and moving that process call to a separate thread do not cause the queued program to load. Calling `IEditController::setParamNormalized` for the same Program value does load it.
+
+The omitted controller synchronization explains assignment 44's queue-only fixture result. The result is not caused merely by the absence of a component handler, an unserviced message loop, or the subsequent state readback. It must not be relabeled as an invalid queue. The Program parameter is actually advertised with `kIsProgramChange | kCanAutomate` (`0x8001`).
+
+The refined factory data is not the cause. Both binaries tested show the same behavior, and the relevant processing/bridge source is unchanged from the pre-refinement commit. **Queue-only program automation is not certified.** The separately verified plugin Library/native-controller factory selection and native state restoration remain valid. No production source or pinned JUCE wrapper was changed during this investigation; implementing program loading on the audio path requires a separate integration change and qualification.
+
+## Exact experiment
+
+The small host reuses `tests/Vst3AutomationTests.cpp` and creates the actual native processor and controller. It initializes and connects both `IConnectionPoint` directions, synchronizes initial state, obtains native Program metadata, and selects curated **Flute, host index 374**, using normalized value `374 / 522`. The program list has 523 entries; Program parameter ID is **1886548852** with 522 steps.
+
+Each Program queue also contains an ordinary volume change to physical value 0.31. This control proves the processing call accepts and applies ordinary parameter changes. The initialized fixture has metadata `Brass Swell I`, index 222, and default parameter values; those initial values are a fixture setup, not an assertion about that factory preset's actual content.
+
+| Path | Result immediately after queue and after 250 ms | After explicit controller synchronization |
+| --- | --- | --- |
+| Zero-frame flush, no handler | Program remains index 222; volume becomes 0.31 | Flute index 374 loads |
+| Zero-frame flush, handler installed | Same | Flute index 374 loads |
+| 128-frame process, handler installed | Same | Flute index 374 loads |
+| 128-frame process on a separate thread, handler installed | Same | Flute index 374 loads |
+| Controller selection before the queue | Flute stays selected; queued volume becomes 0.31 | Already selected |
+
+Every stage captures native component state **before any subsequent `setComponentState` readback**. Thus the stale program selection is already present in the processor state and is not manufactured by the readback. The controller-first positive control produces an asynchronous `kParamValuesChanged` handler notification during the same 250 ms interval; this is direct evidence that the internal Linux message loop is servicing notifications. The queue-only cases produce no handler edit or restart notification in that interval.
+
+Both native module runs exit 0, with 26 logical observation groups checked by the recorded analysis, and 48 state snapshots total. Exit 0 means the diagnostic completed and its stated observations were checked; it does **not** mean queue-only Program selection passed.
+
+## Why the route behaves this way
+
+The pinned JUCE version is 8.0.11, commit `c352e2489000ffeb9e397051377d75eef2efe641`. Its VST3 wrapper creates an auxiliary `AudioParameterInt` for Program. The actual controller uses `ProgramChangeParameter::setNormalized`, which invokes the owner's `setCurrentProgram`; the plugin implementation then calls `loadFactoryPreset`.
+
+The processor queue route updates the auxiliary parameter using `setValueAndNotifyIfChanged`. That helper sets the thread-local `inParameterChangedCallback` flag. `OwnedParameterListener` reaches the controller's `paramChanged`, which returns immediately while that flag is true. No later controller selection is scheduled by that route. Waiting or installing a handler cannot turn that suppressed callback into `setCurrentProgram`.
+
+The product's generated HostAutomationBridge wrapper offers the parameter to `attachHostAutomationQueue`. Program is not one of the processor-owned APVTS automation lanes, so attachment returns false and the wrapper uses the same JUCE fallback. A zero-frame flush also retains that fallback. The generated VST3 wrapper in the two build directories is byte-identical, SHA256 `7f72937f4c1427bf036c04279736fa4c958ba18d6d470bc299f1cb595a99df64`.
+
+`setComponentState` refreshes controller Program from the processor owner's current program index, not the auxiliary Program parameter. This explains assignment 44's readback, but is not the origin of the missing load.
+
+## Baseline and provenance
+
+| Module | SHA256 | Distinguishing loaded Flute values |
+| --- | --- | --- |
+| Revised local module | `82eb87ac9e8562f2201b8c4e0b3328224ea44d87c4fd102f44e481f6739a46b2` | mix 0.22; rank II noise 0.82; rank II level 0.32 |
+| Older prior-workspace module | `c96b62ef8b9aec5d5aaa6fc7362a4767b2cbd5a0a755987e49e077715f26c4e1` | mix 0.16; rank II noise 0.16; rank II level 0.18 |
+
+The older binary's loaded Flute values match the pre-refinement design and differ from the revised data. Its exact compile commit is not independently established, so its checkout's current HEAD is not used as build provenance. Source comparison separately proves that `PluginProcessor.cpp`, `PluginProcessor.h`, `PluginProcessorAutomation.cpp`, `HostAutomationBridge.h`, `scripts/patch-juce-automation.py`, and `cmake/HostAutomation.cmake` are byte-identical between pre-refinement `7f55a95` and final source `be460b0`.
+
+The original assignment 44 queue-only source, executable, failure logs, and reproduction have not been modified or relabeled. This directory contains a new diagnostic with separate output.
+
+## Protocol scope
+
+Steinberg's official guidance assigns automation delivery to the processor queue and GUI synchronization to host calls of `IEditController::setParamNormalized`. It also restricts Program automation when affected parameters are themselves automatable. Consequently a full host must perform controller synchronization, but that obligation does not prove the processor-only behavior is correct or sample accurate. The present evidence establishes the precise controller dependency; it does not certify arbitrary DAW program automation, program-change timing, or every host protocol path.
+
+Primary references checked:
+
+- [VST3 Parameters and Automation](https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Parameters%2BAutomation/Index.html): Automation Playback, GUI playback, parameter flags and automation constraints.
+- [VST3 Communication FAQ](https://steinbergmedia.github.io/vst3_dev_portal/pages/FAQ/Communication.html): processing queues and zero-frame parameter flushing.
+
+## Evidence files
+
+`probe.cpp`, `compile-command.json`, and `compile.log` record the bounded diagnostic and build. Each module directory contains `run-result.json` with exact argv and hashes, `run.log`, `observations.csv`, and native state snapshots. `source-comparison.json` records unchanged-source and generated-wrapper hashes. `summary.json` records the explicit classification, checks, and release scope.

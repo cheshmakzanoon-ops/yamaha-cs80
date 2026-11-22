@@ -1,0 +1,681 @@
+{
+  "assignment": 40,
+  "status": "PASS",
+  "scope": "Repeated articulation and released-slot reuse for four strengthened factory attack layers",
+  "recorded_git_head": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "library_revision": "2026.11.1",
+  "source_state": "Final factory data from the locally compiled pre-publication core. Exact executable, library, inventory and relevant source hashes identify this execution; this is not a CI-produced plugin artifact.",
+  "sample_rate": 48000,
+  "program_notes": {
+    "Harp": 60,
+    "Kalimba": 60,
+    "Sine Bass": 48,
+    "Upright Pluck": 48
+  },
+  "conditions": {
+    "factory_parameters_modified": false,
+    "pressure": 0,
+    "channel": 1,
+    "velocity_alternation": [
+      0.3,
+      0.95
+    ],
+    "repeated_notes": "Four same-note strikes at 0, 0.45, 0.90, 1.35 seconds, each held 120 ms.",
+    "arpeggio": "Twelve notes from 2.00 s at 90 ms spacing, 35 ms holds, offsets 0/4/7/12/7/4/0/7/12/16/12/7.",
+    "allocation_burst": "Sixteen onsets from 3.60 s at 10 ms spacing and 6 ms holds, offsets 0/2/4/5/7/9/11/12/14/16/17/19/16/14/12/11. This is a deliberate allocation stress burst, not a normal musical tempo.",
+    "last_individual_note_off_seconds": 3.756,
+    "all_notes_off_release_seconds": 4.05,
+    "duration_per_capture_seconds": 12,
+    "render_blocks": "At most 64 frames, split exactly at each event and envelope checkpoint.",
+    "matched_control": "Identical engine/history/events except omission of onset 25 and its note-off, the tenth burst note at 3.69 s. All earlier audio is bit-identical. Subsequent allocation diverges intentionally, so only the initial 6 ms residual is interpreted causally."
+  },
+  "results": {
+    "checks_passed": 96,
+    "checks_total": 96,
+    "capture_count": 8,
+    "generated_seconds": 96.0,
+    "factory_onsets_per_program": 32,
+    "control_onsets_per_program": 31,
+    "max_factory_peak_dbfs": -9.4997056091,
+    "max_all_capture_peak_dbfs": -8.67435435193,
+    "latest_retirement_seconds": 6.62733333333,
+    "nonfinite_samples": 0,
+    "over_full_scale_samples": 0,
+    "max_boundary_residual": 3.72529029846e-09,
+    "max_first_ms_residual": 8.9593231678e-06,
+    "largest_first_ms_residual_derivative_dbfs": -95.84904585558876,
+    "smallest_derivative_margin_below_control_db": 60.35086471479722
+  },
+  "captures": [
+    {
+      "program": "Harp",
+      "note": 60.0,
+      "variant": "factory",
+      "seconds": 12.0,
+      "peak_dbfs": -9.4997056091,
+      "rms_dbfs": -29.9949683719,
+      "last_half_second_dbfs": -300.0,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "accepted_onsets": 32.0,
+      "released_slot_reuses": 24.0,
+      "burst_reuses": 16.0,
+      "max_active_voices": 8.0,
+      "final_active_voices": 0.0,
+      "final_held_voices": 0.0,
+      "retired_seconds": 6.618,
+      "params_unchanged": 1.0,
+      "raw_float32le_sha256": "0c4b6d68ed7483dffdaeb483d9365750a6811a0a252ffa7ea6b40d3dd50c52f2"
+    },
+    {
+      "program": "Harp",
+      "note": 60.0,
+      "variant": "omitted-onset-control",
+      "seconds": 12.0,
+      "peak_dbfs": -8.67435435193,
+      "rms_dbfs": -29.7826822218,
+      "last_half_second_dbfs": -300.0,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "accepted_onsets": 31.0,
+      "released_slot_reuses": 23.0,
+      "burst_reuses": 15.0,
+      "max_active_voices": 8.0,
+      "final_active_voices": 0.0,
+      "final_held_voices": 0.0,
+      "retired_seconds": 6.62733333333,
+      "params_unchanged": 1.0,
+      "raw_float32le_sha256": "6c09231536ca33374c05d530e1ebc60b23ddb94934970875eb3dc6d98cc83ed3"
+    },
+    {
+      "program": "Kalimba",
+      "note": 60.0,
+      "variant": "factory",
+      "seconds": 12.0,
+      "peak_dbfs": -10.1607732708,
+      "rms_dbfs": -32.6261919268,
+      "last_half_second_dbfs": -300.0,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "accepted_onsets": 32.0,
+      "released_slot_reuses": 15.0,
+      "burst_reuses": 11.0,
+      "max_active_voices": 8.0,
+      "final_active_voices": 0.0,
+      "final_held_voices": 0.0,
+      "retired_seconds": 4.61933333333,
+      "params_unchanged": 1.0,
+      "raw_float32le_sha256": "e0c30ce843a9c2cd5344b52b7aced10294f144b405d6b685a11fc2d82e1dc4e0"
+    },
+    {
+      "program": "Kalimba",
+      "note": 60.0,
+      "variant": "omitted-onset-control",
+      "seconds": 12.0,
+      "peak_dbfs": -10.625999256,
+      "rms_dbfs": -32.8615716444,
+      "last_half_second_dbfs": -300.0,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "accepted_onsets": 31.0,
+      "released_slot_reuses": 14.0,
+      "burst_reuses": 10.0,
+      "max_active_voices": 8.0,
+      "final_active_voices": 0.0,
+      "final_held_voices": 0.0,
+      "retired_seconds": 4.62333333333,
+      "params_unchanged": 1.0,
+      "raw_float32le_sha256": "7881b0d7500b8107bc3e627ed476c584ab5bbfdb7747a328447702e81e222721"
+    },
+    {
+      "program": "Sine Bass",
+      "note": 48.0,
+      "variant": "factory",
+      "seconds": 12.0,
+      "peak_dbfs": -16.8666544307,
+      "rms_dbfs": -36.8340345684,
+      "last_half_second_dbfs": -300.0,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "accepted_onsets": 32.0,
+      "released_slot_reuses": 8.0,
+      "burst_reuses": 8.0,
+      "max_active_voices": 8.0,
+      "final_active_voices": 0.0,
+      "final_held_voices": 0.0,
+      "retired_seconds": 3.97866666667,
+      "params_unchanged": 1.0,
+      "raw_float32le_sha256": "94f94f0efa98e1ebbdbee797639444e1fcc0db2193f281e6c27af37fd26cd599"
+    },
+    {
+      "program": "Sine Bass",
+      "note": 48.0,
+      "variant": "omitted-onset-control",
+      "seconds": 12.0,
+      "peak_dbfs": -16.8666544307,
+      "rms_dbfs": -36.7523930585,
+      "last_half_second_dbfs": -300.0,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "accepted_onsets": 31.0,
+      "released_slot_reuses": 7.0,
+      "burst_reuses": 7.0,
+      "max_active_voices": 8.0,
+      "final_active_voices": 0.0,
+      "final_held_voices": 0.0,
+      "retired_seconds": 3.97733333333,
+      "params_unchanged": 1.0,
+      "raw_float32le_sha256": "2b4e182d8d995105742c5bc7691378ede04ab42a84f5d80243f555568839bbd8"
+    },
+    {
+      "program": "Upright Pluck",
+      "note": 48.0,
+      "variant": "factory",
+      "seconds": 12.0,
+      "peak_dbfs": -15.4147448391,
+      "rms_dbfs": -35.6980489426,
+      "last_half_second_dbfs": -300.0,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "accepted_onsets": 32.0,
+      "released_slot_reuses": 8.0,
+      "burst_reuses": 8.0,
+      "max_active_voices": 8.0,
+      "final_active_voices": 0.0,
+      "final_held_voices": 0.0,
+      "retired_seconds": 4.114,
+      "params_unchanged": 1.0,
+      "raw_float32le_sha256": "64abf9e003afe090610212c36b78574d448fb5b3f8d067bc62f0b96ecd6bf44b"
+    },
+    {
+      "program": "Upright Pluck",
+      "note": 48.0,
+      "variant": "omitted-onset-control",
+      "seconds": 12.0,
+      "peak_dbfs": -15.4147448391,
+      "rms_dbfs": -35.7012658925,
+      "last_half_second_dbfs": -300.0,
+      "nonfinite": 0.0,
+      "over_full_scale": 0.0,
+      "accepted_onsets": 31.0,
+      "released_slot_reuses": 7.0,
+      "burst_reuses": 7.0,
+      "max_active_voices": 8.0,
+      "final_active_voices": 0.0,
+      "final_held_voices": 0.0,
+      "retired_seconds": 4.11266666667,
+      "params_unchanged": 1.0,
+      "raw_float32le_sha256": "7c44bf26962e86791b015c162485274caba2154d17153ddf958a503e380f197a"
+    }
+  ],
+  "matched_boundaries": [
+    {
+      "program": "Harp",
+      "event_seconds": 3.69,
+      "note": 76.0,
+      "slot": 1.0,
+      "prior_slot_active": 1.0,
+      "prior_slot_held": 0.0,
+      "prefix_max_error": 0.0,
+      "event_sample_max_error": 0.0,
+      "first_ms_residual_peak": 4.03821468353e-06,
+      "residual_derivative_first_ms": 7.80820846558e-06,
+      "control_derivative_first_ms": 0.0162661522627,
+      "residual_peak_first6ms": 0.17168379575
+    },
+    {
+      "program": "Kalimba",
+      "event_seconds": 3.69,
+      "note": 76.0,
+      "slot": 1.0,
+      "prior_slot_active": 1.0,
+      "prior_slot_held": 0.0,
+      "prefix_max_error": 0.0,
+      "event_sample_max_error": 3.72529029846e-09,
+      "first_ms_residual_peak": 8.9593231678e-06,
+      "residual_derivative_first_ms": 1.6126781702e-05,
+      "control_derivative_first_ms": 0.0167915560305,
+      "residual_peak_first6ms": 0.148231565952
+    },
+    {
+      "program": "Sine Bass",
+      "event_seconds": 3.69,
+      "note": 64.0,
+      "slot": 1.0,
+      "prior_slot_active": 1.0,
+      "prior_slot_held": 0.0,
+      "prefix_max_error": 0.0,
+      "event_sample_max_error": 0.0,
+      "first_ms_residual_peak": 7.54371285439e-07,
+      "residual_derivative_first_ms": 1.48452818394e-06,
+      "control_derivative_first_ms": 0.00196707807481,
+      "residual_peak_first6ms": 0.0594666646793
+    },
+    {
+      "program": "Upright Pluck",
+      "event_seconds": 3.69,
+      "note": 64.0,
+      "slot": 1.0,
+      "prior_slot_active": 1.0,
+      "prior_slot_held": 0.0,
+      "prefix_max_error": 0.0,
+      "event_sample_max_error": 0.0,
+      "first_ms_residual_peak": 3.83704900742e-07,
+      "residual_derivative_first_ms": 7.52508640289e-07,
+      "control_derivative_first_ms": 0.00183965265751,
+      "residual_peak_first6ms": 0.0488806851208
+    }
+  ],
+  "repeated_onset_envelopes": [
+    {
+      "program": "Harp",
+      "variant": "factory",
+      "event_id": 0.0,
+      "seconds": 0.0,
+      "max_body_envelope_first40ms": 0.998927474022,
+      "max_strike_envelope_first40ms": 0.995804786682
+    },
+    {
+      "program": "Harp",
+      "variant": "factory",
+      "event_id": 1.0,
+      "seconds": 0.45,
+      "max_body_envelope_first40ms": 0.998894870281,
+      "max_strike_envelope_first40ms": 0.99586057663
+    },
+    {
+      "program": "Harp",
+      "variant": "factory",
+      "event_id": 2.0,
+      "seconds": 0.9,
+      "max_body_envelope_first40ms": 0.998984098434,
+      "max_strike_envelope_first40ms": 0.996112048626
+    },
+    {
+      "program": "Harp",
+      "variant": "factory",
+      "event_id": 3.0,
+      "seconds": 1.35,
+      "max_body_envelope_first40ms": 0.998982310295,
+      "max_strike_envelope_first40ms": 0.995983123779
+    },
+    {
+      "program": "Harp",
+      "variant": "omitted-onset-control",
+      "event_id": 0.0,
+      "seconds": 0.0,
+      "max_body_envelope_first40ms": 0.998927474022,
+      "max_strike_envelope_first40ms": 0.995804786682
+    },
+    {
+      "program": "Harp",
+      "variant": "omitted-onset-control",
+      "event_id": 1.0,
+      "seconds": 0.45,
+      "max_body_envelope_first40ms": 0.998894870281,
+      "max_strike_envelope_first40ms": 0.99586057663
+    },
+    {
+      "program": "Harp",
+      "variant": "omitted-onset-control",
+      "event_id": 2.0,
+      "seconds": 0.9,
+      "max_body_envelope_first40ms": 0.998984098434,
+      "max_strike_envelope_first40ms": 0.996112048626
+    },
+    {
+      "program": "Harp",
+      "variant": "omitted-onset-control",
+      "event_id": 3.0,
+      "seconds": 1.35,
+      "max_body_envelope_first40ms": 0.998982310295,
+      "max_strike_envelope_first40ms": 0.995983123779
+    },
+    {
+      "program": "Kalimba",
+      "variant": "factory",
+      "event_id": 0.0,
+      "seconds": 0.0,
+      "max_body_envelope_first40ms": 0.998519182205,
+      "max_strike_envelope_first40ms": 0.994099140167
+    },
+    {
+      "program": "Kalimba",
+      "variant": "factory",
+      "event_id": 1.0,
+      "seconds": 0.45,
+      "max_body_envelope_first40ms": 0.9984588027,
+      "max_strike_envelope_first40ms": 0.994125723839
+    },
+    {
+      "program": "Kalimba",
+      "variant": "factory",
+      "event_id": 2.0,
+      "seconds": 0.9,
+      "max_body_envelope_first40ms": 0.998583197594,
+      "max_strike_envelope_first40ms": 0.994646608829
+    },
+    {
+      "program": "Kalimba",
+      "variant": "factory",
+      "event_id": 3.0,
+      "seconds": 1.35,
+      "max_body_envelope_first40ms": 0.998580694199,
+      "max_strike_envelope_first40ms": 0.994196116924
+    },
+    {
+      "program": "Kalimba",
+      "variant": "omitted-onset-control",
+      "event_id": 0.0,
+      "seconds": 0.0,
+      "max_body_envelope_first40ms": 0.998519182205,
+      "max_strike_envelope_first40ms": 0.994099140167
+    },
+    {
+      "program": "Kalimba",
+      "variant": "omitted-onset-control",
+      "event_id": 1.0,
+      "seconds": 0.45,
+      "max_body_envelope_first40ms": 0.9984588027,
+      "max_strike_envelope_first40ms": 0.994125723839
+    },
+    {
+      "program": "Kalimba",
+      "variant": "omitted-onset-control",
+      "event_id": 2.0,
+      "seconds": 0.9,
+      "max_body_envelope_first40ms": 0.998583197594,
+      "max_strike_envelope_first40ms": 0.994646608829
+    },
+    {
+      "program": "Kalimba",
+      "variant": "omitted-onset-control",
+      "event_id": 3.0,
+      "seconds": 1.35,
+      "max_body_envelope_first40ms": 0.998580694199,
+      "max_strike_envelope_first40ms": 0.994196116924
+    },
+    {
+      "program": "Sine Bass",
+      "variant": "factory",
+      "event_id": 0.0,
+      "seconds": 0.0,
+      "max_body_envelope_first40ms": 1.0,
+      "max_strike_envelope_first40ms": 0.984064340591
+    },
+    {
+      "program": "Sine Bass",
+      "variant": "factory",
+      "event_id": 1.0,
+      "seconds": 0.45,
+      "max_body_envelope_first40ms": 1.0,
+      "max_strike_envelope_first40ms": 0.984135627747
+    },
+    {
+      "program": "Sine Bass",
+      "variant": "factory",
+      "event_id": 2.0,
+      "seconds": 0.9,
+      "max_body_envelope_first40ms": 1.0,
+      "max_strike_envelope_first40ms": 0.985535919666
+    },
+    {
+      "program": "Sine Bass",
+      "variant": "factory",
+      "event_id": 3.0,
+      "seconds": 1.35,
+      "max_body_envelope_first40ms": 1.0,
+      "max_strike_envelope_first40ms": 0.984324872494
+    },
+    {
+      "program": "Sine Bass",
+      "variant": "omitted-onset-control",
+      "event_id": 0.0,
+      "seconds": 0.0,
+      "max_body_envelope_first40ms": 1.0,
+      "max_strike_envelope_first40ms": 0.984064340591
+    },
+    {
+      "program": "Sine Bass",
+      "variant": "omitted-onset-control",
+      "event_id": 1.0,
+      "seconds": 0.45,
+      "max_body_envelope_first40ms": 1.0,
+      "max_strike_envelope_first40ms": 0.984135627747
+    },
+    {
+      "program": "Sine Bass",
+      "variant": "omitted-onset-control",
+      "event_id": 2.0,
+      "seconds": 0.9,
+      "max_body_envelope_first40ms": 1.0,
+      "max_strike_envelope_first40ms": 0.985535919666
+    },
+    {
+      "program": "Sine Bass",
+      "variant": "omitted-onset-control",
+      "event_id": 3.0,
+      "seconds": 1.35,
+      "max_body_envelope_first40ms": 1.0,
+      "max_strike_envelope_first40ms": 0.984324872494
+    },
+    {
+      "program": "Upright Pluck",
+      "variant": "factory",
+      "event_id": 0.0,
+      "seconds": 0.0,
+      "max_body_envelope_first40ms": 0.998522460461,
+      "max_strike_envelope_first40ms": 0.989894807339
+    },
+    {
+      "program": "Upright Pluck",
+      "variant": "factory",
+      "event_id": 1.0,
+      "seconds": 0.45,
+      "max_body_envelope_first40ms": 0.998333096504,
+      "max_strike_envelope_first40ms": 0.990042328835
+    },
+    {
+      "program": "Upright Pluck",
+      "variant": "factory",
+      "event_id": 2.0,
+      "seconds": 0.9,
+      "max_body_envelope_first40ms": 0.998788118362,
+      "max_strike_envelope_first40ms": 0.991097092628
+    },
+    {
+      "program": "Upright Pluck",
+      "variant": "factory",
+      "event_id": 3.0,
+      "seconds": 1.35,
+      "max_body_envelope_first40ms": 0.998748123646,
+      "max_strike_envelope_first40ms": 0.990565240383
+    },
+    {
+      "program": "Upright Pluck",
+      "variant": "omitted-onset-control",
+      "event_id": 0.0,
+      "seconds": 0.0,
+      "max_body_envelope_first40ms": 0.998522460461,
+      "max_strike_envelope_first40ms": 0.989894807339
+    },
+    {
+      "program": "Upright Pluck",
+      "variant": "omitted-onset-control",
+      "event_id": 1.0,
+      "seconds": 0.45,
+      "max_body_envelope_first40ms": 0.998333096504,
+      "max_strike_envelope_first40ms": 0.990042328835
+    },
+    {
+      "program": "Upright Pluck",
+      "variant": "omitted-onset-control",
+      "event_id": 2.0,
+      "seconds": 0.9,
+      "max_body_envelope_first40ms": 0.998788118362,
+      "max_strike_envelope_first40ms": 0.991097092628
+    },
+    {
+      "program": "Upright Pluck",
+      "variant": "omitted-onset-control",
+      "event_id": 3.0,
+      "seconds": 1.35,
+      "max_body_envelope_first40ms": 0.998748123646,
+      "max_strike_envelope_first40ms": 0.990565240383
+    }
+  ],
+  "running_phrase_onset_levels": [
+    {
+      "program": "Harp",
+      "event_id": 0.0,
+      "velocity": 0.3,
+      "onset_5to40ms_dbfs": -29.828573459,
+      "pre_event_20ms_dbfs": -300.0
+    },
+    {
+      "program": "Harp",
+      "event_id": 1.0,
+      "velocity": 0.95,
+      "onset_5to40ms_dbfs": -24.5416768538,
+      "pre_event_20ms_dbfs": -39.3229221196
+    },
+    {
+      "program": "Harp",
+      "event_id": 2.0,
+      "velocity": 0.3,
+      "onset_5to40ms_dbfs": -26.3537373019,
+      "pre_event_20ms_dbfs": -34.675256353
+    },
+    {
+      "program": "Harp",
+      "event_id": 3.0,
+      "velocity": 0.95,
+      "onset_5to40ms_dbfs": -26.2592608294,
+      "pre_event_20ms_dbfs": -36.3697190185
+    },
+    {
+      "program": "Kalimba",
+      "event_id": 0.0,
+      "velocity": 0.3,
+      "onset_5to40ms_dbfs": -29.2375198038,
+      "pre_event_20ms_dbfs": -300.0
+    },
+    {
+      "program": "Kalimba",
+      "event_id": 1.0,
+      "velocity": 0.95,
+      "onset_5to40ms_dbfs": -23.5722387764,
+      "pre_event_20ms_dbfs": -58.8074796855
+    },
+    {
+      "program": "Kalimba",
+      "event_id": 2.0,
+      "velocity": 0.3,
+      "onset_5to40ms_dbfs": -28.9858358648,
+      "pre_event_20ms_dbfs": -53.4119826658
+    },
+    {
+      "program": "Kalimba",
+      "event_id": 3.0,
+      "velocity": 0.95,
+      "onset_5to40ms_dbfs": -23.4266616301,
+      "pre_event_20ms_dbfs": -58.3208744089
+    },
+    {
+      "program": "Sine Bass",
+      "event_id": 0.0,
+      "velocity": 0.3,
+      "onset_5to40ms_dbfs": -30.6887857752,
+      "pre_event_20ms_dbfs": -300.0
+    },
+    {
+      "program": "Sine Bass",
+      "event_id": 1.0,
+      "velocity": 0.95,
+      "onset_5to40ms_dbfs": -25.3195045044,
+      "pre_event_20ms_dbfs": -97.4326624517
+    },
+    {
+      "program": "Sine Bass",
+      "event_id": 2.0,
+      "velocity": 0.3,
+      "onset_5to40ms_dbfs": -30.7599664463,
+      "pre_event_20ms_dbfs": -101.750970344
+    },
+    {
+      "program": "Sine Bass",
+      "event_id": 3.0,
+      "velocity": 0.95,
+      "onset_5to40ms_dbfs": -25.6607409379,
+      "pre_event_20ms_dbfs": -98.0510352297
+    },
+    {
+      "program": "Upright Pluck",
+      "event_id": 0.0,
+      "velocity": 0.3,
+      "onset_5to40ms_dbfs": -30.3558552004,
+      "pre_event_20ms_dbfs": -300.0
+    },
+    {
+      "program": "Upright Pluck",
+      "event_id": 1.0,
+      "velocity": 0.95,
+      "onset_5to40ms_dbfs": -23.9549675899,
+      "pre_event_20ms_dbfs": -95.0983787996
+    },
+    {
+      "program": "Upright Pluck",
+      "event_id": 2.0,
+      "velocity": 0.3,
+      "onset_5to40ms_dbfs": -30.5439040106,
+      "pre_event_20ms_dbfs": -91.5676093113
+    },
+    {
+      "program": "Upright Pluck",
+      "event_id": 3.0,
+      "velocity": 0.95,
+      "onset_5to40ms_dbfs": -24.0100038813,
+      "pre_event_20ms_dbfs": -94.3281531059
+    }
+  ],
+  "limits": [
+    "Eight physical voices are the maximum. The burst exercises reuse of released, still-active slots; it does not represent sixteen simultaneous voices or held-note stealing.",
+    "The immediate-output residual test is not a perceptual click-free guarantee. Intended pluck/click transients produce strong later derivatives and are not classified as defects.",
+    "Running-phrase onset RMS includes earlier release tails and is not an isolated velocity-transfer estimate.",
+    "Retirement is observed at render-block boundaries and is an upper bound within at most 64 host samples.",
+    "The -300 dBFS output is the reporting floor, not a universal claim of mathematical silence.",
+    "No raw audio files were written. Exact little-endian float32 capture hashes are recorded; the probe regenerates them under matching inputs.",
+    "No acoustic-instrument identity, listening-panel result, external DAW behavior or arbitrary performance history is established."
+  ],
+  "input_sha256": {
+    "build-audit/libcs80_core.a": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+    "build-audit/inventory-final.json": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+    "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+    "src/core/FactoryPresets.h": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81",
+    "src/core/CuratedLibrary.inc": "f89ae54e9386d1e12b5b945b1f60f7e1e4667d79e91c5a63afcc63111e3aecf8",
+    "src/core/CuratedLibraryLevels.inc": "cb1f5689e7cfc58034241f2d8f4892cc70bde4530232defe5838bc1e5e89365e",
+    "src/core/curated/Plucked.inc": "ff5f85a6044f169ab74fdc99238642fced94da92f922eca03417900e6d8b8bc9",
+    "src/core/curated/Bass.inc": "fcbe1aec1d5fd4132a6399a8eb2449426e499ea2d4d3a4893a4a244ccfebfd8f",
+    "src/core/Engine.cpp": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+    "src/core/Engine.h": "701e27b480be8145a86eb4a822e6b6c50e8a135a8118093b4a80f8d9f7b58221",
+    "src/core/Params.h": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2",
+    "src/tools/TruthInputSha256.h": "14c3b9c139dfbd7dd00b45a5627c808cc07c57a53d0d680852e7e298fc045271"
+  },
+  "artifact_sha256": {
+    "probe.cpp": "f8b985d3091cf048698863a36f5033e16724afe8188ea276966d99bb6bbd689a",
+    "probe": "ea53c13e468369413de9d1f8015b906aa90f20486d0711deb8b0673db9fbf247",
+    "summarize.py": "2416ee1e74b09e59579be3e1b3bfcde01ba4391b66c5f1934b331d895e83e082",
+    "captures.csv": "0bc3de96d32567f5c331bfb0ee59a7120fdd602d1d83fc53522758973d18c003",
+    "envelopes.csv": "0bec44b6c98fcaa4794fa325cbcdc479b9f4261b62820b37bfb80281a22c3994",
+    "boundaries.csv": "bc53996101b867fb2ab361a58b772733a350bd022981dc6b6de77c02d50d9b71",
+    "events.csv": "45a34b615c29a4da255ca1b7745566de72c0f245009850eae085bc3a609b0384",
+    "onset-levels.csv": "3e440bd392fd210ac8743019e6d0b2f7b7b4d3bd4cc63de0cb1e1546660a4068",
+    "run.log": "d6d77892ba370ebb3431ff3b2d62c62a75aa2b7e57cafd0a9ed5f16b5391cd00"
+  },
+  "reproduction": [
+    "mkdir -p build-w08-rapid-strikes",
+    "c++ -std=c++20 -O2 -Isrc build-w08-rapid-strikes/probe.cpp build-audit/libcs80_core.a -o build-w08-rapid-strikes/probe",
+    "./build-w08-rapid-strikes/probe > build-w08-rapid-strikes/run.log 2>&1",
+    "python build-w08-rapid-strikes/summarize.py"
+  ]
+}

@@ -1,0 +1,12 @@
+test_cleanup_failure_preserves_every_result (__main__.ExitClassificationTests.test_cleanup_failure_preserves_every_result) ... ok
+test_log_failure_preserves_every_result (__main__.ExitClassificationTests.test_log_failure_preserves_every_result) ... ok
+test_native_signal_returns_keep_raw_and_normalized_results (__main__.ExitClassificationTests.test_native_signal_returns_keep_raw_and_normalized_results) ... ok
+test_normal_exits_are_not_inferred_signals (__main__.ExitClassificationTests.test_normal_exits_are_not_inferred_signals) ... ok
+test_real_non_core_signal_termination (__main__.ExitClassificationTests.test_real_non_core_signal_termination) ... ok
+test_real_normal_child_exits (__main__.ExitClassificationTests.test_real_normal_child_exits) ... ok
+test_unknown_signal_name_does_not_override_result (__main__.ExitClassificationTests.test_unknown_signal_name_does_not_override_result) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.206s
+
+OK

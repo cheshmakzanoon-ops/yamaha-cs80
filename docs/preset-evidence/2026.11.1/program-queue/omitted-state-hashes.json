@@ -1,0 +1,247 @@
+{
+  "assignment": 47,
+  "archive_selection_assignment": 48,
+  "reason": "Native saved-state blobs are omitted from the compact dossier. Their identities are preserved here; observations.csv contains the extracted program and control observations. The diagnostic completed successfully while establishing that queue-only Program selection failed in the bounded tested paths.",
+  "state_snapshots": [
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_handler-after_250ms.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_handler-after_controller_sync.bin",
+      "bytes": 14430,
+      "sha256": "87267d03d2d1bc777195e2db430c8de794e4d45c7dcb5ba5ebe95b28616349ec"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_handler-after_queue.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_handler-after_state_transfer.bin",
+      "bytes": 14430,
+      "sha256": "87267d03d2d1bc777195e2db430c8de794e4d45c7dcb5ba5ebe95b28616349ec"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_handler-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_thread_handler-after_250ms.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_thread_handler-after_controller_sync.bin",
+      "bytes": 14430,
+      "sha256": "87267d03d2d1bc777195e2db430c8de794e4d45c7dcb5ba5ebe95b28616349ec"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_thread_handler-after_queue.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_thread_handler-after_state_transfer.bin",
+      "bytes": 14430,
+      "sha256": "87267d03d2d1bc777195e2db430c8de794e4d45c7dcb5ba5ebe95b28616349ec"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/audio_thread_handler-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/controller_then_queue-after_250ms.bin",
+      "bytes": 14445,
+      "sha256": "4c52dd2ea2d5b70adf3d7ba2b8f11ceb1e53760bf4de9d2d4c56b7cb2b6e4937"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/controller_then_queue-after_queue.bin",
+      "bytes": 14445,
+      "sha256": "4c52dd2ea2d5b70adf3d7ba2b8f11ceb1e53760bf4de9d2d4c56b7cb2b6e4937"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/controller_then_queue-after_state_transfer.bin",
+      "bytes": 14445,
+      "sha256": "4c52dd2ea2d5b70adf3d7ba2b8f11ceb1e53760bf4de9d2d4c56b7cb2b6e4937"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/controller_then_queue-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_handler-after_250ms.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_handler-after_controller_sync.bin",
+      "bytes": 14430,
+      "sha256": "87267d03d2d1bc777195e2db430c8de794e4d45c7dcb5ba5ebe95b28616349ec"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_handler-after_queue.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_handler-after_state_transfer.bin",
+      "bytes": 14430,
+      "sha256": "87267d03d2d1bc777195e2db430c8de794e4d45c7dcb5ba5ebe95b28616349ec"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_handler-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_no_handler-after_250ms.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_no_handler-after_controller_sync.bin",
+      "bytes": 14430,
+      "sha256": "87267d03d2d1bc777195e2db430c8de794e4d45c7dcb5ba5ebe95b28616349ec"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_no_handler-after_queue.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_no_handler-after_state_transfer.bin",
+      "bytes": 14430,
+      "sha256": "87267d03d2d1bc777195e2db430c8de794e4d45c7dcb5ba5ebe95b28616349ec"
+    },
+    {
+      "origin": "build-w10-program-queue/prior_workspace/flush_no_handler-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_handler-after_250ms.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_handler-after_controller_sync.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_handler-after_queue.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_handler-after_state_transfer.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_handler-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_thread_handler-after_250ms.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_thread_handler-after_controller_sync.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_thread_handler-after_queue.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_thread_handler-after_state_transfer.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/audio_thread_handler-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/controller_then_queue-after_250ms.bin",
+      "bytes": 14457,
+      "sha256": "5a85b32fdc680d644b5539416bab1b85810e6d1cbe68300010a9051e79e207ff"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/controller_then_queue-after_queue.bin",
+      "bytes": 14457,
+      "sha256": "5a85b32fdc680d644b5539416bab1b85810e6d1cbe68300010a9051e79e207ff"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/controller_then_queue-after_state_transfer.bin",
+      "bytes": 14457,
+      "sha256": "5a85b32fdc680d644b5539416bab1b85810e6d1cbe68300010a9051e79e207ff"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/controller_then_queue-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_handler-after_250ms.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_handler-after_controller_sync.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_handler-after_queue.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_handler-after_state_transfer.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_handler-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_no_handler-after_250ms.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_no_handler-after_controller_sync.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_no_handler-after_queue.bin",
+      "bytes": 14278,
+      "sha256": "8dae6777fa93ff08ec8f74b6e8af0d3818205aee3fba2f9c9161e67d0a117ad9"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_no_handler-after_state_transfer.bin",
+      "bytes": 14442,
+      "sha256": "18992f167bbff048db0053e129f009144bb2d2e96064c2795c7d295f5e948588"
+    },
+    {
+      "origin": "build-w10-program-queue/revised/flush_no_handler-before.bin",
+      "bytes": 14278,
+      "sha256": "5f01a63dfec591d700e77cfc41daf79f5b3825e8e6cf8c35f76560b30308a73e"
+    }
+  ]
+}
