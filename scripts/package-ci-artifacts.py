@@ -13,12 +13,14 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import platform
+import posixpath
 import re
 import stat
 import subprocess
 import sys
 import tarfile
 import tempfile
+from urllib.parse import quote, unquote, urlsplit, urlunsplit
 import zipfile
 
 PRODUCT = "CS-80 Reference"
@@ -326,6 +328,45 @@ def read_preset_library_revision() -> str:
     return declarations[0]
 
 
+def packaged_markdown(source: str, commit: str, destinations: dict[str, str]) -> bytes:
+    """Keep bundled guide links local and pin other repository links to source.
+
+    The project guides use inline Markdown links. This deliberately handles that
+    syntax only, leaving external URLs, fragments and fenced examples unchanged;
+    third-party notices are copied verbatim through their existing paths.
+    """
+    link = re.compile(r'(?P<prefix>!?\[[^\]\n]+\]\()(?P<target>[^\s()]+)(?P<tail>(?:\s+"[^"]*")?\))')
+
+    def replace(match: re.Match) -> str:
+        target = urlsplit(match["target"])
+        if target.scheme or target.netloc or not target.path or target.path.startswith("/"):
+            return match[0]
+        relative = posixpath.normpath(posixpath.join(
+            PurePosixPath(source).parent.as_posix(), unquote(target.path)))
+        safe_name(relative)
+        if relative in destinations:
+            address = urlunsplit(("", "", destinations[relative], target.query, target.fragment))
+        else:
+            path = f"/cheshmakzanoon-ops/yamaha-cs80/blob/{commit}/{quote(relative, safe='/')}"
+            address = urlunsplit(("https", "github.com", path, target.query, target.fragment))
+        return match["prefix"] + address + match["tail"]
+
+    output = []
+    fence = ""
+    for line in (ROOT / source).read_text(encoding="utf-8").splitlines(keepends=True):
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
+        if marker:
+            token = marker[1]
+            if not fence:
+                fence = token
+            elif token[0] == fence[0] and len(token) >= len(fence):
+                fence = ""
+            output.append(line)
+        else:
+            output.append(line if fence else link.sub(replace, line))
+    return "".join(output).encode("utf-8")
+
+
 def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
     commit = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
     require(subprocess.run(["git", "-C", str(ROOT), "diff", "--quiet", "HEAD", "--"],
@@ -347,10 +388,14 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
     license_file = source / "LICENSE.md"
     require(license_file.is_file(), "Verified JUCE source license is missing")
     preset_revision = read_preset_library_revision()
+    guides = {
+        "docs/INSTALL_AND_QUICKSTART.md": "INSTALL_AND_QUICKSTART.md",
+        "docs/PRESET_GUIDE.md": "PRESET_GUIDE.md",
+        "docs/CI_DISTRIBUTION_STATUS.md": "DISTRIBUTION_STATUS.md",
+    }
     extras = {
-        "INSTALL_AND_QUICKSTART.md": (ROOT / "docs/INSTALL_AND_QUICKSTART.md").read_bytes(),
-        "PRESET_GUIDE.md": (ROOT / "docs/PRESET_GUIDE.md").read_bytes(),
-        "DISTRIBUTION_STATUS.md": (ROOT / "docs/CI_DISTRIBUTION_STATUS.md").read_bytes(),
+        **{destination: packaged_markdown(source, commit, guides)
+           for source, destination in guides.items()},
         "LICENSE": (ROOT / "LICENSE").read_bytes(),
         "licenses/JUCE-LICENSE.md": license_file.read_bytes(),
         "licenses/BarlowCondensed-OFL.txt": (ROOT / "assets/fonts/barlow-condensed/OFL.txt").read_bytes(),

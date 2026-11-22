@@ -105,7 +105,11 @@ class NoticeTests(unittest.TestCase):
     def test_actual_ci_payload_and_archive_bytes(self):
         commit, metadata, extras = self.ci_context()
         expected = {"licenses/" + name: data for name, data in self.expected.items()}
-        expected["PRESET_GUIDE.md"] = (ROOT / "docs/PRESET_GUIDE.md").read_bytes()
+        guide = extras["PRESET_GUIDE.md"].decode()
+        self.assertIn(f"[Lead voicings](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/{commit}/src/core/curated/Leads.inc)", guide)
+        self.assertIn("[playing and mode instructions](INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing)", guide)
+        self.assertIn(f"[2026.11.1 refinement report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/{commit}/docs/PRESET_REFINEMENT_2026_11_1.md)", guide)
+        self.assertNotIn("](../", guide)
         revision = metadata["preset_library_revision"]
         self.assertIn(f'curatedLibraryRevision = "{revision}";',
                       (ROOT / "src/core/FactoryPresets.h").read_text(encoding="utf-8"))
@@ -137,6 +141,27 @@ class NoticeTests(unittest.TestCase):
                     member = prefix + "/manifest.json"
                     embedded = reader.read(member) if system == "windows" else reader.extractfile(member).read()
                     self.assertEqual(json.loads(embedded), manifest)
+
+    def test_bundled_guide_links_keep_local_documents_and_pin_source(self):
+        source = (
+            "[Install](./INSTALL_AND_QUICKSTART.md#start)\n"
+            "[Status](CI_DISTRIBUTION_STATUS.md)\n"
+            "[Source](../src/core/Engine.cpp#L1)\n"
+            "[Report](PRESET_REFINEMENT_2026_11_1.md?plain=1#results)\n"
+            "[External](https://example.invalid/guide?q=1#part) [Here](#start)\n"
+            "```md\n[Example](../not-a-real-source.md)\n```\n"
+        )
+        commit, _, extras = self.ci_context({"docs/PRESET_GUIDE.md": source.encode()})
+        prefix = f"https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/{commit}"
+        expected = (
+            "[Install](INSTALL_AND_QUICKSTART.md#start)\n"
+            "[Status](DISTRIBUTION_STATUS.md)\n"
+            f"[Source]({prefix}/src/core/Engine.cpp#L1)\n"
+            f"[Report]({prefix}/docs/PRESET_REFINEMENT_2026_11_1.md?plain=1#results)\n"
+            "[External](https://example.invalid/guide?q=1#part) [Here](#start)\n"
+            "```md\n[Example](../not-a-real-source.md)\n```\n"
+        )
+        self.assertEqual(extras["PRESET_GUIDE.md"].decode(), expected)
 
     def test_changed_source_revision_propagates_without_packager_update(self):
         for revision in ("2042.07", "2042.07.1", "2042.07.12"):
