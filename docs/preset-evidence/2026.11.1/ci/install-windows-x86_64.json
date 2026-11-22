@@ -1,0 +1,160 @@
+{
+  "driver": {
+    "version": "3.0",
+    "path": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/verify-downloaded-artifacts-v3.py",
+    "sha256": "e310f7ef18eb2c1c47f2063b7bf5f6e265e2a2f278c6e19ee0e0f898d0792de6"
+  },
+  "expected_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "expected_run_id": "45044040694",
+  "expected_preset_revision": "2026.11.1",
+  "source_root": "/workspace/scratch/ffe08111d1ce/yamaha-cs80",
+  "packaging_contract": {
+    "reviewed_at_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+    "script_sha256": {
+      "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+    },
+    "source_read_policy": "immutable Git blobs at expected commit; concurrent worktree untouched",
+    "guide_destinations": {
+      "docs/PRESET_GUIDE.md": "PRESET_GUIDE.md",
+      "docs/INSTALL_AND_QUICKSTART.md": "INSTALL_AND_QUICKSTART.md",
+      "docs/CI_DISTRIBUTION_STATUS.md": "DISTRIBUTION_STATUS.md"
+    },
+    "guide_comparison": "exact source-commit packaged_markdown output on every platform"
+  },
+  "verifier_source_sha256": {
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "all_four_targets_supplied": false,
+  "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+  "artifacts": [
+    {
+      "target": "windows-x86_64",
+      "expected_artifact_name": "cs80-windows-install-bundle",
+      "outer_zip": "/workspace/scratch/ffe08111d1ce/ci-run-45044040694/cs80-windows-install-bundle.zip",
+      "status": "PASS",
+      "outer_sha256": "aa472ff6516371482b7e73f76dc2fbc58d15b52aa8eb86c91f62e091dac06ec8",
+      "trusted_expected_outer_sha256": "aa472ff6516371482b7e73f76dc2fbc58d15b52aa8eb86c91f62e091dac06ec8",
+      "trusted_outer_sha256_verified": true,
+      "outer_members": [
+        {
+          "path": "cs80-reference-windows-x86_64-6d3cc220edef.zip",
+          "size": 6255970,
+          "selected": true
+        },
+        {
+          "path": "SHA256SUMS",
+          "size": 236,
+          "selected": true
+        },
+        {
+          "path": "cs80-reference-windows-x86_64-6d3cc220edef.manifest.json",
+          "size": 4557,
+          "selected": true
+        }
+      ],
+      "verifier_command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/actual-run-45044040694-windows/source-snapshot/scripts/verify-ci-bundle.py",
+        "--archive",
+        "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/actual-run-45044040694-windows/windows-x86_64/cs80-reference-windows-x86_64-6d3cc220edef.zip",
+        "--expected-commit",
+        "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+      ],
+      "verifier_exit_code": 0,
+      "existing_verifier": {
+        "result": "integrity and declared source consistency verified",
+        "commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+        "platform": "windows",
+        "architecture": "x86_64",
+        "files": 20,
+        "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+      },
+      "archive": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/actual-run-45044040694-windows/windows-x86_64/cs80-reference-windows-x86_64-6d3cc220edef.zip",
+      "archive_sha256": "84e16905a24dfff25bfdc71b816ec5f81c49bbd018d7b15ecfe7b2b22aeb88b5",
+      "manifest_sha256": "1d0ee86dd358ab3f7e1af4bcdef9f9c378f53eef5a42c416ef3df0d9d2b3b3d2",
+      "checks": {
+        "preset_library_revision": "2026.11.1",
+        "workflow_run_id": "45044040694",
+        "documents": [
+          {
+            "path": "PRESET_GUIDE.md",
+            "source_path": "docs/PRESET_GUIDE.md",
+            "bytes": 17675,
+            "source_bytes": 14109,
+            "sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+            "source_sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+            "archived_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+            "expected_packaged_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+            "exact_source_bytes": false,
+            "exact_source_bound_packaged_bytes": true,
+            "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+            "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+          },
+          {
+            "path": "INSTALL_AND_QUICKSTART.md",
+            "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+            "bytes": 15885,
+            "source_bytes": 15481,
+            "sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+            "source_sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+            "archived_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+            "expected_packaged_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+            "exact_source_bytes": false,
+            "exact_source_bound_packaged_bytes": true,
+            "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+            "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+          },
+          {
+            "path": "DISTRIBUTION_STATUS.md",
+            "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+            "bytes": 3707,
+            "source_bytes": 3606,
+            "sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+            "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "archived_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+            "expected_packaged_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+            "exact_source_bytes": false,
+            "exact_source_bound_packaged_bytes": true,
+            "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+            "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+          }
+        ],
+        "binaries": [
+          {
+            "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+            "bytes": 7258624,
+            "sha256": "1794245c4d57129e4b31464a635d0814239a8d584b128089574e5a01a674996c",
+            "platform": "windows",
+            "architecture": "x86_64",
+            "role": "plugin",
+            "header_check": "PASS"
+          },
+          {
+            "path": "Standalone/CS-80 Reference.exe",
+            "bytes": 7460352,
+            "sha256": "d504ad607e3d4fc664976891f72d37f743ce4430fc5e1cc91f1b2838ba2fad06",
+            "platform": "windows",
+            "architecture": "x86_64",
+            "role": "standalone",
+            "header_check": "PASS"
+          }
+        ],
+        "source_txt": {
+          "commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+          "sha256": "149fdea61908c033045a4604990d6eb93be1d2e92c2078c561f7f6d5bea950f4",
+          "source_sha256": "149fdea61908c033045a4604990d6eb93be1d2e92c2078c561f7f6d5bea950f4",
+          "archived_sha256": "149fdea61908c033045a4604990d6eb93be1d2e92c2078c561f7f6d5bea950f4",
+          "exact_expected_bytes": true,
+          "exact_source_bytes": true,
+          "normalized_source_content_equal": true,
+          "newline_transform": "none"
+        }
+      }
+    }
+  ],
+  "status": "PASS",
+  "all_four_targets_verified": false
+}

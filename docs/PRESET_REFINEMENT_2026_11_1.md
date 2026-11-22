@@ -10,13 +10,13 @@ frozen Legacy programs. The comparison baseline for this refinement is
 The [original revision report](PRESET_REVISION_2026_11.md) documents the larger
 change from the older library.
 
-**Final level calibration and all four integrated preset test suites have
-passed. Native platform validation and publication of this revision's bundles
-are pending.** The tables below
-identify which evidence comes from the authoring stage. They do not certify a
-pending download. The final publication update must record the actual source
-commit and successful CI run; the library revision and application version
-alone cannot identify a binary.
+**Windows x64, Apple Silicon and Intel Mac have verified 2026.11.1 candidate
+bundles. Their native tests and required platform validators passed on attempt 1.
+Linux, complete four-platform publication and the actual 24-WAV audition
+remain pending.** Final level calibration and all four integrated preset test
+suites have also passed. The tables below separate individual platform results
+from authoring evidence and the remaining publication work. The library revision
+and application version alone cannot identify a binary.
 
 The current candidate is source `6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
 [build 45044040694, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
@@ -31,11 +31,28 @@ preserves both sources and the actual predecessor failure evidence.
 | Twelve authored refinements | Measured against the frozen baseline; implemented in the factory data |
 | Character regression suite | 128/128 checks pass on the final calibrated bank; baseline fails 16 checks |
 | Final calibrated bank and complete library audit | Two applied calibration passes converge for the twelve refined programs; all 301 Circuit + 222 Legacy programs, 136 voicing checks and 9 capture-tool tests pass |
-| Windows x64 VST3 / Standalone | Pending this revision's CI and archive verification |
-| macOS Apple Silicon VST3 / AU / Standalone | Pending this revision's CI and archive verification |
-| macOS Intel VST3 / AU / Standalone | Pending this revision's CI and archive verification |
-| Linux x86-64 VST3 / Standalone | Pending this revision's CI and archive verification |
-| 24-excerpt audition artifact | Capture pipeline verified; revised-bank CI artifact pending |
+| Windows x64 VST3 / Standalone | **Verified candidate:** 219 CTest entries passed, zero failed, two skipped; both strictness-10 VST3 gates passed. [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) · [Native checks](preset-evidence/2026.11.1/ci/native-windows-x86_64.json) · [Archive checks](preset-evidence/2026.11.1/ci/install-windows-x86_64.json) |
+| macOS Apple Silicon VST3 / AU / Standalone | **Verified candidate:** 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) · [Native checks](preset-evidence/2026.11.1/ci/native-macos-arm64.json) · [Archive checks](preset-evidence/2026.11.1/ci/install-macos-arm64.json) |
+| macOS Intel VST3 / AU / Standalone | **Verified candidate:** 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) · [Native checks](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) · [Archive checks](preset-evidence/2026.11.1/ci/install-macos-x86_64.json) |
+| Linux x86-64 VST3 / Standalone | **Pending:** this revision's completed native/validator CI, archive verification and public download |
+| Complete four-platform publication | **Pending:** Linux results, the four-target archive aggregate and the combined validator-input/package identity record |
+| 24-excerpt audition artifact | **Pending actual revised-bank CI artifact and verification.** The completed pipeline smoke used the frozen baseline executable |
+
+Each of the three linked candidate ZIPs passed its individual version-3 archive
+checks and a complete unauthenticated public GET, with the expected API byte count
+and SHA-256. These records identify source `6d3cc220`, run `45044040694` and the
+native target. They do not mark the unfinished whole workflow or four-target
+aggregate as passed. CTest counts above distinguish registered test entries;
+the native reports separately retain embedded Python subtest skips.
+[Actual public downloads](preset-evidence/2026.11.1/ci/download-links.json)
+
+These are CI development candidates without release signing or notarization.
+The [main README's four-platform download table](../README.md#downloads) continues
+to point to the retained **2026.11** build at `d0c3c23`; those packages do not
+contain these twelve later refinements. Its original Linux validator failure,
+successful second attempt and instrumented nonreproductions remain documented
+in the [original report](PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation).
+That history does not establish the current candidate's pending Linux outcome.
 
 [Evidence index](preset-evidence/2026.11.1/README.md) ·
 [Additional native and performance evidence](preset-evidence/2026.11.1/INTEGRATION.md) ·
@@ -278,8 +295,9 @@ others use three-second holds and one-second releases. Captures retain the
 factory settings without normalization. Provenance includes source commit,
 binary hash, selection, timing, completion status and checksums. A pipeline
 smoke check produced 24 WAVs and verified 32 checksummed files; that check used
-the frozen baseline executable solely to validate delivery. The revised-bank
-artifact still requires the final CI run.
+the frozen baseline executable solely to validate delivery. The actual
+2026.11.1 CI audition artifact, its checksums and its public download remain
+pending; the older twelve-WAV 2026.11 download is a separate recording set.
 [Pipeline evidence](preset-evidence/2026.11.1/audition/summary.json)
 
 Instrument names describe CS-80 synthesized interpretations. These measurements

@@ -112,7 +112,9 @@ the finished mix. Init Circuit remains the 301st program.
 
 The new character regression suite passes **128 checks** on the final calibrated
 bank; the previous bank fails **16** of the same checks. The complete library
-audit and 136 voicing checks also pass. Platform build publication is pending: the [refinement report](docs/PRESET_REFINEMENT_2026_11_1.md)
+audit and 136 voicing checks also pass. Windows x64 and both Mac architectures
+have verified 2026.11.1 candidate bundles; Linux, full four-platform publication
+and the actual 24-WAV audition remain pending: the [refinement report](docs/PRESET_REFINEMENT_2026_11_1.md)
 identifies the current status, measurement conditions and evidence. The
 [original revision report](docs/PRESET_REVISION_2026_11.md) covers the complete
 300-program redesign.

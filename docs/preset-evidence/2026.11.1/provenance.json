@@ -487,9 +487,9 @@
       "origin": "Authored package index and reproduction instructions in assignments20 and28",
       "phase": "Evidence-stage index; not an additional measurement.",
       "origin_sha256": null,
-      "stored_sha256": "a3bf49b091e9e5cf9b4d6f9b5ba515f5af439c1a57b64e18a87d8664a1f1857f",
-      "bytes": 17311,
-      "transform": "Original evidence index retained; appended source-bound pending native integration status, superseded-run link and explicit separation from original2026.11 qualification. Authoring measurements unchanged."
+      "stored_sha256": "ac95c0d76a8a232b752429b3af621ff6691fcca53ba5b6a3ea4de35ce8f35aff",
+      "bytes": 20243,
+      "transform": "Original evidence index retained; appended source/run-bound native integration status, actual three-platform records and current download links, superseded-run evidence and explicit separation from original2026.11 qualification. Authoring measurements unchanged."
     },
     {
       "path": "final/ctest.log",
@@ -2317,6 +2317,78 @@
       "stored_sha256": "dd1447aca5861076e5fa942b0a2e05284d65bcbbaeb290c81518e144f679219b",
       "bytes": 3742,
       "transform": "Verbatim."
+    },
+    {
+      "path": "ci/native-macos-arm64.json",
+      "origin": "review-w09-macos-arm/revision2026.11.1/run-45044040694/final-verification.json",
+      "phase": "Actual Apple Silicon native job, tests, strict validators and packaging; install payload verified separately.",
+      "origin_sha256": "17890e1e477af699b640bdbe4e8004aeab30799fa6faf42adf4f3b26dd1311c1",
+      "stored_sha256": "17890e1e477af699b640bdbe4e8004aeab30799fa6faf42adf4f3b26dd1311c1",
+      "bytes": 19894,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/native-windows-x86_64.json",
+      "origin": "review-w09-windows/revision2026.11.1/run-45044040694/attempt-1/verification.json",
+      "phase": "Actual Windows native and validator jobs; install payload verified separately.",
+      "origin_sha256": "4a2f09e13ce0f97b675f34c81c59c52e18f9fb372895cc618790c68a0db7f2f8",
+      "stored_sha256": "4a2f09e13ce0f97b675f34c81c59c52e18f9fb372895cc618790c68a0db7f2f8",
+      "bytes": 25147,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/install-macos-arm64.json",
+      "origin": "review-2026.11.1-artifact-integrity/actual-run-45044040694-arm/report.json",
+      "phase": "Actual Apple Silicon archive/source/run/header verification; does not qualify the other targets.",
+      "origin_sha256": "b6ff1daf7d56ca10d4727fe848d8c9bb8c702537e0cf9de75f9886de0d2a0e5f",
+      "stored_sha256": "b6ff1daf7d56ca10d4727fe848d8c9bb8c702537e0cf9de75f9886de0d2a0e5f",
+      "bytes": 8563,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/install-windows-x86_64.json",
+      "origin": "review-2026.11.1-artifact-integrity/actual-run-45044040694-windows/report.json",
+      "phase": "Actual Windows archive/source/run/header verification; does not qualify the other targets.",
+      "origin_sha256": "209047e685b428cd2e5c1adf94d74d4f9142e766a89a68400144c46b9151603c",
+      "stored_sha256": "209047e685b428cd2e5c1adf94d74d4f9142e766a89a68400144c46b9151603c",
+      "bytes": 8206,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/download-links.json",
+      "origin": "ci-run-45044040694/download-links.json",
+      "phase": "Actual complete unauthenticated GETs for three current installation archives.",
+      "origin_sha256": "83af8ee4640ac8958c796234ac0e503257fa8a1072bd2d9c37c8d1499f72d9d6",
+      "stored_sha256": "83af8ee4640ac8958c796234ac0e503257fa8a1072bd2d9c37c8d1499f72d9d6",
+      "bytes": 2689,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/validator-input-downloads.json",
+      "origin": "ci-run-45044040694/validator-input-downloads.json",
+      "phase": "Actual complete unauthenticated GETs for currently available validator input archives; complete installed-payload join remains pending.",
+      "origin_sha256": "e3d17f7133bd7c7496b2969ef69994f2a70c9c6ea288252e30f2017733c1286f",
+      "stored_sha256": "e3d17f7133bd7c7496b2969ef69994f2a70c9c6ea288252e30f2017733c1286f",
+      "bytes": 952,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/native-macos-x86_64.json",
+      "origin": "review-w09-macos-intel/revision2026.11.1/run-45044040694/final-verification.json",
+      "phase": "Actual Intel Mac native tests, strict VST3/AU/AU-GUI validators and packaging; native pixel comparison remains report-only.",
+      "origin_sha256": "ad0557858394ccf9555aedb70d3dab28c1cfb4bfb04e6bc1480c41863e23c7ad",
+      "stored_sha256": "ad0557858394ccf9555aedb70d3dab28c1cfb4bfb04e6bc1480c41863e23c7ad",
+      "bytes": 18482,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/install-macos-x86_64.json",
+      "origin": "review-2026.11.1-artifact-integrity/actual-run-45044040694-intel/report.json",
+      "phase": "Actual Intel Mac archive/source/run/header verification; does not qualify the remaining Linux target.",
+      "origin_sha256": "f178ccbeced43f172d5b439468d07f9f67bea988c42e7401f1b7fe0b74cdb178",
+      "stored_sha256": "f178ccbeced43f172d5b439468d07f9f67bea988c42e7401f1b7fe0b74cdb178",
+      "bytes": 8592,
+      "transform": "Verbatim."
     }
   ],
   "extension_assignment": 48,
@@ -2325,13 +2397,18 @@
     48
   ],
   "native_integration": {
-    "recorded_at_utc": "2026-11-22T16:36:50.151731+00:00",
+    "recorded_at_utc": "2026-11-22T17:25:29.057387+00:00",
     "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
     "source_tree": "88ee322bf66b380c4227e224821783f2db04bbee",
     "run_id": 45044040694,
     "attempt": 1,
-    "status": "PENDING_NATIVE_AND_ARTIFACT_VERIFICATION",
+    "status": "THREE_NATIVE_TARGETS_AND_ARCHIVES_VERIFIED_LINUX_AND_FULL_PUBLICATION_PENDING",
     "lineage": "ci/source-lineage.json",
-    "separate_original_revision": "../2026.11/ci/release-qualification.json"
+    "separate_original_revision": "../2026.11/ci/release-qualification.json",
+    "verified_targets": [
+      "macos-arm64",
+      "macos-x86_64",
+      "windows-x86_64"
+    ]
   }
 }

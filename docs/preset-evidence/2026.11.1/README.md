@@ -10,7 +10,10 @@ The [refinement report](../../PRESET_REFINEMENT_2026_11_1.md) explains the resul
 sounds. [Provenance](provenance.json) records every archived input, its original
 SHA-256, the stored SHA-256 and any textual transformation.
 
-Native qualification is in progress for source
+**Three current platforms are verified: Windows x64, Apple Silicon and Intel
+Mac. Linux, complete four-platform publication and the actual 24-WAV audition
+remain pending.** The three native suites and their required strictness-10
+platform validators passed on attempt 1 for source
 `6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
 [build 45044040694, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
 The [integration lineage](ci/source-lineage.json) retains the cancelled predecessor
@@ -18,6 +21,32 @@ and its actual workflow-snapshot failure on all four native runners. Correcting
 that expectation changed no production bank, packaging code or required
 validator command. The older [2026.11 qualification](../2026.11/ci/release-qualification.json)
 remains separate and does not qualify these newer binaries.
+
+## Current candidate platforms and delivery
+
+| Target | Native result in attempt 1 | Verified candidate download and archive record |
+| --- | --- | --- |
+| Windows x64 | 219 CTest entries passed, zero failed, two skipped; both strictness-10 VST3 gates passed. [Native record](ci/native-windows-x86_64.json) | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) · [Archive record](ci/install-windows-x86_64.json) |
+| macOS Apple Silicon | 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Native record](ci/native-macos-arm64.json) | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) · [Archive record](ci/install-macos-arm64.json) |
+| macOS Intel | 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Native record](ci/native-macos-x86_64.json) | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) · [Archive record](ci/install-macos-x86_64.json) |
+| Linux x86-64 | Pending current native and validator completion | Pending current archive/public-download verification |
+| Four-platform publication | Pending Linux and the complete aggregate/input-to-package identity record | No complete four-platform publication claim |
+| Actual 24-WAV audition | Revised-bank CI artifact and verification pending | No current audition download is asserted by the baseline pipeline smoke |
+
+All three available ZIPs passed individual version-3 archive verification and
+were downloaded in full through their public URLs without authentication. Their
+complete byte counts and SHA-256 values matched the GitHub API metadata.
+[Public download records](ci/download-links.json)
+The individual reports remain separate from the pending four-target aggregate;
+the CTest counts above do not subsume the embedded Python skips recorded in each
+native report. These are CI development candidates, without release signing or
+notarization or a claim of compatibility with every DAW.
+
+The retained 2026.11 four-platform downloads and twelve-WAV audition use the older
+`d0c3c23` source. Its unresolved Linux failure, successful second attempt and
+bounded nonreproductions remain in the [original qualification history](../../PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation).
+The current refinement's [VST3 Program-queue controller dependency](../../PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification)
+also remains part of the stated host-compatibility limits.
 
 ## Read the evidence at its recorded stage
 
@@ -57,8 +86,9 @@ The 128-check character suite covers eleven programs. Ether Pad has separate
 multi-register authoring measurements; it is not silently counted as a twelfth
 program in that test target. Measurements support bounded software behavior,
 not acoustic-instrument identity, physical CS-80 calibration or a listening-panel
-verdict. Raw audio and executables are omitted from this compact source dossier;
-the CI audition artifact carries the generated WAV examples.
+verdict. Raw audio and executables are omitted from this compact source dossier.
+The planned 24-WAV CI audition is separate and still awaits the actual revised-bank
+artifact and its verification.
 
 ## Measurement conventions
 

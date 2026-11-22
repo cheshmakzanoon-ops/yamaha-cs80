@@ -5,6 +5,42 @@ existing CI workflow already builds. They add no paid dependency, installer,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
+## Current 2026.11.1 candidates — three platforms verified
+
+**Windows x64, Apple Silicon and Intel Mac have verified candidate bundles.
+Linux, complete four-platform publication and the actual 24-WAV audition remain
+pending.** The current source is
+`6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`, under
+[build 45044040694, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
+These three native suites and their required platform validators passed on that
+first attempt. This is a per-platform result while the whole build remains
+incomplete.
+
+| Candidate platform | Included formats | Native checks | Verified candidate ZIP |
+| --- | --- | --- | --- |
+| Windows x64 | VST3, Standalone | 219 CTest entries passed, zero failed, two skipped; both strictness-10 VST3 gates passed. [Record](preset-evidence/2026.11.1/ci/native-windows-x86_64.json) | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Record](preset-evidence/2026.11.1/ci/native-macos-arm64.json) | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Record](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) |
+| Linux x86-64 | VST3, Standalone | Current native/validator completion pending | Current archive and public download pending |
+
+All three available candidates passed individual version-3 archive checks and
+complete unauthenticated public downloads with matching API sizes and SHA-256.
+The complete four-target archive aggregate and combined validator-input/package
+identity record still await Linux. The actual revised-bank 24-WAV audition and
+its download verification also remain pending.
+[Windows archive](preset-evidence/2026.11.1/ci/install-windows-x86_64.json) ·
+[Apple Silicon archive](preset-evidence/2026.11.1/ci/install-macos-arm64.json) ·
+[Intel archive](preset-evidence/2026.11.1/ci/install-macos-x86_64.json) ·
+[Public downloads](preset-evidence/2026.11.1/ci/download-links.json)
+
+These are CI development candidates without release signing or notarization.
+The [refinement report](PRESET_REFINEMENT_2026_11_1.md) retains the predecessor
+failure and the VST3 Program-queue controller dependency; these validator passes
+do not certify queue-only Program automation or arbitrary DAW integration.
+The main README's default four-platform downloads remain the retained 2026.11
+packages below. Those older binaries and their twelve-WAV audition do not contain
+the twelve 2026.11.1 refinements.
+
 ## Pinned verified development downloads — 2026.11
 
 These retained packages verify the original 300-program redesign. Newer
