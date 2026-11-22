@@ -313,15 +313,15 @@ def verify_archive(archive: Path, root: str, manifest: dict) -> None:
 
 
 def read_preset_library_revision() -> str:
-    """Read the canonical, single-line YYYY.MM sound-data revision declaration."""
+    """Read a canonical YYYY.MM or YYYY.MM.PATCH sound-data revision."""
     header = ROOT / "src/core/FactoryPresets.h"
     require(header.is_file(), "Missing preset library revision header: src/core/FactoryPresets.h")
     declarations = re.findall(
         r'^inline constexpr const char\* curatedLibraryRevision = "([^"\r\n]*)";$',
         header.read_text(encoding="utf-8"), re.MULTILINE)
     require(len(declarations) == 1
-            and re.fullmatch(r"[0-9]{4}\.(?:0[1-9]|1[0-2])", declarations[0]) is not None,
-            "Expected exactly one canonical curatedLibraryRevision declaration with a YYYY.MM revision "
+            and re.fullmatch(r"[0-9]{4}\.(?:0[1-9]|1[0-2])(?:\.[1-9][0-9]*)?", declarations[0]) is not None,
+            "Expected exactly one canonical curatedLibraryRevision declaration with a YYYY.MM or YYYY.MM.PATCH revision "
             "in src/core/FactoryPresets.h")
     return declarations[0]
 

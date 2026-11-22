@@ -139,10 +139,13 @@ class NoticeTests(unittest.TestCase):
                     self.assertEqual(json.loads(embedded), manifest)
 
     def test_changed_source_revision_propagates_without_packager_update(self):
-        _, metadata, extras = self.ci_context({
-            "src/core/FactoryPresets.h": b'inline constexpr const char* curatedLibraryRevision = "2042.07";\n'})
-        self.assertEqual(metadata["preset_library_revision"], "2042.07")
-        self.assertIn(b"Preset library revision: 2042.07\n", extras["SOURCE.txt"])
+        for revision in ("2042.07", "2042.07.1", "2042.07.12"):
+            with self.subTest(revision=revision):
+                _, metadata, extras = self.ci_context({
+                    "src/core/FactoryPresets.h":
+                        f'inline constexpr const char* curatedLibraryRevision = "{revision}";\n'.encode()})
+                self.assertEqual(metadata["preset_library_revision"], revision)
+                self.assertIn(f"Preset library revision: {revision}\n".encode(), extras["SOURCE.txt"])
 
     def test_missing_or_invalid_source_revision_is_rejected(self):
         declarations = (
@@ -151,6 +154,14 @@ class NoticeTests(unittest.TestCase):
             b'inline constexpr const char* curatedLibraryRevision = "";\n',
             b'inline constexpr const char* curatedLibraryRevision = "2042.13";\n',
             b'inline constexpr const char* curatedLibraryRevision = "2042.7";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.13.1";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.00.1";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.07.0";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.07.01";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.07.-1";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.07.1extra";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.07.1.2";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.07.";\n',
             b'inline constexpr const char* curatedLibraryRevision = "2042.07\\nforged metadata";\n',
             b'inline constexpr const char* curatedLibraryRevision = "2042.07";\n' * 2,
         )
