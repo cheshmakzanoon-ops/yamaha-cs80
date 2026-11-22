@@ -26,7 +26,7 @@ separate and does not qualify these newer binaries.
 | Windows x64 | 219 CTest entries passed, two skipped, zero failed; both strictness-10 VST3 gates passed | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) |
 | macOS Apple Silicon | 241 CTest entries passed, two skipped, zero failed; VST3, AU and AU GUI strictness-10 gates passed | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) |
 | macOS Intel | 241 CTest entries passed, two skipped, zero failed; VST3, AU and AU GUI strictness-10 gates passed | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) |
-| Linux x86-64 | 578 executed CTest passes, one skipped/not-run case, zero failed; headless and fixed GUI seed passed; randomized GUI exited with SIGSEGV after SUCCESS | [Linux ZIP — GUI validation failed](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
+| Linux x86-64 | 578 executed CTest passes, one skipped/not-run case, zero failed; headless and fixed GUI seed passed; randomized GUI exited with SIGSEGV after SUCCESS | [Linux experimental ZIP — GUI validation failed](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
 | Actual 24-WAV CI audition | 117 seconds, all 32 checksums and 24 parameter digests verified; finite, below-full-scale samples | [Audition ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip) |
 | Formal combined release | Withheld; strict publisher skipped and public release endpoint returned 404 | No release assets or release tag are presented as available |
 
@@ -49,7 +49,7 @@ and remain supporting compatibility evidence only.
 [Original failure](final-ci/linux-x86_64/ci-proof.json) ·
 [Independent diagnosis](final-ci/failure-review/README.md)
 
-The earlier three-platform `ci/` records retain their observation-time scope.
+The earlier per-platform `ci/` records retain their observation-time scope.
 The [integration lineage](ci/source-lineage.json) preserves the cancelled
 predecessor and workflow-snapshot correction. The retained 2026.11 downloads use
 older `d0c3c23` bytes; its first Linux failure, successful second attempt and
@@ -57,6 +57,18 @@ bounded nonreproductions remain in the [original history](../../PRESET_REVISION_
 The current [VST3 Program-queue controller dependency](../../PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification)
 also remains. Source measurements do not establish acoustic-instrument identity,
 physical CS-80 calibration or a listening-panel verdict.
+
+### Complementary compact review
+
+These `ci/` records retain their original review times and checked file hashes;
+they complement the full `final-ci/` dossier above. Acceptance of the reviewed
+snapshots does not imply that later documentation has the same bytes.
+
+- [Consolidated qualification](ci/release-qualification.json) joins the native results, downloads and blocked publisher, with formal CTest and nested Python skips counted separately.
+- [V3 archive aggregate](ci/final-install-artifacts.json) records 114 inventory entries and 10 native headers for the four source/run-bound installation ZIPs.
+- [Complete validator payload identity](ci/final-validator-payload-identity.json) compares every Linux and Windows VST3 file with the separate validator inputs.
+- [Recorded download acceptance](ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md) retains its reviewed manifest and prose identities and accepts development links with the failed Linux gate disclosed.
+- [Teardown source audit](ci/teardown-source-audit.md) preserves the production-source comparison and lifetime findings without claiming a cause or repair.
 
 ## Read the evidence at its recorded stage
 

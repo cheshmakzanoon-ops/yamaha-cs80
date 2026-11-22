@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-22T19:34:26.451875+00:00",
+  "status": "READ_ONLY_AUDIT_COMPLETE_NO_NEW_DEMONSTRATED_LIFETIME_DEFECT",
+  "validator_verdict": "FAILURE_RETAINED",
+  "scope": "Source and retained evidence audit only; no tests, replays, builds, renders, network downloads, source edits, or audition writes.",
+  "source": {
+    "binary_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "binary_tree": "88ee322bf66b380c4227e224821783f2db04bbee",
+    "review_commit": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+    "prior_2026_11_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "prebuild_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+    "run_id": "45044040694",
+    "run_attempt": "1",
+    "linux_validator_job_id": "137324977642"
+  },
+  "source_comparison": {
+    "production_paths_changed_from_prior": [
+      "src/core/CuratedLibraryLevels.inc",
+      "src/core/FactoryPresets.h",
+      "src/core/curated/Bass.inc",
+      "src/core/curated/Brass.inc",
+      "src/core/curated/Fx.inc",
+      "src/core/curated/Pads.inc",
+      "src/core/curated/Plucked.inc",
+      "src/core/curated/Polysynth.inc",
+      "src/core/curated/Winds.inc"
+    ],
+    "plugin_trees": {
+      "d0c3c23be68ef048aa56969f1c493c221c1562c5": "d7b52b190e002561b646e1eb9d10bd5186a9d8dd",
+      "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c": "d7b52b190e002561b646e1eb9d10bd5186a9d8dd",
+      "96c466f0e7c25055ac8e745d2c796af643860fc6": "d7b52b190e002561b646e1eb9d10bd5186a9d8dd"
+    },
+    "vendor_trees": {
+      "d0c3c23be68ef048aa56969f1c493c221c1562c5": "50f4f45d1704d9a13e16fdd79d48e8d30ea03f2e",
+      "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c": "50f4f45d1704d9a13e16fdd79d48e8d30ea03f2e",
+      "96c466f0e7c25055ac8e745d2c796af643860fc6": "50f4f45d1704d9a13e16fdd79d48e8d30ea03f2e"
+    },
+    "prebuild_to_binary_src_or_cmake_changes": [],
+    "binary_to_review_src_or_cmake_changes": [],
+    "juce_git_tag": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "juce_pin_unchanged_in_cmake": true,
+    "production_diff_sha256": "1f314a9d4bfa28e66200ad8cb139d5def82fe38d9504762fb16757e20fc97d29",
+    "classification": "Preset parameter values, descriptions, four calibration gains and revision string; CMake adds only a character-test target. No changed ownership, registry, callback, thread or teardown implementation."
+  },
+  "original_process": {
+    "pid": 2883,
+    "mode": "GUI strictness 10",
+    "seed": "0x4369262",
+    "success_log_utc": "2026-11-22T19:24:05.9974371Z",
+    "raw_returncode": -11,
+    "normalized_exit": 139,
+    "termination": "SIGSEGV",
+    "original_stack_available": false,
+    "local_elf_core_available": false
+  },
+  "other_invocations": {
+    "headless": {
+      "seed": "0x3e72560",
+      "pid": 2851,
+      "exit": 0
+    },
+    "fixed_gui": {
+      "seed": "0x2da72db",
+      "pid": 2936,
+      "exit": 0
+    },
+    "same_seed_gdb": {
+      "seed": "0x4369262",
+      "pid": 2994,
+      "exit": 0
+    },
+    "same_seed_fault_trace": {
+      "seed": "0x4369262",
+      "exit": 0,
+      "fault_trace_captured": false
+    }
+  },
+  "focused_source_review": [
+    {
+      "area": "preset construction and cache",
+      "references": [
+        "src/core/CuratedLibrary.inc:177-192",
+        "src/core/FactoryPresets.cpp:643-655",
+        "src/plugin/PresetBrowser.cpp:23-60",
+        "src/plugin/PresetBrowser.cpp:2883-2894"
+      ],
+      "finding": "Builder copies program values and string data synchronously; cached signatures own numeric structures, not processor references or deferred closures. No new lifetime path in changed preset expressions."
+    },
+    {
+      "area": "editor teardown and owned timers",
+      "references": [
+        "src/plugin/PluginEditor.cpp:1030-1036",
+        "src/plugin/PluginEditor.cpp:2350-2355",
+        "src/plugin/PresetBrowser.cpp:2508-2518",
+        "src/plugin/HardwareKeyboard.h:592",
+        "src/plugin/HardwareKeyboard.h:721-740"
+      ],
+      "finding": "Editor stops its timer before resetting implementation; implementation stops frame timer and clears meter callback; browser stops timers and removes listeners; keyboard watcher unregisters and cancels pending update. These unchanged guards do not prove every module-unload schedule safe."
+    },
+    {
+      "area": "async callbacks",
+      "references": [
+        "src/plugin/UndoHistory.cpp:110-115",
+        "src/plugin/UndoHistory.cpp:159-173",
+        "src/plugin/UiComponents.cpp:4036-4043",
+        "src/plugin/UiComponents.cpp:4083-4084",
+        "src/plugin/ParameterContextButton.cpp:146-150",
+        "src/plugin/KeyboardTuningPage.cpp:229-243",
+        "docs/PROGRAM_DISPLAY_NOTIFICATION.md:50"
+      ],
+      "finding": "Reviewed raw-this undo callback checks a weak lifetime token; reviewed UI callbacks use component SafePointer. Correctness assumes existing message-thread/message-manager-lock teardown discipline. No current evidence of violating it."
+    },
+    {
+      "area": "MTS and static registries",
+      "references": [
+        "src/plugin/MtsEspClient.cpp:22-26",
+        "src/vendor/mts-esp/Client/libMTSClient.cpp:162-196",
+        "src/vendor/mts-esp/Client/libMTSClient.cpp:239-246",
+        "docs/VALIDATOR_DIAGNOSTICS.md:101-129"
+      ],
+      "finding": "MTS client registration/deregistration and module-global loader are unchanged; static image/typeface caches were already audited. No original stack or library mapping implicates these paths."
+    },
+    {
+      "area": "thread and descriptor ownership",
+      "references": [
+        "src/plugin/PluginProcessor.cpp:114-125",
+        "src/plugin/PluginProcessor.cpp:136-143",
+        "docs/VALIDATOR_DIAGNOSTICS.md:108-109",
+        "docs/analysis/validator-6c560f1.md:154-160"
+      ],
+      "finding": "No project core/plugin thread-start or FD-registration calls found. Host MIDI uses atomic handoff; keyboard state servicing is on message thread. Existing wrapper/host run-loop lifetimes remain the prior unresolved investigation."
+    }
+  ],
+  "prior_host_hypothesis": {
+    "new_finding": false,
+    "source": "docs/analysis/validator-6c560f1.md:116-166",
+    "upstream_guard_commit": "04e167d64661d3298afd4978f6c2e77f841b5f17",
+    "current_original_process_attribution": "NOT_ESTABLISHED",
+    "caveat": "Historical replay callback-path stack and known host map-lifetime defect do not identify current PID 2883, exclude plugin corruption, or establish a repair."
+  },
+  "recommendation": "No speculative source patch or CI rerun justified by this audit. Keep Linux validator failure and release gate blocked; describe available builds as development bundles. Future diagnosis needs evidence of the original failing process or a demonstrated lifetime defect, not another green replay.",
+  "limitations": [
+    "Source-only inspection cannot rule out latent races or earlier memory corruption.",
+    "Unchanged implementation can be exposed by changed sound data, timing, heap layout, compiler output or external scheduling.",
+    "Original PID 2883 has no captured stack/core; same-seed replay success is inconclusive.",
+    "This audit does not replace native build, platform validation or audition evidence."
+  ],
+  "evidence_sha256": {
+    "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/validator-job.log": "04574dd6de1a26659dec7d57ae349d98078dc0c6898ecbfee4002c39e1d71b59",
+    "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui.log": "d0f46ffab92a53aff3c370d2b5c9aa5b3853b7a4f95e8c52e7c2aa569011812b",
+    "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-core.log": "a29764eddf095eb50b1b209bee76d14ec89c78d52f1a70f3e2f2aecc7dce9073",
+    "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-headless-core.log": "26434337c4aaaad329c8302632a9691d2df6f33cfc08de1f5cc153a540b5bc16",
+    "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-seed-regression-core.log": "b2805f31aa250224c823aa1c0df8c1fca4e3d38c98d40d944a803d51701b55ac",
+    "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-gdb.log": "745331e8004dc54e3596e2ca7206e84c5881709c440e56980d780a199deba87d",
+    "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-trace.log": "d0f46ffab92a53aff3c370d2b5c9aa5b3853b7a4f95e8c52e7c2aa569011812b",
+    "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-fault-trace.log": "a07630fd14937a06786a0f51f3a000e7178c2e0221acbd0efc640773ffcde680"
+  },
+  "reviewed_source_sha256": {
+    "src/plugin/PluginProcessor.cpp": "95f709baf46b9a83ce44725473aaed00aaa43b9e117deee8a72f29c362dd52d1",
+    "src/plugin/PluginProcessor.h": "a1a60605ace28029ee947b3b751c89ab31895ef1d6e419ff4389e6d014283dc5",
+    "src/plugin/PluginEditor.cpp": "8405e39729c7f90a57cf2706b62ff9f363b537933ab015dd73b0a99c14f5d566",
+    "src/plugin/HardwareKeyboard.h": "bfbc290a25c2a1938a06f3eb25c5991e50713fa0e2fa4d706f0b4497c27aaf52",
+    "src/plugin/UndoHistory.cpp": "0b8b327d52345e5bf84960b46ec369a8d4cbff116f8d23aa734bc30108c98e78",
+    "src/plugin/UndoHistory.h": "9a8ba28ae82417119af95485b8093c17e0602e2bd8518e09aab17f25ede4434c",
+    "src/plugin/PresetBrowser.cpp": "c20495c3e7de0587a6be141fa190582733823c3334919ef5da379e10e8d8ee75",
+    "src/plugin/MtsEspClient.cpp": "c5e7e36945e91e185174de7fcf35e8be486061e79986d5f8c60d1404d889b885",
+    "src/vendor/mts-esp/Client/libMTSClient.cpp": "b854e7c2b657a660431839fb1c413522fa2877296404cee2a36db55d8813c4b3",
+    "src/core/CuratedLibrary.inc": "f89ae54e9386d1e12b5b945b1f60f7e1e4667d79e91c5a63afcc63111e3aecf8",
+    "src/core/FactoryPresets.cpp": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af",
+    "docs/VALIDATOR_DIAGNOSTICS.md": "40fe24e0fd6eaad8df0b83da5a9377166276335b144a013f0e0738e925fc04e6",
+    "docs/analysis/validator-6c560f1.md": "c105df33f6e622149f84c8a73fd311ce31e4f153abc8c5ac20ff581ba988ae34"
+  }
+}

@@ -1,0 +1,354 @@
+{
+  "status": "PASS_ARCHIVE_INTEGRITY_ONLY",
+  "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "workflow_run_id": "45044040694",
+  "preset_library_revision": "2026.11.1",
+  "report": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/actual-run-45044040694-all/report.json",
+  "report_sha256": "530d2839d7da6cd62a42c5717ff923a5ab1bdaf77ffcdeb9ac8b4f4f53517acc",
+  "driver": {
+    "version": "3.0",
+    "path": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/verify-downloaded-artifacts-v3.py",
+    "sha256": "e310f7ef18eb2c1c47f2063b7bf5f6e265e2a2f278c6e19ee0e0f898d0792de6"
+  },
+  "all_four_targets_verified": true,
+  "total_inventory_entries": 114,
+  "total_native_headers": 10,
+  "total_exact_transformed_guide_checks": 12,
+  "all_source_txt_exact_expected_lf": true,
+  "artifacts": [
+    {
+      "target": "macos-x86_64",
+      "status": "PASS",
+      "artifact_id": 14763644216,
+      "outer_zip": "/workspace/scratch/ffe08111d1ce/ci-run-45044040694/cs80-macos-15-intel-install-bundle.zip",
+      "outer_bytes": 16057766,
+      "outer_sha256": "325b42beb55ca861b65e9f8416ec286a4b6061946181210fdb41d041e7d3cf1f",
+      "archive": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/actual-run-45044040694-all/macos-x86_64/cs80-reference-macos-x86_64-6d3cc220edef.tar.gz",
+      "archive_sha256": "f566daeb1a023cd4152e29e5ea3fae94f1dbb1d81a9de500fb86a2d16493012d",
+      "manifest_sha256": "931a1e6a022a8dc2956de36849de3b75141a8799b71a9afe08ab9e2273132cc5",
+      "inventory_entries": 37,
+      "native_headers": 3,
+      "binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+          "bytes": 15547088,
+          "sha256": "eedf73931506be6508c13570b0344d797dc00429a6b34b5ae4a5c8d88965405a",
+          "platform": "macos",
+          "architecture": "x86_64",
+          "role": "plugin",
+          "header_check": "PASS"
+        },
+        {
+          "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+          "bytes": 15110264,
+          "sha256": "5c42f54bf777fee62621e443af91853caca2834e0bfcb4b18858230adbb6d3ff",
+          "platform": "macos",
+          "architecture": "x86_64",
+          "role": "plugin",
+          "header_check": "PASS"
+        },
+        {
+          "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+          "bytes": 14954920,
+          "sha256": "9bf552faa1d25f0c3e7cd97de5520c682e352a172e1aa68274e7ab09ac20bc2c",
+          "platform": "macos",
+          "architecture": "x86_64",
+          "role": "standalone",
+          "header_check": "PASS"
+        }
+      ],
+      "source_txt_sha256": "149fdea61908c033045a4604990d6eb93be1d2e92c2078c561f7f6d5bea950f4",
+      "guide_checks": [
+        {
+          "path": "PRESET_GUIDE.md",
+          "source_path": "docs/PRESET_GUIDE.md",
+          "bytes": 17675,
+          "source_bytes": 14109,
+          "sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "source_sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+          "archived_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "expected_packaged_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        },
+        {
+          "path": "INSTALL_AND_QUICKSTART.md",
+          "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+          "bytes": 15885,
+          "source_bytes": 15481,
+          "sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "source_sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+          "archived_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "expected_packaged_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        },
+        {
+          "path": "DISTRIBUTION_STATUS.md",
+          "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+          "bytes": 3707,
+          "source_bytes": 3606,
+          "sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+          "archived_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "expected_packaged_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        }
+      ]
+    },
+    {
+      "target": "macos-arm64",
+      "status": "PASS",
+      "artifact_id": 14763761497,
+      "outer_zip": "/workspace/scratch/ffe08111d1ce/ci-run-45044040694/cs80-macos-15-install-bundle.zip",
+      "outer_bytes": 14900540,
+      "outer_sha256": "662f66e20a8658374b3d4d30102b698234e01bb99e3753a49206a04f99b201a7",
+      "archive": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/actual-run-45044040694-all/macos-arm64/cs80-reference-macos-arm64-6d3cc220edef.tar.gz",
+      "archive_sha256": "ad0212a12ff0623f2d60d77c2dc7fa0c574c47b5beeb99cf037d938a2cae184f",
+      "manifest_sha256": "1b0ae78c220b6143d8d73891e50e9e7614fddde61206548bcc7db4bbbedfb30d",
+      "inventory_entries": 37,
+      "native_headers": 3,
+      "binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+          "bytes": 14601008,
+          "sha256": "31f9579380bcbb0e33b89be1dfed9da941c8cb3dc0234d1f0ef8e99e2e307a5c",
+          "platform": "macos",
+          "architecture": "arm64",
+          "role": "plugin",
+          "header_check": "PASS"
+        },
+        {
+          "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+          "bytes": 14305024,
+          "sha256": "75bbfaef0815e94b5a3b26a9bdabdc3bdb2413602b09b55153e030737bd5450c",
+          "platform": "macos",
+          "architecture": "arm64",
+          "role": "plugin",
+          "header_check": "PASS"
+        },
+        {
+          "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+          "bytes": 14139232,
+          "sha256": "c4619fe9c8df7885e627a4b08590b61e2cf126f6c1a78b3349b95f5c83c4c9bd",
+          "platform": "macos",
+          "architecture": "arm64",
+          "role": "standalone",
+          "header_check": "PASS"
+        }
+      ],
+      "source_txt_sha256": "149fdea61908c033045a4604990d6eb93be1d2e92c2078c561f7f6d5bea950f4",
+      "guide_checks": [
+        {
+          "path": "PRESET_GUIDE.md",
+          "source_path": "docs/PRESET_GUIDE.md",
+          "bytes": 17675,
+          "source_bytes": 14109,
+          "sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "source_sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+          "archived_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "expected_packaged_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        },
+        {
+          "path": "INSTALL_AND_QUICKSTART.md",
+          "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+          "bytes": 15885,
+          "source_bytes": 15481,
+          "sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "source_sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+          "archived_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "expected_packaged_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        },
+        {
+          "path": "DISTRIBUTION_STATUS.md",
+          "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+          "bytes": 3707,
+          "source_bytes": 3606,
+          "sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+          "archived_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "expected_packaged_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        }
+      ]
+    },
+    {
+      "target": "linux-x86_64",
+      "status": "PASS",
+      "artifact_id": 14768807632,
+      "outer_zip": "/workspace/scratch/ffe08111d1ce/ci-run-45044040694/cs80-linux-install-bundle.zip",
+      "outer_bytes": 13225022,
+      "outer_sha256": "4295d202bacb20ab41e7a776290dac51cf4a7458abc66d185a86bc351efd4d30",
+      "archive": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/actual-run-45044040694-all/linux-x86_64/cs80-reference-linux-x86_64-6d3cc220edef.tar.gz",
+      "archive_sha256": "e1b8531a04159fd9d597348fccb110ea001fb6055e70e77c6b57b177b6871076",
+      "manifest_sha256": "3bd11a9938d7a3565ca3fba5f32048b185525010817f26172966a74fbd4eb728",
+      "inventory_entries": 20,
+      "native_headers": 2,
+      "binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+          "bytes": 17389016,
+          "sha256": "270d91d746d7bc4496c0097755b997f0ba102728c3d17f7050225f1392250265",
+          "platform": "linux",
+          "architecture": "x86_64",
+          "role": "plugin",
+          "header_check": "PASS"
+        },
+        {
+          "path": "Standalone/CS-80 Reference",
+          "bytes": 16730448,
+          "sha256": "a48b7b588db798ad6bfc64ce282ae6b16b1e46169e40fea592d9294cc901932f",
+          "platform": "linux",
+          "architecture": "x86_64",
+          "role": "standalone",
+          "header_check": "PASS"
+        }
+      ],
+      "source_txt_sha256": "149fdea61908c033045a4604990d6eb93be1d2e92c2078c561f7f6d5bea950f4",
+      "guide_checks": [
+        {
+          "path": "PRESET_GUIDE.md",
+          "source_path": "docs/PRESET_GUIDE.md",
+          "bytes": 17675,
+          "source_bytes": 14109,
+          "sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "source_sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+          "archived_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "expected_packaged_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        },
+        {
+          "path": "INSTALL_AND_QUICKSTART.md",
+          "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+          "bytes": 15885,
+          "source_bytes": 15481,
+          "sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "source_sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+          "archived_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "expected_packaged_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        },
+        {
+          "path": "DISTRIBUTION_STATUS.md",
+          "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+          "bytes": 3707,
+          "source_bytes": 3606,
+          "sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+          "archived_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "expected_packaged_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        }
+      ]
+    },
+    {
+      "target": "windows-x86_64",
+      "status": "PASS",
+      "artifact_id": 14763872941,
+      "outer_zip": "/workspace/scratch/ffe08111d1ce/ci-run-45044040694/cs80-windows-install-bundle.zip",
+      "outer_bytes": 6261285,
+      "outer_sha256": "aa472ff6516371482b7e73f76dc2fbc58d15b52aa8eb86c91f62e091dac06ec8",
+      "archive": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/actual-run-45044040694-all/windows-x86_64/cs80-reference-windows-x86_64-6d3cc220edef.zip",
+      "archive_sha256": "84e16905a24dfff25bfdc71b816ec5f81c49bbd018d7b15ecfe7b2b22aeb88b5",
+      "manifest_sha256": "1d0ee86dd358ab3f7e1af4bcdef9f9c378f53eef5a42c416ef3df0d9d2b3b3d2",
+      "inventory_entries": 20,
+      "native_headers": 2,
+      "binary_headers": [
+        {
+          "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+          "bytes": 7258624,
+          "sha256": "1794245c4d57129e4b31464a635d0814239a8d584b128089574e5a01a674996c",
+          "platform": "windows",
+          "architecture": "x86_64",
+          "role": "plugin",
+          "header_check": "PASS"
+        },
+        {
+          "path": "Standalone/CS-80 Reference.exe",
+          "bytes": 7460352,
+          "sha256": "d504ad607e3d4fc664976891f72d37f743ce4430fc5e1cc91f1b2838ba2fad06",
+          "platform": "windows",
+          "architecture": "x86_64",
+          "role": "standalone",
+          "header_check": "PASS"
+        }
+      ],
+      "source_txt_sha256": "149fdea61908c033045a4604990d6eb93be1d2e92c2078c561f7f6d5bea950f4",
+      "guide_checks": [
+        {
+          "path": "PRESET_GUIDE.md",
+          "source_path": "docs/PRESET_GUIDE.md",
+          "bytes": 17675,
+          "source_bytes": 14109,
+          "sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "source_sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+          "archived_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "expected_packaged_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        },
+        {
+          "path": "INSTALL_AND_QUICKSTART.md",
+          "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+          "bytes": 15885,
+          "source_bytes": 15481,
+          "sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "source_sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+          "archived_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "expected_packaged_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        },
+        {
+          "path": "DISTRIBUTION_STATUS.md",
+          "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+          "bytes": 3707,
+          "source_bytes": 3606,
+          "sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+          "archived_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "expected_packaged_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+          "exact_source_bytes": false,
+          "exact_source_bound_packaged_bytes": true,
+          "source_transform": "source-commit packaged_markdown with pinned source and bundled destinations",
+          "packaged_newline_policy": "LF on all platforms via universal-newline text read; no archive normalization"
+        }
+      ]
+    }
+  ],
+  "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+  "external_runtime_status_note": "Parent reports Linux validator job 137324977642 failed GUI after SUCCESS/SIGSEGV, seed 0x4369262; this aggregate does not inspect or override that runtime result. Release qualification remains separately gated.",
+  "retention": "All original outer ZIPs, previous reports and current aggregate inner archives retained. Temporary non-executable header copies automatically removed by the unchanged driver. No other cleanup performed.",
+  "free_bytes_after_from_invocation": 66084864
+}

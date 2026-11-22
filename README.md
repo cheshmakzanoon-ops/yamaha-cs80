@@ -34,7 +34,7 @@ failure above.** No GitHub sign-in is required for these links.
 | Windows x64 | VST3, Standalone | [Windows candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) |
 | macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) |
 | macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) |
-| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
+| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux experimental ZIP — GUI validation failed](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
 
 Binary source:
 [`6d3cc220`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c) ·
@@ -42,6 +42,9 @@ Binary source:
 [Download hashes and public GET evidence](docs/preset-evidence/2026.11.1/final-ci/public-candidates/summary.json) ·
 [Four-archive installation checks](docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json) ·
 [Linux validator failure](docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json)
+
+[Consolidated qualification](docs/preset-evidence/2026.11.1/ci/release-qualification.json) ·
+[Acceptance of the reviewed downloads](docs/preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md)
 
 **Hear the revised factory bank:** [24 unnormalized WAV excerpts](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip)
 from the same source, including every refined program: **117 seconds** of

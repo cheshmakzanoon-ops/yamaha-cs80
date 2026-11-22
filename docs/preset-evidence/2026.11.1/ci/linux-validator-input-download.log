@@ -1,0 +1,22 @@
+2026-11-22T19:23:23.9426064Z ##[group]Run actions/download-artifact@v5
+2026-11-22T19:23:23.9426652Z with:
+2026-11-22T19:23:23.9426856Z   name: cs80-linux-vst3
+2026-11-22T19:23:23.9427078Z   path: vst3
+2026-11-22T19:23:23.9427286Z   merge-multiple: false
+2026-11-22T19:23:23.9427543Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-22T19:23:23.9427822Z   run-id: 45044040694
+2026-11-22T19:23:23.9428023Z env:
+2026-11-22T19:23:23.9428217Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-22T19:23:23.9428453Z ##[endgroup]
+2026-11-22T19:23:24.1061792Z Downloading single artifact
+2026-11-22T19:23:24.1253219Z (node:2337) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-22T19:23:24.4140254Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-22T19:23:24.4160694Z Preparing to download the following artifacts:
+2026-11-22T19:23:24.4162152Z - cs80-linux-vst3 (ID: 14768852300, Size: 6892184, Expected Digest: sha256:b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698)
+2026-11-22T19:23:24.6588565Z Redirecting to blob download url: https://productionresultssa1.blob.core.windows.net/actions-results/5db499c8-1c73-8903-b1b0-ca69c02de5db/workflow-job-run-bfc696cb-9dd8-5a74-8321-4ba2fe4010b2/artifacts/c73fa92e22a2b569bad7ba7874d9fe4c69f41adee58fec8c93490cd26f2eed8a.zip
+2026-11-22T19:23:24.6591584Z Starting download of artifact to: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3
+2026-11-22T19:23:24.9832923Z (node:2337) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-22T19:23:25.7811070Z SHA256 digest of downloaded artifact is b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698
+2026-11-22T19:23:25.7812166Z Artifact download completed successfully.
+2026-11-22T19:23:25.7812622Z Total of 1 artifact(s) downloaded
+2026-11-22T19:23:25.7818019Z Download artifact has finished successfully

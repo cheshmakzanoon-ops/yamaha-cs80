@@ -31,7 +31,7 @@ the sound bank, packaging code and required validator commands were unchanged.
 | Windows x64 VST3 / Standalone | **Native/platform candidate passed:** 219 of 221 registered CTest entries passed, zero failed, two skipped; both strictness-10 VST3 gates passed. [ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) · [Native record](preset-evidence/2026.11.1/ci/native-windows-x86_64.json) |
 | macOS Apple Silicon VST3 / AU / Standalone | **Native/platform candidate passed:** 241 of 243 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) · [Native record](preset-evidence/2026.11.1/ci/native-macos-arm64.json) |
 | macOS Intel VST3 / AU / Standalone | **Native/platform candidate passed:** 241 of 243 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) · [Native record](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) |
-| Linux x86-64 VST3 / Standalone | **Native/archive passed; GUI validator failed:** 578 of 579 CTest entries passed, one SKIP_RETURN_CODE=77, zero failed; native CTest took 9,492.20 seconds. [Candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) · [Gate and exit record](preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json) |
+| Linux x86-64 VST3 / Standalone | **Native/archive passed; GUI validator failed:** 578 of 579 CTest entries passed, one SKIP_RETURN_CODE=77, zero failed; native CTest took 9,492.20 seconds. [Experimental ZIP — GUI validation failed](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) · [Gate and exit record](preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json) |
 | Four installation archives | **Archive/installation checks passed:** complete inventories, native formats and architectures, executable/bundle structure, source identity, guides and notices. This does not qualify the failed full release. [Record](preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json) |
 | Actual 24-excerpt CI audition | **Artifact passed:** 117 seconds / 5,616,000 stereo frames at 48 kHz; all 24 parameter digests and 32 hashes verified; no nonfinite or full-scale samples. [ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip) · [Record](preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json) |
 | Five public candidate downloads | **Byte checks passed:** full unauthenticated GETs matched fresh API sizes/digests and cached artifact bytes. They remain candidates from a failed build. [Record](preset-evidence/2026.11.1/final-ci/public-candidates/summary.json) |
@@ -56,6 +56,10 @@ original failed invocation. No original crash core or stack was available.
 The evidence does not establish the crash's ownership or root cause, and no
 repair is claimed. [Original exits and diagnostic evidence](preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json)
 
+A separate [teardown source audit](preset-evidence/2026.11.1/ci/teardown-source-audit.md)
+preserves the production-source comparison and lifetime review; it establishes
+neither crash ownership nor a repair.
+
 A separate upstream pluginval 2.0.0-beta3 comparison passed its three recorded
 lanes on the same plug-in artifact. Its validator, test inventory and seeds
 differ from the required stable invocation. Those passes add bounded
@@ -79,6 +83,9 @@ from this run's GUI failure; no common cause or fix is inferred.
 [Additional native and performance evidence](preset-evidence/2026.11.1/INTEGRATION.md) ·
 [Evidence provenance](preset-evidence/2026.11.1/provenance.json) ·
 [Current 60-agent assignment review](TEAM_REVIEW_2026_11_1.md)
+
+[Consolidated qualification](preset-evidence/2026.11.1/ci/release-qualification.json) ·
+[Acceptance of the reviewed snapshots](preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md)
 
 ## What changed and why
 

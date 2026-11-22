@@ -1,0 +1,281 @@
+{
+  "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "ctest": {
+    "root_tag": "testsuite",
+    "root_attributes": {
+      "name": "(empty)",
+      "tests": "579",
+      "failures": "0",
+      "disabled": "0",
+      "skipped": "1",
+      "hostname": "",
+      "time": "9492",
+      "timestamp": "2026-11-22T16:43:01"
+    },
+    "registered": 579,
+    "passed": 578,
+    "failed": 0,
+    "skipped": 1,
+    "disabled": 0,
+    "failures": [],
+    "skips": [
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "classname": "cs80_stereo_pra_exact_tests",
+        "time": "0.00103264",
+        "status": "notrun",
+        "outcome": "skipped",
+        "skipped": {
+          "attributes": {
+            "message": "SKIP_RETURN_CODE=77"
+          },
+          "text": null
+        }
+      }
+    ]
+  },
+  "targets": {
+    "cs80_library_audit_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "library audit passed: 301 curated + 222 legacy programs"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_library_audit_tests.log"
+    },
+    "cs80_preset_voicing_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset voicing regressions: 136/136 checks passed; 45.1 seconds generated."
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_preset_voicing_tests.log"
+    },
+    "cs80_preset_character_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset character regressions: 128/128 checks passed; 31.4 seconds generated."
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_preset_character_tests.log"
+    },
+    "cs80_preset_capture_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 9 tests in 1.620s",
+        "OK"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_preset_capture_tests.log"
+    },
+    "cs80_preset_revert_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset opening sound REVERT: 1387 checks, 0 failures"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_preset_revert_tests.log"
+    },
+    "cs80_modern_recall_host_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Modern/session/preset/A-B recall: 2355 checks, 0 failures"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_modern_recall_host_tests.log"
+    },
+    "cs80_preset_file_recall_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "User-preset file/recall host: 2784 checks, 0 failures"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_preset_file_recall_tests.log"
+    },
+    "cs80_preset_identity_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset loaded identity: 81 checks, 0 failures"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_preset_identity_tests.log"
+    },
+    "cs80_preset_refresh_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset catalogue refresh: 193 checks, 0 failures"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_preset_refresh_tests.log"
+    },
+    "cs80_ui_smoke": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Expression persistence RMS: restored=0.0055870672 expected=0.00532606404 full=0.0177500081 relative_error=0.0490048859",
+        "golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+        "golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+        "UI SMOKE TEST PASSED"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_ui_smoke.log"
+    },
+    "cs80_panel_golden_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.73 (limit 8.0)",
+        "golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+        "Panel golden tests: 4 checks, 0 failures"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_panel_golden_tests.log"
+    },
+    "cs80_controller_handoff_host_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Controller handoff: 376 checks, 0 failures"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_controller_handoff_host_tests.log"
+    },
+    "cs80_program_extension_recall_host_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Program extension recall: 158 checks, 0 failures"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_program_extension_recall_host_tests.log"
+    },
+    "cs80_pluginval_macos_download_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 22 tests in 0.023s",
+        "OK"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_pluginval_macos_download_tests.log"
+    },
+    "cs80_pluginval_windows_download_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 15 tests in 0.023s",
+        "OK"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_pluginval_windows_download_tests.log"
+    },
+    "cs80_ci_juce_provenance_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 11 tests in 0.295s",
+        "OK"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_ci_juce_provenance_tests.log"
+    },
+    "cs80_ci_bundle_verification_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 28 tests in 0.173s",
+        "OK"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_ci_bundle_verification_tests.log"
+    },
+    "cs80_packaging_notice_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 7 tests in 1.203s",
+        "OK"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_packaging_notice_tests.log"
+    },
+    "cs80_package_binary_identity_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 13 tests in 0.123s",
+        "OK (skipped=1)"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_package_binary_identity_tests.log"
+    },
+    "cs80_windows_installer_preflight_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 12 tests in 0.848s",
+        "OK (skipped=2)"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_windows_installer_preflight_tests.log"
+    },
+    "cs80_snapshot_cli_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Snapshot CLI admission: 8 invalid invocations rejected before UI execution"
+      ],
+      "full_output_file": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/targeted-native-output/cs80_snapshot_cli_tests.log"
+    }
+  },
+  "recall": {
+    "cs80_preset_revert_tests": {
+      "checks": 1387,
+      "failures": 0
+    },
+    "cs80_modern_recall_host_tests": {
+      "checks": 2355,
+      "failures": 0
+    },
+    "cs80_preset_file_recall_tests": {
+      "checks": 2784,
+      "failures": 0
+    },
+    "cs80_preset_identity_tests": {
+      "checks": 81,
+      "failures": 0
+    },
+    "cs80_preset_refresh_tests": {
+      "checks": 193,
+      "failures": 0
+    }
+  },
+  "recall_total": 6800,
+  "recall_failures": 0,
+  "internal_unittest_skips": {
+    "total": 3,
+    "suites": [
+      {
+        "test": "cs80_package_binary_identity_tests",
+        "skips": 1,
+        "reason_lines": [
+          "OK (skipped=1)"
+        ]
+      },
+      {
+        "test": "cs80_windows_installer_preflight_tests",
+        "skips": 2,
+        "reason_lines": [
+          "OK (skipped=2)"
+        ]
+      }
+    ]
+  },
+  "juce_provenance": {
+    "checked_at": "2026-11-22T16:30:54Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "workflow_run": "45044040694",
+    "configured_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/home/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  }
+}

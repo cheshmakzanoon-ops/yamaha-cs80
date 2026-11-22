@@ -1,0 +1,608 @@
+{
+  "comparison_only": true,
+  "stable_gate_replacement": false,
+  "run_id": 45060638632,
+  "run_attempt": 1,
+  "run_conclusion": "success",
+  "workflow_source_sha": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "source_run_id": 45044040694,
+  "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "source_stable_conclusion": "failure",
+  "current_stable_failed_seed": "0x4369262",
+  "current_stable_failed_seed_replayed": false,
+  "lanes": [
+    {
+      "lane": "gui-current-regression",
+      "job_id": 137325542552,
+      "seed": "0x3ca4063",
+      "skip_gui_tests": false,
+      "process_exit": 0,
+      "logging_exit": 0,
+      "explicit_success": true,
+      "strictness": 10,
+      "tests": 31,
+      "passed": 31,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "repeats": 1,
+      "validation_retries": 0,
+      "junit_root_attributes": {
+        "name": "pluginval",
+        "tests": "31",
+        "failures": "0",
+        "errors": "0",
+        "time": "19.014"
+      },
+      "provenance": {
+        "schema_version": 1,
+        "scope": "separate official prerelease comparison; not a stable-gate replacement",
+        "repository": "cheshmakzanoon-ops/yamaha-cs80",
+        "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+        "source_run_id": 45044040694,
+        "source_run_attempt": 1,
+        "source_run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+        "source_run_conclusion": "failure",
+        "source_workflow_id": 399616500,
+        "source_workflow_path": ".github/workflows/build.yml",
+        "source_artifact": {
+          "id": 14768852300,
+          "name": "cs80-linux-vst3",
+          "size_bytes": 6892184,
+          "digest": "sha256:b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698",
+          "created_at": "2026-11-22T19:21:37Z",
+          "updated_at": "2026-11-22T19:21:37Z"
+        },
+        "comparison_run_id": 45060638632,
+        "comparison_run_attempt": "1",
+        "comparison_workflow_sha": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+        "validator": {
+          "repository": "Tracktion/pluginval",
+          "tag": "v2.0.0-beta3",
+          "commit": "37d6a37bc752606c524f7f3febffc73e0945a740",
+          "asset": "pluginval_Linux.zip",
+          "asset_sha256": "2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f",
+          "asset_url": "https://github.com/Tracktion/pluginval/releases/download/v2.0.0-beta3/pluginval_Linux.zip",
+          "juce_tag": "9.0.3",
+          "juce_commit": "be29c81492b6151c8ea8d14c840e1311963b3a83",
+          "source_modifications": false
+        },
+        "lane": "gui-current-regression",
+        "seed": "0x3ca4063",
+        "strictness": 10,
+        "repeats": 1,
+        "skip_gui_tests": false,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "block_sizes": [
+          64,
+          128,
+          256,
+          512,
+          1024
+        ],
+        "test_timeout_ms": 120000,
+        "process_timeout_seconds": 600,
+        "validation_retries": 0
+      },
+      "validator_version": "pluginval - 2.0.0",
+      "validator_binary_sha256": "79612f9dd1a93f24920a7244a46c50bc7ff1bdf8174c013acee19032f5047f24",
+      "plugin_file_sha256": [
+        "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4  vst3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "270d91d746d7bc4496c0097755b997f0ba102728c3d17f7050225f1392250265  vst3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so"
+      ],
+      "evidence_folder": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/comparison-run-45060638632/attempt-1/upstream-beta3-gui-current-regression"
+    },
+    {
+      "lane": "gui-inclusive",
+      "job_id": 137325542836,
+      "seed": "0x63421ca",
+      "skip_gui_tests": false,
+      "process_exit": 0,
+      "logging_exit": 0,
+      "explicit_success": true,
+      "strictness": 10,
+      "tests": 31,
+      "passed": 31,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "repeats": 1,
+      "validation_retries": 0,
+      "junit_root_attributes": {
+        "name": "pluginval",
+        "tests": "31",
+        "failures": "0",
+        "errors": "0",
+        "time": "22.624"
+      },
+      "provenance": {
+        "schema_version": 1,
+        "scope": "separate official prerelease comparison; not a stable-gate replacement",
+        "repository": "cheshmakzanoon-ops/yamaha-cs80",
+        "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+        "source_run_id": 45044040694,
+        "source_run_attempt": 1,
+        "source_run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+        "source_run_conclusion": "failure",
+        "source_workflow_id": 399616500,
+        "source_workflow_path": ".github/workflows/build.yml",
+        "source_artifact": {
+          "id": 14768852300,
+          "name": "cs80-linux-vst3",
+          "size_bytes": 6892184,
+          "digest": "sha256:b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698",
+          "created_at": "2026-11-22T19:21:37Z",
+          "updated_at": "2026-11-22T19:21:37Z"
+        },
+        "comparison_run_id": 45060638632,
+        "comparison_run_attempt": "1",
+        "comparison_workflow_sha": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+        "validator": {
+          "repository": "Tracktion/pluginval",
+          "tag": "v2.0.0-beta3",
+          "commit": "37d6a37bc752606c524f7f3febffc73e0945a740",
+          "asset": "pluginval_Linux.zip",
+          "asset_sha256": "2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f",
+          "asset_url": "https://github.com/Tracktion/pluginval/releases/download/v2.0.0-beta3/pluginval_Linux.zip",
+          "juce_tag": "9.0.3",
+          "juce_commit": "be29c81492b6151c8ea8d14c840e1311963b3a83",
+          "source_modifications": false
+        },
+        "lane": "gui-inclusive",
+        "seed": "0x63421ca",
+        "strictness": 10,
+        "repeats": 1,
+        "skip_gui_tests": false,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "block_sizes": [
+          64,
+          128,
+          256,
+          512,
+          1024
+        ],
+        "test_timeout_ms": 120000,
+        "process_timeout_seconds": 600,
+        "validation_retries": 0
+      },
+      "validator_version": "pluginval - 2.0.0",
+      "validator_binary_sha256": "79612f9dd1a93f24920a7244a46c50bc7ff1bdf8174c013acee19032f5047f24",
+      "plugin_file_sha256": [
+        "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4  vst3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "270d91d746d7bc4496c0097755b997f0ba102728c3d17f7050225f1392250265  vst3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so"
+      ],
+      "evidence_folder": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/comparison-run-45060638632/attempt-1/upstream-beta3-gui-inclusive"
+    },
+    {
+      "lane": "headless-subset",
+      "job_id": 137325542917,
+      "seed": "0x4f31605",
+      "skip_gui_tests": true,
+      "process_exit": 0,
+      "logging_exit": 0,
+      "explicit_success": true,
+      "strictness": 10,
+      "tests": 25,
+      "passed": 25,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "repeats": 1,
+      "validation_retries": 0,
+      "junit_root_attributes": {
+        "name": "pluginval",
+        "tests": "25",
+        "failures": "0",
+        "errors": "0",
+        "time": "10.045"
+      },
+      "provenance": {
+        "schema_version": 1,
+        "scope": "separate official prerelease comparison; not a stable-gate replacement",
+        "repository": "cheshmakzanoon-ops/yamaha-cs80",
+        "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+        "source_run_id": 45044040694,
+        "source_run_attempt": 1,
+        "source_run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+        "source_run_conclusion": "failure",
+        "source_workflow_id": 399616500,
+        "source_workflow_path": ".github/workflows/build.yml",
+        "source_artifact": {
+          "id": 14768852300,
+          "name": "cs80-linux-vst3",
+          "size_bytes": 6892184,
+          "digest": "sha256:b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698",
+          "created_at": "2026-11-22T19:21:37Z",
+          "updated_at": "2026-11-22T19:21:37Z"
+        },
+        "comparison_run_id": 45060638632,
+        "comparison_run_attempt": "1",
+        "comparison_workflow_sha": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+        "validator": {
+          "repository": "Tracktion/pluginval",
+          "tag": "v2.0.0-beta3",
+          "commit": "37d6a37bc752606c524f7f3febffc73e0945a740",
+          "asset": "pluginval_Linux.zip",
+          "asset_sha256": "2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f",
+          "asset_url": "https://github.com/Tracktion/pluginval/releases/download/v2.0.0-beta3/pluginval_Linux.zip",
+          "juce_tag": "9.0.3",
+          "juce_commit": "be29c81492b6151c8ea8d14c840e1311963b3a83",
+          "source_modifications": false
+        },
+        "lane": "headless-subset",
+        "seed": "0x4f31605",
+        "strictness": 10,
+        "repeats": 1,
+        "skip_gui_tests": true,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "block_sizes": [
+          64,
+          128,
+          256,
+          512,
+          1024
+        ],
+        "test_timeout_ms": 120000,
+        "process_timeout_seconds": 600,
+        "validation_retries": 0
+      },
+      "validator_version": "pluginval - 2.0.0",
+      "validator_binary_sha256": "79612f9dd1a93f24920a7244a46c50bc7ff1bdf8174c013acee19032f5047f24",
+      "plugin_file_sha256": [
+        "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4  vst3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "270d91d746d7bc4496c0097755b997f0ba102728c3d17f7050225f1392250265  vst3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so"
+      ],
+      "evidence_folder": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/comparison-run-45060638632/attempt-1/upstream-beta3-headless-subset"
+    }
+  ],
+  "artifact_verification": [
+    {
+      "file": "upstream-beta3-gui-current-regression-source-45044040694-attempt-1.zip",
+      "artifact_id": 14769337392,
+      "expected_size": 21872,
+      "expected_sha256": "63074e6462351ccc15f630396152a3d99b0a26567340401ad3b1e9442a8d13d5",
+      "folder": "upstream-beta3-gui-current-regression",
+      "workflow_source": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+      "comparison_run_id": 45060638632,
+      "actual_size": 21872,
+      "actual_sha256": "63074e6462351ccc15f630396152a3d99b0a26567340401ad3b1e9442a8d13d5",
+      "verified": true,
+      "zip_crc_verified": true,
+      "members": [
+        {
+          "name": "archive-verification.txt",
+          "size": 18,
+          "sha256": "41f52e6e0a03d3f414b8788f00f9a198d3592e4f9d272ea0844beabf49868e4f"
+        },
+        {
+          "name": "command.txt",
+          "size": 627,
+          "sha256": "8ac8064c1867ee3434590d6e1abf07a3bff4de7315718e655a1fd00b37c2b782"
+        },
+        {
+          "name": "console.log",
+          "size": 10253,
+          "sha256": "ea8cc65dceae8a97696dc459f1ca02a1eee1d2a7c299b83fc668afc2dde90cc7"
+        },
+        {
+          "name": "archive-contents.txt",
+          "size": 209,
+          "sha256": "9b02223ae1f3c8876b0d9331a3219f01a339c72b5fa7417abc1ab437f2b38379"
+        },
+        {
+          "name": "finished-at.txt",
+          "size": 26,
+          "sha256": "42715a75cc38945e5ababd49e8b674a6f37eedb111a2f98dd721d550b1171454"
+        },
+        {
+          "name": "os-release.txt",
+          "size": 400,
+          "sha256": "87458b3b1f1ca0e5c693ade771de7007c3783bdc692fa6b39eb6414bf2af2763"
+        },
+        {
+          "name": "logging-exit-code.txt",
+          "size": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "plugin-files-sha256.txt",
+          "size": 260,
+          "sha256": "5df2d9ce8acd8e8e13b528294491ec02ee36b90774a485417795b3fce61fd2c4"
+        },
+        {
+          "name": "process-exit-code.txt",
+          "size": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "provenance.json",
+          "size": 1772,
+          "sha256": "ad8729bd1f3971cc3120e61e6d7d6f1fc4a72968e6fb6c67c81e6cf7aca2140c"
+        },
+        {
+          "name": "results.json",
+          "size": 4495,
+          "sha256": "db0646d4d3b0c86bfd7cf42d59d7c52a59fe25c4a4fbc730aa942f3af43d24ce"
+        },
+        {
+          "name": "results.xml",
+          "size": 3781,
+          "sha256": "47fa554c918c58f19cfb4f573c4f33757e48cd0ffbafe02bb2e99a6aef5cc7aa"
+        },
+        {
+          "name": "runtime-packages.txt",
+          "size": 40235,
+          "sha256": "358f8f3a2e2304b296f0b84204a80ddc801d31b4830d9173547715f42fead733"
+        },
+        {
+          "name": "started-at.txt",
+          "size": 26,
+          "sha256": "147428cb0eee1d7ba3b41625742388cf227124a1f9a37d5d9d905d2e899ed367"
+        },
+        {
+          "name": "strictness-10-inventory.txt",
+          "size": 3558,
+          "sha256": "b542ce7a0bf8bd9c8403b02be1444ea54935901490c005c2e6225a0e1f6e3fc8"
+        },
+        {
+          "name": "validator-binary-sha256.txt",
+          "size": 95,
+          "sha256": "b66e8ae91ab6b680c3f4539090406ef801333c64a1541abaf1eaa19342e53b1e"
+        },
+        {
+          "name": "validator",
+          "size": 10165,
+          "sha256": "b34a017e57f886427a6932b9a2d026931cb219f7fb9f771d632f9b97425c5c25"
+        },
+        {
+          "name": "validator-libraries.txt",
+          "size": 1006,
+          "sha256": "c834f94bd9bf6baea9370e61776da119315ab75c5178c801ada23b0c1db71410"
+        },
+        {
+          "name": "validator-version.txt",
+          "size": 18,
+          "sha256": "330f2f5ecf019027cbeb8946499c6fc22c9a776ebb485114a72a93a3e35bb372"
+        }
+      ]
+    },
+    {
+      "file": "upstream-beta3-headless-subset-source-45044040694-attempt-1.zip",
+      "artifact_id": 14769098257,
+      "expected_size": 21373,
+      "expected_sha256": "baf15f1cf7a711d339d08a56cab374bc9eb3091326f53742a3ffc710c107c35b",
+      "folder": "upstream-beta3-headless-subset",
+      "workflow_source": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+      "comparison_run_id": 45060638632,
+      "actual_size": 21373,
+      "actual_sha256": "baf15f1cf7a711d339d08a56cab374bc9eb3091326f53742a3ffc710c107c35b",
+      "verified": true,
+      "zip_crc_verified": true,
+      "members": [
+        {
+          "name": "command.txt",
+          "size": 604,
+          "sha256": "3c94659fec02d0ca065e46492b0dfaf328b8c1cf5683ae0465bf327041ea0f4f"
+        },
+        {
+          "name": "archive-contents.txt",
+          "size": 209,
+          "sha256": "9b02223ae1f3c8876b0d9331a3219f01a339c72b5fa7417abc1ab437f2b38379"
+        },
+        {
+          "name": "console.log",
+          "size": 8989,
+          "sha256": "3ff89f7609d9899338c76d8e2de697dc051f53b11e5713b7f0c5b2029e002434"
+        },
+        {
+          "name": "archive-verification.txt",
+          "size": 18,
+          "sha256": "41f52e6e0a03d3f414b8788f00f9a198d3592e4f9d272ea0844beabf49868e4f"
+        },
+        {
+          "name": "finished-at.txt",
+          "size": 26,
+          "sha256": "252e1010861e5fd2d6eda1d21144d9b077407fd6939ca873ebd110a35eafcc29"
+        },
+        {
+          "name": "logging-exit-code.txt",
+          "size": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "os-release.txt",
+          "size": 400,
+          "sha256": "87458b3b1f1ca0e5c693ade771de7007c3783bdc692fa6b39eb6414bf2af2763"
+        },
+        {
+          "name": "plugin-files-sha256.txt",
+          "size": 260,
+          "sha256": "5df2d9ce8acd8e8e13b528294491ec02ee36b90774a485417795b3fce61fd2c4"
+        },
+        {
+          "name": "process-exit-code.txt",
+          "size": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "provenance.json",
+          "size": 1764,
+          "sha256": "06eb670b2102ab4a45f3eae6470a6dd1bf80207a4e17444e101aca1651e460d2"
+        },
+        {
+          "name": "results.json",
+          "size": 3730,
+          "sha256": "cbb5a466eab299a682162e4c9619d2fbd3a4e48707fc299631a8761d52b8ae13"
+        },
+        {
+          "name": "results.xml",
+          "size": 3185,
+          "sha256": "25533f87f9ba0148f93a4db21ce740a4a4573ab7fbb51d24a39448c7d3c5f52a"
+        },
+        {
+          "name": "runtime-packages.txt",
+          "size": 40235,
+          "sha256": "358f8f3a2e2304b296f0b84204a80ddc801d31b4830d9173547715f42fead733"
+        },
+        {
+          "name": "started-at.txt",
+          "size": 26,
+          "sha256": "e58b968d848718b54eea0448d2855fdd0b26313877e9ca23f91abd13c7d16088"
+        },
+        {
+          "name": "strictness-10-inventory.txt",
+          "size": 3558,
+          "sha256": "b542ce7a0bf8bd9c8403b02be1444ea54935901490c005c2e6225a0e1f6e3fc8"
+        },
+        {
+          "name": "validator",
+          "size": 8901,
+          "sha256": "5db0c6eab2e488c256419af2a13f902c0d666dce16149e8e10b7b09c4de48b1c"
+        },
+        {
+          "name": "validator-binary-sha256.txt",
+          "size": 95,
+          "sha256": "b66e8ae91ab6b680c3f4539090406ef801333c64a1541abaf1eaa19342e53b1e"
+        },
+        {
+          "name": "validator-libraries.txt",
+          "size": 1006,
+          "sha256": "b337a36a2901ae03cc7787c197ce7e9521934972e744735df5d0bb2fda7fd13f"
+        },
+        {
+          "name": "validator-version.txt",
+          "size": 18,
+          "sha256": "330f2f5ecf019027cbeb8946499c6fc22c9a776ebb485114a72a93a3e35bb372"
+        }
+      ]
+    },
+    {
+      "file": "upstream-beta3-gui-inclusive-source-45044040694-attempt-1.zip",
+      "artifact_id": 14769073337,
+      "expected_size": 21869,
+      "expected_sha256": "38da6d2229847ebcdf19d729a7df0b0c7b6504a162a66518fa63c887de76a631",
+      "folder": "upstream-beta3-gui-inclusive",
+      "workflow_source": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+      "comparison_run_id": 45060638632,
+      "actual_size": 21869,
+      "actual_sha256": "38da6d2229847ebcdf19d729a7df0b0c7b6504a162a66518fa63c887de76a631",
+      "verified": true,
+      "zip_crc_verified": true,
+      "members": [
+        {
+          "name": "archive-contents.txt",
+          "size": 209,
+          "sha256": "9b02223ae1f3c8876b0d9331a3219f01a339c72b5fa7417abc1ab437f2b38379"
+        },
+        {
+          "name": "command.txt",
+          "size": 627,
+          "sha256": "892ff982b09d90909688c55b78f3c82f579a11bdc209106dc9601e7516dc8032"
+        },
+        {
+          "name": "archive-verification.txt",
+          "size": 18,
+          "sha256": "41f52e6e0a03d3f414b8788f00f9a198d3592e4f9d272ea0844beabf49868e4f"
+        },
+        {
+          "name": "console.log",
+          "size": 10253,
+          "sha256": "2cc128d0948f0ba95d6b8046619db2f4ef8abc2fd60bd84bcbd3217158dfdd37"
+        },
+        {
+          "name": "finished-at.txt",
+          "size": 26,
+          "sha256": "ea02766e7bde37f0a1521275bf7121f62e52016368ffa1459a1c795826e05e6a"
+        },
+        {
+          "name": "os-release.txt",
+          "size": 400,
+          "sha256": "87458b3b1f1ca0e5c693ade771de7007c3783bdc692fa6b39eb6414bf2af2763"
+        },
+        {
+          "name": "logging-exit-code.txt",
+          "size": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "plugin-files-sha256.txt",
+          "size": 260,
+          "sha256": "5df2d9ce8acd8e8e13b528294491ec02ee36b90774a485417795b3fce61fd2c4"
+        },
+        {
+          "name": "process-exit-code.txt",
+          "size": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "provenance.json",
+          "size": 1763,
+          "sha256": "e4db11cf2d9207e0e5448a2fab22c414047a827dd53f9fa2eb7697b9339803b9"
+        },
+        {
+          "name": "results.json",
+          "size": 4498,
+          "sha256": "84dc613ac9915796208124220d76227c878d8a3c89c0c67b2787351d9fb681e9"
+        },
+        {
+          "name": "results.xml",
+          "size": 3781,
+          "sha256": "17360ff7048a82e2e7348e4e47e8b334654fa68e7a67e10243d8e4376fb96607"
+        },
+        {
+          "name": "runtime-packages.txt",
+          "size": 40235,
+          "sha256": "358f8f3a2e2304b296f0b84204a80ddc801d31b4830d9173547715f42fead733"
+        },
+        {
+          "name": "started-at.txt",
+          "size": 26,
+          "sha256": "7ccb2c81261dcdf6e7ae939f4616ae753df000066361803d32c4f739a9933a8f"
+        },
+        {
+          "name": "strictness-10-inventory.txt",
+          "size": 3558,
+          "sha256": "b542ce7a0bf8bd9c8403b02be1444ea54935901490c005c2e6225a0e1f6e3fc8"
+        },
+        {
+          "name": "validator",
+          "size": 10165,
+          "sha256": "68f97c5dcb33166666a0f078f968ce3ff1d2d56496b2278d8461b27a88b1641a"
+        },
+        {
+          "name": "validator-binary-sha256.txt",
+          "size": 95,
+          "sha256": "b66e8ae91ab6b680c3f4539090406ef801333c64a1541abaf1eaa19342e53b1e"
+        },
+        {
+          "name": "validator-version.txt",
+          "size": 18,
+          "sha256": "330f2f5ecf019027cbeb8946499c6fc22c9a776ebb485114a72a93a3e35bb372"
+        },
+        {
+          "name": "validator-libraries.txt",
+          "size": 1006,
+          "sha256": "20ad00a40b0cef26ce570cea770fc4e7c6334007c2ac827b3a7a20ff96858638"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "The comparison uses official v2.0.0-beta3, whose executable reports 2.0.0, not stable 1.0.4.",
+    "The lane named gui-current-regression uses 0x3ca4063; none of these lanes replays this candidate stable failure seed 0x4369262.",
+    "Different validator source/JUCE/test inventory/seeds mean these successes do not fix, exonerate or replace the stable first-attempt failure.",
+    "No workflow was triggered/rerun/mutated and no local plugin invocation was executed by this reviewer."
+  ]
+}

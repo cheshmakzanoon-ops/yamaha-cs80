@@ -1,0 +1,289 @@
+{
+  "reviewed_at_utc": "2026-11-22T19:45:25.782323+00:00",
+  "status": "ACCEPT_DEVELOPMENT_LINKS_WITH_KNOWN_LINUX_FAILURE",
+  "qualified_versioned_release": false,
+  "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "source_tree": "88ee322bf66b380c4227e224821783f2db04bbee",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "overall_build_conclusion": "failure",
+  "scope": "Read-only reconciliation of retained API/native/archive/input/audio/public-GET/publication records and current prose/manifest. No CI execution, archive download or product invocation.",
+  "checks": [
+    {
+      "check": "exact current source/run/tree/attempt/failure",
+      "passed": true
+    },
+    {
+      "check": "development-only status and validator qualification",
+      "passed": true
+    },
+    {
+      "check": "only first-attempt native/validator job records",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 source/native job",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 CTest counts",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 nested skip count",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 source/native job",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 CTest counts",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 nested skip count",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 source/native job",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 CTest counts",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 nested skip count",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 source/native job",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 CTest counts",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 nested skip count",
+      "passed": true
+    },
+    {
+      "check": "CTest aggregate",
+      "passed": true
+    },
+    {
+      "check": "nested skips separately total 24",
+      "passed": true
+    },
+    {
+      "check": "Windows strict validators passed",
+      "passed": true
+    },
+    {
+      "check": "ARM strict validators passed",
+      "passed": true
+    },
+    {
+      "check": "Intel strict validators passed",
+      "passed": true
+    },
+    {
+      "check": "current Linux failure preserved",
+      "passed": true
+    },
+    {
+      "check": "diagnostic nonreproduction not substituted",
+      "passed": true
+    },
+    {
+      "check": "all four source-bound aggregate archives",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 installation API/publicGET/archive identity",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 source docs/header checks",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 installation API/publicGET/archive identity",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 source docs/header checks",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 installation API/publicGET/archive identity",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 source docs/header checks",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 installation API/publicGET/archive identity",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 source docs/header checks",
+      "passed": true
+    },
+    {
+      "check": "114 inventory entries and 10 native headers",
+      "passed": true
+    },
+    {
+      "check": "payload join source/run/status",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 complete validator payload and input binding",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 native payload header/hash join",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 complete validator payload and input binding",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 native payload header/hash join",
+      "passed": true
+    },
+    {
+      "check": "actual audition source/API/public GET",
+      "passed": true
+    },
+    {
+      "check": "actual 24 WAV totals and scope",
+      "passed": true
+    },
+    {
+      "check": "publisher skipped and qualified release blocked",
+      "passed": true
+    },
+    {
+      "check": "historical failure separately retained",
+      "passed": true
+    },
+    {
+      "check": "complete current provenance manifest hashes",
+      "passed": true
+    },
+    {
+      "check": "README.md current links and failure disclosure",
+      "passed": true,
+      "criteria": {
+        "all_four_current_installation_links": true,
+        "current_audition_link": true,
+        "exact_source_link_run_and_attempt": true,
+        "linux_experimental_and_unqualified": true,
+        "first_attempt_post_SUCCESS_SIGSEGV_raw_minus11_wrapper139": true,
+        "diagnostics_not_established_as_fix": true,
+        "publisher_skipped_and_versioned_release_blocked": true,
+        "links_to_detailed_seed_bearing_failure_and_qualification": true
+      },
+      "correction": "The original predicate unnecessarily required the literal failed random seed in every prose document. README contains the material failure and publication disclosures and links the detailed records. No substantive disclosure defect or README change was required."
+    },
+    {
+      "check": "docs/CI_DISTRIBUTION_STATUS.md current links and failure disclosure",
+      "passed": true
+    },
+    {
+      "check": "docs/PRESET_REFINEMENT_2026_11_1.md current links and failure disclosure",
+      "passed": true
+    },
+    {
+      "check": "docs/preset-evidence/2026.11.1/README.md current links and failure disclosure",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "ctest_totals": {
+    "registered": 1286,
+    "passed": 1279,
+    "failed": 0,
+    "formal_skipped": 7
+  },
+  "nested_python_skips": {
+    "windows-x86_64": 11,
+    "macos-arm64": 5,
+    "macos-x86_64": 5,
+    "linux-x86_64": 3
+  },
+  "install_artifact_ids": {
+    "macos-arm64": 14763761497,
+    "windows-x86_64": 14763872941,
+    "macos-x86_64": 14763644216,
+    "linux-x86_64": 14768807632
+  },
+  "input_artifact_ids": {
+    "linux-x86_64": 14768852300,
+    "windows-x86_64": 14763658388
+  },
+  "audition_artifact_id": 14769036590,
+  "manifest_entries_checked": 295,
+  "manifest_mismatches": [],
+  "prose": [
+    {
+      "file": "README.md",
+      "sha256": "81fc7a78ec778a46e9ac7d1f1bf7e1c8f2b1541309070abb66d2a4f02de3a578"
+    },
+    {
+      "file": "docs/CI_DISTRIBUTION_STATUS.md",
+      "sha256": "69ec28e90a7e3db36bd4d138717764433014fe3672355badab215f0936a1f3c9"
+    },
+    {
+      "file": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "sha256": "8dcfd8b700c9968ae2e8414d0c9ca5b97a3685b1285cd9227a2a9ea948f9cfe5"
+    },
+    {
+      "file": "docs/preset-evidence/2026.11.1/README.md",
+      "sha256": "d57b53beb786e69912ace0a84e76add7be47aed960d3377495b7f3f5d27bfbed"
+    }
+  ],
+  "release_qualification_file_sha256": "7dc0ac49254a1d593bfea2b8346c7c88548421db1deb28f4f9a042ca92ce8dca",
+  "limitations": [
+    "This is a consistency review of retained verification results; previous independent archive and WAV verification is not rerun.",
+    "Release/tag absence is the recorded coordinator observation in release-qualification.json; this reviewer did not perform another remote release-list request.",
+    "No claim of a repaired Linux crash, all-platform stable validation pass, versioned release, signing/notarization, physical-instrument equivalence or universal DAW compatibility is accepted."
+  ],
+  "original_reviewed_at_utc": "2026-11-22T19:40:07.806696+00:00",
+  "original_manifest_entries_checked": 293,
+  "manifest_snapshot_note": "The original detailed join review covered 293 entries. Two verbatim completed beta comparison reports were then added. A subsequent read-only pass verified all 295 file sizes and SHA-256 values, with zero mismatches. Qualification JSON and all four prose hashes remained unchanged.",
+  "review_correction": {
+    "preserved_draft": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/final-development-link-review/acceptance.draft-20261122T194007.json",
+    "preserved_draft_sha256": "e2e635c2ac26fe60af8ffbc17b7f321884dff2d698569665794ba122c3373db0",
+    "original_finding": "README.md current links and failure disclosure",
+    "finding_type": "Overly strict review predicate, not a substantive disclosure defect",
+    "exact_cause": "Literal 0x4369262 was required in every prose document. README summarizes the first-attempt SIGSEGV failure and links seed-bearing detailed records. The publisher run ID is also omitted from README, but was not part of the failed predicate.",
+    "correction": "Assess material disclosure and unambiguous detailed evidence links, preserving every underlying source/count/digest/artifact/failure/publication check.",
+    "repository_edits_performed": false,
+    "qualification_record_and_four_prose_hashes_unchanged": true
+  },
+  "historical_2026_11_preserved": "The detailed review checked the separate d0c3c23 original failure record; current 6d GUI failure remains a separate first-attempt failure.",
+  "comparison_scope": {
+    "run_id": 45060638632,
+    "attempt": 1,
+    "workflow_source": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+    "input_source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "input_artifact_id": 14768852300,
+    "official_tag": "v2.0.0-beta3",
+    "actual_version_output": "pluginval - 2.0.0",
+    "passed_tests": [
+      31,
+      31,
+      25
+    ],
+    "all_process_and_capture_exits": 0,
+    "replays_current_failed_seed_0x4369262": false,
+    "replaces_stable_failure": false
+  }
+}

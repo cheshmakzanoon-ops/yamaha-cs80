@@ -25,7 +25,7 @@ establish a fix; the original crash core was unavailable.
 | Windows x64 | VST3, Standalone | [Windows candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) |
 | macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) |
 | macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) |
-| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
+| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux experimental ZIP — GUI validation failed](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
 
 Native CTest results are **219 passed / 221 registered** on Windows,
 **241 / 243** on each Mac architecture and **578 / 579** on Linux, with zero
@@ -38,6 +38,11 @@ suite does not reverse the failed dependent Linux GUI gate.
 [Intel Mac native evidence](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) ·
 [Linux gates and original exits](preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json)
 
+The [consolidated qualification](preset-evidence/2026.11.1/ci/release-qualification.json)
+records **1,286 registered CTest entries: 1,279 passed, zero failed and seven
+formal skips**. Its **24 nested Python subtest skips** are separate: 11 Windows,
+five on each Mac and three Linux; they are not additional formal CTest skips.
+
 All four actual install archives passed their bounded inventory, architecture,
 format, executable/bundle, guide and notice checks. All five candidate ZIPs,
 including the audition, were downloaded in full without credentials and matched
@@ -45,6 +50,12 @@ fresh API byte counts/digests and the cached artifacts. **Their byte verificatio
 does not qualify a complete release.**
 [Four-archive installation evidence](preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json) ·
 [Five public GETs, hashes and withheld publisher](preset-evidence/2026.11.1/final-ci/public-candidates/summary.json)
+
+The complementary [V3 archive aggregate](preset-evidence/2026.11.1/ci/final-install-artifacts.json)
+records **114 inventory entries and 10 native headers**. The
+[complete validator payload comparison](preset-evidence/2026.11.1/ci/final-validator-payload-identity.json)
+joins every Linux and Windows VST3 file to the actual validator input artifacts;
+that byte identity does not establish runtime success.
 
 The [24-WAV audition ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip) contains **117 seconds** of
 unnormalized 48 kHz stereo core-engine excerpts, including all twelve refined
@@ -72,6 +83,9 @@ below remain intact; those older binaries do not contain the twelve later
 The [current 60-agent assignment review](TEAM_REVIEW_2026_11_1.md) records this
 task separately from the earlier 2026.11 review. Completing an investigation
 does not turn its failed gate into a pass.
+
+[Recorded download acceptance](preset-evidence/2026.11.1/ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md) ·
+[Teardown source audit](preset-evidence/2026.11.1/ci/teardown-source-audit.md)
 
 ## Pinned verified development downloads — 2026.11
 

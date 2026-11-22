@@ -1,0 +1,85 @@
+{
+  "base_commit": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "incoming_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+  "incoming_payloads_verified": 522,
+  "compact_snapshot_entries": 298,
+  "added_compact_entries": [
+    "ci/final-validator-payload-identity.json",
+    "ci/final-install-artifacts.json",
+    "ci/final-install-summary.json",
+    "ci/final-install-invocation.json",
+    "ci/native-linux-x86_64.json",
+    "ci/final-linux-verification.json",
+    "ci/linux-validator-summary.json",
+    "ci/linux-validator-failure.log",
+    "ci/linux-validator-input-provenance.json",
+    "ci/linux-validator-input-download.log",
+    "ci/linux-pluginval-gui.log",
+    "ci/linux-pluginval-gui-core.log",
+    "ci/linux-pluginval-gui-gdb.log",
+    "ci/linux-pluginval-fault-trace.log",
+    "ci/linux-native-evidence-download.json",
+    "ci/linux-validator-evidence-download.json",
+    "ci/final-audition.json",
+    "ci/audition-public-download.json",
+    "ci/audition-verification-execution.json",
+    "ci/audition-verifier.py",
+    "ci/audition-verifier-fixtures.json",
+    "ci/run-final-api.json",
+    "ci/jobs-final-api.json",
+    "ci/artifacts-final-api.json",
+    "ci/publisher-skipped-api.json",
+    "ci/release-qualification.json",
+    "ci/publication-absence-api.json",
+    "ci/teardown-source-audit.md",
+    "ci/teardown-source-audit.json",
+    "ci/teardown-production-source-diff.patch",
+    "ci/current-upstream-comparison.json",
+    "ci/current-upstream-comparison.md",
+    "ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.json",
+    "ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md",
+    "ci/acceptance/initial-predicate-finding.json"
+  ],
+  "updated_prior_entries": [
+    "ci/download-links.json",
+    "ci/validator-input-downloads.json"
+  ],
+  "prose_overlap": [
+    "README.md"
+  ],
+  "incoming_final_ci_preserved": true,
+  "all_old_measurement_payloads_preserved": true,
+  "retained_stash": "814c1fe452be0dd146d4aacf42ee977ded527ad2",
+  "current_union_entries_before_final_merge_record": 561,
+  "completed_at_utc": "2026-11-22T19:53:58.807823+00:00",
+  "status": "ADDITIVE_MERGE_VERIFIED_NO_RELEASE_QUALIFICATION",
+  "incoming_payload_changes": [
+    "README.md",
+    "ci/download-links.json",
+    "ci/validator-input-downloads.json"
+  ],
+  "incoming_final_ci_files_preserved": 259,
+  "all_prior_measurement_payloads_preserved": true,
+  "four_accepted_prose_snapshots_preserved": true,
+  "final_manifest_payload_count_including_this_record": 562,
+  "compiled_source_tests_cmake_build_workflow_unchanged_from": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "independent_reviews": [
+    {
+      "agent": "/root/w09_artifact_integrity_protocol",
+      "source": "Completed session message after additive four-file prose merge",
+      "outcome": "No substantive incoming/compact discrepancy; all five artifact IDs, sizes/hashes, audio peak/count/duration agree; all incoming content preserved."
+    },
+    {
+      "agent": "/root/w10_audition_workflow_preflight",
+      "source": "Completed read-only session message before final manifest refresh",
+      "outcome": "All259incoming final-ci files byte-identical; historical measurements preserved; four old prose snapshots match prior acceptance; exact install/audio/failure identities agree; only harmless float32 pressure and3.6e-15dB RMS presentation differences."
+    }
+  ],
+  "qualified_versioned_release": false,
+  "linux_crash_repaired": false,
+  "notes": [
+    "The earlier compact46-check/295-payload acceptance remains at its recorded prose snapshot, which is archived under ci/acceptance/reviewed-prose/.",
+    "The incoming final-ci/team ledger and its separately pending59/60reviews are preserved; their completion is not inferred from this compact merge review.",
+    "No publisher rule, runtime behavior or validation result was changed."
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "qualified": false,
+  "version": "1.0.4",
+  "job_id": 137324977642,
+  "job_conclusion": "failure",
+  "gates": {
+    "headless": {
+      "log_file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-headless.log",
+      "core_log_file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-headless-core.log",
+      "seeds": [
+        "0x3e72560"
+      ],
+      "strictness_levels": [
+        "10"
+      ],
+      "success_count": 1,
+      "explicit_failed_markers": 0,
+      "pid": 2851,
+      "wrapper_exit": 0,
+      "raw_returncode": 0,
+      "termination_kind": "exit",
+      "signal_name": null,
+      "native_step": {
+        "name": "Validate VST3 headless",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-22T19:23:43Z",
+        "completed_at": "2026-11-22T19:23:47Z"
+      },
+      "core_available": false,
+      "original_process_count": 1
+    },
+    "gui": {
+      "log_file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui.log",
+      "core_log_file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-core.log",
+      "seeds": [
+        "0x4369262"
+      ],
+      "strictness_levels": [
+        "10"
+      ],
+      "success_count": 1,
+      "explicit_failed_markers": 0,
+      "pid": 2883,
+      "wrapper_exit": 139,
+      "raw_returncode": -11,
+      "termination_kind": "signal",
+      "signal_name": "SIGSEGV",
+      "native_step": {
+        "name": "Validate VST3 GUI under Xvfb",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 8,
+        "started_at": "2026-11-22T19:23:47Z",
+        "completed_at": "2026-11-22T19:24:06Z"
+      },
+      "core_available": false,
+      "original_process_count": 1
+    },
+    "gui-seed-regression": {
+      "log_file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-seed-regression.log",
+      "core_log_file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-seed-regression-core.log",
+      "seeds": [
+        "0x2da72db"
+      ],
+      "strictness_levels": [
+        "10"
+      ],
+      "success_count": 1,
+      "explicit_failed_markers": 0,
+      "pid": 2936,
+      "wrapper_exit": 0,
+      "raw_returncode": 0,
+      "termination_kind": "exit",
+      "signal_name": null,
+      "native_step": {
+        "name": "Validate GUI state regression seed 0x2da72db",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-22T19:24:06Z",
+        "completed_at": "2026-11-22T19:24:22Z"
+      },
+      "core_available": false,
+      "original_process_count": 1
+    }
+  },
+  "failed_gate": "gui",
+  "failure": "GUI/Xvfb strictness-10 seed 0x4369262 printed SUCCESS then terminated SIGSEGV; raw -11, wrapper 139.",
+  "automatic_post_test_retry_observed": false,
+  "diagnostics": {
+    "gdb": {
+      "file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-gdb.log",
+      "seeds": [
+        "0x4369262"
+      ],
+      "success_count": 1,
+      "diagnostic_exit": 0,
+      "capture_exit": 0,
+      "reproduced_original_crash": false,
+      "does_not_replace_original_gate": true
+    },
+    "fault_trace": {
+      "file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-trace.log",
+      "seeds": [
+        "0x4369262"
+      ],
+      "success_count": 1,
+      "diagnostic_exit": 0,
+      "capture_exit": 0,
+      "reproduced_original_crash": false,
+      "does_not_replace_original_gate": true
+    },
+    "original_stack_available": false,
+    "original_elf_core_available": false,
+    "core_limitation": "Existing kernel pipe collector; local ELF core capture unavailable. Original exit status remains recorded.",
+    "fault_trace_content": [
+      "diagnostic handler installed; later replacement is possible",
+      "diagnostic handler installed; later replacement is possible",
+      "diagnostic handler installed; later replacement is possible"
+    ],
+    "interpretation": "Both workflow-configured instrumented replays exited normally. Nonreproduction is inconclusive; no failing instruction/thread or plugin-versus-host fault ownership was established."
+  },
+  "input": {
+    "validator_job_id": 137324977642,
+    "run_id": 45044040694,
+    "run_attempt": 1,
+    "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "artifact_id": 14768852300,
+    "artifact_name": "cs80-linux-vst3",
+    "api_size": 6892184,
+    "api_digest": "sha256:b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698",
+    "logged_expected_digest": "b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698",
+    "logged_download_digest": "b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698",
+    "run_artifact_digest_match": true,
+    "raw_excerpt_file": "/workspace/scratch/ffe08111d1ce/review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/validator-input-download.log",
+    "artifact_bytes_not_downloaded_by_this_agent": true,
+    "parent_owns_install_inventory_comparison": true
+  },
+  "failed_gui_report_bytes": 0
+}

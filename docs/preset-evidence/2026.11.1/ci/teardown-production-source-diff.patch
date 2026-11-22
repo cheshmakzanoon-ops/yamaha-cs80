@@ -1,0 +1,274 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ee2f942..6151d39 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -740,6 +740,10 @@ if (CS80_BUILD_TESTS)
+     target_link_libraries(cs80_preset_voicing_tests PRIVATE cs80_core)
+     add_test(NAME cs80_preset_voicing_tests COMMAND cs80_preset_voicing_tests)
+     set_tests_properties(cs80_preset_voicing_tests PROPERTIES TIMEOUT 180)
++    add_executable(cs80_preset_character_tests tests/PresetCharacterTests.cpp)
++    target_link_libraries(cs80_preset_character_tests PRIVATE cs80_core)
++    add_test(NAME cs80_preset_character_tests COMMAND cs80_preset_character_tests)
++    set_tests_properties(cs80_preset_character_tests PROPERTIES TIMEOUT 120)
+     add_test(NAME cs80_preset_capture_tests
+              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_preset_capture.py
+                      --capture $<TARGET_FILE:cs80_preset_capture>)
+diff --git a/src/core/CuratedLibraryLevels.inc b/src/core/CuratedLibraryLevels.inc
+index fd9682f..dabbf97 100644
+--- a/src/core/CuratedLibraryLevels.inc
++++ b/src/core/CuratedLibraryLevels.inc
+@@ -93,7 +93,7 @@
+     { "Cathedral Pad", 0.971f },
+     { "Shimmer Pad", 0.961f },
+     { "Low Drone", 1.000f },
+-    { "Ether Pad", 0.687f },
++    { "Ether Pad", 0.768f },
+     { "Velvet Pad", 1.000f },
+     { "Analog Haze", 0.896f },
+     { "Bowed Glass", 0.936f },
+@@ -187,13 +187,13 @@
+     { "Nylon Pluck", 1.000f },
+     { "Steel Pluck", 1.000f },
+     { "Muted Pluck", 1.000f },
+-    { "Kalimba", 0.868f },
++    { "Kalimba", 0.934f },
+     { "Zither", 1.000f },
+     { "Dulcimer Pluck", 1.000f },
+     { "Pressure Pluck", 1.000f },
+     { "Analog Bass", 1.000f },
+     { "Resonance Bass", 1.000f },
+-    { "Sine Bass", 0.691f },
++    { "Sine Bass", 0.752f },
+     { "Sub Bass", 0.572f },
+     { "Pluck Bass", 1.000f },
+     { "Fretless Glide", 1.000f },
+@@ -207,7 +207,7 @@
+     { "Dark Bass", 0.906f },
+     { "Bright Bass", 1.000f },
+     { "Picked Bass", 1.000f },
+-    { "Upright Pluck", 0.980f },
++    { "Upright Pluck", 1.000f },
+     { "Fifth Bass", 1.000f },
+     { "Pedal Bass", 0.792f },
+     { "Squelch Bass", 1.000f },
+diff --git a/src/core/FactoryPresets.h b/src/core/FactoryPresets.h
+index 34956e4..918e7cd 100644
+--- a/src/core/FactoryPresets.h
++++ b/src/core/FactoryPresets.h
+@@ -35,7 +35,7 @@ inline constexpr int legacyProgramCount = 222;
+ // The curated circuit-engine library (docs/workstreams/ws6-library.md). Every
+ // program sets SOURCE PERFORMANCE on, so recalling it selects the circuit engine.
+ // A sound-data revision, independent of host program numbers or session schema.
+-inline constexpr const char* curatedLibraryRevision = "2026.11";
++inline constexpr const char* curatedLibraryRevision = "2026.11.1";
+ const std::vector<FactoryPreset>& curatedLibrary();
+ 
+ // The host-facing program list. Host program numbers 0..221 keep their shipped
+diff --git a/src/core/curated/Bass.inc b/src/core/curated/Bass.inc
+index 7b97e3c..c813231 100644
+--- a/src/core/curated/Bass.inc
++++ b/src/core/curated/Bass.inc
+@@ -33,10 +33,10 @@ void buildBass(Builder& add)
+     add("Sine Bass", "Bass", { "sine", "percussive", "velocity" },
+         "A sustained 16' sine with a separate, very short 8' pulse click. The upper rank disappears after the onset, leaving a clean low fundamental.",
+         bass().wave(I, false, false, 1.0f).wave(II, false, true).pw(II, 0.70f)
+-              .hpf(II, 650.0f).lpf(II, 4300.0f, 0.06f).feg(II, 0.0f, 0.25f, 0.001f, 0.09f, 0.04f)
++              .hpf(II, 450.0f).lpf(II, 4300.0f, 0.06f).feg(II, 0.0f, 0.25f, 0.001f, 0.09f, 0.04f)
+               .eg(I, 0.005f, 0.6f, 1.0f, 0.18f).eg(II, 0.001f, 0.14f, 0.0f, 0.045f)
+               .touch(I, 0.0f, 0.64f, 0.0f, 0.0f).touch(II, 0.10f, 0.75f, 0.0f, 0.0f)
+-              .level(I, 0.0f, 0.32f).level(II, 0.78f, 0.08f).mix(0.14f).res(0.04f));
++              .level(I, 0.0f, 0.32f).level(II, 0.95f, 0.08f).mix(0.21f).res(0.04f));
+     add("Sub Bass", "Bass", { "sine", "velocity" },
+         "One centered 16' sine, with a short rounded onset and controlled release. Velocity controls level; there is no detuned upper layer, filter sweep or vibrato.",
+         bass().wave(I, false, false, 1.0f).wave(II, false, false)
+@@ -130,12 +130,12 @@ void buildBass(Builder& add)
+     add("Upright Pluck", "Bass", { "sine", "percussive", "velocity" },
+         "A rounded decaying 16' body with a separate woody finger-and-string transient. This synthesized upright interpretation favors lower notes and short, connected phrases.",
+         bass().wave(I, true, false, 0.70f).wave(II, false, true, 0.0f, 0.16f).feet(Both, f16).pw(II, 0.55f)
+-              .hpf(I, 25.0f).hpf(II, 450.0f).lpf(I, 600.0f, 0.12f).lpf(II, 2300.0f, 0.22f)
+-              .level(I, 0.42f, 0.24f).level(II, 0.74f, 0.08f)
++              .hpf(I, 25.0f).hpf(II, 300.0f).lpf(I, 600.0f, 0.12f).lpf(II, 2300.0f, 0.22f)
++              .level(I, 0.42f, 0.24f).level(II, 0.95f, 0.08f)
+               .feg(I, 0.0f, 0.20f, 0.009f, 1.2f, 0.20f).feg(II, 0.0f, 0.32f, 0.003f, 0.31f, 0.08f)
+               .eg(I, 0.010f, 3.8f, 0.0f, 0.30f).eg(II, 0.003f, 0.70f, 0.0f, 0.10f)
+               .touch(I, 0.06f, 0.76f, 0.0f, 0.0f).touch(II, 0.14f, 0.88f, 0.0f, 0.0f)
+-              .mix(0.14f).res(0.08f));
++              .mix(0.19f).res(0.08f));
+     add("Fifth Bass", "Bass", { "feet-layer" },
+         "A 16' foundation supports a quieter 5 1/3' upper twelfth: the fifth above its octave. The upper harmonic has a shorter attack accent and a controlled sustain.",
+         bass().feet(II, f513).wave(II, true, false).hpf(II, 160.0f).lpf(II, 3100.0f, 0.10f)
+diff --git a/src/core/curated/Brass.inc b/src/core/curated/Brass.inc
+index 05c009e..e03c64d 100644
+--- a/src/core/curated/Brass.inc
++++ b/src/core/curated/Brass.inc
+@@ -57,7 +57,8 @@ void buildBrass(Builder& add)
+                .feg(I, 0.36f, 0.61f, 0.45f, 2.8f, 1.2f).feg(II, 0.48f, 0.50f, 0.72f, 2.1f, 1.0f)
+                .eg(I, 0.14f, 2.4f, 0.86f, 1.65f).eg(II, 0.25f, 2.0f, 0.78f, 1.35f)
+                .touch(I, 0.12f, 0.46f, 0.46f, 0.32f).touch(II, 0.18f, 0.52f, 0.60f, 0.28f)
+-               .sub(subSine, 5.0f, 0.0f).subAt(0.06f, 0.105f).bend(0.08f).mix(0.46f));
++               .sub(subSine, 5.0f, 0.0f).subAt(0.06f, 0.105f).bend(0.08f).mix(0.46f)
++               .pan(I, -0.24f).pan(II, 0.34f));
+     add("Sforzando Brass", "Brass", { "brilliance-swell", "velocity" },
+         "A bright, hard-struck accent relaxes into a quieter sustained section. One rank carries the initial bite while the other holds the body.",
+         brass().lpf(I, 820.0f, 0.16f).lpf(II, 1280.0f, 0.24f)
+@@ -116,12 +117,13 @@ void buildBrass(Builder& add)
+                .touch(I, 0.22f, 0.68f, 0.22f, 0.20f).touch(II, 0.30f, 0.80f, 0.28f, 0.16f)
+                .mix(0.28f).detune(1.5f).res(0.14f));
+     add("Brass Ensemble 16", "Brass", { "feet-layer", "chorus" },
+-        "A weighty 16' body under an 8' section, with restrained chorus for ensemble width. The upper rank enters a little later and stays lighter than the foundation.",
++        "A weighty 16' body under an 8' section, spread gently in stereo beneath restrained chorus. The upper rank enters a little later and stays lighter than the foundation.",
+         brass().feet(I, f16).wave(I, true, false, 0.08f)
+                .hpf(I, 25.0f).hpf(II, 72.0f).lpf(I, 640.0f, 0.13f).lpf(II, 1480.0f, 0.15f)
+                .feg(I, 0.22f, 0.44f, 0.20f, 2.2f, 0.55f).feg(II, 0.30f, 0.50f, 0.29f, 1.7f, 0.48f)
+                .eg(I, 0.07f, 2.1f, 0.88f, 0.72f).eg(II, 0.105f, 1.7f, 0.75f, 0.58f)
+-               .chorus(0.34f, 0.29f).detune(4.5f).mix(0.34f));
++               .chorus(0.34f, 0.29f).detune(4.5f).mix(0.34f)
++               .pan(I, -0.12f).pan(II, 0.38f));
+     add("Low Brass", "Brass", { "feet-layer", "dual-rank" },
+         "Two 16' ranks combine a rounded saw foundation with a darker pulse edge. A slower low-body attack gives weight without the constant wobble of an ensemble effect.",
+         brass().feet(Both, f16).wave(I, true, false, 0.10f).wave(II, false, true).pw(II, 0.58f)
+diff --git a/src/core/curated/Fx.inc b/src/core/curated/Fx.inc
+index 66d6692..365e259 100644
+--- a/src/core/curated/Fx.inc
++++ b/src/core/curated/Fx.inc
+@@ -138,7 +138,7 @@ void buildFx(Builder& add)
+                 .touch(I, 0.0f, 0.12f, 0.02f, 0.15f).touch(II, 0.0f, 0.10f, 0.08f, 0.18f)
+                 .sub(subSquare, 11.5f, 0.0f, 0.32f, 0.95f).subAt(0.14f, 0.0f, 0.04f).mix(0.42f));
+     add("UFO Landing", "FX", { "sub-mod", "ring-mod", "dual-rank" },
+-        "A low sine body follows repeating downward SUB glides while the ring carrier settles after each note. A shorter upper pulse edge marks the start of the landing sweep.",
++        "A low sine body follows repeating downward SUB glides while the shared ring carrier settles over the phrase. Release all keys and any sustain hold before the next attack to restart that sweep; a shorter upper pulse edge marks each note.",
+         effect().feet(I, f16).feet(II, f4).wave(I, false, false, 0.95f).wave(II, false, true, 0.25f)
+                 .hpf(II, 240.0f).lpf(II, 2100.0f, 0.17f).feg(II, 0.0f, 0.40f, 0.003f, 0.65f, 0.45f)
+                 .level(I, 0.0f, 0.45f).level(II, 0.35f, 0.28f)
+diff --git a/src/core/curated/Pads.inc b/src/core/curated/Pads.inc
+index 6974479..53f802c 100644
+--- a/src/core/curated/Pads.inc
++++ b/src/core/curated/Pads.inc
+@@ -144,12 +144,13 @@ void buildPads(Builder& add)
+              .eg(I, 0.38f, 3.0f, 0.92f, 2.3f).eg(II, 0.65f, 2.8f, 0.85f, 2.7f)
+              .tremolo(0.43f, 3.8f).detune(3.6f).mix(0.39f));
+     add("Neo-Noir Pad", "Pads", { "chorus", "ring-mod", "dual-rank" },
+-        "A dark saw foundation supports a later pulse glow, broad chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes.",
++        "A dark saw foundation supports a later pulse glow, a broad stereo field, chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes.",
+         pad().wave(I, true, false, 0.10f).lpf(I, 1100.0f, 0.10f).lpf(II, 2400.0f, 0.17f)
+              .hpf(I, 35.0f).hpf(II, 190.0f).pw(II, 0.60f, 0.26f, 0.16f)
+              .feg(I, 0.24f, 0.28f, 1.25f, 4.8f, 2.8f).feg(II, 0.40f, 0.42f, 1.8f, 3.8f, 2.4f)
+              .eg(I, 0.85f, 4.2f, 0.91f, 5.2f).eg(II, 1.4f, 3.5f, 0.78f, 4.1f)
+-             .chorus(0.58f, 0.25f).ring(0.3f, 0.06f, 3.0f, 5.0f, 0.08f).detune(8.5f).mix(0.39f));
++             .chorus(0.58f, 0.25f).ring(0.3f, 0.06f, 3.0f, 5.0f, 0.08f).detune(8.5f).mix(0.39f)
++             .pan(I, -0.18f).pan(II, 0.40f));
+     add("Rain Pad", "Pads", { "modern", "lfo", "noise" },
+         "An 8 Hz modern sample-and-hold LFO flickers the filters over a soft pulse body and a little band-limited air. The stepped filter motion is inactive in Pure CS-80.",
+         pad().wave(I, false, true, 0.04f).pw(I, 0.54f, 0.10f, 0.19f)
+@@ -185,13 +186,13 @@ void buildPads(Builder& add)
+              .mix(0.30f).detune(1.1f).g(P_chorusOn, 0.0f).g(P_drift, 0.035f).g(P_analogNoise, 0.0f));
+     add("Ether Pad", "Pads", { "noise", "sine", "dual-rank" },
+         "A pure 8' sine fades in beneath a separate thin veil of filtered noise. The air arrives later and follows pressure more strongly, leaving the pitched center clean and soft.",
+-        pad().wave(I, false, false, 0.85f).wave(II, false, false, 0.0f, 0.65f)
++        pad().wave(I, false, false, 0.85f).wave(II, false, false, 0.0f, 0.95f)
+              .hpf(II, 1100.0f).lpf(II, 5600.0f, 0.08f)
+              .feg(I, 0.0f, 0.0f, 0.01f, 0.5f, 0.4f).feg(II, 0.18f, 0.24f, 1.7f, 3.8f, 2.8f)
+              .eg(I, 0.65f, 3.5f, 0.94f, 3.0f).eg(II, 1.25f, 3.0f, 0.68f, 4.0f)
+              .level(I, 0.0f, 0.63f).level(II, 1.0f, 0.55f)
+              .touch(I, 0.0f, 0.22f, 0.0f, 0.27f).touch(II, 0.04f, 0.20f, 0.12f, 0.44f)
+-             .mix(0.19f).detune(0.0f).chorus(0.20f, 0.24f).g(P_analogNoise, 0.0f).g(P_drift, 0.035f));
++             .mix(0.28f).detune(0.0f).chorus(0.20f, 0.24f).g(P_analogNoise, 0.0f).g(P_drift, 0.035f));
+     add("Velvet Pad", "Pads", { "chorus", "dual-rank" },
+         "Softly filtered saw ranks overlap with shallow, unequal blooms. Modest detune and chorus make a dense, smooth chord; the second rank closes earlier on release.",
+         pad().wave(Both, true, false).lpf(I, 1250.0f, 0.06f).lpf(II, 1950.0f, 0.07f)
+@@ -224,11 +225,12 @@ void buildPads(Builder& add)
+              .touch(I, 0.02f, 0.24f, 0.10f, 0.28f).touch(II, 0.04f, 0.26f, 0.18f, 0.28f)
+              .mix(0.31f).detune(5.2f).chorus(0.42f, 0.23f));
+     add("Arctic Pad", "Pads", { "chorus", "feet-layer", "dual-rank" },
+-        "A thin, bright 8' saw band supports a quiet 4' pulse sheen. Distinct high-pass bands and later upper entry create an icy texture; moderate chorus supplies width.",
++        "A thin, bright 8' saw band supports a quiet 4' pulse sheen. Distinct high-pass bands and later upper entry create an icy texture; gently spread ranks supply stereo width under moderate chorus.",
+         pad().wave(I, true, false).wave(II, false, true).feet(II, f4).pw(II, 0.66f, 0.18f, 0.31f)
+              .hpf(I, 330.0f, 0.06f).lpf(I, 4300.0f, 0.08f).hpf(II, 1100.0f, 0.08f).lpf(II, 7800.0f, 0.08f)
+              .feg(I, 0.10f, 0.15f, 0.75f, 3.2f, 1.6f).feg(II, 0.18f, 0.20f, 1.15f, 2.7f, 2.0f)
+              .eg(I, 0.48f, 3.0f, 0.86f, 2.7f).eg(II, 0.85f, 2.6f, 0.72f, 3.3f)
+              .touch(I, 0.06f, 0.28f, 0.10f, 0.25f).touch(II, 0.06f, 0.26f, 0.12f, 0.24f)
+-             .level(II, 0.90f, 0.59f).mix(0.29f).detune(3.5f).chorus(0.40f, 0.34f));
++             .level(II, 0.90f, 0.59f).mix(0.29f).detune(3.5f).chorus(0.40f, 0.34f)
++             .pan(I, -0.12f).pan(II, 0.40f));
+ }
+diff --git a/src/core/curated/Plucked.inc b/src/core/curated/Plucked.inc
+index 7412686..e9873cf 100644
+--- a/src/core/curated/Plucked.inc
++++ b/src/core/curated/Plucked.inc
+@@ -53,13 +53,13 @@ void buildPlucked(Builder& add)
+                  .mix(0.25f).res(0.25f));
+     add("Harp", "Plucked", { "sine", "feet-layer", "velocity" },
+         "A long 8' resonant body with a shorter 4' finger-plucked glint. The upper harmonics fade first, leaving a round clear tail; release controls the damping.",
+-        plucked().wave(I, true, false, 0.78f).wave(II, false, true, 0.24f).feet(II, f4).pw(II, 0.55f)
++        plucked().wave(I, true, false, 0.78f).wave(II, false, true, 0.46f).feet(II, f4).pw(II, 0.55f)
+                  .hpf(I, 30.0f).hpf(II, 480.0f).lpf(I, 1700.0f, 0.025f).lpf(II, 4200.0f, 0.035f)
+                  .level(I, 0.18f, 0.32f).level(II, 0.34f, 0.10f)
+                  .feg(I, 0.0f, 0.12f, 0.003f, 2.1f, 0.65f).feg(II, 0.0f, 0.24f, 0.0015f, 0.65f, 0.25f)
+                  .eg(I, 0.003f, 6.8f, 0.0f, 2.3f).eg(II, 0.0015f, 1.95f, 0.0f, 0.65f)
+                  .touch(I, 0.08f, 0.76f, 0.0f, 0.0f).touch(II, 0.18f, 0.92f, 0.0f, 0.0f)
+-                 .mix(0.18f).res(0.025f).detune(0.0f));
++                 .mix(0.24f).res(0.025f).detune(0.0f));
+     add("Koto", "Plucked", { "init-bend", "velocity", "percussive" },
+         "A focused narrow-pulse string with a sharp plectrum edge and a slight upward settling of the initial pitch. The pick rank dies quickly while the string body rings.",
+         plucked().wave(I, false, true, 0.07f).pw(I, 0.78f)
+@@ -129,13 +129,13 @@ void buildPlucked(Builder& add)
+     add("Kalimba", "Plucked", { "sine", "feet-layer", "percussive", "velocity" },
+         "A clear 4' tine-like body with a brief 2' strike harmonic. The upper ping falls away early, leaving a stable round decay; velocity determines how prominently it speaks.",
+         plucked().wave(I, false, false, 0.96f).feet(I, f4)
+-                 .wave(II, false, true, 0.34f).pw(II, 0.5f).feet(II, f2)
++                 .wave(II, false, true, 0.54f).pw(II, 0.5f).feet(II, f2)
+                  .hpf(II, 1700.0f).lpf(II, 7800.0f, 0.06f)
+                  .level(I, 0.0f, 0.30f).level(II, 0.20f, 0.08f)
+                  .eg(I, 0.002f, 3.25f, 0.0f, 0.70f).eg(II, 0.001f, 0.38f, 0.0f, 0.12f)
+                  .feg(II, 0.0f, 0.17f, 0.001f, 0.19f, 0.075f)
+                  .touch(I, 0.0f, 0.78f, 0.0f, 0.0f).touch(II, 0.14f, 0.94f, 0.0f, 0.0f)
+-                 .mix(0.16f).res(0.025f).detune(0.0f));
++                 .mix(0.23f).res(0.025f).detune(0.0f));
+     add("Zither", "Plucked", { "chorus", "velocity", "dual-rank" },
+         "Bright paired 8' strings with a long body decay and an independently fading upper course. Shallow chorus and a small tuning offset supply a restrained ensemble shimmer.",
+         plucked().wave(I, true, false, 0.12f).wave(II, false, true, 0.06f).pw(II, 0.76f)
+diff --git a/src/core/curated/Polysynth.inc b/src/core/curated/Polysynth.inc
+index 3443c43..64ea05e 100644
+--- a/src/core/curated/Polysynth.inc
++++ b/src/core/curated/Polysynth.inc
+@@ -128,11 +128,12 @@ void buildPolysynth(Builder& add)
+               .eg(I, 0.009f, 1.6f, 0.78f, 0.40f).eg(II, 0.004f, 0.75f, 0.42f, 0.26f)
+               .mix(0.37f).detune(2.7f).chorus(0.16f, 0.36f));
+     add("Synthwave Chords", "Polysynth", { "chorus", "detune", "dual-rank" },
+-        "Detuned saw chords have a bright opening accent and broad chorus. The second rank sustains more softly and releases sooner, preserving a warm center in the longer retro tail.",
++        "Detuned saw chords spread across stereo with a bright opening accent and chorus. The second rank sustains more softly and releases sooner, preserving a warm center in the longer retro tail.",
+         poly().wave(Both, true, false).lpf(I, 2500.0f, 0.13f).lpf(II, 3800.0f, 0.15f)
+               .feg(I, 0.03f, 0.28f, 0.015f, 1.6f, 0.65f).feg(II, 0.0f, 0.36f, 0.008f, 1.0f, 0.50f)
+               .eg(I, 0.013f, 1.9f, 0.83f, 1.8f).eg(II, 0.021f, 1.35f, 0.68f, 1.35f)
+-              .mix(0.45f).detune(11.5f).chorus(0.48f, 0.37f));
++              .mix(0.45f).detune(11.5f).chorus(0.48f, 0.37f)
++              .pan(I, -0.24f).pan(II, 0.32f));
+     add("Square Poly", "Polysynth", { "dual-rank", "velocity" },
+         "Unmodulated 50-percent pulses give a clear square-wave chord. The upper rank has a shorter accent and brighter filter; light detune adds body without a PWM sweep.",
+         poly().wave(Both, false, true).pw(Both, 0.5f, 0.0f)
+diff --git a/src/core/curated/Winds.inc b/src/core/curated/Winds.inc
+index 87d7861..76ebe80 100644
+--- a/src/core/curated/Winds.inc
++++ b/src/core/curated/Winds.inc
+@@ -27,13 +27,18 @@ void buildWinds(Builder& add)
+         "Rounded 8' body with quiet upper harmonics and a separate sustained air rank. Velocity shapes the attack; pressure adds breath and gentle vibrato.",
+         winds().eg(I, 0.040f, 0.70f, 0.94f, 0.17f)
+                .feg(I, 0.05f, 0.14f, 0.030f, 0.42f, 0.12f)
++               // Balance the filtered air against the bypass sine in the final mix.
++               .wave(II, false, false, 0.0f, 0.82f).hpf(II, 950.0f)
++               .level(II, 0.95f, 0.32f).eg(II, 0.018f, 0.50f, 0.82f, 0.12f)
++               .touch(II, 0.04f, 0.44f, 0.08f, 0.40f).mix(0.22f)
+                .sub(subSine, 5.1f, 0.0f).subAt(0.04f, 0.085f));
+     add("Breathy Flute", "Winds", { "noise", "aftertouch", "velocity" },
+         "Soft pitched body with a separately sustained, band-limited air stream. Pressure increases the breath as well as the body; use a gentle attack.",
+         winds().wave(I, false, true, 0.80f).level(I, 0.13f, 0.28f)
+-               .wave(II, false, false, 0.0f, 0.38f).hpf(II, 950.0f).lpf(II, 7000.0f, 0.04f)
+-               .eg(I, 0.065f, 0.85f, 0.91f, 0.24f).eg(II, 0.035f, 0.65f, 0.82f, 0.19f)
+-               .touch(II, 0.08f, 0.45f, 0.10f, 0.38f).mix(0.24f).subAt(0.04f, 0.10f));
++               .wave(II, false, false, 0.0f, 0.75f).hpf(II, 800.0f).lpf(II, 7000.0f, 0.04f)
++               .level(II, 0.98f, 0.30f)
++               .eg(I, 0.065f, 0.85f, 0.91f, 0.24f).eg(II, 0.035f, 0.65f, 0.88f, 0.19f)
++               .touch(II, 0.08f, 0.55f, 0.10f, 0.50f).mix(0.32f).subAt(0.04f, 0.10f));
+     add("Pan Flute", "Winds", { "noise", "percussive", "velocity" },
+         "A short, independent noise chiff precedes the sustained 8' body. The air rank decays to silence while the held pitch remains; velocity controls the tongued onset.",
+         winds().wave(I, false, true, 0.92f).level(I, 0.08f, 0.28f)

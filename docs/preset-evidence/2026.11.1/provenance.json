@@ -5,7 +5,7 @@
   "packaging_assignment": 20,
   "status": "ACTUAL_NATIVE_AND_CANDIDATE_ARCHIVES_VERIFIED_LINUX_GUI_GATE_FAILED_RELEASE_UNQUALIFIED_FINAL_REVIEW_PENDING",
   "scope": "Authoring and calibrated-bank evidence, local native/control/performance checks, actual four-platform native CI and installation archives, and the actual 24-WAV CI audition. The required Linux randomized GUI validator crashed after SUCCESS; the whole build failed and the formal release was withheld. Public candidate delivery and the completed task ledger are recorded separately as integration finishes; no release qualification is inferred from archive or native-test passes.",
-  "measurement_integrity": "At commit 758fc0d, the 239-entry snapshot preserved all 81 original manifest entries and archived bytes exactly. Commit f0542df then added 16 CI preparation/review records and amended the README index and its manifest entry; the other 80 original entries and payloads remain unchanged. No measurements were recalculated. Archived metadata removes the original checkout prefix only where present; the earlier final core log also abbreviates its producing Python runtime executable path. Original/stored hashes record transformations. Reproduction sources remain verbatim. Compact indexes identify selected and omitted supporting inputs. Historical draft, failed setup and unresolved observations retain their recorded stage. The initial final-ci archival additions preserved every payload and manifest entry present in the 263-entry 96c466f snapshot. The final evidence-index refresh then deliberately updated README.md and its manifest entry; the other 262 payloads and entries remain unchanged. The prior index entry is retained in index_updates and its bytes in Git commit96c466f. New native, candidate-audition, installation and original Linux failure records are copied verbatim, including their historical preparation and pending snapshots. Any later public index edits are deliberate new snapshots; measurements and failed results are not rewritten.",
+  "measurement_integrity": "At commit 758fc0d, the 239-entry snapshot preserved all 81 original manifest entries and archived bytes exactly. Commit f0542df then added 16 CI preparation/review records and amended the README index and its manifest entry; the other 80 original entries and payloads remain unchanged. No measurements were recalculated. Archived metadata removes the original checkout prefix only where present; the earlier final core log also abbreviates its producing Python runtime executable path. Original/stored hashes record transformations. Reproduction sources remain verbatim. Compact indexes identify selected and omitted supporting inputs. Historical draft, failed setup and unresolved observations retain their recorded stage. The initial final-ci archival additions preserved every payload and manifest entry present in the 263-entry 96c466f snapshot. The final evidence-index refresh then deliberately updated README.md and its manifest entry; the other 262 payloads and entries remain unchanged. The prior index entry is retained in index_updates and its bytes in Git commit96c466f. New native, candidate-audition, installation and original Linux failure records are copied verbatim, including their historical preparation and pending snapshots. Any later public index edits are deliberate new snapshots; measurements and failed results are not rewritten. Concurrent documentation814c901 retains its full final-ci evidence and team ledger. The compact verification adds independent ci records, refreshes the earlier installation/input GET summaries, and archives its exact reviewed prose snapshot before the additive documentation merge; historical measurement payloads are unchanged.",
   "limitations": [
     "Candidate parameter-override renders use the frozen baseline engine and baseline master volumes. They are not the final calibrated download.",
     "Artifact-pipeline smoke uses the frozen baseline executable and cannot certify final CI assets.",
@@ -488,9 +488,9 @@
       "origin": "Authored package index and reproduction instructions in assignments20 and28",
       "phase": "Evidence-stage index; not an additional measurement.",
       "origin_sha256": null,
-      "stored_sha256": "f95231a00d87eb24f36656003cb68f89eb5a73d7f4bb1482758e1fd46bde15a8",
-      "bytes": 20990,
-      "transform": "Deliberate final integration index refresh: actual four-platform native/archive outcomes, original Linux GUI failure, verified five candidate downloads and withheld formal release. Authoring measurements and every other prior payload remain unchanged."
+      "stored_sha256": "978adcc7b5cbdedd292da4a76a1adb9ebb1491e1d418a6aa32bc70954b808148",
+      "bytes": 22122,
+      "transform": "Deliberate final integration index refresh: actual four-platform native/archive outcomes, original Linux GUI failure, verified five candidate downloads and withheld formal release. Authoring measurements and every other prior payload remain unchanged. Additive merge after814c901 adds compact verification links and explicit Linux experimental labeling; incoming sections and measurement material preserved."
     },
     {
       "path": "final/ctest.log",
@@ -2358,19 +2358,19 @@
     {
       "path": "ci/download-links.json",
       "origin": "ci-run-45044040694/download-links.json",
-      "phase": "Actual complete unauthenticated GETs for three current installation archives.",
-      "origin_sha256": "83af8ee4640ac8958c796234ac0e503257fa8a1072bd2d9c37c8d1499f72d9d6",
-      "stored_sha256": "83af8ee4640ac8958c796234ac0e503257fa8a1072bd2d9c37c8d1499f72d9d6",
-      "bytes": 2689,
+      "phase": "Four actual complete unauthenticated installation GETs; Linux validator qualification is separate and failed.",
+      "origin_sha256": "908afc9cca1e9120c15352ce8979b929608279c3530ab55332deac118ce1793c",
+      "stored_sha256": "908afc9cca1e9120c15352ce8979b929608279c3530ab55332deac118ce1793c",
+      "bytes": 3540,
       "transform": "Verbatim."
     },
     {
       "path": "ci/validator-input-downloads.json",
       "origin": "ci-run-45044040694/validator-input-downloads.json",
-      "phase": "Actual complete unauthenticated GETs for currently available validator input archives; complete installed-payload join remains pending.",
-      "origin_sha256": "e3d17f7133bd7c7496b2969ef69994f2a70c9c6ea288252e30f2017733c1286f",
-      "stored_sha256": "e3d17f7133bd7c7496b2969ef69994f2a70c9c6ea288252e30f2017733c1286f",
-      "bytes": 952,
+      "phase": "Both actual complete unauthenticated Linux and Windows validator-input GETs.",
+      "origin_sha256": "cc4c1dbb8fc1e851c90b728caf3ee8fff69e57865cbbe88a8a754bd1e7aed3d0",
+      "stored_sha256": "cc4c1dbb8fc1e851c90b728caf3ee8fff69e57865cbbe88a8a754bd1e7aed3d0",
+      "bytes": 1789,
       "transform": "Verbatim."
     },
     {
@@ -4671,7 +4671,7 @@
     {
       "path": "final-ci/team/ledger.json",
       "origin": "build-w12-team-ledger/ledger-final.json",
-      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58–60-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
+      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58\u201360-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
       "origin_sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14",
       "stored_sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14",
       "bytes": 54106,
@@ -4680,7 +4680,7 @@
     {
       "path": "final-ci/team/source-accounting.json",
       "origin": "build-w12-team-ledger/final-source-accounting.json",
-      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58–60-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
+      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58\u201360-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
       "origin_sha256": "8856856397125fb091915ce85be232cec56190a5ab8e42655d340fe761e915b2",
       "stored_sha256": "8856856397125fb091915ce85be232cec56190a5ab8e42655d340fe761e915b2",
       "bytes": 8814,
@@ -4689,7 +4689,7 @@
     {
       "path": "final-ci/team/review.json",
       "origin": "build-w12-team-ledger/final-report-review.json",
-      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58–60-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
+      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58\u201360-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
       "origin_sha256": "c6934d5fdb4f6923c1c5d3cd5e631da60f2c9aaa02d99d52151ee2455c372490",
       "stored_sha256": "c6934d5fdb4f6923c1c5d3cd5e631da60f2c9aaa02d99d52151ee2455c372490",
       "bytes": 2603,
@@ -4720,6 +4720,369 @@
       "origin_sha256": "50a48514ebd07e54ccc3037c27e52c7ada34294164779e9ab524042197cb764b",
       "stored_sha256": "50a48514ebd07e54ccc3037c27e52c7ada34294164779e9ab524042197cb764b",
       "bytes": 9209,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/final-validator-payload-identity.json",
+      "origin": "ci-run-45044040694/final-validator-payload-identity.json",
+      "phase": "Complete VST3 file-content equality between actual input and installation archives; not runtime qualification.",
+      "origin_sha256": "de7587e70a45aa6fb1d9d44b73d4b643d2936a5d9ab5479f633878d4af19844b",
+      "stored_sha256": "de7587e70a45aa6fb1d9d44b73d4b643d2936a5d9ab5479f633878d4af19844b",
+      "bytes": 2739,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/final-install-artifacts.json",
+      "origin": "review-2026.11.1-artifact-integrity/actual-run-45044040694-all/report.json",
+      "phase": "Unchanged V3 require-all verification of all four actual installation archives.",
+      "origin_sha256": "530d2839d7da6cd62a42c5717ff923a5ab1bdaf77ffcdeb9ac8b4f4f53517acc",
+      "stored_sha256": "530d2839d7da6cd62a42c5717ff923a5ab1bdaf77ffcdeb9ac8b4f4f53517acc",
+      "bytes": 28116,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/final-install-summary.json",
+      "origin": "review-2026.11.1-artifact-integrity/actual-run-45044040694-all/completion-summary.json",
+      "phase": "Four actual archive identities, inventory totals and binary/guide hashes.",
+      "origin_sha256": "1dfcf6eb9e34d66184221ac1aae8f9e7b6e99a92681372b25fe90bda13a6ba62",
+      "stored_sha256": "1dfcf6eb9e34d66184221ac1aae8f9e7b6e99a92681372b25fe90bda13a6ba62",
+      "bytes": 19256,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/final-install-invocation.json",
+      "origin": "review-2026.11.1-artifact-integrity/actual-run-45044040694-all-invocation.json",
+      "phase": "Actual V3 invocation and API identity join.",
+      "origin_sha256": "a652e7b6a4ce5fbd80c442ffbac1764cf0384a5a27694488acabd068f28ee246",
+      "stored_sha256": "a652e7b6a4ce5fbd80c442ffbac1764cf0384a5a27694488acabd068f28ee246",
+      "bytes": 4486,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/native-linux-x86_64.json",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/native-verification.json",
+      "phase": "Completed Linux native build, CTest and packaging; independent host validator failed.",
+      "origin_sha256": "b2d7d3f1970e5ab44ff8cf64ba1e749e1dd80b92cf3dfcd6f239cfc66187ac63",
+      "stored_sha256": "b2d7d3f1970e5ab44ff8cf64ba1e749e1dd80b92cf3dfcd6f239cfc66187ac63",
+      "bytes": 10201,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/final-linux-verification.json",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/verification.json",
+      "phase": "Actual native PASS and first-attempt Linux GUI validator SIGSEGV; overall candidate is not release-qualified.",
+      "origin_sha256": "4f85b437574aae7c0716756ed321267e58aa0d35a337c416236de16d3f4b0119",
+      "stored_sha256": "4f85b437574aae7c0716756ed321267e58aa0d35a337c416236de16d3f4b0119",
+      "bytes": 32095,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-validator-summary.json",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/validator-summary.json",
+      "phase": "Three strictness-10 Linux process results and two instrumented nonreproductions; original failure preserved.",
+      "origin_sha256": "1aa622ef6a2df9ced48d3fd6008c86b827a881bfee4327f94be59900fd3d9801",
+      "stored_sha256": "1aa622ef6a2df9ced48d3fd6008c86b827a881bfee4327f94be59900fd3d9801",
+      "bytes": 5575,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-validator-failure.log",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/failure-excerpt.log",
+      "phase": "Verbatim original failure and diagnostic excerpts from terminal CI log.",
+      "origin_sha256": "4e50a873032545283ee6c2e39ea714adf42aa4e7c0e58dd0c206b2c25fdb8168",
+      "stored_sha256": "4e50a873032545283ee6c2e39ea714adf42aa4e7c0e58dd0c206b2c25fdb8168",
+      "bytes": 4252,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-validator-input-provenance.json",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/validator-input-provenance.json",
+      "phase": "Original validator logged artifact ID and expected/actual digest joined to API.",
+      "origin_sha256": "53a373d916cadae877d7bb1331eed965369637d8807536adc11fa1d2983193be",
+      "stored_sha256": "53a373d916cadae877d7bb1331eed965369637d8807536adc11fa1d2983193be",
+      "bytes": 809,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-validator-input-download.log",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/validator-input-download.log",
+      "phase": "Verbatim original validator artifact-download log section.",
+      "origin_sha256": "95a2464499c24d77c304d47d44c5e1f727c52d1ca392fed6eb67a63b9c7ff10f",
+      "stored_sha256": "95a2464499c24d77c304d47d44c5e1f727c52d1ca392fed6eb67a63b9c7ff10f",
+      "bytes": 2039,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-pluginval-gui.log",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui.log",
+      "phase": "Original failed GUI gate stdout, including SUCCESS followed by wrapper exit139.",
+      "origin_sha256": "d0f46ffab92a53aff3c370d2b5c9aa5b3853b7a4f95e8c52e7c2aa569011812b",
+      "stored_sha256": "d0f46ffab92a53aff3c370d2b5c9aa5b3853b7a4f95e8c52e7c2aa569011812b",
+      "bytes": 7964,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-pluginval-gui-core.log",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-core.log",
+      "phase": "Original PID and raw SIGSEGV classification; local core unavailable.",
+      "origin_sha256": "a29764eddf095eb50b1b209bee76d14ec89c78d52f1a70f3e2f2aecc7dce9073",
+      "stored_sha256": "a29764eddf095eb50b1b209bee76d14ec89c78d52f1a70f3e2f2aecc7dce9073",
+      "bytes": 475,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-pluginval-gui-gdb.log",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-gui-gdb.log",
+      "phase": "Same-seed GDB diagnostic nonreproduction, not a replacement pass.",
+      "origin_sha256": "745331e8004dc54e3596e2ca7206e84c5881709c440e56980d780a199deba87d",
+      "stored_sha256": "745331e8004dc54e3596e2ca7206e84c5881709c440e56980d780a199deba87d",
+      "bytes": 8223,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-pluginval-fault-trace.log",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/pluginval-evidence/pluginval-fault-trace.log",
+      "phase": "Same-seed fault-trace diagnostic handler-install messages; no fault stack.",
+      "origin_sha256": "a07630fd14937a06786a0f51f3a000e7178c2e0221acbd0efc640773ffcde680",
+      "stored_sha256": "a07630fd14937a06786a0f51f3a000e7178c2e0221acbd0efc640773ffcde680",
+      "bytes": 180,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-native-evidence-download.json",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/native-download-verification.json",
+      "phase": "Actual Linux test-evidence artifact integrity.",
+      "origin_sha256": "0daa6e8ee409c6e1b9eb8444f8126b379540bc6c10512f4c3d8d69cb5b3c743a",
+      "stored_sha256": "0daa6e8ee409c6e1b9eb8444f8126b379540bc6c10512f4c3d8d69cb5b3c743a",
+      "bytes": 961,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/linux-validator-evidence-download.json",
+      "origin": "review-w09-linux/revision2026.11.1/run-45044040694/attempt-1/validator-download-verification.json",
+      "phase": "Actual Linux validator-evidence artifact integrity.",
+      "origin_sha256": "cc1874283cc2c78293baa6f77160123e693fbc2f0885083e5e0939f2a4929173",
+      "stored_sha256": "cc1874283cc2c78293baa6f77160123e693fbc2f0885083e5e0939f2a4929173",
+      "bytes": 3235,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/final-audition.json",
+      "origin": "review-w10-audition/revision-2026.11.1-run-45044040694/verification.json",
+      "phase": "Actual 24-WAV revised-bank CI audition: 117seconds, complete inventory/checksums/controllers/raw metrics.",
+      "origin_sha256": "ee098b654b4e99ca1ce6fc7a432825548960f6c7f406eda2f8e1da167df54ef8",
+      "stored_sha256": "ee098b654b4e99ca1ce6fc7a432825548960f6c7f406eda2f8e1da167df54ef8",
+      "bytes": 32536,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/audition-public-download.json",
+      "origin": "review-w10-audition/revision-2026.11.1-run-45044040694/public-download-record.json",
+      "phase": "Actual full unauthenticated audition GET, HTTP200/API byte count and SHA256.",
+      "origin_sha256": "dfb1cd03015d4fcd44aa822546eccba553317873ebc646c862b35d62d0049762",
+      "stored_sha256": "dfb1cd03015d4fcd44aa822546eccba553317873ebc646c862b35d62d0049762",
+      "bytes": 1667,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/audition-verification-execution.json",
+      "origin": "review-w10-audition/revision-2026.11.1-run-45044040694/verification-execution-record.json",
+      "phase": "Actual unchanged audition verifier execution and script identity.",
+      "origin_sha256": "9a1dccc637f3520dcad2795d2031688ee11852297f036e5cb9738bc43126595c",
+      "stored_sha256": "9a1dccc637f3520dcad2795d2031688ee11852297f036e5cb9738bc43126595c",
+      "bytes": 1056,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/audition-verifier.py",
+      "origin": "review-w10-audition/revision-2026.11.1-run-45044040694/verify-actual-audition.py",
+      "phase": "Verbatim source/run-bound actual audition verifier; recorded workspace paths are historical inputs.",
+      "origin_sha256": "d08bcfe2de98b4549484ce9344dfc8ba497cedeaff2fb937fedf4156cd8aea65",
+      "stored_sha256": "d08bcfe2de98b4549484ce9344dfc8ba497cedeaff2fb937fedf4156cd8aea65",
+      "bytes": 23711,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/audition-verifier-fixtures.json",
+      "origin": "review-w10-audition/revision-2026.11.1-run-45044040694/fixture-checks.json",
+      "phase": "Prepared verifier bounded synthetic controls, separate from actual artifact verification.",
+      "origin_sha256": "3e828591ddb90042497b3bae3039382ae33cdbef4b339864532660a206c0fc1d",
+      "stored_sha256": "3e828591ddb90042497b3bae3039382ae33cdbef4b339864532660a206c0fc1d",
+      "bytes": 3956,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/run-final-api.json",
+      "origin": "ci-run-45044040694/build-final-api.json",
+      "phase": "Completed build API: first-attempt failure, exact source and workflow.",
+      "origin_sha256": "361f6c48281e1d6f10f92d4a0b7066916282e6369cb2e46f47f97c774f7691e8",
+      "stored_sha256": "361f6c48281e1d6f10f92d4a0b7066916282e6369cb2e46f47f97c774f7691e8",
+      "bytes": 15246,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/jobs-final-api.json",
+      "origin": "ci-run-45044040694/jobs-api-final.json",
+      "phase": "All six actual job records including the failed Linux validator.",
+      "origin_sha256": "d98d9fff1ebd4d9eeac81f81b07f4123401574b99e8d7ce9579a21deecbb2178",
+      "stored_sha256": "d98d9fff1ebd4d9eeac81f81b07f4123401574b99e8d7ce9579a21deecbb2178",
+      "bytes": 31998,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/artifacts-final-api.json",
+      "origin": "ci-run-45044040694/artifact-metadata.json",
+      "phase": "Complete sixteen-artifact API snapshot, exact source/run sizes and digests.",
+      "origin_sha256": "ee6353df38a08698cf809eb677928ec380d4d16092efbc8cc529b31f71439b4f",
+      "stored_sha256": "ee6353df38a08698cf809eb677928ec380d4d16092efbc8cc529b31f71439b4f",
+      "bytes": 14121,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/publisher-skipped-api.json",
+      "origin": "ci-run-45044040694/publisher-skipped-api.json",
+      "phase": "Automatic versioned publisher skipped after the failed originating build.",
+      "origin_sha256": "abf642bad1f41742aa50c3e30c7f3e9bbf150cc48e47c6df762d16713fe919f2",
+      "stored_sha256": "abf642bad1f41742aa50c3e30c7f3e9bbf150cc48e47c6df762d16713fe919f2",
+      "bytes": 14812,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/release-qualification.json",
+      "origin": "current-2026.11.1-release-qualification.json",
+      "phase": "Final bounded integration: four native/archive/download passes and actual audition, with failed Linux GUI gate and blocked versioned release preserved.",
+      "origin_sha256": "7dc0ac49254a1d593bfea2b8346c7c88548421db1deb28f4f9a042ca92ce8dca",
+      "stored_sha256": "7dc0ac49254a1d593bfea2b8346c7c88548421db1deb28f4f9a042ca92ce8dca",
+      "bytes": 9874,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/publication-absence-api.json",
+      "origin": "ci-run-45044040694/releases-api.json and tag-matches-api.json",
+      "phase": "Actual post-failure release/tag absence API snapshots; no versioned asset publication claimed.",
+      "origin_sha256": {
+        "releases-api.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "tag-matches-api.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      },
+      "stored_sha256": "3c46f902625f0c9de9a362380d8ad60c89a51e8e50b38b4df951b1a8c717d246",
+      "bytes": 802,
+      "transform": "Wrapped the two exact parsed API responses with observed query URLs and recorded local snapshot times."
+    },
+    {
+      "path": "ci/teardown-source-audit.md",
+      "origin": "review-w10-teardown/revision-2026.11.1-run-45044040694/DIAGNOSIS.md",
+      "phase": "Read-only source-bound teardown audit: no new demonstrated lifetime defect; original GUI failure and unresolved ownership preserved.",
+      "origin_sha256": "ae4e17a97db3f48299cb26cb30f277164ef59a7a7d413fc953b8111f97c8e506",
+      "stored_sha256": "ae4e17a97db3f48299cb26cb30f277164ef59a7a7d413fc953b8111f97c8e506",
+      "bytes": 7732,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/teardown-source-audit.json",
+      "origin": "review-w10-teardown/revision-2026.11.1-run-45044040694/audit.json",
+      "phase": "Read-only source-bound teardown audit: no new demonstrated lifetime defect; original GUI failure and unresolved ownership preserved.",
+      "origin_sha256": "d6303d0800c17f6a7e37ff851ec3f8d6c0dd49f5d9b0d33043ab76192e6b0c02",
+      "stored_sha256": "d6303d0800c17f6a7e37ff851ec3f8d6c0dd49f5d9b0d33043ab76192e6b0c02",
+      "bytes": 10282,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/teardown-production-source-diff.patch",
+      "origin": "review-w10-teardown/revision-2026.11.1-run-45044040694/production-source-diff.patch",
+      "phase": "Read-only source-bound teardown audit: no new demonstrated lifetime defect; original GUI failure and unresolved ownership preserved.",
+      "origin_sha256": "1f314a9d4bfa28e66200ad8cb139d5def82fe38d9504762fb16757e20fc97d29",
+      "stored_sha256": "1f314a9d4bfa28e66200ad8cb139d5def82fe38d9504762fb16757e20fc97d29",
+      "bytes": 20294,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/current-upstream-comparison.json",
+      "origin": "review-w09-linux/revision2026.11.1/comparison-run-45060638632/attempt-1/verification.json",
+      "phase": "Actual separate official beta3 comparison on the same VST3 artifact; different host/JUCE/test inventory/seeds, not a stable-gate replacement or crash repair.",
+      "origin_sha256": "2bb254f4852fb933b22ad2ffd0e36e5a264c6dd1ef84b108d6985e05dc3ab05b",
+      "stored_sha256": "2bb254f4852fb933b22ad2ffd0e36e5a264c6dd1ef84b108d6985e05dc3ab05b",
+      "bytes": 22470,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/current-upstream-comparison.md",
+      "origin": "review-w09-linux/revision2026.11.1/comparison-run-45060638632/attempt-1/REPORT.md",
+      "phase": "Actual separate official beta3 comparison on the same VST3 artifact; different host/JUCE/test inventory/seeds, not a stable-gate replacement or crash repair.",
+      "origin_sha256": "e2e442484180fdec1f9d5d2a739a8d6c3a2a676f55dfc3942cf8b7e5e2b020db",
+      "stored_sha256": "e2e442484180fdec1f9d5d2a739a8d6c3a2a676f55dfc3942cf8b7e5e2b020db",
+      "bytes": 2380,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.json",
+      "origin": "review-w09-linux/revision2026.11.1/final-development-link-review/acceptance.json",
+      "phase": "Read-only acceptance of accurately disclosed development downloads only; qualified versioned release remains blocked. Initial overly strict prose predicate and correction retained.",
+      "origin_sha256": "4de258827a107cd5597a0952b2d578695c10c170ba26ffa2077c96e2bdb954df",
+      "stored_sha256": "4de258827a107cd5597a0952b2d578695c10c170ba26ffa2077c96e2bdb954df",
+      "bytes": 9592,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.md",
+      "origin": "review-w09-linux/revision2026.11.1/final-development-link-review/REPORT.md",
+      "phase": "Read-only acceptance of accurately disclosed development downloads only; qualified versioned release remains blocked. Initial overly strict prose predicate and correction retained.",
+      "origin_sha256": "31996b564f9fcbefdd15f75c9fad897db972995ee5c7e72c842d88e7657e02ad",
+      "stored_sha256": "31996b564f9fcbefdd15f75c9fad897db972995ee5c7e72c842d88e7657e02ad",
+      "bytes": 3359,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/acceptance/initial-predicate-finding.json",
+      "origin": "review-w09-linux/revision2026.11.1/final-development-link-review/acceptance.draft-20261122T194007.json",
+      "phase": "Read-only acceptance of accurately disclosed development downloads only; qualified versioned release remains blocked. Initial overly strict prose predicate and correction retained.",
+      "origin_sha256": "e2e635c2ac26fe60af8ffbc17b7f321884dff2d698569665794ba122c3373db0",
+      "stored_sha256": "e2e635c2ac26fe60af8ffbc17b7f321884dff2d698569665794ba122c3373db0",
+      "bytes": 6722,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/acceptance/reviewed-prose/root-README.md",
+      "origin": "current-development-merge-814c901/README.md",
+      "phase": "Exact prose snapshot covered by compact acceptance before concurrent814c901 integration; original relative links are interpreted at the recorded source path, not this archive folder.",
+      "origin_sha256": "81fc7a78ec778a46e9ac7d1f1bf7e1c8f2b1541309070abb66d2a4f02de3a578",
+      "stored_sha256": "81fc7a78ec778a46e9ac7d1f1bf7e1c8f2b1541309070abb66d2a4f02de3a578",
+      "bytes": 16191,
+      "transform": "Verbatim snapshot; filename relocated for archival context."
+    },
+    {
+      "path": "ci/acceptance/reviewed-prose/CI_DISTRIBUTION_STATUS.md",
+      "origin": "current-development-merge-814c901/docs/CI_DISTRIBUTION_STATUS.md",
+      "phase": "Exact prose snapshot covered by compact acceptance before concurrent814c901 integration; original relative links are interpreted at the recorded source path, not this archive folder.",
+      "origin_sha256": "69ec28e90a7e3db36bd4d138717764433014fe3672355badab215f0936a1f3c9",
+      "stored_sha256": "69ec28e90a7e3db36bd4d138717764433014fe3672355badab215f0936a1f3c9",
+      "bytes": 13216,
+      "transform": "Verbatim snapshot; filename relocated for archival context."
+    },
+    {
+      "path": "ci/acceptance/reviewed-prose/PRESET_REFINEMENT_2026_11_1.md",
+      "origin": "current-development-merge-814c901/docs/PRESET_REFINEMENT_2026_11_1.md",
+      "phase": "Exact prose snapshot covered by compact acceptance before concurrent814c901 integration; original relative links are interpreted at the recorded source path, not this archive folder.",
+      "origin_sha256": "8dcfd8b700c9968ae2e8414d0c9ca5b97a3685b1285cd9227a2a9ea948f9cfe5",
+      "stored_sha256": "8dcfd8b700c9968ae2e8414d0c9ca5b97a3685b1285cd9227a2a9ea948f9cfe5",
+      "bytes": 23982,
+      "transform": "Verbatim snapshot; filename relocated for archival context."
+    },
+    {
+      "path": "ci/acceptance/reviewed-prose/evidence-README.md",
+      "origin": "current-development-merge-814c901/docs/preset-evidence/2026.11.1/README.md",
+      "phase": "Exact prose snapshot covered by compact acceptance before concurrent814c901 integration; original relative links are interpreted at the recorded source path, not this archive folder.",
+      "origin_sha256": "d57b53beb786e69912ace0a84e76add7be47aed960d3377495b7f3f5d27bfbed",
+      "stored_sha256": "d57b53beb786e69912ace0a84e76add7be47aed960d3377495b7f3f5d27bfbed",
+      "bytes": 23441,
+      "transform": "Verbatim snapshot; filename relocated for archival context."
+    },
+    {
+      "path": "ci/merge-814c901.json",
+      "origin": "current-development-semantic-merge.json",
+      "phase": "Coordinator byte-preservation accounting and independently reviewed additive integration after concurrent documentation publication.",
+      "origin_sha256": "ad5e9031feaf601e84ae30fba93f8645357435cb5b5ae7224607b7e8bd6e0faa",
+      "stored_sha256": "ad5e9031feaf601e84ae30fba93f8645357435cb5b5ae7224607b7e8bd6e0faa",
+      "bytes": 3817,
       "transform": "Verbatim."
     }
   ],
@@ -4837,6 +5200,53 @@
       },
       "new_stored_sha256": "f95231a00d87eb24f36656003cb68f89eb5a73d7f4bb1482758e1fd46bde15a8",
       "reason": "Actual completed native/candidate/failure outcome replaces the earlier three-platform pending status."
+    },
+    {
+      "path": "README.md",
+      "previous_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+      "previous_entry": {
+        "path": "README.md",
+        "origin": "Authored package index and reproduction instructions in assignments20 and28",
+        "phase": "Evidence-stage index; not an additional measurement.",
+        "origin_sha256": null,
+        "stored_sha256": "f95231a00d87eb24f36656003cb68f89eb5a73d7f4bb1482758e1fd46bde15a8",
+        "bytes": 20990,
+        "transform": "Deliberate final integration index refresh: actual four-platform native/archive outcomes, original Linux GUI failure, verified five candidate downloads and withheld formal release. Authoring measurements and every other prior payload remain unchanged."
+      },
+      "new_stored_sha256": "978adcc7b5cbdedd292da4a76a1adb9ebb1491e1d418a6aa32bc70954b808148",
+      "reason": "Additive compact review links; incoming final-ci material and older measurements preserved."
     }
-  ]
+  ],
+  "compact_verification": {
+    "recorded_at_utc": "2026-11-22T19:33:14.284499+00:00",
+    "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "source_tree": "88ee322bf66b380c4227e224821783f2db04bbee",
+    "run_id": 45044040694,
+    "attempt": 1,
+    "status": "DEVELOPMENT_DOWNLOADS_VERIFIED_LINUX_VALIDATOR_FAILED_VERSIONED_RELEASE_BLOCKED",
+    "lineage": "ci/source-lineage.json",
+    "qualification": "ci/release-qualification.json",
+    "separate_original_revision": "../2026.11/ci/release-qualification.json",
+    "native_test_and_archive_verified_targets": [
+      "linux-x86_64",
+      "macos-arm64",
+      "macos-x86_64",
+      "windows-x86_64"
+    ],
+    "required_platform_validators_passed_targets": [
+      "macos-arm64",
+      "macos-x86_64",
+      "windows-x86_64"
+    ],
+    "linux_validator_qualified": false,
+    "audition_actual_wavs_verified": 24,
+    "versioned_release_status": "BLOCKED",
+    "development_publication_review": "ci/acceptance/FINAL-ACCEPTANCE-2026_11_1.json",
+    "development_publication_review_scope": "46 passing retained-evidence/prose consistency checks and295manifestpayloads; three acceptance documents added afterward with exact-byte hashes. No qualified versioned release or Linux crash repair.",
+    "before_concurrent_documentation_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+    "prose_review_snapshot": "ci/acceptance/reviewed-prose/",
+    "integration_note": "The incoming final-ci dossier and team ledger are preserved. Compact295-payload acceptance concerns its recorded earlier prose/evidence snapshot. A combined provenance hash check is recorded separately; no versioned release or Linux repair is claimed.",
+    "additive_merge": "ci/merge-814c901.json",
+    "combined_manifest_payload_count": 562
+  }
 }

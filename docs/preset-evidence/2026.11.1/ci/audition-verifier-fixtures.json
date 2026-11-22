@@ -1,0 +1,126 @@
+{
+  "status": "VERIFIER_FIXTURES_CHECKED",
+  "scope": "Preparation fixtures only; not actual 2026.11.1 CI artifact verification",
+  "checked_at_utc": "2026-11-22T16:43:20.978070+00:00",
+  "checks_exercised": 19,
+  "all_checks_behaved_as_expected": true,
+  "checks": [
+    {
+      "check": "Exact published source yields 24 programs / 117 seconds and mixed durations",
+      "expected": "accept",
+      "observed": "accept"
+    },
+    {
+      "check": "Valid in-memory provenance contract",
+      "expected": "accept",
+      "observed": "accept"
+    },
+    {
+      "check": "Numeric attempt 1 is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "Provenance attempt must be the exact string \"1\""
+    },
+    {
+      "check": "Different attempt is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "Provenance attempt must be the exact string \"1\""
+    },
+    {
+      "check": "Wrong source is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "Wrong source commit in provenance"
+    },
+    {
+      "check": "Wrong run is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "Wrong or non-string run ID in provenance"
+    },
+    {
+      "check": "Incomplete capture is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "Capture did not complete"
+    },
+    {
+      "check": "Incorrect slow duration in provenance is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "Provenance selections differ from published source"
+    },
+    {
+      "check": "Checksum coverage derives from file set, not a fixed count",
+      "expected": "accept",
+      "observed": "accept"
+    },
+    {
+      "check": "Unchecksummed extra file is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "Incomplete checksum coverage"
+    },
+    {
+      "check": "Changed checksummed bytes are rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "Checksum mismatch: one.txt"
+    },
+    {
+      "check": "Frame parser accepts caller-bound 4-frame fixture",
+      "expected": "accept",
+      "observed": "accept"
+    },
+    {
+      "check": "Frame parser accepts a different 7-frame fixture",
+      "expected": "accept",
+      "observed": "accept"
+    },
+    {
+      "check": "Frame parser rejects a duration mismatch",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "WAV frame count differs from its source group"
+    },
+    {
+      "check": "Raw nonfinite sample is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "WAV contains nonfinite samples"
+    },
+    {
+      "check": "Raw sample over full scale is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "WAV contains samples over full scale"
+    },
+    {
+      "check": "Independent float32 parameter digest agrees with retained real CSV",
+      "expected": "accept",
+      "observed": "accept"
+    },
+    {
+      "check": "Raw peak/RMS computation agrees with one retained real clip CSV",
+      "expected": "accept",
+      "observed": "accept"
+    },
+    {
+      "check": "CSV RMS disagreement is rejected",
+      "expected": "reject",
+      "observed": "reject",
+      "reason": "CSV/raw WAV mismatch: rms_dbfs"
+    }
+  ],
+  "existing_clip_fixture": {
+    "source_zip": "/workspace/scratch/ffe08111d1ce/ci-run-45029235535/cs80-curated-preset-audition-d0c3c23be68ef048aa56969f1c493c221c1562c5.zip",
+    "member": "standard/0-Brass-Swell-I.wav",
+    "sha256": "4af8cea5b0574c4e3ad043a00493f6bb9f37c87af954b1a7a870926b60029916"
+  },
+  "new_audio_renders": 0,
+  "builds": 0,
+  "actual_new_artifact_verification_performed": false,
+  "synthetic_parser_fixtures": "Only ephemeral 4-frame and 7-frame byte arrays; no files or synth renders",
+  "original_d0c_evidence_files_unchanged": 12
+}
