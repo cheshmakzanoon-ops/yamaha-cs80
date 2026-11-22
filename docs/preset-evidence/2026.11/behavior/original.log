@@ -1,0 +1,42 @@
+FAIL: Pan Flute: independent transient dies on a held key
+MIX ONSET Pan Flute           transient/body   -15.9 dB; reconstruction error  -141.9 dB relative
+TRANSIENT Pan Flute           transient late/onset     2.5 dB; body late/early   -0.1 dB; full late  -28.5 dBFS
+FAIL: Sine Bass: independent transient dies on a held key
+TRANSIENT Sine Bass           transient late/onset    -1.7 dB; body late/early   -0.3 dB; full late  -25.8 dBFS
+MIX ONSET Nylon Pluck         transient/body    -0.1 dB; reconstruction error  -142.7 dB relative
+FAIL: Nylon Pluck: finger transient dies promptly on a held key
+FAIL: Percussive Organ: percussion is the octave above the 8-foot body
+FAIL: Percussive Organ: octave percussion is present in the full patch
+FAIL: Percussive Organ: full-patch octave percussion fades
+PERCUSSION octave/other   -2.7 dB; full octave/root onset  -45.7 dB; octave late/early   -0.2 dB; root late/early  -0.1 dB
+FAIL: Piccolo: no prominent unintended lower-octave pitch
+REGISTER  Piccolo             intended  -24.7 dBFS; strongest lower octave    -6.7 dB relative
+FAIL: Ocarina: no prominent unintended lower-octave pitch
+REGISTER  Ocarina             intended  -22.5 dBFS; strongest lower octave    -8.9 dB relative
+FAIL: Whistle: no prominent unintended lower-octave pitch
+REGISTER  Whistle             intended  -22.8 dBFS; strongest lower octave    -8.9 dB relative
+FAIL: Velocity Keys: hard attack is substantially louder than soft attack
+FAIL: Velocity Keys: wide velocity dynamics persist beyond the onset
+VELOCITY  Velocity Keys       hard/soft attack   +4.1 dB; body   +1.7 dB; soft body  -43.1 dBFS
+FAIL: Velocity Lead: hard attack is substantially louder than soft attack
+FAIL: Velocity Lead: wide velocity dynamics persist beyond the onset
+VELOCITY  Velocity Lead       hard/soft attack   -0.1 dB; body   +1.0 dB; soft body  -26.5 dBFS
+FAIL: Pressure Lead: no-pressure held key is at the silence/noise floor
+FAIL: Pressure Lead: full pressure brings out a clearly audible tone
+FAIL: Pressure Lead: releasing pressure fades the held tone
+PRESSURE  unpressed   -37.5 dBFS; pressed  -27.2 dBFS; released/pressed   -10.8 dB
+FAIL: Brass Stab: short articulation dies without note-off
+HELD      Brass Stab          late/onset    -1.2 dB; onset  -30.3 dBFS
+HELD      Pizzicato Strings   late/onset   -45.3 dB; onset  -35.1 dBFS
+FAIL: Spiccato Strings: short articulation dies without note-off
+HELD      Spiccato Strings    late/onset   -10.5 dB; onset  -33.9 dBFS
+FAIL: Poly Stab: short articulation dies without note-off
+HELD      Poly Stab           late/onset     0.8 dB; onset  -27.5 dBFS
+HELD      Flute Organ 8+4     late/onset     0.0 dB; onset  -25.8 dBFS
+SWELL     Slow Pad            bloom/opening  +18.6 dB; final/bloom   -0.3 dB; held 3.0 s
+SWELL     Slow Strings        bloom/opening  +13.5 dB; final/bloom   -0.8 dB; held 2.6 s
+FAIL: Bowed Swell Strings: long opening grows into an audible swell
+SWELL     Bowed Swell Strings bloom/opening   +3.4 dB; final/bloom   +0.9 dB; held 3.2 s
+SWELL     Brass Pad Swell     bloom/opening  +24.1 dB; final/bloom   +2.1 dB; held 3.2 s
+SWELL     Sweep Pad           bloom/opening  +22.3 dB; final/bloom   -0.5 dB; held 4.8 s
+Preset voicing regressions: 116/136 checks passed; 45.1 seconds generated.

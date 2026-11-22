@@ -1,0 +1,125 @@
+{
+  "scope": "six-factory-programs-long-hold-natural-release-overlap",
+  "total_audio_seconds": 84.0,
+  "stereo_samples": 8064000,
+  "sample_rate_hz": 48000,
+  "oversampling_factor": 2,
+  "factory_parameter_match": [
+    {
+      "name": "Deep Space",
+      "index": 275,
+      "parameter_count": 190,
+      "float32_parameter_mismatches": [],
+      "expected_digest": "c6de53111753fab6",
+      "measured_digest": "c6de53111753fab6",
+      "digest_matches": true
+    },
+    {
+      "name": "Evolving Pad",
+      "index": 71,
+      "parameter_count": 190,
+      "float32_parameter_mismatches": [],
+      "expected_digest": "20c7d35b693d6850",
+      "measured_digest": "20c7d35b693d6850",
+      "digest_matches": true
+    },
+    {
+      "name": "Plate Pad",
+      "index": 283,
+      "parameter_count": 190,
+      "float32_parameter_mismatches": [],
+      "expected_digest": "c139050f1a53bead",
+      "measured_digest": "c139050f1a53bead",
+      "digest_matches": true
+    },
+    {
+      "name": "Ambient Bells",
+      "index": 293,
+      "parameter_count": 190,
+      "float32_parameter_mismatches": [],
+      "expected_digest": "2d67aaf8c241bf",
+      "measured_digest": "2d67aaf8c241bf",
+      "digest_matches": true
+    },
+    {
+      "name": "Bell Pad",
+      "index": 248,
+      "parameter_count": 190,
+      "float32_parameter_mismatches": [],
+      "expected_digest": "926dfc2d92b7bf47",
+      "measured_digest": "926dfc2d92b7bf47",
+      "digest_matches": true
+    },
+    {
+      "name": "Ensemble Plus",
+      "index": 294,
+      "parameter_count": 190,
+      "float32_parameter_mismatches": [],
+      "expected_digest": "bf9d1a12173839ef",
+      "measured_digest": "bf9d1a12173839ef",
+      "digest_matches": true
+    }
+  ],
+  "all_finite": true,
+  "all_below_full_scale": true,
+  "all_reach_eight_voices": true,
+  "all_end_zero_voices": true,
+  "worst_peak_dbfs": -6.48666640124,
+  "per_program_level_adjustment_recommended": false,
+  "tail_windows": [
+    {
+      "name": "Deep Space",
+      "post_release_seconds": 8.45,
+      "rms_0_to_halfsecond_dbfs": -32.01534136875571,
+      "rms_1_to_2_seconds_dbfs": -39.7436639773777,
+      "rms_3_to_4_seconds_dbfs": -69.20628022876605,
+      "rms_last_second_dbfs": -109.81792625460679
+    },
+    {
+      "name": "Evolving Pad",
+      "post_release_seconds": 7.85,
+      "rms_0_to_halfsecond_dbfs": -25.999940277346152,
+      "rms_1_to_2_seconds_dbfs": -46.21650382342379,
+      "rms_3_to_4_seconds_dbfs": -77.71736674987908,
+      "rms_last_second_dbfs": -82.21795080907293
+    },
+    {
+      "name": "Plate Pad",
+      "post_release_seconds": 8.85,
+      "rms_0_to_halfsecond_dbfs": -23.782462293688276,
+      "rms_1_to_2_seconds_dbfs": -48.33740516568714,
+      "rms_3_to_4_seconds_dbfs": -91.24934401876475,
+      "rms_last_second_dbfs": -109.75799869291608
+    },
+    {
+      "name": "Ambient Bells",
+      "post_release_seconds": 8.85,
+      "rms_0_to_halfsecond_dbfs": -38.4128637294734,
+      "rms_1_to_2_seconds_dbfs": -58.9628112527182,
+      "rms_3_to_4_seconds_dbfs": -81.94519049033016,
+      "rms_last_second_dbfs": -81.37327186061157
+    },
+    {
+      "name": "Bell Pad",
+      "post_release_seconds": 9.85,
+      "rms_0_to_halfsecond_dbfs": -34.33374972792298,
+      "rms_1_to_2_seconds_dbfs": -50.798489648415675,
+      "rms_3_to_4_seconds_dbfs": -72.84649658836854,
+      "rms_last_second_dbfs": -73.4738112919612
+    },
+    {
+      "name": "Ensemble Plus",
+      "post_release_seconds": 7.85,
+      "rms_0_to_halfsecond_dbfs": -35.441931691029936,
+      "rms_1_to_2_seconds_dbfs": -84.24479432506395,
+      "rms_3_to_4_seconds_dbfs": -84.130093571236,
+      "rms_last_second_dbfs": -84.12824139061256
+    }
+  ],
+  "files": {
+    "libcs80_core.a": "93afda4ffa0a4c7a6a7a94155b3cc693754e932b49e7e197d15402f3b79a293f",
+    "inventory.json": "cf02a7c19d2f2fef86dbae90e90d125752a9b2b0bff6918f8f48ef9134eb5f81",
+    "long_tail_audit.cpp": "b90018ce94b82dccf7fe82a2e81e2213f526aa6d5974cadbc7590a8252587929",
+    "long_tail_audit": "defc550b93efb30f1486595f187c30ed1e9b71a8c81791a0f44b765bdd747da7"
+  }
+}

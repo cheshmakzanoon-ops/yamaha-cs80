@@ -46,6 +46,12 @@ void testProgramLibraryHost(Check&& check)
     // --- Program list: Legacy Library keeps host indexes 0..221; curated follows.
     {
         Cs80AudioProcessor host;
+        check(host.getCurrentProgram() == cs80::programIndexForCurated(0)
+                  && host.getPresetName() == juce::String(curated[0].name)
+                  && host.getPresetMetadata().origin.kind == cs80::PresetOrigin::Kind::factory
+                  && valuesMatch(host, curated[0].values)
+                  && host.getParamValue(cs80::P_subOriginalMode) == 1.0f,
+              "fresh instance recalls the authored Circuit showcase and its factory identity");
         check(host.getNumPrograms() == L + C && C >= 280, "host program list covers legacy and curated libraries");
         check(host.getProgramName(0) == juce::String(legacy[0].name)
                   && host.getProgramName(22) == juce::String(legacy[22].name)

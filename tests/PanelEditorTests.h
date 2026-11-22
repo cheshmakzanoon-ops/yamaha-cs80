@@ -561,7 +561,7 @@ inline GoldenResult compareGolden(const juce::Image& golden, const juce::Image& 
 }
 
 // Golden-image comparison of the main view at both supported sizes. Each capture comes from a fresh processor and
-// editor (Init Patch, no audio rendered, no pointer), so it is deterministic. Set CS80_REFRESH_GOLDENS=1 to write
+// editor (explicit frozen patch, no audio rendered, no pointer), so it is deterministic. Set CS80_REFRESH_GOLDENS=1 to write
 // the captures into tests/golden instead (then inspect and commit them).
 template <typename Check, typename Flush>
 void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
@@ -578,9 +578,14 @@ void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
         {
             juce::TemporaryFile presetRoot("-cs80-golden");
             Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
-            // The goldens show a fresh instance as players meet it (re-recorded 2026-10-31 on the integrated
-            // tree): the circuit engine (plan 1.7, status chip "MODE SOURCE PERFORMANCE"), ws8's toolbar and
-            // ws6's program counter over the 523-program library.
+            // The layout golden has an explicit, frozen sound fixture: the
+            // startup patch recorded on 2026-10-31. Curated voicing changes must
+            // not silently turn a panel-layout test into a preset-data snapshot.
+            // ProgramLibraryHostTests separately checks the current startup sound.
+            host.loadFactoryPreset(0);
+            host.setParamValue(cs80::P_subOriginalMode, 1.0f);
+            host.setParamValue(cs80::P_sourcePerformance, 1.0f);
+            host.setPresetName(juce::String(host.getFactoryPresets()[0].name) + " / Original SUB");
             Cs80AudioProcessorEditor editor(host);
             editor.setSize(size.x, size.y);
             flush(300);

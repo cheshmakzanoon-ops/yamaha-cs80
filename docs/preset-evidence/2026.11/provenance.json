@@ -1,0 +1,365 @@
+{
+  "baseline_commit": "61f45feeae1f01038476eb9c99105534950db4de",
+  "capture_date": "2026-11-22",
+  "status": "LOCAL_INTEGRATION_VERIFIED_CI_PENDING",
+  "note": "The final inventory includes the Stereo Delay Pluck correction. The complete library audit, five native recall modes, panel comparisons, 136 behavior checks and nine capture CLI tests passed on the integrated source. Nominal metrics retain 300 unchanged vectors and recapture Stereo Delay Pluck; all 301 row digests match the final inventory. Platform CI and publication links remain pending.",
+  "files": [
+    {
+      "path": "baseline/inventory.json",
+      "origin": "evidence-baseline/inventory.json",
+      "original_sha256": "a967a799478dd4b009bdf03a8e45975c204c770462bf137cf300a173d478eb93",
+      "stored_sha256": "a967a799478dd4b009bdf03a8e45975c204c770462bf137cf300a173d478eb93",
+      "transform": "verbatim"
+    },
+    {
+      "path": "baseline/nominal.csv",
+      "origin": "evidence-baseline/nominal/metrics.csv",
+      "original_sha256": "616a8cee63f723dc64b4a97a362eaf949e8fa4cfc487c464e0eb3812e1767a0e",
+      "stored_sha256": "616a8cee63f723dc64b4a97a362eaf949e8fa4cfc487c464e0eb3812e1767a0e",
+      "transform": "verbatim"
+    },
+    {
+      "path": "baseline/library-audit.log",
+      "origin": "evidence-baseline/library-audit.log",
+      "original_sha256": "f4b51db123c34a085df85508d612491c0858f72fcb57a5e5d4637b54b79da206",
+      "stored_sha256": "f4b51db123c34a085df85508d612491c0858f72fcb57a5e5d4637b54b79da206",
+      "transform": "verbatim"
+    },
+    {
+      "path": "final/inventory.json",
+      "origin": "evidence-release/inventory.json",
+      "original_sha256": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785",
+      "stored_sha256": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785",
+      "transform": "verbatim"
+    },
+    {
+      "path": "final/nominal.csv",
+      "origin": "evidence-release/nominal/metrics.csv",
+      "original_sha256": "93d78bf470acd708543279441992985e429e3082dd0680e27aed41ed1fcb1784",
+      "stored_sha256": "c0fbebc357627adc26364bc1fa896aab599f5d64d888c8cc55afb2c95a9ae018",
+      "transform": "CRLF converted to LF; numeric fields unchanged"
+    },
+    {
+      "path": "final/library-audit.log",
+      "origin": "evidence-release/library-audit.log",
+      "original_sha256": "912b60f52e254fb7f704b9c89aa109fb7fd0d5e25254198befd7c5655b0bb522",
+      "stored_sha256": "912b60f52e254fb7f704b9c89aa109fb7fd0d5e25254198befd7c5655b0bb522",
+      "transform": "verbatim"
+    },
+    {
+      "path": "calibration/pass-1-levels.inc",
+      "origin": "calibration-pass-1-levels.inc",
+      "original_sha256": "792815597969a870fc411649cc4841fd8e1468f7a5979e9af91adc7c704de367",
+      "stored_sha256": "792815597969a870fc411649cc4841fd8e1468f7a5979e9af91adc7c704de367",
+      "transform": "verbatim"
+    },
+    {
+      "path": "calibration/pass-2-levels.inc",
+      "origin": "calibration-pass-2-levels.inc",
+      "original_sha256": "f54c685f5d3e33bd722f34c68324634718c5d284dd9cd93f6910635d0676678b",
+      "stored_sha256": "f54c685f5d3e33bd722f34c68324634718c5d284dd9cd93f6910635d0676678b",
+      "transform": "verbatim"
+    },
+    {
+      "path": "calibration/rebuild-between-passes.log",
+      "origin": "calibration-pass-2-build.log",
+      "original_sha256": "2cdf144c2a3081d44028b39625dd28fb0677e97c002e7ed5424a5d4e3d52fdf2",
+      "stored_sha256": "2cdf144c2a3081d44028b39625dd28fb0677e97c002e7ed5424a5d4e3d52fdf2",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/brass.json",
+      "origin": "review-w04-brass/measurements.json",
+      "original_sha256": "08f8c498ce426296d1e2b285081ad6db4ca810fe2ff53a43c363d6cb90e3e641",
+      "stored_sha256": "0e5eeda6042aac70613bce55be908236af233ef5cab3c00f82be4e772c88a87f",
+      "transform": "workspace prefix removed from provenance strings; JSON formatted"
+    },
+    {
+      "path": "families/strings.json",
+      "origin": "review-w04-strings/analysis.json",
+      "original_sha256": "7b515d4d2e1ab9474e142e84be55ff989edd09de9c3433e7783a8df357610864",
+      "stored_sha256": "f2dd698a4c17e7ac2f1cc4d77e0708846bd1bcfd63df3f57d622ff386184abd7",
+      "transform": "workspace prefix removed from provenance strings; JSON formatted"
+    },
+    {
+      "path": "families/pads-polysynth.json",
+      "origin": "review-w04-pads-poly/analysis.json",
+      "original_sha256": "74932e42d40e8cb99cfdcf538bf3a22eeb8104e26cdfdf6a817fcd7aa1446a07",
+      "stored_sha256": "1022c655a242ae5a53513fcf3039bc2ac4691abe9e2e6609df2c20edcfdf3574",
+      "transform": "workspace prefix removed from provenance strings; JSON formatted"
+    },
+    {
+      "path": "families/winds-organ.json",
+      "origin": "review-w04-winds-organ/analysis.json",
+      "original_sha256": "20c014f91a6864136b0b40280fb9dd5c2a870ac4751580dd47a3c6beaaaf1846",
+      "stored_sha256": "20c014f91a6864136b0b40280fb9dd5c2a870ac4751580dd47a3c6beaaaf1846",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/winds-organ-supplement.json",
+      "origin": "review-w04-winds-organ/supplement.json",
+      "original_sha256": "a88afa3c406d518839b452aadf0605e2d58c1986df49de79b6233309ae229378",
+      "stored_sha256": "a88afa3c406d518839b452aadf0605e2d58c1986df49de79b6233309ae229378",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/keys-plucked.json",
+      "origin": "review-w04-keys-plucked/metrics-derived.json",
+      "original_sha256": "d2495d76a58f3c4c2508d4fa42358a64f98192b64db01832514043e97f186e24",
+      "stored_sha256": "70ac2dbdd5cf556ee1fe83a83d40a8cae414942d760e0be8e905d186ae76b8c0",
+      "transform": "workspace prefix removed from provenance strings; JSON formatted"
+    },
+    {
+      "path": "families/nylon-refinement.json",
+      "origin": "review-w04-keys-plucked/nylon-refinement-summary.json",
+      "original_sha256": "f6d712d5785488171ef53af380c141b1802a2e25e7ee2be12d3a4871ed8c0e61",
+      "stored_sha256": "d02bf7dd775a1495a4bb587aa7f0ec20512328dbde626bd9f6f4df2ca87fcc3f",
+      "transform": "workspace prefix removed from provenance strings; JSON formatted"
+    },
+    {
+      "path": "families/bass-leads.json",
+      "origin": "review-w04-bass-leads/analysis.json",
+      "original_sha256": "bcd8eba16e737ae81244252a4645251a90b8f774d69a9516847e334304234d85",
+      "stored_sha256": "bcd8eba16e737ae81244252a4645251a90b8f774d69a9516847e334304234d85",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/sine-bass-bands.csv",
+      "origin": "review-w04-bass-leads/sine-bands.csv",
+      "original_sha256": "70328642a74e3a37dd27f63978756b3294250981155b91b10b7a46704e901353",
+      "stored_sha256": "8ec54212e1a6d085d92f7ec9f64696f0737d87efa5a78242f762cc04e1b80e76",
+      "transform": "CRLF converted to LF; numeric fields unchanged"
+    },
+    {
+      "path": "families/bells-ranks.csv",
+      "origin": "review-w05-bells/rank-analysis.csv",
+      "original_sha256": "828143da75437dcc5e287252279bc1e9ee18e01e60649b54334deb7e27e94b66",
+      "stored_sha256": "828143da75437dcc5e287252279bc1e9ee18e01e60649b54334deb7e27e94b66",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/bells-final-audit.csv",
+      "origin": "review-w05-bells/final-audit.csv",
+      "original_sha256": "4f20f516f2f589ae0c15098d958d52e45fca85d9ba4ae1438ad00257a226c9c3",
+      "stored_sha256": "4f20f516f2f589ae0c15098d958d52e45fca85d9ba4ae1438ad00257a226c9c3",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/bells-spectrum.csv",
+      "origin": "review-w05-bells/spectral-comparison.csv",
+      "original_sha256": "19cf66bd56424058b4756d9ecbcbc8ce18a5b42b1b8ce1dd9ce6e4ad6387c65e",
+      "stored_sha256": "19cf66bd56424058b4756d9ecbcbc8ce18a5b42b1b8ce1dd9ce6e4ad6387c65e",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/fx-final-audit.csv",
+      "origin": "review-w05-fx/final-audit.csv",
+      "original_sha256": "bc405bd655169083f3abc47bb13d33116d9b43bb77cb6775517f38461a958dd4",
+      "stored_sha256": "bc405bd655169083f3abc47bb13d33116d9b43bb77cb6775517f38461a958dd4",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/fx-gates.json",
+      "origin": "review-w05-fx/gate-metrics.json",
+      "original_sha256": "f0552914b7c58c9f7adda81dc6e068cc3d18491c98db953bcccf3c930eab2569",
+      "stored_sha256": "f0552914b7c58c9f7adda81dc6e068cc3d18491c98db953bcccf3c930eab2569",
+      "transform": "verbatim"
+    },
+    {
+      "path": "families/modern.json",
+      "origin": "review-w05-modern/metrics.json",
+      "original_sha256": "d75b53635e468d96eca7394056dba924dbf73e4a5d7454b356b3b03d4e3fbd6c",
+      "stored_sha256": "c29d8cbeb18e78090231f78768dd5a02c5bd109d47754403f25a8af59b47598f",
+      "transform": "workspace prefix removed from provenance strings; JSON formatted"
+    },
+    {
+      "path": "controls/velocity-static.json",
+      "origin": "review-w06-velocity/static-summary.json",
+      "original_sha256": "2294f6e2db38888d34c29aaec819b50cc7dbaefb93aa5dedba5d4b11596ff2d1",
+      "stored_sha256": "2294f6e2db38888d34c29aaec819b50cc7dbaefb93aa5dedba5d4b11596ff2d1",
+      "transform": "verbatim"
+    },
+    {
+      "path": "controls/velocity-comparisons.json",
+      "origin": "review-w06-velocity/velocity-comparisons.json",
+      "original_sha256": "d659340846375a97cd330a6c17ea636314953c51c822c71b82a6ce94f335e0a8",
+      "stored_sha256": "d659340846375a97cd330a6c17ea636314953c51c822c71b82a6ce94f335e0a8",
+      "transform": "verbatim"
+    },
+    {
+      "path": "controls/pressure-static.json",
+      "origin": "review-w06-pressure/static-summary.json",
+      "original_sha256": "361d13635b74f2e267d497b6b8c233e7302bf1b380cec14f1f77f0f9d026f35c",
+      "stored_sha256": "361d13635b74f2e267d497b6b8c233e7302bf1b380cec14f1f77f0f9d026f35c",
+      "transform": "verbatim"
+    },
+    {
+      "path": "controls/pressure.json",
+      "origin": "review-w06-pressure/analysis.json",
+      "original_sha256": "39a61c90e54b974c73fc3ff77af164b40d4dc047d1c5037fc1e0a96e8590d44f",
+      "stored_sha256": "39a61c90e54b974c73fc3ff77af164b40d4dc047d1c5037fc1e0a96e8590d44f",
+      "transform": "verbatim"
+    },
+    {
+      "path": "behavior/final.log",
+      "origin": "evidence-release/voicing-tests.log",
+      "original_sha256": "e8a6df42f9a7e924fd03327c5a6253917ace71ba2db7528a7a09acf01bf8ffdf",
+      "stored_sha256": "e8a6df42f9a7e924fd03327c5a6253917ace71ba2db7528a7a09acf01bf8ffdf",
+      "transform": "verbatim"
+    },
+    {
+      "path": "behavior/quiet-draft.log",
+      "origin": "review-w06-behavior/quiet-draft.log",
+      "original_sha256": "9382a8f56b8652ee274449ab0c97e564a21b94a04e2fb81ec7177811b75cb814",
+      "stored_sha256": "9382a8f56b8652ee274449ab0c97e564a21b94a04e2fb81ec7177811b75cb814",
+      "transform": "verbatim"
+    },
+    {
+      "path": "behavior/original.log",
+      "origin": "review-w06-behavior/original.log",
+      "original_sha256": "e8669a4667f8a7ddd004dd0434ca4ca06fe03767fc6db41b09b9a27494088ff2",
+      "stored_sha256": "e8669a4667f8a7ddd004dd0434ca4ca06fe03767fc6db41b09b9a27494088ff2",
+      "transform": "verbatim"
+    },
+    {
+      "path": "behavior/summary.json",
+      "origin": "review-w06-behavior/summary.json",
+      "original_sha256": "57538b25e985a3cc01119ad75ec4ff5a6acfbe9acaec855012397c654e27a0a5",
+      "stored_sha256": "aa21331cb31242f21bd8f7fcc7a4fe2c42db68acad90e243e8f286c5295e5130",
+      "transform": "workspace prefix removed from provenance strings; JSON formatted"
+    },
+    {
+      "path": "long-tails/verification.json",
+      "origin": "review-w06-long-tails/verification.json",
+      "original_sha256": "abe4e4e0ce404beadfee59b7c8ed66b9e7665c893ededd06ab2682cbc1e5169b",
+      "stored_sha256": "abe4e4e0ce404beadfee59b7c8ed66b9e7665c893ededd06ab2682cbc1e5169b",
+      "transform": "verbatim"
+    },
+    {
+      "path": "long-tails/metrics.csv",
+      "origin": "review-w06-long-tails/metrics.csv",
+      "original_sha256": "cad7f3f84412c824367ff662256b3d6205a0c16f4af82bc77a4e083159179a41",
+      "stored_sha256": "cad7f3f84412c824367ff662256b3d6205a0c16f4af82bc77a4e083159179a41",
+      "transform": "verbatim"
+    },
+    {
+      "path": "long-tails/windows.csv",
+      "origin": "review-w06-long-tails/windows.csv",
+      "original_sha256": "65e80586c768704372d7c9f45dbbef41c6738ff04700865563c2181c3f8ea97a",
+      "stored_sha256": "65e80586c768704372d7c9f45dbbef41c6738ff04700865563c2181c3f8ea97a",
+      "transform": "verbatim"
+    },
+    {
+      "path": "long-tails/run.log",
+      "origin": "review-w06-long-tails/run.log",
+      "original_sha256": "68d0de401c7bb43eb23348f4c82047c1a92a720b01d3161159ccac0675657fdb",
+      "stored_sha256": "68d0de401c7bb43eb23348f4c82047c1a92a720b01d3161159ccac0675657fdb",
+      "transform": "verbatim"
+    },
+    {
+      "path": "stereo/summary.csv",
+      "origin": "review-w06-stereo/stereo-summary.csv",
+      "original_sha256": "87b907be09831cfd7d45a992941d822b7d1368d762d3613631cb3ed62dd0f64a",
+      "stored_sha256": "1be7ebb09f8ed7bce80abfd65e4657e2cb6e584f7180154944c5f4b6ec9d833a",
+      "transform": "CRLF converted to LF; numeric fields unchanged"
+    },
+    {
+      "path": "stereo/echo-and-attack.json",
+      "origin": "review-w06-stereo/candidate-echo-and-attack.json",
+      "original_sha256": "cfbd483bcf28b7ff0b8d0582895cdad286a5a5bc7c581a30ead6d1302f3ce2cf",
+      "stored_sha256": "cfbd483bcf28b7ff0b8d0582895cdad286a5a5bc7c581a30ead6d1302f3ce2cf",
+      "transform": "verbatim"
+    },
+    {
+      "path": "stereo/applied-preset-block.txt",
+      "origin": "review-w06-stereo/applied-preset-block.txt",
+      "original_sha256": "0160ad1ad72cc2f611ba6620f4d10ccabb15fad339828772b1349f895cff8a83",
+      "stored_sha256": "0160ad1ad72cc2f611ba6620f4d10ccabb15fad339828772b1349f895cff8a83",
+      "transform": "verbatim"
+    },
+    {
+      "path": "host/native-identity.log",
+      "origin": "evidence-release/native/preset-identity-tests.log",
+      "original_sha256": "0323b35a89628b6d7c35a4d797a209f205af76fdd7466c8c1b64eff1dae9ae18",
+      "stored_sha256": "0323b35a89628b6d7c35a4d797a209f205af76fdd7466c8c1b64eff1dae9ae18",
+      "transform": "verbatim"
+    },
+    {
+      "path": "host/native-modern-recall.log",
+      "origin": "evidence-release/native/modern-recall-host-tests.log",
+      "original_sha256": "0d66f71f551f2827606409897cd4f3194fad2a9bd6e0636c0a0842606c927b93",
+      "stored_sha256": "0d66f71f551f2827606409897cd4f3194fad2a9bd6e0636c0a0842606c927b93",
+      "transform": "verbatim"
+    },
+    {
+      "path": "host/panel-golden-tests.log",
+      "origin": "evidence-release/panel-golden-tests.log",
+      "original_sha256": "1b972b335907d5b1ae1a9edcfe3509113c06cc5d7bcef64bba3495509b79d12f",
+      "stored_sha256": "1b972b335907d5b1ae1a9edcfe3509113c06cc5d7bcef64bba3495509b79d12f",
+      "transform": "verbatim"
+    },
+    {
+      "path": "capture/tests.log",
+      "origin": "evidence-release/capture-tests.log",
+      "original_sha256": "3c0d5fab73efb64616d8e676cdebe737305c17712c5e5c2426166b961c473e0b",
+      "stored_sha256": "3c0d5fab73efb64616d8e676cdebe737305c17712c5e5c2426166b961c473e0b",
+      "transform": "verbatim"
+    },
+    {
+      "path": "capture/focused-checks.json",
+      "origin": "review-w06-capture-portability/focused-checks.json",
+      "original_sha256": "11c2e372f830dcac9ae861be811f4856f2e0d6f908e0b4c25b31b25040c12226",
+      "stored_sha256": "11c2e372f830dcac9ae861be811f4856f2e0d6f908e0b4c25b31b25040c12226",
+      "transform": "verbatim"
+    },
+    {
+      "path": "identity/summary.json",
+      "origin": "review-w05-identity/audit-results.json",
+      "original_sha256": "8a0a25ec93d1191fbcac74985dfd1e8b1b0b9cdfd6bb5ab750671b9062bfa191",
+      "stored_sha256": "228a629f548bf0efc2455765430e3586c8d4f7c2095e8445fae34a1c8211d871",
+      "transform": "selected fields; original measurements unchanged"
+    },
+    {
+      "path": "identity/program-change-counts.csv",
+      "origin": "review-w05-identity/audit-results.json",
+      "original_sha256": "8a0a25ec93d1191fbcac74985dfd1e8b1b0b9cdfd6bb5ab750671b9062bfa191",
+      "stored_sha256": "376d66e9a99bedf100ce410f011836bb5a3717748af4cad2e9e87e6e8bf490e9",
+      "transform": "selected fields; original measurements unchanged; CRLF converted to LF; numeric fields unchanged"
+    },
+    {
+      "path": "stereo/comparison.json",
+      "origin": "review-w06-stereo/candidate-comparison.json",
+      "original_sha256": "e4d60291c8f75e7e2013c99d1c2c7bf65cf1e6954de0bf35debaa5c2c0007d5b",
+      "stored_sha256": "583b3ae9027182fde90033216ca2e42012cd321b3d52f0e921f82b985786fd3f",
+      "transform": "selected fields; original measurements unchanged"
+    },
+    {
+      "path": "final/nominal-provenance.json",
+      "origin": "evidence-release/nominal/provenance.json",
+      "original_sha256": "b5183fbe29057fbf212fe697ab7ba5420125a2061399a178a5e8e978cdf5cf0a",
+      "stored_sha256": "06ea5ccdd5f429cdbb6c7e2775b806e7acbd4f0edcf3beae91fd656d2af13e08",
+      "transform": "Added repository CSV hash and line-ending transformation note; original measurement provenance unchanged"
+    },
+    {
+      "path": "host/native-file-recall.log",
+      "origin": "evidence-release/native/preset-file-recall-tests.log",
+      "original_sha256": "85dde784edde06dd40f1b6b782ae3a153c26aacf0f74a6d2aabf07098abdd4f4",
+      "stored_sha256": "85dde784edde06dd40f1b6b782ae3a153c26aacf0f74a6d2aabf07098abdd4f4",
+      "transform": "verbatim"
+    },
+    {
+      "path": "host/native-refresh.log",
+      "origin": "evidence-release/native/preset-refresh-tests.log",
+      "original_sha256": "6c8a013943d171fa8049b7a99fe5be1f0ed257be5a06e72d631db23216f8d2f8",
+      "stored_sha256": "6c8a013943d171fa8049b7a99fe5be1f0ed257be5a06e72d631db23216f8d2f8",
+      "transform": "verbatim"
+    },
+    {
+      "path": "host/native-revert.log",
+      "origin": "evidence-release/native/preset-revert-tests.log",
+      "original_sha256": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28",
+      "stored_sha256": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28",
+      "transform": "verbatim"
+    }
+  ]
+}

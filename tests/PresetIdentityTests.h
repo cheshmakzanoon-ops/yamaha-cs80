@@ -19,6 +19,23 @@ struct PresetIdentityAccess
         juce::TemporaryFile fixture("-cs80-preset-identity");
         const auto root = fixture.getFile();
         auto host = std::make_unique<Cs80AudioProcessor>(root.getChildFile("presets"));
+        {
+            ui::PresetBrowser startup(*host);
+            startup.scopeFilter = 0;
+            startup.rebuildFilter();
+            startup.selectCurrentPreset();
+            const auto* selected = startup.selectedEntry();
+            check(startup.scopeFilter == 0 && selected != nullptr && !selected->isLegacy
+                      && selected->factoryIndex == cs80::programIndexForCurated(0),
+                  "fresh Library stays on Circuit programs and selects the authored showcase");
+            host->loadFactoryPreset(0);
+            startup.syncLoaded();
+            startup.selectCurrentPreset();
+            check(startup.scopeFilter == 3 && startup.selectedEntry() != nullptr
+                      && startup.selectedEntry()->isLegacy,
+                  "explicit Legacy recall still opens its compatible library section");
+            host->loadFactoryPreset(cs80::programIndexForCurated(0));
+        }
         host->setParamValue(P_brilliance, 0.125f);
         const auto first = host->saveUserPreset("A Identity");
         host->setParamValue(P_brilliance, 0.875f);

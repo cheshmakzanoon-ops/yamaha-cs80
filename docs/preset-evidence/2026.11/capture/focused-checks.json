@@ -1,0 +1,76 @@
+[
+  {
+    "check": "conflicting-modes",
+    "version": "before",
+    "exit": 0,
+    "existing_inventory_preserved": false,
+    "stderr": ""
+  },
+  {
+    "check": "conflicting-modes",
+    "version": "after",
+    "exit": 2,
+    "existing_inventory_preserved": true,
+    "stderr": "preset capture: choose exactly one of --list, --inventory, or --out"
+  },
+  {
+    "check": "rates-and-note-boundaries-identical-before-after",
+    "rate": 44100,
+    "note": 0,
+    "files": {
+      "metrics.csv": "15befbc96a652374e39a4de5725bb46c6c3f282b2985f31e77d73dc067e2b49c",
+      "300-Init-Circuit.wav": "8741079d50dc2c1815fe23056853dfe436f00b22a26cc63d517a36039be98e01"
+    }
+  },
+  {
+    "check": "rates-and-note-boundaries-identical-before-after",
+    "rate": 44100,
+    "note": 127,
+    "files": {
+      "metrics.csv": "61704d544b23a491a140abfe331495b1f9c298af6749d2ead1555a1434a68291",
+      "300-Init-Circuit.wav": "22a773369357f9eb175a7a7a14e38c1b117f3bfcc0aff0e13b97edb2597c8a8b"
+    }
+  },
+  {
+    "check": "rates-and-note-boundaries-identical-before-after",
+    "rate": 48000,
+    "note": 0,
+    "files": {
+      "metrics.csv": "8682df1fe7e925bb0c4c0d4eddc0efaf8211696bdf180d70a34df7922b47587a",
+      "300-Init-Circuit.wav": "407e9e31a4cf7be1c37eca5f2714fdecf7ce90e38259fa5a0f6239b1065511c0"
+    }
+  },
+  {
+    "check": "rates-and-note-boundaries-identical-before-after",
+    "rate": 48000,
+    "note": 127,
+    "files": {
+      "metrics.csv": "bf439d1ac0c94438e5df15e75992771b3bd901ab5403a011805522b50858fc3b",
+      "300-Init-Circuit.wav": "df8acde8fd6e8ff9ef0e6963c33c77e7fbc91d235b2eebcbe5b3daa04212afe7"
+    }
+  },
+  {
+    "check": "rates-and-note-boundaries-identical-before-after",
+    "rate": 96000,
+    "note": 0,
+    "files": {
+      "metrics.csv": "0f9d0a6f6b5ca9ea453b8056054d7788d83c0c9cad6e6d261627b071196a8649",
+      "300-Init-Circuit.wav": "c420201f2b9889dbee8f0aa5b0f59d788e36e0ef1540ef719441ff1d9695bfbe"
+    }
+  },
+  {
+    "check": "rates-and-note-boundaries-identical-before-after",
+    "rate": 96000,
+    "note": 127,
+    "files": {
+      "metrics.csv": "eeda89204f79bc3f5117d6d8b361387c854122e3164b08d385856dc6e4c94268",
+      "300-Init-Circuit.wav": "ede5da5e03bcd3ee9b41f01e7f651217e55af92757690e149ce861ef5941e63e"
+    }
+  },
+  {
+    "check": "inventory-identical-under-comma-decimal-environment",
+    "locale": "de_DE.UTF-8",
+    "programs": 301,
+    "sha256": "cf02a7c19d2f2fef86dbae90e90d125752a9b2b0bff6918f8f48ef9134eb5f81"
+  }
+]

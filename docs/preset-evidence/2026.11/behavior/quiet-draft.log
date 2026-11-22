@@ -1,0 +1,24 @@
+FAIL: Pan Flute: transient remains present at the actual rank balance
+MIX ONSET Pan Flute           transient/body   -27.0 dB; reconstruction error  -142.8 dB relative
+TRANSIENT Pan Flute           transient late/onset   -93.8 dB; body late/early   -0.2 dB; full late  -29.0 dBFS
+TRANSIENT Sine Bass           transient late/onset   -99.3 dB; body late/early   -0.0 dB; full late  -24.7 dBFS
+FAIL: Nylon Pluck: transient remains present at the actual rank balance
+MIX ONSET Nylon Pluck         transient/body   -49.8 dB; reconstruction error  -143.8 dB relative
+PERCUSSION octave/other   51.3 dB; full octave/root onset  -13.9 dB; octave late/early  -31.6 dB; root late/early  -0.0 dB
+REGISTER  Piccolo             intended  -23.5 dBFS; strongest lower octave  -127.2 dB relative
+REGISTER  Ocarina             intended  -21.2 dBFS; strongest lower octave  -121.8 dB relative
+REGISTER  Whistle             intended  -20.9 dBFS; strongest lower octave  -124.5 dB relative
+VELOCITY  Velocity Keys       hard/soft attack  +10.5 dB; body  +10.5 dB; soft body  -41.5 dBFS
+VELOCITY  Velocity Lead       hard/soft attack  +10.2 dB; body  +10.2 dB; soft body  -36.4 dBFS
+PRESSURE  unpressed  -240.0 dBFS; pressed  -26.7 dBFS; released/pressed   -62.6 dB
+HELD      Brass Stab          late/onset   -73.0 dB; onset  -29.9 dBFS
+HELD      Pizzicato Strings   late/onset   -53.4 dB; onset  -27.2 dBFS
+HELD      Spiccato Strings    late/onset   -87.6 dB; onset  -30.9 dBFS
+HELD      Poly Stab           late/onset   -61.7 dB; onset  -28.5 dBFS
+HELD      Flute Organ 8+4     late/onset     0.0 dB; onset  -23.8 dBFS
+SWELL     Slow Pad            bloom/opening  +12.3 dB; final/bloom   +0.9 dB; held 3.0 s
+SWELL     Slow Strings        bloom/opening  +15.0 dB; final/bloom   -0.9 dB; held 2.6 s
+SWELL     Bowed Swell Strings bloom/opening  +11.8 dB; final/bloom   +0.6 dB; held 3.2 s
+SWELL     Brass Pad Swell     bloom/opening  +26.1 dB; final/bloom   +0.0 dB; held 3.2 s
+SWELL     Sweep Pad           bloom/opening  +14.0 dB; final/bloom   +0.8 dB; held 4.8 s
+Preset voicing regressions: 134/136 checks passed; 45.1 seconds generated.

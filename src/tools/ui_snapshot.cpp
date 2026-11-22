@@ -2010,6 +2010,27 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--panel-golden-tests") == 0)
+    {
+        if (argc != 3 || argv[2][0] == '\0' || std::strncmp(argv[2], "--", 2) == 0)
+        {
+            std::fprintf(stderr, "Usage: CS80Snapshots --panel-golden-tests DIRECTORY\n");
+            return 64;
+        }
+        // Painting and comparison need no native window. Keep this focused
+        // fixture available independently of the full desktop smoke suite.
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        const auto checked = [&](bool condition, const char* what) { ++checks; check(condition, what); };
+        const auto flush = [](int milliseconds)
+        {
+            juce::MessageManager::getInstance()->runDispatchLoopUntil(milliseconds);
+        };
+        cs80::tests::testGoldenImages(checked, flush,
+            juce::File::getCurrentWorkingDirectory().getChildFile(argv[2]));
+        std::printf("Panel golden tests: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--preset-revert-tests") == 0)
     {
         juce::ScopedJuceInitialiser_GUI juceInit;
@@ -2449,7 +2470,10 @@ int main(int argc, char** argv)
     // plus its oscillator's 8 internal samples (ws1 merge).
     check(processor.getLatencySamples() == 63 + 8 / processor.getEngine().getOversamplingFactor(),
           "reported latency at construction");
-    check(processor.getPresetName().contains("Original SUB"), "fresh startup identifies modified original SUB configuration");
+    const auto& startupPreset = cs80::curatedLibrary().front();
+    check(processor.getPresetName() == juce::String(startupPreset.name)
+              && processor.getCurrentProgram() == cs80::programIndexForCurated(0),
+          "fresh startup identifies the authored Circuit showcase");
     processor.prepareToPlay(48000.0, 512);
     check(processor.getLatencySamples() == 63 + 8 / processor.getEngine().getOversamplingFactor(),
           "reported latency after prepare");
@@ -2465,13 +2489,13 @@ int main(int argc, char** argv)
             check(processor.getParamValue(index) == 1.0f, "fresh instance selects original SUB functions");
             continue;
         }
-        // Plan 1.7 (intentional): a fresh instance is program 0 on the circuit engine.
+        // Startup recalls curated program 0, including its Circuit policy.
         if (index == cs80::P_sourcePerformance)
         {
             check(processor.getParamValue(index) == 1.0f, "fresh instance selects the circuit engine");
             continue;
         }
-        check(std::abs(processor.getParamValue(index) - processor.getFactoryPresets()[0].values[index])
+        check(std::abs(processor.getParamValue(index) - startupPreset.values[index])
                   <= std::max(0.0001f, (def.max - def.min) * 0.00001f),
               "initial program name and actual parameter values agree");
     }

@@ -736,6 +736,14 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_library_audit_tests PRIVATE cs80_core Threads::Threads)
     add_test(NAME cs80_library_audit_tests COMMAND cs80_library_audit_tests)
     set_tests_properties(cs80_library_audit_tests PROPERTIES TIMEOUT 600)
+    add_executable(cs80_preset_voicing_tests tests/PresetVoicingTests.cpp)
+    target_link_libraries(cs80_preset_voicing_tests PRIVATE cs80_core)
+    add_test(NAME cs80_preset_voicing_tests COMMAND cs80_preset_voicing_tests)
+    set_tests_properties(cs80_preset_voicing_tests PROPERTIES TIMEOUT 180)
+    add_test(NAME cs80_preset_capture_tests
+             COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_preset_capture.py
+                     --capture $<TARGET_FILE:cs80_preset_capture>)
+    set_tests_properties(cs80_preset_capture_tests PROPERTIES TIMEOUT 60)
     add_executable(cs80_randomise_tests tests/RandomiseTests.cpp)
     target_link_libraries(cs80_randomise_tests PRIVATE cs80_core)
     add_test(NAME cs80_randomise_tests COMMAND cs80_randomise_tests)
@@ -887,6 +895,9 @@ add_executable(cs80_dsp_probe src/tools/dsp_probe.cpp)
 target_link_libraries(cs80_dsp_probe PRIVATE cs80_core)
 add_executable(cs80_engine_audit src/tools/engine_audit.cpp)
 target_link_libraries(cs80_engine_audit PRIVATE cs80_core)
+add_executable(cs80_preset_capture src/tools/preset_capture.cpp)
+target_link_libraries(cs80_preset_capture PRIVATE cs80_core)
+
 add_executable(cs80_parity_capture src/tools/parity_capture.cpp)
 target_link_libraries(cs80_parity_capture PRIVATE cs80_core)
 if (CS80_BUILD_TESTS)
@@ -2438,6 +2449,10 @@ if (CS80_BUILD_PLUGIN)
     target_link_libraries(CS80Snapshots PRIVATE cs80_panel_fonts)
     # [ws7-panel] Golden images of the main view (tests/PanelEditorTests.h; refresh with CS80_REFRESH_GOLDENS=1).
     target_compile_definitions(CS80Snapshots PRIVATE CS80_GOLDEN_DIR="${CMAKE_CURRENT_SOURCE_DIR}/tests/golden")
+
+    add_test(NAME cs80_panel_golden_tests COMMAND CS80Snapshots --panel-golden-tests
+             ${CMAKE_CURRENT_BINARY_DIR}/panel-golden-check)
+    set_tests_properties(cs80_panel_golden_tests PROPERTIES TIMEOUT 60)
 
     # Opening sound recall through the real browser and processor, without a native peer.
     add_test(NAME cs80_preset_revert_tests COMMAND CS80Snapshots --preset-revert-tests)

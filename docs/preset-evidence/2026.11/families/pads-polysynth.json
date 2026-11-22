@@ -1,0 +1,528 @@
+{
+  "audio_seconds": 69.5,
+  "method": "48 kHz float WAV, note 60, velocity 0.8; stereo-channel average spectral power; levels provisional.",
+  "renders": {
+    "long/Rain Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -26.308845975620198,
+        "power_centroid_hz": 336.07667853811074,
+        "high_power_fraction": 0.0042432003941699015,
+        "fundamental_power_fraction": 0.900979238818732,
+        "fundamental_band_rms_dbfs": -26.88469234897115
+      },
+      "settled": {
+        "rms_dbfs": -22.75507809972413,
+        "power_centroid_hz": 341.6535378862838,
+        "high_power_fraction": 0.008878689193316828,
+        "fundamental_power_fraction": 0.8970087217925043,
+        "fundamental_band_rms_dbfs": -23.539781077081877
+      }
+    },
+    "long/Evolving Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -33.65703115480841,
+        "power_centroid_hz": 315.7063847059831,
+        "high_power_fraction": 0.0006773256212438053,
+        "fundamental_power_fraction": 0.8712057847850816,
+        "fundamental_band_rms_dbfs": -34.363093998533934
+      },
+      "settled": {
+        "rms_dbfs": -27.043972328689904,
+        "power_centroid_hz": 381.7895087506205,
+        "high_power_fraction": 0.009776476237870568,
+        "fundamental_power_fraction": 0.8274860263282293,
+        "fundamental_band_rms_dbfs": -27.211175996281312
+      }
+    },
+    "poly-colors/PWM Poly": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -28.655384898922172,
+        "power_centroid_hz": 562.7140894287542,
+        "high_power_fraction": 0.027212000027268847,
+        "fundamental_power_fraction": 0.5607321786230084,
+        "fundamental_band_rms_dbfs": -31.183443106434595
+      },
+      "settled": {
+        "rms_dbfs": -26.547486165646568,
+        "power_centroid_hz": 355.1431094632403,
+        "high_power_fraction": 0.009442984020711535,
+        "fundamental_power_fraction": 0.8934578267414185,
+        "fundamental_band_rms_dbfs": -27.065006320573954
+      }
+    },
+    "poly-colors/Sine Poly": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -29.520658883048235,
+        "power_centroid_hz": 262.17841155594283,
+        "high_power_fraction": 5.068620971670067e-05,
+        "fundamental_power_fraction": 0.9935600235520821,
+        "fundamental_band_rms_dbfs": -29.55304742571158
+      },
+      "settled": {
+        "rms_dbfs": -30.30979895180023,
+        "power_centroid_hz": 261.80991282214137,
+        "high_power_fraction": 3.829674772288552e-05,
+        "fundamental_power_fraction": 0.9997861942858394,
+        "fundamental_band_rms_dbfs": -30.31030664977671
+      }
+    },
+    "poly-colors/Dark Poly": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -22.326428364578096,
+        "power_centroid_hz": 293.0547724963399,
+        "high_power_fraction": 0.0005783145209693568,
+        "fundamental_power_fraction": 0.9257919349998234,
+        "fundamental_band_rms_dbfs": -22.67353480113362
+      },
+      "settled": {
+        "rms_dbfs": -28.10209869640331,
+        "power_centroid_hz": 340.8750237622584,
+        "high_power_fraction": 0.0009902175322016036,
+        "fundamental_power_fraction": 0.7915114847965317,
+        "fundamental_band_rms_dbfs": -30.114485751406313
+      }
+    },
+    "poly-colors/Bright Poly": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -23.953367597527393,
+        "power_centroid_hz": 408.89995466353224,
+        "high_power_fraction": 0.021782171087084988,
+        "fundamental_power_fraction": 0.8732901038524018,
+        "fundamental_band_rms_dbfs": -24.6467347252523
+      },
+      "settled": {
+        "rms_dbfs": -26.93089426199218,
+        "power_centroid_hz": 461.48346989252843,
+        "high_power_fraction": 0.02594322285675617,
+        "fundamental_power_fraction": 0.7780972491469728,
+        "fundamental_band_rms_dbfs": -27.820207418490625
+      }
+    },
+    "pressure-0/Pressure Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -40.367597400711695,
+        "power_centroid_hz": 303.7273284464795,
+        "high_power_fraction": 0.00048095133496396046,
+        "fundamental_power_fraction": 0.8972387463115218,
+        "fundamental_band_rms_dbfs": -40.92479349106146
+      },
+      "settled": {
+        "rms_dbfs": -36.36706951868317,
+        "power_centroid_hz": 375.8982506087853,
+        "high_power_fraction": 0.003770172843082623,
+        "fundamental_power_fraction": 0.7792755339125859,
+        "fundamental_band_rms_dbfs": -40.48447073316232
+      }
+    },
+    "pressure-0/Poly Swell": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -38.05685994447818,
+        "power_centroid_hz": 583.6736938007051,
+        "high_power_fraction": 0.016090619810939448,
+        "fundamental_power_fraction": 0.4130251066068862,
+        "fundamental_band_rms_dbfs": -41.865776071861816
+      },
+      "settled": {
+        "rms_dbfs": -36.346995030392215,
+        "power_centroid_hz": 387.9476683073717,
+        "high_power_fraction": 0.005133408489853469,
+        "fundamental_power_fraction": 0.7564477724420061,
+        "fundamental_band_rms_dbfs": -38.52636502778524
+      }
+    },
+    "pressure-1/Pressure Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -28.479334786223806,
+        "power_centroid_hz": 334.3494418511136,
+        "high_power_fraction": 0.0020129954536241158,
+        "fundamental_power_fraction": 0.8523019808623408,
+        "fundamental_band_rms_dbfs": -29.39013385075491
+      },
+      "settled": {
+        "rms_dbfs": -22.97385439476995,
+        "power_centroid_hz": 440.28635955453717,
+        "high_power_fraction": 0.015580339568227899,
+        "fundamental_power_fraction": 0.7556844441084023,
+        "fundamental_band_rms_dbfs": -26.203840555282902
+      }
+    },
+    "pressure-1/Poly Swell": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -28.508413865410276,
+        "power_centroid_hz": 666.073008683703,
+        "high_power_fraction": 0.03562904607433936,
+        "fundamental_power_fraction": 0.38768852066794246,
+        "fundamental_band_rms_dbfs": -32.55248843116121
+      },
+      "settled": {
+        "rms_dbfs": -25.367230041569883,
+        "power_centroid_hz": 445.65048463703914,
+        "high_power_fraction": 0.01658736328372375,
+        "fundamental_power_fraction": 0.7321104214880584,
+        "fundamental_band_rms_dbfs": -27.35548163426727
+      }
+    },
+    "footage-rank-1/Octave Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -33.61661797642908,
+        "power_centroid_hz": 230.76930991411672,
+        "high_power_fraction": 0.0004328783734276418,
+        "fundamental_power_fraction": 0.3112901622034416,
+        "fundamental_band_rms_dbfs": -39.012605851966846
+      },
+      "settled": {
+        "rms_dbfs": -25.39436978291522,
+        "power_centroid_hz": 255.0955774090866,
+        "high_power_fraction": 0.0012690247946915154,
+        "fundamental_power_fraction": 0.31986475941806236,
+        "fundamental_band_rms_dbfs": -30.37307272807858
+      }
+    },
+    "footage-rank-1/Fifth Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -30.984378351465583,
+        "power_centroid_hz": 337.91387210764174,
+        "high_power_fraction": 0.0017904999791897697,
+        "fundamental_power_fraction": 0.8357866939156751,
+        "fundamental_band_rms_dbfs": -32.01712116954827
+      },
+      "settled": {
+        "rms_dbfs": -23.892266076725974,
+        "power_centroid_hz": 362.88014300373015,
+        "high_power_fraction": 0.005261160821523814,
+        "fundamental_power_fraction": 0.8310479068040734,
+        "fundamental_band_rms_dbfs": -24.731502385899837
+      }
+    },
+    "footage-rank-2/Octave Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -32.412029740050066,
+        "power_centroid_hz": 363.472364058258,
+        "high_power_fraction": 0.005872950274808687,
+        "fundamental_power_fraction": 0.8420643755629695,
+        "fundamental_band_rms_dbfs": -33.43764562745789
+      },
+      "settled": {
+        "rms_dbfs": -22.74938453717965,
+        "power_centroid_hz": 490.6538565914728,
+        "high_power_fraction": 0.0348810338257765,
+        "fundamental_power_fraction": 0.7562540923589532,
+        "fundamental_band_rms_dbfs": -24.268253034194927
+      }
+    },
+    "footage-rank-2/Fifth Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -34.33985743756126,
+        "power_centroid_hz": 702.0465014026086,
+        "high_power_fraction": 0.044536023297392535,
+        "fundamental_power_fraction": 1.0835551865787002e-08,
+        "fundamental_band_rms_dbfs": -114.36028936640405
+      },
+      "settled": {
+        "rms_dbfs": -24.796692701966926,
+        "power_centroid_hz": 823.3424065784661,
+        "high_power_fraction": 0.07901501303123323,
+        "fundamental_power_fraction": 1.7047396696380024e-09,
+        "fundamental_band_rms_dbfs": -112.46471312459673
+      }
+    },
+    "sine-rank-1/Sine Poly": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -27.58253477912617,
+        "power_centroid_hz": 261.73411176026644,
+        "high_power_fraction": 3.5547175332525134e-05,
+        "fundamental_power_fraction": 0.9943328071246403,
+        "fundamental_band_rms_dbfs": -27.616172999855685
+      },
+      "settled": {
+        "rms_dbfs": -28.293687879354103,
+        "power_centroid_hz": 261.7162541148034,
+        "high_power_fraction": 3.554803101531398e-05,
+        "fundamental_power_fraction": 0.9999281862248751,
+        "fundamental_band_rms_dbfs": -28.297878756735347
+      }
+    },
+    "sine-rank-2/Sine Poly": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -40.77937281866863,
+        "power_centroid_hz": 433.75868487758544,
+        "high_power_fraction": 0.00617369244787889,
+        "fundamental_power_fraction": 0.6468393195131361,
+        "fundamental_band_rms_dbfs": -43.26847832383643
+      },
+      "settled": {
+        "rms_dbfs": -48.24893515434839,
+        "power_centroid_hz": 412.06023494378104,
+        "high_power_fraction": 0.003981357381127848,
+        "fundamental_power_fraction": 0.6750887507170275,
+        "fundamental_band_rms_dbfs": -49.96784414428373
+      }
+    },
+    "cathedral/Cathedral Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -37.65716933866855,
+        "power_centroid_hz": 263.065633488829,
+        "high_power_fraction": 0.0006998571140818458,
+        "fundamental_power_fraction": 0.28503597714112366,
+        "fundamental_band_rms_dbfs": -43.48200599796588
+      },
+      "settled": {
+        "rms_dbfs": -27.387334917591744,
+        "power_centroid_hz": 247.1049084007345,
+        "high_power_fraction": 0.0015478863116229066,
+        "fundamental_power_fraction": 0.3090445729129717,
+        "fundamental_band_rms_dbfs": -32.544645677307635
+      }
+    },
+    "baseline-rain/Rain Pad": {
+      "nonfinite": 0,
+      "samples_over_full_scale": 0,
+      "early": {
+        "rms_dbfs": -38.42734489365117,
+        "power_centroid_hz": 391.68026114929705,
+        "high_power_fraction": 0.005582558929768004,
+        "fundamental_power_fraction": 0.7793488720914117,
+        "fundamental_band_rms_dbfs": -41.177152978264324
+      },
+      "settled": {
+        "rms_dbfs": -31.20387706055275,
+        "power_centroid_hz": 420.5439551944616,
+        "high_power_fraction": 0.013751915056991398,
+        "fundamental_power_fraction": 0.7820130185997217,
+        "fundamental_band_rms_dbfs": -32.295944356616516
+      }
+    }
+  },
+  "poly_colors": {
+    "PWM Poly": {
+      "rms_dbfs": -27.209398734545328,
+      "power_centroid_hz": 327.65211843311334,
+      "high_power_fraction": 0.0068940277780297436,
+      "fundamental_power_fraction": 0.9214527354128235,
+      "fundamental_band_rms_dbfs": -25.52946384594863
+    },
+    "Sine Poly": {
+      "rms_dbfs": -30.34879773343654,
+      "power_centroid_hz": 261.7898212993239,
+      "high_power_fraction": 3.8914189104086625e-05,
+      "fundamental_power_fraction": 0.9998263819439439,
+      "fundamental_band_rms_dbfs": -30.35744503898872
+    },
+    "Dark Poly": {
+      "rms_dbfs": -26.897176161519212,
+      "power_centroid_hz": 343.3153701174247,
+      "high_power_fraction": 0.0010732057561603173,
+      "fundamental_power_fraction": 0.7967096689791103,
+      "fundamental_band_rms_dbfs": -30.702339956023984
+    },
+    "Bright Poly": {
+      "rms_dbfs": -26.90483134345085,
+      "power_centroid_hz": 539.5583039371011,
+      "high_power_fraction": 0.03638091601055448,
+      "fundamental_power_fraction": 0.6804877807219571,
+      "fundamental_band_rms_dbfs": -29.79061193897778
+    }
+  },
+  "pressure": {
+    "Pressure Pad": {
+      "zero": {
+        "rms_dbfs": -36.28129629728025,
+        "power_centroid_hz": 332.2520631130474,
+        "high_power_fraction": 0.002393088007163701,
+        "fundamental_power_fraction": 0.8636179574330796,
+        "fundamental_band_rms_dbfs": -37.54261193886934
+      },
+      "full": {
+        "rms_dbfs": -22.71616142781681,
+        "power_centroid_hz": 409.6497023391571,
+        "high_power_fraction": 0.01325863707794029,
+        "fundamental_power_fraction": 0.7912300125535446,
+        "fundamental_band_rms_dbfs": -24.905983559532437
+      },
+      "rms_gain_db": 13.565134869463439,
+      "fundamental_band_gain_db": 12.636628379336905
+    },
+    "Poly Swell": {
+      "zero": {
+        "rms_dbfs": -35.57936803938097,
+        "power_centroid_hz": 398.0031270854375,
+        "high_power_fraction": 0.005302551002968445,
+        "fundamental_power_fraction": 0.7284477543045383,
+        "fundamental_band_rms_dbfs": -38.89341468732953
+      },
+      "full": {
+        "rms_dbfs": -24.702156454584458,
+        "power_centroid_hz": 487.94562000230377,
+        "high_power_fraction": 0.019693184200503464,
+        "fundamental_power_fraction": 0.6554270461317907,
+        "fundamental_band_rms_dbfs": -28.62608001207097
+      },
+      "rms_gain_db": 10.877211584796509,
+      "fundamental_band_gain_db": 10.26733467525856
+    }
+  },
+  "footage": {
+    "Octave Pad": {
+      "rank1_fundamental_hz": 130.68114789153026,
+      "rank2_fundamental_hz": 262.2424089655127,
+      "frequency_ratio": 2.0067348136793437,
+      "interval_cents": 1205.819975755178
+    },
+    "Fifth Pad": {
+      "rank1_fundamental_hz": 261.3576111668432,
+      "rank2_fundamental_hz": 392.88001075365275,
+      "frequency_ratio": 1.5032277384217805,
+      "interval_cents": 705.6763122646776
+    }
+  },
+  "sine_layer_roles": {
+    "1": {
+      "attack": {
+        "rms_dbfs": -27.28776959141829,
+        "power_centroid_hz": 261.7255012602269,
+        "high_power_fraction": 3.554717978280151e-05,
+        "fundamental_power_fraction": 0.661732076176984,
+        "fundamental_band_rms_dbfs": -29.096708726199157
+      },
+      "settled": {
+        "rms_dbfs": -28.314215363735094,
+        "power_centroid_hz": 261.70088803125253,
+        "high_power_fraction": 3.55484415002281e-05,
+        "fundamental_power_fraction": 0.9998898128633771,
+        "fundamental_band_rms_dbfs": -28.310194812350367
+      },
+      "settle_relative_to_attack_db": -1.026445772316805
+    },
+    "2": {
+      "attack": {
+        "rms_dbfs": -37.65088231998013,
+        "power_centroid_hz": 474.6482930285218,
+        "high_power_fraction": 0.011895618135220592,
+        "fundamental_power_fraction": 0.4027039144925262,
+        "fundamental_band_rms_dbfs": -41.663275440258616
+      },
+      "settled": {
+        "rms_dbfs": -48.26300888280371,
+        "power_centroid_hz": 412.05697616416194,
+        "high_power_fraction": 0.003981538344910961,
+        "fundamental_power_fraction": 0.6750754768964038,
+        "fundamental_band_rms_dbfs": -49.972885411912486
+      },
+      "settle_relative_to_attack_db": -10.612126562823583
+    }
+  },
+  "long_motion": {
+    "Rain Pad": {
+      "early": {
+        "rms_dbfs": -24.54081042619038,
+        "power_centroid_hz": 323.4541083695445,
+        "high_power_fraction": 0.005398809827136742,
+        "fundamental_power_fraction": 0.9176167253803508,
+        "fundamental_band_rms_dbfs": -24.921079716074814
+      },
+      "attack_body": {
+        "rms_dbfs": -22.377622354187796,
+        "power_centroid_hz": 361.24695475650594,
+        "high_power_fraction": 0.00711712869325146,
+        "fundamental_power_fraction": 0.8838016375477312,
+        "fundamental_band_rms_dbfs": -22.7688769468292
+      },
+      "mid": {
+        "rms_dbfs": -22.87141354850208,
+        "power_centroid_hz": 329.9265915371739,
+        "high_power_fraction": 0.006647588607725847,
+        "fundamental_power_fraction": 0.934834854236922,
+        "fundamental_band_rms_dbfs": -22.862925682767624
+      },
+      "late": {
+        "rms_dbfs": -22.694241327582752,
+        "power_centroid_hz": 340.39072900759373,
+        "high_power_fraction": 0.008706436353891437,
+        "fundamental_power_fraction": 0.8978856083711444,
+        "fundamental_band_rms_dbfs": -23.33038565205113
+      },
+      "settled_centroid_p10_hz": 318.1764478739105,
+      "settled_centroid_p90_hz": 362.3555072053931,
+      "strongest_04_to_1hz_centroid_rate": 0.8695652173913044
+    },
+    "Evolving Pad": {
+      "early": {
+        "rms_dbfs": -32.00206704992637,
+        "power_centroid_hz": 330.7263152275814,
+        "high_power_fraction": 0.001132324437206012,
+        "fundamental_power_fraction": 0.8470359009711268,
+        "fundamental_band_rms_dbfs": -32.5211627585294
+      },
+      "attack_body": {
+        "rms_dbfs": -29.920090406048367,
+        "power_centroid_hz": 835.1619644757866,
+        "high_power_fraction": 0.0981419502657155,
+        "fundamental_power_fraction": 0.49869291418688944,
+        "fundamental_band_rms_dbfs": -34.20985646763706
+      },
+      "mid": {
+        "rms_dbfs": -27.283669395265502,
+        "power_centroid_hz": 385.01093884677385,
+        "high_power_fraction": 0.010994972186928733,
+        "fundamental_power_fraction": 0.801032454022633,
+        "fundamental_band_rms_dbfs": -27.200256011754202
+      },
+      "late": {
+        "rms_dbfs": -26.789209351072024,
+        "power_centroid_hz": 385.6149532595943,
+        "high_power_fraction": 0.009016968146437253,
+        "fundamental_power_fraction": 0.8084243209940979,
+        "fundamental_band_rms_dbfs": -28.5507306382458
+      },
+      "settled_centroid_p10_hz": 321.8823942947487,
+      "settled_centroid_p90_hz": 707.2579876240844,
+      "strongest_04_to_1hz_centroid_rate": 0.8695652173913044
+    }
+  },
+  "rain_boundary_comparison": {
+    "candidate": {
+      "median_125ms_boundary_jump_hz": 16.202119126523883,
+      "median_midstep_change_hz": 11.391021166153905,
+      "boundary_to_midstep_ratio": 1.422358793842397
+    },
+    "baseline": {
+      "median_125ms_boundary_jump_hz": 118.18188465497897,
+      "median_midstep_change_hz": 140.08610620002668,
+      "boundary_to_midstep_ratio": 0.8436374445744746
+    }
+  }
+}

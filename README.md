@@ -6,7 +6,7 @@ low-pass filters, and amplifier. The ribbon, polyphonic aftertouch, ring
 modulator, chorus and tremolo bring the original's performance controls into
 a DAW or a standalone app.
 
-[Downloads](#downloads) · [First sound](#play-your-first-sound) ·
+[Downloads](#downloads) · [First sound](#play-your-first-sound) · [Preset guide](docs/PRESET_GUIDE.md) ·
 [How it was modeled](#from-schematic-to-sound) · [CPU evidence](#how-we-reduced-cpu-work) ·
 [Build from source](#build-from-source)
 
@@ -46,8 +46,9 @@ plug-in checks are not a guarantee of compatibility with every DAW.
 ## Play your first sound
 
 Launch **Standalone** and select your audio output and MIDI input, or install
-VST3/AU and load **CS-80 Reference** on a software-instrument track. Open
-**Library**, try **Brass Swell I**, and hold a chord. With polyphonic aftertouch,
+VST3/AU and load **CS-80 Reference** on a software-instrument track. A fresh
+instance opens **Brass Swell I** from the Circuit library. Hold a chord, then
+open **Library** to explore the other voices. With polyphonic aftertouch,
 press just one note harder to brighten it; you can also drag down on a held
 on-screen key to try pressure.
 
@@ -60,6 +61,39 @@ on-screen key to try pressure.
   arpeggiation, effects and expanded voice modes. These are software additions,
   not features of the original hardware. See the [mode contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
+
+## Revoiced Circuit library — 2026.11
+
+All **300 musical Circuit programs** have newly authored voicings. The bank also
+includes **Init Circuit**, for 301 programs in total. The redesign gives the two
+ranks distinct jobs: a sustaining body and a brief breath or strike, differently
+timed ensemble layers, or complementary registers. Velocity, pressure, filter
+motion and releases are programmed for each sound, with a separate full-bank
+level calibration.
+
+| Try | What to play and hear |
+| --- | --- |
+| Brass Swell I / Pressure Swell Brass | Hold chords and gradually add pressure for a controlled bloom. |
+| Solo Violin / Solo Cello | Connected lines with a stable central voice; pressure introduces restrained vibrato. |
+| Pan Flute / Percussive Organ | A short independent onset over a body that continues while the key is held. |
+| Electric Piano I / Guitar I / Harp | Compare soft and hard strikes, then hold notes to hear their differently decaying body and attack layers. |
+| Marimba / Clock Bells | Distinct mallet articulation and a clearly registered pair of bell tones. |
+| Rain Pad / Random Filter | Rate-controlled sample-and-hold motion from the tagged modern layer. |
+
+**Pressure Lead requires aftertouch**: it is intentionally silent until pressure
+is applied. Use channel/polyphonic aftertouch or drag downward on a held
+on-screen key. Programs tagged **modern** use software additions; Pure CS-80
+disables those additions.
+
+The [preset guide](docs/PRESET_GUIDE.md) explains playing technique, registration
+and the modern programs. The [revision report](docs/PRESET_REVISION_2026_11.md)
+documents the changes and their measured verification. Instrument names describe
+CS-80 synthesized interpretations; the measurements verify software behavior,
+not an acoustic-instrument or physical-hardware match.
+
+Existing saved sessions retain their serialized sound. Program names, order and
+host indexes are unchanged, and all **222 Legacy programs** retain their original
+data. Reload a Circuit factory program to hear its new voicing.
 
 ## From schematic to sound
 

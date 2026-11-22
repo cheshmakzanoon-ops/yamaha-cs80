@@ -278,7 +278,7 @@ void testEngineDefaultHost(Check&& check)
         host.processBlock(block, midi);
         check(host.getEngine().getRenderPolicy() == RenderPolicy::legacy, "ENGINE Legacy (compat) renders legacy");
 
-        // New-preset creation (the INIT action) is a fresh instance's patch.
+        // INIT stays a neutral programming patch; startup is the Circuit showcase.
         host.setPure(true);
         host.loadFactoryPreset(5);
         check(host.getEngineMode() == Mode::legacy, "legacy factory bank programs keep the legacy engine");

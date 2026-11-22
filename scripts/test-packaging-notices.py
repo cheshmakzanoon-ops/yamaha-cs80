@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Focused notice payload tests. All binaries/evidence are synthetic.
+"""Focused notice/guide payload and revision tests. All binaries/evidence are synthetic.
 
 No product builds, signing, host validation, workflow reads, or network access.
 Linux compiles inert ELF fixtures (never executed) and builds/extracts a synthetic
@@ -9,6 +9,7 @@ macOS/Windows checks cover notice source mappings, not native installers.
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
 from pathlib import Path
 import platform
@@ -40,7 +41,7 @@ def run(*args):
     return subprocess.run(args, check=True, capture_output=True, text=True).stdout
 
 
-def products(base, system):
+def products(base, system, arch="x86_64"):
     product = packaging.PRODUCT
     vst = base / "VST3" / f"{product}.vst3"
     if system == "macos":
@@ -57,7 +58,7 @@ def products(base, system):
         binary.parent.mkdir(parents=True, exist_ok=True)
         # Header-only inert inputs satisfy archive identity checks without
         # introducing executable fixture code or bypassing production checks.
-        binary.write_bytes(packaging.binary_fixture(system, "x86_64", index == len(binaries) - 1))
+        binary.write_bytes(packaging.binary_fixture(system, arch, index == len(binaries) - 1))
         binary.chmod(0o755)
 
 
@@ -70,20 +71,28 @@ class NoticeTests(unittest.TestCase):
         for data in self.expected.values():
             self.assertTrue(data)
 
-    def ci_context(self):
+    def ci_context(self, source_changes=None):
         # An isolated clean checkout exercises the real read_ci_context path,
         # including commit/evidence checks, without changing the working repo.
-        source = self.temp_root / "source"
+        context = Path(tempfile.mkdtemp(prefix="ci-", dir=self.temp_root))
+        source = context / "source"
         source.mkdir()
-        for relative in [*NOTICES.values(), "LICENSE", "docs/INSTALL_AND_QUICKSTART.md", "docs/CI_DISTRIBUTION_STATUS.md"]:
+        for relative in [*NOTICES.values(), "LICENSE", "docs/INSTALL_AND_QUICKSTART.md",
+                         "docs/CI_DISTRIBUTION_STATUS.md", "docs/PRESET_GUIDE.md", "src/core/FactoryPresets.h"]:
             target = source / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, target)
+        for relative, data in (source_changes or {}).items():
+            target = source / relative
+            if data is None:
+                target.unlink()
+            else:
+                target.write_bytes(data)
         run("git", "init", "--quiet", str(source))
         run("git", "-C", str(source), "add", ".")
         run("git", "-C", str(source), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "Synthetic source fixture")
         commit = run("git", "-C", str(source), "rev-parse", "HEAD").strip()
-        build = self.temp_root / "build"
+        build = context / "build"
         juce = build / "_deps/juce-src"
         juce.mkdir(parents=True)
         (juce / "LICENSE.md").write_bytes(b"synthetic JUCE notice fixture\n")
@@ -95,23 +104,64 @@ class NoticeTests(unittest.TestCase):
 
     def test_actual_ci_payload_and_archive_bytes(self):
         commit, metadata, extras = self.ci_context()
-        for name, data in self.expected.items():
-            self.assertEqual(extras["licenses/" + name], data)
-        for system in ("linux", "macos", "windows"):
-            with self.subTest(system=system):
-                base = self.temp_root / system / "products"
-                products(base, system)
-                archive, manifest = packaging.package(base, base.parent / "out", system, "x86_64", commit, metadata, extras)
+        expected = {"licenses/" + name: data for name, data in self.expected.items()}
+        expected["PRESET_GUIDE.md"] = (ROOT / "docs/PRESET_GUIDE.md").read_bytes()
+        revision = metadata["preset_library_revision"]
+        self.assertIn(f'curatedLibraryRevision = "{revision}";',
+                      (ROOT / "src/core/FactoryPresets.h").read_text(encoding="utf-8"))
+        self.assertIn(f"Preset library revision: {revision}\n".encode(), extras["SOURCE.txt"])
+        self.assertIn((f"Online preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/"
+                       f"blob/{commit}/docs/PRESET_GUIDE.md\n").encode(), extras["SOURCE.txt"])
+        for relative, data in expected.items():
+            self.assertEqual(extras[relative], data)
+        for system, arch in (("linux", "x86_64"), ("macos", "x86_64"),
+                             ("macos", "arm64"), ("windows", "x86_64")):
+            with self.subTest(system=system, arch=arch):
+                base = self.temp_root / f"{system}-{arch}" / "products"
+                products(base, system, arch)
+                archive, manifest = packaging.package(base, base.parent / "out", system, arch, commit, metadata, extras)
                 prefix = archive.name.removesuffix(".tar.gz").removesuffix(".zip")
                 inventory = {item["path"]: item for item in manifest["files"]}
+                self.assertEqual(manifest["preset_library_revision"], revision)
+                self.assertEqual(json.loads((base.parent / "out" / (prefix + ".manifest.json")).read_bytes()), manifest)
                 with (zipfile.ZipFile(archive) if system == "windows" else tarfile.open(archive)) as reader:
-                    for name, data in self.expected.items():
-                        relative = "licenses/" + name
+                    # Read the actual payload, including revision text and the
+                    # embedded manifest; merely checking the extras map would
+                    # not catch an archive omitting or altering these bytes.
+                    for relative, data in extras.items():
                         member = prefix + "/" + relative
                         actual = reader.read(member) if system == "windows" else reader.extractfile(member).read()
                         self.assertEqual(actual, data)
                         self.assertEqual(inventory[relative]["sha256"], packaging.digest(data))
                         self.assertEqual(inventory[relative]["size"], len(data))
+                    member = prefix + "/manifest.json"
+                    embedded = reader.read(member) if system == "windows" else reader.extractfile(member).read()
+                    self.assertEqual(json.loads(embedded), manifest)
+
+    def test_changed_source_revision_propagates_without_packager_update(self):
+        _, metadata, extras = self.ci_context({
+            "src/core/FactoryPresets.h": b'inline constexpr const char* curatedLibraryRevision = "2042.07";\n'})
+        self.assertEqual(metadata["preset_library_revision"], "2042.07")
+        self.assertIn(b"Preset library revision: 2042.07\n", extras["SOURCE.txt"])
+
+    def test_missing_or_invalid_source_revision_is_rejected(self):
+        declarations = (
+            None,
+            b"// The sound-data revision is missing.\n",
+            b'inline constexpr const char* curatedLibraryRevision = "";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.13";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.7";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.07\\nforged metadata";\n',
+            b'inline constexpr const char* curatedLibraryRevision = "2042.07";\n' * 2,
+        )
+        for declaration in declarations:
+            with self.subTest(declaration=declaration):
+                with self.assertRaisesRegex(ValueError, "revision|curatedLibraryRevision"):
+                    self.ci_context({"src/core/FactoryPresets.h": declaration})
+
+    def test_missing_preset_guide_is_rejected(self):
+        with self.assertRaises(FileNotFoundError):
+            self.ci_context({"docs/PRESET_GUIDE.md": None})
 
     def test_native_installer_notice_source_mappings(self):
         # Inspect only the packaging entrypoints. Native compilers are not used.

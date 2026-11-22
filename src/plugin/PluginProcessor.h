@@ -236,8 +236,8 @@ public:
     void setPure(bool pure);
     bool isPure() const;
     // New-preset creation (the INIT action's hook): the factory "Init Patch"
-    // program with the original SUB panel on the circuit engine, like a fresh
-    // instance. The legacy bank program itself is unchanged.
+    // program with the original SUB panel on the circuit engine. Startup uses
+    // the curated showcase instead. The legacy bank program is unchanged.
     void loadInitPatch();
 
     // ---- ws3-keyboard Phase 6 processor APIs (modern layer) ----------------

@@ -65,8 +65,8 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
             for (int local = 0; local < cs80::CP_count; ++local)
                 hardwareFactoryValues[(size_t) channel][(size_t) tone][(size_t) local] = values[cs80::chParam(channel, local)];
         }
-    // Fresh instances: factory program 0 with the original SUB panel, on the
-    // circuit engine (plan 1.7).
+    // Start with a program actually voiced for Circuit, including its library
+    // identity. A Legacy identity would also open the browser in Legacy scope.
     applyFreshInstancePatch();
     cachedFrame.effectiveValues = currentValues();
     resetHostAutomationState();
@@ -81,9 +81,6 @@ Cs80AudioProcessor::Cs80AudioProcessor(const juce::File& presetDirectory)
     // as soon as the processor exists. prepareToPlay and any later quality or
     // offline change re-report it for hosts that query only after a change.
     setLatencySamples(engine.getLatencySamples());
-    presetName = (getFactoryPresets().empty() ? juce::String("Init Patch")
-                 : juce::String(getFactoryPresets()[0].name)) + " / Original SUB";
-    currentProgram = 0;
     apvts.syncNow();                       // [ws8-studio] the initial sound is not an undo step
     undoManager.clearUndoHistory();
 }
@@ -733,12 +730,20 @@ bool Cs80AudioProcessor::isPure() const
 
 void Cs80AudioProcessor::applyFreshInstancePatch()
 {
-    if (!getFactoryPresets().empty())
-        applyValues(getFactoryPresets()[0].values);
-    // The original six-function SUB panel and the circuit engine (plan 1.7).
-    // Factory bank0 itself remains unchanged/legacy when explicitly selected.
+    const auto& bank = getFactoryPresets();
+    const int index = cs80::programIndexForCurated(0);
+    if (index >= 0 && index < static_cast<int>(bank.size()))
+    {
+        const auto& preset = bank[static_cast<size_t>(index)];
+        applyValues(preset.values);
+        setPresetMetadata(juce::String(preset.name), index, cs80::PresetOrigin::factory());
+        return;
+    }
+    // Defensive empty-library fallback; never relabel a Legacy sound as curated.
+    applyValues(cs80::ParamValues {});
     setParamValue(cs80::P_subOriginalMode, 1.0f);
     setParamValue(cs80::P_sourcePerformance, 1.0f);
+    setPresetMetadata("Init Circuit", 0);
 }
 
 void Cs80AudioProcessor::loadInitPatch()
@@ -752,8 +757,8 @@ void Cs80AudioProcessor::loadInitPatch()
             break;
         }
     loadFactoryPreset(index);
-    // A new preset starts like a fresh instance: the original SUB panel on the
-    // circuit engine (plan 1.7). The bank program itself stays legacy.
+    // INIT remains the neutral programming starting point on Circuit. Fresh
+    // instances instead open the curated showcase; the Legacy bank is frozen.
     setParamValue(cs80::P_subOriginalMode, 1.0f);
     setParamValue(cs80::P_sourcePerformance, 1.0f);
     if (!bank.empty())

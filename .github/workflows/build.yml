@@ -11,13 +11,15 @@ on:
       - '.github/workflows/circuit-inspection.yml'
   workflow_dispatch:
 
-# Serialize each validation job independently. A macOS allocation wait must not
-# block new Linux/Windows evidence. Running jobs still finish; no gates removed.
+# Schedule each validation job independently so a macOS allocation wait cannot
+# block Linux/Windows. Updated main/PR runs supersede obsolete jobs; manual runs
+# have their own groups so a publication check can finish against its chosen SHA.
+# A cancelled run is incomplete evidence: every gate still applies to its successor.
 jobs:
   linux:
     concurrency:
-      group: ${{ github.workflow }}-linux-${{ github.ref }}
-      cancel-in-progress: false
+      group: ${{ github.workflow }}-linux-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     name: Linux / VST3 + Standalone
     runs-on: ubuntu-24.04
     steps:
@@ -51,7 +53,110 @@ jobs:
         run: cmake --build build --parallel "$(nproc)"
 
       - name: Test
-        run: ctest --test-dir build --output-on-failure
+        # UI timers, persistence and timing-sensitive cases are not qualified
+        # for whole-suite concurrency. Keep the complete test suite serial.
+        run: >
+          ctest --test-dir build --output-on-failure --no-tests=error
+          --output-junit "${{ github.workspace }}/build/ctest-results.xml"
+
+      - name: Capture curated preset auditions
+        id: preset_audition
+        run: |
+          python3 - <<'PY'
+          import csv
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import platform
+          import subprocess
+
+          out = Path('preset-audition')
+          out.mkdir()
+          capture = Path('build/cs80_preset_capture')
+          source = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          if source != os.environ['GITHUB_SHA']:
+              raise SystemExit('Audition source does not match the workflow SHA')
+          (out / 'source-commit.txt').write_text(source + '\n', encoding='utf-8')
+
+          # One short example per selected family, plus the intentional
+          # pressure-only lead at nonzero pressure. These load the actual bank.
+          selections = [
+              ('standard', '0', [
+                  'Brass Swell I', 'Solo Violin', 'Clarinet', 'Electric Piano I',
+                  'Flute Organ 8+4', 'Analog Bass', 'Nylon Pluck', 'Marimba',
+                  'Slow Pad', 'Arp Poly', 'Wind',
+              ]),
+              ('pressure', '0.65', ['Pressure Lead']),
+          ]
+          inventory_command = [str(capture), '--inventory', str(out / 'inventory.json')]
+          commands = []
+          for folder, pressure, names in selections:
+              command = [str(capture), '--out', str(out / folder), '--wav',
+                         '--hold', '3', '--tail', '1', '--pressure', pressure]
+              for name in names:
+                  command.extend(['--preset', name])
+              commands.append(command)
+
+          provenance = {
+              'schema': 1, 'source_commit': source,
+              'repository': os.environ['GITHUB_REPOSITORY'],
+              'run_id': os.environ['GITHUB_RUN_ID'],
+              'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'platform': platform.platform(),
+              'capture_binary_sha256': hashlib.sha256(capture.read_bytes()).hexdigest(),
+              'inventory_command': inventory_command, 'capture_commands': commands,
+              'capture_status': 'started',
+          }
+          manifest = out / 'provenance.json'
+          manifest.write_text(json.dumps(provenance, indent=2) + '\n', encoding='utf-8')
+          # Inventory is a separate CLI mode; combining it with --out is
+          # rejected instead of silently omitting the requested WAVs.
+          subprocess.run(inventory_command, check=True)
+          for command in commands:
+              subprocess.run(command, check=True)
+
+          inventory = json.loads((out / 'inventory.json').read_text(encoding='utf-8'))
+          if len(inventory['programs']) != 301:
+              raise SystemExit('Expected the complete 301-program curated inventory')
+          for folder, pressure, names in selections:
+              with (out / folder / 'metrics.csv').open(newline='', encoding='utf-8') as stream:
+                  rows = list(csv.DictReader(stream))
+              wavs = list((out / folder).glob('*.wav'))
+              if len(rows) != len(names) or {row['name'] for row in rows} != set(names):
+                  raise SystemExit('Audition metrics do not match the requested presets')
+              if len(wavs) != len(names) or any(path.stat().st_size <= 58 for path in wavs):
+                  raise SystemExit('Audition WAV set is incomplete')
+
+          (out / 'README.txt').write_text(
+              'Twelve actual curated factory programs from the source commit in provenance.json.\n'
+              'Stereo 48 kHz IEEE float WAVs; velocity 0.8; category-specific MIDI notes are in metrics.csv.\n'
+              'Each example holds one note for 3 seconds, followed by a 1-second release excerpt.\n'
+              'No audio normalization or clipping is applied. Long releases may continue beyond the excerpt.\n'
+              'Standard examples use zero pressure; Pressure Lead uses pressure 0.65 because it is pressure-only.\n'
+              'Arp Poly is a one-key arpeggiator example; these excerpts do not exercise chord playing.\n'
+              'inventory.json contains all 301 curated programs and their complete parameter values.\n'
+              'CSV metrics describe software output, not acoustic-instrument similarity or full-bank coverage.\n'
+              'This artifact alone does not establish that every platform and pluginval gate passed.\n',
+              encoding='utf-8')
+          provenance['library_revision'] = inventory['library_revision']
+          provenance['capture_status'] = 'complete'
+          provenance['wav_count'] = 12
+          manifest.write_text(json.dumps(provenance, indent=2) + '\n', encoding='utf-8')
+          checksums = [
+              f'{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.relative_to(out).as_posix()}'
+              for path in sorted(out.rglob('*')) if path.is_file()
+          ]
+          (out / 'SHA256SUMS').write_text('\n'.join(checksums) + '\n', encoding='utf-8')
+          PY
+
+      - name: Upload curated preset auditions
+        if: always() && (steps.preset_audition.outcome == 'success' || steps.preset_audition.outcome == 'failure')
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-curated-preset-audition-${{ github.sha }}
+          path: preset-audition/
+          if-no-files-found: error
 
       - name: Upload Linux VST3
         uses: actions/upload-artifact@v5
@@ -95,13 +200,14 @@ jobs:
           name: cs80-linux-test-evidence
           path: |
             build/Testing/Temporary/LastTest.log
+            build/ctest-results.xml
             build/ci-juce-provenance.txt
           if-no-files-found: warn
 
   pluginval:
     concurrency:
-      group: ${{ github.workflow }}-pluginval-${{ github.ref }}
-      cancel-in-progress: false
+      group: ${{ github.workflow }}-pluginval-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     name: pluginval / Linux VST3 (strictness 10)
     needs: linux
     runs-on: ubuntu-24.04
@@ -414,8 +520,8 @@ jobs:
       matrix:
         runner: [macos-15, macos-15-intel]
     concurrency:
-      group: ${{ github.workflow }}-macos-${{ matrix.runner }}-${{ github.ref }}
-      cancel-in-progress: false
+      group: ${{ github.workflow }}-macos-${{ matrix.runner }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     name: macOS / ${{ matrix.runner }} / VST3 + AU + Standalone
     runs-on: ${{ matrix.runner }}
     steps:
@@ -444,7 +550,9 @@ jobs:
         run: cmake --build build --parallel
 
       - name: Test
-        run: ctest --test-dir build --output-on-failure
+        run: >
+          ctest --test-dir build --output-on-failure --no-tests=error
+          --output-junit "${{ github.workspace }}/build/ctest-results.xml"
 
       - name: Fetch pluginval 1.0.4
         timeout-minutes: 5
@@ -567,13 +675,14 @@ jobs:
           name: cs80-${{ matrix.runner }}-test-evidence
           path: |
             build/Testing/Temporary/LastTest.log
+            build/ctest-results.xml
             build/ci-juce-provenance.txt
           if-no-files-found: warn
 
   windows:
     concurrency:
-      group: ${{ github.workflow }}-windows-${{ github.ref }}
-      cancel-in-progress: false
+      group: ${{ github.workflow }}-windows-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     name: Windows / VST3 + Standalone
     runs-on: windows-2022
     steps:
@@ -612,7 +721,9 @@ jobs:
 
       - name: Test
         if: steps.configure.outcome == 'success'
-        run: ctest --test-dir build -C Release --output-on-failure
+        run: >
+          ctest --test-dir build -C Release --output-on-failure --no-tests=error
+          --output-junit "${{ github.workspace }}/build/ctest-results.xml"
 
       - name: Upload Windows VST3
         if: steps.configure.outcome == 'success'
@@ -644,13 +755,14 @@ jobs:
           name: cs80-windows-test-evidence
           path: |
             build/Testing/Temporary/LastTest.log
+            build/ctest-results.xml
             build/ci-juce-provenance.txt
           if-no-files-found: warn
 
   pluginval-windows:
     concurrency:
-      group: ${{ github.workflow }}-pluginval-windows-${{ github.ref }}
-      cancel-in-progress: false
+      group: ${{ github.workflow }}-pluginval-windows-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
     name: pluginval / Windows VST3 (strictness 10)
     needs: windows
     runs-on: windows-2022

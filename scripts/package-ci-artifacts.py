@@ -312,6 +312,20 @@ def verify_archive(archive: Path, root: str, manifest: dict) -> None:
     require(seen == set(expected) | {expected_manifest}, "Missing archive members")
 
 
+def read_preset_library_revision() -> str:
+    """Read the canonical, single-line YYYY.MM sound-data revision declaration."""
+    header = ROOT / "src/core/FactoryPresets.h"
+    require(header.is_file(), "Missing preset library revision header: src/core/FactoryPresets.h")
+    declarations = re.findall(
+        r'^inline constexpr const char\* curatedLibraryRevision = "([^"\r\n]*)";$',
+        header.read_text(encoding="utf-8"), re.MULTILINE)
+    require(len(declarations) == 1
+            and re.fullmatch(r"[0-9]{4}\.(?:0[1-9]|1[0-2])", declarations[0]) is not None,
+            "Expected exactly one canonical curatedLibraryRevision declaration with a YYYY.MM revision "
+            "in src/core/FactoryPresets.h")
+    return declarations[0]
+
+
 def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
     commit = subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
     require(subprocess.run(["git", "-C", str(ROOT), "diff", "--quiet", "HEAD", "--"],
@@ -332,8 +346,10 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
             "JUCE evidence does not name the fetched CI source directory")
     license_file = source / "LICENSE.md"
     require(license_file.is_file(), "Verified JUCE source license is missing")
+    preset_revision = read_preset_library_revision()
     extras = {
         "INSTALL_AND_QUICKSTART.md": (ROOT / "docs/INSTALL_AND_QUICKSTART.md").read_bytes(),
+        "PRESET_GUIDE.md": (ROOT / "docs/PRESET_GUIDE.md").read_bytes(),
         "DISTRIBUTION_STATUS.md": (ROOT / "docs/CI_DISTRIBUTION_STATUS.md").read_bytes(),
         "LICENSE": (ROOT / "LICENSE").read_bytes(),
         "licenses/JUCE-LICENSE.md": license_file.read_bytes(),
@@ -346,9 +362,12 @@ def read_ci_context(build: Path) -> tuple[str, dict, dict[str, bytes]]:
         "evidence/juce-provenance.txt": report_data,
         "SOURCE.txt": (f"Source commit: {commit}\n"
                        f"https://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/{commit}\n"
+                       f"Preset library revision: {preset_revision}\n"
+                       f"Online preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/{commit}/docs/PRESET_GUIDE.md\n"
                        "Use the full source at this commit; this archive is not a source distribution.\n").encode(),
     }
     metadata = {"juce_sha": JUCE_SHA, "juce_version": "8.0.11",
+                "preset_library_revision": preset_revision,
                 "workflow_run_id": os.environ.get("GITHUB_RUN_ID", ""),
                 "runner_os": platform.platform(),
                 "validation_note": "Consult every required job for this exact commit; package availability is not a pass."}

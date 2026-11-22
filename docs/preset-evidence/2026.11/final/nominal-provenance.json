@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "description": "All 301 final parameter vectors are represented. 300 unchanged rows retain their measured data; Stereo Delay Pluck was recaptured after its two-parameter mono correction. Every row digest was checked against final inventory at float32 precision.",
+  "base_capture_binary_sha256": "91b8566ed63c1e58900c7ebf98316b6447d1ff515941f85bffc5f188a7f953fd",
+  "updated_capture_binary_sha256": "1f50466d9b785951cb0f5d9dbe98023fb9f7f81bd5781a09f5d3afcb691b3b4e",
+  "base_inventory_sha256": "cf02a7c19d2f2fef86dbae90e90d125752a9b2b0bff6918f8f48ef9134eb5f81",
+  "final_inventory_sha256": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785",
+  "updated_programs": [
+    "Stereo Delay Pluck"
+  ],
+  "command_base": [
+    "cs80_preset_capture",
+    "--all",
+    "--out",
+    "nominal"
+  ],
+  "command_update": [
+    "cs80_preset_capture",
+    "--preset",
+    "Stereo Delay Pluck",
+    "--out",
+    "stereo-delay"
+  ],
+  "rows": 301,
+  "nonfinite": 0,
+  "samples_over_full_scale": 0,
+  "represented_audio_seconds": 1216.749999878,
+  "metrics_sha256": "93d78bf470acd708543279441992985e429e3082dd0680e27aed41ed1fcb1784",
+  "stored_metrics_sha256": "c0fbebc357627adc26364bc1fa896aab599f5d64d888c8cc55afb2c95a9ae018",
+  "stored_metrics_transform": "CRLF converted to LF for repository formatting; numeric fields unchanged. metrics_sha256 identifies the original captured CSV."
+}

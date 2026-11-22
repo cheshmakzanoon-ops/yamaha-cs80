@@ -1,0 +1,57 @@
+{
+  "final": {
+    "exit_code": 0,
+    "wall_seconds": 6.498231156001566,
+    "passed": 136,
+    "checks": 136,
+    "generated_seconds_exact": 45.05,
+    "failures": [],
+    "library": "evidence-final/libcs80_core.a",
+    "library_sha256": "93afda4ffa0a4c7a6a7a94155b3cc693754e932b49e7e197d15402f3b79a293f"
+  },
+  "quiet-draft": {
+    "exit_code": 1,
+    "wall_seconds": 6.4679961429937975,
+    "passed": 134,
+    "checks": 136,
+    "generated_seconds_exact": 45.05,
+    "failures": [
+      "Pan Flute: transient remains present at the actual rank balance",
+      "Nylon Pluck: transient remains present at the actual rank balance"
+    ],
+    "library": "candidate-voicing-core.a",
+    "library_sha256": "f17cd116cbf139f707a5271c93ede04663d12b0c5ff7e98138e6385cce871fb0"
+  },
+  "original": {
+    "exit_code": 1,
+    "wall_seconds": 6.3179503200008185,
+    "passed": 116,
+    "checks": 136,
+    "generated_seconds_exact": 45.05,
+    "failures": [
+      "Pan Flute: independent transient dies on a held key",
+      "Sine Bass: independent transient dies on a held key",
+      "Nylon Pluck: finger transient dies promptly on a held key",
+      "Percussive Organ: percussion is the octave above the 8-foot body",
+      "Percussive Organ: octave percussion is present in the full patch",
+      "Percussive Organ: full-patch octave percussion fades",
+      "Piccolo: no prominent unintended lower-octave pitch",
+      "Ocarina: no prominent unintended lower-octave pitch",
+      "Whistle: no prominent unintended lower-octave pitch",
+      "Velocity Keys: hard attack is substantially louder than soft attack",
+      "Velocity Keys: wide velocity dynamics persist beyond the onset",
+      "Velocity Lead: hard attack is substantially louder than soft attack",
+      "Velocity Lead: wide velocity dynamics persist beyond the onset",
+      "Pressure Lead: no-pressure held key is at the silence/noise floor",
+      "Pressure Lead: full pressure brings out a clearly audible tone",
+      "Pressure Lead: releasing pressure fades the held tone",
+      "Brass Stab: short articulation dies without note-off",
+      "Spiccato Strings: short articulation dies without note-off",
+      "Poly Stab: short articulation dies without note-off",
+      "Bowed Swell Strings: long opening grows into an audible swell"
+    ],
+    "library": "evidence-baseline/libcs80_core.a",
+    "library_sha256": "0a609738fa8e5d20e2ce0b8d5a948831eec2caa5accf7918c2447f6f8f2669ed"
+  },
+  "test_source_sha256": "ce272e4a04d4109933cc0b68bcea048d93707a88a4b4c702c33824c5ce55af6c"
+}
