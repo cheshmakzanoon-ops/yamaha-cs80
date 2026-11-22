@@ -1,0 +1,243 @@
+name: Linux headless validator artifact diagnostic (d0c3c23)
+
+# Two bounded diagnostic invocations of an already failed headless validation.
+# This separate workflow cannot rescue the original gate or publish a product.
+on:
+  push:
+    branches:
+      - 'diagnostic/preset-d0c3-headless'
+    paths:
+      - '.github/workflows/validator-d0c3-headless-diagnostic.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  diagnose:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/diagnostic/preset-d0c3-headless'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      ARTIFACT_ID: '14761700962'
+      ARTIFACT_BYTES: '6889833'
+      ORIGINAL_RUN: '45029235535'
+      ORIGINAL_RUN_ATTEMPT: '1'
+      ORIGINAL_JOB: '137263093053'
+      ORIGINAL_SOURCE: 'd0c3c23be68ef048aa56969f1c493c221c1562c5'
+      ARTIFACT_SHA256: '1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77'
+      PLUGIN_SHA256: '6ffae83a8425553915941106386fb4e34380f59cdb0daf9f6bd17ca2b30d0a6b'
+      MODULEINFO_SHA256: '01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4'
+      REPLAY_SEED: '0x5ba7253'
+      VALIDATOR_SHA256: 'c01c49d8063965c4c2dea8324468336768f5c9139e0b1caebde14c2400b55352'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Freeze the existing diagnostic shim/fixtures at the failed source.
+          # The plugin itself is downloaded below and is never rebuilt here.
+          ref: d0c3c23be68ef048aa56969f1c493c221c1562c5
+          persist-credentials: false
+
+      - name: Record original failure and headless diagnostic scope
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$ORIGINAL_SOURCE"
+          test -z "${DISPLAY:-}"
+          test -z "${WAYLAND_DISPLAY:-}"
+          mkdir -p diagnostic-evidence
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path('diagnostic-evidence/scope.json').write_text(json.dumps({
+              'purpose': 'diagnostic only; not a validator gate or retry-to-green',
+              'source': os.environ['ORIGINAL_SOURCE'],
+              'original_run': int(os.environ['ORIGINAL_RUN']),
+              'original_run_attempt': int(os.environ['ORIGINAL_RUN_ATTEMPT']),
+              'original_job': int(os.environ['ORIGINAL_JOB']),
+              'original_job_url': 'https://github.com/' + os.environ['GITHUB_REPOSITORY']
+                  + '/actions/runs/' + os.environ['ORIGINAL_RUN'] + '/job/' + os.environ['ORIGINAL_JOB'],
+              'original_headless_result': 'FAILED: SUCCESS text followed by native SIGSEGV',
+              'original_raw_returncode': -11,
+              'original_wrapper_exit': 139,
+              'original_gui_and_fixed_seed_lanes': 'skipped',
+              'original_stack_or_local_core_available': False,
+              'seed': os.environ['REPLAY_SEED'],
+              'strictness': 10,
+              'validate_in_process': True,
+              'skip_gui_tests': True,
+              'replays': ['one GDB invocation', 'one fault-thread-preload invocation'],
+              'per_replay_timeout_seconds': 240,
+              'termination_grace_seconds': 10,
+              'original_attempt_1_failure_is_not_rescued_by_later_attempts_or_diagnostics': True,
+              'crash_ownership': 'unestablished until actual failure evidence is examined'
+          }, indent=2) + '\n')
+          PY
+
+      - name: Install official diagnostic runtime
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libasound2t64 libfontconfig1 libfreetype6 \
+            libx11-6 libxext6 libxrandr2 libxcursor1 libxinerama1 \
+            libxrender1 libxcomposite1 libxkbcommon0 libxcb1 libgl1 \
+            fonts-dejavu-core unzip gdb gcc libunwind-dev
+
+      - name: Retrieve and verify exact failed plugin artifact
+        id: artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID" > diagnostic-evidence/artifact.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$ARTIFACT_ID/zip" > exact-plugin.zip
+          python3 - <<'PY'
+          import hashlib, json, os, stat, zipfile
+          from pathlib import Path
+          metadata = json.loads(Path('diagnostic-evidence/artifact.json').read_text())
+          assert metadata['id'] == int(os.environ['ARTIFACT_ID'])
+          assert metadata['name'] == 'cs80-linux-vst3' and not metadata['expired']
+          assert metadata['workflow_run']['id'] == int(os.environ['ORIGINAL_RUN'])
+          assert metadata['workflow_run']['head_sha'] == os.environ['ORIGINAL_SOURCE']
+          digest = os.environ['ARTIFACT_SHA256']
+          assert metadata['digest'] == 'sha256:' + digest
+          archive = Path('exact-plugin.zip')
+          assert archive.stat().st_size == metadata['size_in_bytes'] == int(os.environ['ARTIFACT_BYTES'])
+          with archive.open('rb') as stream:
+              assert hashlib.file_digest(stream, 'sha256').hexdigest() == digest
+          plugin = 'CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so'
+          moduleinfo = 'CS-80 Reference.vst3/Contents/Resources/moduleinfo.json'
+          expected = {
+              plugin: (17384920, os.environ['PLUGIN_SHA256']),
+              moduleinfo: (1095, os.environ['MODULEINFO_SHA256'])
+          }
+          identities = []
+          with zipfile.ZipFile(archive) as source:
+              entries = source.infolist()
+              assert len(entries) == len(expected) and {x.filename for x in entries} == set(expected)
+              assert sum(x.file_size for x in entries) < 64 * 1024 * 1024
+              for entry in entries:
+                  mode = entry.external_attr >> 16
+                  assert not entry.is_dir() and stat.S_IFMT(mode) in (0, stat.S_IFREG)
+                  assert not (entry.flag_bits & 1)
+                  size, wanted = expected[entry.filename]
+                  assert entry.file_size == size
+                  destination = Path('exact-plugin') / entry.filename
+                  destination.parent.mkdir(parents=True, exist_ok=True)
+                  actual, copied = hashlib.sha256(), 0
+                  with source.open(entry, 'r') as src, destination.open('xb') as dst:
+                      for chunk in iter(lambda: src.read(1024 * 1024), b''):
+                          copied += len(chunk)
+                          assert copied <= size
+                          actual.update(chunk)
+                          dst.write(chunk)
+                  assert copied == size and actual.hexdigest() == wanted
+                  identities.append({'name': entry.filename, 'bytes': copied, 'sha256': actual.hexdigest()})
+          Path('diagnostic-evidence/plugin-identity.json').write_text(json.dumps({
+              'artifact_id': int(os.environ['ARTIFACT_ID']),
+              'artifact_bytes': archive.stat().st_size,
+              'artifact_sha256': digest,
+              'source': os.environ['ORIGINAL_SOURCE'],
+              'run': int(os.environ['ORIGINAL_RUN']),
+              'members': identities
+          }, indent=2) + '\n')
+          PY
+
+      - name: Verify official validator and diagnostic shim
+        id: tools
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          curl --fail --location --retry 3 --retry-delay 2 \
+            -o pluginval.zip https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_Linux.zip
+          printf '%s  pluginval.zip\n' "$VALIDATOR_SHA256" | sha256sum --check
+          unzip -q pluginval.zip -d pluginval
+          test -x pluginval/pluginval
+          ./pluginval/pluginval --version | tee diagnostic-evidence/pluginval-version.txt
+          grep -qx 'pluginval - 1.0.4' diagnostic-evidence/pluginval-version.txt
+          sha256sum pluginval.zip pluginval/pluginval > diagnostic-evidence/validator-sha256.txt
+          gdb --version | sed -n '1p' > diagnostic-evidence/gdb-version.txt
+          cat /etc/os-release > diagnostic-evidence/os-release.txt
+          dpkg-query -W libc6 libx11-6 libunwind8 gdb > diagnostic-evidence/runtime-packages.txt
+          sha256sum scripts/pluginval-fault-trace.c scripts/pluginval-fault-fixture.c \
+            scripts/test-pluginval-fault-trace.py scripts/pluginval-diagnostic-seed.py \
+            > diagnostic-evidence/shim-source-sha256.txt
+          cc -std=c11 -O2 -Wall -Wextra -Werror -fPIC -shared -Wl,-z,now \
+            scripts/pluginval-fault-trace.c -lunwind -o fault-trace.so
+          cc -std=c11 -O0 -g -Wall -Wextra -Werror -rdynamic -pthread \
+            scripts/pluginval-fault-fixture.c -o fault-fixture
+          timeout --signal=TERM --kill-after=10s 60s \
+            python3 scripts/test-pluginval-fault-trace.py fault-trace.so fault-fixture \
+            | tee diagnostic-evidence/shim-fixtures.txt
+
+      - name: One same-seed headless diagnostic under GDB
+        id: gdb
+        timeout-minutes: 5
+        if: success() && steps.artifact.outcome == 'success' && steps.tools.outcome == 'success'
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          printf '%s  %s\n' "$PLUGIN_SHA256" \
+            "$PWD/exact-plugin/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" \
+            | sha256sum --check > diagnostic-evidence/gdb-input-check.txt
+          mkdir -p diagnostic-evidence/gdb-reports
+          set +e
+          timeout --signal=TERM --kill-after=10s 240s \
+            gdb -nx -nh --batch --return-child-result \
+            -iex 'set auto-load off' -iex 'set debuginfod enabled off' \
+            -iex 'set print frame-arguments none' -ex 'set pagination off' \
+            -ex 'set print thread-events off' -ex 'set disable-randomization off' \
+            -ex run \
+            -ex "python if gdb.selected_inferior().pid: gdb.execute('thread apply all bt 40'); gdb.execute('info sharedlibrary')" \
+            --args "$PWD/pluginval/pluginval" --random-seed "$REPLAY_SEED" \
+            --strictness-level 10 --validate-in-process --skip-gui-tests --timeout-ms 120000 \
+            --output-dir "$PWD/diagnostic-evidence/gdb-reports" --output-filename same-seed-headless-gdb \
+            "$PWD/exact-plugin/CS-80 Reference.vst3" 2>&1 | tee diagnostic-evidence/gdb.log
+          statuses=("${PIPESTATUS[@]}")
+          printf 'Debugger/timeout process exit: %s; log exit: %s\nOriginal attempt 1 headless invocation remains FAILED.\n' \
+            "${statuses[0]}" "${statuses[1]}" | tee diagnostic-evidence/gdb-status.txt
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          exit "${statuses[0]}"
+
+      - name: One same-seed headless diagnostic with fault-thread trace
+        id: trace
+        timeout-minutes: 5
+        if: always() && !cancelled() && steps.artifact.outcome == 'success' && steps.tools.outcome == 'success'
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          printf '%s  %s\n' "$PLUGIN_SHA256" \
+            "$PWD/exact-plugin/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so" \
+            | sha256sum --check > diagnostic-evidence/trace-input-check.txt
+          mkdir -p diagnostic-evidence/trace-reports
+          set +e
+          timeout --signal=TERM --kill-after=10s 240s \
+            env LD_PRELOAD="$PWD/fault-trace.so" \
+            "$PWD/pluginval/pluginval" --random-seed "$REPLAY_SEED" \
+            --strictness-level 10 --validate-in-process --skip-gui-tests --timeout-ms 120000 \
+            --output-dir "$PWD/diagnostic-evidence/trace-reports" --output-filename same-seed-headless-trace \
+            "$PWD/exact-plugin/CS-80 Reference.vst3" \
+            198>diagnostic-evidence/fault-thread.log 2>&1 | tee diagnostic-evidence/trace.log
+          statuses=("${PIPESTATUS[@]}")
+          cat diagnostic-evidence/fault-thread.log
+          printf 'Diagnostic/timeout process exit: %s; log exit: %s\nFault shim uses numeric 128+signal, not native signal termination.\nOriginal attempt 1 headless invocation remains FAILED.\n' \
+            "${statuses[0]}" "${statuses[1]}" | tee diagnostic-evidence/trace-status.txt
+          if [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi
+          exit "${statuses[0]}"
+
+      - name: Upload diagnostic text evidence only
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cs80-d0c3-headless-same-artifact-diagnostics
+          path: |
+            diagnostic-evidence/*.json
+            diagnostic-evidence/*.txt
+            diagnostic-evidence/*.log
+            diagnostic-evidence/gdb-reports/same-seed-headless-gdb
+            diagnostic-evidence/trace-reports/same-seed-headless-trace
+          if-no-files-found: error
