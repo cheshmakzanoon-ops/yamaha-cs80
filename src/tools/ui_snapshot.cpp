@@ -560,7 +560,8 @@ void testExternalInputHost()
 
 // The foot controller position must survive what resets the engine, and stay shared
 // between the on-screen wheel and MIDI CC11.
-void testExpressionPersistence()
+template <typename Check>
+void testExpressionPersistence(Check check)
 {
     auto rmsOf = [](Cs80AudioProcessor& target)
     {
@@ -585,8 +586,10 @@ void testExpressionPersistence()
     auto fresh = [](float pedal)
     {
         auto target = std::make_unique<Cs80AudioProcessor>();
-        // Plan 1.7 (ws2): fresh instances default to the circuit engine; this fixture
-        // exercises the legacy-start contract, so it selects Legacy (compat) explicitly.
+        // Keep the original startup fixture independent of the current showcase:
+        // frozen Legacy program 0 with the original SUB panel, then Legacy (compat).
+        target->loadFactoryPreset(0);
+        target->setParamValue(cs80::P_subOriginalMode, 1.0f);
         target->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
         target->setParamValue(cs80::P_voiceDispersion, 0.0f);
         target->setParamValue(cs80::P_drift, 0.0f);
@@ -606,6 +609,10 @@ void testExpressionPersistence()
     auto reference = fresh(0.3f);
     auto full = fresh(-1.0f);
     const double restored = rmsOf(*moved), expected = rmsOf(*reference), loud = rmsOf(*full);
+    const double relativeError = expected > 0.0 ? std::abs(restored - expected) / expected
+                                               : std::numeric_limits<double>::infinity();
+    std::printf("Expression persistence RMS: restored=%.9g expected=%.9g full=%.9g relative_error=%.9g\n",
+                restored, expected, loud, relativeError);
     // The engine's phase RNG is not reset by prepare (about 5% level scatter); snapping
     // back to full travel would be 3x louder, so a 15% window separates the cases.
     check(moved->getExpressionValue() == 0.3f && std::abs(restored - expected) < expected * 0.15,
@@ -2010,6 +2017,20 @@ int main(int argc, char** argv)
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
     if (argc > 1 && std::strcmp(argv[1], "--locale-smoke") == 0)
         return cs80::tests::runLocaleSmoke(argc, argv);
+    if (argc > 1 && std::strcmp(argv[1], "--expression-persistence-tests") == 0)
+    {
+        if (argc != 2)
+        {
+            std::fprintf(stderr, "Usage: CS80Snapshots --expression-persistence-tests\n");
+            return 64;
+        }
+        // This processor-only fixture needs no editor or native window.
+        juce::ScopedJuceInitialiser_GUI juceInit;
+        int checks = 0;
+        testExpressionPersistence([&](bool condition, const char* what) { ++checks; check(condition, what); });
+        std::printf("Expression persistence tests: %d checks, %d failures\n", checks, failures);
+        return failures == 0 ? 0 : 1;
+    }
     if (argc > 1 && std::strcmp(argv[1], "--panel-golden-tests") == 0)
     {
         if (argc != 3 || argv[2][0] == '\0' || std::strncmp(argv[2], "--", 2) == 0)
@@ -2459,7 +2480,7 @@ int main(int argc, char** argv)
     testKeyPressureGesture(true);
     testKeyboardHandoffHost(false);
     testKeyboardHandoffHost(true);
-    testExpressionPersistence();
+    testExpressionPersistence(check);
     phases.begin("live envelope and factory source host");
     testLiveEnvelopeTimingHost();
     testSourceFactoryHost();
