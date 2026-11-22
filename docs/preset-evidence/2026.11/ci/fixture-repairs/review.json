@@ -1,0 +1,59 @@
+{
+  "reviewer": "agent60",
+  "checked_at_utc": "2026-11-22T13:45:52.929279+00:00",
+  "review_method": "Read-only source, static byte comparison and existing causal/CTest/JUnit evidence; no tests, builds, network calls or repository edits.",
+  "published_source_before_repairs": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "checkout_head_at_review": "d2c70e11e56034f932418ff228115c551769a85a",
+  "reviewed_working_source_sha256": {
+    "tests/ControllerHandoffHostTests.cpp": "ab271787f212f4f7fab4b005b583c561552a8522fa05f1a5f90a4a6a2af79841",
+    "CMakeLists.txt": "5262276e9cd313a4b640be62850f7ee8cc92cf3d2d17bebf79be885431312fa8"
+  },
+  "verdict": "ACCEPT_BOTH_MINIMAL_FIXTURE_REPAIRS_FOR_NEXT_CI_RUN",
+  "release_status": "NOT_ACCEPTED_PRIOR_LINUX_CI_FAILED_NEXT_COMPLETE_RUN_PENDING",
+  "controller": {
+    "exactly_one_added_comment_parameter_block": true,
+    "all_other_source_bytes_unchanged": true,
+    "saved_before_matches_published": true,
+    "saved_after_matches_reviewed": true,
+    "all_causal_file_hashes_match": true,
+    "causal_file_count": 11,
+    "causal_pairs": 16,
+    "causal_pairs_have_identical_sub_states_and_pressure": true,
+    "original_and_negative_failure_count": 16,
+    "neutral_and_final_failure_count": 0,
+    "runtime_checks_preserved": 376,
+    "settling_frames_preserved": 4096,
+    "ci_failure_output_matches_local_before": true
+  },
+  "panel": {
+    "exactly_one_added_linux_environment_block": true,
+    "only_set_environment": "JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu",
+    "system_default_output_matches_ci_exactly": true,
+    "controlled_and_juce_only_output_identical": true,
+    "registered_ctest_environment_printed": true,
+    "registered_ctest_result": "4 checks, 0 failures",
+    "thresholds_preserved": {
+      "pixel_delta": 40,
+      "changed_fraction": 0.003,
+      "block_size": 8,
+      "block_mean": 8.0
+    },
+    "log_sha256": {
+      "controlled.log": "1b972b335907d5b1ae1a9edcfe3509113c06cc5d7bcef64bba3495509b79d12f",
+      "system-default.log": "71c2ac89d0b3be4346da0b5516513bb0ad593a370072fbf93bb29ebd8fa2bfb8",
+      "juce-font-only.log": "1b972b335907d5b1ae1a9edcfe3509113c06cc5d7bcef64bba3495509b79d12f",
+      "registered-ctest.log": "fc05548f90becb89fafdc2aebabc19bb58539f74850f597338e29294e1c32852"
+    }
+  },
+  "production_preset_ui_workflow_golden_diffs": [],
+  "failed_linux_junit": {
+    "name": "(empty)",
+    "tests": "578",
+    "failures": "2",
+    "disabled": "0",
+    "skipped": "1",
+    "hostname": "",
+    "time": "7358",
+    "timestamp": "2026-11-22T11:30:35"
+  }
+}

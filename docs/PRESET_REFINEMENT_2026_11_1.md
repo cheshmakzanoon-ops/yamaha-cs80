@@ -18,6 +18,14 @@ pending download. The final publication update must record the actual source
 commit and successful CI run; the library revision and application version
 alone cannot identify a binary.
 
+The current candidate is source `6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
+[build 45044040694, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
+Its predecessor was cancelled after all four native runners recorded the same
+stale workflow-snapshot test failure. The repair updates that reviewed snapshot;
+the sound bank, packaging code and required validator commands are unchanged.
+The [integration lineage](preset-evidence/2026.11.1/ci/source-lineage.json)
+preserves both sources and the actual predecessor failure evidence.
+
 | Deliverable | Current verification status |
 | --- | --- |
 | Twelve authored refinements | Measured against the frozen baseline; implemented in the factory data |

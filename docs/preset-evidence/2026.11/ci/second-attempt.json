@@ -1,0 +1,198 @@
+{
+  "qualified": false,
+  "reason": "Linux full CTest has two failures; dependent artifact, packaging, audition and Linux validator gates were skipped.",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "run_id": 45016741244,
+  "run_attempt": 1,
+  "run_status": "completed",
+  "run_conclusion": "failure",
+  "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "source_tree": "1b875a79f779ab0ad91d67da7d7926dc58b94e28",
+  "native_job_id": 137190569890,
+  "native_conclusion": "failure",
+  "validator_job_id": 137225403463,
+  "validator_conclusion": "skipped",
+  "ctest": {
+    "root_tag": "testsuite",
+    "root_attributes": {
+      "name": "(empty)",
+      "tests": "578",
+      "failures": "2",
+      "disabled": "0",
+      "skipped": "1",
+      "hostname": "",
+      "time": "7358",
+      "timestamp": "2026-11-22T11:30:35"
+    },
+    "registered": 578,
+    "passed": 575,
+    "failed": 2,
+    "skipped": 1,
+    "disabled": 0,
+    "failures": [
+      {
+        "name": "cs80_controller_handoff_host_tests",
+        "outcome": "failed",
+        "time": "1.23261",
+        "status": "fail",
+        "failure": "",
+        "skipped": null
+      },
+      {
+        "name": "cs80_panel_golden_tests",
+        "outcome": "failed",
+        "time": "1.58579",
+        "status": "fail",
+        "failure": "",
+        "skipped": null
+      }
+    ],
+    "skips": [
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "outcome": "skipped",
+        "time": "0.000783694",
+        "status": "notrun",
+        "failure": null,
+        "skipped": {
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      }
+    ]
+  },
+  "ctest_wall_time_seconds": 7358.06,
+  "internal_python_skips": {
+    "total": 3,
+    "suites": [
+      {
+        "test": "cs80_package_binary_identity_tests",
+        "skips": 1,
+        "reason_lines": [
+          "OK (skipped=1)"
+        ],
+        "source_inferred_reasons": [
+          "Native Windows junction fixture (scripts/test-package-binary-identity.py:213)"
+        ]
+      },
+      {
+        "test": "cs80_windows_installer_preflight_tests",
+        "skips": 2,
+        "reason_lines": [
+          "OK (skipped=2)"
+        ],
+        "source_inferred_reasons": [
+          "Native directory-junction fixture requires Windows (scripts/test-windows-installer-preflight.py:127)",
+          "Native ISCC compilation requires Windows and Inno Setup 6 (scripts/test-windows-installer-preflight.py:148)"
+        ]
+      }
+    ],
+    "reason_provenance": "Counts are observed in LastTest.log; compact unittest output omits reason text, so reasons are cross-checked from source decorators at the same test source."
+  },
+  "recall": {
+    "cs80_preset_revert_tests": {
+      "checks": 1387,
+      "failures": 0
+    },
+    "cs80_modern_recall_host_tests": {
+      "checks": 2355,
+      "failures": 0
+    },
+    "cs80_preset_file_recall_tests": {
+      "checks": 2784,
+      "failures": 0
+    },
+    "cs80_preset_identity_tests": {
+      "checks": 81,
+      "failures": 0
+    },
+    "cs80_preset_refresh_tests": {
+      "checks": 193,
+      "failures": 0
+    }
+  },
+  "recall_total_checks": 6800,
+  "recall_total_failures": 0,
+  "juce_provenance": {
+    "checked_at": "2026-11-22T11:21:36Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+    "workflow_run": "45016741244",
+    "configured_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/home/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "native_environment": {
+    "os": "Ubuntu 24.04.5 LTS",
+    "runner_image": "ubuntu-24.04",
+    "runner_image_version": "20261116.376.1",
+    "c_compiler": "GNU 13.3.0",
+    "cxx_compiler": "GNU 13.3.0",
+    "generator": "Ninja",
+    "build_type": "Release",
+    "plugin": "ON",
+    "tests": "ON"
+  },
+  "native_test_artifact": {
+    "file": "linux-test-evidence-ba3a721.zip",
+    "artifact_id": 14756267327,
+    "expected_size": 136999,
+    "expected_sha256": "18d6990462d8712d920c8a5d75d1cd36a2459c1287a5de43409eb01ef3468dc5",
+    "folder": "native-evidence",
+    "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+    "run_id": 45016741244,
+    "actual_size": 136999,
+    "actual_sha256": "18d6990462d8712d920c8a5d75d1cd36a2459c1287a5de43409eb01ef3468dc5",
+    "verified": true,
+    "zip_crc_verified": true,
+    "members": [
+      {
+        "name": "Testing/Temporary/LastTest.log",
+        "size": 1095018,
+        "sha256": "f359fd85ef7a5c9abca9f4897f9ccdbabf6996b8b87963979c4fef66c4ce2a7a"
+      },
+      {
+        "name": "ctest-results.xml",
+        "size": 461226,
+        "sha256": "e7417d28ba99652bb832ce8b7f74c94cf21ef8a4940a6db9905c09c7460d002c"
+      },
+      {
+        "name": "ci-juce-provenance.txt",
+        "size": 609,
+        "sha256": "1e415d8339ad7c06e020a559841b0806325e1f56d1ab1a93ac5b60349735954d"
+      }
+    ]
+  },
+  "unreached": {
+    "packaging_selftest": "skipped",
+    "package_linux": "skipped",
+    "linux_install_bundle": "absent from this run",
+    "linux_vst3_artifact": "absent from this run",
+    "auditions": "skipped",
+    "pluginval_headless_strictness_10": "skipped",
+    "pluginval_gui_xvfb_strictness_10": "skipped",
+    "pluginval_gui_seed_0x2da72db_strictness_10": "skipped",
+    "pluginval_explicit_success": "not produced",
+    "pluginval_input_digest": "not produced"
+  },
+  "other_platforms": {
+    "windows-x86_64": "PASS",
+    "macos-arm64": "PASS",
+    "macos-x86_64": "PASS"
+  },
+  "subsequent_repair": {
+    "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "next_build_run": 45029235535,
+    "controller_causal_evidence": "fixture-repairs/controller.json",
+    "panel_causal_evidence": "fixture-repairs/panel.json",
+    "independent_review": "fixture-repairs/review.json",
+    "new_run_status_at_recording": "pending"
+  }
+}

@@ -1,8 +1,8 @@
 {
   "baseline_commit": "61f45feeae1f01038476eb9c99105534950db4de",
   "capture_date": "2026-11-22",
-  "status": "LOCAL_INTEGRATION_VERIFIED_CI_PENDING",
-  "note": "The final inventory includes the Stereo Delay Pluck correction. The complete library audit, five native recall modes, panel comparisons, 136 behavior checks and nine capture CLI tests passed on the integrated source. Nominal metrics retain 300 unchanged vectors and recapture Stereo Delay Pluck; all 301 row digests match the final inventory. Platform CI and publication links remain pending.",
+  "status": "INDEPENDENT_REVIEW_ACCEPTED_ORIGINAL_2026_11_DEVELOPMENT_DOWNLOADS_WITH_UNRESOLVED_LINUX_FAILURE",
+  "note": "All four original native suites and actual package integrity checks pass. Original Linux stable validator attempt1 failed afterSUCCESS bySIGSEGV; externally initiated attempt2 passed allthree gates on the same artifact with changed randomseeds and runner environment. Both attempts remain distinct; no repair is claimed. Actual12-WAV audition and allfive public downloadGETs pass. Independent final review accepted the accurately disclosed original development downloads after83 retained-hash and206 consistency checks. Later2026.11.1 binaries are outside this qualification.",
   "files": [
     {
       "path": "baseline/inventory.json",
@@ -360,6 +360,323 @@
       "original_sha256": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28",
       "stored_sha256": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28",
       "transform": "verbatim"
+    },
+    {
+      "path": "behavior/independent-audit.json",
+      "origin": "review-w10-behavior-evidence/artifact-audit.json",
+      "original_sha256": "bbb38171c547e3280dd4fd4b32b835464f12bde7a865cf9f5c9d27244da602cd",
+      "stored_sha256": "565a5f7cb6fab145101ff08b50f226bcaa6f5c119708f569026e30cd567ba5fd",
+      "transform": "Workspace prefix removed from provenance strings; JSON formatted; measurements unchanged"
+    },
+    {
+      "path": "host/expression-persistence.log",
+      "origin": "integration-fix-expression.log",
+      "original_sha256": "046fa234c284642c696ce75a4e150bf267593d7ee48e371e1404a44ca0f439dd",
+      "stored_sha256": "046fa234c284642c696ce75a4e150bf267593d7ee48e371e1404a44ca0f439dd",
+      "transform": "verbatim"
+    },
+    {
+      "path": "host/workflow-guards.log",
+      "origin": "integration-fix-workflow-guards.log",
+      "original_sha256": "c238517ee3c738f9b87f4cbe18fea2fc2c3e4ec1fbb1162fe80837f29c9e92d8",
+      "stored_sha256": "c238517ee3c738f9b87f4cbe18fea2fc2c3e4ec1fbb1162fe80837f29c9e92d8",
+      "transform": "verbatim"
+    },
+    {
+      "path": "ci/initial-attempt.json",
+      "origin": "ci-run-45014200523/initial-attempt-summary.json",
+      "original_sha256": "534cdeb98122dcb86fa26cdcf21dc02a3397f2ecbc35c1951dd620d8b0f13dcf",
+      "stored_sha256": "534cdeb98122dcb86fa26cdcf21dc02a3397f2ecbc35c1951dd620d8b0f13dcf",
+      "transform": "verbatim"
+    },
+    {
+      "path": "ci/macos-arm64.json",
+      "origin": "review-w09-macos-arm/replacement-run-45016741244/final-verification.json",
+      "original_sha256": "9cda05b028813af9d5ee6ec3711ef887179adb92c81c2fb5a27fb5724b07e4a6",
+      "stored_sha256": "246cdb89aa3c39536089a18fe6434347ad23f0fd19ff5b953e8242eb8229e057",
+      "transform": "Omitted the redundant per-step GitHub metadata and unused artifact API identifiers; retained native counts, validators, package details and artifact source/digests."
+    },
+    {
+      "path": "ci/windows-x86_64.json",
+      "origin": "review-w09-windows/replacement-ba3a721/verification.json",
+      "original_sha256": "1a434d270218491a945f5dc6ae9ee214cf86f978e2187b2eac0ef4672b425aa5",
+      "stored_sha256": "26ed22304100cb4ebac3e509a78fc705fe89f80c2a97b71cf5518d9e61751083",
+      "transform": "Workspace prefix removed from provenance paths; unused artifact API identifiers omitted; native counts, skips, validators and digest checks retained."
+    },
+    {
+      "path": "ci/windows-document-review.json",
+      "origin": "review-w10-acceptance/windows-document-identity-review.json",
+      "original_sha256": "68bc959b5b8da41ecb3b7a81f4e75bab7e112966df8d4c17d2ebe60da4e51727",
+      "stored_sha256": "68bc959b5b8da41ecb3b7a81f4e75bab7e112966df8d4c17d2ebe60da4e51727",
+      "transform": "Workspace prefix removed from provenance strings; JSON formatted; independent byte-review facts unchanged. This is a timestamped interim review, not the final release verdict."
+    },
+    {
+      "path": "ci/verify-downloaded-artifacts.py",
+      "origin": "review-w09-artifact-integrity/verify-downloaded-artifacts.py",
+      "original_sha256": "87f97e8ef3b5824f25497d68d748306d88792596ab33f02078b10305d9ec30a6",
+      "stored_sha256": "87f97e8ef3b5824f25497d68d748306d88792596ab33f02078b10305d9ec30a6",
+      "transform": "verbatim"
+    },
+    {
+      "path": "ci/macos-x86_64.json",
+      "origin": "review-w09-macos-intel/replacement-45016741244/final-verification.json",
+      "original_sha256": "624c4ed89bdf91596409a9907e326888e58212cae5e8ad79166fd0e53d203b69",
+      "stored_sha256": "931fc6ac0964fe8294a786db3a27a20c3affa97f16d88c82647519548e7f597d",
+      "transform": "Workspace prefix removed from provenance paths; unused artifact API identifiers omitted; native counts, skips, validators and digest checks retained."
+    },
+    {
+      "path": "ci/windows-validator-payload-identity.json",
+      "origin": "ci-run-45016741244/windows-validator-payload-identity.json",
+      "original_sha256": "dac9dfb5fe134eb850350dd3f49b55611fa207a6233ad3a7436d6f559a95b04c",
+      "stored_sha256": "dac9dfb5fe134eb850350dd3f49b55611fa207a6233ad3a7436d6f559a95b04c",
+      "transform": "verbatim"
+    },
+    {
+      "path": "ci/initial-upstream-comparison.json",
+      "origin": "review-w08-workflow/upstream-comparison-45016771698-evidence.json",
+      "original_sha256": "b1a41a94b04cbadf70122e808c6bab36e3af79c5cf0497138ea05d342f53aebd",
+      "stored_sha256": "e7cf616526ba4166abc96f22ac2ee36d44cb86ad9ccac7439aa393399facaf64",
+      "transform": "Selected originating-build, job and artifact evidence; added independently read source-run/error log excerpts and hashes; omitted unrelated repository settings."
+    },
+    {
+      "path": "ci/fixture-repairs/controller.json",
+      "origin": "review-w09-controller/handoff/causal-evidence.json",
+      "original_sha256": "935582db450ec3dd61951cfe7143472f4d4c3bf91b6d7fedcfaf36b0b86230d6",
+      "stored_sha256": "935582db450ec3dd61951cfe7143472f4d4c3bf91b6d7fedcfaf36b0b86230d6",
+      "transform": "verbatim; causal review of the superseded candidate, not final native qualification"
+    },
+    {
+      "path": "ci/fixture-repairs/panel.json",
+      "origin": "review-linux-fixture-repairs/panel/causal-evidence.json",
+      "original_sha256": "650e2311c86068c81ae898d36dce2cd24faa39625da24f0113ff666ebdad3279",
+      "stored_sha256": "650e2311c86068c81ae898d36dce2cd24faa39625da24f0113ff666ebdad3279",
+      "transform": "verbatim; causal review of the superseded candidate, not final native qualification"
+    },
+    {
+      "path": "ci/fixture-repairs/review.json",
+      "origin": "review-w10-acceptance/linux-fixture-repairs-review.json",
+      "original_sha256": "191d6838fb8d3773fecc1bdc16cde93b42f4bd40ba6cca186aadb515438089a2",
+      "stored_sha256": "191d6838fb8d3773fecc1bdc16cde93b42f4bd40ba6cca186aadb515438089a2",
+      "transform": "verbatim; causal review of the superseded candidate, not final native qualification"
+    },
+    {
+      "path": "ci/second-attempt.json",
+      "origin": "review-w09-linux/replacement-run-45016741244/verification.json",
+      "original_sha256": "0932c417add1ed0bf7efb62c45b37219875358cc88c9098b6e477d53304abf61",
+      "stored_sha256": "3fa59de080d3b5b02ee3cbfd16a2532cc6d764f56454c77322f6951ac946ff78",
+      "transform": "Selected observed native counts, skips, provenance and blocked gates; added later repair source and new-run reference. Historical failed-run result retained."
+    },
+    {
+      "path": "identity/final-inventory-comparison.json",
+      "origin": "Coordinator comparison of retained baseline/final inventories and git source tree",
+      "original_sha256": "21fc27c201ed0c4cee803cff5e02c1e864c549a41b95bce4d9776b6b4634703f",
+      "stored_sha256": "21fc27c201ed0c4cee803cff5e02c1e864c549a41b95bce4d9776b6b4634703f",
+      "transform": "new derived summary; no audio was generated"
+    },
+    {
+      "path": "ci/source-lineage.json",
+      "origin": "Coordinator git-object comparison of actual pushed commits",
+      "original_sha256": "52709ebd7e449ef39dc607bc72370482964098707f20a7543acc10becdae6df2",
+      "stored_sha256": "52709ebd7e449ef39dc607bc72370482964098707f20a7543acc10becdae6df2",
+      "transform": "new derived source-lineage summary Concurrent upstream 2026.11.1 source lineage is recorded separately; no old result is applied to the newer source."
+    },
+    {
+      "path": "ci/final-windows-x86_64.json",
+      "origin": "review-w09-windows/final-run-45029235535/verification.json",
+      "original_sha256": "661eb781c9a9a03bddb2f822ad92b169c3959ffff6591fce409b495e1e7e529c",
+      "stored_sha256": "268e2d964da9519c40c4ac88380a69a1399a74e1cc7085a1463a3a52d97a4e09",
+      "transform": "Workspace prefixes and unused artifact API URL/node identifiers omitted; all native results, validator input provenance, checksums and platform skips retained."
+    },
+    {
+      "path": "ci/final-macos-arm64.json",
+      "origin": "review-w09-macos-arm/final-run-45029235535/final-verification.json",
+      "original_sha256": "04140af476a67515895b36877153e9dac78b71d1dc33e5ec1c2e836c84c07208",
+      "stored_sha256": "a3a77e408d9aa42fc9f7507b01b76d797a3b4bb69970c7e1e0cef42403478817",
+      "transform": "Redundant per-step metadata, unused artifact API URL/node identifiers and workspace prefixes omitted; all native/recall/validator counts and checksums retained. Coordinator additionally counted nested Python skips in the same verified native artifact; that read retains its artifact/log digests."
+    },
+    {
+      "path": "ci/final-macos-x86_64.json",
+      "origin": "review-w09-macos-intel/final-run-45029235535/final-verification.json",
+      "original_sha256": "af30b612fcb51ca7ef8932e7809f690973c71f2ba8c237a8d460de59e5d5ff33",
+      "stored_sha256": "1dc8ae923cddafdd89b4ddb8ec15ce47ab82438d862e671fad525cc5ffb136a3",
+      "transform": "Workspace prefixes and unused artifact API URL/node identifiers omitted; all native/recall/validator counts, checksums and platform skips retained."
+    },
+    {
+      "path": "ci/auxiliary-gates.json",
+      "origin": "review-w08-workflow/final-source-d0c3-auxiliary-evidence.json",
+      "original_sha256": "a108bcec08bffc8bb840e2e4c786ebc860cc8e0b46753c6b440e708ea50deb30",
+      "stored_sha256": "c70588345217998ff222b09dc290729d07908920e51d5e14f9dbc8477b8bf4bb",
+      "transform": "Selected exact-source auxiliary run/job summaries, screenshot lineage and historical beta source/error excerpts; omitted redundant per-step and prior artifact metadata."
+    },
+    {
+      "path": "ci/final-linux-x86_64.json",
+      "origin": "review-w09-linux/final-run-45029235535/verification.json",
+      "original_sha256": "7a65b9b1bb6a50f033fa82cd492418afd66b6023fa19977995341dc35e1de00e",
+      "stored_sha256": "c65d0943f0a7f8c3748e44545bf556e4602a66c83866ddedf2997cc44ae3985b",
+      "transform": "Workspace prefix and redundant artifact API node/download identifiers removed; numeric results and source/run/attempt identities retained. Qualification scope is unchanged."
+    },
+    {
+      "path": "ci/final-linux-validator-attempt-2.json",
+      "origin": "review-w09-linux/final-run-45029235535/attempt-2/attempt-reconciliation.json",
+      "original_sha256": "fc109bd72f8e7c0af5d350132e44cc5b76f28d7ad62313194b3af0c669021ec7",
+      "stored_sha256": "e13aae211a145a3295fe1084b1ada667e142e91ae35025c92f7d2ef4eb70b73a",
+      "transform": "Workspace prefix and redundant artifact API node/download identifiers removed; numeric results and source/run/attempt identities retained. Qualification scope is unchanged."
+    },
+    {
+      "path": "ci/final-install-artifacts.json",
+      "origin": "review-w09-artifact-integrity/final-run-45029235535-all/report.json",
+      "original_sha256": "4724f69ef5fe9d78e3b40dc7bf742d07353a307f526f554b8efda3420637dfaf",
+      "stored_sha256": "af055053746dada44c4a55a7a15c8811cb5baa1dc14cd62728bd6bba580218df",
+      "transform": "Workspace prefix and redundant artifact API node/download identifiers removed; numeric results and source/run/attempt identities retained. Qualification scope is unchanged."
+    },
+    {
+      "path": "ci/final-validator-payload-identity.json",
+      "origin": "ci-run-45029235535/final-validator-payload-identity.json",
+      "original_sha256": "5d5e6ad689944dd128c0768d907b7cef054b23618ba661e9f40b1ef9c08c0800",
+      "stored_sha256": "5d5e6ad689944dd128c0768d907b7cef054b23618ba661e9f40b1ef9c08c0800",
+      "transform": "Workspace prefix and redundant artifact API node/download identifiers removed; numeric results and source/run/attempt identities retained. Qualification scope is unchanged."
+    },
+    {
+      "path": "ci/final-audition.json",
+      "origin": "review-w10-audition/final-run-45029235535/verification.json",
+      "original_sha256": "cd3d4ec6560dbe382b9f5376f216075e49d2139b19c8b3543999c3d0d9e3f422",
+      "stored_sha256": "78983b3b688ac9f5e5c44b9f40aff62883b0b518a633194d481df4038288f99d",
+      "transform": "Workspace prefix and redundant artifact API node/download identifiers removed; numeric results and source/run/attempt identities retained. Qualification scope is unchanged."
+    },
+    {
+      "path": "ci/current-upstream-comparison.json",
+      "origin": "review-w08-workflow/current-d0c3-beta-and-host-evidence.json",
+      "original_sha256": "63f98ba965ddfdb3c15cdedfece9f82e4173366e988b61bc97147a121da9666c",
+      "stored_sha256": "3ea30adf1f49b45bff9d111f9a67f48f670c6fc372bba4ed2fb39069e524395c",
+      "transform": "Workspace prefix and redundant artifact API node/download identifiers removed; numeric results and source/run/attempt identities retained. Qualification scope is unchanged."
+    },
+    {
+      "path": "ci/run-latest-attempt.json",
+      "origin": "ci-run-45029235535/run.json",
+      "original_sha256": "366d5565a9e82ad358b5f7f88c0c9b2cc2d944a33941b4db21afa8523f5a2877",
+      "stored_sha256": "366d5565a9e82ad358b5f7f88c0c9b2cc2d944a33941b4db21afa8523f5a2877",
+      "transform": "Workspace prefix and redundant artifact API node/download identifiers removed; numeric results and source/run/attempt identities retained. Qualification scope is unchanged."
+    },
+    {
+      "path": "ci/final-download-links.json",
+      "origin": "Coordinator combination of ci-run-45029235535/download-links.json and audition-download-link.json",
+      "original_sha256": "cb8c48e35d9408846cdafe6a7f52b0cc462f4ff2b8fc0672abfc27442ade3728",
+      "stored_sha256": "cb8c48e35d9408846cdafe6a7f52b0cc462f4ff2b8fc0672abfc27442ade3728",
+      "transform": "New combined record; original install and audition GET observations retained unchanged, with an explicit scope note."
+    },
+    {
+      "path": "ci/verify-validator-payload-identity.py",
+      "origin": "verify-validator-payload-identity.py",
+      "original_sha256": "6e36949901152ca89c14b372956057de81fc5026bc005d7ab5a191b9c06e5f35",
+      "stored_sha256": "6e36949901152ca89c14b372956057de81fc5026bc005d7ab5a191b9c06e5f35",
+      "transform": "verbatim"
+    },
+    {
+      "path": "ci/release-qualification.json",
+      "origin": "Coordinator cross-check of source-bound native, attempt-history, package, input-payload, public-download, audition and auxiliary reports",
+      "original_sha256": "eb3b3c3f8db27aa3f440323e84171262970af488546311c1362d8c62e016f9e8",
+      "stored_sha256": "0bd447dac857449a2992553b78f8c1a00d9b2a0961ed7072ddafef114a25f06c",
+      "transform": "New derived summary joining actual artifact IDs and complete hashes across native validator download logs, downloaded inputs and installation inventories. Numeric run_attempt string in audition source is parsed to integer; no execution failure is changed. Concurrent upstream 2026.11.1 source lineage is recorded separately; no old result is applied to the newer source. Appended the final independent acceptance reference; original source, artifacts, attempt history and numerical outcomes unchanged."
+    },
+    {
+      "path": "ci/headless-diagnostic.json",
+      "origin": "review-w09-controller/d0c3-headless/actual-run-45041640467/RESULTS.json",
+      "original_sha256": "edcfbeb454ad9e3989abd44018c61d9328a9c3d770b4f6f59b98f8310022a579",
+      "stored_sha256": "edcfbeb454ad9e3989abd44018c61d9328a9c3d770b4f6f59b98f8310022a579",
+      "transform": "Workspace prefix and redundant artifact API identifiers removed. Actual same-seed diagnostic results, hashes and nonreproduction limits retained."
+    },
+    {
+      "path": "ci/acceptance/FINAL-ACCEPTANCE-2026_11.md",
+      "origin": "review-w10-acceptance/FINAL-ACCEPTANCE-2026_11.md",
+      "original_sha256": "04fe75c96d619ce49615269e2639d65032695bbe4c9e220897c54598dcd145a6",
+      "stored_sha256": "04fe75c96d619ce49615269e2639d65032695bbe4c9e220897c54598dcd145a6",
+      "transform": "Verbatim final independent original2026.11 review. The83-file and document hashes are the reviewed snapshot before administrative acceptance/ledger publication updates."
+    },
+    {
+      "path": "ci/acceptance/FINAL-ACCEPTANCE-2026_11.json",
+      "origin": "review-w10-acceptance/FINAL-ACCEPTANCE-2026_11.json",
+      "original_sha256": "8729303b12c85d678ed8eefc82fdaab56a064e3481447cc23dc38664638a544a",
+      "stored_sha256": "8729303b12c85d678ed8eefc82fdaab56a064e3481447cc23dc38664638a544a",
+      "transform": "Verbatim final independent original2026.11 review. The83-file and document hashes are the reviewed snapshot before administrative acceptance/ledger publication updates."
+    },
+    {
+      "path": "ci/acceptance/final-evidence-joins-2026_11.json",
+      "origin": "review-w10-acceptance/final-evidence-joins-2026_11.json",
+      "original_sha256": "62ff7b97e03b0cf1e28baa62a2783361031c7d69419998e21c950e63ce186a6a",
+      "stored_sha256": "62ff7b97e03b0cf1e28baa62a2783361031c7d69419998e21c950e63ce186a6a",
+      "transform": "Verbatim final independent original2026.11 review. The83-file and document hashes are the reviewed snapshot before administrative acceptance/ledger publication updates."
+    },
+    {
+      "path": "review-assignments.json",
+      "origin": "agent59 final ledger after reading exact agent60 acceptance",
+      "original_sha256": "980f2513afec24ecf2dd799eb74307fe13d85a674444d3b6cb9c5c60f0f655ff",
+      "stored_sha256": "980f2513afec24ecf2dd799eb74307fe13d85a674444d3b6cb9c5c60f0f655ff",
+      "transform": "Verbatim final ledger. All60 primary assignments plus one nested review complete; current2026.11.1 integration remains separately pending."
+    },
+    {
+      "path": "review-assignments.md",
+      "origin": "agent59 final ledger after reading exact agent60 acceptance",
+      "original_sha256": "1a04a7236cfcf296d47ca404b39aa6da2c5b7629cce55ab08dca5244a9479cf1",
+      "stored_sha256": "1a04a7236cfcf296d47ca404b39aa6da2c5b7629cce55ab08dca5244a9479cf1",
+      "transform": "Verbatim final ledger. All60 primary assignments plus one nested review complete; current2026.11.1 integration remains separately pending."
     }
-  ]
+  ],
+  "integration_follow_up": {
+    "commit": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+    "build_run": 45016741244,
+    "preset_data_changed": false,
+    "local_expression_checks": 17,
+    "local_identity_checks": 81,
+    "local_workflow_guard_tests": 22,
+    "native_ci": {
+      "macos-arm64": "PASS",
+      "macos-x86_64": "PASS",
+      "windows-x86_64": "PASS",
+      "linux-x86_64": "FAIL: 575 passed, 2 failed, 1 skipped"
+    }
+  },
+  "linux_fixture_follow_up": {
+    "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "build_run": 45029235535,
+    "preset_data_changed": false,
+    "production_code_changed": false,
+    "local_controller_checks": 376,
+    "local_panel_checks": 4,
+    "native_ci": {
+      "windows-x86_64": "PASS",
+      "macos-arm64": "PASS",
+      "macos-x86_64": "PASS",
+      "linux-x86_64": "PASS: 577 passed, 0 failed, 1 skipped"
+    }
+  },
+  "linux_validator_original": {
+    "run_id": 45029235535,
+    "attempt": 1,
+    "job_id": 137263093053,
+    "result": "FAIL",
+    "seed": "0x5ba7253",
+    "raw_returncode": -11,
+    "normalized_exit": 139,
+    "gui_and_fixed_seed": "skipped",
+    "cause": "unestablished"
+  },
+  "latest_observed_workflow": {
+    "run_id": 45029235535,
+    "attempt": 2,
+    "conclusion": "success",
+    "new_execution": "Linux validator only; five other job records retain attempt-1 execution",
+    "note": "Later pass does not erase or establish a repair for the original failed invocation."
+  },
+  "concurrent_newer_main_preserved": {
+    "commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+    "revision": "2026.11.1",
+    "not_qualified_by_these_2026_11_results": true
+  },
+  "final_independent_acceptance": {
+    "verdict": "ACCEPTED_FOR_ORIGINAL_2026_11_DEVELOPMENT_PUBLICATION_WITH_RECORDED_UNRESOLVED_LINUX_FAILURE",
+    "record": "ci/acceptance/FINAL-ACCEPTANCE-2026_11.json",
+    "reviewed_manifest_entries": 83,
+    "consistency_checks": 206,
+    "first_linux_failure_remains_unresolved": true
+  }
 }

@@ -1,0 +1,528 @@
+{
+  "native_qualified": true,
+  "native_and_validator_qualified": false,
+  "platform": "Linux x86_64",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "workflow": {
+    "run_id": 45029235535,
+    "run_attempt": 1,
+    "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "tree": "bf4aa2f49be6207e07646a317018bb8df91fa5dc",
+    "status": "completed",
+    "conclusion": "failure",
+    "blocker": "Linux headless pluginval terminated SIGSEGV after printing SUCCESS; remaining Linux GUI gates skipped."
+  },
+  "native_job_id": 137228906281,
+  "native_conclusion": "success",
+  "validator_job_id": 137263093053,
+  "validator_conclusion": "failure",
+  "ctest": {
+    "root_tag": "testsuite",
+    "root_attributes": {
+      "name": "(empty)",
+      "tests": "578",
+      "failures": "0",
+      "disabled": "0",
+      "skipped": "1",
+      "hostname": "",
+      "time": "6629",
+      "timestamp": "2026-11-22T13:56:28"
+    },
+    "registered": 578,
+    "passed": 577,
+    "failed": 0,
+    "skipped": 1,
+    "disabled": 0,
+    "failures": [],
+    "skips": [
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "outcome": "skipped",
+        "time": "0.000649057",
+        "status": "notrun",
+        "failure": null,
+        "skipped": {
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      }
+    ]
+  },
+  "ctest_wall_seconds": 6629.97,
+  "internal_unittest_skips": {
+    "total": 3,
+    "suites": [
+      {
+        "test": "cs80_package_binary_identity_tests",
+        "skips": 1,
+        "reason_lines": [
+          "OK (skipped=1)"
+        ],
+        "source_checked_reasons": [
+          "Native Windows junction fixture"
+        ]
+      },
+      {
+        "test": "cs80_windows_installer_preflight_tests",
+        "skips": 2,
+        "reason_lines": [
+          "OK (skipped=2)"
+        ],
+        "source_checked_reasons": [
+          "Native directory-junction fixture requires Windows",
+          "Native ISCC compilation requires Windows and Inno Setup 6"
+        ]
+      }
+    ],
+    "source_reason_binding": "Counts from fresh CI LastTest.log; reason decorators checked through explicit git objects at d0c3c23be68ef048aa56969f1c493c221c1562c5"
+  },
+  "targets": {
+    "cs80_controller_handoff_host_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Controller handoff: 376 checks, 0 failures"
+      ]
+    },
+    "cs80_panel_golden_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.73 (limit 8.0)",
+        "golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+        "Panel golden tests: 4 checks, 0 failures"
+      ]
+    },
+    "cs80_library_audit_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "library audit passed: 301 curated + 222 legacy programs"
+      ]
+    },
+    "cs80_preset_voicing_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset voicing regressions: 136/136 checks passed; 45.1 seconds generated."
+      ]
+    },
+    "cs80_preset_capture_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 9 tests in 1.042s",
+        "OK"
+      ]
+    },
+    "cs80_preset_revert_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset opening sound REVERT: 1387 checks, 0 failures"
+      ]
+    },
+    "cs80_modern_recall_host_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Modern/session/preset/A-B recall: 2355 checks, 0 failures"
+      ]
+    },
+    "cs80_preset_file_recall_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "User-preset file/recall host: 2784 checks, 0 failures"
+      ]
+    },
+    "cs80_preset_identity_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset loaded identity: 81 checks, 0 failures"
+      ]
+    },
+    "cs80_preset_refresh_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset catalogue refresh: 193 checks, 0 failures"
+      ]
+    },
+    "cs80_ui_smoke": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Expression persistence RMS: restored=0.0055870672 expected=0.00532606404 full=0.0177500081 relative_error=0.0490048859",
+        "golden main-1600x1000: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+        "golden main-1120x700: changed 0.0000 % of pixels (limit 0.30 %), worst 8x8 block mean 0.00 (limit 8.0)",
+        "UI SMOKE TEST PASSED"
+      ]
+    },
+    "cs80_pluginval_macos_download_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 22 tests in 0.011s",
+        "OK"
+      ]
+    },
+    "cs80_pluginval_windows_download_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 15 tests in 0.011s",
+        "OK"
+      ]
+    },
+    "cs80_packaging_notice_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 6 tests in 0.588s",
+        "OK"
+      ]
+    },
+    "cs80_package_binary_identity_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 13 tests in 0.061s",
+        "OK (skipped=1)"
+      ]
+    },
+    "cs80_ci_juce_provenance_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "test_every_release_job_checks_before_build_and_retains_evidence (__main__.ReleaseWorkflowTests.test_every_release_job_checks_before_build_and_retains_evidence) ... ok",
+        "test_failed_recheck_replaces_previous_pass (__main__.SourceGateTests.test_failed_recheck_replaces_previous_pass) ... ok",
+        "Ran 11 tests in 0.160s",
+        "OK"
+      ]
+    },
+    "cs80_ci_bundle_verification_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 28 tests in 0.099s",
+        "OK"
+      ]
+    },
+    "cs80_windows_installer_preflight_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 12 tests in 0.563s",
+        "OK (skipped=2)"
+      ]
+    },
+    "cs80_snapshot_cli_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Snapshot CLI admission: 8 invalid invocations rejected before UI execution"
+      ]
+    },
+    "cs80_program_extension_recall_host_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Program extension recall: 158 checks, 0 failures"
+      ]
+    }
+  },
+  "recall": {
+    "cs80_preset_revert_tests": {
+      "checks": 1387,
+      "failures": 0
+    },
+    "cs80_modern_recall_host_tests": {
+      "checks": 2355,
+      "failures": 0
+    },
+    "cs80_preset_file_recall_tests": {
+      "checks": 2784,
+      "failures": 0
+    },
+    "cs80_preset_identity_tests": {
+      "checks": 81,
+      "failures": 0
+    },
+    "cs80_preset_refresh_tests": {
+      "checks": 193,
+      "failures": 0
+    }
+  },
+  "recall_total": 6800,
+  "recall_failures": 0,
+  "juce_provenance": {
+    "checked_at": "2026-11-22T13:48:23Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "workflow_run": "45029235535",
+    "configured_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/home/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "environment": {
+    "os": "Ubuntu 24.04.5 LTS",
+    "runner_image": "ubuntu-24.04",
+    "runner_image_version": "20261116.133.1",
+    "compiler": "GNU C/C++ 13.3.0",
+    "architecture": "x86_64",
+    "generator": "Ninja",
+    "configuration": "Release"
+  },
+  "validator": {
+    "job_id": 137263093053,
+    "version": "pluginval - 1.0.4",
+    "headless": {
+      "gate": "failed",
+      "seed": "0x5ba7253",
+      "strictness": 10,
+      "explicit_success_count": 1,
+      "assertion_failure_markers": [],
+      "reported_test_completion": "Fuzz parameters completed, then SUCCESS",
+      "original_pid": 2679,
+      "raw_returncode": -11,
+      "signal_number": 11,
+      "signal_name": "SIGSEGV",
+      "wrapper_exit": 139,
+      "timeout": false,
+      "observed_attempts": 1,
+      "retry_eligibility": "not eligible for a post-test retry",
+      "retries": 0,
+      "local_elf_core_available": false,
+      "stack_available": false,
+      "report_file_bytes": 0,
+      "inference": "Signal occurred after SUCCESS; exact crashing function/cause is not established without a stack or reproduction."
+    },
+    "gui_xvfb": {
+      "gate": "skipped"
+    },
+    "gui_seed_0x2da72db": {
+      "gate": "skipped"
+    },
+    "diagnostic_exit_guard": "success",
+    "fault_thread_shim_fixture": "success",
+    "gui_fault_trace_diagnostic": "skipped",
+    "gui_gdb_diagnostic": "skipped",
+    "input": {
+      "validator_job_id": 137263093053,
+      "run_id": 45029235535,
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "artifact_id": 14761700962,
+      "artifact_name": "cs80-linux-vst3",
+      "api_size": 6889833,
+      "api_digest": "sha256:1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+      "logged_download_digest": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+      "run_artifact_digest_match": true,
+      "raw_excerpt_file": "review-w09-linux/final-run-45029235535/validator-input-download.log",
+      "artifact_bytes_not_downloaded_by_this_agent": true,
+      "parent_owns_install_inventory_comparison": true
+    },
+    "excerpt": "review-w09-linux/final-run-45029235535/headless-failure-excerpt.log"
+  },
+  "artifacts": [
+    {
+      "id": 14761950156,
+      "name": "cs80-pluginval-reports",
+      "size_in_bytes": 2585,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761950156",
+      "expired": false,
+      "digest": "sha256:950129ef4710352e95ea9cad86610a80ab7e6c2fd6272c69d06d16353a5d2b41",
+      "created_at": "2026-11-22T15:48:56Z",
+      "updated_at": "2026-11-22T15:48:56Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    },
+    {
+      "id": 14761700962,
+      "name": "cs80-linux-vst3",
+      "size_in_bytes": 6889833,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761700962",
+      "expired": false,
+      "digest": "sha256:1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+      "created_at": "2026-11-22T15:47:06Z",
+      "updated_at": "2026-11-22T15:47:06Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    },
+    {
+      "id": 14761606495,
+      "name": "cs80-linux-artifacts",
+      "size_in_bytes": 67333229,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761606495",
+      "expired": false,
+      "digest": "sha256:706ee34aabe04443ca96eb1aafb3628773704084ef40d44a1783a37d6ba9bffe",
+      "created_at": "2026-11-22T15:48:17Z",
+      "updated_at": "2026-11-22T15:48:17Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    },
+    {
+      "id": 14761556554,
+      "name": "cs80-linux-install-bundle",
+      "size_in_bytes": 13220309,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761556554",
+      "expired": false,
+      "digest": "sha256:dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+      "created_at": "2026-11-22T15:48:23Z",
+      "updated_at": "2026-11-22T15:48:23Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    },
+    {
+      "id": 14761377362,
+      "name": "cs80-linux-test-evidence",
+      "size_in_bytes": 136543,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761377362",
+      "expired": false,
+      "digest": "sha256:eb10f5ad16141c7a4d4ef4fa6fadb01e5555fd85efb6bb6cd119c005702dfad9",
+      "created_at": "2026-11-22T15:48:23Z",
+      "updated_at": "2026-11-22T15:48:23Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    }
+  ],
+  "evidence_downloads": [
+    {
+      "file": "linux-test-evidence-d0c3c23.zip",
+      "artifact_id": 14761377362,
+      "expected_size": 136543,
+      "expected_sha256": "eb10f5ad16141c7a4d4ef4fa6fadb01e5555fd85efb6bb6cd119c005702dfad9",
+      "folder": "native-evidence",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "run_id": 45029235535,
+      "actual_size": 136543,
+      "actual_sha256": "eb10f5ad16141c7a4d4ef4fa6fadb01e5555fd85efb6bb6cd119c005702dfad9",
+      "verified": true,
+      "zip_crc_verified": true,
+      "members": [
+        {
+          "name": "Testing/Temporary/LastTest.log",
+          "size": 1093555,
+          "sha256": "0d3563798f9da9f5b58d045704623f6484e4df2964859eea133056cff3ab699a"
+        },
+        {
+          "name": "ctest-results.xml",
+          "size": 459707,
+          "sha256": "771aac0f9b824c71aa12eba1ea369a996d9d472af5eb5238d5bc21cb3697d8f9"
+        },
+        {
+          "name": "ci-juce-provenance.txt",
+          "size": 609,
+          "sha256": "d0937631c587f86b5705acb9b1e8b708a69abe7ff19161ad5f65dd8d00ba7cb3"
+        }
+      ]
+    },
+    {
+      "file": "linux-pluginval-d0c3c23.zip",
+      "artifact_id": 14761950156,
+      "expected_size": 2585,
+      "expected_sha256": "950129ef4710352e95ea9cad86610a80ab7e6c2fd6272c69d06d16353a5d2b41",
+      "folder": "pluginval-evidence",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "run_id": 45029235535,
+      "actual_size": 2585,
+      "actual_sha256": "950129ef4710352e95ea9cad86610a80ab7e6c2fd6272c69d06d16353a5d2b41",
+      "verified": true,
+      "zip_crc_verified": true,
+      "members": [
+        {
+          "name": "pluginval-core-fixture.log",
+          "size": 1335,
+          "sha256": "cd36ae4a4b4d596f26835ca733ca8110357cf46adfdfb8966239333613e22e10"
+        },
+        {
+          "name": "pluginval-headless-core.log",
+          "size": 475,
+          "sha256": "73277d0ad54351b0e012aeba7a01246880dfe0310dc6b5f22cb6159c75bb22c3"
+        },
+        {
+          "name": "pluginval-gdb-normal-exit.log",
+          "size": 165,
+          "sha256": "d62fe67e36d5769f169329448a4cfb43c8b00c5ee5f60a83680680bd5154244d"
+        },
+        {
+          "name": "pluginval-headless.log",
+          "size": 7282,
+          "sha256": "58d75ac42e991dfa5274208ab6b022d34702ab736a48d3f6db8d4792d7befa33"
+        },
+        {
+          "name": "pluginval-reports/cs80-headless",
+          "size": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "pluginval-version.txt",
+          "size": 18,
+          "sha256": "bebe24349489b87a47861fafe98f029b18e3bdfd913d623d729d47409693eb4f"
+        }
+      ]
+    }
+  ],
+  "package_selftest": {
+    "checks": 46,
+    "passed": true,
+    "synthetic_only": true
+  },
+  "package_native_log": {
+    "archive": "cs80-reference-linux-x86_64-d0c3c23be68e.tar.gz",
+    "sha256": "f8ae92c84286cd6a152eb62667884304121311adab76353e5c79ac7a20dccdf9",
+    "formats": [
+      "VST3",
+      "Standalone"
+    ],
+    "architecture": "x86_64"
+  },
+  "audition_capture_step": "success",
+  "audition_upload_step": "success",
+  "limitations": [
+    "Linux validator qualification failed despite an explicit SUCCESS log line because the process subsequently died by SIGSEGV.",
+    "Neither Linux GUI/Xvfb nor fixed GUI regression seed 0x2da72db ran.",
+    "No stack/core is available and exact crash cause is not established by this evidence.",
+    "Root owns actual VST3 and install-archive inventory comparison; this agent verified logged input identity/digest against API metadata.",
+    "Agent56 owns the audition ZIP and listening review; this agent did not download it.",
+    "Only fresh run45029235535 test/validator evidence is used here. No repository changes, tests/builds or CI reruns were performed."
+  ]
+}

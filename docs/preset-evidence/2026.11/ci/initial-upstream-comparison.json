@@ -1,0 +1,405 @@
+{
+  "schema": 1,
+  "assessed_at_utc": "2026-11-22 13:03:23 UTC",
+  "scope": "Historical auxiliary setup failure; not a validation result for the replacement build.",
+  "comparison_run": {
+    "id": 45016771698,
+    "name": "Upstream validator comparison",
+    "event": "workflow_run",
+    "status": "completed",
+    "conclusion": "failure",
+    "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+    "path": ".github/workflows/upstream-validator-comparison.yml",
+    "created_at": "2026-11-22T11:19:49Z",
+    "updated_at": "2026-11-22T11:20:03Z",
+    "run_attempt": 1,
+    "run_number": 492,
+    "workflow_id": 401250871,
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45016771698"
+  },
+  "comparison_head_sha_meaning": "Workflow-definition SHA, not the originating plug-in source.",
+  "originating_build_run": {
+    "id": 45014200523,
+    "name": "build",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "failure",
+    "head_sha": "7ac6d99a5e187068907b17233109f2f1cc3da9fb",
+    "path": ".github/workflows/build.yml",
+    "created_at": "2026-11-22T10:48:19Z",
+    "updated_at": "2026-11-22T11:19:46Z",
+    "run_attempt": 1,
+    "run_number": 1205,
+    "workflow_id": 399616500,
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45014200523"
+  },
+  "replacement_source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "replacement_build_run_id": 45016741244,
+  "comparison_jobs": [
+    {
+      "job_id": 137190661560,
+      "name": "Official beta3 / gui-current-regression / 0x3ca4063",
+      "status": "completed",
+      "conclusion": "failure",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        }
+      ],
+      "log_origin": "review-w08-workflow/upstream-comparison-job-137190661560.log",
+      "log_sha256": "035f30b972f20c201166955c744b4d51b7f1597af6a771e0b82e4e5bedbb5686",
+      "selected_origin_and_error_lines": [
+        "2026-11-22T11:19:54.4050715Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716",
+        "2026-11-22T11:19:58.8253390Z Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+        "2026-11-22T11:19:58.8286756Z ##[error]Unhandled error: Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+        "2026-11-22T11:19:59.0894738Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716",
+        "2026-11-22T11:19:59.0901296Z   SOURCE_RUN_ID: 45014200523",
+        "2026-11-22T11:19:59.1148611Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      ]
+    },
+    {
+      "job_id": 137190661711,
+      "name": "Official beta3 / gui-inclusive / 0x63421ca",
+      "status": "completed",
+      "conclusion": "failure",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        }
+      ],
+      "log_origin": "review-w08-workflow/upstream-comparison-job-137190661711.log",
+      "log_sha256": "a9b4d991fc53ab55196cd79f460eb08fcfeb010d568bb26e2198dd3930ae4d74",
+      "selected_origin_and_error_lines": [
+        "2026-11-22T11:19:56.5321602Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716",
+        "2026-11-22T11:19:59.3948592Z Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+        "2026-11-22T11:19:59.3977983Z ##[error]Unhandled error: Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+        "2026-11-22T11:19:59.6291336Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716",
+        "2026-11-22T11:19:59.6293838Z   SOURCE_RUN_ID: 45014200523",
+        "2026-11-22T11:19:59.6444743Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      ]
+    },
+    {
+      "job_id": 137190661731,
+      "name": "Official beta3 / headless-subset / 0x4f31605",
+      "status": "completed",
+      "conclusion": "failure",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        }
+      ],
+      "log_origin": "review-w08-workflow/upstream-comparison-job-137190661731.log",
+      "log_sha256": "9dca4f14a8b763b5fac11f7e1171a1848c2a99dbf8aab5806d3b3a0f1edb46c4",
+      "selected_origin_and_error_lines": [
+        "2026-11-22T11:19:54.1113343Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716",
+        "2026-11-22T11:19:55.2675074Z Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+        "2026-11-22T11:19:55.2734514Z ##[error]Unhandled error: Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+        "2026-11-22T11:19:55.3036497Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716",
+        "2026-11-22T11:19:55.3038005Z   SOURCE_RUN_ID: 45014200523",
+        "2026-11-22T11:19:55.3416600Z   COMPARISON_WORKFLOW_SHA: ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      ]
+    }
+  ],
+  "originating_linux_job": {
+    "id": 137182878099,
+    "name": "Linux / VST3 + Standalone",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "run_id": 45014200523,
+    "logs_url": null,
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2
+      },
+      {
+        "name": "Install build dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3
+      },
+      {
+        "name": "Configure",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4
+      },
+      {
+        "name": "Verify configured JUCE source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5
+      },
+      {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6
+      },
+      {
+        "name": "Test",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "number": 7
+      },
+      {
+        "name": "Capture curated preset auditions",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 8
+      },
+      {
+        "name": "Upload curated preset auditions",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 9
+      },
+      {
+        "name": "Upload Linux VST3",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 10
+      },
+      {
+        "name": "Render demo and screenshots",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 11
+      },
+      {
+        "name": "Upload render artifacts",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 12
+      },
+      {
+        "name": "Package Linux VST3 and Standalone",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 13
+      },
+      {
+        "name": "Upload Linux install bundle",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 14
+      },
+      {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15
+      },
+      {
+        "name": "Post Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 30
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 31
+      }
+    ]
+  },
+  "originating_artifacts": [
+    {
+      "id": 14751937886,
+      "name": "cs80-macos-15-intel-test-evidence",
+      "digest": "sha256:cf6ebd785066e2d66b93b807c96b53d17b420b36ba4d608c7839cb37b595ae7b"
+    },
+    {
+      "id": 14751906152,
+      "name": "cs80-macos-15-test-evidence",
+      "digest": "sha256:7269ad2f92fe4fe967f635ac194fffe92add13c141863f8c68827276e9504774"
+    },
+    {
+      "id": 14751862286,
+      "name": "cs80-windows-test-evidence",
+      "digest": "sha256:6bbd1c6763f8642de1ec8a53212dfe56b725e5f4979b2c045ff698727db20333"
+    },
+    {
+      "id": 14751693515,
+      "name": "cs80-linux-test-evidence",
+      "digest": "sha256:6e20da78b77e90d8dc070b35b1094203a40cb27c14fa88a45bb0bfe62a9eaee8"
+    }
+  ],
+  "comparison_artifacts": [],
+  "validator_executed": false,
+  "reason": "The original Linux job was cancelled during CTest and never uploaded cs80-linux-vst3. The aggregate old build was failure, so the documented comparison condition admitted it; the required artifact guard correctly failed.",
+  "workflow_identical_at": {
+    "refs": [
+      "61f45feeae1f01038476eb9c99105534950db4de",
+      "7ac6d99a5e187068907b17233109f2f1cc3da9fb",
+      "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "working file"
+    ],
+    "bytes": 14189,
+    "sha256": "4fd4db9da3deae757c5f8bbe4af81b0dfa24db93563145db6819d6669c8834fa"
+  },
+  "stable_gate": "The separate build.yml pluginval 1.0.4 gates remain required for replacement source ba3.",
+  "disposition": "Preserve the failed historical setup result; no production fix or rerun warranted for this failure. A comparison triggered by the replacement build must be assessed separately."
+}

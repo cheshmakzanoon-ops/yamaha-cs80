@@ -28,6 +28,10 @@ channel aftertouch affects notes on that MIDI channel together. Polyphonic
 aftertouch does not require MPE. Without a pressure keyboard, hold an on-screen
 key and drag downward along it. See the [playing and mode instructions](INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing).
 
+For on-screen pressure, leave **KAS Scan Timing** off; if it is on, use MIDI
+aftertouch instead. This optional physical setup setting is retained when you
+change presets, including in Pure CS-80 mode.
+
 **Pressure Lead is intentionally silent without pressure.** Hold a key and apply
 polyphonic or channel aftertouch, or drag down on the on-screen key. A harder
 strike alone will not produce its sound. Pressure brings up its level and

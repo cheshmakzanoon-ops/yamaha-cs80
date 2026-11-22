@@ -1,0 +1,1328 @@
+{
+  "scope": "Independent read-only joins of retained original 2026.11 evidence and actual archives; no builds, test or validator execution, audio rendering, network, repository edits or CI actions.",
+  "checked_at_utc": "2026-11-22T16:42:13.097284+00:00",
+  "source_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "run_id": 45029235535,
+  "preset_revision": "2026.11",
+  "current_head_context_only": "00339ed7c616da28e5c32011e558ea00833f041b",
+  "result": "PASS",
+  "checks_total": 206,
+  "checks_passed": 206,
+  "failed_checks": [],
+  "evidence_manifest_entries": 83,
+  "document_snapshot_sha256": {
+    "README.md": "08f5c63521b505562f7b94aed08878e542d49e9bb73fa73f8b56c30f92c62640",
+    "docs/PRESET_REVISION_2026_11.md": "27b38fc084806fa119fc8aaba232165ab089a43a9dec7bfebf487174b3601497",
+    "docs/CI_DISTRIBUTION_STATUS.md": "17469b4008b05453d93ab5ad25923d6e66881f437d816ce4a2b6c41586ec975f",
+    "docs/preset-evidence/2026.11/README.md": "a78b65ec07e3e8d34f1ad742661cb835ab537834201ff23a5302d14946f921c7",
+    "docs/preset-evidence/2026.11/provenance.json": "0e20286698b079fd775f4313763cb46cdabd7ed58e7455f7ea25735ebe25f4d9",
+    "docs/preset-evidence/2026.11/review-assignments.json": "61626704d96aa0218bfe9c788c21433237c4abc5b28c3b21ef1a284a3da71943",
+    "docs/preset-evidence/2026.11/review-assignments.md": "2e9e48a84e2510d2a4077cc2f48f41262432d8b723bc05c933e98e15cc5b134e"
+  },
+  "packages": [
+    {
+      "target": "linux-x86_64",
+      "artifact_id": 14761556554,
+      "bytes": 13220309,
+      "outer_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+      "entries": 20,
+      "binary_headers": 2
+    },
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14758286408,
+      "bytes": 14898681,
+      "outer_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+      "entries": 37,
+      "binary_headers": 3
+    },
+    {
+      "target": "macos-x86_64",
+      "artifact_id": 14758362460,
+      "bytes": 16055847,
+      "outer_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+      "entries": 37,
+      "binary_headers": 3
+    },
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14758250272,
+      "bytes": 6259679,
+      "outer_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+      "entries": 20,
+      "binary_headers": 2
+    }
+  ],
+  "audition_wavs": [
+    {
+      "path": "pressure/222-Pressure-Lead.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -19.50317741233463,
+      "rms_dbfs": -30.07696308914195,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/0-Brass-Swell-I.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -16.95013852365242,
+      "rms_dbfs": -31.183933029063514,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/114-Electric-Piano-I.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -21.377504541553694,
+      "rms_dbfs": -36.3746611326444,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/138-Flute-Organ-8-4.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -19.855805801932185,
+      "rms_dbfs": -26.124795971831794,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/156-Clarinet.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -20.162499865845813,
+      "rms_dbfs": -27.125843976183404,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/175-Nylon-Pluck.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -21.79289910942353,
+      "rms_dbfs": -38.47948958454636,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/182-Analog-Bass.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -16.26901425541348,
+      "rms_dbfs": -30.322292783124723,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/244-Marimba.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -21.17953547853322,
+      "rms_dbfs": -38.35404226614078,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/262-Wind.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -26.879648380075754,
+      "rms_dbfs": -41.95552528376207,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/286-Arp-Poly.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -14.575833238762858,
+      "rms_dbfs": -27.501878823270395,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/41-Solo-Violin.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -16.566867577620393,
+      "rms_dbfs": -30.470291744777896,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    },
+    {
+      "path": "standard/60-Slow-Pad.wav",
+      "frames": 192000,
+      "seconds": 4.0,
+      "peak_dbfs": -15.814492306527617,
+      "rms_dbfs": -27.728810970301517,
+      "nonfinite": 0,
+      "over_full_scale": 0
+    }
+  ],
+  "checks": [
+    {
+      "check": "83 unique retained evidence files",
+      "passed": true
+    },
+    {
+      "check": "retained hash baseline/inventory.json",
+      "passed": true,
+      "detail": {
+        "actual": "a967a799478dd4b009bdf03a8e45975c204c770462bf137cf300a173d478eb93",
+        "expected": "a967a799478dd4b009bdf03a8e45975c204c770462bf137cf300a173d478eb93"
+      }
+    },
+    {
+      "check": "retained hash baseline/nominal.csv",
+      "passed": true,
+      "detail": {
+        "actual": "616a8cee63f723dc64b4a97a362eaf949e8fa4cfc487c464e0eb3812e1767a0e",
+        "expected": "616a8cee63f723dc64b4a97a362eaf949e8fa4cfc487c464e0eb3812e1767a0e"
+      }
+    },
+    {
+      "check": "retained hash baseline/library-audit.log",
+      "passed": true,
+      "detail": {
+        "actual": "f4b51db123c34a085df85508d612491c0858f72fcb57a5e5d4637b54b79da206",
+        "expected": "f4b51db123c34a085df85508d612491c0858f72fcb57a5e5d4637b54b79da206"
+      }
+    },
+    {
+      "check": "retained hash final/inventory.json",
+      "passed": true,
+      "detail": {
+        "actual": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785",
+        "expected": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785"
+      }
+    },
+    {
+      "check": "retained hash final/nominal.csv",
+      "passed": true,
+      "detail": {
+        "actual": "c0fbebc357627adc26364bc1fa896aab599f5d64d888c8cc55afb2c95a9ae018",
+        "expected": "c0fbebc357627adc26364bc1fa896aab599f5d64d888c8cc55afb2c95a9ae018"
+      }
+    },
+    {
+      "check": "retained hash final/library-audit.log",
+      "passed": true,
+      "detail": {
+        "actual": "912b60f52e254fb7f704b9c89aa109fb7fd0d5e25254198befd7c5655b0bb522",
+        "expected": "912b60f52e254fb7f704b9c89aa109fb7fd0d5e25254198befd7c5655b0bb522"
+      }
+    },
+    {
+      "check": "retained hash calibration/pass-1-levels.inc",
+      "passed": true,
+      "detail": {
+        "actual": "792815597969a870fc411649cc4841fd8e1468f7a5979e9af91adc7c704de367",
+        "expected": "792815597969a870fc411649cc4841fd8e1468f7a5979e9af91adc7c704de367"
+      }
+    },
+    {
+      "check": "retained hash calibration/pass-2-levels.inc",
+      "passed": true,
+      "detail": {
+        "actual": "f54c685f5d3e33bd722f34c68324634718c5d284dd9cd93f6910635d0676678b",
+        "expected": "f54c685f5d3e33bd722f34c68324634718c5d284dd9cd93f6910635d0676678b"
+      }
+    },
+    {
+      "check": "retained hash calibration/rebuild-between-passes.log",
+      "passed": true,
+      "detail": {
+        "actual": "2cdf144c2a3081d44028b39625dd28fb0677e97c002e7ed5424a5d4e3d52fdf2",
+        "expected": "2cdf144c2a3081d44028b39625dd28fb0677e97c002e7ed5424a5d4e3d52fdf2"
+      }
+    },
+    {
+      "check": "retained hash families/brass.json",
+      "passed": true,
+      "detail": {
+        "actual": "0e5eeda6042aac70613bce55be908236af233ef5cab3c00f82be4e772c88a87f",
+        "expected": "0e5eeda6042aac70613bce55be908236af233ef5cab3c00f82be4e772c88a87f"
+      }
+    },
+    {
+      "check": "retained hash families/strings.json",
+      "passed": true,
+      "detail": {
+        "actual": "f2dd698a4c17e7ac2f1cc4d77e0708846bd1bcfd63df3f57d622ff386184abd7",
+        "expected": "f2dd698a4c17e7ac2f1cc4d77e0708846bd1bcfd63df3f57d622ff386184abd7"
+      }
+    },
+    {
+      "check": "retained hash families/pads-polysynth.json",
+      "passed": true,
+      "detail": {
+        "actual": "1022c655a242ae5a53513fcf3039bc2ac4691abe9e2e6609df2c20edcfdf3574",
+        "expected": "1022c655a242ae5a53513fcf3039bc2ac4691abe9e2e6609df2c20edcfdf3574"
+      }
+    },
+    {
+      "check": "retained hash families/winds-organ.json",
+      "passed": true,
+      "detail": {
+        "actual": "20c014f91a6864136b0b40280fb9dd5c2a870ac4751580dd47a3c6beaaaf1846",
+        "expected": "20c014f91a6864136b0b40280fb9dd5c2a870ac4751580dd47a3c6beaaaf1846"
+      }
+    },
+    {
+      "check": "retained hash families/winds-organ-supplement.json",
+      "passed": true,
+      "detail": {
+        "actual": "a88afa3c406d518839b452aadf0605e2d58c1986df49de79b6233309ae229378",
+        "expected": "a88afa3c406d518839b452aadf0605e2d58c1986df49de79b6233309ae229378"
+      }
+    },
+    {
+      "check": "retained hash families/keys-plucked.json",
+      "passed": true,
+      "detail": {
+        "actual": "70ac2dbdd5cf556ee1fe83a83d40a8cae414942d760e0be8e905d186ae76b8c0",
+        "expected": "70ac2dbdd5cf556ee1fe83a83d40a8cae414942d760e0be8e905d186ae76b8c0"
+      }
+    },
+    {
+      "check": "retained hash families/nylon-refinement.json",
+      "passed": true,
+      "detail": {
+        "actual": "d02bf7dd775a1495a4bb587aa7f0ec20512328dbde626bd9f6f4df2ca87fcc3f",
+        "expected": "d02bf7dd775a1495a4bb587aa7f0ec20512328dbde626bd9f6f4df2ca87fcc3f"
+      }
+    },
+    {
+      "check": "retained hash families/bass-leads.json",
+      "passed": true,
+      "detail": {
+        "actual": "bcd8eba16e737ae81244252a4645251a90b8f774d69a9516847e334304234d85",
+        "expected": "bcd8eba16e737ae81244252a4645251a90b8f774d69a9516847e334304234d85"
+      }
+    },
+    {
+      "check": "retained hash families/sine-bass-bands.csv",
+      "passed": true,
+      "detail": {
+        "actual": "8ec54212e1a6d085d92f7ec9f64696f0737d87efa5a78242f762cc04e1b80e76",
+        "expected": "8ec54212e1a6d085d92f7ec9f64696f0737d87efa5a78242f762cc04e1b80e76"
+      }
+    },
+    {
+      "check": "retained hash families/bells-ranks.csv",
+      "passed": true,
+      "detail": {
+        "actual": "828143da75437dcc5e287252279bc1e9ee18e01e60649b54334deb7e27e94b66",
+        "expected": "828143da75437dcc5e287252279bc1e9ee18e01e60649b54334deb7e27e94b66"
+      }
+    },
+    {
+      "check": "retained hash families/bells-final-audit.csv",
+      "passed": true,
+      "detail": {
+        "actual": "4f20f516f2f589ae0c15098d958d52e45fca85d9ba4ae1438ad00257a226c9c3",
+        "expected": "4f20f516f2f589ae0c15098d958d52e45fca85d9ba4ae1438ad00257a226c9c3"
+      }
+    },
+    {
+      "check": "retained hash families/bells-spectrum.csv",
+      "passed": true,
+      "detail": {
+        "actual": "19cf66bd56424058b4756d9ecbcbc8ce18a5b42b1b8ce1dd9ce6e4ad6387c65e",
+        "expected": "19cf66bd56424058b4756d9ecbcbc8ce18a5b42b1b8ce1dd9ce6e4ad6387c65e"
+      }
+    },
+    {
+      "check": "retained hash families/fx-final-audit.csv",
+      "passed": true,
+      "detail": {
+        "actual": "bc405bd655169083f3abc47bb13d33116d9b43bb77cb6775517f38461a958dd4",
+        "expected": "bc405bd655169083f3abc47bb13d33116d9b43bb77cb6775517f38461a958dd4"
+      }
+    },
+    {
+      "check": "retained hash families/fx-gates.json",
+      "passed": true,
+      "detail": {
+        "actual": "f0552914b7c58c9f7adda81dc6e068cc3d18491c98db953bcccf3c930eab2569",
+        "expected": "f0552914b7c58c9f7adda81dc6e068cc3d18491c98db953bcccf3c930eab2569"
+      }
+    },
+    {
+      "check": "retained hash families/modern.json",
+      "passed": true,
+      "detail": {
+        "actual": "c29d8cbeb18e78090231f78768dd5a02c5bd109d47754403f25a8af59b47598f",
+        "expected": "c29d8cbeb18e78090231f78768dd5a02c5bd109d47754403f25a8af59b47598f"
+      }
+    },
+    {
+      "check": "retained hash controls/velocity-static.json",
+      "passed": true,
+      "detail": {
+        "actual": "2294f6e2db38888d34c29aaec819b50cc7dbaefb93aa5dedba5d4b11596ff2d1",
+        "expected": "2294f6e2db38888d34c29aaec819b50cc7dbaefb93aa5dedba5d4b11596ff2d1"
+      }
+    },
+    {
+      "check": "retained hash controls/velocity-comparisons.json",
+      "passed": true,
+      "detail": {
+        "actual": "d659340846375a97cd330a6c17ea636314953c51c822c71b82a6ce94f335e0a8",
+        "expected": "d659340846375a97cd330a6c17ea636314953c51c822c71b82a6ce94f335e0a8"
+      }
+    },
+    {
+      "check": "retained hash controls/pressure-static.json",
+      "passed": true,
+      "detail": {
+        "actual": "361d13635b74f2e267d497b6b8c233e7302bf1b380cec14f1f77f0f9d026f35c",
+        "expected": "361d13635b74f2e267d497b6b8c233e7302bf1b380cec14f1f77f0f9d026f35c"
+      }
+    },
+    {
+      "check": "retained hash controls/pressure.json",
+      "passed": true,
+      "detail": {
+        "actual": "39a61c90e54b974c73fc3ff77af164b40d4dc047d1c5037fc1e0a96e8590d44f",
+        "expected": "39a61c90e54b974c73fc3ff77af164b40d4dc047d1c5037fc1e0a96e8590d44f"
+      }
+    },
+    {
+      "check": "retained hash behavior/final.log",
+      "passed": true,
+      "detail": {
+        "actual": "e8a6df42f9a7e924fd03327c5a6253917ace71ba2db7528a7a09acf01bf8ffdf",
+        "expected": "e8a6df42f9a7e924fd03327c5a6253917ace71ba2db7528a7a09acf01bf8ffdf"
+      }
+    },
+    {
+      "check": "retained hash behavior/quiet-draft.log",
+      "passed": true,
+      "detail": {
+        "actual": "9382a8f56b8652ee274449ab0c97e564a21b94a04e2fb81ec7177811b75cb814",
+        "expected": "9382a8f56b8652ee274449ab0c97e564a21b94a04e2fb81ec7177811b75cb814"
+      }
+    },
+    {
+      "check": "retained hash behavior/original.log",
+      "passed": true,
+      "detail": {
+        "actual": "e8669a4667f8a7ddd004dd0434ca4ca06fe03767fc6db41b09b9a27494088ff2",
+        "expected": "e8669a4667f8a7ddd004dd0434ca4ca06fe03767fc6db41b09b9a27494088ff2"
+      }
+    },
+    {
+      "check": "retained hash behavior/summary.json",
+      "passed": true,
+      "detail": {
+        "actual": "aa21331cb31242f21bd8f7fcc7a4fe2c42db68acad90e243e8f286c5295e5130",
+        "expected": "aa21331cb31242f21bd8f7fcc7a4fe2c42db68acad90e243e8f286c5295e5130"
+      }
+    },
+    {
+      "check": "retained hash long-tails/verification.json",
+      "passed": true,
+      "detail": {
+        "actual": "abe4e4e0ce404beadfee59b7c8ed66b9e7665c893ededd06ab2682cbc1e5169b",
+        "expected": "abe4e4e0ce404beadfee59b7c8ed66b9e7665c893ededd06ab2682cbc1e5169b"
+      }
+    },
+    {
+      "check": "retained hash long-tails/metrics.csv",
+      "passed": true,
+      "detail": {
+        "actual": "cad7f3f84412c824367ff662256b3d6205a0c16f4af82bc77a4e083159179a41",
+        "expected": "cad7f3f84412c824367ff662256b3d6205a0c16f4af82bc77a4e083159179a41"
+      }
+    },
+    {
+      "check": "retained hash long-tails/windows.csv",
+      "passed": true,
+      "detail": {
+        "actual": "65e80586c768704372d7c9f45dbbef41c6738ff04700865563c2181c3f8ea97a",
+        "expected": "65e80586c768704372d7c9f45dbbef41c6738ff04700865563c2181c3f8ea97a"
+      }
+    },
+    {
+      "check": "retained hash long-tails/run.log",
+      "passed": true,
+      "detail": {
+        "actual": "68d0de401c7bb43eb23348f4c82047c1a92a720b01d3161159ccac0675657fdb",
+        "expected": "68d0de401c7bb43eb23348f4c82047c1a92a720b01d3161159ccac0675657fdb"
+      }
+    },
+    {
+      "check": "retained hash stereo/summary.csv",
+      "passed": true,
+      "detail": {
+        "actual": "1be7ebb09f8ed7bce80abfd65e4657e2cb6e584f7180154944c5f4b6ec9d833a",
+        "expected": "1be7ebb09f8ed7bce80abfd65e4657e2cb6e584f7180154944c5f4b6ec9d833a"
+      }
+    },
+    {
+      "check": "retained hash stereo/echo-and-attack.json",
+      "passed": true,
+      "detail": {
+        "actual": "cfbd483bcf28b7ff0b8d0582895cdad286a5a5bc7c581a30ead6d1302f3ce2cf",
+        "expected": "cfbd483bcf28b7ff0b8d0582895cdad286a5a5bc7c581a30ead6d1302f3ce2cf"
+      }
+    },
+    {
+      "check": "retained hash stereo/applied-preset-block.txt",
+      "passed": true,
+      "detail": {
+        "actual": "0160ad1ad72cc2f611ba6620f4d10ccabb15fad339828772b1349f895cff8a83",
+        "expected": "0160ad1ad72cc2f611ba6620f4d10ccabb15fad339828772b1349f895cff8a83"
+      }
+    },
+    {
+      "check": "retained hash host/native-identity.log",
+      "passed": true,
+      "detail": {
+        "actual": "0323b35a89628b6d7c35a4d797a209f205af76fdd7466c8c1b64eff1dae9ae18",
+        "expected": "0323b35a89628b6d7c35a4d797a209f205af76fdd7466c8c1b64eff1dae9ae18"
+      }
+    },
+    {
+      "check": "retained hash host/native-modern-recall.log",
+      "passed": true,
+      "detail": {
+        "actual": "0d66f71f551f2827606409897cd4f3194fad2a9bd6e0636c0a0842606c927b93",
+        "expected": "0d66f71f551f2827606409897cd4f3194fad2a9bd6e0636c0a0842606c927b93"
+      }
+    },
+    {
+      "check": "retained hash host/panel-golden-tests.log",
+      "passed": true,
+      "detail": {
+        "actual": "1b972b335907d5b1ae1a9edcfe3509113c06cc5d7bcef64bba3495509b79d12f",
+        "expected": "1b972b335907d5b1ae1a9edcfe3509113c06cc5d7bcef64bba3495509b79d12f"
+      }
+    },
+    {
+      "check": "retained hash capture/tests.log",
+      "passed": true,
+      "detail": {
+        "actual": "3c0d5fab73efb64616d8e676cdebe737305c17712c5e5c2426166b961c473e0b",
+        "expected": "3c0d5fab73efb64616d8e676cdebe737305c17712c5e5c2426166b961c473e0b"
+      }
+    },
+    {
+      "check": "retained hash capture/focused-checks.json",
+      "passed": true,
+      "detail": {
+        "actual": "11c2e372f830dcac9ae861be811f4856f2e0d6f908e0b4c25b31b25040c12226",
+        "expected": "11c2e372f830dcac9ae861be811f4856f2e0d6f908e0b4c25b31b25040c12226"
+      }
+    },
+    {
+      "check": "retained hash identity/summary.json",
+      "passed": true,
+      "detail": {
+        "actual": "228a629f548bf0efc2455765430e3586c8d4f7c2095e8445fae34a1c8211d871",
+        "expected": "228a629f548bf0efc2455765430e3586c8d4f7c2095e8445fae34a1c8211d871"
+      }
+    },
+    {
+      "check": "retained hash identity/program-change-counts.csv",
+      "passed": true,
+      "detail": {
+        "actual": "376d66e9a99bedf100ce410f011836bb5a3717748af4cad2e9e87e6e8bf490e9",
+        "expected": "376d66e9a99bedf100ce410f011836bb5a3717748af4cad2e9e87e6e8bf490e9"
+      }
+    },
+    {
+      "check": "retained hash stereo/comparison.json",
+      "passed": true,
+      "detail": {
+        "actual": "583b3ae9027182fde90033216ca2e42012cd321b3d52f0e921f82b985786fd3f",
+        "expected": "583b3ae9027182fde90033216ca2e42012cd321b3d52f0e921f82b985786fd3f"
+      }
+    },
+    {
+      "check": "retained hash final/nominal-provenance.json",
+      "passed": true,
+      "detail": {
+        "actual": "06ea5ccdd5f429cdbb6c7e2775b806e7acbd4f0edcf3beae91fd656d2af13e08",
+        "expected": "06ea5ccdd5f429cdbb6c7e2775b806e7acbd4f0edcf3beae91fd656d2af13e08"
+      }
+    },
+    {
+      "check": "retained hash host/native-file-recall.log",
+      "passed": true,
+      "detail": {
+        "actual": "85dde784edde06dd40f1b6b782ae3a153c26aacf0f74a6d2aabf07098abdd4f4",
+        "expected": "85dde784edde06dd40f1b6b782ae3a153c26aacf0f74a6d2aabf07098abdd4f4"
+      }
+    },
+    {
+      "check": "retained hash host/native-refresh.log",
+      "passed": true,
+      "detail": {
+        "actual": "6c8a013943d171fa8049b7a99fe5be1f0ed257be5a06e72d631db23216f8d2f8",
+        "expected": "6c8a013943d171fa8049b7a99fe5be1f0ed257be5a06e72d631db23216f8d2f8"
+      }
+    },
+    {
+      "check": "retained hash host/native-revert.log",
+      "passed": true,
+      "detail": {
+        "actual": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28",
+        "expected": "08e89f121c971b7275b1eab46ac99445d072d1585eb583727beb62c88b3d3b28"
+      }
+    },
+    {
+      "check": "retained hash behavior/independent-audit.json",
+      "passed": true,
+      "detail": {
+        "actual": "565a5f7cb6fab145101ff08b50f226bcaa6f5c119708f569026e30cd567ba5fd",
+        "expected": "565a5f7cb6fab145101ff08b50f226bcaa6f5c119708f569026e30cd567ba5fd"
+      }
+    },
+    {
+      "check": "retained hash host/expression-persistence.log",
+      "passed": true,
+      "detail": {
+        "actual": "046fa234c284642c696ce75a4e150bf267593d7ee48e371e1404a44ca0f439dd",
+        "expected": "046fa234c284642c696ce75a4e150bf267593d7ee48e371e1404a44ca0f439dd"
+      }
+    },
+    {
+      "check": "retained hash host/workflow-guards.log",
+      "passed": true,
+      "detail": {
+        "actual": "c238517ee3c738f9b87f4cbe18fea2fc2c3e4ec1fbb1162fe80837f29c9e92d8",
+        "expected": "c238517ee3c738f9b87f4cbe18fea2fc2c3e4ec1fbb1162fe80837f29c9e92d8"
+      }
+    },
+    {
+      "check": "retained hash ci/initial-attempt.json",
+      "passed": true,
+      "detail": {
+        "actual": "534cdeb98122dcb86fa26cdcf21dc02a3397f2ecbc35c1951dd620d8b0f13dcf",
+        "expected": "534cdeb98122dcb86fa26cdcf21dc02a3397f2ecbc35c1951dd620d8b0f13dcf"
+      }
+    },
+    {
+      "check": "retained hash ci/macos-arm64.json",
+      "passed": true,
+      "detail": {
+        "actual": "246cdb89aa3c39536089a18fe6434347ad23f0fd19ff5b953e8242eb8229e057",
+        "expected": "246cdb89aa3c39536089a18fe6434347ad23f0fd19ff5b953e8242eb8229e057"
+      }
+    },
+    {
+      "check": "retained hash ci/windows-x86_64.json",
+      "passed": true,
+      "detail": {
+        "actual": "26ed22304100cb4ebac3e509a78fc705fe89f80c2a97b71cf5518d9e61751083",
+        "expected": "26ed22304100cb4ebac3e509a78fc705fe89f80c2a97b71cf5518d9e61751083"
+      }
+    },
+    {
+      "check": "retained hash ci/windows-document-review.json",
+      "passed": true,
+      "detail": {
+        "actual": "68bc959b5b8da41ecb3b7a81f4e75bab7e112966df8d4c17d2ebe60da4e51727",
+        "expected": "68bc959b5b8da41ecb3b7a81f4e75bab7e112966df8d4c17d2ebe60da4e51727"
+      }
+    },
+    {
+      "check": "retained hash ci/verify-downloaded-artifacts.py",
+      "passed": true,
+      "detail": {
+        "actual": "87f97e8ef3b5824f25497d68d748306d88792596ab33f02078b10305d9ec30a6",
+        "expected": "87f97e8ef3b5824f25497d68d748306d88792596ab33f02078b10305d9ec30a6"
+      }
+    },
+    {
+      "check": "retained hash ci/macos-x86_64.json",
+      "passed": true,
+      "detail": {
+        "actual": "931fc6ac0964fe8294a786db3a27a20c3affa97f16d88c82647519548e7f597d",
+        "expected": "931fc6ac0964fe8294a786db3a27a20c3affa97f16d88c82647519548e7f597d"
+      }
+    },
+    {
+      "check": "retained hash ci/windows-validator-payload-identity.json",
+      "passed": true,
+      "detail": {
+        "actual": "dac9dfb5fe134eb850350dd3f49b55611fa207a6233ad3a7436d6f559a95b04c",
+        "expected": "dac9dfb5fe134eb850350dd3f49b55611fa207a6233ad3a7436d6f559a95b04c"
+      }
+    },
+    {
+      "check": "retained hash ci/initial-upstream-comparison.json",
+      "passed": true,
+      "detail": {
+        "actual": "e7cf616526ba4166abc96f22ac2ee36d44cb86ad9ccac7439aa393399facaf64",
+        "expected": "e7cf616526ba4166abc96f22ac2ee36d44cb86ad9ccac7439aa393399facaf64"
+      }
+    },
+    {
+      "check": "retained hash ci/fixture-repairs/controller.json",
+      "passed": true,
+      "detail": {
+        "actual": "935582db450ec3dd61951cfe7143472f4d4c3bf91b6d7fedcfaf36b0b86230d6",
+        "expected": "935582db450ec3dd61951cfe7143472f4d4c3bf91b6d7fedcfaf36b0b86230d6"
+      }
+    },
+    {
+      "check": "retained hash ci/fixture-repairs/panel.json",
+      "passed": true,
+      "detail": {
+        "actual": "650e2311c86068c81ae898d36dce2cd24faa39625da24f0113ff666ebdad3279",
+        "expected": "650e2311c86068c81ae898d36dce2cd24faa39625da24f0113ff666ebdad3279"
+      }
+    },
+    {
+      "check": "retained hash ci/fixture-repairs/review.json",
+      "passed": true,
+      "detail": {
+        "actual": "191d6838fb8d3773fecc1bdc16cde93b42f4bd40ba6cca186aadb515438089a2",
+        "expected": "191d6838fb8d3773fecc1bdc16cde93b42f4bd40ba6cca186aadb515438089a2"
+      }
+    },
+    {
+      "check": "retained hash ci/second-attempt.json",
+      "passed": true,
+      "detail": {
+        "actual": "3fa59de080d3b5b02ee3cbfd16a2532cc6d764f56454c77322f6951ac946ff78",
+        "expected": "3fa59de080d3b5b02ee3cbfd16a2532cc6d764f56454c77322f6951ac946ff78"
+      }
+    },
+    {
+      "check": "retained hash identity/final-inventory-comparison.json",
+      "passed": true,
+      "detail": {
+        "actual": "21fc27c201ed0c4cee803cff5e02c1e864c549a41b95bce4d9776b6b4634703f",
+        "expected": "21fc27c201ed0c4cee803cff5e02c1e864c549a41b95bce4d9776b6b4634703f"
+      }
+    },
+    {
+      "check": "retained hash ci/source-lineage.json",
+      "passed": true,
+      "detail": {
+        "actual": "52709ebd7e449ef39dc607bc72370482964098707f20a7543acc10becdae6df2",
+        "expected": "52709ebd7e449ef39dc607bc72370482964098707f20a7543acc10becdae6df2"
+      }
+    },
+    {
+      "check": "retained hash ci/final-windows-x86_64.json",
+      "passed": true,
+      "detail": {
+        "actual": "268e2d964da9519c40c4ac88380a69a1399a74e1cc7085a1463a3a52d97a4e09",
+        "expected": "268e2d964da9519c40c4ac88380a69a1399a74e1cc7085a1463a3a52d97a4e09"
+      }
+    },
+    {
+      "check": "retained hash ci/final-macos-arm64.json",
+      "passed": true,
+      "detail": {
+        "actual": "a3a77e408d9aa42fc9f7507b01b76d797a3b4bb69970c7e1e0cef42403478817",
+        "expected": "a3a77e408d9aa42fc9f7507b01b76d797a3b4bb69970c7e1e0cef42403478817"
+      }
+    },
+    {
+      "check": "retained hash ci/final-macos-x86_64.json",
+      "passed": true,
+      "detail": {
+        "actual": "1dc8ae923cddafdd89b4ddb8ec15ce47ab82438d862e671fad525cc5ffb136a3",
+        "expected": "1dc8ae923cddafdd89b4ddb8ec15ce47ab82438d862e671fad525cc5ffb136a3"
+      }
+    },
+    {
+      "check": "retained hash ci/auxiliary-gates.json",
+      "passed": true,
+      "detail": {
+        "actual": "c70588345217998ff222b09dc290729d07908920e51d5e14f9dbc8477b8bf4bb",
+        "expected": "c70588345217998ff222b09dc290729d07908920e51d5e14f9dbc8477b8bf4bb"
+      }
+    },
+    {
+      "check": "retained hash ci/final-linux-x86_64.json",
+      "passed": true,
+      "detail": {
+        "actual": "c65d0943f0a7f8c3748e44545bf556e4602a66c83866ddedf2997cc44ae3985b",
+        "expected": "c65d0943f0a7f8c3748e44545bf556e4602a66c83866ddedf2997cc44ae3985b"
+      }
+    },
+    {
+      "check": "retained hash ci/final-linux-validator-attempt-2.json",
+      "passed": true,
+      "detail": {
+        "actual": "e13aae211a145a3295fe1084b1ada667e142e91ae35025c92f7d2ef4eb70b73a",
+        "expected": "e13aae211a145a3295fe1084b1ada667e142e91ae35025c92f7d2ef4eb70b73a"
+      }
+    },
+    {
+      "check": "retained hash ci/final-install-artifacts.json",
+      "passed": true,
+      "detail": {
+        "actual": "af055053746dada44c4a55a7a15c8811cb5baa1dc14cd62728bd6bba580218df",
+        "expected": "af055053746dada44c4a55a7a15c8811cb5baa1dc14cd62728bd6bba580218df"
+      }
+    },
+    {
+      "check": "retained hash ci/final-validator-payload-identity.json",
+      "passed": true,
+      "detail": {
+        "actual": "5d5e6ad689944dd128c0768d907b7cef054b23618ba661e9f40b1ef9c08c0800",
+        "expected": "5d5e6ad689944dd128c0768d907b7cef054b23618ba661e9f40b1ef9c08c0800"
+      }
+    },
+    {
+      "check": "retained hash ci/final-audition.json",
+      "passed": true,
+      "detail": {
+        "actual": "78983b3b688ac9f5e5c44b9f40aff62883b0b518a633194d481df4038288f99d",
+        "expected": "78983b3b688ac9f5e5c44b9f40aff62883b0b518a633194d481df4038288f99d"
+      }
+    },
+    {
+      "check": "retained hash ci/current-upstream-comparison.json",
+      "passed": true,
+      "detail": {
+        "actual": "3ea30adf1f49b45bff9d111f9a67f48f670c6fc372bba4ed2fb39069e524395c",
+        "expected": "3ea30adf1f49b45bff9d111f9a67f48f670c6fc372bba4ed2fb39069e524395c"
+      }
+    },
+    {
+      "check": "retained hash ci/run-latest-attempt.json",
+      "passed": true,
+      "detail": {
+        "actual": "366d5565a9e82ad358b5f7f88c0c9b2cc2d944a33941b4db21afa8523f5a2877",
+        "expected": "366d5565a9e82ad358b5f7f88c0c9b2cc2d944a33941b4db21afa8523f5a2877"
+      }
+    },
+    {
+      "check": "retained hash ci/final-download-links.json",
+      "passed": true,
+      "detail": {
+        "actual": "cb8c48e35d9408846cdafe6a7f52b0cc462f4ff2b8fc0672abfc27442ade3728",
+        "expected": "cb8c48e35d9408846cdafe6a7f52b0cc462f4ff2b8fc0672abfc27442ade3728"
+      }
+    },
+    {
+      "check": "retained hash ci/verify-validator-payload-identity.py",
+      "passed": true,
+      "detail": {
+        "actual": "6e36949901152ca89c14b372956057de81fc5026bc005d7ab5a191b9c06e5f35",
+        "expected": "6e36949901152ca89c14b372956057de81fc5026bc005d7ab5a191b9c06e5f35"
+      }
+    },
+    {
+      "check": "retained hash ci/release-qualification.json",
+      "passed": true,
+      "detail": {
+        "actual": "eb3b3c3f8db27aa3f440323e84171262970af488546311c1362d8c62e016f9e8",
+        "expected": "eb3b3c3f8db27aa3f440323e84171262970af488546311c1362d8c62e016f9e8"
+      }
+    },
+    {
+      "check": "retained hash ci/headless-diagnostic.json",
+      "passed": true,
+      "detail": {
+        "actual": "edcfbeb454ad9e3989abd44018c61d9328a9c3d770b4f6f59b98f8310022a579",
+        "expected": "edcfbeb454ad9e3989abd44018c61d9328a9c3d770b4f6f59b98f8310022a579"
+      }
+    },
+    {
+      "check": "final publication record included and indexed ci/final-install-artifacts.json",
+      "passed": true
+    },
+    {
+      "check": "final publication record included and indexed ci/final-download-links.json",
+      "passed": true
+    },
+    {
+      "check": "final publication record included and indexed ci/final-validator-payload-identity.json",
+      "passed": true
+    },
+    {
+      "check": "final publication record included and indexed ci/final-audition.json",
+      "passed": true
+    },
+    {
+      "check": "final publication record included and indexed ci/release-qualification.json",
+      "passed": true
+    },
+    {
+      "check": "final publication record included and indexed ci/headless-diagnostic.json",
+      "passed": true
+    },
+    {
+      "check": "final publication record included and indexed ci/final-linux-x86_64.json",
+      "passed": true
+    },
+    {
+      "check": "final publication record included and indexed ci/final-linux-validator-attempt-2.json",
+      "passed": true
+    },
+    {
+      "check": "reviewed Markdown local file links resolve",
+      "passed": true,
+      "detail": {
+        "count": 161,
+        "missing": []
+      }
+    },
+    {
+      "check": "original reproduction source explicitly pinned",
+      "passed": true
+    },
+    {
+      "check": "60 unique primary assignments plus one nested reviewer",
+      "passed": true
+    },
+    {
+      "check": "ledger pending work limited to independent final acceptance/publication",
+      "passed": true
+    },
+    {
+      "check": "original source tree",
+      "passed": true
+    },
+    {
+      "check": "all final records source-bound",
+      "passed": true
+    },
+    {
+      "check": "verifier source pinned scripts/verify-ci-bundle.py",
+      "passed": true
+    },
+    {
+      "check": "verifier source pinned scripts/package-ci-artifacts.py",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 outer archive/download/qualification identity",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 inner archive and manifest hashes",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 outer SHA256SUMS",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 embedded manifest byte identity",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 complete archive entry inventory",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 complete regular-file sizes/hashes",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 declared source/run/revision/target",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 SOURCE.txt exact expected bytes",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 source document PRESET_GUIDE.md",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 source document INSTALL_AND_QUICKSTART.md",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 source document DISTRIBUTION_STATUS.md",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 binary identity/header VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 binary identity/header Standalone/CS-80 Reference",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 outer archive/download/qualification identity",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 inner archive and manifest hashes",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 outer SHA256SUMS",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 embedded manifest byte identity",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 complete archive entry inventory",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 complete regular-file sizes/hashes",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 declared source/run/revision/target",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 SOURCE.txt exact expected bytes",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 source document PRESET_GUIDE.md",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 source document INSTALL_AND_QUICKSTART.md",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 source document DISTRIBUTION_STATUS.md",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 binary identity/header VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 binary identity/header AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "passed": true
+    },
+    {
+      "check": "macos-arm64 binary identity/header Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 outer archive/download/qualification identity",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 inner archive and manifest hashes",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 outer SHA256SUMS",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 embedded manifest byte identity",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 complete archive entry inventory",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 complete regular-file sizes/hashes",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 declared source/run/revision/target",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 SOURCE.txt exact expected bytes",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 source document PRESET_GUIDE.md",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 source document INSTALL_AND_QUICKSTART.md",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 source document DISTRIBUTION_STATUS.md",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 binary identity/header VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 binary identity/header AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "passed": true
+    },
+    {
+      "check": "macos-x86_64 binary identity/header Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 outer archive/download/qualification identity",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 inner archive and manifest hashes",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 outer SHA256SUMS",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 embedded manifest byte identity",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 complete archive entry inventory",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 complete regular-file sizes/hashes",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 declared source/run/revision/target",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 SOURCE.txt exact expected bytes",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 source document PRESET_GUIDE.md",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 source document INSTALL_AND_QUICKSTART.md",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 source document DISTRIBUTION_STATUS.md",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 binary identity/header VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 binary identity/header Standalone/CS-80 Reference.exe",
+      "passed": true
+    },
+    {
+      "check": "four packages total 114 entries and ten headers",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 validator input outer identity",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 complete validator/install VST3 payload equality",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 published validator payload CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "passed": true
+    },
+    {
+      "check": "linux-x86_64 published validator payload CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 validator input outer identity",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 complete validator/install VST3 payload equality",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 published validator payload CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "passed": true
+    },
+    {
+      "check": "windows-x86_64 published validator payload CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "passed": true
+    },
+    {
+      "check": "audition outer archive/download/qualification identity",
+      "passed": true
+    },
+    {
+      "check": "audition 19 files and complete 18 checksums",
+      "passed": true
+    },
+    {
+      "check": "audition original source/revision/run/attempt provenance",
+      "passed": true
+    },
+    {
+      "check": "audition retained complete original inventory",
+      "passed": true
+    },
+    {
+      "check": "audition complete twelve WAV/CSV/report identities",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum pressure/222-Pressure-Lead.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure pressure/222-Pressure-Lead.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/0-Brass-Swell-I.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/0-Brass-Swell-I.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/114-Electric-Piano-I.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/114-Electric-Piano-I.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/138-Flute-Organ-8-4.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/138-Flute-Organ-8-4.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/156-Clarinet.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/156-Clarinet.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/175-Nylon-Pluck.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/175-Nylon-Pluck.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/182-Analog-Bass.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/182-Analog-Bass.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/244-Marimba.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/244-Marimba.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/262-Wind.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/262-Wind.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/286-Arp-Poly.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/286-Arp-Poly.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/41-Solo-Violin.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/41-Solo-Violin.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV checksum standard/60-Slow-Pad.wav",
+      "passed": true
+    },
+    {
+      "check": "audition WAV header/raw metrics/pressure standard/60-Slow-Pad.wav",
+      "passed": true
+    },
+    {
+      "check": "audition aggregate twelve clips and 48 seconds",
+      "passed": true
+    },
+    {
+      "check": "four native suites totals and execution attempt preserved",
+      "passed": true
+    },
+    {
+      "check": "qualification retains original failure and later-version boundary",
+      "passed": true
+    },
+    {
+      "check": "retained attempt 1 SUCCESS followed by raw SIGSEGV",
+      "passed": true
+    },
+    {
+      "check": "retained attempt 2 headless success and normal process exit",
+      "passed": true
+    },
+    {
+      "check": "retained attempt 2 gui success and normal process exit",
+      "passed": true
+    },
+    {
+      "check": "retained attempt 2 gui-seed-regression success and normal process exit",
+      "passed": true
+    },
+    {
+      "check": "retained Linux download input binding attempt-1",
+      "passed": true
+    },
+    {
+      "check": "retained Linux download input binding attempt-2/",
+      "passed": true
+    },
+    {
+      "check": "bounded diagnostic archive identity",
+      "passed": true
+    },
+    {
+      "check": "bounded diagnostic gdb original seed and normal exit",
+      "passed": true
+    },
+    {
+      "check": "bounded diagnostic trace original seed and normal exit",
+      "passed": true
+    },
+    {
+      "check": "diagnostic workflow bytes bound to retained report",
+      "passed": true
+    },
+    {
+      "check": "reviewed documentation bytes stable during join audit",
+      "passed": true
+    }
+  ]
+}

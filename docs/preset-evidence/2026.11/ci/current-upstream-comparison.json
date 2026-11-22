@@ -1,0 +1,367 @@
+{
+  "observed_at_utc": "2026-11-22 15:55:22 UTC",
+  "stable_failure": {
+    "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "run_id": 45029235535,
+    "job_id": 137263093053,
+    "headless_seed": "0x5ba7253",
+    "result": "SUCCESS text followed by raw -11/SIGSEGV, exit139; original remains failed",
+    "origin": "Exact failure details supplied by parent; separate agent retains stable logs."
+  },
+  "beta_run": {
+    "id": 45040382534,
+    "name": "Upstream validator comparison",
+    "head_sha": "7f55a95a7534b389927defe46866456560b3a878",
+    "event": "workflow_run",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-22T15:49:03Z",
+    "updated_at": "2026-11-22T15:49:49Z",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45040382534"
+  },
+  "beta_source": {
+    "run_id": 45029235535,
+    "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "vst3_artifact_id": 14761700962,
+    "original_conclusion": "failure"
+  },
+  "beta_jobs": [
+    {
+      "id": 137263271480,
+      "name": "Official beta3 / gui-inclusive / 0x63421ca",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45040382534,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        }
+      ]
+    },
+    {
+      "id": 137263271676,
+      "name": "Official beta3 / headless-subset / 0x4f31605",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45040382534,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        }
+      ]
+    },
+    {
+      "id": 137263271704,
+      "name": "Official beta3 / gui-current-regression / 0x3ca4063",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45040382534,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Verify exact originating build and artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Download only the verified build artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install ordinary validator runtime dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify official archive before extracting or executing",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run one ordinary validation and preserve its result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Summarize without changing either gate's result",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Preserve comparison provenance and all available reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        }
+      ]
+    }
+  ],
+  "beta_artifacts": [
+    {
+      "id": 14761900534,
+      "name": "upstream-beta3-gui-inclusive-source-45029235535-attempt-1",
+      "size_in_bytes": 21859,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761900534",
+      "expired": false,
+      "created_at": "2026-11-22T15:49:38Z",
+      "expires_at": "2026-12-22T15:49:38Z",
+      "updated_at": "2026-11-22T15:49:38Z",
+      "digest": "sha256:9bc48bfcd945d8b4a6816b4ee0c2f7641365cae3da59f50550634936220baff6",
+      "workflow_run": {
+        "id": 45040382534,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "7f55a95a7534b389927defe46866456560b3a878"
+      }
+    },
+    {
+      "id": 14761253177,
+      "name": "upstream-beta3-gui-current-regression-source-45029235535-attempt-1",
+      "size_in_bytes": 21881,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761253177",
+      "expired": false,
+      "created_at": "2026-11-22T15:49:46Z",
+      "expires_at": "2026-12-22T15:49:45Z",
+      "updated_at": "2026-11-22T15:49:46Z",
+      "digest": "sha256:d67b9816e8abc6008141e24694063e188ee7365d5223b1da00bd7dcaedf9e276",
+      "workflow_run": {
+        "id": 45040382534,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "7f55a95a7534b389927defe46866456560b3a878"
+      }
+    },
+    {
+      "id": 14760853278,
+      "name": "upstream-beta3-headless-subset-source-45029235535-attempt-1",
+      "size_in_bytes": 21371,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14760853278",
+      "expired": false,
+      "created_at": "2026-11-22T15:49:41Z",
+      "expires_at": "2026-12-22T15:49:40Z",
+      "updated_at": "2026-11-22T15:49:41Z",
+      "digest": "sha256:e86bad4c7455b40a2455bc732eeb6f143096de9b2c186f2ad0b78b29d5b69a91",
+      "workflow_run": {
+        "id": 45040382534,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "7f55a95a7534b389927defe46866456560b3a878"
+      }
+    }
+  ],
+  "lanes": [
+    {
+      "job_id": 137263271676,
+      "lane": "headless-subset",
+      "seed": "0x4f31605",
+      "tests": 25,
+      "artifact_id": 14760853278,
+      "verified_log_lines": [
+        "2026-11-22T15:49:12.0990087Z Using artifact 14761700962 from run 45029235535, source d0c3c23be68ef048aa56969f1c493c221c1562c5; original conclusion failure",
+        "2026-11-22T15:49:29.7596460Z pluginval.zip: OK",
+        "2026-11-22T15:49:39.8530744Z SUCCESS",
+        "2026-11-22T15:49:39.8954163Z Verified clean comparison report: 25 tests",
+        "2026-11-22T15:49:39.9069911Z   VALIDATION_OUTCOME: success",
+        "2026-11-22T15:49:39.9070203Z   SOURCE_SHA: d0c3c23be68ef048aa56969f1c493c221c1562c5",
+        "2026-11-22T15:49:39.9070523Z   SOURCE_RUN_ID: 45029235535"
+      ]
+    },
+    {
+      "job_id": 137263271480,
+      "lane": "gui-inclusive",
+      "seed": "0x63421ca",
+      "tests": 31,
+      "artifact_id": 14761900534,
+      "verified_log_lines": [
+        "2026-11-22T15:49:07.5172429Z Using artifact 14761700962 from run 45029235535, source d0c3c23be68ef048aa56969f1c493c221c1562c5; original conclusion failure",
+        "2026-11-22T15:49:18.6122836Z pluginval.zip: OK",
+        "2026-11-22T15:49:38.1155060Z SUCCESS",
+        "2026-11-22T15:49:38.1521501Z Verified clean comparison report: 31 tests",
+        "2026-11-22T15:49:38.1606397Z   VALIDATION_OUTCOME: success",
+        "2026-11-22T15:49:38.1606561Z   SOURCE_SHA: d0c3c23be68ef048aa56969f1c493c221c1562c5",
+        "2026-11-22T15:49:38.1606732Z   SOURCE_RUN_ID: 45029235535"
+      ]
+    },
+    {
+      "job_id": 137263271704,
+      "lane": "gui-current-regression",
+      "seed": "0x3ca4063",
+      "tests": 31,
+      "artifact_id": 14761253177,
+      "verified_log_lines": [
+        "2026-11-22T15:49:09.1551233Z Using artifact 14761700962 from run 45029235535, source d0c3c23be68ef048aa56969f1c493c221c1562c5; original conclusion failure",
+        "2026-11-22T15:49:23.9188425Z pluginval.zip: OK",
+        "2026-11-22T15:49:45.4119288Z SUCCESS",
+        "2026-11-22T15:49:45.4492257Z Verified clean comparison report: 31 tests",
+        "2026-11-22T15:49:45.4595169Z   VALIDATION_OUTCOME: success",
+        "2026-11-22T15:49:45.4595510Z   SOURCE_SHA: d0c3c23be68ef048aa56969f1c493c221c1562c5",
+        "2026-11-22T15:49:45.4595857Z   SOURCE_RUN_ID: 45029235535"
+      ]
+    }
+  ],
+  "primary_sources": {
+    "stable_release": {
+      "url": "https://api.github.com/repos/Tracktion/pluginval/releases/latest",
+      "tag_name": "v1.0.4",
+      "published_at": "2024-12-04T12:16:00Z",
+      "body": "# What's changed \r\n\r\n### 1.0.4\r\n- Limit auval's stress test to 20 seconds (vs 600) [#135]\r\n- Fixed incorrect \"ALL TESTS PASSED\" message when validating out of process [#125]\r\n- Updated juce to 8.0.3 [#133]\r\n- Added LV2 support [#25]\r\n- Provide CMake module for registering pluginval tests with CTest [#123] \r\n- Changed minimum Linux version to Ubuntu 22.04\r\n",
+      "html_url": "https://github.com/Tracktion/pluginval/releases/tag/v1.0.4"
+    },
+    "stable_juce_submodule": {
+      "name": "juce",
+      "path": "modules/juce",
+      "sha": "5179f4e720d8406ebd1b5401c86aea8da6cc83c9",
+      "size": 0,
+      "url": "https://api.github.com/repos/Tracktion/pluginval/contents/modules/juce?ref=v1.0.4",
+      "html_url": "https://github.com/juce-framework/JUCE/tree/5179f4e720d8406ebd1b5401c86aea8da6cc83c9",
+      "git_url": "https://api.github.com/repos/juce-framework/JUCE/git/trees/5179f4e720d8406ebd1b5401c86aea8da6cc83c9",
+      "download_url": null,
+      "type": "submodule",
+      "submodule_git_url": "https://github.com/juce-framework/JUCE",
+      "_links": {
+        "self": "https://api.github.com/repos/Tracktion/pluginval/contents/modules/juce?ref=v1.0.4",
+        "git": "https://api.github.com/repos/juce-framework/JUCE/git/trees/5179f4e720d8406ebd1b5401c86aea8da6cc83c9",
+        "html": "https://github.com/juce-framework/JUCE/tree/5179f4e720d8406ebd1b5401c86aea8da6cc83c9"
+      }
+    },
+    "callback_fix": {
+      "sha": "04e167d64661d3298afd4978f6c2e77f841b5f17",
+      "date": "2026-09-04T10:31:46Z",
+      "title": "VST3 Host: Fix an occasional crash when removing callbacks from the message loop during shutdown",
+      "url": "https://github.com/juce-framework/JUCE/commit/04e167d64661d3298afd4978f6c2e77f841b5f17",
+      "files": [
+        "modules/juce_audio_processors_headless/format_types/juce_VST3PluginFormatImpl.h"
+      ]
+    },
+    "stable_host_source": "https://github.com/juce-framework/JUCE/blob/5179f4e720d8406ebd1b5401c86aea8da6cc83c9/modules/juce_audio_processors/format_types/juce_VST3PluginFormat.cpp",
+    "beta_cmake": "https://github.com/Tracktion/pluginval/blob/37d6a37bc752606c524f7f3febffc73e0945a740/CMakeLists.txt",
+    "beta_host_source": "https://github.com/juce-framework/JUCE/blob/be29c81492b6151c8ea8d14c840e1311963b3a83/modules/juce_audio_processors_headless/format_types/juce_VST3PluginFormatImpl.h"
+  },
+  "conclusion": "Current beta passes are real and correctly attributed, but neither replace the failed stable gate nor prove this failure's ownership. Upstream callback-map lifetime fix is real; applying it in a host binary is a legitimate targeted mechanism change only after causal evidence supports that defect."
+}

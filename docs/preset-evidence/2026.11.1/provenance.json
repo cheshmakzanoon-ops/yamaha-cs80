@@ -487,9 +487,9 @@
       "origin": "Authored package index and reproduction instructions in assignments20 and28",
       "phase": "Evidence-stage index; not an additional measurement.",
       "origin_sha256": null,
-      "stored_sha256": "4f712fcea8d9b9f88b2cf44d9cac3458725f26fdff3fb553d5994ac396d13453",
-      "bytes": 16720,
-      "transform": "New explanatory text; no source measurement transformed."
+      "stored_sha256": "a3bf49b091e9e5cf9b4d6f9b5ba515f5af439c1a57b64e18a87d8664a1f1857f",
+      "bytes": 17311,
+      "transform": "Original evidence index retained; appended source-bound pending native integration status, superseded-run link and explicit separation from original2026.11 qualification. Authoring measurements unchanged."
     },
     {
       "path": "final/ctest.log",
@@ -2173,11 +2173,165 @@
       "stored_sha256": "02cd965418b012cf687932b3e5dcd42261b3b080e29d9e27fc19a4f77ac9bd0f",
       "bytes": 10432,
       "transform": "Authored omitted-artifact hash index; no measurements recalculated."
+    },
+    {
+      "path": "ci/publisher-review.json",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "c6de2a8b2dc20497c82772fd842bd479141f41c6203b3c8241a63ae6f7905811",
+      "stored_sha256": "c6de2a8b2dc20497c82772fd842bd479141f41c6203b3c8241a63ae6f7905811",
+      "bytes": 37128,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/publisher-review.md",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "b6705d0c46ba47811cfcffa7a63da0efbf1d3cd329346df6cbf229b25b6f9627",
+      "stored_sha256": "b6705d0c46ba47811cfcffa7a63da0efbf1d3cd329346df6cbf229b25b6f9627",
+      "bytes": 5991,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/source-lineage.json",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "1c6dbba5393fcf388879e6bbdbc91405b7684fae82087123976681d844956605",
+      "stored_sha256": "1c6dbba5393fcf388879e6bbdbc91405b7684fae82087123976681d844956605",
+      "bytes": 9626,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/superseded-be460-linux-guard.log",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "183e0951019205f24bb10e1628ed15707769311cf427411558623bf5801d02ed",
+      "stored_sha256": "183e0951019205f24bb10e1628ed15707769311cf427411558623bf5801d02ed",
+      "bytes": 1713,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/superseded-be460-macos-arm-guard.log",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "c1a29b810d27e4781cef0644eb54d89c44eaf63007ae1931fd56dc55ed7c2a86",
+      "stored_sha256": "c1a29b810d27e4781cef0644eb54d89c44eaf63007ae1931fd56dc55ed7c2a86",
+      "bytes": 2145,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/superseded-be460-macos-intel-guard.log",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "092dec1178be2a6e5f81067ea21f8abd2dbc9ee5a67d5982f1e7a6f7ad39c56f",
+      "stored_sha256": "092dec1178be2a6e5f81067ea21f8abd2dbc9ee5a67d5982f1e7a6f7ad39c56f",
+      "bytes": 1846,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/superseded-be460-run.json",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "23b16a5deca253355381d7f10655dc8aaee131bc5b9310792f9534e8222ce8b3",
+      "stored_sha256": "23b16a5deca253355381d7f10655dc8aaee131bc5b9310792f9534e8222ce8b3",
+      "bytes": 40130,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/superseded-be460-windows-guard.log",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "e96690b763fb859ead390eb17c1f8491cbc32393e3fedb95065795487cca03bd",
+      "stored_sha256": "e96690b763fb859ead390eb17c1f8491cbc32393e3fedb95065795487cca03bd",
+      "bytes": 4100,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/workflow-guard-after.log",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "5b3fdebe69999b1d9586abaa1cfc60098cfcf7f3795548b10711ad14e30d78b6",
+      "stored_sha256": "5b3fdebe69999b1d9586abaa1cfc60098cfcf7f3795548b10711ad14e30d78b6",
+      "bytes": 121,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/workflow-guard-before.log",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "8de045c535177b53adecd8cfd8cad67252c6fc8408221162a48c86d5de598728",
+      "stored_sha256": "8de045c535177b53adecd8cfd8cad67252c6fc8408221162a48c86d5de598728",
+      "bytes": 1074,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/workflow-guard-fixture-review.json",
+      "origin": "integration review at source6d3cc220; exact run and earlier source identities are retained within each record",
+      "phase": "Native integration preparation and superseded-run evidence; current candidate qualification remains pending.",
+      "origin_sha256": "98922779666ae95b5d7d1211f474e693c840311243cb42c6a2f29b8f8dffd603",
+      "stored_sha256": "98922779666ae95b5d7d1211f474e693c840311243cb42c6a2f29b8f8dffd603",
+      "bytes": 1003,
+      "transform": "Verbatim copy of the integration record; no measurements or historical outcomes changed."
+    },
+    {
+      "path": "ci/artifact-verifier-v3.py",
+      "origin": "review-2026.11.1-artifact-integrity/verify-downloaded-artifacts-v3.py",
+      "phase": "Reviewed verifier preparation; synthetic fixtures only, no actual candidate artifact qualification.",
+      "origin_sha256": "e310f7ef18eb2c1c47f2063b7bf5f6e265e2a2f278c6e19ee0e0f898d0792de6",
+      "stored_sha256": "e310f7ef18eb2c1c47f2063b7bf5f6e265e2a2f278c6e19ee0e0f898d0792de6",
+      "bytes": 20754,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/artifact-verifier-v3-preparation.json",
+      "origin": "review-2026.11.1-artifact-integrity/source-contract-preparation.json",
+      "phase": "Reviewed verifier preparation; synthetic fixtures only, no actual candidate artifact qualification.",
+      "origin_sha256": "3073bf7517d0fbb7e7529b1cbc4cb52fa03ca735a6b0d633c1c46a0ad76b9621",
+      "stored_sha256": "3073bf7517d0fbb7e7529b1cbc4cb52fa03ca735a6b0d633c1c46a0ad76b9621",
+      "bytes": 13784,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/artifact-verifier-v3-fixtures.json",
+      "origin": "review-2026.11.1-artifact-integrity/fixture-checks.json",
+      "phase": "Reviewed verifier preparation; synthetic fixtures only, no actual candidate artifact qualification.",
+      "origin_sha256": "837495586ce85b12c38f272608da73d68054f25cabc0f8f2d35decb87f4f8963",
+      "stored_sha256": "837495586ce85b12c38f272608da73d68054f25cabc0f8f2d35decb87f4f8963",
+      "bytes": 2475,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/artifact-verifier-v3-contract.md",
+      "origin": "review-2026.11.1-artifact-integrity/PREPARATION.md",
+      "phase": "Reviewed verifier preparation; synthetic fixtures only, no actual candidate artifact qualification.",
+      "origin_sha256": "d7869987ec1e7f4c6e8e14ee98a0cf8e4170122f51d6ee427b43ee4c4e2fd00e",
+      "stored_sha256": "d7869987ec1e7f4c6e8e14ee98a0cf8e4170122f51d6ee427b43ee4c4e2fd00e",
+      "bytes": 9699,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ci/artifact-verifier-v3-review.md",
+      "origin": "review-w08-workflow/v3-archive-verifier-independent-review.md",
+      "phase": "Reviewed verifier preparation; synthetic fixtures only, no actual candidate artifact qualification.",
+      "origin_sha256": "dd1447aca5861076e5fa942b0a2e05284d65bcbbaeb290c81518e144f679219b",
+      "stored_sha256": "dd1447aca5861076e5fa942b0a2e05284d65bcbbaeb290c81518e144f679219b",
+      "bytes": 3742,
+      "transform": "Verbatim."
     }
   ],
   "extension_assignment": 48,
   "extension_assignments": [
     28,
     48
-  ]
+  ],
+  "native_integration": {
+    "recorded_at_utc": "2026-11-22T16:36:50.151731+00:00",
+    "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "source_tree": "88ee322bf66b380c4227e224821783f2db04bbee",
+    "run_id": 45044040694,
+    "attempt": 1,
+    "status": "PENDING_NATIVE_AND_ARTIFACT_VERIFICATION",
+    "lineage": "ci/source-lineage.json",
+    "separate_original_revision": "../2026.11/ci/release-qualification.json"
+  }
 }

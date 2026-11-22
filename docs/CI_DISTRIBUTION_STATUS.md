@@ -5,6 +5,61 @@ existing CI workflow already builds. They add no paid dependency, installer,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
+## Pinned verified development downloads — 2026.11
+
+These retained packages verify the original 300-program redesign. Newer
+2026.11.1 source and packaging changes on `main` are preserved; their separate
+publication status is tracked in the [refinement report](PRESET_REFINEMENT_2026_11_1.md).
+The pinned 2026.11 packages do not include those later changes.
+
+The four installation bundles below come from source
+`d0c3c23be68ef048aa56969f1c493c221c1562c5`, in
+[build 45029235535](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535).
+All four native build/test/package jobs passed in attempt 1. The latest build
+status is **success on attempt 2**, which reran only the Linux validator and
+retained the other successful executions.
+[Combined verification record](preset-evidence/2026.11/ci/release-qualification.json) ·
+[Latest run status](preset-evidence/2026.11/ci/run-latest-attempt.json)
+
+**Linux has a known intermittent validator failure.** The first stable headless
+pluginval invocation printed `SUCCESS` and then died with raw −11 / SIGSEGV.
+The original invocation remains failed and unexplained. A later invocation used
+the same VST3 artifact on a different runner with a different random seed; all
+three Linux validator gates then passed with normal exit 0. The latest successful
+status does not demonstrate a clean first pass or a fix. Separate beta3 passes
+and two instrumented original-seed diagnostic passes did not establish the
+crash's cause or ownership. The [revision report](PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation)
+preserves the attempt history, seed/runner changes and diagnostic limits.
+
+| Platform | Included formats | Pinned installation download |
+| --- | --- | --- |
+| Windows x64 | VST3, Standalone | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758250272.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758286408.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758362460.zip) |
+| Linux x86-64, Ubuntu 24.04 build | VST3, Standalone; validator limitation above applies | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761556554.zip) |
+
+All four downloaded archives passed source/run/revision, inventory and native
+binary-header checks: **114 inventory entries and 10 binary headers** in total.
+The complete Linux and Windows VST3 payloads also match their separate validator
+input artifacts. Every installation ZIP was fetched in full without GitHub
+authentication and matched its API byte count and SHA-256.
+[Archive verification](preset-evidence/2026.11/ci/final-install-artifacts.json) ·
+[Validator payload identity](preset-evidence/2026.11/ci/final-validator-payload-identity.json) ·
+[Public download verification](preset-evidence/2026.11/ci/final-download-links.json)
+
+The [twelve-WAV audition ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761870353.zip)
+was verified from the same source and downloaded in full through its public URL.
+It contains **12 actual excerpts / 48 seconds**, the complete preset inventory,
+metrics, provenance and checksums. Pressure Lead uses aftertouch; the other
+eleven excerpts use zero pressure.
+[Audition verification](preset-evidence/2026.11/ci/final-audition.json)
+
+These are CI development bundles without release signing or notarization.
+Artifact downloads expire under GitHub retention. If nightly.link is unavailable,
+sign in to the build's GitHub **Artifacts** list; an expired artifact requires a
+newer retained build. Follow the [installation guide](INSTALL_AND_QUICKSTART.md)
+for complete-bundle extraction and native architecture selection.
+
 ## Evidence and limitations
 
 - The archive and external manifest identify a full source commit, native
@@ -32,8 +87,9 @@ verified JUCE checkout; the release installers ship both as well
 `SOURCE.txt` points to the corresponding source commit; the archives are not
 complete source distributions, so the AGPL source offer is met by that public
 commit. This helper makes no further legal-compliance determination (for
-example a trademark review or a complete third-party notice audit), and the
-artifacts stay unsigned development builds unless signing secrets exist.
+example a trademark review or a complete third-party notice audit). These
+verified CI artifacts have no release signing or notarization. A separate
+signed-installer release requires its own qualification.
 
 ## Reproduce packaging
 

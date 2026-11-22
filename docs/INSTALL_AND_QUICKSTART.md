@@ -10,6 +10,10 @@ engine as the fresh default, the toolbar (ENGINE, PURE CS-80, STUDIO), the
 may contain an earlier sound library. Use the guide bundled with your artifact
 and compare its full manifest commit with the current-build table in the
 repository README.
+The repository also retains pinned **2026.11** downloads of the full-bank
+redesign. Their bundled guides, manifest revision and `SOURCE.txt` identify
+that earlier bank; they do not contain the twelve later 2026.11.1 refinements.
+
 The project version string alone is not a build identifier: development builds
 can share the same version while containing different source commits.
 
@@ -157,6 +161,12 @@ distributions. No additional audio driver is bundled on any platform.
    programs carry their own (curated programs the circuit engine, Legacy Library
    programs Legacy). PURE CS-80 is a session policy: program recall keeps it,
    and a full DAW session restores it. Transient pedal gestures are not saved.
+
+**Pressure Lead requires aftertouch.** It is intentionally silent before pressure
+is applied. Hold a key and add MIDI pressure, or, with **KAS Scan Timing** off
+(the default), drag farther down an on-screen key. MIDI aftertouch also works
+with KAS Scan Timing on. See the [preset guide](PRESET_GUIDE.md) for playing
+suggestions across the revised bank.
 
 ### Stuck notes and output headroom
 

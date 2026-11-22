@@ -1,0 +1,287 @@
+{
+  "result": "Windows native and both required pluginval gates completed successfully, with platform skips recorded.",
+  "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "tree": "1b875a79f779ab0ad91d67da7d7926dc58b94e28",
+  "run_id": 45016741244,
+  "run_attempt": 1,
+  "native_job_id": 137190570164,
+  "pluginval_job_id": 137201111173,
+  "runner": "Windows Server 2022 / windows-2022 / VS2022 x64 Release",
+  "ctest": {
+    "registered": 220,
+    "passed": 218,
+    "failed": 0,
+    "skipped": 2,
+    "disabled": 0,
+    "duration_seconds": 1547.59,
+    "skips": [
+      {
+        "test": "cs80_filter_batch_cap_tests",
+        "reason": "AVX2 unavailable or disabled; no SIMD qualification. MSVC is outside the qualified GCC backend."
+      },
+      {
+        "test": "cs80_stereo_pra_exact_tests",
+        "reason": "Compiler/OS/ISA specialization is Linux x86_64 GCC 14.2 only; Windows returns the configured skip code 77."
+      }
+    ],
+    "internal_unittest_case_skips": [
+      {
+        "test": "cs80_packaging_notice_tests",
+        "skipped": 1,
+        "explicit_skip_reasons": [
+          "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+        ],
+        "reason_from_source": "Synthetic Debian notice fixture requires native Linux amd64 and Debian tools."
+      },
+      {
+        "test": "cs80_windows_installer_preflight_tests",
+        "skipped": 1,
+        "explicit_skip_reasons": [],
+        "reason_from_source": "Native Windows symlink creation is explicitly skipped because it can require extra privileges."
+      },
+      {
+        "test": "cs80_preset_capture_tests",
+        "skipped": 1,
+        "explicit_skip_reasons": [],
+        "reason_from_source": "POSIX file-size-limit failure injection is unavailable on Windows."
+      },
+      {
+        "test": "cs80_render_cli_tests",
+        "skipped": 3,
+        "explicit_skip_reasons": [],
+        "reason_from_source": "Three POSIX file-size/resource-limit failure-injection cases."
+      },
+      {
+        "test": "cs80_truth_render_tests",
+        "skipped": 2,
+        "explicit_skip_reasons": [],
+        "reason_from_source": "Two POSIX file-size-limit failure-injection cases."
+      },
+      {
+        "test": "cs80_vca_reference_tests",
+        "skipped": 1,
+        "explicit_skip_reasons": [],
+        "reason_from_source": "POSIX file-size-limit failure injection."
+      },
+      {
+        "test": "cs80_float_wav_tests",
+        "skipped": 1,
+        "explicit_skip_reasons": [],
+        "reason_from_source": "POSIX resource module/file-size-limit failure injection unavailable."
+      }
+    ],
+    "internal_unittest_case_skip_count": 10
+  },
+  "targeted": {
+    "library_audit": {
+      "curated": 301,
+      "legacy": 222,
+      "passed": true
+    },
+    "preset_voicing": {
+      "passed": 136,
+      "total": 136,
+      "generated_audio_seconds": 45.1
+    },
+    "preset_capture_unittest": {
+      "listed": 9,
+      "passed": 8,
+      "skipped": 1,
+      "reason": "POSIX file-size-limit failure injection"
+    },
+    "recall": {
+      "checks": 6800,
+      "failures": 0,
+      "suites": [
+        {
+          "test": "cs80_preset_revert_tests",
+          "checks": 1387,
+          "failures": 0
+        },
+        {
+          "test": "cs80_modern_recall_host_tests",
+          "checks": 2355,
+          "failures": 0
+        },
+        {
+          "test": "cs80_preset_file_recall_tests",
+          "checks": 2784,
+          "failures": 0
+        },
+        {
+          "test": "cs80_preset_identity_tests",
+          "checks": 81,
+          "failures": 0
+        },
+        {
+          "test": "cs80_preset_refresh_tests",
+          "checks": 193,
+          "failures": 0
+        }
+      ]
+    },
+    "ui_smoke": {
+      "passed": true,
+      "expression_rms": {
+        "restored": 0.00558706742,
+        "expected": 0.00532606419,
+        "full": 0.0177500086,
+        "relative_error": 0.0490048971
+      },
+      "existing_relative_tolerance": 0.15
+    },
+    "workflow_download_guard_unittests": 22,
+    "panel_goldens": {
+      "test_passed": true,
+      "checks": 2,
+      "pixel_comparisons": "report only on Windows; not a strict pixel-threshold pass"
+    },
+    "program_extension_recall_host_tests": "Not registered on Windows; enclosing CMake condition is Linux only, not a runtime skip."
+  },
+  "juce": {
+    "checked_at": "2026-11-22T11:22:13Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+    "workflow_run": "45016741244",
+    "configured_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "D:/a/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "pluginval": {
+    "version": "1.0.4",
+    "download_verified": true,
+    "asset_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab",
+    "gates": [
+      {
+        "log": "pluginval-windows.log",
+        "random_seed": "0x4f81069",
+        "strictness": 10,
+        "success_marker": true,
+        "failed_marker": false,
+        "skip_gui_tests": true,
+        "external_vst3_validator": "skipped because no validator path configured"
+      },
+      {
+        "log": "pluginval-windows-seed-regression.log",
+        "random_seed": "0x5037a0c",
+        "strictness": 10,
+        "success_marker": true,
+        "failed_marker": false,
+        "skip_gui_tests": true,
+        "external_vst3_validator": "skipped because no validator path configured"
+      }
+    ]
+  },
+  "packaging": {
+    "step_success": true,
+    "self_test_checks": 34,
+    "archive": "cs80-reference-windows-x86_64-ba3a721a69b6.zip",
+    "archive_sha256_reported_by_native_job": "9323499816891ffcb31723d01267750da014be51d93726d578864a113bdf7a76",
+    "install_bundle_artifact_id": 14753705844,
+    "archive_independent_verification": "Delegated to root; not downloaded by this agent."
+  },
+  "artifact_metadata": [
+    {
+      "id": 14753820444,
+      "name": "cs80-windows-vst3",
+      "size_in_bytes": 3140725,
+      "expired": false,
+      "digest": "sha256:da384f0cb20ecadb0b5e5d97bcb91495024f95aff90eba08454f704b2fb4147f",
+      "created_at": "2026-11-22T12:01:38Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    },
+    {
+      "id": 14753705844,
+      "name": "cs80-windows-install-bundle",
+      "size_in_bytes": 6259685,
+      "expired": false,
+      "digest": "sha256:6362a4b2c73ec6caf97fa240834f5e4a4a4d44532704e838acfa33c34dd71f6e",
+      "created_at": "2026-11-22T12:01:42Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    },
+    {
+      "id": 14753218463,
+      "name": "cs80-pluginval-windows",
+      "size_in_bytes": 5084,
+      "expired": false,
+      "digest": "sha256:ecdd6391f30013bb875de9f80e51a4825c86f6afea4cad0dc63e4c29798cead5",
+      "created_at": "2026-11-22T12:02:11Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    },
+    {
+      "id": 14753118591,
+      "name": "cs80-windows-test-evidence",
+      "size_in_bytes": 57322,
+      "expired": false,
+      "digest": "sha256:b64563b2003fc8acee6b4ab14e8d9771f4a07e99a2b2035c84db09895f138b26",
+      "created_at": "2026-11-22T12:01:43Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    }
+  ],
+  "download_verification": [
+    {
+      "artifact_id": 14753118591,
+      "file": "review-w09-windows/replacement-ba3a721/windows-test-evidence-ba3a721.zip",
+      "size_bytes": 57322,
+      "sha256": "b64563b2003fc8acee6b4ab14e8d9771f4a07e99a2b2035c84db09895f138b26",
+      "github_digest_matches": true,
+      "members": [
+        "Testing/Temporary/LastTest.log",
+        "ci-juce-provenance.txt",
+        "ctest-results.xml"
+      ]
+    },
+    {
+      "artifact_id": 14753218463,
+      "file": "review-w09-windows/replacement-ba3a721/windows-pluginval-ba3a721.zip",
+      "size_bytes": 5084,
+      "sha256": "ecdd6391f30013bb875de9f80e51a4825c86f6afea4cad0dc63e4c29798cead5",
+      "github_digest_matches": true,
+      "members": [
+        "pluginval-reports/cs80-windows",
+        "pluginval-download.json",
+        "pluginval-reports/cs80-windows-seed-regression",
+        "pluginval-windows.log",
+        "pluginval-windows-seed-regression.log",
+        "pluginval-version.txt"
+      ]
+    }
+  ],
+  "scope": "This report verifies Windows jobs only, not the final outcome of other platform jobs."
+}

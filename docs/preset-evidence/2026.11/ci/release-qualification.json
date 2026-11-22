@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-22T16:10:30.129513+00:00",
+  "scope": "Publication evidence for 2026.11 CI development bundles: latest required CI jobs pass, with the original Linux validator failure explicitly retained. Not a signed installer release, universal DAW qualification, or acoustic/hardware fidelity certification.",
+  "status": "LATEST_REQUIRED_CI_PASS_WITH_RECORDED_UNRESOLVED_LINUX_FAILURE",
+  "clean_initial_validator_pass": false,
+  "source_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "source_tree": "bf4aa2f49be6207e07646a317018bb8df91fa5dc",
+  "preset_revision": "2026.11",
+  "workflow": {
+    "id": 45029235535,
+    "name": "build",
+    "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "head_branch": "main",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 2,
+    "created_at": "2026-11-22T13:46:22Z",
+    "updated_at": "2026-11-22T15:53:01Z",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535",
+    "workflow_id": 399616500
+  },
+  "native_suites": {
+    "windows-x86_64": {
+      "registered": 220,
+      "passed": 218,
+      "failed": 0,
+      "skipped": 2,
+      "actual_execution_attempt": 1,
+      "report": "ci/final-windows-x86_64.json"
+    },
+    "macos-arm64": {
+      "registered": 242,
+      "passed": 240,
+      "failed": 0,
+      "skipped": 2,
+      "actual_execution_attempt": 1,
+      "report": "ci/final-macos-arm64.json"
+    },
+    "macos-x86_64": {
+      "registered": 242,
+      "passed": 240,
+      "failed": 0,
+      "skipped": 2,
+      "actual_execution_attempt": 1,
+      "report": "ci/final-macos-x86_64.json"
+    },
+    "linux-x86_64": {
+      "registered": 578,
+      "passed": 577,
+      "failed": 0,
+      "skipped": 1,
+      "actual_execution_attempt": 1,
+      "report": "ci/final-linux-x86_64.json"
+    }
+  },
+  "native_totals": {
+    "registered": 1282,
+    "passed": 1275,
+    "failed": 0,
+    "skipped": 7
+  },
+  "all_native_builds_and_packages_executed_in_attempt": 1,
+  "latest_linux_validator_execution_attempt": 2,
+  "original_linux_failure": {
+    "job_id": 137263093053,
+    "seed": "0x5ba7253",
+    "explicit_success_before_crash": true,
+    "raw_returncode": -11,
+    "normalized_exit": 139,
+    "crash_ownership": "unestablished",
+    "source_or_binary_repair_between_attempts": false,
+    "report": "ci/final-linux-x86_64.json"
+  },
+  "linux_attempt_reconciliation": "ci/final-linux-validator-attempt-2.json",
+  "attempt2_new_gates": {
+    "pluginval-headless": {
+      "success_count": 1,
+      "seeds": [
+        "0x50a3104"
+      ],
+      "strictness_levels": [
+        "10"
+      ],
+      "failure_markers": [],
+      "core_termination_lines": [
+        "Original validator termination: PID=2668; raw returncode=0; kind=exit; exit_code=0"
+      ],
+      "gui_lines": [],
+      "report_bytes": 7194
+    },
+    "pluginval-gui": {
+      "success_count": 1,
+      "seeds": [
+        "0x75af02"
+      ],
+      "strictness_levels": [
+        "10"
+      ],
+      "failure_markers": [],
+      "core_termination_lines": [
+        "Original validator termination: PID=2698; raw returncode=0; kind=exit; exit_code=0"
+      ],
+      "gui_lines": [
+        "Starting tests in: pluginval / Open editor whilst processing...",
+        "Completed tests in pluginval / Open editor whilst processing"
+      ],
+      "report_bytes": 7875
+    },
+    "pluginval-gui-seed-regression": {
+      "success_count": 1,
+      "seeds": [
+        "0x2da72db"
+      ],
+      "strictness_levels": [
+        "10"
+      ],
+      "failure_markers": [],
+      "core_termination_lines": [
+        "Original validator termination: PID=2740; raw returncode=0; kind=exit; exit_code=0"
+      ],
+      "gui_lines": [
+        "Starting tests in: pluginval / Open editor whilst processing...",
+        "Completed tests in pluginval / Open editor whilst processing"
+      ],
+      "report_bytes": 7876
+    }
+  },
+  "attempt2_attribution_limit": [
+    "GitHub actor and triggering_actor identify the account; inspected public run/job APIs do not identify UI versus API/token/app versus automation, or the exact human/client responsible.",
+    "The retained push event identifies the originating workflow event; it does not establish that a new push caused the rerun.",
+    "The observed pattern is one new Linux validator execution plus retained successful jobs; exact rerun API operation cannot be determined from these fields."
+  ],
+  "source_auxiliary_gates": [
+    {
+      "id": 45029235522,
+      "name": "Filter batch qualification",
+      "event": "push",
+      "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-22T13:46:22Z",
+      "updated_at": "2026-11-22T13:47:26Z",
+      "run_attempt": 1,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235522"
+    },
+    {
+      "id": 45029235556,
+      "name": "Hardware panel screenshots",
+      "event": "push",
+      "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-22T13:46:22Z",
+      "updated_at": "2026-11-22T13:54:02Z",
+      "run_attempt": 1,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235556"
+    },
+    {
+      "id": 45029235582,
+      "name": "DSP numerical measurements",
+      "event": "push",
+      "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-22T13:46:22Z",
+      "updated_at": "2026-11-22T14:27:33Z",
+      "run_attempt": 1,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235582"
+    }
+  ],
+  "packages": [
+    {
+      "target": "linux-x86_64",
+      "artifact_id": 14761556554,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761556554.zip",
+      "outer_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+      "bytes": 13220309,
+      "inventory_entries": 20,
+      "binary_headers": 2,
+      "expires_at": "2027-02-20T13:46:22Z"
+    },
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14758286408,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758286408.zip",
+      "outer_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+      "bytes": 14898681,
+      "inventory_entries": 37,
+      "binary_headers": 3,
+      "expires_at": "2027-02-20T13:46:22Z"
+    },
+    {
+      "target": "macos-x86_64",
+      "artifact_id": 14758362460,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758362460.zip",
+      "outer_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+      "bytes": 16055847,
+      "inventory_entries": 37,
+      "binary_headers": 3,
+      "expires_at": "2027-02-20T13:46:22Z"
+    },
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14758250272,
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758250272.zip",
+      "outer_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+      "bytes": 6259679,
+      "inventory_entries": 20,
+      "binary_headers": 2,
+      "expires_at": "2027-02-20T13:46:22Z"
+    }
+  ],
+  "package_totals": {
+    "inventory_entries": 114,
+    "binary_headers": 10,
+    "all_four_integrity_verified": true
+  },
+  "validator_input_to_install_bindings": [
+    {
+      "target": "linux-x86_64",
+      "input_artifact_id": 14761700962,
+      "input_sha256": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+      "install_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+      "complete_file_inventory_identical": true,
+      "runtime_download_observations": [
+        {
+          "attempt": "attempt1",
+          "validator_job_id": 137263093053,
+          "artifact_id": 14761700962,
+          "logged_download_digest": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77"
+        },
+        {
+          "attempt": "attempt2",
+          "validator_job_id": 137263915334,
+          "artifact_id": 14761700962,
+          "logged_download_digest": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77"
+        }
+      ]
+    },
+    {
+      "target": "windows-x86_64",
+      "input_artifact_id": 14758085624,
+      "input_sha256": "f85e3b7e33185540cbfea13cdc8223f840896609e5c89f484e27827fa874c554",
+      "install_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+      "complete_file_inventory_identical": true,
+      "runtime_download_observations": [
+        {
+          "attempt": "attempt1",
+          "validator_job_id": 137236123878,
+          "artifact_id": 14758085624,
+          "logged_download_digest": "f85e3b7e33185540cbfea13cdc8223f840896609e5c89f484e27827fa874c554"
+        }
+      ]
+    }
+  ],
+  "audition": {
+    "artifact_id": 14761870353,
+    "actual_capture_attempt": 1,
+    "wav_count": 12,
+    "seconds": 48.0,
+    "sample_rate": 48000,
+    "inventory_sha256": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785",
+    "artifact_sha256": "6672a89b5b4d58243edb3ce202b1d91b9485aa20712d6f49492579277af393c7",
+    "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761870353.zip",
+    "raw_nonfinite_and_over_full_scale_samples": 0,
+    "report": "ci/final-audition.json"
+  },
+  "comparison_scope": "Current beta3 passes are a separate host/seeds/topology comparison and do not replace the original stable failure. Same-seed instrumented nonreproductions do not identify or fix it.",
+  "final_independent_publication_review": "pending",
+  "same_seed_diagnostic": {
+    "run_id": 45041640467,
+    "workflow_commit": "b61d4057e83eac404c9f0db0c38f9ee857f83baf",
+    "job_id": 137267174290,
+    "source_plugin_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "source_artifact_id": 14761700962,
+    "seed": "0x5ba7253",
+    "replays": 2,
+    "process_exits": [
+      0,
+      0
+    ],
+    "result": "instrumented nonreproduction; no failure trace, ownership or repair established",
+    "report": "ci/headless-diagnostic.json",
+    "other_branch_build_excluded": true
+  },
+  "concurrent_newer_main": {
+    "commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+    "preset_revision": "2026.11.1",
+    "commits_preserved": [
+      "99f5ebd6b71283a56810d801df89c49ef62f3512",
+      "85b0b547ea11dfb15335dc3720bf59761abf29ff",
+      "be460b0b93bdcb8dce5eb8925b18b72706b25e19"
+    ],
+    "scope": "Separately added upstream refinement and packaging work is preserved. It changes production preset data and workflow/packaging code. The pinned 2026.11 artifacts and tests in this record do not qualify that newer source."
+  },
+  "independent_final_review": {
+    "reviewer": "agent60",
+    "verdict": "ACCEPTED_FOR_ORIGINAL_2026_11_DEVELOPMENT_PUBLICATION_WITH_RECORDED_UNRESOLVED_LINUX_FAILURE",
+    "scope": "Original2026.11 development publication with unresolved initial Linux validator failure; does not qualify newer2026.11.1.",
+    "record": "ci/acceptance/FINAL-ACCEPTANCE-2026_11.json",
+    "joins_record": "ci/acceptance/final-evidence-joins-2026_11.json",
+    "accepted_manifest_snapshot_entries": 83,
+    "accepted_consistency_checks": 206
+  }
+}

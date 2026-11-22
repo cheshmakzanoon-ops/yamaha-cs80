@@ -1,0 +1,2373 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-11-22",
+  "release_context": {
+    "preset_library_revision": "2026.11",
+    "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "ci_run_id": 45029235535,
+    "ci_run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535",
+    "publication_status": "accepted_for_original_development_publication_coordinator_finalization_pending",
+    "status_basis": "Agent 60 independently accepted accurately disclosed original 2026.11 development-download publication, with no blocking discrepancy in that scope: 83 of 83 retained evidence hashes and 206 of 206 read-only joins passed, including all four actual archives, complete validator payloads, five full public GET records and the actual audition. The original Linux validator SIGSEGV remains failed and unexplained. The externally observed successful second execution and two exact-seed instrumented nonreproductions are separate; no root cause, crash ownership or production fix is established. Original publication finalization remains the coordinator task; newer 2026.11.1 integration is excluded.",
+    "authoring_source_sha": "7ac6d99a5e187068907b17233109f2f1cc3da9fb",
+    "initial_attempt": {
+      "source_sha": "7ac6d99a5e187068907b17233109f2f1cc3da9fb",
+      "ci_run_id": 45014200523,
+      "arm_test_result": "238 passed, 2 failed, 2 skipped",
+      "follow_up_commit": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "preset_or_production_dsp_changed": false
+    },
+    "source_identity_note": "Original 2026.11 binaries and qualification retain d0c3c23be68ef048aa56969f1c493c221c1562c5 / run 45029235535. The screenshot-only 7f55a95a7534b389927defe46866456560b3a878 descendant is not their binary source. Historical ba3 results retain run 45016741244. Concurrent 2026.11.1 source 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c / run 45044040694 is separately pending integration; publication-only descendants 4a3bd7116fc3a5f4344fcdd5e6694ff4c2646452 and 00339ed7c616da28e5c32011e558ea00833f041b do not change that newer binary source.",
+    "ci_run_status": "completed",
+    "ci_run_conclusion": "success",
+    "source_tree": "bf4aa2f49be6207e07646a317018bb8df91fa5dc",
+    "ci_run_started_at": "2026-11-22T13:46:22Z",
+    "previous_attempt": {
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "run_conclusion": "failure",
+      "native_platform_passes": [
+        "windows-x86_64",
+        "macos-arm64",
+        "macos-x86_64"
+      ],
+      "linux_ctest": {
+        "registered": 578,
+        "passed": 575,
+        "failed": 2,
+        "skipped": 1
+      },
+      "linux_validators": "skipped",
+      "linux_install_bundle": "not produced",
+      "published_audition": "not produced"
+    },
+    "fixture_repair_review": {
+      "agent": 60,
+      "status": "accepted_for_next_ci",
+      "session_evidence_identifier": "review-w10-acceptance/linux-fixture-repairs-review.json",
+      "release_acceptance": "original_development_publication_accepted_with_recorded_unresolved_linux_failure",
+      "final_acceptance_verification_id": "original_2026_11_final_publication_acceptance"
+    },
+    "linux_current_observation": {
+      "native_job_id": 137228906281,
+      "native_conclusion": "success",
+      "ctest": {
+        "registered": 578,
+        "passed": 577,
+        "failed": 0,
+        "skipped": 1
+      },
+      "validator_attempt1_job_id": 137263093053,
+      "validator_attempt1_conclusion": "failure",
+      "validator_attempt2_job_id": 137263915334,
+      "validator_attempt2_conclusion": "success",
+      "basis": "Retained native report and attempt reconciliation; original failure preserved."
+    },
+    "ci_run_attempt": 2,
+    "first_attempt_conclusion": "failure",
+    "clean_first_pass": false,
+    "original_linux_validator_fault_fixed": false,
+    "native_totals": {
+      "registered": 1282,
+      "passed": 1275,
+      "failed": 0,
+      "skipped": 7
+    },
+    "joined_qualification_evidence_path": "docs/preset-evidence/2026.11/ci/release-qualification.json",
+    "diagnostic_status": "two_completed_instrumented_nonreproductions_original_crash_unexplained",
+    "final_acceptance_status": "ACCEPTED_FOR_ORIGINAL_2026_11_DEVELOPMENT_PUBLICATION_WITH_RECORDED_UNRESOLVED_LINUX_FAILURE",
+    "final_acceptance_verification_id": "original_2026_11_final_publication_acceptance",
+    "publication_execution_status": "coordinator_commit_and_push_not_recorded_by_this_ledger"
+  },
+  "participation": {
+    "actually_spawned_subagents": 61,
+    "distinct_task_names": 61,
+    "maximum_concurrent_subagents": 3,
+    "coordinator_count": 1,
+    "execution": "Staged work with at most three subagents alongside the coordinator: 60 requested primary assignments plus one additional nested follow-up reviewer, 61 distinct spawned subagents in total. These counts do not imply simultaneous execution.",
+    "completion_counts": {
+      "complete": 61
+    },
+    "roster_sources": [
+      {
+        "identifier": "agent-review-ledger.json",
+        "kind": "working_session_record",
+        "imported_agent_count": 60,
+        "sha256": "4aada4523a2dc579950aa2afd1a5d62550a64db6c9b1bedb12b46df5ad2cffa9",
+        "scope": "The coordinator roster identifies the 60 primary assignments. The additional nested reviewer is recorded separately from the primary roster, based on the parent controller report and coordinator confirmation."
+      },
+      {
+        "identifier": "coordinator assignment and follow-up confirmation, 2026-11-22",
+        "kind": "session_message",
+        "scope": "All 60 primary initial assignments and one nested review remain complete: 61 subagents. All four current native suites, aggregate artifacts, complete validator-input identity, full public downloads and actual audition passed. Original Linux validator attempt 1 failed by SIGSEGV after SUCCESS; externally triggered attempt 2 passed on the same artifact with different randomized seed/runner. Root/agents issued no rerun. Two bounded same-seed instrumented diagnostics completed without reproducing the fault; the original crash remains unexplained. Agent 60 subsequently accepted original development publication with the unresolved failure disclosed; its exact final verdict is separately recorded."
+      },
+      {
+        "identifier": "review-w09-macos-arm/replacement-run-45016741244/final-verification.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Completed Apple Silicon native job, tests, validators, packaging and artifact identities at the replacement source/run."
+      },
+      {
+        "identifier": "review-w09-artifact-integrity/actual-run-45016741244-arm/report.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Independent verification of the actual downloaded Apple Silicon archive, complete inventory and three binary headers."
+      },
+      {
+        "identifier": "review-w09-windows/replacement-ba3a721/verification.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Completed Windows native and both required headless validator gates, with platform skips recorded."
+      },
+      {
+        "identifier": "review-w09-macos-intel/replacement-45016741244/final-verification.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Completed Intel macOS native, VST3/AU/AU-GUI validator and packaging gates, with platform skips recorded."
+      },
+      {
+        "identifier": "review-w09-artifact-integrity/actual-run-45016741244-windows-v2/report.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Actual Windows v2 bundle verification with the narrow copied-document newline rule explicitly recorded."
+      },
+      {
+        "identifier": "review-w09-artifact-integrity/actual-run-45016741244-intel/report.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Actual Intel macOS archive verification, complete inventory and three binary headers."
+      },
+      {
+        "identifier": "ci-run-45016741244/download-links.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Coordinator GET checks for the three actual platform artifact-ID download links."
+      },
+      {
+        "identifier": "review-w09-linux/replacement-run-45016741244/verification.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Terminal failed Linux test result and skipped validator/artifact/audition gates."
+      },
+      {
+        "identifier": "review-w09-controller/handoff/REPORT.md",
+        "kind": "working_session_follow_up_report",
+        "scope": "Agent 54 local controller-fixture repair and explicit completed nested reviewer identity."
+      },
+      {
+        "identifier": "review-w09-controller/handoff/causal-evidence.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Controller fixture reproduction, neutral arm, re-enabled negative control and final registered local pass."
+      },
+      {
+        "identifier": "review-linux-fixture-repairs/panel/causal-evidence.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Exact Linux panel-font failure reproduction and final registered local pass with the pinned font environment."
+      },
+      {
+        "identifier": "review-w10-acceptance/linux-fixture-repairs-review.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Independent acceptance of both minimal Linux fixture repairs for the next CI run, without final release acceptance."
+      },
+      {
+        "identifier": "ci-run-45029235535/download-links.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "All four current full public install ZIP downloads and exact API size/digest checks."
+      },
+      {
+        "identifier": "review-w09-artifact-integrity/final-preparation-review.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Historical preparation-only review by agent 52; the later actual aggregate verification is recorded separately."
+      },
+      {
+        "identifier": "review-w10-audition/final-run-45029235535/preparation.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Historical preparation-only review by agent 56; the later actual audition artifact verification is recorded separately."
+      },
+      {
+        "identifier": "docs/preset-evidence/2026.11/ci/final-windows-x86_64.json",
+        "kind": "repository_evidence",
+        "scope": "Fresh current-source native and validator qualification."
+      },
+      {
+        "identifier": "docs/preset-evidence/2026.11/ci/final-macos-arm64.json",
+        "kind": "repository_evidence",
+        "scope": "Fresh current-source native and validator qualification."
+      },
+      {
+        "identifier": "docs/preset-evidence/2026.11/ci/final-macos-x86_64.json",
+        "kind": "repository_evidence",
+        "scope": "Fresh current-source native and validator qualification."
+      },
+      {
+        "identifier": "review-w09-linux/final-run-45029235535/verification.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "review-w09-linux/final-run-45029235535/validator-summary.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "review-w09-linux/final-run-45029235535/attempt-2/attempt-reconciliation.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "review-w09-artifact-integrity/final-run-45029235535-all/report.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "ci-run-45029235535/final-validator-payload-identity.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "review-w10-audition/final-run-45029235535/verification.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "ci-run-45029235535/audition-download-link.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "review-w09-download-links/final-publication-review-d0c3c23.md",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "review-w09-controller/d0c3-headless/checks.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Retained terminal outcome, attempt reconciliation, actual artifact verification, publication-copy review or bounded diagnostic preparation; see corresponding ledger record for limits."
+      },
+      {
+        "identifier": "review-w09-controller/d0c3-headless/actual-run-45041640467/RESULTS.json",
+        "kind": "working_session_follow_up_report",
+        "scope": "Actual same-artifact, same-seed GDB and fault-trace diagnostic results: two instrumented nonreproductions; original SIGSEGV unexplained."
+      },
+      {
+        "identifier": "docs/preset-evidence/2026.11/ci/headless-diagnostic.json",
+        "kind": "repository_evidence",
+        "scope": "Public copy of the actual bounded diagnostic outcomes and exact artifact identities."
+      },
+      {
+        "identifier": "docs/preset-evidence/2026.11/ci/release-qualification.json",
+        "kind": "repository_evidence",
+        "scope": "Joined original native, archive, payload, audition, download and validator evidence; preserves the original failure. The separately recorded final acceptance report closes the review that was pending when this evidence was collected."
+      },
+      {
+        "identifier": "review-w10-acceptance/FINAL-ACCEPTANCE-2026_11.json",
+        "kind": "working_session_final_review",
+        "sha256": "8729303b12c85d678ed8eefc82fdaab56a064e3481447cc23dc38664638a544a",
+        "scope": "Exact bounded final verdict closes primary assignment 60 for accurately disclosed original 2026.11 development publication; newer integration and coordinator commit/push are excluded."
+      },
+      {
+        "identifier": "review-w10-acceptance/FINAL-ACCEPTANCE-2026_11.md",
+        "kind": "working_session_final_review",
+        "sha256": "04fe75c96d619ce49615269e2639d65032695bbe4c9e220897c54598dcd145a6",
+        "scope": "Readable independent final acceptance report, preserving the original unexplained Linux failure and separate execution history."
+      }
+    ],
+    "requested_primary_subagents": 60,
+    "actually_spawned_primary_subagents": 60,
+    "actually_spawned_nested_subagents": 1,
+    "initial_primary_assignments_completed": 60,
+    "nested_follow_up_assignments_completed": 1,
+    "primary_completion_counts": {
+      "complete": 60
+    },
+    "nested_completion_counts": {
+      "complete": 1
+    },
+    "follow_up_agent_reuse_note": "Subsequent monitoring and review tasks reuse these existing agents. No additional agents were spawned for the newer 2026.11.1 integration.",
+    "primary_final_assignments_completed": 60
+  },
+  "status_semantics": {
+    "complete": "The specified authoring, review or follow-up assignment completed. Assignment 60 accepts accurately disclosed original development publication with the Linux crash unresolved. Completion does not assert a clean first pass, a production fix, newer-version qualification or a completed coordinator commit/push. The completed nested review remains read-only.",
+    "initial_review_complete": "Historical status for a completed initial assignment before its final follow-up was resolved. All 60 primary assignments now have complete status; assignment 60 retains its bounded final-publication verdict separately.",
+    "active": "The actual agent was spawned and its final review outcome was not yet recorded at this snapshot."
+  },
+  "evidence_interpretation": {
+    "engineering_report": "docs/PRESET_REVISION_2026_11.md",
+    "evidence_index": "docs/preset-evidence/2026.11/README.md",
+    "measurement_manifest": "docs/preset-evidence/2026.11/provenance.json",
+    "related_repository_paths": "Pointers to integrated code or evidence relevant to the scope; they do not imply that each agent reviewed the final source revision or authored each referenced file.",
+    "session_evidence_identifier": "Historical working-session report identifiers, relative to the session workspace. They are not repository links and are not promised as bundled files.",
+    "roster_vs_measurements": "The roster records assignments and completion states. The evolving manifest records selected measurement and CI evidence. It is not one output file per agent, and this ledger does not modify that manifest.",
+    "measurement_manifest_snapshot": {
+      "checked_at_utc": "2026-11-22T16:13:29Z",
+      "file_count": 83,
+      "manifest_sha256": "7b52a9140a6c3b1d73010b0b9efb24aabfb127b940fdda5424cc7804d2e84a06",
+      "stored_file_digests_matched": 83,
+      "status": "passed",
+      "scope": "Only the checked manifest snapshot; later evidence may change its contents."
+    },
+    "verification_record_scope": "Each verification record retains its source/run, attempt or collection scope. Earlier partial records remain historical observations; current_verification_ids identifies the latest complete deliverable records. Artifact or second-attempt success does not erase an earlier runtime failure."
+  },
+  "coverage_limits": [
+    "Family audio reviews used software renders, numeric analysis and source contracts; this ledger records no completed subjective listening panel or physical CS-80 comparison.",
+    "Bounded register, velocity, pressure, stereo and tail checks do not cover every program under every controller history, note, DAW or playback condition.",
+    "All four current native suites passed, including Linux 577/578 with one explicit skip. Original Linux validator attempt 1 still failed after SUCCESS with SIGSEGV; attempt 2 passed separately on the same artifact with changed randomized seed and runner.",
+    "All four current install archives, complete Linux/Windows VST3 payload identities, full public downloads and actual audition passed their bounded checks. Those artifact checks do not establish runtime crash causality or a clean first-pass validator result.",
+    "No fix for the original Linux validator SIGSEGV is established. External attempt-2 success and separate official beta3 comparison are additional observations, not replacements for that failure.",
+    "Independent acceptance is complete for accurately disclosed original development publication; coordinator publication finalization is separate. Newer 2026.11.1 integration remains outside this acceptance. The two completed instrumented nonreproductions do not explain or fix the original SIGSEGV; any diagnostic-branch Build does not qualify candidate d0c3c23."
+  ],
+  "pending_verification": [],
+  "assignment_groups": [
+    {
+      "id": "discovery",
+      "first_agent": 1,
+      "last_agent": 6,
+      "agent_count": 6,
+      "scope": "Discovery and contracts",
+      "related_repository_paths": [
+        "docs/PRESET_REVISION_2026_11.md",
+        "src/core/Engine.cpp",
+        "src/core/FactoryPresets.cpp"
+      ]
+    },
+    {
+      "id": "family_authoring",
+      "first_agent": 7,
+      "last_agent": 14,
+      "agent_count": 8,
+      "scope": "Family authoring",
+      "related_repository_paths": [
+        "src/core/curated",
+        "docs/PRESET_REVISION_2026_11.md"
+      ]
+    },
+    {
+      "id": "validation_tool_ci_startup",
+      "first_agent": 15,
+      "last_agent": 18,
+      "agent_count": 4,
+      "scope": "Validation, capture, CI and startup",
+      "related_repository_paths": [
+        "tests/PresetVoicingTests.cpp",
+        "src/tools/preset_capture.cpp",
+        ".github/workflows/build.yml",
+        "tests/PresetIdentityTests.h"
+      ]
+    },
+    {
+      "id": "family_audio_review",
+      "first_agent": 19,
+      "last_agent": 27,
+      "agent_count": 9,
+      "scope": "Family render and measurement reviews",
+      "related_repository_paths": [
+        "docs/preset-evidence/2026.11/families",
+        "docs/PRESET_REVISION_2026_11.md"
+      ]
+    },
+    {
+      "id": "guide_packaging_identity",
+      "first_agent": 28,
+      "last_agent": 30,
+      "agent_count": 3,
+      "scope": "Guide, bundle provenance and identity",
+      "related_repository_paths": [
+        "docs/PRESET_GUIDE.md",
+        "scripts/package-ci-artifacts.py",
+        "docs/preset-evidence/2026.11/identity/summary.json"
+      ]
+    },
+    {
+      "id": "controls_behavior_register_pure_performance",
+      "first_agent": 31,
+      "last_agent": 42,
+      "agent_count": 12,
+      "scope": "Controls, behavior, register, Pure mode, performance scope and evidence report",
+      "related_repository_paths": [
+        "docs/preset-evidence/2026.11/controls",
+        "docs/preset-evidence/2026.11/behavior",
+        "docs/preset-evidence/2026.11/stereo",
+        "docs/preset-evidence/2026.11/long-tails",
+        "docs/PRESET_REVISION_2026_11.md"
+      ]
+    },
+    {
+      "id": "publication_review",
+      "first_agent": 43,
+      "last_agent": 48,
+      "agent_count": 6,
+      "scope": "Publication and evidence review",
+      "related_repository_paths": [
+        "docs/preset-evidence/2026.11/provenance.json",
+        "docs/PRESET_REVISION_2026_11.md",
+        ".github/workflows/build.yml"
+      ]
+    },
+    {
+      "id": "native_platform_readiness",
+      "first_agent": 49,
+      "last_agent": 51,
+      "agent_count": 3,
+      "scope": "Current d0c3c23 Windows and both macOS native/validator passes",
+      "related_repository_paths": [
+        ".github/workflows/build.yml",
+        "CMakeLists.txt",
+        "docs/preset-evidence/2026.11/ci/macos-arm64.json",
+        "docs/preset-evidence/2026.11/ci/windows-x86_64.json",
+        "docs/preset-evidence/2026.11/ci/macos-x86_64.json",
+        "docs/preset-evidence/2026.11/ci/final-windows-x86_64.json",
+        "docs/preset-evidence/2026.11/ci/final-macos-arm64.json",
+        "docs/preset-evidence/2026.11/ci/final-macos-x86_64.json"
+      ]
+    },
+    {
+      "id": "artifact_integrity_protocol",
+      "first_agent": 52,
+      "last_agent": 52,
+      "agent_count": 1,
+      "scope": "Four actual bundles and complete validator-input payload identities verified",
+      "related_repository_paths": [
+        "scripts/verify-ci-bundle.py",
+        "scripts/package-ci-artifacts.py"
+      ]
+    },
+    {
+      "id": "download_route",
+      "first_agent": 53,
+      "last_agent": 53,
+      "agent_count": 1,
+      "scope": "All install/audition public downloads passed; finalizer and copy review resolved",
+      "related_repository_paths": [
+        "README.md",
+        ".github/workflows/build.yml"
+      ]
+    },
+    {
+      "id": "controller_host_contract",
+      "first_agent": 54,
+      "last_agent": 54,
+      "agent_count": 1,
+      "scope": "Controller fixture repair passed; two bounded validator diagnostics completed as nonreproductions, original crash unexplained",
+      "related_repository_paths": [
+        "src/plugin/PluginProcessor.cpp",
+        "tests/KeyboardPressureHostTests.h",
+        "docs/PRESET_GUIDE.md",
+        "docs/preset-evidence/2026.11/ci/headless-diagnostic.json"
+      ]
+    },
+    {
+      "id": "voice_distinction",
+      "first_agent": 55,
+      "last_agent": 55,
+      "agent_count": 1,
+      "scope": "41 voice pairs / 75 programs",
+      "related_repository_paths": [
+        "src/core/curated",
+        "docs/preset-evidence/2026.11/final/inventory.json",
+        "docs/preset-evidence/2026.11/final/nominal.csv"
+      ]
+    },
+    {
+      "id": "audition_preflight",
+      "first_agent": 56,
+      "last_agent": 56,
+      "agent_count": 1,
+      "scope": "Historical local preflight plus actual current 12-WAV audition verified",
+      "related_repository_paths": [
+        ".github/workflows/build.yml",
+        "src/tools/preset_capture.cpp"
+      ]
+    },
+    {
+      "id": "install_compatibility",
+      "first_agent": 57,
+      "last_agent": 57,
+      "agent_count": 1,
+      "scope": "Install and update source compatibility",
+      "related_repository_paths": [
+        "docs/INSTALL_AND_QUICKSTART.md",
+        "scripts/verify-ci-bundle.py",
+        "scripts/package-ci-artifacts.py"
+      ]
+    },
+    {
+      "id": "independent_behavior_review",
+      "first_agent": 58,
+      "last_agent": 58,
+      "agent_count": 1,
+      "scope": "Independent behavioral evidence review",
+      "related_repository_paths": [
+        "tests/PresetVoicingTests.cpp",
+        "docs/preset-evidence/2026.11/behavior"
+      ]
+    },
+    {
+      "id": "assignment_ledger",
+      "first_agent": 59,
+      "last_agent": 59,
+      "agent_count": 1,
+      "scope": "Review assignment ledger",
+      "related_repository_paths": [
+        "docs/preset-evidence/2026.11/review-assignments.json",
+        "docs/preset-evidence/2026.11/review-assignments.md"
+      ]
+    },
+    {
+      "id": "release_acceptance",
+      "first_agent": 60,
+      "last_agent": 60,
+      "agent_count": 1,
+      "scope": "Original 2026.11 development publication independently accepted with the unresolved Linux failure disclosed",
+      "related_repository_paths": [
+        "docs/PRESET_REVISION_2026_11.md",
+        ".github/workflows/build.yml",
+        "docs/preset-evidence/2026.11/ci/windows-document-review.json",
+        "docs/preset-evidence/2026.11/ci/release-qualification.json"
+      ]
+    }
+  ],
+  "agents": [
+    {
+      "number": 1,
+      "task": "w01_presets_audit",
+      "status": "complete",
+      "group": "discovery",
+      "scope": "Audit the original preset bank and identify revision scope."
+    },
+    {
+      "number": 2,
+      "task": "w01_dsp_audit",
+      "status": "complete",
+      "group": "discovery",
+      "scope": "Audit DSP behavior relevant to credible preset authoring."
+    },
+    {
+      "number": 3,
+      "task": "w01_release_audit",
+      "status": "complete",
+      "group": "discovery",
+      "scope": "Audit release requirements and publication readiness."
+    },
+    {
+      "number": 4,
+      "task": "w01_expression_contract",
+      "status": "complete",
+      "group": "discovery",
+      "scope": "Review velocity, pressure and expression contracts."
+    },
+    {
+      "number": 5,
+      "task": "w01_capture_plan",
+      "status": "complete",
+      "group": "discovery",
+      "scope": "Plan reproducible captures and numeric evidence."
+    },
+    {
+      "number": 6,
+      "task": "w01_recall_audit",
+      "status": "complete",
+      "group": "discovery",
+      "scope": "Audit preset, session and host recall contracts."
+    },
+    {
+      "number": 7,
+      "task": "w02_brass_design",
+      "status": "complete",
+      "group": "family_authoring",
+      "scope": "Author Brass family voicings."
+    },
+    {
+      "number": 8,
+      "task": "w02_strings_design",
+      "status": "complete",
+      "group": "family_authoring",
+      "scope": "Author Strings family voicings."
+    },
+    {
+      "number": 9,
+      "task": "w02_winds_organ_design",
+      "status": "complete",
+      "group": "family_authoring",
+      "scope": "Author Winds and Organ family voicings."
+    },
+    {
+      "number": 10,
+      "task": "w02_keys_plucked_design",
+      "status": "complete",
+      "group": "family_authoring",
+      "scope": "Author Keys and Plucked family voicings."
+    },
+    {
+      "number": 11,
+      "task": "w02_bass_leads_design",
+      "status": "complete",
+      "group": "family_authoring",
+      "scope": "Author Bass and Leads family voicings."
+    },
+    {
+      "number": 12,
+      "task": "w02_pads_poly_design",
+      "status": "complete",
+      "group": "family_authoring",
+      "scope": "Author Pads and Polysynth family voicings."
+    },
+    {
+      "number": 13,
+      "task": "w03_bells_fx_design",
+      "status": "complete",
+      "group": "family_authoring",
+      "scope": "Author Bells and FX family voicings."
+    },
+    {
+      "number": 14,
+      "task": "w03_modern_design",
+      "status": "complete",
+      "group": "family_authoring",
+      "scope": "Author Modern family voicings."
+    },
+    {
+      "number": 15,
+      "task": "w03_voicing_regressions",
+      "status": "complete",
+      "group": "validation_tool_ci_startup",
+      "scope": "Develop voicing behavior regressions."
+    },
+    {
+      "number": 16,
+      "task": "w03_capture_review",
+      "status": "complete",
+      "group": "validation_tool_ci_startup",
+      "scope": "Review the capture tool and its evidence contract."
+    },
+    {
+      "number": 17,
+      "task": "w03_ci_publication",
+      "status": "complete",
+      "group": "validation_tool_ci_startup",
+      "scope": "Prepare CI capture, packaging and publication changes."
+    },
+    {
+      "number": 18,
+      "task": "w03_startup_recall_review",
+      "status": "complete",
+      "group": "validation_tool_ci_startup",
+      "scope": "Review fresh-instance startup and recall behavior."
+    },
+    {
+      "number": 19,
+      "task": "w04_brass_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured Brass articulation and rank roles.",
+      "session_evidence_identifier": "review-w04-brass/review.md"
+    },
+    {
+      "number": 20,
+      "task": "w04_strings_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured Strings register and expression behavior.",
+      "session_evidence_identifier": "review-w04-strings/review.md"
+    },
+    {
+      "number": 21,
+      "task": "w04_winds_organ_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured Winds and Organ roles, register and attacks.",
+      "session_evidence_identifier": "review-w04-winds-organ/REPORT.md"
+    },
+    {
+      "number": 22,
+      "task": "w04_keys_plucked_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured Keys and Plucked strike and decay behavior.",
+      "session_evidence_identifier": "review-w04-keys-plucked/report.md"
+    },
+    {
+      "number": 23,
+      "task": "w04_bass_leads_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured Bass and Leads register and articulation.",
+      "session_evidence_identifier": "review-w04-bass-leads/README.md"
+    },
+    {
+      "number": 24,
+      "task": "w04_pads_poly_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured Pads and Polysynth registration and modulation.",
+      "session_evidence_identifier": "review-w04-pads-poly/REVIEW.md"
+    },
+    {
+      "number": 25,
+      "task": "w05_bells_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured Bells ranks, decay and calibration constraints.",
+      "session_evidence_identifier": "review-w05-bells/review.md"
+    },
+    {
+      "number": 26,
+      "task": "w05_fx_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured FX articulation, gating and calibration constraints.",
+      "session_evidence_identifier": "review-w05-fx/report.md"
+    },
+    {
+      "number": 27,
+      "task": "w05_modern_audio_review",
+      "status": "complete",
+      "group": "family_audio_review",
+      "scope": "Review measured Modern routes, effects and dynamics.",
+      "session_evidence_identifier": "review-w05-modern/REVIEW.md"
+    },
+    {
+      "number": 28,
+      "task": "w05_preset_guide",
+      "status": "complete",
+      "group": "guide_packaging_identity",
+      "scope": "Prepare the preset playing and reproduction guide."
+    },
+    {
+      "number": 29,
+      "task": "w05_bundle_preset_provenance",
+      "status": "complete",
+      "group": "guide_packaging_identity",
+      "scope": "Review preset revision and guide provenance in bundles."
+    },
+    {
+      "number": 30,
+      "task": "w05_identity_contract_review",
+      "status": "complete",
+      "group": "guide_packaging_identity",
+      "scope": "Independently review Legacy, Init, metadata and address preservation.",
+      "session_evidence_identifier": "review-w05-identity/report.md"
+    },
+    {
+      "number": 31,
+      "task": "w06_velocity_screen",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Screen velocity routes and bounded rendered comparisons.",
+      "session_evidence_identifier": "review-w06-velocity/REPORT.md"
+    },
+    {
+      "number": 32,
+      "task": "w06_pressure_screen",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Screen pressure routes and bounded rendered comparisons.",
+      "session_evidence_identifier": "review-w06-pressure/REPORT.md"
+    },
+    {
+      "number": 33,
+      "task": "w06_behavior_gate_review",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Review behavior gates against original, draft and corrected banks.",
+      "session_evidence_identifier": "review-w06-behavior/REPORT.md"
+    },
+    {
+      "number": 34,
+      "task": "w06_capture_portability",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Review capture portability, paths and output behavior.",
+      "session_evidence_identifier": "review-w06-capture-portability/review.md"
+    },
+    {
+      "number": 35,
+      "task": "w06_stereo_mono_review",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Review stereo/mono behavior and the Stereo Delay Pluck correction.",
+      "session_evidence_identifier": "review-w06-stereo/report.md"
+    },
+    {
+      "number": 36,
+      "task": "w06_long_tail_stress",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Check selected slow releases and overlapping chords.",
+      "session_evidence_identifier": "review-w06-long-tails/REPORT.md"
+    },
+    {
+      "number": 37,
+      "task": "w07_low_register_review",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Review selected low-register voicings.",
+      "session_evidence_identifier": "review-w07-low-register/REPORT.md"
+    },
+    {
+      "number": 38,
+      "task": "w07_high_register_review",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Review selected high-register voicings.",
+      "session_evidence_identifier": "review-w07-high-register/REPORT.md"
+    },
+    {
+      "number": 39,
+      "task": "w07_evidence_report",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Prepare the engineering evidence report."
+    },
+    {
+      "number": 40,
+      "task": "w07_pitch_motion_contract",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Review pitch and modulation contracts.",
+      "session_evidence_identifier": "review-w07-pitch-motion/report.md"
+    },
+    {
+      "number": 41,
+      "task": "w07_pure_mode_review",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Review Pure CS-80 mode routes and limits.",
+      "session_evidence_identifier": "review-w07-pure/review.md"
+    },
+    {
+      "number": 42,
+      "task": "w07_performance_scope_review",
+      "status": "complete",
+      "group": "controls_behavior_register_pure_performance",
+      "scope": "Review performance scope and avoid unsupported timing claims.",
+      "session_evidence_identifier": "review-w07-performance/report.md"
+    },
+    {
+      "number": 43,
+      "task": "w08_metadata_precision_review",
+      "status": "complete",
+      "group": "publication_review",
+      "scope": "Review metadata precision and coverage.",
+      "session_evidence_identifier": "review-w08-metadata/REPORT.md"
+    },
+    {
+      "number": 44,
+      "task": "w08_calibration_evidence_review",
+      "status": "complete",
+      "group": "publication_review",
+      "scope": "Review calibration evidence and rebuild provenance.",
+      "session_evidence_identifier": "review-w08-calibration/report.md"
+    },
+    {
+      "number": 45,
+      "task": "w08_browser_startup_scope_review",
+      "status": "complete",
+      "group": "publication_review",
+      "scope": "Review browser scope and fresh-instance startup identity.",
+      "session_evidence_identifier": "review-w08-browser/review.md"
+    },
+    {
+      "number": 46,
+      "task": "w08_final_diff_review",
+      "status": "complete",
+      "group": "publication_review",
+      "scope": "Review the integrated final source diff.",
+      "session_evidence_identifier": "review-w08-final-diff/report.md"
+    },
+    {
+      "number": 47,
+      "task": "w08_workflow_publication_review",
+      "status": "complete",
+      "group": "publication_review",
+      "scope": "Review workflow publication requirements.",
+      "session_evidence_identifier": "review-w08-workflow/review.md"
+    },
+    {
+      "number": 48,
+      "task": "w08_documentation_evidence_review",
+      "status": "complete",
+      "group": "publication_review",
+      "scope": "Review documentation against available evidence.",
+      "session_evidence_identifier": "review-w08-docs/publication-readiness-review.md"
+    },
+    {
+      "number": 49,
+      "task": "w09_windows_ci_verification",
+      "status": "complete",
+      "native_ci_status": "passed_for_d0c3c23_run_45029235535",
+      "group": "native_platform_readiness",
+      "scope": "Review Windows CI readiness, then verify native results when available.",
+      "session_evidence_identifier": "review-w09-windows/readiness.md",
+      "status_note": "Fresh native and all required pluginval gates passed for d0c3c23be68ef048aa56969f1c493c221c1562c5, run 45029235535: 218 CTest passes, zero failures, two skips; 136 voicing and 6,800 recall checks passed. Pixel golden comparisons are report-only, and the Linux-only controller handoff fixture is not registered here. Historical ba3 results remain separately recorded. Follow-up reconciliation separately preserves original Linux SIGSEGV attempt 1 and the externally triggered successful attempt 2; neither root nor agents issued that rerun.",
+      "follow_up_evidence_identifier": "review-w09-windows/replacement-ba3a721/verification.json",
+      "completed_verification_id": "windows_x86_64_native",
+      "historical_native_ci_status": "passed_for_ba3_run_45016741244",
+      "current_run_followup_status": "passed",
+      "current_repository_evidence_path": "docs/preset-evidence/2026.11/ci/final-windows-x86_64.json",
+      "current_completed_verification_id": "current_windows_x86_64_native",
+      "linux_attempt_review_status": "complete_original_failure_preserved_second_execution_passed",
+      "linux_attempt_review_evidence_identifier": "review-w09-linux/final-run-45029235535/attempt-2/attempt-reconciliation.json"
+    },
+    {
+      "number": 50,
+      "task": "w09_macos_arm_ci_verification",
+      "status": "complete",
+      "native_ci_status": "passed_for_d0c3c23_run_45029235535",
+      "group": "native_platform_readiness",
+      "scope": "Review Apple Silicon CI readiness, then verify native results when available.",
+      "session_evidence_identifier": "review-w09-macos-arm/readiness.md",
+      "status_note": "Fresh native and all required pluginval gates passed for d0c3c23be68ef048aa56969f1c493c221c1562c5, run 45029235535: 240 CTest passes, zero failures, two skips; 136 voicing and 6,800 recall checks passed. Pixel golden comparisons are report-only, and the Linux-only controller handoff fixture is not registered here. Historical ba3 results remain separately recorded.",
+      "follow_up_evidence_identifier": "review-w09-macos-arm/replacement-run-45016741244/final-verification.json",
+      "completed_verification_id": "macos_arm64_native",
+      "historical_native_ci_status": "passed_for_ba3_run_45016741244",
+      "current_run_followup_status": "passed",
+      "current_repository_evidence_path": "docs/preset-evidence/2026.11/ci/final-macos-arm64.json",
+      "current_completed_verification_id": "current_macos_arm64_native"
+    },
+    {
+      "number": 51,
+      "task": "w09_macos_intel_ci_verification",
+      "status": "complete",
+      "native_ci_status": "passed_for_d0c3c23_run_45029235535",
+      "group": "native_platform_readiness",
+      "scope": "Review Intel macOS CI readiness, then verify native results when available.",
+      "session_evidence_identifier": "review-w09-macos-intel/pending-report.json",
+      "status_note": "Fresh native and all required pluginval gates passed for d0c3c23be68ef048aa56969f1c493c221c1562c5, run 45029235535: 240 CTest passes, zero failures, two skips; 136 voicing and 6,800 recall checks passed. Pixel golden comparisons are report-only, and the Linux-only controller handoff fixture is not registered here. Historical ba3 results remain separately recorded.",
+      "follow_up_evidence_identifier": "review-w09-macos-intel/replacement-45016741244/final-verification.json",
+      "completed_verification_id": "macos_x86_64_native",
+      "historical_native_ci_status": "passed_for_ba3_run_45016741244",
+      "current_run_followup_status": "passed",
+      "current_repository_evidence_path": "docs/preset-evidence/2026.11/ci/final-macos-x86_64.json",
+      "current_completed_verification_id": "current_macos_x86_64_native"
+    },
+    {
+      "number": 52,
+      "task": "w09_artifact_integrity_protocol",
+      "status": "complete",
+      "group": "artifact_integrity_protocol",
+      "scope": "Prepare and check the downloaded-artifact integrity review driver, then verify actual platform bundles.",
+      "session_evidence_identifier": "review-w09-artifact-integrity/README.md",
+      "status_note": "The coordinator completed the actual v2 --require-all verification across all four current install archives: 114 inventory entries and ten binary headers. Complete Linux/Windows VST3 validator-input versus install identities also passed. Agent 52 preparation review remains read-only; these artifact results do not diagnose the original validator SIGSEGV.",
+      "publication_followup_status": "artifact_checks_complete_original_publication_accepted_coordinator_finalization_separate",
+      "current_run_followup_status": "aggregate_and_payload_identity_passed_by_coordinator",
+      "current_verified_targets": [
+        "linux-x86_64",
+        "macos-arm64",
+        "macos-x86_64",
+        "windows-x86_64"
+      ],
+      "current_remaining_targets": [],
+      "aggregate_require_all_status": "passed",
+      "preparation_review_identifier": "review-w09-artifact-integrity/final-preparation-review.json",
+      "current_completed_verification_ids": [
+        "current_all_four_install_archives",
+        "current_validator_payload_identity"
+      ],
+      "historical_verified_targets": [
+        "macos-arm64",
+        "windows-x86_64",
+        "macos-x86_64"
+      ],
+      "historical_remaining_targets": [
+        "linux-x86_64"
+      ],
+      "historical_completed_verification_ids": [
+        "macos_arm64_install_bundle",
+        "windows_x86_64_install_bundle",
+        "macos_x86_64_install_bundle"
+      ],
+      "historical_follow_up_evidence_identifiers": [
+        "review-w09-artifact-integrity/actual-run-45016741244-arm/report.json",
+        "review-w09-artifact-integrity/actual-run-45016741244-windows-v2/report.json",
+        "review-w09-artifact-integrity/actual-run-45016741244-intel/report.json"
+      ],
+      "historical_publication_followup_status": "partially_verified"
+    },
+    {
+      "number": 53,
+      "task": "w09_download_link_review",
+      "status": "complete",
+      "group": "download_route",
+      "scope": "Review direct download routing and the publication protocol.",
+      "session_evidence_identifier": "review-w09-download-links/PROTOCOL.md",
+      "status_note": "All four actual install ZIPs and the actual audition passed coordinator full public GET size/digest checks. Agent 53 finalizer/copy review is resolved, including factory reselect/saved-state guidance, Pressure Lead operation and qualified 67/63-sample latency wording. Online guide corrections do not alter immutable d0c3c23 archive bytes. The README download section is finalized with a prominent Linux caveat. Final independent acceptance is complete for the accurately caveated original development downloads; coordinator publication finalization is separate.",
+      "publication_followup_status": "download_and_copy_checks_complete_original_publication_accepted_coordinator_finalization_separate",
+      "current_run_followup_status": "all_five_downloads_passed_copy_review_resolved",
+      "current_completed_verification_id": "current_all_install_and_audition_public_downloads",
+      "current_follow_up_evidence_identifier": "ci-run-45029235535/download-links.json",
+      "publication_copy_review_status": "resolved",
+      "publication_copy_review_evidence_identifier": "review-w09-download-links/final-publication-review-d0c3c23.md",
+      "historical_publication_followup_status": "partially_verified",
+      "historical_verified_targets": [
+        "macos-arm64",
+        "windows-x86_64",
+        "macos-x86_64"
+      ],
+      "historical_remaining_targets": [
+        "linux-x86_64",
+        "published-audition"
+      ],
+      "historical_follow_up_evidence_identifier": "ci-run-45016741244/download-links.json",
+      "historical_completed_verification_id": "three_platform_download_routes",
+      "current_verified_targets": [
+        "linux-x86_64",
+        "macos-arm64",
+        "macos-x86_64",
+        "windows-x86_64",
+        "published-audition"
+      ],
+      "current_remaining_targets": [],
+      "current_follow_up_evidence_identifiers": [
+        "ci-run-45029235535/download-links.json",
+        "ci-run-45029235535/audition-download-link.json"
+      ]
+    },
+    {
+      "number": 54,
+      "task": "w09_controller_host_contract",
+      "status": "complete",
+      "group": "controller_host_contract",
+      "scope": "Review controller-to-preset contracts and the KAS Scan Timing caveat; diagnose the Linux controller handoff fixture failure.",
+      "session_evidence_identifier": "review-w09-controller/REPORT.md",
+      "status_note": "The initial controller review completed. Agent 54 later isolated unrelated pressure SUB pitch modulation in the bend-comparison fixture: the unchanged fixture and re-enabled negative control each failed 16 of 376 checks; neutralizing only that pitch route passed all 376 local checks. Assertions and settling frames remained unchanged, with no production DSP edit. Agent 60 accepted the minimal repair, committed in d0c3c23; the current native Linux job now passes all 376 controller checks. Separately, the coordinator launched an isolated diagnostic branch for the unresolved current Linux validator SIGSEGV. Agent 54 verified both completed same-seed instrumented runs: one GDB and one fault-trace execution printed SUCCESS and exited zero without fault frames. These are two nonreproductions; the original SIGSEGV remains unexplained, with no crash ownership or production fix established.",
+      "follow_up_status": "fixture_repair_passed_current_native_ci",
+      "follow_up_evidence_identifiers": [
+        "review-w09-controller/handoff/REPORT.md",
+        "review-w09-controller/handoff/causal-evidence.json"
+      ],
+      "nested_review_task": "/root/w09_controller_host_contract/controller_extension_contract",
+      "diagnostic_followup_status": "complete_two_instrumented_nonreproductions_original_crash_unexplained",
+      "current_completed_verification_id": "current_linux_x86_64_native",
+      "completed_diagnostic_id": "current_linux_same_seed_instrumented_diagnostic",
+      "diagnostic_evidence_identifier": "review-w09-controller/d0c3-headless/actual-run-45041640467/RESULTS.json",
+      "diagnostic_repository_evidence_path": "docs/preset-evidence/2026.11/ci/headless-diagnostic.json"
+    },
+    {
+      "number": 55,
+      "task": "w10_voice_distinction_review",
+      "status": "complete",
+      "group": "voice_distinction",
+      "scope": "Review active synthesis distinctions in 41 pairs covering 75 unique programs.",
+      "session_evidence_identifier": "review-w10-distinction/README.md",
+      "status_note": "No concrete defect found in the 41 reviewed pairs. Existing captures and active source routes support this bounded result; no new rendering or perceptual-distance study was performed."
+    },
+    {
+      "number": 56,
+      "task": "w10_audition_workflow_preflight",
+      "status": "complete",
+      "group": "audition_preflight",
+      "scope": "Preflight the exact audition workflow script locally: 12 WAVs, 48 seconds.",
+      "session_evidence_identifier": "review-w10-audition/RESULTS.md",
+      "status_note": "Agent 56 verified the actual current GitHub Actions audition artifact: capture complete, 12 WAVs/48 seconds, 301-program inventory, 18 checksum entries, decoded audio/CSV agreement and nonsilent Pressure Lead at pressure 0.65. No audio was regenerated and no subjective listening claim is made.",
+      "current_run_followup_status": "actual_artifact_verified",
+      "current_preparation_evidence_identifier": "review-w10-audition/final-run-45029235535/preparation.json",
+      "actual_current_artifact_verified": true,
+      "actual_verification_evidence_identifier": "review-w10-audition/final-run-45029235535/verification.json",
+      "current_completed_verification_id": "current_published_audition"
+    },
+    {
+      "number": 57,
+      "task": "w10_install_bundle_compatibility",
+      "status": "complete",
+      "group": "install_compatibility",
+      "scope": "Review install/update source compatibility and serialized-state behavior.",
+      "session_evidence_identifier": "review-w10-install/review.md",
+      "status_note": "Coordinator confirmed final completion. Source review found no concrete install/update blocker; it did not execute an installation or qualify a DAW."
+    },
+    {
+      "number": 58,
+      "task": "w10_behavior_evidence_independent_review",
+      "status": "complete",
+      "group": "independent_behavior_review",
+      "scope": "Independently review behavioral evidence and its source bindings.",
+      "status_note": "Independent source/artifact review found no blocking defect in the bounded behavior claims. The 136 checks comprise 52 behavior assertions, two reconstruction controls and 82 policy/finite/peak checks across 30 renders of 20 programs. No new build, render or test execution was performed.",
+      "session_evidence_identifier": "review-w10-behavior-evidence/REPORT.md"
+    },
+    {
+      "number": 59,
+      "task": "w10_review_coverage_ledger",
+      "status": "complete",
+      "group": "assignment_ledger",
+      "scope": "Document the actual agent roster, assignment coverage and pending gates.",
+      "status_note": "The final ledger preserves 60 primary plus one nested reviewer, historical failures, all original deliverable passes, the failed original validator invocation, separately observed external attempt 2, and two instrumented nonreproductions. Original development-publication acceptance is complete with the Linux failure unresolved. Newer 2026.11.1 integration is separately pending; only the ledger files were edited."
+    },
+    {
+      "number": 60,
+      "task": "w10_final_release_acceptance",
+      "status": "complete",
+      "group": "release_acceptance",
+      "scope": "Independently accept accurately disclosed original 2026.11 development-download publication while preserving the unresolved Linux failure and excluding newer-version qualification.",
+      "status_note": "Final report accepts original d0c3c23 / run 45029235535 development publication with the unresolved Linux failure disclosed and no blocking discrepancy in that scope. It records 83/83 retained hashes and 206/206 read-only joins. The failed original invocation, external successful second execution and two diagnostic nonreproductions remain separate; no clean first pass, cause, ownership or production fix is established. Newer 2026.11.1 integration and coordinator publication commit/push are excluded.",
+      "publication_followup_status": "accepted_original_development_publication_coordinator_finalization_separate",
+      "session_evidence_identifier": "review-w10-acceptance/FINAL-ACCEPTANCE-2026_11.json",
+      "final_acceptance_status": "ACCEPTED_FOR_ORIGINAL_2026_11_DEVELOPMENT_PUBLICATION_WITH_RECORDED_UNRESOLVED_LINUX_FAILURE",
+      "limited_follow_up_status": "accepted_narrow_windows_document_rule",
+      "limited_follow_up_repository_evidence": "docs/preset-evidence/2026.11/ci/windows-document-review.json",
+      "completed_verification_id": "windows_document_rule_review",
+      "fixture_repair_review_status": "accepted_for_next_ci",
+      "fixture_repair_review_evidence_identifier": "review-w10-acceptance/linux-fixture-repairs-review.json",
+      "historical_initial_review_evidence_identifier": "review-w10-acceptance/PENDING-GATES.md",
+      "session_report_identifier": "review-w10-acceptance/FINAL-ACCEPTANCE-2026_11.md",
+      "current_completed_verification_id": "original_2026_11_final_publication_acceptance"
+    }
+  ],
+  "updated_at_utc": "2026-11-22T16:47:49Z",
+  "completed_verification": [
+    {
+      "id": "macos_arm64_native",
+      "agents": [
+        50
+      ],
+      "status": "passed",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "job_id": 137190570266,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45016741244/job/137190570266",
+      "completed_at": "2026-11-22T11:46:42Z",
+      "platform_architecture": "arm64",
+      "ctest": {
+        "registered": 242,
+        "passed": 240,
+        "failed": 0,
+        "skipped": 2,
+        "skipped_names": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "pluginval": {
+        "version": "1.0.4",
+        "strictness": 10,
+        "vst3": "passed",
+        "au_headless": "passed",
+        "au_gui": "passed"
+      },
+      "packaging": "passed",
+      "session_evidence_identifier": "review-w09-macos-arm/replacement-run-45016741244/final-verification.json",
+      "repository_evidence_path": "docs/preset-evidence/2026.11/ci/macos-arm64.json",
+      "pixel_golden_comparisons": "report_only"
+    },
+    {
+      "id": "macos_arm64_install_bundle",
+      "agents": [
+        52
+      ],
+      "status": "passed",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "artifact_id": 14753021863,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "target": "macos-arm64",
+      "outer_sha256": "10d6965aeb417ebb16dca5f6bb1b0861556c67e87906239bc0f740a80d656c47",
+      "trusted_outer_digest_verified": true,
+      "archive_sha256": "b9c4b605af42123b544c7753133b093d1e8cce43338b29e3fed0fb06fa044965",
+      "manifest_file_count": 37,
+      "binary_headers_verified": 3,
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "inventory_and_checksums": "passed",
+      "source_run_revision_and_documents": "passed",
+      "all_four_targets_verified": false,
+      "session_evidence_identifier": "review-w09-artifact-integrity/actual-run-45016741244-arm/report.json",
+      "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification."
+    },
+    {
+      "id": "windows_x86_64_native",
+      "agents": [
+        49
+      ],
+      "status": "passed",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "native_job_id": 137190570164,
+      "native_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45016741244/job/137190570164",
+      "pluginval_job_id": 137201111173,
+      "pluginval_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45016741244/job/137201111173",
+      "platform_architecture": "x86_64",
+      "ctest": {
+        "registered": 220,
+        "passed": 218,
+        "failed": 0,
+        "skipped": 2,
+        "skipped_names": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ],
+        "additional_python_subtest_skips": 10
+      },
+      "capture_cli": {
+        "listed": 9,
+        "passed": 8,
+        "skipped": 1,
+        "skip_reason": "POSIX file-size-limit failure injection"
+      },
+      "voicing_checks_passed": 136,
+      "recall_checks": 6800,
+      "recall_failures": 0,
+      "pluginval": {
+        "version": "1.0.4",
+        "strictness": 10,
+        "headless_randomized": "passed",
+        "headless_fixed_state_regression": "passed",
+        "gui_tests": "not run by these Windows gates",
+        "external_vst3_validator": "not configured"
+      },
+      "packaging": "passed",
+      "pixel_golden_comparisons": "report_only",
+      "session_evidence_identifier": "review-w09-windows/replacement-ba3a721/verification.json",
+      "repository_evidence_path": "docs/preset-evidence/2026.11/ci/windows-x86_64.json"
+    },
+    {
+      "id": "macos_x86_64_native",
+      "agents": [
+        51
+      ],
+      "status": "passed",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "job_id": 137190570128,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45016741244/job/137190570128",
+      "completed_at": "2026-11-22T12:06:02Z",
+      "platform_architecture": "x86_64",
+      "ctest": {
+        "registered": 242,
+        "passed": 240,
+        "failed": 0,
+        "skipped": 2,
+        "skipped_names": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ],
+        "additional_python_subtest_skips": 5
+      },
+      "capture_cli": {
+        "listed": 9,
+        "passed": 9,
+        "skipped": 0
+      },
+      "voicing_checks_passed": 136,
+      "recall_checks": 6800,
+      "recall_failures": 0,
+      "pluginval": {
+        "version": "1.0.4",
+        "strictness": 10,
+        "vst3_headless": "passed",
+        "au_headless": "passed",
+        "au_gui": "passed",
+        "retained_warnings": [
+          "AU and AU GUI report current program -1; both validators returned SUCCESS."
+        ]
+      },
+      "packaging": "passed",
+      "pixel_golden_comparisons": "report_only",
+      "session_evidence_identifier": "review-w09-macos-intel/replacement-45016741244/final-verification.json",
+      "repository_evidence_path": "docs/preset-evidence/2026.11/ci/macos-x86_64.json"
+    },
+    {
+      "id": "windows_x86_64_install_bundle",
+      "agents": [
+        52
+      ],
+      "status": "passed",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "artifact_id": 14753705844,
+      "artifact_name": "cs80-windows-install-bundle",
+      "target": "windows-x86_64",
+      "outer_sha256": "6362a4b2c73ec6caf97fa240834f5e4a4a4d44532704e838acfa33c34dd71f6e",
+      "trusted_outer_digest_verified": true,
+      "archive_sha256": "9323499816891ffcb31723d01267750da014be51d93726d578864a113bdf7a76",
+      "manifest_file_count": 20,
+      "binary_headers_verified": 2,
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "inventory_and_checksums": "passed",
+      "source_run_revision_and_documents": "passed",
+      "all_four_targets_verified": false,
+      "session_evidence_identifier": "review-w09-artifact-integrity/actual-run-45016741244-windows-v2/report.json",
+      "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+      "document_comparison": {
+        "copied_windows_markdown_policy": "Only exact source bytes or the exact LF-to-CRLF transform of the three copied Markdown documents is accepted. No arbitrary whitespace/content normalization.",
+        "observed_transform": "LF_to_CRLF",
+        "copied_documents": [
+          {
+            "path": "PRESET_GUIDE.md",
+            "source_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "archived_sha256": "3c6df6dddeb9674233c4b0110dc32641f2cdb053b4d38b6564301a66f645a755",
+            "exact_source_bytes": false,
+            "normalized_source_content_equal": true,
+            "newline_transform": "LF_to_CRLF"
+          },
+          {
+            "path": "INSTALL_AND_QUICKSTART.md",
+            "source_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "archived_sha256": "221133179e789986bccf566ab0bebfe2c61b5d57cf561bab473e35f6a25f5912",
+            "exact_source_bytes": false,
+            "normalized_source_content_equal": true,
+            "newline_transform": "LF_to_CRLF"
+          },
+          {
+            "path": "DISTRIBUTION_STATUS.md",
+            "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "archived_sha256": "d1789fae0bd8dd8bd950ccc5f83a5ec88f1a2bae1559b53d2630b6dfb71ed31d",
+            "exact_source_bytes": false,
+            "normalized_source_content_equal": true,
+            "newline_transform": "LF_to_CRLF"
+          }
+        ],
+        "source_txt": "exact expected bytes",
+        "original_byte_exact_failure_preserved": true,
+        "independent_review_by": 60,
+        "independent_review_repository_path": "docs/preset-evidence/2026.11/ci/windows-document-review.json"
+      }
+    },
+    {
+      "id": "macos_x86_64_install_bundle",
+      "agents": [
+        52
+      ],
+      "status": "passed",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "artifact_id": 14753179065,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "target": "macos-x86_64",
+      "outer_sha256": "90fba143ff9d8edb6527b1fec412b33430d71a9f708daeb44ab9a004e3c5628c",
+      "trusted_outer_digest_verified": true,
+      "archive_sha256": "76933987b5ec35cca4cae7eb8bd3ff0b9c3771fc03d303e88f3cba3109834eb5",
+      "manifest_file_count": 37,
+      "binary_headers_verified": 3,
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "inventory_and_checksums": "passed",
+      "source_run_revision_and_documents": "passed",
+      "all_four_targets_verified": false,
+      "session_evidence_identifier": "review-w09-artifact-integrity/actual-run-45016741244-intel/report.json",
+      "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+      "document_comparison": "All copied documents and SOURCE.txt match exact source/expected bytes."
+    },
+    {
+      "id": "three_platform_download_routes",
+      "agents": [],
+      "performed_by": "coordinator",
+      "related_assignment": 53,
+      "status": "passed_for_three_targets",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "links": [
+        {
+          "target": "macos-arm64",
+          "artifact_id": 14753021863,
+          "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14753021863.zip",
+          "method": "GET",
+          "request_range": "bytes=0-3",
+          "status": 206,
+          "zip_magic_hex": "504b0304",
+          "content_type": "application/zip"
+        },
+        {
+          "target": "windows-x86_64",
+          "artifact_id": 14753705844,
+          "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14753705844.zip",
+          "method": "GET",
+          "request_range": "bytes=0-3",
+          "status": 206,
+          "zip_magic_hex": "504b0304",
+          "content_type": "application/zip",
+          "checked_at": "2026-11-22T12:03:24.519219+00:00"
+        },
+        {
+          "target": "macos-x86_64",
+          "artifact_id": 14753179065,
+          "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14753179065.zip",
+          "method": "GET",
+          "request_range": "bytes=0-3",
+          "status": 206,
+          "zip_magic_hex": "504b0304",
+          "content_type": "application/zip",
+          "checked_at": "2026-11-22T12:07:26.662243+00:00"
+        }
+      ],
+      "session_evidence_identifier": "ci-run-45016741244/download-links.json",
+      "qualification": "A ranged GET confirms the recorded route returned ZIP bytes; complete archive integrity is established separately by the three bundle records. Linux and published-audition routes remain pending."
+    },
+    {
+      "id": "windows_document_rule_review",
+      "agents": [
+        60
+      ],
+      "status": "accepted_narrow_policy",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "repository_evidence_path": "docs/preset-evidence/2026.11/ci/windows-document-review.json",
+      "copied_document_policy": "Exact source bytes or exact LF-to-CRLF transformation of three copied Windows Markdown documents only; generated SOURCE.txt remains byte-exact.",
+      "original_failure_preserved": true,
+      "same_archive_and_manifest_hashes": true,
+      "final_release_acceptance_at_review_time": "pending",
+      "later_final_acceptance_verification_id": "original_2026_11_final_publication_acceptance"
+    },
+    {
+      "id": "linux_fixture_repairs_review",
+      "agents": [
+        60
+      ],
+      "status": "accepted_for_next_ci_only",
+      "committed_source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "qualification_ci_run_id": 45029235535,
+      "session_evidence_identifier": "review-w10-acceptance/linux-fixture-repairs-review.json",
+      "controller_assertions_preserved": 376,
+      "controller_settling_frames_preserved": 4096,
+      "panel_thresholds_and_reference_images_preserved": true,
+      "final_release_acceptance_at_review_time": "pending",
+      "later_final_acceptance_verification_id": "original_2026_11_final_publication_acceptance"
+    },
+    {
+      "id": "current_windows_x86_64_native",
+      "agents": [
+        49
+      ],
+      "status": "passed",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "job_id": 137228906213,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535/job/137228906213",
+      "platform_architecture": "x86_64",
+      "ctest": {
+        "registered": 220,
+        "passed": 218,
+        "failed": 0,
+        "skipped": 2,
+        "skipped_names": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "capture_cli": {
+        "listed": 9,
+        "passed": 8,
+        "skipped": 1,
+        "skip_reason": "POSIX file-size-limit failure injection"
+      },
+      "voicing_checks_passed": 136,
+      "recall_checks": 6800,
+      "recall_failures": 0,
+      "pluginval": {
+        "version": "1.0.4",
+        "strictness": 10,
+        "randomized_headless": "passed",
+        "fixed_state_regression_headless": "passed",
+        "gui": "not included in these Windows gates"
+      },
+      "packaging": "passed",
+      "pixel_golden_comparisons": "report_only",
+      "controller_handoff_fixture": "Linux-only; not registered on this platform",
+      "repository_evidence_path": "docs/preset-evidence/2026.11/ci/final-windows-x86_64.json",
+      "validator_job_id": 137236123878,
+      "qualification_scope": "Current source/run; individual platform result, not complete release acceptance."
+    },
+    {
+      "id": "current_windows_x86_64_install_bundle",
+      "agents": [],
+      "performed_by": "coordinator",
+      "related_assignment": 52,
+      "status": "passed_for_individual_target",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "artifact_id": 14758250272,
+      "artifact_name": "cs80-windows-install-bundle",
+      "target": "windows-x86_64",
+      "outer_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+      "trusted_outer_digest_verified": true,
+      "archive_sha256": "e297aefad63533a5269d4e48e863114e99c09010d847c8333289de718902a796",
+      "manifest_file_count": 20,
+      "binary_headers_verified": 2,
+      "inventory_checksums_source_run_revision": "passed",
+      "copied_document_transforms": {
+        "PRESET_GUIDE.md": "LF_to_CRLF",
+        "INSTALL_AND_QUICKSTART.md": "LF_to_CRLF",
+        "DISTRIBUTION_STATUS.md": "LF_to_CRLF"
+      },
+      "source_txt_exact_expected_bytes": true,
+      "driver_version": "2.0",
+      "all_four_targets_verified": false,
+      "session_evidence_identifier": "review-w09-artifact-integrity/final-run-45029235535-windows/report.json",
+      "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+      "qualification_scope": "Current source/run; individual platform result, not complete release acceptance."
+    },
+    {
+      "id": "current_macos_arm64_native",
+      "agents": [
+        50
+      ],
+      "status": "passed",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "job_id": 137228905982,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535/job/137228905982",
+      "platform_architecture": "arm64",
+      "ctest": {
+        "registered": 242,
+        "passed": 240,
+        "failed": 0,
+        "skipped": 2,
+        "skipped_names": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "capture_cli": {
+        "listed": 9,
+        "passed": 9,
+        "skipped": 0
+      },
+      "voicing_checks_passed": 136,
+      "recall_checks": 6800,
+      "recall_failures": 0,
+      "pluginval": {
+        "version": "1.0.4",
+        "strictness": 10,
+        "vst3_headless": "passed",
+        "au_headless": "passed",
+        "au_gui": "passed"
+      },
+      "packaging": "passed",
+      "pixel_golden_comparisons": "report_only",
+      "controller_handoff_fixture": "Linux-only; not registered on this platform",
+      "repository_evidence_path": "docs/preset-evidence/2026.11/ci/final-macos-arm64.json",
+      "qualification_scope": "Current source/run; individual platform result, not complete release acceptance."
+    },
+    {
+      "id": "current_macos_arm64_install_bundle",
+      "agents": [],
+      "performed_by": "coordinator",
+      "related_assignment": 52,
+      "status": "passed_for_individual_target",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "artifact_id": 14758286408,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "target": "macos-arm64",
+      "outer_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+      "trusted_outer_digest_verified": true,
+      "archive_sha256": "0dced8f1c406e92df31869bd1310af6ebe462ca8e15f45086dbba27d458f93e4",
+      "manifest_file_count": 37,
+      "binary_headers_verified": 3,
+      "inventory_checksums_source_run_revision": "passed",
+      "copied_document_transforms": {
+        "PRESET_GUIDE.md": "none",
+        "INSTALL_AND_QUICKSTART.md": "none",
+        "DISTRIBUTION_STATUS.md": "none"
+      },
+      "source_txt_exact_expected_bytes": true,
+      "driver_version": "2.0",
+      "all_four_targets_verified": false,
+      "session_evidence_identifier": "review-w09-artifact-integrity/final-run-45029235535-arm/report.json",
+      "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+      "qualification_scope": "Current source/run; individual platform result, not complete release acceptance."
+    },
+    {
+      "id": "current_macos_x86_64_native",
+      "agents": [
+        51
+      ],
+      "status": "passed",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "job_id": 137228906289,
+      "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535/job/137228906289",
+      "platform_architecture": "x86_64",
+      "ctest": {
+        "registered": 242,
+        "passed": 240,
+        "failed": 0,
+        "skipped": 2,
+        "skipped_names": [
+          "cs80_filter_batch_cap_tests",
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "capture_cli": {
+        "listed": 9,
+        "passed": 9,
+        "skipped": 0
+      },
+      "voicing_checks_passed": 136,
+      "recall_checks": 6800,
+      "recall_failures": 0,
+      "pluginval": {
+        "version": "1.0.4",
+        "strictness": 10,
+        "vst3_headless": "passed",
+        "au_headless": "passed",
+        "au_gui": "passed"
+      },
+      "packaging": "passed",
+      "pixel_golden_comparisons": "report_only",
+      "controller_handoff_fixture": "Linux-only; not registered on this platform",
+      "repository_evidence_path": "docs/preset-evidence/2026.11/ci/final-macos-x86_64.json",
+      "qualification_scope": "Current source/run; individual platform result, not complete release acceptance."
+    },
+    {
+      "id": "current_macos_x86_64_install_bundle",
+      "agents": [],
+      "performed_by": "coordinator",
+      "related_assignment": 52,
+      "status": "passed_for_individual_target",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "artifact_id": 14758362460,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "target": "macos-x86_64",
+      "outer_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+      "trusted_outer_digest_verified": true,
+      "archive_sha256": "01860844dc91e69c3fad86dc9a569ebbc2a6a53c27c0856bbdb4c60cc4868d2d",
+      "manifest_file_count": 37,
+      "binary_headers_verified": 3,
+      "inventory_checksums_source_run_revision": "passed",
+      "copied_document_transforms": {
+        "PRESET_GUIDE.md": "none",
+        "INSTALL_AND_QUICKSTART.md": "none",
+        "DISTRIBUTION_STATUS.md": "none"
+      },
+      "source_txt_exact_expected_bytes": true,
+      "driver_version": "2.0",
+      "all_four_targets_verified": false,
+      "session_evidence_identifier": "review-w09-artifact-integrity/final-run-45029235535-intel/report.json",
+      "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+      "qualification_scope": "Current source/run; individual platform result, not complete release acceptance."
+    },
+    {
+      "id": "current_three_platform_public_full_downloads",
+      "agents": [],
+      "performed_by": "coordinator",
+      "related_assignment": 53,
+      "status": "passed_for_three_install_targets",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "method": "full unauthenticated GET",
+      "downloads": [
+        {
+          "target": "windows-x86_64",
+          "artifact_id": 14758250272,
+          "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758250272.zip",
+          "http_status": 200,
+          "bytes": 6259679,
+          "expected_bytes": 6259679,
+          "sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+          "expected_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+          "digest_matches_api": true,
+          "checked_at_utc": "2026-11-22T14:13:59.419934+00:00"
+        },
+        {
+          "target": "macos-arm64",
+          "artifact_id": 14758286408,
+          "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758286408.zip",
+          "http_status": 200,
+          "bytes": 14898681,
+          "expected_bytes": 14898681,
+          "sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+          "expected_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+          "digest_matches_api": true,
+          "checked_at_utc": "2026-11-22T14:18:43.932220+00:00"
+        },
+        {
+          "target": "macos-x86_64",
+          "artifact_id": 14758362460,
+          "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758362460.zip",
+          "http_status": 200,
+          "bytes": 16055847,
+          "expected_bytes": 16055847,
+          "sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+          "expected_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+          "digest_matches_api": true,
+          "checked_at_utc": "2026-11-22T14:25:03.383496+00:00"
+        }
+      ],
+      "session_evidence_identifier": "ci-run-45029235535/download-links.json",
+      "qualification": "Three complete public ZIP downloads and their API size/digest checks. Linux and audition downloads remain pending; full bundle checks are recorded separately."
+    },
+    {
+      "id": "current_linux_x86_64_native",
+      "agents": [],
+      "related_assignment": 49,
+      "status": "native_pass_only",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "run_attempt": 1,
+      "job_id": 137228906281,
+      "ctest": {
+        "registered": 578,
+        "passed": 577,
+        "failed": 0,
+        "skipped": 1,
+        "skipped_names": [
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "controller_handoff_checks": 376,
+      "controller_handoff_failures": 0,
+      "strict_panel_checks": 4,
+      "strict_panel_failures": 0,
+      "capture_cli_passed": 9,
+      "voicing_checks_passed": 136,
+      "recall_checks": 6800,
+      "recall_failures": 0,
+      "session_evidence_identifier": "review-w09-linux/final-run-45029235535/verification.json",
+      "qualification": "Native CTest success only. Original Linux validator attempt 1 failed; attempt 2 is separately recorded."
+    },
+    {
+      "id": "current_all_four_install_archives",
+      "agents": [],
+      "performed_by": "coordinator",
+      "related_assignment": 52,
+      "status": "passed",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "driver_version": "2.0",
+      "require_all": true,
+      "all_four_targets_verified": true,
+      "inventory_entries": 114,
+      "verified_binary_headers": 10,
+      "targets": [
+        {
+          "target": "linux-x86_64",
+          "inventory_entries": 20,
+          "binary_headers": 2,
+          "outer_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+          "archive_sha256": "f8ae92c84286cd6a152eb62667884304121311adab76353e5c79ac7a20dccdf9",
+          "status": "PASS"
+        },
+        {
+          "target": "macos-arm64",
+          "inventory_entries": 37,
+          "binary_headers": 3,
+          "outer_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+          "archive_sha256": "0dced8f1c406e92df31869bd1310af6ebe462ca8e15f45086dbba27d458f93e4",
+          "status": "PASS"
+        },
+        {
+          "target": "macos-x86_64",
+          "inventory_entries": 37,
+          "binary_headers": 3,
+          "outer_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+          "archive_sha256": "01860844dc91e69c3fad86dc9a569ebbc2a6a53c27c0856bbdb4c60cc4868d2d",
+          "status": "PASS"
+        },
+        {
+          "target": "windows-x86_64",
+          "inventory_entries": 20,
+          "binary_headers": 2,
+          "outer_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+          "archive_sha256": "e297aefad63533a5269d4e48e863114e99c09010d847c8333289de718902a796",
+          "status": "PASS"
+        }
+      ],
+      "session_evidence_identifier": "review-w09-artifact-integrity/final-run-45029235535-all/report.json",
+      "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification."
+    },
+    {
+      "id": "current_validator_payload_identity",
+      "agents": [],
+      "performed_by": "coordinator",
+      "related_assignment": 52,
+      "status": "passed",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "targets": [
+        {
+          "target": "linux-x86_64",
+          "input_artifact_id": 14761700962,
+          "complete_vst3_file_inventory_identical": true,
+          "regular_files": 2
+        },
+        {
+          "target": "windows-x86_64",
+          "input_artifact_id": 14758085624,
+          "complete_vst3_file_inventory_identical": true,
+          "regular_files": 2
+        }
+      ],
+      "session_evidence_identifier": "ci-run-45029235535/final-validator-payload-identity.json",
+      "qualification": "Exact complete VST3 regular-file contents in separate validator input archives and installation inventories. Validator download identity and runtime SUCCESS must be established separately from native reports. This comparison does not inspect validator outcomes or execute binaries."
+    },
+    {
+      "id": "current_published_audition",
+      "agents": [
+        56
+      ],
+      "status": "passed_actual_artifact",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "run_attempt": 1,
+      "artifact_id": 14761870353,
+      "artifact_sha256": "6672a89b5b4d58243edb3ce202b1d91b9485aa20712d6f49492579277af393c7",
+      "capture_status": "complete",
+      "wav_count": 12,
+      "total_audio_seconds": 48.0,
+      "inventory_program_count": 301,
+      "checksum_entries_verified": 18,
+      "nonfinite_or_over_full_scale_samples": 0,
+      "pressure_lead_nonsilent_at_pressure_0_65": true,
+      "raw_audio_matches_csv": true,
+      "audio_regenerated": false,
+      "session_evidence_identifier": "review-w10-audition/final-run-45029235535/verification.json",
+      "qualification": "Actual published numerical audio verification, not a subjective listening-panel or hardware-equivalence claim."
+    },
+    {
+      "id": "current_all_install_and_audition_public_downloads",
+      "agents": [],
+      "performed_by": "coordinator",
+      "related_assignment": 53,
+      "status": "passed",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "method": "full unauthenticated GET",
+      "downloads": [
+        {
+          "target": "windows-x86_64",
+          "artifact_id": 14758250272,
+          "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758250272.zip",
+          "http_status": 200,
+          "bytes": 6259679,
+          "expected_bytes": 6259679,
+          "sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+          "expected_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+          "digest_matches_api": true
+        },
+        {
+          "target": "macos-arm64",
+          "artifact_id": 14758286408,
+          "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758286408.zip",
+          "http_status": 200,
+          "bytes": 14898681,
+          "expected_bytes": 14898681,
+          "sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+          "expected_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+          "digest_matches_api": true
+        },
+        {
+          "target": "macos-x86_64",
+          "artifact_id": 14758362460,
+          "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14758362460.zip",
+          "http_status": 200,
+          "bytes": 16055847,
+          "expected_bytes": 16055847,
+          "sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+          "expected_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+          "digest_matches_api": true
+        },
+        {
+          "target": "linux-x86_64",
+          "artifact_id": 14761556554,
+          "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761556554.zip",
+          "http_status": 200,
+          "bytes": 13220309,
+          "expected_bytes": 13220309,
+          "sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+          "expected_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+          "digest_matches_api": true
+        },
+        {
+          "target": "audition",
+          "artifact_id": 14761870353,
+          "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14761870353.zip",
+          "http_status": 200,
+          "bytes": 16802082,
+          "expected_bytes": 16802082,
+          "sha256": "6672a89b5b4d58243edb3ce202b1d91b9485aa20712d6f49492579277af393c7",
+          "expected_sha256": "6672a89b5b4d58243edb3ce202b1d91b9485aa20712d6f49492579277af393c7",
+          "digest_matches_api": true
+        }
+      ],
+      "session_evidence_identifiers": [
+        "ci-run-45029235535/download-links.json",
+        "ci-run-45029235535/audition-download-link.json"
+      ],
+      "qualification": "All four install ZIPs and actual audition returned complete HTTP 200 responses with expected API size/digest; does not resolve the validator crash."
+    },
+    {
+      "id": "linux_validator_attempt2_execution",
+      "agents": [
+        49
+      ],
+      "status": "passed_execution_original_failure_unresolved",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "run_attempt": 2,
+      "job_id": 137263915334,
+      "input_artifact_id": 14761700962,
+      "strictness": 10,
+      "gates": [
+        {
+          "name": "headless",
+          "seed": "0x50a3104",
+          "raw_returncode": 0,
+          "status": "passed"
+        },
+        {
+          "name": "gui",
+          "seed": "0x75af02",
+          "raw_returncode": 0,
+          "status": "passed"
+        },
+        {
+          "name": "fixed_gui",
+          "seed": "0x2da72db",
+          "raw_returncode": 0,
+          "status": "passed"
+        }
+      ],
+      "session_evidence_identifier": "review-w09-linux/final-run-45029235535/attempt-2/attempt-reconciliation.json",
+      "qualification": "Observed externally triggered second execution; not a same-seed replay, clean first pass or demonstrated fix of attempt-1 SIGSEGV."
+    },
+    {
+      "id": "original_2026_11_final_publication_acceptance",
+      "primary_agents": [
+        60
+      ],
+      "status": "accepted_for_accurately_disclosed_original_development_publication",
+      "verdict": "ACCEPTED_FOR_ORIGINAL_2026_11_DEVELOPMENT_PUBLICATION_WITH_RECORDED_UNRESOLVED_LINUX_FAILURE",
+      "reviewed_at_utc": "2026-11-22T16:42:13.097284+00:00",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "source_tree": "bf4aa2f49be6207e07646a317018bb8df91fa5dc",
+      "ci_run_id": 45029235535,
+      "preset_library_revision": "2026.11",
+      "acceptance_scope": "Accurately disclosed original preset revision 2026.11 development downloads and source-bound evidence. Acceptance of the publication record does not convert the failed first validator invocation into a pass.",
+      "publication_blockers_in_scope": [],
+      "session_evidence_identifier": "review-w10-acceptance/FINAL-ACCEPTANCE-2026_11.json",
+      "session_evidence_sha256": "8729303b12c85d678ed8eefc82fdaab56a064e3481447cc23dc38664638a544a",
+      "session_report_identifier": "review-w10-acceptance/FINAL-ACCEPTANCE-2026_11.md",
+      "session_report_sha256": "04fe75c96d619ce49615269e2639d65032695bbe4c9e220897c54598dcd145a6",
+      "join_audit_evidence_identifier": "review-w10-acceptance/final-evidence-joins-2026_11.json",
+      "join_audit_sha256": "62ff7b97e03b0cf1e28baa62a2783361031c7d69419998e21c950e63ce186a6a",
+      "read_only_join_checks": 206,
+      "read_only_join_checks_passed": 206,
+      "reviewed_manifest_snapshot": {
+        "file_count": 83,
+        "stored_file_digests_matched": 83,
+        "manifest_sha256": "0e20286698b079fd775f4313763cb46cdabd7ed58e7455f7ea25735ebe25f4d9",
+        "scope": "The evidence snapshot inspected by assignment 60; later publication/status edits require the coordinator to refresh their affected provenance records."
+      },
+      "native_totals": {
+        "registered": 1282,
+        "passed": 1275,
+        "failed": 0,
+        "skipped": 7,
+        "execution_attempt": 1
+      },
+      "actual_install_archives_verified": 4,
+      "inventory_entries": 114,
+      "binary_headers": 10,
+      "complete_validator_input_payloads_verified": [
+        "linux-x86_64",
+        "windows-x86_64"
+      ],
+      "retained_public_full_get_records_verified": 5,
+      "actual_audition_wav_files": 12,
+      "actual_audition_seconds": 48,
+      "original_linux_first_attempt_failed": true,
+      "original_linux_failure_unexplained": true,
+      "production_fix_established": false,
+      "newer_2026_11_1_qualified": false,
+      "required_claim_boundaries": [
+        "Keep the original Linux failed invocation and separate attempt-2/diagnostic outcomes visible; do not call the original a clean first pass or the crash fixed.",
+        "Bind the four installation links and audition to d0c3c23 / run 45029235535 / revision 2026.11.",
+        "Later documentation or current main commits, including 2026.11.1 changes, are not source identities or qualification for these binaries.",
+        "Numerical software renders and available audition excerpts do not establish a completed subjective listening study, physical CS-80/acoustic-instrument equivalence, every DAW, or release signing/notarization."
+      ],
+      "review_limits": "Retained evidence and actual archives inspected locally. No new builds, test/validator execution, audio rendering, listening study, network GET, CI operation, repository edit, commit or push. Publication/push completion remains the coordinator task.",
+      "administrative_handoff": "This closes assignment 60 final acceptance. The coordinator/ledger reviewer may replace pending-final-review status with this bounded verdict, retain all caveats and refresh any affected provenance hashes. This review does not certify that those subsequent publication edits were already committed or pushed."
+    }
+  ],
+  "agents_scope": "The agents array and numbered assignment groups contain the 60 primary assignments. Additional nested reviewers are listed separately in nested_follow_up_agents.",
+  "nested_follow_up_agents": [
+    {
+      "task": "controller_extension_contract",
+      "canonical_task_name": "/root/w09_controller_host_contract/controller_extension_contract",
+      "parent_primary_agent_number": 54,
+      "parent_task": "w09_controller_host_contract",
+      "status": "complete",
+      "scope": "Independently review the declared controller-extension activation contract during Linux fixture diagnosis.",
+      "method": "Read-only source/contract review; no edits, builds, tests or network calls.",
+      "status_note": "Confirmed that extension activation copies controller/protocol targets rather than oscillator state, supporting isolation of unrelated preset pitch modulation in the fixture. This is an additional nested reviewer, not a 61st primary assignment or new CI qualification.",
+      "session_evidence_identifier": "review-w09-controller/handoff/REPORT.md",
+      "completion_basis": "The parent report explicitly records this completed nested review; the coordinator confirmed the additional spawn and completion."
+    }
+  ],
+  "failed_verification": [
+    {
+      "id": "linux_x86_64_run_45016741244",
+      "owner": "coordinator",
+      "status": "failed",
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "ci_run_id": 45016741244,
+      "run_conclusion": "failure",
+      "native_job_id": 137190569890,
+      "native_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45016741244/job/137190569890",
+      "validator_job_id": 137225403463,
+      "validator_job_conclusion": "skipped",
+      "ctest": {
+        "registered": 578,
+        "passed": 575,
+        "failed": 2,
+        "skipped": 1,
+        "disabled": 0,
+        "failed_names": [
+          "cs80_controller_handoff_host_tests",
+          "cs80_panel_golden_tests"
+        ],
+        "skipped_names": [
+          "cs80_stereo_pra_exact_tests"
+        ]
+      },
+      "failing_case_checks": {
+        "cs80_controller_handoff_host_tests": {
+          "checks": 376,
+          "failures": 16
+        },
+        "cs80_panel_golden_tests": {
+          "checks": 4,
+          "failures": 2
+        }
+      },
+      "test_evidence_artifact_id": 14756267327,
+      "test_evidence_artifact_sha256": "18d6990462d8712d920c8a5d75d1cd36a2459c1287a5de43409eb01ef3468dc5",
+      "test_evidence_archive_verified": true,
+      "linux_install_bundle": "not produced",
+      "linux_vst3_artifact": "not produced",
+      "published_audition": "not produced; capture/upload skipped",
+      "linux_pluginval": "all required gates skipped; no SUCCESS result",
+      "session_evidence_identifier": "review-w09-linux/replacement-run-45016741244/verification.json",
+      "qualification": "Linux and the overall build run failed. Later local fixture diagnoses are separate evidence and do not change this historical outcome."
+    },
+    {
+      "id": "linux_validator_attempt1_sigsegv",
+      "status": "failed_unresolved",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "run_attempt": 1,
+      "job_id": 137263093053,
+      "seed": "0x5ba7253",
+      "strictness": 10,
+      "success_line_before_signal": true,
+      "raw_returncode": -11,
+      "signal": "SIGSEGV",
+      "wrapper_exit": 139,
+      "gui_and_fixed_gui": "skipped",
+      "retries": 0,
+      "cause_or_fix_established": false,
+      "session_evidence_identifier": "review-w09-linux/final-run-45029235535/validator-summary.json"
+    }
+  ],
+  "local_repair_verification": [
+    {
+      "id": "controller_handoff_fixture_repair",
+      "primary_agents": [
+        54
+      ],
+      "status": "focused_local_and_current_native_ctest_passed",
+      "base_checkout_sha": "d2c70e11e56034f932418ff228115c551769a85a",
+      "failed_ci_source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "failed_ci_run_id": 45016741244,
+      "commit_status": "Committed and pushed in d0c3c23be68ef048aa56969f1c493c221c1562c5; repaired fixture passed native Linux in run 45029235535",
+      "cause": "The new startup preset leaves aftertouch SUB-to-VCO pitch modulation active while the fixture compares frequencies across legitimate independent oscillator histories.",
+      "repair": "Set only P_subAtVco to zero in the controller fixture; preserve existing assertions, events, case loops and settling frames.",
+      "production_code_changed": false,
+      "unmodified_fixture": {
+        "checks": 376,
+        "failures": 16
+      },
+      "diagnostic_neutral": {
+        "checks": 376,
+        "failures": 0,
+        "depth": 0
+      },
+      "reenabled_negative_control": {
+        "checks": 376,
+        "failures": 16,
+        "depth": 0.065
+      },
+      "final_registered_local_ctest": {
+        "tests": 1,
+        "checks": 376,
+        "failures": 0,
+        "reported_test_seconds": 1.38
+      },
+      "assertions_and_settling_frames_unchanged": true,
+      "nested_contract_reviewer": "/root/w09_controller_host_contract/controller_extension_contract",
+      "session_evidence_identifier": "review-w09-controller/handoff/causal-evidence.json",
+      "session_report_identifier": "review-w09-controller/handoff/REPORT.md",
+      "committed_source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "qualification_ci_run_id": 45029235535,
+      "independent_review_identifier": "review-w10-acceptance/linux-fixture-repairs-review.json",
+      "native_ci_run_id": 45029235535,
+      "qualification_note": "The earlier controller/panel fixture failures now pass native Linux. This does not fix or explain the distinct current validator SIGSEGV."
+    },
+    {
+      "id": "linux_panel_font_fixture_repair",
+      "owner": "coordinator",
+      "status": "focused_local_and_current_native_ctest_passed",
+      "base_checkout_sha": "d2c70e11e56034f932418ff228115c551769a85a",
+      "failed_ci_source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "failed_ci_run_id": 45016741244,
+      "commit_status": "Committed and pushed in d0c3c23be68ef048aa56969f1c493c221c1562c5; repaired fixture passed native Linux in run 45029235535",
+      "cause": "Dedicated Linux CTest did not use the DejaVu font search path already pinned by the UI-smoke wrapper.",
+      "repair": "Set JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu in the dedicated Linux panel CTest environment.",
+      "same_snapshot_binary_for_all_arms": true,
+      "production_code_changed": false,
+      "assertions_thresholds_and_reference_images_changed": false,
+      "system_default_reproduction": {
+        "checks": 4,
+        "failures": 2,
+        "changed_percent": [
+          0.0193,
+          0.0285
+        ],
+        "block_mean": [
+          75.56,
+          69.56
+        ],
+        "matches_ci_exactly": true
+      },
+      "font_only_control": {
+        "checks": 4,
+        "failures": 0,
+        "JUCE_FONT_PATH": "/usr/share/fonts/truetype/dejavu",
+        "FONTCONFIG_FILE": "unset",
+        "block_mean": [
+          0.73,
+          0.0
+        ]
+      },
+      "final_registered_local_ctest": {
+        "tests": 1,
+        "checks": 4,
+        "failures": 0,
+        "parent_JUCE_FONT_PATH": "unset",
+        "parent_FONTCONFIG_FILE": "unset",
+        "ctest_environment": "JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu",
+        "seconds": 1.85
+      },
+      "session_evidence_identifier": "review-linux-fixture-repairs/panel/causal-evidence.json",
+      "committed_source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "qualification_ci_run_id": 45029235535,
+      "independent_review_identifier": "review-w10-acceptance/linux-fixture-repairs-review.json",
+      "native_ci_run_id": 45029235535,
+      "qualification_note": "The earlier controller/panel fixture failures now pass native Linux. This does not fix or explain the distinct current validator SIGSEGV."
+    }
+  ],
+  "current_verification_ids": [
+    "current_windows_x86_64_native",
+    "current_macos_arm64_native",
+    "current_macos_x86_64_native",
+    "current_linux_x86_64_native",
+    "current_all_four_install_archives",
+    "current_validator_payload_identity",
+    "current_published_audition",
+    "current_all_install_and_audition_public_downloads",
+    "linux_validator_attempt2_execution",
+    "original_2026_11_final_publication_acceptance"
+  ],
+  "preparation_reviews": [
+    {
+      "agent": 52,
+      "status": "bounded_static_review_complete",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "session_evidence_identifier": "review-w09-artifact-integrity/final-preparation-review.json",
+      "scope_wording_corrected": true,
+      "aggregate_require_all_executed": false,
+      "qualification": "Inspected existing partial reports, download provenance and helper source; did not execute downloads, tests or aggregate verification."
+    },
+    {
+      "agent": 56,
+      "status": "prepared_awaiting_artifact",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "session_evidence_identifier": "review-w10-audition/final-run-45029235535/preparation.json",
+      "actual_artifact_verification_performed": false,
+      "audio_regenerated": false,
+      "qualification": "Actual CI audition verifier prepared; no actual audition pass."
+    }
+  ],
+  "linux_validator_attempts": {
+    "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "ci_run_id": 45029235535,
+    "input_artifact_id": 14761700962,
+    "input_artifact_sha256": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+    "attempt1": {
+      "run_attempt": 1,
+      "job_id": 137263093053,
+      "status": "failed",
+      "strictness": 10,
+      "headless_seed": "0x5ba7253",
+      "printed_success": true,
+      "raw_returncode": -11,
+      "signal": "SIGSEGV",
+      "wrapper_exit": 139,
+      "retries": 0,
+      "gui_gate": "skipped",
+      "fixed_gui_gate": "skipped",
+      "stack_or_core_available": false,
+      "root_cause": "not established",
+      "session_evidence_identifier": "review-w09-linux/final-run-45029235535/validator-summary.json"
+    },
+    "attempt2": {
+      "run_attempt": 2,
+      "job_id": 137263915334,
+      "status": "passed",
+      "strictness": 10,
+      "headless": {
+        "seed": "0x50a3104",
+        "raw_returncode": 0,
+        "success": true
+      },
+      "gui": {
+        "seed": "0x75af02",
+        "raw_returncode": 0,
+        "success": true
+      },
+      "fixed_gui": {
+        "seed": "0x2da72db",
+        "raw_returncode": 0,
+        "success": true
+      },
+      "same_artifact_as_attempt1": true,
+      "different_randomized_headless_seed_and_runner": true,
+      "native_jobs": "Retained successful attempt-1 executions; not fresh attempt-2 builds/tests."
+    },
+    "trigger_attribution": {
+      "reported_actor": "cheshmakzanoon-ops",
+      "reported_triggering_actor": "cheshmakzanoon-ops",
+      "coordinator_or_agents_issued_rerun": false,
+      "basis": "GitHub account fields plus coordinator confirmation that root/agents issued no rerun.",
+      "limit": "Account fields do not identify the exact human, client, UI, API token or automation responsible; the originating push event does not prove a new push caused the rerun."
+    },
+    "original_failure_preserved": true,
+    "failure_fixed_by_second_attempt": false,
+    "session_evidence_identifier": "review-w09-linux/final-run-45029235535/attempt-2/attempt-reconciliation.json"
+  },
+  "auxiliary_comparisons": [
+    {
+      "kind": "official_beta3_comparison",
+      "ci_run_id": 45040382534,
+      "input_artifact_id": 14761700962,
+      "candidate_source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "status": "passed_reported_cases",
+      "reported_passed_check_counts": [
+        25,
+        31,
+        31
+      ],
+      "evidence_basis": "Coordinator update; distinct host and seeds.",
+      "qualification": "Same candidate artifact tested under a different host/seeds; does not replace original pluginval 1.0.4 gates or demonstrate that its attempt-1 crash is fixed."
+    }
+  ],
+  "pending_diagnostics": [],
+  "completed_diagnostics": [
+    {
+      "id": "current_linux_same_seed_instrumented_diagnostic",
+      "kind": "bounded_same_seed_headless_replay",
+      "branch": "diagnostic/preset-d0c3-headless",
+      "workflow_commit": "b61d4057e83eac404c9f0db0c38f9ee857f83baf",
+      "candidate_source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "original_candidate_ci_run_id": 45029235535,
+      "original_failed_job_id": 137263093053,
+      "diagnostic_ci_run_id": 45041640467,
+      "diagnostic_job_id": 137267174290,
+      "input_artifact_id": 14761700962,
+      "input_artifact_sha256": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+      "seed": "0x5ba7253",
+      "completed_replay_count": 2,
+      "status": "completed_two_instrumented_nonreproductions",
+      "launched_by": "coordinator",
+      "reviewed_by_primary_agent": 54,
+      "runtime_results": {
+        "gdb": {
+          "seed": "0x5ba7253",
+          "strictness": 10,
+          "success_markers": 1,
+          "process_exit": 0,
+          "log_exit": 0,
+          "timeout": false,
+          "fault_or_failure_marker": false,
+          "normal_inferior_exit": true,
+          "fault_stack_available": false
+        },
+        "trace": {
+          "seed": "0x5ba7253",
+          "strictness": 10,
+          "success_markers": 1,
+          "process_exit": 0,
+          "log_exit": 0,
+          "timeout": false,
+          "fault_or_failure_marker": false,
+          "normal_inferior_exit": null,
+          "fault_stack_available": false
+        }
+      },
+      "diagnostic_artifact": {
+        "id": 14761467989,
+        "bytes": 8995,
+        "sha256": "c455d7e957ef49bd986b9ba4c02925ef742c93471d9eb2e4fdbe50d1945c6df3"
+      },
+      "fault_thread_log": "diagnostic handler installed; later replacement is possible",
+      "prepublication_preparation_evidence_identifier": "review-w09-controller/d0c3-headless/checks.json",
+      "session_evidence_identifier": "review-w09-controller/d0c3-headless/actual-run-45041640467/RESULTS.json",
+      "repository_evidence_path": "docs/preset-evidence/2026.11/ci/headless-diagnostic.json",
+      "diagnostic_branch_build_qualifies_candidate": false,
+      "reruns_or_changes_in_monitor_task": 0,
+      "original_failure_preserved": true,
+      "original_crash_root_cause_established": false,
+      "production_fix_established": false,
+      "qualification": "One GDB and one fault-trace run used the exact failed input and headless seed at strictness 10. Both printed SUCCESS and exited zero without fault frames. These are two instrumented nonreproductions, not evidence that the original crash was fixed or explained. Any general Build on the isolated diagnostic branch is excluded from candidate qualification."
+    }
+  ],
+  "unresolved_findings": [
+    {
+      "id": "original_linux_validator_sigsegv_unexplained",
+      "ci_run_id": 45029235535,
+      "run_attempt": 1,
+      "job_id": 137263093053,
+      "seed": "0x5ba7253",
+      "raw_returncode": -11,
+      "wrapper_exit": 139,
+      "status": "unexplained_after_two_instrumented_nonreproductions",
+      "new_diagnostic_execution_pending": false,
+      "root_cause_established": false,
+      "crash_ownership_established": false,
+      "production_fix_established": false,
+      "qualification": "The separate successful second execution, beta comparison and completed diagnostic nonreproductions preserve the original failure; they neither erase it nor demonstrate a fix."
+    }
+  ],
+  "separate_pending_integrations": [
+    {
+      "preset_library_revision": "2026.11.1",
+      "status": "pending_separate_integration",
+      "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "ci_run_id": 45044040694,
+      "ci_run_attempt": 1,
+      "ci_run_observation": "pending at coordinator update",
+      "ci_run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+      "publication_only_descendants": [
+        "4a3bd7116fc3a5f4344fcdd5e6694ff4c2646452",
+        "00339ed7c616da28e5c32011e558ea00833f041b"
+      ],
+      "original_2026_11_qualification": false,
+      "new_agents_spawned": 0,
+      "evidence_basis": "Coordinator session update; commit identities confirmed from the shared local Git history. This ledger does not monitor the newer CI run.",
+      "qualification": "The concurrent 2026.11.1 integration uses its own source and first-attempt run. Publication-only descendants do not change that binary source. Follow-ups reuse existing agents and do not alter this original 2026.11 roster or transfer d0c3c23 qualifications to the newer binaries."
+    }
+  ],
+  "pending_publication_actions": [
+    {
+      "scope": "Finalize the accepted original 2026.11 publication record",
+      "owner": "coordinator",
+      "status": "administrative_finalization_not_recorded_here",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "ci_run_id": 45029235535,
+      "needed": "Integrate the bounded final verdict and ledger status edits, refresh affected provenance hashes, and complete any intended publication commit/push. Preserve original failure history and the separate newer integration.",
+      "acceptance_verification_id": "original_2026_11_final_publication_acceptance",
+      "additional_agent_assignment_required": false
+    }
+  ]
+}

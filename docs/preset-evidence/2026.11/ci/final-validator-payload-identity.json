@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "source_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "run_id": 45029235535,
+  "checked_at_utc": "2026-11-22T15:58:15.494272+00:00",
+  "targets": [
+    {
+      "target": "linux-x86_64",
+      "input_artifact_id": 14761700962,
+      "input_artifact_name": "cs80-linux-vst3",
+      "input_outer_sha256": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+      "install_outer_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+      "complete_vst3_file_inventory_identical": true,
+      "files": [
+        {
+          "path": "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+          "bytes": 1095,
+          "validator_input_sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+          "installation_sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+          "identical": true
+        },
+        {
+          "path": "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+          "bytes": 17384920,
+          "validator_input_sha256": "6ffae83a8425553915941106386fb4e34380f59cdb0daf9f6bd17ca2b30d0a6b",
+          "installation_sha256": "6ffae83a8425553915941106386fb4e34380f59cdb0daf9f6bd17ca2b30d0a6b",
+          "identical": true
+        }
+      ]
+    },
+    {
+      "target": "windows-x86_64",
+      "input_artifact_id": 14758085624,
+      "input_artifact_name": "cs80-windows-vst3",
+      "input_outer_sha256": "f85e3b7e33185540cbfea13cdc8223f840896609e5c89f484e27827fa874c554",
+      "install_outer_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+      "complete_vst3_file_inventory_identical": true,
+      "files": [
+        {
+          "path": "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+          "bytes": 1143,
+          "validator_input_sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6",
+          "installation_sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6",
+          "identical": true
+        },
+        {
+          "path": "CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+          "bytes": 7258112,
+          "validator_input_sha256": "7d39db58ff62fee033f33320bb25bb245d20dfcde7fad5868e4603e135451b15",
+          "installation_sha256": "7d39db58ff62fee033f33320bb25bb245d20dfcde7fad5868e4603e135451b15",
+          "identical": true
+        }
+      ]
+    }
+  ],
+  "scope": "Exact complete VST3 regular-file contents in separate validator input archives and installation inventories. Validator download identity and runtime SUCCESS must be established separately from native reports. This comparison does not inspect validator outcomes or execute binaries."
+}

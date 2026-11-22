@@ -1,0 +1,278 @@
+{
+  "reviewed_contract_commit": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "candidate_source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "preset_revision": "2026.11.1",
+  "source_records": {
+    "be460b0b93bdcb8dce5eb8925b18b72706b25e19": {
+      "scripts/package-ci-artifacts.py": {
+        "bytes": 29516,
+        "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+      },
+      "scripts/verify-ci-bundle.py": {
+        "bytes": 18296,
+        "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+      },
+      "scripts/test-packaging-notices.py": {
+        "bytes": 15700,
+        "sha256": "961e22ca665ec8f6fcad8abce672931beb802c9e9f65dcb4ea52a005b476ba47"
+      },
+      "src/core/FactoryPresets.h": {
+        "bytes": 2851,
+        "sha256": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81"
+      },
+      "docs/PRESET_GUIDE.md": {
+        "bytes": 14109,
+        "sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69"
+      },
+      "docs/INSTALL_AND_QUICKSTART.md": {
+        "bytes": 15481,
+        "sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8"
+      },
+      "docs/CI_DISTRIBUTION_STATUS.md": {
+        "bytes": 3606,
+        "sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea"
+      }
+    },
+    "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c": {
+      "scripts/package-ci-artifacts.py": {
+        "bytes": 29516,
+        "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+      },
+      "scripts/verify-ci-bundle.py": {
+        "bytes": 18296,
+        "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa"
+      },
+      "scripts/test-packaging-notices.py": {
+        "bytes": 15700,
+        "sha256": "961e22ca665ec8f6fcad8abce672931beb802c9e9f65dcb4ea52a005b476ba47"
+      },
+      "src/core/FactoryPresets.h": {
+        "bytes": 2851,
+        "sha256": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81"
+      },
+      "docs/PRESET_GUIDE.md": {
+        "bytes": 14109,
+        "sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69"
+      },
+      "docs/INSTALL_AND_QUICKSTART.md": {
+        "bytes": 15481,
+        "sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8"
+      },
+      "docs/CI_DISTRIBUTION_STATUS.md": {
+        "bytes": 3606,
+        "sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea"
+      }
+    }
+  },
+  "actual_artifacts_downloaded_or_verified": false,
+  "legacy_v2_sha256": "87f97e8ef3b5824f25497d68d748306d88792596ab33f02078b10305d9ec30a6",
+  "legacy_d0c_all_four_report_sha256": "4724f69ef5fe9d78e3b40dc7bf742d07353a307f526f554b8efda3420637dfaf",
+  "candidate_build_run_id": 45044040694,
+  "superseded_contract_source_run_id": 45042166237,
+  "superseded_run_status_from_assignment": "cancelled by main concurrency after source refinement; not used for candidate qualification",
+  "expected_archive_guides": [
+    {
+      "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+      "archive_path": "INSTALL_AND_QUICKSTART.md",
+      "raw_source_bytes": 15481,
+      "raw_source_sha256": "a176227408de7ba6294cd03578ec0b7cfe862edbec581368217a128f7e8090d8",
+      "expected_packaged_bytes": 15885,
+      "expected_packaged_sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+      "diff_file": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/expected-candidate-guides/INSTALL_AND_QUICKSTART.md.diff",
+      "all_expected_newlines_LF": true,
+      "pinned_relative_link_targets": [
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/OUTPUT_METER.md",
+          "repository_path": "docs/OUTPUT_METER.md",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PANIC_CONTROL.md",
+          "repository_path": "docs/PANIC_CONTROL.md",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md",
+          "repository_path": "docs/PARITY_ISOLATION.md",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/performance/2026-10-30-source-performance/SUMMARY.md",
+          "repository_path": "docs/performance/2026-10-30-source-performance/SUMMARY.md",
+          "git_object_type": "blob"
+        }
+      ],
+      "noncandidate_github_blob_or_tree_refs": []
+    },
+    {
+      "source_path": "docs/PRESET_GUIDE.md",
+      "archive_path": "PRESET_GUIDE.md",
+      "raw_source_bytes": 14109,
+      "raw_source_sha256": "64394488711f2b08bdebbfd5451a2a4a503dcf18b8fa00783d4147653d830d69",
+      "expected_packaged_bytes": 17675,
+      "expected_packaged_sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+      "diff_file": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/expected-candidate-guides/PRESET_GUIDE.md.diff",
+      "all_expected_newlines_LF": true,
+      "pinned_relative_link_targets": [
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/.github/workflows/build.yml",
+          "repository_path": ".github/workflows/build.yml",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/CMakeLists.txt",
+          "repository_path": "CMakeLists.txt",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md",
+          "repository_path": "docs/PARITY_ISOLATION.md",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REFINEMENT_2026_11_1.md",
+          "repository_path": "docs/PRESET_REFINEMENT_2026_11_1.md",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md",
+          "repository_path": "docs/PRESET_REVISION_2026_11.md",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc",
+          "repository_path": "src/core/CuratedLibrary.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Engine.cpp",
+          "repository_path": "src/core/Engine.cpp",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/FactoryPresets.h",
+          "repository_path": "src/core/FactoryPresets.h",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Params.h",
+          "repository_path": "src/core/Params.h",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc",
+          "repository_path": "src/core/curated/Bass.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc",
+          "repository_path": "src/core/curated/Bells.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc",
+          "repository_path": "src/core/curated/Brass.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc",
+          "repository_path": "src/core/curated/Fx.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc",
+          "repository_path": "src/core/curated/Keys.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc",
+          "repository_path": "src/core/curated/Leads.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc",
+          "repository_path": "src/core/curated/Modern.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc",
+          "repository_path": "src/core/curated/Organ.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc",
+          "repository_path": "src/core/curated/Pads.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc",
+          "repository_path": "src/core/curated/Plucked.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Polysynth.inc",
+          "repository_path": "src/core/curated/Polysynth.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc",
+          "repository_path": "src/core/curated/Strings.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc",
+          "repository_path": "src/core/curated/Winds.inc",
+          "git_object_type": "blob"
+        },
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/tools/preset_capture.cpp",
+          "repository_path": "src/tools/preset_capture.cpp",
+          "git_object_type": "blob"
+        }
+      ],
+      "noncandidate_github_blob_or_tree_refs": []
+    },
+    {
+      "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "archive_path": "DISTRIBUTION_STATUS.md",
+      "raw_source_bytes": 3606,
+      "raw_source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+      "expected_packaged_bytes": 3707,
+      "expected_packaged_sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+      "diff_file": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/expected-candidate-guides/DISTRIBUTION_STATUS.md.diff",
+      "all_expected_newlines_LF": true,
+      "pinned_relative_link_targets": [
+        {
+          "url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/release/RELEASE_QUALIFICATION.md",
+          "repository_path": "docs/release/RELEASE_QUALIFICATION.md",
+          "git_object_type": "blob"
+        }
+      ],
+      "noncandidate_github_blob_or_tree_refs": []
+    }
+  ],
+  "driver": {
+    "version": "3.0",
+    "path": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/verify-downloaded-artifacts-v3.py",
+    "sha256": "e310f7ef18eb2c1c47f2063b7bf5f6e265e2a2f278c6e19ee0e0f898d0792de6"
+  },
+  "fixture_checks": {
+    "path": "/workspace/scratch/ffe08111d1ce/review-2026.11.1-artifact-integrity/fixture-checks.json",
+    "status": "PASS",
+    "check_count": 8,
+    "evidence_type": "synthetic header-only fixtures; no actual candidate artifacts"
+  },
+  "legacy_immutability_confirmed_after_preparation": {
+    "driver_sha256": "87f97e8ef3b5824f25497d68d748306d88792596ab33f02078b10305d9ec30a6",
+    "aggregate_report_sha256": "4724f69ef5fe9d78e3b40dc7bf742d07353a307f526f554b8efda3420637dfaf"
+  },
+  "status": "PREPARED_NOT_ARTIFACT_QUALIFIED",
+  "transform_risks_and_limits": [
+    "Windows archive guides must now be LF; V2 CRLF tolerance is not carried forward",
+    "Limited inline Markdown syntax; no general reference-style, HTML, escaped/nested or space/parenthesis target handling",
+    "Only fenced examples explicitly excluded; inline/indented-code link-like text may be rewritten",
+    "Absolute/root-relative/fragment-only targets are unchanged; future movable absolute refs require review",
+    "Same-source transform replay establishes byte conformity, not rendering, online availability or fragment correctness",
+    "Artifact integrity is separate from native/runtime and publisher qualification"
+  ]
+}

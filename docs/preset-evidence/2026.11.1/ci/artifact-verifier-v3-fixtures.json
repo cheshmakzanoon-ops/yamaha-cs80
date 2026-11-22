@@ -1,0 +1,69 @@
+{
+  "evidence_type": "Synthetic header-only scratch fixtures, not candidate artifacts or CI qualification",
+  "candidate_source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "synthetic_run_id": "0",
+  "driver_version": "3.0",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "Exact source Markdown transform from CRLF input",
+      "result": "PASS",
+      "covers": "Local mapping, exact commit, query/fragment/title, external URL, anchor, fenced example, LF output"
+    },
+    {
+      "check": "Canonical patch revision",
+      "result": "PASS",
+      "accepted": "2026.11.1",
+      "rejected": "2026.11.01"
+    },
+    {
+      "check": "Linux patch bundle with transformed LF guides",
+      "result": "PASS",
+      "expected_bundle_acceptance": true,
+      "observed_bundle_acceptance": true,
+      "inner_verifier_passed": true,
+      "rejection_reason": null
+    },
+    {
+      "check": "Windows patch bundle with transformed LF guides",
+      "result": "PASS",
+      "expected_bundle_acceptance": true,
+      "observed_bundle_acceptance": true,
+      "inner_verifier_passed": true,
+      "rejection_reason": null
+    },
+    {
+      "check": "Reject old Windows CRLF guide tolerance",
+      "result": "PASS",
+      "expected_bundle_acceptance": false,
+      "observed_bundle_acceptance": false,
+      "inner_verifier_passed": true,
+      "rejection_reason": "ValueError: PRESET_GUIDE.md differs from the exact source-bound packaged_markdown output"
+    },
+    {
+      "check": "Reject guide pinned to superseded source",
+      "result": "PASS",
+      "expected_bundle_acceptance": false,
+      "observed_bundle_acceptance": false,
+      "inner_verifier_passed": true,
+      "rejection_reason": "ValueError: PRESET_GUIDE.md differs from the exact source-bound packaged_markdown output"
+    },
+    {
+      "check": "Reject untransformed raw guide",
+      "result": "PASS",
+      "expected_bundle_acceptance": false,
+      "observed_bundle_acceptance": false,
+      "inner_verifier_passed": true,
+      "rejection_reason": "ValueError: PRESET_GUIDE.md differs from the exact source-bound packaged_markdown output"
+    },
+    {
+      "check": "Reject original revision in patch manifest",
+      "result": "PASS",
+      "expected_bundle_acceptance": false,
+      "observed_bundle_acceptance": false,
+      "inner_verifier_passed": true,
+      "rejection_reason": "ValueError: Manifest preset_library_revision mismatch"
+    }
+  ],
+  "temporary_fixtures_removed": true
+}

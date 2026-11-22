@@ -1,0 +1,58 @@
+{
+  "source_before": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "source_parent": "d2c70e11e56034f932418ff228115c551769a85a",
+  "failed_ci_run_id": 45016741244,
+  "same_snapshot_binary_for_all_arms": true,
+  "production_code_changed": false,
+  "assertions_thresholds_and_reference_images_changed": false,
+  "cause": "Dedicated Linux CTest did not use the DejaVu font search path already pinned by the UI-smoke wrapper.",
+  "arms": {
+    "controlled": {
+      "checks": 4,
+      "failures": 0,
+      "block_mean": [
+        0.73,
+        0.0
+      ]
+    },
+    "system_default": {
+      "checks": 4,
+      "failures": 2,
+      "changed_percent": [
+        0.0193,
+        0.0285
+      ],
+      "block_mean": [
+        75.56,
+        69.56
+      ],
+      "matches_ci_exactly": true
+    },
+    "juce_font_only": {
+      "checks": 4,
+      "failures": 0,
+      "JUCE_FONT_PATH": "/usr/share/fonts/truetype/dejavu",
+      "FONTCONFIG_FILE": "unset",
+      "block_mean": [
+        0.73,
+        0.0
+      ]
+    },
+    "registered_ctest": {
+      "tests": 1,
+      "checks": 4,
+      "failures": 0,
+      "parent_JUCE_FONT_PATH": "unset",
+      "parent_FONTCONFIG_FILE": "unset",
+      "ctest_environment": "JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu",
+      "seconds": 1.85
+    }
+  },
+  "files": {
+    "juce-font-only.log": "1b972b335907d5b1ae1a9edcfe3509113c06cc5d7bcef64bba3495509b79d12f",
+    "configure.log": "3d7240f6efd7dd0f4b2e3ac37f3cc13e4720472cfadf7d05adcf738e7ab1acb6",
+    "registered-ctest.log": "fc05548f90becb89fafdc2aebabc19bb58539f74850f597338e29294e1c32852",
+    "controlled.log": "1b972b335907d5b1ae1a9edcfe3509113c06cc5d7bcef64bba3495509b79d12f",
+    "system-default.log": "71c2ac89d0b3be4346da0b5516513bb0ad593a370072fbf93bb29ebd8fa2bfb8"
+  }
+}

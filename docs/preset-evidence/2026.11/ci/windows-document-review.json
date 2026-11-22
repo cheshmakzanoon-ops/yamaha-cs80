@@ -1,0 +1,86 @@
+{
+  "reviewer": "agent60",
+  "checked_at_utc": "2026-11-22T12:08:30.928074+00:00",
+  "source_commit": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "run_id": 45016741244,
+  "review_method": "Read-only source review and independent raw-byte comparisons of existing local archives; no driver rerun, CI query, build or repository edit.",
+  "verdict": "ACCEPT_NARROW_WINDOWS_COPIED_DOCUMENT_RULE",
+  "release_acceptance": "PENDING_LINUX_CI_VALIDATOR_AUDITION_AND_FULL_FINAL_REVIEW",
+  "driver_version": "2.0",
+  "driver_sha256": "87f97e8ef3b5824f25497d68d748306d88792596ab33f02078b10305d9ec30a6",
+  "driver_hash_matches_actual_v2_report": true,
+  "original_failure_preserved": true,
+  "original_failure_reason": "ValueError: PRESET_GUIDE.md differs byte-for-byte from the expected source commit",
+  "v2_windows_status": "PASS",
+  "same_outer_archive_hash": true,
+  "same_inner_archive_hash": true,
+  "same_manifest_hash": true,
+  "inner_verifier_success_both_reports": true,
+  "source_txt_exact_bytes": true,
+  "source_txt_sha256": "4165025b4e421162e44dd1553986dddb3ad91ff107f2c6f29be8424b2f9c0428",
+  "source_txt_hash_matches_v2": true,
+  "documents": [
+    {
+      "path": "PRESET_GUIDE.md",
+      "source_cr_bytes": 0,
+      "source_lf_bytes": 214,
+      "archive_crlf_pairs": 214,
+      "exact_source_bytes": false,
+      "exact_source_LF_to_CRLF_bytes": true,
+      "source_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+      "archive_sha256": "3c6df6dddeb9674233c4b0110dc32641f2cdb053b4d38b6564301a66f645a755",
+      "both_hashes_match_v2_report": true
+    },
+    {
+      "path": "INSTALL_AND_QUICKSTART.md",
+      "source_cr_bytes": 0,
+      "source_lf_bytes": 235,
+      "archive_crlf_pairs": 235,
+      "exact_source_bytes": false,
+      "exact_source_LF_to_CRLF_bytes": true,
+      "source_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+      "archive_sha256": "221133179e789986bccf566ab0bebfe2c61b5d57cf561bab473e35f6a25f5912",
+      "both_hashes_match_v2_report": true
+    },
+    {
+      "path": "DISTRIBUTION_STATUS.md",
+      "source_cr_bytes": 0,
+      "source_lf_bytes": 64,
+      "archive_crlf_pairs": 64,
+      "exact_source_bytes": false,
+      "exact_source_LF_to_CRLF_bytes": true,
+      "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+      "archive_sha256": "d1789fae0bd8dd8bd950ccc5f83a5ec88f1a2bae1559b53d2630b6dfb71ed31d",
+      "both_hashes_match_v2_report": true
+    }
+  ],
+  "binary_payload_hashes": [
+    {
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "sha256": "31c75d4a3b34450b67a58d1977064c3673dd7a80e085a635ffc86ac0769b89a5",
+      "matches_v2_hash": true,
+      "matches_declared_size": true
+    },
+    {
+      "path": "Standalone/CS-80 Reference.exe",
+      "sha256": "c1c25362131bf510bc95bc7672c37122d2c12f8258e701866c1400fcf9cbbbf0",
+      "matches_v2_hash": true,
+      "matches_declared_size": true
+    }
+  ],
+  "source_verifier_snapshots": [
+    {
+      "path": "scripts/verify-ci-bundle.py",
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+      "both_snapshots_match_commit_bytes": true,
+      "both_recorded_hashes_match": true
+    },
+    {
+      "path": "scripts/package-ci-artifacts.py",
+      "sha256": "d78db71fc4c512a6c19c8489aa60b22d0b81582112d34ce0c4b8cc45159560a6",
+      "both_snapshots_match_commit_bytes": true,
+      "both_recorded_hashes_match": true
+    }
+  ],
+  "all_four_targets_verified_still_false": true
+}

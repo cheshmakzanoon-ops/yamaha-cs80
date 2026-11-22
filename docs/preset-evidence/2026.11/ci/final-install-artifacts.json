@@ -1,0 +1,515 @@
+{
+  "driver": {
+    "version": "2.0",
+    "path": "review-w09-artifact-integrity/verify-downloaded-artifacts.py",
+    "sha256": "87f97e8ef3b5824f25497d68d748306d88792596ab33f02078b10305d9ec30a6"
+  },
+  "expected_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "expected_run_id": "45029235535",
+  "expected_preset_revision": "2026.11",
+  "source_root": "yamaha-cs80",
+  "verifier_source_sha256": {
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "d78db71fc4c512a6c19c8489aa60b22d0b81582112d34ce0c4b8cc45159560a6"
+  },
+  "all_four_targets_supplied": true,
+  "qualification": "Artifact integrity, declared source/run consistency and binary-header identity only; not publisher authenticity, proof of compilation from source, signing/notarization, CI pass, runtime behavior, or DAW qualification.",
+  "artifacts": [
+    {
+      "target": "linux-x86_64",
+      "expected_artifact_name": "cs80-linux-install-bundle",
+      "outer_zip": "ci-run-45029235535/cs80-linux-install-bundle.zip",
+      "status": "PASS",
+      "outer_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+      "trusted_expected_outer_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+      "trusted_outer_sha256_verified": true,
+      "outer_members": [
+        {
+          "path": "SHA256SUMS",
+          "size": 235,
+          "selected": true
+        },
+        {
+          "path": "cs80-reference-linux-x86_64-d0c3c23be68e.tar.gz",
+          "size": 13214993,
+          "selected": true
+        },
+        {
+          "path": "cs80-reference-linux-x86_64-d0c3c23be68e.manifest.json",
+          "size": 4561,
+          "selected": true
+        }
+      ],
+      "verifier_command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "review-w09-artifact-integrity/final-run-45029235535-all/verifier-source/verify-ci-bundle.py",
+        "--archive",
+        "review-w09-artifact-integrity/final-run-45029235535-all/linux-x86_64/cs80-reference-linux-x86_64-d0c3c23be68e.tar.gz",
+        "--expected-commit",
+        "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      ],
+      "verifier_exit_code": 0,
+      "existing_verifier": {
+        "result": "integrity and declared source consistency verified",
+        "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+        "platform": "linux",
+        "architecture": "x86_64",
+        "files": 20,
+        "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+      },
+      "archive": "review-w09-artifact-integrity/final-run-45029235535-all/linux-x86_64/cs80-reference-linux-x86_64-d0c3c23be68e.tar.gz",
+      "archive_sha256": "f8ae92c84286cd6a152eb62667884304121311adab76353e5c79ac7a20dccdf9",
+      "manifest_sha256": "2c77e4ab75f986fe74efa01c99648c64663e02e9d6603734b34c51f2ef9d5d03",
+      "checks": {
+        "preset_library_revision": "2026.11",
+        "workflow_run_id": "45029235535",
+        "documents": [
+          {
+            "path": "PRESET_GUIDE.md",
+            "source_path": "docs/PRESET_GUIDE.md",
+            "bytes": 12747,
+            "source_bytes": 12747,
+            "sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "source_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "archived_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          },
+          {
+            "path": "INSTALL_AND_QUICKSTART.md",
+            "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+            "bytes": 14321,
+            "source_bytes": 14321,
+            "sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "source_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "archived_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          },
+          {
+            "path": "DISTRIBUTION_STATUS.md",
+            "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+            "bytes": 3606,
+            "source_bytes": 3606,
+            "sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "archived_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          }
+        ],
+        "binaries": [
+          {
+            "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+            "bytes": 17384920,
+            "sha256": "6ffae83a8425553915941106386fb4e34380f59cdb0daf9f6bd17ca2b30d0a6b",
+            "platform": "linux",
+            "architecture": "x86_64",
+            "role": "plugin",
+            "header_check": "PASS"
+          },
+          {
+            "path": "Standalone/CS-80 Reference",
+            "bytes": 16730448,
+            "sha256": "2dd1f0364ec6190ea388186cc41f90d138f0d6fa18f1a598520fdd7d550e04d3",
+            "platform": "linux",
+            "architecture": "x86_64",
+            "role": "standalone",
+            "header_check": "PASS"
+          }
+        ],
+        "source_txt": {
+          "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+          "sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "source_sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "archived_sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "exact_expected_bytes": true,
+          "exact_source_bytes": true,
+          "normalized_source_content_equal": true,
+          "newline_transform": "none"
+        }
+      }
+    },
+    {
+      "target": "macos-arm64",
+      "expected_artifact_name": "cs80-macos-15-install-bundle",
+      "outer_zip": "ci-run-45029235535/cs80-macos-15-install-bundle.zip",
+      "status": "PASS",
+      "outer_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+      "trusted_expected_outer_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+      "trusted_outer_sha256_verified": true,
+      "outer_members": [
+        {
+          "path": "cs80-reference-macos-arm64-d0c3c23be68e.manifest.json",
+          "size": 7621,
+          "selected": true
+        },
+        {
+          "path": "SHA256SUMS",
+          "size": 233,
+          "selected": true
+        },
+        {
+          "path": "cs80-reference-macos-arm64-d0c3c23be68e.tar.gz",
+          "size": 14890311,
+          "selected": true
+        }
+      ],
+      "verifier_command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "review-w09-artifact-integrity/final-run-45029235535-all/verifier-source/verify-ci-bundle.py",
+        "--archive",
+        "review-w09-artifact-integrity/final-run-45029235535-all/macos-arm64/cs80-reference-macos-arm64-d0c3c23be68e.tar.gz",
+        "--expected-commit",
+        "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      ],
+      "verifier_exit_code": 0,
+      "existing_verifier": {
+        "result": "integrity and declared source consistency verified",
+        "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+        "platform": "macos",
+        "architecture": "arm64",
+        "files": 37,
+        "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+      },
+      "archive": "review-w09-artifact-integrity/final-run-45029235535-all/macos-arm64/cs80-reference-macos-arm64-d0c3c23be68e.tar.gz",
+      "archive_sha256": "0dced8f1c406e92df31869bd1310af6ebe462ca8e15f45086dbba27d458f93e4",
+      "manifest_sha256": "85d7987e07ce8d09d88a62c8b89dc6928e7cc8c8ba8323c111b0d67e547f8f6a",
+      "checks": {
+        "preset_library_revision": "2026.11",
+        "workflow_run_id": "45029235535",
+        "documents": [
+          {
+            "path": "PRESET_GUIDE.md",
+            "source_path": "docs/PRESET_GUIDE.md",
+            "bytes": 12747,
+            "source_bytes": 12747,
+            "sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "source_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "archived_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          },
+          {
+            "path": "INSTALL_AND_QUICKSTART.md",
+            "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+            "bytes": 14321,
+            "source_bytes": 14321,
+            "sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "source_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "archived_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          },
+          {
+            "path": "DISTRIBUTION_STATUS.md",
+            "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+            "bytes": 3606,
+            "source_bytes": 3606,
+            "sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "archived_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          }
+        ],
+        "binaries": [
+          {
+            "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+            "bytes": 14601008,
+            "sha256": "ac7a7c6a02e984eb29d9a291c97c90cec0dedff455da882f7bea3cce3f4c0af6",
+            "platform": "macos",
+            "architecture": "arm64",
+            "role": "plugin",
+            "header_check": "PASS"
+          },
+          {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "bytes": 14305024,
+            "sha256": "37b577aaf9ac79e23c6bd980b923a29366aabe9bd67c61a24bee79540af2c65f",
+            "platform": "macos",
+            "architecture": "arm64",
+            "role": "plugin",
+            "header_check": "PASS"
+          },
+          {
+            "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+            "bytes": 14139232,
+            "sha256": "314d9644432e94dbe9e5632b4792cbde2e5e15742313236fa4f7a4c8489ba2ca",
+            "platform": "macos",
+            "architecture": "arm64",
+            "role": "standalone",
+            "header_check": "PASS"
+          }
+        ],
+        "source_txt": {
+          "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+          "sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "source_sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "archived_sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "exact_expected_bytes": true,
+          "exact_source_bytes": true,
+          "normalized_source_content_equal": true,
+          "newline_transform": "none"
+        }
+      }
+    },
+    {
+      "target": "macos-x86_64",
+      "expected_artifact_name": "cs80-macos-15-intel-install-bundle",
+      "outer_zip": "ci-run-45029235535/cs80-macos-15-intel-install-bundle.zip",
+      "status": "PASS",
+      "outer_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+      "trusted_expected_outer_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+      "trusted_outer_sha256_verified": true,
+      "outer_members": [
+        {
+          "path": "SHA256SUMS",
+          "size": 235,
+          "selected": true
+        },
+        {
+          "path": "cs80-reference-macos-x86_64-d0c3c23be68e.tar.gz",
+          "size": 16047468,
+          "selected": true
+        },
+        {
+          "path": "cs80-reference-macos-x86_64-d0c3c23be68e.manifest.json",
+          "size": 7624,
+          "selected": true
+        }
+      ],
+      "verifier_command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "review-w09-artifact-integrity/final-run-45029235535-all/verifier-source/verify-ci-bundle.py",
+        "--archive",
+        "review-w09-artifact-integrity/final-run-45029235535-all/macos-x86_64/cs80-reference-macos-x86_64-d0c3c23be68e.tar.gz",
+        "--expected-commit",
+        "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      ],
+      "verifier_exit_code": 0,
+      "existing_verifier": {
+        "result": "integrity and declared source consistency verified",
+        "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+        "platform": "macos",
+        "architecture": "x86_64",
+        "files": 37,
+        "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+      },
+      "archive": "review-w09-artifact-integrity/final-run-45029235535-all/macos-x86_64/cs80-reference-macos-x86_64-d0c3c23be68e.tar.gz",
+      "archive_sha256": "01860844dc91e69c3fad86dc9a569ebbc2a6a53c27c0856bbdb4c60cc4868d2d",
+      "manifest_sha256": "b613822863b58b576bd68e88b942e75dd738a32b4d9c2172e4d27194ed7bd137",
+      "checks": {
+        "preset_library_revision": "2026.11",
+        "workflow_run_id": "45029235535",
+        "documents": [
+          {
+            "path": "PRESET_GUIDE.md",
+            "source_path": "docs/PRESET_GUIDE.md",
+            "bytes": 12747,
+            "source_bytes": 12747,
+            "sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "source_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "archived_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          },
+          {
+            "path": "INSTALL_AND_QUICKSTART.md",
+            "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+            "bytes": 14321,
+            "source_bytes": 14321,
+            "sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "source_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "archived_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          },
+          {
+            "path": "DISTRIBUTION_STATUS.md",
+            "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+            "bytes": 3606,
+            "source_bytes": 3606,
+            "sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "archived_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "exact_source_bytes": true,
+            "normalized_source_content_equal": true,
+            "newline_transform": "none"
+          }
+        ],
+        "binaries": [
+          {
+            "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+            "bytes": 15542960,
+            "sha256": "48ac1f25a26cb33ef7e10d013b4b819a7848f19d2cba08e8d6692dacd297be4d",
+            "platform": "macos",
+            "architecture": "x86_64",
+            "role": "plugin",
+            "header_check": "PASS"
+          },
+          {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "bytes": 15110264,
+            "sha256": "cf960f9e628f767e243c348d6f490a414d473d6fea8ac168dd62a9edc4d8ca22",
+            "platform": "macos",
+            "architecture": "x86_64",
+            "role": "plugin",
+            "header_check": "PASS"
+          },
+          {
+            "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+            "bytes": 14954920,
+            "sha256": "103cd1c38d08712090a2a21df6984aea5cc8cf7300074abedaa9aa412707775e",
+            "platform": "macos",
+            "architecture": "x86_64",
+            "role": "standalone",
+            "header_check": "PASS"
+          }
+        ],
+        "source_txt": {
+          "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+          "sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "source_sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "archived_sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "exact_expected_bytes": true,
+          "exact_source_bytes": true,
+          "normalized_source_content_equal": true,
+          "newline_transform": "none"
+        }
+      }
+    },
+    {
+      "target": "windows-x86_64",
+      "expected_artifact_name": "cs80-windows-install-bundle",
+      "outer_zip": "ci-run-45029235535/cs80-windows-install-bundle.zip",
+      "status": "PASS",
+      "outer_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+      "trusted_expected_outer_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+      "trusted_outer_sha256_verified": true,
+      "outer_members": [
+        {
+          "path": "cs80-reference-windows-x86_64-d0c3c23be68e.zip",
+          "size": 6254366,
+          "selected": true
+        },
+        {
+          "path": "cs80-reference-windows-x86_64-d0c3c23be68e.manifest.json",
+          "size": 4555,
+          "selected": true
+        },
+        {
+          "path": "SHA256SUMS",
+          "size": 236,
+          "selected": true
+        }
+      ],
+      "verifier_command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "review-w09-artifact-integrity/final-run-45029235535-all/verifier-source/verify-ci-bundle.py",
+        "--archive",
+        "review-w09-artifact-integrity/final-run-45029235535-all/windows-x86_64/cs80-reference-windows-x86_64-d0c3c23be68e.zip",
+        "--expected-commit",
+        "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      ],
+      "verifier_exit_code": 0,
+      "existing_verifier": {
+        "result": "integrity and declared source consistency verified",
+        "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+        "platform": "windows",
+        "architecture": "x86_64",
+        "files": 20,
+        "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+      },
+      "archive": "review-w09-artifact-integrity/final-run-45029235535-all/windows-x86_64/cs80-reference-windows-x86_64-d0c3c23be68e.zip",
+      "archive_sha256": "e297aefad63533a5269d4e48e863114e99c09010d847c8333289de718902a796",
+      "manifest_sha256": "7cd310fba75e81bd5dd312f0d61fb365d7947fd3183cf4988f55f6f2ff1ef2b3",
+      "checks": {
+        "preset_library_revision": "2026.11",
+        "workflow_run_id": "45029235535",
+        "documents": [
+          {
+            "path": "PRESET_GUIDE.md",
+            "source_path": "docs/PRESET_GUIDE.md",
+            "bytes": 12961,
+            "source_bytes": 12747,
+            "sha256": "3c6df6dddeb9674233c4b0110dc32641f2cdb053b4d38b6564301a66f645a755",
+            "source_sha256": "d576f86addc7f3999a74cc9c31e69affca2146122906a2809793ce695ba42a9f",
+            "archived_sha256": "3c6df6dddeb9674233c4b0110dc32641f2cdb053b4d38b6564301a66f645a755",
+            "exact_source_bytes": false,
+            "normalized_source_content_equal": true,
+            "newline_transform": "LF_to_CRLF"
+          },
+          {
+            "path": "INSTALL_AND_QUICKSTART.md",
+            "source_path": "docs/INSTALL_AND_QUICKSTART.md",
+            "bytes": 14556,
+            "source_bytes": 14321,
+            "sha256": "221133179e789986bccf566ab0bebfe2c61b5d57cf561bab473e35f6a25f5912",
+            "source_sha256": "443ccf4173b2575b3d1092d2b9d0ac0f0e11f6faa60569744eb9776b81711057",
+            "archived_sha256": "221133179e789986bccf566ab0bebfe2c61b5d57cf561bab473e35f6a25f5912",
+            "exact_source_bytes": false,
+            "normalized_source_content_equal": true,
+            "newline_transform": "LF_to_CRLF"
+          },
+          {
+            "path": "DISTRIBUTION_STATUS.md",
+            "source_path": "docs/CI_DISTRIBUTION_STATUS.md",
+            "bytes": 3670,
+            "source_bytes": 3606,
+            "sha256": "d1789fae0bd8dd8bd950ccc5f83a5ec88f1a2bae1559b53d2630b6dfb71ed31d",
+            "source_sha256": "e35deea1054ec9bbcce8918773b561dfa1623c3959288a30f30c75d4702fb3ea",
+            "archived_sha256": "d1789fae0bd8dd8bd950ccc5f83a5ec88f1a2bae1559b53d2630b6dfb71ed31d",
+            "exact_source_bytes": false,
+            "normalized_source_content_equal": true,
+            "newline_transform": "LF_to_CRLF"
+          }
+        ],
+        "binaries": [
+          {
+            "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+            "bytes": 7258112,
+            "sha256": "7d39db58ff62fee033f33320bb25bb245d20dfcde7fad5868e4603e135451b15",
+            "platform": "windows",
+            "architecture": "x86_64",
+            "role": "plugin",
+            "header_check": "PASS"
+          },
+          {
+            "path": "Standalone/CS-80 Reference.exe",
+            "bytes": 7459328,
+            "sha256": "7b4a7d23f5adefc585e29aa384bc6927f77d2e67a1b78e4cd9e21f35501acaf4",
+            "platform": "windows",
+            "architecture": "x86_64",
+            "role": "standalone",
+            "header_check": "PASS"
+          }
+        ],
+        "source_txt": {
+          "commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+          "sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "source_sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "archived_sha256": "d115e86b228d387644030f33e87065032e89c626f3e64a97f3a0f1544868fbca",
+          "exact_expected_bytes": true,
+          "exact_source_bytes": true,
+          "normalized_source_content_equal": true,
+          "newline_transform": "none"
+        }
+      }
+    }
+  ],
+  "status": "PASS",
+  "all_four_targets_verified": true
+}

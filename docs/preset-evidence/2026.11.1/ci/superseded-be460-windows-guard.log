@@ -1,0 +1,37 @@
+2026-11-22T16:23:43.5157587Z  13/221 Test  #13: cs80_pluginval_macos_download_tests ...........***Failed    0.18 sec
+2026-11-22T16:23:43.5158647Z .....................C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 403: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5159237Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5159759Z C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 408: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5160401Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5161006Z C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5161549Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5163630Z C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 500: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5164250Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5164781Z C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 502: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5165296Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5165810Z C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 503: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5166323Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5166817Z C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 504: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5167422Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5167874Z C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 401: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5168335Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5168793Z C:\hostedtoolcache\windows\Python\3.14.10\x64\Lib\tempfile.py:538: ResourceWarning: Implicitly cleaning up <HTTPError 404: 'PRIVATE_DETAIL'>
+2026-11-22T16:23:43.5169246Z   _warnings.warn(self.warn_message, ResourceWarning)
+2026-11-22T16:23:43.5169476Z F
+2026-11-22T16:23:43.5169640Z ======================================================================
+2026-11-22T16:23:43.5170183Z FAIL: test_workflow_gate_unchanged_and_transfer_failure_stops_execution (__main__.DownloadTests.test_workflow_gate_unchanged_and_transfer_failure_stops_execution)
+2026-11-22T16:23:43.5170727Z ----------------------------------------------------------------------
+2026-11-22T16:23:43.5170984Z Traceback (most recent call last):
+2026-11-22T16:23:43.5171481Z   File "D:\a\yamaha-cs80\yamaha-cs80\scripts\test-pluginval-macos-download.py", line 325, in test_workflow_gate_unchanged_and_transfer_failure_stops_execution
+2026-11-22T16:23:43.5172198Z     self.assertEqual(hashlib.sha256(linux.encode()).hexdigest(), "dd36be196c6f754017a19517bc9974b0d0b1e376ae4e4af4b5143e6cef78e9a2")
+2026-11-22T16:23:43.5172688Z     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-22T16:23:43.5173261Z AssertionError: 'c72b9d5e34364eb77ff9a62d546e7b1c1a031d7f448f5e71b188a6cd95227caa' != 'dd36be196c6f754017a19517bc9974b0d0b1e376ae4e4af4b5143e6cef78e9a2'
+2026-11-22T16:23:43.5174019Z - c72b9d5e34364eb77ff9a62d546e7b1c1a031d7f448f5e71b188a6cd95227caa
+2026-11-22T16:23:43.5174360Z + dd36be196c6f754017a19517bc9974b0d0b1e376ae4e4af4b5143e6cef78e9a2
+2026-11-22T16:23:43.5174562Z 
+2026-11-22T16:23:43.5174566Z 
+2026-11-22T16:23:43.5174674Z ----------------------------------------------------------------------
+2026-11-22T16:23:43.5175077Z Ran 22 tests in 0.062s
+2026-11-22T16:23:43.5175216Z 
+2026-11-22T16:23:43.5175287Z FAILED (failures=1)
+2026-11-22T16:23:43.5175381Z 

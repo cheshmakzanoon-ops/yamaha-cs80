@@ -1,0 +1,33 @@
+{
+  "source_commit": "7ac6d99a5e187068907b17233109f2f1cc3da9fb",
+  "run_id": 45014200523,
+  "job_id": 137182878297,
+  "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+  "job_conclusion": "failure",
+  "test_artifact_id": 14751906152,
+  "test_artifact_sha256": "7269ad2f92fe4fe967f635ac194fffe92add13c141863f8c68827276e9504774",
+  "registered_tests": 242,
+  "passed": 238,
+  "failed": [
+    {
+      "name": "cs80_pluginval_macos_download_tests",
+      "seconds": 0.144931
+    },
+    {
+      "name": "cs80_ui_smoke",
+      "seconds": 98.4757
+    }
+  ],
+  "skipped": [
+    "cs80_filter_batch_cap_tests",
+    "cs80_stereo_pra_exact_tests"
+  ],
+  "repair_commit": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "repair_scope": [
+    "Refresh frozen workflow-region hashes after reviewed scheduling/audition/JUnit changes.",
+    "Explicitly select the frozen Legacy patch in the Legacy expression-persistence fixture."
+  ],
+  "production_dsp_or_preset_changes": false,
+  "assertions_and_tolerances_preserved": true,
+  "replacement_run": 45016741244
+}

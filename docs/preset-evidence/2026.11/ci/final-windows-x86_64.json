@@ -1,0 +1,550 @@
+{
+  "native_and_validator_qualified": true,
+  "platform": "Windows x86_64",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "run_id": 45029235535,
+  "run_attempt": 1,
+  "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "source_tree": "bf4aa2f49be6207e07646a317018bb8df91fa5dc",
+  "native_job_id": 137228906213,
+  "native_conclusion": "success",
+  "validator_job_id": 137236123878,
+  "validator_conclusion": "success",
+  "ctest": {
+    "root_tag": "testsuite",
+    "root_attributes": {
+      "name": "(empty)",
+      "tests": "220",
+      "failures": "0",
+      "disabled": "0",
+      "skipped": "2",
+      "hostname": "",
+      "time": "918",
+      "timestamp": "2026-11-22T13:57:18"
+    },
+    "registered": 220,
+    "passed": 218,
+    "failed": 0,
+    "skipped": 2,
+    "disabled": 0,
+    "failures": [],
+    "skips": [
+      {
+        "name": "cs80_filter_batch_cap_tests",
+        "outcome": "skipped",
+        "time": "0.0184792",
+        "status": "notrun",
+        "failure": null,
+        "skipped": {
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      },
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "outcome": "skipped",
+        "time": "0.0043905",
+        "status": "notrun",
+        "failure": null,
+        "skipped": {
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      }
+    ]
+  },
+  "ctest_wall_seconds": 918.08,
+  "internal_unittest_skips": {
+    "total": 10,
+    "suites": [
+      {
+        "test": "cs80_packaging_notice_tests",
+        "skips": 1,
+        "reason_lines": [
+          "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'",
+          "OK (skipped=1)"
+        ],
+        "source_checked_reason": "Native Linux amd64/DEB fixture"
+      },
+      {
+        "test": "cs80_windows_installer_preflight_tests",
+        "skips": 1,
+        "reason_lines": [
+          "OK (skipped=1)"
+        ],
+        "source_checked_reason": "Native Windows symlink creation may require extra privileges"
+      },
+      {
+        "test": "cs80_preset_capture_tests",
+        "skips": 1,
+        "reason_lines": [
+          "OK (skipped=1)"
+        ],
+        "source_checked_reason": "POSIX file-size limits"
+      },
+      {
+        "test": "cs80_render_cli_tests",
+        "skips": 3,
+        "reason_lines": [
+          "OK (skipped=3)"
+        ],
+        "source_checked_reason": "Three POSIX child-only file-size/resource-limit fixtures"
+      },
+      {
+        "test": "cs80_truth_render_tests",
+        "skips": 2,
+        "reason_lines": [
+          "OK (skipped=2)"
+        ],
+        "source_checked_reason": "Two POSIX file-size failure-injection fixtures"
+      },
+      {
+        "test": "cs80_vca_reference_tests",
+        "skips": 1,
+        "reason_lines": [
+          "OK (skipped=1)"
+        ],
+        "source_checked_reason": "POSIX file-size failure injection"
+      },
+      {
+        "test": "cs80_float_wav_tests",
+        "skips": 1,
+        "reason_lines": [
+          "OK (skipped=1)"
+        ],
+        "source_checked_reason": "POSIX file-size fault injection unavailable"
+      }
+    ],
+    "source_reason_binding": "Explicit git objects at d0c3c23be68ef048aa56969f1c493c221c1562c5; counts from fresh native LastTest.log."
+  },
+  "targets": {
+    "cs80_controller_handoff_host_tests": {
+      "found": false
+    },
+    "cs80_panel_golden_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "golden main-1600x1000: changed 0.9693 % of pixels (limit 0.30 %), worst 8x8 block mean 57.34 (limit 8.0) [report only on this platform]",
+        "golden main-1120x700: changed 1.8187 % of pixels (limit 0.30 %), worst 8x8 block mean 72.12 (limit 8.0) [report only on this platform]",
+        "Panel golden tests: 2 checks, 0 failures"
+      ]
+    },
+    "cs80_library_audit_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "library audit passed: 301 curated + 222 legacy programs"
+      ]
+    },
+    "cs80_preset_voicing_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset voicing regressions: 136/136 checks passed; 45.1 seconds generated."
+      ]
+    },
+    "cs80_preset_capture_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 9 tests in 2.167s",
+        "OK (skipped=1)"
+      ]
+    },
+    "cs80_preset_revert_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset opening sound REVERT: 1387 checks, 0 failures"
+      ]
+    },
+    "cs80_modern_recall_host_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Modern/session/preset/A-B recall: 2355 checks, 0 failures"
+      ]
+    },
+    "cs80_preset_file_recall_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "User-preset file/recall host: 2784 checks, 0 failures"
+      ]
+    },
+    "cs80_preset_identity_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset loaded identity: 81 checks, 0 failures"
+      ]
+    },
+    "cs80_preset_refresh_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Preset catalogue refresh: 193 checks, 0 failures"
+      ]
+    },
+    "cs80_ui_smoke": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Expression persistence RMS: restored=0.00558706742 expected=0.00532606419 full=0.0177500086 relative_error=0.0490048971",
+        "golden main-1600x1000: changed 0.9693 % of pixels (limit 0.30 %), worst 8x8 block mean 57.34 (limit 8.0) [report only on this platform]",
+        "golden main-1120x700: changed 1.8187 % of pixels (limit 0.30 %), worst 8x8 block mean 72.12 (limit 8.0) [report only on this platform]",
+        "UI SMOKE TEST PASSED"
+      ]
+    },
+    "cs80_pluginval_macos_download_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 22 tests in 0.042s",
+        "OK"
+      ]
+    },
+    "cs80_pluginval_windows_download_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 15 tests in 0.049s",
+        "OK"
+      ]
+    },
+    "cs80_packaging_notice_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'",
+        "Ran 6 tests in 3.102s",
+        "OK (skipped=1)"
+      ]
+    },
+    "cs80_package_binary_identity_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 13 tests in 0.181s",
+        "OK"
+      ]
+    },
+    "cs80_ci_juce_provenance_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "test_every_release_job_checks_before_build_and_retains_evidence (__main__.ReleaseWorkflowTests.test_every_release_job_checks_before_build_and_retains_evidence) ... ok",
+        "test_failed_recheck_replaces_previous_pass (__main__.SourceGateTests.test_failed_recheck_replaces_previous_pass) ... ok",
+        "Ran 11 tests in 2.673s",
+        "OK"
+      ]
+    },
+    "cs80_ci_bundle_verification_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 28 tests in 0.520s",
+        "OK"
+      ]
+    },
+    "cs80_windows_installer_preflight_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Ran 12 tests in 3.107s",
+        "OK (skipped=1)"
+      ]
+    },
+    "cs80_snapshot_cli_tests": {
+      "found": true,
+      "junit_outcome": "passed",
+      "summary_lines": [
+        "Snapshot CLI admission: 8 invalid invocations rejected before UI execution"
+      ]
+    },
+    "cs80_program_extension_recall_host_tests": {
+      "found": false
+    }
+  },
+  "recall": {
+    "cs80_preset_revert_tests": {
+      "checks": 1387,
+      "failures": 0
+    },
+    "cs80_modern_recall_host_tests": {
+      "checks": 2355,
+      "failures": 0
+    },
+    "cs80_preset_file_recall_tests": {
+      "checks": 2784,
+      "failures": 0
+    },
+    "cs80_preset_identity_tests": {
+      "checks": 81,
+      "failures": 0
+    },
+    "cs80_preset_refresh_tests": {
+      "checks": 193,
+      "failures": 0
+    }
+  },
+  "recall_total": 6800,
+  "recall_failures": 0,
+  "juce_provenance": {
+    "checked_at": "2026-11-22T13:48:12Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "workflow_run": "45029235535",
+    "configured_source": "D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "D:/a/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "environment": {
+    "os": "Windows Server 2022 Datacenter 10.0.20348",
+    "runner_image": "windows-2022",
+    "runner_image_version": "20261116.370.1",
+    "compiler": "MSVC 19.44.35230.0",
+    "architecture": "x64",
+    "generator": "Visual Studio 17 2022",
+    "configuration": "Release"
+  },
+  "validator": {
+    "pluginval-windows.log": {
+      "success_count": 1,
+      "seeds": [
+        "0x2467d1"
+      ],
+      "strictness_levels": [
+        "10"
+      ],
+      "failure_markers": [],
+      "version_lines": [],
+      "gui_lines": []
+    },
+    "pluginval-windows-seed-regression.log": {
+      "success_count": 1,
+      "seeds": [
+        "0x5037a0c"
+      ],
+      "strictness_levels": [
+        "10"
+      ],
+      "failure_markers": [],
+      "version_lines": [],
+      "gui_lines": []
+    }
+  },
+  "validator_version": "1.0.4",
+  "validator_download": {
+    "repository": "Tracktion/pluginval",
+    "version": "1.0.4",
+    "release_id": 188928656,
+    "asset_id": 210999198,
+    "asset_name": "pluginval_Windows.zip",
+    "expected_size": 2408590,
+    "expected_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab",
+    "attempts": [
+      {
+        "number": 1,
+        "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999198",
+        "reason": "downloaded",
+        "bytes": 2408590,
+        "final_host": "release-assets.githubusercontent.com",
+        "transfer_exit": 0
+      }
+    ],
+    "verified": true,
+    "actual_size": 2408590,
+    "actual_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab"
+  },
+  "validator_input": {
+    "validator_job_id": 137236123878,
+    "run_id": 45029235535,
+    "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "artifact_id": 14758085624,
+    "artifact_name": "cs80-windows-vst3",
+    "api_size": 3140726,
+    "api_digest": "sha256:f85e3b7e33185540cbfea13cdc8223f840896609e5c89f484e27827fa874c554",
+    "logged_download_digest": "f85e3b7e33185540cbfea13cdc8223f840896609e5c89f484e27827fa874c554",
+    "run_artifact_digest_match": true,
+    "raw_excerpt_file": "review-w09-windows/final-run-45029235535/validator-input-download.log",
+    "artifact_bytes_not_downloaded_by_this_agent": true,
+    "parent_owns_install_inventory_comparison": true
+  },
+  "artifacts": [
+    {
+      "id": 14758250272,
+      "name": "cs80-windows-install-bundle",
+      "size_in_bytes": 6259679,
+      "expired": false,
+      "digest": "sha256:b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+      "created_at": "2026-11-22T14:12:42Z",
+      "updated_at": "2026-11-22T14:12:42Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    },
+    {
+      "id": 14758085624,
+      "name": "cs80-windows-vst3",
+      "size_in_bytes": 3140726,
+      "expired": false,
+      "digest": "sha256:f85e3b7e33185540cbfea13cdc8223f840896609e5c89f484e27827fa874c554",
+      "created_at": "2026-11-22T14:12:38Z",
+      "updated_at": "2026-11-22T14:12:38Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    },
+    {
+      "id": 14757811652,
+      "name": "cs80-windows-test-evidence",
+      "size_in_bytes": 57104,
+      "expired": false,
+      "digest": "sha256:440fbe69673db858595a79ce307f616f9ebf51d2e46ec3cedb9f53044c8a0e15",
+      "created_at": "2026-11-22T14:12:43Z",
+      "updated_at": "2026-11-22T14:12:43Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    },
+    {
+      "id": 14758505066,
+      "name": "cs80-pluginval-windows",
+      "size_in_bytes": 5082,
+      "expired": false,
+      "digest": "sha256:aefa8ad4d2e398adde88ecaa281af5504baf8af15bb74dbb1eeb440a3660fc41",
+      "created_at": "2026-11-22T14:13:15Z",
+      "updated_at": "2026-11-22T14:13:15Z",
+      "expires_at": "2027-02-20T13:46:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    }
+  ],
+  "evidence_downloads": [
+    {
+      "file": "windows-test-evidence-d0c3c23.zip",
+      "artifact_id": 14757811652,
+      "expected_size": 57104,
+      "expected_sha256": "440fbe69673db858595a79ce307f616f9ebf51d2e46ec3cedb9f53044c8a0e15",
+      "folder": "native-evidence",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "run_id": 45029235535,
+      "actual_size": 57104,
+      "actual_sha256": "440fbe69673db858595a79ce307f616f9ebf51d2e46ec3cedb9f53044c8a0e15",
+      "verified": true,
+      "zip_crc_verified": true,
+      "members": [
+        {
+          "name": "ctest-results.xml",
+          "size": 95123,
+          "sha256": "4264a350ab923c4887cdf5a1443d5329e3484ec5635b47b6731913ccc75c1616"
+        },
+        {
+          "name": "ci-juce-provenance.txt",
+          "size": 585,
+          "sha256": "12579f9bf4b1b6e1cbc4fdc4376fe9b28e76ec831b2f34c733d3cea96b37438a"
+        },
+        {
+          "name": "Testing/Temporary/LastTest.log",
+          "size": 291046,
+          "sha256": "10b310193b8654bcb36012d0cfa83a5987b62673888496d816dfa419787c8204"
+        }
+      ]
+    },
+    {
+      "file": "windows-pluginval-d0c3c23.zip",
+      "artifact_id": 14758505066,
+      "expected_size": 5082,
+      "expected_sha256": "aefa8ad4d2e398adde88ecaa281af5504baf8af15bb74dbb1eeb440a3660fc41",
+      "folder": "pluginval-evidence",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "run_id": 45029235535,
+      "actual_size": 5082,
+      "actual_sha256": "aefa8ad4d2e398adde88ecaa281af5504baf8af15bb74dbb1eeb440a3660fc41",
+      "verified": true,
+      "zip_crc_verified": true,
+      "members": [
+        {
+          "name": "pluginval-reports/cs80-windows",
+          "size": 7167,
+          "sha256": "1531df408bdad3807d3f8275824609e59eea0c78a83ee0319428753889c87021"
+        },
+        {
+          "name": "pluginval-download.json",
+          "size": 718,
+          "sha256": "af96370d962221940857e22bba53e6e8fa5e61a42df9cb558d49706fbaf5956c"
+        },
+        {
+          "name": "pluginval-reports/cs80-windows-seed-regression",
+          "size": 7168,
+          "sha256": "baad3c35f7510101fa936d5f3c91a6bbfec5f28a3612b58f1fdc4464db557616"
+        },
+        {
+          "name": "pluginval-windows.log",
+          "size": 7381,
+          "sha256": "66f81e7ba7ec93d1b3d795f637d2710431783fb5b038355856208cebc9ea856f"
+        },
+        {
+          "name": "pluginval-windows-seed-regression.log",
+          "size": 7382,
+          "sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45"
+        },
+        {
+          "name": "pluginval-version.txt",
+          "size": 19,
+          "sha256": "83c1d35a35bad95a0c3b2e63de3f8526c134a35093d604a6a22e684981199d6c"
+        }
+      ]
+    }
+  ],
+  "package_selftest": {
+    "checks": 34,
+    "passed": true,
+    "synthetic_only": true
+  },
+  "package_native_log": {
+    "archive": "cs80-reference-windows-x86_64-d0c3c23be68e.zip",
+    "sha256": "e297aefad63533a5269d4e48e863114e99c09010d847c8333289de718902a796",
+    "formats": [
+      "VST3",
+      "Standalone"
+    ],
+    "architecture": "x86_64"
+  },
+  "limitations": [
+    "Windows validators were headless; GUI comparison is not claimed.",
+    "Windows panel golden comparisons are report-only; this does not qualify the Linux strict golden fixture.",
+    "Controller handoff and program extension fixtures are not registered in this Windows build.",
+    "Root owns downloaded VST3/install-archive inventory comparison; this agent only verified logged input identity/digest against API metadata.",
+    "The whole workflow still awaited Linux at Windows evidence collection time.",
+    "No previous-source native evidence was substituted. No tests/builds/repository/CI mutations were performed by this agent."
+  ]
+}

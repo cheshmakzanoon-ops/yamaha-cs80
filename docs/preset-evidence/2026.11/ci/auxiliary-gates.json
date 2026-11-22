@@ -1,0 +1,260 @@
+{
+  "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "snapshot_at_utc": "2026-11-22 14:36:12 UTC",
+  "report_written_utc": "2026-11-22 14:38:44 UTC",
+  "auxiliary_runs": [
+    {
+      "id": 45029235522,
+      "name": "Filter batch qualification",
+      "event": "push",
+      "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-22T13:46:22Z",
+      "updated_at": "2026-11-22T13:47:26Z",
+      "run_attempt": 1,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235522"
+    },
+    {
+      "id": 45029235556,
+      "name": "Hardware panel screenshots",
+      "event": "push",
+      "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-22T13:46:22Z",
+      "updated_at": "2026-11-22T13:54:02Z",
+      "run_attempt": 1,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235556"
+    },
+    {
+      "id": 45029235582,
+      "name": "DSP numerical measurements",
+      "event": "push",
+      "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-22T13:46:22Z",
+      "updated_at": "2026-11-22T14:27:33Z",
+      "run_attempt": 1,
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235582"
+    }
+  ],
+  "dsp_jobs": [
+    {
+      "id": 137228906067,
+      "name": "Default-off raw audio versus shipped baseline",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45029235582
+    },
+    {
+      "id": 137228906242,
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45029235582
+    },
+    {
+      "id": 137228906283,
+      "name": "sanitizers",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45029235582
+    },
+    {
+      "id": 137228906312,
+      "name": "measure",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45029235582
+    },
+    {
+      "id": 137228906454,
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45029235582
+    }
+  ],
+  "build_at_snapshot": {
+    "id": 45029235535,
+    "name": "build",
+    "event": "push",
+    "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "status": "in_progress",
+    "conclusion": null,
+    "created_at": "2026-11-22T13:46:22Z",
+    "updated_at": "2026-11-22T14:12:48Z",
+    "run_attempt": 1,
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45029235535"
+  },
+  "screenshot_descendant": {
+    "sha": "7f55a95a7534b389927defe46866456560b3a878",
+    "parents": [
+      "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+    ],
+    "message": "docs: refresh verified panel screenshots [skip ci]",
+    "files": [
+      {
+        "filename": "docs/screenshots/SHA256SUMS",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-page1.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-page2.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-page3.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-page4.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-populated-page1.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-populated-page2.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-populated-page3.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-populated-page4.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-source-performance-about.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/advanced-sub-ext-enabled.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/browser-1600x1000.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/main-1120x700.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/main-1200x760.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/main-1600x1000.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/main-populated-1600x1000.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/main-restored-1600x1000.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/main-source-performance-1120x700.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/memory-programmer-1600x1000.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/memory-programmer-selected-1600x1000.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/provenance.json",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/studio-drawers-1120x700.png",
+        "status": "modified"
+      },
+      {
+        "filename": "docs/screenshots/studio-keyboard-midi-learn-1600x1000.png",
+        "status": "modified"
+      }
+    ]
+  },
+  "historical_beta_comparison": {
+    "run_id": 45028098165,
+    "displayed_workflow_sha": "d2c70e11e56034f932418ff228115c551769a85a",
+    "actual_source_run_id": 45016741244,
+    "actual_plugin_source": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+    "source_artifact_missing": true,
+    "validator_executed": false,
+    "jobs": [
+      {
+        "id": 137225422580,
+        "name": "Official beta3 / headless-subset / 0x4f31605",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 45028098165
+      },
+      {
+        "id": 137225422820,
+        "name": "Official beta3 / gui-current-regression / 0x3ca4063",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 45028098165
+      },
+      {
+        "id": 137225422969,
+        "name": "Official beta3 / gui-inclusive / 0x63421ca",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 45028098165
+      }
+    ],
+    "log_extracts": [
+      {
+        "job_id": 137225422580,
+        "relevant_lines": [
+          "2026-11-22T13:33:26.2965208Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a",
+          "2026-11-22T13:33:27.1855854Z ##[error]Unhandled error: Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+          "2026-11-22T13:33:27.2078236Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a",
+          "2026-11-22T13:33:27.2081054Z   VALIDATION_OUTCOME: skipped",
+          "2026-11-22T13:33:27.2082010Z   SOURCE_RUN_ID: 45016741244",
+          "2026-11-22T13:33:27.2263322Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a"
+        ]
+      },
+      {
+        "job_id": 137225422820,
+        "relevant_lines": [
+          "2026-11-22T13:33:26.4806041Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a",
+          "2026-11-22T13:33:27.3862018Z ##[error]Unhandled error: Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+          "2026-11-22T13:33:27.4124270Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a",
+          "2026-11-22T13:33:27.4128564Z   VALIDATION_OUTCOME: skipped",
+          "2026-11-22T13:33:27.4129972Z   SOURCE_RUN_ID: 45016741244",
+          "2026-11-22T13:33:27.4417731Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a"
+        ]
+      },
+      {
+        "job_id": 137225422969,
+        "relevant_lines": [
+          "2026-11-22T13:33:27.6824134Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a",
+          "2026-11-22T13:33:32.2050556Z ##[error]Unhandled error: Error: Expected exactly one non-expired cs80-linux-vst3 artifact",
+          "2026-11-22T13:33:32.4163858Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a",
+          "2026-11-22T13:33:32.4165298Z   VALIDATION_OUTCOME: skipped",
+          "2026-11-22T13:33:32.4165805Z   SOURCE_RUN_ID: 45016741244",
+          "2026-11-22T13:33:32.4328173Z   COMPARISON_WORKFLOW_SHA: d2c70e11e56034f932418ff228115c551769a85a"
+        ]
+      }
+    ]
+  },
+  "scope": "Exact-source auxiliary terminal results and a timestamped historical comparison attribution. The build was still pending at this snapshot; final native/validator/package acceptance is recorded separately."
+}

@@ -1,0 +1,69 @@
+{
+  "assessment": "Two instrumented nonreproductions; original attempt-1 native SIGSEGV remains unexplained. No crash ownership or production fix established.",
+  "run_id": 45041640467,
+  "job_id": 137267174290,
+  "workflow_commit": "b61d4057e83eac404c9f0db0c38f9ee857f83baf",
+  "published_workflow_sha256": "19c5beaf06202411f24bdfe1e57973081598ff0907f03f97ae0fa1877898982e",
+  "source": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "original_run": 45029235535,
+  "original_run_attempt": 1,
+  "original_job": 137263093053,
+  "original_raw_returncode": -11,
+  "original_wrapper_exit": 139,
+  "input_plugin": {
+    "artifact_id": 14761700962,
+    "artifact_bytes": 6889833,
+    "artifact_sha256": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+    "source": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "run": 45029235535,
+    "members": [
+      {
+        "name": "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "bytes": 1095,
+        "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4"
+      },
+      {
+        "name": "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "bytes": 17384920,
+        "sha256": "6ffae83a8425553915941106386fb4e34380f59cdb0daf9f6bd17ca2b30d0a6b"
+      }
+    ]
+  },
+  "validator_version": "1.0.4",
+  "validator_hashes": {
+    "pluginval.zip": "c01c49d8063965c4c2dea8324468336768f5c9139e0b1caebde14c2400b55352",
+    "pluginval/pluginval": "d3d342ea92293b0699a5c983937211e3faf2b0f38145b31cb8d78424a25e10ba"
+  },
+  "results": {
+    "gdb": {
+      "seed": "0x5ba7253",
+      "strictness": 10,
+      "success_markers": 1,
+      "process_exit": 0,
+      "log_exit": 0,
+      "timeout": false,
+      "fault_or_failure_marker": false,
+      "normal_inferior_exit": true,
+      "fault_stack_available": false
+    },
+    "trace": {
+      "seed": "0x5ba7253",
+      "strictness": 10,
+      "success_markers": 1,
+      "process_exit": 0,
+      "log_exit": 0,
+      "timeout": false,
+      "fault_or_failure_marker": false,
+      "normal_inferior_exit": null,
+      "fault_stack_available": false
+    }
+  },
+  "fault_thread_log": "diagnostic handler installed; later replacement is possible",
+  "diagnostic_artifact": {
+    "id": 14761467989,
+    "bytes": 8995,
+    "sha256": "c455d7e957ef49bd986b9ba4c02925ef742c93471d9eb2e4fdbe50d1945c6df3"
+  },
+  "general_build_used_for_qualification": false,
+  "reruns_or_changes_in_monitor_task": 0
+}

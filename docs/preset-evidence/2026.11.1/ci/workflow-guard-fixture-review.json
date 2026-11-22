@@ -1,0 +1,21 @@
+{
+  "checked_at_utc": "2026-11-22T16:28:02.382679+00:00",
+  "source_parent": "dd78677f08fd877abe7e55de242897f90c2ca8ba",
+  "candidate_binary_ancestor": "be460b0b93bdcb8dce5eb8925b18b72706b25e19",
+  "baseline": {
+    "tests": 22,
+    "failures": 1,
+    "exit": 1,
+    "reason": "stale entire Linux workflow-region fingerprint after audition/diagnostic changes"
+  },
+  "corrected": {
+    "tests": 22,
+    "failures": 0,
+    "exit": 0
+  },
+  "old_linux_sha256": "dd36be196c6f754017a19517bc9974b0d0b1e376ae4e4af4b5143e6cef78e9a2",
+  "new_linux_sha256": "c72b9d5e34364eb77ff9a62d546e7b1c1a031d7f448f5e71b188a6cd95227caa",
+  "test_sha256_before": "8f22d4e5c17c40dcb1cf1b016dd7619b4ab5c4a9a8da6cc1a3855a7c20f13559",
+  "test_sha256_after": "724d979b435bbcf4d46ca1d15c983f3e35a340ba2ad9a0a1786327f6b39909e4",
+  "independent_review": "Agent47 compared all8 required validator step dictionaries; unchanged ignoring only newly added headless step id; all command/failure bytes retained. Linux wrapper identical."
+}

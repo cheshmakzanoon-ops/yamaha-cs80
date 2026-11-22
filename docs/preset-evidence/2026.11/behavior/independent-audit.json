@@ -1,0 +1,133 @@
+{
+  "reviewed_commit": "7ac6d99a5e187068907b17233109f2f1cc3da9fb",
+  "method": "Read-only source, inventory, hash, archive-member and executable-symbol inspection. No rendering, tests or builds.",
+  "test_source_sha256": "ce272e4a04d4109933cc0b68bcea048d93707a88a4b4c702c33824c5ce55af6c",
+  "test_source_hash_matches_retained_summary": true,
+  "banks": {
+    "original": {
+      "archive": "evidence-baseline/libcs80_core.a",
+      "sha256": "0a609738fa8e5d20e2ce0b8d5a948831eec2caa5accf7918c2447f6f8f2669ed",
+      "archive_members": {
+        "Engine.cpp.o": "320b81ade7127ab0be1844338fc2f0102596f29ac26f0fcbfe058d69e53043c4",
+        "EngineWscHeld.cpp.o": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060",
+        "FactoryPresets.cpp.o": "634ee1a42dc460f7ba49c52d3cd34fa0b6548a777c05bf95e2c8c69c0aad6a1b",
+        "Ig00156Batch.cpp.o": "d89a152bea2e682baaa5cccbb3b6ac831d7e8064bcb8411413ef4a309c233266"
+      },
+      "archive_hash_matches_summary": true,
+      "log_sha256": "e8669a4667f8a7ddd004dd0434ca4ca06fe03767fc6db41b09b9a27494088ff2",
+      "log_matches_original": true,
+      "failures": [
+        "Pan Flute: independent transient dies on a held key",
+        "Sine Bass: independent transient dies on a held key",
+        "Nylon Pluck: finger transient dies promptly on a held key",
+        "Percussive Organ: percussion is the octave above the 8-foot body",
+        "Percussive Organ: octave percussion is present in the full patch",
+        "Percussive Organ: full-patch octave percussion fades",
+        "Piccolo: no prominent unintended lower-octave pitch",
+        "Ocarina: no prominent unintended lower-octave pitch",
+        "Whistle: no prominent unintended lower-octave pitch",
+        "Velocity Keys: hard attack is substantially louder than soft attack",
+        "Velocity Keys: wide velocity dynamics persist beyond the onset",
+        "Velocity Lead: hard attack is substantially louder than soft attack",
+        "Velocity Lead: wide velocity dynamics persist beyond the onset",
+        "Pressure Lead: no-pressure held key is at the silence/noise floor",
+        "Pressure Lead: full pressure brings out a clearly audible tone",
+        "Pressure Lead: releasing pressure fades the held tone",
+        "Brass Stab: short articulation dies without note-off",
+        "Spiccato Strings: short articulation dies without note-off",
+        "Poly Stab: short articulation dies without note-off",
+        "Bowed Swell Strings: long opening grows into an audible swell"
+      ],
+      "failures_exactly_match_summary": true,
+      "summary_nonpath_fields_match_original": true,
+      "passed": 116,
+      "checks": 136
+    },
+    "quiet-draft": {
+      "archive": "candidate-voicing-core.a",
+      "sha256": "f17cd116cbf139f707a5271c93ede04663d12b0c5ff7e98138e6385cce871fb0",
+      "archive_members": {
+        "Engine.cpp.o": "320b81ade7127ab0be1844338fc2f0102596f29ac26f0fcbfe058d69e53043c4",
+        "EngineWscHeld.cpp.o": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060",
+        "FactoryPresets.cpp.o": "882c15d9b7d588ece6ccb06f8b2b6716b9640f29a8961c08eb6ddb563c284bc6",
+        "Ig00156Batch.cpp.o": "d89a152bea2e682baaa5cccbb3b6ac831d7e8064bcb8411413ef4a309c233266"
+      },
+      "archive_hash_matches_summary": true,
+      "log_sha256": "9382a8f56b8652ee274449ab0c97e564a21b94a04e2fb81ec7177811b75cb814",
+      "log_matches_original": true,
+      "failures": [
+        "Pan Flute: transient remains present at the actual rank balance",
+        "Nylon Pluck: transient remains present at the actual rank balance"
+      ],
+      "failures_exactly_match_summary": true,
+      "summary_nonpath_fields_match_original": true,
+      "passed": 134,
+      "checks": 136
+    },
+    "final": {
+      "archive": "evidence-final/libcs80_core.a",
+      "sha256": "93afda4ffa0a4c7a6a7a94155b3cc693754e932b49e7e197d15402f3b79a293f",
+      "archive_members": {
+        "Engine.cpp.o": "320b81ade7127ab0be1844338fc2f0102596f29ac26f0fcbfe058d69e53043c4",
+        "EngineWscHeld.cpp.o": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060",
+        "FactoryPresets.cpp.o": "06930f0a9696672037a4012a7157f967636f1c03ac2181d8719ac73cea5c8ae3",
+        "Ig00156Batch.cpp.o": "d89a152bea2e682baaa5cccbb3b6ac831d7e8064bcb8411413ef4a309c233266"
+      },
+      "archive_hash_matches_summary": true,
+      "log_sha256": "e8a6df42f9a7e924fd03327c5a6253917ace71ba2db7528a7a09acf01bf8ffdf",
+      "log_matches_original": true,
+      "failures": [],
+      "failures_exactly_match_summary": true,
+      "summary_nonpath_fields_match_original": true,
+      "passed": 136,
+      "checks": 136
+    },
+    "release": {
+      "archive": "evidence-release/libcs80_core.a",
+      "sha256": "3b954b496188cbcfa66c243f146963ac26f171d832d270bcdc8f7c02665a515b",
+      "archive_members": {
+        "Engine.cpp.o": "320b81ade7127ab0be1844338fc2f0102596f29ac26f0fcbfe058d69e53043c4",
+        "EngineWscHeld.cpp.o": "f5c2960a333bfa9aa5f556bec345e7a2ef12738a2485da0bd6973fc832f96060",
+        "FactoryPresets.cpp.o": "42a189c7a1b1c5d56870b9ce587ef5a2e62861ff8d944b42bf8596a9e41e57be",
+        "Ig00156Batch.cpp.o": "d89a152bea2e682baaa5cccbb3b6ac831d7e8064bcb8411413ef4a309c233266"
+      }
+    }
+  },
+  "scope_counts": {
+    "programs": 20,
+    "renders": 30,
+    "policy_checks": 30,
+    "finite_checks": 30,
+    "full_patch_peak_checks": 22,
+    "behavior_assertions": 52,
+    "reconstruction_checks": 2,
+    "total_checks": 136,
+    "generated_seconds": 45.05
+  },
+  "non_factory_archive_members_identical_across_all_four": true,
+  "corrected_to_release_deltas": [
+    {
+      "name": "Stereo Delay Pluck",
+      "changes": [
+        {
+          "parameter": "fx1_mix",
+          "corrected": 0.280000001,
+          "release": 0.180000007
+        },
+        {
+          "parameter": "fx1_param_b",
+          "corrected": 0.579999983,
+          "release": 0.419999987
+        }
+      ]
+    }
+  ],
+  "release_inventory_equals_published": true,
+  "baseline_inventory_equals_published": true,
+  "release_log_matches_published_final": true,
+  "release_archive_matches_build_archive": true,
+  "release_voicing_binary_sha256": "e6aad969fdd8ee81dadc9f381e8a0b923e94ea228b26e4b3dfc6412afe9c9f6c",
+  "release_link_record": "/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/cs80_preset_voicing_tests.dir/link.d CMakeFiles/cs80_preset_voicing_tests.dir/tests/PresetVoicingTests.cpp.o -o cs80_preset_voicing_tests  libcs80_core.a",
+  "direct_link_commands": "Working directory: yamaha-cs80\n\ng++ -std=c++20 -O2 -Wall -Wextra -Wpedantic -I src tests/PresetVoicingTests.cpp evidence-final/libcs80_core.a -o review-w06-behavior/voicing-final -pthread -ldl\ng++ -std=c++20 -O2 -Wall -Wextra -Wpedantic -I src tests/PresetVoicingTests.cpp candidate-voicing-core.a -o review-w06-behavior/voicing-quiet-draft -pthread -ldl\ng++ -std=c++20 -O2 -Wall -Wextra -Wpedantic -I src tests/PresetVoicingTests.cpp evidence-baseline/libcs80_core.a -o review-w06-behavior/voicing-original -pthread -ldl\n",
+  "report_sha256": "769dc89dbefcd7e9d5951a4bba64507c184056c78dfa2d3dab86170bc195dd9c"
+}

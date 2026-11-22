@@ -10,6 +10,15 @@ The [refinement report](../../PRESET_REFINEMENT_2026_11_1.md) explains the resul
 sounds. [Provenance](provenance.json) records every archived input, its original
 SHA-256, the stored SHA-256 and any textual transformation.
 
+Native qualification is in progress for source
+`6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
+[build 45044040694, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
+The [integration lineage](ci/source-lineage.json) retains the cancelled predecessor
+and its actual workflow-snapshot failure on all four native runners. Correcting
+that expectation changed no production bank, packaging code or required
+validator command. The older [2026.11 qualification](../2026.11/ci/release-qualification.json)
+remains separate and does not qualify these newer binaries.
+
 ## Read the evidence at its recorded stage
 
 The family measurements use the **frozen baseline engine and bank**, with the

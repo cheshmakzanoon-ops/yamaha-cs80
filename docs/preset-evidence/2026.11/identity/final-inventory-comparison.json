@@ -1,0 +1,22 @@
+{
+  "checked_at_utc": "2026-11-22T13:53:39.020255+00:00",
+  "reviewer": "coordinator final inventory recheck",
+  "source_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "baseline_commit": "61f45feeae1f01038476eb9c99105534950db4de",
+  "inventory_sha256": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785",
+  "parameter_comparison": "all 190 parameters compared as IEEE 754 binary32; volume excluded only from voicing change/duplicate counts",
+  "parameter_ids_identical": true,
+  "identities_identical": true,
+  "musical_programs_revoiced": 300,
+  "minimum_non_volume_changes": 19,
+  "maximum_non_volume_changes": 61,
+  "exact_non_volume_duplicates": [],
+  "init_complete_record_unchanged": true,
+  "description_changes": 300,
+  "tag_list_changes": 243,
+  "existing_per_program_change_count_csv_matches_final": true,
+  "compiled_preset_sources_identical_to_authoring_commit": true,
+  "source_paths_checked": [
+    "src/core"
+  ]
+}

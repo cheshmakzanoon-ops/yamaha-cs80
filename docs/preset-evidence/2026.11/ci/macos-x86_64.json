@@ -1,0 +1,510 @@
+{
+  "schema": 1,
+  "verdict": "PASS_NATIVE_CI_WITH_EXPLICIT_PLATFORM_SKIPS",
+  "recorded_at": "2026-11-22T12:11:24.144704+00:00",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "source_tree": "1b875a79f779ab0ad91d67da7d7926dc58b94e28",
+  "run_id": 45016741244,
+  "run_attempt": 1,
+  "job_id": 137190570128,
+  "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45016741244/job/137190570128",
+  "started_at": "2026-11-22T11:19:48Z",
+  "completed_at": "2026-11-22T12:06:02Z",
+  "platform": {
+    "runner_label": "macos-15-intel",
+    "observed_uname_m": "x86_64",
+    "os_version": "15.7.9",
+    "os_build": "24G830",
+    "xcode": "16.4",
+    "compiler": "AppleClang 17.0.0.17000013",
+    "runner_image": "macos-15",
+    "runner_image_version": "20260824.0482.1"
+  },
+  "source_provenance": {
+    "run_and_job_sha_match": true,
+    "run_tree_matches": true,
+    "checkout_log_sha_match": true,
+    "artifact_workflow_sha_match": true,
+    "juce": {
+      "checked_at": "2026-11-22T11:23:05Z",
+      "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "expected_version": "8.0.11",
+      "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+      "workflow_commit": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+      "workflow_run": "45016741244",
+      "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+      "source_override": "",
+      "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+      "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "origin": "https://github.com/juce-framework/JUCE.git",
+      "git_description": "8.0.11",
+      "source_clean": "true",
+      "actual_version": "8.0.11",
+      "verification": "PASS"
+    },
+    "reviewed_source_files": [
+      {
+        "path": ".github/workflows/build.yml",
+        "sha256": "cb207616afe4f7ed2b471da5eb306139d9614d9275a1e9b878b22c75cf69831f",
+        "working_copy_matches_published_commit": true
+      },
+      {
+        "path": "scripts/verify-ci-juce-source.cmake",
+        "sha256": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727",
+        "working_copy_matches_published_commit": true
+      },
+      {
+        "path": "scripts/package-ci-artifacts.py",
+        "sha256": "d78db71fc4c512a6c19c8489aa60b22d0b81582112d34ce0c4b8cc45159560a6",
+        "working_copy_matches_published_commit": true
+      },
+      {
+        "path": "tests/PanelEditorTests.h",
+        "sha256": "81eef110a5e253a5c98a83c8c2c082c5d27e91a96acbb835b432d370685eaa4b",
+        "working_copy_matches_published_commit": true
+      },
+      {
+        "path": "tests/StereoPraExactTests.cpp",
+        "sha256": "9086cd6180720365618872e6462b3574d6ce39996305db1762c87ea64c9472e0",
+        "working_copy_matches_published_commit": true
+      },
+      {
+        "path": "src/tools/ui_snapshot.cpp",
+        "sha256": "d805ec1f693ccc68a70d731e3f840d73461910f22a8ef744e1e53d19e8492690",
+        "working_copy_matches_published_commit": true
+      }
+    ]
+  },
+  "ctest": {
+    "registered": 242,
+    "passed": 240,
+    "failed": 0,
+    "skipped": 2,
+    "disabled": 0,
+    "seconds": 1921.15,
+    "skipped_details": [
+      {
+        "name": "cs80_filter_batch_cap_tests",
+        "status": "skipped",
+        "seconds": 0.0226586,
+        "skip_attributes": {
+          "message": "SKIP_RETURN_CODE=77"
+        },
+        "output": "SKIP: AVX2 unavailable or disabled; no SIMD qualification\n"
+      },
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "skipped",
+        "seconds": 0.00614418,
+        "skip_attributes": {
+          "message": "SKIP_RETURN_CODE=77"
+        },
+        "output": ""
+      }
+    ],
+    "stereo_pra_skip_explanation": "Source gate requires Linux x86_64 GCC 14.2 plus specific ISA/FP settings; macOS AppleClang takes return 77.",
+    "additional_python_subtest_skips": [
+      {
+        "ctest": "cs80_package_binary_identity_tests",
+        "subtests_skipped": 1
+      },
+      {
+        "ctest": "cs80_packaging_notice_tests",
+        "subtests_skipped": 1
+      },
+      {
+        "ctest": "cs80_windows_installer_preflight_tests",
+        "subtests_skipped": 2
+      },
+      {
+        "ctest": "cs80_render_cli_tests",
+        "subtests_skipped": 1
+      }
+    ],
+    "full_case_list_file": "ctest-test-list.json"
+  },
+  "targeted": {
+    "preset_voicing": {
+      "test": "cs80_preset_voicing_tests",
+      "status": "passed",
+      "checks_passed": 136,
+      "checks_total": 136,
+      "audio_seconds_generated": 45.1,
+      "seconds": 11.3886
+    },
+    "preset_capture": {
+      "test": "cs80_preset_capture_tests",
+      "status": "passed",
+      "cases": 9,
+      "python_seconds": 7.282
+    },
+    "library": {
+      "test": "cs80_library_audit_tests",
+      "status": "passed",
+      "curated": 301,
+      "legacy": 222,
+      "phrase_peak_max_dbfs": -5.0,
+      "loudest_window_rms_range_dbfs": [
+        -30.0,
+        -18.0
+      ],
+      "stress_peak_max_dbfs": -1.5
+    },
+    "macos_download_fixture": {
+      "test": "cs80_pluginval_macos_download_tests",
+      "status": "passed",
+      "python_cases": 22
+    },
+    "recall": {
+      "checks": 6800,
+      "failures": 0,
+      "suites": [
+        {
+          "name": "cs80_preset_revert_tests",
+          "status": "passed",
+          "seconds": 3.43615,
+          "checks": 1387,
+          "failures": 0
+        },
+        {
+          "name": "cs80_modern_recall_host_tests",
+          "status": "passed",
+          "seconds": 6.57448,
+          "checks": 2355,
+          "failures": 0
+        },
+        {
+          "name": "cs80_preset_file_recall_tests",
+          "status": "passed",
+          "seconds": 1.4297,
+          "checks": 2784,
+          "failures": 0
+        },
+        {
+          "name": "cs80_preset_identity_tests",
+          "status": "passed",
+          "seconds": 0.458682,
+          "checks": 81,
+          "failures": 0
+        },
+        {
+          "name": "cs80_preset_refresh_tests",
+          "status": "passed",
+          "seconds": 0.649619,
+          "checks": 193,
+          "failures": 0
+        }
+      ]
+    },
+    "panel": {
+      "test": "cs80_panel_golden_tests",
+      "ctest_status": "passed",
+      "checks": 2,
+      "failures": 0,
+      "pixel_comparison_policy": "report-only on macOS; Linux-only thresholds are not enforced",
+      "images": [
+        {
+          "name": "main-1600x1000",
+          "changed_pixels_percent": 0.8014,
+          "reference_limit_percent": 0.3,
+          "block": "8x8",
+          "worst_block_mean": 64.52,
+          "reference_block_limit": 8.0,
+          "enforced": false
+        },
+        {
+          "name": "main-1120x700",
+          "changed_pixels_percent": 1.3947,
+          "reference_limit_percent": 0.3,
+          "block": "8x8",
+          "worst_block_mean": 52.08,
+          "reference_block_limit": 8.0,
+          "enforced": false
+        }
+      ]
+    },
+    "ui_smoke": {
+      "test": "cs80_ui_smoke",
+      "status": "passed",
+      "explicit_result": "UI SMOKE TEST PASSED",
+      "seconds": 140.444,
+      "expression_relative_error": 0.0490048664,
+      "unchanged_expression_relative_error_limit": 0.15
+    },
+    "host_wrapper_platform": {
+      "status": "passed",
+      "checks": 92,
+      "failures": 0
+    },
+    "main_vst3_only_automation": {
+      "status": "passed",
+      "checks": 191,
+      "failures": 0
+    },
+    "other_host_ui_case_statuses": [
+      {
+        "name": "cs80_host_automation_curve_tests",
+        "status": "passed",
+        "seconds": 0.849867
+      },
+      {
+        "name": "cs80_memory_panel_tests",
+        "status": "passed",
+        "seconds": 0.903945
+      },
+      {
+        "name": "cs80_memory_panel_ports_tests",
+        "status": "passed",
+        "seconds": 18.4047
+      },
+      {
+        "name": "cs80_memory_panel_port_map_tests",
+        "status": "passed",
+        "seconds": 1.69746
+      },
+      {
+        "name": "cs80_panel_golden_tests",
+        "status": "passed",
+        "seconds": 3.41087
+      },
+      {
+        "name": "cs80_modern_recall_host_tests",
+        "status": "passed",
+        "seconds": 6.57448
+      },
+      {
+        "name": "cs80_mpe_released_target_host_tests",
+        "status": "passed",
+        "seconds": 20.7161
+      },
+      {
+        "name": "cs80_mpe_member_onset_host_tests",
+        "status": "passed",
+        "seconds": 9.60936
+      },
+      {
+        "name": "cs80_sixteen_voice_release_host_tests",
+        "status": "passed",
+        "seconds": 1.39748
+      },
+      {
+        "name": "cs80_mod_matrix_routing_ui_tests",
+        "status": "passed",
+        "seconds": 0.227294
+      },
+      {
+        "name": "cs80_mts_dormant_engine_host_tests",
+        "status": "passed",
+        "seconds": 2.3204
+      },
+      {
+        "name": "cs80_controller_reset_host_tests",
+        "status": "passed",
+        "seconds": 5.13433
+      },
+      {
+        "name": "cs80_voice_activity_host_tests",
+        "status": "passed",
+        "seconds": 0.426781
+      },
+      {
+        "name": "cs80_voice_activity_ui_tests",
+        "status": "passed",
+        "seconds": 1.45222
+      },
+      {
+        "name": "cs80_keyboard_handoff_host_tests",
+        "status": "passed",
+        "seconds": 1.18538
+      },
+      {
+        "name": "cs80_keyboard_tuning_ui_tests",
+        "status": "passed",
+        "seconds": 0.299121
+      },
+      {
+        "name": "cs80_ui_smoke",
+        "status": "passed",
+        "seconds": 140.444
+      },
+      {
+        "name": "cs80_host_wrapper_platform_tests",
+        "status": "passed",
+        "seconds": 6.40823
+      }
+    ]
+  },
+  "pluginval": {
+    "version": "1.0.4",
+    "verified_download": {
+      "repository": "Tracktion/pluginval",
+      "version": "1.0.4",
+      "release_id": 188928656,
+      "asset_id": 210999197,
+      "asset_name": "pluginval_macOS.zip",
+      "expected_size": 9202795,
+      "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+      "attempts": [
+        {
+          "number": 1,
+          "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+          "reason": "downloaded",
+          "bytes": 9202795,
+          "final_host": "release-assets.githubusercontent.com",
+          "transfer_exit": 0
+        }
+      ],
+      "verified": true,
+      "actual_size": 9202795,
+      "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+    },
+    "validators": {
+      "vst3_headless": {
+        "status": "SUCCESS",
+        "strictness": 10,
+        "seed": "0x2872ed5",
+        "validated_path": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3",
+        "log_file": "pluginval-vst3.log",
+        "log_sha256": "2a6eea2890fe2e59eabeefd29f6fd1a0ea8a2f75a19a590015ac8d9a96cac935",
+        "warnings": []
+      },
+      "au_headless": {
+        "status": "SUCCESS",
+        "strictness": 10,
+        "seed": "0x44ddc76",
+        "validated_path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+        "log_file": "pluginval-au.log",
+        "log_sha256": "12cb5b430ec8247a453e9897e0ba4ebe476ce8e67934daf3e259140deda81aff",
+        "warnings": [
+          "!!! WARNING: Current program is -1... Is this correct?"
+        ]
+      },
+      "au_gui": {
+        "status": "SUCCESS",
+        "strictness": 10,
+        "seed": "0x3b06ac1",
+        "validated_path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+        "log_file": "pluginval-au-gui.log",
+        "log_sha256": "e060fb21ac7023a34a43e1b98ded11e4d3274baadc13a204e96d2b7064af926d",
+        "warnings": [
+          "!!! WARNING: Current program is -1... Is this correct?"
+        ],
+        "completed_editor_checks": [
+          "Editor",
+          "Open editor whilst processing",
+          "Editor Automation"
+        ]
+      }
+    }
+  },
+  "package": {
+    "archive": "packages/cs80-reference-macos-x86_64-ba3a721a69b6.tar.gz",
+    "sha256": "76933987b5ec35cca4cae7eb8bd3ff0b9c3771fc03d303e88f3cba3109834eb5",
+    "formats": [
+      "VST3",
+      "Standalone",
+      "AU"
+    ],
+    "architecture": "x86_64",
+    "ci_step": "success",
+    "self_test_checks": 46,
+    "self_test_scope": "synthetic fixture/rejection checks",
+    "upload_artifact_id": 14753179065,
+    "independent_install_archive_verification": "Root-owned; not performed by this review"
+  },
+  "artifacts": [
+    {
+      "id": 14753308625,
+      "name": "cs80-pluginval-macos-15-intel",
+      "size_in_bytes": 7262,
+      "expired": false,
+      "created_at": "2026-11-22T12:05:57Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "digest": "sha256:970b63f624eb7d5fbe31324e4c47445b93b84421555dea3ca5afae51e19e9bb8",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    },
+    {
+      "id": 14753228917,
+      "name": "cs80-macos-15-intel-test-evidence",
+      "size_in_bytes": 60280,
+      "expired": false,
+      "created_at": "2026-11-22T12:05:58Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "digest": "sha256:87315d3e91bdd0101ab231302a24cf5031a9c9b36cd525e6f871f27640747324",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    },
+    {
+      "id": 14753179065,
+      "name": "cs80-macos-15-intel-install-bundle",
+      "size_in_bytes": 16055839,
+      "expired": false,
+      "created_at": "2026-11-22T12:05:56Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "digest": "sha256:90fba143ff9d8edb6527b1fec412b33430d71a9f708daeb44ab9a004e3c5628c",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    }
+  ],
+  "evidence_zip_integrity": [
+    {
+      "artifact_id": 14753228917,
+      "file_name": "cs80-macos-15-intel-test-evidence.zip",
+      "bytes": 60280,
+      "sha256": "87315d3e91bdd0101ab231302a24cf5031a9c9b36cd525e6f871f27640747324",
+      "api_digest_matches": true,
+      "status": 200,
+      "content_type": "application/zip",
+      "members": [
+        "Testing/Temporary/LastTest.log",
+        "ctest-results.xml",
+        "ci-juce-provenance.txt"
+      ],
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+    },
+    {
+      "artifact_id": 14753308625,
+      "file_name": "cs80-pluginval-macos-15-intel.zip",
+      "bytes": 7262,
+      "sha256": "970b63f624eb7d5fbe31324e4c47445b93b84421555dea3ca5afae51e19e9bb8",
+      "api_digest_matches": true,
+      "status": 200,
+      "content_type": "application/zip",
+      "members": [
+        "pluginval-download.json",
+        "pluginval-reports/cs80-au-gui",
+        "pluginval-reports/cs80-au",
+        "pluginval-reports/cs80-vst3",
+        "pluginval-vst3.log",
+        "pluginval-au.log",
+        "pluginval-au-gui.log"
+      ],
+      "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+    }
+  ],
+  "limitations": [
+    "Two CTest entries are explicitly skipped; do not describe all 242 as executed passes.",
+    "Five Python subtests are reported skipped within four passing CTest suites; their counts are listed separately.",
+    "Native macOS panel pixel comparisons are report-only, and their differences exceed the Linux reference thresholds.",
+    "Both AU pluginval logs contain a Current program is -1 warning, while both end with explicit SUCCESS.",
+    "This review verifies CI/log/test evidence; independent install-archive payload verification belongs to root."
+  ],
+  "repository_changes": "None"
+}

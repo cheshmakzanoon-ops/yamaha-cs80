@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "reviewer": "primary assignment 60, w10_final_release_acceptance",
+  "reviewed_at_utc": "2026-11-22T16:42:13.097284+00:00",
+  "verdict": "ACCEPTED_FOR_ORIGINAL_2026_11_DEVELOPMENT_PUBLICATION_WITH_RECORDED_UNRESOLVED_LINUX_FAILURE",
+  "acceptance_scope": "Accurately disclosed original preset revision 2026.11 development downloads and source-bound evidence. Acceptance of the publication record does not convert the failed first validator invocation into a pass.",
+  "source_commit": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "source_tree": "bf4aa2f49be6207e07646a317018bb8df91fa5dc",
+  "preset_revision": "2026.11",
+  "workflow_run_id": 45029235535,
+  "reviewed_working_head_context_only": "00339ed7c616da28e5c32011e558ea00833f041b",
+  "current_main_qualifies_these_binaries": false,
+  "newer_2026_11_1_qualified_by_this_review": false,
+  "publication_blockers_in_this_scope": [],
+  "original_first_attempt_clean": false,
+  "original_linux_validator_failure": {
+    "run_attempt": 1,
+    "job_id": 137263093053,
+    "seed": "0x5ba7253",
+    "explicit_success_before_crash": true,
+    "raw_returncode": -11,
+    "wrapper_exit": 139,
+    "retry_count": 0,
+    "gui_gates": "skipped",
+    "status": "retained failed, unexplained",
+    "cause_established": false,
+    "crash_ownership_established": false,
+    "production_fix_established": false
+  },
+  "separate_later_linux_validation": {
+    "run_attempt": 2,
+    "job_id": 137263915334,
+    "input_artifact_id": 14761700962,
+    "same_input_bytes": true,
+    "headless_seed": "0x50a3104",
+    "gui_seed": "0x75af02",
+    "fixed_gui_seed": "0x2da72db",
+    "all_three_exits": 0,
+    "other_five_job_executions": "retained from attempt 1",
+    "review_team_initiated_rerun": false,
+    "attribution_limit": "Public actor fields identify an account, not the exact human or client; execution changed runner and randomized seeds."
+  },
+  "bounded_diagnostics": {
+    "run_id": 45041640467,
+    "job_id": 137267174290,
+    "original_input_artifact_id": 14761700962,
+    "original_seed": "0x5ba7253",
+    "instrumented_replays": 2,
+    "observations": "GDB and fault trace both printed SUCCESS and exited 0; no fault stack, cause, ownership or fix established.",
+    "general_branch_build_used": false
+  },
+  "verified_evidence": {
+    "manifest_entries": 83,
+    "manifest_hashes_matched": 83,
+    "read_only_join_checks": 206,
+    "read_only_join_checks_passed": 206,
+    "native_totals": {
+      "registered": 1282,
+      "passed": 1275,
+      "failed": 0,
+      "skipped": 7,
+      "execution_attempt": 1
+    },
+    "four_native_counts": {
+      "windows-x86_64": {
+        "passed": 218,
+        "failed": 0,
+        "skipped": 2
+      },
+      "macos-arm64": {
+        "passed": 240,
+        "failed": 0,
+        "skipped": 2
+      },
+      "macos-x86_64": {
+        "passed": 240,
+        "failed": 0,
+        "skipped": 2
+      },
+      "linux-x86_64": {
+        "passed": 577,
+        "failed": 0,
+        "skipped": 1
+      }
+    },
+    "install_archives": [
+      {
+        "target": "linux-x86_64",
+        "artifact_id": 14761556554,
+        "bytes": 13220309,
+        "outer_sha256": "dca4c5e020162a0b6fecd976f58eefe9cfd32420900ce768ac25b8c88b2a46b3",
+        "entries": 20,
+        "binary_headers": 2
+      },
+      {
+        "target": "macos-arm64",
+        "artifact_id": 14758286408,
+        "bytes": 14898681,
+        "outer_sha256": "cb555d75e7984569bb05227eb4ae701d93d088be56ab4f33d7e20c845f899118",
+        "entries": 37,
+        "binary_headers": 3
+      },
+      {
+        "target": "macos-x86_64",
+        "artifact_id": 14758362460,
+        "bytes": 16055847,
+        "outer_sha256": "d05991f110369882891e4588c41ed02400c8a8053b47298e714b59fdab0c820c",
+        "entries": 37,
+        "binary_headers": 3
+      },
+      {
+        "target": "windows-x86_64",
+        "artifact_id": 14758250272,
+        "bytes": 6259679,
+        "outer_sha256": "b44a0139c9ba513929f0997205415ab3b7bf2cd7392b5bf73c7d2f4106b44b50",
+        "entries": 20,
+        "binary_headers": 2
+      }
+    ],
+    "inventory_entries": 114,
+    "binary_headers": 10,
+    "validator_input_complete_vst3_payloads_identical": [
+      "linux-x86_64",
+      "windows-x86_64"
+    ],
+    "retained_full_public_GET_records": 5,
+    "http_status_each": 200,
+    "local_retained_bytes_match_GET_hashes": true,
+    "audition": {
+      "artifact_id": 14761870353,
+      "capture_attempt": 1,
+      "wav_files": 12,
+      "sample_rate_hz": 48000,
+      "format": "stereo IEEE float32",
+      "seconds": 48,
+      "files": 19,
+      "checksum_entries": 18,
+      "inventory_programs": 301,
+      "all_nonsilent": true,
+      "nonfinite_samples": 0,
+      "samples_over_full_scale": 0,
+      "raw_peak_rms_match_csv_db_tolerance": 1e-06,
+      "pressure_lead_pressure": 0.65,
+      "other_programs_pressure": 0
+    },
+    "primary_assignments": 60,
+    "additional_nested_reviewer": 1,
+    "previously_pending_public_records_now_present": [
+      "ci/final-install-artifacts.json",
+      "ci/final-download-links.json",
+      "ci/final-validator-payload-identity.json",
+      "ci/final-audition.json",
+      "ci/release-qualification.json",
+      "ci/headless-diagnostic.json"
+    ]
+  },
+  "documentation_correction_closed": "Original evidence README now explicitly selects detached d0c3c23, pins guide/capture/audit/voicing links to that source, warns current main contains later data, and identifies separate baseline 61f45feeae1f01038476eb9c99105534950db4de.",
+  "prior_static_review_conclusions_retained": [
+    "Fixture repairs preserved assertions, thresholds and test registration; they did not change preset/DSP/production processor data.",
+    "Windows guide exception is restricted to exact LF-to-CRLF transformation for three named copied documents. Source text, non-Windows documents, manifests, hashes and binary headers remain strict."
+  ],
+  "required_claim_boundaries": [
+    "Keep the original Linux failed invocation and separate attempt-2/diagnostic outcomes visible; do not call the original a clean first pass or the crash fixed.",
+    "Bind the four installation links and audition to d0c3c23 / run 45029235535 / revision 2026.11.",
+    "Later documentation or current main commits, including 2026.11.1 changes, are not source identities or qualification for these binaries.",
+    "Numerical software renders and available audition excerpts do not establish a completed subjective listening study, physical CS-80/acoustic-instrument equivalence, every DAW, or release signing/notarization."
+  ],
+  "review_limits": "Retained evidence and actual archives inspected locally. No new builds, test/validator execution, audio rendering, listening study, network GET, CI operation, repository edit, commit or push. Publication/push completion remains the coordinator task.",
+  "document_snapshot_sha256": {
+    "README.md": "08f5c63521b505562f7b94aed08878e542d49e9bb73fa73f8b56c30f92c62640",
+    "docs/PRESET_REVISION_2026_11.md": "27b38fc084806fa119fc8aaba232165ab089a43a9dec7bfebf487174b3601497",
+    "docs/CI_DISTRIBUTION_STATUS.md": "17469b4008b05453d93ab5ad25923d6e66881f437d816ce4a2b6c41586ec975f",
+    "docs/preset-evidence/2026.11/README.md": "a78b65ec07e3e8d34f1ad742661cb835ab537834201ff23a5302d14946f921c7",
+    "docs/preset-evidence/2026.11/provenance.json": "0e20286698b079fd775f4313763cb46cdabd7ed58e7455f7ea25735ebe25f4d9",
+    "docs/preset-evidence/2026.11/review-assignments.json": "61626704d96aa0218bfe9c788c21433237c4abc5b28c3b21ef1a284a3da71943",
+    "docs/preset-evidence/2026.11/review-assignments.md": "2e9e48a84e2510d2a4077cc2f48f41262432d8b723bc05c933e98e15cc5b134e"
+  },
+  "join_audit": {
+    "file": "final-evidence-joins-2026_11.json",
+    "sha256": "62ff7b97e03b0cf1e28baa62a2783361031c7d69419998e21c950e63ce186a6a"
+  },
+  "administrative_handoff": "This closes assignment 60 final acceptance. The coordinator/ledger reviewer may replace pending-final-review status with this bounded verdict, retain all caveats and refresh any affected provenance hashes. This review does not certify that those subsequent publication edits were already committed or pushed."
+}

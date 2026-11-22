@@ -1,0 +1,143 @@
+{
+  "recorded_at": "2026-11-22T11:49:14.271Z",
+  "source_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716",
+  "run_id": 45016741244,
+  "job_id": 137190570266,
+  "status": "PASS",
+  "started_at": "2026-11-22T11:19:29Z",
+  "completed_at": "2026-11-22T11:46:42Z",
+  "job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45016741244/job/137190570266",
+  "platform": {
+    "architecture": "arm64",
+    "image": "macos-15-arm64",
+    "os": "15.8.2",
+    "xcode": "16.4"
+  },
+  "ctest": {
+    "registered": 242,
+    "passed": 240,
+    "failed": 0,
+    "skipped": 2,
+    "skipped_names": [
+      "cs80_filter_batch_cap_tests",
+      "cs80_stereo_pra_exact_tests"
+    ],
+    "seconds": 1010.8,
+    "repaired_cases": {
+      "cs80_pluginval_macos_download_tests": {
+        "status": "pass",
+        "python_cases": 22,
+        "seconds": 0.132591
+      },
+      "cs80_ui_smoke": {
+        "status": "pass",
+        "seconds": 98.767,
+        "expression_relative_error": 0.0490050872,
+        "unchanged_relative_error_limit": 0.15
+      }
+    },
+    "new_cases": {
+      "cs80_library_audit_tests": {
+        "status": "pass",
+        "curated": 301,
+        "legacy": 222
+      },
+      "cs80_preset_voicing_tests": {
+        "status": "pass",
+        "checks": 136
+      },
+      "cs80_preset_capture_tests": {
+        "status": "pass",
+        "python_cases": 9
+      }
+    }
+  },
+  "pluginval": {
+    "version": "1.0.4",
+    "download_verified": true,
+    "vst3": {
+      "strictness": 10,
+      "status": "SUCCESS",
+      "seed": "0x203c0d7"
+    },
+    "au_headless": {
+      "strictness": 10,
+      "status": "SUCCESS",
+      "seed": "0x679d0a4"
+    },
+    "au_gui": {
+      "strictness": 10,
+      "status": "SUCCESS",
+      "seed": "0x3092c2b",
+      "editor_checks": [
+        "Editor",
+        "Open editor whilst processing",
+        "Editor Automation"
+      ]
+    }
+  },
+  "package": {
+    "ci_step": "success",
+    "self_test_checks": 46,
+    "archive": "cs80-reference-macos-arm64-ba3a721a69b6.tar.gz",
+    "archive_sha256_from_ci": "b9c4b605af42123b544c7753133b093d1e8cce43338b29e3fed0fb06fa044965",
+    "formats": [
+      "VST3",
+      "Standalone",
+      "AU"
+    ],
+    "architecture": "arm64",
+    "independent_payload_verification": "Owned by root/agent52; not claimed by this job/test review"
+  },
+  "artifacts": [
+    {
+      "id": 14753285711,
+      "name": "cs80-macos-15-test-evidence",
+      "size_in_bytes": 60249,
+      "expired": false,
+      "digest": "sha256:6287320389a00f66bc6398471cba32fcb17df9856fc2871a246383ced297ca00",
+      "created_at": "2026-11-22T11:46:38Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    },
+    {
+      "id": 14753111404,
+      "name": "cs80-pluginval-macos-15",
+      "size_in_bytes": 7262,
+      "expired": false,
+      "digest": "sha256:fb3d5c42671804803862d9862122ee71c7051af119f74c62ca9dbb2afa3a76e0",
+      "created_at": "2026-11-22T11:46:37Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    },
+    {
+      "id": 14753021863,
+      "name": "cs80-macos-15-install-bundle",
+      "size_in_bytes": 14898658,
+      "expired": false,
+      "digest": "sha256:10d6965aeb417ebb16dca5f6bb1b0861556c67e87906239bc0f740a80d656c47",
+      "created_at": "2026-11-22T11:46:36Z",
+      "expires_at": "2027-02-20T11:19:27Z",
+      "workflow_run": {
+        "id": 45016741244,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "ba3a721a69b679070bfc8dcc31a13635e62ff716"
+      }
+    }
+  ],
+  "scope": "Native job/test/validator evidence from the exact replacement run. Downloaded install payload inventory and header verification are recorded separately."
+}

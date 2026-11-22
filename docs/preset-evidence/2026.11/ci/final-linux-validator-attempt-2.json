@@ -1,0 +1,392 @@
+{
+  "run_id": 45029235535,
+  "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+  "tree": "bf4aa2f49be6207e07646a317018bb8df91fa5dc",
+  "attempt1": {
+    "run_attempt": 1,
+    "conclusion": "failure",
+    "run_started_at": "2026-11-22T13:46:22Z",
+    "updated_at": "2026-11-22T15:48:59Z",
+    "linux_validator_job_id": 137263093053,
+    "linux_validator_result": {
+      "job_id": 137263093053,
+      "version": "pluginval - 1.0.4",
+      "headless": {
+        "gate": "failed",
+        "seed": "0x5ba7253",
+        "strictness": 10,
+        "explicit_success_count": 1,
+        "assertion_failure_markers": [],
+        "reported_test_completion": "Fuzz parameters completed, then SUCCESS",
+        "original_pid": 2679,
+        "raw_returncode": -11,
+        "signal_number": 11,
+        "signal_name": "SIGSEGV",
+        "wrapper_exit": 139,
+        "timeout": false,
+        "observed_attempts": 1,
+        "retry_eligibility": "not eligible for a post-test retry",
+        "retries": 0,
+        "local_elf_core_available": false,
+        "stack_available": false,
+        "report_file_bytes": 0,
+        "inference": "Signal occurred after SUCCESS; exact crashing function/cause is not established without a stack or reproduction."
+      },
+      "gui_xvfb": {
+        "gate": "skipped"
+      },
+      "gui_seed_0x2da72db": {
+        "gate": "skipped"
+      },
+      "diagnostic_exit_guard": "success",
+      "fault_thread_shim_fixture": "success",
+      "gui_fault_trace_diagnostic": "skipped",
+      "gui_gdb_diagnostic": "skipped",
+      "input": {
+        "validator_job_id": 137263093053,
+        "run_id": 45029235535,
+        "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+        "artifact_id": 14761700962,
+        "artifact_name": "cs80-linux-vst3",
+        "api_size": 6889833,
+        "api_digest": "sha256:1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+        "logged_download_digest": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+        "run_artifact_digest_match": true,
+        "raw_excerpt_file": "review-w09-linux/final-run-45029235535/validator-input-download.log",
+        "artifact_bytes_not_downloaded_by_this_agent": true,
+        "parent_owns_install_inventory_comparison": true
+      },
+      "excerpt": "review-w09-linux/final-run-45029235535/headless-failure-excerpt.log"
+    },
+    "preserved_original_files": 53,
+    "original_files_changed": [],
+    "validator_environment": {
+      "cloud": "Azure",
+      "region": "eastus2",
+      "os": "Ubuntu 24.04.5 LTS",
+      "runner_image": "ubuntu-24.04",
+      "image_version": "20261116.376.1",
+      "runner_id": 1000042013
+    }
+  },
+  "attempt2": {
+    "run_attempt": 2,
+    "conclusion": "success",
+    "created_at": "2026-11-22T15:51:22Z",
+    "run_started_at": "2026-11-22T15:51:21Z",
+    "updated_at": "2026-11-22T15:53:01Z",
+    "event": "push",
+    "actor": {
+      "login": "cheshmakzanoon-ops",
+      "id": 318354914,
+      "type": "User"
+    },
+    "triggering_actor": {
+      "login": "cheshmakzanoon-ops",
+      "id": 318354914,
+      "type": "User"
+    },
+    "newly_executed_jobs": [
+      {
+        "name": "pluginval / Linux VST3 (strictness 10)",
+        "attempt1_job_id": 137263093053,
+        "attempt2_job_id": 137263915334,
+        "attempt2_record_created_at": "2026-11-22T15:51:23Z",
+        "started_at": "2026-11-22T15:51:26Z",
+        "completed_at": "2026-11-22T15:53:00Z",
+        "same_as_attempt1": {
+          "started_at": false,
+          "completed_at": false,
+          "steps": false,
+          "runner_id": false,
+          "runner_name": false,
+          "head_sha": true,
+          "conclusion": false
+        },
+        "runner_id": 1000042019,
+        "classification": "fresh execution within attempt2"
+      }
+    ],
+    "retained_prior_executions": [
+      {
+        "name": "Linux / VST3 + Standalone",
+        "attempt1_job_id": 137228906281,
+        "attempt2_job_id": 137263916044,
+        "attempt2_record_created_at": "2026-11-22T15:51:23Z",
+        "started_at": "2026-11-22T13:46:24Z",
+        "completed_at": "2026-11-22T15:48:25Z",
+        "same_as_attempt1": {
+          "started_at": true,
+          "completed_at": true,
+          "steps": true,
+          "runner_id": true,
+          "runner_name": true,
+          "head_sha": true,
+          "conclusion": true
+        },
+        "runner_id": 1000041994,
+        "classification": "retained prior execution; not a fresh attempt2 build/test"
+      },
+      {
+        "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+        "attempt1_job_id": 137228906289,
+        "attempt2_job_id": 137263916796,
+        "attempt2_record_created_at": "2026-11-22T15:51:23Z",
+        "started_at": "2026-11-22T13:46:25Z",
+        "completed_at": "2026-11-22T14:23:53Z",
+        "same_as_attempt1": {
+          "started_at": true,
+          "completed_at": true,
+          "steps": true,
+          "runner_id": true,
+          "runner_name": true,
+          "head_sha": true,
+          "conclusion": true
+        },
+        "runner_id": 1000041989,
+        "classification": "retained prior execution; not a fresh attempt2 build/test"
+      },
+      {
+        "name": "Windows / VST3 + Standalone",
+        "attempt1_job_id": 137228906213,
+        "attempt2_job_id": 137263946049,
+        "attempt2_record_created_at": "2026-11-22T15:51:29Z",
+        "started_at": "2026-11-22T13:46:24Z",
+        "completed_at": "2026-11-22T14:12:46Z",
+        "same_as_attempt1": {
+          "started_at": true,
+          "completed_at": true,
+          "steps": true,
+          "runner_id": true,
+          "runner_name": true,
+          "head_sha": true,
+          "conclusion": true
+        },
+        "runner_id": 1000041988,
+        "classification": "retained prior execution; not a fresh attempt2 build/test"
+      },
+      {
+        "name": "pluginval / Windows VST3 (strictness 10)",
+        "attempt1_job_id": 137236123878,
+        "attempt2_job_id": 137263953664,
+        "attempt2_record_created_at": "2026-11-22T15:51:31Z",
+        "started_at": "2026-11-22T14:12:48Z",
+        "completed_at": "2026-11-22T14:13:18Z",
+        "same_as_attempt1": {
+          "started_at": true,
+          "completed_at": true,
+          "steps": true,
+          "runner_id": true,
+          "runner_name": true,
+          "head_sha": true,
+          "conclusion": true
+        },
+        "runner_id": 1000042010,
+        "classification": "retained prior execution; not a fresh attempt2 build/test"
+      },
+      {
+        "name": "macOS / macos-15 / VST3 + AU + Standalone",
+        "attempt1_job_id": 137228905982,
+        "attempt2_job_id": 137263954862,
+        "attempt2_record_created_at": "2026-11-22T15:51:31Z",
+        "started_at": "2026-11-22T13:46:24Z",
+        "completed_at": "2026-11-22T14:17:09Z",
+        "same_as_attempt1": {
+          "started_at": true,
+          "completed_at": true,
+          "steps": true,
+          "runner_id": true,
+          "runner_name": true,
+          "head_sha": true,
+          "conclusion": true
+        },
+        "runner_id": 1000041987,
+        "classification": "retained prior execution; not a fresh attempt2 build/test"
+      }
+    ],
+    "validator_results": {
+      "pluginval-headless": {
+        "success_count": 1,
+        "seeds": [
+          "0x50a3104"
+        ],
+        "strictness_levels": [
+          "10"
+        ],
+        "failure_markers": [],
+        "core_termination_lines": [
+          "Original validator termination: PID=2668; raw returncode=0; kind=exit; exit_code=0"
+        ],
+        "gui_lines": [],
+        "report_bytes": 7194
+      },
+      "pluginval-gui": {
+        "success_count": 1,
+        "seeds": [
+          "0x75af02"
+        ],
+        "strictness_levels": [
+          "10"
+        ],
+        "failure_markers": [],
+        "core_termination_lines": [
+          "Original validator termination: PID=2698; raw returncode=0; kind=exit; exit_code=0"
+        ],
+        "gui_lines": [
+          "Starting tests in: pluginval / Open editor whilst processing...",
+          "Completed tests in pluginval / Open editor whilst processing"
+        ],
+        "report_bytes": 7875
+      },
+      "pluginval-gui-seed-regression": {
+        "success_count": 1,
+        "seeds": [
+          "0x2da72db"
+        ],
+        "strictness_levels": [
+          "10"
+        ],
+        "failure_markers": [],
+        "core_termination_lines": [
+          "Original validator termination: PID=2740; raw returncode=0; kind=exit; exit_code=0"
+        ],
+        "gui_lines": [
+          "Starting tests in: pluginval / Open editor whilst processing...",
+          "Completed tests in pluginval / Open editor whilst processing"
+        ],
+        "report_bytes": 7876
+      }
+    },
+    "validator_input": {
+      "validator_job_id": 137263915334,
+      "run_id": 45029235535,
+      "run_attempt": 2,
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "artifact_id": 14761700962,
+      "artifact_name": "cs80-linux-vst3",
+      "api_size": 6889833,
+      "api_digest": "sha256:1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+      "logged_download_digest": "1528fb2caa87175bbf4e2429d27bbd626d2b4ef202b8081e964cf20095f24a77",
+      "run_artifact_digest_match": true,
+      "same_input_id_and_digest_as_failed_attempt1": true,
+      "raw_excerpt_file": "review-w09-linux/final-run-45029235535/attempt-2/validator-input-download.log",
+      "input_archive_not_downloaded_by_this_agent": true
+    },
+    "validator_artifact": {
+      "id": 14762015388,
+      "name": "cs80-pluginval-reports",
+      "size_in_bytes": 8900,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14762015388",
+      "expired": false,
+      "digest": "sha256:dcaf2b52f16d0f0383f7b070e92f7a7df4108e8c0720ef54a2cb558e690b1ff1",
+      "created_at": "2026-11-22T15:52:57Z",
+      "updated_at": "2026-11-22T15:52:57Z",
+      "expires_at": "2027-02-20T15:51:22Z",
+      "workflow_run": {
+        "id": 45029235535,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5"
+      }
+    },
+    "download_verification": {
+      "file": "linux-pluginval-attempt-2-d0c3c23.zip",
+      "artifact_id": 14762015388,
+      "expected_size": 8900,
+      "expected_sha256": "dcaf2b52f16d0f0383f7b070e92f7a7df4108e8c0720ef54a2cb558e690b1ff1",
+      "folder": "pluginval-evidence",
+      "source_sha": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+      "run_id": 45029235535,
+      "run_attempt_by_job_upload_log": 2,
+      "upload_job_id": 137263915334,
+      "actual_size": 8900,
+      "actual_sha256": "dcaf2b52f16d0f0383f7b070e92f7a7df4108e8c0720ef54a2cb558e690b1ff1",
+      "verified": true,
+      "zip_crc_verified": true,
+      "members": [
+        {
+          "name": "pluginval-gdb-normal-exit.log",
+          "size": 165,
+          "sha256": "013d075a33bbd80dd8dbddc4d4b06710adb828d9e472e5920ff7ba94f2e71d3a"
+        },
+        {
+          "name": "pluginval-gui-seed-regression-core.log",
+          "size": 443,
+          "sha256": "76ad8413776e531f504f39cc424045b759bd04123628f6eea6469874353eafd7"
+        },
+        {
+          "name": "pluginval-gui-core.log",
+          "size": 443,
+          "sha256": "d9dc8d6b2de7fa81e033c08a15a2f366808fdc6cd8a587a5f19713bd720e8110"
+        },
+        {
+          "name": "pluginval-core-fixture.log",
+          "size": 1335,
+          "sha256": "0b4509641bb77b8820791caac28a2cec961bfadb956f73a69ed48d6dac722312"
+        },
+        {
+          "name": "pluginval-gui-seed-regression.log",
+          "size": 7964,
+          "sha256": "e49f91612bbd921d506caf51e85de189cb00e970d7a892ffb0a4b01e51708298"
+        },
+        {
+          "name": "pluginval-gui.log",
+          "size": 7963,
+          "sha256": "9ba26aa0e1cf4c5fd794577c49932003e8ba2068c03c6f87e657b5502c712ba4"
+        },
+        {
+          "name": "pluginval-headless-core.log",
+          "size": 443,
+          "sha256": "e36e8ca1675f2a06cd6e624a689f060197784da5ec98091a4d98e7ba462abfb1"
+        },
+        {
+          "name": "pluginval-headless.log",
+          "size": 7282,
+          "sha256": "22ff13d51b69108d165f090383de96808ef0302ad90fbf7e1096bab5fa4f1c75"
+        },
+        {
+          "name": "pluginval-reports/cs80-gui",
+          "size": 7875,
+          "sha256": "f5804ccd6354d4919817f050c3d17e3d271c285e63884ecd71933ad489851b48"
+        },
+        {
+          "name": "pluginval-reports/cs80-gui-seed-regression",
+          "size": 7876,
+          "sha256": "280903665e6f0149c56b4292d92eb09adf16b88f3f47c4c221ed839231a660ad"
+        },
+        {
+          "name": "pluginval-reports/cs80-headless",
+          "size": 7194,
+          "sha256": "c86dedf757a58490249463ab53407ee349e62468061025d8a253c94e919e8f5a"
+        },
+        {
+          "name": "pluginval-version.txt",
+          "size": 18,
+          "sha256": "bebe24349489b87a47861fafe98f029b18e3bdfd913d623d729d47409693eb4f"
+        }
+      ]
+    },
+    "validator_environment": {
+      "cloud": "AWS",
+      "region": "us-west-2",
+      "os": "Ubuntu 24.04.5 LTS",
+      "runner_image": "ubuntu-24.04",
+      "image_version": "20261116.133.1",
+      "runner_id": 1000042019
+    }
+  },
+  "attribution_limits": [
+    "GitHub actor and triggering_actor identify the account; inspected public run/job APIs do not identify UI versus API/token/app versus automation, or the exact human/client responsible.",
+    "The retained push event identifies the originating workflow event; it does not establish that a new push caused the rerun.",
+    "The observed pattern is one new Linux validator execution plus retained successful jobs; exact rerun API operation cannot be determined from these fields."
+  ],
+  "qualification_limits": [
+    "Attempt1 SIGSEGV remains an observed authoritative failure; attempt2 success does not prove it fixed.",
+    "Attempt2 changed the randomized headless seed from 0x5ba7253 to 0x50a3104 and used a different runner; it did not replay the failed headless seed.",
+    "Attempt2 reused the exact attempt1 VST3 artifact, ID14761700962, with the same SHA256; no source or binary change is established.",
+    "All native CTest/build/package evidence in the merged successful run remains attempt1 execution.",
+    "Runner cloud, region and image version also changed; this was not a controlled replay of the first failure."
+  ],
+  "actions_by_verifier": "Read-only GitHub GET/log/download calls plus new scratch evidence files only; no rerun, cancellation, repository or CI edit."
+}
