@@ -1,0 +1,102 @@
+[
+  {
+    "name": "cs80-windows-vst3",
+    "path": "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-coordination/artifact-cache/cs80-windows-vst3-14763658388.zip",
+    "artifact_api": {
+      "id": 14763658388,
+      "node_id": "MDg6QXJ0aWZhY3QxNDc2MzY1ODM4OA==",
+      "name": "cs80-windows-vst3",
+      "size_in_bytes": 3141145,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763658388",
+      "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763658388/zip",
+      "expired": false,
+      "digest": "sha256:c1e2fe453091000219038cad624941137a77e4116232917a9ba7a7d306d4b975",
+      "created_at": "2026-11-22T17:01:04Z",
+      "updated_at": "2026-11-22T17:01:04Z",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "workflow_run": {
+        "id": 45044040694,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+      }
+    },
+    "sha256": "c1e2fe453091000219038cad624941137a77e4116232917a9ba7a7d306d4b975",
+    "bytes": 3141145,
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763658388.zip",
+    "members": [
+      "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "CS-80 Reference.lib",
+      "CS-80 Reference.exp",
+      "CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3"
+    ]
+  },
+  {
+    "name": "cs80-windows-test-evidence",
+    "path": "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-coordination/artifact-cache/cs80-windows-test-evidence-14764092290.zip",
+    "artifact_api": {
+      "id": 14764092290,
+      "node_id": "MDg6QXJ0aWZhY3QxNDc2NDA5MjI5MA==",
+      "name": "cs80-windows-test-evidence",
+      "size_in_bytes": 58143,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14764092290",
+      "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14764092290/zip",
+      "expired": false,
+      "digest": "sha256:fbf0f75415f7df8a77aef3bf76e7d5792a11b1dc242eec6e8bf1dd1691cb666e",
+      "created_at": "2026-11-22T17:01:09Z",
+      "updated_at": "2026-11-22T17:01:09Z",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "workflow_run": {
+        "id": 45044040694,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+      }
+    },
+    "sha256": "fbf0f75415f7df8a77aef3bf76e7d5792a11b1dc242eec6e8bf1dd1691cb666e",
+    "bytes": 58143,
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14764092290.zip",
+    "members": [
+      "ctest-results.xml",
+      "Testing/Temporary/LastTest.log",
+      "ci-juce-provenance.txt"
+    ]
+  },
+  {
+    "name": "cs80-pluginval-windows",
+    "path": "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-coordination/artifact-cache/cs80-pluginval-windows-14764440289.zip",
+    "artifact_api": {
+      "id": 14764440289,
+      "node_id": "MDg6QXJ0aWZhY3QxNDc2NDQ0MDI4OQ==",
+      "name": "cs80-pluginval-windows",
+      "size_in_bytes": 5081,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14764440289",
+      "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14764440289/zip",
+      "expired": false,
+      "digest": "sha256:89ffd697c11e4cb8179cf1c50a76c89c7e7738b8bd9a67e5189eab3a9def6f9d",
+      "created_at": "2026-11-22T17:01:42Z",
+      "updated_at": "2026-11-22T17:01:42Z",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "workflow_run": {
+        "id": 45044040694,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+      }
+    },
+    "sha256": "89ffd697c11e4cb8179cf1c50a76c89c7e7738b8bd9a67e5189eab3a9def6f9d",
+    "bytes": 5081,
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14764440289.zip",
+    "members": [
+      "pluginval-reports/cs80-windows-seed-regression",
+      "pluginval-download.json",
+      "pluginval-reports/cs80-windows",
+      "pluginval-windows.log",
+      "pluginval-windows-seed-regression.log",
+      "pluginval-version.txt"
+    ]
+  }
+]

@@ -1,0 +1,64 @@
+[
+  {
+    "artifact_id": 14764315135,
+    "name": "cs80-macos-15-test-evidence",
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14764315135.zip",
+    "credential_free_get": true,
+    "bytes": 61127,
+    "sha256": "73f8bb4a3557f4c8e7762ed80627713a1e55959091fb0b98c3f8a0fa9abc40d2",
+    "members": [
+      {
+        "member": "ctest-results.xml",
+        "saved_as": "ctest-results.xml",
+        "bytes": 103885,
+        "sha256": "348830abb5b313fb7b1016b51452cbceb02902eb6687f0fb4d270e232106aafc"
+      },
+      {
+        "member": "Testing/Temporary/LastTest.log",
+        "saved_as": "LastTest.log",
+        "bytes": 307787,
+        "sha256": "2510eb9017381744f2c3ff91e5ca092b7ebd634cabc7deb1f1419d4efdfa2bb0"
+      },
+      {
+        "member": "ci-juce-provenance.txt",
+        "saved_as": "ci-juce-provenance.txt",
+        "bytes": 612,
+        "sha256": "5f3466da5396807a3a075d752e1868e76f864f408fbf5c156c29ac236935adf7"
+      }
+    ]
+  },
+  {
+    "artifact_id": 14763581836,
+    "name": "cs80-pluginval-macos-15",
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763581836.zip",
+    "credential_free_get": true,
+    "bytes": 7259,
+    "sha256": "627c4e2a90fdb4d6e5f225de518c42623cb9bae31fdce4dc8cfb8589742b6849",
+    "members": [
+      {
+        "member": "pluginval-vst3.log",
+        "saved_as": "pluginval-vst3.log",
+        "bytes": 7399,
+        "sha256": "a7116603a90032c34498f82788ecedd03a723214555674f2a4c1763d7627bb36"
+      },
+      {
+        "member": "pluginval-au.log",
+        "saved_as": "pluginval-au.log",
+        "bytes": 7308,
+        "sha256": "af602439adfef9e4e48dce4f0f2fcd5488ea87eae3e9407edca753a528a29b3d"
+      },
+      {
+        "member": "pluginval-au-gui.log",
+        "saved_as": "pluginval-au-gui.log",
+        "bytes": 7990,
+        "sha256": "aa3a706f134e6a45d5015e40a9742d5abe5f58b8ef8e83a4c6b2b36aea6a0a6f"
+      },
+      {
+        "member": "pluginval-download.json",
+        "saved_as": "pluginval-download.json",
+        "bytes": 694,
+        "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c"
+      }
+    ]
+  }
+]

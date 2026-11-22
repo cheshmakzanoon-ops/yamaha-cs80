@@ -1,0 +1,17 @@
+{
+  "assignment": 53,
+  "classification": "preparation_parser_update_not_native_test_failure",
+  "original_checker_sha256": "3d69a1eb86c293ce5bb958e1797da3d5160a19869d1f2086cae5b864427f0db0",
+  "reason": "Preparation assumed legacy CTest summary wording. Current AppleSilicon evidence reports modern summary wording and explicit skips; Intel reconciliation will inspect raw per-test rows and JUnit rather than only a summary string.",
+  "candidate_unchanged": true,
+  "native_job_retry_performed": false,
+  "final_checker_sha256": "ded0f68b0260af38a0e491fdac6f0bd9339b65c02653b5b55ed68a103a03c209",
+  "observed_intel_summary": "100% tests passed out of 243",
+  "per_test_rows_reconciled": 243,
+  "junit_cases_reconciled": 243,
+  "executed_passed": 241,
+  "explicit_skips": 2,
+  "native_failures": 0,
+  "preparation_parser_executed_against_native_output_before_adjustment": false,
+  "log_preservation": "The tool-decoded job log is retained exactly, including its single terminal newline."
+}

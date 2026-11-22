@@ -5,41 +5,73 @@ existing CI workflow already builds. They add no paid dependency, installer,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
-## Current 2026.11.1 candidates — three platforms verified
+## Current 2026.11.1 development candidates — release blocked
 
-**Windows x64, Apple Silicon and Intel Mac have verified candidate bundles.
-Linux, complete four-platform publication and the actual 24-WAV audition remain
-pending.** The current source is
-`6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`, under
-[build 45044040694, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
-These three native suites and their required platform validators passed on that
-first attempt. This is a per-platform result while the whole build remains
-incomplete.
+**All four native build/test/package jobs passed and the actual installation
+archives and 24-WAV audition were verified. The complete build failed because
+Linux randomized GUI validation terminated by SIGSEGV after SUCCESS.** The
+strict publisher was skipped and no qualified 2026.11.1 prerelease was published.
 
-| Candidate platform | Included formats | Native checks | Verified candidate ZIP |
-| --- | --- | --- | --- |
-| Windows x64 | VST3, Standalone | 219 CTest entries passed, zero failed, two skipped; both strictness-10 VST3 gates passed. [Record](preset-evidence/2026.11.1/ci/native-windows-x86_64.json) | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) |
-| macOS Apple Silicon (arm64) | VST3, AU, Standalone | 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Record](preset-evidence/2026.11.1/ci/native-macos-arm64.json) | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) |
-| macOS Intel (x86-64) | VST3, AU, Standalone | 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Record](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) |
-| Linux x86-64 | VST3, Standalone | Current native/validator completion pending | Current archive and public download pending |
+These are **unsigned development candidates**, from source
+`6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
+[build 45044040694, attempt 1 — failed](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
+Windows and both Mac targets passed their required platform validators. Linux
+passed headless and fixed-seed GUI validation, but its randomized GUI gate failed
+with raw −11 / wrapper 139. The same-seed instrumented nonreproductions do not
+establish a fix; the original crash core was unavailable.
 
-All three available candidates passed individual version-3 archive checks and
-complete unauthenticated public downloads with matching API sizes and SHA-256.
-The complete four-target archive aggregate and combined validator-input/package
-identity record still await Linux. The actual revised-bank 24-WAV audition and
-its download verification also remain pending.
-[Windows archive](preset-evidence/2026.11.1/ci/install-windows-x86_64.json) ·
-[Apple Silicon archive](preset-evidence/2026.11.1/ci/install-macos-arm64.json) ·
-[Intel archive](preset-evidence/2026.11.1/ci/install-macos-x86_64.json) ·
-[Public downloads](preset-evidence/2026.11.1/ci/download-links.json)
+| Candidate platform | Included formats | Pinned candidate download |
+| --- | --- | --- |
+| Windows x64 | VST3, Standalone | [Windows candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) |
+| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
 
-These are CI development candidates without release signing or notarization.
-The [refinement report](PRESET_REFINEMENT_2026_11_1.md) retains the predecessor
-failure and the VST3 Program-queue controller dependency; these validator passes
-do not certify queue-only Program automation or arbitrary DAW integration.
-The main README's default four-platform downloads remain the retained 2026.11
-packages below. Those older binaries and their twelve-WAV audition do not contain
-the twelve 2026.11.1 refinements.
+Native CTest results are **219 passed / 221 registered** on Windows,
+**241 / 243** on each Mac architecture and **578 / 579** on Linux, with zero
+native test failures. Windows and each Mac target have two formal skips; Linux
+has one SKIP_RETURN_CODE=77. The linked records retain embedded Python subtest
+skips separately. Linux's native suite took 9,492.20 seconds. A green native
+suite does not reverse the failed dependent Linux GUI gate.
+[Windows native evidence](preset-evidence/2026.11.1/ci/native-windows-x86_64.json) ·
+[Apple Silicon native evidence](preset-evidence/2026.11.1/ci/native-macos-arm64.json) ·
+[Intel Mac native evidence](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) ·
+[Linux gates and original exits](preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json)
+
+All four actual install archives passed their bounded inventory, architecture,
+format, executable/bundle, guide and notice checks. All five candidate ZIPs,
+including the audition, were downloaded in full without credentials and matched
+fresh API byte counts/digests and the cached artifacts. **Their byte verification
+does not qualify a complete release.**
+[Four-archive installation evidence](preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json) ·
+[Five public GETs, hashes and withheld publisher](preset-evidence/2026.11.1/final-ci/public-candidates/summary.json)
+
+The [24-WAV audition ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip) contains **117 seconds** of
+unnormalized 48 kHz stereo core-engine excerpts, including all twelve refined
+programs. Its 24 parameter digests, 32 checksums and actual samples were checked;
+all samples are finite and below full scale. This is distinct from both the
+local `99f5ebd` replay and the older twelve-excerpt 2026.11 package below.
+[Actual CI audition proof](preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json)
+
+The package manifests and `SOURCE.txt` identify the binary source, independently
+of later documentation on `main`. These retained Actions artifacts have recorded
+API expiry **20 February 2027 at 16:28:38 UTC**. They are not permanent release
+assets, signed installers, notarized apps or universal Mac binaries. Follow the
+[installation guide](INSTALL_AND_QUICKSTART.md), select the Mac architecture of
+the host process and keep each plug-in/application bundle intact.
+
+The [refinement report](PRESET_REFINEMENT_2026_11_1.md) preserves the predecessor
+failure, this unresolved Linux GUI failure and the pre-existing VST3 Program
+queue controller dependency. Use **Library → Circuit** to select the revised
+factory values; saved sessions retain serialized values. No queue-only Program
+automation, arbitrary DAW integration or acoustic/hardware equivalence is claimed.
+
+The original **2026.11** downloads and their separate Linux failure/retry history
+below remain intact; those older binaries do not contain the twelve later
+2026.11.1 refinements.
+The [current 60-agent assignment review](TEAM_REVIEW_2026_11_1.md) records this
+task separately from the earlier 2026.11 review. Completing an investigation
+does not turn its failed gate into a pass.
 
 ## Pinned verified development downloads — 2026.11
 

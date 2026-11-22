@@ -10,43 +10,53 @@ The [refinement report](../../PRESET_REFINEMENT_2026_11_1.md) explains the resul
 sounds. [Provenance](provenance.json) records every archived input, its original
 SHA-256, the stored SHA-256 and any textual transformation.
 
-**Three current platforms are verified: Windows x64, Apple Silicon and Intel
-Mac. Linux, complete four-platform publication and the actual 24-WAV audition
-remain pending.** The three native suites and their required strictness-10
-platform validators passed on attempt 1 for source
-`6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
+**All four native builds and candidate archives, and the actual 24-WAV CI audition, are verified. The required Linux randomized GUI validator crashed after printing SUCCESS, so the full build failed and the formal release was withheld.**
+
+The fixed binary source is `6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
 [build 45044040694, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
-The [integration lineage](ci/source-lineage.json) retains the cancelled predecessor
-and its actual workflow-snapshot failure on all four native runners. Correcting
-that expectation changed no production bank, packaging code or required
-validator command. The older [2026.11 qualification](../2026.11/ci/release-qualification.json)
-remains separate and does not qualify these newer binaries.
+The [actual candidate and failure index](final-ci/README.md) joins the native
+results, original failure, public downloads and supporting diagnostic evidence.
+The older [2026.11 qualification](../2026.11/ci/release-qualification.json) remains
+separate and does not qualify these newer binaries.
 
 ## Current candidate platforms and delivery
 
-| Target | Native result in attempt 1 | Verified candidate download and archive record |
+| Target | Actual native and required-validator result | Verified candidate |
 | --- | --- | --- |
-| Windows x64 | 219 CTest entries passed, zero failed, two skipped; both strictness-10 VST3 gates passed. [Native record](ci/native-windows-x86_64.json) | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) · [Archive record](ci/install-windows-x86_64.json) |
-| macOS Apple Silicon | 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Native record](ci/native-macos-arm64.json) | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) · [Archive record](ci/install-macos-arm64.json) |
-| macOS Intel | 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Native record](ci/native-macos-x86_64.json) | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) · [Archive record](ci/install-macos-x86_64.json) |
-| Linux x86-64 | Pending current native and validator completion | Pending current archive/public-download verification |
-| Four-platform publication | Pending Linux and the complete aggregate/input-to-package identity record | No complete four-platform publication claim |
-| Actual 24-WAV audition | Revised-bank CI artifact and verification pending | No current audition download is asserted by the baseline pipeline smoke |
+| Windows x64 | 219 CTest entries passed, two skipped, zero failed; both strictness-10 VST3 gates passed | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) |
+| macOS Apple Silicon | 241 CTest entries passed, two skipped, zero failed; VST3, AU and AU GUI strictness-10 gates passed | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) |
+| macOS Intel | 241 CTest entries passed, two skipped, zero failed; VST3, AU and AU GUI strictness-10 gates passed | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) |
+| Linux x86-64 | 578 executed CTest passes, one skipped/not-run case, zero failed; headless and fixed GUI seed passed; randomized GUI exited with SIGSEGV after SUCCESS | [Linux ZIP — GUI validation failed](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) |
+| Actual 24-WAV CI audition | 117 seconds, all 32 checksums and 24 parameter digests verified; finite, below-full-scale samples | [Audition ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip) |
+| Formal combined release | Withheld; strict publisher skipped and public release endpoint returned 404 | No release assets or release tag are presented as available |
 
-All three available ZIPs passed individual version-3 archive verification and
-were downloaded in full through their public URLs without authentication. Their
-complete byte counts and SHA-256 values matched the GitHub API metadata.
-[Public download records](ci/download-links.json)
-The individual reports remain separate from the pending four-target aggregate;
-the CTest counts above do not subsume the embedded Python skips recorded in each
-native report. These are CI development candidates, without release signing or
-notarization or a claim of compatibility with every DAW.
+All five actual unauthenticated GETs matched their source-bound API byte counts
+and SHA-256 values. The four-archive aggregate verified complete inventories and
+installation content. These are unsigned development artifacts; the Linux
+candidate retains the required GUI validation failure. Their recorded API
+expiry is **2027-02-20 16:28:38 UTC**. CTest skips and embedded Python subtest skips
+remain separately recorded.
+[Public-byte proof](final-ci/public-candidates/summary.json) ·
+[Archive aggregate](final-ci/installation/artifact-proof.json) ·
+[Actual audition](final-ci/auditions/artifact-proof.json)
 
-The retained 2026.11 four-platform downloads and twelve-WAV audition use the older
-`d0c3c23` source. Its unresolved Linux failure, successful second attempt and
-bounded nonreproductions remain in the [original qualification history](../../PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation).
-The current refinement's [VST3 Program-queue controller dependency](../../PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification)
-also remains part of the stated host-compatibility limits.
+The original Linux GUI seed `0x4369262` printed SUCCESS and then exited raw
+`-11` / SIGSEGV, normalized to 139. No internal retry occurred. Same-seed GDB and
+fault-thread replays exited zero but do not repair that failed gate. No original
+crash stack is available; ownership remains unproven. Actual successes with the
+separate official 2.0.0-beta3 validator used a different host and different seeds
+and remain supporting compatibility evidence only.
+[Original failure](final-ci/linux-x86_64/ci-proof.json) ·
+[Independent diagnosis](final-ci/failure-review/README.md)
+
+The earlier three-platform `ci/` records retain their observation-time scope.
+The [integration lineage](ci/source-lineage.json) preserves the cancelled
+predecessor and workflow-snapshot correction. The retained 2026.11 downloads use
+older `d0c3c23` bytes; its first Linux failure, successful second attempt and
+bounded nonreproductions remain in the [original history](../../PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation).
+The current [VST3 Program-queue controller dependency](../../PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification)
+also remains. Source measurements do not establish acoustic-instrument identity,
+physical CS-80 calibration or a listening-panel verdict.
 
 ## Read the evidence at its recorded stage
 
@@ -87,8 +97,9 @@ multi-register authoring measurements; it is not silently counted as a twelfth
 program in that test target. Measurements support bounded software behavior,
 not acoustic-instrument identity, physical CS-80 calibration or a listening-panel
 verdict. Raw audio and executables are omitted from this compact source dossier.
-The planned 24-WAV CI audition is separate and still awaits the actual revised-bank
-artifact and its verification.
+The actual revised-bank 24-WAV CI audition is now separately verified in
+[its final CI record](final-ci/auditions/artifact-proof.json); historical baseline
+pipeline-smoke records remain unchanged.
 
 ## Measurement conventions
 

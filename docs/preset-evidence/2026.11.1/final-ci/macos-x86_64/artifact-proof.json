@@ -1,0 +1,151 @@
+{
+  "assignment": 53,
+  "verified_at_utc": "2026-11-22T17:19:07.024910+00:00",
+  "run_attempt": 1,
+  "status": "artifact_bytes_verified",
+  "ci_qualification": "Exact builder CTest/pluginval log qualification is recorded separately; all-platform publication remains separate.",
+  "artifact_api": {
+    "id": 14763644216,
+    "node_id": "MDg6QXJ0aWZhY3QxNDc2MzY0NDIxNg==",
+    "name": "cs80-macos-15-intel-install-bundle",
+    "size_in_bytes": 16057766,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216/zip",
+    "expired": false,
+    "digest": "sha256:325b42beb55ca861b65e9f8416ec286a4b6061946181210fdb41d041e7d3cf1f",
+    "created_at": "2026-11-22T17:17:47Z",
+    "updated_at": "2026-11-22T17:17:47Z",
+    "expires_at": "2027-02-20T16:28:38Z",
+    "workflow_run": {
+      "id": 45044040694,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+    }
+  },
+  "download": {
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+    "credential_free_get": true,
+    "path": "build-coordination/artifact-cache/cs80-macos-15-intel-install-bundle-14763644216.zip",
+    "bytes": 16057766,
+    "sha256": "325b42beb55ca861b65e9f8416ec286a4b6061946181210fdb41d041e7d3cf1f"
+  },
+  "inner_archive": {
+    "name": "cs80-reference-macos-x86_64-6d3cc220edef.tar.gz",
+    "bytes": 16049385,
+    "sha256": "f566daeb1a023cd4152e29e5ea3fae94f1dbb1d81a9de500fb86a2d16493012d",
+    "temporary_copy_removed_after_verification": true
+  },
+  "manifest_identity": {
+    "commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "preset_library_revision": "2026.11.1",
+    "workflow_run_id": "45044040694",
+    "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "juce_version": "8.0.11",
+    "platform": "macos",
+    "architecture": "x86_64",
+    "formats": [
+      "VST3",
+      "Standalone",
+      "AU"
+    ]
+  },
+  "source_text": "Source commit: 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nPreset library revision: 2026.11.1\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+  "juce_provenance": {
+    "checked_at": "2026-11-22T16:31:29Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "workflow_run": "45044040694",
+    "configured_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/Users/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "offline_verifier": {
+    "platform": "macos",
+    "architecture": "x86_64",
+    "formats": [
+      "VST3",
+      "Standalone",
+      "AU"
+    ],
+    "manifest_sha256": "931a1e6a022a8dc2956de36849de3b75141a8799b71a9afe08ab9e2273132cc5",
+    "inventory_entries": 37
+  },
+  "binary_headers": [
+    {
+      "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "bytes": 15110264,
+      "sha256": "5c42f54bf777fee62621e443af91853caca2834e0bfcb4b18858230adbb6d3ff",
+      "format": "Mach-O64",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "file_type": 8,
+      "load_commands": 40,
+      "load_command_bytes": 5168,
+      "flags": "0x818085"
+    },
+    {
+      "path": "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+      "bytes": 14954920,
+      "sha256": "9bf552faa1d25f0c3e7cd97de5520c682e352a172e1aa68274e7ab09ac20bc2c",
+      "format": "Mach-O64",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "file_type": 2,
+      "load_commands": 42,
+      "load_command_bytes": 5040,
+      "flags": "0xa18085"
+    },
+    {
+      "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "bytes": 15547088,
+      "sha256": "eedf73931506be6508c13570b0344d797dc00429a6b34b5ae4a5c8d88965405a",
+      "format": "Mach-O64",
+      "cpu_type": "0x1000007",
+      "cpu_subtype": "0x3",
+      "file_type": 8,
+      "load_commands": 40,
+      "load_command_bytes": 5088,
+      "flags": "0x818085"
+    }
+  ],
+  "bundled_guides": [
+    {
+      "name": "INSTALL_AND_QUICKSTART.md",
+      "sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+      "repository_links_pinned": 4,
+      "local_links": [
+        "PRESET_GUIDE.md"
+      ]
+    },
+    {
+      "name": "PRESET_GUIDE.md",
+      "sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+      "repository_links_pinned": 38,
+      "local_links": [
+        "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing"
+      ]
+    },
+    {
+      "name": "DISTRIBUTION_STATUS.md",
+      "sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+      "repository_links_pinned": 1,
+      "local_links": []
+    }
+  ],
+  "trusted_verifier_inputs": {
+    "publish-preset-refinement.py": "72ad916f9843a9019d17833c6722c64493e8875a3e7818e58dee5ed0c8d7a343",
+    "verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "limitations": "Archive consistency and native architecture inspection, plus separately recorded CI execution. No payload executed locally; no signing, notarization, subjective listening, hardware matching, arbitrary DAW or publication claim."
+}

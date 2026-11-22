@@ -1,0 +1,28 @@
+{
+  "assignment": 56,
+  "status": "PREPARED_PUBLIC_RELEASE_VERIFICATION_PENDING",
+  "source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "required_run_attempt": 1,
+  "syntax_check": "PASS",
+  "availability_observation": {
+    "assignment": 56,
+    "status": "PENDING_RELEASE_NOT_PUBLICLY_VISIBLE",
+    "checked_at_utc": "2026-11-22T16:53:42.388051+00:00",
+    "release_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/tag/presets-2026.11.1",
+    "observed_public_http_status": 404,
+    "source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "run_id": 45044040694,
+    "run_attempt_required": 1,
+    "qualification": "No release assets, build gates or public download bytes are certified by this availability check."
+  },
+  "files": {
+    "verify-public-release.py": "d59337b09ab4739036c22b85458f65cdf9343f4c9298c836b07286823140179a",
+    "README.md": "61932674d637238f2c224b5e1be2ce8c53b10415388dc9ec4c7c7453112924f5",
+    "observed/summary.json": "5bfff3739e179171d7d58231650911cf609ed57e518ee610ea5bde9fcf6807c9"
+  },
+  "reviewed_publisher_sha256": "454be66bb1fbe5add732bbd4e5326e72fc79a1e28a29040cc20921ceff9214b2",
+  "production_or_release_mutations": false,
+  "downloaded_product_execution": false,
+  "success_path_exercised": false
+}

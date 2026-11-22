@@ -1,0 +1,27 @@
+Tests at strictness level 10:
+
+  Plugin info: Logs getName(), getAlternateDisplayNames(), supportsDoublePrecisionProcessing(), getLatencySamples(), getTailLengthSeconds()
+  Locale stability: Checks that the plugin doesn't change the system locale. Some plugins or GUI frameworks change locale settings (e.g., decimal separator from '.' to ','). This can corrupt preset files, break float parsing in other plugins, or crash the host
+  Plugin programs: Calls getNumPrograms() and getProgramName() for each, then randomly switches programs 5 times via setCurrentProgram()
+  Editor: Calls createEditor() twice (cold and warm), logs time taken, expects non-null editor pointer
+  Plugin state: Saves state via getStateInformation(), randomises all automatable params, restores via setStateInformation()
+  Automatable Parameters: For each non-bypass automatable parameter: logs index, name, defaultValue, label, numSteps, isDiscrete, isBoolean, isAutomatable, category
+  Audio processing: Processes 10 blocks at each sample rate / block size combo. For instruments, sends noteOn/noteOff. Checks for NaNs, Infs, subnormals
+  Automation: Processes in 32-sample sub-blocks, randomly changing up to 10 params between each. Subnormals treated as errors
+  Open editor whilst processing: Starts async thread calling processBlock() repeatedly, then calls createEditor() on message thread. Tests concurrent access
+  Bus layout processing: For every supported combination of mono/stereo on each input and output bus (including sidechain), calls setBusesLayout(), prepareToPlay() and processBlock(). Detects crashes in plugins that mis-handle non-default channel counts (e.g. mono main with stereo sidechain).
+  Basic bus: Tests audio bus configuration: lists all supported input/output layouts (named channel sets like stereo/5.1 and discrete channels), tests enableAllBuses() and disableNonMainBuses(), then verifies the default layout can be restored
+  Editor Automation: With editor open, loops 1000x calling setValue(random) on ALL parameters with 10ms sleep between iterations
+  vst3 validator: Runs Steinberg's vstvalidator with -e flag for extended validation (VST3 only)
+  auval: Runs 'auval -strict -stress 20 -v <type> <subtype> <manu>' (Audio Units only)
+  Fuzz parameters: For each parameter, sets 5 random values and calls getValue(), getText(), getValueForText(), getCurrentValueAsText(). Tests that text/value conversion functions don't crash or hang with arbitrary inputs
+  Editor stress
+  Plugin state restoration: For each param: saves original value, randomises, restores state, expects value within 0.1 of original. Also requires exact binary state match
+  Non-releasing audio processing: Same as audio processing, but calls prepareToPlay() at new sample rate WITHOUT calling releaseResources() first
+  Parameter thread safety: Message thread calls setValueNotifyingHost() 500x on all params. Simultaneously, this thread calls setValue() and processBlock() 500x
+  Background thread state: Opens editor on message thread. From background thread: getStateInformation(), randomise params, setStateInformation(). Sleeps 2s for async updates
+  Parameters: Same as automatable parameters test - logs info for all non-bypass automatable parameters
+  Discrete parameter state restoration: For each discrete param: sets a random value, saves state, then restores that state twice - once unchanged and once after setting a different value - and expects the same value both times
+  Process called with a larger than prepared block size
+  Allocations during process
+

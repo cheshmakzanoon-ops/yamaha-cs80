@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "python3",
+    "build-w12-ci-auditions/verify-ci-auditions.py",
+    "--artifact-json",
+    "build-w12-ci-auditions/artifact-api.json",
+    "--run-json",
+    "build-w12-ci-auditions/run-api.json",
+    "--job-json",
+    "build-w12-ci-auditions/linux-job-api.json"
+  ],
+  "started_utc": "2026-11-22T19:22:55.748172+00:00",
+  "completed_utc": "2026-11-22T19:23:11.665074+00:00",
+  "elapsed_seconds": 15.916931090003345,
+  "exit_code": 0,
+  "cache_existed_before_invocation": false,
+  "stdout": "{\"status\": \"ARTIFACT_VERIFIED\", \"artifact_id\": 14769036590, \"wav_count\": 24, \"seconds\": 117, \"stereo_frames\": 5616000, \"highest_peak_dbfs\": -14.575833238762858, \"outer_sha256\": \"9b164379e214d8a15e6907d94dd48842628c09d5970579386818596a0488e16b\"}\n",
+  "stderr": "",
+  "verifier_sha256": "5c5579b421098001501d3b076ae84086a608245f89e3cd60cf7ea4d173dc2d93"
+}

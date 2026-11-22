@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "assignment": 60,
+  "status": "FINAL_ACCEPTANCE_PENDING",
+  "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "revision": "2026.11.1",
+  "required_jobs": {
+    "Linux / VST3 + Standalone": [
+      "Build",
+      "Capture curated preset auditions",
+      "Package Linux VST3 and Standalone",
+      "Test",
+      "Upload Linux install bundle",
+      "Upload curated preset auditions",
+      "Verify configured JUCE source"
+    ],
+    "Windows / VST3 + Standalone": [
+      "Build",
+      "Package Windows VST3 and Standalone",
+      "Test",
+      "Upload Windows install bundle",
+      "Verify configured JUCE source"
+    ],
+    "macOS / macos-15 / VST3 + AU + Standalone": [
+      "Build",
+      "Package native macOS VST3, AU and Standalone",
+      "Test",
+      "Upload native macOS install bundle",
+      "Validate AU with pluginval",
+      "Validate AU with pluginval GUI",
+      "Validate VST3 with pluginval",
+      "Verify configured JUCE source"
+    ],
+    "macOS / macos-15-intel / VST3 + AU + Standalone": [
+      "Build",
+      "Package native macOS VST3, AU and Standalone",
+      "Test",
+      "Upload native macOS install bundle",
+      "Validate AU with pluginval",
+      "Validate AU with pluginval GUI",
+      "Validate VST3 with pluginval",
+      "Verify configured JUCE source"
+    ],
+    "pluginval / Linux VST3 (strictness 10)": [
+      "Validate GUI state regression seed 0x2da72db",
+      "Validate VST3 GUI under Xvfb",
+      "Validate VST3 headless"
+    ],
+    "pluginval / Windows VST3 (strictness 10)": [
+      "Validate VST3 headless",
+      "Validate state regression seed 0x5037a0c"
+    ]
+  },
+  "platform_assets": {
+    "cs80-windows-install-bundle": {
+      "system": "windows",
+      "architecture": "x86_64",
+      "release_asset": "cs80-windows-x64.zip"
+    },
+    "cs80-macos-15-install-bundle": {
+      "system": "macos",
+      "architecture": "arm64",
+      "release_asset": "cs80-macos-apple-silicon.zip"
+    },
+    "cs80-macos-15-intel-install-bundle": {
+      "system": "macos",
+      "architecture": "x86_64",
+      "release_asset": "cs80-macos-intel.zip"
+    },
+    "cs80-linux-install-bundle": {
+      "system": "linux",
+      "architecture": "x86_64",
+      "release_asset": "cs80-linux-x64.zip"
+    }
+  },
+  "audition_asset": "cs80-preset-auditions-2026.11.1.zip",
+  "metadata_assets": [
+    "release-provenance.json",
+    "SHA256SUMS"
+  ],
+  "checklist": [
+    {
+      "id": "source_scope",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Source 6d3 contains the reviewed 12-program/42-value refinement, four master calibrations, metadata correction and fixed packaging; later publication changes stay in README/docs or three named publisher files. Preserve distinction from earlier 300-program 2026.11 revoice.",
+      "evidence": [
+        "source graph",
+        "compiled inventory",
+        "final identity record"
+      ]
+    },
+    {
+      "id": "build_identity",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Exact main push 45044040694 / source 6d3, completed success on GitHub run_attempt 1; no newer source or successful rerun substituted.",
+      "evidence": [
+        "fresh raw run API"
+      ]
+    },
+    {
+      "id": "native_and_validator_jobs",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Exactly the six required jobs belong to the same source/run/attempt 1, all successful; every named required step succeeds. Native raw logs/JUnit establish actual executed/skipped/disabled/not-run counts; Linux 579 is registered scope, not automatic execution count.",
+      "evidence": [
+        "fresh raw jobs API",
+        "four native logs/JUnit",
+        "validator reports"
+      ]
+    },
+    {
+      "id": "validator_attempt_history",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Read every validator lane including internal child attempts. Linux terminal raw exits must be 0 and post-SUCCESS crashes must fail. Internal retry history stays visible and is distinct from GitHub run_attempt. Mac successful pipefail steps establish status; do not invent numeric child exit fields.",
+      "evidence": [
+        "assignment49 Windows proof",
+        "assignments52/53 Mac proofs",
+        "assignment54 Linux proof"
+      ]
+    },
+    {
+      "id": "four_native_archives",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Actual four ZIPs match API digest/size and producing source/run. Verify complete inner inventories, revision 2026.11.1, JUCE 8.0.11/c352..., SOURCE and all Windows PE / Mac Mach-O / Linux ELF architecture/format roles.",
+      "evidence": [
+        "assignments49/52/53/54 artifact proofs",
+        "artifact API"
+      ]
+    },
+    {
+      "id": "actual_ci_auditions",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Actual exact-SHA artifact has 24 WAVs / 117 seconds / 5,616,000 stereo frames at 48 kHz float32; 32 checksum entries, final 301 inventory SHA fe3ddc..., 24 parameter digests, exact timing/pressure selections, finite/unclipped samples. Local 99f5 render is not this artifact.",
+      "evidence": [
+        "assignment55 proof",
+        "audition artifact API",
+        "CSV/WAV/provenance"
+      ]
+    },
+    {
+      "id": "installation_contents",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "All four cached archives contain source-correct guides, licenses/notices, bundle structures and modes, source-pinned repository links and working local links. Signing/notarization/physical installation remain unclaimed.",
+      "evidence": [
+        "assignment57 actual archive proof"
+      ]
+    },
+    {
+      "id": "public_release_bytes",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Public prerelease has exactly seven expected assets. Credential-free GET bytes match release API hashes/sizes; five ZIP hashes also equal build artifacts; SHA256SUMS covers the other six assets exactly; receipt joins binary source/run/attempt/jobs/artifacts.",
+      "evidence": [
+        "assignment56 actual public GET proof",
+        "release API",
+        "receipt",
+        "checksums"
+      ]
+    },
+    {
+      "id": "publication_identity",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Tag identifies receipt publication commit, source is its ancestor, comparison is complete and fewer than 300 paths, every delta path allowlisted. Source, publication commit and later main documentation commit are recorded separately. No tag/asset replacement.",
+      "evidence": [
+        "tag/ref API",
+        "comparison API",
+        "receipt",
+        "current main API"
+      ]
+    },
+    {
+      "id": "public_documents",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "README and current report promote only the actually verified 2026.11.1 targets, with correct architecture/format/download mappings and working release/audition/checksum/provenance links. Earlier 2026.11 history/ledger remains distinct. Factory reload/pressure/Pure/Studio and Program-queue qualifications stay accurate.",
+      "evidence": [
+        "assignment59 final drafts/link checks",
+        "reviewed final document bytes"
+      ]
+    },
+    {
+      "id": "sixty_current_assignments",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Exactly 60 distinct current assignment IDs 1..60 exist. Assignments 1..59 have completed outcomes; assignment 60 passes this final review. Root may then mark 60 completed from its receipt. Do not count follow-up turns or the separate earlier 2026.11 ledger.",
+      "evidence": [
+        "assignment58 final ledger",
+        "current coordinator ledger",
+        "this final acceptance"
+      ]
+    },
+    {
+      "id": "evidence_and_claims",
+      "status": "PENDING_FINAL_REVIEW",
+      "criterion": "Current dossier hashes/sizes/tracked coverage hold. Retain historical snapshots/failures and exact source identities. Claims concern measured synthesized roles; do not claim acoustic/hardware identity, a human listening panel, every-DAW support, or a runtime repair of the queue-only limitation.",
+      "evidence": [
+        "current dossier manifest",
+        "final report",
+        "final response draft"
+      ]
+    }
+  ]
+}

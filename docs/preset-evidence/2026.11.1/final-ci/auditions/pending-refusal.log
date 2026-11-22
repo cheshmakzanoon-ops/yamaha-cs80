@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-w12-ci-auditions/verify-ci-auditions.py", line 214, in <module>
+    main()
+  File "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-w12-ci-auditions/verify-ci-auditions.py", line 146, in main
+    require(all(steps.get(name, {}).get('conclusion') == 'success' for name in required), 'Required audition-producing step is incomplete')
+  File "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-w12-ci-auditions/verify-ci-auditions.py", line 44, in require
+    raise ValueError(message)
+ValueError: Required audition-producing step is incomplete

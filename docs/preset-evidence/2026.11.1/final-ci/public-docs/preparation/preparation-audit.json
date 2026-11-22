@@ -1,0 +1,565 @@
+{
+  "assignment": 59,
+  "status": "PREPARED_STRUCTURE_PASS_FINAL_PUBLIC_LINKS_PENDING",
+  "base_commit": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "checks": [
+    {
+      "name": "Prepared local paths and heading anchors resolve",
+      "pass": true,
+      "detail": {
+        "count": 122,
+        "errors": []
+      }
+    },
+    {
+      "name": "Public inputs remain byte-identical to the preparation baseline",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Template hashes match the plan",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Exactly seven planned public asset URLs appear in the README",
+      "pass": true,
+      "detail": [
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/SHA256SUMS",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-linux-x64.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-macos-apple-silicon.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-macos-intel.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-preset-auditions-2026.11.1.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-windows-x64.zip",
+        "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/release-provenance.json"
+      ]
+    },
+    {
+      "name": "All four platform rows agree with the publisher-derived plan",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Every draft explicitly retains pending qualification",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Publication commit remains unknown until real receipt exists",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No live release or public download claim is certified",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Historical distribution and earlier review remain preserved",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "check_count": 9,
+  "failures": 0,
+  "local_links": [
+    {
+      "document": "README.md",
+      "target": "#downloads"
+    },
+    {
+      "document": "README.md",
+      "target": "#play-your-first-sound"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_GUIDE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "#from-schematic-to-sound"
+    },
+    {
+      "document": "README.md",
+      "target": "#how-we-reduced-cpu-work"
+    },
+    {
+      "document": "README.md",
+      "target": "#build-from-source"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/screenshots/main-source-performance-1600x1000.png"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/screenshots/provenance.json"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/CI_DISTRIBUTION_STATUS.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/INSTALL_AND_QUICKSTART.md#offline-inventory-verification-python-310"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/INSTALL_AND_QUICKSTART.md#install-only-the-formats-you-need"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/CI_DISTRIBUTION_STATUS.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REVISION_2026_11.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PARITY_ISOLATION.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/screenshots/"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REVISION_2026_11.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_GUIDE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/OSCILLATOR_PROMOTION.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/IG00156_NODAL_MODEL.md"
+    },
+    {
+      "document": "README.md",
+      "target": "src/core/Ig00156Filter.h"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/INITIAL_PITCH_TRANSIENT.md"
+    },
+    {
+      "document": "README.md",
+      "target": "src/core/TouchCircuit.h"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/OE2_CIRCUIT_EVIDENCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/BBD_CHORUS_MODEL.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/AFTERTOUCH_SUB_VCF.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PANEL_CONFORMANCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/RING_TIME_REFERENCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/OSCILLATOR_CIRCUIT_EVIDENCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/MN3001_CLOCK_EVENT_DESIGN.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/HARDWARE_REFERENCES.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/HARDWARE_COVERAGE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/avx-default/"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/cumulative-cpu-2026-11-19/continued-exact-hotpaths/"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/cumulative-cpu-2026-11-19/compact-cutoff-publication/"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/cumulative-cpu-2026-11-19/q0-evidence/PHYSICAL-TARGET.md"
+    },
+    {
+      "document": "README.md",
+      "target": ".github/workflows/build.yml"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/ENGINE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/STATUS.md#model-register"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/DSP_MEASUREMENTS.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/CI_DISTRIBUTION_STATUS.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/release/RELEASE_QUALIFICATION.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/ANALOG_FIDELITY_REQUIREMENT.md"
+    },
+    {
+      "document": "README.md",
+      "target": "LICENSE"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PRESET_REVISION_2026_11.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/source-lineage.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/native-windows-x86_64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/install-windows-x86_64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/native-macos-arm64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/install-macos-arm64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/native-macos-x86_64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/install-macos-x86_64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/download-links.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../README.md#downloads"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "CI_DISTRIBUTION_STATUS.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11/review-assignments.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PRESET_GUIDE.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "#native-recall-and-host-program-qualification"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "INSTALL_AND_QUICKSTART.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/README.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/INTEGRATION.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/provenance.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/identity/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../src/core/curated/Winds.inc"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/winds/center.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/winds/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/wind-performance/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../src/core/curated/Plucked.inc"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../src/core/curated/Bass.inc"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/plucks/measurements.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/bass/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ether/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/stereo/initial.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/stereo/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/stereo-chords/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PARITY_ISOLATION.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PRESET_GUIDE.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../tests/PresetCharacterTests.cpp"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/character/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/review/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-identity/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/compatibility/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/distinctness/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/native-recall/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/external-vst3/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/program-queue/method.txt"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/INTEGRATION.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/sample-rates/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/long-sustain/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/arpeggiators/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ring/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../.github/workflows/build.yml"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/audition/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-auditions-local/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-auditions-local/preset-audition/provenance.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "../README.md#downloads"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/native-windows-x86_64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/native-macos-arm64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/native-macos-x86_64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/install-windows-x86_64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/install-macos-arm64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/install-macos-x86_64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/download-links.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/release-qualification.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/run-latest-attempt.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/final-install-artifacts.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/final-validator-payload-identity.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/final-download-links.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/final-audition.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "INSTALL_AND_QUICKSTART.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "release/RELEASE_QUALIFICATION.md"
+    }
+  ],
+  "planned_release_urls": [
+    "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/SHA256SUMS",
+    "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-linux-x64.zip",
+    "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-macos-apple-silicon.zip",
+    "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-macos-intel.zip",
+    "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-preset-auditions-2026.11.1.zip",
+    "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/cs80-windows-x64.zip",
+    "https://github.com/cheshmakzanoon-ops/yamaha-cs80/releases/download/presets-2026.11.1/release-provenance.json"
+  ],
+  "scope": "Local draft paths, headings, asset mapping, provenance wording and preservation only. No live asset GET, native result or final public link availability is certified."
+}

@@ -1,0 +1,76 @@
+{
+  "scope": "Reporting helper smoke only; actual four-case local XML and inert skipped/disabled/notrun fixture. No final native CI certified.",
+  "local_xml_executed_passed": 4,
+  "synthetic_case_classification": {
+    "suite_attributes": {
+      "tests": "4",
+      "failures": "0",
+      "skipped": "1",
+      "disabled": "1"
+    },
+    "testcase_records": 4,
+    "executed_passed": [
+      {
+        "name": "pass",
+        "status": "run",
+        "time": null,
+        "skipped_messages": []
+      }
+    ],
+    "failures": [],
+    "skipped": [
+      {
+        "name": "skip",
+        "status": "run",
+        "time": null,
+        "skipped_messages": [
+          "SKIP_RETURN_CODE"
+        ]
+      },
+      {
+        "name": "disabled",
+        "status": "notrun",
+        "time": null,
+        "skipped_messages": [
+          "Disabled"
+        ]
+      }
+    ],
+    "disabled": [
+      {
+        "name": "disabled",
+        "status": "notrun",
+        "time": null,
+        "skipped_messages": [
+          "Disabled"
+        ]
+      }
+    ],
+    "not_run": [
+      {
+        "name": "disabled",
+        "status": "notrun",
+        "time": null,
+        "skipped_messages": [
+          "Disabled"
+        ]
+      },
+      {
+        "name": "not-run",
+        "status": "notrun",
+        "time": null,
+        "skipped_messages": []
+      }
+    ],
+    "unknown_status": [],
+    "raw_nonexecuted_case_lines": [
+      "2/4 Test #2: skip ... ***Skipped",
+      "3/4 Test #3: disabled ... ***Not Run (Disabled)",
+      "4/4 Test #4: not-run ... ***Not Run"
+    ],
+    "registered_denominators_in_log": [
+      4
+    ],
+    "classification_note": "Lists retain raw JUnit status and may overlap (a disabled case may also be skipped). Only status=run without failure/error/skip/disabled/not-run is counted as executed_passed. Overall green is reported separately."
+  }
+}

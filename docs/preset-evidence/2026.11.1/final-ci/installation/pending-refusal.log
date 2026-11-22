@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-w12-installation-review/inspect-installation-bundles.py", line 334, in <module>
+    main()
+  File "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-w12-installation-review/inspect-installation-bundles.py", line 324, in main
+    require(all(len(rows) == 1 for rows in selected.values()), 'All four unique final artifacts must exist')
+  File "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-w12-installation-review/inspect-installation-bundles.py", line 59, in require
+    raise ValueError(message)
+ValueError: All four unique final artifacts must exist

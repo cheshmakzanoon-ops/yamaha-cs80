@@ -1,0 +1,210 @@
+{
+  "pluginval_version": "2.0.0",
+  "command": "validate",
+  "target": "/home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3",
+  "start_time": "2026-11-22T19:25:26.342Z",
+  "duration_ms": 22624,
+  "properties": {
+    "plugin_name": "CS-80 Reference",
+    "plugin_version": "1.0.0",
+    "plugin_format": "VST3",
+    "plugin_manufacturer": "Reference Instruments",
+    "strictness_level": "10",
+    "timeout_ms": "120000",
+    "random_seed": "0x63421ca"
+  },
+  "summary": {
+    "tests": 31,
+    "passed": 31,
+    "failed": 0,
+    "errors": 0
+  },
+  "tests": [
+    {
+      "name": "Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Open plugin (cold)",
+      "status": "passed",
+      "duration_ms": 212,
+      "messages": []
+    },
+    {
+      "name": "Open plugin (warm)",
+      "status": "passed",
+      "duration_ms": 187,
+      "messages": []
+    },
+    {
+      "name": "Plugin info",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Plugin programs",
+      "status": "passed",
+      "duration_ms": 1,
+      "messages": []
+    },
+    {
+      "name": "Editor",
+      "status": "passed",
+      "duration_ms": 383,
+      "messages": []
+    },
+    {
+      "name": "Open editor whilst processing",
+      "status": "passed",
+      "duration_ms": 98,
+      "messages": []
+    },
+    {
+      "name": "Audio processing",
+      "status": "passed",
+      "duration_ms": 363,
+      "messages": []
+    },
+    {
+      "name": "Non-releasing audio processing",
+      "status": "passed",
+      "duration_ms": 360,
+      "messages": []
+    },
+    {
+      "name": "Plugin state",
+      "status": "passed",
+      "duration_ms": 4,
+      "messages": []
+    },
+    {
+      "name": "Plugin state restoration",
+      "status": "passed",
+      "duration_ms": 438,
+      "messages": []
+    },
+    {
+      "name": "Discrete parameter state restoration",
+      "status": "passed",
+      "duration_ms": 98,
+      "messages": []
+    },
+    {
+      "name": "Automation",
+      "status": "passed",
+      "duration_ms": 220,
+      "messages": []
+    },
+    {
+      "name": "Editor Automation",
+      "status": "passed",
+      "duration_ms": 10387,
+      "messages": []
+    },
+    {
+      "name": "Automatable Parameters",
+      "status": "passed",
+      "duration_ms": 31,
+      "messages": []
+    },
+    {
+      "name": "Parameters",
+      "status": "passed",
+      "duration_ms": 29,
+      "messages": []
+    },
+    {
+      "name": "Background thread state",
+      "status": "passed",
+      "duration_ms": 2063,
+      "messages": []
+    },
+    {
+      "name": "Parameter thread safety",
+      "status": "passed",
+      "duration_ms": 1120,
+      "messages": []
+    },
+    {
+      "name": "auval",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "vst3 validator",
+      "status": "passed",
+      "duration_ms": 5732,
+      "messages": []
+    },
+    {
+      "name": "Ensuring that the locale does not change during execution",
+      "status": "passed",
+      "duration_ms": 91,
+      "messages": []
+    },
+    {
+      "name": "Basic bus",
+      "status": "passed",
+      "duration_ms": 4,
+      "messages": []
+    },
+    {
+      "name": "Listing available buses",
+      "status": "passed",
+      "duration_ms": 4,
+      "messages": []
+    },
+    {
+      "name": "Enabling all buses",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Disabling non-main busses",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Restoring default layout",
+      "status": "passed",
+      "duration_ms": 8,
+      "messages": []
+    },
+    {
+      "name": "Bus layout processing",
+      "status": "passed",
+      "duration_ms": 46,
+      "messages": []
+    },
+    {
+      "name": "Editor stress",
+      "status": "passed",
+      "duration_ms": 127,
+      "messages": []
+    },
+    {
+      "name": "Allocations during process",
+      "status": "passed",
+      "duration_ms": 352,
+      "messages": []
+    },
+    {
+      "name": "Process called with a larger than prepared block size",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Fuzz parameters",
+      "status": "passed",
+      "duration_ms": 266,
+      "messages": []
+    }
+  ]
+}

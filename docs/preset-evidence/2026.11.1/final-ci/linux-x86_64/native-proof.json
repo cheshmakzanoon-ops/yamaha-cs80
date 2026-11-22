@@ -1,0 +1,3640 @@
+{
+  "assignment": 54,
+  "status": "PASS",
+  "scope": "Native Linux CTest and required build steps only; no validator verdict is inferred.",
+  "verified_at_utc": "2026-11-22T19:25:01.686545+00:00",
+  "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "builder_job_id": 137274597635,
+  "registered_ctest_count": 579,
+  "ctest_reported_total": 579,
+  "ctest_failed": 0,
+  "total_ctest_seconds": 9492.2,
+  "ctest_execution": {
+    "suite_attributes": {
+      "name": "(empty)",
+      "tests": "579",
+      "failures": "0",
+      "disabled": "0",
+      "skipped": "1",
+      "hostname": "",
+      "time": "9492",
+      "timestamp": "2026-11-22T16:43:01"
+    },
+    "testcase_records": 579,
+    "executed_passed": [
+      {
+        "name": "cs80_engine_output_fir_packed_tests",
+        "status": "run",
+        "time": "0.233259",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_wsc_held_endpoint_tests",
+        "status": "run",
+        "time": "0.00452414",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_legacy_sub_lfo_oracle_tests",
+        "status": "run",
+        "time": "1.82623",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00156_batch_tests",
+        "status": "run",
+        "time": "0.0155018",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_batch_engine_tests",
+        "status": "run",
+        "time": "6.78851",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_batch_scheduling_tests",
+        "status": "run",
+        "time": "2.19632",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00151_zero_ei_tests",
+        "status": "run",
+        "time": "0.0196028",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_event_timeline_tests",
+        "status": "run",
+        "time": "0.00305686",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pump_until_tests",
+        "status": "run",
+        "time": "0.00168131",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_batch_admission_tests",
+        "status": "run",
+        "time": "11.2739",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_package_binary_identity_tests",
+        "status": "run",
+        "time": "0.240311",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_packaging_notice_tests",
+        "status": "run",
+        "time": "1.2975",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ci_juce_provenance_tests",
+        "status": "run",
+        "time": "0.350638",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pluginval_windows_download_tests",
+        "status": "run",
+        "time": "0.121721",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pluginval_macos_download_tests",
+        "status": "run",
+        "time": "0.122972",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_deb_runtime_dependency_tests",
+        "status": "run",
+        "time": "4.12776",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ci_bundle_verification_tests",
+        "status": "run",
+        "time": "0.275345",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_windows_installer_preflight_tests",
+        "status": "run",
+        "time": "0.940062",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_parity_harness_tests",
+        "status": "run",
+        "time": "2.17995",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ui_environment_tests",
+        "status": "run",
+        "time": "15.7366",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_trash_safety_tests",
+        "status": "run",
+        "time": "0.767747",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_signature_math_tests",
+        "status": "run",
+        "time": "13.8835",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_macos_installer_architecture_tests",
+        "status": "run",
+        "time": "3.44333",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_continuous_voice_circuit_tests",
+        "status": "run",
+        "time": "0.0300691",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_continuous_voice_circuit_audit_tests",
+        "status": "run",
+        "time": "0.822164",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_lfo_scope_preview_tests",
+        "status": "run",
+        "time": "0.004574",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_preview_math_tests",
+        "status": "run",
+        "time": "0.00204868",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_output_meter_display_tests",
+        "status": "run",
+        "time": "0.00107099",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_voice_activity_tests",
+        "status": "run",
+        "time": "0.00295398",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_output_meter_tests",
+        "status": "run",
+        "time": "0.000965957",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_output_meter_audit_tests",
+        "status": "run",
+        "time": "0.00844345",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_keyboard_pressure_audit_tests",
+        "status": "run",
+        "time": "0.00201106",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_captured_keyboard_events_tests",
+        "status": "run",
+        "time": "0.0015975",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_keyboard_event_queue_tests",
+        "status": "run",
+        "time": "0.00514793",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_keyboard_epoch_interleaving_tests",
+        "status": "run",
+        "time": "2.12599",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_parity_mode_tests",
+        "status": "run",
+        "time": "4.7756",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_source_performance_tests",
+        "status": "run",
+        "time": "11.5965",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_source_performance_audit_tests",
+        "status": "run",
+        "time": "3.91933",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_envelope_precision_tests",
+        "status": "run",
+        "time": "57.7235",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_default_history_tests",
+        "status": "run",
+        "time": "0.0369673",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_default_history_missing_tests",
+        "status": "run",
+        "time": "0.00501106",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_default_history_truncated_tests",
+        "status": "run",
+        "time": "0.0044497",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_idle_fallback_tests",
+        "status": "run",
+        "time": "0.0221256",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_idle_fallback_missing_tests",
+        "status": "run",
+        "time": "0.00503975",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_idle_fallback_truncated_tests",
+        "status": "run",
+        "time": "0.0044709",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_batch_cap_tests",
+        "status": "run",
+        "time": "0.0630987",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_batch_cap_missing_tests",
+        "status": "run",
+        "time": "0.00506728",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_batch_cap_truncated_tests",
+        "status": "run",
+        "time": "0.00442222",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00156_cache_tests",
+        "status": "run",
+        "time": "0.115158",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00156_filter_tests",
+        "status": "run",
+        "time": "0.486001",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_envelope_rc_model_tests",
+        "status": "run",
+        "time": "0.245549",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_live_envelope_level_tests",
+        "status": "run",
+        "time": "5.50038",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_live_envelope_timing_tests",
+        "status": "run",
+        "time": "1.99435",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_active_tail_continuity_tests",
+        "status": "run",
+        "time": "12.5878",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_core_tests",
+        "status": "run",
+        "time": "11.0187",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_voice_release_tests",
+        "status": "run",
+        "time": "2.07658",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_sixteen_voice_release_tests",
+        "status": "run",
+        "time": "4.73618",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_unison_glide_tests",
+        "status": "run",
+        "time": "7.21702",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_unison_detune_latch_tests",
+        "status": "run",
+        "time": "0.222941",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pedal_release_tests",
+        "status": "run",
+        "time": "1.84461",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_high_resolution_velocity_tests",
+        "status": "run",
+        "time": "0.00172151",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_controller_reset_tests",
+        "status": "run",
+        "time": "13.0551",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_experimental_oscillator_tests",
+        "status": "run",
+        "time": "9.57118",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_source_factory_integration_tests",
+        "status": "run",
+        "time": "197.106",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_source_factory_tone_tests",
+        "status": "run",
+        "time": "0.0930684",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_hardware_control_tests",
+        "status": "run",
+        "time": "0.00234485",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00156_reference_tests",
+        "status": "run",
+        "time": "0.0296617",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_keyboard_contour_reference_tests",
+        "status": "run",
+        "time": "0.00317677",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_loaded_control_reference_tests",
+        "status": "run",
+        "time": "0.00182157",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_loaded_control_rank_tests",
+        "status": "run",
+        "time": "0.0057131",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_loaded_control_transient_tests",
+        "status": "run",
+        "time": "0.0156571",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_output_tap_integration_tests",
+        "status": "run",
+        "time": "1.78287",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_output_tap_circuit_tests",
+        "status": "run",
+        "time": "1.61113",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_output_taps_tests",
+        "status": "run",
+        "time": "0.00468079",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_level_control_tests",
+        "status": "run",
+        "time": "0.120452",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_resonance_control_tests",
+        "status": "run",
+        "time": "0.0304649",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_oe2_filters_tests",
+        "status": "run",
+        "time": "0.00531453",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pra_wah_integration_tests",
+        "status": "run",
+        "time": "1.68586",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pra_wah_circuit_tests",
+        "status": "run",
+        "time": "1.18322",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pra_wah_tests",
+        "status": "run",
+        "time": "0.0227128",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_bbd_chorus_tests",
+        "status": "run",
+        "time": "0.998877",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mn3001_packet_tests",
+        "status": "run",
+        "time": "0.0200402",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_performance_control_tests",
+        "status": "run",
+        "time": "12.383",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_validator_diagnostic_selection_tests",
+        "status": "run",
+        "time": "4.23841",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_validator_retry_tests",
+        "status": "run",
+        "time": "4.14834",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_validator_exit_classification_tests",
+        "status": "run",
+        "time": "0.349743",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00156_nodal_tests",
+        "status": "run",
+        "time": "23.8932",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00156_top_octave_tests",
+        "status": "run",
+        "time": "1.4364",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_oscillator_promotion_tests",
+        "status": "run",
+        "time": "5.61686",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00151_vca_tests",
+        "status": "run",
+        "time": "1.64231",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_tolerance_drift_tests",
+        "status": "run",
+        "time": "8.93731",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_fx_loudness_core_tests",
+        "status": "run",
+        "time": "0.115341",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_fx_loudness_gate_tests",
+        "status": "run",
+        "time": "0.0239158",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_arp_rate_lifecycle_tests",
+        "status": "run",
+        "time": "0.289642",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_arp_pedal_lifecycle_tests",
+        "status": "run",
+        "time": "0.266739",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_arp_repeat_lifecycle_tests",
+        "status": "run",
+        "time": "0.112965",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_quiet_fx_rack_tests",
+        "status": "run",
+        "time": "1.47792",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_fx_tape_lifecycle_tests",
+        "status": "run",
+        "time": "0.0873797",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_external_interpolator_tests",
+        "status": "run",
+        "time": "2.91718",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_oversampling_tests",
+        "status": "run",
+        "time": "2.33766",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_smoothing_tests",
+        "status": "run",
+        "time": "2.9806",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pitch_bend_range_tests",
+        "status": "run",
+        "time": "1.73991",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_member_onset_tests",
+        "status": "run",
+        "time": "4.84347",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_timbre_combination_tests",
+        "status": "run",
+        "time": "1.45095",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_pressure_combination_tests",
+        "status": "run",
+        "time": "0.694202",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_released_target_tests",
+        "status": "run",
+        "time": "5.8888",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_master_smoothing_tests",
+        "status": "run",
+        "time": "0.386463",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_output_listening_tests",
+        "status": "run",
+        "time": "1.9774",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_noise_tests",
+        "status": "run",
+        "time": "5.08499",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_poly_pressure_routing_tests",
+        "status": "run",
+        "time": "1.25859",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_host_automation_curve_tests",
+        "status": "run",
+        "time": "0.45907",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_free_running_voice_tests",
+        "status": "run",
+        "time": "5.29462",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_kas_scanner_tests",
+        "status": "run",
+        "time": "2.86159",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_scanner_ordering_tests",
+        "status": "run",
+        "time": "1.51845",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_scanner_overflow_tests",
+        "status": "run",
+        "time": "1.66512",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_keyboard_contour_key_map_tests",
+        "status": "run",
+        "time": "26.7825",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_touch_circuit_tests",
+        "status": "run",
+        "time": "4.22137",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_master_bend_routing_tests",
+        "status": "run",
+        "time": "4.25024",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_tuning_midi_tests",
+        "status": "run",
+        "time": "22.5731",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_tuning_frequency_domain_tests",
+        "status": "run",
+        "time": "0.00285708",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_tuning_robustness_tests",
+        "status": "run",
+        "time": "0.00287033",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mts_esp_native_tests",
+        "status": "run",
+        "time": "0.00171111",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mts_esp_integration_tests",
+        "status": "run",
+        "time": "0.3738",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mts_esp_channel_tests",
+        "status": "run",
+        "time": "0.00570077",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mts_esp_fallback_tests",
+        "status": "run",
+        "time": "0.00163936",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mts_esp_windows_macro_tests",
+        "status": "run",
+        "time": "0.00102242",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00150_sub_tests",
+        "status": "run",
+        "time": "10.9585",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ring_modulator_circuit_tests",
+        "status": "run",
+        "time": "3.36628",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_oe2_stereo_chorus_tests",
+        "status": "run",
+        "time": "0.96788",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_pra_optical_cell_tests",
+        "status": "run",
+        "time": "6.54044",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_lfo_random_switching_tests",
+        "status": "run",
+        "time": "0.130788",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_lfo_random_variable_rate_tests",
+        "status": "run",
+        "time": "0.0649657",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_modern_lfo_tests",
+        "status": "run",
+        "time": "1.59175",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mseg_tests",
+        "status": "run",
+        "time": "2.18853",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mseg_transport_rate_tests",
+        "status": "run",
+        "time": "0.126059",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mono_mseg_routing_tests",
+        "status": "run",
+        "time": "0.818179",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mseg_retrigger_rate_tests",
+        "status": "run",
+        "time": "1.28711",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mseg_combined_interaction_tests",
+        "status": "run",
+        "time": "0.0212662",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mod_matrix_tests",
+        "status": "run",
+        "time": "27.0144",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_modern_fx_tests",
+        "status": "run",
+        "time": "62.5743",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_delay_line_tests",
+        "status": "run",
+        "time": "0.0332755",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_plate_reverb_rate_tests",
+        "status": "run",
+        "time": "3.33718",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_tape_echo_time_tests",
+        "status": "run",
+        "time": "3.298",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_drive_control_cache_tests",
+        "status": "run",
+        "time": "0.562024",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ensemble_rate_cache_tests",
+        "status": "run",
+        "time": "5.14474",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_tape_echo_control_cache_tests",
+        "status": "run",
+        "time": "9.68377",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_library_audit_tests",
+        "status": "run",
+        "time": "169.831",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_voicing_tests",
+        "status": "run",
+        "time": "7.25542",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_character_tests",
+        "status": "run",
+        "time": "5.18233",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_capture_tests",
+        "status": "run",
+        "time": "1.68676",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_randomise_tests",
+        "status": "run",
+        "time": "40.2296",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_source_factory_boundary_tests",
+        "status": "run",
+        "time": "0.679191",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_panel_tests",
+        "status": "run",
+        "time": "0.75824",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_panel_ports_tests",
+        "status": "run",
+        "time": "15.912",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_panel_port_map_tests",
+        "status": "run",
+        "time": "1.61223",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_port_map_negative_controls",
+        "status": "run",
+        "time": "12.7463",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_control_routing_tests",
+        "status": "run",
+        "time": "0.705683",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_receiver_truth_tests",
+        "status": "run",
+        "time": "1.9377",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_qualification_probe_self_tests",
+        "status": "run",
+        "time": "0.00217984",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_verified_diode_tests",
+        "status": "run",
+        "time": "9.23248",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_centered_log_rational",
+        "status": "run",
+        "time": "0.415088",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_interval_extrema",
+        "status": "run",
+        "time": "0.29721",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_sparse_update_tests",
+        "status": "run",
+        "time": "17.6806",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_sparse_negative_controls",
+        "status": "run",
+        "time": "9.40881",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_memory_routing_negative_controls",
+        "status": "run",
+        "time": "11.7431",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_programmer_control_identity_tests",
+        "status": "run",
+        "time": "0.00122591",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_fast_math_tests",
+        "status": "run",
+        "time": "0.0498113",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_evidence_register_tests",
+        "status": "run",
+        "time": "0.00224505",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_midi_learn_tests",
+        "status": "run",
+        "time": "0.161255",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_render_cli_tests",
+        "status": "run",
+        "time": "0.335026",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_callback_cpu_measurement_tests",
+        "status": "run",
+        "time": "0.00117632",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_callback_cpu_benchmark_tests",
+        "status": "run",
+        "time": "13.4741",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_benchmark_preflight_tests",
+        "status": "run",
+        "time": "0.0898388",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_parity_capture_tests",
+        "status": "run",
+        "time": "3.28",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_dsp_probe_tests",
+        "status": "run",
+        "time": "1.05291",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_modern_state_integer_tests",
+        "status": "run",
+        "time": "0.00221304",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_display_name_tests",
+        "status": "run",
+        "time": "0.00177285",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_file_values_tests",
+        "status": "run",
+        "time": "0.00580149",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mseg_state_text_tests",
+        "status": "run",
+        "time": "0.0314496",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_parameter_state_index_tests",
+        "status": "run",
+        "time": "1.8638",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_state_mirror_bridge_tests",
+        "status": "run",
+        "time": "0.0752388",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "13.7601",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_automation_44100_offline_tests",
+        "status": "run",
+        "time": "37.9517",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "13.9412",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_automation_48000_offline_tests",
+        "status": "run",
+        "time": "38.2187",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "13.8428",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_automation_96000_offline_tests",
+        "status": "run",
+        "time": "22.7024",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_depth_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "13.7049",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_depth_automation_44100_offline_tests",
+        "status": "run",
+        "time": "37.9962",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_depth_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "13.8422",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_depth_automation_48000_offline_tests",
+        "status": "run",
+        "time": "37.947",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_depth_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "13.833",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_depth_automation_96000_offline_tests",
+        "status": "run",
+        "time": "22.845",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_times_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "14.8843",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_times_automation_44100_offline_tests",
+        "status": "run",
+        "time": "43.0105",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_times_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "14.9223",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_times_automation_48000_offline_tests",
+        "status": "run",
+        "time": "42.7666",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_times_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "14.9513",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_times_automation_96000_offline_tests",
+        "status": "run",
+        "time": "25.2131",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_retrigger_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "15.8115",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_retrigger_automation_44100_offline_tests",
+        "status": "run",
+        "time": "45.1778",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_retrigger_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "15.9253",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_retrigger_automation_48000_offline_tests",
+        "status": "run",
+        "time": "45.4747",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_retrigger_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "15.9178",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_retrigger_automation_96000_offline_tests",
+        "status": "run",
+        "time": "26.6134",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_combined_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "11.5744",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_combined_automation_44100_offline_tests",
+        "status": "run",
+        "time": "32.2421",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_combined_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "11.5813",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_combined_automation_48000_offline_tests",
+        "status": "run",
+        "time": "32.0074",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_combined_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "11.6977",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_combined_automation_96000_offline_tests",
+        "status": "run",
+        "time": "19.1447",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_chorus_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "16.537",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_chorus_automation_44100_offline_tests",
+        "status": "run",
+        "time": "45.3478",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_chorus_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "16.5592",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_chorus_automation_48000_offline_tests",
+        "status": "run",
+        "time": "45.5144",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_chorus_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "16.6098",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_chorus_automation_96000_offline_tests",
+        "status": "run",
+        "time": "27.1899",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tremolo_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "17.8788",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tremolo_automation_44100_offline_tests",
+        "status": "run",
+        "time": "49.2215",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tremolo_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "17.9936",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tremolo_automation_48000_offline_tests",
+        "status": "run",
+        "time": "49.3519",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tremolo_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "17.9889",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tremolo_automation_96000_offline_tests",
+        "status": "run",
+        "time": "29.503",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_portamento_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "8.83779",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_portamento_automation_44100_offline_tests",
+        "status": "run",
+        "time": "23.3715",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_portamento_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "8.83504",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_portamento_automation_48000_offline_tests",
+        "status": "run",
+        "time": "23.3149",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_portamento_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "8.65549",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_portamento_automation_96000_offline_tests",
+        "status": "run",
+        "time": "14.1633",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_master_sustain_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "8.07254",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_master_sustain_automation_44100_offline_tests",
+        "status": "run",
+        "time": "22.0941",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_master_sustain_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "8.11474",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_master_sustain_automation_48000_offline_tests",
+        "status": "run",
+        "time": "22.2631",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_master_sustain_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "8.11883",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_master_sustain_automation_96000_offline_tests",
+        "status": "run",
+        "time": "13.2349",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_bend_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "7.32746",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_bend_automation_44100_offline_tests",
+        "status": "run",
+        "time": "19.4496",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_bend_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "7.31007",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_bend_automation_48000_offline_tests",
+        "status": "run",
+        "time": "19.4758",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_bend_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "7.12094",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_bend_automation_96000_offline_tests",
+        "status": "run",
+        "time": "11.616",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_low_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "6.83718",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_low_automation_44100_offline_tests",
+        "status": "run",
+        "time": "19.3985",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_low_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "6.9212",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_low_automation_48000_offline_tests",
+        "status": "run",
+        "time": "19.4151",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_low_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "7.02461",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_low_automation_96000_offline_tests",
+        "status": "run",
+        "time": "11.6157",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_high_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "7.1978",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_high_automation_44100_offline_tests",
+        "status": "run",
+        "time": "19.8499",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_high_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "7.25055",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_high_automation_48000_offline_tests",
+        "status": "run",
+        "time": "19.8533",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_high_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "7.25082",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_level_high_automation_96000_offline_tests",
+        "status": "run",
+        "time": "11.8468",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_brilliance_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "14.1829",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_brilliance_automation_44100_offline_tests",
+        "status": "run",
+        "time": "39.8844",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_brilliance_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "14.2473",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_brilliance_automation_48000_offline_tests",
+        "status": "run",
+        "time": "39.8091",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_brilliance_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "14.3419",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_brilliance_automation_96000_offline_tests",
+        "status": "run",
+        "time": "23.8611",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_touch_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "26.7307",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_touch_automation_44100_offline_tests",
+        "status": "run",
+        "time": "74.6294",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_touch_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "26.8399",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_touch_automation_48000_offline_tests",
+        "status": "run",
+        "time": "74.1807",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_touch_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "26.8932",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_initial_touch_automation_96000_offline_tests",
+        "status": "run",
+        "time": "44.1967",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_after_touch_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "28.9728",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_after_touch_automation_44100_offline_tests",
+        "status": "run",
+        "time": "81.4211",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_after_touch_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "29.0774",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_after_touch_automation_48000_offline_tests",
+        "status": "run",
+        "time": "81.9968",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_after_touch_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "29.686",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_after_touch_automation_96000_offline_tests",
+        "status": "run",
+        "time": "49.0966",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_pwm_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "27.4745",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_pwm_automation_44100_offline_tests",
+        "status": "run",
+        "time": "76.3117",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_pwm_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "27.3422",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_pwm_automation_48000_offline_tests",
+        "status": "run",
+        "time": "76.5423",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_pwm_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "27.7921",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_pwm_automation_96000_offline_tests",
+        "status": "run",
+        "time": "45.5617",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vcf_level_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "13.19",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vcf_level_automation_44100_offline_tests",
+        "status": "run",
+        "time": "36.9936",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vcf_level_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "13.2472",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vcf_level_automation_48000_offline_tests",
+        "status": "run",
+        "time": "36.9883",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vcf_level_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "13.2595",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vcf_level_automation_96000_offline_tests",
+        "status": "run",
+        "time": "22.0829",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vca_sustain_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "13.1452",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vca_sustain_automation_44100_offline_tests",
+        "status": "run",
+        "time": "36.7103",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vca_sustain_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "13.3211",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vca_sustain_automation_48000_offline_tests",
+        "status": "run",
+        "time": "36.6548",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vca_sustain_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "13.3049",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_vca_sustain_automation_96000_offline_tests",
+        "status": "run",
+        "time": "21.8384",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_il_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "12.6651",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_il_automation_44100_offline_tests",
+        "status": "run",
+        "time": "34.7314",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_il_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "12.6598",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_il_automation_48000_offline_tests",
+        "status": "run",
+        "time": "34.8148",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_il_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "12.6894",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_il_automation_96000_offline_tests",
+        "status": "run",
+        "time": "21.0601",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_al_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "13.2125",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_al_automation_44100_offline_tests",
+        "status": "run",
+        "time": "36.7379",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_al_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "13.2967",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_al_automation_48000_offline_tests",
+        "status": "run",
+        "time": "36.8441",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_al_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "13.325",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_filter_al_automation_96000_offline_tests",
+        "status": "run",
+        "time": "21.9365",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_attack_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "26.3899",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_attack_automation_44100_offline_tests",
+        "status": "run",
+        "time": "74.0645",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_attack_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "26.6362",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_attack_automation_48000_offline_tests",
+        "status": "run",
+        "time": "74.1674",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_attack_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "27.0379",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_attack_automation_96000_offline_tests",
+        "status": "run",
+        "time": "44.1783",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "26.3461",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_automation_44100_offline_tests",
+        "status": "run",
+        "time": "73.7113",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "26.4462",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_automation_48000_offline_tests",
+        "status": "run",
+        "time": "73.3285",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "26.461",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_automation_96000_offline_tests",
+        "status": "run",
+        "time": "43.8184",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_release_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "25.3527",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_release_automation_44100_offline_tests",
+        "status": "run",
+        "time": "69.5524",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_release_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "25.1901",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_release_automation_48000_offline_tests",
+        "status": "run",
+        "time": "69.9451",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_release_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "25.7169",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_release_automation_96000_offline_tests",
+        "status": "run",
+        "time": "41.9008",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_release_combined_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "10.4174",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_release_combined_automation_44100_offline_tests",
+        "status": "run",
+        "time": "27.9161",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_release_combined_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "10.3804",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_release_combined_automation_48000_offline_tests",
+        "status": "run",
+        "time": "27.944",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_release_combined_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "10.3497",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_envelope_decay_release_combined_automation_96000_offline_tests",
+        "status": "run",
+        "time": "16.8737",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sine_noise_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "25.0736",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sine_noise_automation_44100_offline_tests",
+        "status": "run",
+        "time": "68.8116",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sine_noise_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "25.3049",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sine_noise_automation_48000_offline_tests",
+        "status": "run",
+        "time": "69.3321",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sine_noise_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "25.4071",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sine_noise_automation_96000_offline_tests",
+        "status": "run",
+        "time": "41.754",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "7.02542",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_automation_44100_offline_tests",
+        "status": "run",
+        "time": "19.3429",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "7.02408",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_automation_48000_offline_tests",
+        "status": "run",
+        "time": "19.2992",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "7.10355",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_automation_96000_offline_tests",
+        "status": "run",
+        "time": "11.8751",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_key_release_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "6.40281",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_key_release_automation_44100_offline_tests",
+        "status": "run",
+        "time": "17.604",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_key_release_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "6.42941",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_key_release_automation_48000_offline_tests",
+        "status": "run",
+        "time": "17.6455",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_key_release_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "6.51322",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_key_release_automation_96000_offline_tests",
+        "status": "run",
+        "time": "10.6632",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_native_random_44100_realtime_tests",
+        "status": "run",
+        "time": "17.2738",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_native_random_44100_offline_tests",
+        "status": "run",
+        "time": "42.8076",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_native_random_48000_realtime_tests",
+        "status": "run",
+        "time": "17.1294",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_native_random_48000_offline_tests",
+        "status": "run",
+        "time": "42.5936",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_native_random_96000_realtime_tests",
+        "status": "run",
+        "time": "16.7252",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_native_random_96000_offline_tests",
+        "status": "run",
+        "time": "26.0881",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_static_shapes_44100_realtime_tests",
+        "status": "run",
+        "time": "12.3937",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_static_shapes_44100_offline_tests",
+        "status": "run",
+        "time": "24.3281",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_static_shapes_48000_realtime_tests",
+        "status": "run",
+        "time": "12.2829",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_static_shapes_48000_offline_tests",
+        "status": "run",
+        "time": "24.4757",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_static_shapes_96000_realtime_tests",
+        "status": "run",
+        "time": "12.5547",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_static_shapes_96000_offline_tests",
+        "status": "run",
+        "time": "17.4768",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_depth_combined_44100_realtime_tests",
+        "status": "run",
+        "time": "23.8082",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_depth_combined_44100_offline_tests",
+        "status": "run",
+        "time": "62.2058",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_depth_combined_48000_realtime_tests",
+        "status": "run",
+        "time": "23.9642",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_depth_combined_48000_offline_tests",
+        "status": "run",
+        "time": "62.3186",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_depth_combined_96000_realtime_tests",
+        "status": "run",
+        "time": "23.7085",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_depth_combined_96000_offline_tests",
+        "status": "run",
+        "time": "37.4787",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "22.7582",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_automation_44100_offline_tests",
+        "status": "run",
+        "time": "60.9416",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "22.8943",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_automation_48000_offline_tests",
+        "status": "run",
+        "time": "61.4264",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "22.8304",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_rate_automation_96000_offline_tests",
+        "status": "run",
+        "time": "36.0343",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_depth_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "19.8042",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_depth_automation_44100_offline_tests",
+        "status": "run",
+        "time": "52.0835",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_depth_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "19.8894",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_depth_automation_48000_offline_tests",
+        "status": "run",
+        "time": "52.1515",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_depth_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "19.3391",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_lfo_depth_automation_96000_offline_tests",
+        "status": "run",
+        "time": "31.3896",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_mod_wheel_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "16.1327",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_mod_wheel_automation_44100_offline_tests",
+        "status": "run",
+        "time": "41.7057",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_mod_wheel_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "16.1896",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_mod_wheel_automation_48000_offline_tests",
+        "status": "run",
+        "time": "42.0712",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_mod_wheel_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "15.7503",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_mod_wheel_automation_96000_offline_tests",
+        "status": "run",
+        "time": "25.176",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_cc1_fixture_44100_realtime_tests",
+        "status": "run",
+        "time": "0.814692",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_cc1_fixture_44100_offline_tests",
+        "status": "run",
+        "time": "1.68528",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_cc1_fixture_48000_realtime_tests",
+        "status": "run",
+        "time": "0.814854",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_cc1_fixture_48000_offline_tests",
+        "status": "run",
+        "time": "1.69497",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_cc1_fixture_96000_realtime_tests",
+        "status": "run",
+        "time": "0.831923",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_cc1_fixture_96000_offline_tests",
+        "status": "run",
+        "time": "1.18001",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tuning_ref_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "7.1453",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tuning_ref_automation_44100_offline_tests",
+        "status": "run",
+        "time": "18.0437",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tuning_ref_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "7.20548",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tuning_ref_automation_48000_offline_tests",
+        "status": "run",
+        "time": "18.0566",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tuning_ref_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "7.08595",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_tuning_ref_automation_96000_offline_tests",
+        "status": "run",
+        "time": "10.9787",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_release_floor_interaction_44100_realtime_tests",
+        "status": "run",
+        "time": "12.7326",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_release_floor_interaction_44100_offline_tests",
+        "status": "run",
+        "time": "34.8056",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_release_floor_interaction_48000_realtime_tests",
+        "status": "run",
+        "time": "12.7056",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_release_floor_interaction_48000_offline_tests",
+        "status": "run",
+        "time": "34.9389",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_release_floor_interaction_96000_realtime_tests",
+        "status": "run",
+        "time": "12.8573",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_release_floor_interaction_96000_offline_tests",
+        "status": "run",
+        "time": "21.2384",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_release_modes_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "12.8272",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_release_modes_automation_44100_offline_tests",
+        "status": "run",
+        "time": "34.8173",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_release_modes_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "12.791",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_release_modes_automation_48000_offline_tests",
+        "status": "run",
+        "time": "35.1786",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_release_modes_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "12.8547",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ribbon_release_modes_automation_96000_offline_tests",
+        "status": "run",
+        "time": "21.249",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_contour_combined_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "14.3751",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_contour_combined_automation_44100_offline_tests",
+        "status": "run",
+        "time": "39.9468",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_contour_combined_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "14.4153",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_contour_combined_automation_48000_offline_tests",
+        "status": "run",
+        "time": "40.1386",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_contour_combined_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "14.5645",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_kbd_contour_combined_automation_96000_offline_tests",
+        "status": "run",
+        "time": "23.915",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_glissando_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "8.42474",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_glissando_automation_44100_offline_tests",
+        "status": "run",
+        "time": "22.9733",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_glissando_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "8.44732",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_glissando_automation_48000_offline_tests",
+        "status": "run",
+        "time": "22.9695",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_glissando_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "8.54906",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_glissando_automation_96000_offline_tests",
+        "status": "run",
+        "time": "13.8834",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_chorus_combined_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "19.6738",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_chorus_combined_automation_44100_offline_tests",
+        "status": "run",
+        "time": "54.2444",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_chorus_combined_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "19.6916",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_chorus_combined_automation_48000_offline_tests",
+        "status": "run",
+        "time": "54.3469",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_chorus_combined_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "19.8337",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_ring_chorus_combined_automation_96000_offline_tests",
+        "status": "run",
+        "time": "32.6456",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_speed_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "8.5604",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_speed_automation_44100_offline_tests",
+        "status": "run",
+        "time": "21.0119",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_speed_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "8.58389",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_speed_automation_48000_offline_tests",
+        "status": "run",
+        "time": "20.9848",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_speed_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "8.19065",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_speed_automation_96000_offline_tests",
+        "status": "run",
+        "time": "12.661",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "24.9712",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_automation_44100_offline_tests",
+        "status": "run",
+        "time": "65.7865",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "25.0018",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_automation_48000_offline_tests",
+        "status": "run",
+        "time": "65.6128",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "24.602",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_automation_96000_offline_tests",
+        "status": "run",
+        "time": "39.4798",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_combined_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "18.1593",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_combined_automation_44100_offline_tests",
+        "status": "run",
+        "time": "46.5122",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_combined_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "18.2095",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_combined_automation_48000_offline_tests",
+        "status": "run",
+        "time": "46.2901",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_combined_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "17.7217",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_combined_automation_96000_offline_tests",
+        "status": "run",
+        "time": "27.5389",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_combined_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "19.4821",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_combined_automation_44100_offline_tests",
+        "status": "run",
+        "time": "49.8893",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_combined_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "19.4308",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_combined_automation_48000_offline_tests",
+        "status": "run",
+        "time": "50.0381",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_combined_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "18.401",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_legacy_combined_automation_96000_offline_tests",
+        "status": "run",
+        "time": "29.6163",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_legacy_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "27.0239",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_legacy_automation_44100_offline_tests",
+        "status": "run",
+        "time": "71.5299",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_legacy_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "27.049",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_legacy_automation_48000_offline_tests",
+        "status": "run",
+        "time": "71.3512",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_legacy_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "26.6265",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_touch_legacy_automation_96000_offline_tests",
+        "status": "run",
+        "time": "44.0037",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_waveform_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "23.9322",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_waveform_automation_44100_offline_tests",
+        "status": "run",
+        "time": "60.3063",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_waveform_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "23.7702",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_waveform_automation_48000_offline_tests",
+        "status": "run",
+        "time": "60.0964",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_waveform_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "22.5605",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_waveform_automation_96000_offline_tests",
+        "status": "run",
+        "time": "35.2835",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_depth_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "27.056",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_depth_automation_44100_offline_tests",
+        "status": "run",
+        "time": "72.4021",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_depth_automation_48000_realtime_tests",
+        "status": "run",
+        "time": "27.2399",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_depth_automation_48000_offline_tests",
+        "status": "run",
+        "time": "72.5809",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_depth_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "27.0798",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_depth_automation_96000_offline_tests",
+        "status": "run",
+        "time": "42.81",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_automation_tests",
+        "status": "run",
+        "time": "14.3403",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "14.3816",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_automation_44100_offline_tests",
+        "status": "run",
+        "time": "36.0797",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_automation_48000_offline_tests",
+        "status": "run",
+        "time": "35.8156",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "14.1835",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_sub_automation_96000_offline_tests",
+        "status": "run",
+        "time": "21.2604",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_automation_tests",
+        "status": "run",
+        "time": "51.9031",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_automation_44100_realtime_tests",
+        "status": "run",
+        "time": "51.6015",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_automation_44100_offline_tests",
+        "status": "run",
+        "time": "114.315",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_automation_48000_offline_tests",
+        "status": "run",
+        "time": "115.879",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_automation_96000_realtime_tests",
+        "status": "run",
+        "time": "53.4425",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vst3_automation_96000_offline_tests",
+        "status": "run",
+        "time": "81.0588",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mts_esp_processor_tests",
+        "status": "run",
+        "time": "1.74276",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_sub_routing_display_tests",
+        "status": "run",
+        "time": "0.698308",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_parameter_admission_tests",
+        "status": "run",
+        "time": "0.0457365",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_manager_range_retarget_host_tests",
+        "status": "run",
+        "time": "2.36361",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_member_range_retarget_host_tests",
+        "status": "run",
+        "time": "1.92884",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_membership_reset_host_tests",
+        "status": "run",
+        "time": "4.71088",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_role_transition_host_tests",
+        "status": "run",
+        "time": "6.37222",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_program_arp_handoff_host_tests",
+        "status": "run",
+        "time": "2.64291",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_timbre_combination_host_tests",
+        "status": "run",
+        "time": "4.32056",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_pressure_combination_host_tests",
+        "status": "run",
+        "time": "3.60259",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_poly_pressure_host_tests",
+        "status": "run",
+        "time": "4.16966",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_host_automation_lookup_tests",
+        "status": "run",
+        "time": "0.12607",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_program_routing_host_tests",
+        "status": "run",
+        "time": "7.39954",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_configuration_range_host_tests",
+        "status": "run",
+        "time": "2.9047",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_controller_handoff_host_tests",
+        "status": "run",
+        "time": "1.55612",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_modern_state_notification_tests",
+        "status": "run",
+        "time": "22.0066",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_tuning_state_notification_tests",
+        "status": "run",
+        "time": "1.86243",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_midi_map_change_tests",
+        "status": "run",
+        "time": "0.00196948",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ab_copy_notification_tests",
+        "status": "run",
+        "time": "2.42512",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_studio_preference_notification_tests",
+        "status": "run",
+        "time": "7.4291",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_studio_state_sync_tests",
+        "status": "run",
+        "time": "0.323823",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_midi_map_notification_tests",
+        "status": "run",
+        "time": "3.19606",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_voice_monitor_accessibility_tests",
+        "status": "run",
+        "time": "0.413402",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_render_policy_context_tests",
+        "status": "run",
+        "time": "0.0990453",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_voice_monitor_focus_tests",
+        "status": "run",
+        "time": "0.7593",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_voice_inspection_host_tests",
+        "status": "run",
+        "time": "0.667444",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_tuning_inspection_host_tests",
+        "status": "run",
+        "time": "0.29417",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_status_host_tests",
+        "status": "run",
+        "time": "0.283352",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_program_extension_recall_host_tests",
+        "status": "run",
+        "time": "2.7692",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_state_mirror_host_tests",
+        "status": "run",
+        "time": "0.0814742",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_scala_session_admission_tests",
+        "status": "run",
+        "time": "0.624854",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ui_control_mailbox_tests",
+        "status": "run",
+        "time": "4.55198",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_voice_inspection_allocation_tests",
+        "status": "run",
+        "time": "0.411239",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_audio_callback_allocation_tests",
+        "status": "run",
+        "time": "1.50087",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_main_vst3_multirecall_state_tests",
+        "status": "run",
+        "time": "0.785296",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_panel_golden_tests",
+        "status": "run",
+        "time": "1.75188",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_revert_tests",
+        "status": "run",
+        "time": "1.66065",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_modern_recall_host_tests",
+        "status": "run",
+        "time": "2.90682",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_file_recall_tests",
+        "status": "run",
+        "time": "0.632117",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_xml_tests",
+        "status": "run",
+        "time": "0.111889",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_load_tests",
+        "status": "run",
+        "time": "0.381781",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_save_storage_tests",
+        "status": "run",
+        "time": "0.0922129",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_identity_tests",
+        "status": "run",
+        "time": "0.219839",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_refresh_tests",
+        "status": "run",
+        "time": "0.264657",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_search_tests",
+        "status": "run",
+        "time": "0.220151",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_preferences_tests",
+        "status": "run",
+        "time": "0.741661",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_preset_click_tests",
+        "status": "run",
+        "time": "0.118096",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_undo_replay_gesture_tests",
+        "status": "run",
+        "time": "0.497127",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_hardware_source_history_tests",
+        "status": "run",
+        "time": "1.06756",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_patch_history_tests",
+        "status": "run",
+        "time": "0.288182",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_released_target_host_tests",
+        "status": "run",
+        "time": "7.04784",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mpe_member_onset_host_tests",
+        "status": "run",
+        "time": "2.8559",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_sixteen_voice_release_host_tests",
+        "status": "run",
+        "time": "0.713723",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ring_curve_gesture_tests",
+        "status": "run",
+        "time": "0.694189",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mod_matrix_route_actions_tests",
+        "status": "run",
+        "time": "0.1643",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mod_matrix_routing_ui_tests",
+        "status": "run",
+        "time": "0.0943189",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mseg_point_values_tests",
+        "status": "run",
+        "time": "0.29697",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mseg_shape_copy_tests",
+        "status": "run",
+        "time": "0.120365",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mseg_editor_lifecycle_tests",
+        "status": "run",
+        "time": "0.210084",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_modern_slider_gesture_tests",
+        "status": "run",
+        "time": "0.0736439",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_qwerty_note_ownership_tests",
+        "status": "run",
+        "time": "1.17223",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_toolbar_menu_lifetime_tests",
+        "status": "run",
+        "time": "0.0553788",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_snapshot_cli_tests",
+        "status": "run",
+        "time": "0.0676802",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_mts_dormant_engine_host_tests",
+        "status": "run",
+        "time": "1.35046",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_controller_reset_host_tests",
+        "status": "run",
+        "time": "2.64129",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_voice_activity_host_tests",
+        "status": "run",
+        "time": "0.206688",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_voice_activity_ui_tests",
+        "status": "run",
+        "time": "1.9445",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_keyboard_handoff_host_tests",
+        "status": "run",
+        "time": "0.631224",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_switch_context_tests",
+        "status": "run",
+        "time": "1.05897",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_studio_lfo_context_tests",
+        "status": "run",
+        "time": "3.07819",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_studio_switch_context_tests",
+        "status": "run",
+        "time": "0.462124",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_parameter_combo_context_tests",
+        "status": "run",
+        "time": "0.158155",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_context_menu_keyboard_tests",
+        "status": "run",
+        "time": "0.114172",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_typed_value_unit_tests",
+        "status": "run",
+        "time": "0.0782564",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_keyboard_tuning_ui_tests",
+        "status": "run",
+        "time": "0.137944",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_transient_control_tests",
+        "status": "run",
+        "time": "0.332189",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_performance_wheel_keyboard_tests",
+        "status": "run",
+        "time": "0.221055",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ui_smoke",
+        "status": "run",
+        "time": "77.971",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_teardown_probe",
+        "status": "run",
+        "time": "0.530732",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_locale_query",
+        "status": "run",
+        "time": "0.0643227",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_locale_query_mixed",
+        "status": "run",
+        "time": "0.0645844",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_locale_editor",
+        "status": "run",
+        "time": "0.246981",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_locale_editor_mixed",
+        "status": "run",
+        "time": "0.247624",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_host_wrapper_platform_tests",
+        "status": "run",
+        "time": "2.10498",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_main_vst3_only_automation_tests",
+        "status": "run",
+        "time": "2.80112",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_truth_render_tests",
+        "status": "run",
+        "time": "1.248",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ig00156_step_diagnostics_tests",
+        "status": "run",
+        "time": "0.00466489",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_truth_input_sha256_tests",
+        "status": "run",
+        "time": "0.00617118",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_amplitude_production_comparison_tests",
+        "status": "run",
+        "time": "1.52452",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_production_comparison_tests",
+        "status": "run",
+        "time": "2.04066",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_vca_reference_tests",
+        "status": "run",
+        "time": "0.25353",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_decimal_conversion_tests",
+        "status": "run",
+        "time": "0.00683817",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_decimal_conversion_locale_tests",
+        "status": "run",
+        "time": "0.0129209",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_float_wav_tests",
+        "status": "run",
+        "time": "0.178823",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_reference_chain_tests",
+        "status": "run",
+        "time": "8.69816",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_reference_chain_clock_tests",
+        "status": "run",
+        "time": "7.23855",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_amplitude_envelope_reference_tests",
+        "status": "run",
+        "time": "4.77329",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_event_aware_envelope_vca_tests",
+        "status": "run",
+        "time": "0.147726",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_ring_time_reference_tests",
+        "status": "run",
+        "time": "0.152768",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_event_aware_envelope_sine_tests",
+        "status": "run",
+        "time": "0.150197",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_event_aware_ring_vca_tests",
+        "status": "run",
+        "time": "0.172695",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_event_aware_ring_vca_coincident_tests",
+        "status": "run",
+        "time": "0.209137",
+        "skipped_messages": []
+      },
+      {
+        "name": "cs80_filter_envelope_reference_tests",
+        "status": "run",
+        "time": "5.57509",
+        "skipped_messages": []
+      }
+    ],
+    "failures": [],
+    "skipped": [
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "notrun",
+        "time": "0.00103264",
+        "skipped_messages": [
+          "SKIP_RETURN_CODE=77"
+        ]
+      }
+    ],
+    "disabled": [],
+    "not_run": [
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "notrun",
+        "time": "0.00103264",
+        "skipped_messages": [
+          "SKIP_RETURN_CODE=77"
+        ]
+      }
+    ],
+    "unknown_status": [],
+    "declared_failures_or_errors": [],
+    "raw_nonexecuted_case_lines": [
+      "78/579 Test  #78: cs80_stereo_pra_exact_tests .................................................***Skipped   0.00 sec"
+    ],
+    "registered_denominators_in_log": [
+      579
+    ],
+    "classification_note": "Lists retain raw JUnit status and may overlap (a disabled case may also be skipped). Only status=run without failure/error/skip/disabled/not-run is counted as executed_passed. Overall green is reported separately."
+  },
+  "required_native_steps": [
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-22T16:30:54Z",
+      "completed_at": "2026-11-22T16:43:01Z"
+    },
+    {
+      "name": "Capture curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-22T19:21:13Z",
+      "completed_at": "2026-11-22T19:21:33Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-22T16:29:32Z",
+      "completed_at": "2026-11-22T16:30:54Z"
+    },
+    {
+      "name": "Package Linux VST3 and Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-11-22T19:23:02Z",
+      "completed_at": "2026-11-22T19:23:08Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-22T16:43:01Z",
+      "completed_at": "2026-11-22T19:21:13Z"
+    },
+    {
+      "name": "Upload Linux install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-11-22T19:23:08Z",
+      "completed_at": "2026-11-22T19:23:09Z"
+    },
+    {
+      "name": "Upload curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-22T19:21:33Z",
+      "completed_at": "2026-11-22T19:21:35Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-22T16:30:54Z",
+      "completed_at": "2026-11-22T16:30:54Z"
+    }
+  ],
+  "test_evidence_artifact_api": {
+    "id": 14769041851,
+    "node_id": "MDg6QXJ0aWZhY3QxNDc2OTA0MTg1MQ==",
+    "name": "cs80-linux-test-evidence",
+    "size_in_bytes": 137818,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769041851",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769041851/zip",
+    "expired": false,
+    "digest": "sha256:539687d4ef0bfe68a66f7463620c989e65f5284026d9d16fe233b6509f7e6c50",
+    "created_at": "2026-11-22T19:23:10Z",
+    "updated_at": "2026-11-22T19:23:10Z",
+    "expires_at": "2027-02-20T16:28:38Z",
+    "workflow_run": {
+      "id": 45044040694,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+    }
+  },
+  "test_evidence_download": {
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769041851.zip",
+    "credential_free_get": true,
+    "path": "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-coordination/artifact-cache/cs80-linux-test-evidence-14769041851.zip",
+    "bytes": 137818,
+    "sha256": "539687d4ef0bfe68a66f7463620c989e65f5284026d9d16fe233b6509f7e6c50"
+  },
+  "junit_member": {
+    "path": "ctest-results.xml",
+    "bytes": 461119,
+    "sha256": "88d6325991dc67a2a7f318e64e9c80e9ecdce022a586dc9aa1fc3aff68fd30a3"
+  },
+  "inputs": {
+    "run.json": {
+      "bytes": 15243,
+      "sha256": "f3f3c02d6465d7b7e92e2945e4aca963f23aaca9dee78a59f3d852901775b98c"
+    },
+    "builder-job.json": {
+      "bytes": 4806,
+      "sha256": "b733ceebf29f6cf77c105503d80a51c8c07d1663b599f4e0314823537e1e65c5"
+    },
+    "builder-job.log": {
+      "bytes": 457941,
+      "sha256": "92d5ce841d6e024da0a7aa0070804a8b42d740f015cba425b1221d22bb99c0c1"
+    }
+  }
+}

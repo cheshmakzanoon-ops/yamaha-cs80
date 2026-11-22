@@ -1,0 +1,31 @@
+{
+  "assignment": 54,
+  "status": "PREPARED_PENDING_REAL_LINUX_CI_AND_ARTIFACT",
+  "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "observed_at_utc": "2026-11-22 16:55:34 UTC",
+  "native_job_id": 137274597635,
+  "native_job_status": "in_progress",
+  "native_current_step": "Test",
+  "observed_run_artifacts": 0,
+  "preparation": {
+    "python_sources_compile": 3,
+    "historical_post_success_crash": "Rejected raw -11 as required; not current CI evidence",
+    "ctest_reporting": "Executed, skipped, disabled and not-run cases reported separately; green summary does not imply all579 registered cases ran"
+  },
+  "outstanding": [
+    "Actual native complete CTest results and test-evidence artifact",
+    "Actual Linux strictness10 headless, GUI and fixed-seed lane logs and reports artifact",
+    "Actual Linux install artifact and public GET digest/inventory/ELF/guide checks"
+  ],
+  "internal_retry_policy": "Production wrapper unchanged: at most3 full attempts; eligibility requires normalized status139, no SUCCESS/FAILED substring, a prior exact Starting tests in: line and last exact matching phase Completed tests in:. Log capture/preservation failures reject. Earlier attempts will remain visible, even if the final lane succeeds.",
+  "scope": "Preparation only, no final CI/product/download/publication certified; no retries or product execution performed",
+  "trusted_sources": {
+    "scripts/run-pluginval-linux.sh": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+    "scripts/run-pluginval-with-core.py": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea",
+    "scripts/publish-preset-refinement.py": "454be66bb1fbe5add732bbd4e5326e72fc79a1e28a29040cc20921ceff9214b2",
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  }
+}

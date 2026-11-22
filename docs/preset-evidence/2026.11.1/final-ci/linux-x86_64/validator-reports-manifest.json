@@ -1,0 +1,116 @@
+{
+  "artifact_api": {
+    "id": 14769486678,
+    "node_id": "MDg6QXJ0aWZhY3QxNDc2OTQ4NjY3OA==",
+    "name": "cs80-pluginval-reports",
+    "size_in_bytes": 12870,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769486678",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769486678/zip",
+    "expired": false,
+    "digest": "sha256:8d199d30e368a52390923d0d8d825e7dfb331f76844dd56fcae3b618dab47185",
+    "created_at": "2026-11-22T19:25:03Z",
+    "updated_at": "2026-11-22T19:25:03Z",
+    "expires_at": "2027-02-20T16:28:38Z",
+    "workflow_run": {
+      "id": 45044040694,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+    }
+  },
+  "download": {
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769486678.zip",
+    "credential_free_get": true,
+    "path": "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-coordination/artifact-cache/cs80-pluginval-reports-14769486678.zip",
+    "bytes": 12870,
+    "sha256": "8d199d30e368a52390923d0d8d825e7dfb331f76844dd56fcae3b618dab47185"
+  },
+  "members": [
+    {
+      "path": "pluginval-core-fixture.log",
+      "bytes": 1335,
+      "sha256": "29e913c33222947bfdf37ad59820db24cc4b65c547b604b4ddbceda82f1ed62e"
+    },
+    {
+      "path": "pluginval-fault-trace.log",
+      "bytes": 180,
+      "sha256": "a07630fd14937a06786a0f51f3a000e7178c2e0221acbd0efc640773ffcde680"
+    },
+    {
+      "path": "pluginval-diagnostic-reports/cs80-gui-gdb",
+      "bytes": 7876,
+      "sha256": "81ce24e65718576b95688d59ffd739379f0d26322acfd1bf08a4872abf526989"
+    },
+    {
+      "path": "pluginval-gdb-normal-exit.log",
+      "bytes": 165,
+      "sha256": "fb99b15c23dba07146b23a12aec9ca5da961011d058edee46015285df1a62ecf"
+    },
+    {
+      "path": "pluginval-gui-core.log",
+      "bytes": 475,
+      "sha256": "a29764eddf095eb50b1b209bee76d14ec89c78d52f1a70f3e2f2aecc7dce9073"
+    },
+    {
+      "path": "pluginval-gui-seed-regression-core.log",
+      "bytes": 443,
+      "sha256": "b2805f31aa250224c823aa1c0df8c1fca4e3d38c98d40d944a803d51701b55ac"
+    },
+    {
+      "path": "pluginval-gui-gdb.log",
+      "bytes": 8223,
+      "sha256": "745331e8004dc54e3596e2ca7206e84c5881709c440e56980d780a199deba87d"
+    },
+    {
+      "path": "pluginval-gui-seed-regression.log",
+      "bytes": 7964,
+      "sha256": "e49f91612bbd921d506caf51e85de189cb00e970d7a892ffb0a4b01e51708298"
+    },
+    {
+      "path": "pluginval-gui-trace.log",
+      "bytes": 7964,
+      "sha256": "d0f46ffab92a53aff3c370d2b5c9aa5b3853b7a4f95e8c52e7c2aa569011812b"
+    },
+    {
+      "path": "pluginval-gui.log",
+      "bytes": 7964,
+      "sha256": "d0f46ffab92a53aff3c370d2b5c9aa5b3853b7a4f95e8c52e7c2aa569011812b"
+    },
+    {
+      "path": "pluginval-headless-core.log",
+      "bytes": 443,
+      "sha256": "26434337c4aaaad329c8302632a9691d2df6f33cfc08de1f5cc153a540b5bc16"
+    },
+    {
+      "path": "pluginval-headless.log",
+      "bytes": 7282,
+      "sha256": "e232ff9694bfddcfd3780e48b8c7653b3668562c42206bd786ce3efd382f4abb"
+    },
+    {
+      "path": "pluginval-reports/cs80-gui",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pluginval-reports/cs80-gui-seed-regression",
+      "bytes": 7876,
+      "sha256": "280903665e6f0149c56b4292d92eb09adf16b88f3f47c4c221ed839231a660ad"
+    },
+    {
+      "path": "pluginval-reports/cs80-headless",
+      "bytes": 7194,
+      "sha256": "3bf8c85a6dbe4d3b8d38e101d2654c16cd03840d7e3b6043853ebb7fdb5ee235"
+    },
+    {
+      "path": "pluginval-trace-reports/cs80-gui-trace",
+      "bytes": 7876,
+      "sha256": "81ce24e65718576b95688d59ffd739379f0d26322acfd1bf08a4872abf526989"
+    },
+    {
+      "path": "pluginval-version.txt",
+      "bytes": 18,
+      "sha256": "bebe24349489b87a47861fafe98f029b18e3bdfd913d623d729d47409693eb4f"
+    }
+  ]
+}

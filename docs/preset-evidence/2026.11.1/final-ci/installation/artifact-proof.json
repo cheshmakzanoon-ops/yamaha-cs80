@@ -1,0 +1,1569 @@
+{
+  "assignment": 57,
+  "source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "verified_at_utc": "2026-11-22T19:24:49.233947+00:00",
+  "source_review": {
+    "application_version": "1.0.0",
+    "preset_revision": "2026.11.1",
+    "required_installation_phrases": 15,
+    "guide_hashes": {
+      "INSTALL_AND_QUICKSTART.md": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+      "PRESET_GUIDE.md": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+      "DISTRIBUTION_STATUS.md": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448"
+    },
+    "nonblocking_clarification": "Frozen packaged guides predate the queue-only VST3 Program diagnosis. Current public README/report qualify that path; release notes should direct users to Library and link that current qualification.",
+    "source_guide_links": [
+      {
+        "guide": "INSTALL_AND_QUICKSTART.md",
+        "kind": "external",
+        "target": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html"
+      },
+      {
+        "guide": "INSTALL_AND_QUICKSTART.md",
+        "kind": "external",
+        "target": "https://support.apple.com/en-ie/102239"
+      },
+      {
+        "guide": "INSTALL_AND_QUICKSTART.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PANIC_CONTROL.md"
+      },
+      {
+        "guide": "INSTALL_AND_QUICKSTART.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/OUTPUT_METER.md"
+      },
+      {
+        "guide": "INSTALL_AND_QUICKSTART.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+      },
+      {
+        "guide": "INSTALL_AND_QUICKSTART.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/performance/2026-10-30-source-performance/SUMMARY.md"
+      },
+      {
+        "guide": "INSTALL_AND_QUICKSTART.md",
+        "kind": "local",
+        "target": "PRESET_GUIDE.md"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REFINEMENT_2026_11_1.md"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "local",
+        "target": "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Polysynth.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Engine.cpp"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Params.h"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/FactoryPresets.h"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/CMakeLists.txt"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/tools/preset_capture.cpp"
+      },
+      {
+        "guide": "PRESET_GUIDE.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/.github/workflows/build.yml"
+      },
+      {
+        "guide": "DISTRIBUTION_STATUS.md",
+        "kind": "source-pinned-repository",
+        "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/release/RELEASE_QUALIFICATION.md"
+      }
+    ]
+  },
+  "trusted_helpers": {
+    "verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "limits": "Installation/layout, exact source documents and notice presence/content only. No downloaded product executed, native OS installation, signature verification, legal compliance conclusion, every-DAW compatibility or acoustic/hardware equivalence. CI and public release qualification remain separate.",
+  "status": "four_actual_installation_archives_verified",
+  "artifact_count": 4,
+  "artifacts": [
+    {
+      "artifact_id": 14763872941,
+      "artifact_name": "cs80-windows-install-bundle",
+      "platform": "windows",
+      "architecture": "x86_64",
+      "outer_sha256": "aa472ff6516371482b7e73f76dc2fbc58d15b52aa8eb86c91f62e091dac06ec8",
+      "outer_bytes": 6261285,
+      "inner_name": "cs80-reference-windows-x86_64-6d3cc220edef.zip",
+      "inner_sha256": "84e16905a24dfff25bfdc71b816ec5f81c49bbd018d7b15ecfe7b2b22aeb88b5",
+      "inner_bytes": 6255970,
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "inventory_entries": 20,
+      "product_roots": [
+        "Standalone/CS-80 Reference.exe",
+        "VST3/CS-80 Reference.vst3"
+      ],
+      "unix_executable_paths": [],
+      "bundle_metadata": [],
+      "license_notice_comparisons": [
+        {
+          "path": "LICENSE",
+          "sha256": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75",
+          "source_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "match": "line-ending-only"
+        },
+        {
+          "path": "licenses/BarlowCondensed-OFL.txt",
+          "sha256": "b4cc842153e834885f3f9385ce26de4e1213d3ffbe473a6c0519e5522a8e3608",
+          "source_sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "match": "line-ending-only"
+        },
+        {
+          "path": "licenses/BarlowCondensed-SOURCE.txt",
+          "sha256": "3ab63fda5832592118033ccd14e61aae95b20166145f618bb3e08e943609496e",
+          "source_sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "match": "line-ending-only"
+        },
+        {
+          "path": "licenses/MTS-ESP-LICENSE.txt",
+          "sha256": "e57ad8fe52e75038366594539d7656107f493e5fdd68b48063e368b3dfb06c47",
+          "source_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "match": "line-ending-only"
+        },
+        {
+          "path": "licenses/libxml2-Copyright.txt",
+          "sha256": "f06bad318a967a790be27cc90235573a2548a2125f6c54b6129d1c802ed201a8",
+          "source_sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "match": "line-ending-only"
+        },
+        {
+          "path": "licenses/libxml2-SOURCE.txt",
+          "sha256": "0afbd154bd05bb26fd9d6fc2db195da5b7347b5cdde10dd39d320a6c3cfbbe2c",
+          "source_sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+          "match": "line-ending-only"
+        },
+        {
+          "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+          "sha256": "773ec3c805a88806812048182c3b0fa90b4bc18012ea4dc131e01ba3729bd337",
+          "source_sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+          "match": "line-ending-only"
+        },
+        {
+          "path": "licenses/JUCE-LICENSE.md",
+          "sha256": "ca3a08368c9ed3195253f2df63ef08db1b0ea6be99388bb130c921b7c3e54616",
+          "source_sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "match": "line-ending-only"
+        }
+      ],
+      "guide_links": [
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "external",
+          "target": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "external",
+          "target": "https://support.apple.com/en-ie/102239"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PANIC_CONTROL.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/OUTPUT_METER.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/performance/2026-10-30-source-performance/SUMMARY.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "local",
+          "target": "PRESET_GUIDE.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REFINEMENT_2026_11_1.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "local",
+          "target": "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Polysynth.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Engine.cpp"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Params.h"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/FactoryPresets.h"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/CMakeLists.txt"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/tools/preset_capture.cpp"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/.github/workflows/build.yml"
+        },
+        {
+          "guide": "DISTRIBUTION_STATUS.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/release/RELEASE_QUALIFICATION.md"
+        }
+      ],
+      "source_text": "Source commit: 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nPreset library revision: 2026.11.1\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+      "symlink_count": 0,
+      "archive_products_extracted_or_executed": false
+    },
+    {
+      "artifact_id": 14763761497,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "platform": "macos",
+      "architecture": "arm64",
+      "outer_sha256": "662f66e20a8658374b3d4d30102b698234e01bb99e3753a49206a04f99b201a7",
+      "outer_bytes": 14900540,
+      "inner_name": "cs80-reference-macos-arm64-6d3cc220edef.tar.gz",
+      "inner_sha256": "ad0212a12ff0623f2d60d77c2dc7fa0c574c47b5beeb99cf037d938a2cae184f",
+      "inner_bytes": 14892168,
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "inventory_entries": 37,
+      "product_roots": [
+        "AU/CS-80 Reference.component",
+        "Standalone/CS-80 Reference.app",
+        "VST3/CS-80 Reference.vst3"
+      ],
+      "unix_executable_paths": [
+        "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+        "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+        "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference"
+      ],
+      "bundle_metadata": [
+        {
+          "path": "AU/CS-80 Reference.component",
+          "identifier": "com.referenceinstruments.cs80",
+          "type": "BNDL",
+          "application_version": "1.0.0"
+        },
+        {
+          "path": "Standalone/CS-80 Reference.app",
+          "identifier": "com.referenceinstruments.cs80",
+          "type": "APPL",
+          "application_version": "1.0.0"
+        },
+        {
+          "path": "VST3/CS-80 Reference.vst3",
+          "identifier": "com.referenceinstruments.cs80",
+          "type": "BNDL",
+          "application_version": "1.0.0"
+        }
+      ],
+      "license_notice_comparisons": [
+        {
+          "path": "LICENSE",
+          "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "source_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/BarlowCondensed-OFL.txt",
+          "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "source_sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/BarlowCondensed-SOURCE.txt",
+          "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "source_sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/MTS-ESP-LICENSE.txt",
+          "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "source_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-Copyright.txt",
+          "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "source_sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-SOURCE.txt",
+          "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+          "source_sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+          "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+          "source_sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/JUCE-LICENSE.md",
+          "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "source_sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "match": "byte-exact"
+        }
+      ],
+      "guide_links": [
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "external",
+          "target": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "external",
+          "target": "https://support.apple.com/en-ie/102239"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PANIC_CONTROL.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/OUTPUT_METER.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/performance/2026-10-30-source-performance/SUMMARY.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "local",
+          "target": "PRESET_GUIDE.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REFINEMENT_2026_11_1.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "local",
+          "target": "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Polysynth.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Engine.cpp"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Params.h"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/FactoryPresets.h"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/CMakeLists.txt"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/tools/preset_capture.cpp"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/.github/workflows/build.yml"
+        },
+        {
+          "guide": "DISTRIBUTION_STATUS.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/release/RELEASE_QUALIFICATION.md"
+        }
+      ],
+      "source_text": "Source commit: 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nPreset library revision: 2026.11.1\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+      "symlink_count": 0,
+      "archive_products_extracted_or_executed": false
+    },
+    {
+      "artifact_id": 14763644216,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "platform": "macos",
+      "architecture": "x86_64",
+      "outer_sha256": "325b42beb55ca861b65e9f8416ec286a4b6061946181210fdb41d041e7d3cf1f",
+      "outer_bytes": 16057766,
+      "inner_name": "cs80-reference-macos-x86_64-6d3cc220edef.tar.gz",
+      "inner_sha256": "f566daeb1a023cd4152e29e5ea3fae94f1dbb1d81a9de500fb86a2d16493012d",
+      "inner_bytes": 16049385,
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "inventory_entries": 37,
+      "product_roots": [
+        "AU/CS-80 Reference.component",
+        "Standalone/CS-80 Reference.app",
+        "VST3/CS-80 Reference.vst3"
+      ],
+      "unix_executable_paths": [
+        "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+        "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference",
+        "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference"
+      ],
+      "bundle_metadata": [
+        {
+          "path": "AU/CS-80 Reference.component",
+          "identifier": "com.referenceinstruments.cs80",
+          "type": "BNDL",
+          "application_version": "1.0.0"
+        },
+        {
+          "path": "Standalone/CS-80 Reference.app",
+          "identifier": "com.referenceinstruments.cs80",
+          "type": "APPL",
+          "application_version": "1.0.0"
+        },
+        {
+          "path": "VST3/CS-80 Reference.vst3",
+          "identifier": "com.referenceinstruments.cs80",
+          "type": "BNDL",
+          "application_version": "1.0.0"
+        }
+      ],
+      "license_notice_comparisons": [
+        {
+          "path": "LICENSE",
+          "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "source_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/BarlowCondensed-OFL.txt",
+          "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "source_sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/BarlowCondensed-SOURCE.txt",
+          "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "source_sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/MTS-ESP-LICENSE.txt",
+          "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "source_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-Copyright.txt",
+          "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "source_sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-SOURCE.txt",
+          "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+          "source_sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+          "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+          "source_sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/JUCE-LICENSE.md",
+          "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "source_sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "match": "byte-exact"
+        }
+      ],
+      "guide_links": [
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "external",
+          "target": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "external",
+          "target": "https://support.apple.com/en-ie/102239"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PANIC_CONTROL.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/OUTPUT_METER.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/performance/2026-10-30-source-performance/SUMMARY.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "local",
+          "target": "PRESET_GUIDE.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REFINEMENT_2026_11_1.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "local",
+          "target": "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Polysynth.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Engine.cpp"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Params.h"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/FactoryPresets.h"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/CMakeLists.txt"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/tools/preset_capture.cpp"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/.github/workflows/build.yml"
+        },
+        {
+          "guide": "DISTRIBUTION_STATUS.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/release/RELEASE_QUALIFICATION.md"
+        }
+      ],
+      "source_text": "Source commit: 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nPreset library revision: 2026.11.1\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+      "symlink_count": 0,
+      "archive_products_extracted_or_executed": false
+    },
+    {
+      "artifact_id": 14768807632,
+      "artifact_name": "cs80-linux-install-bundle",
+      "platform": "linux",
+      "architecture": "x86_64",
+      "outer_sha256": "4295d202bacb20ab41e7a776290dac51cf4a7458abc66d185a86bc351efd4d30",
+      "outer_bytes": 13225022,
+      "inner_name": "cs80-reference-linux-x86_64-6d3cc220edef.tar.gz",
+      "inner_sha256": "e1b8531a04159fd9d597348fccb110ea001fb6055e70e77c6b57b177b6871076",
+      "inner_bytes": 13219702,
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "inventory_entries": 20,
+      "product_roots": [
+        "Standalone/CS-80 Reference",
+        "VST3/CS-80 Reference.vst3"
+      ],
+      "unix_executable_paths": [
+        "VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "Standalone/CS-80 Reference"
+      ],
+      "bundle_metadata": [],
+      "license_notice_comparisons": [
+        {
+          "path": "LICENSE",
+          "sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "source_sha256": "8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/BarlowCondensed-OFL.txt",
+          "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "source_sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/BarlowCondensed-SOURCE.txt",
+          "sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "source_sha256": "ccfea866e3a7512831e4a1ae6fd9fb1e9ccf2814c2e5974bd6c57b394cbb7623",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/MTS-ESP-LICENSE.txt",
+          "sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "source_sha256": "481d4c320dc5c1a7f5b4604c8e9a08ac7710e73291b177c468ab69e0fe158837",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-Copyright.txt",
+          "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "source_sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-SOURCE.txt",
+          "sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+          "source_sha256": "3c89edbac7a536dc646e6ef80cd6cc1bf868130ac9403d597bead3d5fb4f93e0",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+          "sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+          "source_sha256": "55223bc25b0a696fc2af6d57256b322d77144d12e68424edc808419822c13894",
+          "match": "byte-exact"
+        },
+        {
+          "path": "licenses/JUCE-LICENSE.md",
+          "sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "source_sha256": "2633539bb26d244f0966fbc4df59400ea99bdf575fa96291851c1c3ff3456146",
+          "match": "byte-exact"
+        }
+      ],
+      "guide_links": [
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "external",
+          "target": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "external",
+          "target": "https://support.apple.com/en-ie/102239"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PANIC_CONTROL.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/OUTPUT_METER.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/performance/2026-10-30-source-performance/SUMMARY.md"
+        },
+        {
+          "guide": "INSTALL_AND_QUICKSTART.md",
+          "kind": "local",
+          "target": "PRESET_GUIDE.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REFINEMENT_2026_11_1.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "local",
+          "target": "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Polysynth.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Leads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/CuratedLibrary.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Brass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Strings.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Keys.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Plucked.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Winds.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Organ.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bells.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Bass.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Engine.cpp"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/Params.h"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Modern.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Pads.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/curated/Fx.inc"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PARITY_ISOLATION.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/core/FactoryPresets.h"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_REVISION_2026_11.md"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/CMakeLists.txt"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/src/tools/preset_capture.cpp"
+        },
+        {
+          "guide": "PRESET_GUIDE.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/.github/workflows/build.yml"
+        },
+        {
+          "guide": "DISTRIBUTION_STATUS.md",
+          "kind": "source-pinned-repository",
+          "target": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/release/RELEASE_QUALIFICATION.md"
+        }
+      ],
+      "source_text": "Source commit: 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c\nPreset library revision: 2026.11.1\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/6d3cc220edef5a4a2c7cd968ea8a786c7c83198c/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+      "symlink_count": 0,
+      "archive_products_extracted_or_executed": false
+    }
+  ],
+  "native_ci_snapshot": {
+    "status": "in_progress",
+    "conclusion": null,
+    "run_attempt": 1
+  }
+}

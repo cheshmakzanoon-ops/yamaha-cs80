@@ -1,0 +1,39 @@
+{
+  "assignment": 57,
+  "status": "PREPARED_PENDING_ACTUAL_ARCHIVES",
+  "source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "observed_repository_head": "23e53bbff0e0f4453a7b533bec5ffe346a7941c0",
+  "prepared_at_utc": "2026-11-22T17:01:06.479035+00:00",
+  "actual_artifacts_downloaded_or_inspected": 0,
+  "source_review": "PASS",
+  "source_guide_link_counts": {
+    "external": 2,
+    "local": 2,
+    "source-pinned-repository": 43
+  },
+  "preparation_checks": {
+    "syntax": true,
+    "source_contract": true,
+    "zero_artifact_snapshot_refused": true
+  },
+  "nonblocking_clarification": "Frozen packaged guides predate the queue-only VST3 Program diagnosis. Current public README/report qualify that path; release notes should direct users to Library and link that current qualification.",
+  "primary_location_sources": [
+    {
+      "url": "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+      "finding": "The guide uses documented user VST3 locations and Windows system alternative."
+    },
+    {
+      "url": "https://support.apple.com/en-us/102239",
+      "finding": "The guide uses the documented user Audio Units Components location."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/audiotoolbox/audio-components",
+      "finding": "Apple lists the user and global Components directories."
+    }
+  ],
+  "no_production_edits": true,
+  "no_product_execution": true,
+  "native_ci_and_public_release_qualification": "Pending, separate from this installation-content preparation."
+}

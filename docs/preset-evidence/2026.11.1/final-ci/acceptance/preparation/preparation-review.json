@@ -1,0 +1,260 @@
+{
+  "assignment": 60,
+  "status": "PREPARATION_REVIEW_PASS_FINAL_ACCEPTANCE_PENDING",
+  "observed_head": "5cb7ed1f02ff63dcd4980956f8df90ce7262cc32",
+  "binary_source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "checks": [
+    {
+      "name": "Publication descendant changes only allowed paths below comparison cap",
+      "passed": true,
+      "detail": {
+        "count": 224,
+        "outside_docs": [
+          ".github/workflows/publish-preset-refinement.yml",
+          "scripts/publish-preset-refinement.py",
+          "scripts/test-publish-preset-refinement.py"
+        ]
+      }
+    },
+    {
+      "name": "Candidate source and tests equal the frozen be460b0 inputs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Production changes are confined to preset data and revision",
+      "passed": true,
+      "detail": [
+        "src/core/CuratedLibraryLevels.inc",
+        "src/core/FactoryPresets.h",
+        "src/core/curated/Bass.inc",
+        "src/core/curated/Brass.inc",
+        "src/core/curated/Fx.inc",
+        "src/core/curated/Pads.inc",
+        "src/core/curated/Plucked.inc",
+        "src/core/curated/Polysynth.inc",
+        "src/core/curated/Winds.inc"
+      ]
+    },
+    {
+      "name": "Final inventory identity and size",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Parameter IDs and catalog identities unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Exactly twelve changed vectors and 42 float32 values",
+      "passed": true,
+      "detail": [
+        {
+          "name": "Noir Swell Brass",
+          "parameters": [
+            "ch1_pan",
+            "ch2_pan"
+          ]
+        },
+        {
+          "name": "Brass Ensemble 16",
+          "parameters": [
+            "ch1_pan",
+            "ch2_pan"
+          ]
+        },
+        {
+          "name": "Neo-Noir Pad",
+          "parameters": [
+            "ch1_pan",
+            "ch2_pan"
+          ]
+        },
+        {
+          "name": "Ether Pad",
+          "parameters": [
+            "mix",
+            "volume",
+            "ch2_noise"
+          ]
+        },
+        {
+          "name": "Arctic Pad",
+          "parameters": [
+            "ch1_pan",
+            "ch2_pan"
+          ]
+        },
+        {
+          "name": "Synthwave Chords",
+          "parameters": [
+            "ch1_pan",
+            "ch2_pan"
+          ]
+        },
+        {
+          "name": "Flute",
+          "parameters": [
+            "mix",
+            "ch2_noise",
+            "ch2_hpf_cutoff",
+            "ch2_vcf_level",
+            "ch2_v_s",
+            "ch2_v_level",
+            "ch2_init_level",
+            "ch2_after_level"
+          ]
+        },
+        {
+          "name": "Breathy Flute",
+          "parameters": [
+            "mix",
+            "ch2_noise",
+            "ch2_hpf_cutoff",
+            "ch2_vcf_level",
+            "ch2_v_s",
+            "ch2_v_level",
+            "ch2_init_level",
+            "ch2_after_level"
+          ]
+        },
+        {
+          "name": "Harp",
+          "parameters": [
+            "mix",
+            "ch2_sine"
+          ]
+        },
+        {
+          "name": "Kalimba",
+          "parameters": [
+            "mix",
+            "volume",
+            "ch2_sine"
+          ]
+        },
+        {
+          "name": "Sine Bass",
+          "parameters": [
+            "mix",
+            "volume",
+            "ch2_hpf_cutoff",
+            "ch2_vcf_level"
+          ]
+        },
+        {
+          "name": "Upright Pluck",
+          "parameters": [
+            "mix",
+            "volume",
+            "ch2_hpf_cutoff",
+            "ch2_vcf_level"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Four master levels, five descriptions and unchanged Init",
+      "passed": true,
+      "detail": [
+        "Brass Ensemble 16",
+        "Neo-Noir Pad",
+        "Arctic Pad",
+        "Synthwave Chords",
+        "UFO Landing"
+      ]
+    },
+    {
+      "name": "Current dossier bytes, sizes and tracked coverage match",
+      "passed": true,
+      "detail": {
+        "entries": 255,
+        "errors": []
+      }
+    },
+    {
+      "name": "Original evidence snapshot versus later index amendment is explicit",
+      "passed": true,
+      "detail": {
+        "original": 81,
+        "unchanged": 80,
+        "changed": [
+          "README.md"
+        ]
+      }
+    },
+    {
+      "name": "Publisher differs from 00339ed only in release body",
+      "passed": true,
+      "detail": {
+        "current_sha256": "72ad916f9843a9019d17833c6722c64493e8875a3e7818e58dee5ed0c8d7a343",
+        "expected": "72ad916f9843a9019d17833c6722c64493e8875a3e7818e58dee5ed0c8d7a343"
+      }
+    },
+    {
+      "name": "Current publisher is exactly committed 23e53bb",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Thirteen existing publisher refusal/transaction fixtures pass",
+      "passed": true,
+      "detail": {
+        "exit_code": 0,
+        "log_sha256": "476e77594034bc2965c06700b3329286114eec88a96fb9aec9e6eb271deb9fb0"
+      }
+    },
+    {
+      "name": "Recorded core identity and selected-suite claims agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Recorded character sensitivity uses the same 128-check scope",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Native recall and controller/state evidence retain exact scope",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Queue-only limitation is explicitly preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "Sixty actual distinct assignments recorded without claiming pending completion",
+      "passed": true,
+      "detail": {
+        "total": 60,
+        "completed": 50,
+        "pending": [
+          49,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60
+        ]
+      }
+    }
+  ],
+  "check_count": 17,
+  "failures": [],
+  "qualifications": [
+    "No new audio or native rendering was performed.",
+    "Existing measurements were read and independently joined with exact source/data identities.",
+    "Prepared verifiers, old 2026.11 assets and local 99f5 auditions cannot certify final 2026.11.1 downloads.",
+    "Build run attempt 1 does not imply zero internal validator retries; final logs must report those separately.",
+    "No acoustic-instrument, physical-CS80 or human-listening identity is established."
+  ]
+}

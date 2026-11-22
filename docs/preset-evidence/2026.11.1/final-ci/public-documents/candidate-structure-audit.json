@@ -1,0 +1,610 @@
+{
+  "assignment": 59,
+  "status": "LOCAL_CANDIDATE_DOCUMENTS_PASS_PUBLISHED_CHECK_PENDING",
+  "base_commit": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "binary_source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "build_run_id": 45044040694,
+  "build_run_attempt": 1,
+  "build_conclusion": "failure",
+  "release_qualified": false,
+  "check_count": 16,
+  "failures": 0,
+  "checks": [
+    {
+      "name": "All local paths and Markdown heading anchors resolve",
+      "pass": true,
+      "detail": {
+        "links": 123,
+        "errors": []
+      }
+    },
+    {
+      "name": "Three applied public docs match the reviewed candidate hashes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Authoritative public-byte proof is copied verbatim",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Linux, audition and installation public proofs match their inspected inputs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exact five proven candidate URLs in README.md",
+      "pass": true,
+      "detail": [
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip"
+      ]
+    },
+    {
+      "name": "Exact five proven candidate URLs in docs/PRESET_REFINEMENT_2026_11_1.md",
+      "pass": true,
+      "detail": [
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip"
+      ]
+    },
+    {
+      "name": "Exact five proven candidate URLs in docs/CI_DISTRIBUTION_STATUS.md",
+      "pass": true,
+      "detail": [
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip",
+        "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip"
+      ]
+    },
+    {
+      "name": "README platform/format/asset rows are exact",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Earlier distribution and release history remain byte-identical",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "README performance, recall, mode and latency guidance remain byte-identical",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Correct latency and explicit factory reload remain",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Public documents preserve release failure and unsigned status",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Source, failed first attempt and release refusal preserved in proof",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Local audition and prior CI remain separate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Failure review remains bounded and linked",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Three public documents pass whitespace validation",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "local_links": [
+    {
+      "document": "README.md",
+      "target": "#downloads"
+    },
+    {
+      "document": "README.md",
+      "target": "#play-your-first-sound"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_GUIDE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "#from-schematic-to-sound"
+    },
+    {
+      "document": "README.md",
+      "target": "#how-we-reduced-cpu-work"
+    },
+    {
+      "document": "README.md",
+      "target": "#build-from-source"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/screenshots/main-source-performance-1600x1000.png"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/screenshots/provenance.json"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/preset-evidence/2026.11.1/final-ci/public-candidates/summary.json"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/INSTALL_AND_QUICKSTART.md#offline-inventory-verification-python-310"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/INSTALL_AND_QUICKSTART.md#install-only-the-formats-you-need"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/CI_DISTRIBUTION_STATUS.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REVISION_2026_11.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/TEAM_REVIEW_2026_11_1.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PARITY_ISOLATION.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/screenshots/"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REVISION_2026_11.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_GUIDE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/OSCILLATOR_PROMOTION.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/IG00156_NODAL_MODEL.md"
+    },
+    {
+      "document": "README.md",
+      "target": "src/core/Ig00156Filter.h"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/INITIAL_PITCH_TRANSIENT.md"
+    },
+    {
+      "document": "README.md",
+      "target": "src/core/TouchCircuit.h"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/OE2_CIRCUIT_EVIDENCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/BBD_CHORUS_MODEL.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/AFTERTOUCH_SUB_VCF.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/PANEL_CONFORMANCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/RING_TIME_REFERENCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/OSCILLATOR_CIRCUIT_EVIDENCE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/MN3001_CLOCK_EVENT_DESIGN.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/HARDWARE_REFERENCES.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/HARDWARE_COVERAGE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/avx-default/"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/cumulative-cpu-2026-11-19/continued-exact-hotpaths/"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/cumulative-cpu-2026-11-19/compact-cutoff-publication/"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/experiments/cumulative-cpu-2026-11-19/q0-evidence/PHYSICAL-TARGET.md"
+    },
+    {
+      "document": "README.md",
+      "target": ".github/workflows/build.yml"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/ENGINE.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/STATUS.md#model-register"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/DSP_MEASUREMENTS.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/CI_DISTRIBUTION_STATUS.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/release/RELEASE_QUALIFICATION.md"
+    },
+    {
+      "document": "README.md",
+      "target": "docs/ANALOG_FIDELITY_REQUIREMENT.md"
+    },
+    {
+      "document": "README.md",
+      "target": "LICENSE"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PRESET_REVISION_2026_11.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/source-lineage.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/native-windows-x86_64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/native-macos-arm64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ci/native-macos-x86_64.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-ci/public-candidates/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-ci/failure-review/README.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "CI_DISTRIBUTION_STATUS.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/README.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/INTEGRATION.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/provenance.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "TEAM_REVIEW_2026_11_1.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/identity/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../src/core/curated/Winds.inc"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/winds/center.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/winds/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/wind-performance/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../src/core/curated/Plucked.inc"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../src/core/curated/Bass.inc"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/plucks/measurements.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/bass/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ether/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/stereo/initial.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/stereo/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/stereo-chords/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PARITY_ISOLATION.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "PRESET_GUIDE.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../tests/PresetCharacterTests.cpp"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/character/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/review/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-identity/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/compatibility/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/distinctness/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/native-recall/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/external-vst3/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/program-queue/method.txt"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/INTEGRATION.md"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/sample-rates/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/long-sustain/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/arpeggiators/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/ring/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "../.github/workflows/build.yml"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/audition/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-auditions-local/summary.json"
+    },
+    {
+      "document": "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "target": "preset-evidence/2026.11.1/final-auditions-local/preset-audition/provenance.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/native-windows-x86_64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/native-macos-arm64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/ci/native-macos-x86_64.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/final-ci/public-candidates/summary.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "INSTALL_AND_QUICKSTART.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "TEAM_REVIEW_2026_11_1.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "PRESET_REFINEMENT_2026_11_1.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/release-qualification.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/run-latest-attempt.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/final-install-artifacts.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/final-validator-payload-identity.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/final-download-links.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "preset-evidence/2026.11/ci/final-audition.json"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "INSTALL_AND_QUICKSTART.md"
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "target": "release/RELEASE_QUALIFICATION.md"
+    }
+  ],
+  "scope": "Local public-document paths, headings, exact candidate mappings, proof hashes and historical preservation. Published-content and subsequent live-link checks remain pending the parent push. No release qualification or listening verdict is asserted."
+}

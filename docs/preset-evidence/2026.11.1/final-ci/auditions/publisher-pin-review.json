@@ -1,0 +1,76 @@
+{
+  "assignment": 55,
+  "status": "PASS_PIN_REBASE_ONLY_FINAL_ARTIFACT_PENDING",
+  "reviewed_utc": "2026-11-22T17:09:46.637615+00:00",
+  "old_publisher_commit": "00339ed7c616da28e5c32011e558ea00833f041b",
+  "new_publisher_commit": "23e53bbff0e0f4453a7b533bec5ffe346a7941c0",
+  "old_publisher_sha256": "454be66bb1fbe5add732bbd4e5326e72fc79a1e28a29040cc20921ceff9214b2",
+  "new_publisher_sha256": "72ad916f9843a9019d17833c6722c64493e8875a3e7818e58dee5ed0c8d7a343",
+  "current_publisher_matches_reviewed_commit": true,
+  "text_diff_added_lines": 2,
+  "text_diff_removed_lines": 0,
+  "module_ast_identical_except_main_release_body_value": true,
+  "acceptance_helpers_unchanged": true,
+  "first_attempt_requirement_unchanged": true,
+  "reason": "Two literal release-note paragraphs explain Library/Circuit reload, Pressure Lead and the documented queue limitation; no verifier/helper/acceptance semantics changed.",
+  "initial_snapshot_directory": "initial-preparation",
+  "initial_snapshot_files": [
+    {
+      "path": "README.md",
+      "sha256": "76423eb01dc7ed38dbb903ae802beaf0347369abb94c4c3f682eeb78b1a16cf8",
+      "bytes": 3755
+    },
+    {
+      "path": "SHA256SUMS",
+      "sha256": "741d7e23fe039ab0c8fd67ae487902dd8b6f28118c19bb299a874dc77623006b",
+      "bytes": 789
+    },
+    {
+      "path": "last-observed-artifacts.json",
+      "sha256": "f7417e1fb877d3f5934f143cc38ad9e2905476e8f5ac6776507d09441efcd6f6",
+      "bytes": 42
+    },
+    {
+      "path": "last-observed-jobs.json",
+      "sha256": "5d160294edec190895804ae44aec84a5fd640b4455c65ac13003d43bd14b23f8",
+      "bytes": 19664
+    },
+    {
+      "path": "last-observed-linux-job.json",
+      "sha256": "9cadaa0b80345215804775ba0ccf423da5fdfdedd61965f434267240785bbe5c",
+      "bytes": 4165
+    },
+    {
+      "path": "last-observed-run.json",
+      "sha256": "c9ee4951a65822efc5979aeb7679580013eae34a6fcdd0e17be64144d3a6e5a0",
+      "bytes": 15243
+    },
+    {
+      "path": "pending-refusal.log",
+      "sha256": "22ea8f0a1350cf14abf4fa03ea918c47097f2c6e901c0e923c6c2e029096a0e4",
+      "bytes": 635
+    },
+    {
+      "path": "preparation-checks.json",
+      "sha256": "c23f8162808f99baa99a17e22f2b41a5a0a0ef2a7c7834a9fe415fc0537e24c3",
+      "bytes": 1019
+    },
+    {
+      "path": "summary.json",
+      "sha256": "7ea7a46ba2dae4b2bbadab20e4b1504949d7824d0eee34f08f3f406a88aa2a3c",
+      "bytes": 1939
+    },
+    {
+      "path": "verify-ci-auditions.py",
+      "sha256": "d200581ac760ac79b12f01ba948389356dd0dca5f594990978769d1724141909",
+      "bytes": 14652
+    }
+  ],
+  "new_verifier_sha256": "5c5579b421098001501d3b076ae84086a608245f89e3cd60cf7ea4d173dc2d93",
+  "syntax_check": "PASS",
+  "pending_producing_steps_rejected_before_download": true,
+  "pending_refusal_exit": 1,
+  "new_downloads": 0,
+  "old_wav_check_repeated": false,
+  "final_artifact_verified": false
+}

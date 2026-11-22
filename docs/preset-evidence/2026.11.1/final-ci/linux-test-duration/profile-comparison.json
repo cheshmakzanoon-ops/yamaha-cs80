@@ -1,0 +1,65 @@
+{
+  "d0c3_cmake_equals7f55": true,
+  "d0c3_cmake_sha256": "5262276e9cd313a4b640be62850f7ee8cc92cf3d2d17bebf79be885431312fa8",
+  "candidate_cmake_sha256": "46f485c3ac013abd8fd391288932addbe1f32714e81c47691a943daeac7b8d4f",
+  "native_configure_build_test_steps": [
+    {
+      "job": "linux",
+      "step": "Configure",
+      "unchanged": true,
+      "run": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON\n"
+    },
+    {
+      "job": "linux",
+      "step": "Build",
+      "unchanged": true,
+      "run": "cmake --build build --parallel \"$(nproc)\""
+    },
+    {
+      "job": "linux",
+      "step": "Test",
+      "unchanged": true,
+      "run": "ctest --test-dir build --output-on-failure --no-tests=error --output-junit \"${{ github.workspace }}/build/ctest-results.xml\"\n"
+    },
+    {
+      "job": "windows",
+      "step": "Configure",
+      "unchanged": true,
+      "run": "cmake -S . -B build -G \"Visual Studio 17 2022\" -A x64 `\n  -DCS80_BUILD_PLUGIN=ON `\n  -DCS80_BUILD_TESTS=ON 2>&1 | Tee-Object -FilePath configure.log\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\n"
+    },
+    {
+      "job": "windows",
+      "step": "Build",
+      "unchanged": true,
+      "run": "cmake --build build --config Release --parallel"
+    },
+    {
+      "job": "windows",
+      "step": "Test",
+      "unchanged": true,
+      "run": "ctest --test-dir build -C Release --output-on-failure --no-tests=error --output-junit \"${{ github.workspace }}/build/ctest-results.xml\"\n"
+    },
+    {
+      "job": "macos",
+      "step": "Configure",
+      "unchanged": true,
+      "run": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON\n"
+    },
+    {
+      "job": "macos",
+      "step": "Build",
+      "unchanged": true,
+      "run": "cmake --build build --parallel"
+    },
+    {
+      "job": "macos",
+      "step": "Test",
+      "unchanged": true,
+      "run": "ctest --test-dir build --output-on-failure --no-tests=error --output-junit \"${{ github.workspace }}/build/ctest-results.xml\"\n"
+    }
+  ],
+  "linux_runner_unchanged": true,
+  "linux_runner": "ubuntu-24.04",
+  "linux_job_timeout_minutes_before": null,
+  "linux_job_timeout_minutes_after": null
+}

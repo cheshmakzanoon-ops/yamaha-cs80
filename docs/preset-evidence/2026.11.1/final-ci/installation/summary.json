@@ -1,0 +1,44 @@
+{
+  "assignment": 57,
+  "status": "PASS_ARCHIVE_CONTENT_ONLY",
+  "completed_at_utc": "2026-11-22T19:26:01.802334+00:00",
+  "source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "observed_repository_head": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "actual_archives_inspected": 4,
+  "archive_bytes_total": 50444613,
+  "inventory_entries": 114,
+  "guide_links": {
+    "source-pinned-repository": 172,
+    "local": 8,
+    "external": 8
+  },
+  "license_notice_comparisons": {
+    "byte-exact": 24,
+    "line-ending-only": 8
+  },
+  "unix_executable_paths": 8,
+  "mac_bundle_plists": 6,
+  "payload_symlinks_observed": 0,
+  "application_version": "1.0.0",
+  "preset_revision": "2026.11.1",
+  "artifact_proof_sha256": "226d5533c60fead25e3a44734dc7c14cb9e65687a3c28de6e7d128acd13cc737",
+  "publication_qualified": false,
+  "observed_external_gate_failure": [
+    {
+      "job_id": 137324977642,
+      "job_name": "pluginval / Linux VST3 (strictness 10)",
+      "job_status": "in_progress",
+      "job_conclusion": null,
+      "step": "Validate VST3 GUI under Xvfb",
+      "step_conclusion": "failure"
+    }
+  ],
+  "native_test_vs_validator_qualification": "Four native builders completed successfully in the API snapshot. Required Linux GUI pluginval failed while diagnostic steps were still running. Archive-content success is not complete validation or release qualification. No retry performed.",
+  "known_guide_age_qualification": "Frozen packaged guides predate the queue-only VST3 Program diagnosis. Current public README/report qualify that path; release notes should direct users to Library and link that current qualification.",
+  "original_preparation": "Original seven files and their checksum manifest preserved byte-for-byte in preparation/.",
+  "product_extraction_or_execution": false,
+  "production_edits": false,
+  "limits": "Installation/layout, exact source documents and notice presence/content only. No downloaded product executed, native OS installation, signature verification, legal compliance conclusion, every-DAW compatibility or acoustic/hardware equivalence. CI and public release qualification remain separate."
+}

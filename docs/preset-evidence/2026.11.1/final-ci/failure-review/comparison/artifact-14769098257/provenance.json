@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "scope": "separate official prerelease comparison; not a stable-gate replacement",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "source_run_id": 45044040694,
+  "source_run_attempt": 1,
+  "source_run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+  "source_run_conclusion": "failure",
+  "source_workflow_id": 399616500,
+  "source_workflow_path": ".github/workflows/build.yml",
+  "source_artifact": {
+    "id": 14768852300,
+    "name": "cs80-linux-vst3",
+    "size_bytes": 6892184,
+    "digest": "sha256:b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698",
+    "created_at": "2026-11-22T19:21:37Z",
+    "updated_at": "2026-11-22T19:21:37Z"
+  },
+  "comparison_run_id": 45060638632,
+  "comparison_run_attempt": "1",
+  "comparison_workflow_sha": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "validator": {
+    "repository": "Tracktion/pluginval",
+    "tag": "v2.0.0-beta3",
+    "commit": "37d6a37bc752606c524f7f3febffc73e0945a740",
+    "asset": "pluginval_Linux.zip",
+    "asset_sha256": "2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f",
+    "asset_url": "https://github.com/Tracktion/pluginval/releases/download/v2.0.0-beta3/pluginval_Linux.zip",
+    "juce_tag": "9.0.3",
+    "juce_commit": "be29c81492b6151c8ea8d14c840e1311963b3a83",
+    "source_modifications": false
+  },
+  "lane": "headless-subset",
+  "seed": "0x4f31605",
+  "strictness": 10,
+  "repeats": 1,
+  "skip_gui_tests": true,
+  "sample_rates": [
+    44100,
+    48000,
+    96000
+  ],
+  "block_sizes": [
+    64,
+    128,
+    256,
+    512,
+    1024
+  ],
+  "test_timeout_ms": 120000,
+  "process_timeout_seconds": 600,
+  "validation_retries": 0
+}

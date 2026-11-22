@@ -1,0 +1,184 @@
+{
+  "assignment": 53,
+  "status": "PASS",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "job_id": 137274597912,
+  "job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+  "job_conclusion": "success",
+  "started_at": "2026-11-22T16:29:00Z",
+  "completed_at": "2026-11-22T17:17:53Z",
+  "required_steps": [
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-22T16:31:29Z",
+      "completed_at": "2026-11-22T16:41:09Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-22T16:29:13Z",
+      "completed_at": "2026-11-22T16:31:29Z"
+    },
+    {
+      "name": "Fetch pluginval 1.0.4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-22T17:12:46Z",
+      "completed_at": "2026-11-22T17:12:51Z"
+    },
+    {
+      "name": "Package native macOS VST3, AU and Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-11-22T17:17:35Z",
+      "completed_at": "2026-11-22T17:17:45Z"
+    },
+    {
+      "name": "Record native platform",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-22T16:29:13Z",
+      "completed_at": "2026-11-22T16:29:13Z"
+    },
+    {
+      "name": "Register built AU",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-22T17:12:51Z",
+      "completed_at": "2026-11-22T17:12:54Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-22T16:41:09Z",
+      "completed_at": "2026-11-22T17:12:46Z"
+    },
+    {
+      "name": "Upload native macOS install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-11-22T17:17:45Z",
+      "completed_at": "2026-11-22T17:17:47Z"
+    },
+    {
+      "name": "Validate AU with pluginval",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2026-11-22T17:13:03Z",
+      "completed_at": "2026-11-22T17:13:40Z"
+    },
+    {
+      "name": "Validate AU with pluginval GUI",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12,
+      "started_at": "2026-11-22T17:13:40Z",
+      "completed_at": "2026-11-22T17:17:35Z"
+    },
+    {
+      "name": "Validate VST3 with pluginval",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-22T17:12:54Z",
+      "completed_at": "2026-11-22T17:13:03Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-22T16:31:29Z",
+      "completed_at": "2026-11-22T16:31:29Z"
+    }
+  ],
+  "ctest_count": 243,
+  "ctest_passed": 241,
+  "ctest_failed": 0,
+  "ctest_skipped": 2,
+  "ctest_disabled": 0,
+  "ctest_junit_notrun_status": 2,
+  "ctest_not_run_other_than_skips": 0,
+  "skipped_tests": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "reason": "Raw LastTest.log: AVX2 unavailable or disabled; no SIMD qualification.",
+      "skip_return_code": 77
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "reason": "No runtime explanation printed. Source guards this exact specialization to qualified Linux x86_64 GCC14.2 arithmetic and returns77 on other platforms; Intel macOS does not enter it.",
+      "skip_return_code": 77
+    }
+  ],
+  "pluginval_exact_success_markers": 3,
+  "validators": [
+    {
+      "format": "VST3",
+      "filename": "pluginval-vst3.log",
+      "strictness": 10,
+      "random_seed": "0x2b37ae3",
+      "exact_success_markers": 1,
+      "sha256": "eab71fcef73a2fb7ef32b4034f42794a918c2d9252c5683d44837d7ac4353529"
+    },
+    {
+      "format": "AU",
+      "filename": "pluginval-au.log",
+      "strictness": 10,
+      "random_seed": "0x3dfa008",
+      "exact_success_markers": 1,
+      "sha256": "c5d1b2562437c5f020ff11cb41be3ea70c1596a3c18cd3839813f0f6d4c7fb8d"
+    },
+    {
+      "format": "AU GUI",
+      "filename": "pluginval-au-gui.log",
+      "strictness": 10,
+      "random_seed": "0x19211fd",
+      "exact_success_markers": 1,
+      "sha256": "0ea35b3eaaca555df2a88d383072751d8602aba02b06dfdff968e52cdba6a85c"
+    }
+  ],
+  "validator_exit_evidence": "Each successful required step uses set -euo pipefail, runs pluginval through tee, and then requires an exact SUCCESS line. Step success establishes a zero pipeline status including the validator; the log does not separately print numeric raw child exits.",
+  "inputs": {
+    "run.json": {
+      "bytes": 15243,
+      "sha256": "f3f3c02d6465d7b7e92e2945e4aca963f23aaca9dee78a59f3d852901775b98c"
+    },
+    "job.json": {
+      "bytes": 5511,
+      "sha256": "b9b9caa250fb2e6c67d6a06c678c2a9f92de7037de0542a7d9cda9962a5090d5"
+    },
+    "job.log": {
+      "bytes": 216239,
+      "sha256": "cb46e7b02a2c2181a00b98052780ad4433b76803aed6c1009f4a5980a2892624"
+    },
+    "ctest-results.xml": {
+      "bytes": 103715,
+      "sha256": "5937917863a68a20a580c3b8fd5a42f3e6e6c8f6689d2617a69477bdfe949da2"
+    },
+    "LastTest.log": {
+      "bytes": 307533,
+      "sha256": "94754e94bf27c06fd78e784eba0998d2ec01a2ba26d8758f01c02fc59989e8cd"
+    },
+    "ci-evidence-downloads.json": {
+      "bytes": 2165,
+      "sha256": "c1e2bf08c02e8db8351b50c129c19454223b54154324df75435e3c954410d80a"
+    }
+  },
+  "scope": "This exact Intel Mac builder/CTest/VST3/AU/AU-GUI gate only. The full run may still have other platform jobs pending."
+}

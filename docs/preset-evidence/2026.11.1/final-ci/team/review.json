@@ -1,0 +1,63 @@
+{
+  "assignment": 58,
+  "status": "REPORT_AND_SOURCE_ACCOUNTING_PREPARED_FINAL_INTEGRATION_PENDING",
+  "qualification": "Read-only accounting and presentation of existing results; original required Linux gate remains FAIL and formal release acceptance BLOCKED.",
+  "recorded_at_utc": "2026-11-22T19:39:42.713646+00:00",
+  "actual_distinct_agents": 60,
+  "recorded_completed": 57,
+  "pending_assignments": [
+    58,
+    59,
+    60
+  ],
+  "all60_completed": false,
+  "local_document_links_checked": 74,
+  "missing_links": [],
+  "table_rows": 60,
+  "working_manifest_entries": 516,
+  "committed_source_to_head_paths": 232,
+  "working_source_difference_paths": 485,
+  "original81_unchanged_payloads": 80,
+  "prior263_unchanged_payloads": 262,
+  "amended_prior_index": "README.md",
+  "all62_map_payloads_exact": true,
+  "mutable_origins_copied_from_snapshots": [
+    {
+      "origin": "build-w12-linux/summary.json",
+      "copied_from_preserved_snapshot": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-linux/summary.json",
+      "destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/preparation/summary.json",
+      "preserved_sha256": "a918f4542feb79542bfd2e7edf3c5e5b70a289129e50df0d8ccb3de839b60b58"
+    },
+    {
+      "origin": "build-w12-installation-review/summary.json",
+      "copied_from_preserved_snapshot": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-installation-review/summary.json",
+      "destination": "docs/preset-evidence/2026.11.1/final-ci/installation/preparation/summary.json",
+      "preserved_sha256": "b2ff37f92298506c223bdd75d7ff4b01cb232262f79a59313da3cdfffe57863c"
+    }
+  ],
+  "suggested_destinations": {
+    "TEAM_REVIEW_2026_11_1.md": "docs/TEAM_REVIEW_2026_11_1.md",
+    "ledger-final.json": "docs/preset-evidence/2026.11.1/final-ci/team/ledger.json",
+    "final-source-accounting.json": "docs/preset-evidence/2026.11.1/final-ci/team/source-accounting.json",
+    "final-report-review.json": "docs/preset-evidence/2026.11.1/final-ci/team/review.json"
+  },
+  "outputs": [
+    {
+      "file": "TEAM_REVIEW_2026_11_1.md",
+      "bytes": 32463,
+      "sha256": "6f219a60241ad1f1f9e9a630acfbc4a8bc7e7dba479363f029b884aaf4cd6d74"
+    },
+    {
+      "file": "ledger-final.json",
+      "bytes": 54106,
+      "sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14"
+    },
+    {
+      "file": "final-source-accounting.json",
+      "bytes": 8814,
+      "sha256": "8856856397125fb091915ce85be232cec56190a5ab8e42655d340fe761e915b2"
+    }
+  ],
+  "public_files_modified": false,
+  "git_mutations": false
+}

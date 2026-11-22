@@ -1,0 +1,84 @@
+{
+  "local_configuration_only": true,
+  "tests": 579,
+  "selected": {
+    "cs80_packaging_notice_tests": {
+      "name": "cs80_packaging_notice_tests",
+      "timeout": 60.0,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/d02ade0cfee0/yamaha-cs80/scripts/test-packaging-notices.py"
+      ]
+    },
+    "cs80_pluginval_macos_download_tests": {
+      "name": "cs80_pluginval_macos_download_tests",
+      "timeout": 30.0,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/d02ade0cfee0/yamaha-cs80/scripts/test-pluginval-macos-download.py"
+      ]
+    },
+    "cs80_validator_diagnostic_selection_tests": {
+      "name": "cs80_validator_diagnostic_selection_tests",
+      "timeout": 30.0,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/d02ade0cfee0/yamaha-cs80/scripts/test-pluginval-diagnostic-log.py"
+      ]
+    },
+    "cs80_library_audit_tests": {
+      "name": "cs80_library_audit_tests",
+      "timeout": 600.0,
+      "command": null
+    },
+    "cs80_preset_voicing_tests": {
+      "name": "cs80_preset_voicing_tests",
+      "timeout": 180.0,
+      "command": null
+    },
+    "cs80_preset_character_tests": {
+      "name": "cs80_preset_character_tests",
+      "timeout": 120.0,
+      "command": null
+    },
+    "cs80_preset_capture_tests": {
+      "name": "cs80_preset_capture_tests",
+      "timeout": 60.0,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/d02ade0cfee0/yamaha-cs80/tests/test_preset_capture.py",
+        "--capture",
+        "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-native/cs80_preset_capture"
+      ]
+    }
+  },
+  "without_explicit_timeout": [
+    "cs80_engine_output_fir_packed_tests",
+    "cs80_wsc_held_endpoint_tests",
+    "cs80_filter_batch_cap_missing_tests",
+    "cs80_filter_batch_cap_truncated_tests",
+    "cs80_core_tests",
+    "cs80_hardware_control_tests",
+    "cs80_oversampling_tests",
+    "cs80_smoothing_tests",
+    "cs80_output_listening_tests",
+    "cs80_noise_tests",
+    "cs80_randomise_tests",
+    "cs80_source_factory_boundary_tests",
+    "cs80_memory_panel_tests",
+    "cs80_programmer_control_identity_tests",
+    "cs80_callback_cpu_measurement_tests",
+    "cs80_midi_map_change_tests",
+    "cs80_ig00156_step_diagnostics_tests",
+    "cs80_truth_input_sha256_tests"
+  ],
+  "maximum_explicit_timeout": 1200.0,
+  "sum_explicit_timeouts": 90765.0,
+  "cache": {
+    "CMAKE_BUILD_TYPE": "Release",
+    "CMAKE_CXX_FLAGS_RELEASE": "-O3 -DNDEBUG",
+    "CS80_BUILD_PLUGIN": "ON",
+    "CS80_BUILD_TESTS": "ON",
+    "CS80_TEST_TIMEOUT_SCALE": "1"
+  }
+}

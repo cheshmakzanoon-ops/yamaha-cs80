@@ -1,0 +1,24 @@
+{
+  "status": "PREPARATION_ONLY",
+  "syntax": "PASS",
+  "numpy_version": "2.3.5",
+  "reviewed_publisher_commit": "00339ed7c616da28e5c32011e558ea00833f041b",
+  "publisher_sha256": "454be66bb1fbe5add732bbd4e5326e72fc79a1e28a29040cc20921ceff9214b2",
+  "pending_real_steps_refused": true,
+  "download_attempted": false,
+  "existing_local_wav_parser_check": {
+    "source_commit": "99f5ebd6b71283a56810d801df89c49ef62f3512",
+    "run_id": "local-assignment-32",
+    "path": "build-w06-final-auditions/preset-audition/refined/152-Flute.wav",
+    "sha256": "1f93b4f637a02e3fc2ba551479cc22cefd20580081ca0fc0d291c81e884dcc7d",
+    "note": "One older local Flute WAV exercised the independent parser; this is not the final CI artifact.",
+    "metrics": {
+      "frames": 192000,
+      "peak_dbfs": -22.08645441424308,
+      "rms_dbfs": -28.015878912025457,
+      "nonfinite_samples": 0,
+      "samples_at_or_over_full_scale": 0
+    }
+  },
+  "verifier_sha256": "d200581ac760ac79b12f01ba948389356dd0dca5f594990978769d1724141909"
+}

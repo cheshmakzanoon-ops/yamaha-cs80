@@ -1,0 +1,201 @@
+{
+  "assignment": 60,
+  "followup": "Narrow source-only diagnostic of prolonged Linux Test step",
+  "status": "NO_NEW_UNBOUNDED_TEST_WAIT_IDENTIFIED_CAUSE_UNDETERMINED",
+  "final_acceptance": "PENDING",
+  "binary_source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "native_linux_job_id": 137274597635,
+  "run_attempt": 1,
+  "observed_active_duration_context": {
+    "source": "Parent live UI/API observations, not a new remote observation by this diagnostic",
+    "test_started_utc": "2026-11-22T16:43:01Z",
+    "still_in_test_around_utc": "2026-11-22T19:08:00Z"
+  },
+  "historical_comparator": {
+    "source": "d0c3c23be68ef048aa56969f1c493c221c1562c5",
+    "run_id": 45029235535,
+    "registered": 578,
+    "passed": 577,
+    "skipped": 1,
+    "failed": 0,
+    "disabled": 0,
+    "skips": [
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "outcome": "skipped",
+        "time": "0.000649057",
+        "status": "notrun",
+        "failure": null,
+        "skipped": {
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      }
+    ],
+    "wall_seconds": 6629.97,
+    "evidence_path": "docs/preset-evidence/2026.11/ci/final-linux-x86_64.json",
+    "evidence_sha256": "c65d0943f0a7f8c3748e44545bf556e4602a66c83866ddedf2997cc44ae3985b",
+    "not_this_comparator": "575 cases /6926.01seconds belongs to older bb4d751e/run45002603673."
+  },
+  "registration": {
+    "d0c3_cmake_equals7f55": true,
+    "only_added_ctest_name": "cs80_preset_character_tests",
+    "new_test_timeout_seconds": 120,
+    "candidate_registered_count": 579,
+    "new_count_delta_from_d0c3": 1
+  },
+  "character_work": {
+    "programs": 11,
+    "renders": 23,
+    "sample_rate": 44100,
+    "generated_audio_seconds": 31.4,
+    "frames": 1384740,
+    "render_chunk_maximum_frames": 128,
+    "render_chunk_count": 10832,
+    "dft_window_samples": 8192,
+    "dft_bins_total": 45,
+    "dft_inner_iterations_total": 368640,
+    "fixed_loop_bounds": true,
+    "contains_subprocess_thread_join_network_or_sleep": false,
+    "qualification": "No new test execution. Counts derived from the exact constant case lists, sample dimensions, render loops and five fixed note/register DFT bands."
+  },
+  "changed_existing_ctest_cases": [
+    {
+      "name": "cs80_packaging_notice_tests",
+      "timeout_seconds": 60,
+      "bounded_changes": "Finite revision declarations and source-linked guide assertions. Existing packaging context subprocess/file operations remain under the unchanged CTest deadline."
+    },
+    {
+      "name": "cs80_validator_diagnostic_selection_tests",
+      "timeout_seconds": 30,
+      "bounded_changes": "Finite5^3 outcomes plus5^2 backward-compatibility outcomes, malformed cases, and12 mocked replay-shell combinations. timeout is intercepted with a stub; no actual pluginval or debugger executes. Individual subprocess.run calls lack Python timeout, but the CTest case retains30 seconds."
+    },
+    {
+      "name": "cs80_pluginval_macos_download_tests",
+      "timeout_seconds": 30,
+      "bounded_changes": "Expected workflow-region hash and comments only; no new runtime loop or network path."
+    }
+  ],
+  "unchanged_relevant_preset_tests": {
+    "cs80_library_audit_tests": 600,
+    "cs80_preset_voicing_tests": 180,
+    "cs80_preset_capture_tests": 60
+  },
+  "excluded_from_current_test_step": [
+    "Expanded24-WAV capture workflow step occurs after Test.",
+    "Native pluginval diagnostic replays occur in the downstream validator job, which needs the Linux native job.",
+    "One-off publisher script/tests execute in the separate publication workflow after successful build; they are not added to the candidate CTest registry."
+  ],
+  "profile_comparison": {
+    "d0c3_cmake_equals7f55": true,
+    "d0c3_cmake_sha256": "5262276e9cd313a4b640be62850f7ee8cc92cf3d2d17bebf79be885431312fa8",
+    "candidate_cmake_sha256": "46f485c3ac013abd8fd391288932addbe1f32714e81c47691a943daeac7b8d4f",
+    "native_configure_build_test_steps": [
+      {
+        "job": "linux",
+        "step": "Configure",
+        "unchanged": true,
+        "run": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON\n"
+      },
+      {
+        "job": "linux",
+        "step": "Build",
+        "unchanged": true,
+        "run": "cmake --build build --parallel \"$(nproc)\""
+      },
+      {
+        "job": "linux",
+        "step": "Test",
+        "unchanged": true,
+        "run": "ctest --test-dir build --output-on-failure --no-tests=error --output-junit \"${{ github.workspace }}/build/ctest-results.xml\"\n"
+      },
+      {
+        "job": "windows",
+        "step": "Configure",
+        "unchanged": true,
+        "run": "cmake -S . -B build -G \"Visual Studio 17 2022\" -A x64 `\n  -DCS80_BUILD_PLUGIN=ON `\n  -DCS80_BUILD_TESTS=ON 2>&1 | Tee-Object -FilePath configure.log\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\n"
+      },
+      {
+        "job": "windows",
+        "step": "Build",
+        "unchanged": true,
+        "run": "cmake --build build --config Release --parallel"
+      },
+      {
+        "job": "windows",
+        "step": "Test",
+        "unchanged": true,
+        "run": "ctest --test-dir build -C Release --output-on-failure --no-tests=error --output-junit \"${{ github.workspace }}/build/ctest-results.xml\"\n"
+      },
+      {
+        "job": "macos",
+        "step": "Configure",
+        "unchanged": true,
+        "run": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=ON -DCS80_BUILD_TESTS=ON\n"
+      },
+      {
+        "job": "macos",
+        "step": "Build",
+        "unchanged": true,
+        "run": "cmake --build build --parallel"
+      },
+      {
+        "job": "macos",
+        "step": "Test",
+        "unchanged": true,
+        "run": "ctest --test-dir build --output-on-failure --no-tests=error --output-junit \"${{ github.workspace }}/build/ctest-results.xml\"\n"
+      }
+    ],
+    "linux_runner_unchanged": true,
+    "linux_runner": "ubuntu-24.04",
+    "linux_job_timeout_minutes_before": null,
+    "linux_job_timeout_minutes_after": null
+  },
+  "inherited_timeout_qualification": {
+    "without_explicit_timeout": [
+      "cs80_engine_output_fir_packed_tests",
+      "cs80_wsc_held_endpoint_tests",
+      "cs80_filter_batch_cap_missing_tests",
+      "cs80_filter_batch_cap_truncated_tests",
+      "cs80_core_tests",
+      "cs80_hardware_control_tests",
+      "cs80_oversampling_tests",
+      "cs80_smoothing_tests",
+      "cs80_output_listening_tests",
+      "cs80_noise_tests",
+      "cs80_randomise_tests",
+      "cs80_source_factory_boundary_tests",
+      "cs80_memory_panel_tests",
+      "cs80_programmer_control_identity_tests",
+      "cs80_callback_cpu_measurement_tests",
+      "cs80_midi_map_change_tests",
+      "cs80_ig00156_step_diagnostics_tests",
+      "cs80_truth_input_sha256_tests"
+    ],
+    "count_without_explicit_timeout": 18,
+    "largest_explicit_timeout_seconds": 1200.0,
+    "timeout_scale": "1",
+    "qualification": "Read-only local configured579-case profile with source-identical CMake; not a current CI process snapshot. All18 no-timeout cases and long explicit limits predate this refinement. Their presence does not identify the current case or prove a hang."
+  },
+  "candidate_input_sha256": {
+    "CMakeLists.txt": "46f485c3ac013abd8fd391288932addbe1f32714e81c47691a943daeac7b8d4f",
+    ".github/workflows/build.yml": "a609f613be8876ca0a1b49cf7242723c535603aa419442b4df1f6b128c235e3e",
+    "tests/PresetCharacterTests.cpp": "12b7553ff5acbb1377a1bebf68be5b02baaf798117b12d6c331ed0b655cbbad1",
+    "tests/LibraryAuditTests.cpp": "fb593e73400fc6b6bea8754990ab786e696614297e8082498d93797b25c8f2ac",
+    "tests/test_preset_capture.py": "155e47ec0469eb56bfe0a022e4f73fc9f93ba137b5ed97e9562e76b6f973de0b",
+    "scripts/test-packaging-notices.py": "961e22ca665ec8f6fcad8abce672931beb802c9e9f65dcb4ea52a005b476ba47",
+    "scripts/test-pluginval-diagnostic-log.py": "dc85d6da04d4b98e1d7743ed651564473599edc9f0082450704e0a7460cd028a",
+    "scripts/pluginval-diagnostic-log.py": "279198b0971b867547942c1f32a8b16bac6c9a11b0646b5c81b406f942d7bc34",
+    "scripts/test-pluginval-macos-download.py": "724d979b435bbcf4d46ca1d15c983f3e35a340ba2ad9a0a1786327f6b39909e4",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "conclusion": "The new character test and modified fixture registrations are bounded, with no new unbounded wait found. Source/profile differences do not establish a cause for the longer current elapsed time. The currently executing case, completed-case times and failure/timeout details are unavailable until live logs or final evidence become accessible. Do not treat elapsed time alone as success, failure or a confirmed hang.",
+  "actions": {
+    "expensive_tests_executed": false,
+    "test_execution_performed": false,
+    "ctest_show_only": true,
+    "source_or_public_docs_changed": false,
+    "workflow_cancel_or_rerun": false,
+    "authentication_initiated": false
+  }
+}

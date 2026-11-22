@@ -1,0 +1,24 @@
+{
+  "attempt": "one read-only recheck while native Test remains in progress",
+  "observed_at": "2026-11-22 19:14:39 UTC",
+  "job_id": 137274597635,
+  "run_id": 45044040694,
+  "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "GitHub API error 404: ﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:bfb6e5f7-801e-0067-60b5-7a2184000000\nTime:2026-11-22T19:14:40.1259218Z</Message></Error>"
+      }
+    ],
+    "structuredContent": {
+      "error": "GitHub API error 404: ﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:bfb6e5f7-801e-0067-60b5-7a2184000000\nTime:2026-11-22T19:14:40.1259218Z</Message></Error>",
+      "error_code": "NOT_FOUND",
+      "error_data": {
+        "error_str": "GitHub API error 404: ﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>BlobNotFound</Code><Message>The specified blob does not exist.\nRequestId:bfb6e5f7-801e-0067-60b5-7a2184000000\nTime:2026-11-22T19:14:40.1259218Z</Message></Error>"
+      }
+    },
+    "isError": true
+  },
+  "classification": "Job logs are not yet exposed. BlobNotFound is an evidence-availability condition, not a CI test failure. No job retry, cancellation, or source change."
+}

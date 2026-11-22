@@ -1,0 +1,733 @@
+﻿2026-11-22T19:25:11.8541523Z Current runner version: '2.338.2'
+2026-11-22T19:25:11.8593782Z ##[group]Runner Image Provisioner
+2026-11-22T19:25:11.8594649Z Hosted Compute Agent
+2026-11-22T19:25:11.8595303Z Version: 20261111.635
+2026-11-22T19:25:11.8595966Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-22T19:25:11.8596735Z Build Date: 2026-11-11T01:49:01Z
+2026-11-22T19:25:11.8597484Z Worker ID: {a1c567a8-aa07-49cb-b686-75da9c652312}
+2026-11-22T19:25:11.8598209Z Region: northcentralus
+2026-11-22T19:25:11.8598781Z Cloud: Azure
+2026-11-22T19:25:11.8599421Z ##[endgroup]
+2026-11-22T19:25:11.8601201Z ##[group]Operating System
+2026-11-22T19:25:11.8601954Z Ubuntu
+2026-11-22T19:25:11.8602492Z 24.04.5
+2026-11-22T19:25:11.8602992Z LTS
+2026-11-22T19:25:11.8603573Z ##[endgroup]
+2026-11-22T19:25:11.8604173Z ##[group]Runner Image
+2026-11-22T19:25:11.8604800Z Image: ubuntu-24.04
+2026-11-22T19:25:11.8605395Z Version: 20261116.376.1
+2026-11-22T19:25:11.8606742Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.376/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-22T19:25:11.8608353Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.376
+2026-11-22T19:25:11.8609359Z ##[endgroup]
+2026-11-22T19:25:11.8610629Z ##[group]GITHUB_TOKEN Permissions
+2026-11-22T19:25:11.8613363Z Actions: read
+2026-11-22T19:25:11.8614093Z Contents: read
+2026-11-22T19:25:11.8614658Z Metadata: read
+2026-11-22T19:25:11.8615283Z ##[endgroup]
+2026-11-22T19:25:11.8617540Z Secret source: Actions
+2026-11-22T19:25:11.8618576Z Cache mode: write
+2026-11-22T19:25:11.8619379Z Prepare workflow directory
+2026-11-22T19:25:11.9160200Z Prepare all required actions
+2026-11-22T19:25:11.9209472Z Getting action download info
+2026-11-22T19:25:12.1492139Z Download action repository 'actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b' (SHA:f28e40c7f34bde8b3046d885e986cb6290c5673b)
+2026-11-22T19:25:12.5230418Z Download action repository 'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0' (SHA:634f93cb2916e3fdff6788551b99b062d0335ce0)
+2026-11-22T19:25:12.8113402Z Download action repository 'actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-22T19:25:13.1149205Z Complete job name: Official beta3 / gui-inclusive / 0x63421ca
+2026-11-22T19:25:13.2039788Z ##[group]Run actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b
+2026-11-22T19:25:13.2041206Z with:
+2026-11-22T19:25:13.2071194Z   script: const fs = require('fs');
+const eventRun = context.payload.workflow_run;
+const repository = `${context.repo.owner}/${context.repo.repo}`;
+fs.mkdirSync('reports', { recursive: true });
+if (repository !== 'cheshmakzanoon-ops/yamaha-cs80' ||
+    context.eventName !== 'workflow_run' ||
+    eventRun?.head_repository?.full_name !== repository ||
+    eventRun?.event !== 'push' || eventRun?.head_branch !== 'main' ||
+    eventRun?.status !== 'completed') {
+  throw new Error('Refusing an origin other than a completed same-repository main push');
+}
+const { data: run } = await github.rest.actions.getWorkflowRun({
+  ...context.repo, run_id: eventRun.id
+});
+const { data: workflow } = await github.rest.actions.getWorkflow({
+  ...context.repo, workflow_id: 'build.yml'
+});
+if (run.id !== eventRun.id || run.run_attempt !== eventRun.run_attempt ||
+    run.head_sha !== eventRun.head_sha || !/^[0-9a-f]{40}$/.test(run.head_sha) ||
+    run.repository?.full_name !== repository ||
+    run.head_repository?.full_name !== repository ||
+    run.event !== 'push' || run.head_branch !== 'main' ||
+    run.status !== 'completed' || run.name !== 'build' ||
+    run.workflow_id !== workflow.id || workflow.path !== '.github/workflows/build.yml') {
+  throw new Error('Build metadata changed or does not match the trusted workflow');
+}
+const artifacts = await github.paginate(github.rest.actions.listWorkflowRunArtifacts, {
+  ...context.repo, run_id: run.id, per_page: 100
+});
+const matches = artifacts.filter(a => a.name === 'cs80-linux-vst3' && !a.expired);
+if (matches.length !== 1) throw new Error('Expected exactly one non-expired cs80-linux-vst3 artifact');
+const artifact = matches[0];
+if (artifact.workflow_run?.id !== run.id ||
+    artifact.workflow_run?.head_sha !== run.head_sha ||
+    artifact.workflow_run?.repository_id !== run.repository.id ||
+    artifact.workflow_run?.head_repository_id !== run.head_repository.id) {
+  throw new Error('Artifact origin does not match the verified source build');
+}
+const provenance = {
+  schema_version: 1,
+  scope: 'separate official prerelease comparison; not a stable-gate replacement',
+  repository,
+  source_sha: run.head_sha,
+  source_run_id: run.id,
+  source_run_attempt: run.run_attempt,
+  source_run_url: run.html_url,
+  source_run_conclusion: run.conclusion,
+  source_workflow_id: run.workflow_id,
+  source_workflow_path: workflow.path,
+  source_artifact: {
+    id: artifact.id, name: artifact.name, size_bytes: artifact.size_in_bytes,
+    digest: artifact.digest ?? null, created_at: artifact.created_at,
+    updated_at: artifact.updated_at
+  },
+  comparison_run_id: context.runId,
+  comparison_run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+  comparison_workflow_sha: process.env.COMPARISON_WORKFLOW_SHA,
+  validator: {
+    repository: 'Tracktion/pluginval', tag: process.env.VALIDATOR_TAG,
+    commit: process.env.VALIDATOR_COMMIT, asset: process.env.VALIDATOR_ASSET,
+    asset_sha256: process.env.VALIDATOR_SHA256,
+    asset_url: `https://github.com/Tracktion/pluginval/releases/download/${process.env.VALIDATOR_TAG}/${process.env.VALIDATOR_ASSET}`,
+    juce_tag: process.env.VALIDATOR_JUCE_TAG,
+    juce_commit: process.env.VALIDATOR_JUCE_COMMIT,
+    source_modifications: false
+  },
+  lane: process.env.COMPARISON_LANE,
+  seed: process.env.COMPARISON_SEED,
+  strictness: 10, repeats: 1,
+  skip_gui_tests: process.env.SKIP_GUI === 'true',
+  sample_rates: [44100, 48000, 96000],
+  block_sizes: [64, 128, 256, 512, 1024],
+  test_timeout_ms: 120000, process_timeout_seconds: 600,
+  validation_retries: 0
+};
+fs.writeFileSync('reports/provenance.json', JSON.stringify(provenance, null, 2) + '\n');
+core.setOutput('artifact_id', String(artifact.id));
+core.setOutput('source_sha', run.head_sha);
+core.info(`Using artifact ${artifact.id} from run ${run.id}, source ${run.head_sha}; original conclusion ${run.conclusion}`);
+
+2026-11-22T19:25:13.2114303Z   github-token: ***
+2026-11-22T19:25:13.2115117Z   debug: false
+2026-11-22T19:25:13.2115756Z   user-agent: actions/github-script
+2026-11-22T19:25:13.2116515Z   result-encoding: json
+2026-11-22T19:25:13.2117013Z   retries: 0
+2026-11-22T19:25:13.2117685Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-11-22T19:25:13.2118887Z env:
+2026-11-22T19:25:13.2119503Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-22T19:25:13.2120526Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-22T19:25:13.2122007Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-22T19:25:13.2123630Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-22T19:25:13.2124497Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-22T19:25:13.2125162Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-22T19:25:13.2126041Z   COMPARISON_WORKFLOW_SHA: 96c466f0e7c25055ac8e745d2c796af643860fc6
+2026-11-22T19:25:13.2126868Z   COMPARISON_LANE: gui-inclusive
+2026-11-22T19:25:13.2127491Z   COMPARISON_SEED: 0x63421ca
+2026-11-22T19:25:13.2128077Z   SKIP_GUI: false
+2026-11-22T19:25:13.2128665Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-22T19:25:13.2129359Z ##[endgroup]
+2026-11-22T19:25:14.3279761Z Using artifact 14768852300 from run 45044040694, source 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c; original conclusion failure
+2026-11-22T19:25:14.3604389Z ##[group]Run actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0
+2026-11-22T19:25:14.3606360Z with:
+2026-11-22T19:25:14.3607307Z   artifact-ids: 14768852300
+2026-11-22T19:25:14.3608429Z   path: vst3
+2026-11-22T19:25:14.3609406Z   merge-multiple: true
+2026-11-22T19:25:14.3621676Z   github-token: ***
+2026-11-22T19:25:14.3622865Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-22T19:25:14.3624521Z   run-id: 45044040694
+2026-11-22T19:25:14.3625566Z env:
+2026-11-22T19:25:14.3626495Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-22T19:25:14.3627965Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-22T19:25:14.3629645Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-22T19:25:14.3631778Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-22T19:25:14.3633829Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-22T19:25:14.3635313Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-22T19:25:14.3637365Z   COMPARISON_WORKFLOW_SHA: 96c466f0e7c25055ac8e745d2c796af643860fc6
+2026-11-22T19:25:14.3639092Z   COMPARISON_LANE: gui-inclusive
+2026-11-22T19:25:14.3640340Z   COMPARISON_SEED: 0x63421ca
+2026-11-22T19:25:14.3641608Z   SKIP_GUI: false
+2026-11-22T19:25:14.3642773Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-22T19:25:14.3644199Z ##[endgroup]
+2026-11-22T19:25:14.5270643Z Downloading artifacts by ID
+2026-11-22T19:25:14.5274051Z Fetching artifact list for workflow run 45044040694 in repository cheshmakzanoon-ops/yamaha-cs80
+2026-11-22T19:25:14.5359461Z (node:2201) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-22T19:25:14.5362877Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-22T19:25:14.5539730Z (node:2201) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-22T19:25:14.8044873Z Found 16 artifact(s)
+2026-11-22T19:25:14.8048246Z Preparing to download the following artifacts:
+2026-11-22T19:25:14.8053213Z - cs80-linux-vst3 (ID: 14768852300, Size: 6892184, Expected Digest: sha256:b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698)
+2026-11-22T19:25:14.8089756Z Downloading artifact '14768852300' from 'cheshmakzanoon-ops/yamaha-cs80'
+2026-11-22T19:25:15.0406029Z Redirecting to blob download url: https://productionresultssa1.blob.core.windows.net/actions-results/5db499c8-1c73-8903-b1b0-ca69c02de5db/workflow-job-run-bfc696cb-9dd8-5a74-8321-4ba2fe4010b2/artifacts/c73fa92e22a2b569bad7ba7874d9fe4c69f41adee58fec8c93490cd26f2eed8a.zip
+2026-11-22T19:25:15.0413829Z Starting download of artifact to: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3
+2026-11-22T19:25:15.1655394Z (node:2201) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-22T19:25:15.4196900Z SHA256 digest of downloaded artifact is b878f70ed85ab6e5aefd757891895b96714087c0fb6f170feb26b385da95c698
+2026-11-22T19:25:15.4198099Z Artifact download completed successfully.
+2026-11-22T19:25:15.4198767Z Total of 1 artifact(s) downloaded
+2026-11-22T19:25:15.4203184Z Download artifact has finished successfully
+2026-11-22T19:25:15.4482657Z ##[group]Run set -euo pipefail
+2026-11-22T19:25:15.4483141Z [36;1mset -euo pipefail[0m
+2026-11-22T19:25:15.4483456Z [36;1msudo apt-get update[0m
+2026-11-22T19:25:15.4483851Z [36;1msudo apt-get install -y --no-install-recommends \[0m
+2026-11-22T19:25:15.4484380Z [36;1m  libasound2t64 libfontconfig1 libfreetype6 libjack-jackd2-0 \[0m
+2026-11-22T19:25:15.4484927Z [36;1m  libx11-6 libxext6 libxi6 libxrandr2 libxcursor1 libxinerama1 \[0m
+2026-11-22T19:25:15.4485455Z [36;1m  libxrender1 libxcomposite1 libxkbcommon0 libxcb1 libgl1 \[0m
+2026-11-22T19:25:15.4485934Z [36;1m  fonts-dejavu-core xauth xvfb unzip[0m
+2026-11-22T19:25:15.4486345Z [36;1mcat /etc/os-release > reports/os-release.txt[0m
+2026-11-22T19:25:15.4486757Z [36;1mdpkg-query -W > reports/runtime-packages.txt[0m
+2026-11-22T19:25:15.4512571Z shell: /usr/bin/bash -e {0}
+2026-11-22T19:25:15.4512901Z env:
+2026-11-22T19:25:15.4513179Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-22T19:25:15.4513626Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-22T19:25:15.4514046Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-22T19:25:15.4514727Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-22T19:25:15.4515218Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-22T19:25:15.4515589Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-22T19:25:15.4516074Z   COMPARISON_WORKFLOW_SHA: 96c466f0e7c25055ac8e745d2c796af643860fc6
+2026-11-22T19:25:15.4516500Z   COMPARISON_LANE: gui-inclusive
+2026-11-22T19:25:15.4516801Z   COMPARISON_SEED: 0x63421ca
+2026-11-22T19:25:15.4517078Z   SKIP_GUI: false
+2026-11-22T19:25:15.4517373Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-22T19:25:15.4517715Z ##[endgroup]
+2026-11-22T19:25:15.5440276Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-22T19:25:15.5825091Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-11-22T19:25:15.5842316Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-11-22T19:25:15.5844397Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-11-22T19:25:15.5902168Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-11-22T19:25:15.5912318Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-11-22T19:25:15.7164403Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [832 kB]
+2026-11-22T19:25:15.7344256Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [762 kB]
+2026-11-22T19:25:15.7836593Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1475 kB]
+2026-11-22T19:25:15.7917860Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [319 kB]
+2026-11-22T19:25:15.7947229Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1716 kB]
+2026-11-22T19:25:15.8058776Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [346 kB]
+2026-11-22T19:25:15.8103709Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1922 kB]
+2026-11-22T19:25:15.8222529Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [443 kB]
+2026-11-22T19:25:15.9437928Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1198 kB]
+2026-11-22T19:25:15.9496849Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [239 kB]
+2026-11-22T19:25:15.9517347Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1231 kB]
+2026-11-22T19:25:15.9592642Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1792 kB]
+2026-11-22T19:25:16.0118718Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [414 kB]
+2026-11-22T19:25:19.6717381Z Fetched 13.1 MB in 1s (9890 kB/s)
+2026-11-22T19:25:21.0526983Z Reading package lists...
+2026-11-22T19:25:21.0942792Z Reading package lists...
+2026-11-22T19:25:21.3533165Z Building dependency tree...
+2026-11-22T19:25:21.3541263Z Reading state information...
+2026-11-22T19:25:21.5013377Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-11-22T19:25:21.5014530Z libasound2t64 set to manually installed.
+2026-11-22T19:25:21.5015206Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-11-22T19:25:21.5015897Z libfontconfig1 set to manually installed.
+2026-11-22T19:25:21.5016581Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.2).
+2026-11-22T19:25:21.5017287Z libfreetype6 set to manually installed.
+2026-11-22T19:25:21.5017931Z libx11-6 is already the newest version (2:1.8.7-1ubuntu0.1).
+2026-11-22T19:25:21.5018535Z libx11-6 set to manually installed.
+2026-11-22T19:25:21.5019105Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-11-22T19:25:21.5019676Z libxext6 set to manually installed.
+2026-11-22T19:25:21.5020315Z libxi6 is already the newest version (2:1.8.1-1build1).
+2026-11-22T19:25:21.5021210Z libxi6 set to manually installed.
+2026-11-22T19:25:21.5022473Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-11-22T19:25:21.5023194Z libxrandr2 set to manually installed.
+2026-11-22T19:25:21.5023798Z libxcursor1 is already the newest version (1:1.2.1-1build1).
+2026-11-22T19:25:21.5024413Z libxcursor1 set to manually installed.
+2026-11-22T19:25:21.5024973Z libxinerama1 is already the newest version (2:1.1.4-3build1).
+2026-11-22T19:25:21.5025523Z libxinerama1 set to manually installed.
+2026-11-22T19:25:21.5026131Z libxrender1 is already the newest version (1:0.9.10-1.1build1).
+2026-11-22T19:25:21.5026534Z libxrender1 set to manually installed.
+2026-11-22T19:25:21.5026930Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-11-22T19:25:21.5027305Z libxcomposite1 set to manually installed.
+2026-11-22T19:25:21.5027650Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-11-22T19:25:21.5028091Z libxkbcommon0 set to manually installed.
+2026-11-22T19:25:21.5028676Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-11-22T19:25:21.5029010Z libxcb1 set to manually installed.
+2026-11-22T19:25:21.5029297Z libgl1 is already the newest version (1.7.0-1build1).
+2026-11-22T19:25:21.5029600Z libgl1 set to manually installed.
+2026-11-22T19:25:21.5029909Z fonts-dejavu-core is already the newest version (2.37-8).
+2026-11-22T19:25:21.5030260Z fonts-dejavu-core set to manually installed.
+2026-11-22T19:25:21.5030584Z xauth is already the newest version (1:1.1.2-1build1).
+2026-11-22T19:25:21.5031301Z xauth set to manually installed.
+2026-11-22T19:25:21.5031738Z xvfb is already the newest version (2:21.1.12-1ubuntu1.9).
+2026-11-22T19:25:21.5032318Z unzip is already the newest version (6.0-28ubuntu4.1).
+2026-11-22T19:25:21.5032678Z The following additional packages will be installed:
+2026-11-22T19:25:21.5033019Z   libopus0 libsamplerate0
+2026-11-22T19:25:21.5033259Z Suggested packages:
+2026-11-22T19:25:21.5033478Z   jackd2 opus-tools
+2026-11-22T19:25:21.5220332Z The following NEW packages will be installed:
+2026-11-22T19:25:21.5226099Z   libjack-jackd2-0 libopus0 libsamplerate0
+2026-11-22T19:25:21.5437733Z 0 upgraded, 3 newly installed, 0 to remove and 68 not upgraded.
+2026-11-22T19:25:21.5438173Z Need to get 1841 kB of archives.
+2026-11-22T19:25:21.5438525Z After this operation, 3091 kB of additional disk space will be used.
+2026-11-22T19:25:21.5439192Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-22T19:25:21.5920342Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libopus0 amd64 1.4-1build1 [208 kB]
+2026-11-22T19:25:21.6257780Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsamplerate0 amd64 0.2.2-4build1 [1344 kB]
+2026-11-22T19:25:21.6822170Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libjack-jackd2-0 amd64 1.9.21~dfsg-3ubuntu3 [289 kB]
+2026-11-22T19:25:21.9789238Z Fetched 1841 kB in 0s (11.5 MB/s)
+2026-11-22T19:25:22.0042222Z Selecting previously unselected package libopus0:amd64.
+2026-11-22T19:25:22.0374332Z (Reading database ... 
+2026-11-22T19:25:22.0377027Z (Reading database ... 5%
+2026-11-22T19:25:22.0377386Z (Reading database ... 10%
+2026-11-22T19:25:22.0377729Z (Reading database ... 15%
+2026-11-22T19:25:22.0378063Z (Reading database ... 20%
+2026-11-22T19:25:22.0378630Z (Reading database ... 25%
+2026-11-22T19:25:22.0379012Z (Reading database ... 30%
+2026-11-22T19:25:22.0379407Z (Reading database ... 35%
+2026-11-22T19:25:22.0379673Z (Reading database ... 40%
+2026-11-22T19:25:22.0379991Z (Reading database ... 45%
+2026-11-22T19:25:22.0380276Z (Reading database ... 50%
+2026-11-22T19:25:22.0454729Z (Reading database ... 55%
+2026-11-22T19:25:22.1749179Z (Reading database ... 60%
+2026-11-22T19:25:22.4177086Z (Reading database ... 65%
+2026-11-22T19:25:22.5602515Z (Reading database ... 70%
+2026-11-22T19:25:22.7645857Z (Reading database ... 75%
+2026-11-22T19:25:22.8321558Z (Reading database ... 80%
+2026-11-22T19:25:23.0196582Z (Reading database ... 85%
+2026-11-22T19:25:23.1624487Z (Reading database ... 90%
+2026-11-22T19:25:23.2765813Z (Reading database ... 95%
+2026-11-22T19:25:23.2766597Z (Reading database ... 100%
+2026-11-22T19:25:23.2767113Z (Reading database ... 217092 files and directories currently installed.)
+2026-11-22T19:25:23.2811803Z Preparing to unpack .../libopus0_1.4-1build1_amd64.deb ...
+2026-11-22T19:25:23.2869473Z Unpacking libopus0:amd64 (1.4-1build1) ...
+2026-11-22T19:25:23.3138944Z Selecting previously unselected package libsamplerate0:amd64.
+2026-11-22T19:25:23.3283841Z Preparing to unpack .../libsamplerate0_0.2.2-4build1_amd64.deb ...
+2026-11-22T19:25:23.3292018Z Unpacking libsamplerate0:amd64 (0.2.2-4build1) ...
+2026-11-22T19:25:23.3610216Z Selecting previously unselected package libjack-jackd2-0:amd64.
+2026-11-22T19:25:23.3757499Z Preparing to unpack .../libjack-jackd2-0_1.9.21~dfsg-3ubuntu3_amd64.deb ...
+2026-11-22T19:25:23.3765278Z Unpacking libjack-jackd2-0:amd64 (1.9.21~dfsg-3ubuntu3) ...
+2026-11-22T19:25:23.4269968Z Setting up libopus0:amd64 (1.4-1build1) ...
+2026-11-22T19:25:23.4301445Z Setting up libsamplerate0:amd64 (0.2.2-4build1) ...
+2026-11-22T19:25:23.4325147Z Setting up libjack-jackd2-0:amd64 (1.9.21~dfsg-3ubuntu3) ...
+2026-11-22T19:25:23.4352571Z Processing triggers for libc-bin (2.39-0ubuntu8.12) ...
+2026-11-22T19:25:24.1755885Z 
+2026-11-22T19:25:24.1756469Z Running kernel seems to be up-to-date.
+2026-11-22T19:25:24.1756965Z 
+2026-11-22T19:25:24.1757185Z No services need to be restarted.
+2026-11-22T19:25:24.1757593Z 
+2026-11-22T19:25:24.1757835Z No containers need to be restarted.
+2026-11-22T19:25:24.1758236Z 
+2026-11-22T19:25:24.1758508Z No user sessions are running outdated binaries.
+2026-11-22T19:25:24.1758995Z 
+2026-11-22T19:25:24.1759487Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-22T19:25:25.3686955Z ##[group]Run set -euo pipefail
+2026-11-22T19:25:25.3687319Z [36;1mset -euo pipefail[0m
+2026-11-22T19:25:25.3687844Z [36;1murl="https://github.com/Tracktion/pluginval/releases/download/${VALIDATOR_TAG}/${VALIDATOR_ASSET}"[0m
+2026-11-22T19:25:25.3688472Z [36;1mcurl --fail --location --proto '=https' --proto-redir '=https' \[0m
+2026-11-22T19:25:25.3688991Z [36;1m  --connect-timeout 30 --max-time 180 --output pluginval.zip "$url"[0m
+2026-11-22T19:25:25.3689532Z [36;1mprintf '%s  pluginval.zip\n' "$VALIDATOR_SHA256" | sha256sum --check --strict \[0m
+2026-11-22T19:25:25.3689981Z [36;1m  | tee reports/archive-verification.txt[0m
+2026-11-22T19:25:25.3690362Z [36;1munzip -l pluginval.zip > reports/archive-contents.txt[0m
+2026-11-22T19:25:25.3690755Z [36;1munzip -q pluginval.zip -d official-pluginval[0m
+2026-11-22T19:25:25.3691465Z [36;1mtest -f official-pluginval/pluginval[0m
+2026-11-22T19:25:25.3691792Z [36;1mtest ! -L official-pluginval/pluginval[0m
+2026-11-22T19:25:25.3692143Z [36;1mchmod +x official-pluginval/pluginval[0m
+2026-11-22T19:25:25.3692590Z [36;1msha256sum official-pluginval/pluginval > reports/validator-binary-sha256.txt[0m
+2026-11-22T19:25:25.3693045Z [36;1mtest -d 'vst3/CS-80 Reference.vst3'[0m
+2026-11-22T19:25:25.3693528Z [36;1mfind vst3 -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum > reports/plugin-files-sha256.txt[0m
+2026-11-22T19:25:25.3694037Z [36;1mtest -s reports/plugin-files-sha256.txt[0m
+2026-11-22T19:25:25.3694469Z [36;1mldd official-pluginval/pluginval | tee reports/validator-libraries.txt[0m
+2026-11-22T19:25:25.3694963Z [36;1mif grep -q 'not found' reports/validator-libraries.txt; then[0m
+2026-11-22T19:25:25.3695439Z [36;1m  echo '::error::The official validator has an unavailable runtime library'[0m
+2026-11-22T19:25:25.3695827Z [36;1m  exit 1[0m
+2026-11-22T19:25:25.3696017Z [36;1mfi[0m
+2026-11-22T19:25:25.3696360Z [36;1m./official-pluginval/pluginval --version | tee reports/validator-version.txt[0m
+2026-11-22T19:25:25.3697002Z [36;1m./official-pluginval/pluginval strictness-help 10 | tee reports/strictness-10-inventory.txt[0m
+2026-11-22T19:25:25.3717313Z shell: /usr/bin/bash -e {0}
+2026-11-22T19:25:25.3717565Z env:
+2026-11-22T19:25:25.3717778Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-22T19:25:25.3718279Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-22T19:25:25.3718643Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-22T19:25:25.3719070Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-22T19:25:25.3719496Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-22T19:25:25.3719807Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-22T19:25:25.3720235Z   COMPARISON_WORKFLOW_SHA: 96c466f0e7c25055ac8e745d2c796af643860fc6
+2026-11-22T19:25:25.3720591Z   COMPARISON_LANE: gui-inclusive
+2026-11-22T19:25:25.3721056Z   COMPARISON_SEED: 0x63421ca
+2026-11-22T19:25:25.3721316Z   SKIP_GUI: false
+2026-11-22T19:25:25.3721564Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-22T19:25:25.3721854Z ##[endgroup]
+2026-11-22T19:25:25.3854247Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-11-22T19:25:25.3855160Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-11-22T19:25:25.3855754Z 
+2026-11-22T19:25:25.5448052Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-11-22T19:25:25.5448818Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-11-22T19:25:25.6249616Z 
+2026-11-22T19:25:25.6250166Z 100 8012k  100 8012k    0     0  32.6M      0 --:--:-- --:--:-- --:--:-- 32.6M
+2026-11-22T19:25:25.6377474Z pluginval.zip: OK
+2026-11-22T19:25:25.8521272Z 	linux-vdso.so.1 (0x00007f5b87dc9000)
+2026-11-22T19:25:25.8522040Z 	libasound.so.2 => /lib/x86_64-linux-gnu/libasound.so.2 (0x00007f5b86af6000)
+2026-11-22T19:25:25.8522721Z 	libfontconfig.so.1 => /lib/x86_64-linux-gnu/libfontconfig.so.1 (0x00007f5b87d66000)
+2026-11-22T19:25:25.8523518Z 	libfreetype.so.6 => /lib/x86_64-linux-gnu/libfreetype.so.6 (0x00007f5b86a2a000)
+2026-11-22T19:25:25.8524000Z 	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f5b86941000)
+2026-11-22T19:25:25.8524513Z 	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f5b87d38000)
+2026-11-22T19:25:25.8525284Z 	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f5b86600000)
+2026-11-22T19:25:25.8525959Z 	/lib64/ld-linux-x86-64.so.2 (0x00007f5b87dcb000)
+2026-11-22T19:25:25.8526566Z 	libexpat.so.1 => /lib/x86_64-linux-gnu/libexpat.so.1 (0x00007f5b86913000)
+2026-11-22T19:25:25.8526989Z 	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f5b868f7000)
+2026-11-22T19:25:25.8527386Z 	libbz2.so.1.0 => /lib/x86_64-linux-gnu/libbz2.so.1.0 (0x00007f5b87d22000)
+2026-11-22T19:25:25.8527825Z 	libpng16.so.16 => /lib/x86_64-linux-gnu/libpng16.so.16 (0x00007f5b868bf000)
+2026-11-22T19:25:25.8528297Z 	libbrotlidec.so.1 => /lib/x86_64-linux-gnu/libbrotlidec.so.1 (0x00007f5b868b1000)
+2026-11-22T19:25:25.8528833Z 	libbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x00007f5b8688e000)
+2026-11-22T19:25:25.9081519Z pluginval - 2.0.0
+2026-11-22T19:25:25.9206972Z Tests at strictness level 10:
+2026-11-22T19:25:25.9207855Z 
+2026-11-22T19:25:25.9208700Z   Plugin info: Logs getName(), getAlternateDisplayNames(), supportsDoublePrecisionProcessing(), getLatencySamples(), getTailLengthSeconds()
+2026-11-22T19:25:25.9210447Z   Locale stability: Checks that the plugin doesn't change the system locale. Some plugins or GUI frameworks change locale settings (e.g., decimal separator from '.' to ','). This can corrupt preset files, break float parsing in other plugins, or crash the host
+2026-11-22T19:25:25.9212456Z   Plugin programs: Calls getNumPrograms() and getProgramName() for each, then randomly switches programs 5 times via setCurrentProgram()
+2026-11-22T19:25:25.9213526Z   Editor: Calls createEditor() twice (cold and warm), logs time taken, expects non-null editor pointer
+2026-11-22T19:25:25.9214552Z   Plugin state: Saves state via getStateInformation(), randomises all automatable params, restores via setStateInformation()
+2026-11-22T19:25:25.9215868Z   Automatable Parameters: For each non-bypass automatable parameter: logs index, name, defaultValue, label, numSteps, isDiscrete, isBoolean, isAutomatable, category
+2026-11-22T19:25:25.9217562Z   Audio processing: Processes 10 blocks at each sample rate / block size combo. For instruments, sends noteOn/noteOff. Checks for NaNs, Infs, subnormals
+2026-11-22T19:25:25.9218792Z   Automation: Processes in 32-sample sub-blocks, randomly changing up to 10 params between each. Subnormals treated as errors
+2026-11-22T19:25:25.9220070Z   Open editor whilst processing: Starts async thread calling processBlock() repeatedly, then calls createEditor() on message thread. Tests concurrent access
+2026-11-22T19:25:25.9222383Z   Bus layout processing: For every supported combination of mono/stereo on each input and output bus (including sidechain), calls setBusesLayout(), prepareToPlay() and processBlock(). Detects crashes in plugins that mis-handle non-default channel counts (e.g. mono main with stereo sidechain).
+2026-11-22T19:25:25.9224268Z   Basic bus: Tests audio bus configuration: lists all supported input/output layouts (named channel sets like stereo/5.1 and discrete channels), tests enableAllBuses() and disableNonMainBuses(), then verifies the default layout can be restored
+2026-11-22T19:25:25.9225517Z   Editor Automation: With editor open, loops 1000x calling setValue(random) on ALL parameters with 10ms sleep between iterations
+2026-11-22T19:25:25.9226253Z   vst3 validator: Runs Steinberg's vstvalidator with -e flag for extended validation (VST3 only)
+2026-11-22T19:25:25.9226868Z   auval: Runs 'auval -strict -stress 20 -v <type> <subtype> <manu>' (Audio Units only)
+2026-11-22T19:25:25.9228065Z   Fuzz parameters: For each parameter, sets 5 random values and calls getValue(), getText(), getValueForText(), getCurrentValueAsText(). Tests that text/value conversion functions don't crash or hang with arbitrary inputs
+2026-11-22T19:25:25.9228937Z   Editor stress
+2026-11-22T19:25:25.9229568Z   Plugin state restoration: For each param: saves original value, randomises, restores state, expects value within 0.1 of original. Also requires exact binary state match
+2026-11-22T19:25:25.9230600Z   Non-releasing audio processing: Same as audio processing, but calls prepareToPlay() at new sample rate WITHOUT calling releaseResources() first
+2026-11-22T19:25:25.9231973Z   Parameter thread safety: Message thread calls setValueNotifyingHost() 500x on all params. Simultaneously, this thread calls setValue() and processBlock() 500x
+2026-11-22T19:25:25.9233110Z   Background thread state: Opens editor on message thread. From background thread: getStateInformation(), randomise params, setStateInformation(). Sleeps 2s for async updates
+2026-11-22T19:25:25.9234065Z   Parameters: Same as automatable parameters test - logs info for all non-bypass automatable parameters
+2026-11-22T19:25:25.9235175Z   Discrete parameter state restoration: For each discrete param: sets a random value, saves state, then restores that state twice - once unchanged and once after setting a different value - and expects the same value both times
+2026-11-22T19:25:25.9236121Z   Process called with a larger than prepared block size
+2026-11-22T19:25:25.9236448Z   Allocations during process
+2026-11-22T19:25:25.9236615Z 
+2026-11-22T19:25:25.9325186Z ##[group]Run set -euo pipefail
+2026-11-22T19:25:25.9325554Z [36;1mset -euo pipefail[0m
+2026-11-22T19:25:25.9325867Z [36;1mvalidator="$PWD/official-pluginval/pluginval"[0m
+2026-11-22T19:25:25.9326236Z [36;1mplugin="$PWD/vst3/CS-80 Reference.vst3"[0m
+2026-11-22T19:25:25.9326618Z [36;1mcommand=("$validator" validate --strictness-level 10[0m
+2026-11-22T19:25:25.9327079Z [36;1m  --random-seed "$COMPARISON_SEED" --repeat 1 --timeout-ms 120000[0m
+2026-11-22T19:25:25.9327577Z [36;1m  --sample-rates 44100,48000,96000 --block-sizes 64,128,256,512,1024[0m
+2026-11-22T19:25:25.9328044Z [36;1m  --output-dir "$PWD/reports" --output-filename validator[0m
+2026-11-22T19:25:25.9328455Z [36;1m  --json-results "$PWD/reports/results.json"[0m
+2026-11-22T19:25:25.9328809Z [36;1m  --junit-xml "$PWD/reports/results.xml")[0m
+2026-11-22T19:25:25.9329135Z [36;1mif [ "$SKIP_GUI" = true ]; then[0m
+2026-11-22T19:25:25.9329424Z [36;1m  command+=(--skip-gui-tests)[0m
+2026-11-22T19:25:25.9329905Z [36;1melse[0m
+2026-11-22T19:25:25.9330219Z [36;1m  command=(xvfb-run -a -s '-screen 0 1920x1200x24' "${command[@]}")[0m
+2026-11-22T19:25:25.9330597Z [36;1mfi[0m
+2026-11-22T19:25:25.9330802Z [36;1mcommand+=("$plugin")[0m
+2026-11-22T19:25:25.9331536Z [36;1mprintf '%q ' timeout --signal=TERM --kill-after=10s 600s "${command[@]}" > reports/command.txt[0m
+2026-11-22T19:25:25.9332048Z [36;1mprintf '\n' >> reports/command.txt[0m
+2026-11-22T19:25:25.9332416Z [36;1mdate --utc --iso-8601=seconds > reports/started-at.txt[0m
+2026-11-22T19:25:25.9332763Z [36;1mset +e[0m
+2026-11-22T19:25:25.9333158Z [36;1mtimeout --signal=TERM --kill-after=10s 600s "${command[@]}" 2>&1 | tee reports/console.log[0m
+2026-11-22T19:25:25.9333644Z [36;1mstatuses=("${PIPESTATUS[@]}")[0m
+2026-11-22T19:25:25.9333905Z [36;1mset -e[0m
+2026-11-22T19:25:25.9334197Z [36;1mprintf '%s\n' "${statuses[0]}" > reports/process-exit-code.txt[0m
+2026-11-22T19:25:25.9334637Z [36;1mprintf '%s\n' "${statuses[1]}" > reports/logging-exit-code.txt[0m
+2026-11-22T19:25:25.9335079Z [36;1mdate --utc --iso-8601=seconds > reports/finished-at.txt[0m
+2026-11-22T19:25:25.9335549Z [36;1m# A SUCCESS line can never override a nonzero process/timeout status.[0m
+2026-11-22T19:25:25.9336016Z [36;1mif [ "${statuses[0]}" -ne 0 ]; then exit "${statuses[0]}"; fi[0m
+2026-11-22T19:25:25.9336421Z [36;1mif [ "${statuses[1]}" -ne 0 ]; then exit "${statuses[1]}"; fi[0m
+2026-11-22T19:25:25.9336751Z [36;1mpython3 - <<'PY'[0m
+2026-11-22T19:25:25.9336984Z [36;1mimport json[0m
+2026-11-22T19:25:25.9337192Z [36;1mimport os[0m
+2026-11-22T19:25:25.9337402Z [36;1mimport pathlib[0m
+2026-11-22T19:25:25.9337616Z [36;1m[0m
+2026-11-22T19:25:25.9337831Z [36;1mreports = pathlib.Path('reports')[0m
+2026-11-22T19:25:25.9338231Z [36;1mlog = (reports / 'console.log').read_text(errors='replace').splitlines()[0m
+2026-11-22T19:25:25.9338690Z [36;1mif not any(line.strip() == 'SUCCESS' for line in log):[0m
+2026-11-22T19:25:25.9339167Z [36;1m    raise SystemExit('Missing explicit SUCCESS after an exit-zero comparison')[0m
+2026-11-22T19:25:25.9339670Z [36;1mresult = json.loads((reports / 'results.json').read_text())[0m
+2026-11-22T19:25:25.9340030Z [36;1msummary = result['summary'][0m
+2026-11-22T19:25:25.9340337Z [36;1mproperties = result.get('properties', {})[0m
+2026-11-22T19:25:25.9340657Z [36;1mif (result.get('command') != 'validate'[0m
+2026-11-22T19:25:25.9341367Z [36;1m        or result.get('target') != str(pathlib.Path('vst3/CS-80 Reference.vst3').resolve())[0m
+2026-11-22T19:25:25.9341867Z [36;1m        or properties.get('strictness_level') != '10'[0m
+2026-11-22T19:25:25.9342225Z [36;1m        or properties.get('timeout_ms') != '120000'[0m
+2026-11-22T19:25:25.9342639Z [36;1m        or properties.get('random_seed') != os.environ['COMPARISON_SEED'][0m
+2026-11-22T19:25:25.9343190Z [36;1m        or any(type(summary.get(key)) is not int for key in ('tests', 'passed', 'failed', 'errors'))[0m
+2026-11-22T19:25:25.9343833Z [36;1m        or summary['tests'] <= 0[0m
+2026-11-22T19:25:25.9344154Z [36;1m        or summary.get('passed') != summary['tests'][0m
+2026-11-22T19:25:25.9344547Z [36;1m        or summary.get('failed') != 0 or summary.get('errors') != 0[0m
+2026-11-22T19:25:25.9344956Z [36;1m        or len(result.get('tests', [])) != summary['tests'][0m
+2026-11-22T19:25:25.9345374Z [36;1m        or any(test.get('status') != 'passed' for test in result['tests'])):[0m
+2026-11-22T19:25:25.9345923Z [36;1m    raise SystemExit('Comparison report is incomplete or contains a failed/error test')[0m
+2026-11-22T19:25:25.9346486Z [36;1mprint(f"Verified clean comparison report: {summary['tests']} tests")[0m
+2026-11-22T19:25:25.9346859Z [36;1mPY[0m
+2026-11-22T19:25:25.9366217Z shell: /usr/bin/bash -e {0}
+2026-11-22T19:25:25.9366461Z env:
+2026-11-22T19:25:25.9366658Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-22T19:25:25.9366977Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-22T19:25:25.9367472Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-22T19:25:25.9367887Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-22T19:25:25.9368316Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-22T19:25:25.9368624Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-22T19:25:25.9369045Z   COMPARISON_WORKFLOW_SHA: 96c466f0e7c25055ac8e745d2c796af643860fc6
+2026-11-22T19:25:25.9369429Z   COMPARISON_LANE: gui-inclusive
+2026-11-22T19:25:25.9369684Z   COMPARISON_SEED: 0x63421ca
+2026-11-22T19:25:25.9369909Z   SKIP_GUI: false
+2026-11-22T19:25:25.9370148Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-22T19:25:25.9370443Z ##[endgroup]
+2026-11-22T19:25:26.3355087Z Started validating: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3
+2026-11-22T19:25:26.3422183Z Random seed: 0x63421ca
+2026-11-22T19:25:26.3422667Z Validation started
+2026-11-22T19:25:26.3423041Z Strictness level: 10
+2026-11-22T19:25:26.3423521Z -----------------------------------------------------------------
+2026-11-22T19:25:26.3424702Z Starting tests in: pluginval / Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3...
+2026-11-22T19:25:26.3425760Z Num plugins found: 1
+2026-11-22T19:25:26.3425982Z 
+2026-11-22T19:25:26.3426213Z Testing plugin: VST3-CS-80 Reference-3e83ebbf-8c22ac91
+2026-11-22T19:25:26.3426803Z Reference Instruments: CS-80 Reference v1.0.0
+2026-11-22T19:25:26.3427836Z Completed tests in pluginval / Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3
+2026-11-22T19:25:26.3428937Z -----------------------------------------------------------------
+2026-11-22T19:25:26.3429598Z Starting tests in: pluginval / Open plugin (cold)...
+2026-11-22T19:25:26.5549277Z Completed tests in pluginval / Open plugin (cold)
+2026-11-22T19:25:26.5549989Z -----------------------------------------------------------------
+2026-11-22T19:25:26.5550519Z Starting tests in: pluginval / Open plugin (warm)...
+2026-11-22T19:25:26.5916128Z Running tests 1 times
+2026-11-22T19:25:26.7417327Z Completed tests in pluginval / Open plugin (warm)
+2026-11-22T19:25:26.7418182Z -----------------------------------------------------------------
+2026-11-22T19:25:26.7418988Z Starting tests in: pluginval / Plugin info...
+2026-11-22T19:25:26.7419470Z 
+2026-11-22T19:25:26.7419688Z Plugin name: CS-80 Reference
+2026-11-22T19:25:26.7420256Z Alternative names: CS-80 Reference
+2026-11-22T19:25:26.7421133Z SupportsDoublePrecision: no
+2026-11-22T19:25:26.7421691Z Reported latency: 0
+2026-11-22T19:25:26.7422171Z Reported taillength: inf
+2026-11-22T19:25:26.7422768Z Completed tests in pluginval / Plugin info
+2026-11-22T19:25:26.7423521Z -----------------------------------------------------------------
+2026-11-22T19:25:26.7424280Z Starting tests in: pluginval / Plugin programs...
+2026-11-22T19:25:26.7424908Z Num programs: 523
+2026-11-22T19:25:26.7425322Z All program names checked
+2026-11-22T19:25:26.7425613Z 
+2026-11-22T19:25:26.7425793Z Changing program
+2026-11-22T19:25:26.7426608Z Completed tests in pluginval / Plugin programs
+2026-11-22T19:25:26.7427319Z -----------------------------------------------------------------
+2026-11-22T19:25:26.7427965Z Starting tests in: pluginval / Editor...
+2026-11-22T19:25:27.1253934Z Completed tests in pluginval / Editor
+2026-11-22T19:25:27.1254626Z -----------------------------------------------------------------
+2026-11-22T19:25:27.1255409Z Starting tests in: pluginval / Open editor whilst processing...
+2026-11-22T19:25:27.2232602Z Completed tests in pluginval / Open editor whilst processing
+2026-11-22T19:25:27.2233692Z -----------------------------------------------------------------
+2026-11-22T19:25:27.2234614Z Starting tests in: pluginval / Audio processing...
+2026-11-22T19:25:27.2265982Z Testing with sample rate [44100] and block size [64]
+2026-11-22T19:25:27.2379266Z Testing with sample rate [44100] and block size [128]
+2026-11-22T19:25:27.2525567Z Testing with sample rate [44100] and block size [256]
+2026-11-22T19:25:27.2731888Z Testing with sample rate [44100] and block size [512]
+2026-11-22T19:25:27.3012340Z Testing with sample rate [44100] and block size [1024]
+2026-11-22T19:25:27.3466609Z Testing with sample rate [48000] and block size [64]
+2026-11-22T19:25:27.3591876Z Testing with sample rate [48000] and block size [128]
+2026-11-22T19:25:27.3720399Z Testing with sample rate [48000] and block size [256]
+2026-11-22T19:25:27.3891704Z Testing with sample rate [48000] and block size [512]
+2026-11-22T19:25:27.4168090Z Testing with sample rate [48000] and block size [1024]
+2026-11-22T19:25:27.4629304Z Testing with sample rate [96000] and block size [64]
+2026-11-22T19:25:27.4755312Z Testing with sample rate [96000] and block size [128]
+2026-11-22T19:25:27.4892243Z Testing with sample rate [96000] and block size [256]
+2026-11-22T19:25:27.5078869Z Testing with sample rate [96000] and block size [512]
+2026-11-22T19:25:27.5386102Z Testing with sample rate [96000] and block size [1024]
+2026-11-22T19:25:27.5868718Z Completed tests in pluginval / Audio processing
+2026-11-22T19:25:27.5869165Z -----------------------------------------------------------------
+2026-11-22T19:25:27.5869592Z Starting tests in: pluginval / Non-releasing audio processing...
+2026-11-22T19:25:27.5950779Z Testing with sample rate [44100] and block size [64]
+2026-11-22T19:25:27.5981769Z Testing with sample rate [44100] and block size [128]
+2026-11-22T19:25:27.6156234Z Testing with sample rate [44100] and block size [256]
+2026-11-22T19:25:27.6362904Z Testing with sample rate [44100] and block size [512]
+2026-11-22T19:25:27.6646407Z Testing with sample rate [44100] and block size [1024]
+2026-11-22T19:25:27.7099034Z Testing with sample rate [48000] and block size [64]
+2026-11-22T19:25:27.7210396Z Testing with sample rate [48000] and block size [128]
+2026-11-22T19:25:27.7340232Z Testing with sample rate [48000] and block size [256]
+2026-11-22T19:25:27.7508771Z Testing with sample rate [48000] and block size [512]
+2026-11-22T19:25:27.7785406Z Testing with sample rate [48000] and block size [1024]
+2026-11-22T19:25:27.8246613Z Testing with sample rate [96000] and block size [64]
+2026-11-22T19:25:27.8363348Z Testing with sample rate [96000] and block size [128]
+2026-11-22T19:25:27.8499680Z Testing with sample rate [96000] and block size [256]
+2026-11-22T19:25:27.8684184Z Testing with sample rate [96000] and block size [512]
+2026-11-22T19:25:27.8995289Z Testing with sample rate [96000] and block size [1024]
+2026-11-22T19:25:27.9472113Z Completed tests in pluginval / Non-releasing audio processing
+2026-11-22T19:25:27.9472660Z -----------------------------------------------------------------
+2026-11-22T19:25:27.9473045Z Starting tests in: pluginval / Plugin state...
+2026-11-22T19:25:27.9516533Z Completed tests in pluginval / Plugin state
+2026-11-22T19:25:27.9517296Z -----------------------------------------------------------------
+2026-11-22T19:25:27.9518104Z Starting tests in: pluginval / Plugin state restoration...
+2026-11-22T19:25:28.3892603Z Completed tests in pluginval / Plugin state restoration
+2026-11-22T19:25:28.3893463Z -----------------------------------------------------------------
+2026-11-22T19:25:28.3894192Z Starting tests in: pluginval / Discrete parameter state restoration...
+2026-11-22T19:25:28.4872715Z Completed tests in pluginval / Discrete parameter state restoration
+2026-11-22T19:25:28.4873218Z -----------------------------------------------------------------
+2026-11-22T19:25:28.4873581Z Starting tests in: pluginval / Automation...
+2026-11-22T19:25:28.4993359Z Testing with sample rate [44100] and block size [64] and sub-block size [32]
+2026-11-22T19:25:28.5092778Z Testing with sample rate [44100] and block size [128] and sub-block size [32]
+2026-11-22T19:25:28.5212978Z Testing with sample rate [44100] and block size [256] and sub-block size [32]
+2026-11-22T19:25:28.5365792Z Testing with sample rate [44100] and block size [512] and sub-block size [32]
+2026-11-22T19:25:28.5562431Z Testing with sample rate [44100] and block size [1024] and sub-block size [32]
+2026-11-22T19:25:28.5761709Z Testing with sample rate [48000] and block size [64] and sub-block size [32]
+2026-11-22T19:25:28.5846215Z Testing with sample rate [48000] and block size [128] and sub-block size [32]
+2026-11-22T19:25:28.5944206Z Testing with sample rate [48000] and block size [256] and sub-block size [32]
+2026-11-22T19:25:28.6071714Z Testing with sample rate [48000] and block size [512] and sub-block size [32]
+2026-11-22T19:25:28.6225011Z Testing with sample rate [48000] and block size [1024] and sub-block size [32]
+2026-11-22T19:25:28.6461951Z Testing with sample rate [96000] and block size [64] and sub-block size [32]
+2026-11-22T19:25:28.6552706Z Testing with sample rate [96000] and block size [128] and sub-block size [32]
+2026-11-22T19:25:28.6655147Z Testing with sample rate [96000] and block size [256] and sub-block size [32]
+2026-11-22T19:25:28.6772845Z Testing with sample rate [96000] and block size [512] and sub-block size [32]
+2026-11-22T19:25:28.6938348Z Testing with sample rate [96000] and block size [1024] and sub-block size [32]
+2026-11-22T19:25:28.7081897Z Completed tests in pluginval / Automation
+2026-11-22T19:25:28.7082569Z -----------------------------------------------------------------
+2026-11-22T19:25:28.7083110Z Starting tests in: pluginval / Editor Automation...
+2026-11-22T19:25:39.0943712Z Completed tests in pluginval / Editor Automation
+2026-11-22T19:25:39.0944133Z -----------------------------------------------------------------
+2026-11-22T19:25:39.0944546Z Starting tests in: pluginval / Automatable Parameters...
+2026-11-22T19:25:39.1255106Z Completed tests in pluginval / Automatable Parameters
+2026-11-22T19:25:39.1255797Z -----------------------------------------------------------------
+2026-11-22T19:25:39.1256420Z Starting tests in: pluginval / Parameters...
+2026-11-22T19:25:39.1549934Z Completed tests in pluginval / Parameters
+2026-11-22T19:25:39.1550362Z -----------------------------------------------------------------
+2026-11-22T19:25:39.1551097Z Starting tests in: pluginval / Background thread state...
+2026-11-22T19:25:41.2172274Z Completed tests in pluginval / Background thread state
+2026-11-22T19:25:41.2172721Z -----------------------------------------------------------------
+2026-11-22T19:25:41.2173135Z Starting tests in: pluginval / Parameter thread safety...
+2026-11-22T19:25:42.3372877Z Completed tests in pluginval / Parameter thread safety
+2026-11-22T19:25:42.3373582Z -----------------------------------------------------------------
+2026-11-22T19:25:42.3374167Z Starting tests in: pluginval / auval...
+2026-11-22T19:25:42.3374684Z Completed tests in pluginval / auval
+2026-11-22T19:25:42.3375257Z -----------------------------------------------------------------
+2026-11-22T19:25:42.3375872Z Starting tests in: pluginval / vst3 validator...
+2026-11-22T19:25:48.0692229Z vst3 validator exited with code: 0
+2026-11-22T19:25:48.0693216Z Completed tests in pluginval / vst3 validator
+2026-11-22T19:25:48.0694023Z -----------------------------------------------------------------
+2026-11-22T19:25:48.0695557Z Starting tests in: pluginval / Ensuring that the locale does not change during execution...
+2026-11-22T19:25:48.0696542Z INFO: Startup Locale: [C]
+2026-11-22T19:25:48.0904529Z Opening editor...
+2026-11-22T19:25:48.1603349Z INFO: Shutdown Locale: [C]
+2026-11-22T19:25:48.1604162Z Completed tests in pluginval / Ensuring that the locale does not change during execution
+2026-11-22T19:25:48.1605043Z -----------------------------------------------------------------
+2026-11-22T19:25:48.1605660Z Starting tests in: pluginval / Basic bus...
+2026-11-22T19:25:48.1645533Z Completed tests in pluginval / Basic bus
+2026-11-22T19:25:48.1645969Z -----------------------------------------------------------------
+2026-11-22T19:25:48.1646363Z Starting tests in: pluginval / Listing available buses...
+2026-11-22T19:25:48.1668514Z Inputs:
+2026-11-22T19:25:48.1668817Z 	Named layouts: Mono
+2026-11-22T19:25:48.1669048Z 	Discrete layouts: Discrete #1
+2026-11-22T19:25:48.1685089Z Outputs:
+2026-11-22T19:25:48.1685848Z 	Named layouts: Mono, Stereo
+2026-11-22T19:25:48.1686122Z 	Discrete layouts: Discrete #1
+2026-11-22T19:25:48.1686369Z Main bus num input channels: 0
+2026-11-22T19:25:48.1686620Z Main bus num output channels: 2
+2026-11-22T19:25:48.1687016Z Completed tests in pluginval / Listing available buses
+2026-11-22T19:25:48.1687653Z -----------------------------------------------------------------
+2026-11-22T19:25:48.1688312Z Starting tests in: pluginval / Enabling all buses...
+2026-11-22T19:25:48.1688932Z Completed tests in pluginval / Enabling all buses
+2026-11-22T19:25:48.1689525Z -----------------------------------------------------------------
+2026-11-22T19:25:48.1689923Z Starting tests in: pluginval / Disabling non-main busses...
+2026-11-22T19:25:48.1690324Z Completed tests in pluginval / Disabling non-main busses
+2026-11-22T19:25:48.1690698Z -----------------------------------------------------------------
+2026-11-22T19:25:48.1691439Z Starting tests in: pluginval / Restoring default layout...
+2026-11-22T19:25:48.1691790Z Main bus num input channels: 0
+2026-11-22T19:25:48.1692044Z Main bus num output channels: 2
+2026-11-22T19:25:48.1764152Z Completed tests in pluginval / Restoring default layout
+2026-11-22T19:25:48.1764567Z -----------------------------------------------------------------
+2026-11-22T19:25:48.1764954Z Starting tests in: pluginval / Bus layout processing...
+2026-11-22T19:25:48.1767997Z Total candidate layouts to test: 7
+2026-11-22T19:25:48.2154103Z Layouts tested: 7, accepted by setBusesLayout: 5
+2026-11-22T19:25:48.2222328Z Completed tests in pluginval / Bus layout processing
+2026-11-22T19:25:48.2222978Z -----------------------------------------------------------------
+2026-11-22T19:25:48.2223563Z Starting tests in: pluginval / Editor stress...
+2026-11-22T19:25:48.2403201Z Testing opening Editor with released processing
+2026-11-22T19:25:48.2916874Z Testing opening Editor with 0 sample rate and block size
+2026-11-22T19:25:48.3499055Z Completed tests in pluginval / Editor stress
+2026-11-22T19:25:48.3499798Z -----------------------------------------------------------------
+2026-11-22T19:25:48.3500555Z Starting tests in: pluginval / Allocations during process...
+2026-11-22T19:25:48.3671230Z Testing with sample rate [44100] and block size [64]
+2026-11-22T19:25:48.3770118Z Testing with sample rate [44100] and block size [128]
+2026-11-22T19:25:48.3899964Z Testing with sample rate [44100] and block size [256]
+2026-11-22T19:25:48.4092539Z Testing with sample rate [44100] and block size [512]
+2026-11-22T19:25:48.4356267Z Testing with sample rate [44100] and block size [1024]
+2026-11-22T19:25:48.4773105Z Testing with sample rate [48000] and block size [64]
+2026-11-22T19:25:48.4889578Z Testing with sample rate [48000] and block size [128]
+2026-11-22T19:25:48.5014025Z Testing with sample rate [48000] and block size [256]
+2026-11-22T19:25:48.5174668Z Testing with sample rate [48000] and block size [512]
+2026-11-22T19:25:48.5435081Z Testing with sample rate [48000] and block size [1024]
+2026-11-22T19:25:48.5866352Z Testing with sample rate [96000] and block size [64]
+2026-11-22T19:25:48.5976170Z Testing with sample rate [96000] and block size [128]
+2026-11-22T19:25:48.6105406Z Testing with sample rate [96000] and block size [256]
+2026-11-22T19:25:48.6277637Z Testing with sample rate [96000] and block size [512]
+2026-11-22T19:25:48.6564156Z Testing with sample rate [96000] and block size [1024]
+2026-11-22T19:25:48.7014264Z Completed tests in pluginval / Allocations during process
+2026-11-22T19:25:48.7015266Z -----------------------------------------------------------------
+2026-11-22T19:25:48.7016508Z Starting tests in: pluginval / Process called with a larger than prepared block size...
+2026-11-22T19:25:48.7017646Z INFO: Skipping test for plugin format
+2026-11-22T19:25:48.7018745Z Completed tests in pluginval / Process called with a larger than prepared block size
+2026-11-22T19:25:48.7019890Z -----------------------------------------------------------------
+2026-11-22T19:25:48.7020693Z Starting tests in: pluginval / Fuzz parameters...
+2026-11-22T19:25:48.9680056Z Completed tests in pluginval / Fuzz parameters
+2026-11-22T19:25:49.1528321Z SUCCESS
+2026-11-22T19:25:49.1958813Z Verified clean comparison report: 31 tests
+2026-11-22T19:25:49.2047844Z ##[group]Run {
+2026-11-22T19:25:49.2048116Z [36;1m{[0m
+2026-11-22T19:25:49.2048511Z [36;1m  echo '## Official pluginval prerelease comparison — not a stable-gate replacement'[0m
+2026-11-22T19:25:49.2049059Z [36;1m  echo "- Source build: $SOURCE_RUN_ID; source SHA: $SOURCE_SHA"[0m
+2026-11-22T19:25:49.2049595Z [36;1m  echo "- Validator: $VALIDATOR_TAG; lane: $COMPARISON_LANE; fixed seed: $COMPARISON_SEED"[0m
+2026-11-22T19:25:49.2050088Z [36;1m  echo "- Validation step: $VALIDATION_OUTCOME"[0m
+2026-11-22T19:25:49.2050447Z [36;1m  if [ -f reports/process-exit-code.txt ]; then[0m
+2026-11-22T19:25:49.2051240Z [36;1m    echo "- Process/timeout exit: $(cat reports/process-exit-code.txt)"[0m
+2026-11-22T19:25:49.2051769Z [36;1m  else[0m
+2026-11-22T19:25:49.2052125Z [36;1m    echo '- No completed process exit recorded; do not count this lane as passed.'[0m
+2026-11-22T19:25:49.2052542Z [36;1m  fi[0m
+2026-11-22T19:25:49.2053022Z [36;1m  echo '- Different validator/JUCE/test inventory. No retries, repair, crash reproduction or causality claim.'[0m
+2026-11-22T19:25:49.2053693Z [36;1m  echo '- The stable 1.0.4 build gate and every historical failure remain unchanged.'[0m
+2026-11-22T19:25:49.2054118Z [36;1m} >> "$GITHUB_STEP_SUMMARY"[0m
+2026-11-22T19:25:49.2073592Z shell: /usr/bin/bash -e {0}
+2026-11-22T19:25:49.2073831Z env:
+2026-11-22T19:25:49.2074024Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-22T19:25:49.2074351Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-22T19:25:49.2074702Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-22T19:25:49.2075110Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-22T19:25:49.2075535Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-22T19:25:49.2075851Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-22T19:25:49.2076299Z   COMPARISON_WORKFLOW_SHA: 96c466f0e7c25055ac8e745d2c796af643860fc6
+2026-11-22T19:25:49.2076656Z   COMPARISON_LANE: gui-inclusive
+2026-11-22T19:25:49.2076912Z   COMPARISON_SEED: 0x63421ca
+2026-11-22T19:25:49.2077141Z   SKIP_GUI: false
+2026-11-22T19:25:49.2077379Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-22T19:25:49.2077675Z   VALIDATION_OUTCOME: success
+2026-11-22T19:25:49.2077954Z   SOURCE_SHA: 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c
+2026-11-22T19:25:49.2078262Z   SOURCE_RUN_ID: 45044040694
+2026-11-22T19:25:49.2078486Z ##[endgroup]
+2026-11-22T19:25:49.2218500Z ##[group]Run actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+2026-11-22T19:25:49.2218914Z with:
+2026-11-22T19:25:49.2219214Z   name: upstream-beta3-gui-inclusive-source-45044040694-attempt-1
+2026-11-22T19:25:49.2219577Z   path: reports/
+2026-11-22T19:25:49.2219786Z   if-no-files-found: warn
+2026-11-22T19:25:49.2220009Z   retention-days: 30
+2026-11-22T19:25:49.2220233Z   compression-level: 6
+2026-11-22T19:25:49.2220441Z   overwrite: false
+2026-11-22T19:25:49.2220650Z   include-hidden-files: false
+2026-11-22T19:25:49.2221173Z env:
+2026-11-22T19:25:49.2221362Z   VALIDATOR_TAG: v2.0.0-beta3
+2026-11-22T19:25:49.2221660Z   VALIDATOR_COMMIT: 37d6a37bc752606c524f7f3febffc73e0945a740
+2026-11-22T19:25:49.2222010Z   VALIDATOR_ASSET: pluginval_Linux.zip
+2026-11-22T19:25:49.2222421Z   VALIDATOR_SHA256: 2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f
+2026-11-22T19:25:49.2222871Z   VALIDATOR_JUCE_TAG: 9.0.3
+2026-11-22T19:25:49.2223204Z   VALIDATOR_JUCE_COMMIT: be29c81492b6151c8ea8d14c840e1311963b3a83
+2026-11-22T19:25:49.2223623Z   COMPARISON_WORKFLOW_SHA: 96c466f0e7c25055ac8e745d2c796af643860fc6
+2026-11-22T19:25:49.2223974Z   COMPARISON_LANE: gui-inclusive
+2026-11-22T19:25:49.2224222Z   COMPARISON_SEED: 0x63421ca
+2026-11-22T19:25:49.2224449Z   SKIP_GUI: false
+2026-11-22T19:25:49.2224683Z   JUCE_FONT_PATH: /usr/share/fonts/truetype/dejavu
+2026-11-22T19:25:49.2225171Z ##[endgroup]
+2026-11-22T19:25:49.3921448Z (node:2746) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-22T19:25:49.3922295Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-22T19:25:49.4028134Z With the provided path, there will be 19 files uploaded
+2026-11-22T19:25:49.4028914Z Artifact name is valid!
+2026-11-22T19:25:49.4029168Z Root directory input is valid!
+2026-11-22T19:25:49.6529868Z Beginning upload of artifact content to blob storage
+2026-11-22T19:25:49.6963029Z (node:2746) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-22T19:25:49.8224991Z Uploaded bytes 21869
+2026-11-22T19:25:49.8580263Z Finished uploading artifact content to blob storage!
+2026-11-22T19:25:49.8581621Z SHA256 digest of uploaded artifact zip is 38da6d2229847ebcdf19d729a7df0b0c7b6504a162a66518fa63c887de76a631
+2026-11-22T19:25:49.8583605Z Finalizing artifact upload
+2026-11-22T19:25:50.1932770Z Artifact upstream-beta3-gui-inclusive-source-45044040694-attempt-1.zip successfully finalized. Artifact ID 14769073337
+2026-11-22T19:25:50.1934439Z Artifact upstream-beta3-gui-inclusive-source-45044040694-attempt-1 has been successfully uploaded! Final size is 21869 bytes. Artifact ID is 14769073337
+2026-11-22T19:25:50.1943557Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45060638632/artifacts/14769073337
+2026-11-22T19:25:50.2171616Z Cleaning up orphan processes
+2026-11-22T19:25:50.2553204Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0, actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b, actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,469 @@
+{
+  "assignment": 49,
+  "verified_at_utc": "2026-11-22T17:10:20.084680+00:00",
+  "windows_qualification": "PASS: first-attempt native build/test/package and both headless Windows VST3 pluginval lanes; actual downloadable bundle bytes verified.",
+  "overall_release_qualification": "PENDING: the observed build run is still in_progress. Linux, Intel macOS and remaining release gates are outside this Windows completion.",
+  "binary_source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "build_run": 45044040694,
+  "build_run_attempt": 1,
+  "run_api_status": "in_progress",
+  "run_api_conclusion": null,
+  "windows_jobs": [
+    {
+      "id": 137274597948,
+      "name": "Windows / VST3 + Standalone",
+      "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "run_id": 45044040694,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T16:28:44Z",
+      "completed_at": "2026-11-22T17:01:13Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-22T16:28:45Z",
+          "completed_at": "2026-11-22T16:28:46Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-22T16:28:46Z",
+          "completed_at": "2026-11-22T16:28:56Z"
+        },
+        {
+          "name": "Configure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-22T16:28:56Z",
+          "completed_at": "2026-11-22T16:31:17Z"
+        },
+        {
+          "name": "Report CMake failure",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-11-22T16:31:17Z",
+          "completed_at": "2026-11-22T16:31:17Z"
+        },
+        {
+          "name": "Verify configured JUCE source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-22T16:31:17Z",
+          "completed_at": "2026-11-22T16:31:17Z"
+        },
+        {
+          "name": "Build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-22T16:31:17Z",
+          "completed_at": "2026-11-22T16:42:41Z"
+        },
+        {
+          "name": "Test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-22T16:42:41Z",
+          "completed_at": "2026-11-22T17:01:03Z"
+        },
+        {
+          "name": "Upload Windows VST3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-22T17:01:03Z",
+          "completed_at": "2026-11-22T17:01:04Z"
+        },
+        {
+          "name": "Package Windows VST3 and Standalone",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-22T17:01:04Z",
+          "completed_at": "2026-11-22T17:01:07Z"
+        },
+        {
+          "name": "Upload Windows install bundle",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-22T17:01:07Z",
+          "completed_at": "2026-11-22T17:01:08Z"
+        },
+        {
+          "name": "Upload test and JUCE source evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-22T17:01:08Z",
+          "completed_at": "2026-11-22T17:01:09Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-11-22T17:01:09Z",
+          "completed_at": "2026-11-22T17:01:11Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-11-22T17:01:11Z",
+          "completed_at": "2026-11-22T17:01:11Z"
+        }
+      ]
+    },
+    {
+      "id": 137283806829,
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "run_id": 45044040694,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T17:01:14Z",
+      "completed_at": "2026-11-22T17:01:44Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-22T17:01:15Z",
+          "completed_at": "2026-11-22T17:01:16Z"
+        },
+        {
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-22T17:01:16Z",
+          "completed_at": "2026-11-22T17:01:28Z"
+        },
+        {
+          "name": "Download Windows VST3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-22T17:01:28Z",
+          "completed_at": "2026-11-22T17:01:29Z"
+        },
+        {
+          "name": "Fetch pluginval 1.0.4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-22T17:01:29Z",
+          "completed_at": "2026-11-22T17:01:32Z"
+        },
+        {
+          "name": "Validate VST3 headless",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-22T17:01:32Z",
+          "completed_at": "2026-11-22T17:01:37Z"
+        },
+        {
+          "name": "Validate state regression seed 0x5037a0c",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-22T17:01:37Z",
+          "completed_at": "2026-11-22T17:01:41Z"
+        },
+        {
+          "name": "Report pluginval failure",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-11-22T17:01:41Z",
+          "completed_at": "2026-11-22T17:01:41Z"
+        },
+        {
+          "name": "Upload pluginval reports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-22T17:01:41Z",
+          "completed_at": "2026-11-22T17:01:42Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-11-22T17:01:42Z",
+          "completed_at": "2026-11-22T17:01:44Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-22T17:01:44Z",
+          "completed_at": "2026-11-22T17:01:44Z"
+        }
+      ]
+    }
+  ],
+  "native_ctest": {
+    "total": 221,
+    "passed": 219,
+    "failed": 0,
+    "skipped": 2,
+    "disabled": 0,
+    "junit_notrun": 2,
+    "additional_not_run": 0,
+    "overlap_note": "Both JUnit notrun cases are the same two skipped cases, not two additional tests.",
+    "real_seconds": 1101.04,
+    "skipped_cases": [
+      {
+        "name": "cs80_filter_batch_cap_tests",
+        "ctest_status": "skipped",
+        "junit_status": "notrun",
+        "reason": "SKIP_RETURN_CODE=77",
+        "output": "SKIP: AVX2 unavailable or disabled; no SIMD qualification\n"
+      },
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "ctest_status": "skipped",
+        "junit_status": "notrun",
+        "reason": "SKIP_RETURN_CODE=77",
+        "output": ""
+      }
+    ],
+    "junit_sha256": "f9e932d910fbc212c586d7fcee39300abb8037507b9b6b10316fdd8d5eae7356",
+    "junit_summary": {
+      "name": "(empty)",
+      "tests": "221",
+      "failures": "0",
+      "disabled": "0",
+      "skipped": "2",
+      "hostname": "",
+      "time": "1100",
+      "timestamp": "2026-11-22T16:42:41"
+    }
+  },
+  "pluginval": {
+    "version": "1.0.4",
+    "official_validator_download": {
+      "repository": "Tracktion/pluginval",
+      "version": "1.0.4",
+      "release_id": 188928656,
+      "asset_id": 210999198,
+      "asset_name": "pluginval_Windows.zip",
+      "expected_size": 2408590,
+      "expected_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab",
+      "attempts": [
+        {
+          "number": 1,
+          "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999198",
+          "reason": "downloaded",
+          "bytes": 2408590,
+          "final_host": "release-assets.githubusercontent.com",
+          "transfer_exit": 0
+        }
+      ],
+      "verified": true,
+      "actual_size": 2408590,
+      "actual_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab"
+    },
+    "lanes": [
+      {
+        "lane": "randomized",
+        "step": "Validate VST3 headless",
+        "random_seed": "0x402130",
+        "strictness": 10,
+        "headless": true,
+        "skip_gui_tests": true,
+        "validate_in_process": true,
+        "log_sha256": "929706d23fc580e2f625a388a97724ed2a1cb5f2a79cd2a630dd3d668428db91",
+        "final_output": "SUCCESS",
+        "actual_job_success_line": "2026-11-22T17:01:36.9807869Z SUCCESS",
+        "step_conclusion": "success",
+        "process_exit_evidence": "The native LASTEXITCODE nonzero guard is present in the executed step; the step concluded success and the actual validator output ended SUCCESS. A separate numeric exit line was not printed."
+      },
+      {
+        "lane": "fixed_seed",
+        "step": "Validate state regression seed 0x5037a0c",
+        "random_seed": "0x5037a0c",
+        "strictness": 10,
+        "headless": true,
+        "skip_gui_tests": true,
+        "validate_in_process": true,
+        "log_sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45",
+        "final_output": "SUCCESS",
+        "actual_job_success_line": "2026-11-22T17:01:41.5698311Z SUCCESS",
+        "step_conclusion": "success",
+        "process_exit_evidence": "The native LASTEXITCODE nonzero guard is present in the executed step; the step concluded success and the actual validator output ended SUCCESS. A separate numeric exit line was not printed."
+      }
+    ],
+    "input_artifact": {
+      "id": 14763658388,
+      "node_id": "MDg6QXJ0aWZhY3QxNDc2MzY1ODM4OA==",
+      "name": "cs80-windows-vst3",
+      "size_in_bytes": 3141145,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763658388",
+      "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763658388/zip",
+      "expired": false,
+      "digest": "sha256:c1e2fe453091000219038cad624941137a77e4116232917a9ba7a7d306d4b975",
+      "created_at": "2026-11-22T17:01:04Z",
+      "updated_at": "2026-11-22T17:01:04Z",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "workflow_run": {
+        "id": 45044040694,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c"
+      }
+    },
+    "runtime_files_identical_to_install_bundle": [
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "bytes": 1143,
+        "sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6"
+      },
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+        "bytes": 7258624,
+        "sha256": "1794245c4d57129e4b31464a635d0814239a8d584b128089574e5a01a674996c"
+      }
+    ]
+  },
+  "bundle": {
+    "artifact_id": 14763872941,
+    "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+    "size": 6261285,
+    "sha256": "aa472ff6516371482b7e73f76dc2fbc58d15b52aa8eb86c91f62e091dac06ec8",
+    "expires_at": "2027-02-20T16:28:38Z",
+    "inner_sha256": "84e16905a24dfff25bfdc71b816ec5f81c49bbd018d7b15ecfe7b2b22aeb88b5",
+    "manifest_sha256": "1d0ee86dd358ab3f7e1af4bcdef9f9c378f53eef5a42c416ef3df0d9d2b3b3d2",
+    "inventory_entries": 20,
+    "manifest_identity": {
+      "commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "preset_library_revision": "2026.11.1",
+      "workflow_run_id": "45044040694",
+      "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "juce_version": "8.0.11",
+      "platform": "windows",
+      "architecture": "x86_64",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ]
+    },
+    "binary_headers": [
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+        "bytes": 7258624,
+        "format": "PE32+",
+        "machine": "0x8664",
+        "characteristics": "0x2022",
+        "role": "DLL"
+      },
+      {
+        "path": "Standalone/CS-80 Reference.exe",
+        "bytes": 7460352,
+        "format": "PE32+",
+        "machine": "0x8664",
+        "characteristics": "0x22",
+        "role": "executable"
+      }
+    ],
+    "guides": [
+      {
+        "name": "INSTALL_AND_QUICKSTART.md",
+        "sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+        "repository_links_pinned": 4,
+        "local_links": [
+          "PRESET_GUIDE.md"
+        ]
+      },
+      {
+        "name": "PRESET_GUIDE.md",
+        "sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+        "repository_links_pinned": 38,
+        "local_links": [
+          "INSTALL_AND_QUICKSTART.md#choose-the-mode-before-playing"
+        ]
+      },
+      {
+        "name": "DISTRIBUTION_STATUS.md",
+        "sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+        "repository_links_pinned": 1,
+        "local_links": []
+      }
+    ],
+    "additional_guide_inspection": [
+      {
+        "name": "INSTALL_AND_QUICKSTART.md",
+        "other_external_links": [
+          "https://steinbergmedia.github.io/vst3_dev_portal/pages/Technical%2BDocumentation/Locations%2BFormat/Plugin%2BLocations.html",
+          "https://support.apple.com/en-ie/102239"
+        ],
+        "latency_lines": [
+          "Default Circuit Standard mode reports **67 samples of plug-in latency**"
+        ]
+      },
+      {
+        "name": "PRESET_GUIDE.md",
+        "other_external_links": [],
+        "latency_lines": []
+      },
+      {
+        "name": "DISTRIBUTION_STATUS.md",
+        "other_external_links": [],
+        "latency_lines": []
+      }
+    ]
+  },
+  "job_log_sha256": {
+    "native_normalized_lf": "f64085943fbb9c966ab835f799498a557e59c7088b7d0e37b8118c8a4291b308",
+    "validator_normalized_lf": "bc1213d0860e7d2a0151e1c36306c04d600b6940797f1cba74fa5632ac68e8bb"
+  },
+  "supporting_artifacts": [
+    {
+      "id": 14763658388,
+      "name": "cs80-windows-vst3",
+      "bytes": 3141145,
+      "sha256": "c1e2fe453091000219038cad624941137a77e4116232917a9ba7a7d306d4b975",
+      "path": "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-coordination/artifact-cache/cs80-windows-vst3-14763658388.zip"
+    },
+    {
+      "id": 14764092290,
+      "name": "cs80-windows-test-evidence",
+      "bytes": 58143,
+      "sha256": "fbf0f75415f7df8a77aef3bf76e7d5792a11b1dc242eec6e8bf1dd1691cb666e",
+      "path": "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-coordination/artifact-cache/cs80-windows-test-evidence-14764092290.zip"
+    },
+    {
+      "id": 14764440289,
+      "name": "cs80-pluginval-windows",
+      "bytes": 5081,
+      "sha256": "89ffd697c11e4cb8179cf1c50a76c89c7e7738b8bd9a67e5189eab3a9def6f9d",
+      "path": "/workspace/scratch/d02ade0cfee0/yamaha-cs80/build-coordination/artifact-cache/cs80-pluginval-windows-14764440289.zip"
+    }
+  ],
+  "limits": [
+    "No Windows product binary executed in this workspace.",
+    "Both Windows pluginval lanes skip GUI tests; this does not qualify Windows GUI or every DAW.",
+    "The two CTest skips are excluded from the passed count; SIMD batch-cap qualification was explicitly skipped.",
+    "No claims of signing, notarization, hardware sonic identity or subjective listening quality.",
+    "No retries, source edits, release creation or publication performed by this assignment."
+  ]
+}

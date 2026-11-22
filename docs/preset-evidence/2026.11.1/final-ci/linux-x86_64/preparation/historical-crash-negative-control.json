@@ -1,0 +1,13 @@
+{
+  "status": "rejected_as_required",
+  "reason": "Validator final child did not exit zero; SUCCESS text cannot override a crash",
+  "last_termination": {
+    "pid": 2679,
+    "raw_returncode": -11,
+    "kind": "signal",
+    "details": "signal_number=11; signal_name=SIGSEGV"
+  },
+  "source_log": "build-coordination/linux-pluginval-baseline.log",
+  "source_log_sha256": "662a5b990068a1b5c14e8332bd7cb5a9c711818ce26a0ce52050493dbef72b32",
+  "scope": "Parser negative-control only; old source/run, not current Linux validation"
+}

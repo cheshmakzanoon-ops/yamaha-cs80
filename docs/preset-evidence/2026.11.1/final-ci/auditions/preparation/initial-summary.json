@@ -1,0 +1,57 @@
+{
+  "assignment": 55,
+  "status": "PREPARED_FINAL_CI_ARTIFACT_PENDING",
+  "prepared_utc": "2026-11-22T16:53:49.737979+00:00",
+  "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "linux_job_id": 137274597635,
+  "observed_phase": "Test",
+  "observed_artifact_count": 0,
+  "final_artifact_downloaded": false,
+  "final_artifact_verified": false,
+  "prepared_verifier": "build-w12-ci-auditions/verify-ci-auditions.py",
+  "qualification": "Preparation only. Exact final CI download, checksums, selected factory values and actual WAV samples remain to be verified. No native or release qualification is certified.",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "76423eb01dc7ed38dbb903ae802beaf0347369abb94c4c3f682eeb78b1a16cf8",
+      "bytes": 3755
+    },
+    {
+      "path": "last-observed-artifacts.json",
+      "sha256": "f7417e1fb877d3f5934f143cc38ad9e2905476e8f5ac6776507d09441efcd6f6",
+      "bytes": 42
+    },
+    {
+      "path": "last-observed-jobs.json",
+      "sha256": "5d160294edec190895804ae44aec84a5fd640b4455c65ac13003d43bd14b23f8",
+      "bytes": 19664
+    },
+    {
+      "path": "last-observed-linux-job.json",
+      "sha256": "9cadaa0b80345215804775ba0ccf423da5fdfdedd61965f434267240785bbe5c",
+      "bytes": 4165
+    },
+    {
+      "path": "last-observed-run.json",
+      "sha256": "c9ee4951a65822efc5979aeb7679580013eae34a6fcdd0e17be64144d3a6e5a0",
+      "bytes": 15243
+    },
+    {
+      "path": "pending-refusal.log",
+      "sha256": "22ea8f0a1350cf14abf4fa03ea918c47097f2c6e901c0e923c6c2e029096a0e4",
+      "bytes": 635
+    },
+    {
+      "path": "preparation-checks.json",
+      "sha256": "c23f8162808f99baa99a17e22f2b41a5a0a0ef2a7c7834a9fe415fc0537e24c3",
+      "bytes": 1019
+    },
+    {
+      "path": "verify-ci-auditions.py",
+      "sha256": "d200581ac760ac79b12f01ba948389356dd0dca5f594990978769d1724141909",
+      "bytes": 14652
+    }
+  ]
+}

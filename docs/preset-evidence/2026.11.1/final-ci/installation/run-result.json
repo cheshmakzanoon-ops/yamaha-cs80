@@ -1,0 +1,17 @@
+{
+  "assignment": 57,
+  "argv": [
+    "python3",
+    "build-w12-installation-review/inspect-installation-bundles.py",
+    "--artifacts-json",
+    "build-w12-installation-review/artifacts-api.json",
+    "--run-json",
+    "build-w12-installation-review/run-api.json"
+  ],
+  "exit_code": 0,
+  "recorded_at_utc": "2026-11-22T19:26:37.477401+00:00",
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "script_sha256": "589f4687c125e8ebc3b86046170a493edd6b12d03fd47f7d179a264c68de68b7",
+  "artifact_proof_sha256": "226d5533c60fead25e3a44734dc7c14cb9e65687a3c28de6e7d128acd13cc737",
+  "statement": "Recorded actual completed inspector invocation. Exit0 establishes its archive-content checks only; the separate Linux GUI validation failure remains recorded."
+}

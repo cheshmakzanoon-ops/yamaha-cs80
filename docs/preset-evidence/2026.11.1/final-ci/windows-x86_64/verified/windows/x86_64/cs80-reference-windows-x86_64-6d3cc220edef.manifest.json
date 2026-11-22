@@ -1,0 +1,153 @@
+{
+  "architecture": "x86_64",
+  "commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "files": [
+    {
+      "mode": "0o777",
+      "path": "Standalone/CS-80 Reference.exe",
+      "sha256": "d504ad607e3d4fc664976891f72d37f743ce4430fc5e1cc91f1b2838ba2fad06",
+      "size": 7460352,
+      "type": "file"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3",
+      "type": "directory"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents",
+      "type": "directory"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents/Resources",
+      "type": "directory"
+    },
+    {
+      "mode": "0o666",
+      "path": "VST3/CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+      "sha256": "04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6",
+      "size": 1143,
+      "type": "file"
+    },
+    {
+      "mode": "0o777",
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win",
+      "type": "directory"
+    },
+    {
+      "mode": "0o666",
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "sha256": "1794245c4d57129e4b31464a635d0814239a8d584b128089574e5a01a674996c",
+      "size": 7258624,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "DISTRIBUTION_STATUS.md",
+      "sha256": "9a99b3b7c2d83a968b9fdde2eb88d5211d5169c6ecdeaf51710a047460d9d448",
+      "size": 3707,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "INSTALL_AND_QUICKSTART.md",
+      "sha256": "6f0e1e52c064caee9350935474669fe59ab3105d2a44330a9efaa61f0ba0d37b",
+      "size": 15885,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "LICENSE",
+      "sha256": "6f1e622c82a380075843bb084a7ec3b1f1d12a4a02526d75e78b0924a860aa75",
+      "size": 35184,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "PRESET_GUIDE.md",
+      "sha256": "7b9755466e7936a4a510f1b12d167efce30bb595b0b4664c552b323abb19f3e5",
+      "size": 17675,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "SOURCE.txt",
+      "sha256": "149fdea61908c033045a4604990d6eb93be1d2e92c2078c561f7f6d5bea950f4",
+      "size": 404,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "evidence/juce-provenance.txt",
+      "sha256": "fad6d269a2edba73be4d84907b6ae267a0a564ea009d74338865e7107824ea00",
+      "size": 585,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-OFL.txt",
+      "sha256": "b4cc842153e834885f3f9385ce26de4e1213d3ffbe473a6c0519e5522a8e3608",
+      "size": 4470,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/BarlowCondensed-SOURCE.txt",
+      "sha256": "3ab63fda5832592118033ccd14e61aae95b20166145f618bb3e08e943609496e",
+      "size": 1010,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/JUCE-LICENSE.md",
+      "sha256": "ca3a08368c9ed3195253f2df63ef08db1b0ea6be99388bb130c921b7c3e54616",
+      "size": 5038,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/MTS-ESP-LICENSE.txt",
+      "sha256": "e57ad8fe52e75038366594539d7656107f493e5fdd68b48063e368b3dfb06c47",
+      "size": 666,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-ADDITIONAL-NOTICES.txt",
+      "sha256": "773ec3c805a88806812048182c3b0fa90b4bc18012ea4dc131e01ba3729bd337",
+      "size": 1444,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-Copyright.txt",
+      "sha256": "f06bad318a967a790be27cc90235573a2548a2125f6c54b6129d1c802ed201a8",
+      "size": 1338,
+      "type": "file"
+    },
+    {
+      "mode": "0o644",
+      "path": "licenses/libxml2-SOURCE.txt",
+      "sha256": "0afbd154bd05bb26fd9d6fc2db195da5b7347b5cdde10dd39d320a6c3cfbbe2c",
+      "size": 682,
+      "type": "file"
+    }
+  ],
+  "formats": [
+    "VST3",
+    "Standalone"
+  ],
+  "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "juce_version": "8.0.11",
+  "package_kind": "development CI artifact; not a release-qualification certificate",
+  "platform": "windows",
+  "preset_library_revision": "2026.11.1",
+  "product": "CS-80 Reference",
+  "runner_os": "Windows-2022Server-10.0.20348-SP0",
+  "schema_version": 1,
+  "signature_status": "not inspected; no release signing/notarization performed by this helper",
+  "validation_note": "Consult every required job for this exact commit; package availability is not a pass.",
+  "workflow_run_id": "45044040694"
+}

@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "assignment": 58,
+  "status": "SOURCE_AND_EXISTING_EVIDENCE_REVIEW_COMPLETE_FINAL_DOCUMENT_INTEGRATION_PENDING",
+  "recorded_at_utc": "2026-11-22T19:39:42.713646+00:00",
+  "binary_source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "build_run_id": 45044040694,
+  "build_run_attempt": 1,
+  "build_conclusion": "failure",
+  "observed_committed_head": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "attempted_publisher_head": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "final_documentation_commit": null,
+  "final_documentation_commit_status": "Not yet known at this working-tree snapshot; root owns integration.",
+  "committed_source_difference": {
+    "paths": 232,
+    "all_allowlisted": true,
+    "strict_less_than300_guard_satisfied_at_attempted_publisher_head": true
+  },
+  "working_tree_source_difference": {
+    "paths": 485,
+    "all_documentation_or_named_publisher_paths": true,
+    "uncommitted_paths_relative_to_head": [
+      "README.md",
+      "docs/CI_DISTRIBUTION_STATUS.md",
+      "docs/PRESET_REFINEMENT_2026_11_1.md",
+      "docs/preset-evidence/2026.11.1/README.md",
+      "docs/preset-evidence/2026.11.1/provenance.json"
+    ],
+    "qualification": "Includes pending documentation/evidence additions. This is not the commit used by the skipped publisher and is not a successful release validation."
+  },
+  "preset_scope": {
+    "program_count": 301,
+    "core_parameter_count": 190,
+    "changed_vector_count": 12,
+    "unchanged_vector_count": 289,
+    "unchanged_complete_record_count": 288,
+    "changed_value_count": 42,
+    "master_level_changes": 4,
+    "nonvolume_changes": 38,
+    "init_complete_record_unchanged": true,
+    "names_categories_tags_order_host_indices_unchanged": true
+  },
+  "legacy": {
+    "records": 222,
+    "byte_identical": true,
+    "encoded_record_sha256": "c485b4776e7356ce7afb4d7d5031afe2df1c9feef44324f48ae6c5a92e95c28a",
+    "evidence": "docs/preset-evidence/2026.11.1/final-identity/summary.json",
+    "qualification": "Existing compiled-contract evidence, not a new58 native execution. Digest is specific to that fixture's record encoding."
+  },
+  "source_files_changed_from_baseline": [
+    "src/core/CuratedLibraryLevels.inc",
+    "src/core/FactoryPresets.h",
+    "src/core/curated/Bass.inc",
+    "src/core/curated/Brass.inc",
+    "src/core/curated/Fx.inc",
+    "src/core/curated/Pads.inc",
+    "src/core/curated/Plucked.inc",
+    "src/core/curated/Polysynth.inc",
+    "src/core/curated/Winds.inc"
+  ],
+  "baseline_already_contains_earlier_300_program_revision": true,
+  "runtime_algorithm_or_parameter_layout_changed": false,
+  "be460_to_6d3_src_tests_cmake_build_workflow_identical": true,
+  "source_equivalence_is_not_independent_binary_hash_equivalence": true,
+  "archive": {
+    "manifest_path": "docs/preset-evidence/2026.11.1/provenance.json",
+    "manifest_sha256": "63013c44959bd047ddc539998d668b578fac0ee881890262fb8739995d980142",
+    "working_payload_count": 516,
+    "all_payload_hashes_sizes_match": true,
+    "committed_96c466f_payload_count": 263,
+    "previous263_unchanged_entries_and_payloads": 262,
+    "previous263_amended_entries_and_payloads": [
+      "README.md"
+    ],
+    "extensions": {
+      "263_to420": 157,
+      "420_to515": 95,
+      "515_to516": 1
+    },
+    "all62_selected_map_payloads_verbatim": true,
+    "mutable_origins_preserved_from_snapshots": [
+      {
+        "origin": "build-w12-linux/summary.json",
+        "copied_from_preserved_snapshot": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-linux/summary.json",
+        "destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/preparation/summary.json",
+        "preserved_sha256": "a918f4542feb79542bfd2e7edf3c5e5b70a289129e50df0d8ccb3de839b60b58"
+      },
+      {
+        "origin": "build-w12-installation-review/summary.json",
+        "copied_from_preserved_snapshot": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-installation-review/summary.json",
+        "destination": "docs/preset-evidence/2026.11.1/final-ci/installation/preparation/summary.json",
+        "preserved_sha256": "b2ff37f92298506c223bdd75d7ff4b01cb232262f79a59313da3cdfffe57863c"
+      }
+    ],
+    "original_at_binary_source": 81,
+    "original_entries_and_payloads_still_unchanged": 80,
+    "original_amended_index_only": "README.md",
+    "historical239_snapshot_preserved_all81": true,
+    "snapshot_scope": "Later index/manifest amendments must receive their own timestamped accounting; do not relabel this 516-entry snapshot."
+  },
+  "retained_raw_formatting": {
+    "docs/preset-evidence/2026.11.1/external-vst3/changed-values.csv": 85,
+    "docs/preset-evidence/2026.11.1/external-vst3/saved-state-physical.csv": 2281,
+    "docs/preset-evidence/2026.11.1/native-recall/xvfb-true.log": 21,
+    "docs/preset-evidence/2026.11.1/packaging/install-guide/changes.diff": 9,
+    "docs/preset-evidence/2026.11.1/packaging/pinned-links/changes.diff": 4,
+    "docs/preset-evidence/2026.11.1/packaging/revision-parser/changes.diff": 5
+  },
+  "historical_raw_whitespace_diagnostics": 2405,
+  "new_native_raw_bytes": "Preserved by original/stored hashes; no global whitespace-clean claim.",
+  "pruning": [
+    {
+      "path": "build-coordination/pruned-diagnostic-wavs.json",
+      "bytes": 87026,
+      "sha256": "3ed3a0ccbe9c963f7a5988517495a4f476031306c5c47e958e6863cc63c12b04",
+      "records": 803,
+      "reported_total_bytes": 479662574,
+      "reason": "Recovered workspace capacity by removing only regeneratable diagnostic WAV intermediates. Reproduction scripts, measurements, original hashes and all committed evidence retained. Final 24-WAV audition files retained."
+    },
+    {
+      "path": "build-coordination/pruned-performance-wavs.json",
+      "bytes": 11299,
+      "sha256": "32a3bebb76ac0184bd4803222dd1ef0ee0080714b0a6a1a0ec980dd264af63df",
+      "records": 54,
+      "reported_total_bytes": null,
+      "reason": "Reproducible local diagnostic WAV intermediates removed after their metrics, source, methods and hashes were archived. Preserve space for actual final platform and audition downloads. Final24 local audition WAVs and local executables are retained."
+    },
+    {
+      "path": "build-coordination/pruned-link-intermediates.json",
+      "bytes": 927,
+      "sha256": "c5c56bd1c90681e016461716ab425e2ee4fee37de5b9808c695ed6f606769d49",
+      "records": 2,
+      "reported_total_bytes": 49768568,
+      "reason": "Generated link intermediates pruned with exact hashes retained."
+    }
+  ],
+  "retained_local_audition_wavs": 24,
+  "publisher_files_unchanged_from_attempted_publication_head": [
+    {
+      "path": ".github/workflows/publish-preset-refinement.yml",
+      "bytes": 1502,
+      "sha256": "617aac1ad5ca64797057b1aca5c311b396e0d31b92157873bed630c278308213"
+    },
+    {
+      "path": "scripts/publish-preset-refinement.py",
+      "bytes": 30107,
+      "sha256": "72ad916f9843a9019d17833c6722c64493e8875a3e7818e58dee5ed0c8d7a343"
+    },
+    {
+      "path": "scripts/test-publish-preset-refinement.py",
+      "bytes": 23953,
+      "sha256": "f1ea5ad207d9835fe384333acc057d7fad206f694cd13d8e9e9a110e065e872d"
+    }
+  ],
+  "strict_release_verifier_unchanged": {
+    "path": "build-w12-public-release/verify-public-release.py",
+    "bytes": 22254,
+    "sha256": "d59337b09ab4739036c22b85458f65cdf9343f4c9298c836b07286823140179a"
+  },
+  "publisher_outcome": {
+    "id": 45060638607,
+    "name": "Publish preset refinement 2026.11.1",
+    "path": ".github/workflows/publish-preset-refinement.yml",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45060638607",
+    "head_sha": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+    "event": "workflow_run",
+    "status": "completed",
+    "conclusion": "skipped",
+    "created_at": "2026-11-22T19:25:08Z",
+    "updated_at": "2026-11-22T19:25:09Z"
+  },
+  "public_tag_http_status": 404,
+  "separate_earlier2026_11_agents": 60,
+  "earlier_current_agent_name_overlap": [],
+  "historical_duration_identity": {
+    "source": "bb4d751edb7fd3572f15c0f13a22e1f02b9af8e1",
+    "run": 45002603673,
+    "registered_tests": 575,
+    "ctest_seconds": 6926.01,
+    "qualification": "6926.01seconds/575 tests belongs to the earlier bb4d751e run45002603673, not d0c3c23/run45029235535. Current candidate has579 registered Linux tests per assignment50; registration is not an execution result."
+  },
+  "current_linux_duration_seconds": 9492.2,
+  "limitations": [
+    "No new native execution, rendering, artifact GET, CI rerun, production change or release action performed by this accounting.",
+    "Current release qualification and formal acceptance are blocked; completed review assignments do not imply passing gates.",
+    "No acoustic/hardware equivalence, human-listening verdict or universal-DAW claim."
+  ]
+}

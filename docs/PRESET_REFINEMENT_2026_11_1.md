@@ -10,53 +10,75 @@ frozen Legacy programs. The comparison baseline for this refinement is
 The [original revision report](PRESET_REVISION_2026_11.md) documents the larger
 change from the older library.
 
-**Windows x64, Apple Silicon and Intel Mac have verified 2026.11.1 candidate
-bundles. Their native tests and required platform validators passed on attempt 1.
-Linux, complete four-platform publication and the actual 24-WAV audition
-remain pending.** Final level calibration and all four integrated preset test
-suites have also passed. The tables below separate individual platform results
-from authoring evidence and the remaining publication work. The library revision
-and application version alone cannot identify a binary.
+**All four native builds and installation archives are verified, and the
+actual 24-WAV audition passed its artifact checks. The complete CI run failed
+because the Linux randomized GUI validator terminated by SIGSEGV after SUCCESS.
+The gated publisher was skipped; no qualified 2026.11.1 prerelease is published.**
+The download links below are explicitly unsigned development candidates.
 
-The current candidate is source `6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
+Binary source is `6d3cc220edef5a4a2c7cd968ea8a786c7c83198c`,
 [build 45044040694, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694).
 Its predecessor was cancelled after all four native runners recorded the same
-stale workflow-snapshot test failure. The repair updates that reviewed snapshot;
-the sound bank, packaging code and required validator commands are unchanged.
-The [integration lineage](preset-evidence/2026.11.1/ci/source-lineage.json)
-preserves both sources and the actual predecessor failure evidence.
+stale workflow-snapshot test failure. The reviewed repair changed that snapshot;
+the sound bank, packaging code and required validator commands were unchanged.
+[Integration lineage](preset-evidence/2026.11.1/ci/source-lineage.json)
 
-| Deliverable | Current verification status |
+| Deliverable | Observed result |
 | --- | --- |
-| Twelve authored refinements | Measured against the frozen baseline; implemented in the factory data |
-| Character regression suite | 128/128 checks pass on the final calibrated bank; baseline fails 16 checks |
-| Final calibrated bank and complete library audit | Two applied calibration passes converge for the twelve refined programs; all 301 Circuit + 222 Legacy programs, 136 voicing checks and 9 capture-tool tests pass |
-| Windows x64 VST3 / Standalone | **Verified candidate:** 219 CTest entries passed, zero failed, two skipped; both strictness-10 VST3 gates passed. [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) · [Native checks](preset-evidence/2026.11.1/ci/native-windows-x86_64.json) · [Archive checks](preset-evidence/2026.11.1/ci/install-windows-x86_64.json) |
-| macOS Apple Silicon VST3 / AU / Standalone | **Verified candidate:** 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) · [Native checks](preset-evidence/2026.11.1/ci/native-macos-arm64.json) · [Archive checks](preset-evidence/2026.11.1/ci/install-macos-arm64.json) |
-| macOS Intel VST3 / AU / Standalone | **Verified candidate:** 241 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) · [Native checks](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) · [Archive checks](preset-evidence/2026.11.1/ci/install-macos-x86_64.json) |
-| Linux x86-64 VST3 / Standalone | **Pending:** this revision's completed native/validator CI, archive verification and public download |
-| Complete four-platform publication | **Pending:** Linux results, the four-target archive aggregate and the combined validator-input/package identity record |
-| 24-excerpt audition artifact | **Pending actual revised-bank CI artifact and verification.** The completed pipeline smoke used the frozen baseline executable |
+| Twelve authored refinements | Implemented and measured against the frozen 2026.11 baseline |
+| Character regression suite | 128/128 final-bank checks pass; the baseline fails 16 of the identical checks |
+| Final calibration and library audit | Two applied passes converge for the twelve targets; 301 Circuit + 222 Legacy programs, 136 voicing checks and 9 capture-tool tests pass |
+| Windows x64 VST3 / Standalone | **Native/platform candidate passed:** 219 of 221 registered CTest entries passed, zero failed, two skipped; both strictness-10 VST3 gates passed. [ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip) · [Native record](preset-evidence/2026.11.1/ci/native-windows-x86_64.json) |
+| macOS Apple Silicon VST3 / AU / Standalone | **Native/platform candidate passed:** 241 of 243 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip) · [Native record](preset-evidence/2026.11.1/ci/native-macos-arm64.json) |
+| macOS Intel VST3 / AU / Standalone | **Native/platform candidate passed:** 241 of 243 CTest entries passed, zero failed, two skipped; VST3, AU and AU GUI strictness-10 gates passed. [ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip) · [Native record](preset-evidence/2026.11.1/ci/native-macos-x86_64.json) |
+| Linux x86-64 VST3 / Standalone | **Native/archive passed; GUI validator failed:** 578 of 579 CTest entries passed, one SKIP_RETURN_CODE=77, zero failed; native CTest took 9,492.20 seconds. [Candidate ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip) · [Gate and exit record](preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json) |
+| Four installation archives | **Archive/installation checks passed:** complete inventories, native formats and architectures, executable/bundle structure, source identity, guides and notices. This does not qualify the failed full release. [Record](preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json) |
+| Actual 24-excerpt CI audition | **Artifact passed:** 117 seconds / 5,616,000 stereo frames at 48 kHz; all 24 parameter digests and 32 hashes verified; no nonfinite or full-scale samples. [ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip) · [Record](preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json) |
+| Five public candidate downloads | **Byte checks passed:** full unauthenticated GETs matched fresh API sizes/digests and cached artifact bytes. They remain candidates from a failed build. [Record](preset-evidence/2026.11.1/final-ci/public-candidates/summary.json) |
+| Complete CI and qualified prerelease | **Failed / withheld:** the required Linux randomized GUI gate failed; publisher run 45060638607 and its publish job were skipped. No public `presets-2026.11.1` release was available in the recorded check. |
 
-Each of the three linked candidate ZIPs passed its individual version-3 archive
-checks and a complete unauthenticated public GET, with the expected API byte count
-and SHA-256. These records identify source `6d3cc220`, run `45044040694` and the
-native target. They do not mark the unfinished whole workflow or four-target
-aggregate as passed. CTest counts above distinguish registered test entries;
-the native reports separately retain embedded Python subtest skips.
-[Actual public downloads](preset-evidence/2026.11.1/ci/download-links.json)
+The native counts distinguish executed passing cases from formal skipped
+entries. The native records separately retain embedded Python subtest skips.
+Archive and download verification establish their stated byte/inventory scope;
+they do not reverse a validator failure or establish arbitrary DAW compatibility.
 
-These are CI development candidates without release signing or notarization.
-The [main README's four-platform download table](../README.md#downloads) continues
-to point to the retained **2026.11** build at `d0c3c23`; those packages do not
-contain these twelve later refinements. Its original Linux validator failure,
-successful second attempt and instrumented nonreproductions remain documented
-in the [original report](PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation).
-That history does not establish the current candidate's pending Linux outcome.
+### Linux validator failure and diagnostic limits
+
+| Required lane | Seed | Original child exit | Result |
+| --- | --- | --- | --- |
+| Headless VST3 | `0x3e72560` | 0 | Passed |
+| Randomized GUI under Xvfb | `0x4369262` | −11, normalized wrapper 139 | **Failed after printing SUCCESS** |
+| Fixed GUI regression | `0x2da72db` | 0 | Passed |
+
+There were **zero internal wrapper retries**. The same-seed GDB and fault-thread
+diagnostics both exited 0; these are nonreproductions and do not replace the
+original failed invocation. No original crash core or stack was available.
+The evidence does not establish the crash's ownership or root cause, and no
+repair is claimed. [Original exits and diagnostic evidence](preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json)
+
+A separate upstream pluginval 2.0.0-beta3 comparison passed its three recorded
+lanes on the same plug-in artifact. Its validator, test inventory and seeds
+differ from the required stable invocation. Those passes add bounded
+compatibility evidence; they do not repair the failed stable gate or identify
+its cause. [Independent failure review and actual comparison](preset-evidence/2026.11.1/final-ci/failure-review/README.md)
+
+The publisher's success and first-attempt requirements remain unchanged. The
+public candidate links expose existing native artifacts with this failure
+disclosed; they are not a qualified release or seven published release assets.
+They retain source `6d3cc220` even after documentation changes on `main` and are
+subject to GitHub artifact retention. The package application version alone is
+not a build identifier. These bundles have no release signing or notarization.
+
+The older **2026.11** source `d0c3c23`, its original Linux headless failure and
+later successful retry remain documented in the
+[original report](PRESET_REVISION_2026_11.md#linux-validator-history-and-remaining-limitation)
+and [distribution history](CI_DISTRIBUTION_STATUS.md). Those records are separate
+from this run's GUI failure; no common cause or fix is inferred.
 
 [Evidence index](preset-evidence/2026.11.1/README.md) ·
 [Additional native and performance evidence](preset-evidence/2026.11.1/INTEGRATION.md) ·
-[Evidence provenance](preset-evidence/2026.11.1/provenance.json)
+[Evidence provenance](preset-evidence/2026.11.1/provenance.json) ·
+[Current 60-agent assignment review](TEAM_REVIEW_2026_11_1.md)
 
 ## What changed and why
 
@@ -254,7 +276,7 @@ records its binary hash and distinguishes its older factory data directly.
 Library selection, controller-based selection and saved-state restoration are
 supported by their passing fixtures. Queue-only Program automation, sample-accurate
 program switching and arbitrary host integration are not certified. No runtime
-or pinned-wrapper repair is claimed in this release; MIDI Program Change routing
+or pinned-wrapper repair is claimed in this preset revision; MIDI Program Change routing
 is a separate source path and was not exercised by this external host fixture.
 
 ## Additional performance checks
@@ -295,10 +317,24 @@ others use three-second holds and one-second releases. Captures retain the
 factory settings without normalization. Provenance includes source commit,
 binary hash, selection, timing, completion status and checksums. A pipeline
 smoke check produced 24 WAVs and verified 32 checksummed files; that check used
-the frozen baseline executable solely to validate delivery. The actual
-2026.11.1 CI audition artifact, its checksums and its public download remain
-pending; the older twelve-WAV 2026.11 download is a separate recording set.
+the frozen baseline executable solely to validate delivery.
 [Pipeline evidence](preset-evidence/2026.11.1/audition/summary.json)
+
+The actual revised-bank CI artifact now verifies **24 WAVs / 117 seconds**,
+all 32 checksums and all 24 selected factory parameter digests. Its highest
+sample peak is **−14.576 dBFS**; all samples are finite and below full scale.
+It identifies source `6d3cc220`, run `45044040694`, attempt 1. Its producing
+Linux build/capture steps succeeded, while the later GUI validator failure
+prevents complete release qualification.
+[CI audition verification](preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json) ·
+[Public candidate download](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip)
+
+The earlier local replay retains source
+`99f5ebd6b71283a56810d801df89c49ef62f3512`, run `local-assignment-32` and its
+original capture binary hash. It is not relabeled as the CI artifact. The older
+twelve-WAV **2026.11** package is also a separate recording set.
+[Local replay](preset-evidence/2026.11.1/final-auditions-local/summary.json) ·
+[Local provenance](preset-evidence/2026.11.1/final-auditions-local/preset-audition/provenance.json)
 
 Instrument names describe CS-80 synthesized interpretations. These measurements
 establish specific software behavior and reproducible differences; they do not

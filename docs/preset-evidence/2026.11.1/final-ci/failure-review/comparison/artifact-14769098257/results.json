@@ -1,0 +1,174 @@
+{
+  "pluginval_version": "2.0.0",
+  "command": "validate",
+  "target": "/home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3",
+  "start_time": "2026-11-22T19:25:35.067Z",
+  "duration_ms": 10045,
+  "properties": {
+    "plugin_name": "CS-80 Reference",
+    "plugin_version": "1.0.0",
+    "plugin_format": "VST3",
+    "plugin_manufacturer": "Reference Instruments",
+    "strictness_level": "10",
+    "timeout_ms": "120000",
+    "random_seed": "0x4f31605"
+  },
+  "summary": {
+    "tests": 25,
+    "passed": 25,
+    "failed": 0,
+    "errors": 0
+  },
+  "tests": [
+    {
+      "name": "Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3",
+      "status": "passed",
+      "duration_ms": 1,
+      "messages": []
+    },
+    {
+      "name": "Open plugin (cold)",
+      "status": "passed",
+      "duration_ms": 211,
+      "messages": []
+    },
+    {
+      "name": "Open plugin (warm)",
+      "status": "passed",
+      "duration_ms": 188,
+      "messages": []
+    },
+    {
+      "name": "Plugin info",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Plugin programs",
+      "status": "passed",
+      "duration_ms": 1,
+      "messages": []
+    },
+    {
+      "name": "Audio processing",
+      "status": "passed",
+      "duration_ms": 350,
+      "messages": []
+    },
+    {
+      "name": "Non-releasing audio processing",
+      "status": "passed",
+      "duration_ms": 371,
+      "messages": []
+    },
+    {
+      "name": "Plugin state",
+      "status": "passed",
+      "duration_ms": 4,
+      "messages": []
+    },
+    {
+      "name": "Plugin state restoration",
+      "status": "passed",
+      "duration_ms": 476,
+      "messages": []
+    },
+    {
+      "name": "Discrete parameter state restoration",
+      "status": "passed",
+      "duration_ms": 103,
+      "messages": []
+    },
+    {
+      "name": "Automation",
+      "status": "passed",
+      "duration_ms": 229,
+      "messages": []
+    },
+    {
+      "name": "Automatable Parameters",
+      "status": "passed",
+      "duration_ms": 36,
+      "messages": []
+    },
+    {
+      "name": "Parameters",
+      "status": "passed",
+      "duration_ms": 27,
+      "messages": []
+    },
+    {
+      "name": "Parameter thread safety",
+      "status": "passed",
+      "duration_ms": 1352,
+      "messages": []
+    },
+    {
+      "name": "auval",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "vst3 validator",
+      "status": "passed",
+      "duration_ms": 5434,
+      "messages": []
+    },
+    {
+      "name": "Basic bus",
+      "status": "passed",
+      "duration_ms": 6,
+      "messages": []
+    },
+    {
+      "name": "Listing available buses",
+      "status": "passed",
+      "duration_ms": 4,
+      "messages": []
+    },
+    {
+      "name": "Enabling all buses",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Disabling non-main busses",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Restoring default layout",
+      "status": "passed",
+      "duration_ms": 23,
+      "messages": []
+    },
+    {
+      "name": "Bus layout processing",
+      "status": "passed",
+      "duration_ms": 80,
+      "messages": []
+    },
+    {
+      "name": "Allocations during process",
+      "status": "passed",
+      "duration_ms": 858,
+      "messages": []
+    },
+    {
+      "name": "Process called with a larger than prepared block size",
+      "status": "passed",
+      "duration_ms": 0,
+      "messages": []
+    },
+    {
+      "name": "Fuzz parameters",
+      "status": "passed",
+      "duration_ms": 291,
+      "messages": []
+    }
+  ]
+}

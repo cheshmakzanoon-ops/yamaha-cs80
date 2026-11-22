@@ -1,0 +1,56 @@
+{
+  "assignment": 59,
+  "status": "LOCAL_CANDIDATE_DOCUMENTS_READY_PUBLISHED_CHECK_PENDING",
+  "base_commit": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "binary_source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "build_run_id": 45044040694,
+  "build_run_attempt": 1,
+  "build_conclusion": "failure",
+  "release_qualified": false,
+  "inputs": {
+    "public_candidates": {
+      "path": "build-w12-public-release/candidate-verified/summary.json",
+      "sha256": "87ad68a563e9e81bd6cdf3cd307dc6f0fe27ad75ddeca653f4a04cb4d6b1f7ec"
+    },
+    "linux": {
+      "path": "build-w12-linux/ci-proof.json",
+      "sha256": "e1b079482ff44858c345a1d68cd61a1ba8beabf11960d5ca756dbc8a67a2259a"
+    },
+    "auditions": {
+      "path": "build-w12-ci-auditions/artifact-proof.json",
+      "sha256": "6a709a3e180abccdc2054b0a12c5aca92be84da0256f46df21dafc65e6026c0b"
+    },
+    "installation": {
+      "path": "build-w12-installation-review/artifact-proof.json",
+      "sha256": "226d5533c60fead25e3a44734dc7c14cb9e65687a3c28de6e7d128acd13cc737"
+    }
+  },
+  "candidate_urls": [
+    "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+    "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip",
+    "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+    "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip",
+    "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip"
+  ],
+  "public_documents": {
+    "README.md": {
+      "before_sha256": "0c4b6e506a029285d89caaba6177843d94b47d94ec6d74d4b01222d8ce81e3ed",
+      "after_sha256": "5dfd44178e56997d8ff520a0c198a497fb585bb1efc1ce74e7a15624f44c2498",
+      "bytes": 15398
+    },
+    "docs/PRESET_REFINEMENT_2026_11_1.md": {
+      "before_sha256": "d14605752cdfcebdec8d566947f10aa5f263c5814d1ed4d2e8fca7c7dd380025",
+      "after_sha256": "250aaf79139035af41da6f93b32462fdaba53271cbb84ce1c22cc3cc8476299a",
+      "bytes": 23039
+    },
+    "docs/CI_DISTRIBUTION_STATUS.md": {
+      "before_sha256": "87dde12318294cfcfc47461d3b5fe645c4bf8071af4461198f7a7d2b9e921f32",
+      "after_sha256": "0eee9ba7fc0052e6d94e6a5b96c6dfc7e71bdad255c7e072f0a20a2058327273",
+      "bytes": 12376
+    }
+  },
+  "public_documents_written": true,
+  "historical_2026_11_distribution_section_preserved": true,
+  "release_templates_preserved": true,
+  "published_content_and_live_link_check": "PENDING ROOT PUSH"
+}

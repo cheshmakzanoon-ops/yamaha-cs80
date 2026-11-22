@@ -1,0 +1,188 @@
+{
+  "id": 137274597912,
+  "run_id": 45044040694,
+  "workflow_name": "build",
+  "head_branch": "main",
+  "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOVaLxy88AAAAf9jQiGA",
+  "head_sha": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/137274597912",
+  "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694/job/137274597912",
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-11-22T16:28:39Z",
+  "started_at": "2026-11-22T16:29:00Z",
+  "completed_at": "2026-11-22T17:17:53Z",
+  "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-22T16:29:00Z",
+      "completed_at": "2026-11-22T16:29:01Z"
+    },
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-22T16:29:01Z",
+      "completed_at": "2026-11-22T16:29:13Z"
+    },
+    {
+      "name": "Record native platform",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-22T16:29:13Z",
+      "completed_at": "2026-11-22T16:29:13Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-22T16:29:13Z",
+      "completed_at": "2026-11-22T16:31:29Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-22T16:31:29Z",
+      "completed_at": "2026-11-22T16:31:29Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-22T16:31:29Z",
+      "completed_at": "2026-11-22T16:41:09Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-22T16:41:09Z",
+      "completed_at": "2026-11-22T17:12:46Z"
+    },
+    {
+      "name": "Fetch pluginval 1.0.4",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-22T17:12:46Z",
+      "completed_at": "2026-11-22T17:12:51Z"
+    },
+    {
+      "name": "Register built AU",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-22T17:12:51Z",
+      "completed_at": "2026-11-22T17:12:54Z"
+    },
+    {
+      "name": "Validate VST3 with pluginval",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-22T17:12:54Z",
+      "completed_at": "2026-11-22T17:13:03Z"
+    },
+    {
+      "name": "Validate AU with pluginval",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2026-11-22T17:13:03Z",
+      "completed_at": "2026-11-22T17:13:40Z"
+    },
+    {
+      "name": "Validate AU with pluginval GUI",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12,
+      "started_at": "2026-11-22T17:13:40Z",
+      "completed_at": "2026-11-22T17:17:35Z"
+    },
+    {
+      "name": "Package native macOS VST3, AU and Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-11-22T17:17:35Z",
+      "completed_at": "2026-11-22T17:17:45Z"
+    },
+    {
+      "name": "Upload native macOS install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-11-22T17:17:45Z",
+      "completed_at": "2026-11-22T17:17:47Z"
+    },
+    {
+      "name": "AU registration diagnostics",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 15,
+      "started_at": "2026-11-22T17:17:47Z",
+      "completed_at": "2026-11-22T17:17:47Z"
+    },
+    {
+      "name": "Report pluginval failure",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 16,
+      "started_at": "2026-11-22T17:17:47Z",
+      "completed_at": "2026-11-22T17:17:47Z"
+    },
+    {
+      "name": "Upload pluginval reports",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17,
+      "started_at": "2026-11-22T17:17:47Z",
+      "completed_at": "2026-11-22T17:17:48Z"
+    },
+    {
+      "name": "Upload test and JUCE source evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 18,
+      "started_at": "2026-11-22T17:17:48Z",
+      "completed_at": "2026-11-22T17:17:49Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 36,
+      "started_at": "2026-11-22T17:17:49Z",
+      "completed_at": "2026-11-22T17:17:51Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 37,
+      "started_at": "2026-11-22T17:17:51Z",
+      "completed_at": "2026-11-22T17:17:52Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/137274597912",
+  "labels": [
+    "macos-15-intel"
+  ],
+  "runner_id": 1000042073,
+  "runner_name": "GitHub Actions 1000042073",
+  "runner_group_id": 0,
+  "runner_group_name": "GitHub Actions"
+}

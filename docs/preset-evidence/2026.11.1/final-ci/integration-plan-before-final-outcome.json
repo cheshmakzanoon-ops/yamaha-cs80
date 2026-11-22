@@ -1,0 +1,1580 @@
+{
+  "schema": 1,
+  "assignment": 58,
+  "status": "LOCAL_ONLY_POST_PUBLICATION_INTEGRATION_PLAN_NOT_QUALIFICATION",
+  "created_at_utc": "2026-11-22T18:18:20.874050+00:00",
+  "observed_head": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+  "binary_source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "required_attempt": 1,
+  "public_files_modified": false,
+  "new_qualification_claim": false,
+  "final_acceptance_complete": false,
+  "integration_timing": "Copy only after successful release publication. Until then preserve the 232-path comparison and existing strict <300 publisher limit; do not weaken it.",
+  "manifest": {
+    "path": "docs/preset-evidence/2026.11.1/provenance.json",
+    "bytes": 131804,
+    "sha256": "2cf287eee82329c9727be1b07bf59893dbbb732c5c0e03c7811cf2329814d2ef",
+    "entries_at_plan_time": 263,
+    "schema": 1,
+    "payload_hash_field": "stored_sha256",
+    "payload_size_field": "bytes",
+    "path_base": "docs/preset-evidence/2026.11.1/",
+    "historical_initial_generator": "build-w04-evidence/package.py",
+    "historical_extension_writers": [
+      "build-w05-evidence-extension/package.py",
+      "build-w05-evidence-extension/finalize.py",
+      "build-w05-evidence-extension/add_identity.py"
+    ],
+    "current_general_generator_found": false,
+    "generator_scope": "These writers target earlier stages and are not a safe general regeneration command for the current 263-entry manifest. Later 239/255/263 changes are retained in Git; no complete current-stage writer was found in this checkout.",
+    "existing_payloads": "Retain all current files and existing manifest entries. Append exact-byte manifest_entry objects after copying only absent destinations; update mutable indexes deliberately with separately recorded hashes.",
+    "self_excluded": true
+  },
+  "selection_summary": {
+    "selected_unique_files": 62,
+    "selected_bytes": 1921331,
+    "deduplicated_exact_aliases": 5,
+    "by_status": {
+      "HISTORICAL_RUN_OBSERVATION": 1,
+      "EXISTING_COMPLETED_REVIEW_RECORD": 42,
+      "HISTORICAL_PENDING_RECORD": 2,
+      "HISTORICAL_PREPARATION_RECORD": 3,
+      "PREPARATION_ONLY_FINAL_RESULT_PENDING": 14
+    },
+    "current_source_to_head_paths": 232,
+    "projected_paths_if_all_selected_added_now": 294,
+    "projection_limits": "Excludes any new integration index, this map, pending final slots and later publication files. This is not permission to archive before publication."
+  },
+  "selected_files": [
+    {
+      "assignment": "49/52/53",
+      "origin_path": "build-w10-windows/run-api.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/shared/run-before-linux-completion.json",
+      "bytes": 15243,
+      "sha256": "f3f3c02d6465d7b7e92e2945e4aca963f23aaca9dee78a59f3d852901775b98c",
+      "reason": "Single exact API run snapshot used by all three completed reviewers. It records the run still in progress; preserve that time-bound scope.",
+      "status": "HISTORICAL_RUN_OBSERVATION",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/shared/run-before-linux-completion.json",
+        "origin": "build-w10-windows/run-api.json",
+        "phase": "Historical preparation/pending record for assignment 49/52/53; not final qualification and not relabeled after completion.",
+        "origin_sha256": "f3f3c02d6465d7b7e92e2945e4aca963f23aaca9dee78a59f3d852901775b98c",
+        "stored_sha256": "f3f3c02d6465d7b7e92e2945e4aca963f23aaca9dee78a59f3d852901775b98c",
+        "bytes": 15243,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": "52/53",
+      "origin_path": "build-w11-macos-arm/pluginval-download.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/shared/macos-pluginval-download.json",
+      "bytes": 694,
+      "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+      "reason": "Exact official validator asset receipt, shared byte-for-byte by the Mac jobs.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/shared/macos-pluginval-download.json",
+        "origin": "build-w11-macos-arm/pluginval-download.json",
+        "phase": "Completed assignment 52/53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+        "stored_sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+        "bytes": 694,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": "52/53",
+      "origin_path": "build-w11-macos-arm/skip-source.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/shared/macos-skip-source.json",
+      "bytes": 2840,
+      "sha256": "1e820397c6fdc82d04e79e249ebf91bfa55eb6d96a95dcc9e39339924a59f4e7",
+      "reason": "Pinned source guards explain the two formal Mac CTest skips; one byte-identical record serves both.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/shared/macos-skip-source.json",
+        "origin": "build-w11-macos-arm/skip-source.json",
+        "phase": "Completed assignment 52/53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "1e820397c6fdc82d04e79e249ebf91bfa55eb6d96a95dcc9e39339924a59f4e7",
+        "stored_sha256": "1e820397c6fdc82d04e79e249ebf91bfa55eb6d96a95dcc9e39339924a59f4e7",
+        "bytes": 2840,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/artifact-proof.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/artifact-proof.json",
+      "bytes": 5478,
+      "sha256": "6fcfde253accc8b1779b7c33e689fc2ce41f247013adbd7a5acb4fe5658e8d60",
+      "reason": "Independent actual public ZIP, inner inventory, architecture and guide proof.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/artifact-proof.json",
+        "origin": "build-w10-windows/artifact-proof.json",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "6fcfde253accc8b1779b7c33e689fc2ce41f247013adbd7a5acb4fe5658e8d60",
+        "stored_sha256": "6fcfde253accc8b1779b7c33e689fc2ce41f247013adbd7a5acb4fe5658e8d60",
+        "bytes": 5478,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/windows-qualification.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/windows-qualification.json",
+      "bytes": 16512,
+      "sha256": "4fa5ab91bdbde15ae1f0644b069634e3239bfa23e6825f61639f4c0e5393a4e6",
+      "reason": "Scoped native CTest, validator, input/install identity and platform qualification.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/windows-qualification.json",
+        "origin": "build-w10-windows/windows-qualification.json",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "4fa5ab91bdbde15ae1f0644b069634e3239bfa23e6825f61639f4c0e5393a4e6",
+        "stored_sha256": "4fa5ab91bdbde15ae1f0644b069634e3239bfa23e6825f61639f4c0e5393a4e6",
+        "bytes": 16512,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/ctest-results.xml",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/ctest-results.xml",
+      "bytes": 96663,
+      "sha256": "f9e932d910fbc212c586d7fcee39300abb8037507b9b6b10316fdd8d5eae7356",
+      "reason": "Raw JUnit preserves executed, skipped and not-run distinctions.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/ctest-results.xml",
+        "origin": "build-w10-windows/ctest-results.xml",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "f9e932d910fbc212c586d7fcee39300abb8037507b9b6b10316fdd8d5eae7356",
+        "stored_sha256": "f9e932d910fbc212c586d7fcee39300abb8037507b9b6b10316fdd8d5eae7356",
+        "bytes": 96663,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/windows-native-job.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/windows-native-job.log",
+      "bytes": 132624,
+      "sha256": "f64085943fbb9c966ab835f799498a557e59c7088b7d0e37b8118c8a4291b308",
+      "reason": "Raw retained native job log, including test output and successful step context.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/windows-native-job.log",
+        "origin": "build-w10-windows/windows-native-job.log",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "f64085943fbb9c966ab835f799498a557e59c7088b7d0e37b8118c8a4291b308",
+        "stored_sha256": "f64085943fbb9c966ab835f799498a557e59c7088b7d0e37b8118c8a4291b308",
+        "bytes": 132624,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": true,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/windows-pluginval-job.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/windows-pluginval-job.log",
+      "bytes": 43880,
+      "sha256": "bc1213d0860e7d2a0151e1c36306c04d600b6940797f1cba74fa5632ac68e8bb",
+      "reason": "Raw retained validator job log preserves both executed commands, seeds and exit propagation context.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/windows-pluginval-job.log",
+        "origin": "build-w10-windows/windows-pluginval-job.log",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "bc1213d0860e7d2a0151e1c36306c04d600b6940797f1cba74fa5632ac68e8bb",
+        "stored_sha256": "bc1213d0860e7d2a0151e1c36306c04d600b6940797f1cba74fa5632ac68e8bb",
+        "bytes": 43880,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": true,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/validator-reports/pluginval-windows.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/validator-reports/pluginval-windows.log",
+      "bytes": 7381,
+      "sha256": "929706d23fc580e2f625a388a97724ed2a1cb5f2a79cd2a630dd3d668428db91",
+      "reason": "Actual randomized strictness 10 headless VST3 log.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/validator-reports/pluginval-windows.log",
+        "origin": "build-w10-windows/validator-reports/pluginval-windows.log",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "929706d23fc580e2f625a388a97724ed2a1cb5f2a79cd2a630dd3d668428db91",
+        "stored_sha256": "929706d23fc580e2f625a388a97724ed2a1cb5f2a79cd2a630dd3d668428db91",
+        "bytes": 7381,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 139,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/validator-reports/pluginval-windows-seed-regression.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/validator-reports/pluginval-windows-seed-regression.log",
+      "bytes": 7382,
+      "sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45",
+      "reason": "Actual fixed-seed strictness 10 regression log.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/validator-reports/pluginval-windows-seed-regression.log",
+        "origin": "build-w10-windows/validator-reports/pluginval-windows-seed-regression.log",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45",
+        "stored_sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45",
+        "bytes": 7382,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 139,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/consolidate-windows-proof.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/consolidate-windows-proof.py",
+      "bytes": 11324,
+      "sha256": "e0dc75d7122464a5429bbcc8bcf1b10bb058c25c98915fd5e7fc0c571351c497",
+      "reason": "Exact consolidator; restore original layout and reacquire excluded input archives before reproducing.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/consolidate-windows-proof.py",
+        "origin": "build-w10-windows/consolidate-windows-proof.py",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "e0dc75d7122464a5429bbcc8bcf1b10bb058c25c98915fd5e7fc0c571351c497",
+        "stored_sha256": "e0dc75d7122464a5429bbcc8bcf1b10bb058c25c98915fd5e7fc0c571351c497",
+        "bytes": 11324,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/verify-windows-download.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/verify-windows-download.py",
+      "bytes": 6625,
+      "sha256": "c8845ccd6492a4f3ebdcc1ef1a412ae3caba0eefaf4ae38550ff69c546925961",
+      "reason": "Exact archive verifier and trusted-helper checks.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/verify-windows-download.py",
+        "origin": "build-w10-windows/verify-windows-download.py",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "c8845ccd6492a4f3ebdcc1ef1a412ae3caba0eefaf4ae38550ff69c546925961",
+        "stored_sha256": "c8845ccd6492a4f3ebdcc1ef1a412ae3caba0eefaf4ae38550ff69c546925961",
+        "bytes": 6625,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/supporting-artifacts.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/supporting-artifacts.json",
+      "bytes": 4409,
+      "sha256": "8990f855e19e9f57440db25f469ba623db0a15a884eb262b696f18817e2aa219",
+      "reason": "Immutable supporting artifact IDs, digests, download records and validator-input identity; no archive payloads.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/supporting-artifacts.json",
+        "origin": "build-w10-windows/supporting-artifacts.json",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "8990f855e19e9f57440db25f469ba623db0a15a884eb262b696f18817e2aa219",
+        "stored_sha256": "8990f855e19e9f57440db25f469ba623db0a15a884eb262b696f18817e2aa219",
+        "bytes": 4409,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/jobs-api.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/jobs-api.json",
+      "bytes": 24675,
+      "sha256": "1ae2004111bae58a558cc601eea58bde3fa29283a0a360a963dda89885a9751e",
+      "reason": "One final Windows review jobs snapshot, needed for native/validator successful-step metadata.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/jobs-api.json",
+        "origin": "build-w10-windows/jobs-api.json",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "1ae2004111bae58a558cc601eea58bde3fa29283a0a360a963dda89885a9751e",
+        "stored_sha256": "1ae2004111bae58a558cc601eea58bde3fa29283a0a360a963dda89885a9751e",
+        "bytes": 24675,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/verified/windows/x86_64/cs80-reference-windows-x86_64-6d3cc220edef.manifest.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/verified/windows/x86_64/cs80-reference-windows-x86_64-6d3cc220edef.manifest.json",
+      "bytes": 4557,
+      "sha256": "1d0ee86dd358ab3f7e1af4bcdef9f9c378f53eef5a42c416ef3df0d9d2b3b3d2",
+      "reason": "Small original package manifest provides the exact 20-file inventory without shipping binaries.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/verified/windows/x86_64/cs80-reference-windows-x86_64-6d3cc220edef.manifest.json",
+        "origin": "build-w10-windows/verified/windows/x86_64/cs80-reference-windows-x86_64-6d3cc220edef.manifest.json",
+        "phase": "Completed assignment 49 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "1d0ee86dd358ab3f7e1af4bcdef9f9c378f53eef5a42c416ef3df0d9d2b3b3d2",
+        "stored_sha256": "1d0ee86dd358ab3f7e1af4bcdef9f9c378f53eef5a42c416ef3df0d9d2b3b3d2",
+        "bytes": 4557,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 49,
+      "origin_path": "build-w10-windows/pending-handoff.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/preparation/pending-handoff.json",
+      "bytes": 37475,
+      "sha256": "fbfed62c89b8e7e14ac94eea07ebd0b4ffdbb91c28afbfe3aa79297a1ef9f7a8",
+      "reason": "Original pending handoff remains an earlier observation even after platform completion.",
+      "status": "HISTORICAL_PENDING_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/windows-x86_64/preparation/pending-handoff.json",
+        "origin": "build-w10-windows/pending-handoff.json",
+        "phase": "Historical preparation/pending record for assignment 49; not final qualification and not relabeled after completion.",
+        "origin_sha256": "fbfed62c89b8e7e14ac94eea07ebd0b4ffdbb91c28afbfe3aa79297a1ef9f7a8",
+        "stored_sha256": "fbfed62c89b8e7e14ac94eea07ebd0b4ffdbb91c28afbfe3aa79297a1ef9f7a8",
+        "bytes": 37475,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/artifact-proof.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/artifact-proof.json",
+      "bytes": 22280,
+      "sha256": "f41f5bc02af45236ac0bbd082a7e163e8d630be87a49c0df7acd1009f6b70289",
+      "reason": "Independent actual ZIP, native architecture and source-bound guide proof.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/artifact-proof.json",
+        "origin": "build-w11-macos-arm/artifact-proof.json",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "f41f5bc02af45236ac0bbd082a7e163e8d630be87a49c0df7acd1009f6b70289",
+        "stored_sha256": "f41f5bc02af45236ac0bbd082a7e163e8d630be87a49c0df7acd1009f6b70289",
+        "bytes": 22280,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/ci-proof.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/ci-proof.json",
+      "bytes": 5781,
+      "sha256": "07a409de184d6c03f38d9bb9c87dc5c840856e1dc0d6e0e0ef60ef46011c5a24",
+      "reason": "Native CTest counts, validator lanes and job identities with narrowly scoped completion.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/ci-proof.json",
+        "origin": "build-w11-macos-arm/ci-proof.json",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "07a409de184d6c03f38d9bb9c87dc5c840856e1dc0d6e0e0ef60ef46011c5a24",
+        "stored_sha256": "07a409de184d6c03f38d9bb9c87dc5c840856e1dc0d6e0e0ef60ef46011c5a24",
+        "bytes": 5781,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/ctest-results.xml",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/ctest-results.xml",
+      "bytes": 103885,
+      "sha256": "348830abb5b313fb7b1016b51452cbceb02902eb6687f0fb4d270e232106aafc",
+      "reason": "Raw JUnit retains all 243 cases and both formal skips.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/ctest-results.xml",
+        "origin": "build-w11-macos-arm/ctest-results.xml",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "348830abb5b313fb7b1016b51452cbceb02902eb6687f0fb4d270e232106aafc",
+        "stored_sha256": "348830abb5b313fb7b1016b51452cbceb02902eb6687f0fb4d270e232106aafc",
+        "bytes": 103885,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/LastTest.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/LastTest.log",
+      "bytes": 307787,
+      "sha256": "2510eb9017381744f2c3ff91e5ca092b7ebd634cabc7deb1f1419d4efdfa2bb0",
+      "reason": "Full native CTest output preserves embedded Python skips and output truncated in JUnit.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/LastTest.log",
+        "origin": "build-w11-macos-arm/LastTest.log",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "2510eb9017381744f2c3ff91e5ca092b7ebd634cabc7deb1f1419d4efdfa2bb0",
+        "stored_sha256": "2510eb9017381744f2c3ff91e5ca092b7ebd634cabc7deb1f1419d4efdfa2bb0",
+        "bytes": 307787,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/job.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/job.log",
+      "bytes": 211790,
+      "sha256": "9b13eb889a2d110055c420b65c88b12c1e487e586c48bf94a98b25275cb1429a",
+      "reason": "Exact decoded native job log; preserve BOM and terminal newline as originally retained.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/job.log",
+        "origin": "build-w11-macos-arm/job.log",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "9b13eb889a2d110055c420b65c88b12c1e487e586c48bf94a98b25275cb1429a",
+        "stored_sha256": "9b13eb889a2d110055c420b65c88b12c1e487e586c48bf94a98b25275cb1429a",
+        "bytes": 211790,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": true,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/pluginval-vst3.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/pluginval-vst3.log",
+      "bytes": 7399,
+      "sha256": "a7116603a90032c34498f82788ecedd03a723214555674f2a4c1763d7627bb36",
+      "reason": "Actual strictness 10 VST3 headless output, seed and final marker.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/pluginval-vst3.log",
+        "origin": "build-w11-macos-arm/pluginval-vst3.log",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "a7116603a90032c34498f82788ecedd03a723214555674f2a4c1763d7627bb36",
+        "stored_sha256": "a7116603a90032c34498f82788ecedd03a723214555674f2a4c1763d7627bb36",
+        "bytes": 7399,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/pluginval-au.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/pluginval-au.log",
+      "bytes": 7308,
+      "sha256": "af602439adfef9e4e48dce4f0f2fcd5488ea87eae3e9407edca753a528a29b3d",
+      "reason": "Actual strictness 10 AU headless output, seed and warnings.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/pluginval-au.log",
+        "origin": "build-w11-macos-arm/pluginval-au.log",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "af602439adfef9e4e48dce4f0f2fcd5488ea87eae3e9407edca753a528a29b3d",
+        "stored_sha256": "af602439adfef9e4e48dce4f0f2fcd5488ea87eae3e9407edca753a528a29b3d",
+        "bytes": 7308,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/pluginval-au-gui.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/pluginval-au-gui.log",
+      "bytes": 7990,
+      "sha256": "aa3a706f134e6a45d5015e40a9742d5abe5f58b8ef8e83a4c6b2b36aea6a0a6f",
+      "reason": "Actual strictness 10 AU GUI output and editor checks.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/pluginval-au-gui.log",
+        "origin": "build-w11-macos-arm/pluginval-au-gui.log",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "aa3a706f134e6a45d5015e40a9742d5abe5f58b8ef8e83a4c6b2b36aea6a0a6f",
+        "stored_sha256": "aa3a706f134e6a45d5015e40a9742d5abe5f58b8ef8e83a4c6b2b36aea6a0a6f",
+        "bytes": 7990,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/check-ci-gates.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/check-ci-gates.py",
+      "bytes": 6417,
+      "sha256": "75081fc4cf47a72f8f23a5acdc36a99488221b8c989dbe152be3b736704e4bf1",
+      "reason": "Exact final CI parser/reconciler; restore original input names for reproduction.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/check-ci-gates.py",
+        "origin": "build-w11-macos-arm/check-ci-gates.py",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "75081fc4cf47a72f8f23a5acdc36a99488221b8c989dbe152be3b736704e4bf1",
+        "stored_sha256": "75081fc4cf47a72f8f23a5acdc36a99488221b8c989dbe152be3b736704e4bf1",
+        "bytes": 6417,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/fetch-ci-evidence.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/fetch-ci-evidence.py",
+      "bytes": 2637,
+      "sha256": "f0f9396f03e58667fb66478aaf357683d9bc9a6a4fa76d71222e4fdb2115c3cc",
+      "reason": "Exact small-evidence artifact fetcher; API records can be restored from existing ci/native platform records.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/fetch-ci-evidence.py",
+        "origin": "build-w11-macos-arm/fetch-ci-evidence.py",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "f0f9396f03e58667fb66478aaf357683d9bc9a6a4fa76d71222e4fdb2115c3cc",
+        "stored_sha256": "f0f9396f03e58667fb66478aaf357683d9bc9a6a4fa76d71222e4fdb2115c3cc",
+        "bytes": 2637,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/verify-arm-download.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/verify-arm-download.py",
+      "bytes": 9282,
+      "sha256": "b9d13c2c12fcf6bbc6248e6e5b46f93b2653b85b0d13752177ab1786a86a4780",
+      "reason": "Exact archive verifier; original relative layout and pinned helper code are prerequisites.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/verify-arm-download.py",
+        "origin": "build-w11-macos-arm/verify-arm-download.py",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "b9d13c2c12fcf6bbc6248e6e5b46f93b2653b85b0d13752177ab1786a86a4780",
+        "stored_sha256": "b9d13c2c12fcf6bbc6248e6e5b46f93b2653b85b0d13752177ab1786a86a4780",
+        "bytes": 9282,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/ci-evidence-downloads.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/ci-evidence-downloads.json",
+      "bytes": 2153,
+      "sha256": "42b76abcd12fa8c11763bbe55181ba7e5b80fb7eb01115a76623a7b1914775ba",
+      "reason": "Binds raw text members to the small evidence artifact IDs, full ZIP hashes and sizes.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/ci-evidence-downloads.json",
+        "origin": "build-w11-macos-arm/ci-evidence-downloads.json",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "42b76abcd12fa8c11763bbe55181ba7e5b80fb7eb01115a76623a7b1914775ba",
+        "stored_sha256": "42b76abcd12fa8c11763bbe55181ba7e5b80fb7eb01115a76623a7b1914775ba",
+        "bytes": 2153,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/job.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/job.json",
+      "bytes": 5499,
+      "sha256": "f95f56bb763261068740b26d6c484895a4a13a67b28d6e93e15e1cf09136d8ac",
+      "reason": "One completed native job object provides exact named-step status to the parser.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/job.json",
+        "origin": "build-w11-macos-arm/job.json",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "f95f56bb763261068740b26d6c484895a4a13a67b28d6e93e15e1cf09136d8ac",
+        "stored_sha256": "f95f56bb763261068740b26d6c484895a4a13a67b28d6e93e15e1cf09136d8ac",
+        "bytes": 5499,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/README.md",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/README.md",
+      "bytes": 4922,
+      "sha256": "d49388941c475283940f3ed4c375d873c486172859ab04c64547caea3afb43ee",
+      "reason": "Reviewer method, preservation details and explicit platform-only qualification.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/README.md",
+        "origin": "build-w11-macos-arm/README.md",
+        "phase": "Completed assignment 52 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "d49388941c475283940f3ed4c375d873c486172859ab04c64547caea3afb43ee",
+        "stored_sha256": "d49388941c475283940f3ed4c375d873c486172859ab04c64547caea3afb43ee",
+        "bytes": 4922,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/artifact-proof.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/artifact-proof.json",
+      "bytes": 6134,
+      "sha256": "ef5ea63f0c306ff1366ac4dc4775f50ce556eac8be84f7bb2031114abc320f88",
+      "reason": "Independent actual ZIP, native architecture and source-bound guide proof.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/artifact-proof.json",
+        "origin": "build-w11-macos-intel/artifact-proof.json",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "ef5ea63f0c306ff1366ac4dc4775f50ce556eac8be84f7bb2031114abc320f88",
+        "stored_sha256": "ef5ea63f0c306ff1366ac4dc4775f50ce556eac8be84f7bb2031114abc320f88",
+        "bytes": 6134,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/ci-proof.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/ci-proof.json",
+      "bytes": 5783,
+      "sha256": "7d9431d5b4ed81839b5e8351fd9ef010e630533e1c875744929f7f1a2146ee26",
+      "reason": "Native CTest counts, validator lanes and job identities with narrowly scoped completion.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/ci-proof.json",
+        "origin": "build-w11-macos-intel/ci-proof.json",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "7d9431d5b4ed81839b5e8351fd9ef010e630533e1c875744929f7f1a2146ee26",
+        "stored_sha256": "7d9431d5b4ed81839b5e8351fd9ef010e630533e1c875744929f7f1a2146ee26",
+        "bytes": 5783,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/ctest-results.xml",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/ctest-results.xml",
+      "bytes": 103715,
+      "sha256": "5937917863a68a20a580c3b8fd5a42f3e6e6c8f6689d2617a69477bdfe949da2",
+      "reason": "Raw JUnit retains all 243 cases and both formal skips.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/ctest-results.xml",
+        "origin": "build-w11-macos-intel/ctest-results.xml",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "5937917863a68a20a580c3b8fd5a42f3e6e6c8f6689d2617a69477bdfe949da2",
+        "stored_sha256": "5937917863a68a20a580c3b8fd5a42f3e6e6c8f6689d2617a69477bdfe949da2",
+        "bytes": 103715,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/LastTest.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/LastTest.log",
+      "bytes": 307533,
+      "sha256": "94754e94bf27c06fd78e784eba0998d2ec01a2ba26d8758f01c02fc59989e8cd",
+      "reason": "Full native CTest output preserves embedded Python skips and output truncated in JUnit.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/LastTest.log",
+        "origin": "build-w11-macos-intel/LastTest.log",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "94754e94bf27c06fd78e784eba0998d2ec01a2ba26d8758f01c02fc59989e8cd",
+        "stored_sha256": "94754e94bf27c06fd78e784eba0998d2ec01a2ba26d8758f01c02fc59989e8cd",
+        "bytes": 307533,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/job.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/job.log",
+      "bytes": 216239,
+      "sha256": "cb46e7b02a2c2181a00b98052780ad4433b76803aed6c1009f4a5980a2892624",
+      "reason": "Exact decoded native job log; preserve BOM and terminal newline as originally retained.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/job.log",
+        "origin": "build-w11-macos-intel/job.log",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "cb46e7b02a2c2181a00b98052780ad4433b76803aed6c1009f4a5980a2892624",
+        "stored_sha256": "cb46e7b02a2c2181a00b98052780ad4433b76803aed6c1009f4a5980a2892624",
+        "bytes": 216239,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": true,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/pluginval-vst3.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/pluginval-vst3.log",
+      "bytes": 7399,
+      "sha256": "eab71fcef73a2fb7ef32b4034f42794a918c2d9252c5683d44837d7ac4353529",
+      "reason": "Actual strictness 10 VST3 headless output, seed and final marker.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/pluginval-vst3.log",
+        "origin": "build-w11-macos-intel/pluginval-vst3.log",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "eab71fcef73a2fb7ef32b4034f42794a918c2d9252c5683d44837d7ac4353529",
+        "stored_sha256": "eab71fcef73a2fb7ef32b4034f42794a918c2d9252c5683d44837d7ac4353529",
+        "bytes": 7399,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/pluginval-au.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/pluginval-au.log",
+      "bytes": 7308,
+      "sha256": "c5d1b2562437c5f020ff11cb41be3ea70c1596a3c18cd3839813f0f6d4c7fb8d",
+      "reason": "Actual strictness 10 AU headless output, seed and warnings.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/pluginval-au.log",
+        "origin": "build-w11-macos-intel/pluginval-au.log",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "c5d1b2562437c5f020ff11cb41be3ea70c1596a3c18cd3839813f0f6d4c7fb8d",
+        "stored_sha256": "c5d1b2562437c5f020ff11cb41be3ea70c1596a3c18cd3839813f0f6d4c7fb8d",
+        "bytes": 7308,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/pluginval-au-gui.log",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/pluginval-au-gui.log",
+      "bytes": 7990,
+      "sha256": "0ea35b3eaaca555df2a88d383072751d8602aba02b06dfdff968e52cdba6a85c",
+      "reason": "Actual strictness 10 AU GUI output and editor checks.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/pluginval-au-gui.log",
+        "origin": "build-w11-macos-intel/pluginval-au-gui.log",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "0ea35b3eaaca555df2a88d383072751d8602aba02b06dfdff968e52cdba6a85c",
+        "stored_sha256": "0ea35b3eaaca555df2a88d383072751d8602aba02b06dfdff968e52cdba6a85c",
+        "bytes": 7990,
+        "transform": "Verbatim."
+      },
+      "byte_format": {
+        "utf8_bom": false,
+        "crlf_pairs": 0,
+        "terminal_newline": true
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/check-ci-gates.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/check-ci-gates.py",
+      "bytes": 6660,
+      "sha256": "ded0f68b0260af38a0e491fdac6f0bd9339b65c02653b5b55ed68a103a03c209",
+      "reason": "Exact final CI parser/reconciler; restore original input names for reproduction.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/check-ci-gates.py",
+        "origin": "build-w11-macos-intel/check-ci-gates.py",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "ded0f68b0260af38a0e491fdac6f0bd9339b65c02653b5b55ed68a103a03c209",
+        "stored_sha256": "ded0f68b0260af38a0e491fdac6f0bd9339b65c02653b5b55ed68a103a03c209",
+        "bytes": 6660,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/fetch-ci-evidence.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/fetch-ci-evidence.py",
+      "bytes": 2649,
+      "sha256": "5519008e0fd459e20354baf3dffc9bce69e54d968eeae09752d72b59ef01a260",
+      "reason": "Exact small-evidence artifact fetcher; API records can be restored from existing ci/native platform records.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/fetch-ci-evidence.py",
+        "origin": "build-w11-macos-intel/fetch-ci-evidence.py",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "5519008e0fd459e20354baf3dffc9bce69e54d968eeae09752d72b59ef01a260",
+        "stored_sha256": "5519008e0fd459e20354baf3dffc9bce69e54d968eeae09752d72b59ef01a260",
+        "bytes": 2649,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/verify-intel-download.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/verify-intel-download.py",
+      "bytes": 10226,
+      "sha256": "622d8ea7a752171731086ce34f96cb90b3e1c6b024c6d59cadd63300bcbc15ce",
+      "reason": "Exact archive verifier; original relative layout and pinned helper code are prerequisites.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/verify-intel-download.py",
+        "origin": "build-w11-macos-intel/verify-intel-download.py",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "622d8ea7a752171731086ce34f96cb90b3e1c6b024c6d59cadd63300bcbc15ce",
+        "stored_sha256": "622d8ea7a752171731086ce34f96cb90b3e1c6b024c6d59cadd63300bcbc15ce",
+        "bytes": 10226,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/ci-evidence-downloads.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/ci-evidence-downloads.json",
+      "bytes": 2165,
+      "sha256": "c1e2bf08c02e8db8351b50c129c19454223b54154324df75435e3c954410d80a",
+      "reason": "Binds raw text members to the small evidence artifact IDs, full ZIP hashes and sizes.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/ci-evidence-downloads.json",
+        "origin": "build-w11-macos-intel/ci-evidence-downloads.json",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "c1e2bf08c02e8db8351b50c129c19454223b54154324df75435e3c954410d80a",
+        "stored_sha256": "c1e2bf08c02e8db8351b50c129c19454223b54154324df75435e3c954410d80a",
+        "bytes": 2165,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/job.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/job.json",
+      "bytes": 5511,
+      "sha256": "b9b9caa250fb2e6c67d6a06c678c2a9f92de7037de0542a7d9cda9962a5090d5",
+      "reason": "One completed native job object provides exact named-step status to the parser.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/job.json",
+        "origin": "build-w11-macos-intel/job.json",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "b9b9caa250fb2e6c67d6a06c678c2a9f92de7037de0542a7d9cda9962a5090d5",
+        "stored_sha256": "b9b9caa250fb2e6c67d6a06c678c2a9f92de7037de0542a7d9cda9962a5090d5",
+        "bytes": 5511,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/README.md",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/README.md",
+      "bytes": 4464,
+      "sha256": "47929ba787f311ba5e2644e13faeb349ba8ec6edd531a6f39e42966099f73c1a",
+      "reason": "Reviewer method, preservation details and explicit platform-only qualification.",
+      "status": "EXISTING_COMPLETED_REVIEW_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/README.md",
+        "origin": "build-w11-macos-intel/README.md",
+        "phase": "Completed assignment 53 source 6d3/run 45044040694/attempt 1 evidence; scoped result remains exactly as recorded.",
+        "origin_sha256": "47929ba787f311ba5e2644e13faeb349ba8ec6edd531a6f39e42966099f73c1a",
+        "stored_sha256": "47929ba787f311ba5e2644e13faeb349ba8ec6edd531a6f39e42966099f73c1a",
+        "bytes": 4464,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 52,
+      "origin_path": "build-w11-macos-arm/initial-job.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/preparation/initial-job.json",
+      "bytes": 4729,
+      "sha256": "c41253d36b3fdf84119decd3b9e0cdf77113889693e9e5eda1b26a8576e8bade",
+      "reason": "Original incomplete job snapshot preserves preparation timing; identical later observation is omitted.",
+      "status": "HISTORICAL_PENDING_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-arm64/preparation/initial-job.json",
+        "origin": "build-w11-macos-arm/initial-job.json",
+        "phase": "Historical preparation/pending record for assignment 52; not final qualification and not relabeled after completion.",
+        "origin_sha256": "c41253d36b3fdf84119decd3b9e0cdf77113889693e9e5eda1b26a8576e8bade",
+        "stored_sha256": "c41253d36b3fdf84119decd3b9e0cdf77113889693e9e5eda1b26a8576e8bade",
+        "bytes": 4729,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/pending-api-snapshot.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/preparation/pending-api-snapshot.json",
+      "bytes": 21381,
+      "sha256": "153698f2ee47d202c7fa34a98301e2b35ec52636159cee4337e695f795186044",
+      "reason": "Original Intel preparation snapshot remains pending, even after later successful results.",
+      "status": "HISTORICAL_PREPARATION_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/preparation/pending-api-snapshot.json",
+        "origin": "build-w11-macos-intel/pending-api-snapshot.json",
+        "phase": "Historical preparation/pending record for assignment 53; not final qualification and not relabeled after completion.",
+        "origin_sha256": "153698f2ee47d202c7fa34a98301e2b35ec52636159cee4337e695f795186044",
+        "stored_sha256": "153698f2ee47d202c7fa34a98301e2b35ec52636159cee4337e695f795186044",
+        "bytes": 21381,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/preparation-check-ci-gates.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/preparation/preparation-check-ci-gates.py",
+      "bytes": 3312,
+      "sha256": "3d69a1eb86c293ce5bb958e1797da3d5160a19869d1f2086cae5b864427f0db0",
+      "reason": "Original unexecuted preparation parser, before modern CTest wording reconciliation.",
+      "status": "HISTORICAL_PREPARATION_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/preparation/preparation-check-ci-gates.py",
+        "origin": "build-w11-macos-intel/preparation-check-ci-gates.py",
+        "phase": "Historical preparation/pending record for assignment 53; not final qualification and not relabeled after completion.",
+        "origin_sha256": "3d69a1eb86c293ce5bb958e1797da3d5160a19869d1f2086cae5b864427f0db0",
+        "stored_sha256": "3d69a1eb86c293ce5bb958e1797da3d5160a19869d1f2086cae5b864427f0db0",
+        "bytes": 3312,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 53,
+      "origin_path": "build-w11-macos-intel/preparation-parser-adjustment.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/preparation/preparation-parser-adjustment.json",
+      "bytes": 991,
+      "sha256": "6cae4b03654b4a115dd30e64f7a240495af4f19f65e01ab0dd4652a3b738c870",
+      "reason": "Records why the parser changed, original/final hashes, no native retry, and no test failure claim.",
+      "status": "HISTORICAL_PREPARATION_RECORD",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/macos-x86_64/preparation/preparation-parser-adjustment.json",
+        "origin": "build-w11-macos-intel/preparation-parser-adjustment.json",
+        "phase": "Historical preparation/pending record for assignment 53; not final qualification and not relabeled after completion.",
+        "origin_sha256": "6cae4b03654b4a115dd30e64f7a240495af4f19f65e01ab0dd4652a3b738c870",
+        "stored_sha256": "6cae4b03654b4a115dd30e64f7a240495af4f19f65e01ab0dd4652a3b738c870",
+        "bytes": 991,
+        "transform": "Verbatim."
+      }
+    },
+    {
+      "assignment": 54,
+      "origin_path": "build-w12-linux/summary.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/preparation/summary.json",
+      "bytes": 1995,
+      "sha256": "a918f4542feb79542bfd2e7edf3c5e5b70a289129e50df0d8ccb3de839b60b58",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/linux-x86_64/preparation/summary.json",
+        "origin": "build-w12-linux/summary.json",
+        "phase": "Historical preparation/pending record for assignment 54; not final qualification and not relabeled after completion.",
+        "origin_sha256": "a918f4542feb79542bfd2e7edf3c5e5b70a289129e50df0d8ccb3de839b60b58",
+        "stored_sha256": "a918f4542feb79542bfd2e7edf3c5e5b70a289129e50df0d8ccb3de839b60b58",
+        "bytes": 1995,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-linux/summary.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-linux/summary.json"
+    },
+    {
+      "assignment": 54,
+      "origin_path": "build-w12-linux/ctest-reporting-smoke.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/preparation/ctest-reporting-smoke.json",
+      "bytes": 1869,
+      "sha256": "bbf296d0f9ab4c2765c3add69a5929e8abf7ba35c943183e4efb7f8e7828aa17",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/linux-x86_64/preparation/ctest-reporting-smoke.json",
+        "origin": "build-w12-linux/ctest-reporting-smoke.json",
+        "phase": "Historical preparation/pending record for assignment 54; not final qualification and not relabeled after completion.",
+        "origin_sha256": "bbf296d0f9ab4c2765c3add69a5929e8abf7ba35c943183e4efb7f8e7828aa17",
+        "stored_sha256": "bbf296d0f9ab4c2765c3add69a5929e8abf7ba35c943183e4efb7f8e7828aa17",
+        "bytes": 1869,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-linux/ctest-reporting-smoke.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-linux/ctest-reporting-smoke.json"
+    },
+    {
+      "assignment": 54,
+      "origin_path": "build-w12-linux/historical-crash-negative-control.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/preparation/historical-crash-negative-control.json",
+      "bytes": 529,
+      "sha256": "5117fe04029186c8aef2f6af4011dfdc085f46040fb980ddb3ac0fb2e861f1b5",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/linux-x86_64/preparation/historical-crash-negative-control.json",
+        "origin": "build-w12-linux/historical-crash-negative-control.json",
+        "phase": "Historical preparation/pending record for assignment 54; not final qualification and not relabeled after completion.",
+        "origin_sha256": "5117fe04029186c8aef2f6af4011dfdc085f46040fb980ddb3ac0fb2e861f1b5",
+        "stored_sha256": "5117fe04029186c8aef2f6af4011dfdc085f46040fb980ddb3ac0fb2e861f1b5",
+        "bytes": 529,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-linux/historical-crash-negative-control.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-linux/historical-crash-negative-control.json"
+    },
+    {
+      "assignment": 55,
+      "origin_path": "build-w12-ci-auditions/initial-preparation/summary.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/auditions/preparation/initial-summary.json",
+      "bytes": 1939,
+      "sha256": "7ea7a46ba2dae4b2bbadab20e4b1504949d7824d0eee34f08f3f406a88aa2a3c",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/auditions/preparation/initial-summary.json",
+        "origin": "build-w12-ci-auditions/initial-preparation/summary.json",
+        "phase": "Historical preparation/pending record for assignment 55; not final qualification and not relabeled after completion.",
+        "origin_sha256": "7ea7a46ba2dae4b2bbadab20e4b1504949d7824d0eee34f08f3f406a88aa2a3c",
+        "stored_sha256": "7ea7a46ba2dae4b2bbadab20e4b1504949d7824d0eee34f08f3f406a88aa2a3c",
+        "bytes": 1939,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-ci-auditions/initial-preparation/summary.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-ci-auditions/initial-preparation/summary.json"
+    },
+    {
+      "assignment": 55,
+      "origin_path": "build-w12-ci-auditions/initial-preparation/verify-ci-auditions.py",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/auditions/preparation/initial-verifier.py",
+      "bytes": 14652,
+      "sha256": "d200581ac760ac79b12f01ba948389356dd0dca5f594990978769d1724141909",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/auditions/preparation/initial-verifier.py",
+        "origin": "build-w12-ci-auditions/initial-preparation/verify-ci-auditions.py",
+        "phase": "Historical preparation/pending record for assignment 55; not final qualification and not relabeled after completion.",
+        "origin_sha256": "d200581ac760ac79b12f01ba948389356dd0dca5f594990978769d1724141909",
+        "stored_sha256": "d200581ac760ac79b12f01ba948389356dd0dca5f594990978769d1724141909",
+        "bytes": 14652,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-ci-auditions/initial-preparation/verify-ci-auditions.py",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-ci-auditions/initial-preparation/verify-ci-auditions.py"
+    },
+    {
+      "assignment": 55,
+      "origin_path": "build-w12-ci-auditions/publisher-pin-review.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/auditions/preparation/publisher-pin-review.json",
+      "bytes": 2847,
+      "sha256": "5c5937b501b277777738dce5c597602645961278410bc7aa0a90a67ff44497d8",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/auditions/preparation/publisher-pin-review.json",
+        "origin": "build-w12-ci-auditions/publisher-pin-review.json",
+        "phase": "Historical preparation/pending record for assignment 55; not final qualification and not relabeled after completion.",
+        "origin_sha256": "5c5937b501b277777738dce5c597602645961278410bc7aa0a90a67ff44497d8",
+        "stored_sha256": "5c5937b501b277777738dce5c597602645961278410bc7aa0a90a67ff44497d8",
+        "bytes": 2847,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-ci-auditions/publisher-pin-review.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-ci-auditions/publisher-pin-review.json"
+    },
+    {
+      "assignment": 55,
+      "origin_path": "build-w12-ci-auditions/publisher-note-change.diff",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/auditions/preparation/publisher-note-change.diff",
+      "bytes": 1753,
+      "sha256": "6c9ea67f4838cb149fddaba03e254c5815a89f8313db20e29af3a6f34347b53d",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/auditions/preparation/publisher-note-change.diff",
+        "origin": "build-w12-ci-auditions/publisher-note-change.diff",
+        "phase": "Historical preparation/pending record for assignment 55; not final qualification and not relabeled after completion.",
+        "origin_sha256": "6c9ea67f4838cb149fddaba03e254c5815a89f8313db20e29af3a6f34347b53d",
+        "stored_sha256": "6c9ea67f4838cb149fddaba03e254c5815a89f8313db20e29af3a6f34347b53d",
+        "bytes": 1753,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-ci-auditions/publisher-note-change.diff",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-ci-auditions/publisher-note-change.diff"
+    },
+    {
+      "assignment": 56,
+      "origin_path": "build-w12-public-release/prepared-summary.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/public-release/preparation/prepared-summary.json",
+      "bytes": 1288,
+      "sha256": "c788ee3f612ff6aa1e63f4cbe8f6ab372078b0fe12e37ace9797e956b933e9eb",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/public-release/preparation/prepared-summary.json",
+        "origin": "build-w12-public-release/prepared-summary.json",
+        "phase": "Historical preparation/pending record for assignment 56; not final qualification and not relabeled after completion.",
+        "origin_sha256": "c788ee3f612ff6aa1e63f4cbe8f6ab372078b0fe12e37ace9797e956b933e9eb",
+        "stored_sha256": "c788ee3f612ff6aa1e63f4cbe8f6ab372078b0fe12e37ace9797e956b933e9eb",
+        "bytes": 1288,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-public-release/prepared-summary.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-public-release/prepared-summary.json"
+    },
+    {
+      "assignment": 57,
+      "origin_path": "build-w12-installation-review/summary.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/installation/preparation/summary.json",
+      "bytes": 1636,
+      "sha256": "b2ff37f92298506c223bdd75d7ff4b01cb232262f79a59313da3cdfffe57863c",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/installation/preparation/summary.json",
+        "origin": "build-w12-installation-review/summary.json",
+        "phase": "Historical preparation/pending record for assignment 57; not final qualification and not relabeled after completion.",
+        "origin_sha256": "b2ff37f92298506c223bdd75d7ff4b01cb232262f79a59313da3cdfffe57863c",
+        "stored_sha256": "b2ff37f92298506c223bdd75d7ff4b01cb232262f79a59313da3cdfffe57863c",
+        "bytes": 1636,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-installation-review/summary.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-installation-review/summary.json"
+    },
+    {
+      "assignment": 57,
+      "origin_path": "build-w12-installation-review/source-review.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/installation/preparation/source-review.json",
+      "bytes": 12568,
+      "sha256": "99d8d18f1c6c4af020298b5ead337a587a3c45a03e92dc2e266d34f520865ab5",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/installation/preparation/source-review.json",
+        "origin": "build-w12-installation-review/source-review.json",
+        "phase": "Historical preparation/pending record for assignment 57; not final qualification and not relabeled after completion.",
+        "origin_sha256": "99d8d18f1c6c4af020298b5ead337a587a3c45a03e92dc2e266d34f520865ab5",
+        "stored_sha256": "99d8d18f1c6c4af020298b5ead337a587a3c45a03e92dc2e266d34f520865ab5",
+        "bytes": 12568,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-installation-review/source-review.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w12-installation-review/source-review.json"
+    },
+    {
+      "assignment": 59,
+      "origin_path": "build-w13-release-docs/preparation-audit.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/public-docs/preparation/preparation-audit.json",
+      "bytes": 17743,
+      "sha256": "035b65f7c1342ecd737988fbbb16c7ef57cc2d7c4391daadd969d8566faf643b",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/public-docs/preparation/preparation-audit.json",
+        "origin": "build-w13-release-docs/preparation-audit.json",
+        "phase": "Historical preparation/pending record for assignment 59; not final qualification and not relabeled after completion.",
+        "origin_sha256": "035b65f7c1342ecd737988fbbb16c7ef57cc2d7c4391daadd969d8566faf643b",
+        "stored_sha256": "035b65f7c1342ecd737988fbbb16c7ef57cc2d7c4391daadd969d8566faf643b",
+        "bytes": 17743,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w13-release-docs/preparation-audit.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w13-release-docs/preparation-audit.json"
+    },
+    {
+      "assignment": 59,
+      "origin_path": "build-w13-release-docs/rebase-notes.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/public-docs/preparation/rebase-notes.json",
+      "bytes": 640,
+      "sha256": "1473b6b23945c90e83507d29469c7c2321dd4efcdb299efa698ae927b6e1d94a",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/public-docs/preparation/rebase-notes.json",
+        "origin": "build-w13-release-docs/rebase-notes.json",
+        "phase": "Historical preparation/pending record for assignment 59; not final qualification and not relabeled after completion.",
+        "origin_sha256": "1473b6b23945c90e83507d29469c7c2321dd4efcdb299efa698ae927b6e1d94a",
+        "stored_sha256": "1473b6b23945c90e83507d29469c7c2321dd4efcdb299efa698ae927b6e1d94a",
+        "bytes": 640,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w13-release-docs/rebase-notes.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w13-release-docs/rebase-notes.json"
+    },
+    {
+      "assignment": 60,
+      "origin_path": "build-w13-acceptance/acceptance-plan.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/acceptance/preparation/acceptance-plan.json",
+      "bytes": 8247,
+      "sha256": "aac836b71794746f6e6dc0907a98bcc1b0c65b586cfb232a58247f3220bc28a8",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/acceptance/preparation/acceptance-plan.json",
+        "origin": "build-w13-acceptance/acceptance-plan.json",
+        "phase": "Historical preparation/pending record for assignment 60; not final qualification and not relabeled after completion.",
+        "origin_sha256": "aac836b71794746f6e6dc0907a98bcc1b0c65b586cfb232a58247f3220bc28a8",
+        "stored_sha256": "aac836b71794746f6e6dc0907a98bcc1b0c65b586cfb232a58247f3220bc28a8",
+        "bytes": 8247,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w13-acceptance/acceptance-plan.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w13-acceptance/acceptance-plan.json"
+    },
+    {
+      "assignment": 60,
+      "origin_path": "build-w13-acceptance/preparation-review.json",
+      "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/acceptance/preparation/preparation-review.json",
+      "bytes": 6544,
+      "sha256": "2186777b915f08c7ab9531ba3ec5be8c226cd179cd7ecae51b06c61cd6ca4d50",
+      "reason": "Preserve the original pending/preparation or parser/pin-review scope without converting it into final qualification.",
+      "status": "PREPARATION_ONLY_FINAL_RESULT_PENDING",
+      "copy_transform": "Verbatim bytes; do not normalize BOM, CRLF, terminal newline, absolute paths, timestamps or status wording.",
+      "manifest_entry": {
+        "path": "final-ci/acceptance/preparation/preparation-review.json",
+        "origin": "build-w13-acceptance/preparation-review.json",
+        "phase": "Historical preparation/pending record for assignment 60; not final qualification and not relabeled after completion.",
+        "origin_sha256": "2186777b915f08c7ab9531ba3ec5be8c226cd179cd7ecae51b06c61cd6ca4d50",
+        "stored_sha256": "2186777b915f08c7ab9531ba3ec5be8c226cd179cd7ecae51b06c61cd6ca4d50",
+        "bytes": 6544,
+        "transform": "Verbatim."
+      },
+      "pinned_snapshot_path": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w13-acceptance/preparation-review.json",
+      "copy_from_after_origin_changes": "build-w12-team-ledger/input-snapshots/final-ci-preparation/build-w13-acceptance/preparation-review.json"
+    }
+  ],
+  "exact_byte_aliases": [
+    {
+      "origin_path": "build-w11-macos-arm/run.json",
+      "archived_once_at": "docs/preset-evidence/2026.11.1/final-ci/shared/run-before-linux-completion.json",
+      "bytes": 15243,
+      "sha256": "f3f3c02d6465d7b7e92e2945e4aca963f23aaca9dee78a59f3d852901775b98c",
+      "reason": "Exact duplicate bytes; restore original path from this one archived copy."
+    },
+    {
+      "origin_path": "build-w11-macos-intel/run.json",
+      "archived_once_at": "docs/preset-evidence/2026.11.1/final-ci/shared/run-before-linux-completion.json",
+      "bytes": 15243,
+      "sha256": "f3f3c02d6465d7b7e92e2945e4aca963f23aaca9dee78a59f3d852901775b98c",
+      "reason": "Exact duplicate bytes; restore original path from this one archived copy."
+    },
+    {
+      "origin_path": "build-w11-macos-intel/pluginval-download.json",
+      "archived_once_at": "docs/preset-evidence/2026.11.1/final-ci/shared/macos-pluginval-download.json",
+      "bytes": 694,
+      "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c",
+      "reason": "Exact duplicate bytes; restore original path from this one archived copy."
+    },
+    {
+      "origin_path": "build-w11-macos-intel/skip-source.json",
+      "archived_once_at": "docs/preset-evidence/2026.11.1/final-ci/shared/macos-skip-source.json",
+      "bytes": 2840,
+      "sha256": "1e820397c6fdc82d04e79e249ebf91bfa55eb6d96a95dcc9e39339924a59f4e7",
+      "reason": "Exact duplicate bytes; restore original path from this one archived copy."
+    },
+    {
+      "origin_path": "build-w11-macos-arm/last-observed-job.json",
+      "archived_once_at": "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/preparation/initial-job.json",
+      "bytes": 4729,
+      "sha256": "c41253d36b3fdf84119decd3b9e0cdf77113889693e9e5eda1b26a8576e8bade",
+      "reason": "Exact duplicate bytes; restore original path from this one archived copy."
+    }
+  ],
+  "pending_final_slots": [
+    {
+      "assignment": 54,
+      "directory": "build-w12-linux",
+      "destination": "linux-x86_64",
+      "status": "PENDING_ACTUAL_FINAL_REVIEW_RESULT",
+      "expected_records": [
+        {
+          "origin_path": "build-w12-linux/artifact-proof.json",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/artifact-proof.json",
+          "exists_at_plan_time": false,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-linux/ci-proof.json",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json",
+          "exists_at_plan_time": false,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-linux/check-ci-gates.py",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/check-ci-gates.py",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-linux/verify-linux-download.py",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/verify-linux-download.py",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-linux/common.py",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/common.py",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-linux/builder-job.log",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/builder-job.log",
+          "exists_at_plan_time": false,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-linux/validator-job.log",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/validator-job.log",
+          "exists_at_plan_time": false,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        }
+      ],
+      "reason": "Select actual extracted CTest JUnit/LastTest and named validator logs when produced; capture raw zero/nonzero exit history and any internal retries without relabeling."
+    },
+    {
+      "assignment": 55,
+      "directory": "build-w12-ci-auditions",
+      "destination": "auditions",
+      "status": "PENDING_ACTUAL_FINAL_REVIEW_RESULT",
+      "expected_records": [
+        {
+          "origin_path": "build-w12-ci-auditions/artifact-proof.json",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json",
+          "exists_at_plan_time": false,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-ci-auditions/verify-ci-auditions.py",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/auditions/verify-ci-auditions.py",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        }
+      ],
+      "reason": "Select the actual compact provenance/checksum/metrics records when available, excluding WAVs, ZIPs, duplicate full inventories and capture binaries."
+    },
+    {
+      "assignment": 56,
+      "directory": "build-w12-public-release",
+      "destination": "public-release",
+      "status": "PENDING_ACTUAL_FINAL_REVIEW_RESULT",
+      "expected_records": [
+        {
+          "origin_path": "build-w12-public-release/observed/summary.json",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/public-release/observed/summary.json",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-public-release/verify-public-release.py",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/public-release/verify-public-release.py",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        }
+      ],
+      "reason": "Require actual seven public asset GET results and final tag/receipt identity. Existing observed/summary.json is only an earlier 404; do not archive it as final. Select actual release-provenance.json and SHA256SUMS receipts after publication."
+    },
+    {
+      "assignment": 57,
+      "directory": "build-w12-installation-review",
+      "destination": "installation",
+      "status": "PENDING_ACTUAL_FINAL_REVIEW_RESULT",
+      "expected_records": [
+        {
+          "origin_path": "build-w12-installation-review/artifact-proof.json",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json",
+          "exists_at_plan_time": false,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w12-installation-review/inspect-installation-bundles.py",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/installation/inspect-installation-bundles.py",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        }
+      ],
+      "reason": "Actual combined four-platform archive/content result remains pending; preserve the older source-only review separately."
+    },
+    {
+      "assignment": 59,
+      "directory": "build-w13-release-docs",
+      "destination": "public-docs",
+      "status": "PENDING_ACTUAL_FINAL_REVIEW_RESULT",
+      "expected_records": [
+        {
+          "origin_path": "build-w13-release-docs/audit-release-docs.py",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/public-docs/audit-release-docs.py",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        },
+        {
+          "origin_path": "build-w13-release-docs/prepare-drafts.py",
+          "suggested_destination": "docs/preset-evidence/2026.11.1/final-ci/public-docs/prepare-drafts.py",
+          "exists_at_plan_time": true,
+          "bytes": null,
+          "sha256": null,
+          "status": "UNQUALIFIED_SLOT_REFRESH_FROM_ACTUAL_FINAL_OUTPUT"
+        }
+      ],
+      "reason": "Final audit receipt filename is not yet established. Add actual final link/asset/doc results after publication; omit the release templates once public docs contain their final text."
+    },
+    {
+      "assignment": 60,
+      "directory": "build-w13-acceptance",
+      "destination": "acceptance",
+      "status": "PENDING_ACTUAL_FINAL_REVIEW_RESULT",
+      "expected_records": [],
+      "reason": "Do not invent a final receipt filename or PASS. Add the actual final acceptance record and its exact reproducer/reviewer method when returned."
+    }
+  ],
+  "existing_records_to_complement_without_overwriting": [
+    "docs/preset-evidence/2026.11.1/ci/native-windows-x86_64.json",
+    "docs/preset-evidence/2026.11.1/ci/install-windows-x86_64.json",
+    "docs/preset-evidence/2026.11.1/ci/native-macos-arm64.json",
+    "docs/preset-evidence/2026.11.1/ci/install-macos-arm64.json",
+    "docs/preset-evidence/2026.11.1/ci/native-macos-x86_64.json",
+    "docs/preset-evidence/2026.11.1/ci/install-macos-x86_64.json",
+    "docs/preset-evidence/2026.11.1/ci/download-links.json",
+    "docs/preset-evidence/2026.11.1/ci/validator-input-downloads.json"
+  ],
+  "excluded": [
+    {
+      "pattern": "*.zip, *.tar.gz, *.wav, binaries and compiled Python caches",
+      "reason": "Raw products/audio stay outside the compact evidence repository; exact IDs/hashes remain in proofs."
+    },
+    {
+      "pattern": "Repeated run/artifact API files, polling snapshots, verification stdout and generated test-cases.json",
+      "reason": "Prefer one necessary API input, authoritative proof and raw JUnit/logs. Exact shared bytes are represented by aliases."
+    },
+    {
+      "pattern": "build-w10-windows/superseded-run.json",
+      "reason": "Existing ci/superseded-be460-*.json/log records preserve the superseded source failure; current proof retains the candidate identity."
+    },
+    {
+      "pattern": "Per-directory SHA256SUMS files",
+      "reason": "They enumerate original local working folders including intentionally omitted files; use the new dossier manifest for this selection instead."
+    },
+    {
+      "pattern": "Final-looking pending receipts and release templates",
+      "reason": "Do not convert prepared or 404 observations into final evidence; use slots and preserve original preparation separately."
+    }
+  ],
+  "reproduction_notes": [
+    "Archive exact original scripts, not rewritten archival-path variants. Restore their original build-w*/ relative paths in a fresh checkout before running.",
+    "Use exact_byte_aliases to recreate shared run.json and Mac metadata inputs without storing duplicate public copies.",
+    "Mac fetcher API records are available as named artifact objects in existing ci/native-macos-*.json. Restore expected filenames from those immutable-ID records before a new fetch.",
+    "Full archive verification requires reacquiring bytes with the recorded immutable IDs/digests or matching final release assets. Archives are intentionally not included.",
+    "Do not execute consolidation scripts inside the preserved archive: some write updated proof outputs. Use a separate reproduction workspace and retain new output provenance.",
+    "Raw decoded job logs retain their recorded byte format. Existing normalization, if disclosed by a producing reviewer, must not be concealed or repeated.",
+    "When any origin changes, compare its current hash with the map. Retain the recorded historical snapshot; add a distinct final record instead of silently rebinding the existing entry."
+  ]
+}

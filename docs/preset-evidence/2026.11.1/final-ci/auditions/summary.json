@@ -1,0 +1,168 @@
+{
+  "assignment": 55,
+  "status": "PASS_CI_AUDITION_ARTIFACT_VERIFIED",
+  "verified_utc": "2026-11-22T19:23:11.617984+00:00",
+  "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "linux_job_id": 137274597635,
+  "artifact_id": 14769036590,
+  "artifact_name": "cs80-curated-preset-audition-6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "artifact_bytes": 41014591,
+  "artifact_sha256": "9b164379e214d8a15e6907d94dd48842628c09d5970579386818596a0488e16b",
+  "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip",
+  "artifact_expires_at": "2027-02-20T16:28:38Z",
+  "final_artifact_downloaded": true,
+  "fresh_credential_free_get": true,
+  "final_artifact_verified": true,
+  "verification_exit_code": 0,
+  "verification_elapsed_seconds": 15.916931090003345,
+  "wav_count": 24,
+  "seconds": 117,
+  "stereo_frames": 5616000,
+  "manifest_entries_verified": 32,
+  "inventory_programs": 301,
+  "core_parameters_per_program": 190,
+  "inventory_sha256": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+  "parameter_digests_verified": 24,
+  "highest_peak_dbfs": -14.575833238762858,
+  "highest_peak_program": "Arp Poly",
+  "max_peak_error_db": 4.902840800014019e-09,
+  "max_rms_error_db": 4.777895412644284e-09,
+  "nonfinite_samples": 0,
+  "samples_at_or_over_full_scale": 0,
+  "publisher_sha256": "72ad916f9843a9019d17833c6722c64493e8875a3e7818e58dee5ed0c8d7a343",
+  "verifier_sha256": "5c5579b421098001501d3b076ae84086a608245f89e3cd60cf7ea4d173dc2d93",
+  "capture_binary_sha256_recorded_by_workflow": "e6a2845a5186572472c8fcbb1e86675e13b7b5f0f81521ee610269aa6839ccd7",
+  "capture_binary_hash_qualification": "The producing workflow records the hash of its capture executable. That executable is not included in the audition ZIP, so this check does not independently rehash its binary.",
+  "outer_zip": "build-coordination/artifact-cache/cs80-curated-preset-audition-6d3cc220edef5a4a2c7cd968ea8a786c7c83198c-14769036590.zip",
+  "artifact_proof": "artifact-proof.json",
+  "original_preparation_snapshot": "initial-preparation/",
+  "publisher_pin_review": "publisher-pin-review.json",
+  "overall_ci_status_at_verification": "in_progress",
+  "overall_ci_conclusion_at_verification": null,
+  "monitor_status": "Stopped after successful capture/upload and artifact verification; monitor-latest snapshots are now historical final observations for this assignment.",
+  "qualification": "Verified actual CI-produced core audition bytes. This is not an all-platform/pluginval completion certificate, a listening verdict, hardware/acoustic equivalence, or arbitrary DAW qualification. Earlier local99f5 evidence retains its own provenance.",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "67c696bf7c9496da5d1e51fb0da5edf09b20bc5848b02def8f4887738fa11cf8",
+      "bytes": 5592
+    },
+    {
+      "path": "artifact-api.json",
+      "sha256": "7df41ef54b75817cafe1ba101087ece58d67ad22612c49ce4aea19ffacc297b2",
+      "bytes": 842
+    },
+    {
+      "path": "artifact-proof.json",
+      "sha256": "6a709a3e180abccdc2054b0a12c5aca92be84da0256f46df21dafc65e6026c0b",
+      "bytes": 17352
+    },
+    {
+      "path": "last-observed-artifacts.json",
+      "sha256": "f7417e1fb877d3f5934f143cc38ad9e2905476e8f5ac6776507d09441efcd6f6",
+      "bytes": 42
+    },
+    {
+      "path": "last-observed-jobs.json",
+      "sha256": "5d160294edec190895804ae44aec84a5fd640b4455c65ac13003d43bd14b23f8",
+      "bytes": 19664
+    },
+    {
+      "path": "last-observed-linux-job.json",
+      "sha256": "9cadaa0b80345215804775ba0ccf423da5fdfdedd61965f434267240785bbe5c",
+      "bytes": 4165
+    },
+    {
+      "path": "last-observed-run.json",
+      "sha256": "c9ee4951a65822efc5979aeb7679580013eae34a6fcdd0e17be64144d3a6e5a0",
+      "bytes": 15243
+    },
+    {
+      "path": "linux-job-api.json",
+      "sha256": "e90ce050c8bd9e846d8efc1c84516e3e8efa1f3d690bb376aa627781ac8743b7",
+      "bytes": 4337
+    },
+    {
+      "path": "monitor-latest-artifacts.json",
+      "sha256": "92d5222fdb6332e09dcd91a899634ff152fe8372316974d4482561756adf53d5",
+      "bytes": 10619
+    },
+    {
+      "path": "monitor-latest-jobs.json",
+      "sha256": "0aaf99918873d9f62fa46da077258097e5351194502a08cce104dff3e33951f0",
+      "bytes": 25649
+    },
+    {
+      "path": "pending-refusal-current.log",
+      "sha256": "22ea8f0a1350cf14abf4fa03ea918c47097f2c6e901c0e923c6c2e029096a0e4",
+      "bytes": 635
+    },
+    {
+      "path": "pending-refusal.log",
+      "sha256": "22ea8f0a1350cf14abf4fa03ea918c47097f2c6e901c0e923c6c2e029096a0e4",
+      "bytes": 635
+    },
+    {
+      "path": "post-verification-jobs.json",
+      "sha256": "d98d9fff1ebd4d9eeac81f81b07f4123401574b99e8d7ce9579a21deecbb2178",
+      "bytes": 31998
+    },
+    {
+      "path": "pre-verification-README.md",
+      "sha256": "e335030183ac5fcd31cf733f1752cdc3d1449c140766f54c80fe1f9f52710ddc",
+      "bytes": 4681
+    },
+    {
+      "path": "pre-verification-summary.json",
+      "sha256": "66779ac386c115690f9b872037aaa040f156f5952403f0ac4da7137d11de8b9e",
+      "bytes": 2708
+    },
+    {
+      "path": "preparation-checks.json",
+      "sha256": "c23f8162808f99baa99a17e22f2b41a5a0a0ef2a7c7834a9fe415fc0537e24c3",
+      "bytes": 1019
+    },
+    {
+      "path": "publisher-note-change.diff",
+      "sha256": "6c9ea67f4838cb149fddaba03e254c5815a89f8313db20e29af3a6f34347b53d",
+      "bytes": 1753
+    },
+    {
+      "path": "publisher-pin-review.json",
+      "sha256": "5c5937b501b277777738dce5c597602645961278410bc7aa0a90a67ff44497d8",
+      "bytes": 2847
+    },
+    {
+      "path": "run-api.json",
+      "sha256": "f3f3c02d6465d7b7e92e2945e4aca963f23aaca9dee78a59f3d852901775b98c",
+      "bytes": 15243
+    },
+    {
+      "path": "verification-execution.json",
+      "sha256": "7f41d0a206e72afa4c10df5edc5c6f4af11b01f2bc2a0e42315ec7818acb72cc",
+      "bytes": 882
+    },
+    {
+      "path": "verification.log",
+      "sha256": "ece67d0982902c64f954d387bcefe6bdf4b9377ae0f151af3cdab609b8f32690",
+      "bytes": 245
+    },
+    {
+      "path": "verify-ci-auditions.py",
+      "sha256": "5c5579b421098001501d3b076ae84086a608245f89e3cd60cf7ea4d173dc2d93",
+      "bytes": 14652
+    }
+  ],
+  "subsequent_required_gate_failures": [
+    {
+      "job_id": 137324977642,
+      "job_name": "pluginval / Linux VST3 (strictness 10)",
+      "step": "Validate VST3 GUI under Xvfb",
+      "conclusion": "failure",
+      "completed_at": "2026-11-22T19:24:06Z"
+    }
+  ],
+  "subsequent_release_qualification": "Blocked: required Linux GUI validator step failed after the scoped audition artifact verification. No all-platform validation or publication pass is claimed."
+}

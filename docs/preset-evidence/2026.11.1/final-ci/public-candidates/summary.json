@@ -1,0 +1,231 @@
+{
+  "assignment": 56,
+  "status": "CANDIDATE_BYTES_VERIFIED_RELEASE_UNQUALIFIED",
+  "verified_at_utc": "2026-11-22T19:32:22.382858+00:00",
+  "binary_source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "build_run_id": 45044040694,
+  "build_run_attempt": 1,
+  "build_conclusion": "failure",
+  "release_qualified": false,
+  "public_release_tag": "presets-2026.11.1",
+  "public_release_tag_http_status": 404,
+  "publisher_run": {
+    "id": 45060638607,
+    "name": "Publish preset refinement 2026.11.1",
+    "path": ".github/workflows/publish-preset-refinement.yml",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45060638607",
+    "head_sha": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+    "event": "workflow_run",
+    "status": "completed",
+    "conclusion": "skipped",
+    "created_at": "2026-11-22T19:25:08Z",
+    "updated_at": "2026-11-22T19:25:09Z"
+  },
+  "publisher_jobs": [
+    {
+      "id": 137325593929,
+      "name": "publish",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "release_blocker": {
+    "validator_job_id": 137324977642,
+    "step": {
+      "name": "Validate VST3 GUI under Xvfb",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 8,
+      "started_at": "2026-11-22T19:23:47Z",
+      "completed_at": "2026-11-22T19:24:06Z"
+    },
+    "seed": "0x4369262",
+    "raw_returncode": -11,
+    "normalized_wrapper_exit": 139,
+    "success_markers": 1,
+    "raw_gate_proof_path": "build-w12-linux/ci-proof.json",
+    "raw_gate_proof_sha256": "e1b079482ff44858c345a1d68cd61a1ba8beabf11960d5ca756dbc8a67a2259a",
+    "termination_log_path": "build-w12-linux/validator-reports/pluginval-gui-core.log",
+    "termination_log_sha256": "a29764eddf095eb50b1b209bee76d14ec89c78d52f1a70f3e2f2aecc7dce9073"
+  },
+  "public_candidate_artifacts": [
+    {
+      "artifact_id": 14763872941,
+      "artifact_name": "cs80-windows-install-bundle",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:31:44.623029+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:05.549331+00:00",
+      "bytes": 6261285,
+      "sha256": "aa472ff6516371482b7e73f76dc2fbc58d15b52aa8eb86c91f62e091dac06ec8",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-windows-install-bundle-14763872941.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    },
+    {
+      "artifact_id": 14763761497,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:31:44.636789+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:05.470650+00:00",
+      "bytes": 14900540,
+      "sha256": "662f66e20a8658374b3d4d30102b698234e01bb99e3753a49206a04f99b201a7",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-macos-15-install-bundle-14763761497.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    },
+    {
+      "artifact_id": 14763644216,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:31:44.641299+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:06.357103+00:00",
+      "bytes": 16057766,
+      "sha256": "325b42beb55ca861b65e9f8416ec286a4b6061946181210fdb41d041e7d3cf1f",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-macos-15-intel-install-bundle-14763644216.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    },
+    {
+      "artifact_id": 14768807632,
+      "artifact_name": "cs80-linux-install-bundle",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:32:05.511861+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:15.806301+00:00",
+      "bytes": 13225022,
+      "sha256": "4295d202bacb20ab41e7a776290dac51cf4a7458abc66d185a86bc351efd4d30",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-linux-install-bundle-14768807632.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    },
+    {
+      "artifact_id": 14769036590,
+      "artifact_name": "cs80-curated-preset-audition-6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:32:05.653205+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:22.376439+00:00",
+      "bytes": 41014591,
+      "sha256": "9b164379e214d8a15e6907d94dd48842628c09d5970579386818596a0488e16b",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-curated-preset-audition-6d3cc220edef5a4a2c7cd968ea8a786c7c83198c-14769036590.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    }
+  ],
+  "metadata_reads": {
+    "run": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:27.039139+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45044040694",
+      "file": "run-api.json",
+      "sha256": "689ec2e78fdd28e1d2bcdb74723ef425aa22d4224ece7442c4adffe19669342e"
+    },
+    "release": {
+      "http_status": 404,
+      "observed_at_utc": "2026-11-22T19:31:27.040110+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/releases/tags/presets-2026.11.1"
+    },
+    "publisher-run": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:27.040696+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45060638607",
+      "file": "publisher-run-api.json",
+      "sha256": "f5dff79842b77d22ffbaf7408665ffae4db9cb3a2b2178892547816f776ee569"
+    },
+    "publisher-jobs": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:27.041698+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45060638607/jobs?per_page=100",
+      "file": "publisher-jobs-api.json",
+      "sha256": "85896309bb0c2013d9fcac81834202d4b85ebf144ee17869acc8a22229a322e1"
+    },
+    "failed-linux-validator-job": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:33.043081+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/137324977642",
+      "file": "failed-linux-validator-job-api.json",
+      "sha256": "8c6b398a4e49033203525f8d9d511c54cc98aca83441836e03b8d271463b8336"
+    },
+    "artifact-14763872941": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:33.071737+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941",
+      "file": "artifact-14763872941-api.json",
+      "sha256": "637a71aaf4a21b7eb7715438bccb0fe6e957e7d2df8d483230c0496b194c5247"
+    },
+    "artifact-14763761497": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:33.091183+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497",
+      "file": "artifact-14763761497-api.json",
+      "sha256": "e069e8fd4476b541be8a8715687730878f3b5df4dc42bb184ec4ab62897397ff"
+    },
+    "artifact-14763644216": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:33.103962+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216",
+      "file": "artifact-14763644216-api.json",
+      "sha256": "65ab4ff5f95dd125c9a864566947972faaf6a084bcdcd53ed7a24ab31c80c6f0"
+    },
+    "artifact-14768807632": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:37.970046+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632",
+      "file": "artifact-14768807632-api.json",
+      "sha256": "074fd81c1cf4ff97f6e3a85650f18b86b364ba5fabc7beff24db6209e0a94567"
+    },
+    "artifact-14769036590": {
+      "http_status": 200,
+      "observed_at_utc": "2026-11-22T19:31:37.999858+00:00",
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590",
+      "file": "artifact-14769036590-api.json",
+      "sha256": "a1740220db9f56bd3227fffd86988c4f241add7de9ad8764f500c3b4287daad9"
+    }
+  },
+  "original_strict_release_verifier_sha256": "d59337b09ab4739036c22b85458f65cdf9343f4c9298c836b07286823140179a",
+  "candidate_verifier_sha256": "bc6b7f7943e77c9b12bb80c8ccee717c081861ce6b32f83bd8febcce9e1cfb81",
+  "qualification": "Five actual pinned public artifact GETs matched fresh API metadata and cached CI artifact bytes. They remain candidate downloads from a FAILED first-attempt build; no combined release, seven release assets, successful overall CI, fix for the validator crash, signing, universal DAW support or listening verdict is claimed. The public prerelease is absent and the automatic publisher was skipped. No CI rerun, publication, product execution, extraction, duplicate download storage or production edit occurred."
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuites name="pluginval" tests="31" failures="0" errors="0" time="19.014">
+  <testsuite name="pluginval validate: CS-80 Reference.vst3" tests="31" failures="0"
+             errors="0" time="19.014" skipped="0" timestamp="2026-11-22T19:25:28.767Z">
+    <properties>
+      <property name="plugin_name" value="CS-80 Reference"/>
+      <property name="plugin_version" value="1.0.0"/>
+      <property name="plugin_format" value="VST3"/>
+      <property name="plugin_manufacturer" value="Reference Instruments"/>
+      <property name="strictness_level" value="10"/>
+      <property name="timeout_ms" value="120000"/>
+      <property name="random_seed" value="0x3ca4063"/>
+    </properties>
+    <testcase classname="pluginval.validate" name="Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3"
+              time="0.001"/>
+    <testcase classname="pluginval.validate" name="Open plugin (cold)" time="0.207"/>
+    <testcase classname="pluginval.validate" name="Open plugin (warm)" time="0.181"/>
+    <testcase classname="pluginval.validate" name="Plugin info" time="0.000"/>
+    <testcase classname="pluginval.validate" name="Plugin programs" time="0.000"/>
+    <testcase classname="pluginval.validate" name="Editor" time="0.203"/>
+    <testcase classname="pluginval.validate" name="Open editor whilst processing"
+              time="0.089"/>
+    <testcase classname="pluginval.validate" name="Audio processing" time="0.237"/>
+    <testcase classname="pluginval.validate" name="Non-releasing audio processing"
+              time="0.227"/>
+    <testcase classname="pluginval.validate" name="Plugin state" time="0.004"/>
+    <testcase classname="pluginval.validate" name="Plugin state restoration"
+              time="0.336"/>
+    <testcase classname="pluginval.validate" name="Discrete parameter state restoration"
+              time="0.073"/>
+    <testcase classname="pluginval.validate" name="Automation" time="0.095"/>
+    <testcase classname="pluginval.validate" name="Editor Automation" time="10.454"/>
+    <testcase classname="pluginval.validate" name="Automatable Parameters"
+              time="0.016"/>
+    <testcase classname="pluginval.validate" name="Parameters" time="0.016"/>
+    <testcase classname="pluginval.validate" name="Background thread state"
+              time="2.054"/>
+    <testcase classname="pluginval.validate" name="Parameter thread safety"
+              time="0.535"/>
+    <testcase classname="pluginval.validate" name="auval" time="0.000"/>
+    <testcase classname="pluginval.validate" name="vst3 validator" time="3.753"/>
+    <testcase classname="pluginval.validate" name="Ensuring that the locale does not change during execution"
+              time="0.076"/>
+    <testcase classname="pluginval.validate" name="Basic bus" time="0.003"/>
+    <testcase classname="pluginval.validate" name="Listing available buses"
+              time="0.003"/>
+    <testcase classname="pluginval.validate" name="Enabling all buses" time="0.000"/>
+    <testcase classname="pluginval.validate" name="Disabling non-main busses"
+              time="0.000"/>
+    <testcase classname="pluginval.validate" name="Restoring default layout"
+              time="0.004"/>
+    <testcase classname="pluginval.validate" name="Bus layout processing" time="0.022"/>
+    <testcase classname="pluginval.validate" name="Editor stress" time="0.110"/>
+    <testcase classname="pluginval.validate" name="Allocations during process"
+              time="0.068"/>
+    <testcase classname="pluginval.validate" name="Process called with a larger than prepared block size"
+              time="0.000"/>
+    <testcase classname="pluginval.validate" name="Fuzz parameters" time="0.247"/>
+  </testsuite>
+</testsuites>
