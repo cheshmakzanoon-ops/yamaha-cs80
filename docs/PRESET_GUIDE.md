@@ -182,8 +182,11 @@ application's version and saved-session format. The redesign changes factory voi
 their names, order and host program identities. Existing sessions keep their
 serialized sound: reload the corresponding Circuit factory program to hear
 its revised voicing. Save a user copy if you want to retain an edited version.
-If a host restores only a program number, or sends Program Change after restoring
-the saved state, that selection loads the current factory voicing at that number.
+A delivered factory selection by program number loads the current voicing at
+that address. VST3 changes sent only through the Program processing queue remain
+subject to a [documented controller dependency](PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification).
+Use **Library** to select the revised sound directly; serialized-state recall
+remains separate from factory selection.
 
 The **222-program Legacy library is frozen**: its original values and order
 remain intact. Host indexes 0–221 retain those Legacy identities; Circuit

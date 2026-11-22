@@ -196,8 +196,9 @@ parameters; that is a different count from the application layout.
 Saved sessions, user presets, A/B and browser Revert restore their serialized
 sound values. A saved factory index is metadata and does not reload the bank.
 Explicit factory selection or a later MIDI Program Change loads the current
-voicing at its stable address; a host saving only a program number therefore
-selects the revised sound. Startup remains Brass Swell I.
+voicing at its stable address. A host's program-number recall must reach the
+factory-selection path; VST3 Program processing-queue-only changes retain the
+controller dependency documented below. Startup remains Brass Swell I.
 [Restore control-flow review](preset-evidence/2026.11.1/compatibility/summary.json)
 
 A separate audio screen compared **45,150 pairs across all 301 programs** and

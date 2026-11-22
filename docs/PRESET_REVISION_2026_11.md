@@ -78,7 +78,10 @@ index or unassigned result. [Identity evidence](preset-evidence/2026.11/identity
 Saved sessions restore their serialized parameter values. Restoring their
 factory-name/index metadata does not reload the revised bank. Explicit factory
 selection or a later MIDI Program Change loads the new values at the stable
-address; a host saving only a program number therefore selects the new sound.
+address. A host's program-number recall must reach the factory-selection path;
+the later [VST3 wrapper review](PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification)
+documents a pre-existing controller dependency for processing-queue-only Program
+changes. Library selection does not use that limited route.
 The [state restoration](../src/plugin/PluginProcessor.cpp) and
 [library metadata code](../src/plugin/PluginProcessorLibrary.cpp) retain that
 distinction.

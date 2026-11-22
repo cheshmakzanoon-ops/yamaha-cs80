@@ -246,9 +246,11 @@ continue processing idle instances.
 - To hear the revised factory sounds, open **LIBRARY**, choose **Circuit** and
   select the desired program again. Existing sessions and user presets restore
   their saved parameter values; A/B and Revert use their stored snapshots. A
-  host that restores only a program number, or sends Program Change after state
-  restoration, selects the current factory voicing at that address. See the
-  bundled [preset guide](PRESET_GUIDE.md).
+  delivered factory selection by program number loads the current voicing at
+  that address. VST3 host changes sent only through the Program processing queue
+  retain a [documented controller dependency](PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification);
+  **Library** selection does not use that limited route. See the bundled
+  [preset guide](PRESET_GUIDE.md).
 - To uninstall, remove only the installed **CS-80 Reference** bundles/application
   you copied. Do not remove shared plug-in folders or user presets. Restoring a
   backup does not prove old/new session audio is identical.

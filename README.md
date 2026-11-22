@@ -127,8 +127,9 @@ explains these modes, registrations and playing techniques.
 
 Existing saved sessions retain their serialized sound. Program names, order and
 host indexes are unchanged, and all **222 Legacy programs** retain their original
-data. Reload a Circuit factory program to hear its revised voicing; a host that
-restores only a program number selects the current factory sound. Instrument
+data. Reload a Circuit factory program from **Library** to hear its revised
+voicing. VST3 host program automation has a [documented controller dependency](docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification);
+Library selection does not use that limited route. Instrument
 names describe synthesized interpretations; the measurements verify software
 behavior rather than an acoustic-instrument or physical-hardware match.
 
