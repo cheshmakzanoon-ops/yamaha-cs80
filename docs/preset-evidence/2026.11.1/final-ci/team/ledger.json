@@ -2,16 +2,12 @@
   "schema": 2,
   "assignment": 58,
   "revision": "2026.11.1",
-  "recorded_at_utc": "2026-11-22T19:39:42.713646+00:00",
-  "status": "CURRENT_TASK_OUTCOMES_RECORDED_FINAL_HANDOFF_PENDING_RELEASE_BLOCKED",
+  "recorded_at_utc": "2026-11-22T19:55:44.936953+00:00",
+  "status": "ALL_60_ASSIGNMENTS_COMPLETED_CANDIDATE_HANDOFF_VERIFIED_RELEASE_BLOCKED",
   "actual_distinct_agents": 60,
-  "completed_assignments": 57,
-  "pending_assignments": [
-    58,
-    59,
-    60
-  ],
-  "all60_completed": false,
+  "completed_assignments": 60,
+  "pending_assignments": [],
+  "all60_completed": true,
   "completion_means": "The assigned investigation/review returned a scoped result, including negative results; it does not mean every required gate passed.",
   "build": {
     "source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
@@ -205,7 +201,7 @@
         "build-w02-plucks/summary.txt"
       ],
       "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
-      "outcome_at_review": "Raises the existing upper sine and rank balance; measured 4\u201320 ms upper/body increases are 8.85\u20138.99 dB for Harp and 8.08\u20138.21 dB for Kalimba.",
+      "outcome_at_review": "Raises the existing upper sine and rank balance; measured 4–20 ms upper/body increases are 8.85–8.99 dB for Harp and 8.08–8.21 dB for Kalimba.",
       "assignment_completed": true,
       "review_outcome": "Scoped outcome recorded; see evidence"
     },
@@ -452,7 +448,7 @@
         "build-w04-wind-performance/summary.json"
       ],
       "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
-      "outcome_at_review": "Checks 24 captures/96 seconds of channel/poly pressure, repeats, overlap and release. All voices retire; highest sample peak is \u22127.824 dBFS.",
+      "outcome_at_review": "Checks 24 captures/96 seconds of channel/poly pressure, repeats, overlap and release. All voices retire; highest sample peak is −7.824 dBFS.",
       "assignment_completed": true,
       "review_outcome": "Scoped outcome recorded; see evidence"
     },
@@ -722,7 +718,7 @@
         "build-w08-long-sustain/summary.json"
       ],
       "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
-      "outcome_at_review": "96 checks across 12 eight-note captures/216 seconds include ten-second holds and eight-second releases; maximum sample peak \u22122.939 dBFS and bounded voice retirement.",
+      "outcome_at_review": "96 checks across 12 eight-note captures/216 seconds include ten-second holds and eight-second releases; maximum sample peak −2.939 dBFS and bounded voice retirement.",
       "assignment_completed": true,
       "review_outcome": "Scoped outcome recorded; see evidence"
     },
@@ -997,7 +993,7 @@
       "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
       "outcome": "Completed actual Linux native/archive verification; required randomized GUI validator failed post-SUCCESS with raw -11; release qualification blocked.",
       "evidence": "build-w12-linux/summary.json",
-      "outcome_at_review": "Completes the actual Linux review: 578 CTest cases pass and one is skipped out of 579; the 20-entry archive and two ELF images verify. The required randomized GUI lane prints SUCCESS then crashes, raw \u221211/wrapper 139, seed 0x4369262. Zero internal retries; successful same-seed diagnostics do not erase the failed gate.",
+      "outcome_at_review": "Completes the actual Linux review: 578 CTest cases pass and one is skipped out of 579; the 20-entry archive and two ELF images verify. The required randomized GUI lane prints SUCCESS then crashes, raw −11/wrapper 139, seed 0x4369262. Zero internal retries; successful same-seed diagnostics do not erase the failed gate.",
       "assignment_completed": true,
       "review_outcome": "Completed review; required validator gate FAIL; release BLOCKED"
     },
@@ -1068,57 +1064,77 @@
       "assignment": 58,
       "wave": 12,
       "agent": "/root/w12_team_source_ledger",
-      "status": "prepared_awaiting_final_outcomes",
+      "status": "completed",
       "objective": "Account for this team and source scope",
-      "evidence_phase": "draft refreshed; final ledger refresh pending",
-      "repository_evidence": [],
+      "evidence_phase": "completed scoped review; original release acceptance remains blocked",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/team/review.json",
+        "docs/preset-evidence/2026.11.1/final-ci/team/source-accounting.json"
+      ],
       "local_evidence": [
         "build-w12-team-ledger/final-source-accounting.json"
       ],
       "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
-      "outcome_at_review": "Refreshes this 60-agent ledger and the failed-build outcome, preserving 57 completed assignments and three pending final reviews. The dated working archive has 516 matching payloads; 262 earlier entries/payloads remain unchanged and the README index is amended. Final documentation commit/integration review remains pending.",
-      "assignment_completed": false,
-      "review_outcome": "Accounting prepared; final integration pending"
+      "outcome_at_review": "Completed source and team accounting and exact integration-map review at the dated 516-payload snapshot; root integrated its report while preserving that historical scope.",
+      "assignment_completed": true,
+      "review_outcome": "Completed scoped work; release unqualified"
     },
     {
       "assignment": 59,
       "wave": 13,
       "agent": "/root/w13_release_links_docs",
-      "status": "prepared_awaiting_final_outcomes",
+      "status": "completed",
       "objective": "Review release links and public documentation",
-      "evidence_phase": "running; final link review pending",
-      "repository_evidence": [],
+      "evidence_phase": "completed scoped review; original release acceptance remains blocked",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/public-documents/published-candidate-verification.json"
+      ],
       "local_evidence": [
         "build-w13-release-docs/preparation-audit.json"
       ],
       "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
-      "outcome_at_review": "Prepares and integrates truthful public candidate-download documentation after the five-GET proof. README, refinement and distribution guidance must identify the failed build, skipped publisher, expiring candidates and preserved original failure. Final public-document handoff review remains pending.",
-      "assignment_completed": false,
-      "review_outcome": "Final public-document review pending"
+      "outcome_at_review": "Completed actual published-document/link review of 814c9014:17 HTTP200 hash-matched document GETs and five HTTP206 four-byte ZIP availability probes. Public release endpoint404; release remains unqualified.",
+      "assignment_completed": true,
+      "review_outcome": "Completed scoped work; release unqualified"
     },
     {
       "assignment": 60,
       "wave": 13,
       "agent": "/root/w13_final_acceptance",
-      "status": "prepared_awaiting_final_outcomes",
+      "status": "completed",
       "objective": "Perform final independent acceptance",
-      "evidence_phase": "running; final acceptance pending",
+      "evidence_phase": "completed scoped review; original release acceptance remains blocked",
       "repository_evidence": [
-        "docs/preset-evidence/2026.11.1/final-ci/failure-review/summary.json",
-        "docs/preset-evidence/2026.11.1/final-ci/linux-test-duration/summary.json"
+        "docs/preset-evidence/2026.11.1/final-ci/acceptance/final-review.json"
       ],
       "local_evidence": [
         "build-w13-acceptance/post-success-crash/summary.json"
       ],
       "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
-      "outcome_at_review": "Records bounded diagnosis of the post-SUCCESS crash and supplementary actual pluginval 2.0.0-beta3 comparison run 45060638632. Three comparison lanes exit zero, but do not replay the original failing seed or establish crash ownership or repair. Formal release acceptance remains BLOCKED; final handoff review is pending.",
-      "assignment_completed": false,
-      "review_outcome": "Bounded diagnosis recorded; formal acceptance BLOCKED and final review pending"
+      "outcome_at_review": "Completed 101-check independent final review of 814c9014 and 522 published payloads. Candidate handoff VERIFIED_RELEASE_UNQUALIFIED; original formal release acceptance BLOCKED and required Linux GUI gate FAIL. No criteria were changed.",
+      "assignment_completed": true,
+      "review_outcome": "Completed scoped work; release unqualified"
     }
   ],
-  "required_finalization": [
-    "Root integrates this report, source accounting and machine ledger with the final documentation commit.",
-    "Assignment 59 returns actual public-link/documentation review; assignment 60 returns final handoff review while preserving release acceptance BLOCKED.",
-    "Update 58\u201360 statuses only from their real scoped outcomes; never replace the failed original gate with diagnostic or beta-comparison success."
-  ]
+  "required_finalization": [],
+  "overall_original_user_goal_complete": false,
+  "formal_release_acceptance": "BLOCKED",
+  "candidate_handoff_review": "VERIFIED_RELEASE_UNQUALIFIED",
+  "remaining_release_blockers": [
+    "Original required Linux GUI1.0.4 invocation remains FAIL afterSUCCESS/SIGSEGV; no causal repair or qualifying run replaces it.",
+    "Strict publisher skipped; no qualified release, seven release assets, receipt or release-tag identity is available.",
+    "The492-path candidate-documentation snapshot at814c9014 does not satisfy the unchanged fewer-than300-path publication rule if proposed as a formal release commit."
+  ],
+  "coordinator_finalization": {
+    "recorded_at_utc": "2026-11-22T19:55:44.936953+00:00",
+    "reviewed_publication_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+    "reviewed_payload_count": 522,
+    "original_observation_snapshot": "final-ci/team/ledger-at-first-publication.json",
+    "source_accounting_snapshot_remains": "final-ci/team/source-accounting.json",
+    "assignment59_proof": "final-ci/public-documents/published-candidate-verification.json",
+    "assignment60_proof": "final-ci/acceptance/final-review.json",
+    "sealing_commit_identity": "The Git commit containing this finalized ledger; its parent is the independently reviewed publication commit.",
+    "binary_sources_gates_and_candidate_urls_changed": false,
+    "meaning": "All60 scoped assignments returned results, including failures. This is not completion of the original fully qualified release goal."
+  }
 }

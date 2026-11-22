@@ -130,3 +130,7 @@ qualification false.
 The [preexisting Program-queue controller dependency](../../../PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification)
 also remains. No arbitrary-DAW, signed/notarized build, calibrated physical-CS-80
 match or listening-panel result is asserted.
+
+## Final review closure
+
+All 60 distinct agent assignments returned their scoped results. The [published-document check](public-documents/published-candidate-verification.json) verifies 814c9014 and five live candidate links. The [independent final review](acceptance/final-review.md) records 101 evidence checks against that commit and its 522-payload dossier. **Candidate handoff is VERIFIED_RELEASE_UNQUALIFIED; original formal release acceptance remains BLOCKED.** The later documentation-only seal records completion without changing the binary source, required gates, five candidate URLs or original failure. [Completed team ledger](../../../TEAM_REVIEW_2026_11_1.md).

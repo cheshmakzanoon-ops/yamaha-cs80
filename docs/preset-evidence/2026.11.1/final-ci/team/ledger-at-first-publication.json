@@ -1,0 +1,1124 @@
+{
+  "schema": 2,
+  "assignment": 58,
+  "revision": "2026.11.1",
+  "recorded_at_utc": "2026-11-22T19:39:42.713646+00:00",
+  "status": "CURRENT_TASK_OUTCOMES_RECORDED_FINAL_HANDOFF_PENDING_RELEASE_BLOCKED",
+  "actual_distinct_agents": 60,
+  "completed_assignments": 57,
+  "pending_assignments": [
+    58,
+    59,
+    60
+  ],
+  "all60_completed": false,
+  "completion_means": "The assigned investigation/review returned a scoped result, including negative results; it does not mean every required gate passed.",
+  "build": {
+    "source": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+    "run_id": 45044040694,
+    "attempt": 1,
+    "conclusion": "failure",
+    "release_qualified": false
+  },
+  "publisher": {
+    "run_id": 45060638607,
+    "head": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+    "conclusion": "skipped",
+    "public_tag_http_status": 404
+  },
+  "source_snapshot": {
+    "committed_head": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+    "working_manifest_entries": 516,
+    "final_documentation_commit": null
+  },
+  "separate_earlier2026_11_ledger_excluded": true,
+  "agent_name_overlap_with_earlier_ledger": [],
+  "followup_turns_counted_as_new_agents": false,
+  "initial_coordination_only_assignments": [
+    1,
+    2,
+    3
+  ],
+  "human_listening_panel_claim": false,
+  "intended_public_path": "docs/preset-evidence/2026.11.1/final-ci/team/ledger.json",
+  "agents": [
+    {
+      "assignment": 1,
+      "wave": 1,
+      "agent": "/root/w01_brass_strings",
+      "status": "completed",
+      "objective": "Review brass and string programs",
+      "evidence_phase": "coordination; linked later follow-up",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/stereo/summary.json"
+      ],
+      "local_evidence": [],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Initial family review recorded complete. Later stereo authoring covers the selected brass refinements; no separate initial report is retained here.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 2,
+      "wave": 1,
+      "agent": "/root/w01_keys_plucked",
+      "status": "completed",
+      "objective": "Review keys and plucked programs",
+      "evidence_phase": "coordination; linked later follow-up",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/strike-baseline/measurements.json"
+      ],
+      "local_evidence": [],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Initial family review recorded complete. The subsequent strike matrix and plucked-voice measurements are retained separately; no initial standalone report is retained here.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 3,
+      "wave": 1,
+      "agent": "/root/w01_release",
+      "status": "completed",
+      "objective": "Review existing build and download state",
+      "evidence_phase": "coordination only for this assignment",
+      "repository_evidence": [],
+      "local_evidence": [],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Initial release review recorded complete. Historical platform checks belong to the older revision and do not qualify the pending 2026.11.1 downloads; no standalone initial report is retained here.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 4,
+      "wave": 1,
+      "agent": "/root/w01_winds_organ",
+      "status": "completed",
+      "objective": "Measure wind/organ family balance",
+      "evidence_phase": "retained initial measurements",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w01-winds/measurements.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Baseline Flute and Breathy Flute body/air measurements identify the subdued sustained-air ranks that the later wind-authoring task refines.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 5,
+      "wave": 1,
+      "agent": "/root/w01_pads_poly",
+      "status": "completed",
+      "objective": "Review pad/polysynth rank roles",
+      "evidence_phase": "retained initial measurements",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w01-pads/analysis.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Baseline Ether Pad and Noise Pad weighted-rank measurements are retained; follow-up authoring isolates Ether Pad air and stereo work.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 6,
+      "wave": 1,
+      "agent": "/root/w01_bass_leads_fx",
+      "status": "completed",
+      "objective": "Review bass, lead and effect roles",
+      "evidence_phase": "retained initial measurements",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w01-bass/analysis.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Baseline Sine Bass and Upright Pluck strike/body windows are retained and feed the subsequent bass refinements.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 7,
+      "wave": 2,
+      "agent": "/root/w02_strike_measure",
+      "status": "completed",
+      "objective": "Measure attack ranks before editing",
+      "evidence_phase": "baseline authoring evidence",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/strike-baseline/measurements.json",
+        "docs/preset-evidence/2026.11.1/strike-baseline/summary.txt"
+      ],
+      "local_evidence": [
+        "build-w02-strikes/measurements.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Baseline register/velocity strike matrices distinguish the short upper components from the sustained body, supporting targeted Harp/Kalimba edits.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 8,
+      "wave": 2,
+      "agent": "/root/w02_wind_voicing",
+      "status": "completed",
+      "objective": "Author sustained flute air",
+      "evidence_phase": "parameter-override authoring",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/winds/summary.json"
+      ],
+      "local_evidence": [
+        "build-w02-winds/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Refines two wind programs and measures their weighted air/body relationship across register, velocity and pressure endpoints; authoring uses baseline master levels.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 9,
+      "wave": 2,
+      "agent": "/root/w02_stereo_voicing",
+      "status": "completed",
+      "objective": "Author stereo rank separation",
+      "evidence_phase": "parameter-override authoring",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/stereo/summary.json"
+      ],
+      "local_evidence": [
+        "build-w02-stereo/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Programs and measures five restrained rank-pan pairs, with channel balance and mono-retention bounds; Pure mode centers those pans.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 10,
+      "wave": 2,
+      "agent": "/root/w02_pluck_voicing",
+      "status": "completed",
+      "objective": "Author Harp and Kalimba attacks",
+      "evidence_phase": "parameter-override authoring",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/plucks/measurements.json"
+      ],
+      "local_evidence": [
+        "build-w02-plucks/summary.txt"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Raises the existing upper sine and rank balance; measured 4\u201320 ms upper/body increases are 8.85\u20138.99 dB for Harp and 8.08\u20138.21 dB for Kalimba.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 11,
+      "wave": 2,
+      "agent": "/root/w02_bass_voicing",
+      "status": "completed",
+      "objective": "Author bass strike definition",
+      "evidence_phase": "parameter-override authoring",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/bass/summary.json"
+      ],
+      "local_evidence": [
+        "build-w02-bass/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Refines upper high-pass, filter level and balance for Sine Bass and Upright Pluck while preserving their body programming; register/velocity and stress records are retained.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 12,
+      "wave": 2,
+      "agent": "/root/w02_ci_diagnosis",
+      "status": "completed",
+      "objective": "Diagnose long CI duration",
+      "evidence_phase": "historical CI observation",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w02-ci/diagnosis.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Records the 575-test, 6926.01-second Linux suite from run 45002603673/source bb4d751e. This historical timing is not the current 579-test candidate result.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 13,
+      "wave": 3,
+      "agent": "/root/w03_ether_voicing",
+      "status": "completed",
+      "objective": "Refine Ether Pad air",
+      "evidence_phase": "parameter-override authoring",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/ether/summary.json"
+      ],
+      "local_evidence": [
+        "build-w03-ether/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Increases noise-rank source and balance; measured late air/body contribution rises about 7.69 dB with the pitched center retained.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 14,
+      "wave": 3,
+      "agent": "/root/w03_behavior_tests",
+      "status": "completed",
+      "objective": "Implement character regressions",
+      "evidence_phase": "final core regression evidence",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/character/summary.json",
+        "tests/PresetCharacterTests.cpp"
+      ],
+      "local_evidence": [
+        "build-w03-character-tests/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Final hardened suite passes 128/128 on the calibrated bank; the frozen bank passes 112 and fails 16. Reconstruction is checked over each measured window and full capture.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 15,
+      "wave": 3,
+      "agent": "/root/w03_audition_delivery",
+      "status": "completed",
+      "objective": "Build audition capture delivery",
+      "evidence_phase": "historical pipeline smoke",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/audition/summary.json"
+      ],
+      "local_evidence": [
+        "build-w03-audition/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Defines 24 factory excerpts and failure-aware provenance; initial pipeline smoke uses the frozen 2026.11 executable and is not final 2026.11.1 CI audio.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 16,
+      "wave": 3,
+      "agent": "/root/w03_identity_review",
+      "status": "completed",
+      "objective": "Review pre-calibration identity",
+      "evidence_phase": "pre-calibration identity snapshot",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/identity/summary.json"
+      ],
+      "local_evidence": [
+        "build-w03-identity/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Confirms twelve changed vectors and 38 voicing values before level calibration; the snapshot deliberately precedes four master-level changes and the UFO description correction.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 17,
+      "wave": 3,
+      "agent": "/root/w03_ring_semantics",
+      "status": "completed",
+      "objective": "Check shared ring-sweep semantics",
+      "evidence_phase": "source and control-telemetry evidence",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/ring/summary.json"
+      ],
+      "local_evidence": [
+        "build-w03-ring/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Measures overlapping and detached phrases, corrects UFO Landing wording, and documents release of all keys and sustain before a fresh shared-ring sweep.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 18,
+      "wave": 3,
+      "agent": "/root/w03_test_adversarial_review",
+      "status": "completed",
+      "objective": "Challenge character-test assertions",
+      "evidence_phase": "independent earlier test review",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/review/summary.json"
+      ],
+      "local_evidence": [
+        "build-w03-test-review/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Finds that whole-capture reconstruction can hide short-window error; local-window checks are accepted. The archived 116-check review is historical; the final suite has 128.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 19,
+      "wave": 4,
+      "agent": "/root/w04_compatibility_review",
+      "status": "completed",
+      "objective": "Review recall compatibility",
+      "evidence_phase": "read-only source review",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/compatibility/summary.json"
+      ],
+      "local_evidence": [
+        "build-w04-compatibility/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Static control-flow review separates serialized state restoration from explicit current-factory selection. It is distinct from later native execution.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 20,
+      "wave": 4,
+      "agent": "/root/w04_evidence_pack",
+      "status": "completed",
+      "objective": "Package authoring evidence",
+      "evidence_phase": "evidence packaging",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/README.md"
+      ],
+      "local_evidence": [
+        "build-w04-evidence/package.py"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Creates the compact authoring dossier and exact reproduction sources; final core/identity evidence and later native work are added by separate assignments.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 21,
+      "wave": 4,
+      "agent": "/root/w04_report_draft",
+      "status": "completed",
+      "objective": "Draft the refinement report",
+      "evidence_phase": "coordination and integrated report",
+      "repository_evidence": [
+        "docs/PRESET_REFINEMENT_2026_11_1.md"
+      ],
+      "local_evidence": [],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Produces the report structure covering the twelve refinements, conditions and limits; the current report is a later integrated document, not an untouched initial draft.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 22,
+      "wave": 4,
+      "agent": "/root/w04_audition_review",
+      "status": "completed",
+      "objective": "Review audition delivery independently",
+      "evidence_phase": "independent historical pipeline review",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w04-audition-review/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Checks the existing baseline smoke: 24 excerpts, 117 seconds and 32 checksums, including failure provenance and exact source guarding. Final CI remains a separate gate.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 23,
+      "wave": 4,
+      "agent": "/root/w04_audio_distinctness",
+      "status": "completed",
+      "objective": "Screen all Circuit voices for duplicates",
+      "evidence_phase": "bounded distinctness screen",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/distinctness/summary.json"
+      ],
+      "local_evidence": [
+        "build-w04-distinctness/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Compares 45,150 pairs from 301 renders and finds no exact raw or gain-normalized duplicates in the fixture; ten follow-up captures distinguish close pairs.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 24,
+      "wave": 4,
+      "agent": "/root/w04_wind_performance",
+      "status": "completed",
+      "objective": "Exercise performed wind control",
+      "evidence_phase": "final-bank performance fixture",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/wind-performance/summary.json"
+      ],
+      "local_evidence": [
+        "build-w04-wind-performance/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Checks 24 captures/96 seconds of channel/poly pressure, repeats, overlap and release. All voices retire; highest sample peak is \u22127.824 dBFS.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 25,
+      "wave": 5,
+      "agent": "/root/w05_stereo_chords",
+      "status": "completed",
+      "objective": "Exercise stereo chords and mono fold-down",
+      "evidence_phase": "bounded chord performance fixture",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/stereo-chords/summary.json"
+      ],
+      "local_evidence": [
+        "build-w05-stereo-chords/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Five factory and five centered-control sequences total 120 seconds; worst active-window mono losses are 0.317 dB overall and 0.481 dB in fundamental bands.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 26,
+      "wave": 5,
+      "agent": "/root/w05_linux_validator_diagnosis",
+      "status": "completed",
+      "objective": "Preserve Linux validator failure evidence",
+      "evidence_phase": "historical failure and diagnostic routing",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/validator-diagnostics/summary.json"
+      ],
+      "local_evidence": [
+        "build-w05-linux-validator/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Retains the older post-SUCCESS SIGSEGV and separate successful diagnostic rerun; extends failure-only headless diagnostic routing. No crash repair is claimed.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 27,
+      "wave": 5,
+      "agent": "/root/w05_final_identity",
+      "status": "completed",
+      "objective": "Verify final calibrated identity",
+      "evidence_phase": "final compiled-contract comparison",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-identity/summary.json"
+      ],
+      "local_evidence": [
+        "build-w05-final-identity/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Confirms 42 changed values across 12 programs, 289 unchanged vectors, 288 unchanged complete Circuit records, all 222 Legacy records unchanged and stable mappings/layout/schema.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 28,
+      "wave": 5,
+      "agent": "/root/w05_final_evidence",
+      "status": "completed",
+      "objective": "Archive final core and calibration evidence",
+      "evidence_phase": "historical81-entry archive stage",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final/summary.json"
+      ],
+      "local_evidence": [
+        "build-w05-evidence-extension/finalize.py"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Adds final full CTest output, applied calibration passes and identity records, bringing the then-dossier to 81 files. Calibration convergence is scoped to twelve eligible programs.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 29,
+      "wave": 5,
+      "agent": "/root/w05_native_recall",
+      "status": "completed",
+      "objective": "Exercise native preset/session recall",
+      "evidence_phase": "selected native fixtures",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/native-recall/summary.json"
+      ],
+      "local_evidence": [
+        "build-w05-native-recall/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Four native JUCE fixtures pass 6607 checks for selection, sessions, user presets, A/B, Revert and identity. The separate Xvfb setup failure is preserved.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 30,
+      "wave": 6,
+      "agent": "/root/w06_sample_rates",
+      "status": "completed",
+      "objective": "Check representative sample rates",
+      "evidence_phase": "bounded final-bank rate checks",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/sample-rates/summary.json"
+      ],
+      "local_evidence": [
+        "build-w06-sample-rates/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "183 checks across 54 rank captures/56.7 seconds preserve six refined layer roles at 44.1, 48 and 96 kHz. The 54 sample-rate WAV intermediates were later pruned with methods, measurements and hashes retained.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 31,
+      "wave": 6,
+      "agent": "/root/w06_diagnostic_review",
+      "status": "completed",
+      "objective": "Review validator diagnostic routing",
+      "evidence_phase": "independent diagnostic review",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/validator-diagnostics/independent-review/summary.json"
+      ],
+      "local_evidence": [
+        "build-w06-diagnostic-review/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Independently checks that added headless diagnostics retain acceptance behavior and preserve the distinction between failure evidence and a passing validator.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 32,
+      "wave": 6,
+      "agent": "/root/w06_final_auditions",
+      "status": "completed",
+      "objective": "Replay final-bank auditions locally",
+      "evidence_phase": "final-bank local audition replay",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-auditions-local/summary.json"
+      ],
+      "local_evidence": [
+        "build-w06-final-auditions/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Verifies 24 WAVs, 117 seconds, 32 hashes and factory digests. Provenance remains source 99f5ebd/run local-assignment-32; it is not the later CI artifact.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 33,
+      "wave": 6,
+      "agent": "/root/w06_performance_controls",
+      "status": "completed",
+      "objective": "Exercise pressure, wah, vibrato and velocity",
+      "evidence_phase": "bounded performed-control fixtures",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/performance-controls/summary.json"
+      ],
+      "local_evidence": [
+        "build-w06-performance-controls/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "60 checks across ten captures/64 seconds verify the intended controls in five selected programs, including Pressure Lead silence before pressure input.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 34,
+      "wave": 6,
+      "agent": "/root/w06_release_plan_review",
+      "status": "completed",
+      "objective": "Review release packaging",
+      "evidence_phase": "packager authoring and fixtures",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/packaging/revision-parser/summary.json"
+      ],
+      "local_evidence": [
+        "build-w06-release-plan/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Finds and fixes rejection of YYYY.MM.PATCH revisions while keeping canonical month/patch validation. Synthetic package fixtures do not qualify real native archives.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 35,
+      "wave": 7,
+      "agent": "/root/w07_durable_release",
+      "status": "completed",
+      "objective": "Design the durable release publisher",
+      "evidence_phase": "historical publisher draft",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/publisher-review/draft-authoring/summary.json"
+      ],
+      "local_evidence": [
+        "build-w07-durable-release/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Builds the original fail-closed draft and eleven offline test methods. The original summary remains DRAFT_READY_NOT_INSTALLED; later installation/rebinding/hardening have separate commits.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 36,
+      "wave": 7,
+      "agent": "/root/w07_install_guide",
+      "status": "completed",
+      "objective": "Correct installation guidance",
+      "evidence_phase": "guide source review",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/packaging/install-guide/summary.json"
+      ],
+      "local_evidence": [
+        "build-w07-install-guide/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Corrects default Circuit Standard latency to 67 samples and adds revision, factory-reload and saved-state guidance.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 37,
+      "wave": 7,
+      "agent": "/root/w07_modern_role_audit",
+      "status": "completed",
+      "objective": "Audit modern program roles",
+      "evidence_phase": "static source/data audit",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/modern-roles/summary.json"
+      ],
+      "local_evidence": [
+        "build-w07-modern-role/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "46 static checks cover 24 modern-tagged records. Studio exposes controls; ordinary Circuit routing and Pure masking are separate mechanisms.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 38,
+      "wave": 7,
+      "agent": "/root/w07_packaged_doc_links",
+      "status": "completed",
+      "objective": "Fix source links in packaged guides",
+      "evidence_phase": "packager source-link change",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/packaging/pinned-links/summary.json"
+      ],
+      "local_evidence": [
+        "build-w07-packaged-links/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Preserves local guide destinations while pinning other repository references to the exact binary source; licenses remain verbatim.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 39,
+      "wave": 8,
+      "agent": "/root/w08_long_sustain_headroom",
+      "status": "completed",
+      "objective": "Check long sustained-chord headroom",
+      "evidence_phase": "bounded long-hold fixtures",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/long-sustain/summary.json"
+      ],
+      "local_evidence": [
+        "build-w08-long-sustain/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "96 checks across 12 eight-note captures/216 seconds include ten-second holds and eight-second releases; maximum sample peak \u22122.939 dBFS and bounded voice retirement.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 40,
+      "wave": 8,
+      "agent": "/root/w08_rapid_strikes",
+      "status": "completed",
+      "objective": "Check repeated plucked attacks",
+      "evidence_phase": "bounded repetition fixtures",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/rapid-strikes/summary.json"
+      ],
+      "local_evidence": [
+        "build-w08-rapid-strikes/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "96 checks across eight captures/96 seconds cover Harp, Kalimba, Sine Bass and Upright Pluck with matched omitted-onset controls and released-slot reuse.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 41,
+      "wave": 8,
+      "agent": "/root/w08_publisher_review",
+      "status": "completed",
+      "objective": "Review publisher transaction safety",
+      "evidence_phase": "independent earlier publisher review",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/publisher-review/summary.json"
+      ],
+      "local_evidence": [
+        "build-w08-publisher-review/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Independent draft/installed-layout review passes eleven fixture methods and nine mocked transaction checks. Its be460b0/run 45042166237 binding is historical, not current publication proof.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 42,
+      "wave": 9,
+      "agent": "/root/w09_phrase_gates",
+      "status": "completed",
+      "objective": "Check phrase gates and glide modes",
+      "evidence_phase": "bounded control-telemetry fixtures",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/phrase-gates/summary.json"
+      ],
+      "local_evidence": [
+        "build-w09-phrase-gates/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "100 final checks across twelve captures/86 seconds verify shared ring/CC64 history and glide/glissando control. The initial too-short four-second observations remain archived.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 43,
+      "wave": 9,
+      "agent": "/root/w09_arpeggiator_roles",
+      "status": "completed",
+      "objective": "Check all four arpeggiator roles",
+      "evidence_phase": "bounded four-program fixtures",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/arpeggiators/summary.json"
+      ],
+      "local_evidence": [
+        "build-w09-arp-roles/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "64 checks across four captures/36 seconds cover free-running timing, order, gates and source-key release. Host tempo sync and arbitrary DAWs are outside this fixture.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 44,
+      "wave": 9,
+      "agent": "/root/w09_vst3_factory_boundary",
+      "status": "completed",
+      "objective": "Exercise the actual local VST3 boundary",
+      "evidence_phase": "native Linux module fixture",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/external-vst3/summary.json"
+      ],
+      "local_evidence": [
+        "build-w09-vst3-boundary/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "45115 assertions pass on controller-plus-queue selection/state restore, including 523 names/order and 4560 normalized comparisons. Separate queue-only failures remain preserved.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 45,
+      "wave": 9,
+      "agent": "/root/w09_claims_review",
+      "status": "completed",
+      "objective": "Review published sound claims",
+      "evidence_phase": "historical claim-consistency review",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/claims-review/summary.json"
+      ],
+      "local_evidence": [
+        "build-w09-claims-review/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "17 checks validate the then 81-file dossier and numerical wording; recommends Studio-control and twelve-program calibration clarifications. Later evidence is separate.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 46,
+      "wave": 10,
+      "agent": "/root/w10_packaging_independent_review",
+      "status": "completed",
+      "objective": "Review packaging independently",
+      "evidence_phase": "independent source/synthetic-package review",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/packaging/independent-review/summary.json"
+      ],
+      "local_evidence": [
+        "build-w10-packaging-review/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "108 independent assertions cover parser boundaries, four synthetic platform shapes and 47 guide links; seven notice tests and 46 package fixtures pass.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 47,
+      "wave": 10,
+      "agent": "/root/w10_vst3_program_queue",
+      "status": "completed",
+      "objective": "Diagnose Program queue-only selection",
+      "evidence_phase": "bounded diagnostic with negative result",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/program-queue/summary.json",
+        "docs/preset-evidence/2026.11.1/program-queue/method.txt"
+      ],
+      "local_evidence": [
+        "build-w10-program-queue/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Two native modules show a pre-existing controller dependency despite handler/thread/wait controls. No runtime fix is claimed; the older module compile commit remains unknown.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 48,
+      "wave": 10,
+      "agent": "/root/w10_evidence_extension",
+      "status": "completed",
+      "objective": "Extend the native/performance archive",
+      "evidence_phase": "historical239-entry integration snapshot",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/INTEGRATION.md",
+        "docs/preset-evidence/2026.11.1/integration/summary.json"
+      ],
+      "local_evidence": [],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Creates the 239-entry snapshot at 758fc0d, preserving all 81 original entries and bytes at that time. Later f0542df adds 16 records and amends only the original README index.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 49,
+      "wave": 10,
+      "agent": "/root/w10_windows_download",
+      "status": "completed",
+      "objective": "Verify final Windows bundle and gates",
+      "evidence_phase": "completed actual native and archive verification",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/windows-qualification.json",
+        "docs/preset-evidence/2026.11.1/final-ci/windows-x86_64/artifact-proof.json"
+      ],
+      "local_evidence": [
+        "build-w10-windows/artifact-proof.json",
+        "build-w10-windows/windows-qualification.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Completes source 6d3 attempt 1 qualification: 219 passed, 0 failed, 2 formal CTest skips; both strictness 10 headless VST3 lanes pass. Artifact 14763872941 and its 20-file inventory, source, guides and validator-input identity are verified.",
+      "assignment_completed": true,
+      "review_outcome": "Windows native and archive checks pass"
+    },
+    {
+      "assignment": 50,
+      "wave": 11,
+      "agent": "/root/w11_ci_source_gate_audit",
+      "status": "completed",
+      "objective": "Audit replacement source and CI gates",
+      "evidence_phase": "completed source/gate review, pending CI",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w11-ci-audit/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "All eight validator command blocks retain behavior; the corrected 22-test fingerprint fixture passes. 579 Linux tests are registered. The 16:36:09 UTC snapshot is pending CI, not a pass.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 51,
+      "wave": 11,
+      "agent": "/root/w11_integrated_evidence_review",
+      "status": "completed",
+      "objective": "Review the integrated archive independently",
+      "evidence_phase": "completed historical snapshot review",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w11-evidence-review/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "30 grouped checks pass against the 239-entry snapshot, including 174 links and unchanged 81 original entries. It records base/observed head 4a3bd71 and must not be relabeled a later 255-, 263- or 516-entry review.",
+      "assignment_completed": true,
+      "review_outcome": "Scoped outcome recorded; see evidence"
+    },
+    {
+      "assignment": 52,
+      "wave": 11,
+      "agent": "/root/w11_macos_arm_download",
+      "status": "completed",
+      "objective": "Verify final Apple Silicon bundle and gates",
+      "evidence_phase": "completed actual native and archive verification",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/ci-proof.json",
+        "docs/preset-evidence/2026.11.1/final-ci/macos-arm64/artifact-proof.json"
+      ],
+      "local_evidence": [
+        "build-w11-macos-arm/artifact-proof.json",
+        "build-w11-macos-arm/ci-proof.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Completes source 6d3 attempt 1 qualification: 241 passed, 0 failed, 2 formal CTest skips; strictness 10 VST3, AU and AU GUI lanes pass. Artifact 14763761497 has the verified 37-file arm64 VST3/AU/Standalone inventory and source-bound guides.",
+      "assignment_completed": true,
+      "review_outcome": "Apple Silicon native and archive checks pass"
+    },
+    {
+      "assignment": 53,
+      "wave": 11,
+      "agent": "/root/w11_macos_intel_download",
+      "status": "completed",
+      "objective": "Verify final Intel Mac bundle and gates",
+      "evidence_phase": "completed actual native and archive verification",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/ci-proof.json",
+        "docs/preset-evidence/2026.11.1/final-ci/macos-x86_64/artifact-proof.json"
+      ],
+      "local_evidence": [
+        "build-w11-macos-intel/artifact-proof.json",
+        "build-w11-macos-intel/ci-proof.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Completes source 6d3 attempt 1 qualification: 241 passed, 0 failed, 2 formal CTest skips; strictness 10 VST3, AU and AU GUI lanes pass. Artifact 14763644216 has the verified 37-file x86_64 VST3/AU/Standalone inventory and source-bound guides; AU warning text is retained.",
+      "assignment_completed": true,
+      "review_outcome": "Intel Mac native and archive checks pass"
+    },
+    {
+      "assignment": 54,
+      "wave": 12,
+      "agent": "/root/w12_linux_download",
+      "status": "completed",
+      "objective": "Verify final Linux bundle and gates",
+      "evidence_phase": "prepared; actual native results pending",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/summary.json",
+        "docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json"
+      ],
+      "local_evidence": [
+        "build-w12-linux/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome": "Completed actual Linux native/archive verification; required randomized GUI validator failed post-SUCCESS with raw -11; release qualification blocked.",
+      "evidence": "build-w12-linux/summary.json",
+      "outcome_at_review": "Completes the actual Linux review: 578 CTest cases pass and one is skipped out of 579; the 20-entry archive and two ELF images verify. The required randomized GUI lane prints SUCCESS then crashes, raw \u221211/wrapper 139, seed 0x4369262. Zero internal retries; successful same-seed diagnostics do not erase the failed gate.",
+      "assignment_completed": true,
+      "review_outcome": "Completed review; required validator gate FAIL; release BLOCKED"
+    },
+    {
+      "assignment": 55,
+      "wave": 12,
+      "agent": "/root/w12_ci_audition_download",
+      "status": "completed",
+      "objective": "Verify the final CI audition package",
+      "evidence_phase": "prepared; actual CI audition pending",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json",
+        "docs/preset-evidence/2026.11.1/final-ci/auditions/summary.json"
+      ],
+      "local_evidence": [
+        "build-w12-ci-auditions/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome": "Actual CI24-WAV audition public bytes, provenance and signal checks PASS; separate full-build failure preserved.",
+      "evidence": "build-w12-ci-auditions/summary.json",
+      "outcome_at_review": "Verifies actual CI audition artifact 14769036590: 24 WAVs, 117 seconds, 5,616,000 stereo frames, 32 checksum entries and 24 factory-parameter digests. No nonfinite or full-scale samples occur. The producing run later concludes failure at the separate Linux validator gate.",
+      "assignment_completed": true,
+      "review_outcome": "Actual audition bytes and signal checks PASS; complete release unqualified"
+    },
+    {
+      "assignment": 56,
+      "wave": 12,
+      "agent": "/root/w12_public_release_bytes",
+      "status": "completed",
+      "objective": "Verify public release asset bytes",
+      "evidence_phase": "prepared; actual public release pending",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/public-candidates/summary.json",
+        "docs/preset-evidence/2026.11.1/final-ci/public-candidates/strict-refusal.json"
+      ],
+      "local_evidence": [
+        "build-w12-public-release/candidate-verified/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome": "Five actual pinned public candidate GETs verified; formal release absent/skipped and failed-run refusal preserved.",
+      "evidence": "build-w12-public-release/candidate-verified/summary.json",
+      "outcome_at_review": "Five fresh pinned public GETs match API and cached artifact sizes/hashes. The first-attempt build remains failed, the strict publisher is skipped and the public release tag returns 404. Candidate links expire on 2027-02-20 at 16:28:38 UTC. The original strict release verifier remains unchanged and rejects the failed run.",
+      "assignment_completed": true,
+      "review_outcome": "CANDIDATE_BYTES_VERIFIED_RELEASE_UNQUALIFIED"
+    },
+    {
+      "assignment": 57,
+      "wave": 12,
+      "agent": "/root/w12_installation_bundle_review",
+      "status": "completed",
+      "objective": "Review installation contents across platforms",
+      "evidence_phase": "running/prepared; final bundle review pending",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/installation/summary.json",
+        "docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json"
+      ],
+      "local_evidence": [
+        "build-w12-installation-review/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome": "Actual four-archive installation contents PASS; publication_qualified false.",
+      "evidence": "build-w12-installation-review/summary.json",
+      "outcome_at_review": "Four actual archive-content checks pass: 114 inventory entries, 172 source-pinned project links, eight local guide links, 32 notice comparisons and six Mac plists. Eight Windows notice differences are CRLF/LF-only and retain original hashes. Archive-content success does not qualify publication.",
+      "assignment_completed": true,
+      "review_outcome": "Archive contents PASS; publication_qualified false"
+    },
+    {
+      "assignment": 58,
+      "wave": 12,
+      "agent": "/root/w12_team_source_ledger",
+      "status": "prepared_awaiting_final_outcomes",
+      "objective": "Account for this team and source scope",
+      "evidence_phase": "draft refreshed; final ledger refresh pending",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w12-team-ledger/final-source-accounting.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Refreshes this 60-agent ledger and the failed-build outcome, preserving 57 completed assignments and three pending final reviews. The dated working archive has 516 matching payloads; 262 earlier entries/payloads remain unchanged and the README index is amended. Final documentation commit/integration review remains pending.",
+      "assignment_completed": false,
+      "review_outcome": "Accounting prepared; final integration pending"
+    },
+    {
+      "assignment": 59,
+      "wave": 13,
+      "agent": "/root/w13_release_links_docs",
+      "status": "prepared_awaiting_final_outcomes",
+      "objective": "Review release links and public documentation",
+      "evidence_phase": "running; final link review pending",
+      "repository_evidence": [],
+      "local_evidence": [
+        "build-w13-release-docs/preparation-audit.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Prepares and integrates truthful public candidate-download documentation after the five-GET proof. README, refinement and distribution guidance must identify the failed build, skipped publisher, expiring candidates and preserved original failure. Final public-document handoff review remains pending.",
+      "assignment_completed": false,
+      "review_outcome": "Final public-document review pending"
+    },
+    {
+      "assignment": 60,
+      "wave": 13,
+      "agent": "/root/w13_final_acceptance",
+      "status": "prepared_awaiting_final_outcomes",
+      "objective": "Perform final independent acceptance",
+      "evidence_phase": "running; final acceptance pending",
+      "repository_evidence": [
+        "docs/preset-evidence/2026.11.1/final-ci/failure-review/summary.json",
+        "docs/preset-evidence/2026.11.1/final-ci/linux-test-duration/summary.json"
+      ],
+      "local_evidence": [
+        "build-w13-acceptance/post-success-crash/summary.json"
+      ],
+      "attribution_basis": "coordinator record and retained evidence; no human listening-panel claim",
+      "outcome_at_review": "Records bounded diagnosis of the post-SUCCESS crash and supplementary actual pluginval 2.0.0-beta3 comparison run 45060638632. Three comparison lanes exit zero, but do not replay the original failing seed or establish crash ownership or repair. Formal release acceptance remains BLOCKED; final handoff review is pending.",
+      "assignment_completed": false,
+      "review_outcome": "Bounded diagnosis recorded; formal acceptance BLOCKED and final review pending"
+    }
+  ],
+  "required_finalization": [
+    "Root integrates this report, source accounting and machine ledger with the final documentation commit.",
+    "Assignment 59 returns actual public-link/documentation review; assignment 60 returns final handoff review while preserving release acceptance BLOCKED.",
+    "Update 58\u201360 statuses only from their real scoped outcomes; never replace the failed original gate with diagnostic or beta-comparison success."
+  ]
+}

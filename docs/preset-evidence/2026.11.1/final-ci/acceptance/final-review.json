@@ -1,0 +1,945 @@
+{
+  "schema": 1,
+  "assignment": 60,
+  "reviewed_at_utc": "2026-11-22T19:51:10.659167+00:00",
+  "reviewed_publication_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+  "reviewed_tree": "c52340c61778e54b5453e64a281c086a5ba48cef",
+  "binary_source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+  "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "run_id": 45044040694,
+  "run_attempt": 1,
+  "formal_release_acceptance": "BLOCKED",
+  "required_linux_gate": "FAIL",
+  "candidate_handoff_review": "VERIFIED_RELEASE_UNQUALIFIED",
+  "assignment60_work_completed": true,
+  "overall_original_user_goal_complete": false,
+  "original_acceptance_plan_sha256": "aac836b71794746f6e6dc0907a98bcc1b0c65b586cfb232a58247f3220bc28a8",
+  "original_criteria_changed": false,
+  "original_criteria": [
+    {
+      "id": "source_scope",
+      "original_criterion": "Source 6d3 contains the reviewed 12-program/42-value refinement, four master calibrations, metadata correction and fixed packaging; later publication changes stay in README/docs or three named publisher files. Preserve distinction from earlier 300-program 2026.11 revoice.",
+      "outcome": "PASS",
+      "assessment": "Reviewed twelve-program refinement remains the frozen binary source; subsequent publication is docs/publisher only."
+    },
+    {
+      "id": "build_identity",
+      "original_criterion": "Exact main push 45044040694 / source 6d3, completed success on GitHub run_attempt 1; no newer source or successful rerun substituted.",
+      "outcome": "FAIL",
+      "assessment": "Exact attempt1 completed failure, not required success."
+    },
+    {
+      "id": "native_and_validator_jobs",
+      "original_criterion": "Exactly the six required jobs belong to the same source/run/attempt 1, all successful; every named required step succeeds. Native raw logs/JUnit establish actual executed/skipped/disabled/not-run counts; Linux 579 is registered scope, not automatic execution count.",
+      "outcome": "FAIL",
+      "assessment": "Four native jobs and Windows validation pass; required Linux randomized GUI validation fails."
+    },
+    {
+      "id": "validator_attempt_history",
+      "original_criterion": "Read every validator lane including internal child attempts. Linux terminal raw exits must be 0 and post-SUCCESS crashes must fail. Internal retry history stays visible and is distinct from GitHub run_attempt. Mac successful pipefail steps establish status; do not invent numeric child exit fields.",
+      "outcome": "FAIL",
+      "assessment": "Original GUI raw -11 after SUCCESS; zero internal retries. Diagnostics and beta comparison do not substitute."
+    },
+    {
+      "id": "four_native_archives",
+      "original_criterion": "Actual four ZIPs match API digest/size and producing source/run. Verify complete inner inventories, revision 2026.11.1, JUCE 8.0.11/c352..., SOURCE and all Windows PE / Mac Mach-O / Linux ELF architecture/format roles.",
+      "outcome": "PASS",
+      "assessment": "All four actual candidate bytes/inventories/architectures/formats verified in scoped native and installation records."
+    },
+    {
+      "id": "actual_ci_auditions",
+      "original_criterion": "Actual exact-SHA artifact has 24 WAVs / 117 seconds / 5,616,000 stereo frames at 48 kHz float32; 32 checksum entries, final 301 inventory SHA fe3ddc..., 24 parameter digests, exact timing/pressure selections, finite/unclipped samples. Local 99f5 render is not this artifact.",
+      "outcome": "PASS",
+      "assessment": "Actual source6d3 CI artifact verifies24 WAVs,117seconds,5616000stereo frames,24 parameter digests and32 checksum entries."
+    },
+    {
+      "id": "installation_contents",
+      "original_criterion": "All four cached archives contain source-correct guides, licenses/notices, bundle structures and modes, source-pinned repository links and working local links. Signing/notarization/physical installation remain unclaimed.",
+      "outcome": "PASS",
+      "assessment": "Four archive-content reviews verify114 inventory entries; no native installation/signing/every-DAW claim."
+    },
+    {
+      "id": "public_release_bytes",
+      "original_criterion": "Public prerelease has exactly seven expected assets. Credential-free GET bytes match release API hashes/sizes; five ZIP hashes also equal build artifacts; SHA256SUMS covers the other six assets exactly; receipt joins binary source/run/attempt/jobs/artifacts.",
+      "outcome": "BLOCKED",
+      "assessment": "No qualified public release or its required seven assets; five candidate GETs are separate evidence."
+    },
+    {
+      "id": "publication_identity",
+      "original_criterion": "Tag identifies receipt publication commit, source is its ancestor, comparison is complete and fewer than 300 paths, every delta path allowlisted. Source, publication commit and later main documentation commit are recorded separately. No tag/asset replacement.",
+      "outcome": "BLOCKED",
+      "assessment": "No release tag/receipt/publication join. This candidate-doc snapshot has492 allowlisted paths, exceeding the unchanged<300 release-publication comparison criterion."
+    },
+    {
+      "id": "public_documents",
+      "original_criterion": "README and current report promote only the actually verified 2026.11.1 targets, with correct architecture/format/download mappings and working release/audition/checksum/provenance links. Earlier 2026.11 history/ledger remains distinct. Factory reload/pressure/Pure/Studio and Program-queue qualifications stay accurate.",
+      "outcome": "PARTIAL",
+      "assessment": "Candidate documents and links are verified and truthful; required release-level asset/receipt links cannot be certified because the release is absent."
+    },
+    {
+      "id": "sixty_current_assignments",
+      "original_criterion": "Exactly 60 distinct current assignment IDs 1..60 exist. Assignments 1..59 have completed outcomes; assignment 60 passes this final review. Root may then mark 60 completed from its receipt. Do not count follow-up turns or the separate earlier 2026.11 ledger.",
+      "outcome": "PARTIAL",
+      "assessment": "60distinct assignments and all other59 scoped completions are established; assignment60 completes this review with formal acceptance BLOCKED, so its original PASS predicate is unmet."
+    },
+    {
+      "id": "evidence_and_claims",
+      "original_criterion": "Current dossier hashes/sizes/tracked coverage hold. Retain historical snapshots/failures and exact source identities. Claims concern measured synthesized roles; do not claim acoustic/hardware identity, a human listening panel, every-DAW support, or a runtime repair of the queue-only limitation.",
+      "outcome": "PASS",
+      "assessment": "All522 pinned payloads verify; historical failures, Legacy/state, pressure/mode and Program-queue qualifications retained; no acoustic/hardware/listening verdict."
+    }
+  ],
+  "source_delta": {
+    "paths": 492,
+    "all_paths_allowlisted": true,
+    "non_documentation_paths": [
+      ".github/workflows/publish-preset-refinement.yml",
+      "scripts/publish-preset-refinement.py",
+      "scripts/test-publish-preset-refinement.py"
+    ],
+    "runtime_or_required_build_gate_changed": false,
+    "original_release_comparison_path_limit": "fewer than300",
+    "reviewed_snapshot_meets_that_limit": false
+  },
+  "dossier": {
+    "payloads": 522,
+    "all_sizes_hashes_and_tracked_coverage_match": true,
+    "manifest_sha256": "f36e4649b778ba033cf595e40e9bcc3a35be087726fcbefcc10be959fdb7cb33",
+    "preservation": {
+      "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c": {
+        "original_count": 81,
+        "unchanged_entries_and_bytes": 80,
+        "amended": [
+          "README.md"
+        ]
+      },
+      "96c466f": {
+        "original_count": 263,
+        "unchanged_entries_and_bytes": 262,
+        "amended": [
+          "README.md"
+        ]
+      }
+    }
+  },
+  "required_jobs": [
+    {
+      "name": "Linux / VST3 + Standalone",
+      "id": 137274597635,
+      "conclusion": "success",
+      "required_steps": {
+        "Verify configured JUCE source": "success",
+        "Build": "success",
+        "Test": "success",
+        "Capture curated preset auditions": "success",
+        "Upload curated preset auditions": "success",
+        "Package Linux VST3 and Standalone": "success",
+        "Upload Linux install bundle": "success"
+      }
+    },
+    {
+      "name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "id": 137274597823,
+      "conclusion": "success",
+      "required_steps": {
+        "Verify configured JUCE source": "success",
+        "Build": "success",
+        "Test": "success",
+        "Validate VST3 with pluginval": "success",
+        "Validate AU with pluginval": "success",
+        "Validate AU with pluginval GUI": "success",
+        "Package native macOS VST3, AU and Standalone": "success",
+        "Upload native macOS install bundle": "success"
+      }
+    },
+    {
+      "name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "id": 137274597912,
+      "conclusion": "success",
+      "required_steps": {
+        "Verify configured JUCE source": "success",
+        "Build": "success",
+        "Test": "success",
+        "Validate VST3 with pluginval": "success",
+        "Validate AU with pluginval": "success",
+        "Validate AU with pluginval GUI": "success",
+        "Package native macOS VST3, AU and Standalone": "success",
+        "Upload native macOS install bundle": "success"
+      }
+    },
+    {
+      "name": "Windows / VST3 + Standalone",
+      "id": 137274597948,
+      "conclusion": "success",
+      "required_steps": {
+        "Verify configured JUCE source": "success",
+        "Build": "success",
+        "Test": "success",
+        "Package Windows VST3 and Standalone": "success",
+        "Upload Windows install bundle": "success"
+      }
+    },
+    {
+      "name": "pluginval / Windows VST3 (strictness 10)",
+      "id": 137283806829,
+      "conclusion": "success",
+      "required_steps": {
+        "Validate VST3 headless": "success",
+        "Validate state regression seed 0x5037a0c": "success"
+      }
+    },
+    {
+      "name": "pluginval / Linux VST3 (strictness 10)",
+      "id": 137324977642,
+      "conclusion": "failure",
+      "required_steps": {
+        "Validate VST3 headless": "success",
+        "Validate VST3 GUI under Xvfb": "failure",
+        "Validate GUI state regression seed 0x2da72db": "success"
+      }
+    }
+  ],
+  "native_ctest": [
+    {
+      "platform": "windows-x86_64",
+      "registered_and_reported": 221,
+      "passed": 219,
+      "skipped": 2,
+      "failed": 0,
+      "skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "junit_sha256": "f9e932d910fbc212c586d7fcee39300abb8037507b9b6b10316fdd8d5eae7356"
+    },
+    {
+      "platform": "macos-arm64",
+      "registered_and_reported": 243,
+      "passed": 241,
+      "skipped": 2,
+      "failed": 0,
+      "skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "junit_sha256": "348830abb5b313fb7b1016b51452cbceb02902eb6687f0fb4d270e232106aafc"
+    },
+    {
+      "platform": "macos-x86_64",
+      "registered_and_reported": 243,
+      "passed": 241,
+      "skipped": 2,
+      "failed": 0,
+      "skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "junit_sha256": "5937917863a68a20a580c3b8fd5a42f3e6e6c8f6689d2617a69477bdfe949da2"
+    },
+    {
+      "platform": "linux-x86_64",
+      "registered_and_reported": 579,
+      "passed": 578,
+      "skipped": 1,
+      "failed": 0,
+      "skip_names": [
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "junit_sha256": "88d6325991dc67a2a7f318e64e9c80e9ecdce022a586dc9aa1fc3aff68fd30a3"
+    }
+  ],
+  "public_candidates": [
+    {
+      "artifact_id": 14763872941,
+      "artifact_name": "cs80-windows-install-bundle",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763872941.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:31:44.623029+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:05.549331+00:00",
+      "bytes": 6261285,
+      "sha256": "aa472ff6516371482b7e73f76dc2fbc58d15b52aa8eb86c91f62e091dac06ec8",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-windows-install-bundle-14763872941.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    },
+    {
+      "artifact_id": 14763761497,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763761497.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:31:44.636789+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:05.470650+00:00",
+      "bytes": 14900540,
+      "sha256": "662f66e20a8658374b3d4d30102b698234e01bb99e3753a49206a04f99b201a7",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-macos-15-install-bundle-14763761497.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    },
+    {
+      "artifact_id": 14763644216,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14763644216.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:31:44.641299+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:06.357103+00:00",
+      "bytes": 16057766,
+      "sha256": "325b42beb55ca861b65e9f8416ec286a4b6061946181210fdb41d041e7d3cf1f",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-macos-15-intel-install-bundle-14763644216.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    },
+    {
+      "artifact_id": 14768807632,
+      "artifact_name": "cs80-linux-install-bundle",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14768807632.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:32:05.511861+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:15.806301+00:00",
+      "bytes": 13225022,
+      "sha256": "4295d202bacb20ab41e7a776290dac51cf4a7458abc66d185a86bc351efd4d30",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-linux-install-bundle-14768807632.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    },
+    {
+      "artifact_id": 14769036590,
+      "artifact_name": "cs80-curated-preset-audition-6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14769036590.zip",
+      "credential_free_get": true,
+      "http_status": 200,
+      "final_host": "productionresultssa1.blob.core.windows.net",
+      "get_started_at_utc": "2026-11-22T19:32:05.653205+00:00",
+      "get_completed_at_utc": "2026-11-22T19:32:22.376439+00:00",
+      "bytes": 41014591,
+      "sha256": "9b164379e214d8a15e6907d94dd48842628c09d5970579386818596a0488e16b",
+      "expires_at": "2027-02-20T16:28:38Z",
+      "api_expired": false,
+      "source_commit": "6d3cc220edef5a4a2c7cd968ea8a786c7c83198c",
+      "workflow_run_id": 45044040694,
+      "build_run_attempt": 1,
+      "cached_file": "build-coordination/artifact-cache/cs80-curated-preset-audition-6d3cc220edef5a4a2c7cd968ea8a786c7c83198c-14769036590.zip",
+      "cached_file_bytes_and_sha256_match": true,
+      "response_streamed_without_saving_duplicate": true,
+      "release_qualified": false
+    }
+  ],
+  "audition": {
+    "artifact_id": 14769036590,
+    "outer_bytes": 41014591,
+    "outer_sha256": "9b164379e214d8a15e6907d94dd48842628c09d5970579386818596a0488e16b",
+    "wav_count": 24,
+    "seconds": 117,
+    "stereo_frames": 5616000,
+    "parameter_digests_verified": 24,
+    "nonfinite_samples": 0,
+    "samples_at_or_over_full_scale": 0
+  },
+  "publisher": {
+    "run_id": 45060638607,
+    "conclusion": "skipped",
+    "workflow_commit": "96c466f0e7c25055ac8e745d2c796af643860fc6",
+    "job_id": 137325593929,
+    "job_conclusion": "skipped",
+    "release_http_status": 404
+  },
+  "assignment59": {
+    "status": "PUBLISHED_CANDIDATE_DOCS_AND_LINKS_VERIFIED_RELEASE_UNQUALIFIED",
+    "proof_sha256": "87bae0eefaa906e8697378cb0da76c0b659c253b51a321e48b1437d8ec5e0c7e",
+    "verified_at_utc": "2026-11-22T19:47:15.834164+00:00",
+    "document_gets": 17,
+    "candidate_range_gets": 5,
+    "range_gets_are_not_full_hash_checks": true
+  },
+  "team": {
+    "current_unique_assignments": 60,
+    "current_unique_agents": 60,
+    "other59_scoped_assignments_completed": true,
+    "coordinator_completed_at_snapshot": 59,
+    "published_ledger_completed_at_its_dated_snapshot": 57,
+    "assignment59_completion_supported_by_actual_return_and_proof": true,
+    "assignment60_completion_is_review_completion_not_release_PASS": true,
+    "initial_coordination_only_assignment_limits_retained": [
+      1,
+      2,
+      3
+    ],
+    "earlier_separate60_not_counted": true,
+    "human_listening_panel_claim": false,
+    "coordinator_final_snapshot_sha256": "85456e96344d0c1bcbee959a540b001ed853eecaa235fbe93c29271bf6e4973c",
+    "coordinator_final_snapshot_observed_at_utc": "2026-11-22T19:51:43.407915+00:00",
+    "coordinator_assignments1_through59_completed": true
+  },
+  "document_local_file_or_directory_links_checked": 264,
+  "exact_remaining_blocker": {
+    "job_id": 137324977642,
+    "lane": "randomized Linux GUI",
+    "seed": "0x4369262",
+    "pid": 2883,
+    "raw_returncode": -11,
+    "signal": "SIGSEGV",
+    "normalized_wrapper_exit": 139,
+    "success_printed_before_fault": true,
+    "internal_retries": 0
+  },
+  "diagnostic_limit": "No original core/fault stack. Same-seed GDB/preload replays exit0. Actual beta3 three-lane comparison uses another validator and different seeds. No ownership or repair is established.",
+  "next_step": "Keep release blocked. Obtain bounded same-artifact/original-seed stable-validator fault evidence on an already capable Linux diagnostic host; match original PID to a permitted local core and capture argument-free stacks/module identity if it faults. No retry-until-green or gate replacement.",
+  "sealing_scope": "Root may archive this actual review and assignment59proof and update ledger59/60 to completed in a subsequent docs-only seal. This review remains pinned to814c9014 and522payloads. Seal must not relabel formal acceptance, rewrite prior snapshots, change binary source/gates/candidate URLs, or claim a qualified release.",
+  "product_executions": 0,
+  "ci_retries_or_cancellations": 0,
+  "production_or_gate_changes": 0,
+  "evidence_checks_passed": 101,
+  "checks": [
+    {
+      "check": "published main identity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "binary source is ancestor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "post-source path allowlist",
+      "pass": true,
+      "detail": {
+        "count": 492,
+        "non_documentation": [
+          ".github/workflows/publish-preset-refinement.yml",
+          "scripts/publish-preset-refinement.py",
+          "scripts/test-publish-preset-refinement.py"
+        ]
+      }
+    },
+    {
+      "check": "binary runtime, tests and required build workflow unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "publisher unchanged since reviewed body-only23e53bb change",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "publisher unchanged since attempted publication head96c466f",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original formal acceptance plan preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original first-attempt source/run preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "separate older revision/history bytes preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "preset-only production scope from baseline",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "522 unique manifest payloads",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "complete tracked dossier coverage",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "all522 pinned payload sizes and hashes",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "check": "historical payload preservation 6d3cc220",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "historical payload preservation 96c466f",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "failed original attempt1 remains actual outcome",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "all six original jobs identified",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "source/run/attempt join Linux / VST3 + Standalone",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual required step outcomes Linux / VST3 + Standalone",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "source/run/attempt join macOS / macos-15 / VST3 + AU + Standalone",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual required step outcomes macOS / macos-15 / VST3 + AU + Standalone",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "source/run/attempt join macOS / macos-15-intel / VST3 + AU + Standalone",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual required step outcomes macOS / macos-15-intel / VST3 + AU + Standalone",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "source/run/attempt join Windows / VST3 + Standalone",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual required step outcomes Windows / VST3 + Standalone",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "source/run/attempt join pluginval / Windows VST3 (strictness 10)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual required step outcomes pluginval / Windows VST3 (strictness 10)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "source/run/attempt join pluginval / Linux VST3 (strictness 10)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual required step outcomes pluginval / Linux VST3 (strictness 10)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual native JUnit windows-x86_64",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native skip reasons windows-x86_64",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual native JUnit macos-arm64",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native skip reasons macos-arm64",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual native JUnit macos-x86_64",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native skip reasons macos-x86_64",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Linux native evidence ZIP identity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Linux actual JUnit bytes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual native JUnit linux-x86_64",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native skip reasons linux-x86_64",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "original native SIGSEGV and zero retries retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "independent failure review retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "four actual archive records",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native formats and architecture 14763872941",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native formats and architecture 14763761497",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native formats and architecture 14763644216",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "native formats and architecture 14768807632",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "114 actual inventory entries",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "five public full-GET records",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "candidate cached bytes/fullGET join 14763872941",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "pinned candidate URL 14763872941",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "candidate cached bytes/fullGET join 14763761497",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "pinned candidate URL 14763761497",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "candidate cached bytes/fullGET join 14763644216",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "pinned candidate URL 14763644216",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "candidate cached bytes/fullGET join 14768807632",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "pinned candidate URL 14768807632",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "candidate cached bytes/fullGET join 14769036590",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "pinned candidate URL 14769036590",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "actual CI audition proof",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "publisher actually skipped",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "current document local link targets",
+      "pass": true,
+      "detail": {
+        "checked": 264,
+        "missing": [],
+        "scope": "file/directory targets; separate final-observed/anchor-checks.json independently verifies15local anchor links"
+      }
+    },
+    {
+      "check": "five exact current download targets README.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "five exact current download targets docs/PRESET_REFINEMENT_2026_11_1.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "five exact current download targets docs/CI_DISTRIBUTION_STATUS.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "public release and claim limits",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "controller and older-module attribution retained",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "assignment59 actual completed review",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "assignment59 fullGET proof hash join",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "17 actual public doc GETs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:README.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes main:README.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/PRESET_REFINEMENT_2026_11_1.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes main:docs/PRESET_REFINEMENT_2026_11_1.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/CI_DISTRIBUTION_STATUS.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes main:docs/CI_DISTRIBUTION_STATUS.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/preset-evidence/2026.11.1/final-ci/public-candidates/summary.json",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/preset-evidence/2026.11.1/final-ci/linux-x86_64/ci-proof.json",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/preset-evidence/2026.11.1/final-ci/auditions/artifact-proof.json",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/preset-evidence/2026.11.1/final-ci/installation/artifact-proof.json",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/preset-evidence/2026.11.1/final-ci/failure-review/README.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/preset-evidence/2026.11.1/final-ci/README.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/TEAM_REVIEW_2026_11_1.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 814c9014:docs/preset-evidence/2026.11.1/final-ci/team/ledger.json",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 6d3cc220:README.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 6d3cc220:docs/PRESET_REFINEMENT_2026_11_1.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published doc bytes 6d3cc220:docs/INSTALL_AND_QUICKSTART.md",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "five bounded candidate availability checks",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "availability/fullGET evidence joined 14763872941",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "availability/fullGET evidence joined 14763761497",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "availability/fullGET evidence joined 14763644216",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "availability/fullGET evidence joined 14768807632",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "availability/fullGET evidence joined 14769036590",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "public qualified release still absent",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "60 actual distinct current assignments",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "published57-completed ledger is explicitly historical",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "coordinator matches published distinct-agent identities",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "other58 recorded completed outcomes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "assignment58 actual scoped final return evidence",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "first59 scoped assignments complete before60 decision",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "all original criteria explicitly adjudicated",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "current document local anchors",
+      "pass": true,
+      "detail": {
+        "checked": 15,
+        "missing": []
+      }
+    }
+  ],
+  "document_local_anchor_links_checked": 15
+}

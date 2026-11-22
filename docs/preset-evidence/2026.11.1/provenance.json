@@ -3,9 +3,9 @@
   "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
   "library_revision_under_review": "2026.11.1",
   "packaging_assignment": 20,
-  "status": "ACTUAL_NATIVE_AND_CANDIDATE_ARCHIVES_VERIFIED_LINUX_GUI_GATE_FAILED_RELEASE_UNQUALIFIED_FINAL_REVIEW_PENDING",
+  "status": "ALL_60_SCOPED_ASSIGNMENTS_COMPLETED_CANDIDATE_HANDOFF_VERIFIED_RELEASE_UNQUALIFIED",
   "scope": "Authoring and calibrated-bank evidence, local native/control/performance checks, actual four-platform native CI and installation archives, and the actual 24-WAV CI audition. The required Linux randomized GUI validator crashed after SUCCESS; the whole build failed and the formal release was withheld. Public candidate delivery and the completed task ledger are recorded separately as integration finishes; no release qualification is inferred from archive or native-test passes.",
-  "measurement_integrity": "At commit 758fc0d, the 239-entry snapshot preserved all 81 original manifest entries and archived bytes exactly. Commit f0542df then added 16 CI preparation/review records and amended the README index and its manifest entry; the other 80 original entries and payloads remain unchanged. No measurements were recalculated. Archived metadata removes the original checkout prefix only where present; the earlier final core log also abbreviates its producing Python runtime executable path. Original/stored hashes record transformations. Reproduction sources remain verbatim. Compact indexes identify selected and omitted supporting inputs. Historical draft, failed setup and unresolved observations retain their recorded stage. The initial final-ci archival additions preserved every payload and manifest entry present in the 263-entry 96c466f snapshot. The final evidence-index refresh then deliberately updated README.md and its manifest entry; the other 262 payloads and entries remain unchanged. The prior index entry is retained in index_updates and its bytes in Git commit96c466f. New native, candidate-audition, installation and original Linux failure records are copied verbatim, including their historical preparation and pending snapshots. Any later public index edits are deliberate new snapshots; measurements and failed results are not rewritten. Concurrent documentation814c901 retains its full final-ci evidence and team ledger. The compact verification adds independent ci records, refreshes the earlier installation/input GET summaries, and archives its exact reviewed prose snapshot before the additive documentation merge; historical measurement payloads are unchanged.",
+  "measurement_integrity": "At commit 758fc0d, the 239-entry snapshot preserved all 81 original manifest entries and archived bytes exactly. Commit f0542df then added 16 CI preparation/review records and amended the README index and its manifest entry; the other 80 original entries and payloads remain unchanged. No measurements were recalculated. Archived metadata removes the original checkout prefix only where present; the earlier final core log also abbreviates its producing Python runtime executable path. Original/stored hashes record transformations. Reproduction sources remain verbatim. Compact indexes identify selected and omitted supporting inputs. Historical draft, failed setup and unresolved observations retain their recorded stage. The initial final-ci archival additions preserved every payload and manifest entry present in the 263-entry 96c466f snapshot. The final evidence-index refresh then deliberately updated README.md and its manifest entry; the other 262 payloads and entries remain unchanged. The prior index entry is retained in index_updates and its bytes in Git commit96c466f. New native, candidate-audition, installation and original Linux failure records are copied verbatim, including their historical preparation and pending snapshots. Any later public index edits are deliberate new snapshots; measurements and failed results are not rewritten. Concurrent documentation814c901 retains its full final-ci evidence and team ledger. The compact verification adds independent ci records, refreshes the earlier installation/input GET summaries, and archives its exact reviewed prose snapshot before the additive documentation merge; historical measurement payloads are unchanged. The final documentation seal reconciles the completed 60-agent review with incoming commit 2b2f222: 560 of its 562 manifest entries and payloads remain byte-identical; only the final-ci index and current team ledger are deliberately updated, and 15 review payloads are added. The previous ledger is retained verbatim as ledger-at-first-publication.json. The independent final review still concerns commit 814c901 and its 522-payload snapshot; no review result, plugin runtime, required CI gate, candidate archive or release qualification is changed by this seal.",
   "limitations": [
     "Candidate parameter-override renders use the frozen baseline engine and baseline master volumes. They are not the final calibrated download.",
     "Artifact-pipeline smoke uses the frozen baseline executable and cannot certify final CI assets.",
@@ -4664,23 +4664,23 @@
       "origin": "Root-authored actual candidate/failure evidence index",
       "phase": "Outcome index; not a new measurement or release certification.",
       "origin_sha256": null,
-      "stored_sha256": "ecc248f03fe2a897646a30e1b5670fa8b91b6062a84daa0d7feb8b2b90ebd14e",
-      "bytes": 8192,
-      "transform": "Authored index of separately archived primary records."
+      "stored_sha256": "662da9f635fbac5a7268ee4dfa22d7a523c5ae50360c1d99a036a4300e623c45",
+      "bytes": 8868,
+      "transform": "Appended actual completed59/60 review links and scope; reviewed814c9014/522-payload snapshot remains distinct from this later documentation-only seal. Formal release remains BLOCKED."
     },
     {
       "path": "final-ci/team/ledger.json",
       "origin": "build-w12-team-ledger/ledger-final.json",
-      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58\u201360-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
+      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58–60-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
       "origin_sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14",
-      "stored_sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14",
-      "bytes": 54106,
-      "transform": "Verbatim snapshot."
+      "stored_sha256": "d0a002c51662ff26a80d8bdbb30bb186f0dd6b4a6d14425f8a6d47f0d69cbee7",
+      "bytes": 54986,
+      "transform": "Coordinator closure from preserved first-publication snapshot and actual completed58/59/60 reports. All60 scoped assignments complete; original goal/release acceptance remain incomplete/BLOCKED. No earlier negative result is rewritten."
     },
     {
       "path": "final-ci/team/source-accounting.json",
       "origin": "build-w12-team-ledger/final-source-accounting.json",
-      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58\u201360-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
+      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58–60-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
       "origin_sha256": "8856856397125fb091915ce85be232cec56190a5ab8e42655d340fe761e915b2",
       "stored_sha256": "8856856397125fb091915ce85be232cec56190a5ab8e42655d340fe761e915b2",
       "bytes": 8814,
@@ -4689,7 +4689,7 @@
     {
       "path": "final-ci/team/review.json",
       "origin": "build-w12-team-ledger/final-report-review.json",
-      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58\u201360-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
+      "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58–60-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
       "origin_sha256": "c6934d5fdb4f6923c1c5d3cd5e631da60f2c9aaa02d99d52151ee2455c372490",
       "stored_sha256": "c6934d5fdb4f6923c1c5d3cd5e631da60f2c9aaa02d99d52151ee2455c372490",
       "bytes": 2603,
@@ -5084,6 +5084,141 @@
       "stored_sha256": "ad5e9031feaf601e84ae30fba93f8645357435cb5b5ae7224607b7e8bd6e0faa",
       "bytes": 3817,
       "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/public-documents/published-candidate-verification.json",
+      "origin": "build-w13-release-docs/published-candidate-verification.json",
+      "phase": "Completed assignment59 actual post-push review of814c9014:17 public document/hash checks and five bounded HTTP206 ZIP availability probes; full artifact byte verification is separately assignment56. Release remains unqualified and endpoint404.",
+      "origin_sha256": "87bae0eefaa906e8697378cb0da76c0b659c253b51a321e48b1437d8ec5e0c7e",
+      "stored_sha256": "87bae0eefaa906e8697378cb0da76c0b659c253b51a321e48b1437d8ec5e0c7e",
+      "bytes": 14328,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/public-documents/PUBLISHED_CANDIDATE_CHECK.md",
+      "origin": "build-w13-release-docs/PUBLISHED_CANDIDATE_CHECK.md",
+      "phase": "Completed assignment59 actual post-push review of814c9014:17 public document/hash checks and five bounded HTTP206 ZIP availability probes; full artifact byte verification is separately assignment56. Release remains unqualified and endpoint404.",
+      "origin_sha256": "f6d912dbdf51837696944b1fc58e8c0aca3098cbab923d6d310c670860cea949",
+      "stored_sha256": "f6d912dbdf51837696944b1fc58e8c0aca3098cbab923d6d310c670860cea949",
+      "bytes": 3630,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-review.json",
+      "origin": "build-w13-acceptance/final-review.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "47c4b3247cea4fb225f92ea5f713f4c5542502b8bbf1b71aeae8a686de26de36",
+      "stored_sha256": "47c4b3247cea4fb225f92ea5f713f4c5542502b8bbf1b71aeae8a686de26de36",
+      "bytes": 32817,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-review.md",
+      "origin": "build-w13-acceptance/final-review.md",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "e889c835c974be02dd5e9ec84d01111f07b344708a040dd8531a3522ab1c91be",
+      "stored_sha256": "e889c835c974be02dd5e9ec84d01111f07b344708a040dd8531a3522ab1c91be",
+      "bytes": 10174,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/review-final-handoff.py",
+      "origin": "build-w13-acceptance/review-final-handoff.py",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "5c6259851cace1d6bd13a31c9d1111864ca0450297006fdd6325367623ffc5b4",
+      "stored_sha256": "5c6259851cace1d6bd13a31c9d1111864ca0450297006fdd6325367623ffc5b4",
+      "bytes": 23041,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-observed/anchor-checks.json",
+      "origin": "build-w13-acceptance/final-observed/anchor-checks.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "ec841c02c359ceee5c80337147af5b6c8a2d2a4ef8118234f51f87afc6834d92",
+      "stored_sha256": "ec841c02c359ceee5c80337147af5b6c8a2d2a4ef8118234f51f87afc6834d92",
+      "bytes": 3855,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-observed/build-jobs.json",
+      "origin": "build-w13-acceptance/final-observed/build-jobs.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "d98d9fff1ebd4d9eeac81f81b07f4123401574b99e8d7ce9579a21deecbb2178",
+      "stored_sha256": "d98d9fff1ebd4d9eeac81f81b07f4123401574b99e8d7ce9579a21deecbb2178",
+      "bytes": 31998,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-observed/build-run.json",
+      "origin": "build-w13-acceptance/final-observed/build-run.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "361f6c48281e1d6f10f92d4a0b7066916282e6369cb2e46f47f97c774f7691e8",
+      "stored_sha256": "361f6c48281e1d6f10f92d4a0b7066916282e6369cb2e46f47f97c774f7691e8",
+      "bytes": 15246,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-observed/coordinator-at-final-decision.json",
+      "origin": "build-w13-acceptance/final-observed/coordinator-at-final-decision.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "85456e96344d0c1bcbee959a540b001ed853eecaa235fbe93c29271bf6e4973c",
+      "stored_sha256": "85456e96344d0c1bcbee959a540b001ed853eecaa235fbe93c29271bf6e4973c",
+      "bytes": 8213,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-observed/main-ref.json",
+      "origin": "build-w13-acceptance/final-observed/main-ref.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "d61c3372990d27240fa7c8368f7a6a2d3902f36dff480a201e08786cac645a02",
+      "stored_sha256": "d61c3372990d27240fa7c8368f7a6a2d3902f36dff480a201e08786cac645a02",
+      "bytes": 397,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-observed/publisher-jobs.json",
+      "origin": "build-w13-acceptance/final-observed/publisher-jobs.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "8a889175970cd6722676340de49b9415d35fa6bc217273c3b72a64d88d15b9d1",
+      "stored_sha256": "8a889175970cd6722676340de49b9415d35fa6bc217273c3b72a64d88d15b9d1",
+      "bytes": 1163,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-observed/publisher-run.json",
+      "origin": "build-w13-acceptance/final-observed/publisher-run.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "abf642bad1f41742aa50c3e30c7f3e9bbf150cc48e47c6df762d16713fe919f2",
+      "stored_sha256": "abf642bad1f41742aa50c3e30c7f3e9bbf150cc48e47c6df762d16713fe919f2",
+      "bytes": 14812,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/final-observed/reviewed-commit.json",
+      "origin": "build-w13-acceptance/final-observed/reviewed-commit.json",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "373d092c45b309e369e6ef31aec8b02817fa3df9983a94630edf51e99c2c7795",
+      "stored_sha256": "373d092c45b309e369e6ef31aec8b02817fa3df9983a94630edf51e99c2c7795",
+      "bytes": 1834,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/acceptance/FINAL_SHA256SUMS",
+      "origin": "build-w13-acceptance/FINAL_SHA256SUMS",
+      "phase": "Completed assignment60 independent final handoff review pinned to814c9014/522 published dossier payloads. 101 evidence checks support VERIFIED_RELEASE_UNQUALIFIED candidate handoff; original formal release acceptance stays BLOCKED and required Linux gate FAIL. The subsequent coordinator seal changes documentation only and is not relabeled as this independently reviewed snapshot.",
+      "origin_sha256": "f7c5fb5d695e6e8f6a26b4b13c7c21565a3f78ccbcfb7e1167835ff106c3a010",
+      "stored_sha256": "f7c5fb5d695e6e8f6a26b4b13c7c21565a3f78ccbcfb7e1167835ff106c3a010",
+      "bytes": 1063,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-ci/team/ledger-at-first-publication.json",
+      "origin": "git:814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4:docs/preset-evidence/2026.11.1/final-ci/team/ledger.json",
+      "phase": "Exact earlier57-completed/58–60-pending observation snapshot, published in814c9014 before final coordinator closure.",
+      "origin_sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14",
+      "stored_sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14",
+      "bytes": 54106,
+      "transform": "Verbatim."
     }
   ],
   "extension_assignment": 48,
@@ -5156,7 +5291,7 @@
     "publisher_run_id": 45060638607,
     "publisher_conclusion": "skipped",
     "release_http_status": 404,
-    "final_team_review": "pending"
+    "final_team_review": "final-ci/acceptance/final-review.json"
   },
   "failure_investigation": {
     "record": "final-ci/failure-review/summary.json",
@@ -5215,6 +5350,36 @@
       },
       "new_stored_sha256": "978adcc7b5cbdedd292da4a76a1adb9ebb1491e1d418a6aa32bc70954b808148",
       "reason": "Additive compact review links; incoming final-ci material and older measurements preserved."
+    },
+    {
+      "path": "final-ci/team/ledger.json",
+      "previous_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+      "previous_entry": {
+        "path": "final-ci/team/ledger.json",
+        "origin": "build-w12-team-ledger/ledger-final.json",
+        "phase": "Assignment58 returned scoped accounting/review at the recorded516-payload snapshot; its57-completed/58–60-pending state precedes final coordinator closure and published-document verification. Completed reviews do not imply passing Linux/release gates.",
+        "origin_sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14",
+        "stored_sha256": "e2ebb23f5731ebcf49b434f6c5c233fe351c4c5a7f26570e902500a1ff6afd14",
+        "bytes": 54106,
+        "transform": "Verbatim snapshot."
+      },
+      "new_stored_sha256": "d0a002c51662ff26a80d8bdbb30bb186f0dd6b4a6d14425f8a6d47f0d69cbee7",
+      "reason": "Coordinator closure from preserved first-publication snapshot and actual completed58/59/60 reports. All60 scoped assignments complete; original goal/release acceptance remain incomplete/BLOCKED. No earlier negative result is rewritten."
+    },
+    {
+      "path": "final-ci/README.md",
+      "previous_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+      "previous_entry": {
+        "path": "final-ci/README.md",
+        "origin": "Root-authored actual candidate/failure evidence index",
+        "phase": "Outcome index; not a new measurement or release certification.",
+        "origin_sha256": null,
+        "stored_sha256": "ecc248f03fe2a897646a30e1b5670fa8b91b6062a84daa0d7feb8b2b90ebd14e",
+        "bytes": 8192,
+        "transform": "Authored index of separately archived primary records."
+      },
+      "new_stored_sha256": "662da9f635fbac5a7268ee4dfa22d7a523c5ae50360c1d99a036a4300e623c45",
+      "reason": "Appended actual completed59/60 review links and scope; reviewed814c9014/522-payload snapshot remains distinct from this later documentation-only seal. Formal release remains BLOCKED."
     }
   ],
   "compact_verification": {
@@ -5247,6 +5412,52 @@
     "prose_review_snapshot": "ci/acceptance/reviewed-prose/",
     "integration_note": "The incoming final-ci dossier and team ledger are preserved. Compact295-payload acceptance concerns its recorded earlier prose/evidence snapshot. A combined provenance hash check is recorded separately; no versioned release or Linux repair is claimed.",
     "additive_merge": "ci/merge-814c901.json",
-    "combined_manifest_payload_count": 562
+    "combined_manifest_payload_count": 562,
+    "combined_manifest_snapshot_commit": "2b2f222674b4779fe5342f8ae67fbcf1c7897dd7"
+  },
+  "review_closure": {
+    "actual_distinct_agents": 60,
+    "completed_scoped_assignments": 60,
+    "overall_original_user_goal_complete": false,
+    "formal_release_acceptance": "BLOCKED",
+    "required_linux_gate": "FAIL",
+    "candidate_handoff_review": "VERIFIED_RELEASE_UNQUALIFIED",
+    "independent_review_commit": "814c9014b65b5ac5e48aa6ead8d5c2b4fec568f4",
+    "independent_review_payload_count": 522,
+    "independent_evidence_checks": 101,
+    "source_and_required_gates_changed_by_seal": false,
+    "earlier_completion_snapshot": "final-ci/team/ledger-at-first-publication.json",
+    "final_review": "final-ci/acceptance/final-review.json",
+    "post_review_reconciliation": {
+      "parent_commit": "2b2f222674b4779fe5342f8ae67fbcf1c7897dd7",
+      "parent_manifest_payload_count": 562,
+      "final_manifest_payload_count": 577,
+      "unchanged_parent_entries_and_payloads": 560,
+      "amended_index_or_current_ledger_paths": [
+        "final-ci/README.md",
+        "final-ci/team/ledger.json"
+      ],
+      "added_review_payload_paths": [
+        "final-ci/public-documents/published-candidate-verification.json",
+        "final-ci/public-documents/PUBLISHED_CANDIDATE_CHECK.md",
+        "final-ci/acceptance/final-review.json",
+        "final-ci/acceptance/final-review.md",
+        "final-ci/acceptance/review-final-handoff.py",
+        "final-ci/acceptance/final-observed/anchor-checks.json",
+        "final-ci/acceptance/final-observed/build-jobs.json",
+        "final-ci/acceptance/final-observed/build-run.json",
+        "final-ci/acceptance/final-observed/coordinator-at-final-decision.json",
+        "final-ci/acceptance/final-observed/main-ref.json",
+        "final-ci/acceptance/final-observed/publisher-jobs.json",
+        "final-ci/acceptance/final-observed/publisher-run.json",
+        "final-ci/acceptance/final-observed/reviewed-commit.json",
+        "final-ci/acceptance/FINAL_SHA256SUMS",
+        "final-ci/team/ledger-at-first-publication.json"
+      ],
+      "runtime_changed": false,
+      "required_gates_changed": false,
+      "independent_review_scope_expanded": false,
+      "note": "Additive documentation seal preserves incoming independent evidence and the original final-review snapshot. This record does not certify a qualified release or repair the Linux crash."
+    }
   }
 }
