@@ -432,6 +432,8 @@ def main():
                 f'Binary source: `{source}`.\nBuild: {run["html_url"]}.\n'
                 f'The tag identifies publication commit `{publication}`; only the allowlisted documentation/publisher paths differ from the binary source. The package SOURCE.txt and manifests retain the exact binary source.\n\n'
                 'Four native platform bundles and 24 factory audition WAVs are copied byte-for-byte from the successful build artifacts. All six required jobs and named test/validator/package steps passed; archive hashes, source identity, architecture and audition integrity were checked before publication.\n\n'
+                'Use ordinary Circuit mode and explicitly select a factory program in **Library** to hear its current voicing. Existing saved sessions keep their serialized sounds. **Pressure Lead** requires aftertouch.\n\n'
+                'A pre-existing limitation remains for Program changes sent only through the VST3 processing queue. See the [host-program qualification and refinement report](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/docs/PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification) for the observed controller dependency and verification scope.\n\n'
                 'These packages are not signed/notarized releases and have not been qualified with every DAW. See release-provenance.json and SHA256SUMS for exact identities and verification scope.\n')
         if not args.publish:
             print(json.dumps({'status': 'verified; publication not requested', 'binary_source': source, 'publication_commit': publication, 'assets': sorted(assets)}, indent=2))
