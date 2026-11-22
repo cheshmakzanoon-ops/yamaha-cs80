@@ -16,19 +16,21 @@ a DAW or a standalone app.
 
 ## Downloads
 
-**[Get the latest verified development builds on GitHub Actions](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/build.yml?query=branch%3Amain+event%3Apush+is%3Asuccess)**
+Choose your platform for a **direct ZIP download** from the latest successful
+`main` build. No GitHub sign-in is required for these links.
 
-Sign in to GitHub, open the newest successful **build** run for a push to
-`main`, then select your bundle under **Artifacts**. If a newer commit is
-still building or failed validation, it is not yet the verified download.
-This link follows current development instead of pointing to a dated installer.
-
-| Platform | Formats | Artifact name |
+| Platform | Formats | Download |
 | --- | --- | --- |
-| Windows x64 | VST3, Standalone | `cs80-windows-install-bundle` |
-| macOS Apple Silicon (arm64) | VST3, AU, Standalone | `cs80-macos-15-install-bundle` |
-| macOS Intel (x86-64) | VST3, AU, Standalone | `cs80-macos-15-intel-install-bundle` |
-| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | `cs80-linux-install-bundle` |
+| Windows x64 | VST3, Standalone | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/workflows/build/main/cs80-windows-install-bundle.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/workflows/build/main/cs80-macos-15-install-bundle.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/workflows/build/main/cs80-macos-15-intel-install-bundle.zip) |
+| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/workflows/build/main/cs80-linux-install-bundle.zip) |
+
+The direct links use [nightly.link](https://nightly.link/) to serve the public
+GitHub Actions artifacts. If that mirror is unavailable or you prefer to
+download from GitHub, sign in and use [GitHub Actions](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/workflows/build.yml?query=branch%3Amain+event%3Apush+is%3Asuccess):
+open the newest successful `main` build and find your `*-install-bundle` under
+**Artifacts**. A pending or failed build does not replace the verified download.
 
 Unzip the GitHub artifact, verify `SHA256SUMS`, and unpack the inner archive
 without splitting the plug-in or app bundle. The package manifest and
