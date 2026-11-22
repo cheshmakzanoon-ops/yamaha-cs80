@@ -1,0 +1,47 @@
+# One-off publication of the independently reviewed source/run below.
+name: Publish preset refinement 2026.11.1
+
+on:
+  workflow_run:
+    workflows: [build]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-preset-refinement-2026.11.1
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: >-
+      github.repository == 'cheshmakzanoon-ops/yamaha-cs80' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.workflow_run.id == 45042166237 &&
+        github.event.workflow_run.head_sha == 'be460b0b93bdcb8dce5eb8925b18b72706b25e19' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_repository.full_name == github.repository))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      actions: read
+      contents: write
+    env:
+      # Fixed contract, never workflow_dispatch inputs.
+      PUBLISH_BINARY_SHA: be460b0b93bdcb8dce5eb8925b18b72706b25e19
+      PUBLISH_BUILD_RUN_ID: '45042166237'
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify publisher refusal and archive fixtures
+        run: python3 scripts/test-publish-preset-refinement.py
+      - name: Verify the exact build and publish its unchanged archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/publish-preset-refinement.py --publish
+
