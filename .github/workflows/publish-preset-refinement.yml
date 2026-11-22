@@ -20,8 +20,8 @@ jobs:
     if: >-
       github.repository == 'cheshmakzanoon-ops/yamaha-cs80' &&
       (github.event_name == 'workflow_dispatch' ||
-       (github.event.workflow_run.id == 45042166237 &&
-        github.event.workflow_run.head_sha == 'be460b0b93bdcb8dce5eb8925b18b72706b25e19' &&
+       (github.event.workflow_run.id == 45044040694 &&
+        github.event.workflow_run.head_sha == '6d3cc220edef5a4a2c7cd968ea8a786c7c83198c' &&
         github.event.workflow_run.conclusion == 'success' &&
         github.event.workflow_run.head_repository.full_name == github.repository))
     runs-on: ubuntu-24.04
@@ -31,8 +31,8 @@ jobs:
       contents: write
     env:
       # Fixed contract, never workflow_dispatch inputs.
-      PUBLISH_BINARY_SHA: be460b0b93bdcb8dce5eb8925b18b72706b25e19
-      PUBLISH_BUILD_RUN_ID: '45042166237'
+      PUBLISH_BINARY_SHA: 6d3cc220edef5a4a2c7cd968ea8a786c7c83198c
+      PUBLISH_BUILD_RUN_ID: '45044040694'
     steps:
       - uses: actions/checkout@v5
         with:
