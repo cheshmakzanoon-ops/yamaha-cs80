@@ -16,6 +16,9 @@ int main(){
   auto host=std::make_unique<Cs80AudioProcessor>(fixture.getFile());
   host->setEngineMode(circuit?Cs80AudioProcessor::EngineMode::circuit:Cs80AudioProcessor::EngineMode::legacy);
   for(auto [key,value]:std::array<std::pair<int,float>,10>{{{cs80::P_parityMode,0},{cs80::P_mpeOn,1},{cs80::P_voiceMode,0},{cs80::P_kasScanTiming,0},{cs80::P_arpOn,0},{cs80::P_voiceDispersion,0},{cs80::P_drift,0},{cs80::P_analogNoise,0},{cs80::P_pressureCurve,0},{cs80::P_pressureThreshold,0}}})host->setParamValue(key,value);
+  // Isolate retained bend targets from the startup preset's pressure vibrato:
+  // a newly activated instrument deliberately has its own oscillator history.
+  host->setParamValue(cs80::P_subAtVco,0);
   host->setParamValue(cs80::P_mod1Amount,1);
   host->getModernLayer().setSlot(0,{cs80::modern::ModSource::timbre,cs80::modern::ModSource::none,cs80::modern::ModDestination::pulseWidth,cs80::modern::ModTarget::both});
   host->prepareToPlay(48000,64);juce::AudioBuffer<float> audio(2,frames);juce::MidiBuffer midi;

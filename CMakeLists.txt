@@ -2453,6 +2453,11 @@ if (CS80_BUILD_PLUGIN)
     add_test(NAME cs80_panel_golden_tests COMMAND CS80Snapshots --panel-golden-tests
              ${CMAKE_CURRENT_BINARY_DIR}/panel-golden-check)
     set_tests_properties(cs80_panel_golden_tests PROPERTIES TIMEOUT 60)
+    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        # Match the golden-image font environment used by run-ui-smoke-linux.sh.
+        set_tests_properties(cs80_panel_golden_tests PROPERTIES
+            ENVIRONMENT "JUCE_FONT_PATH=/usr/share/fonts/truetype/dejavu")
+    endif()
 
     # Opening sound recall through the real browser and processor, without a native peer.
     add_test(NAME cs80_preset_revert_tests COMMAND CS80Snapshots --preset-revert-tests)
