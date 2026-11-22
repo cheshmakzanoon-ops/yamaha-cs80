@@ -317,12 +317,12 @@ class DownloadTests(unittest.TestCase):
         self.assertNotIn("|| true", fetch.split("          unzip", 1)[0])
         self.assertIn("            pluginval-download.json", macos)
         self.assertIn("runner: [macos-15, macos-15-intel]", macos)
-        # Freeze both full platform regions. The 2026.11 refresh includes approved
-        # scheduling, Linux auditions and JUnit evidence; each pluginval job changes
-        # only its two concurrency lines, retaining every validator-step byte.
+        # Freeze both full platform regions after the 2026.11.1 audition expansion
+        # and failure-only headless diagnostic routing. The required validator
+        # commands and failure behavior remain unchanged.
         linux = workflow.split("  macos:", 1)[0]
         windows = workflow.split("  windows:", 1)[1]
-        self.assertEqual(hashlib.sha256(linux.encode()).hexdigest(), "dd36be196c6f754017a19517bc9974b0d0b1e376ae4e4af4b5143e6cef78e9a2")
+        self.assertEqual(hashlib.sha256(linux.encode()).hexdigest(), "c72b9d5e34364eb77ff9a62d546e7b1c1a031d7f448f5e71b188a6cd95227caa")
         self.assertEqual(hashlib.sha256(windows.encode()).hexdigest(), "d87bb8d1e298aeb055efb83ef32d721366786511e087678a43341f8e9721d3f4")
 
 
