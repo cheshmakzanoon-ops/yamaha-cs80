@@ -144,12 +144,13 @@ void buildPads(Builder& add)
              .eg(I, 0.38f, 3.0f, 0.92f, 2.3f).eg(II, 0.65f, 2.8f, 0.85f, 2.7f)
              .tremolo(0.43f, 3.8f).detune(3.6f).mix(0.39f));
     add("Neo-Noir Pad", "Pads", { "chorus", "ring-mod", "dual-rank" },
-        "A dark saw foundation supports a later pulse glow, broad chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes.",
+        "A dark saw foundation supports a later pulse glow, a broad stereo field, chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes.",
         pad().wave(I, true, false, 0.10f).lpf(I, 1100.0f, 0.10f).lpf(II, 2400.0f, 0.17f)
              .hpf(I, 35.0f).hpf(II, 190.0f).pw(II, 0.60f, 0.26f, 0.16f)
              .feg(I, 0.24f, 0.28f, 1.25f, 4.8f, 2.8f).feg(II, 0.40f, 0.42f, 1.8f, 3.8f, 2.4f)
              .eg(I, 0.85f, 4.2f, 0.91f, 5.2f).eg(II, 1.4f, 3.5f, 0.78f, 4.1f)
-             .chorus(0.58f, 0.25f).ring(0.3f, 0.06f, 3.0f, 5.0f, 0.08f).detune(8.5f).mix(0.39f));
+             .chorus(0.58f, 0.25f).ring(0.3f, 0.06f, 3.0f, 5.0f, 0.08f).detune(8.5f).mix(0.39f)
+             .pan(I, -0.18f).pan(II, 0.40f));
     add("Rain Pad", "Pads", { "modern", "lfo", "noise" },
         "An 8 Hz modern sample-and-hold LFO flickers the filters over a soft pulse body and a little band-limited air. The stepped filter motion is inactive in Pure CS-80.",
         pad().wave(I, false, true, 0.04f).pw(I, 0.54f, 0.10f, 0.19f)
@@ -185,13 +186,13 @@ void buildPads(Builder& add)
              .mix(0.30f).detune(1.1f).g(P_chorusOn, 0.0f).g(P_drift, 0.035f).g(P_analogNoise, 0.0f));
     add("Ether Pad", "Pads", { "noise", "sine", "dual-rank" },
         "A pure 8' sine fades in beneath a separate thin veil of filtered noise. The air arrives later and follows pressure more strongly, leaving the pitched center clean and soft.",
-        pad().wave(I, false, false, 0.85f).wave(II, false, false, 0.0f, 0.65f)
+        pad().wave(I, false, false, 0.85f).wave(II, false, false, 0.0f, 0.95f)
              .hpf(II, 1100.0f).lpf(II, 5600.0f, 0.08f)
              .feg(I, 0.0f, 0.0f, 0.01f, 0.5f, 0.4f).feg(II, 0.18f, 0.24f, 1.7f, 3.8f, 2.8f)
              .eg(I, 0.65f, 3.5f, 0.94f, 3.0f).eg(II, 1.25f, 3.0f, 0.68f, 4.0f)
              .level(I, 0.0f, 0.63f).level(II, 1.0f, 0.55f)
              .touch(I, 0.0f, 0.22f, 0.0f, 0.27f).touch(II, 0.04f, 0.20f, 0.12f, 0.44f)
-             .mix(0.19f).detune(0.0f).chorus(0.20f, 0.24f).g(P_analogNoise, 0.0f).g(P_drift, 0.035f));
+             .mix(0.28f).detune(0.0f).chorus(0.20f, 0.24f).g(P_analogNoise, 0.0f).g(P_drift, 0.035f));
     add("Velvet Pad", "Pads", { "chorus", "dual-rank" },
         "Softly filtered saw ranks overlap with shallow, unequal blooms. Modest detune and chorus make a dense, smooth chord; the second rank closes earlier on release.",
         pad().wave(Both, true, false).lpf(I, 1250.0f, 0.06f).lpf(II, 1950.0f, 0.07f)
@@ -224,11 +225,12 @@ void buildPads(Builder& add)
              .touch(I, 0.02f, 0.24f, 0.10f, 0.28f).touch(II, 0.04f, 0.26f, 0.18f, 0.28f)
              .mix(0.31f).detune(5.2f).chorus(0.42f, 0.23f));
     add("Arctic Pad", "Pads", { "chorus", "feet-layer", "dual-rank" },
-        "A thin, bright 8' saw band supports a quiet 4' pulse sheen. Distinct high-pass bands and later upper entry create an icy texture; moderate chorus supplies width.",
+        "A thin, bright 8' saw band supports a quiet 4' pulse sheen. Distinct high-pass bands and later upper entry create an icy texture; gently spread ranks supply stereo width under moderate chorus.",
         pad().wave(I, true, false).wave(II, false, true).feet(II, f4).pw(II, 0.66f, 0.18f, 0.31f)
              .hpf(I, 330.0f, 0.06f).lpf(I, 4300.0f, 0.08f).hpf(II, 1100.0f, 0.08f).lpf(II, 7800.0f, 0.08f)
              .feg(I, 0.10f, 0.15f, 0.75f, 3.2f, 1.6f).feg(II, 0.18f, 0.20f, 1.15f, 2.7f, 2.0f)
              .eg(I, 0.48f, 3.0f, 0.86f, 2.7f).eg(II, 0.85f, 2.6f, 0.72f, 3.3f)
              .touch(I, 0.06f, 0.28f, 0.10f, 0.25f).touch(II, 0.06f, 0.26f, 0.12f, 0.24f)
-             .level(II, 0.90f, 0.59f).mix(0.29f).detune(3.5f).chorus(0.40f, 0.34f));
+             .level(II, 0.90f, 0.59f).mix(0.29f).detune(3.5f).chorus(0.40f, 0.34f)
+             .pan(I, -0.12f).pan(II, 0.40f));
 }

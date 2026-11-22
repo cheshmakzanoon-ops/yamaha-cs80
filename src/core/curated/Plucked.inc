@@ -53,13 +53,13 @@ void buildPlucked(Builder& add)
                  .mix(0.25f).res(0.25f));
     add("Harp", "Plucked", { "sine", "feet-layer", "velocity" },
         "A long 8' resonant body with a shorter 4' finger-plucked glint. The upper harmonics fade first, leaving a round clear tail; release controls the damping.",
-        plucked().wave(I, true, false, 0.78f).wave(II, false, true, 0.24f).feet(II, f4).pw(II, 0.55f)
+        plucked().wave(I, true, false, 0.78f).wave(II, false, true, 0.46f).feet(II, f4).pw(II, 0.55f)
                  .hpf(I, 30.0f).hpf(II, 480.0f).lpf(I, 1700.0f, 0.025f).lpf(II, 4200.0f, 0.035f)
                  .level(I, 0.18f, 0.32f).level(II, 0.34f, 0.10f)
                  .feg(I, 0.0f, 0.12f, 0.003f, 2.1f, 0.65f).feg(II, 0.0f, 0.24f, 0.0015f, 0.65f, 0.25f)
                  .eg(I, 0.003f, 6.8f, 0.0f, 2.3f).eg(II, 0.0015f, 1.95f, 0.0f, 0.65f)
                  .touch(I, 0.08f, 0.76f, 0.0f, 0.0f).touch(II, 0.18f, 0.92f, 0.0f, 0.0f)
-                 .mix(0.18f).res(0.025f).detune(0.0f));
+                 .mix(0.24f).res(0.025f).detune(0.0f));
     add("Koto", "Plucked", { "init-bend", "velocity", "percussive" },
         "A focused narrow-pulse string with a sharp plectrum edge and a slight upward settling of the initial pitch. The pick rank dies quickly while the string body rings.",
         plucked().wave(I, false, true, 0.07f).pw(I, 0.78f)
@@ -129,13 +129,13 @@ void buildPlucked(Builder& add)
     add("Kalimba", "Plucked", { "sine", "feet-layer", "percussive", "velocity" },
         "A clear 4' tine-like body with a brief 2' strike harmonic. The upper ping falls away early, leaving a stable round decay; velocity determines how prominently it speaks.",
         plucked().wave(I, false, false, 0.96f).feet(I, f4)
-                 .wave(II, false, true, 0.34f).pw(II, 0.5f).feet(II, f2)
+                 .wave(II, false, true, 0.54f).pw(II, 0.5f).feet(II, f2)
                  .hpf(II, 1700.0f).lpf(II, 7800.0f, 0.06f)
                  .level(I, 0.0f, 0.30f).level(II, 0.20f, 0.08f)
                  .eg(I, 0.002f, 3.25f, 0.0f, 0.70f).eg(II, 0.001f, 0.38f, 0.0f, 0.12f)
                  .feg(II, 0.0f, 0.17f, 0.001f, 0.19f, 0.075f)
                  .touch(I, 0.0f, 0.78f, 0.0f, 0.0f).touch(II, 0.14f, 0.94f, 0.0f, 0.0f)
-                 .mix(0.16f).res(0.025f).detune(0.0f));
+                 .mix(0.23f).res(0.025f).detune(0.0f));
     add("Zither", "Plucked", { "chorus", "velocity", "dual-rank" },
         "Bright paired 8' strings with a long body decay and an independently fading upper course. Shallow chorus and a small tuning offset supply a restrained ensemble shimmer.",
         plucked().wave(I, true, false, 0.12f).wave(II, false, true, 0.06f).pw(II, 0.76f)

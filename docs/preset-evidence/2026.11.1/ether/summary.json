@@ -1,0 +1,90 @@
+{
+  "program": "Ether Pad",
+  "changes": {
+    "ch2_noise": 0.95,
+    "mix": 0.28
+  },
+  "candidate_air_body_db_range_1_5_to_2_5_seconds": [
+    -28.08449207833045,
+    -19.184958985503584
+  ],
+  "relative_air_increase_db_range": [
+    7.693161788325366,
+    7.696496275341367
+  ],
+  "minimum_fundamental_band_power_fraction": 0.9879331920705757,
+  "dominant_fft_bin_unchanged_all": true,
+  "max_peak_dbfs": -19.532540007508928,
+  "worst_reconstruction_relative_db": -134.21068443577175,
+  "nonfinite_samples": 0,
+  "samples_over_full_scale": 0,
+  "captures": 54,
+  "captured_seconds": 243.0,
+  "air_arrival": [
+    {
+      "note": 48,
+      "pressure": 0,
+      "air_growth_db": 17.7769456043291,
+      "body_growth_db": 11.060591773362017,
+      "air_relative_growth_db": 6.716353830967087
+    },
+    {
+      "note": 48,
+      "pressure": 0.5,
+      "air_growth_db": 18.253371349139584,
+      "body_growth_db": 11.380518712123916,
+      "air_relative_growth_db": 6.872852637015672
+    },
+    {
+      "note": 48,
+      "pressure": 1,
+      "air_growth_db": 18.53485900074196,
+      "body_growth_db": 11.626182522672323,
+      "air_relative_growth_db": 6.908676478069641
+    },
+    {
+      "note": 60,
+      "pressure": 0,
+      "air_growth_db": 16.971234817910414,
+      "body_growth_db": 11.384375377226192,
+      "air_relative_growth_db": 5.586859440684215
+    },
+    {
+      "note": 60,
+      "pressure": 0.5,
+      "air_growth_db": 17.411156420417257,
+      "body_growth_db": 11.70661796826278,
+      "air_relative_growth_db": 5.7045384521544875
+    },
+    {
+      "note": 60,
+      "pressure": 1,
+      "air_growth_db": 17.64909731450851,
+      "body_growth_db": 11.95414516882484,
+      "air_relative_growth_db": 5.694952145683676
+    },
+    {
+      "note": 76,
+      "pressure": 0,
+      "air_growth_db": 15.628707329628924,
+      "body_growth_db": 11.414622530113427,
+      "air_relative_growth_db": 4.214084799515501
+    },
+    {
+      "note": 76,
+      "pressure": 0.5,
+      "air_growth_db": 15.95277166526175,
+      "body_growth_db": 11.736120279887029,
+      "air_relative_growth_db": 4.216651385374718
+    },
+    {
+      "note": 76,
+      "pressure": 1,
+      "air_growth_db": 16.064908486286683,
+      "body_growth_db": 11.983058205836361,
+      "air_relative_growth_db": 4.081850280450318
+    }
+  ],
+  "source_file_sha256_after_edit": "bfef354a1f795b335201a1f4ceec81ef643fdd6a5fb190a0f63f07838a6bd75d",
+  "scope": "Only Ether Pad individual ch2_noise and mix values changed. Sine source, filters, both amplitude/filter envelopes, pressure routes, master volume, and other programs unchanged. Prior stereo refinements elsewhere in Pads.inc preserved. Parent owns integrated rebuild/calibration and chord/stress checks."
+}

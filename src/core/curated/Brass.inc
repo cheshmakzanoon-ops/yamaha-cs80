@@ -57,7 +57,8 @@ void buildBrass(Builder& add)
                .feg(I, 0.36f, 0.61f, 0.45f, 2.8f, 1.2f).feg(II, 0.48f, 0.50f, 0.72f, 2.1f, 1.0f)
                .eg(I, 0.14f, 2.4f, 0.86f, 1.65f).eg(II, 0.25f, 2.0f, 0.78f, 1.35f)
                .touch(I, 0.12f, 0.46f, 0.46f, 0.32f).touch(II, 0.18f, 0.52f, 0.60f, 0.28f)
-               .sub(subSine, 5.0f, 0.0f).subAt(0.06f, 0.105f).bend(0.08f).mix(0.46f));
+               .sub(subSine, 5.0f, 0.0f).subAt(0.06f, 0.105f).bend(0.08f).mix(0.46f)
+               .pan(I, -0.24f).pan(II, 0.34f));
     add("Sforzando Brass", "Brass", { "brilliance-swell", "velocity" },
         "A bright, hard-struck accent relaxes into a quieter sustained section. One rank carries the initial bite while the other holds the body.",
         brass().lpf(I, 820.0f, 0.16f).lpf(II, 1280.0f, 0.24f)
@@ -116,12 +117,13 @@ void buildBrass(Builder& add)
                .touch(I, 0.22f, 0.68f, 0.22f, 0.20f).touch(II, 0.30f, 0.80f, 0.28f, 0.16f)
                .mix(0.28f).detune(1.5f).res(0.14f));
     add("Brass Ensemble 16", "Brass", { "feet-layer", "chorus" },
-        "A weighty 16' body under an 8' section, with restrained chorus for ensemble width. The upper rank enters a little later and stays lighter than the foundation.",
+        "A weighty 16' body under an 8' section, spread gently in stereo beneath restrained chorus. The upper rank enters a little later and stays lighter than the foundation.",
         brass().feet(I, f16).wave(I, true, false, 0.08f)
                .hpf(I, 25.0f).hpf(II, 72.0f).lpf(I, 640.0f, 0.13f).lpf(II, 1480.0f, 0.15f)
                .feg(I, 0.22f, 0.44f, 0.20f, 2.2f, 0.55f).feg(II, 0.30f, 0.50f, 0.29f, 1.7f, 0.48f)
                .eg(I, 0.07f, 2.1f, 0.88f, 0.72f).eg(II, 0.105f, 1.7f, 0.75f, 0.58f)
-               .chorus(0.34f, 0.29f).detune(4.5f).mix(0.34f));
+               .chorus(0.34f, 0.29f).detune(4.5f).mix(0.34f)
+               .pan(I, -0.12f).pan(II, 0.38f));
     add("Low Brass", "Brass", { "feet-layer", "dual-rank" },
         "Two 16' ranks combine a rounded saw foundation with a darker pulse edge. A slower low-body attack gives weight without the constant wobble of an ensemble effect.",
         brass().feet(Both, f16).wave(I, true, false, 0.10f).wave(II, false, true).pw(II, 0.58f)

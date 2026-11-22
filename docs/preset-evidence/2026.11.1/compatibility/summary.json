@@ -1,0 +1,63 @@
+{
+  "assignment": 19,
+  "agent": "/root/w04_compatibility_review",
+  "base_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "method": "Read-only control-flow review of current source; no new native-host test execution and no repeat of assignment16 identity matrix.",
+  "result": "PASS_NO_RESTORE_REGRESSION_IDENTIFIED",
+  "source_hashes": {
+    "src/plugin/PluginProcessor.cpp": "95f709baf46b9a83ce44725473aaed00aaa43b9e117deee8a72f29c362dd52d1",
+    "src/plugin/PluginProcessorLibrary.cpp": "28223afbb07ff6e342cd6ff292ae8c8b7b4f6e07e76ad6ff5a59ac118422326e",
+    "src/plugin/PluginProcessorLibrary.h": "aa5dd1edd4c4ad7e9ae72ca197cd1d26920f037ed814cbb40e85dd6dd96f0d93",
+    "src/plugin/PluginProcessor.h": "a1a60605ace28029ee947b3b751c89ab31895ef1d6e419ff4389e6d014283dc5",
+    "src/core/Engine.cpp": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+    "src/core/Params.h": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2"
+  },
+  "runtime_sources_unchanged": true,
+  "findings": [
+    {
+      "topic": "host session restore",
+      "source": "src/plugin/PluginProcessor.cpp:1572-1632",
+      "result": "Serializes APVTS parameter snapshot; normaliseRestoredState completes snapshot from schema defaults; replaceState restores it directly. setPresetMetadata only clamps/display-publishes factoryIndex and clears pending MIDI identity. No factory recall occurs."
+    },
+    {
+      "topic": "missing values",
+      "source": "src/plugin/PluginProcessor.cpp:1426-1541",
+      "result": "Schema-specific parameter defaults are used, never a factory record or the fresh instance values. Engine fallback remains Legacy before schema3 and Circuit from schema3."
+    },
+    {
+      "topic": "fresh instance",
+      "source": "src/plugin/PluginProcessor.cpp:70,731-747",
+      "result": "Fresh startup explicitly selects Circuit0/host222 Brass Swell I; this patch is outside the twelve refinements. Later valid session state replaces all restored parameters."
+    },
+    {
+      "topic": "user preset snapshot",
+      "source": "src/plugin/PluginProcessor.cpp:1660-1786",
+      "result": "User save writes actual APVTS sound values. User load restores values directly and identity metadata separately; it deliberately retains existing live Pure, oversampling, output-jack and tuning-mode settings. None of this behavior changed."
+    },
+    {
+      "topic": "A/B and browser revert",
+      "source": "src/plugin/PluginProcessorLibrary.cpp:238-290,400-451; src/plugin/PluginProcessor.cpp:534-612",
+      "result": "Snapshots store actual parameter values, modern configuration, hardware sources and memory values. Recall applies snapshot values, not current factory values; restored factory index is metadata only."
+    },
+    {
+      "topic": "explicit host/MIDI program recall",
+      "source": "src/plugin/PluginProcessor.cpp:771-787,1554-1557; src/plugin/PluginProcessorLibrary.cpp:52-96",
+      "result": "Explicit setCurrentProgram or permitted MIDI Program Change selects current bank values at unchanged addresses. Program-number-only project restore, or a later program event, intentionally loads revised timbre."
+    },
+    {
+      "topic": "documentation",
+      "source": "README.md:94-97; docs/PRESET_GUIDE.md:Recalling a revised sound",
+      "result": "Existing compatibility wording correctly distinguishes serialized values from explicit factory recall. Parent publication pass should refresh displayed revision to2026.11.1 and retain program-number caveat."
+    }
+  ],
+  "existing_tests_reviewed": [
+    "tests/ProgramLibraryHostTests.h",
+    "tests/PresetFileHostTests.h",
+    "tests/PresetRecallHostTests.h",
+    "tests/PresetIdentityTests.h"
+  ],
+  "limitations": [
+    "No new claim of bit-identical audio across arbitrary oscillator/controller histories or DAWs. This review establishes unchanged restore control flow, not a fresh native-host run."
+  ],
+  "source_edits": []
+}

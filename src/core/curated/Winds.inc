@@ -27,13 +27,18 @@ void buildWinds(Builder& add)
         "Rounded 8' body with quiet upper harmonics and a separate sustained air rank. Velocity shapes the attack; pressure adds breath and gentle vibrato.",
         winds().eg(I, 0.040f, 0.70f, 0.94f, 0.17f)
                .feg(I, 0.05f, 0.14f, 0.030f, 0.42f, 0.12f)
+               // Balance the filtered air against the bypass sine in the final mix.
+               .wave(II, false, false, 0.0f, 0.82f).hpf(II, 950.0f)
+               .level(II, 0.95f, 0.32f).eg(II, 0.018f, 0.50f, 0.82f, 0.12f)
+               .touch(II, 0.04f, 0.44f, 0.08f, 0.40f).mix(0.22f)
                .sub(subSine, 5.1f, 0.0f).subAt(0.04f, 0.085f));
     add("Breathy Flute", "Winds", { "noise", "aftertouch", "velocity" },
         "Soft pitched body with a separately sustained, band-limited air stream. Pressure increases the breath as well as the body; use a gentle attack.",
         winds().wave(I, false, true, 0.80f).level(I, 0.13f, 0.28f)
-               .wave(II, false, false, 0.0f, 0.38f).hpf(II, 950.0f).lpf(II, 7000.0f, 0.04f)
-               .eg(I, 0.065f, 0.85f, 0.91f, 0.24f).eg(II, 0.035f, 0.65f, 0.82f, 0.19f)
-               .touch(II, 0.08f, 0.45f, 0.10f, 0.38f).mix(0.24f).subAt(0.04f, 0.10f));
+               .wave(II, false, false, 0.0f, 0.75f).hpf(II, 800.0f).lpf(II, 7000.0f, 0.04f)
+               .level(II, 0.98f, 0.30f)
+               .eg(I, 0.065f, 0.85f, 0.91f, 0.24f).eg(II, 0.035f, 0.65f, 0.88f, 0.19f)
+               .touch(II, 0.08f, 0.55f, 0.10f, 0.50f).mix(0.32f).subAt(0.04f, 0.10f));
     add("Pan Flute", "Winds", { "noise", "percussive", "velocity" },
         "A short, independent noise chiff precedes the sustained 8' body. The air rank decays to silence while the held pitch remains; velocity controls the tongued onset.",
         winds().wave(I, false, true, 0.92f).level(I, 0.08f, 0.28f)

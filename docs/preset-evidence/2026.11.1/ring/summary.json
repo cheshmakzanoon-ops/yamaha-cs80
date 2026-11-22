@@ -1,0 +1,64 @@
+{
+  "assignment": 17,
+  "source_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "library_sha256": "3b954b496188cbcfa66c243f146963ac26f171d832d270bcdc8f7c02665a515b",
+  "probe_source_sha256": "90ff7a6d5ec1db3db27b9cf818b4b92f8a52f9711d0d0b0c4d91a110ab20681a",
+  "probe_executable_sha256": "c7e613e1a56bd69bab03926f65a4d2eb2e84dc1f1f0295fd660b69892aa38175",
+  "engine_source_sha256": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871",
+  "sample_rate": 48000,
+  "velocity": 0.8,
+  "pressure": 0,
+  "played_notes": [
+    60,
+    67
+  ],
+  "first_note_seconds": 0,
+  "detached_first_note_off_seconds": 0.55,
+  "second_note_seconds": 0.6,
+  "render_seconds_per_sequence": 1,
+  "sequences_per_program": 3,
+  "total_rendered_seconds": 12,
+  "sequence_roles": [
+    "first note held continuously",
+    "second note added while first remains held",
+    "first note released before second starts"
+  ],
+  "comparison_window_seconds": [
+    0.6,
+    1.0
+  ],
+  "results": [
+    {
+      "program": "UFO Landing",
+      "overlap_max_envelope_error": 0.0,
+      "overlap_max_carrier_frequency_error_hz": 0.0,
+      "detached_max_envelope_difference": 0.693998754025,
+      "audio_finite": true
+    },
+    {
+      "program": "Gong",
+      "overlap_max_envelope_error": 0.0,
+      "overlap_max_carrier_frequency_error_hz": 0.0,
+      "detached_max_envelope_difference": 0.726151883602,
+      "audio_finite": true
+    },
+    {
+      "program": "Temple Bell",
+      "overlap_max_envelope_error": 0.0,
+      "overlap_max_carrier_frequency_error_hz": 0.0,
+      "detached_max_envelope_difference": 0.835030034184,
+      "audio_finite": true
+    },
+    {
+      "program": "Ring Sweep Bell",
+      "overlap_max_envelope_error": 0.0,
+      "overlap_max_carrier_frequency_error_hz": 0.0,
+      "detached_max_envelope_difference": 0.899996004999,
+      "audio_finite": true
+    }
+  ],
+  "source_change": "UFO Landing description only; no parameter values, names, tags, categories, order or engine changes.",
+  "guide_snippet": "guide-snippet.txt supplied for parent integration; PRESET_GUIDE.md not edited by this assignment.",
+  "scope": "The no-retrigger overlap comparison uses identical engine clocks and controller histories. Sustain-hold wording is backed by Engine::releaseVoice checking voice.held or voice.pedalHeld; sustain was not exercised by this probe.",
+  "result": "passed"
+}

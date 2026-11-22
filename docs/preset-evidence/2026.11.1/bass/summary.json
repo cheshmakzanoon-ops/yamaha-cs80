@@ -1,0 +1,84 @@
+{
+  "assignment": 11,
+  "agent": "/root/w02_bass_voicing",
+  "base_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "scope": [
+    "Sine Bass",
+    "Upright Pluck"
+  ],
+  "changed_source": "src/core/curated/Bass.inc",
+  "source_diff_sha256": "4ea58641fc2d1062223b547920986b8044527908984a1cd3676f9d5454790bad",
+  "design": "Strengthen the existing filtered short upper component relative to the unchanged lower oscillator/envelope; lower its high-pass modestly for a less thin onset. Keep click/strike sustain zero and master calibration unchanged.",
+  "conditions": "48kHz; MIDI36/48/60; velocities0.3/0.9; pressure0; 0.8s held plus0.4s release. Both programs have no active aftertouch routes.",
+  "programs": {
+    "Sine Bass": {
+      "baseline": {
+        "strike_body_4_20ms_db_range": [
+          -34.767193358526136,
+          -31.428539062322187
+        ],
+        "strike_body_600_800ms_db_max": -131.62899630732508,
+        "reconstruction_error_relative_db_max": -142.46236142646217,
+        "maximum_peak_dbfs": -22.282424441853838
+      },
+      "woody": {
+        "strike_body_4_20ms_db_range": [
+          -26.61025876474486,
+          -23.537579607023336
+        ],
+        "strike_body_600_800ms_db_max": -125.3415490400485,
+        "reconstruction_error_relative_db_max": -142.4242894106166,
+        "maximum_peak_dbfs": -22.9988167240213
+      },
+      "relative_strike_improvement_db_range": [
+        7.890959455298852,
+        8.156934593781276
+      ],
+      "overrides": {
+        "ch2_vcf_level": 0.95,
+        "mix": 0.21,
+        "ch2_hpf_cutoff": 450
+      }
+    },
+    "Upright Pluck": {
+      "baseline": {
+        "strike_body_4_20ms_db_range": [
+          -30.508139323003864,
+          -27.294284690956534
+        ],
+        "strike_body_600_800ms_db_max": -74.06737985909699,
+        "reconstruction_error_relative_db_max": -142.97302232979155,
+        "maximum_peak_dbfs": -18.19452053339734
+      },
+      "woody": {
+        "strike_body_4_20ms_db_range": [
+          -23.128801660160594,
+          -19.98618991779744
+        ],
+        "strike_body_600_800ms_db_max": -66.55030763850802,
+        "reconstruction_error_relative_db_max": -142.9642986751707,
+        "maximum_peak_dbfs": -18.71522433385232
+      },
+      "relative_strike_improvement_db_range": [
+        7.308094773159095,
+        7.451003687890271
+      ],
+      "overrides": {
+        "ch2_vcf_level": 0.95,
+        "mix": 0.19,
+        "ch2_hpf_cutoff": 300
+      }
+    }
+  },
+  "stress": "stress.csv: eight-note [36,43,48,55,60,64,67,72], full velocity/pressure, 2s hold +0.5s release at48kHz; zero nonfinite; maximum candidate peaks -6.89722dBFS Sine Bass, -6.95772dBFS Upright Pluck.",
+  "evidence": [
+    "measure.py",
+    "center.json",
+    "matrix.json",
+    "matrix.log",
+    "stress.cpp",
+    "stress.csv",
+    "source.diff"
+  ],
+  "limitations": "These are causal layer balance and bounded headroom measurements, not a listening panel result or acoustic-instrument similarity rating. Root will rebuild final bank, recalibrate master volume, and run integrated gates."
+}

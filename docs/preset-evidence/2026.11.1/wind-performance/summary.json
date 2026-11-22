@@ -1,0 +1,141 @@
+{
+  "assignment": 24,
+  "status": "passed",
+  "scope": "Final calibrated Circuit2026.11.1 Flute and Breathy Flute; all factory parameters preserved; no tracked source edits.",
+  "provenance": "provenance.json",
+  "sample_rate": 48000,
+  "render_count": 24,
+  "generated_audio_seconds": 96,
+  "sequence_conditions": {
+    "programs": [
+      "Flute",
+      "Breathy Flute"
+    ],
+    "base_notes": [
+      55,
+      67,
+      79
+    ],
+    "pressure_modes": [
+      "channel",
+      "polyphonic addressed to base note only"
+    ],
+    "duration_seconds": 7,
+    "pressure_update_interval_ms": 5,
+    "note_events": [
+      {
+        "time": 0,
+        "action": "base note on",
+        "velocity": 0.3
+      },
+      {
+        "time": 2.9,
+        "action": "base note off"
+      },
+      {
+        "time": 3.05,
+        "action": "base note on",
+        "velocity": 0.95
+      },
+      {
+        "time": 3.15,
+        "action": "base+4 on",
+        "velocity": 0.8
+      },
+      {
+        "time": 3.25,
+        "action": "base+7 on",
+        "velocity": 0.8
+      },
+      {
+        "time": 3.35,
+        "action": "base+12 on",
+        "velocity": 0.85
+      },
+      {
+        "time": 4.45,
+        "action": "base note off"
+      },
+      {
+        "time": 4.5,
+        "action": "base note on",
+        "velocity": 0.55
+      },
+      {
+        "time": 5.4,
+        "action": "all four notes off"
+      }
+    ],
+    "pressure_ramps": [
+      {
+        "start": 0.3,
+        "end": 1.3,
+        "from": 0,
+        "to": 1
+      },
+      {
+        "start": 1.8,
+        "end": 2.8,
+        "from": 1,
+        "to": 0
+      },
+      {
+        "start": 3.5,
+        "end": 4.3,
+        "from": 0,
+        "to": 1
+      },
+      {
+        "start": 4.65,
+        "end": 5.25,
+        "from": 1,
+        "to": 0
+      }
+    ],
+    "pressure_routing_snapshot_seconds": 4.1
+  },
+  "sequence_results": {
+    "maximum_peak_dbfs": -7.82427397827,
+    "maximum_final200ms_rms_dbfs": -225.994827245,
+    "nonfinite_samples": 0,
+    "samples_over_full_scale": 0,
+    "max_active_voices": 5,
+    "all_final_active_voices_zero": true,
+    "all_controller_routes_correct": true
+  },
+  "matched_step_conditions": {
+    "base_notes": [
+      55,
+      67,
+      79
+    ],
+    "velocity": 0.9,
+    "duration_seconds": 1,
+    "pressure_event_seconds": 0.6,
+    "changed_run": "Channel pressure0\u21921 at .6s",
+    "stationary_control": "Identical initialization, note, block sizes and noise/oscillator histories; pressure remains0",
+    "render_partition": "128 frames except exact event boundaries and single frames during first10ms after step",
+    "method": "Subtract matched waveform histories before differencing; compare the pressure-induced residual derivative against the stationary signal derivative. This avoids treating ordinary filtered-noise variation as an artifact."
+  },
+  "matched_step_results": {
+    "pre_event_maximum_audio_error": 0.0,
+    "message_boundary_audio_error": 0.0,
+    "first1ms_maximum_audio_error": 7.45058059692e-09,
+    "touch_node_jump_on_message": 0.0,
+    "max_smoothed_touch_delta_per_host_sample_first10ms": 0.000168729573488,
+    "maximum_pressure_residual_derivative_first10ms_dbfs": -71.2878813054,
+    "maximum_residual_derivative_relative_to_stationary_derivative_db": -32.88571981450001,
+    "held_gain_after_pressure_range_db": [
+      2.73171662016,
+      2.81628554002
+    ]
+  },
+  "limits": "These are bounded software performance and controller-continuity measurements, not a listening-panel click verdict, acoustic-instrument match or guarantee for all histories. The principal phrase uses up to four held notes plus one natural release tail; prior eight-note authoring stress is separate.",
+  "evidence_sha256": {
+    "provenance.json": "a080ca54634bd28ddb4a87ec17970bdc7322843cb771651097b9b4a9bdc6e1fd",
+    "run.log": "531895865994861d408e85f6e601ac9f8cbd21cc2bebbdf31056e014778fa599",
+    "sequences.csv": "4f5d738e83b253ddce028f56c259e7f404e8c5f6abb97b73175c24e4c7370c35",
+    "probe.cpp": "504cde4a6bab1601e6e0525c2a765a0915111660e12dcf8b7982e2260eed1a5b",
+    "pressure-step.csv": "90fc35402944ea688899b2cfb6e4b4af5b5a20eb59a6dd1cf2ed2076552bbbc4"
+  }
+}

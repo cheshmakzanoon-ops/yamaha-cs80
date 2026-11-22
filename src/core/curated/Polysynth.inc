@@ -128,11 +128,12 @@ void buildPolysynth(Builder& add)
               .eg(I, 0.009f, 1.6f, 0.78f, 0.40f).eg(II, 0.004f, 0.75f, 0.42f, 0.26f)
               .mix(0.37f).detune(2.7f).chorus(0.16f, 0.36f));
     add("Synthwave Chords", "Polysynth", { "chorus", "detune", "dual-rank" },
-        "Detuned saw chords have a bright opening accent and broad chorus. The second rank sustains more softly and releases sooner, preserving a warm center in the longer retro tail.",
+        "Detuned saw chords spread across stereo with a bright opening accent and chorus. The second rank sustains more softly and releases sooner, preserving a warm center in the longer retro tail.",
         poly().wave(Both, true, false).lpf(I, 2500.0f, 0.13f).lpf(II, 3800.0f, 0.15f)
               .feg(I, 0.03f, 0.28f, 0.015f, 1.6f, 0.65f).feg(II, 0.0f, 0.36f, 0.008f, 1.0f, 0.50f)
               .eg(I, 0.013f, 1.9f, 0.83f, 1.8f).eg(II, 0.021f, 1.35f, 0.68f, 1.35f)
-              .mix(0.45f).detune(11.5f).chorus(0.48f, 0.37f));
+              .mix(0.45f).detune(11.5f).chorus(0.48f, 0.37f)
+              .pan(I, -0.24f).pan(II, 0.32f));
     add("Square Poly", "Polysynth", { "dual-rank", "velocity" },
         "Unmodulated 50-percent pulses give a clear square-wave chord. The upper rank has a shorter accent and brighter filter; light detune adds body without a PWM sweep.",
         poly().wave(Both, false, true).pw(Both, 0.5f, 0.0f)

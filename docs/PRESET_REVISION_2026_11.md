@@ -1,5 +1,10 @@
 # Circuit library revision 2026.11
 
+This report records the original full-bank redesign. The later
+[2026.11.1 refinement report](PRESET_REFINEMENT_2026_11_1.md) documents twelve
+further sound refinements and the current publication status. Historical
+measurements below retain their original conditions and provenance.
+
 ## Result and publication status
 
 The revision replaces the voicing of **all 300 musical Circuit programs** while

@@ -1,11 +1,13 @@
 # Circuit preset guide
 
-The **2026.11 Circuit library** contains 300 newly voiced musical programs and
+The **2026.11.1 Circuit library** contains 300 revoiced musical programs and
 **Init Circuit**. The redesign gives sounds distinct attacks, sustained bodies,
 releases and touch responses. Instrument names describe synthesized interpretations: a violin-like
 bow, a plucked-string decay or a bell's metallic color. They do not identify
 samples or establish a match to an acoustic instrument or a physical CS-80.
-See the [revision report](PRESET_REVISION_2026_11.md) for the engineering evidence.
+The [2026.11.1 refinement report](PRESET_REFINEMENT_2026_11_1.md) documents the latest
+12-program detail and stereo improvements; the [original revision report](PRESET_REVISION_2026_11.md)
+documents the full-bank redesign.
 
 ## Start with your hands
 
@@ -116,6 +118,16 @@ pulse attack; Sine Bass leaves a pure low body after its click; Sub Bass uses
 one centered sine without an upper strike. Compare short repeated notes and
 long holds. [Bass source](../src/core/curated/Bass.inc)
 
+### Play ring sweeps as phrases
+
+In **UFO Landing**, **Gong**, **Temple Bell** and **Ring Sweep Bell**, one ring
+carrier acts on the combined voices. The first held key starts its frequency
+sweep; overlapping notes continue the same sweep. Release all keys and any
+sustain hold before the next attack to start a fresh sweep. Each new note still
+has its own rank envelopes. A restarted ring sweep also colors release tails
+that are still sounding, because the carrier is shared.
+[Ring trigger and mix](../src/core/Engine.cpp)
+
 ### Read the footage
 
 Footage is a register choice, not an extra key transposition you must enter.
@@ -151,6 +163,9 @@ at least ten seconds. For stepped random motion, hold **Rain Pad** or
 
 **Pure CS-80 disables these additions.** The underlying voice remains, but the
 named echo, arpeggio or Modern modulation will change or disappear. Pure also
+centers both rank pans: the authored stereo spread in Noir Swell Brass, Brass
+Ensemble 16, Neo-Noir Pad, Arctic Pad and Synthwave Chords is available in normal
+Circuit mode, and is deliberately removed in Pure. Pure also
 ignores MIDI pitch bend and the modulation wheel; pressure and ribbon remain
 available. Factory recall preserves the current Pure setting. Select the mode
 before playing, because a mode change clears sounding notes and effect history.
@@ -158,8 +173,8 @@ before playing, because a mode change clears sounding notes and effect history.
 
 ## Recalling a revised sound
 
-**2026.11 is a sound-data revision**, separate from the application's version
-and saved-session format. The redesign changes factory voicings while retaining
+**2026.11 and 2026.11.1 identify sound-data revisions**, separate from the
+application's version and saved-session format. The redesign changes factory voicings while retaining
 their names, order and host program identities. Existing sessions keep their
 serialized sound: reload the corresponding Circuit factory program to hear
 its revised voicing. Save a user copy if you want to retain an edited version.
@@ -205,9 +220,15 @@ these examples, not a performed crescendo.
 
 The [build workflow](../.github/workflows/build.yml) defines an audition artifact
 named `cs80-curated-preset-audition-<source SHA>`. A completed capture contains
-**12 WAVs**, the full inventory, metrics, source commit, provenance and checksums.
-Its excerpts hold one note for three seconds with a one-second release excerpt;
-Pressure Lead uses pressure 0.65. Check `capture_status` in `provenance.json`
+**24 WAVs**, the full inventory, metrics, source commit, provenance and checksums.
+The original 12 examples remain, alongside the refined Flute, Breathy Flute,
+Harp, Kalimba, Sine Bass, Upright Pluck, Noir Swell Brass, Brass Ensemble 16,
+Neo-Noir Pad, Arctic Pad, Synthwave Chords and Ether Pad. Most excerpts hold one
+note for three seconds with a one-second release excerpt. The seven examples
+under `slow/` hold for five seconds with a two-second release excerpt, allowing
+the pad and ensemble layers to develop. The files retain their factory levels;
+no normalization is applied. Pressure Lead uses pressure 0.65; the other
+examples use zero pressure. Check `capture_status` in `provenance.json`
 for `complete`, since a failed capture may also upload a partial artifact.
 The source SHA identifies the bank being heard; a short excerpt does not cover
 every chord, register or long release. Consult the revision report for the

@@ -1,0 +1,89 @@
+{
+  "assignment": 14,
+  "agent": "/root/w03_behavior_tests",
+  "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "test_source": "tests/PresetCharacterTests.cpp",
+  "test_source_sha256": "12b7553ff5acbb1377a1bebf68be5b02baaf798117b12d6c331ed0b655cbbad1",
+  "baseline_library_sha256": "3b954b496188cbcfa66c243f146963ac26f171d832d270bcdc8f7c02665a515b",
+  "candidate_method": "Compile the new test with current src/core/FactoryPresets.cpp before linking frozen baseline core; the current factory definitions satisfy those symbols, while the baseline static archive supplies unchanged Engine code.",
+  "negative_control_method": "Compile identical test source against the frozen baseline core library without replacement FactoryPresets.cpp.",
+  "conditions": {
+    "sample_rate": 44100,
+    "total_generated_seconds_per_run": 31.4,
+    "notes": {
+      "winds": 67,
+      "harp_kalimba": 60,
+      "bass": 48,
+      "stereo": 60
+    },
+    "velocities": {
+      "winds_stereo": 0.8,
+      "strikes": 0.9
+    },
+    "pressure": 0,
+    "notes_remain_held": true
+  },
+  "results": {
+    "current": {
+      "exit_code": 0,
+      "passed": 128,
+      "checks": 128,
+      "worst_reported_reconstruction_error_db": -142.8,
+      "failures": [],
+      "executable_sha256": "1eef018aab9b024ab4b0f786d7e65d06096ad159684a5bde61f805ee3355c960",
+      "log_sha256": "772c6fe31b7361430150b07428c01903911d45b91885dcf4a7b70e88b6634020"
+    },
+    "baseline": {
+      "exit_code": 1,
+      "passed": 112,
+      "checks": 128,
+      "worst_reported_reconstruction_error_db": -142.7,
+      "failures": [
+        "Flute: sustained air is present while its pitched body remains dominant",
+        "Breathy Flute: sustained aspiration is present while its body remains dominant",
+        "Harp: supporting strike is present in the finished onset mix",
+        "Kalimba: supporting strike is present in the finished onset mix",
+        "Sine Bass: supporting strike is present in the finished onset mix",
+        "Upright Pluck: supporting strike is present in the finished onset mix",
+        "Noir Swell Brass: ensemble has side energy above a near-mono output",
+        "Noir Swell Brass: stereo difference is more than channel gain imbalance",
+        "Brass Ensemble 16: ensemble has side energy above a near-mono output",
+        "Brass Ensemble 16: stereo difference is more than channel gain imbalance",
+        "Neo-Noir Pad: ensemble has side energy above a near-mono output",
+        "Neo-Noir Pad: stereo difference is more than channel gain imbalance",
+        "Arctic Pad: ensemble has side energy above a near-mono output",
+        "Arctic Pad: stereo difference is more than channel gain imbalance",
+        "Synthwave Chords: ensemble has side energy above a near-mono output",
+        "Synthwave Chords: stereo difference is more than channel gain imbalance"
+      ],
+      "executable_sha256": "2250e6baa4fc12fd06d7df2bb6300af2c001791a2e0c2d41d2b5198deed595f0",
+      "log_sha256": "fc7a6c93416ab7271ca9726a01a9a4a4b2261ec3874d04b7419b7ee3b78bedf2"
+    }
+  },
+  "scope": "11 named programs; causal reconstruction for six layered voices, sustained wind air presence/ordering, onset contribution and decay for four struck voices, stereo side energy/content/channel balance and mono overall/fundamental protection for five ensembles.",
+  "bounds_note": "Broad authoring role bounds, not acoustic hearing thresholds, reference-recording matching or listening-panel evidence. No pass threshold was adjusted after running the tests.",
+  "tracked_change": "New tests/PresetCharacterTests.cpp only; root owns CMake registration and integrated post-calibration rerun.",
+  "review_18_hardening": "Added 1-percent relative-RMS reconstruction gates over every actual layer-measurement window, in addition to complete capture. No additional audio renders or relaxed character bounds.",
+  "reconstruction_windows_seconds": {
+    "winds": [
+      [
+        0.3,
+        0.5
+      ],
+      [
+        0.5,
+        0.7
+      ]
+    ],
+    "strikes": [
+      [
+        0.004,
+        0.02
+      ],
+      [
+        0.8,
+        1.1
+      ]
+    ]
+  }
+}

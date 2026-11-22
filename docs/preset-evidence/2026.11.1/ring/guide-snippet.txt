@@ -1,0 +1,9 @@
+### Play ring sweeps as phrases
+
+In **UFO Landing**, **Gong**, **Temple Bell** and **Ring Sweep Bell**, one ring
+carrier acts on the combined voices. The first held key starts its frequency
+sweep; overlapping notes continue the same sweep. Release all keys and any
+sustain hold before the next attack to start a fresh sweep. Each new note still
+has its own rank envelopes. A restarted ring sweep also colors release tails
+that are still sounding, because the carrier is shared.
+[Ring trigger and mix](../src/core/Engine.cpp)

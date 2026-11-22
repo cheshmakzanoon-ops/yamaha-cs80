@@ -1,0 +1,531 @@
+{
+  "assignment": 27,
+  "status": "PASS",
+  "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "scope": "Final calibrated 2026.11.1 bank versus frozen 2026.11 baseline; complete compiled binary records and inventory round-trip verified.",
+  "baseline_revision": "2026.11",
+  "final_revision": "2026.11.1",
+  "contract": {
+    "legacy_count": 222,
+    "curated_count": 301,
+    "host_count": 523,
+    "core_parameters": 190,
+    "memory_controls": 26,
+    "host_parameter_count_by_layout": 296,
+    "midi_cases": 49152,
+    "index_cases": 830
+  },
+  "state_schema_version": 3,
+  "parameter_ids_order_unchanged": true,
+  "catalogue_names_categories_tags_library_order_host_indices_unchanged": true,
+  "legacy_complete_records_unchanged": true,
+  "curated_changed_vector_count": 12,
+  "curated_unchanged_vector_count": 289,
+  "curated_complete_record_unchanged_count": 288,
+  "complete_record_qualification": "289 vectors unchanged. Of these, UFO Landing has a description-only correction, so 288 complete records including metadata remain byte-identical.",
+  "changed_value_count": 42,
+  "nonvolume_changed_value_count": 38,
+  "master_volume_changed_value_count": 4,
+  "init_complete_record_unchanged": true,
+  "inventory_float32_roundtrip_matches_compiled_records": true,
+  "host_list_exactly_legacy_then_curated": true,
+  "changed_programs": [
+    {
+      "index": 4,
+      "host_index": 226,
+      "name": "Noir Swell Brass",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0.0,
+          "after": -0.23999999463558197,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "be75c28f"
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0.0,
+          "after": 0.3400000035762787,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "3eae147b"
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "host_index": 234,
+      "name": "Brass Ensemble 16",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0.0,
+          "after": -0.11999999731779099,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "bdf5c28f"
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0.0,
+          "after": 0.3799999952316284,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "3ec28f5c"
+        }
+      ]
+    },
+    {
+      "index": 79,
+      "host_index": 301,
+      "name": "Neo-Noir Pad",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0.0,
+          "after": -0.18000000715255737,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "be3851ec"
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0.0,
+          "after": 0.4000000059604645,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "3ecccccd"
+        }
+      ]
+    },
+    {
+      "index": 84,
+      "host_index": 306,
+      "name": "Ether Pad",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.1899999976158142,
+          "after": 0.2800000011920929,
+          "before_float32_bits": "3e428f5c",
+          "after_float32_bits": "3e8f5c29"
+        },
+        {
+          "parameter": "volume",
+          "before": 0.6869999766349792,
+          "after": 0.7680000066757202,
+          "before_float32_bits": "3f2fdf3b",
+          "after_float32_bits": "3f449ba6"
+        },
+        {
+          "parameter": "ch2_noise",
+          "before": 0.6499999761581421,
+          "after": 0.949999988079071,
+          "before_float32_bits": "3f266666",
+          "after_float32_bits": "3f733333"
+        }
+      ]
+    },
+    {
+      "index": 89,
+      "host_index": 311,
+      "name": "Arctic Pad",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0.0,
+          "after": -0.11999999731779099,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "bdf5c28f"
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0.0,
+          "after": 0.4000000059604645,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "3ecccccd"
+        }
+      ]
+    },
+    {
+      "index": 106,
+      "host_index": 328,
+      "name": "Synthwave Chords",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0.0,
+          "after": -0.23999999463558197,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "be75c28f"
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0.0,
+          "after": 0.3199999928474426,
+          "before_float32_bits": "00000000",
+          "after_float32_bits": "3ea3d70a"
+        }
+      ]
+    },
+    {
+      "index": 152,
+      "host_index": 374,
+      "name": "Flute",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.1599999964237213,
+          "after": 0.2199999988079071,
+          "before_float32_bits": "3e23d70a",
+          "after_float32_bits": "3e6147ae"
+        },
+        {
+          "parameter": "ch2_noise",
+          "before": 0.1599999964237213,
+          "after": 0.8199999928474426,
+          "before_float32_bits": "3e23d70a",
+          "after_float32_bits": "3f51eb85"
+        },
+        {
+          "parameter": "ch2_hpf_cutoff",
+          "before": 1200.0,
+          "after": 950.0,
+          "before_float32_bits": "44960000",
+          "after_float32_bits": "446d8000"
+        },
+        {
+          "parameter": "ch2_vcf_level",
+          "before": 0.800000011920929,
+          "after": 0.949999988079071,
+          "before_float32_bits": "3f4ccccd",
+          "after_float32_bits": "3f733333"
+        },
+        {
+          "parameter": "ch2_v_s",
+          "before": 0.6800000071525574,
+          "after": 0.8199999928474426,
+          "before_float32_bits": "3f2e147b",
+          "after_float32_bits": "3f51eb85"
+        },
+        {
+          "parameter": "ch2_v_level",
+          "before": 0.18000000715255737,
+          "after": 0.3199999928474426,
+          "before_float32_bits": "3e3851ec",
+          "after_float32_bits": "3ea3d70a"
+        },
+        {
+          "parameter": "ch2_init_level",
+          "before": 0.41999998688697815,
+          "after": 0.4399999976158142,
+          "before_float32_bits": "3ed70a3d",
+          "after_float32_bits": "3ee147ae"
+        },
+        {
+          "parameter": "ch2_after_level",
+          "before": 0.23999999463558197,
+          "after": 0.4000000059604645,
+          "before_float32_bits": "3e75c28f",
+          "after_float32_bits": "3ecccccd"
+        }
+      ]
+    },
+    {
+      "index": 153,
+      "host_index": 375,
+      "name": "Breathy Flute",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.23999999463558197,
+          "after": 0.3199999928474426,
+          "before_float32_bits": "3e75c28f",
+          "after_float32_bits": "3ea3d70a"
+        },
+        {
+          "parameter": "ch2_noise",
+          "before": 0.3799999952316284,
+          "after": 0.75,
+          "before_float32_bits": "3ec28f5c",
+          "after_float32_bits": "3f400000"
+        },
+        {
+          "parameter": "ch2_hpf_cutoff",
+          "before": 950.0,
+          "after": 800.0,
+          "before_float32_bits": "446d8000",
+          "after_float32_bits": "44480000"
+        },
+        {
+          "parameter": "ch2_vcf_level",
+          "before": 0.800000011920929,
+          "after": 0.9800000190734863,
+          "before_float32_bits": "3f4ccccd",
+          "after_float32_bits": "3f7ae148"
+        },
+        {
+          "parameter": "ch2_v_s",
+          "before": 0.8199999928474426,
+          "after": 0.8799999952316284,
+          "before_float32_bits": "3f51eb85",
+          "after_float32_bits": "3f6147ae"
+        },
+        {
+          "parameter": "ch2_v_level",
+          "before": 0.18000000715255737,
+          "after": 0.30000001192092896,
+          "before_float32_bits": "3e3851ec",
+          "after_float32_bits": "3e99999a"
+        },
+        {
+          "parameter": "ch2_init_level",
+          "before": 0.44999998807907104,
+          "after": 0.550000011920929,
+          "before_float32_bits": "3ee66666",
+          "after_float32_bits": "3f0ccccd"
+        },
+        {
+          "parameter": "ch2_after_level",
+          "before": 0.3799999952316284,
+          "after": 0.5,
+          "before_float32_bits": "3ec28f5c",
+          "after_float32_bits": "3f000000"
+        }
+      ]
+    },
+    {
+      "index": 170,
+      "host_index": 392,
+      "name": "Harp",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.18000000715255737,
+          "after": 0.23999999463558197,
+          "before_float32_bits": "3e3851ec",
+          "after_float32_bits": "3e75c28f"
+        },
+        {
+          "parameter": "ch2_sine",
+          "before": 0.23999999463558197,
+          "after": 0.46000000834465027,
+          "before_float32_bits": "3e75c28f",
+          "after_float32_bits": "3eeb851f"
+        }
+      ]
+    },
+    {
+      "index": 178,
+      "host_index": 400,
+      "name": "Kalimba",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.1599999964237213,
+          "after": 0.23000000417232513,
+          "before_float32_bits": "3e23d70a",
+          "after_float32_bits": "3e6b851f"
+        },
+        {
+          "parameter": "volume",
+          "before": 0.8679999709129333,
+          "after": 0.9340000152587891,
+          "before_float32_bits": "3f5e353f",
+          "after_float32_bits": "3f6f1aa0"
+        },
+        {
+          "parameter": "ch2_sine",
+          "before": 0.3400000035762787,
+          "after": 0.5400000214576721,
+          "before_float32_bits": "3eae147b",
+          "after_float32_bits": "3f0a3d71"
+        }
+      ]
+    },
+    {
+      "index": 184,
+      "host_index": 406,
+      "name": "Sine Bass",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.14000000059604645,
+          "after": 0.20999999344348907,
+          "before_float32_bits": "3e0f5c29",
+          "after_float32_bits": "3e570a3d"
+        },
+        {
+          "parameter": "volume",
+          "before": 0.6909999847412109,
+          "after": 0.7519999742507935,
+          "before_float32_bits": "3f30e560",
+          "after_float32_bits": "3f408312"
+        },
+        {
+          "parameter": "ch2_hpf_cutoff",
+          "before": 650.0,
+          "after": 450.0,
+          "before_float32_bits": "44228000",
+          "after_float32_bits": "43e10000"
+        },
+        {
+          "parameter": "ch2_vcf_level",
+          "before": 0.7799999713897705,
+          "after": 0.949999988079071,
+          "before_float32_bits": "3f47ae14",
+          "after_float32_bits": "3f733333"
+        }
+      ]
+    },
+    {
+      "index": 198,
+      "host_index": 420,
+      "name": "Upright Pluck",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.14000000059604645,
+          "after": 0.1899999976158142,
+          "before_float32_bits": "3e0f5c29",
+          "after_float32_bits": "3e428f5c"
+        },
+        {
+          "parameter": "volume",
+          "before": 0.9800000190734863,
+          "after": 1.0,
+          "before_float32_bits": "3f7ae148",
+          "after_float32_bits": "3f800000"
+        },
+        {
+          "parameter": "ch2_hpf_cutoff",
+          "before": 450.0,
+          "after": 300.0,
+          "before_float32_bits": "43e10000",
+          "after_float32_bits": "43960000"
+        },
+        {
+          "parameter": "ch2_vcf_level",
+          "before": 0.7400000095367432,
+          "after": 0.949999988079071,
+          "before_float32_bits": "3f3d70a4",
+          "after_float32_bits": "3f733333"
+        }
+      ]
+    }
+  ],
+  "description_changes": [
+    {
+      "index": 12,
+      "name": "Brass Ensemble 16",
+      "before": "A weighty 16' body under an 8' section, with restrained chorus for ensemble width. The upper rank enters a little later and stays lighter than the foundation.",
+      "after": "A weighty 16' body under an 8' section, spread gently in stereo beneath restrained chorus. The upper rank enters a little later and stays lighter than the foundation."
+    },
+    {
+      "index": 79,
+      "name": "Neo-Noir Pad",
+      "before": "A dark saw foundation supports a later pulse glow, broad chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes.",
+      "after": "A dark saw foundation supports a later pulse glow, a broad stereo field, chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes."
+    },
+    {
+      "index": 89,
+      "name": "Arctic Pad",
+      "before": "A thin, bright 8' saw band supports a quiet 4' pulse sheen. Distinct high-pass bands and later upper entry create an icy texture; moderate chorus supplies width.",
+      "after": "A thin, bright 8' saw band supports a quiet 4' pulse sheen. Distinct high-pass bands and later upper entry create an icy texture; gently spread ranks supply stereo width under moderate chorus."
+    },
+    {
+      "index": 106,
+      "name": "Synthwave Chords",
+      "before": "Detuned saw chords have a bright opening accent and broad chorus. The second rank sustains more softly and releases sooner, preserving a warm center in the longer retro tail.",
+      "after": "Detuned saw chords spread across stereo with a bright opening accent and chorus. The second rank sustains more softly and releases sooner, preserving a warm center in the longer retro tail."
+    },
+    {
+      "index": 272,
+      "name": "UFO Landing",
+      "before": "A low sine body follows repeating downward SUB glides while the ring carrier settles after each note. A shorter upper pulse edge marks the start of the landing sweep.",
+      "after": "A low sine body follows repeating downward SUB glides while the shared ring carrier settles over the phrase. Release all keys and any sustain hold before the next attack to restart that sweep; a shorter upper pulse edge marks each note."
+    }
+  ],
+  "binary_comparisons": {
+    "legacy": {
+      "byte_identical": true,
+      "bytes": 195089,
+      "baseline_sha256": "c485b4776e7356ce7afb4d7d5031afe2df1c9feef44324f48ae6c5a92e95c28a",
+      "final_sha256": "c485b4776e7356ce7afb4d7d5031afe2df1c9feef44324f48ae6c5a92e95c28a"
+    },
+    "midi": {
+      "byte_identical": true,
+      "bytes": 393216,
+      "baseline_sha256": "b2d24c28deb135d8b2076e79ba73da02e82ba5461b4b953d3ffb82a426921732",
+      "final_sha256": "b2d24c28deb135d8b2076e79ba73da02e82ba5461b4b953d3ffb82a426921732"
+    },
+    "index": {
+      "byte_identical": true,
+      "bytes": 6640,
+      "baseline_sha256": "48e89e56bd7a5704333d1902e03d415673d4cc1e0a37e956a1418b687c966e03",
+      "final_sha256": "48e89e56bd7a5704333d1902e03d415673d4cc1e0a37e956a1418b687c966e03"
+    }
+  },
+  "source_contracts": {
+    "src/core/Params.h": {
+      "byte_identical": true,
+      "sha256": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2"
+    },
+    "src/core/FactoryPresets.cpp": {
+      "byte_identical": true,
+      "sha256": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af"
+    },
+    "src/core/CuratedLibrary.inc": {
+      "byte_identical": true,
+      "sha256": "f89ae54e9386d1e12b5b945b1f60f7e1e4667d79e91c5a63afcc63111e3aecf8"
+    },
+    "src/core/Engine.cpp": {
+      "byte_identical": true,
+      "sha256": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871"
+    },
+    "src/core/EngineWscHeld.cpp": {
+      "byte_identical": true,
+      "sha256": "ca86927a97437307756edaf357cffad7809ebbda6d395cbab6c2d22023515e10"
+    },
+    "src/plugin/PluginProcessor.h": {
+      "byte_identical": true,
+      "sha256": "a1a60605ace28029ee947b3b751c89ab31895ef1d6e419ff4389e6d014283dc5"
+    },
+    "src/plugin/PluginProcessor.cpp": {
+      "byte_identical": true,
+      "sha256": "95f709baf46b9a83ce44725473aaed00aaa43b9e117deee8a72f29c362dd52d1"
+    },
+    "src/plugin/PluginProcessorLibrary.cpp": {
+      "byte_identical": true,
+      "sha256": "28223afbb07ff6e342cd6ff292ae8c8b7b4f6e07e76ad6ff5a59ac118422326e"
+    }
+  },
+  "inputs": {
+    "baseline-inventory.json": {
+      "sha256": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785",
+      "bytes": 351095
+    },
+    "final-inventory.json": {
+      "sha256": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+      "bytes": 351317
+    },
+    "baseline-core.a": {
+      "sha256": "3b954b496188cbcfa66c243f146963ac26f171d832d270bcdc8f7c02665a515b",
+      "bytes": 1375174
+    },
+    "final-core.a": {
+      "sha256": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+      "bytes": 1375790
+    },
+    "identity.cpp": {
+      "sha256": "de43dd83a152b374bd2d548879935045a0e81c067327d19b2b70f70ba63bac80",
+      "bytes": 2620
+    },
+    "compare.py": {
+      "sha256": "83a6d92e025c8bd7042be664b2e761187907c77e0b0bc69789d236a63cd69d83",
+      "bytes": 8945
+    }
+  },
+  "limits": [
+    "This verifies compiled factory data and source compatibility contracts, not host execution or acoustic realism.",
+    "The host parameter total is derived from the unchanged layout, not a native plug-in reflection run.",
+    "Binary record format uses little-endian u64 lengths/counts, UTF-8 strings, and exact float32 bits.",
+    "MIDI comparison covers MSB 0..2, LSB 0..127, and Program 0..127 (49152 addresses), including unassigned addresses.",
+    "Index comparison covers curated indices -1..302 and host indices -1..524 (830 lookups)."
+  ]
+}

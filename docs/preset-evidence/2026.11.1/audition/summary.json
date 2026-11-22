@@ -1,0 +1,24 @@
+{
+  "assignment": 15,
+  "scope": [
+    ".github/workflows/build.yml audition block",
+    "docs/PRESET_GUIDE.md audition description"
+  ],
+  "unique_programs": 24,
+  "slow_programs": 7,
+  "rendered_seconds": 117.0,
+  "outer_files_checksummed": 32,
+  "provenance_status": "complete",
+  "syntax": "passed",
+  "pipeline_smoke_exit": 0,
+  "injected_failure_status": "failed",
+  "source_guard": "HEAD must equal GITHUB_SHA before capture",
+  "qualification": "Pipeline verification used frozen baseline executable. Final revised-bank artifacts require the new commit CI run.",
+  "notes": [
+    "Original 12 excerpts retained; all 12 refined programs added.",
+    "Default category notes preserved, 48 kHz and velocity .8 explicit.",
+    "Slow group uses 5-second hold and 2-second release excerpt. Other groups use 3+1 seconds.",
+    "No normalization. Full factory parameters and actual source/binary provenance retained.",
+    "No unrelated workflow gates or source files changed."
+  ]
+}

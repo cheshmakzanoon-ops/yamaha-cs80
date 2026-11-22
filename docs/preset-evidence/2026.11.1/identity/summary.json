@@ -1,0 +1,403 @@
+{
+  "assignment": 16,
+  "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "comparison": "Pre-calibration snapshot; this does not assert final post-calibration master levels.",
+  "baseline_inventory_sha256": "fbe1d44a2fcb5e13dc12b7faaa0cc805e87a02cb0673249ab7e3ad4ac4305785",
+  "candidate_inventory_sha256": "8cf567316280a6bdd30a3fd8621acb4b8cdf4af5f9a6fd520eb919e99c60b10d",
+  "baseline_revision": "2026.11",
+  "candidate_revision": "2026.11.1",
+  "core_parameter_count": 190,
+  "curated_program_count": 301,
+  "changed_program_count": 12,
+  "unchanged_program_count": 289,
+  "changed_value_count": 38,
+  "metadata_names_categories_tags_order_host_indices_unchanged": true,
+  "init_complete_record_unchanged": true,
+  "master_values_unchanged_before_calibration": true,
+  "description_changes": [
+    {
+      "name": "Brass Ensemble 16",
+      "before": "A weighty 16' body under an 8' section, with restrained chorus for ensemble width. The upper rank enters a little later and stays lighter than the foundation.",
+      "after": "A weighty 16' body under an 8' section, spread gently in stereo beneath restrained chorus. The upper rank enters a little later and stays lighter than the foundation."
+    },
+    {
+      "name": "Neo-Noir Pad",
+      "before": "A dark saw foundation supports a later pulse glow, broad chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes.",
+      "after": "A dark saw foundation supports a later pulse glow, a broad stereo field, chorus and a faint slow ring beat. Long, unequal releases leave a warm cinematic tail after the upper color recedes."
+    },
+    {
+      "name": "Arctic Pad",
+      "before": "A thin, bright 8' saw band supports a quiet 4' pulse sheen. Distinct high-pass bands and later upper entry create an icy texture; moderate chorus supplies width.",
+      "after": "A thin, bright 8' saw band supports a quiet 4' pulse sheen. Distinct high-pass bands and later upper entry create an icy texture; gently spread ranks supply stereo width under moderate chorus."
+    },
+    {
+      "name": "Synthwave Chords",
+      "before": "Detuned saw chords have a bright opening accent and broad chorus. The second rank sustains more softly and releases sooner, preserving a warm center in the longer retro tail.",
+      "after": "Detuned saw chords spread across stereo with a bright opening accent and chorus. The second rank sustains more softly and releases sooner, preserving a warm center in the longer retro tail."
+    }
+  ],
+  "changed_programs": [
+    {
+      "index": 4,
+      "host_index": 226,
+      "name": "Noir Swell Brass",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0,
+          "after": -0.239999995
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0,
+          "after": 0.340000004
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "host_index": 234,
+      "name": "Brass Ensemble 16",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0,
+          "after": -0.119999997
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0,
+          "after": 0.379999995
+        }
+      ]
+    },
+    {
+      "index": 79,
+      "host_index": 301,
+      "name": "Neo-Noir Pad",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0,
+          "after": -0.180000007
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0,
+          "after": 0.400000006
+        }
+      ]
+    },
+    {
+      "index": 84,
+      "host_index": 306,
+      "name": "Ether Pad",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.189999998,
+          "after": 0.280000001
+        },
+        {
+          "parameter": "ch2_noise",
+          "before": 0.649999976,
+          "after": 0.949999988
+        }
+      ]
+    },
+    {
+      "index": 89,
+      "host_index": 311,
+      "name": "Arctic Pad",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0,
+          "after": -0.119999997
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0,
+          "after": 0.400000006
+        }
+      ]
+    },
+    {
+      "index": 106,
+      "host_index": 328,
+      "name": "Synthwave Chords",
+      "changes": [
+        {
+          "parameter": "ch1_pan",
+          "before": 0,
+          "after": -0.239999995
+        },
+        {
+          "parameter": "ch2_pan",
+          "before": 0,
+          "after": 0.319999993
+        }
+      ]
+    },
+    {
+      "index": 152,
+      "host_index": 374,
+      "name": "Flute",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.159999996,
+          "after": 0.219999999
+        },
+        {
+          "parameter": "ch2_noise",
+          "before": 0.159999996,
+          "after": 0.819999993
+        },
+        {
+          "parameter": "ch2_hpf_cutoff",
+          "before": 1200,
+          "after": 950
+        },
+        {
+          "parameter": "ch2_vcf_level",
+          "before": 0.800000012,
+          "after": 0.949999988
+        },
+        {
+          "parameter": "ch2_v_s",
+          "before": 0.680000007,
+          "after": 0.819999993
+        },
+        {
+          "parameter": "ch2_v_level",
+          "before": 0.180000007,
+          "after": 0.319999993
+        },
+        {
+          "parameter": "ch2_init_level",
+          "before": 0.419999987,
+          "after": 0.439999998
+        },
+        {
+          "parameter": "ch2_after_level",
+          "before": 0.239999995,
+          "after": 0.400000006
+        }
+      ]
+    },
+    {
+      "index": 153,
+      "host_index": 375,
+      "name": "Breathy Flute",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.239999995,
+          "after": 0.319999993
+        },
+        {
+          "parameter": "ch2_noise",
+          "before": 0.379999995,
+          "after": 0.75
+        },
+        {
+          "parameter": "ch2_hpf_cutoff",
+          "before": 950,
+          "after": 800
+        },
+        {
+          "parameter": "ch2_vcf_level",
+          "before": 0.800000012,
+          "after": 0.980000019
+        },
+        {
+          "parameter": "ch2_v_s",
+          "before": 0.819999993,
+          "after": 0.879999995
+        },
+        {
+          "parameter": "ch2_v_level",
+          "before": 0.180000007,
+          "after": 0.300000012
+        },
+        {
+          "parameter": "ch2_init_level",
+          "before": 0.449999988,
+          "after": 0.550000012
+        },
+        {
+          "parameter": "ch2_after_level",
+          "before": 0.379999995,
+          "after": 0.5
+        }
+      ]
+    },
+    {
+      "index": 170,
+      "host_index": 392,
+      "name": "Harp",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.180000007,
+          "after": 0.239999995
+        },
+        {
+          "parameter": "ch2_sine",
+          "before": 0.239999995,
+          "after": 0.460000008
+        }
+      ]
+    },
+    {
+      "index": 178,
+      "host_index": 400,
+      "name": "Kalimba",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.159999996,
+          "after": 0.230000004
+        },
+        {
+          "parameter": "ch2_sine",
+          "before": 0.340000004,
+          "after": 0.540000021
+        }
+      ]
+    },
+    {
+      "index": 184,
+      "host_index": 406,
+      "name": "Sine Bass",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.140000001,
+          "after": 0.209999993
+        },
+        {
+          "parameter": "ch2_hpf_cutoff",
+          "before": 650,
+          "after": 450
+        },
+        {
+          "parameter": "ch2_vcf_level",
+          "before": 0.779999971,
+          "after": 0.949999988
+        }
+      ]
+    },
+    {
+      "index": 198,
+      "host_index": 420,
+      "name": "Upright Pluck",
+      "changes": [
+        {
+          "parameter": "mix",
+          "before": 0.140000001,
+          "after": 0.189999998
+        },
+        {
+          "parameter": "ch2_hpf_cutoff",
+          "before": 450,
+          "after": 300
+        },
+        {
+          "parameter": "ch2_vcf_level",
+          "before": 0.74000001,
+          "after": 0.949999988
+        }
+      ]
+    }
+  ],
+  "unchanged_source_contracts": {
+    "src/core/Params.h": {
+      "unchanged": true,
+      "sha256": "eb5b73f144f83ff386865b0abb726f767eb8f4a0b651662442c4d03ccf8a2ac2"
+    },
+    "src/core/FactoryPresets.cpp": {
+      "unchanged": true,
+      "sha256": "6d720f1f5d5808311a17bb361ab0628552bad91845787dd7775f2165709378af"
+    },
+    "src/core/CuratedLibrary.inc": {
+      "unchanged": true,
+      "sha256": "f89ae54e9386d1e12b5b945b1f60f7e1e4667d79e91c5a63afcc63111e3aecf8"
+    },
+    "src/core/Engine.cpp": {
+      "unchanged": true,
+      "sha256": "9b16ac276fff5c9b718d60f59538a101ad4fb0f5faa6b997a92e0a9cb3401871"
+    },
+    "src/core/EngineWscHeld.cpp": {
+      "unchanged": true,
+      "sha256": "ca86927a97437307756edaf357cffad7809ebbda6d395cbab6c2d22023515e10"
+    },
+    "src/plugin/PluginProcessor.h": {
+      "unchanged": true,
+      "sha256": "a1a60605ace28029ee947b3b751c89ab31895ef1d6e419ff4389e6d014283dc5"
+    },
+    "src/plugin/PluginProcessor.cpp": {
+      "unchanged": true,
+      "sha256": "95f709baf46b9a83ce44725473aaed00aaa43b9e117deee8a72f29c362dd52d1"
+    },
+    "src/plugin/PluginProcessorLibrary.cpp": {
+      "unchanged": true,
+      "sha256": "28223afbb07ff6e342cd6ff292ae8c8b7b4f6e07e76ad6ff5a59ac118422326e"
+    }
+  },
+  "state_schema_version": 3,
+  "status": "PASS",
+  "legacy_canonical_comparison": {
+    "unchanged": true,
+    "baseline_sha256": "c485b4776e7356ce7afb4d7d5031afe2df1c9feef44324f48ae6c5a92e95c28a",
+    "candidate_sha256": "c485b4776e7356ce7afb4d7d5031afe2df1c9feef44324f48ae6c5a92e95c28a",
+    "bytes": 195089
+  },
+  "midi_canonical_comparison": {
+    "unchanged": true,
+    "baseline_sha256": "b2d24c28deb135d8b2076e79ba73da02e82ba5461b4b953d3ffb82a426921732",
+    "candidate_sha256": "b2d24c28deb135d8b2076e79ba73da02e82ba5461b4b953d3ffb82a426921732",
+    "bytes": 393216
+  },
+  "legacy_canonical_format": "Little-endian uint64 bank count, uint64 parameter count; each record: length-prefixed UTF-8 name/category/description; uint64 library enum; uint64 tag count and length-prefixed UTF-8 tags; 190 IEEE754 float32 bit patterns. No decimal rounding.",
+  "midi_canonical_format": "49152 little-endian uint64 two-complement encoded results, ordered MSB 0..2, LSB 0..127, Program 0..127.",
+  "compiled_contract": {
+    "legacy_count": 222,
+    "curated_count": 301,
+    "host_program_count": 523,
+    "core_parameters": 190,
+    "memory_controls": 26,
+    "host_parameter_count_by_layout": 296,
+    "midi_cases": 49152
+  },
+  "baseline_static_library_sha256": "3b954b496188cbcfa66c243f146963ac26f171d832d270bcdc8f7c02665a515b",
+  "candidate_static_library_sha256": "5cb7d2dacaeb12e46e2338d1ba293c0c9d80ea442aff9c5f3b5543c702345472",
+  "helper_source_sha256": "ff40860f296195d2638618a389a133bd03a2a54981d66c39686324c20237d08a",
+  "shared_family_helpers": {
+    "src/core/curated/Bass.inc": {
+      "unchanged": true,
+      "helper_prefix_sha256": "d9c5c3444b4aa32726c46929b15b74ff048473da60a46a58753dec45dab1f92a"
+    },
+    "src/core/curated/Brass.inc": {
+      "unchanged": true,
+      "helper_prefix_sha256": "6824bcb28e694bd3f2e63876bd45ef6cf9e40d70e2dc79f2a99df1f1266b4eac"
+    },
+    "src/core/curated/Pads.inc": {
+      "unchanged": true,
+      "helper_prefix_sha256": "2a900ff4cd5ee6032ab6c3f2ff4756e849558e449766a309dd6eeed81e219269"
+    },
+    "src/core/curated/Plucked.inc": {
+      "unchanged": true,
+      "helper_prefix_sha256": "cd9c6dab35f349f8565969bc530665964561177059d848d88c2c83fdb9a6283f"
+    },
+    "src/core/curated/Polysynth.inc": {
+      "unchanged": true,
+      "helper_prefix_sha256": "573edc50190a1a93b5adea7db991e0a4422922e55ee118e8c188e0f046c18ae8"
+    },
+    "src/core/curated/Winds.inc": {
+      "unchanged": true,
+      "helper_prefix_sha256": "302cf236a34ecf9828348dbe94b832d8debd79215fd4a8d27bb5774024710fcf"
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "assignment": 23,
+  "agent": "/root/w04_audio_distinctness",
+  "result": "No exact or gain-normalized duplicates found in the 301-program fixed-fixture screen. Focused checks distinguish the three strongest near pairs through register response, decay or onset.",
+  "source_baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "bank_snapshot": "2026.11.1 after first level-calibration pass; root may subsequently adjust master levels",
+  "capture_sha256": "8b26fb16d929d87c2991bb308b0e32cef91ffd33a4fd13da16c15ce063bbb03d",
+  "inventory_sha256": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+  "fixture": {
+    "sample_rate": 48000,
+    "note": 60,
+    "velocity": 0.8,
+    "pressure": 0.5,
+    "hold_seconds": 0.7,
+    "release_excerpt_seconds": 0.5,
+    "programs": 301,
+    "total_audio_seconds": 361.2
+  },
+  "pair_count": 45150,
+  "raw_exact_duplicate_groups": [],
+  "peak_normalized_quantized_duplicate_groups": [],
+  "quantization_note": "Each stereo sample is divided by the entire clip peak, multiplied by 1e6 and rounded to int32. This is a labelled numerical screen, not an acoustic or listening threshold.",
+  "all_audio": {
+    "captures": 311,
+    "sample_rate": 48000,
+    "generated_seconds": 385.0,
+    "finite": true,
+    "maximum_peak_dbfs": -11.938482121416168,
+    "samples_exceed_full_scale": false
+  },
+  "strongest_near_pairs": [
+    {
+      "names": [
+        "Analog Bass",
+        "Contour Bass"
+      ],
+      "waveform_correlation_48khz": 0.9994664493504779,
+      "gain_fit_residual_db": -29.719102259110095,
+      "envelope_cosine": 0.9998041505208749,
+      "spectral_cosine": 0.9999771067618342
+    },
+    {
+      "names": [
+        "Celesta",
+        "Kalimba"
+      ],
+      "waveform_correlation_48khz": 0.9987295765951214,
+      "gain_fit_residual_db": -25.952974748098615,
+      "envelope_cosine": 0.9988197158355068,
+      "spectral_cosine": 0.9999999969261478
+    },
+    {
+      "names": [
+        "Sine Bass",
+        "Sub Bass"
+      ],
+      "waveform_correlation_48khz": 0.9983842484001213,
+      "gain_fit_residual_db": -24.909464075148577,
+      "envelope_cosine": 0.9999143800464966,
+      "spectral_cosine": 0.9999641372627797
+    }
+  ],
+  "focused_findings": [
+    {
+      "pair": [
+        "Analog Bass",
+        "Contour Bass"
+      ],
+      "observation": "Similarity at MIDI 60 does not persist across register. At MIDI 84, held-body waveform correlation is 0.96805 and Contour Bass is 1.460 dB louder, compared with \u22120.075 dB relative level at MIDI 36. This is consistent with the deliberately different contour/filter voicing.",
+      "source": "src/core/curated/Bass.inc:Analog Bass and Contour Bass"
+    },
+    {
+      "pair": [
+        "Celesta",
+        "Kalimba"
+      ],
+      "observation": "Both intentionally use 4-foot sine bodies with 2-foot attack partials. At MIDI 60, the revised Kalimba held body is 6.565 dB below Celesta after 2.8\u20133.0 seconds despite nearly equal immediate onset RMS (+0.020 dB). The body/upper decay and release values differ.",
+      "source": "src/core/curated/Keys.inc:Celesta; src/core/curated/Plucked.inc:Kalimba"
+    },
+    {
+      "pair": [
+        "Sine Bass",
+        "Sub Bass"
+      ],
+      "observation": "Both deliberately share a 16-foot sine foundation; only Sine Bass has the disappearing pulse click. At MIDI 48, the onset correlation is 0.99538 with a \u221220.36 dB fitted residual, while the 50\u2013150 ms body correlation is 0.999964. The distinction is concentrated in the onset as described.",
+      "source": "src/core/curated/Bass.inc:Sine Bass and Sub Bass"
+    }
+  ],
+  "limitations": [
+    "A single held note cannot establish full musical or perceptual distinctness.",
+    "Slow swells may not reach their body within this short fixture; fixed ring carriers and modulation depend on note and phrase history.",
+    "Near-identical fundamentals alone are not duplicate sounds; envelopes, pressure response, registration and modulation are reviewed separately.",
+    "Waveform/envelope/spectral similarity is a diagnostic ranking, not a perceptual quality score. No claim that all 301 programs are equally distinguishable in every playing situation is made.",
+    "This was not a listening-panel review. No program change is justified solely by a high correlation between intentionally related variants."
+  ],
+  "files": {
+    "analyze.py": "518878579a9dd3f5ee1f5fcec2f0f02fe2784e6736905127ec35dee40ed869b3",
+    "focus.py": "1176e257e70f8e4066eab6ee6fa96443ade1191fc37acf1830be4950412fa5f9",
+    "analysis.json": "a9b74857a8db0492ffe060599d78f889db4a21901f0c501a94e6622781c39f55",
+    "focused.json": "90de71634066ee99c69f3c595cf8d20b6c04ecdf0c8148a11240938564664c7f",
+    "inventory.json": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa"
+  },
+  "tracked_changes": false
+}

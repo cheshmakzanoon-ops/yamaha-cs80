@@ -1,0 +1,64 @@
+{
+  "assignment": 25,
+  "library_revision": "2026.11.1",
+  "source_base_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "condition": "Final calibrated factory data at 48 kHz; two staggered four-note chords; pressure 0\u21921\u21920 in 10 ms events; first release overlaps second onset, reaching 8 active voices. Twelve seconds each. Matched control changes only two rank pans to 0; full factory effects stay active.",
+  "note_sets": {
+    "first": [
+      48,
+      55,
+      60,
+      64
+    ],
+    "second": [
+      53,
+      57,
+      62,
+      69
+    ]
+  },
+  "first_velocities": [
+    0.8,
+    0.85,
+    0.8,
+    0.85
+  ],
+  "second_velocities": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "source_state": "Uncommitted final calibrated working-tree snapshot; frozen static-library and complete inventory hashes identify the captured bank.",
+  "tail_scope": "Zero active voices at 12 seconds is a voice-retirement result, not exact digital silence: the final half-second remains near the approximately -82 dBFS output floor.",
+  "events_csv": "events.csv",
+  "captured_sequences": 10,
+  "generated_seconds": 120,
+  "analysis": {
+    "window_seconds": 0.25,
+    "step_seconds": 0.125,
+    "active_floor_dbfs": -60,
+    "fundamental_band": "Union of \u00b110% bands around both chords main-rank frequencies; 16-foot main rank for Brass Ensemble 16 and 8-foot for others. Hann-windowed stereo-average and mono powers. Band share reported; not an isolated note spectrum.",
+    "mono": "(L+R)/2, compared with mean L/R channel power"
+  },
+  "bounds": {
+    "highest_factory_peak_dbfs": -3.81668288265,
+    "highest_final_halfsecond_dbfs": -81.8103007097,
+    "nonfinite_samples": 0,
+    "over_full_scale_samples": 0,
+    "all_factory_reached8": true,
+    "all_factory_retired": true,
+    "max_active_abs_lr_balance_db": 1.9366331970949215,
+    "max_active_mono_loss_db": 0.3170655691293403,
+    "max_active_fundamental_union_mono_loss_db": 0.4809114239772071
+  },
+  "hashes": {
+    "libcs80_core-final.a": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+    "inventory-final.json": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+    "probe.cpp": "53536d5cdb22ced0ac7dab8e855ad71524be02b6f37b0aa10f0916d03741d5b9",
+    "probe": "caf7c6d34b83bda0d1e40b1ff817b905645db8e6ca8217bc62d1f0b82efb7fa6",
+    "events.csv": "5df968182744b811e6a9bdf1cc628bdb04b02b4a92ade4a899e8ff98e3a3c07c",
+    "capture.csv": "457cc452993a438d4b0a1c8b68d70f64c7e9995c4009201831832304059f09bb"
+  },
+  "limitations": "Bounded software sequence, not physical-instrument evidence or a listening judgment. Fine individual-note fundamental separation is not claimed during chord overlap; bands are unioned. The -60dBFS floor excludes essentially silent windows from stereo ratios."
+}

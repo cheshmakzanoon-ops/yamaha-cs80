@@ -1,0 +1,749 @@
+{
+  "schema": 1,
+  "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "library_revision_under_review": "2026.11.1",
+  "packaging_assignment": 20,
+  "status": "AUTHORING_REVIEW_AND_FINAL_CORE_INTEGRATION_PACKAGED_NATIVE_AND_PUBLICATION_RECORDED_SEPARATELY",
+  "scope": "Compact authoring/review dossier plus final core calibration/selected tests and performed audio evidence and final compiled-data identity verification. Native-host CI, operating-system artifact verification and the complete agent ledger are integration-owned additions.",
+  "measurement_integrity": "No measurements were recalculated. Archived text removes the checkout prefix where present; final core log additionally abbreviates the producing Python runtime executable path. Original/stored hashes record these transformations. Reproduction sources remain verbatim. New compact indexes explicitly identify selections from larger original evidence files.",
+  "limitations": [
+    "Candidate parameter-override renders use the frozen baseline engine and baseline master volumes. They are not the final calibrated download.",
+    "Artifact-pipeline smoke uses the frozen baseline executable and cannot certify final CI assets.",
+    "Identity snapshot precedes later calibration and UFO Landing metadata correction; final identity review must account for both.",
+    "Character tests contain128 checks after window hardening; review/summary.json preserves the earlier116-check review snapshot.",
+    "Software behavior evidence is not acoustic-instrument equivalence, physical CS-80 calibration or a listening-panel result.",
+    "Final core integration passed four selected preset suites. Native-host, CI and download publication results are separate and are not certified by these local records."
+  ],
+  "files": [
+    {
+      "path": "winds/summary.json",
+      "origin": "build-w02-winds/summary.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "3a7d4de9db512cfe371f248a849039cc85b43d485501eea3d457884a2e6d1942",
+      "stored_sha256": "3a7d4de9db512cfe371f248a849039cc85b43d485501eea3d457884a2e6d1942",
+      "bytes": 3447,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "winds/center.json",
+      "origin": "build-w02-winds/center.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "234ed2b03614977fae2ff250aa222bf7f77ea882bf8c4ce21ce25e84ff058900",
+      "stored_sha256": "234ed2b03614977fae2ff250aa222bf7f77ea882bf8c4ce21ce25e84ff058900",
+      "bytes": 10682,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "winds/matrix.json",
+      "origin": "build-w02-winds/matrix.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "3818395147daae2e6916e9d6a3db247412ed4c50e515981060f6663c379fb527",
+      "stored_sha256": "3818395147daae2e6916e9d6a3db247412ed4c50e515981060f6663c379fb527",
+      "bytes": 61274,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "winds/stress.csv",
+      "origin": "build-w02-winds/stress.csv",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "373198b96f879813504fca5098160c00f11c3bf5e8d661805fdadb43c05cd7c2",
+      "stored_sha256": "373198b96f879813504fca5098160c00f11c3bf5e8d661805fdadb43c05cd7c2",
+      "bytes": 254,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "plucks/measurements.json",
+      "origin": "build-w02-plucks/measurements.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "9e3ab4bac4065dff4e4edc02af1270b718c9e3f16cc324c423321cc3d45c163c",
+      "stored_sha256": "06a2cad63db37d154707f2c5899afe0d7daa4e9b738f02f2850793e04c2add50",
+      "bytes": 46954,
+      "transform": "Removed this checkout absolute-path prefix from textual provenance; all measurement values and relative path suffixes unchanged."
+    },
+    {
+      "path": "plucks/summary.txt",
+      "origin": "build-w02-plucks/summary.txt",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "2f30c42474d4d150ba01f31f763458d39b988b84ef4d012841c2148e71838ec1",
+      "stored_sha256": "2f30c42474d4d150ba01f31f763458d39b988b84ef4d012841c2148e71838ec1",
+      "bytes": 2160,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "bass/summary.json",
+      "origin": "build-w02-bass/summary.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "d14bd5387e29181a539039349662f2f96db23ab33c2020c1f19a147cbe60482c",
+      "stored_sha256": "d14bd5387e29181a539039349662f2f96db23ab33c2020c1f19a147cbe60482c",
+      "bytes": 3089,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "bass/center.json",
+      "origin": "build-w02-bass/center.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "1e2cfa5bfa7e3325f8a4b63a43c8a1b5f6ee65f2daebee0e0732fe423be6822f",
+      "stored_sha256": "1673e6a71ef0e5c9f4eacb99a39d930c7defeff57267624bda0c2813eab9ff55",
+      "bytes": 19648,
+      "transform": "Removed this checkout absolute-path prefix from textual provenance; all measurement values and relative path suffixes unchanged."
+    },
+    {
+      "path": "bass/matrix.json",
+      "origin": "build-w02-bass/matrix.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "dd0d78cf718db047b7302030dc188fbd9863c271c5b46bb755749181fed539d1",
+      "stored_sha256": "40beb527afdaf36b3f677c44d0670cc3ae116f06cfd47be1f0588da84e94c920",
+      "bytes": 76920,
+      "transform": "Removed this checkout absolute-path prefix from textual provenance; all measurement values and relative path suffixes unchanged."
+    },
+    {
+      "path": "bass/stress.csv",
+      "origin": "build-w02-bass/stress.csv",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "0fa38d79f3e4a9fa3f36e33ef3ce7ff561786d7afd7e6451b19484f8e144ce91",
+      "stored_sha256": "0fa38d79f3e4a9fa3f36e33ef3ce7ff561786d7afd7e6451b19484f8e144ce91",
+      "bytes": 264,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "bass/source.diff",
+      "origin": "build-w02-bass/source.diff",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "4ea58641fc2d1062223b547920986b8044527908984a1cd3676f9d5454790bad",
+      "stored_sha256": "4ea58641fc2d1062223b547920986b8044527908984a1cd3676f9d5454790bad",
+      "bytes": 2727,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "stereo/summary.json",
+      "origin": "build-w02-stereo/summary.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "778a09631b596248397159e68943e966d96c88ca8bc73dc7e1aaceacec63bd18",
+      "stored_sha256": "778a09631b596248397159e68943e966d96c88ca8bc73dc7e1aaceacec63bd18",
+      "bytes": 1045,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "stereo/initial.json",
+      "origin": "build-w02-stereo/initial.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "793996708fda0e45ab6daadba9f262d95042f7a778af5690ddf71bfae8eaac45",
+      "stored_sha256": "793996708fda0e45ab6daadba9f262d95042f7a778af5690ddf71bfae8eaac45",
+      "bytes": 4461,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "stereo/registers.json",
+      "origin": "build-w02-stereo/registers.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "84f5c08e339dddf7d0b899068c61ff263a5878145cadd23d0e13c08d37865e94",
+      "stored_sha256": "84f5c08e339dddf7d0b899068c61ff263a5878145cadd23d0e13c08d37865e94",
+      "bytes": 9297,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ether/summary.json",
+      "origin": "build-w03-ether/summary.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "05112a206e0398a8992656d9771827f167799cad37690bd0dabe78ce906a1ad8",
+      "stored_sha256": "05112a206e0398a8992656d9771827f167799cad37690bd0dabe78ce906a1ad8",
+      "bytes": 2738,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ether/measurements.json",
+      "origin": "build-w03-ether/measurements.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "263735bc0e02184ce4adb83418db42d918c2902f06f4bd19c2fb394c1addaa14",
+      "stored_sha256": "3fd538b2d130a62f41e570a4a355f1e53bf6ef3bd19a87771398352448a133c1",
+      "bytes": 57037,
+      "transform": "Removed this checkout absolute-path prefix from textual provenance; all measurement values and relative path suffixes unchanged."
+    },
+    {
+      "path": "ether/summary.txt",
+      "origin": "build-w03-ether/summary.txt",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "2b7ea4245fc80934360899c63639bc3c1719132eea7176d13fe4e169ef8e1c57",
+      "stored_sha256": "2b7ea4245fc80934360899c63639bc3c1719132eea7176d13fe4e169ef8e1c57",
+      "bytes": 981,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "strike-baseline/measurements.json",
+      "origin": "build-w02-strikes/measurements.json",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "d0f3e8bd14e98d07e3643a06e717ee6d76ed224d8ea9edab8e2e9cbbcb6bc2b8",
+      "stored_sha256": "a48735233ab803f8ab3c7022a35296728932837c2ee055794aed3b1da9b68301",
+      "bytes": 45388,
+      "transform": "Removed this checkout absolute-path prefix from textual provenance; all measurement values and relative path suffixes unchanged."
+    },
+    {
+      "path": "strike-baseline/summary.txt",
+      "origin": "build-w02-strikes/summary.txt",
+      "phase": "Frozen baseline and candidate parameter-override authoring comparison; master levels not finally recalibrated.",
+      "origin_sha256": "2c9386447dfcc9dbcde12e86ca12b4132344e54529e06549aac1d48da545bf78",
+      "stored_sha256": "2c9386447dfcc9dbcde12e86ca12b4132344e54529e06549aac1d48da545bf78",
+      "bytes": 1794,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "character/summary.json",
+      "origin": "build-w03-character-tests/summary.json",
+      "phase": "Candidate-factory character regression and frozen-baseline negative control; parent integrated final rerun is separate.",
+      "origin_sha256": "dbb5669294d71e3c3b573f40b120e4a04dc31044de7300bd3bfb6e290c64b410",
+      "stored_sha256": "dbb5669294d71e3c3b573f40b120e4a04dc31044de7300bd3bfb6e290c64b410",
+      "bytes": 4139,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "character/results.json",
+      "origin": "build-w03-character-tests/results.json",
+      "phase": "Candidate-factory character regression and frozen-baseline negative control; parent integrated final rerun is separate.",
+      "origin_sha256": "4612616af887a1f192e99efcccdf91993c3bac15933b1d5f15cc4a459d376209",
+      "stored_sha256": "4612616af887a1f192e99efcccdf91993c3bac15933b1d5f15cc4a459d376209",
+      "bytes": 6096,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "character/current.log",
+      "origin": "build-w03-character-tests/current.log",
+      "phase": "Candidate-factory character regression and frozen-baseline negative control; parent integrated final rerun is separate.",
+      "origin_sha256": "772c6fe31b7361430150b07428c01903911d45b91885dcf4a7b70e88b6634020",
+      "stored_sha256": "772c6fe31b7361430150b07428c01903911d45b91885dcf4a7b70e88b6634020",
+      "bytes": 2357,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "character/baseline.log",
+      "origin": "build-w03-character-tests/baseline.log",
+      "phase": "Candidate-factory character regression and frozen-baseline negative control; parent integrated final rerun is separate.",
+      "origin_sha256": "fc7a6c93416ab7271ca9726a01a9a4a4b2261ec3874d04b7419b7ee3b78bedf2",
+      "stored_sha256": "fc7a6c93416ab7271ca9726a01a9a4a4b2261ec3874d04b7419b7ee3b78bedf2",
+      "bytes": 3547,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "identity/summary.json",
+      "origin": "build-w03-identity/summary.json",
+      "phase": "Pre-calibration identity snapshot: twelve vectors and four stereo descriptions; precedes UFO Landing description correction.",
+      "origin_sha256": "32c12feac210e38e96dcc7b1494f4d695d64e7f84f905d48f53828499b2b1152",
+      "stored_sha256": "32c12feac210e38e96dcc7b1494f4d695d64e7f84f905d48f53828499b2b1152",
+      "bytes": 12148,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "identity/baseline-contract.json",
+      "origin": "build-w03-identity/baseline-contract.json",
+      "phase": "Pre-calibration identity snapshot: twelve vectors and four stereo descriptions; precedes UFO Landing description correction.",
+      "origin_sha256": "9955c560596c00f43a32829d8dcb73f63c7e9c8e2f3fe9a7d43af39b4653ec2e",
+      "stored_sha256": "9955c560596c00f43a32829d8dcb73f63c7e9c8e2f3fe9a7d43af39b4653ec2e",
+      "bytes": 165,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "identity/candidate-contract.json",
+      "origin": "build-w03-identity/candidate-contract.json",
+      "phase": "Pre-calibration identity snapshot: twelve vectors and four stereo descriptions; precedes UFO Landing description correction.",
+      "origin_sha256": "9955c560596c00f43a32829d8dcb73f63c7e9c8e2f3fe9a7d43af39b4653ec2e",
+      "stored_sha256": "9955c560596c00f43a32829d8dcb73f63c7e9c8e2f3fe9a7d43af39b4653ec2e",
+      "bytes": 165,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ring/summary.json",
+      "origin": "build-w03-ring/summary.json",
+      "phase": "Frozen-engine phrase diagnostic; description-only correction, no voicing change.",
+      "origin_sha256": "46db42fe2320ee33001c94fd0da6f30055da2101460adb048262852b15569ccb",
+      "stored_sha256": "46db42fe2320ee33001c94fd0da6f30055da2101460adb048262852b15569ccb",
+      "bytes": 2389,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ring/measurements.csv",
+      "origin": "build-w03-ring/measurements.csv",
+      "phase": "Frozen-engine phrase diagnostic; description-only correction, no voicing change.",
+      "origin_sha256": "93de08db9b3856d552989ef606537c8581abfd46cb4eccfdb9f8dfe9057d2a53",
+      "stored_sha256": "93de08db9b3856d552989ef606537c8581abfd46cb4eccfdb9f8dfe9057d2a53",
+      "bytes": 1584,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ring/result.log",
+      "origin": "build-w03-ring/result.log",
+      "phase": "Frozen-engine phrase diagnostic; description-only correction, no voicing change.",
+      "origin_sha256": "c6f19b3fe8e8b4c92d778f55da51b9e58036104e31a2cf4b7a9dc39dcde99231",
+      "stored_sha256": "c6f19b3fe8e8b4c92d778f55da51b9e58036104e31a2cf4b7a9dc39dcde99231",
+      "bytes": 481,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "ring/guide-snippet.txt",
+      "origin": "build-w03-ring/guide-snippet.txt",
+      "phase": "Frozen-engine phrase diagnostic; description-only correction, no voicing change.",
+      "origin_sha256": "3b6f8c258277079816625761bf09a0d88316027fa80acfeb4b97ccca8ac299d1",
+      "stored_sha256": "3b6f8c258277079816625761bf09a0d88316027fa80acfeb4b97ccca8ac299d1",
+      "bytes": 525,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "audition/summary.json",
+      "origin": "build-w03-audition/summary.json",
+      "phase": "Artifact-pipeline smoke using baseline executable; does not prove a newly published revised-bank artifact.",
+      "origin_sha256": "27db6a8a1733b705a373ec80ad721fff5bb1acf4e899729abd96bd90e50d14d5",
+      "stored_sha256": "27db6a8a1733b705a373ec80ad721fff5bb1acf4e899729abd96bd90e50d14d5",
+      "bytes": 984,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "audition/smoke-result.json",
+      "origin": "build-w03-audition/smoke-result.json",
+      "phase": "Artifact-pipeline smoke using baseline executable; does not prove a newly published revised-bank artifact.",
+      "origin_sha256": "6acd58f7d0092c4e6ed8ca91006a74c4e2ca7420ac59b97a9c884a27efc26237",
+      "stored_sha256": "6acd58f7d0092c4e6ed8ca91006a74c4e2ca7420ac59b97a9c884a27efc26237",
+      "bytes": 250,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "audition/failure-result.json",
+      "origin": "build-w03-audition/failure-result.json",
+      "phase": "Artifact-pipeline smoke using baseline executable; does not prove a newly published revised-bank artifact.",
+      "origin_sha256": "3645ac08e40d2fc63486e4c922724bb4335b37a5d2295fd2e5d09ed6eef139a7",
+      "stored_sha256": "3645ac08e40d2fc63486e4c922724bb4335b37a5d2295fd2e5d09ed6eef139a7",
+      "bytes": 99,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "audition/smoke.log",
+      "origin": "build-w03-audition/smoke.log",
+      "phase": "Artifact-pipeline smoke using baseline executable; does not prove a newly published revised-bank artifact.",
+      "origin_sha256": "5898a2ca39e6c0655f5a7f1f8c26782f70dca6851f3475c2e6aaa917ff7a07ff",
+      "stored_sha256": "5898a2ca39e6c0655f5a7f1f8c26782f70dca6851f3475c2e6aaa917ff7a07ff",
+      "bytes": 843,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "review/summary.json",
+      "origin": "build-w03-test-review/summary.json",
+      "phase": "Independent source/math review; original116-check snapshot, before accepted window hardening.",
+      "origin_sha256": "761e615e77855f0419f70af030b1779e8fca920a37af0dec1651bd6bab79a4be",
+      "stored_sha256": "761e615e77855f0419f70af030b1779e8fca920a37af0dec1651bd6bab79a4be",
+      "bytes": 2909,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "compatibility/summary.json",
+      "origin": "build-w04-compatibility/summary.json",
+      "phase": "Source-control-flow compatibility review; not a new native-host execution.",
+      "origin_sha256": "614624ab41fd220d6ef54ffbdccafe9c35f55dd28246e5a2c2ec2a7e7bc46cd9",
+      "stored_sha256": "614624ab41fd220d6ef54ffbdccafe9c35f55dd28246e5a2c2ec2a7e7bc46cd9",
+      "bytes": 3935,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-probe/diagnostic_capture.cpp",
+      "origin": "build-probe/diagnostic_capture.cpp",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "2936e989443d96a67684b053e56459686137804a285d4eeb454def4fa1cc01eb",
+      "stored_sha256": "2936e989443d96a67684b053e56459686137804a285d4eeb454def4fa1cc01eb",
+      "bytes": 19498,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w02-strikes/measure.py",
+      "origin": "build-w02-strikes/measure.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "718455d0de1da0e200946dc7c471bb23e512365769b27c0cb6e8932bb4a5a1f1",
+      "stored_sha256": "718455d0de1da0e200946dc7c471bb23e512365769b27c0cb6e8932bb4a5a1f1",
+      "bytes": 3227,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w02-winds/analyze.py",
+      "origin": "build-w02-winds/analyze.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "2090fb5f43e2dd4e5581c7f3721b378639732e2879dad92b8d44707b004d4391",
+      "stored_sha256": "2090fb5f43e2dd4e5581c7f3721b378639732e2879dad92b8d44707b004d4391",
+      "bytes": 2834,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w02-winds/stress.cpp",
+      "origin": "build-w02-winds/stress.cpp",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "0edcbb318dbb7e31af9990d37699247440b5c203f5fe5b4d6d98e953243eb34f",
+      "stored_sha256": "0edcbb318dbb7e31af9990d37699247440b5c203f5fe5b4d6d98e953243eb34f",
+      "bytes": 1783,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w02-plucks/measure.py",
+      "origin": "build-w02-plucks/measure.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "f3b6b61ee1c6db3528594b7fbeeb532747ef602da3015480c111124f96579723",
+      "stored_sha256": "f3b6b61ee1c6db3528594b7fbeeb532747ef602da3015480c111124f96579723",
+      "bytes": 5224,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w02-bass/measure.py",
+      "origin": "build-w02-bass/measure.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "a625e2c15ee2206f58b34df8c0bf79e0f85f48a1dee482d909d540e94ee15cd1",
+      "stored_sha256": "a625e2c15ee2206f58b34df8c0bf79e0f85f48a1dee482d909d540e94ee15cd1",
+      "bytes": 4009,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w02-bass/stress.cpp",
+      "origin": "build-w02-bass/stress.cpp",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "d0aa4af8db826ca002a94ae4acd08125ffee2e43a8849a8accc44cccf53a4e35",
+      "stored_sha256": "d0aa4af8db826ca002a94ae4acd08125ffee2e43a8849a8accc44cccf53a4e35",
+      "bytes": 1530,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w02-stereo/measure.py",
+      "origin": "build-w02-stereo/measure.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "335f7a9767d8c9ebbbd54afa44b79a1ae450fe10690588cd23e341949066d189",
+      "stored_sha256": "335f7a9767d8c9ebbbd54afa44b79a1ae450fe10690588cd23e341949066d189",
+      "bytes": 2082,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w02-stereo/registers.py",
+      "origin": "build-w02-stereo/registers.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "54b087942e59a217ae76888736692375ece26212a3abf221a319d09e26169327",
+      "stored_sha256": "54b087942e59a217ae76888736692375ece26212a3abf221a319d09e26169327",
+      "bytes": 2184,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w03-ether/measure.py",
+      "origin": "build-w03-ether/measure.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "0c9eea0cb10b7cff7d137a0e11f879b5cb9e017d0636d126631feac5149b13e6",
+      "stored_sha256": "0c9eea0cb10b7cff7d137a0e11f879b5cb9e017d0636d126631feac5149b13e6",
+      "bytes": 4142,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w03-identity/identity.cpp",
+      "origin": "build-w03-identity/identity.cpp",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "ff40860f296195d2638618a389a133bd03a2a54981d66c39686324c20237d08a",
+      "stored_sha256": "ff40860f296195d2638618a389a133bd03a2a54981d66c39686324c20237d08a",
+      "bytes": 1632,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w03-ring/probe.cpp",
+      "origin": "build-w03-ring/probe.cpp",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "90ff7a6d5ec1db3db27b9cf818b4b92f8a52f9711d0d0b0c4d91a110ab20681a",
+      "stored_sha256": "90ff7a6d5ec1db3db27b9cf818b4b92f8a52f9711d0d0b0c4d91a110ab20681a",
+      "bytes": 2674,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w03-audition/workflow-audition.py",
+      "origin": "build-w03-audition/workflow-audition.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "3116fe7a689053fc75d7e8b9c43393e62ab57fe3715ae60418e27296da2ca1fc",
+      "stored_sha256": "3116fe7a689053fc75d7e8b9c43393e62ab57fe3715ae60418e27296da2ca1fc",
+      "bytes": 7052,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w03-audition/baseline-pipeline-smoke.py",
+      "origin": "build-w03-audition/baseline-pipeline-smoke.py",
+      "phase": "Original reproduction source; restore its original build-directory layout before execution.",
+      "origin_sha256": "f297d866b634cb2b00c7fc41b5a1bba3d1257683247e7e5794f81ef5614eaba2",
+      "stored_sha256": "f297d866b634cb2b00c7fc41b5a1bba3d1257683247e7e5794f81ef5614eaba2",
+      "bytes": 7088,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/character/PresetCharacterTests.cpp",
+      "origin": "tests/PresetCharacterTests.cpp",
+      "phase": "Exact128-check test source matching character/summary.json; final integrated rerun is separate.",
+      "origin_sha256": "12b7553ff5acbb1377a1bebf68be5b02baaf798117b12d6c331ed0b655cbbad1",
+      "stored_sha256": "12b7553ff5acbb1377a1bebf68be5b02baaf798117b12d6c331ed0b655cbbad1",
+      "bytes": 13457,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "README.md",
+      "origin": "Authored package index and reproduction instructions in assignments20 and28",
+      "phase": "Evidence-stage index; not an additional measurement.",
+      "origin_sha256": null,
+      "stored_sha256": "4f712fcea8d9b9f88b2cf44d9cac3458725f26fdff3fb553d5994ac396d13453",
+      "bytes": 16720,
+      "transform": "New explanatory text; no source measurement transformed."
+    },
+    {
+      "path": "final/ctest.log",
+      "origin": "build-audit/final-ctest.log",
+      "phase": "Final calibrated 2026.11.1 working-tree core integration; selected preset suites only; native-host and published CI artifacts are separate.",
+      "origin_sha256": "7dc55a2d2fc58d089c8b8776848c78e967c90bc5317060c21c55b8b4ef7c8e49",
+      "stored_sha256": "fc1bb848d533520434494a0473184b502f49814762a01467c49d5a3a1ddaa387",
+      "bytes": 539,
+      "transform": "Remove the original absolute checkout prefix."
+    },
+    {
+      "path": "final/ctest-junit.xml",
+      "origin": "build-audit/preset-final-results.xml",
+      "phase": "Final calibrated 2026.11.1 working-tree core integration; selected preset suites only; native-host and published CI artifacts are separate.",
+      "origin_sha256": "4e82eed6cf102365edadec7369f64f3bbe47d416a248ad0099582f30d8f1c8df",
+      "stored_sha256": "4e82eed6cf102365edadec7369f64f3bbe47d416a248ad0099582f30d8f1c8df",
+      "bytes": 3429,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final/ctest-full.log",
+      "origin": "build-audit/Testing/Temporary/LastTest.log",
+      "phase": "Final calibrated 2026.11.1 working-tree core integration; selected preset suites only; native-host and published CI artifacts are separate.",
+      "origin_sha256": "9b34e55fc1b6ff2556b3d3218a22f2e8707e5488aead7d3618b47866f3c65faf",
+      "stored_sha256": "d715db6600ee42f8c9b3d861aff7a2039c7c0fb390cf261bc4806e154c1ce2e1",
+      "bytes": 7066,
+      "transform": "Remove the original absolute checkout prefix. Abbreviate the producing Python runtime executable path to python3.12."
+    },
+    {
+      "path": "final/calibration-applied-pass1.inc",
+      "origin": "build-audit/calibration-applied-pass1.inc",
+      "phase": "Final calibrated 2026.11.1 working-tree core integration; selected preset suites only; native-host and published CI artifacts are separate.",
+      "origin_sha256": "cb1f5689e7cfc58034241f2d8f4892cc70bde4530232defe5838bc1e5e89365e",
+      "stored_sha256": "cb1f5689e7cfc58034241f2d8f4892cc70bde4530232defe5838bc1e5e89365e",
+      "bytes": 10163,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final/calibration-applied-pass2.inc",
+      "origin": "build-audit/calibration-applied-pass2.inc",
+      "phase": "Final calibrated 2026.11.1 working-tree core integration; selected preset suites only; native-host and published CI artifacts are separate.",
+      "origin_sha256": "cb1f5689e7cfc58034241f2d8f4892cc70bde4530232defe5838bc1e5e89365e",
+      "stored_sha256": "cb1f5689e7cfc58034241f2d8f4892cc70bde4530232defe5838bc1e5e89365e",
+      "bytes": 10163,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final/summary.json",
+      "origin": "Authored integration index in assignment28",
+      "phase": "Final calibrated 2026.11.1 working-tree core integration; selected preset suites only; native-host and published CI artifacts are separate.",
+      "origin_sha256": null,
+      "stored_sha256": "8941af3f2a467a1714f41ae10e080d4ea01f0bedc647b9b67cef312defc9d8ae",
+      "bytes": 5909,
+      "transform": "New explanatory data; source values copied without numerical recalculation."
+    },
+    {
+      "path": "distinctness/summary.json",
+      "origin": "build-w04-distinctness/summary.json",
+      "phase": "Whole-bank distinctness screen after first calibration pass; final inventory hash is identical, but original snapshot qualification is preserved.",
+      "origin_sha256": "bcdddd4c6468f50f91e838835618fa77e56a8b74fb8339270a50d8e7c9f93011",
+      "stored_sha256": "bcdddd4c6468f50f91e838835618fa77e56a8b74fb8339270a50d8e7c9f93011",
+      "bytes": 4857,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "distinctness/focused.json",
+      "origin": "build-w04-distinctness/focused.json",
+      "phase": "Whole-bank distinctness screen after first calibration pass; final inventory hash is identical, but original snapshot qualification is preserved.",
+      "origin_sha256": "90de71634066ee99c69f3c595cf8d20b6c04ecdf0c8148a11240938564664c7f",
+      "stored_sha256": "58e8fbb55f8b40ed2204488f680d567a3929ee96c5f4dbcbf67c50f4c8059274",
+      "bytes": 9857,
+      "transform": "Remove the original absolute checkout prefix."
+    },
+    {
+      "path": "reproduce/build-w04-distinctness/analyze.py",
+      "origin": "build-w04-distinctness/analyze.py",
+      "phase": "Exact distinctness reproduction source; restore original directory layout and supply freshly captured WAV files.",
+      "origin_sha256": "518878579a9dd3f5ee1f5fcec2f0f02fe2784e6736905127ec35dee40ed869b3",
+      "stored_sha256": "518878579a9dd3f5ee1f5fcec2f0f02fe2784e6736905127ec35dee40ed869b3",
+      "bytes": 5858,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w04-distinctness/focus.py",
+      "origin": "build-w04-distinctness/focus.py",
+      "phase": "Exact distinctness reproduction source; restore original directory layout and supply freshly captured WAV files.",
+      "origin_sha256": "1176e257e70f8e4066eab6ee6fa96443ade1191fc37acf1830be4950412fa5f9",
+      "stored_sha256": "1176e257e70f8e4066eab6ee6fa96443ade1191fc37acf1830be4950412fa5f9",
+      "bytes": 2088,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "distinctness/omitted-artifacts.json",
+      "origin": "Authored integration index in assignment28",
+      "phase": "Whole-bank distinctness screen after first calibration pass; final inventory hash is identical, but original snapshot qualification is preserved.",
+      "origin_sha256": null,
+      "stored_sha256": "3980a98d664bdade839e240d12e354316c173df049082792de9684fc2b028da1",
+      "bytes": 708,
+      "transform": "New explanatory data; source values copied without numerical recalculation."
+    },
+    {
+      "path": "wind-performance/summary.json",
+      "origin": "build-w04-wind-performance/summary.json",
+      "phase": "Final calibrated factory Flute/Breathy Flute at 48 kHz, performed pressure/repeats/overlap and matched controller-step control; no parameter overrides.",
+      "origin_sha256": "3deab09cc925ada19877fbc9203ab646bd06f955c5c9e0d6ddcf3166a634af4a",
+      "stored_sha256": "3deab09cc925ada19877fbc9203ab646bd06f955c5c9e0d6ddcf3166a634af4a",
+      "bytes": 4199,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "wind-performance/provenance.json",
+      "origin": "build-w04-wind-performance/provenance.json",
+      "phase": "Final calibrated factory Flute/Breathy Flute at 48 kHz, performed pressure/repeats/overlap and matched controller-step control; no parameter overrides.",
+      "origin_sha256": "a080ca54634bd28ddb4a87ec17970bdc7322843cb771651097b9b4a9bdc6e1fd",
+      "stored_sha256": "a080ca54634bd28ddb4a87ec17970bdc7322843cb771651097b9b4a9bdc6e1fd",
+      "bytes": 1201,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "wind-performance/sequences.csv",
+      "origin": "build-w04-wind-performance/sequences.csv",
+      "phase": "Final calibrated factory Flute/Breathy Flute at 48 kHz, performed pressure/repeats/overlap and matched controller-step control; no parameter overrides.",
+      "origin_sha256": "4f5d738e83b253ddce028f56c259e7f404e8c5f6abb97b73175c24e4c7370c35",
+      "stored_sha256": "4f5d738e83b253ddce028f56c259e7f404e8c5f6abb97b73175c24e4c7370c35",
+      "bytes": 1203,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "wind-performance/pressure-step.csv",
+      "origin": "build-w04-wind-performance/pressure-step.csv",
+      "phase": "Final calibrated factory Flute/Breathy Flute at 48 kHz, performed pressure/repeats/overlap and matched controller-step control; no parameter overrides.",
+      "origin_sha256": "90fc35402944ea688899b2cfb6e4b4af5b5a20eb59a6dd1cf2ed2076552bbbc4",
+      "stored_sha256": "90fc35402944ea688899b2cfb6e4b4af5b5a20eb59a6dd1cf2ed2076552bbbc4",
+      "bytes": 858,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "wind-performance/run.log",
+      "origin": "build-w04-wind-performance/run.log",
+      "phase": "Final calibrated factory Flute/Breathy Flute at 48 kHz, performed pressure/repeats/overlap and matched controller-step control; no parameter overrides.",
+      "origin_sha256": "531895865994861d408e85f6e601ac9f8cbd21cc2bebbdf31056e014778fa599",
+      "stored_sha256": "531895865994861d408e85f6e601ac9f8cbd21cc2bebbdf31056e014778fa599",
+      "bytes": 67,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w04-wind-performance/probe.cpp",
+      "origin": "build-w04-wind-performance/probe.cpp",
+      "phase": "Exact final-bank wind-performance reproduction source; writes original build directory.",
+      "origin_sha256": "504cde4a6bab1601e6e0525c2a765a0915111660e12dcf8b7982e2260eed1a5b",
+      "stored_sha256": "504cde4a6bab1601e6e0525c2a765a0915111660e12dcf8b7982e2260eed1a5b",
+      "bytes": 6898,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "stereo-chords/summary.json",
+      "origin": "build-w05-stereo-chords/summary.json",
+      "phase": "Final calibrated five stereo programs at 48 kHz; two pressure-controlled four-note chords and matched centered-pan controls, twelve seconds each.",
+      "origin_sha256": "e0d4ad0defbc17b3a6c34c3289a080263feacd484b956338e5fdb0aa9dd7ec94",
+      "stored_sha256": "e0d4ad0defbc17b3a6c34c3289a080263feacd484b956338e5fdb0aa9dd7ec94",
+      "bytes": 2791,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "stereo-chords/events.csv",
+      "origin": "build-w05-stereo-chords/events.csv",
+      "phase": "Final calibrated five stereo programs at 48 kHz; two pressure-controlled four-note chords and matched centered-pan controls, twelve seconds each.",
+      "origin_sha256": "5df968182744b811e6a9bdf1cc628bdb04b02b4a92ade4a899e8ff98e3a3c07c",
+      "stored_sha256": "5df968182744b811e6a9bdf1cc628bdb04b02b4a92ade4a899e8ff98e3a3c07c",
+      "bytes": 8250,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "stereo-chords/capture.csv",
+      "origin": "build-w05-stereo-chords/capture.csv",
+      "phase": "Final calibrated five stereo programs at 48 kHz; two pressure-controlled four-note chords and matched centered-pan controls, twelve seconds each.",
+      "origin_sha256": "457cc452993a438d4b0a1c8b68d70f64c7e9995c4009201831832304059f09bb",
+      "stored_sha256": "457cc452993a438d4b0a1c8b68d70f64c7e9995c4009201831832304059f09bb",
+      "bytes": 1050,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "stereo-chords/phase-measurements.json",
+      "origin": "Authored integration index in assignment28",
+      "phase": "Final calibrated five stereo programs at 48 kHz; two pressure-controlled four-note chords and matched centered-pan controls, twelve seconds each.",
+      "origin_sha256": null,
+      "stored_sha256": "ae865c24c7317024559cafab9ce0858a37af98b38818c1488e76ea79779a1676",
+      "bytes": 33012,
+      "transform": "New explanatory data; source values copied without numerical recalculation."
+    },
+    {
+      "path": "reproduce/build-w05-stereo-chords/probe.cpp",
+      "origin": "build-w05-stereo-chords/probe.cpp",
+      "phase": "Exact final-bank chord capture/analysis source; restore original build-directory layout.",
+      "origin_sha256": "53536d5cdb22ced0ac7dab8e855ad71524be02b6f37b0aa10f0916d03741d5b9",
+      "stored_sha256": "53536d5cdb22ced0ac7dab8e855ad71524be02b6f37b0aa10f0916d03741d5b9",
+      "bytes": 3944,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w05-stereo-chords/analyze.py",
+      "origin": "build-w05-stereo-chords/analyze.py",
+      "phase": "Exact final-bank chord capture/analysis source; restore original build-directory layout.",
+      "origin_sha256": "3ddbf26085654eee481445639a9076225abc6fa2d66c938df86c503f43e6fba5",
+      "stored_sha256": "3ddbf26085654eee481445639a9076225abc6fa2d66c938df86c503f43e6fba5",
+      "bytes": 5845,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-identity/summary.json",
+      "origin": "build-w05-final-identity/summary.json",
+      "phase": "Final calibrated bank compared with frozen baseline: exact compiled records, float32 round-trip, catalogues, parameter IDs, MIDI and index mappings; native-host execution separate.",
+      "origin_sha256": "31890a447a15a3c737c5e473879a3fbf0eac46c2293da222bc724e4920947278",
+      "stored_sha256": "31890a447a15a3c737c5e473879a3fbf0eac46c2293da222bc724e4920947278",
+      "bytes": 17657,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-identity/baseline-contract.json",
+      "origin": "build-w05-final-identity/baseline-contract.json",
+      "phase": "Final calibrated bank compared with frozen baseline: exact compiled records, float32 round-trip, catalogues, parameter IDs, MIDI and index mappings; native-host execution separate.",
+      "origin_sha256": "8f7194df2f233015462f1579afc46a63b6cdf6cfabf7f3171030778c657a4959",
+      "stored_sha256": "8f7194df2f233015462f1579afc46a63b6cdf6cfabf7f3171030778c657a4959",
+      "bytes": 175,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-identity/final-contract.json",
+      "origin": "build-w05-final-identity/final-contract.json",
+      "phase": "Final calibrated bank compared with frozen baseline: exact compiled records, float32 round-trip, catalogues, parameter IDs, MIDI and index mappings; native-host execution separate.",
+      "origin_sha256": "8f7194df2f233015462f1579afc46a63b6cdf6cfabf7f3171030778c657a4959",
+      "stored_sha256": "8f7194df2f233015462f1579afc46a63b6cdf6cfabf7f3171030778c657a4959",
+      "bytes": 175,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "final-identity/README.md",
+      "origin": "build-w05-final-identity/README.md",
+      "phase": "Final calibrated bank compared with frozen baseline: exact compiled records, float32 round-trip, catalogues, parameter IDs, MIDI and index mappings; native-host execution separate.",
+      "origin_sha256": "2c74a0d83b078fc88d7668b1a5a54c8b99af5db46d8e0496f8861e6364b07c30",
+      "stored_sha256": "2c74a0d83b078fc88d7668b1a5a54c8b99af5db46d8e0496f8861e6364b07c30",
+      "bytes": 3245,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w05-final-identity/compare.py",
+      "origin": "build-w05-final-identity/compare.py",
+      "phase": "Exact final identity reproduction source; restore original build directory and recreate the two immutable inputs.",
+      "origin_sha256": "83a6d92e025c8bd7042be664b2e761187907c77e0b0bc69789d236a63cd69d83",
+      "stored_sha256": "83a6d92e025c8bd7042be664b2e761187907c77e0b0bc69789d236a63cd69d83",
+      "bytes": 8945,
+      "transform": "Verbatim."
+    },
+    {
+      "path": "reproduce/build-w05-final-identity/identity.cpp",
+      "origin": "build-w05-final-identity/identity.cpp",
+      "phase": "Exact final identity reproduction source; restore original build directory and recreate the two immutable inputs.",
+      "origin_sha256": "de43dd83a152b374bd2d548879935045a0e81c067327d19b2b70f70ba63bac80",
+      "stored_sha256": "de43dd83a152b374bd2d548879935045a0e81c067327d19b2b70f70ba63bac80",
+      "bytes": 2620,
+      "transform": "Verbatim."
+    }
+  ],
+  "extension_assignment": 28
+}

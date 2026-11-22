@@ -1,0 +1,818 @@
+{
+  "source": "build-w05-stereo-chords/measurements.json",
+  "source_sha256": "f1d1ef03df5e2c62d22c3067adc2840c85269d31e5ba86e8b99c8cbc73a95c10",
+  "source_bytes": 459590,
+  "selection": "Verbatim program identity, raw-audio hash, active-window count, computed bounds and phase measurements. Per-window arrays omitted for size; exact analysis source reproduces them. No values recalculated.",
+  "measurements": [
+    {
+      "name": "Noir Swell Brass",
+      "variant": "factory",
+      "raw_sha256": "d8352f7e3de9a0b9d2f9c4f1af8b33fa880a1e84b4f33b9078d66c1b7555db48",
+      "active_windows": 50,
+      "active_window_bounds": {
+        "min_side_mid_db": -24.873311608989127,
+        "max_side_mid_db": -11.20685503479985,
+        "max_abs_lr_balance_db": 1.9366331970949215,
+        "max_mono_loss_db": 0.3170655691293403,
+        "max_fundamental_union_mono_loss_db": 0.4809114239772071
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -23.054869657600694,
+          "side_mid_db": -19.3821054052756,
+          "lr_balance_db": 0.10341804784015582,
+          "mono_loss_db": 0.049783134343787734,
+          "fundamental_union_mono_loss_db": 0.08318099560147152,
+          "fundamental_union_power_share": 0.7189138331240023,
+          "correlation": 0.9772741784655506
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -20.960942687063127,
+          "side_mid_db": -20.548001327981382,
+          "lr_balance_db": 0.22972588388339144,
+          "mono_loss_db": 0.038113349498917266,
+          "fundamental_union_mono_loss_db": 0.037505339782480884,
+          "fundamental_union_power_share": 0.7033046781173982,
+          "correlation": 0.9828686297541105
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -19.817455627691334,
+          "side_mid_db": -18.47063486653226,
+          "lr_balance_db": 0.737084884293473,
+          "mono_loss_db": 0.06132688024826042,
+          "fundamental_union_mono_loss_db": 0.02774760058502216,
+          "fundamental_union_power_share": 0.7433554396210553,
+          "correlation": 0.9754581375901361
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -20.37730846211744,
+          "side_mid_db": -17.909936585675865,
+          "lr_balance_db": 0.6736764480211552,
+          "mono_loss_db": 0.06971086109394095,
+          "fundamental_union_mono_loss_db": 0.04657968989459333,
+          "fundamental_union_power_share": 0.7918448169301335,
+          "correlation": 0.9710666554185395
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -42.29939495328118,
+          "side_mid_db": -11.805467801301479,
+          "lr_balance_db": 1.7231652669521758,
+          "mono_loss_db": 0.27751588698249935,
+          "fundamental_union_mono_loss_db": 0.109815067094684,
+          "fundamental_union_power_share": 0.9363694348794577,
+          "correlation": 0.8934962014165654
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -81.81030070971453,
+          "side_mid_db": -0.04963420400705933,
+          "lr_balance_db": 0.015192797625173213,
+          "mono_loss_db": 2.985553761040312,
+          "fundamental_union_mono_loss_db": 3.4630808284976995,
+          "fundamental_union_power_share": 0.01478092887112596,
+          "correlation": 0.00571442596422787
+        }
+      }
+    },
+    {
+      "name": "Noir Swell Brass",
+      "variant": "centered-control",
+      "raw_sha256": "f1556653cd16ee767c56c59c99ed5560ba4433303817492b1780a662da9287f4",
+      "active_windows": 50,
+      "active_window_bounds": {
+        "min_side_mid_db": -34.25295914483709,
+        "max_side_mid_db": -24.49531199392757,
+        "max_abs_lr_balance_db": 0.5818487486055315,
+        "max_mono_loss_db": 0.015398660760312627,
+        "max_fundamental_union_mono_loss_db": 0.023754506654813382
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -23.056291715221757,
+          "side_mid_db": -26.332038495754485,
+          "lr_balance_db": -0.4118703348354736,
+          "mono_loss_db": 0.010094287028218029,
+          "fundamental_union_mono_loss_db": 0.016210857773871684,
+          "fundamental_union_power_share": 0.7174670065827546,
+          "correlation": 0.9964760493450072
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -20.955496259339597,
+          "side_mid_db": -26.679984940559933,
+          "lr_balance_db": -0.4338726431121286,
+          "mono_loss_db": 0.009317938442484793,
+          "fundamental_union_mono_loss_db": 0.009815136676007688,
+          "fundamental_union_power_share": 0.7035882093085325,
+          "correlation": 0.9969560144205435
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -19.784131573781924,
+          "side_mid_db": -32.553678440330444,
+          "lr_balance_db": 0.06972632938079275,
+          "mono_loss_db": 0.0024115478537137056,
+          "fundamental_union_mono_loss_db": 0.0015039293306240652,
+          "fundamental_union_power_share": 0.7455805220251495,
+          "correlation": 0.9989219342992539
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -20.350679559212633,
+          "side_mid_db": -30.828651218483095,
+          "lr_balance_db": 0.0761307843228177,
+          "mono_loss_db": 0.003587069767130379,
+          "fundamental_union_mono_loss_db": 0.002720614911578748,
+          "fundamental_union_power_share": 0.7941018899257403,
+          "correlation": 0.9983871225091488
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -42.480562879797176,
+          "side_mid_db": -25.755096748402227,
+          "lr_balance_db": 0.16843881454649345,
+          "mono_loss_db": 0.01152651933268414,
+          "fundamental_union_mono_loss_db": 0.0052727734798419315,
+          "fundamental_union_power_share": 0.9359451763254488,
+          "correlation": 0.994885924220483
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -81.81030070971453,
+          "side_mid_db": -0.04963420400705933,
+          "lr_balance_db": 0.015192797625173213,
+          "mono_loss_db": 2.985553761040312,
+          "fundamental_union_mono_loss_db": 3.4630808284976995,
+          "fundamental_union_power_share": 0.01478092887112596,
+          "correlation": 0.00571442596422787
+        }
+      }
+    },
+    {
+      "name": "Brass Ensemble 16",
+      "variant": "factory",
+      "raw_sha256": "9247047fa8e20a01cc425f16b2ffee9ef50be1aaae0c246f163cae4e63654f21",
+      "active_windows": 46,
+      "active_window_bounds": {
+        "min_side_mid_db": -26.23456327113525,
+        "max_side_mid_db": -19.220837486181242,
+        "max_abs_lr_balance_db": 1.3296039797871926,
+        "max_mono_loss_db": 0.051655341331379986,
+        "max_fundamental_union_mono_loss_db": 0.0446634477756301
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -20.19639763886645,
+          "side_mid_db": -25.508867690712968,
+          "lr_balance_db": -0.40852150684519695,
+          "mono_loss_db": 0.012197968319118891,
+          "fundamental_union_mono_loss_db": 0.00539982617189768,
+          "fundamental_union_power_share": 0.4554215765410127,
+          "correlation": 0.9954905346886512
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -20.491804216318393,
+          "side_mid_db": -24.127713857786574,
+          "lr_balance_db": -0.15773935171635753,
+          "mono_loss_db": 0.016756173457862854,
+          "fundamental_union_mono_loss_db": 0.005322924096959491,
+          "fundamental_union_power_share": 0.5431413588246844,
+          "correlation": 0.9924620154076931
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -18.02812638346554,
+          "side_mid_db": -21.585084855200478,
+          "lr_balance_db": 0.658171296831558,
+          "mono_loss_db": 0.03004503456566669,
+          "fundamental_union_mono_loss_db": 0.0167116634772056,
+          "fundamental_union_power_share": 0.6576577067644466,
+          "correlation": 0.9890442169028129
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -18.83368957570046,
+          "side_mid_db": -20.036743387634232,
+          "lr_balance_db": 0.8358579575224616,
+          "mono_loss_db": 0.04285146141234239,
+          "fundamental_union_mono_loss_db": 0.0422586561742673,
+          "fundamental_union_power_share": 0.6333449307994283,
+          "correlation": 0.9849060413635171
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -44.3493014677533,
+          "side_mid_db": -19.32234892379822,
+          "lr_balance_db": 1.1644510700730357,
+          "mono_loss_db": 0.05046886430760491,
+          "fundamental_union_mono_loss_db": 0.03219679213951528,
+          "fundamental_union_power_share": 0.8073275154263356,
+          "correlation": 0.9856839536075345
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -82.24120354967256,
+          "side_mid_db": -0.05207904130836241,
+          "lr_balance_db": 0.0171062468793399,
+          "mono_loss_db": 2.9843384996730027,
+          "fundamental_union_mono_loss_db": 2.527978603459485,
+          "fundamental_union_power_share": 0.00439498815870043,
+          "correlation": 0.005995915477702279
+        }
+      }
+    },
+    {
+      "name": "Brass Ensemble 16",
+      "variant": "centered-control",
+      "raw_sha256": "d65336f5f0e57b2905251e77d11a9985d80d72fd3750e6fba0dd413d2c475506",
+      "active_windows": 46,
+      "active_window_bounds": {
+        "min_side_mid_db": -33.475924403448765,
+        "max_side_mid_db": -25.951880238251974,
+        "max_abs_lr_balance_db": 0.6493666458369127,
+        "max_mono_loss_db": 0.011016543252048669,
+        "max_fundamental_union_mono_loss_db": 0.015361770327370126
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -20.178545465983873,
+          "side_mid_db": -27.685956756906513,
+          "lr_balance_db": -0.5391755272244443,
+          "mono_loss_db": 0.007392969843502853,
+          "fundamental_union_mono_loss_db": 0.010637386455676256,
+          "fundamental_union_power_share": 0.45488809690632187,
+          "correlation": 0.9985190146439844
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -20.494676795413554,
+          "side_mid_db": -26.56091761495116,
+          "lr_balance_db": -0.5916415736182481,
+          "mono_loss_db": 0.009576650305392996,
+          "fundamental_union_mono_loss_db": 0.012555168918447174,
+          "fundamental_union_power_share": 0.5443879303405027,
+          "correlation": 0.9979051636956826
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -18.010413188636353,
+          "side_mid_db": -32.699111713926705,
+          "lr_balance_db": 0.21110282106747313,
+          "mono_loss_db": 0.0023321502528959107,
+          "fundamental_union_mono_loss_db": 0.0018443983220049463,
+          "fundamental_union_power_share": 0.6581003019198358,
+          "correlation": 0.9992213384918506
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -18.832734181213894,
+          "side_mid_db": -31.320419016965,
+          "lr_balance_db": 0.21950154085334087,
+          "mono_loss_db": 0.0032031866105135687,
+          "fundamental_union_mono_loss_db": 0.0030825629572471965,
+          "fundamental_union_power_share": 0.6301349970434175,
+          "correlation": 0.998844277398474
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -44.35235117939625,
+          "side_mid_db": -28.221916455202766,
+          "lr_balance_db": 0.4395868577091848,
+          "mono_loss_db": 0.006535304982240916,
+          "fundamental_union_mono_loss_db": 0.006240827431009175,
+          "fundamental_union_power_share": 0.810752842568246,
+          "correlation": 0.9982696385621131
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -82.24120354967256,
+          "side_mid_db": -0.05207904130836241,
+          "lr_balance_db": 0.0171062468793399,
+          "mono_loss_db": 2.9843384996730027,
+          "fundamental_union_mono_loss_db": 2.527978603459485,
+          "fundamental_union_power_share": 0.00439498815870043,
+          "correlation": 0.005995915477702279
+        }
+      }
+    },
+    {
+      "name": "Neo-Noir Pad",
+      "variant": "factory",
+      "raw_sha256": "d9e1d22d7da46177847ff23858b49c758eb53536ef40cc96a40b609f7523174e",
+      "active_windows": 67,
+      "active_window_bounds": {
+        "min_side_mid_db": -24.61480100362691,
+        "max_side_mid_db": -15.045414064822985,
+        "max_abs_lr_balance_db": 1.6869558928005912,
+        "max_mono_loss_db": 0.1338241566375254,
+        "max_fundamental_union_mono_loss_db": 0.18931595873780824
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -20.545101541550103,
+          "side_mid_db": -22.84763459886062,
+          "lr_balance_db": -0.1511180679110719,
+          "mono_loss_db": 0.02248516651100111,
+          "fundamental_union_mono_loss_db": 0.014088272514968928,
+          "fundamental_union_power_share": 0.7976763887442102,
+          "correlation": 0.989821754746432
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -21.167325632879653,
+          "side_mid_db": -21.236186951159773,
+          "lr_balance_db": 0.056136580402180405,
+          "mono_loss_db": 0.032548962624180035,
+          "fundamental_union_mono_loss_db": 0.04678624099994716,
+          "fundamental_union_power_share": 0.6062768164643231,
+          "correlation": 0.9850872484365256
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -22.6388961143801,
+          "side_mid_db": -18.97218042267599,
+          "lr_balance_db": 0.5807047816093507,
+          "mono_loss_db": 0.05468011192860726,
+          "fundamental_union_mono_loss_db": 0.04578689926771838,
+          "fundamental_union_power_share": 0.8698264501705701,
+          "correlation": 0.9771564783132778
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -19.477781570208773,
+          "side_mid_db": -18.917044624941287,
+          "lr_balance_db": 0.6372894565466549,
+          "mono_loss_db": 0.05537429274216473,
+          "fundamental_union_mono_loss_db": 0.037801779361146676,
+          "fundamental_union_power_share": 0.7503184413355499,
+          "correlation": 0.9772856689082627
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -28.449913399936605,
+          "side_mid_db": -17.615107624347274,
+          "lr_balance_db": -0.12618804342091694,
+          "mono_loss_db": 0.07456584133684666,
+          "fundamental_union_mono_loss_db": 0.09040050391196487,
+          "fundamental_union_power_share": 0.8630083963390386,
+          "correlation": 0.9660561758973494
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -82.07384298910003,
+          "side_mid_db": -0.23888822426596223,
+          "lr_balance_db": 0.029539899424775133,
+          "mono_loss_db": 2.892498174568763,
+          "fundamental_union_mono_loss_db": 1.1807947425150003,
+          "fundamental_union_power_share": 0.03336715845641106,
+          "correlation": 0.027467509834410604
+        }
+      }
+    },
+    {
+      "name": "Neo-Noir Pad",
+      "variant": "centered-control",
+      "raw_sha256": "924e210565dcf38cf27717a529261df884543533469f3d5d701cd4b716e54e24",
+      "active_windows": 67,
+      "active_window_bounds": {
+        "min_side_mid_db": -32.52256444956626,
+        "max_side_mid_db": -24.031553809985834,
+        "max_abs_lr_balance_db": 0.6901039440958165,
+        "max_mono_loss_db": 0.01713058206209628,
+        "max_fundamental_union_mono_loss_db": 0.024624967628160993
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -20.538069858105402,
+          "side_mid_db": -28.021695162964253,
+          "lr_balance_db": -0.4554102103512992,
+          "mono_loss_db": 0.006843410306983594,
+          "fundamental_union_mono_loss_db": 0.004680332315950302,
+          "fundamental_union_power_share": 0.7977077640517279,
+          "correlation": 0.99822146952346
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -21.17407315054062,
+          "side_mid_db": -26.37862633877619,
+          "lr_balance_db": -0.5238941328891971,
+          "mono_loss_db": 0.009986705577988305,
+          "fundamental_union_mono_loss_db": 0.01214956843818358,
+          "fundamental_union_power_share": 0.6037906877288615,
+          "correlation": 0.9972174138296471
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -22.645470643371205,
+          "side_mid_db": -29.17914873702553,
+          "lr_balance_db": -0.03508222290440947,
+          "mono_loss_db": 0.00524333063841987,
+          "fundamental_union_mono_loss_db": 0.00254731910593406,
+          "fundamental_union_power_share": 0.8700075085382457,
+          "correlation": 0.9975949576502547
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -19.453153440257314,
+          "side_mid_db": -30.142476248150253,
+          "lr_balance_db": 0.11824014693333079,
+          "mono_loss_db": 0.004200748027699809,
+          "fundamental_union_mono_loss_db": 0.003853448096023131,
+          "fundamental_union_power_share": 0.7517428037137176,
+          "correlation": 0.9981588966310929
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -28.420479655701772,
+          "side_mid_db": -31.126937795132783,
+          "lr_balance_db": -7.322222490771319e-05,
+          "mono_loss_db": 0.0033490610778438385,
+          "fundamental_union_mono_loss_db": 0.002893694404427067,
+          "fundamental_union_power_share": 0.864149416092435,
+          "correlation": 0.9984582933233557
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -82.07307502664803,
+          "side_mid_db": -0.24026115065535134,
+          "lr_balance_db": 0.0005426920613259765,
+          "mono_loss_db": 2.891830640639732,
+          "fundamental_union_mono_loss_db": 1.1844252067396428,
+          "fundamental_union_power_share": 0.033564700864365984,
+          "correlation": 0.027625287291006287
+        }
+      }
+    },
+    {
+      "name": "Arctic Pad",
+      "variant": "factory",
+      "raw_sha256": "fed89bdbcaaf839b2d241c70a4d3e848f5dc1dedcde5e3aa43bced6498ceaa4b",
+      "active_windows": 56,
+      "active_window_bounds": {
+        "min_side_mid_db": -26.364983836250705,
+        "max_side_mid_db": -16.828366559795313,
+        "max_abs_lr_balance_db": 0.7863510275251011,
+        "max_mono_loss_db": 0.08922341605509655,
+        "max_fundamental_union_mono_loss_db": 0.05621939839189829
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -25.169654850720704,
+          "side_mid_db": -24.700198973006977,
+          "lr_balance_db": -0.08354806200571008,
+          "mono_loss_db": 0.014690267145579597,
+          "fundamental_union_mono_loss_db": 0.001073951133554809,
+          "fundamental_union_power_share": 0.3196461259874718,
+          "correlation": 0.993292259753378
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -24.379095402555883,
+          "side_mid_db": -25.310968616393332,
+          "lr_balance_db": -0.03356429029090974,
+          "mono_loss_db": 0.012765828388318606,
+          "fundamental_union_mono_loss_db": 0.00702738579447817,
+          "fundamental_union_power_share": 0.1421559745588403,
+          "correlation": 0.9941371738716245
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -25.584051947325094,
+          "side_mid_db": -21.081781615500546,
+          "lr_balance_db": 0.6350483562869863,
+          "mono_loss_db": 0.033722435828946906,
+          "fundamental_union_mono_loss_db": 0.024601764487164376,
+          "fundamental_union_power_share": 0.2986678048558521,
+          "correlation": 0.9871629376451069
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -24.26026552043245,
+          "side_mid_db": -20.18835376957684,
+          "lr_balance_db": 0.6388982945416056,
+          "mono_loss_db": 0.0413883272690896,
+          "fundamental_union_mono_loss_db": 0.024740372936320754,
+          "fundamental_union_power_share": 0.18485133889806013,
+          "correlation": 0.9836856171814187
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -35.71633523513401,
+          "side_mid_db": -19.370022206247835,
+          "lr_balance_db": 0.5886513440800966,
+          "mono_loss_db": 0.04992104266750812,
+          "fundamental_union_mono_loss_db": 0.02537371522547887,
+          "fundamental_union_power_share": 0.3990106103465538,
+          "correlation": 0.9793869266179257
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -82.07604654691374,
+          "side_mid_db": -0.047182694806726856,
+          "lr_balance_db": 0.011515889686280279,
+          "mono_loss_db": 2.9867726843005373,
+          "fundamental_union_mono_loss_db": 3.4916013942244257,
+          "fundamental_union_power_share": 0.014818169124508068,
+          "correlation": 0.005432073328316596
+        }
+      }
+    },
+    {
+      "name": "Arctic Pad",
+      "variant": "centered-control",
+      "raw_sha256": "0e7e52f3587eb220e8b3e36325945363acf99e28ed4796445058c98e2c86f354",
+      "active_windows": 56,
+      "active_window_bounds": {
+        "min_side_mid_db": -30.695915395084338,
+        "max_side_mid_db": -23.82909496088057,
+        "max_abs_lr_balance_db": 0.6711620357061654,
+        "max_mono_loss_db": 0.017946393520561585,
+        "max_fundamental_union_mono_loss_db": 0.00964920151218707
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -25.172356615275973,
+          "side_mid_db": -26.919731740370484,
+          "lr_balance_db": -0.5584403986691415,
+          "mono_loss_db": 0.008818001382776537,
+          "fundamental_union_mono_loss_db": 0.005073960512394844,
+          "fundamental_union_power_share": 0.32041839807175554,
+          "correlation": 0.9980023886896551
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -24.382668050884917,
+          "side_mid_db": -26.600967716311935,
+          "lr_balance_db": -0.5879291040864697,
+          "mono_loss_db": 0.00948883754741007,
+          "fundamental_union_mono_loss_db": 0.009440673942268144,
+          "fundamental_union_power_share": 0.14207151664235748,
+          "correlation": 0.9979166931637053
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -25.582381300675145,
+          "side_mid_db": -29.02195986790144,
+          "lr_balance_db": 0.07635757902564008,
+          "mono_loss_db": 0.005436463455241597,
+          "fundamental_union_mono_loss_db": 0.002265077013994112,
+          "fundamental_union_power_share": 0.29805330772563177,
+          "correlation": 0.9975365272354191
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -24.253092606458214,
+          "side_mid_db": -29.983238189430455,
+          "lr_balance_db": 0.18535703271159837,
+          "mono_loss_db": 0.004357552182100879,
+          "fundamental_union_mono_loss_db": 0.006123586672782596,
+          "fundamental_union_power_share": 0.18454445081563325,
+          "correlation": 0.9982215293331519
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -35.709884582522655,
+          "side_mid_db": -29.91755869839568,
+          "lr_balance_db": 0.18495544218289292,
+          "mono_loss_db": 0.004423919611942986,
+          "fundamental_union_mono_loss_db": 0.002192175530538668,
+          "fundamental_union_power_share": 0.39938643128041285,
+          "correlation": 0.9981900040765803
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -82.07604654691374,
+          "side_mid_db": -0.047182694806726856,
+          "lr_balance_db": 0.011515889686280279,
+          "mono_loss_db": 2.9867726843005373,
+          "fundamental_union_mono_loss_db": 3.4916013942244257,
+          "fundamental_union_power_share": 0.014818169124508068,
+          "correlation": 0.005432073328316596
+        }
+      }
+    },
+    {
+      "name": "Synthwave Chords",
+      "variant": "factory",
+      "raw_sha256": "8295c6b0cfdd470394296e345564488d4177616066e79e0105028509b6cd1c11",
+      "active_windows": 52,
+      "active_window_bounds": {
+        "min_side_mid_db": -26.668663017944798,
+        "max_side_mid_db": -15.348126688648914,
+        "max_abs_lr_balance_db": 1.7281848049096262,
+        "max_mono_loss_db": 0.12494231536908532,
+        "max_fundamental_union_mono_loss_db": 0.17332240180998246
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -22.475850728471478,
+          "side_mid_db": -20.225009759141066,
+          "lr_balance_db": 0.23410370744587822,
+          "mono_loss_db": 0.041042103771603285,
+          "fundamental_union_mono_loss_db": 0.05456715959696956,
+          "fundamental_union_power_share": 0.6743813542719589,
+          "correlation": 0.9815448376880271
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -19.959070228911962,
+          "side_mid_db": -21.597099974342978,
+          "lr_balance_db": 0.39976458415339267,
+          "mono_loss_db": 0.02996231302560249,
+          "fundamental_union_mono_loss_db": 0.030358271025515346,
+          "fundamental_union_power_share": 0.7560178732062592,
+          "correlation": 0.9872940933220637
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -19.827878304992026,
+          "side_mid_db": -17.645148788200228,
+          "lr_balance_db": 0.7598841167690984,
+          "mono_loss_db": 0.07405618937830878,
+          "fundamental_union_mono_loss_db": 0.0750261941631076,
+          "fundamental_union_power_share": 0.6898349169509463,
+          "correlation": 0.9698847125836902
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -20.22569870358967,
+          "side_mid_db": -16.82732334620213,
+          "lr_balance_db": 0.8963667805541259,
+          "mono_loss_db": 0.08924463214468831,
+          "fundamental_union_mono_loss_db": 0.10420299563955605,
+          "fundamental_union_power_share": 0.6521492184221531,
+          "correlation": 0.9644335589687051
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -36.330337650894286,
+          "side_mid_db": -15.644994336393438,
+          "lr_balance_db": 1.47644223657418,
+          "mono_loss_db": 0.1167970668938293,
+          "fundamental_union_mono_loss_db": 0.0643690286940646,
+          "fundamental_union_power_share": 0.7005925657978265,
+          "correlation": 0.9606428297832749
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -82.32550189593897,
+          "side_mid_db": -0.048107859120788,
+          "lr_balance_db": 0.014752650235083074,
+          "mono_loss_db": 2.9863126395501305,
+          "fundamental_union_mono_loss_db": 3.488699727719079,
+          "fundamental_union_power_share": 0.014849616678248675,
+          "correlation": 0.005538591756604808
+        }
+      }
+    },
+    {
+      "name": "Synthwave Chords",
+      "variant": "centered-control",
+      "raw_sha256": "d0a50b76bcde0bb62fb72f2c4b761adf14f74258d997dddf41c4bd8035154cd1",
+      "active_windows": 52,
+      "active_window_bounds": {
+        "min_side_mid_db": -33.42716551119138,
+        "max_side_mid_db": -24.367099851118716,
+        "max_abs_lr_balance_db": 0.5403086510887696,
+        "max_mono_loss_db": 0.01585919449084073,
+        "max_fundamental_union_mono_loss_db": 0.027732068777854876
+      },
+      "phases": {
+        "first_bloom": {
+          "start_seconds": 0.8,
+          "end_seconds": 1.4,
+          "rms_dbfs": -22.479808713995983,
+          "side_mid_db": -27.849897325098567,
+          "lr_balance_db": -0.374122383208469,
+          "mono_loss_db": 0.007119320820119187,
+          "fundamental_union_mono_loss_db": 0.0069424819784258945,
+          "fundamental_union_power_share": 0.673435595453327,
+          "correlation": 0.9976488388307011
+        },
+        "first_pressure_hold": {
+          "start_seconds": 2.5,
+          "end_seconds": 3.5,
+          "rms_dbfs": -19.951203940385064,
+          "side_mid_db": -28.995223436266993,
+          "lr_balance_db": -0.36641016032866874,
+          "mono_loss_db": 0.005470014004977783,
+          "fundamental_union_mono_loss_db": 0.0035321077353130986,
+          "fundamental_union_power_share": 0.7556881943640713,
+          "correlation": 0.9983702104682829
+        },
+        "release_overlap": {
+          "start_seconds": 3.75,
+          "end_seconds": 4.5,
+          "rms_dbfs": -19.816323530633845,
+          "side_mid_db": -31.362029034931112,
+          "lr_balance_db": 0.028367566212271225,
+          "mono_loss_db": 0.0031726543914440027,
+          "fundamental_union_mono_loss_db": 0.003003221946245752,
+          "fundamental_union_power_share": 0.6908523726151604,
+          "correlation": 0.9985447957443995
+        },
+        "second_chord": {
+          "start_seconds": 4.5,
+          "end_seconds": 5.2,
+          "rms_dbfs": -20.22514663105387,
+          "side_mid_db": -32.671987173651836,
+          "lr_balance_db": 0.08704064159258762,
+          "mono_loss_db": 0.0023467576959646345,
+          "fundamental_union_mono_loss_db": 0.0020940659989005833,
+          "fundamental_union_power_share": 0.6501073735694421,
+          "correlation": 0.9989697257434378
+        },
+        "release": {
+          "start_seconds": 5.5,
+          "end_seconds": 6.5,
+          "rms_dbfs": -36.36064283152007,
+          "side_mid_db": -29.38969106216173,
+          "lr_balance_db": 0.16987799055528774,
+          "mono_loss_db": 0.0049953441499236,
+          "fundamental_union_mono_loss_db": 0.003948154314832718,
+          "fundamental_union_power_share": 0.7006226857385015,
+          "correlation": 0.9978916966604138
+        },
+        "final_tail": {
+          "start_seconds": 11.5,
+          "end_seconds": 12,
+          "rms_dbfs": -82.32550189593897,
+          "side_mid_db": -0.048107859120788,
+          "lr_balance_db": 0.014752650235083074,
+          "mono_loss_db": 2.9863126395501305,
+          "fundamental_union_mono_loss_db": 3.488699727719079,
+          "fundamental_union_power_share": 0.014849616678248675,
+          "correlation": 0.005538591756604808
+        }
+      }
+    }
+  ]
+}

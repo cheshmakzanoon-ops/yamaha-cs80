@@ -138,7 +138,7 @@ void buildFx(Builder& add)
                 .touch(I, 0.0f, 0.12f, 0.02f, 0.15f).touch(II, 0.0f, 0.10f, 0.08f, 0.18f)
                 .sub(subSquare, 11.5f, 0.0f, 0.32f, 0.95f).subAt(0.14f, 0.0f, 0.04f).mix(0.42f));
     add("UFO Landing", "FX", { "sub-mod", "ring-mod", "dual-rank" },
-        "A low sine body follows repeating downward SUB glides while the ring carrier settles after each note. A shorter upper pulse edge marks the start of the landing sweep.",
+        "A low sine body follows repeating downward SUB glides while the shared ring carrier settles over the phrase. Release all keys and any sustain hold before the next attack to restart that sweep; a shorter upper pulse edge marks each note.",
         effect().feet(I, f16).feet(II, f4).wave(I, false, false, 0.95f).wave(II, false, true, 0.25f)
                 .hpf(II, 240.0f).lpf(II, 2100.0f, 0.17f).feg(II, 0.0f, 0.40f, 0.003f, 0.65f, 0.45f)
                 .level(I, 0.0f, 0.45f).level(II, 0.35f, 0.28f)

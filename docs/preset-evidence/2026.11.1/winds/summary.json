@@ -1,0 +1,109 @@
+{
+  "assignment": 8,
+  "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "candidate_source_sha256": "c21e00179534cd680f47c37f9a4e6c3c584499bad1edb955d1d2278f90b76900",
+  "scope": "Only Flute and Breathy Flute individual overrides; shared helper, other programs, names and order unchanged. No master level changes.",
+  "method": "48kHz 0.8s held and 0.3s tail; MIDI55/67/79; velocity0.3/0.9; pressure0/1 applied immediately after note-on; full plus independently mixed rank1/rank2; weighted stereo RMS at 300\u2013500ms. Fixed pressure endpoints are not performed crescendos.",
+  "render_count_matrix": 144,
+  "render_count_center": 24,
+  "summary": {
+    "Flute": {
+      "baseline": {
+        "air_body_300_500ms_db_range": [
+          -53.620324676570014,
+          -49.97228082410214
+        ],
+        "maximum_single_note_peak_dbfs": -18.801157827324012,
+        "worst_reconstruction_error_db": -142.45085850230458,
+        "all_finite": true
+      },
+      "candidate": {
+        "air_body_300_500ms_db_range": [
+          -28.925310314405923,
+          -25.018902858159436
+        ],
+        "maximum_single_note_peak_dbfs": -18.7988942286631,
+        "worst_reconstruction_error_db": -142.3126324518768,
+        "all_finite": true
+      }
+    },
+    "Breathy Flute": {
+      "baseline": {
+        "air_body_300_500ms_db_range": [
+          -37.116409759690605,
+          -32.429630880476815
+        ],
+        "maximum_single_note_peak_dbfs": -20.429974932208445,
+        "worst_reconstruction_error_db": -143.142904916298,
+        "all_finite": true
+      },
+      "candidate": {
+        "air_body_300_500ms_db_range": [
+          -21.641036731368573,
+          -17.446754822499567
+        ],
+        "maximum_single_note_peak_dbfs": -19.788039753812473,
+        "worst_reconstruction_error_db": -144.08159967715153,
+        "all_finite": true
+      }
+    }
+  },
+  "candidate_overrides": {
+    "Flute": {
+      "ch2_noise": 0.82,
+      "ch2_hpf_cutoff": 950,
+      "ch2_vcf_level": 0.95,
+      "ch2_v_level": 0.32,
+      "ch2_init_level": 0.44,
+      "ch2_after_level": 0.4,
+      "ch2_v_s": 0.82,
+      "mix": 0.22
+    },
+    "Breathy Flute": {
+      "ch2_noise": 0.75,
+      "ch2_hpf_cutoff": 800,
+      "ch2_vcf_level": 0.98,
+      "ch2_v_level": 0.3,
+      "ch2_init_level": 0.55,
+      "ch2_after_level": 0.5,
+      "ch2_v_s": 0.88,
+      "mix": 0.32
+    }
+  },
+  "stress": [
+    {
+      "name": "Flute",
+      "version": "baseline",
+      "peak_dbfs": "-2.05883",
+      "rms_dbfs": "-14.33254",
+      "tail_dbfs": "-86.64111",
+      "nonfinite": "0"
+    },
+    {
+      "name": "Flute",
+      "version": "candidate",
+      "peak_dbfs": "-2.50594",
+      "rms_dbfs": "-14.94771",
+      "tail_dbfs": "-86.37211",
+      "nonfinite": "0"
+    },
+    {
+      "name": "Breathy Flute",
+      "version": "baseline",
+      "peak_dbfs": "-3.87029",
+      "rms_dbfs": "-16.27751",
+      "tail_dbfs": "-83.33796",
+      "nonfinite": "0"
+    },
+    {
+      "name": "Breathy Flute",
+      "version": "candidate",
+      "peak_dbfs": "-4.35288",
+      "rms_dbfs": "-17.06277",
+      "tail_dbfs": "-82.75624",
+      "nonfinite": "0"
+    }
+  ],
+  "stress_conditions": "Eight held MIDI notes 48,55,60,67,72,76,79,84; velocity1 pressure1; two-second hold and half-second release at48kHz.",
+  "limits": "Software-output evidence, not acoustic matching or a listening-panel verdict. Integrated bank calibration and CI remain root-owned."
+}

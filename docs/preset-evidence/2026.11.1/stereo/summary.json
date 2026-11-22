@@ -1,0 +1,17 @@
+{
+  "assignment": 9,
+  "baseline_source": "7f55a95a7534b389927defe46866456560b3a878",
+  "probe_sha256": "fdee3d8c6ebd336e2ac8394ba4cfe19adb4199c20b8692f570bfb3183fce64ad",
+  "baseline_capture_sha256": "1f50466d9b785951cb0f5d9dbe98023fb9f7f81bd5781a09f5d3afcb691b3b4e",
+  "captures": 30,
+  "generated_seconds": 105.0,
+  "conditions": "48 kHz; single held note; velocity 0.8; three-second hold plus 0.5-second release; measurements in 1.0-2.8 s held window. Baseline note60 pressure0; candidates note60 pressure0 and notes48/72 pressure0/.85. Pans are the only parameter overrides. Full factory effects retained.",
+  "candidate_bounds": {
+    "max_absolute_lr_balance_db": 0.6630054695869926,
+    "max_mono_loss_db": 0.10286148658868259,
+    "max_fundamental_mono_loss_db": 0.11600394501134247,
+    "max_peak_dbfs": -11.688497756588507,
+    "nonfinite_samples": 0
+  },
+  "scope_limit": "Single-note software measurements, not a listening judgment or hardware equivalence. Chord/long-tail integration and master calibration remain parent tasks."
+}

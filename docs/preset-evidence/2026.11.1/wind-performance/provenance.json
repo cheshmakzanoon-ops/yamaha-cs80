@@ -1,0 +1,18 @@
+{
+  "assignment": 24,
+  "baseline_commit": "7f55a95a7534b389927defe46866456560b3a878",
+  "bank": "2026.11.1 final calibrated working tree",
+  "parameters": "No ParamValues overrides; factory values loaded verbatim",
+  "sample_rate": 48000,
+  "conditions": "Flute and Breathy Flute, base MIDI55/67/79; soft-to-hard repeats, channel/poly pressure ramps, 4-note overlaps and full release",
+  "input_sha256": {
+    "build-audit/libcs80_core.a": "6a4118e3e89472004861e08f81d8c1e182011a39fa006572a59b6faa02aa81b5",
+    "build-audit/inventory-final.json": "fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa",
+    "src/core/FactoryPresets.h": "541b3ac5a73482c5985ee5210872e81ed041276994f3d4721204273124271b81",
+    "src/core/CuratedLibraryLevels.inc": "cb1f5689e7cfc58034241f2d8f4892cc70bde4530232defe5838bc1e5e89365e",
+    "src/core/curated/Winds.inc": "c21e00179534cd680f47c37f9a4e6c3c584499bad1edb955d1d2278f90b76900",
+    "build-w04-wind-performance/probe.cpp": "504cde4a6bab1601e6e0525c2a765a0915111660e12dcf8b7982e2260eed1a5b",
+    "build-w04-wind-performance/probe": "976797e0de23112175dbeef728fac127f6a7322d7221ac5e258d0614d2df8dc1"
+  },
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0"
+}

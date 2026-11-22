@@ -1,0 +1,405 @@
+{
+  "rate": 48000,
+  "hold": 0.8,
+  "tail": 0.3,
+  "candidates": {
+    "Flute": {
+      "ch2_noise": 0.82,
+      "ch2_hpf_cutoff": 950,
+      "ch2_vcf_level": 0.95,
+      "ch2_v_level": 0.32,
+      "ch2_init_level": 0.44,
+      "ch2_after_level": 0.4,
+      "ch2_v_s": 0.82,
+      "mix": 0.22
+    },
+    "Breathy Flute": {
+      "ch2_noise": 0.75,
+      "ch2_hpf_cutoff": 800,
+      "ch2_vcf_level": 0.98,
+      "ch2_v_level": 0.3,
+      "ch2_init_level": 0.55,
+      "ch2_after_level": 0.5,
+      "ch2_v_s": 0.88,
+      "mix": 0.32
+    }
+  },
+  "results": [
+    {
+      "name": "Flute",
+      "note": 67,
+      "velocity": 0.8,
+      "pressure": 0,
+      "version": "baseline",
+      "peak_dbfs": -21.991519801669398,
+      "finite": true,
+      "reconstruction_error_db": -142.36274001685499,
+      "windows": [
+        {
+          "start": 0.004,
+          "end": 0.02,
+          "body_dbfs": -33.59772972400917,
+          "air_dbfs": -75.90621241376039,
+          "air_body_db": -42.30848268975122
+        },
+        {
+          "start": 0.03,
+          "end": 0.08,
+          "body_dbfs": -25.944976548214242,
+          "air_dbfs": -74.49930561971875,
+          "air_body_db": -48.55432907150452
+        },
+        {
+          "start": 0.3,
+          "end": 0.5,
+          "body_dbfs": -26.12382054736421,
+          "air_dbfs": -76.88897842132958,
+          "air_body_db": -50.76515787396537
+        },
+        {
+          "start": 0.6,
+          "end": 0.78,
+          "body_dbfs": -26.13533207413813,
+          "air_dbfs": -76.89796594653329,
+          "air_body_db": -50.76263387239517
+        },
+        {
+          "start": 0.98,
+          "end": 1.1,
+          "body_dbfs": -94.54879221382365,
+          "air_dbfs": -117.68974595163016,
+          "air_body_db": -23.14095373780651
+        }
+      ]
+    },
+    {
+      "name": "Flute",
+      "note": 67,
+      "velocity": 0.8,
+      "pressure": 0,
+      "version": "candidate",
+      "peak_dbfs": -22.08645441424308,
+      "finite": true,
+      "reconstruction_error_db": -142.29682245286529,
+      "windows": [
+        {
+          "start": 0.004,
+          "end": 0.02,
+          "body_dbfs": -34.24142343279857,
+          "air_dbfs": -54.3111607951399,
+          "air_body_db": -20.069737362341318
+        },
+        {
+          "start": 0.03,
+          "end": 0.08,
+          "body_dbfs": -26.588670257003642,
+          "air_dbfs": -52.35812685446297,
+          "air_body_db": -25.769456597459325
+        },
+        {
+          "start": 0.3,
+          "end": 0.5,
+          "body_dbfs": -26.767514256153614,
+          "air_dbfs": -53.61998591301941,
+          "air_body_db": -26.8524716568658
+        },
+        {
+          "start": 0.6,
+          "end": 0.78,
+          "body_dbfs": -26.779025782927537,
+          "air_dbfs": -53.593208429354995,
+          "air_body_db": -26.814182646427458
+        },
+        {
+          "start": 0.98,
+          "end": 1.1,
+          "body_dbfs": -95.19248592261306,
+          "air_dbfs": -110.99232351586815,
+          "air_body_db": -15.799837593255097
+        }
+      ]
+    },
+    {
+      "name": "Flute",
+      "note": 67,
+      "velocity": 0.8,
+      "pressure": 1,
+      "version": "baseline",
+      "peak_dbfs": -19.2884410758723,
+      "finite": true,
+      "reconstruction_error_db": -142.65068707332674,
+      "windows": [
+        {
+          "start": 0.004,
+          "end": 0.02,
+          "body_dbfs": -33.155359378327624,
+          "air_dbfs": -75.4598040269382,
+          "air_body_db": -42.30444464861058
+        },
+        {
+          "start": 0.03,
+          "end": 0.08,
+          "body_dbfs": -24.544047467649253,
+          "air_dbfs": -73.12944521425055,
+          "air_body_db": -48.5853977466013
+        },
+        {
+          "start": 0.3,
+          "end": 0.5,
+          "body_dbfs": -23.11490430659393,
+          "air_dbfs": -73.85137310376676,
+          "air_body_db": -50.73646879717283
+        },
+        {
+          "start": 0.6,
+          "end": 0.78,
+          "body_dbfs": -23.071907717222622,
+          "air_dbfs": -73.81933939183928,
+          "air_body_db": -50.74743167461666
+        },
+        {
+          "start": 0.98,
+          "end": 1.1,
+          "body_dbfs": -92.03085177188682,
+          "air_dbfs": -114.48876567014729,
+          "air_body_db": -22.457913898260475
+        }
+      ]
+    },
+    {
+      "name": "Flute",
+      "note": 67,
+      "velocity": 0.8,
+      "pressure": 1,
+      "version": "candidate",
+      "peak_dbfs": -19.231589914622408,
+      "finite": true,
+      "reconstruction_error_db": -142.6527904588644,
+      "windows": [
+        {
+          "start": 0.004,
+          "end": 0.02,
+          "body_dbfs": -33.799053087117024,
+          "air_dbfs": -53.733807584597244,
+          "air_body_db": -19.93475449748022
+        },
+        {
+          "start": 0.03,
+          "end": 0.08,
+          "body_dbfs": -25.187741176438653,
+          "air_dbfs": -50.57783083139614,
+          "air_body_db": -25.39008965495748
+        },
+        {
+          "start": 0.3,
+          "end": 0.5,
+          "body_dbfs": -23.75859801538333,
+          "air_dbfs": -49.79709599121411,
+          "air_body_db": -26.038497975830776
+        },
+        {
+          "start": 0.6,
+          "end": 0.78,
+          "body_dbfs": -23.71560142601203,
+          "air_dbfs": -49.72120751812049,
+          "air_body_db": -26.005606092108454
+        },
+        {
+          "start": 0.98,
+          "end": 1.1,
+          "body_dbfs": -92.67454548067622,
+          "air_dbfs": -107.07363090016209,
+          "air_body_db": -14.399085419485868
+        }
+      ]
+    },
+    {
+      "name": "Breathy Flute",
+      "note": 67,
+      "velocity": 0.8,
+      "pressure": 0,
+      "version": "baseline",
+      "peak_dbfs": -23.500805859850477,
+      "finite": true,
+      "reconstruction_error_db": -143.3388829366784,
+      "windows": [
+        {
+          "start": 0.004,
+          "end": 0.02,
+          "body_dbfs": -38.94066192855916,
+          "air_dbfs": -67.71600288762711,
+          "air_body_db": -28.775340959067954
+        },
+        {
+          "start": 0.03,
+          "end": 0.08,
+          "body_dbfs": -28.610017718430957,
+          "air_dbfs": -61.276845621518106,
+          "air_body_db": -32.666827903087146
+        },
+        {
+          "start": 0.3,
+          "end": 0.5,
+          "body_dbfs": -28.09772659447563,
+          "air_dbfs": -62.73782534261733,
+          "air_body_db": -34.640098748141696
+        },
+        {
+          "start": 0.6,
+          "end": 0.78,
+          "body_dbfs": -28.147573702217468,
+          "air_dbfs": -62.756820084145986,
+          "air_body_db": -34.609246381928514
+        },
+        {
+          "start": 0.98,
+          "end": 1.1,
+          "body_dbfs": -81.99653019202151,
+          "air_dbfs": -115.97624312601845,
+          "air_body_db": -33.97971293399695
+        }
+      ]
+    },
+    {
+      "name": "Breathy Flute",
+      "note": 67,
+      "velocity": 0.8,
+      "pressure": 0,
+      "version": "candidate",
+      "peak_dbfs": -22.955660019189548,
+      "finite": true,
+      "reconstruction_error_db": -144.054571080602,
+      "windows": [
+        {
+          "start": 0.004,
+          "end": 0.02,
+          "body_dbfs": -39.90675557719427,
+          "air_dbfs": -54.267197977032986,
+          "air_body_db": -14.360442399838718
+        },
+        {
+          "start": 0.03,
+          "end": 0.08,
+          "body_dbfs": -29.57611136706607,
+          "air_dbfs": -47.73201648760404,
+          "air_body_db": -18.155905120537973
+        },
+        {
+          "start": 0.3,
+          "end": 0.5,
+          "body_dbfs": -29.06382024311074,
+          "air_dbfs": -48.68066637891908,
+          "air_body_db": -19.616846135808345
+        },
+        {
+          "start": 0.6,
+          "end": 0.78,
+          "body_dbfs": -29.11366735085258,
+          "air_dbfs": -48.66490102659373,
+          "air_body_db": -19.551233675741152
+        },
+        {
+          "start": 0.98,
+          "end": 1.1,
+          "body_dbfs": -82.96262384065662,
+          "air_dbfs": -109.25387354353218,
+          "air_body_db": -26.29124970287556
+        }
+      ]
+    },
+    {
+      "name": "Breathy Flute",
+      "note": 67,
+      "velocity": 0.8,
+      "pressure": 1,
+      "version": "baseline",
+      "peak_dbfs": -20.870953947417203,
+      "finite": true,
+      "reconstruction_error_db": -143.5142074980302,
+      "windows": [
+        {
+          "start": 0.004,
+          "end": 0.02,
+          "body_dbfs": -38.48565583601094,
+          "air_dbfs": -67.02743272627843,
+          "air_body_db": -28.54177689026749
+        },
+        {
+          "start": 0.03,
+          "end": 0.08,
+          "body_dbfs": -27.1216534244782,
+          "air_dbfs": -59.22645318215668,
+          "air_body_db": -32.104799757678485
+        },
+        {
+          "start": 0.3,
+          "end": 0.5,
+          "body_dbfs": -25.041261029500358,
+          "air_dbfs": -58.45150119123268,
+          "air_body_db": -33.410240161732325
+        },
+        {
+          "start": 0.6,
+          "end": 0.78,
+          "body_dbfs": -25.035332104771626,
+          "air_dbfs": -58.419032338609895,
+          "air_body_db": -33.38370023383827
+        },
+        {
+          "start": 0.98,
+          "end": 1.1,
+          "body_dbfs": -81.4672545388905,
+          "air_dbfs": -111.86824564033124,
+          "air_body_db": -30.400991101440727
+        }
+      ]
+    },
+    {
+      "name": "Breathy Flute",
+      "note": 67,
+      "velocity": 0.8,
+      "pressure": 1,
+      "version": "candidate",
+      "peak_dbfs": -20.21707693925986,
+      "finite": true,
+      "reconstruction_error_db": -144.17220093438087,
+      "windows": [
+        {
+          "start": 0.004,
+          "end": 0.02,
+          "body_dbfs": -39.45174948464605,
+          "air_dbfs": -53.60332346187345,
+          "air_body_db": -14.1515739772274
+        },
+        {
+          "start": 0.03,
+          "end": 0.08,
+          "body_dbfs": -28.08774707311331,
+          "air_dbfs": -45.73085769936505,
+          "air_body_db": -17.643110626251747
+        },
+        {
+          "start": 0.3,
+          "end": 0.5,
+          "body_dbfs": -26.007354678135467,
+          "air_dbfs": -44.48760941724167,
+          "air_body_db": -18.480254739106204
+        },
+        {
+          "start": 0.6,
+          "end": 0.78,
+          "body_dbfs": -26.001425753406743,
+          "air_dbfs": -44.42319719897128,
+          "air_body_db": -18.42177144556454
+        },
+        {
+          "start": 0.98,
+          "end": 1.1,
+          "body_dbfs": -82.43334818752561,
+          "air_dbfs": -105.7039796118575,
+          "air_body_db": -23.270631424331896
+        }
+      ]
+    }
+  ]
+}

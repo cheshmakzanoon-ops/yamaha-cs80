@@ -740,6 +740,10 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_preset_voicing_tests PRIVATE cs80_core)
     add_test(NAME cs80_preset_voicing_tests COMMAND cs80_preset_voicing_tests)
     set_tests_properties(cs80_preset_voicing_tests PROPERTIES TIMEOUT 180)
+    add_executable(cs80_preset_character_tests tests/PresetCharacterTests.cpp)
+    target_link_libraries(cs80_preset_character_tests PRIVATE cs80_core)
+    add_test(NAME cs80_preset_character_tests COMMAND cs80_preset_character_tests)
+    set_tests_properties(cs80_preset_character_tests PROPERTIES TIMEOUT 120)
     add_test(NAME cs80_preset_capture_tests
              COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_preset_capture.py
                      --capture $<TARGET_FILE:cs80_preset_capture>)

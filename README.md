@@ -62,38 +62,42 @@ on-screen key to try pressure.
   not features of the original hardware. See the [mode contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
 
-## Revoiced Circuit library — 2026.11
+## Revoiced Circuit library — 2026.11.1
 
-All **300 musical Circuit programs** have newly authored voicings. The bank also
-includes **Init Circuit**, for 301 programs in total. The redesign gives the two
-ranks distinct jobs: a sustaining body and a brief breath or strike, differently
-timed ensemble layers, or complementary registers. Velocity, pressure, filter
-motion and releases are programmed for each sound, with a separate full-bank
-level calibration.
+The **300 musical Circuit programs** were redesigned in 2026.11, with distinct
+rank roles, articulation, touch response and separately calibrated levels.
+**2026.11.1 refines twelve of those programs** after measuring their details in
+the finished mix. Init Circuit remains the 301st program.
 
-| Try | What to play and hear |
+| Try | Latest refinement and playing suggestion |
 | --- | --- |
-| Brass Swell I / Pressure Swell Brass | Hold chords and gradually add pressure for a controlled bloom. |
-| Solo Violin / Solo Cello | Connected lines with a stable central voice; pressure introduces restrained vibrato. |
-| Pan Flute / Percussive Organ | A short independent onset over a body that continues while the key is held. |
-| Electric Piano I / Guitar I / Harp | Compare soft and hard strikes, then hold notes to hear their differently decaying body and attack layers. |
-| Marimba / Clock Bells | Distinct mallet articulation and a clearly registered pair of bell tones. |
-| Rain Pad / Random Filter | Rate-controlled sample-and-hold motion from the tagged modern layer. |
+| Flute / Breathy Flute | Stronger sustained air beneath the pitch; compare a gentle hold with added pressure. |
+| Harp / Kalimba | More distinct upper glint and ping; hold a note to hear that detail disappear before the body. |
+| Sine Bass / Upright Pluck | Clearer short click or finger attack while retaining the rounded low foundation. |
+| Ether Pad | A more present, late air texture above its sine body; allow the pad to develop. |
+| Noir Swell Brass / Brass Ensemble 16 | Gently separated ranks give the held ensemble a measured stereo spread. |
+| Neo-Noir Pad / Arctic Pad / Synthwave Chords | Broader stereo information with controlled channel balance and mono retention. |
 
-**Pressure Lead requires aftertouch**: it is intentionally silent until pressure
+The new character regression suite passes **128 checks** on the final calibrated
+bank; the previous bank fails **16** of the same checks. The complete library
+audit and 136 voicing checks also pass. Platform build publication is pending: the [refinement report](docs/PRESET_REFINEMENT_2026_11_1.md)
+identifies the current status, measurement conditions and evidence. The
+[original revision report](docs/PRESET_REVISION_2026_11.md) covers the complete
+300-program redesign.
+
+**Pressure Lead requires aftertouch** and is intentionally silent until pressure
 is applied. Use channel/polyphonic aftertouch or drag downward on a held
-on-screen key. Programs tagged **modern** use software additions; Pure CS-80
-disables those additions.
-
-The [preset guide](docs/PRESET_GUIDE.md) explains playing technique, registration
-and the modern programs. The [revision report](docs/PRESET_REVISION_2026_11.md)
-documents the changes and their measured verification. Instrument names describe
-CS-80 synthesized interpretations; the measurements verify software behavior,
-not an acoustic-instrument or physical-hardware match.
+on-screen key. **Pure CS-80 centers rank pans**, so the added stereo spread is
+available in ordinary Circuit mode. Pure also disables the software additions
+identified by the **modern** tag. The [preset guide](docs/PRESET_GUIDE.md)
+explains these modes, registrations and playing techniques.
 
 Existing saved sessions retain their serialized sound. Program names, order and
 host indexes are unchanged, and all **222 Legacy programs** retain their original
-data. Reload a Circuit factory program to hear its new voicing.
+data. Reload a Circuit factory program to hear its revised voicing; a host that
+restores only a program number selects the current factory sound. Instrument
+names describe synthesized interpretations; the measurements verify software
+behavior rather than an acoustic-instrument or physical-hardware match.
 
 ## From schematic to sound
 

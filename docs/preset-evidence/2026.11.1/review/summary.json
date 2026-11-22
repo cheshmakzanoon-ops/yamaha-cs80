@@ -1,0 +1,45 @@
+{
+  "assignment": 18,
+  "scope": "Independent read-only adversarial review of PresetCharacterTests.cpp before local-window reconstruction hardening",
+  "production_edits": false,
+  "decision": "No remaining blocking math or assertion defect identified after root accepted local-window reconstruction hardening and Pure mode documentation correction.",
+  "observed_negative_control": {
+    "corrected_passed": 116,
+    "corrected_failed": 0,
+    "baseline_passed": 100,
+    "baseline_failed": 16,
+    "audio_seconds_per_bank": 31.4
+  },
+  "accepted_findings": [
+    {
+      "id": "reconstruction_window",
+      "severity": "test robustness",
+      "location": "tests/PresetCharacterTests.cpp layers()",
+      "finding": "Full-capture reconstruction tolerance can dilute a mismatch confined to the 4\u201320 ms strike measurement window. A local 8% error over 16 ms of a constant-energy 1.2-second capture contributes only about 0.924% globally.",
+      "recommendation": "Check reconstruction in each measured onset/held window using already rendered samples; no new audio render needed.",
+      "status": "Root accepted; assignment14 implementing"
+    },
+    {
+      "id": "pure_stereo",
+      "severity": "documentation accuracy",
+      "location": "src/core/Engine.cpp:985\u2013989 and docs/PRESET_GUIDE.md",
+      "finding": "Pure CS-80 masks both rank pans to zero, so the newly authored stereo spread applies to ordinary Circuit mode, not isolation.",
+      "recommendation": "Explicitly state that Pure centers these programs; preserve tag vocabulary and existing usesModernLayer contract.",
+      "status": "Root reports guide qualification added"
+    }
+  ],
+  "verified_reasoning": [
+    "Actual full factory voices are rendered; tests do not assert authored parameter values.",
+    "Ranks stay active and are isolated only by the actual mix control; float32 body weighting matches Engine subtraction.",
+    "Finite and full-scale guards plus minimum body/window energy prevent silence and NaN false passes.",
+    "Hann DFT power, stereo average, mono (L+R)/2, and power-to-dB conversion are internally consistent.",
+    "The 16-foot Brass Ensemble main band correctly uses half MIDI60 frequency; other tested main registers are 8-foot.",
+    "Correlation rejects simple L/R gain imbalance as a substitute for stereo information.",
+    "Thresholds have broad margins and demonstrably reject the frozen weaker bank; they are authoring contracts rather than perceptual hearing thresholds."
+  ],
+  "limits": [
+    "These tests cover 11 named programs at one note/velocity, no pressure, and one sample rate. Ether Pad is covered by authoring measurements, not this new CI target.",
+    "Amplitude and stereo-role checks do not prove acoustic timbre identity or hardware equivalence.",
+    "The local-window hardening has not been rerun by this reviewer; parent will verify final integrated result."
+  ]
+}

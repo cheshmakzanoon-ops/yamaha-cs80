@@ -1,0 +1,427 @@
+[
+  {
+    "label": "bass-low",
+    "names": [
+      "Analog Bass",
+      "Contour Bass"
+    ],
+    "command": [
+      "build-w04-distinctness/capture-snapshot",
+      "--out",
+      "build-w04-distinctness/focused/bass-low",
+      "--wav",
+      "--note",
+      "36",
+      "--velocity",
+      "0.8",
+      "--pressure",
+      "0.5",
+      "--hold",
+      "0.7",
+      "--tail",
+      "0.5",
+      "--preset",
+      "Analog Bass",
+      "--preset",
+      "Contour Bass"
+    ],
+    "metrics": [
+      {
+        "window": "onset",
+        "range_seconds": [
+          0.004,
+          0.02
+        ],
+        "rms_dbfs": [
+          -28.691966341138937,
+          -29.800999164353218
+        ],
+        "rms_difference_b_minus_a_db": -1.109032823214282,
+        "waveform_correlation": 0.995804908557026,
+        "fit_residual_db": -20.77140481738398
+      },
+      {
+        "window": "early_body",
+        "range_seconds": [
+          0.05,
+          0.15
+        ],
+        "rms_dbfs": [
+          -28.21056782361702,
+          -28.561365089900367
+        ],
+        "rms_difference_b_minus_a_db": -0.35079726628334684,
+        "waveform_correlation": 0.9978135817076109,
+        "fit_residual_db": -23.597117865698017
+      },
+      {
+        "window": "held_body",
+        "range_seconds": [
+          0.49999999999999994,
+          0.7
+        ],
+        "rms_dbfs": [
+          -29.865844864104897,
+          -29.940886523091148
+        ],
+        "rms_difference_b_minus_a_db": -0.07504165898624991,
+        "waveform_correlation": 0.998440435498357,
+        "fit_residual_db": -25.063054502288434
+      },
+      {
+        "window": "release",
+        "range_seconds": [
+          0.7,
+          0.8999999999999999
+        ],
+        "rms_dbfs": [
+          -40.96952461588756,
+          -41.057440291949554
+        ],
+        "rms_difference_b_minus_a_db": -0.08791567606199333,
+        "waveform_correlation": 0.9984051118791653,
+        "fit_residual_db": -24.965862447391242
+      }
+    ]
+  },
+  {
+    "label": "bass-high",
+    "names": [
+      "Analog Bass",
+      "Contour Bass"
+    ],
+    "command": [
+      "build-w04-distinctness/capture-snapshot",
+      "--out",
+      "build-w04-distinctness/focused/bass-high",
+      "--wav",
+      "--note",
+      "84",
+      "--velocity",
+      "0.8",
+      "--pressure",
+      "0.5",
+      "--hold",
+      "0.7",
+      "--tail",
+      "0.5",
+      "--preset",
+      "Analog Bass",
+      "--preset",
+      "Contour Bass"
+    ],
+    "metrics": [
+      {
+        "window": "onset",
+        "range_seconds": [
+          0.004,
+          0.02
+        ],
+        "rms_dbfs": [
+          -25.12421036413349,
+          -24.80386056768625
+        ],
+        "rms_difference_b_minus_a_db": 0.3203497964472378,
+        "waveform_correlation": 0.9790628529510261,
+        "fit_residual_db": -13.826229095796858
+      },
+      {
+        "window": "early_body",
+        "range_seconds": [
+          0.05,
+          0.15
+        ],
+        "rms_dbfs": [
+          -26.091623990566923,
+          -25.205661090032866
+        ],
+        "rms_difference_b_minus_a_db": 0.8859629005340552,
+        "waveform_correlation": 0.9774895446855697,
+        "fit_residual_db": -13.515015245349085
+      },
+      {
+        "window": "held_body",
+        "range_seconds": [
+          0.49999999999999994,
+          0.7
+        ],
+        "rms_dbfs": [
+          -28.71059174181503,
+          -27.25107375626305
+        ],
+        "rms_difference_b_minus_a_db": 1.4595179855519795,
+        "waveform_correlation": 0.9680541122628443,
+        "fit_residual_db": -12.015480035295775
+      },
+      {
+        "window": "release",
+        "range_seconds": [
+          0.7,
+          0.8999999999999999
+        ],
+        "rms_dbfs": [
+          -40.92560007651578,
+          -39.42923306278547
+        ],
+        "rms_difference_b_minus_a_db": 1.4963670137303053,
+        "waveform_correlation": 0.9666676638048723,
+        "fit_residual_db": -11.834032693444247
+      }
+    ]
+  },
+  {
+    "label": "mallet-long",
+    "names": [
+      "Celesta",
+      "Kalimba"
+    ],
+    "command": [
+      "build-w04-distinctness/capture-snapshot",
+      "--out",
+      "build-w04-distinctness/focused/mallet-long",
+      "--wav",
+      "--note",
+      "60",
+      "--velocity",
+      "0.8",
+      "--pressure",
+      "0.5",
+      "--hold",
+      "3",
+      "--tail",
+      "1",
+      "--preset",
+      "Celesta",
+      "--preset",
+      "Kalimba"
+    ],
+    "metrics": [
+      {
+        "window": "onset",
+        "range_seconds": [
+          0.004,
+          0.02
+        ],
+        "rms_dbfs": [
+          -24.33415564294777,
+          -24.314402016738683
+        ],
+        "rms_difference_b_minus_a_db": 0.01975362620909327,
+        "waveform_correlation": 0.9992826356562348,
+        "fit_residual_db": -28.4338601947999
+      },
+      {
+        "window": "early_body",
+        "range_seconds": [
+          0.05,
+          0.15
+        ],
+        "rms_dbfs": [
+          -25.70774702462319,
+          -25.92104367395512
+        ],
+        "rms_difference_b_minus_a_db": -0.21329664933193399,
+        "waveform_correlation": 0.9999390499520483,
+        "fit_residual_db": -39.1400918803268
+      },
+      {
+        "window": "held_body",
+        "range_seconds": [
+          2.8,
+          3
+        ],
+        "rms_dbfs": [
+          -71.69792317506642,
+          -78.26330143524287
+        ],
+        "rms_difference_b_minus_a_db": -6.565378260176446,
+        "waveform_correlation": 0.9998891083128226,
+        "fit_residual_db": -36.54095093661634
+      },
+      {
+        "window": "release",
+        "range_seconds": [
+          3,
+          3.2
+        ],
+        "rms_dbfs": [
+          -80.99219436912693,
+          -86.29278096987875
+        ],
+        "rms_difference_b_minus_a_db": -5.3005866007518145,
+        "waveform_correlation": 0.9852402394205735,
+        "fit_residual_db": -15.331076177625123
+      }
+    ]
+  },
+  {
+    "label": "mallet-soft-high",
+    "names": [
+      "Celesta",
+      "Kalimba"
+    ],
+    "command": [
+      "build-w04-distinctness/capture-snapshot",
+      "--out",
+      "build-w04-distinctness/focused/mallet-soft-high",
+      "--wav",
+      "--note",
+      "76",
+      "--velocity",
+      "0.25",
+      "--pressure",
+      "0",
+      "--hold",
+      "3",
+      "--tail",
+      "1",
+      "--preset",
+      "Celesta",
+      "--preset",
+      "Kalimba"
+    ],
+    "metrics": [
+      {
+        "window": "onset",
+        "range_seconds": [
+          0.004,
+          0.02
+        ],
+        "rms_dbfs": [
+          -29.835823596654404,
+          -29.7559168067782
+        ],
+        "rms_difference_b_minus_a_db": 0.07990678987620287,
+        "waveform_correlation": 0.9997028708060739,
+        "fit_residual_db": -32.260892051441395
+      },
+      {
+        "window": "early_body",
+        "range_seconds": [
+          0.05,
+          0.15
+        ],
+        "rms_dbfs": [
+          -31.210499839568413,
+          -31.340906411808163
+        ],
+        "rms_difference_b_minus_a_db": -0.1304065722397479,
+        "waveform_correlation": 0.9999493470031252,
+        "fit_residual_db": -39.94375858214732
+      },
+      {
+        "window": "held_body",
+        "range_seconds": [
+          2.8,
+          3
+        ],
+        "rms_dbfs": [
+          -77.17899086310692,
+          -83.66136419649764
+        ],
+        "rms_difference_b_minus_a_db": -6.4823733333907345,
+        "waveform_correlation": 0.9998892015785398,
+        "fit_residual_db": -36.544604915029225
+      },
+      {
+        "window": "release",
+        "range_seconds": [
+          3,
+          3.2
+        ],
+        "rms_dbfs": [
+          -86.45300467662642,
+          -91.67656566507796
+        ],
+        "rms_difference_b_minus_a_db": -5.223560988451545,
+        "waveform_correlation": 0.9852027445968139,
+        "fit_residual_db": -15.320139631815515
+      }
+    ]
+  },
+  {
+    "label": "bass-click",
+    "names": [
+      "Sine Bass",
+      "Sub Bass"
+    ],
+    "command": [
+      "build-w04-distinctness/capture-snapshot",
+      "--out",
+      "build-w04-distinctness/focused/bass-click",
+      "--wav",
+      "--note",
+      "48",
+      "--velocity",
+      "0.9",
+      "--pressure",
+      "0",
+      "--hold",
+      "1",
+      "--tail",
+      "0.5",
+      "--preset",
+      "Sine Bass",
+      "--preset",
+      "Sub Bass"
+    ],
+    "metrics": [
+      {
+        "window": "onset",
+        "range_seconds": [
+          0.004,
+          0.02
+        ],
+        "rms_dbfs": [
+          -25.955540172587884,
+          -26.176033019075646
+        ],
+        "rms_difference_b_minus_a_db": -0.2204928464877578,
+        "waveform_correlation": 0.9953821546467875,
+        "fit_residual_db": -20.355345313785435
+      },
+      {
+        "window": "early_body",
+        "range_seconds": [
+          0.05,
+          0.15
+        ],
+        "rms_dbfs": [
+          -25.77996545983889,
+          -25.783562243813122
+        ],
+        "rms_difference_b_minus_a_db": -0.0035967839742307318,
+        "waveform_correlation": 0.999964193846517,
+        "fit_residual_db": -41.45020110650354
+      },
+      {
+        "window": "held_body",
+        "range_seconds": [
+          0.8,
+          1
+        ],
+        "rms_dbfs": [
+          -25.787704733514225,
+          -25.790859023313427
+        ],
+        "rms_difference_b_minus_a_db": -0.0031542897992030724,
+        "waveform_correlation": 0.9982900459212295,
+        "fit_residual_db": -24.663570275022813
+      },
+      {
+        "window": "release",
+        "range_seconds": [
+          1,
+          1.2
+        ],
+        "rms_dbfs": [
+          -37.01620663292633,
+          -36.55561604710377
+        ],
+        "rms_difference_b_minus_a_db": 0.46059058582255474,
+        "waveform_correlation": 0.9967090518757478,
+        "fit_residual_db": -21.82364176737554
+      }
+    ]
+  }
+]
