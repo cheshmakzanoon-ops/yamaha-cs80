@@ -34,11 +34,11 @@ API = '/repos/' + publisher.REPO
 def run_record():
     return {'id': RUN, 'head_sha': SOURCE, 'name': 'build', 'path': '.github/workflows/build.yml',
             'head_branch': 'main', 'event': 'push', 'head_repository': {'full_name': publisher.REPO},
-            'status': 'completed', 'conclusion': 'success'}
+            'status': 'completed', 'conclusion': 'success', 'run_attempt': 1}
 
 
 def job_records():
-    return [{'id': i, 'run_id': RUN, 'head_sha': SOURCE, 'name': name, 'status': 'completed',
+    return [{'id': i, 'run_id': RUN, 'run_attempt': 1, 'head_sha': SOURCE, 'name': name, 'status': 'completed',
              'conclusion': 'success', 'steps': [{'name': s, 'conclusion': 'success'} for s in sorted(steps)]}
             for i, (name, steps) in enumerate(publisher.JOB_STEPS.items(), 1)]
 
@@ -51,6 +51,9 @@ class TransactionClient:
         self.events = []
         self.fail_job = False
         self.duplicate_artifact = False
+        self.run_attempt = 1
+        self.job_attempt = 1
+        self.event_attempt = 1
         names = sorted(set(publisher.BUNDLES) | {'cs80-curated-preset-audition-' + SOURCE})
         self.artifacts = [dict(id=i, name=name, expired=False, workflow_run={'id': RUN, 'head_sha': SOURCE},
                                digest='sha256:' + publisher.sha(name.encode()), size_in_bytes=len(name.encode()))
@@ -63,7 +66,8 @@ class TransactionClient:
         if path == API + '/actions/runs/' + str(RUN):
             return dict(id=RUN, head_sha=SOURCE, name='build', path='.github/workflows/build.yml',
                         head_branch='main', event='push', head_repository={'full_name': publisher.REPO},
-                        status='completed', conclusion='success', html_url='https://example.invalid/build')
+                        status='completed', conclusion='success', run_attempt=self.run_attempt,
+                        html_url='https://example.invalid/build')
         if path == API + '/git/ref/heads/main':
             return {'object': {'sha': PUBLICATION}}
         if path.startswith(API + '/compare/'):
@@ -82,7 +86,7 @@ class TransactionClient:
 
     def pages(self, path, key=None):
         if '/jobs?' in path:
-            rows = [dict(id=i, run_id=RUN, head_sha=SOURCE, name=name, status='completed', conclusion='success',
+            rows = [dict(id=i, run_id=RUN, run_attempt=self.job_attempt, head_sha=SOURCE, name=name, status='completed', conclusion='success',
                          steps=[dict(name=s, conclusion='success') for s in sorted(steps)])
                     for i, (name, steps) in enumerate(publisher.JOB_STEPS.items(), 1)]
             if self.fail_job:
@@ -126,7 +130,7 @@ def invoke_transaction(client, fail_last_verifier=False):
         return {'synthetic_review_payload': True}
     with tempfile.TemporaryDirectory() as work:
         event = Path(work) / 'event.json'
-        event.write_text(json.dumps({'workflow_run': {'id': RUN, 'head_sha': SOURCE}}))
+        event.write_text(json.dumps({'workflow_run': {'id': RUN, 'head_sha': SOURCE, 'run_attempt': client.event_attempt}}))
         env = {'PUBLISH_BINARY_SHA': SOURCE, 'PUBLISH_BUILD_RUN_ID': str(RUN), 'GITHUB_REPOSITORY': publisher.REPO,
                'GITHUB_REF': 'refs/heads/main', 'GH_TOKEN': 'synthetic-not-a-credential',
                'GITHUB_EVENT_PATH': str(event), 'GITHUB_EVENT_NAME': 'workflow_run', 'GITHUB_SHA': PUBLICATION}
@@ -147,6 +151,43 @@ class PublisherTests(unittest.TestCase):
             with self.subTest(key=key):
                 run = run_record(); run[key] = value
                 with self.assertRaises(ValueError): publisher.validate_run(run, SOURCE, RUN)
+
+    def test_only_first_build_and_job_attempts_are_accepted(self):
+        for attempt in (None, 0, 2, '1', True):
+            with self.subTest(attempt=attempt):
+                run = run_record(); run['run_attempt'] = attempt
+                with self.assertRaisesRegex(ValueError, 'attempt'):
+                    publisher.validate_run(run, SOURCE, RUN)
+                jobs = job_records(); jobs[0]['run_attempt'] = attempt
+                with self.assertRaisesRegex(ValueError, 'attempt'):
+                    publisher.validate_jobs(jobs, SOURCE, RUN)
+        run = run_record(); del run['run_attempt']
+        with self.assertRaisesRegex(ValueError, 'attempt'):
+            publisher.validate_run(run, SOURCE, RUN)
+        for index in range(6):
+            jobs = job_records(); del jobs[index]['run_attempt']
+            with self.subTest(missing_job_attempt=index), self.assertRaisesRegex(ValueError, 'attempt'):
+                publisher.validate_jobs(jobs, SOURCE, RUN)
+
+    def test_audition_attempt_is_bound_to_the_first_build_attempt(self):
+        # Keep a valid checksummed metadata envelope; the attempt check must run
+        # before this deliberately incomplete fixture reaches audio validation.
+        inventory = json.dumps({'library_revision': publisher.REVISION, 'parameter_ids': list(range(190)),
+                                'programs': [{'name': str(i)} for i in range(301)]}).encode()
+        with tempfile.TemporaryDirectory() as work, patch.object(publisher, 'INVENTORY_SHA', publisher.sha(inventory)):
+            path = Path(work) / 'auditions.zip'
+            for attempt in (None, '2', 1, True, 'missing'):
+                provenance = {'source_commit': SOURCE, 'run_id': str(RUN), 'repository': publisher.REPO,
+                              'capture_status': 'complete', 'wav_count': 24, 'run_attempt': attempt}
+                if attempt == 'missing': del provenance['run_attempt']
+                files = {'inventory.json': inventory, 'source-commit.txt': SOURCE.encode(),
+                         'provenance.json': json.dumps(provenance).encode()}
+                files.update({f'fixture-{i}': b'unused' for i in range(29)})
+                files['SHA256SUMS'] = ''.join(f'{publisher.sha(data)}  {name}\n' for name, data in files.items()).encode()
+                with zipfile.ZipFile(path, 'w') as archive:
+                    for name, data in files.items(): archive.writestr(name, data)
+                with self.subTest(attempt=attempt), self.assertRaisesRegex(ValueError, 'attempt'):
+                    publisher.verify_auditions(path, SOURCE, RUN)
 
     def test_required_jobs_and_steps_cannot_be_skipped_or_renamed(self):
         self.assertEqual(len(publisher.validate_jobs(job_records(), SOURCE, RUN)), 6)
@@ -276,6 +317,9 @@ class PublisherTests(unittest.TestCase):
         checks = []
         for name, setup, fail_last in (
             ('failed job blocks every mutation', lambda c: setattr(c, 'fail_job', True), False),
+            ('successful rerun blocks every mutation', lambda c: setattr(c, 'run_attempt', 2), False),
+            ('mismatched job attempt blocks every mutation', lambda c: setattr(c, 'job_attempt', 2), False),
+            ('mismatched event attempt blocks every mutation', lambda c: setattr(c, 'event_attempt', 2), False),
             ('duplicate artifact blocks every mutation', lambda c: setattr(c, 'duplicate_artifact', True), False),
             ('fifth payload failure blocks every mutation', lambda c: None, True),
         ):
@@ -294,6 +338,9 @@ class PublisherTests(unittest.TestCase):
         assert client.events[:first_write].count('verify') == 5
         assert len(client.assets) == 7 and client.release['draft'] is False
         assert client.writes[-1] == ('PATCH', API + '/releases/77')
+        receipt = json.loads(client.assets['release-provenance.json']['bytes'])
+        assert receipt['build_run_attempt'] == 1
+        assert all(job['run_attempt'] == 1 for job in receipt['required_jobs'])
         for item in client.artifacts:
             name = publisher.BUNDLES[item['name']][2] if item['name'] in publisher.BUNDLES else 'cs80-preset-auditions-' + publisher.REVISION + '.zip'
             assert client.assets[name]['bytes'] == item['name'].encode()
@@ -329,7 +376,7 @@ class PublisherTests(unittest.TestCase):
             assert not client.writes
         checks.append('existing mismatched asset is refused without mutation')
 
-        self.assertEqual(len(checks), 9)
+        self.assertEqual(len(checks), 12)
 
 
 if __name__ == '__main__':

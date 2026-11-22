@@ -28,6 +28,7 @@ import zipfile
 REPO = 'cheshmakzanoon-ops/yamaha-cs80'
 REVISION = '2026.11.1'
 TAG = 'presets-' + REVISION
+BUILD_RUN_ATTEMPT = 1
 INVENTORY_SHA = 'fe3ddc6ecdb9fa25e77170f1cd9f81e6f2fe0ef5aabd105506a0fa487eb286fa'
 JUCE_SHA = 'c352e2489000ffeb9e397051377d75eef2efe641'
 ROOT = Path(__file__).resolve().parents[1]
@@ -166,6 +167,8 @@ def validate_run(run, source, run_id):
     require(run.get('name') == 'build' and run.get('path') == '.github/workflows/build.yml', 'Wrong workflow')
     require(run.get('head_branch') == 'main' and run.get('event') == 'push', 'Build is not the authorized main push')
     require(run.get('head_repository', {}).get('full_name') == REPO, 'Fork or different repository')
+    # This one-off publication cannot replace an earlier failure with a rerun.
+    require(type(run.get('run_attempt')) is int and run['run_attempt'] == BUILD_RUN_ATTEMPT, 'Build must be its first attempt')
     require(run.get('status') == 'completed' and run.get('conclusion') == 'success', 'Build is not fully successful')
 
 
@@ -174,10 +177,11 @@ def validate_jobs(jobs, source, run_id):
     records = []
     for job in jobs:
         require(job.get('run_id') == run_id and job.get('head_sha') == source, 'Job belongs to a different build')
+        require(type(job.get('run_attempt')) is int and job['run_attempt'] == BUILD_RUN_ATTEMPT, 'Job belongs to a different build attempt')
         require(job.get('status') == 'completed' and job.get('conclusion') == 'success', 'Required job did not pass: ' + job['name'])
         steps = {s['name']: s for s in job.get('steps', [])}
         require(all(steps.get(name, {}).get('conclusion') == 'success' for name in JOB_STEPS[job['name']]), 'Required step skipped or failed: ' + job['name'])
-        records.append({'id': job['id'], 'name': job['name'], 'conclusion': 'success', 'required_steps': sorted(JOB_STEPS[job['name']])})
+        records.append({'id': job['id'], 'name': job['name'], 'run_attempt': job['run_attempt'], 'conclusion': 'success', 'required_steps': sorted(JOB_STEPS[job['name']])})
     return sorted(records, key=lambda item: item['name'])
 
 
@@ -340,6 +344,7 @@ def verify_auditions(path, source, run_id):
     provenance = parse_json(files['provenance.json'])
     require(provenance.get('source_commit') == source and files['source-commit.txt'].decode().strip() == source, 'Audition source mismatch')
     require(provenance.get('run_id') == str(run_id) and provenance.get('repository') == REPO, 'Audition run mismatch')
+    require(provenance.get('run_attempt') == str(BUILD_RUN_ATTEMPT), 'Audition build attempt mismatch')
     require(provenance.get('capture_status') == 'complete' and provenance.get('wav_count') == 24, 'Auditions did not finish')
     seen, wavs, duration = set(), set(), 0
     for folder, (pressure, hold, tail, expected) in AUDITIONS.items():
@@ -380,6 +385,7 @@ def main():
     event = parse_json(Path(os.environ['GITHUB_EVENT_PATH']).read_bytes())
     if os.environ.get('GITHUB_EVENT_NAME') == 'workflow_run':
         require(event.get('workflow_run', {}).get('id') == run_id and event['workflow_run']['head_sha'] == source, 'Wrong triggering workflow')
+        require(type(event['workflow_run'].get('run_attempt')) is int and event['workflow_run']['run_attempt'] == BUILD_RUN_ATTEMPT, 'Wrong triggering build attempt')
     else:
         require(os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch', 'Unexpected publication event')
     jobs = validate_jobs(client.pages(api + f'/actions/runs/{run_id}/jobs?filter=latest', 'jobs'), source, run_id)
@@ -415,7 +421,7 @@ def main():
             details = verify_bundle(path, system, arch, source, run_id, work) if artifact['name'] in BUNDLES else verify_auditions(path, source, run_id)
             assets[asset_name] = path
             records.append({'artifact_id': artifact['id'], 'artifact_name': artifact['name'], 'release_asset': asset_name, 'sha256': digest[7:], 'bytes': path.stat().st_size, 'verification': details})
-        receipt = {'schema': 1, 'preset_library_revision': REVISION, 'binary_source_commit': source, 'build_run_id': run_id, 'build_run_url': run['html_url'], 'publication_commit': publication, 'tag': TAG, 'publication_only_differences': compare, 'required_jobs': jobs, 'artifacts': records, 'qualification': 'Unsigned development prerelease. Verification is bounded build, archive and audition evidence; not notarization, universal DAW compatibility, or measured acoustic/hardware equivalence.'}
+        receipt = {'schema': 1, 'preset_library_revision': REVISION, 'binary_source_commit': source, 'build_run_id': run_id, 'build_run_attempt': run['run_attempt'], 'build_run_url': run['html_url'], 'publication_commit': publication, 'tag': TAG, 'publication_only_differences': compare, 'required_jobs': jobs, 'artifacts': records, 'qualification': 'Unsigned development prerelease. Verification is bounded build, archive and audition evidence; not notarization, universal DAW compatibility, or measured acoustic/hardware equivalence.'}
         receipt_path = work / 'release-provenance.json'
         receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + '\n')
         assets[receipt_path.name] = receipt_path
