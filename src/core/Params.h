@@ -237,6 +237,17 @@ enum : int
 
     // [ws8-studio] append this workstream's core parameters below this line.
 
+    // Software instrument bodies. Append after every shipped core parameter:
+    // model/mix/brightness/relative partial-decay for rank I, then rank II.
+    // Off/zero defaults keep pre-existing saved vectors and circuit fixtures inert.
+    P_body1Model,
+    P_body1Mix,
+    P_body1Brightness,
+    P_body1Decay,
+    P_body2Model,
+    P_body2Mix,
+    P_body2Brightness,
+    P_body2Decay,
     P_numParams
 };
 
@@ -255,6 +266,11 @@ inline constexpr int channelStart(int channel) noexcept
 inline constexpr int chParam(int channel, int index) noexcept
 {
     return channelStart(channel) + index;
+}
+
+inline constexpr int bodyParam(int channel, int offset) noexcept
+{
+    return P_body1Model + (channel == 0 ? 0 : 4) + offset;
 }
 
 struct ParamDef
@@ -461,7 +477,16 @@ inline constexpr ParamDef kExtensionDefs[] = {
 
     // [ws8-studio] append this workstream's ParamDefs below this line (same order as the enum).
 
+    { "body1_model", "BODY I MODEL", 0.0f, 19.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
+    { "body1_mix", "BODY I MIX", 0.0f, 1.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
+    { "body1_brightness", "BODY I BRIGHTNESS", 0.0f, 1.0f, 0.5f, 1.0f, "", "INSTRUMENT BODY" },
+    { "body1_decay", "BODY I PARTIAL DECAY (NEXT NOTE)", 0.25f, 4.0f, 1.0f, 1.0f, "x", "INSTRUMENT BODY" },
+    { "body2_model", "BODY II MODEL", 0.0f, 19.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
+    { "body2_mix", "BODY II MIX", 0.0f, 1.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
+    { "body2_brightness", "BODY II BRIGHTNESS", 0.0f, 1.0f, 0.5f, 1.0f, "", "INSTRUMENT BODY" },
+    { "body2_decay", "BODY II PARTIAL DECAY (NEXT NOTE)", 0.25f, 4.0f, 1.0f, 1.0f, "x", "INSTRUMENT BODY" },
 };
+static_assert(P_body1Model == 190, "all previously shipped core indexes must remain stable");
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);
 

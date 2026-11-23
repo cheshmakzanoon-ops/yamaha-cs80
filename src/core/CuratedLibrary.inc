@@ -120,6 +120,17 @@ struct Program
     }
     Program& pan(Rank r, float x) { return each(r, [&](int c) { set(c, CP_pan, x); }); }
 
+    // A saved, rank-local software excitation; no dispatch by preset name.
+    Program& body(Rank r, body::Model model, float amount, float brightness, float decay)
+    {
+        return each(r, [&](int c) {
+            p[bodyParam(c, 0)] = static_cast<float>(model);
+            p[bodyParam(c, 1)] = amount;
+            p[bodyParam(c, 2)] = brightness;
+            p[bodyParam(c, 3)] = decay;
+        });
+    }
+
     // Global controls.
     Program& g(int index, float v) { p[index] = v; return *this; }
     Program& mix(float v) { return g(P_mix, v); }

@@ -149,6 +149,9 @@ void vibraphoneMode()
     const auto& voice = preset("Vibraphone");
     auto oldOctave = voice.values;
     oldOctave[chParam(1, CP_feet)] = 3.0f; // Defective prior 4' upper registration.
+    // Reconstruct the defective oscillator-only generator as well as its
+    // footage. Leaving today's bar body active would retain its correct H4.
+    oldOctave[P_body1Mix] = oldOctave[P_body2Mix] = 0.0f;
     for (int note : {48, 60, 72}) for (float velocity : {0.30f, 0.85f})
     {
         const auto full = render(voice.values, note, velocity, 0.8, "Vibraphone");
@@ -210,7 +213,8 @@ double fittedPulse(const Audio& audio, double frequency)
 void namedTremolo()
 {
     struct Case { const char* name; double frequency; };
-    for (const auto& test : {Case {"Tremolo Organ", 3.2}, Case {"Tremolo Pad", 3.8}, Case {"Tremolo Poly", 5.4}})
+    for (const auto& test : {Case {"Tremolo Organ", 3.2}, Case {"Theatre Organ", 5.6},
+                             Case {"Tremolo Pad", 3.8}, Case {"Tremolo Poly", 5.4}})
     {
         const auto& voice = preset(test.name);
         auto wetOnly = voice.values;
@@ -268,6 +272,9 @@ void nylonHarmonics()
     sineDominant[chParam(0, CP_sine)] = 0.56f;
     sineDominant[chParam(0, CP_vcfLevel)] = 0.34f;
     sineDominant[chParam(0, CP_lpfCutoff)] = 920.0f;
+    // The old sine-dominant defect had no independently excited string modes.
+    // Keep the same spectral criteria and compare with that actual limitation.
+    sineDominant[P_body1Mix] = sineDominant[P_body2Mix] = 0.0f;
     for (int note : {48, 60, 72}) for (float velocity : {0.30f, 0.85f})
     {
         const auto full = render(voice.values, note, velocity, 0.4, "Nylon Pluck");

@@ -31,6 +31,7 @@
 #include "ControllerCurves.h"
 #include "experimental/ContinuousVoiceCircuit.h"
 #include "ToleranceModel.h"
+#include "InstrumentBody.h"
 
 #include <array>
 #include <cstdint>
@@ -102,6 +103,10 @@ struct RankSettings
     float afterBrill = 0.0f;
     float afterLevel = 0.0f;
     float pan = 0.0f;
+    int bodyModel = 0;
+    float bodyMix = 0.0f;
+    float bodyBrightness = 0.5f;
+    float bodyDecay = 1.0f;
 };
 
 struct GlobalSettings
@@ -468,6 +473,14 @@ private:
         // Circuit engine: event-driven IG00153/IG00158 reconstruction
         // (docs/OSCILLATOR_PROMOTION.md). Legacy keeps the PolyBLEP osc.
         ReconstructedOscillator wsc;
+        body::InstrumentBody instrumentBody;
+        // A reused audible VCA must not discard a ringing body in one sample.
+        // Fixed storage retains the previous excitation for a short handoff;
+        // it is dormant during normal held notes and when bodies are disabled.
+        body::InstrumentBody previousInstrumentBody;
+        float bodyFrequency = 440.0f, bodyColour = 0.5f, bodyPressure = 0.0f;
+        float previousBodyFrequency = 440.0f, previousBodyColour = 0.5f, previousBodyPressure = 0.0f;
+        int bodyHandoffRemaining = 0, bodyHandoffLength = 1;
         Svf hpf;
         Svf lpf;
         // Circuit-engine IG00156 nodal stages (docs/IG00156_NODAL_MODEL.md).

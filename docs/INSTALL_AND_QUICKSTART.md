@@ -4,9 +4,10 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This guide covers factory library revision **2026.11.2**: one circuit engine,
-the unified **523-program library**, **Studio**, **PANIC** and the **SAMPLE PEAK**
-readout. Engine and isolation selectors have been removed. Older artifacts
+This guide covers factory library revision **2026.11.3**: revoiced existing
+programs and optional instrument bodies within one circuit instrument, the
+unified **523-program library**, **Studio**, **PANIC** and the **SAMPLE PEAK**
+readout. Engine and isolation selectors remain removed. Older artifacts
 may contain an earlier sound library. Use the guide bundled with your artifact
 and compare its full manifest commit with the current-build table in the
 repository README.
@@ -54,8 +55,9 @@ and emulation layers are not qualified by these runner builds.
 architecture, JUCE provenance and payload hashes. Checksums detect corruption;
 they are not a publisher signature. `SOURCE.txt` identifies the corresponding
 repository commit and preset library revision. For these revised sounds,
-confirm that both identify **2026.11.2** and that the full source commit matches
-the selected verified download. The sound-library revision is separate from
+confirm that both identify **2026.11.3** and that their full source commit matches
+the exact source SHA listed for the selected verified download and its completed
+workflow qualification. The sound-library revision is separate from
 the application's version string.
 
 ### Offline inventory verification (Python 3.10+)

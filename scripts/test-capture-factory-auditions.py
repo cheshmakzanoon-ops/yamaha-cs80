@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline artifact-boundary regressions; these do not simulate or certify DSP."""
 import csv
+import copy
 import hashlib
 import importlib.util
 import json
@@ -30,10 +31,14 @@ FAMILIES = ["Brass Swell I", "Sforzando Brass", "Covered Horn", "Solo Violin",
             "Solo Cello", "Marcato Strings", "Recorder", "Clarinet", "Flute Organ 8+4", "Tremolo Organ",
             "Rubber Bass", "Picked Bass", "Nylon Pluck", "Mandolin", "Vibraphone", "Marimba",
             "Tremolo Brass", "Tremolo Pad", "Tremolo Poly", "Touch Lead", "Aftertouch Vibrato Lead", "Glide Lead"]
-PRESSURE = ["Aftertouch Vibrato Lead", "Pressure Lead", "Wah Lead"]
+PRESSURE = ["Aftertouch Vibrato Lead", "Pressure Lead", "Wah Lead",
+            "Pressure Pad", "Flute", "Solo Violin", "Pressure Keys"]
 ORIGINAL = ["Tone I: E. Piano", "Tone II: Bass", "Analog Piano", "Bright Keys",
             "Amber Keys 97", "Slow Keys 106", "Replicant Brass", "Bass Stack"]
+INSTRUMENTS = ["Trombone Glide", "Theatre Organ", "Oboe", "Bassoon", "Guitar I", "Guitar II", "Kalimba"]
+TEXTURES = ["Evolving Pad", "Breathing Pad", "Thunder", "Rain", "Surf", "Wind"]
 SOURCE = "3" * 40
+SOURCE_STATE = dict(source_commit=SOURCE, source_tree="5" * 40, tracked_source_clean=True)
 # A tiny valid stereo IEEE-float WAV, used only as an unchanged-byte witness.
 SAMPLES = struct.pack("<4f", .125, -.25, .0625, -.125)
 WAV = struct.pack("<4sI4s4sIHHIIHH4sI", b"RIFF", 36 + len(SAMPLES), b"WAVE",
@@ -51,7 +56,7 @@ class CaptureChild:
         self.commands.append(command)
         option = lambda name: command[command.index(name) + 1]
         if "--inventory" in command:
-            names = KEYBOARDS + FAMILIES + ORIGINAL + ["Pressure Lead", "Wah Lead"]
+            names = list(dict.fromkeys(KEYBOARDS + FAMILIES + ORIGINAL + PRESSURE + INSTRUMENTS + TEXTURES))
             names += [f"Unselected fixture {i}" for i in range(523 - len(names))]
             programs = [{"host_index": i, "name": name} for i, name in enumerate(names)]
             if self.fault == "short inventory":
@@ -63,7 +68,7 @@ class CaptureChild:
             elif self.fault == "missing selection":
                 programs[0]["name"] = "Unselected replacement"
             Path(option("--inventory")).write_text(json.dumps(
-                {"programs": programs, "library_revision": "2026.11.2"}), encoding="utf-8")
+                {"programs": programs, "library_revision": "2026.11.3"}), encoding="utf-8")
             return subprocess.CompletedProcess(command, 0)
         if self.fault == "child failure":
             raise subprocess.CalledProcessError(2, command)
@@ -114,27 +119,36 @@ class AuditionTests(unittest.TestCase):
         self.capture = self.root / "capture"
         self.capture.write_bytes(b"inert capture executable fixture")
 
-    def run_capture(self, output, child):
+    def run_capture(self, output, child, source_check=None):
+        source_check = mock.Mock(return_value=SOURCE_STATE) if source_check is None else source_check
         with (mock.patch.object(helper.subprocess, "run", side_effect=child),
-              mock.patch.object(helper.platform, "platform", return_value="fixture-platform")):
+              mock.patch.object(helper.platform, "platform", return_value="fixture-platform"),
+              mock.patch.object(helper, "verify_source", new=source_check)):
             helper.capture_auditions(self.capture, output, SOURCE)
+        return source_check
 
     def test_complete_artifact_has_all_examples_provenance_and_exact_bytes(self):
         out = self.root / "complete"
         child = CaptureChild()
         with mock.patch.dict(os.environ, {"GITHUB_REPOSITORY": "owner/repo", "GITHUB_RUN_ID": "42",
                                           "GITHUB_RUN_ATTEMPT": "2"}):
-            self.run_capture(out, child)
+            source_check = self.run_capture(out, child)
         manifest = json.loads((out / "provenance.json").read_text())
         self.assertEqual(manifest["capture_status"], "complete")
         self.assertEqual(manifest["platform"], "fixture-platform")
         self.assertEqual(manifest["source_commit"], SOURCE)
+        self.assertEqual(manifest["source_tree"], SOURCE_STATE["source_tree"])
+        self.assertTrue(manifest["tracked_source_clean_before_capture"])
+        self.assertTrue(manifest["tracked_source_clean_after_capture"])
+        self.assertEqual(source_check.call_args_list, [mock.call(SOURCE), mock.call(SOURCE)])
         self.assertEqual((out / "source-commit.txt").read_text(), SOURCE + "\n")
         self.assertEqual((manifest["repository"], manifest["run_id"], manifest["run_attempt"]),
                          ("owner/repo", "42", "2"))
         self.assertEqual(manifest["capture_binary_sha256"], hashlib.sha256(self.capture.read_bytes()).hexdigest())
-        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (68, 68))
-        self.assertEqual(manifest["library_revision"], "2026.11.2")
+        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (90, 90))
+        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (594, 594))
+        self.assertEqual(manifest["selected_program_count"], 71)
+        self.assertEqual(manifest["library_revision"], "2026.11.3")
         self.assertEqual(manifest["inventory_command"], child.commands[0])
         self.assertEqual(manifest["capture_commands"], child.commands[1:])
         groups = manifest["selections"]
@@ -144,9 +158,18 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual(groups[3]["names"], ORIGINAL)
         self.assertEqual([(g["names"], g["pressure"], g["hold"], g["tail"]) for g in groups[4:6]],
                          [(PRESSURE, 0, 5, 1), (PRESSURE, 1, 5, 1)])
-        self.assertEqual([(g["names"], g["note"]) for g in groups[6:]],
+        self.assertEqual(groups[6]["names"], INSTRUMENTS)
+        self.assertEqual(groups[7]["names"], TEXTURES)
+        self.assertEqual((groups[8]["names"], groups[8]["velocity"]), (["Kalimba"], .3))
+        self.assertEqual([(g["names"], g["note"]) for g in groups[9:]],
                          [(["Tine Piano"], 48), (["Tine Piano"], 60), (["Tine Piano"], 84)])
-        self.assertEqual(len({name for group in groups for name in group["names"]}), 56)
+        self.assertEqual(len({name for group in groups for name in group["names"]}), 71)
+        readme = (out / "README.txt").read_text()
+        self.assertIn("90 unnormalized circuit-synth auditions of 71 existing programs", readme)
+        self.assertIn("594 seconds total", readme)
+        self.assertIn("Single-note examples do not establish acoustic similarity", readme)
+        for group in groups:
+            self.assertIn(f"- {group['folder']}: {len(group['names'])} WAVs", readme)
         for command in child.commands:
             self.assertEqual(command[command.index("--library") + 1], "all")
         for path in out.rglob("*.wav"):
@@ -184,6 +207,81 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual(marker.read_text(), "keep")
         self.assertEqual(child.commands, [])
 
+    def test_roster_has_matched_pressure_pairs_and_no_duplicate_render_requests(self):
+        groups = helper.selections()
+        self.assertEqual(helper.roster_summary(groups),
+                         dict(wav_count=90, selected_program_count=71, audio_seconds=594))
+        by_folder = {group["folder"]: group for group in groups}
+        quiet, pressed = by_folder["pressure-zero"], by_folder["pressure-full"]
+        self.assertEqual({k: v for k, v in quiet.items() if k not in {"folder", "pressure"}},
+                         {k: v for k, v in pressed.items() if k not in {"folder", "pressure"}})
+        self.assertEqual((quiet["pressure"], pressed["pressure"]), (0, 1))
+        soft = by_folder["soft-kalimba"]
+        firm = by_folder["instrument-bodies"]
+        self.assertEqual(soft["names"], ["Kalimba"])
+        self.assertIn("Kalimba", firm["names"])
+        self.assertEqual((soft["velocity"], firm["velocity"]), (.3, .85))
+        self.assertEqual(soft.get("note"), firm.get("note"))
+
+    def test_invalid_roster_is_rejected_before_creating_output(self):
+        valid = helper.selections()
+        cases = []
+        for key, value in (("folder", "../escape"), ("names", []), ("names", ["Flute", "Flute"]),
+                           ("velocity", 1.01), ("pressure", -0.1), ("hold", float("nan")),
+                           ("tail", -1), ("note", 60.5), ("note", 128)):
+            groups = copy.deepcopy(valid)
+            groups[0][key] = value
+            cases.append(groups)
+        cases.append(valid + [copy.deepcopy(valid[0])])
+        duplicate = copy.deepcopy(valid[0])
+        duplicate["folder"] = "same-render-another-folder"
+        cases.append(valid + [duplicate])
+        cases.append([])
+        for i, groups in enumerate(cases):
+            with self.subTest(case=i), mock.patch.object(helper, "selections", return_value=groups):
+                out = self.root / f"invalid-roster-{i}"
+                child = CaptureChild()
+                with self.assertRaises(RuntimeError):
+                    self.run_capture(out, child)
+                self.assertEqual(child.commands, [])
+                self.assertFalse(out.exists())
+
+    def test_dirty_source_is_rejected_before_creating_output(self):
+        out = self.root / "dirty"
+        child = CaptureChild()
+        source_check = mock.Mock(side_effect=RuntimeError("clean tracked source tree required"))
+        with self.assertRaisesRegex(RuntimeError, "clean tracked source"):
+            self.run_capture(out, child, source_check)
+        self.assertFalse(out.exists())
+        self.assertEqual(child.commands, [])
+
+    def test_source_change_during_capture_cannot_receive_a_completion_manifest(self):
+        out = self.root / "source-changed"
+        source_check = mock.Mock(side_effect=[SOURCE_STATE, RuntimeError("source changed during capture")])
+        with self.assertRaisesRegex(RuntimeError, "source changed"):
+            self.run_capture(out, CaptureChild(), source_check)
+        manifest = json.loads((out / "provenance.json").read_text())
+        self.assertEqual(manifest["capture_status"], "failed")
+        self.assertFalse(manifest["tracked_source_clean_after_capture"])
+        self.assertFalse((out / "SHA256SUMS").exists())
+        self.assertFalse((out / "README.txt").exists())
+
+    def test_executable_change_during_capture_cannot_receive_checksums(self):
+        out = self.root / "executable-changed"
+        child = CaptureChild()
+
+        def changed_executable(command, *, check):
+            result = child(command, check=check)
+            if "--out" in command:
+                self.capture.write_bytes(b"a different executable")
+            return result
+
+        with self.assertRaisesRegex(RuntimeError, "executable changed"):
+            self.run_capture(out, changed_executable)
+        manifest = json.loads((out / "provenance.json").read_text())
+        self.assertEqual(manifest["capture_status"], "failed")
+        self.assertFalse((out / "SHA256SUMS").exists())
+
     def test_workflow_source_mismatch_stops_before_capture(self):
         argv = [str(SCRIPT), "--capture", str(self.capture), "--out", str(self.root / "unused")]
         with (mock.patch.object(sys, "argv", argv),
@@ -203,6 +301,68 @@ class AuditionTests(unittest.TestCase):
               mock.patch.object(helper, "capture_auditions") as capture):
             helper.main()
             capture.assert_called_once_with(self.capture.resolve(), out.resolve(), SOURCE)
+
+
+class SourceTests(unittest.TestCase):
+    """Use real temporary Git indexes; mocks cannot establish clean-source admission."""
+    def setUp(self):
+        self.work = tempfile.TemporaryDirectory(prefix="cs80-audition-source-")
+        self.addCleanup(self.work.cleanup)
+        self.repo = Path(self.work.name)
+        self.git("init", "--quiet")
+        (self.repo / "source.cpp").write_text("original source\n", encoding="utf-8")
+        self.git("add", "source.cpp")
+        self.commit()
+        self.head = self.git("rev-parse", "HEAD").strip()
+        env = mock.patch.dict(os.environ, {"GITHUB_SHA": self.head})
+        env.start()
+        self.addCleanup(env.stop)
+
+    def git(self, *arguments):
+        return subprocess.check_output(["git", *arguments], cwd=self.repo, text=True,
+                                       stderr=subprocess.STDOUT)
+
+    def commit(self):
+        self.git("-c", "user.name=Audition fixture", "-c", "user.email=fixture@example.invalid",
+                 "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "source fixture")
+
+    def test_clean_commit_records_exact_tree_and_allows_untracked_output(self):
+        (self.repo / "render.wav").write_bytes(WAV)
+        state = helper.verify_source(self.head, self.repo)
+        self.assertEqual(state, dict(source_commit=self.head,
+                                    source_tree=self.git("rev-parse", "HEAD^{tree}").strip(),
+                                    tracked_source_clean=True))
+
+    def test_tracked_unstaged_staged_and_deleted_files_are_rejected(self):
+        source = self.repo / "source.cpp"
+        source.write_text("changed source\n", encoding="utf-8")
+        with self.assertRaisesRegex(RuntimeError, "clean tracked source tree"):
+            helper.verify_source(self.head, self.repo)
+        self.git("add", "source.cpp")
+        with self.assertRaisesRegex(RuntimeError, "clean tracked source tree"):
+            helper.verify_source(self.head, self.repo)
+        self.git("reset", "--hard", "HEAD")
+        source.unlink()
+        with self.assertRaisesRegex(RuntimeError, "clean tracked source tree"):
+            helper.verify_source(self.head, self.repo)
+
+    def test_newly_staged_source_is_rejected(self):
+        (self.repo / "new.cpp").write_text("new source\n", encoding="utf-8")
+        self.git("add", "new.cpp")
+        with self.assertRaisesRegex(RuntimeError, "clean tracked source tree"):
+            helper.verify_source(self.head, self.repo)
+
+    def test_changed_head_is_rejected_even_when_clean(self):
+        (self.repo / "source.cpp").write_text("a different committed source\n", encoding="utf-8")
+        self.git("add", "source.cpp")
+        self.commit()
+        with self.assertRaisesRegex(RuntimeError, "changed from the recorded source"):
+            helper.verify_source(self.head, self.repo)
+
+    def test_workflow_must_identify_the_same_commit(self):
+        with mock.patch.dict(os.environ, {"GITHUB_SHA": "4" * 40}):
+            with self.assertRaisesRegex(RuntimeError, "differs from workflow source"):
+                helper.verify_source(self.head, self.repo)
 
 
 if __name__ == "__main__":

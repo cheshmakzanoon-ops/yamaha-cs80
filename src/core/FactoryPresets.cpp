@@ -1,4 +1,5 @@
 #include "FactoryPresets.h"
+#include "InstrumentBody.h"
 
 #include <algorithm>
 #include <initializer_list>
@@ -203,6 +204,11 @@ void applyHardwareTone(ParamValues& values, int channel, int toneIndex)
     // tone (noise, sine level, PWM, pan, etc.) cannot leak into the new one.
     for (int i = 0; i < CP_count; ++i)
         values[chParam(channel, i)] = kChannelDefs[i].def;
+
+    // The hardware tab replaces its rank's software body as well as the card.
+    // A piano or guitar enhancement must never leak into the newly selected tab.
+    for (int i = 0; i < 4; ++i)
+        values[bodyParam(channel, i)] = paramDef(bodyParam(channel, i)).def;
 
     hardwareTonePatch(values, channel, std::clamp(toneIndex, 0, 10));
 }

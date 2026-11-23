@@ -1,0 +1,121 @@
+{
+  "baseline_commit": "73dc17b8d93d027a8a7de19a9eaeb0915122c621",
+  "current_label": "Frozen uncommitted revised core archive; no release commit claimed",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "configure": "Release; CS80_BUILD_PLUGIN=OFF; CS80_BUILD_TESTS=OFF; default exact AVX2 dispatch",
+  "baseline_compile_commands": {
+    "Engine.cpp": "/usr/bin/c++ -DCS80_ENABLE_BORROWED_HELD=1 -I/tmp/cs80-agent37-baseline/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -o CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o -c /tmp/cs80-agent37-baseline/src/core/Engine.cpp",
+    "Ig00156Batch.cpp": "/usr/bin/c++ -I/tmp/cs80-agent37-baseline/src -O3 -DNDEBUG -std=gnu++20 -fPIC -Wall -Wextra -Wpedantic -ffp-contract=off -o CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o -c /tmp/cs80-agent37-baseline/src/core/Ig00156Batch.cpp"
+  },
+  "probe_flags": [
+    "-std=c++20",
+    "-O3",
+    "-DNDEBUG"
+  ],
+  "probe_sha256": "dd360e47279ee90cb49b789503376a3eff84f219340ea2e5b5408a6643feddfa",
+  "baseline_core_archive_sha256": "6ff9c38d432017a4191e5e0eacaa68da0a5b1e708fe588f4a5dfe749fb4fa111",
+  "revised_core_archive_sha256": "a1add8ad6754724398dd1445f209c6d834d85b3c795d525b7a634af1d6da88f9",
+  "metadata": [
+    {
+      "fixture": "w0-engine-stimulus-v1",
+      "old_parameter_count": 190,
+      "new_parameter_count": 198,
+      "original_values_equal": true,
+      "events_equal": true,
+      "appended_defaults": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1
+      }
+    },
+    {
+      "fixture": "live-adr-v1",
+      "old_parameter_count": 190,
+      "new_parameter_count": 198,
+      "original_values_equal": true,
+      "events_equal": true,
+      "appended_defaults": {
+        "body1_model": 0,
+        "body1_mix": 0,
+        "body1_brightness": 0.5,
+        "body1_decay": 1,
+        "body2_model": 0,
+        "body2_mix": 0,
+        "body2_brightness": 0.5,
+        "body2_decay": 1
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "fixture": "source-standard-48000",
+      "float_samples": 96000,
+      "max_abs_difference": 0.0,
+      "different_samples": 0,
+      "old_sha256": "ce175b23299ac9aa699a59e81d637fe3572ada5510d354d1bfcfba212dc2f1c1",
+      "new_sha256": "ce175b23299ac9aa699a59e81d637fe3572ada5510d354d1bfcfba212dc2f1c1",
+      "byte_identical": true,
+      "finite": true
+    },
+    {
+      "fixture": "legacy-eco-44100",
+      "float_samples": 88200,
+      "max_abs_difference": 0.0,
+      "different_samples": 0,
+      "old_sha256": "6495b6ddb72f6aa3b60ec60e0cb36ac0cdbf349a734c857a30dc91a79058065c",
+      "new_sha256": "6495b6ddb72f6aa3b60ec60e0cb36ac0cdbf349a734c857a30dc91a79058065c",
+      "byte_identical": true,
+      "finite": true
+    },
+    {
+      "fixture": "isolation-hq-96000",
+      "float_samples": 192000,
+      "max_abs_difference": 0.0,
+      "different_samples": 0,
+      "old_sha256": "8f8ef725f0b67b7ca1d8416740f5bcf8dceb701904bfb2c6538cb3a8e58af69d",
+      "new_sha256": "8f8ef725f0b67b7ca1d8416740f5bcf8dceb701904bfb2c6538cb3a8e58af69d",
+      "byte_identical": true,
+      "finite": true
+    },
+    {
+      "fixture": "w0-engine-stimulus-v1",
+      "file": "left.csv",
+      "byte_identical": true,
+      "old_sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40",
+      "new_sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+    },
+    {
+      "fixture": "w0-engine-stimulus-v1",
+      "file": "right.csv",
+      "byte_identical": true,
+      "old_sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40",
+      "new_sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+    },
+    {
+      "fixture": "live-adr-v1",
+      "file": "left.csv",
+      "byte_identical": true,
+      "old_sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6",
+      "new_sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+    },
+    {
+      "fixture": "live-adr-v1",
+      "file": "right.csv",
+      "byte_identical": true,
+      "old_sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6",
+      "new_sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+    },
+    {
+      "fixture": "live-adr-v1",
+      "file": "envelope-events.csv",
+      "byte_identical": true,
+      "old_sha256": "2c611a2b46afde8e35de7ca3d1b9fe5098f1765053260c38e22827e290aba42c",
+      "new_sha256": "2c611a2b46afde8e35de7ca3d1b9fe5098f1765053260c38e22827e290aba42c"
+    }
+  ]
+}

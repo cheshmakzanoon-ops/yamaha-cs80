@@ -3,6 +3,7 @@
 #include "EvidenceRegister.h"
 #include "PluginProcessor.h"
 #include "ArtCommon.h"
+#include "core/InstrumentBody.h"
 
 #include <atomic>
 #include <cmath>
@@ -99,6 +100,8 @@ juce::String formatParamValue(int parameterIndex, float value)
         case cs80::P_glideAssign: return value >= 0.5f ? "ASSIGNED" : "OFF";
         case cs80::P_footMode: return value >= 0.5f ? "EXP-WAH" : "EXP";
         case cs80::P_outputLevel: return value >= 0.5f ? "HIGH" : "LOW";
+        case cs80::P_body1Model:
+        case cs80::P_body2Model: return cs80::body::name(juce::roundToInt(value));
         default: break;
     }
     if (parameterIndex < cs80::P_numGlobals)
@@ -3591,8 +3594,8 @@ std::atomic<bool> gCircuitNotesInTooltips { false };
 struct ReadNumber
 {
     bool ok = false;
-    double value = 0.0;    // in base units (Hz, s, st, ct, oct, %, /, or none)
-    juce::String unit;     // normalised: "hz", "s", "st", "ct", "oct", "%", "/", ""
+    double value = 0.0;    // in base units (Hz, s, st, ct, oct, %, x, /, or none)
+    juce::String unit;     // normalised: "hz", "s", "st", "ct", "oct", "%", "x", "/", ""
     double scale = 1.0;    // what the printed unit multiplied by (1000 for kHz and k, 0.001 for ms)
     bool explicitScale = false;
 };
@@ -3631,6 +3634,7 @@ ReadNumber readNumber(const juce::String& raw, bool validatePercentagePair = fal
     else if (rest == "ct" || rest == "cts" || rest == "cent" || rest == "cents") r.unit = "ct";
     else if (rest == "oct" || rest == "o" || rest == "octave" || rest == "octaves") r.unit = "oct";
     else if (rest == "%") r.unit = "%";
+    else if (rest == "x") r.unit = "x";
     // Only MIX input needs the complementary-percentage contract. Keep the
     // generic formatter/choice classification unchanged for other controls.
     else if (rest.startsWith("/"))
@@ -3813,7 +3817,11 @@ bool parseParamValue(int parameterIndex, const juce::String& text, float current
     }
 
     // Choice and switch names as the control prints them ("GLISS", "SUS II" -> "II", "8'"), exact or a unique prefix.
-    const bool integralRange = d.min == std::round(d.min) && d.max == std::round(d.max) && d.max - d.min <= 16.0f;
+    // The body selector has twenty named choices. Keep the existing range
+    // limit for other controls, which may be continuous despite integral ends.
+    const bool bodyModel = parameterIndex == cs80::P_body1Model || parameterIndex == cs80::P_body2Model;
+    const bool integralRange = d.min == std::round(d.min) && d.max == std::round(d.max)
+                           && (d.max - d.min <= 16.0f || bodyModel);
     if (integralRange)
     {
         int prefixHits = 0;

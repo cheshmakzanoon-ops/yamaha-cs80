@@ -419,6 +419,22 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
 
     // [ws8-studio] append this workstream's host parameters below this line, AU version hint 15.
 
+    // Append only, including AU sort order. Old host slots 0..295 retain
+    // their identity; missing old-state values resolve to the silent defaults.
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        auto instrument = group("instrument_body_" + juce::String(rank + 1),
+                                rank == 0 ? "Instrument body I" : "Instrument body II");
+        juce::StringArray choices;
+        for (int model = 0; model <= 19; ++model) choices.add(cs80::body::name(model));
+        instrument->addChild(std::make_unique<juce::AudioParameterChoice>(
+            juce::ParameterID { parameterId(cs80::bodyParam(rank, 0)), 16 },
+            rank == 0 ? "Body I model (next note)" : "Body II model (next note)", choices, 0));
+        for (int offset = 1; offset < 4; ++offset)
+            instrument->addChild(make(cs80::bodyParam(rank, offset), 16));
+        layout.add(std::move(instrument));
+    }
+
     return layout;
 }
 

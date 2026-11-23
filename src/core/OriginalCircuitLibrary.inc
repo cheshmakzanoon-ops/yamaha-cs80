@@ -98,6 +98,14 @@ void finish(FactoryPreset& preset, Finish style)
         scaleChannel(p, ch, CP_fD, decay);
         scaleChannel(p, ch, CP_vR, release);
         scaleChannel(p, ch, CP_fR, release);
+        if (p[bodyParam(ch, 0)] > 0.0f)
+        {
+            // The named finish must color modal and sine-like bodies too,
+            // not just the parallel saw/pulse filter path.
+            p[bodyParam(ch, 2)] = std::clamp(p[bodyParam(ch, 2)]
+                + 0.24f * std::log2(cutoff), 0.0f, 1.0f);
+            p[bodyParam(ch, 3)] = std::clamp(p[bodyParam(ch, 3)] * decay, 0.25f, 4.0f);
+        }
     }
     preset.description += " ";
     preset.description += detail;
@@ -145,6 +153,8 @@ std::vector<FactoryPreset> build()
             {
                 for (int k = 0; k < CP_count; ++k)
                     std::swap(p.values[chParam(0, k)], p.values[chParam(1, k)]);
+                for (int k = 0; k < 4; ++k)
+                    std::swap(p.values[bodyParam(0, k)], p.values[bodyParam(1, k)]);
                 p.values[P_mix] = 1.0f - p.values[P_mix];
                 // The named card stays on concert pitch after the rank swap.
                 // DETUNE II is one-sided, so a negative compensation would

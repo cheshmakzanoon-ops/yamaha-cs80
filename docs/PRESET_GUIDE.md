@@ -1,15 +1,20 @@
 # Factory preset guide
 
-The **2026.11.2 factory library** contains **523 existing programs**, all played
-by the circuit engine. The original 222 addresses have been revoiced using
-explicit instrument recipes; the later collection contains 300 musical programs
-and **Init Circuit**, including the 24 revised keyboard programs and further
-articulation, harmonic and motion refinements. No names or program addresses
-have been added or removed. Instrument names describe synthesized interpretations: a violin-like
-bow, a plucked-string decay or a bell's metallic color. They do not identify
-samples or establish a match to an acoustic instrument or a physical CS-80.
-The [2026.11.2 circuit library report](CIRCUIT_LIBRARY_2026_11_2.md) explains the
-current sound changes and intentional migration of old engine settings. The
+The **2026.11.3 factory library** contains **523 existing programs**. Its **521
+musical programs** have been reprogrammed; **Init Patch** and **Init Circuit**
+remain starting points. All names, categories and program addresses keep their
+existing order. No presets have been added or removed.
+
+The same circuit instrument now supports optional string, tine, reed, wind and
+bar excitations: **259 programs use these instrument bodies**, while the other
+264 entries retain circuit excitation. The bodies give partials their own
+spectra and decay rates; envelopes, touch, register and effects complete the
+individual sounds. These are authored synthesized interpretations, not samples
+or a demonstrated exact match to an acoustic instrument or physical CS-80.
+The [2026.11.3 revision report](CIRCUIT_LIBRARY_2026_11_3.md) explains the sound
+changes, new controls and evidence. The
+[2026.11.2 report](CIRCUIT_LIBRARY_2026_11_2.md) documents the earlier original-bank
+revoicing and retirement of old engine settings. The
 [2026.11.1 refinement report](PRESET_REFINEMENT_2026_11_1.md) and
 [original revision report](PRESET_REVISION_2026_11.md) retain the earlier history.
 
@@ -110,9 +115,13 @@ tine-like edge and light chorus. Hold the key to hear the strike disappear
 before the body; release early to damp the decay. **Tine Piano** places a shorter
 third-harmonic strike over its 8′ body. Play MIDI 48, 60 and 84 to hear both
 partials follow the key; a firm strike brings the upper partial forward.
-**Reed Piano**, **Stage Keys** and **Saw Pulse Piano** emphasize different short
-attacks and then decay while the key is held. These are circuit-synth voicings,
-not sampled or physically modeled acoustic pianos. [Key source](../src/core/curated/Keys.inc)
+**Reed Piano** has a denser even/odd reed spectrum. **Stage Keys** and **Analog
+Piano** use piano-string excitation with separately softening upper partials;
+**Saw Pulse Piano** retains more of its deliberately synthetic circuit edge.
+All decay while the key is held. The bodies have physically motivated features,
+but they are not samples or complete measured acoustic-piano models.
+[Key source](../src/core/curated/Keys.inc) ·
+[Instrument-body scope](CIRCUIT_LIBRARY_2026_11_3.md#what-changes-in-the-sound)
 
 **Analog Piano / Bright Keys / Slow Keys 106:** these original-address programs
 now draw on specific keyboard recipes. Try the same soft/firm comparison around
@@ -125,8 +134,8 @@ I gives a warm body and short pick; II is brighter and rings longer. Nylon Pluck
 has a mellow finger transient and a centered, unchorused body. Steel Pluck
 adds a faster-fading octave course. **Harp** pairs a long 8′ body with a shorter
 4′ glint: spread the notes of a chord and vary key release for damping.
-The revised Nylon Pluck brings more of its filtered string harmonics into the
-body. **Mandolin** keeps its paired-course decay with gentler amplitude motion;
+Nylon Pluck now carries independently fading string modes beneath its soft
+finger attack. **Mandolin** keeps its paired-course decay with gentler amplitude motion;
 try repeated picked notes rather than relying on a deep automatic flutter.
 [Plucked source](../src/core/curated/Plucked.inc)
 
@@ -139,9 +148,11 @@ notes to hear fresh percussion. [Wind source](../src/core/curated/Winds.inc) ·
 [Organ source](../src/core/curated/Organ.inc)
 
 **Recorder / Clarinet:** play separated notes around MIDI 48–72 to expose their
-short tongue/breath onsets, then hold to hear the pitched body take over. Their
-revised onset layers are more present while the sustained spectra remain
-different. [Wind source](../src/core/curated/Winds.inc)
+short tongue/breath onsets, then hold to hear the pitched body take over.
+Clarinet emphasizes odd harmonics; **Oboe** and **Bassoon** have denser reed
+spectra. **Breathy Flute** carries more air than Flute. Try zero pressure first,
+then add it to hear the authored level, brightness and vibrato response.
+[Wind source](../src/core/curated/Winds.inc)
 
 **Marimba / Xylophone / Clock Bells:** try Marimba around MIDI 48–72 and the
 higher registrations around MIDI 48–67. Marimba's rounded body outlasts its
@@ -179,6 +190,7 @@ or open chord, and hear the different pacing:
 | Tremolo Brass | 4.6 Hz | Add pressure afterward to introduce its restrained vibrato. |
 | Tremolo Keys | 4.8 Hz | Hold past the strike to hear the body pulse as it decays. |
 | Tremolo Poly | 5.4 Hz | Try short chord changes and longer holds. |
+| Theatre Organ | 5.6 Hz | Hold a registration to hear its gentle whole-body tremulant. |
 
 [Organ](../src/core/curated/Organ.inc) · [Pads](../src/core/curated/Pads.inc) ·
 [Brass](../src/core/curated/Brass.inc) · [Keys](../src/core/curated/Keys.inc) ·
@@ -248,9 +260,36 @@ octave span. Fixed filter-motion rates and echo times are separate: changing the
 arpeggiator pace does not automatically retime those effects.
 [Original sequence recipes](../src/core/OriginalCircuitLibrary.inc)
 
+## Instrument-body controls
+
+In the host's parameter list, **Instrument body I** and **Instrument body II**
+each provide **Model**, **Mix**, **Brightness** and **Partial decay**. Model
+and partial decay are captured on the **next accepted note**; mix and brightness
+remain live. Selecting Off also takes effect on the next note, preserving an
+already-ringing body. Partial decay changes how the upper modes fade; the rank's
+normal amplitude envelope and key release still determine the complete note.
+[Control definitions](../src/core/Params.h) ·
+[Per-control help](../src/plugin/EvidenceRegister.h)
+
+At a high body mix, changing the rank's saw/pulse waveform may have little
+effect. The body blends with the filtered oscillator and sine signal **before
+the VCA**; it does not pass through the original high-pass/low-pass circuit
+stages. Brilliance and the low-pass contour also color its spectrum. Try body
+brightness and partial decay when shaping a ringing instrument, and use the
+rank envelope to change its overall articulation.
+[Signal routing](../src/core/Engine.cpp)
+
+These excitations are available on **PANEL sources**. Selecting a hardware tone
+or memory source suppresses them, preserving those separate source paths.
+Their eight saved controls are exposed in the DAW's parameter list and automation
+editor. The custom Studio editor and standalone interface do not yet provide
+dedicated body-control widgets.
+The existing instrument remains one circuit engine, with no new Legacy/Pure
+selector. [Revision details](CIRCUIT_LIBRARY_2026_11_3.md#where-the-body-sits-in-a-rank)
+
 ## Recalling a revised sound
 
-**2026.11.2 identifies a sound-data revision**, separate from the
+**2026.11.3 identifies a sound-data revision**, separate from the
 application's version and saved-session format. Names, order and host program
 identities remain stable while the factory voicings change. A session or user
 preset restores its stored controls; reload the corresponding factory program
@@ -261,6 +300,13 @@ subject to a [documented controller dependency](PRESET_REFINEMENT_2026_11_1.md#n
 Use **Library** to select the revised sound directly; serialized-state recall
 remains separate from factory selection.
 
+Old saved patches without body fields restore both models and mixes to their
+off defaults. **Reload the factory program to hear the new body and voicing**,
+then save your edited copy. The first 190 core IDs and 296 host automation
+positions are preserved; eight appended controls bring the totals to 198 and
+304. Session, user-preset and A/B recall include those new controls.
+[Compatibility details](CIRCUIT_LIBRARY_2026_11_3.md#saved-patches-program-addresses-and-automation)
+
 The original bank now has **revised circuit voicings**. Host indexes **0–221** retain its
 names and categories, while indexes **222–522** retain the later collection.
 Both address ranges now use the circuit engine. MIDI bank MSB **1** still addresses
@@ -268,7 +314,8 @@ the original collection and MSB **0** the later collection; bank LSB selects
 a page of 128 and Program Change selects a program on that page. These are
 zero-based protocol numbers. [Program contract](../src/core/FactoryPresets.h)
 
-**Old Legacy or Pure sessions intentionally change sound.** Schema 4 normalizes
+The earlier **2026.11.2 migration of Legacy or Pure sessions intentionally
+changes their sound**. Schema 4 normalizes
 their engine fields to the circuit engine with normal MIDI and the optional
 Studio layer. Stored controls, A/B comparisons and browser Revert cannot restore
 the retired engine behaviors. Old projects using those modes can therefore have
@@ -313,9 +360,10 @@ for earlier capture commands.
 
 The [build workflow](../.github/workflows/build.yml) uses the
 [audition script](../scripts/capture-factory-auditions.py) and retains the artifact
-name `cs80-curated-preset-audition-<source SHA>`. The revised artifact contains
-**68 WAVs covering 56 existing programs**, the complete 523-program inventory,
-metrics, source commit, provenance and checksums:
+name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.3 roster
+produces **90 WAVs covering 71 existing programs**, totaling **594 seconds
+(9 minutes 54 seconds)**, with the complete 523-program inventory, metrics,
+source commit/tree, executable hash, provenance and checksums:
 
 - All 24 keyboard programs at firm velocity 0.85, held for four seconds with
   a one-second release excerpt.
@@ -325,16 +373,28 @@ metrics, source commit, provenance and checksums:
   release excerpt.
 - Eight revoiced original addresses, held for four seconds with a one-second
   release excerpt.
-- Aftertouch Vibrato Lead, Pressure Lead and Wah Lead, each captured at pressure
-  0 and 1 with a five-second hold and one-second release excerpt: six files.
+- Aftertouch Vibrato Lead, Pressure Lead, Wah Lead, Pressure Pad, Flute,
+  Solo Violin and Pressure Keys, each captured at pressure 0 and 1 with a
+  five-second hold and one-second release excerpt: fourteen files.
+- Trombone Glide, Theatre Organ, Oboe, Bassoon, Guitar I, Guitar II and Kalimba,
+  held for six seconds with a two-second release excerpt.
+- Evolving Pad, Breathing Pad, Thunder, Rain, Surf and Wind, held for seven
+  seconds with a two-second release excerpt.
+- Kalimba at soft velocity 0.3, held for four seconds with a one-second release
+  excerpt.
 - Tine Piano at MIDI 48, 60 and 84, held for three seconds with a one-second
   release excerpt.
 
 The script preserves the factory levels and applies no normalization. All
-excerpts use zero pressure except the three `pressure-full` examples.
+excerpts use zero pressure except the seven `pressure-full` examples.
 **Pressure Lead's `pressure-zero` file is intentionally silent**; its paired
 `pressure-full` file supplies the required pressure. Check `capture_status` in
 `provenance.json` for `complete`, since a failed capture may also upload a
-partial artifact. The source SHA
-identifies the bank being heard; a short excerpt does not cover every chord,
-register or long release, nor does it qualify a native plugin build.
+partial artifact. The script rejects dirty tracked source before creating its
+output and checks that the commit and executable remain unchanged throughout
+capture. Run it from the committed source when producing publication material.
+The source SHA identifies the bank being heard; a short excerpt does not cover
+every chord, register or long release, nor does it establish acoustic equivalence
+or qualify a native plugin build. The roster alone does not mean that a completed
+archive is already available; check the exact source and qualification in the
+[download section](../README.md#downloads).

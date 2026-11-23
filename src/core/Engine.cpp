@@ -193,7 +193,8 @@ void visitSmoothedSettings(GlobalSettings& g, RankSettings* ranks, int rankCount
         auto& r = ranks[rank];
         for (float* field : { &r.sine, &r.noise, &r.pulseWidth, &r.pwmSpeed, &r.pwmDepth, &r.hpfEffectiveCv,
                               &r.hpfRes, &r.lpfEffectiveCv, &r.lpfRes, &r.vcfLevel, &r.vLevel, &r.initBrill,
-                              &r.initLevel, &r.afterBrill, &r.afterLevel, &r.pan })
+                              &r.initLevel, &r.afterBrill, &r.afterLevel, &r.pan,
+                              &r.bodyMix, &r.bodyBrightness })
             visit(*field);
     }
 }
@@ -324,6 +325,10 @@ void Engine::configureInternalRate()
             auto& r = voices[(size_t) vi].ranks[ch];
             (void) r.wsc.prepare(internalRate, OscillatorNominalProfile {});
             r.vca.prepare(internalRate);
+            r.instrumentBody.prepare(internalRate, hostRate);
+            r.previousInstrumentBody.prepare(internalRate, hostRate);
+            r.bodyHandoffRemaining = 0;
+            r.bodyHandoffLength = std::max(1, static_cast<int>(std::lround(0.003 * internalRate)));
             r.thermal.prepare(internalRate, vi * kNumRanks + ch);   // plan 2.5; warm-up restarts here
             r.driftCents = 0.0f;
         }
@@ -443,6 +448,9 @@ void Engine::reset()
             r.vcaCold = true;
             r.fenv.reset();
             r.aenv.reset();
+            r.instrumentBody.reset();
+            r.previousInstrumentBody.reset();
+            r.bodyHandoffRemaining = 0;
             r.idle = {};
             r.idleRefs = {};
         }
@@ -983,6 +991,13 @@ void Engine::buildSettings()
         r.afterBrill = rp(CP_afterBrill);
         r.afterLevel = rp(CP_afterLevel);
         r.pan = rp(CP_pan);
+        // Software excitation only in the playable circuit policy, never in
+        // source-table isolation or a hardware-tab electrical reconstruction.
+        const bool bodyAllowed = global.renderPolicy == RenderPolicy::sourcePerformance && hardwareSources[ch] == 13;
+        r.bodyModel = bodyAllowed ? static_cast<int>(std::lround(params[bodyParam(ch, 0)])) : 0;
+        r.bodyMix = bodyAllowed ? params[bodyParam(ch, 1)] : 0.0f;
+        r.bodyBrightness = params[bodyParam(ch, 2)];
+        r.bodyDecay = params[bodyParam(ch, 3)];
         if (global.parityMode)
         {
             r.hpfOn = r.lpfOn = true;
@@ -1524,6 +1539,41 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
                       std::max(0.001f, rs.vD * global.envTimeScale * r.tol.ampEnvTime),
                       rs.vS,
                       std::max(0.001f, rs.vR * global.envTimeScale * r.tol.ampEnvTime));
+        // Private, reproducible excitation variation; do not consume the
+        // oscillator/noise RNG or depend on host block partitioning.
+        // Spectral formants, stiffness and partial loss belong to the sounding
+        // register. A 16-foot rank at C4 has a C3 body; Scala/MTS and the tuning
+        // reference participate too. Transient bends and vibrato remain live
+        // frequency controls and do not rebuild the physical excitation.
+        float bodyNote = static_cast<float>(note);
+        if (rs.bodyModel != 0)
+        {
+            const float bodyHz = midiToHz(static_cast<float>(v.targetPitch) + global.masterTune
+                                  + (ch == 1 ? global.detuneCents / 100.0f : 0.0f), global.tuningRef)
+                               * kFeetRatios[std::clamp(rs.feet, 0, 5)];
+            bodyNote = 69.0f + 12.0f * std::log2(std::max(bodyHz, 0.01f) / 440.0f);
+        }
+        // The circuit VCA deliberately retains an audible release level on
+        // reassignment. Preserve the old body as well, then hand its waveform
+        // to the new strike over 3 ms. Its last sounding pitch is retained;
+        // retuning the outgoing resonance would itself make a transient.
+        if (preserveAudioState && wasActive && r.aenv.getState().value > 0.0f
+            && (r.instrumentBody.enabled() || rs.bodyModel != 0))
+        {
+            r.previousInstrumentBody = r.instrumentBody;
+            r.previousBodyFrequency = r.bodyFrequency;
+            r.previousBodyColour = r.bodyColour;
+            r.previousBodyPressure = r.bodyPressure;
+            r.bodyHandoffRemaining = r.bodyHandoffLength;
+        }
+        else
+        {
+            r.previousInstrumentBody.reset();
+            r.bodyHandoffRemaining = 0;
+        }
+        r.instrumentBody.noteOn(rs.bodyModel, bodyNote, v.velocity,
+                                params[bodyParam(ch, 2)], rs.bodyDecay,
+                                static_cast<std::uint32_t>(v.age * 0x9e3779b9u + ch * 0x85ebca6bu));
     }
 
     if (! ringKeyDown)
@@ -1993,6 +2043,12 @@ void Engine::allNotesOffMask(bool release, unsigned channelMask, bool allChannel
                         fenv.noteOff();
                 }
             voice.active = voice.held = voice.sustained = voice.pedalHeld = false;
+            for (auto& rank : voice.ranks)
+            {
+                rank.instrumentBody.reset();
+                rank.previousInstrumentBody.reset();
+                rank.bodyHandoffRemaining = 0;
+            }
         }
         else if (allChannels)
         {
@@ -2927,7 +2983,7 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
     struct PendingRank
     {
         Rank* rank;
-        float filtered, sine, vcfLevel, levelCv, amp, chGain, pan;
+        float filtered, sine, vcfLevel, levelCv, amp, chGain, pan, bodySample, bodyMix;
     };
     std::array<PendingRank, kNumVoices * kNumRanks> pending;
     int pendingCount = 0;
@@ -3209,6 +3265,45 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             }
 
             const float sine = sineWave * rs.sine;
+            float bodySample = 0.0f, bodyMix = 0.0f;
+            // The model (including Off) is captured by noteOn. The mix and
+            // colour remain live; choosing another model does not abruptly
+            // remove an already sounding body before its next onset.
+            if (r.instrumentBody.enabled())
+            {
+                // Like the existing sine tap, the resonant body joins before
+                // the rank VCA. Spectral color follows the panel's brilliance,
+                // filter envelope and touch; the oscillator/filter path keeps
+                // its exact circuit arithmetic. Footage and every pitch route
+                // are already present in freq.
+                constexpr float bodyReferenceCv = 6.32192809489f; // log2(5000 / (125 * 0.5))
+                const float color = clampf(rs.bodyBrightness
+                    + 0.075f * (brillOct + envLp + contourLp + mod.lpCutoff)
+                    + 0.045f * (rs.lpfEffectiveCv - bodyReferenceCv), 0.0f, 1.0f);
+                r.bodyFrequency = freq;
+                r.bodyColour = color;
+                r.bodyPressure = clampf(touchPressure * rs.afterBrill, 0.0f, 1.0f);
+                bodySample = r.instrumentBody.tick(freq, color, r.bodyPressure);
+                bodyMix = rs.bodyMix;
+            }
+            if (r.bodyHandoffRemaining > 0)
+            {
+                const float position = static_cast<float>(r.bodyHandoffRemaining) / r.bodyHandoffLength;
+                const float outgoing = position * position * (3.0f - 2.0f * position);
+                const bool hasPrevious = r.previousInstrumentBody.enabled();
+                const float previous = hasPrevious ? r.previousInstrumentBody.tick(
+                    r.previousBodyFrequency, r.previousBodyColour, r.previousBodyPressure) : 0.0f;
+                if (hasPrevious && r.instrumentBody.enabled())
+                    bodySample += outgoing * (previous - bodySample);
+                else if (hasPrevious)
+                {
+                    bodySample = previous;
+                    bodyMix = rs.bodyMix * outgoing;
+                }
+                else
+                    bodyMix *= 1.0f - outgoing;
+                --r.bodyHandoffRemaining;
+            }
             // Legacy: SUB VCA modulation adds to the level CV. Circuit engine:
             // it drives the IG00151 exponential input (Vca.h) instead, so it is
             // left out of the linear LC sum.
@@ -3244,13 +3339,15 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             if (batchFilters)
             {
                 const float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan + mod.pan, -1.0f, 1.0f);
-                pending[(size_t) pendingCount++] = { &r, filtered, sine, rs.vcfLevel, levelCv, amp, chGain, pan };
+                pending[(size_t) pendingCount++] = { &r, filtered, sine, rs.vcfLevel, levelCv, amp, chGain, pan, bodySample, bodyMix };
                 continue;
             }
 #endif
             // Velocity acts through the selected initial-touch destinations.
             // An unconditional velocity gain made disabled touch controls audible.
-            const float vcaInput = filtered * rs.vcfLevel + sine;
+            float vcaInput = filtered * rs.vcfLevel + sine;
+            if (bodyMix > 0.0f)
+                vcaInput += bodyMix * (bodySample - vcaInput);
             float pan = clampf(rs.pan + r.trimPan * dispersion * 0.8f + lfoPan + mod.pan, -1.0f, 1.0f);
             float voiceOut, panLeft, panRight;
             if (circuitVca)
@@ -3336,7 +3433,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 r.vca.reset(p.levelCv);
                 r.vcaCold = false;
             }
-            const float vcaInput = p.filtered * p.vcfLevel + p.sine;
+            float vcaInput = p.filtered * p.vcfLevel + p.sine;
+            if (p.bodyMix > 0.0f)
+                vcaInput += p.bodyMix * (p.bodySample - vcaInput);
             const float voiceOut = r.vca.process(vcaInput, p.levelCv, subValue * global.subVca * kIg00151SubOctaves, p.amp)
                                    * p.chGain * 0.17f;
             float panLeft, panRight;

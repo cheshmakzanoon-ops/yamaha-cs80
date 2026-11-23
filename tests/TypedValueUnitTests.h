@@ -2,6 +2,7 @@
 
 #include "plugin/PluginProcessor.h"
 #include "plugin/UiComponents.h"
+#include "core/InstrumentBody.h"
 
 #include <bit>
 #include <cstdint>
@@ -88,6 +89,57 @@ void testTypedValueUnits(Check check)
         float parsed = -12345.f;
         check(cs80::ui::parseParamValue(pan, " l 12,5 ", 0.f, parsed) && std::abs(parsed+.125f)<1.e-6f,
               "directional pan accepts decimal-comma and case-insensitive entry");
+    }
+
+    for (int parameter : { cs80::P_body1Model, cs80::P_body2Model })
+    {
+        for (int model = 0; model < cs80::body::modelCount; ++model)
+        {
+            const auto shown = cs80::ui::formatParamValue(parameter, (float) model);
+            float parsed = -12345.f;
+            check(shown == cs80::body::name(model)
+                      && cs80::ui::parseParamValue(parameter, shown, 0.f, parsed) && parsed == (float) model,
+                  "both body selectors display and parse every model name, including all twenty choices");
+        }
+        float parsed = -12345.f;
+        check(cs80::ui::parseParamValue(parameter, "  cElEsTa  ", 0.f, parsed)
+                  && parsed == (float) cs80::body::celesta,
+              "body model names accept case-insensitive trimmed entry");
+        check(cs80::ui::parseParamValue(parameter, "Tine", 0.f, parsed)
+                  && parsed == (float) cs80::body::tine,
+              "body model names retain unique-prefix entry");
+        for (const char* text : { "Cl", "B", "Piano strings junk", "19" })
+        {
+            parsed = -12345.f;
+            check(!cs80::ui::parseParamValue(parameter, text, 0.f, parsed) && parsed == -12345.f,
+                  "ambiguous, malformed and numeric body choices reject without mutation");
+        }
+    }
+    for (int parameter : { cs80::P_body1Decay, cs80::P_body2Decay })
+    {
+        for (float value : { .25f, .5f, 1.f, 2.f, 4.f })
+        {
+            float parsed = -12345.f;
+            check(cs80::ui::parseParamValue(parameter, cs80::ui::formatParamValue(parameter, value), 1.f, parsed)
+                      && std::abs(parsed - value) < 1.e-6f,
+                  "both body decay multipliers accept their own displayed x unit");
+        }
+        float parsed = -12345.f;
+        check(cs80::ui::parseParamValue(parameter, "2", 1.f, parsed) && parsed == 2.f,
+              "body decay multiplier still accepts a bare number");
+        for (const char* text : { "2 x junk", "2 xx", "2 ms", "2 Hz" })
+        {
+            parsed = -12345.f;
+            check(!cs80::ui::parseParamValue(parameter, text, 1.f, parsed) && parsed == -12345.f,
+                  "body decay rejects incomplete or mismatched units without mutation");
+        }
+    }
+    for (int parameter : { cutoff, attack, (int) cs80::P_volume })
+    {
+        float parsed = -12345.f;
+        check(!cs80::ui::parseParamValue(parameter, "2 x", cs80::paramDef(parameter).def, parsed)
+                  && parsed == -12345.f,
+              "the multiplier unit does not change parsing of unrelated controls");
     }
 
     // Record every formatter/parser result at five points per parameter. The

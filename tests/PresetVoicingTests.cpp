@@ -421,6 +421,51 @@ void velocityResponse()
     }
 }
 
+void struckVelocityLevel()
+{
+    // A brighter spectrum must not substitute for usable amplitude dynamics.
+    // These ordinary struck instruments should gain at least 4 dB between a
+    // gentle and a firm key strike, across bass, middle and treble registers.
+    // Keep their complete factory patches, including chorus and level trims.
+    constexpr double minimumGainDb = 4.0;
+    struct Case { const char* name; float previousStaticLevel, previousInitialLevel; };
+    for (const auto& test : { Case { "Electric Piano I", 0.24f, 0.74f },
+                              Case { "Electric Piano II", 0.25f, 0.74f },
+                              Case { "Kalimba", 0.30f, 0.78f } })
+    {
+        const auto& voice = preset(test.name);
+        for (const int note : { 48, 60, 84 })
+        {
+            const auto soft = render(voice, note, 0.30f, 0.30);
+            const auto hard = render(voice, note, 0.85f, 0.30);
+            const double softOnset = soft.rms(0.03, 0.23);
+            const double hardOnset = hard.rms(0.03, 0.23);
+            const double gainDb = db(ratio(hardOnset, softOnset));
+            const auto label = voice.name + " at note " + std::to_string(note);
+            check(softOnset > audibleRms && hardOnset > audibleRms,
+                  label + ": both gentle and firm strikes remain audible");
+            check(gainDb > minimumGainDb,
+                  label + ": firm strike gains at least 4 dB of onset level, not only harmonic color");
+            std::printf("STRIKE    %-19s note %d: hard/soft onset %+6.2f dB; soft onset %6.1f dBFS\n",
+                        test.name, note, gainDb, db(softOnset));
+        }
+
+        // Recreate the diagnosed static-VCA-floor regression without removing
+        // the new excitation or its velocity-dependent spectrum. This proves
+        // that an apparently expressive change in color cannot pass the level
+        // criterion while the body remains compressed in amplitude.
+        auto compressed = voice.values;
+        compressed[chParam(0, CP_vLevel)] = test.previousStaticLevel;
+        compressed[chParam(0, CP_initLevel)] = test.previousInitialLevel;
+        const auto soft = render(compressed, voice.name + " compressed control", 60, 0.30f, 0.30);
+        const auto hard = render(compressed, voice.name + " compressed control", 60, 0.85f, 0.30);
+        const double gainDb = db(ratio(hard.rms(0.03, 0.23), soft.rms(0.03, 0.23)));
+        check(gainDb < minimumGainDb,
+              voice.name + ": the compressed-body negative control fails the amplitude-dynamics gate");
+        std::printf("CONTROL   %-19s compressed hard/soft onset %+6.2f dB\n", test.name, gainDb);
+    }
+}
+
 void pressureRequiredLead()
 {
     const auto& voice = preset("Pressure Lead");
@@ -492,6 +537,7 @@ int main()
         octavePercussion();
         highWindRegistration();
         velocityResponse();
+        struckVelocityLevel();
         struckKeyboardCharacter();
         pressureRequiredLead();
         heldArticulation();

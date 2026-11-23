@@ -39,7 +39,7 @@ constexpr double kMinWindowRmsDbfs = -42.0;
 // at least the equivalent of an 8 % change of one full parameter range.
 constexpr double kMinPairDistance = 0.08;
 // Names/categories/order of the original 222 programs at source 7e49ead.
-// Sound vectors and descriptions intentionally change in revision 2026.11.2.
+// Sound vectors and descriptions intentionally change in library revisions.
 constexpr std::uint64_t kOriginalIdentityDigest = 0xa960b5a190e3b7b8ull;
 // Level matching: the loudest-window RMS of every program lies in this window.
 constexpr double kLevelWindowLowDbfs = -30.0, kLevelWindowHighDbfs = -12.0;
@@ -92,7 +92,7 @@ bool isDiscrete(int i)
     if (i == chParam(0, CP_feet) || i == chParam(1, CP_feet)) return true;
     return i == P_glideMode || i == P_subWave || i == P_subOriginalFunction || i == P_lfo1Dest
         || i == P_lfo2Dest || i == P_lfo3Dest || i == P_fx1Type || i == P_fx2Type || i == P_fx3Type
-        || i == P_arpMode || i == P_arpOctaves;
+        || i == P_arpMode || i == P_arpOctaves || i == P_body1Model || i == P_body2Model;
 }
 
 bool usesModernLayer(const ParamValues& v)
@@ -320,7 +320,9 @@ void testCuratedData()
             const float weight = ch == 0 ? 1.0f - v[P_mix] : v[P_mix];
             const bool osc = v[chParam(ch, CP_saw)] >= 0.5f || v[chParam(ch, CP_pulse)] >= 0.5f
                              || v[chParam(ch, CP_noise)] > 0.05f;
-            const bool source = (osc && v[chParam(ch, CP_vcfLevel)] > 0.05f) || v[chParam(ch, CP_sine)] > 0.05f;
+            const bool body = v[bodyParam(ch, 0)] >= 1.0f && v[bodyParam(ch, 1)] > 0.05f;
+            const bool source = body || (osc && v[chParam(ch, CP_vcfLevel)] > 0.05f)
+                                      || v[chParam(ch, CP_sine)] > 0.05f;
             audible = audible || (weight > 0.05f && source
                                   && v[chParam(ch, CP_vLevel)] + v[chParam(ch, CP_initLevel)]
                                          + v[chParam(ch, CP_afterLevel)] > 0.05f);

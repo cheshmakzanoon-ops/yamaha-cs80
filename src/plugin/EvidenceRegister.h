@@ -468,6 +468,32 @@ inline constexpr ControlHelp kControlHelp[] = {
     { "unison_detune", 0, "-", "EXT", Basis::modernExtension,
       "How far apart the stacked unison voices are tuned, in cents.",
       "Optional software extension." },
+
+    // Factory instrument excitations, appended without changing old host IDs.
+    { "body1_model", 0, "-", "EXT", Basis::modernExtension,
+      "Chooses rank I's string, tine, reed, wind or bar excitation for the next note. Off uses its circuit sources.",
+      "Authored software spectra, not measured acoustic instruments or CS-80 circuitry. PANEL sources only." },
+    { "body2_model", 0, "-", "EXT", Basis::modernExtension,
+      "Chooses rank II's string, tine, reed, wind or bar excitation for the next note. Off uses its circuit sources.",
+      "Authored software spectra, not measured acoustic instruments or CS-80 circuitry. PANEL sources only." },
+    { "body1_mix", 0, "-", "EXT", Basis::modernExtension,
+      "Blends rank I's instrument excitation with its filtered oscillators and sine, before the touch-controlled VCA.",
+      "Live software blend. The original rank envelope, release, pan and effects still shape the result." },
+    { "body2_mix", 0, "-", "EXT", Basis::modernExtension,
+      "Blends rank II's instrument excitation with its filtered oscillators and sine, before the touch-controlled VCA.",
+      "Live software blend. The original rank envelope, release, pan and effects still shape the result." },
+    { "body1_brightness", 0, "-", "EXT", Basis::modernExtension,
+      "Balances rank I's fundamental and upper modes. Brilliance, filter contour and expressive touch also color the body.",
+      "Live spectral weighting in the optional software excitation; it does not add a measured acoustic filter." },
+    { "body2_brightness", 0, "-", "EXT", Basis::modernExtension,
+      "Balances rank II's fundamental and upper modes. Brilliance, filter contour and expressive touch also color the body.",
+      "Live spectral weighting in the optional software excitation; it does not add a measured acoustic filter." },
+    { "body1_decay", 0, "-", "EXT", Basis::modernExtension,
+      "Scales rank I's independent partial decay for the next note; larger values let upper modes ring longer.",
+      "The rank ADSR still controls overall duration and key damping. Sustained wind and organ modes do not decay while held." },
+    { "body2_decay", 0, "-", "EXT", Basis::modernExtension,
+      "Scales rank II's independent partial decay for the next note; larger values let upper modes ring longer.",
+      "The rank ADSR still controls overall duration and key damping. Sustained wind and organ modes do not decay while held." },
 };
 
 inline constexpr int kControlHelpSize = (int) (sizeof(kControlHelp) / sizeof(kControlHelp[0]));

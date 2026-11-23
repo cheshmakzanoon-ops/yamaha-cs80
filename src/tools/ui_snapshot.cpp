@@ -49,6 +49,7 @@
 #include "../../tests/PresetBrowserXmlTests.h"
 #include "../../tests/PresetRevertTests.h"
 #include "../../tests/PresetRecallHostTests.h"
+#include "../../tests/InstrumentBodyHostTests.h"
 #include "../../tests/PresetFileHostTests.h"
 #include "../../tests/SessionSchemaHostTests.h"
 #include "../../tests/ModernLayerStateRangeHostTests.h"
@@ -2145,6 +2146,7 @@ int main(int argc, char** argv)
         cs80::tests::testModernLayerHost(checked);
         cs80::tests::testModernLayerStateRangeHost(checked);
         cs80::tests::testProgramLibraryHost(checked);
+        cs80::tests::testInstrumentBodyHost(checked);
         std::printf("Modern/session/preset/A-B recall: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
@@ -2530,6 +2532,8 @@ int main(int argc, char** argv)
     cs80::tests::testPerformanceWheelKeyboard(check);
     phases.begin("preset recall host");
     cs80::tests::testPresetRecallHost(check);
+    phases.begin("instrument body host identity and recall");
+    cs80::tests::testInstrumentBodyHost(check);
     phases.begin("preset file host");
     cs80::tests::testPresetFileHost(check);
     phases.begin("session schema host");

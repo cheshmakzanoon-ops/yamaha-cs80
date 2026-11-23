@@ -1,0 +1,215 @@
+{
+  "sample_rate": 48000,
+  "measured_seconds_per_case": 0.25,
+  "warmup_seconds": 0.05,
+  "timer": "CLOCK_THREAD_CPUTIME_ID",
+  "cases": 80,
+  "voice16": "two sequential eight-voice Engines; proxy for processor routing, excludes host bookkeeping and final sum",
+  "core_library_sha256": "a1add8ad6754724398dd1445f209c6d834d85b3c795d525b7a634af1d6da88f9",
+  "probe_sha256": "948107f537eb23c471b2ed9da1e561e64146f564f09bb30995d59eae379b3a9a",
+  "compiler": "14.2.0",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "notes": "Shared worker, CPU-clock and cache contention may vary; two block-size observations are not independent repeated trials. InstrumentBody uses fixed storage. Global C++ new/new[]/aligned-new intercepted during noteOn, render and 80 released-voice reassignments; prepare excluded.",
+  "results": [
+    {
+      "preset": "Stage Keys",
+      "voices": 8,
+      "quality": "Standard2x",
+      "off_mean": 0.570362,
+      "on_mean": 0.7013335,
+      "on_min": 0.698517,
+      "on_max": 0.70415,
+      "increment_percent": 22.962872701898096
+    },
+    {
+      "preset": "Stage Keys",
+      "voices": 8,
+      "quality": "HQ8x",
+      "off_mean": 2.2037765,
+      "on_mean": 2.7660705,
+      "on_min": 2.63707,
+      "on_max": 2.895071,
+      "increment_percent": 25.515019331588306
+    },
+    {
+      "preset": "Stage Keys",
+      "voices": 16,
+      "quality": "Standard2x",
+      "off_mean": 1.206365,
+      "on_mean": 1.4089904999999998,
+      "on_min": 1.387514,
+      "on_max": 1.430467,
+      "increment_percent": 16.796367600187324
+    },
+    {
+      "preset": "Stage Keys",
+      "voices": 16,
+      "quality": "HQ8x",
+      "off_mean": 4.3819125,
+      "on_mean": 5.6149819999999995,
+      "on_min": 5.294333,
+      "on_max": 5.935631,
+      "increment_percent": 28.139984538714515
+    },
+    {
+      "preset": "Electric Piano I",
+      "voices": 8,
+      "quality": "Standard2x",
+      "off_mean": 0.579548,
+      "on_mean": 0.663484,
+      "on_min": 0.654533,
+      "on_max": 0.672435,
+      "increment_percent": 14.483010898148208
+    },
+    {
+      "preset": "Electric Piano I",
+      "voices": 8,
+      "quality": "HQ8x",
+      "off_mean": 2.2184299999999997,
+      "on_mean": 2.4023630000000002,
+      "on_min": 2.394474,
+      "on_max": 2.410252,
+      "increment_percent": 8.291133819863617
+    },
+    {
+      "preset": "Electric Piano I",
+      "voices": 16,
+      "quality": "Standard2x",
+      "off_mean": 1.1713814999999999,
+      "on_mean": 1.2622814999999998,
+      "on_min": 1.248182,
+      "on_max": 1.276381,
+      "increment_percent": 7.760067919802394
+    },
+    {
+      "preset": "Electric Piano I",
+      "voices": 16,
+      "quality": "HQ8x",
+      "off_mean": 4.3256654999999995,
+      "on_mean": 4.803189,
+      "on_min": 4.716901,
+      "on_max": 4.889477,
+      "increment_percent": 11.039307130891185
+    },
+    {
+      "preset": "Solo Violin",
+      "voices": 8,
+      "quality": "Standard2x",
+      "off_mean": 0.5938635,
+      "on_mean": 0.6129575,
+      "on_min": 0.608436,
+      "on_max": 0.617479,
+      "increment_percent": 3.215216964841261
+    },
+    {
+      "preset": "Solo Violin",
+      "voices": 8,
+      "quality": "HQ8x",
+      "off_mean": 2.0782629999999997,
+      "on_mean": 2.3026915,
+      "on_min": 2.291427,
+      "on_max": 2.313956,
+      "increment_percent": 10.798849808710465
+    },
+    {
+      "preset": "Solo Violin",
+      "voices": 16,
+      "quality": "Standard2x",
+      "off_mean": 1.1085235,
+      "on_mean": 1.2075580000000001,
+      "on_min": 1.197433,
+      "on_max": 1.217683,
+      "increment_percent": 8.933910738022256
+    },
+    {
+      "preset": "Solo Violin",
+      "voices": 16,
+      "quality": "HQ8x",
+      "off_mean": 4.219441,
+      "on_mean": 4.6153984999999995,
+      "on_min": 4.56846,
+      "on_max": 4.662337,
+      "increment_percent": 9.384122209553336
+    },
+    {
+      "preset": "Covered Horn",
+      "voices": 8,
+      "quality": "Standard2x",
+      "off_mean": 0.563953,
+      "on_mean": 0.6702825,
+      "on_min": 0.659511,
+      "on_max": 0.681054,
+      "increment_percent": 18.854319420235367
+    },
+    {
+      "preset": "Covered Horn",
+      "voices": 8,
+      "quality": "HQ8x",
+      "off_mean": 2.191839,
+      "on_mean": 2.585111,
+      "on_min": 2.54498,
+      "on_max": 2.625242,
+      "increment_percent": 17.942558737206515
+    },
+    {
+      "preset": "Covered Horn",
+      "voices": 16,
+      "quality": "Standard2x",
+      "off_mean": 1.1674820000000001,
+      "on_mean": 1.3453105,
+      "on_min": 1.325233,
+      "on_max": 1.365388,
+      "increment_percent": 15.231798006307585
+    },
+    {
+      "preset": "Covered Horn",
+      "voices": 16,
+      "quality": "HQ8x",
+      "off_mean": 4.466566500000001,
+      "on_mean": 5.2221455,
+      "on_min": 5.128255,
+      "on_max": 5.316036,
+      "increment_percent": 16.916327116141638
+    },
+    {
+      "preset": "Flute Organ 8+4",
+      "voices": 8,
+      "quality": "Standard2x",
+      "off_mean": 0.419161,
+      "on_mean": 0.509541,
+      "on_min": 0.468183,
+      "on_max": 0.550899,
+      "increment_percent": 21.56212052170885
+    },
+    {
+      "preset": "Flute Organ 8+4",
+      "voices": 8,
+      "quality": "HQ8x",
+      "off_mean": 1.5850295,
+      "on_mean": 1.859663,
+      "on_min": 1.813214,
+      "on_max": 1.906112,
+      "increment_percent": 17.32671221576634
+    },
+    {
+      "preset": "Flute Organ 8+4",
+      "voices": 16,
+      "quality": "Standard2x",
+      "off_mean": 0.8356355,
+      "on_mean": 0.9578139999999999,
+      "on_min": 0.951917,
+      "on_max": 0.963711,
+      "increment_percent": 14.621027948190335
+    },
+    {
+      "preset": "Flute Organ 8+4",
+      "voices": 16,
+      "quality": "HQ8x",
+      "off_mean": 3.6324495,
+      "on_mean": 4.009535,
+      "on_min": 3.773247,
+      "on_max": 4.245823,
+      "increment_percent": 10.38102525582254
+    }
+  ]
+}

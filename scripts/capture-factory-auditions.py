@@ -10,7 +10,11 @@ import math
 import os
 from pathlib import Path
 import platform
+import re
 import subprocess
+
+ROOT = Path(__file__).resolve().parents[1]
+SAMPLE_RATE = 48000
 
 KEYS = [
     'Electric Piano I', 'Electric Piano II', 'Tine Piano', 'Clavichord I',
@@ -18,6 +22,10 @@ KEYS = [
     'Lute Harpsichord', 'Toy Piano', 'Honky Keys', 'Vibes Keys', 'Celesta',
     'Saw Pulse Piano', 'Soft Keys', 'Chorus Keys', 'Stage Keys', 'Velocity Keys',
     'Dulcimer', 'Reed Piano', 'Glass Keys', 'Tremolo Keys', 'Contour Keys', 'Pressure Keys',
+]
+PRESSURE_COMPARISONS = [
+    'Aftertouch Vibrato Lead', 'Pressure Lead', 'Wah Lead',
+    'Pressure Pad', 'Flute', 'Solo Violin', 'Pressure Keys',
 ]
 
 
@@ -34,10 +42,15 @@ def selections():
         dict(folder='original-addresses', names=['Tone I: E. Piano', 'Tone II: Bass', 'Analog Piano',
              'Bright Keys', 'Amber Keys 97', 'Slow Keys 106', 'Replicant Brass', 'Bass Stack'],
              velocity=.85, pressure=0, hold=4, tail=1),
-        dict(folder='pressure-zero', names=['Aftertouch Vibrato Lead', 'Pressure Lead', 'Wah Lead'],
+        dict(folder='pressure-zero', names=list(PRESSURE_COMPARISONS),
              velocity=.85, pressure=0, hold=5, tail=1),
-        dict(folder='pressure-full', names=['Aftertouch Vibrato Lead', 'Pressure Lead', 'Wah Lead'],
+        dict(folder='pressure-full', names=list(PRESSURE_COMPARISONS),
              velocity=.85, pressure=1, hold=5, tail=1),
+        dict(folder='instrument-bodies', names=['Trombone Glide', 'Theatre Organ', 'Oboe', 'Bassoon',
+             'Guitar I', 'Guitar II', 'Kalimba'], velocity=.85, pressure=0, hold=6, tail=2),
+        dict(folder='textures-and-effects', names=['Evolving Pad', 'Breathing Pad', 'Thunder',
+             'Rain', 'Surf', 'Wind'], velocity=.85, pressure=0, hold=7, tail=2),
+        dict(folder='soft-kalimba', names=['Kalimba'], velocity=.3, pressure=0, hold=4, tail=1),
     ]
     for note in (48, 60, 84):
         groups.append(dict(folder=f'tine-register-{note}', names=['Tine Piano'], velocity=.85,
@@ -45,25 +58,117 @@ def selections():
     return groups
 
 
+def roster_summary(groups):
+    """Validate render requests before creating directories or invoking children."""
+    folders, requests, names = set(), set(), set()
+    count = 0
+    seconds = 0.0
+    for group in groups:
+        folder = group['folder']
+        if not isinstance(folder, str) or re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', folder) is None:
+            raise RuntimeError('Audition folder must be a simple relative name')
+        if folder in folders:
+            raise RuntimeError('Duplicate audition folder')
+        folders.add(folder)
+        selected = group['names']
+        if not selected or any(not isinstance(name, str) or not name.strip() for name in selected):
+            raise RuntimeError('Audition selections must contain named programs')
+        if len(set(selected)) != len(selected):
+            raise RuntimeError('Duplicate program within an audition folder')
+        for key, low, high in (('velocity', 0, 1), ('pressure', 0, 1), ('hold', .05, 30), ('tail', 0, 30)):
+            value = group[key]
+            if not isinstance(value, (int, float)) or not math.isfinite(value) or not low <= value <= high:
+                raise RuntimeError('Invalid audition setting: ' + key)
+        note = group.get('note')
+        if note is not None and (type(note) is not int or not 0 <= note <= 127):
+            raise RuntimeError('Invalid audition MIDI note')
+        for name in selected:
+            request = (name, note, group['velocity'], group['pressure'], group['hold'], group['tail'])
+            if request in requests:
+                raise RuntimeError('Duplicate audition render request')
+            requests.add(request)
+        names.update(selected)
+        count += len(selected)
+        seconds += len(selected) * (group['hold'] + group['tail'])
+    if not count:
+        raise RuntimeError('Empty audition roster')
+    return dict(wav_count=count, selected_program_count=len(names), audio_seconds=seconds)
+
+
+def verify_source(source: str, repo: Path | None = None):
+    """Reject staged/unstaged tracked edits and a checkout that moved during capture."""
+    repo = ROOT if repo is None else repo
+    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
+    if head != source:
+        raise RuntimeError('Audition checkout changed from the recorded source commit')
+    if os.environ.get('GITHUB_SHA', source) != source:
+        raise RuntimeError('Audition checkout differs from workflow source')
+    dirty = subprocess.check_output(
+        ['git', 'status', '--porcelain=v1', '--untracked-files=no'], cwd=repo, text=True)
+    if dirty:
+        raise RuntimeError('Audition capture requires a clean tracked source tree; commit or restore tracked edits first')
+    tree = subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], cwd=repo, text=True).strip()
+    return dict(source_commit=head, source_tree=tree, tracked_source_clean=True)
+
+
+def audition_readme(groups, summary, source, revision):
+    lines = [
+        f"{summary['wav_count']} unnormalized circuit-synth auditions of {summary['selected_program_count']} existing programs.",
+        f"{summary['audio_seconds']:g} seconds total; library revision {revision}; source commit {source}.",
+        '48 kHz stereo float WAV. Each folder has exact settings and raw measurements in metrics.csv.',
+        'The complete 523-program parameter inventory is included. No presets were added.',
+        '',
+        'Listening folders:',
+    ]
+    for group in groups:
+        count = len(group['names'])
+        note = str(group['note']) if 'note' in group else 'category default (see metrics.csv)'
+        lines.append(f"- {group['folder']}: {count} WAVs, {count * (group['hold'] + group['tail']):g} seconds; "
+                     f"velocity {group['velocity']:g}, pressure {group['pressure']:g}, MIDI note {note}; "
+                     f"hold {group['hold']:g}s, release excerpt {group['tail']:g}s.")
+    lines += [
+        '',
+        'Compare firm keyboard and instrument-body examples with soft-keyboards and soft-kalimba.',
+        'Pressure-zero and pressure-full use the same programs, strike velocities and durations.',
+        'Pressure Lead is intentionally silent in pressure-zero and sounds in pressure-full.',
+        'The instrument-bodies folder includes the revised slide-brass, tremulant, woodwind and plucked-string voices.',
+        'Textures-and-effects includes evolving/breathing pads and the distinct thunder, rain, surf and wind layers.',
+        'The Tine Piano register folders compare MIDI notes 48, 60 and 84.',
+        '',
+        'Tracked sources are checked against the recorded commit before and after capture; the executable hash must also stay unchanged.',
+        'Provenance records the executable SHA256, source tree, exact commands and CI run identity when available.',
+        'Single-note examples do not establish acoustic similarity, chord behavior or host validation.',
+        'Long releases can continue beyond the excerpt. The export applies no normalization or additional clipping.',
+    ]
+    return '\n'.join(lines) + '\n'
+
+
 def capture_auditions(capture: Path, out: Path, source: str):
-    out.mkdir(parents=True, exist_ok=False)
     groups = selections()
-    expected_count = sum(len(group['names']) for group in groups)
+    summary = roster_summary(groups)
+    initial_source = verify_source(source)
+    binary_digest = hashlib.sha256(capture.read_bytes()).hexdigest()
+    out.mkdir(parents=True, exist_ok=False)
+    expected_count = summary['wav_count']
     inventory_cmd = [str(capture), '--library', 'all', '--inventory', str(out / 'inventory.json')]
     commands = []
     for group in groups:
         command = [str(capture), '--library', 'all', '--out', str(out / group['folder']), '--wav',
-                   '--rate', '48000', '--velocity', str(group['velocity']), '--pressure', str(group['pressure']),
+                   '--rate', str(SAMPLE_RATE), '--velocity', str(group['velocity']), '--pressure', str(group['pressure']),
                    '--hold', str(group['hold']), '--tail', str(group['tail'])]
         if 'note' in group:
             command += ['--note', str(group['note'])]
         for name in group['names']:
             command += ['--preset', name]
         commands.append(command)
-    provenance = dict(schema=2, source_commit=source, repository=os.environ.get('GITHUB_REPOSITORY'),
+    provenance = dict(schema=3, source_commit=source, source_tree=initial_source['source_tree'],
+                      tracked_source_clean_before_capture=True, tracked_source_clean_after_capture=False,
+                      repository=os.environ.get('GITHUB_REPOSITORY'),
                       run_id=os.environ.get('GITHUB_RUN_ID'), run_attempt=os.environ.get('GITHUB_RUN_ATTEMPT'),
-                      platform=platform.platform(), capture_binary_sha256=hashlib.sha256(capture.read_bytes()).hexdigest(),
+                      platform=platform.platform(), capture_binary_sha256=binary_digest,
                       inventory_command=inventory_cmd, capture_commands=commands, selections=groups,
+                      selected_program_count=summary['selected_program_count'],
+                      expected_audio_seconds=summary['audio_seconds'],
                       expected_wav_count=expected_count, capture_status='started')
     manifest = out / 'provenance.json'
     def save():
@@ -90,7 +195,7 @@ def capture_auditions(capture: Path, out: Path, source: str):
             if len(wavs) != len(rows) or any(p.stat().st_size <= 58 for p in wavs):
                 raise RuntimeError('Missing or empty audition WAV')
             for row in rows:
-                expected = dict(sample_rate=48000, velocity=group['velocity'], pressure=group['pressure'],
+                expected = dict(sample_rate=SAMPLE_RATE, velocity=group['velocity'], pressure=group['pressure'],
                                 hold_seconds=group['hold'], tail_seconds=group['tail'], rank=0,
                                 nonfinite=0, samples_over_full_scale=0)
                 if 'note' in group:
@@ -99,18 +204,16 @@ def capture_auditions(capture: Path, out: Path, source: str):
                     raise RuntimeError('Capture settings or audio safety checks differ')
         if len(list(out.rglob('*.wav'))) != expected_count:
             raise RuntimeError('Audition count differs from manifest')
+        if verify_source(source) != initial_source:
+            raise RuntimeError('Audition source tree changed during capture')
+        if hashlib.sha256(capture.read_bytes()).hexdigest() != binary_digest:
+            raise RuntimeError('Capture executable changed during audition capture')
         provenance.update(capture_status='complete', library_revision=inventory['library_revision'],
-                          wav_count=expected_count)
+                          tracked_source_clean_after_capture=True,
+                          wav_count=expected_count, audio_seconds=summary['audio_seconds'])
         save()
         (out / 'README.txt').write_text(
-            f'{expected_count} unnormalized circuit-synth auditions from the recorded source commit.\n'
-            '24 existing keyboards at firm velocity, five soft-strike comparisons, 22 refined instrument examples,\n'
-            'eight revoiced original addresses, three paired pressure examples, and Tine Piano at MIDI notes 48, 60 and 84.\n'
-            'Pressure Lead is intentionally silent in pressure-zero and sounds in pressure-full.\n'
-            '48 kHz stereo float WAV. Each folder has exact settings and raw measurements in metrics.csv.\n'
-            'The complete 523-program parameter inventory is included. No presets were added.\n'
-            'Single-note examples do not establish acoustic similarity, chord behavior or host validation.\n'
-            'Long releases can continue beyond the excerpt; no normalization or clipping was applied.\n', encoding='utf-8')
+            audition_readme(groups, summary, source, inventory['library_revision']), encoding='utf-8')
         (out / 'SHA256SUMS').write_text(''.join(
             f'{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.relative_to(out).as_posix()}\n'
             for p in sorted(out.rglob('*')) if p.is_file()), encoding='utf-8')
@@ -125,7 +228,7 @@ def main():
     parser.add_argument('--capture', required=True, type=Path)
     parser.add_argument('--out', required=True, type=Path)
     args = parser.parse_args()
-    source = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+    source = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     if os.environ.get('GITHUB_SHA', source) != source:
         raise SystemExit('Audition checkout differs from workflow source')
     capture_auditions(args.capture.resolve(), args.out.resolve(), source)
