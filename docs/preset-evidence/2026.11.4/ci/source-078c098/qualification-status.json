@@ -4,19 +4,23 @@
   "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
   "native_run_id": 45246863788,
   "attempt": 1,
-  "as_of_utc": "2026-11-23T20:05:12Z",
+  "as_of_utc": "2026-11-23T20:48:33Z",
   "completed_independent_scopes": [
-    "Windows installation archive and original native CTest suite",
-    "Apple Silicon installation archive and original native CTest suite",
+    "Windows, Apple Silicon and Intel Mac installation archives and original native CTest suites",
+    "Eight original Mac pluginval lanes and distributed AU/VST3 identity",
+    "Two original Windows pluginval lanes and complete validated/distributed VST3 identity",
     "Original UI smoke and actual screenshot archive",
-    "Six supporting filter jobs with 91 unchanged input files"
+    "Six supporting filter jobs with 91 unchanged input files",
+    "Five exact-source supporting DSP jobs and six actual supporting archives",
+    "ASan/UBSan core suite:199passed,0failed,1formal skip of200;no reported diagnostics"
   ],
   "remaining_scopes": [
-    "Linux and Intel Mac native suites and installation archives",
-    "All 13 validator lanes with original exits and validated-to-distributed identity",
-    "Actual final audition archive",
-    "Final sanitizer outcome",
-    "Final 60-worker ledger and publication review"
+    "Original Linux native suite and installation archive",
+    "Three original Linux pluginval lanes and complete validated/distributed VST3 identity",
+    "Actual final audition archive and delivered-inventory comparison",
+    "Final completion of all60actual workers, independent review and download publication"
   ],
-  "scope_note": "Individual accepted records below are partial scopes. A completed release-qualification.json is required for the new download publication."
+  "scope_note": "Individual accepted records below are partial scopes. A completed release-qualification.json is required for the new download publication.",
+  "actual_workers_spawned": 60,
+  "all_worker_scopes_completed": false
 }

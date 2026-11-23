@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "target": "macos-x86_64",
+  "producer_job_id": 137945806008,
+  "artifact": {
+    "id": 14858878730,
+    "node_id": "MDg6QXJ0aWZhY3QxNDg1ODg3ODczMA==",
+    "name": "cs80-macos-15-intel-install-bundle",
+    "size_in_bytes": 16228346,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730/zip",
+    "expired": false,
+    "digest": "sha256:84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a",
+    "created_at": "2026-11-23T20:19:51Z",
+    "updated_at": "2026-11-23T20:19:51Z",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "workflow_run": {
+      "id": 45246863788,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+    }
+  },
+  "executable": {
+    "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+    "bytes": 15233024,
+    "sha256": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876",
+    "platform": "macos",
+    "architecture": "x86_64",
+    "role": "plugin",
+    "header_check": "PASS",
+    "header": {
+      "format": "Mach-O 64-bit",
+      "advertised_slice_verified": "x86_64",
+      "cpu_type": "0x1000007"
+    }
+  },
+  "installation_report": {
+    "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/verified/macos-x86_64-install.json",
+    "bytes": 4151,
+    "sha256": "aa2f9c21471f0515be0deb58abfb0e490a654095693c4790b91465366810b4eb"
+  },
+  "scope": "SHA256 of actual AU executable bytes read from original distributed installation archive; validator-input identity remains A56 work."
+}

@@ -1,0 +1,244 @@
+[
+  {
+    "target": "macos-arm64",
+    "kind": "pluginval",
+    "archive": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-pluginval.zip",
+      "bytes": 10377,
+      "sha256": "a14b0fedcb8eaef2af315bb596ae9eb84dd77df906933b9fd1691f68b40ec302"
+    },
+    "members": [
+      {
+        "name": "au-payload-before-validation.sha256",
+        "bytes": 378,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "au-payload-after-validation.sha256",
+        "bytes": 378,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-download.json",
+        "bytes": 918,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-reports/cs80-au",
+        "bytes": 7214,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-reports/cs80-au-gui",
+        "bytes": 7896,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-reports/cs80-au-seed-regression",
+        "bytes": 7896,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-reports/cs80-vst3",
+        "bytes": 7272,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-vst3.log",
+        "bytes": 7399,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-au.log",
+        "bytes": 7308,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-au-gui.log",
+        "bytes": 7990,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-au-seed-regression.log",
+        "bytes": 7990,
+        "unix_mode": "0o100644"
+      }
+    ],
+    "canonical_unique_supported_types": true
+  },
+  {
+    "target": "macos-arm64",
+    "kind": "install",
+    "archive": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-install.zip",
+      "bytes": 14949170,
+      "sha256": "a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8"
+    },
+    "members": [
+      {
+        "name": "SHA256SUMS",
+        "bytes": 233,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "cs80-reference-macos-arm64-078c0981ffa1.manifest.json",
+        "bytes": 8001,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "cs80-reference-macos-arm64-078c0981ffa1.tar.gz",
+        "bytes": 14940420,
+        "unix_mode": "0o100644"
+      }
+    ],
+    "canonical_unique_supported_types": true
+  },
+  {
+    "target": "macos-arm64",
+    "kind": "test-evidence",
+    "archive": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-test-evidence.zip",
+      "bytes": 66236,
+      "sha256": "2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895"
+    },
+    "members": [
+      {
+        "name": "Testing/Temporary/LastTest.log",
+        "bytes": 330366,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "ctest-results.xml",
+        "bytes": 111289,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "ci-juce-provenance.txt",
+        "bytes": 612,
+        "unix_mode": "0o100644"
+      }
+    ],
+    "canonical_unique_supported_types": true
+  },
+  {
+    "target": "macos-x86_64",
+    "kind": "pluginval",
+    "archive": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-pluginval.zip",
+      "bytes": 10329,
+      "sha256": "8affb980a4d12a67213228a19dbba242174d52f95c1b86c2c160767739f7b358"
+    },
+    "members": [
+      {
+        "name": "au-payload-before-validation.sha256",
+        "bytes": 378,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-download.json",
+        "bytes": 694,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "au-payload-after-validation.sha256",
+        "bytes": 378,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-reports/cs80-au",
+        "bytes": 7214,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-reports/cs80-au-gui",
+        "bytes": 7896,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-reports/cs80-au-seed-regression",
+        "bytes": 7896,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-reports/cs80-vst3",
+        "bytes": 7272,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-vst3.log",
+        "bytes": 7399,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-au.log",
+        "bytes": 7308,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-au-gui.log",
+        "bytes": 7990,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "pluginval-au-seed-regression.log",
+        "bytes": 7990,
+        "unix_mode": "0o100644"
+      }
+    ],
+    "canonical_unique_supported_types": true
+  },
+  {
+    "target": "macos-x86_64",
+    "kind": "install",
+    "archive": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-install.zip",
+      "bytes": 16228346,
+      "sha256": "84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a"
+    },
+    "members": [
+      {
+        "name": "SHA256SUMS",
+        "bytes": 235,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "cs80-reference-macos-x86_64-078c0981ffa1.manifest.json",
+        "bytes": 8004,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "cs80-reference-macos-x86_64-078c0981ffa1.tar.gz",
+        "bytes": 16219587,
+        "unix_mode": "0o100644"
+      }
+    ],
+    "canonical_unique_supported_types": true
+  },
+  {
+    "target": "macos-x86_64",
+    "kind": "test-evidence",
+    "archive": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-test-evidence.zip",
+      "bytes": 66284,
+      "sha256": "16ab696d2fea6e758ec2f919e7849b473eabcf54b4f6f76011b33cf17b9a82b4"
+    },
+    "members": [
+      {
+        "name": "Testing/Temporary/LastTest.log",
+        "bytes": 330105,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "ctest-results.xml",
+        "bytes": 111138,
+        "unix_mode": "0o100644"
+      },
+      {
+        "name": "ci-juce-provenance.txt",
+        "bytes": 612,
+        "unix_mode": "0o100644"
+      }
+    ],
+    "canonical_unique_supported_types": true
+  }
+]

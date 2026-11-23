@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "status": "retained_original_development_inputs",
+  "inventory_export_source": "e32728b31d97fc356cac291cb98935fdcd38f803",
+  "release_binary_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_comparison_paths": [
+    "src/core",
+    "src/plugin",
+    "src/tools/preset_capture.cpp",
+    "scripts/capture-factory-auditions.py"
+  ],
+  "source_changes_between_export_and_release": [],
+  "files": [
+    {
+      "path": "inventory.json",
+      "bytes": 704822,
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611"
+    },
+    {
+      "path": "parameter-coverage.json",
+      "bytes": 441511,
+      "sha256": "43b693d7990b0e8857867de3b29ed69b02fbc5cec83285f63977b6257825dad9"
+    }
+  ],
+  "prior_review_records": [
+    "../a32/summary.json",
+    "../reviews/a43-summary.json",
+    "../reviews/a47-summary.json"
+  ],
+  "scope": "These are the unchanged original development inventory/structural comparison inputs. Their e327 source labels are preserved. They are not claimed as a new native export or actual audition ZIP; later delivered-inventory verification must independently compare that archive against these bytes. Historical initial-stage inventory and comparison are retained separately."
+}

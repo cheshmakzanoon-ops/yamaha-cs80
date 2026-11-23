@@ -1,0 +1,2457 @@
+{
+  "schema": 1,
+  "reviewer": "actual continuation worker 48 of 60",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_tree": "d84661c6c465c53ff41361e8aba0cba5e4a53397",
+  "reviewed_at_utc": "2026-11-23T20:31:21.308614+00:00",
+  "status": "completed",
+  "conclusion": "success",
+  "run": {
+    "id": 45246863831,
+    "name": "DSP numerical measurements",
+    "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-23T19:14:34Z",
+    "run_started_at": "2026-11-23T19:14:34Z",
+    "updated_at": "2026-11-23T20:29:04Z",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831"
+  },
+  "jobs": [
+    {
+      "id": 137945816716,
+      "name": "Synthetic reference comparison (not hardware evidence)",
+      "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-23T19:17:13Z",
+      "completed_at": "2026-11-23T19:17:34Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831/job/137945816716",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:14Z",
+          "completed_at": "2026-11-23T19:17:16Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:16Z",
+          "completed_at": "2026-11-23T19:17:26Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:26Z",
+          "completed_at": "2026-11-23T19:17:27Z"
+        },
+        {
+          "number": 4,
+          "name": "Test comparison failures and provenance gates",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:27Z",
+          "completed_at": "2026-11-23T19:17:31Z"
+        },
+        {
+          "number": 5,
+          "name": "Compare deterministic synthetic stand-in traces",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:31Z",
+          "completed_at": "2026-11-23T19:17:31Z"
+        },
+        {
+          "number": 6,
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:31Z",
+          "completed_at": "2026-11-23T19:17:32Z"
+        },
+        {
+          "number": 11,
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:32Z",
+          "completed_at": "2026-11-23T19:17:32Z"
+        },
+        {
+          "number": 12,
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:32Z",
+          "completed_at": "2026-11-23T19:17:33Z"
+        },
+        {
+          "number": 13,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:17:33Z",
+          "completed_at": "2026-11-23T19:17:33Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "synthetic-job.log",
+        "bytes": 16134,
+        "sha256": "25a34a870b40ea60ff5fa674950fdbcc4a4ac09d5318ed3eb635531621304c1e"
+      },
+      "observed_exact_checkout": true,
+      "python_unit_tests": {
+        "ran": [
+          22
+        ],
+        "basis": "Original successful test step; retained Ran tests and OK lines. Separate from CTest counts."
+      }
+    },
+    {
+      "id": 137945817147,
+      "name": "Default-off raw audio versus shipped baseline",
+      "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-23T19:25:56Z",
+      "completed_at": "2026-11-23T19:29:01Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831/job/137945817147",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:25:57Z",
+          "completed_at": "2026-11-23T19:25:59Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:25:59Z",
+          "completed_at": "2026-11-23T19:26:09Z"
+        },
+        {
+          "number": 3,
+          "name": "Build both revisions with the same compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:26:09Z",
+          "completed_at": "2026-11-23T19:26:41Z"
+        },
+        {
+          "number": 4,
+          "name": "Require byte-identical default and noisy-reassignment traces",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:26:41Z",
+          "completed_at": "2026-11-23T19:28:56Z"
+        },
+        {
+          "number": 5,
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:28:56Z",
+          "completed_at": "2026-11-23T19:28:58Z"
+        },
+        {
+          "number": 10,
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:28:58Z",
+          "completed_at": "2026-11-23T19:28:58Z"
+        },
+        {
+          "number": 11,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:28:58Z",
+          "completed_at": "2026-11-23T19:28:58Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "legacy-job.log",
+        "bytes": 19254,
+        "sha256": "f8b1226bbcab102608017ab4a8c924d08334218f4945afb899bbeef9a3780f02"
+      },
+      "observed_exact_checkout": true
+    },
+    {
+      "id": 137945817176,
+      "name": "measure",
+      "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-23T19:29:03Z",
+      "completed_at": "2026-11-23T19:30:11Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831/job/137945817176",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:03Z",
+          "completed_at": "2026-11-23T19:29:04Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:04Z",
+          "completed_at": "2026-11-23T19:29:11Z"
+        },
+        {
+          "number": 3,
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:11Z",
+          "completed_at": "2026-11-23T19:29:11Z"
+        },
+        {
+          "number": 4,
+          "name": "Install pinned numerical plotting tools",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:11Z",
+          "completed_at": "2026-11-23T19:29:21Z"
+        },
+        {
+          "number": 5,
+          "name": "Build standalone numerical probe",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:21Z",
+          "completed_at": "2026-11-23T19:29:52Z"
+        },
+        {
+          "number": 6,
+          "name": "Measure and enforce regression bounds",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:52Z",
+          "completed_at": "2026-11-23T19:29:59Z"
+        },
+        {
+          "number": 7,
+          "name": "Export actual-engine candidate with exact-source provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:59Z",
+          "completed_at": "2026-11-23T19:30:03Z"
+        },
+        {
+          "number": 8,
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:03Z",
+          "completed_at": "2026-11-23T19:30:05Z"
+        },
+        {
+          "number": 9,
+          "name": "Upload live envelope candidate trace",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:05Z",
+          "completed_at": "2026-11-23T19:30:06Z"
+        },
+        {
+          "number": 10,
+          "name": "Upload source-traceable graphs and raw traces",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:06Z",
+          "completed_at": "2026-11-23T19:30:09Z"
+        },
+        {
+          "number": 19,
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:09Z",
+          "completed_at": "2026-11-23T19:30:09Z"
+        },
+        {
+          "number": 20,
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:09Z",
+          "completed_at": "2026-11-23T19:30:09Z"
+        },
+        {
+          "number": 21,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:09Z",
+          "completed_at": "2026-11-23T19:30:09Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "measure-job.log",
+        "bytes": 35149,
+        "sha256": "68480e98241a8471b85248217698dee42d3e014e6eba6c2e4dc66d90d684a002"
+      },
+      "observed_exact_checkout": true,
+      "python_unit_tests": {
+        "ran": [
+          13
+        ],
+        "basis": "Original successful test step; retained Ran tests and OK lines. Separate from CTest counts."
+      }
+    },
+    {
+      "id": 137945817253,
+      "name": "sanitizers",
+      "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-23T19:25:55Z",
+      "completed_at": "2026-11-23T20:29:04Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831/job/137945817253",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:25:56Z",
+          "completed_at": "2026-11-23T19:25:57Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:25:57Z",
+          "completed_at": "2026-11-23T19:26:03Z"
+        },
+        {
+          "number": 3,
+          "name": "Configure ASan and UBSan core build",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:26:03Z",
+          "completed_at": "2026-11-23T19:26:06Z"
+        },
+        {
+          "number": 4,
+          "name": "Build instrument and circuit tests",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:26:06Z",
+          "completed_at": "2026-11-23T19:32:54Z"
+        },
+        {
+          "number": 5,
+          "name": "Run sanitizer and validator-fixture tests",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:32:54Z",
+          "completed_at": "2026-11-23T20:29:01Z"
+        },
+        {
+          "number": 10,
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T20:29:01Z",
+          "completed_at": "2026-11-23T20:29:01Z"
+        },
+        {
+          "number": 11,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T20:29:01Z",
+          "completed_at": "2026-11-23T20:29:01Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "sanitizers-job.log",
+        "bytes": 113728,
+        "sha256": "2c296e8b09a99955233a12cab3c65c62c33521dc4f273ceb024c87bacc65a8d0"
+      },
+      "observed_exact_checkout": true,
+      "ctest": {
+        "observed_entries": 200,
+        "registered": 200,
+        "passed": 199,
+        "formal_skipped": 1,
+        "failed": 0,
+        "formal_skip_names": [
+          "cs80_stereo_pra_exact_tests"
+        ],
+        "cases": [
+          {
+            "ordinal": 1,
+            "registered": 200,
+            "name": "cs80_wsc_held_endpoint_tests",
+            "result": "Passed",
+            "detail": "0.11 sec"
+          },
+          {
+            "ordinal": 2,
+            "registered": 200,
+            "name": "cs80_engine_output_fir_packed_tests",
+            "result": "Passed",
+            "detail": "1.18 sec"
+          },
+          {
+            "ordinal": 3,
+            "registered": 200,
+            "name": "cs80_ig00156_batch_tests",
+            "result": "Passed",
+            "detail": "0.08 sec"
+          },
+          {
+            "ordinal": 4,
+            "registered": 200,
+            "name": "cs80_legacy_sub_lfo_oracle_tests",
+            "result": "Passed",
+            "detail": "5.98 sec"
+          },
+          {
+            "ordinal": 5,
+            "registered": 200,
+            "name": "cs80_filter_batch_scheduling_tests",
+            "result": "Passed",
+            "detail": "9.27 sec"
+          },
+          {
+            "ordinal": 6,
+            "registered": 200,
+            "name": "cs80_ig00151_zero_ei_tests",
+            "result": "Passed",
+            "detail": "0.04 sec"
+          },
+          {
+            "ordinal": 7,
+            "registered": 200,
+            "name": "cs80_event_timeline_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 8,
+            "registered": 200,
+            "name": "cs80_pump_until_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 9,
+            "registered": 200,
+            "name": "cs80_filter_batch_admission_tests",
+            "result": "Passed",
+            "detail": "9.13 sec"
+          },
+          {
+            "ordinal": 10,
+            "registered": 200,
+            "name": "cs80_package_binary_identity_tests",
+            "result": "Passed",
+            "detail": "0.49 sec"
+          },
+          {
+            "ordinal": 11,
+            "registered": 200,
+            "name": "cs80_packaging_notice_tests",
+            "result": "Passed",
+            "detail": "1.65 sec"
+          },
+          {
+            "ordinal": 12,
+            "registered": 200,
+            "name": "cs80_factory_audition_artifact_tests",
+            "result": "Passed",
+            "detail": "0.37 sec"
+          },
+          {
+            "ordinal": 13,
+            "registered": 200,
+            "name": "cs80_ci_juce_provenance_tests",
+            "result": "Passed",
+            "detail": "0.33 sec"
+          },
+          {
+            "ordinal": 14,
+            "registered": 200,
+            "name": "cs80_pluginval_windows_download_tests",
+            "result": "Passed",
+            "detail": "0.10 sec"
+          },
+          {
+            "ordinal": 15,
+            "registered": 200,
+            "name": "cs80_pluginval_macos_download_tests",
+            "result": "Passed",
+            "detail": "0.10 sec"
+          },
+          {
+            "ordinal": 16,
+            "registered": 200,
+            "name": "cs80_filter_batch_engine_tests",
+            "result": "Passed",
+            "detail": "26.59 sec"
+          },
+          {
+            "ordinal": 17,
+            "registered": 200,
+            "name": "cs80_ci_bundle_verification_tests",
+            "result": "Passed",
+            "detail": "0.43 sec"
+          },
+          {
+            "ordinal": 18,
+            "registered": 200,
+            "name": "cs80_windows_installer_preflight_tests",
+            "result": "Passed",
+            "detail": "0.80 sec"
+          },
+          {
+            "ordinal": 19,
+            "registered": 200,
+            "name": "cs80_parity_harness_tests",
+            "result": "Passed",
+            "detail": "2.33 sec"
+          },
+          {
+            "ordinal": 20,
+            "registered": 200,
+            "name": "cs80_deb_runtime_dependency_tests",
+            "result": "Passed",
+            "detail": "3.85 sec"
+          },
+          {
+            "ordinal": 21,
+            "registered": 200,
+            "name": "cs80_preset_trash_safety_tests",
+            "result": "Passed",
+            "detail": "0.61 sec"
+          },
+          {
+            "ordinal": 22,
+            "registered": 200,
+            "name": "cs80_ui_environment_tests",
+            "result": "Passed",
+            "detail": "14.92 sec"
+          },
+          {
+            "ordinal": 23,
+            "registered": 200,
+            "name": "cs80_preset_signature_math_tests",
+            "result": "Passed",
+            "detail": "15.74 sec"
+          },
+          {
+            "ordinal": 24,
+            "registered": 200,
+            "name": "cs80_continuous_voice_circuit_tests",
+            "result": "Passed",
+            "detail": "0.08 sec"
+          },
+          {
+            "ordinal": 25,
+            "registered": 200,
+            "name": "cs80_macos_installer_architecture_tests",
+            "result": "Passed",
+            "detail": "2.98 sec"
+          },
+          {
+            "ordinal": 26,
+            "registered": 200,
+            "name": "cs80_lfo_scope_preview_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 27,
+            "registered": 200,
+            "name": "cs80_preset_preview_math_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 28,
+            "registered": 200,
+            "name": "cs80_output_meter_display_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 29,
+            "registered": 200,
+            "name": "cs80_voice_activity_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 30,
+            "registered": 200,
+            "name": "cs80_output_meter_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 31,
+            "registered": 200,
+            "name": "cs80_output_meter_audit_tests",
+            "result": "Passed",
+            "detail": "0.06 sec"
+          },
+          {
+            "ordinal": 32,
+            "registered": 200,
+            "name": "cs80_keyboard_pressure_audit_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 33,
+            "registered": 200,
+            "name": "cs80_captured_keyboard_events_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 34,
+            "registered": 200,
+            "name": "cs80_keyboard_event_queue_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 35,
+            "registered": 200,
+            "name": "cs80_continuous_voice_circuit_audit_tests",
+            "result": "Passed",
+            "detail": "1.90 sec"
+          },
+          {
+            "ordinal": 36,
+            "registered": 200,
+            "name": "cs80_keyboard_epoch_interleaving_tests",
+            "result": "Passed",
+            "detail": "1.75 sec"
+          },
+          {
+            "ordinal": 37,
+            "registered": 200,
+            "name": "cs80_parity_mode_tests",
+            "result": "Passed",
+            "detail": "15.09 sec"
+          },
+          {
+            "ordinal": 38,
+            "registered": 200,
+            "name": "cs80_source_performance_audit_tests",
+            "result": "Passed",
+            "detail": "11.96 sec"
+          },
+          {
+            "ordinal": 39,
+            "registered": 200,
+            "name": "cs80_source_performance_tests",
+            "result": "Passed",
+            "detail": "50.73 sec"
+          },
+          {
+            "ordinal": 40,
+            "registered": 200,
+            "name": "cs80_filter_default_history_tests",
+            "result": "Passed",
+            "detail": "0.13 sec"
+          },
+          {
+            "ordinal": 41,
+            "registered": 200,
+            "name": "cs80_filter_default_history_missing_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 42,
+            "registered": 200,
+            "name": "cs80_filter_default_history_truncated_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 43,
+            "registered": 200,
+            "name": "cs80_filter_idle_fallback_tests",
+            "result": "Passed",
+            "detail": "0.09 sec"
+          },
+          {
+            "ordinal": 44,
+            "registered": 200,
+            "name": "cs80_filter_idle_fallback_missing_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 45,
+            "registered": 200,
+            "name": "cs80_filter_idle_fallback_truncated_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 46,
+            "registered": 200,
+            "name": "cs80_filter_batch_cap_tests",
+            "result": "Passed",
+            "detail": "0.36 sec"
+          },
+          {
+            "ordinal": 47,
+            "registered": 200,
+            "name": "cs80_filter_batch_cap_missing_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 48,
+            "registered": 200,
+            "name": "cs80_filter_batch_cap_truncated_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 49,
+            "registered": 200,
+            "name": "cs80_ig00156_cache_tests",
+            "result": "Passed",
+            "detail": "0.65 sec"
+          },
+          {
+            "ordinal": 50,
+            "registered": 200,
+            "name": "cs80_ig00156_filter_tests",
+            "result": "Passed",
+            "detail": "1.32 sec"
+          },
+          {
+            "ordinal": 51,
+            "registered": 200,
+            "name": "cs80_envelope_rc_model_tests",
+            "result": "Passed",
+            "detail": "1.15 sec"
+          },
+          {
+            "ordinal": 52,
+            "registered": 200,
+            "name": "cs80_live_envelope_level_tests",
+            "result": "Passed",
+            "detail": "24.34 sec"
+          },
+          {
+            "ordinal": 53,
+            "registered": 200,
+            "name": "cs80_live_envelope_timing_tests",
+            "result": "Passed",
+            "detail": "8.06 sec"
+          },
+          {
+            "ordinal": 54,
+            "registered": 200,
+            "name": "cs80_active_tail_continuity_tests",
+            "result": "Passed",
+            "detail": "57.54 sec"
+          },
+          {
+            "ordinal": 55,
+            "registered": 200,
+            "name": "cs80_core_tests",
+            "result": "Passed",
+            "detail": "42.75 sec"
+          },
+          {
+            "ordinal": 56,
+            "registered": 200,
+            "name": "cs80_voice_release_tests",
+            "result": "Passed",
+            "detail": "4.99 sec"
+          },
+          {
+            "ordinal": 57,
+            "registered": 200,
+            "name": "cs80_sixteen_voice_release_tests",
+            "result": "Passed",
+            "detail": "11.62 sec"
+          },
+          {
+            "ordinal": 58,
+            "registered": 200,
+            "name": "cs80_unison_glide_tests",
+            "result": "Passed",
+            "detail": "30.61 sec"
+          },
+          {
+            "ordinal": 59,
+            "registered": 200,
+            "name": "cs80_unison_detune_latch_tests",
+            "result": "Passed",
+            "detail": "0.86 sec"
+          },
+          {
+            "ordinal": 60,
+            "registered": 200,
+            "name": "cs80_pedal_release_tests",
+            "result": "Passed",
+            "detail": "5.08 sec"
+          },
+          {
+            "ordinal": 61,
+            "registered": 200,
+            "name": "cs80_high_resolution_velocity_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 62,
+            "registered": 200,
+            "name": "cs80_envelope_precision_tests",
+            "result": "Passed",
+            "detail": "237.88 sec"
+          },
+          {
+            "ordinal": 63,
+            "registered": 200,
+            "name": "cs80_controller_reset_tests",
+            "result": "Passed",
+            "detail": "34.48 sec"
+          },
+          {
+            "ordinal": 64,
+            "registered": 200,
+            "name": "cs80_experimental_oscillator_tests",
+            "result": "Passed",
+            "detail": "52.90 sec"
+          },
+          {
+            "ordinal": 65,
+            "registered": 200,
+            "name": "cs80_source_factory_tone_tests",
+            "result": "Passed",
+            "detail": "0.35 sec"
+          },
+          {
+            "ordinal": 66,
+            "registered": 200,
+            "name": "cs80_hardware_control_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 67,
+            "registered": 200,
+            "name": "cs80_ig00156_reference_tests",
+            "result": "Passed",
+            "detail": "0.16 sec"
+          },
+          {
+            "ordinal": 68,
+            "registered": 200,
+            "name": "cs80_keyboard_contour_reference_tests",
+            "result": "Passed",
+            "detail": "0.03 sec"
+          },
+          {
+            "ordinal": 69,
+            "registered": 200,
+            "name": "cs80_loaded_control_reference_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 70,
+            "registered": 200,
+            "name": "cs80_loaded_control_rank_tests",
+            "result": "Passed",
+            "detail": "0.05 sec"
+          },
+          {
+            "ordinal": 71,
+            "registered": 200,
+            "name": "cs80_loaded_control_transient_tests",
+            "result": "Passed",
+            "detail": "0.11 sec"
+          },
+          {
+            "ordinal": 72,
+            "registered": 200,
+            "name": "cs80_output_tap_integration_tests",
+            "result": "Passed",
+            "detail": "6.93 sec"
+          },
+          {
+            "ordinal": 73,
+            "registered": 200,
+            "name": "cs80_output_tap_circuit_tests",
+            "result": "Passed",
+            "detail": "7.49 sec"
+          },
+          {
+            "ordinal": 74,
+            "registered": 200,
+            "name": "cs80_output_taps_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 75,
+            "registered": 200,
+            "name": "cs80_level_control_tests",
+            "result": "Passed",
+            "detail": "0.18 sec"
+          },
+          {
+            "ordinal": 76,
+            "registered": 200,
+            "name": "cs80_resonance_control_tests",
+            "result": "Passed",
+            "detail": "0.07 sec"
+          },
+          {
+            "ordinal": 77,
+            "registered": 200,
+            "name": "cs80_oe2_filters_tests",
+            "result": "Passed",
+            "detail": "0.05 sec"
+          },
+          {
+            "ordinal": 78,
+            "registered": 200,
+            "name": "cs80_stereo_pra_exact_tests",
+            "result": "***Skipped",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 79,
+            "registered": 200,
+            "name": "cs80_pra_wah_integration_tests",
+            "result": "Passed",
+            "detail": "6.30 sec"
+          },
+          {
+            "ordinal": 80,
+            "registered": 200,
+            "name": "cs80_pra_wah_circuit_tests",
+            "result": "Passed",
+            "detail": "2.88 sec"
+          },
+          {
+            "ordinal": 81,
+            "registered": 200,
+            "name": "cs80_pra_wah_tests",
+            "result": "Passed",
+            "detail": "0.16 sec"
+          },
+          {
+            "ordinal": 82,
+            "registered": 200,
+            "name": "cs80_bbd_chorus_tests",
+            "result": "Passed",
+            "detail": "2.33 sec"
+          },
+          {
+            "ordinal": 83,
+            "registered": 200,
+            "name": "cs80_mn3001_packet_tests",
+            "result": "Passed",
+            "detail": "0.12 sec"
+          },
+          {
+            "ordinal": 84,
+            "registered": 200,
+            "name": "cs80_performance_control_tests",
+            "result": "Passed",
+            "detail": "43.92 sec"
+          },
+          {
+            "ordinal": 85,
+            "registered": 200,
+            "name": "cs80_validator_diagnostic_selection_tests",
+            "result": "Passed",
+            "detail": "3.88 sec"
+          },
+          {
+            "ordinal": 86,
+            "registered": 200,
+            "name": "cs80_validator_retry_tests",
+            "result": "Passed",
+            "detail": "4.14 sec"
+          },
+          {
+            "ordinal": 87,
+            "registered": 200,
+            "name": "cs80_validator_exit_classification_tests",
+            "result": "Passed",
+            "detail": "0.31 sec"
+          },
+          {
+            "ordinal": 88,
+            "registered": 200,
+            "name": "cs80_ig00156_nodal_tests",
+            "result": "Passed",
+            "detail": "80.67 sec"
+          },
+          {
+            "ordinal": 89,
+            "registered": 200,
+            "name": "cs80_ig00156_top_octave_tests",
+            "result": "Passed",
+            "detail": "2.71 sec"
+          },
+          {
+            "ordinal": 90,
+            "registered": 200,
+            "name": "cs80_oscillator_promotion_tests",
+            "result": "Passed",
+            "detail": "22.36 sec"
+          },
+          {
+            "ordinal": 91,
+            "registered": 200,
+            "name": "cs80_ig00151_vca_tests",
+            "result": "Passed",
+            "detail": "6.74 sec"
+          },
+          {
+            "ordinal": 92,
+            "registered": 200,
+            "name": "cs80_tolerance_drift_tests",
+            "result": "Passed",
+            "detail": "34.61 sec"
+          },
+          {
+            "ordinal": 93,
+            "registered": 200,
+            "name": "cs80_fx_loudness_core_tests",
+            "result": "Passed",
+            "detail": "0.33 sec"
+          },
+          {
+            "ordinal": 94,
+            "registered": 200,
+            "name": "cs80_fx_loudness_gate_tests",
+            "result": "Passed",
+            "detail": "0.08 sec"
+          },
+          {
+            "ordinal": 95,
+            "registered": 200,
+            "name": "cs80_arp_rate_lifecycle_tests",
+            "result": "Passed",
+            "detail": "0.83 sec"
+          },
+          {
+            "ordinal": 96,
+            "registered": 200,
+            "name": "cs80_arp_pedal_lifecycle_tests",
+            "result": "Passed",
+            "detail": "0.77 sec"
+          },
+          {
+            "ordinal": 97,
+            "registered": 200,
+            "name": "cs80_arp_repeat_lifecycle_tests",
+            "result": "Passed",
+            "detail": "0.31 sec"
+          },
+          {
+            "ordinal": 98,
+            "registered": 200,
+            "name": "cs80_quiet_fx_rack_tests",
+            "result": "Passed",
+            "detail": "6.25 sec"
+          },
+          {
+            "ordinal": 99,
+            "registered": 200,
+            "name": "cs80_fx_tape_lifecycle_tests",
+            "result": "Passed",
+            "detail": "0.19 sec"
+          },
+          {
+            "ordinal": 100,
+            "registered": 200,
+            "name": "cs80_external_interpolator_tests",
+            "result": "Passed",
+            "detail": "15.64 sec"
+          },
+          {
+            "ordinal": 101,
+            "registered": 200,
+            "name": "cs80_oversampling_tests",
+            "result": "Passed",
+            "detail": "7.38 sec"
+          },
+          {
+            "ordinal": 102,
+            "registered": 200,
+            "name": "cs80_smoothing_tests",
+            "result": "Passed",
+            "detail": "13.82 sec"
+          },
+          {
+            "ordinal": 103,
+            "registered": 200,
+            "name": "cs80_pitch_bend_range_tests",
+            "result": "Passed",
+            "detail": "8.64 sec"
+          },
+          {
+            "ordinal": 104,
+            "registered": 200,
+            "name": "cs80_mpe_member_onset_tests",
+            "result": "Passed",
+            "detail": "12.33 sec"
+          },
+          {
+            "ordinal": 105,
+            "registered": 200,
+            "name": "cs80_mpe_timbre_combination_tests",
+            "result": "Passed",
+            "detail": "3.27 sec"
+          },
+          {
+            "ordinal": 106,
+            "registered": 200,
+            "name": "cs80_mpe_pressure_combination_tests",
+            "result": "Passed",
+            "detail": "1.78 sec"
+          },
+          {
+            "ordinal": 107,
+            "registered": 200,
+            "name": "cs80_mpe_released_target_tests",
+            "result": "Passed",
+            "detail": "13.77 sec"
+          },
+          {
+            "ordinal": 108,
+            "registered": 200,
+            "name": "cs80_mpe_master_smoothing_tests",
+            "result": "Passed",
+            "detail": "1.69 sec"
+          },
+          {
+            "ordinal": 109,
+            "registered": 200,
+            "name": "cs80_output_listening_tests",
+            "result": "Passed",
+            "detail": "4.96 sec"
+          },
+          {
+            "ordinal": 110,
+            "registered": 200,
+            "name": "cs80_noise_tests",
+            "result": "Passed",
+            "detail": "38.72 sec"
+          },
+          {
+            "ordinal": 111,
+            "registered": 200,
+            "name": "cs80_poly_pressure_routing_tests",
+            "result": "Passed",
+            "detail": "4.37 sec"
+          },
+          {
+            "ordinal": 112,
+            "registered": 200,
+            "name": "cs80_host_automation_curve_tests",
+            "result": "Passed",
+            "detail": "3.24 sec"
+          },
+          {
+            "ordinal": 113,
+            "registered": 200,
+            "name": "cs80_free_running_voice_tests",
+            "result": "Passed",
+            "detail": "19.35 sec"
+          },
+          {
+            "ordinal": 114,
+            "registered": 200,
+            "name": "cs80_kas_scanner_tests",
+            "result": "Passed",
+            "detail": "12.15 sec"
+          },
+          {
+            "ordinal": 115,
+            "registered": 200,
+            "name": "cs80_scanner_ordering_tests",
+            "result": "Passed",
+            "detail": "4.04 sec"
+          },
+          {
+            "ordinal": 116,
+            "registered": 200,
+            "name": "cs80_scanner_overflow_tests",
+            "result": "Passed",
+            "detail": "5.58 sec"
+          },
+          {
+            "ordinal": 117,
+            "registered": 200,
+            "name": "cs80_keyboard_contour_key_map_tests",
+            "result": "Passed",
+            "detail": "55.38 sec"
+          },
+          {
+            "ordinal": 118,
+            "registered": 200,
+            "name": "cs80_touch_circuit_tests",
+            "result": "Passed",
+            "detail": "17.09 sec"
+          },
+          {
+            "ordinal": 119,
+            "registered": 200,
+            "name": "cs80_mpe_master_bend_routing_tests",
+            "result": "Passed",
+            "detail": "15.52 sec"
+          },
+          {
+            "ordinal": 120,
+            "registered": 200,
+            "name": "cs80_tuning_midi_tests",
+            "result": "Passed",
+            "detail": "68.70 sec"
+          },
+          {
+            "ordinal": 121,
+            "registered": 200,
+            "name": "cs80_tuning_frequency_domain_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 122,
+            "registered": 200,
+            "name": "cs80_tuning_robustness_tests",
+            "result": "Passed",
+            "detail": "0.05 sec"
+          },
+          {
+            "ordinal": 123,
+            "registered": 200,
+            "name": "cs80_mts_esp_native_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 124,
+            "registered": 200,
+            "name": "cs80_mts_esp_integration_tests",
+            "result": "Passed",
+            "detail": "1.20 sec"
+          },
+          {
+            "ordinal": 125,
+            "registered": 200,
+            "name": "cs80_mts_esp_channel_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 126,
+            "registered": 200,
+            "name": "cs80_mts_esp_fallback_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 127,
+            "registered": 200,
+            "name": "cs80_mts_esp_windows_macro_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 128,
+            "registered": 200,
+            "name": "cs80_ig00150_sub_tests",
+            "result": "Passed",
+            "detail": "43.79 sec"
+          },
+          {
+            "ordinal": 129,
+            "registered": 200,
+            "name": "cs80_ring_modulator_circuit_tests",
+            "result": "Passed",
+            "detail": "14.30 sec"
+          },
+          {
+            "ordinal": 130,
+            "registered": 200,
+            "name": "cs80_oe2_stereo_chorus_tests",
+            "result": "Passed",
+            "detail": "2.96 sec"
+          },
+          {
+            "ordinal": 131,
+            "registered": 200,
+            "name": "cs80_pra_optical_cell_tests",
+            "result": "Passed",
+            "detail": "5.88 sec"
+          },
+          {
+            "ordinal": 132,
+            "registered": 200,
+            "name": "cs80_lfo_random_switching_tests",
+            "result": "Passed",
+            "detail": "0.19 sec"
+          },
+          {
+            "ordinal": 133,
+            "registered": 200,
+            "name": "cs80_lfo_random_variable_rate_tests",
+            "result": "Passed",
+            "detail": "0.22 sec"
+          },
+          {
+            "ordinal": 134,
+            "registered": 200,
+            "name": "cs80_modern_lfo_tests",
+            "result": "Passed",
+            "detail": "5.58 sec"
+          },
+          {
+            "ordinal": 135,
+            "registered": 200,
+            "name": "cs80_mseg_tests",
+            "result": "Passed",
+            "detail": "11.75 sec"
+          },
+          {
+            "ordinal": 136,
+            "registered": 200,
+            "name": "cs80_mseg_transport_rate_tests",
+            "result": "Passed",
+            "detail": "0.85 sec"
+          },
+          {
+            "ordinal": 137,
+            "registered": 200,
+            "name": "cs80_mono_mseg_routing_tests",
+            "result": "Passed",
+            "detail": "2.13 sec"
+          },
+          {
+            "ordinal": 138,
+            "registered": 200,
+            "name": "cs80_mseg_retrigger_rate_tests",
+            "result": "Passed",
+            "detail": "2.80 sec"
+          },
+          {
+            "ordinal": 139,
+            "registered": 200,
+            "name": "cs80_mseg_combined_interaction_tests",
+            "result": "Passed",
+            "detail": "0.15 sec"
+          },
+          {
+            "ordinal": 140,
+            "registered": 200,
+            "name": "cs80_mod_matrix_tests",
+            "result": "Passed",
+            "detail": "137.19 sec"
+          },
+          {
+            "ordinal": 141,
+            "registered": 200,
+            "name": "cs80_modern_fx_tests",
+            "result": "Passed",
+            "detail": "185.43 sec"
+          },
+          {
+            "ordinal": 142,
+            "registered": 200,
+            "name": "cs80_delay_line_tests",
+            "result": "Passed",
+            "detail": "0.09 sec"
+          },
+          {
+            "ordinal": 143,
+            "registered": 200,
+            "name": "cs80_source_factory_integration_tests",
+            "result": "Passed",
+            "detail": "1034.83 sec"
+          },
+          {
+            "ordinal": 144,
+            "registered": 200,
+            "name": "cs80_plate_reverb_rate_tests",
+            "result": "Passed",
+            "detail": "19.32 sec"
+          },
+          {
+            "ordinal": 145,
+            "registered": 200,
+            "name": "cs80_drive_control_cache_tests",
+            "result": "Passed",
+            "detail": "1.47 sec"
+          },
+          {
+            "ordinal": 146,
+            "registered": 200,
+            "name": "cs80_tape_echo_time_tests",
+            "result": "Passed",
+            "detail": "5.54 sec"
+          },
+          {
+            "ordinal": 147,
+            "registered": 200,
+            "name": "cs80_ensemble_rate_cache_tests",
+            "result": "Passed",
+            "detail": "12.03 sec"
+          },
+          {
+            "ordinal": 148,
+            "registered": 200,
+            "name": "cs80_tape_echo_control_cache_tests",
+            "result": "Passed",
+            "detail": "14.96 sec"
+          },
+          {
+            "ordinal": 149,
+            "registered": 200,
+            "name": "cs80_tine_strike_dynamics_tests",
+            "result": "Passed",
+            "detail": "0.70 sec"
+          },
+          {
+            "ordinal": 150,
+            "registered": 200,
+            "name": "cs80_bowed_body_formant_tests",
+            "result": "Passed",
+            "detail": "7.82 sec"
+          },
+          {
+            "ordinal": 151,
+            "registered": 200,
+            "name": "cs80_instrument_body_tests",
+            "result": "Passed",
+            "detail": "13.78 sec"
+          },
+          {
+            "ordinal": 152,
+            "registered": 200,
+            "name": "cs80_instrument_body_engine_tests",
+            "result": "Passed",
+            "detail": "41.09 sec"
+          },
+          {
+            "ordinal": 153,
+            "registered": 200,
+            "name": "cs80_preset_voicing_tests",
+            "result": "Passed",
+            "detail": "54.64 sec"
+          },
+          {
+            "ordinal": 154,
+            "registered": 200,
+            "name": "cs80_preset_character_tests",
+            "result": "Passed",
+            "detail": "36.51 sec"
+          },
+          {
+            "ordinal": 155,
+            "registered": 200,
+            "name": "cs80_preset_precision_tests",
+            "result": "Passed",
+            "detail": "161.24 sec"
+          },
+          {
+            "ordinal": 156,
+            "registered": 200,
+            "name": "cs80_preset_capture_tests",
+            "result": "Passed",
+            "detail": "5.81 sec"
+          },
+          {
+            "ordinal": 157,
+            "registered": 200,
+            "name": "cs80_randomise_tests",
+            "result": "Passed",
+            "detail": "413.17 sec"
+          },
+          {
+            "ordinal": 158,
+            "registered": 200,
+            "name": "cs80_source_factory_boundary_tests",
+            "result": "Passed",
+            "detail": "0.82 sec"
+          },
+          {
+            "ordinal": 159,
+            "registered": 200,
+            "name": "cs80_memory_panel_tests",
+            "result": "Passed",
+            "detail": "2.00 sec"
+          },
+          {
+            "ordinal": 160,
+            "registered": 200,
+            "name": "cs80_memory_panel_ports_tests",
+            "result": "Passed",
+            "detail": "33.05 sec"
+          },
+          {
+            "ordinal": 161,
+            "registered": 200,
+            "name": "cs80_memory_panel_port_map_tests",
+            "result": "Passed",
+            "detail": "2.52 sec"
+          },
+          {
+            "ordinal": 162,
+            "registered": 200,
+            "name": "cs80_memory_port_map_negative_controls",
+            "result": "Passed",
+            "detail": "10.54 sec"
+          },
+          {
+            "ordinal": 163,
+            "registered": 200,
+            "name": "cs80_memory_control_routing_tests",
+            "result": "Passed",
+            "detail": "1.30 sec"
+          },
+          {
+            "ordinal": 164,
+            "registered": 200,
+            "name": "cs80_memory_receiver_truth_tests",
+            "result": "Passed",
+            "detail": "3.02 sec"
+          },
+          {
+            "ordinal": 165,
+            "registered": 200,
+            "name": "cs80_memory_qualification_probe_self_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 166,
+            "registered": 200,
+            "name": "cs80_memory_verified_diode_tests",
+            "result": "Passed",
+            "detail": "7.70 sec"
+          },
+          {
+            "ordinal": 167,
+            "registered": 200,
+            "name": "cs80_memory_centered_log_rational",
+            "result": "Passed",
+            "detail": "0.38 sec"
+          },
+          {
+            "ordinal": 168,
+            "registered": 200,
+            "name": "cs80_memory_interval_extrema",
+            "result": "Passed",
+            "detail": "0.34 sec"
+          },
+          {
+            "ordinal": 169,
+            "registered": 200,
+            "name": "cs80_memory_sparse_update_tests",
+            "result": "Passed",
+            "detail": "48.26 sec"
+          },
+          {
+            "ordinal": 170,
+            "registered": 200,
+            "name": "cs80_memory_sparse_negative_controls",
+            "result": "Passed",
+            "detail": "11.98 sec"
+          },
+          {
+            "ordinal": 171,
+            "registered": 200,
+            "name": "cs80_memory_routing_negative_controls",
+            "result": "Passed",
+            "detail": "14.47 sec"
+          },
+          {
+            "ordinal": 172,
+            "registered": 200,
+            "name": "cs80_programmer_control_identity_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 173,
+            "registered": 200,
+            "name": "cs80_fast_math_tests",
+            "result": "Passed",
+            "detail": "0.06 sec"
+          },
+          {
+            "ordinal": 174,
+            "registered": 200,
+            "name": "cs80_evidence_register_tests",
+            "result": "Passed",
+            "detail": "0.02 sec"
+          },
+          {
+            "ordinal": 175,
+            "registered": 200,
+            "name": "cs80_midi_learn_tests",
+            "result": "Passed",
+            "detail": "0.08 sec"
+          },
+          {
+            "ordinal": 176,
+            "registered": 200,
+            "name": "cs80_render_cli_tests",
+            "result": "Passed",
+            "detail": "2.09 sec"
+          },
+          {
+            "ordinal": 177,
+            "registered": 200,
+            "name": "cs80_callback_cpu_measurement_tests",
+            "result": "Passed",
+            "detail": "0.01 sec"
+          },
+          {
+            "ordinal": 178,
+            "registered": 200,
+            "name": "cs80_callback_cpu_benchmark_tests",
+            "result": "Passed",
+            "detail": "103.09 sec"
+          },
+          {
+            "ordinal": 179,
+            "registered": 200,
+            "name": "cs80_benchmark_preflight_tests",
+            "result": "Passed",
+            "detail": "0.71 sec"
+          },
+          {
+            "ordinal": 180,
+            "registered": 200,
+            "name": "cs80_parity_capture_tests",
+            "result": "Passed",
+            "detail": "20.07 sec"
+          },
+          {
+            "ordinal": 181,
+            "registered": 200,
+            "name": "cs80_dsp_probe_tests",
+            "result": "Passed",
+            "detail": "4.39 sec"
+          },
+          {
+            "ordinal": 182,
+            "registered": 200,
+            "name": "cs80_truth_render_tests",
+            "result": "Passed",
+            "detail": "7.46 sec"
+          },
+          {
+            "ordinal": 183,
+            "registered": 200,
+            "name": "cs80_ig00156_step_diagnostics_tests",
+            "result": "Passed",
+            "detail": "0.04 sec"
+          },
+          {
+            "ordinal": 184,
+            "registered": 200,
+            "name": "cs80_truth_input_sha256_tests",
+            "result": "Passed",
+            "detail": "0.05 sec"
+          },
+          {
+            "ordinal": 185,
+            "registered": 200,
+            "name": "cs80_amplitude_production_comparison_tests",
+            "result": "Passed",
+            "detail": "4.36 sec"
+          },
+          {
+            "ordinal": 186,
+            "registered": 200,
+            "name": "cs80_filter_production_comparison_tests",
+            "result": "Passed",
+            "detail": "5.45 sec"
+          },
+          {
+            "ordinal": 187,
+            "registered": 200,
+            "name": "cs80_vca_reference_tests",
+            "result": "Passed",
+            "detail": "1.48 sec"
+          },
+          {
+            "ordinal": 188,
+            "registered": 200,
+            "name": "cs80_decimal_conversion_tests",
+            "result": "Passed",
+            "detail": "0.09 sec"
+          },
+          {
+            "ordinal": 189,
+            "registered": 200,
+            "name": "cs80_decimal_conversion_locale_tests",
+            "result": "Passed",
+            "detail": "0.12 sec"
+          },
+          {
+            "ordinal": 190,
+            "registered": 200,
+            "name": "cs80_float_wav_tests",
+            "result": "Passed",
+            "detail": "1.11 sec"
+          },
+          {
+            "ordinal": 191,
+            "registered": 200,
+            "name": "cs80_reference_chain_tests",
+            "result": "Passed",
+            "detail": "21.28 sec"
+          },
+          {
+            "ordinal": 192,
+            "registered": 200,
+            "name": "cs80_reference_chain_clock_tests",
+            "result": "Passed",
+            "detail": "20.66 sec"
+          },
+          {
+            "ordinal": 193,
+            "registered": 200,
+            "name": "cs80_amplitude_envelope_reference_tests",
+            "result": "Passed",
+            "detail": "7.01 sec"
+          },
+          {
+            "ordinal": 194,
+            "registered": 200,
+            "name": "cs80_event_aware_envelope_vca_tests",
+            "result": "Passed",
+            "detail": "0.19 sec"
+          },
+          {
+            "ordinal": 195,
+            "registered": 200,
+            "name": "cs80_ring_time_reference_tests",
+            "result": "Passed",
+            "detail": "0.19 sec"
+          },
+          {
+            "ordinal": 196,
+            "registered": 200,
+            "name": "cs80_event_aware_envelope_sine_tests",
+            "result": "Passed",
+            "detail": "0.19 sec"
+          },
+          {
+            "ordinal": 197,
+            "registered": 200,
+            "name": "cs80_event_aware_ring_vca_tests",
+            "result": "Passed",
+            "detail": "0.22 sec"
+          },
+          {
+            "ordinal": 198,
+            "registered": 200,
+            "name": "cs80_event_aware_ring_vca_coincident_tests",
+            "result": "Passed",
+            "detail": "0.26 sec"
+          },
+          {
+            "ordinal": 199,
+            "registered": 200,
+            "name": "cs80_filter_envelope_reference_tests",
+            "result": "Passed",
+            "detail": "6.76 sec"
+          },
+          {
+            "ordinal": 200,
+            "registered": 200,
+            "name": "cs80_library_audit_tests",
+            "result": "Passed",
+            "detail": "1974.27 sec"
+          }
+        ],
+        "nested_python_skips": null,
+        "nested_python_skip_note": "Successful Python output is not emitted by --output-on-failure; this run provides no reliable total of nested Python skips."
+      },
+      "sanitizer_diagnostic_lines": []
+    },
+    {
+      "id": 137945817476,
+      "name": "Source circuit V1 and audio V2 compatibility",
+      "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-23T19:29:55Z",
+      "completed_at": "2026-11-23T19:30:59Z",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831/job/137945817476",
+      "steps": [
+        {
+          "number": 1,
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:55Z",
+          "completed_at": "2026-11-23T19:29:57Z"
+        },
+        {
+          "number": 2,
+          "name": "Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:29:57Z",
+          "completed_at": "2026-11-23T19:30:08Z"
+        },
+        {
+          "number": 3,
+          "name": "Build immutable circuit and audio checkpoints with one compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:08Z",
+          "completed_at": "2026-11-23T19:30:46Z"
+        },
+        {
+          "number": 4,
+          "name": "Require unchanged seven-tone V1 circuit numerics",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:46Z",
+          "completed_at": "2026-11-23T19:30:46Z"
+        },
+        {
+          "number": 5,
+          "name": "Require unchanged source-audio V2 and numerical history",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:46Z",
+          "completed_at": "2026-11-23T19:30:55Z"
+        },
+        {
+          "number": 6,
+          "name": "Run actions/upload-artifact@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:55Z",
+          "completed_at": "2026-11-23T19:30:57Z"
+        },
+        {
+          "number": 12,
+          "name": "Post Run actions/checkout@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:57Z",
+          "completed_at": "2026-11-23T19:30:57Z"
+        },
+        {
+          "number": 13,
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-23T19:30:57Z",
+          "completed_at": "2026-11-23T19:30:57Z"
+        }
+      ],
+      "decoded_log": {
+        "path": "source-job.log",
+        "bytes": 20944,
+        "sha256": "3b8d40b7421607d2bb51b3fce789559d8d937484fdab8fb2bc3235bb3ce3a6b7"
+      },
+      "observed_exact_checkout": true
+    }
+  ],
+  "actual_artifact_inspections": [
+    {
+      "kind": "synthetic",
+      "artifact_id": 14853109005,
+      "name": "cs80-synthetic-comparison-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 198609,
+      "sha256": "4fba882c577dbf86e6987914712b15fb88aa9c4fb06b9d3632a8f901098223ff",
+      "created_at": "2026-11-23T19:17:32Z",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "producer_job_id": 137945816716,
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "producer_upload_line": "2026-11-23T19:17:32.8527022Z Artifact cs80-synthetic-comparison-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14853109005",
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T19:17:31Z",
+        "completed_at": "2026-11-23T19:17:32Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_inventory": [
+        {
+          "path": "envelope-candidate.csv",
+          "bytes": 92826,
+          "sha256": "4c17cbb27c835772f4c2f62b6d642c832e53eb06182bc2fde780d76df2dab24b"
+        },
+        {
+          "path": "envelope-reference.csv",
+          "bytes": 42423,
+          "sha256": "41b8f42d8c445c2da3a3955d19bf2b5751eba10f532f180a271ad2d9957d0adc"
+        },
+        {
+          "path": "filter-candidate.csv",
+          "bytes": 104968,
+          "sha256": "d80ea4f18ad4480d855f18db1163c621e16c63f98725620c4be737c137fd7923"
+        },
+        {
+          "path": "filter-reference.csv",
+          "bytes": 104535,
+          "sha256": "10cc8f3fde450cb8df8116252045aa442bebba9b080952c1a9424505636ebbcd"
+        },
+        {
+          "path": "manifest.json",
+          "bytes": 4367,
+          "sha256": "e4a73d26cd1051483aef34de66c01e2e2b96009160950552f660b5a9a9d58acc"
+        },
+        {
+          "path": "oscillator-candidate.csv",
+          "bytes": 104771,
+          "sha256": "ffa762c74ebc27893fa6e0cce2e653b69a3800a11bba538c7d60320b07356ab6"
+        },
+        {
+          "path": "oscillator-reference.csv",
+          "bytes": 102391,
+          "sha256": "a274e4cfa0127573d8d719cf76666b8024d154e6c79398ab0cc424045fd82b59"
+        },
+        {
+          "path": "output-candidate.csv",
+          "bytes": 105754,
+          "sha256": "566ad6a77224b52d5e885952dc194f0350b687d3219b4ff7eedebb162875d876"
+        },
+        {
+          "path": "output-reference.csv",
+          "bytes": 105338,
+          "sha256": "5a87936b1cacd09280f63a551cf2aa0c5cbad09c6cbfd8882c671ae3838bef41"
+        },
+        {
+          "path": "report.json",
+          "bytes": 5286,
+          "sha256": "050cb6317e16589c48d52fcb8d1cf1c1820b316d719e87cc3760f4172bfb2cc7"
+        }
+      ],
+      "checks": {
+        "archive_entries": 10,
+        "files": 10,
+        "safe_unique_regular_entries": true,
+        "report_passed": true,
+        "source_hashes_matched": true,
+        "trace_hashes_matched": 8,
+        "analog_evidence": false
+      }
+    },
+    {
+      "kind": "legacy",
+      "artifact_id": 14855770877,
+      "name": "cs80-legacy-compatibility-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 29436,
+      "sha256": "a59ac27b9a0ca0ec3bb215a9b88560e3c99e8c1e588a2d060acb678ec6018e5d",
+      "created_at": "2026-11-23T19:28:57Z",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "producer_job_id": 137945817147,
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "producer_upload_line": "2026-11-23T19:28:58.1330933Z Artifact cs80-legacy-compatibility-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14855770877",
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T19:28:56Z",
+        "completed_at": "2026-11-23T19:28:58Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_inventory": [
+        {
+          "path": "SHA256SUMS",
+          "bytes": 548,
+          "sha256": "8fea9f312ac9c97ad168cce5fd0e6755e7f5a2e73692632a05967114c250223a"
+        },
+        {
+          "path": "baseline-corpus.txt",
+          "bytes": 277637,
+          "sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559"
+        },
+        {
+          "path": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "path": "report.json",
+          "bytes": 392,
+          "sha256": "91ec1ef2157dab8f821c436844f16b96aca379cf7e53a8a9a765a0abc4b434d3"
+        }
+      ],
+      "checks": {
+        "archive_entries": 4,
+        "files": 4,
+        "safe_unique_regular_entries": true,
+        "report": {
+          "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+          "candidate": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+          "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+          "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+          "corpus_parameters": 137,
+          "default_off_byte_identical": true,
+          "legacy_programs": 222,
+          "sample_rates": [
+            44100,
+            48000,
+            96000
+          ],
+          "analog_evidence": false
+        },
+        "recorded_comparison_digests": {
+          "artifacts/compatibility/baseline-corpus.txt": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+          "artifacts/compatibility/baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "artifacts/compatibility/baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+          "artifacts/compatibility/current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+          "artifacts/compatibility/current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+        },
+        "recorded_digest_pairs_equal": true,
+        "raw_audio_binaries_distributed": false,
+        "byte_comparison_evidence": "Original successful producer cmp steps, with retained digest report; raw comparison bytes are not uploaded."
+      }
+    },
+    {
+      "kind": "source",
+      "artifact_id": 14856000575,
+      "name": "cs80-source-factory-compatibility-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 985,
+      "sha256": "d4a9d78f9d9ac5114e2b9bb2f654c143654bb279772fa39aa92d1820e9b6e9eb",
+      "created_at": "2026-11-23T19:30:57Z",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "producer_job_id": 137945817476,
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "producer_upload_line": "2026-11-23T19:30:57.3484616Z Artifact cs80-source-factory-compatibility-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14856000575",
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T19:30:55Z",
+        "completed_at": "2026-11-23T19:30:57Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_inventory": [
+        {
+          "path": "SHA256SUMS",
+          "bytes": 486,
+          "sha256": "4311e27d9c9a85689ac61d689e6eb71c3ce8cea170becea7b1f22c0a9dc8dc61"
+        },
+        {
+          "path": "compiler.txt",
+          "bytes": 246,
+          "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+        },
+        {
+          "path": "report.json",
+          "bytes": 400,
+          "sha256": "8d18c51ca5d09dc90a3627f7215441a5cde52a7c7c12ee4fda53850a143d1673"
+        }
+      ],
+      "checks": {
+        "archive_entries": 3,
+        "files": 3,
+        "safe_unique_regular_entries": true,
+        "report": {
+          "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+          "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+          "candidate": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+          "source_tones": 7,
+          "circuit_values": 16632,
+          "sample_rates": [
+            44100,
+            48000,
+            96000,
+            192000
+          ],
+          "v1_circuit_bytes_unchanged": true,
+          "v2_audio_and_numeric_state_bytes_unchanged": true,
+          "model_metadata_excluded": true,
+          "analog_evidence": false
+        },
+        "recorded_comparison_digests": {
+          "artifacts/source-factory-compatibility/audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "artifacts/source-factory-compatibility/audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+          "artifacts/source-factory-compatibility/circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+          "artifacts/source-factory-compatibility/circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+        },
+        "recorded_digest_pairs_equal": true,
+        "raw_audio_binaries_distributed": false,
+        "byte_comparison_evidence": "Original successful producer cmp steps, with retained digest report; raw comparison bytes are not uploaded."
+      }
+    },
+    {
+      "kind": "candidate",
+      "artifact_id": 14856066121,
+      "name": "cs80-engine-candidate-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 1437988,
+      "sha256": "da5ad87657fe494fd5a7562bdf853777fe1553d37875cf61e984ecf3263ec726",
+      "created_at": "2026-11-23T19:30:04Z",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "producer_job_id": 137945817176,
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "producer_upload_line": "2026-11-23T19:30:04.9947452Z Artifact cs80-engine-candidate-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14856066121",
+      "upload_step": {
+        "name": "Run actions/upload-artifact@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T19:30:03Z",
+        "completed_at": "2026-11-23T19:30:05Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_inventory": [
+        {
+          "path": "BINARY_SHA256SUMS",
+          "bytes": 98,
+          "sha256": "4b8b302606b4b2e3057ae527cc4e31e4cd3b6b181e949a47e15cf6aa57c22d1b"
+        },
+        {
+          "path": "SHA256SUMS",
+          "bytes": 568,
+          "sha256": "4b15f10087741cc23943315db2dbc6047d788ae12a7eca14039fc18ae741bf4e"
+        },
+        {
+          "path": "SOURCE_SHA256SUMS",
+          "bytes": 1397,
+          "sha256": "52596413911b85e4372a392b2811fe648a7fded0d1ed3e3a750548e760371251"
+        },
+        {
+          "path": "build-environment.txt",
+          "bytes": 1079,
+          "sha256": "1c4db1470a351ac9c6c3d4f1903edb3396cd51b2b2d604eb9bcdf22b4f728e74"
+        },
+        {
+          "path": "capture.json",
+          "bytes": 6516,
+          "sha256": "0217a5b2273e18e48e9d59657a4eaf008c50d62b67cf793ba8a964e67ba9a61f"
+        },
+        {
+          "path": "left.csv",
+          "bytes": 1904283,
+          "sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+        },
+        {
+          "path": "provenance.json",
+          "bytes": 98,
+          "sha256": "267e3a867408edb2bdee22ef4c900b8f5845969283a03ad134ae3349adc9a075"
+        },
+        {
+          "path": "right.csv",
+          "bytes": 1904283,
+          "sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+        }
+      ],
+      "checks": {
+        "archive_entries": 8,
+        "files": 8,
+        "safe_unique_regular_entries": true,
+        "manifest_checksums_matched": 7,
+        "source_hashes_matched": 15,
+        "analog_evidence": false
+      }
+    },
+    {
+      "kind": "live-adr",
+      "artifact_id": 14856840329,
+      "name": "cs80-engine-live-adr-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 1454416,
+      "sha256": "2fe175f05d2aab2f5071a8a368d35a669e24e5c8bb6f399b4f67e9fa6870c4e0",
+      "created_at": "2026-11-23T19:30:06Z",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "producer_job_id": 137945817176,
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "producer_upload_line": "2026-11-23T19:30:06.6087774Z Artifact cs80-engine-live-adr-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14856840329",
+      "upload_step": {
+        "name": "Upload live envelope candidate trace",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-23T19:30:05Z",
+        "completed_at": "2026-11-23T19:30:06Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_inventory": [
+        {
+          "path": "BINARY_SHA256SUMS",
+          "bytes": 98,
+          "sha256": "4b8b302606b4b2e3057ae527cc4e31e4cd3b6b181e949a47e15cf6aa57c22d1b"
+        },
+        {
+          "path": "SHA256SUMS",
+          "bytes": 654,
+          "sha256": "8d0782ae34dd87914df7d8e3fa32ffb1efa1c8e692ff13646ff4c7fb08acd4f7"
+        },
+        {
+          "path": "SOURCE_SHA256SUMS",
+          "bytes": 1397,
+          "sha256": "52596413911b85e4372a392b2811fe648a7fded0d1ed3e3a750548e760371251"
+        },
+        {
+          "path": "build-environment.txt",
+          "bytes": 1079,
+          "sha256": "1c4db1470a351ac9c6c3d4f1903edb3396cd51b2b2d604eb9bcdf22b4f728e74"
+        },
+        {
+          "path": "capture.json",
+          "bytes": 11558,
+          "sha256": "f7a41a319f221ee6e67e1faae2c93006db923664a17eb2c65facc395971e16f2"
+        },
+        {
+          "path": "envelope-events.csv",
+          "bytes": 2404,
+          "sha256": "2c611a2b46afde8e35de7ca3d1b9fe5098f1765053260c38e22827e290aba42c"
+        },
+        {
+          "path": "left.csv",
+          "bytes": 1936761,
+          "sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+        },
+        {
+          "path": "provenance.json",
+          "bytes": 98,
+          "sha256": "267e3a867408edb2bdee22ef4c900b8f5845969283a03ad134ae3349adc9a075"
+        },
+        {
+          "path": "right.csv",
+          "bytes": 1936761,
+          "sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+        }
+      ],
+      "checks": {
+        "archive_entries": 9,
+        "files": 9,
+        "safe_unique_regular_entries": true,
+        "manifest_checksums_matched": 8,
+        "source_hashes_matched": 15,
+        "analog_evidence": false
+      }
+    },
+    {
+      "kind": "dsp",
+      "artifact_id": 14854758765,
+      "name": "cs80-dsp-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 8505873,
+      "sha256": "07c0aebfa13a3cd0bed34c9b978e4456f9387b55bd09e75e811fb5510874fffa",
+      "created_at": "2026-11-23T19:30:08Z",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "producer_job_id": 137945817176,
+      "run_id": 45246863831,
+      "run_attempt": 1,
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "producer_upload_line": "2026-11-23T19:30:09.1606303Z Artifact cs80-dsp-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14854758765",
+      "upload_step": {
+        "name": "Upload source-traceable graphs and raw traces",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-23T19:30:06Z",
+        "completed_at": "2026-11-23T19:30:09Z"
+      },
+      "artifact_id_ordering_used_as_provenance": false,
+      "entry_inventory": [
+        {
+          "path": "decimator-impulse.csv",
+          "bytes": 9588,
+          "sha256": "fb3861f5a79241f3567f0111f73e5085dbbbf5b850f5f949b02490b59cc82326"
+        },
+        {
+          "path": "decimator-tones.csv",
+          "bytes": 228,
+          "sha256": "8f3265efbbbc1ad2cf040f8e8cd4a9df4493492442a7cbe27150f1b3cd89aa93"
+        },
+        {
+          "path": "decimator.json",
+          "bytes": 79,
+          "sha256": "c02d9e8f1852998523cb95a57fbd4ade5dbccef95ba06c273a3f5c2e26d3b6d0"
+        },
+        {
+          "path": "filter-envelope-192000.csv",
+          "bytes": 84979,
+          "sha256": "57c9d9b1ed66352326d07b31c3a3c21c33c7fc9811877a2d1ab1983bc0809fed"
+        },
+        {
+          "path": "filter-envelope-44100.csv",
+          "bytes": 84878,
+          "sha256": "b6790076bc33b5a3f0e9aa384f3477138f3c1103866b170a4685888b954e235b"
+        },
+        {
+          "path": "filter-envelope-48000.csv",
+          "bytes": 85088,
+          "sha256": "ed4827cd7eb9ae79191238a3a6b20d1b82fcc3aa9238ffd278e22108d4af8384"
+        },
+        {
+          "path": "filter-envelope-96000.csv",
+          "bytes": 85110,
+          "sha256": "c136936d09d4c1cc057c6a00083912de66818566783a19f301e6d063992b8234"
+        },
+        {
+          "path": "measurements.json",
+          "bytes": 6311,
+          "sha256": "9ff5581ee37831c59809770b05e8705f38eb2eb79934007fc4935cc18a7a9da1"
+        },
+        {
+          "path": "oscillator-151.csv",
+          "bytes": 5857683,
+          "sha256": "cdd5815b8d0ae7018ce63dfe680e0e842357fa28c494d3ed3e2555e3654c98b6"
+        },
+        {
+          "path": "oscillator-3001.csv",
+          "bytes": 5974106,
+          "sha256": "e315d2f9ff3bd79ce621cf372ee4ade95a6cdcdab19530a9435d67ded5e27d45"
+        },
+        {
+          "path": "oscillator-6001.csv",
+          "bytes": 6099446,
+          "sha256": "b70ac197820c6f4456198a3f818b308dadc676839021d6846b589aa169c9a5ff"
+        },
+        {
+          "path": "oscillator-601.csv",
+          "bytes": 5875938,
+          "sha256": "6689c8dbce85f3b89e51dc4adeb3afcd3421b41d55f208a0dcf705fdc563d961"
+        },
+        {
+          "path": "plots/decimator-response-latency.png",
+          "bytes": 362158,
+          "sha256": "fad782a2890cd903739e7c5d6df3c66751f3f2d06c6c42e7f324b1c2d269b1c9"
+        },
+        {
+          "path": "plots/decimator-response-latency.svg",
+          "bytes": 227851,
+          "sha256": "f72237beecb5c4557d02aab9ab45ea12e2b7a95a95239fdd996c3021cf0894e1"
+        },
+        {
+          "path": "plots/filter-envelope-rate-comparison.png",
+          "bytes": 88060,
+          "sha256": "9c602320dc037f414906841d4bd5334b7ed8e08cbb150e16eb8f51e48e4a4844"
+        },
+        {
+          "path": "plots/filter-envelope-rate-comparison.svg",
+          "bytes": 65047,
+          "sha256": "0c5b0d106c2af5cae89689cd5806d4829097644c10f9218987eac3454271a433"
+        },
+        {
+          "path": "plots/oscillator-alias-comparison.png",
+          "bytes": 83637,
+          "sha256": "674bd5cc6682fcfa9b1d7e36539a7bee2c813dae462c1e02e97f89333d6e9103"
+        },
+        {
+          "path": "plots/oscillator-alias-comparison.svg",
+          "bytes": 63618,
+          "sha256": "cd894a2c8733dbcce701ede34d177b1f1b3917104286ceff8c81871cda57b826"
+        },
+        {
+          "path": "plots/oscillator-waveform-spectrum.png",
+          "bytes": 230988,
+          "sha256": "797054832c4100a6bd841013c14ccc22ba232f8562fc5b0d3e1d9c45df92929d"
+        },
+        {
+          "path": "plots/oscillator-waveform-spectrum.svg",
+          "bytes": 605308,
+          "sha256": "b911af8020728bb8f3d2eca50f419f4a509269c48eae796dc58966cc1e29332b"
+        },
+        {
+          "path": "plots/ring-frequency-envelope.png",
+          "bytes": 163184,
+          "sha256": "2d4041a157d355c4e6073679b772250aee1fabf04857ebbc3021c63f51786b38"
+        },
+        {
+          "path": "plots/ring-frequency-envelope.svg",
+          "bytes": 90259,
+          "sha256": "7ae65c40e31daee392317d153ee83380429f5e3cc3e68dfeb8e75749fb7b7bff"
+        },
+        {
+          "path": "probe.json",
+          "bytes": 105,
+          "sha256": "bb39a04905115e1eef08fe88063688ec66700192c4e832058bf58b4c05a6e065"
+        },
+        {
+          "path": "ring-200.csv",
+          "bytes": 65547,
+          "sha256": "ff01eb07563e95064a784f60c1d924f03b4d833b04cbc9d804434e081a731130"
+        },
+        {
+          "path": "ring-40.csv",
+          "bytes": 62480,
+          "sha256": "d5bf59b8fd470289f0ce8b16773f483696a16c53b56e78aee82546b0edaab3f5"
+        },
+        {
+          "path": "ring-7.csv",
+          "bytes": 90202,
+          "sha256": "ec9c7eeaee13f14ae91081b4a7f065730770790b22973814e46e0ddd45e21ed0"
+        }
+      ],
+      "checks": {
+        "archive_entries": 26,
+        "files": 26,
+        "safe_unique_regular_entries": true,
+        "comparative_regression_passed": true,
+        "probe_failures": 0,
+        "source_hashes_matched": 5,
+        "analysis_working_tree_status": [],
+        "scope": "Software numerical reference, not a physical instrument comparison"
+      }
+    }
+  ],
+  "scope_limits": [
+    "Supporting DSP workflow only; not native package or pluginval qualification.",
+    "Synthetic comparison and numerical/Fourier references are software fixtures, not physical CS-80 or acoustic-instrument evidence.",
+    "Compatibility artifacts retain reports/digests and the baseline corpus, not the raw comparison binaries. Successful original cmp steps provide their comparison evidence.",
+    "Sanitizer CTest counts are platform executions; Python nested subtest counts are not inferred from suppressed successful output.",
+    "Workflow success does not establish exact acoustic realism or perceptual quality."
+  ]
+}

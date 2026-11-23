@@ -1,0 +1,657 @@
+{
+  "schema": 1,
+  "status": "parsed_evidence_not_release_qualified",
+  "release_qualified": false,
+  "input_manifest": {
+    "path": "a55/parser-inputs.json",
+    "bytes": 438,
+    "sha256": "9bf79d4b9f4674cc5f0e969b9602e57e1e186586f7e36e3b62f60d81754dbca6"
+  },
+  "parser": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a45/parse_native_evidence.py",
+    "bytes": 17824,
+    "sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58"
+  },
+  "caller_provenance_claims_unverified": {
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "run_id": 45246863788,
+    "attempt": 1
+  },
+  "native": [],
+  "validators": [
+    {
+      "target": "macos-arm64",
+      "status": "observed_logs_green_unbound",
+      "required_lanes": 4,
+      "validation_invocations": 4,
+      "validation_retries": 0,
+      "version": {
+        "record": {
+          "path": "pluginval-download.json",
+          "bytes": 918,
+          "sha256": "d970efc590335f1afb232c1e89426abcdc29fc8afe3d538c55ba95b91346f0a1"
+        },
+        "download": {
+          "repository": "Tracktion/pluginval",
+          "version": "1.0.4",
+          "release_id": 188928656,
+          "asset_id": 210999197,
+          "asset_name": "pluginval_macOS.zip",
+          "expected_size": 9202795,
+          "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+          "attempts": [
+            {
+              "number": 1,
+              "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+              "reason": "api_forbidden",
+              "http_status": 403,
+              "transfer_exit": 12
+            },
+            {
+              "number": 2,
+              "source_url": "https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_macOS.zip",
+              "reason": "downloaded",
+              "bytes": 9202795,
+              "final_host": "release-assets.githubusercontent.com",
+              "transfer_exit": 0
+            }
+          ],
+          "verified": true,
+          "actual_size": 9202795,
+          "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+        }
+      },
+      "version_text_expected": true,
+      "lanes": [
+        {
+          "lane": "vst3",
+          "required_workflow_step": "Validate VST3 with pluginval",
+          "gui_required": false,
+          "fixed_seed": null,
+          "console": {
+            "path": "pluginval-vst3.log",
+            "bytes": 7399,
+            "sha256": "4f2c49cd4c87d5f917160056274ed7f0bb70755511504a57ba33717d514cc9e5",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x368004e"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-vst3",
+            "bytes": 7272,
+            "sha256": "5849bd6906279524cc05798c547ff3cb2e8a7144247526034ab314ed7e1e1476",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x368004e"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        },
+        {
+          "lane": "au",
+          "required_workflow_step": "Validate AU with pluginval",
+          "gui_required": false,
+          "fixed_seed": null,
+          "console": {
+            "path": "pluginval-au.log",
+            "bytes": 7308,
+            "sha256": "8014a6a9f41840d3289330a3cb7830043cae3d3b30885f355532e5606a3831b0",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x535ed06"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": false,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au",
+            "bytes": 7214,
+            "sha256": "e1ab2e1e4c89a495a0be7e14044b4ebda70a8b37a0be9d83108db0119441f236",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x535ed06"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": false,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        },
+        {
+          "lane": "au-gui",
+          "required_workflow_step": "Validate AU with pluginval GUI",
+          "gui_required": true,
+          "fixed_seed": null,
+          "console": {
+            "path": "pluginval-au-gui.log",
+            "bytes": 7990,
+            "sha256": "d632198d2c516d031b3a770f0f4aa437c03eb7507e0a36a816618165cad56cd6",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x5a3f346"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au-gui",
+            "bytes": 7896,
+            "sha256": "f4641190e45707e365de32110dd47a4bc3d3bb17aa79266172b9ae28bdb3f1eb",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x5a3f346"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        },
+        {
+          "lane": "au-gui-seed",
+          "required_workflow_step": "Validate AU GUI fixed-seed regression",
+          "gui_required": true,
+          "fixed_seed": "0x2b4eef5",
+          "console": {
+            "path": "pluginval-au-seed-regression.log",
+            "bytes": 7990,
+            "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x2b4eef5"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au-seed-regression",
+            "bytes": 7896,
+            "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x2b4eef5"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        }
+      ],
+      "archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-pluginval.zip",
+        "bytes": 10377,
+        "sha256": "a14b0fedcb8eaef2af315bb596ae9eb84dd77df906933b9fd1691f68b40ec302"
+      },
+      "qualification": false,
+      "scope": "Console/report summaries are one lane, not two invocations. Original job/step/source/attempt/payload binding remains mandatory. SUCCESS followed by a crash is not accepted by text alone."
+    },
+    {
+      "target": "macos-x86_64",
+      "status": "observed_logs_green_unbound",
+      "required_lanes": 4,
+      "validation_invocations": 4,
+      "validation_retries": 0,
+      "version": {
+        "record": {
+          "path": "pluginval-download.json",
+          "bytes": 694,
+          "sha256": "d3299bb9e78d1079a61d5aed5cc534d01bd2b917d6ecb158e89bdd517f3eba5c"
+        },
+        "download": {
+          "repository": "Tracktion/pluginval",
+          "version": "1.0.4",
+          "release_id": 188928656,
+          "asset_id": 210999197,
+          "asset_name": "pluginval_macOS.zip",
+          "expected_size": 9202795,
+          "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+          "attempts": [
+            {
+              "number": 1,
+              "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+              "reason": "downloaded",
+              "bytes": 9202795,
+              "final_host": "release-assets.githubusercontent.com",
+              "transfer_exit": 0
+            }
+          ],
+          "verified": true,
+          "actual_size": 9202795,
+          "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+        }
+      },
+      "version_text_expected": true,
+      "lanes": [
+        {
+          "lane": "vst3",
+          "required_workflow_step": "Validate VST3 with pluginval",
+          "gui_required": false,
+          "fixed_seed": null,
+          "console": {
+            "path": "pluginval-vst3.log",
+            "bytes": 7399,
+            "sha256": "09d8a3e308d9eb07e2393ca9ed1fac5c78aea0ec8e3e8ba89a5dd2c8b3e73f4a",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x1d1bc71"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-vst3",
+            "bytes": 7272,
+            "sha256": "3a72e14e9357490a78ee71b75d96cbf81a78bd6989e738aa3313db707bf64f13",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x1d1bc71"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        },
+        {
+          "lane": "au",
+          "required_workflow_step": "Validate AU with pluginval",
+          "gui_required": false,
+          "fixed_seed": null,
+          "console": {
+            "path": "pluginval-au.log",
+            "bytes": 7308,
+            "sha256": "e155c7b2cf302277a9a7f4d7029bf6a58d3e4fafe336872097ada0947b7cd42c",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x72f5473"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": false,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au",
+            "bytes": 7214,
+            "sha256": "ce08b4db51e6e924dda2d2cc4c4073a22f070eaa4c80a17b492e5bf006c88075",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x72f5473"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": false,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        },
+        {
+          "lane": "au-gui",
+          "required_workflow_step": "Validate AU with pluginval GUI",
+          "gui_required": true,
+          "fixed_seed": null,
+          "console": {
+            "path": "pluginval-au-gui.log",
+            "bytes": 7990,
+            "sha256": "a7823969132631125d9f24f07a22b87de380469e76affe80a0357be9f2870553",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x454a186"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au-gui",
+            "bytes": 7896,
+            "sha256": "65e36fc9ff8818c1ef86f9a5d5a386526559aaaa6a6cb3905fa99b7579661eeb",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x454a186"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        },
+        {
+          "lane": "au-gui-seed",
+          "required_workflow_step": "Validate AU GUI fixed-seed regression",
+          "gui_required": true,
+          "fixed_seed": "0x2b4eef5",
+          "console": {
+            "path": "pluginval-au-seed-regression.log",
+            "bytes": 7990,
+            "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x2b4eef5"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au-seed-regression",
+            "bytes": 7896,
+            "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x2b4eef5"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        }
+      ],
+      "archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-pluginval.zip",
+        "bytes": 10329,
+        "sha256": "8affb980a4d12a67213228a19dbba242174d52f95c1b86c2c160767739f7b358"
+      },
+      "qualification": false,
+      "scope": "Console/report summaries are one lane, not two invocations. Original job/step/source/attempt/payload binding remains mandatory. SUCCESS followed by a crash is not accepted by text alone."
+    }
+  ],
+  "external_gates": [
+    "Authentic artifact API byte count/digest/name/run/head SHA/expiry.",
+    "Producer upload and native test steps from the intended run attempt.",
+    "Original validator job/step outcomes and source-pinned exit propagation.",
+    "Installation payload binding to validated binaries; macOS AU before/after identity.",
+    "Review all preserved failed attempts; diagnostic reruns never replace original lanes."
+  ],
+  "native_totals": {
+    "registered": 0,
+    "passed": 0,
+    "failed": 0,
+    "formal_skipped": 0,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "nested_python_skips_total": 0,
+  "validator_totals": {
+    "required_lanes": 8,
+    "validation_invocations": 8,
+    "validation_retries": 0
+  },
+  "counting_scope": "CTest executions across supplied targets. Internal assertions and nested unittest skips are not added to CTest counts. Console/report copies count once.",
+  "all_requested_observations_green": true
+}

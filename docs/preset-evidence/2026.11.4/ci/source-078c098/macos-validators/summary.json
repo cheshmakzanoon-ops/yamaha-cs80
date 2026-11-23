@@ -1,0 +1,382 @@
+{
+  "schema": 1,
+  "worker": "a55",
+  "verified_at_utc": "2026-11-23T20:30:18.018746+00:00",
+  "status": "eight_original_macos_validator_lanes_and_distributed_payloads_bound",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "release_qualified": false,
+  "macos_validator_scope_qualified": true,
+  "validator_totals": {
+    "required_lanes": 8,
+    "successful_lanes": 8,
+    "validation_invocations": 8,
+    "validation_retries": 0
+  },
+  "warning_lane_count": 6,
+  "external_vst3_validator_skip_lane_count": 2,
+  "targets": [
+    {
+      "target": "macos-arm64",
+      "producer_job_id": 137945805542,
+      "producer_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/job/137945805542",
+      "producer_job_conclusion": "success",
+      "validator_artifact": {
+        "id": 14856188848,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg1NjE4ODg0OA==",
+        "name": "cs80-pluginval-macos-15",
+        "size_in_bytes": 10377,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856188848",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856188848/zip",
+        "expired": false,
+        "digest": "sha256:a14b0fedcb8eaef2af315bb596ae9eb84dd77df906933b9fd1691f68b40ec302",
+        "created_at": "2026-11-23T19:49:01Z",
+        "updated_at": "2026-11-23T19:49:01Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "distributed_au": {
+        "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+        "bytes": 14293088,
+        "sha256": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b"
+      },
+      "distributed_vst3": {
+        "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+        "bytes": 14570784,
+        "sha256": "d6b2e411a7f7de7aeb8af3f641a6368ff6d1439af28208810beda01a2cf683ac"
+      },
+      "full_au_bundle_diff_before_and_after_passed": true,
+      "all_four_au_digest_lines_match_distributed": true,
+      "vst3_original_tested_path_and_packaged_source_bound": true,
+      "lanes": [
+        {
+          "lane": "vst3",
+          "qualified_within_scope": true,
+          "seed": "0x368004e",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": false,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [],
+          "explicit_skips": [
+            "INFO: Skipping vst3 validator as validator path hasn't been set"
+          ],
+          "step": {
+            "name": "Validate VST3 with pluginval",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-23T19:45:44Z",
+            "completed_at": "2026-11-23T19:45:48Z"
+          }
+        },
+        {
+          "lane": "au",
+          "qualified_within_scope": true,
+          "seed": "0x535ed06",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": false,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "step": {
+            "name": "Validate AU with pluginval",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-23T19:45:48Z",
+            "completed_at": "2026-11-23T19:46:18Z"
+          }
+        },
+        {
+          "lane": "au-gui",
+          "qualified_within_scope": true,
+          "seed": "0x5a3f346",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": true,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "step": {
+            "name": "Validate AU with pluginval GUI",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-23T19:46:18Z",
+            "completed_at": "2026-11-23T19:47:42Z"
+          }
+        },
+        {
+          "lane": "au-gui-seed",
+          "qualified_within_scope": true,
+          "seed": "0x2b4eef5",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": true,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "step": {
+            "name": "Validate AU GUI fixed-seed regression",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-11-23T19:47:42Z",
+            "completed_at": "2026-11-23T19:48:56Z"
+          }
+        }
+      ],
+      "download_transfer_attempts": [
+        {
+          "number": 1,
+          "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+          "reason": "api_forbidden",
+          "http_status": 403,
+          "transfer_exit": 12
+        },
+        {
+          "number": 2,
+          "source_url": "https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_macOS.zip",
+          "reason": "downloaded",
+          "bytes": 9202795,
+          "final_host": "release-assets.githubusercontent.com",
+          "transfer_exit": 0
+        }
+      ]
+    },
+    {
+      "target": "macos-x86_64",
+      "producer_job_id": 137945806008,
+      "producer_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/job/137945806008",
+      "producer_job_conclusion": "success",
+      "validator_artifact": {
+        "id": 14859338331,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg1OTMzODMzMQ==",
+        "name": "cs80-pluginval-macos-15-intel",
+        "size_in_bytes": 10329,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14859338331",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14859338331/zip",
+        "expired": false,
+        "digest": "sha256:8affb980a4d12a67213228a19dbba242174d52f95c1b86c2c160767739f7b358",
+        "created_at": "2026-11-23T20:19:52Z",
+        "updated_at": "2026-11-23T20:19:52Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "distributed_au": {
+        "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+        "bytes": 15233024,
+        "sha256": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876"
+      },
+      "distributed_vst3": {
+        "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+        "bytes": 15533376,
+        "sha256": "b5803183278b81745e476de113ec45b35932daf2a6a1db93563ec8adbf0c13bf"
+      },
+      "full_au_bundle_diff_before_and_after_passed": true,
+      "all_four_au_digest_lines_match_distributed": true,
+      "vst3_original_tested_path_and_packaged_source_bound": true,
+      "lanes": [
+        {
+          "lane": "vst3",
+          "qualified_within_scope": true,
+          "seed": "0x1d1bc71",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": false,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [],
+          "explicit_skips": [
+            "INFO: Skipping vst3 validator as validator path hasn't been set"
+          ],
+          "step": {
+            "name": "Validate VST3 with pluginval",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-23T20:16:04Z",
+            "completed_at": "2026-11-23T20:16:10Z"
+          }
+        },
+        {
+          "lane": "au",
+          "qualified_within_scope": true,
+          "seed": "0x72f5473",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": false,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "step": {
+            "name": "Validate AU with pluginval",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-23T20:16:10Z",
+            "completed_at": "2026-11-23T20:16:50Z"
+          }
+        },
+        {
+          "lane": "au-gui",
+          "qualified_within_scope": true,
+          "seed": "0x454a186",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": true,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "step": {
+            "name": "Validate AU with pluginval GUI",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-23T20:16:50Z",
+            "completed_at": "2026-11-23T20:18:17Z"
+          }
+        },
+        {
+          "lane": "au-gui-seed",
+          "qualified_within_scope": true,
+          "seed": "0x2b4eef5",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": true,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "step": {
+            "name": "Validate AU GUI fixed-seed regression",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-11-23T20:18:17Z",
+            "completed_at": "2026-11-23T20:19:43Z"
+          }
+        }
+      ],
+      "download_transfer_attempts": [
+        {
+          "number": 1,
+          "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+          "reason": "downloaded",
+          "bytes": 9202795,
+          "final_host": "release-assets.githubusercontent.com",
+          "transfer_exit": 0
+        }
+      ]
+    }
+  ],
+  "evidence_files": {
+    "a55-review.md": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55-review.md",
+      "bytes": 9274,
+      "sha256": "b13a811b8cf0f4b4394920c69ae9a1f77422183d0d78bfda126dfdcba0aee069"
+    },
+    "a55/macos-validator-binding.json": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/macos-validator-binding.json",
+      "bytes": 64627,
+      "sha256": "c0e502018384db8f5755dd2f192a78ef74b18b9e716ac84f24344d3f8716212b"
+    },
+    "a55/validator-observations.json": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/validator-observations.json",
+      "bytes": 22674,
+      "sha256": "f08ac65f04b082a5a5495f7158bdc66cf901df85c3ce0cd7f121da32d14c142e"
+    },
+    "a55/parser-inputs.json": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/parser-inputs.json",
+      "bytes": 438,
+      "sha256": "9bf79d4b9f4674cc5f0e969b9602e57e1e186586f7e36e3b62f60d81754dbca6"
+    },
+    "a55/archive-preflight.json": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/archive-preflight.json",
+      "bytes": 6257,
+      "sha256": "df15c2d7dd808ba91205b10a025f3688caf705aec5fc4f934af928cbd32706d4"
+    },
+    "a55/verify_binding.py": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/verify_binding.py",
+      "bytes": 21435,
+      "sha256": "3b76568c64d724a3132297e54aa4954d1465e3f14857731d44a86947db3016d0"
+    }
+  },
+  "source_files": {
+    ".github/workflows/build.yml": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/build-source-078c098.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "git_blob": "70576cb10b78100b6aa98d67b37f00d0361c2a79"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/package-ci-artifacts-source-078c098.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "git_blob": "a53416ca00e3a2accd9a85fa41036383162674da"
+    },
+    "scripts/download-pluginval-macos.py": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/download-pluginval-macos-source-078c098.py",
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290",
+      "git_blob": "d65dbb6de2f47abd682eae2fdab51a27363f5797"
+    }
+  },
+  "limits": [
+    "Overall release qualification remains the parent responsibility; this scope is eight macOS pluginval lanes.",
+    "No new native execution, validator execution, diagnostic rerun, CI rerun, repository edit, or external mutation.",
+    "No acoustic-realism, release-signing/notarization, separate Steinberg validator, standalone auval validation, or DAW-coverage claim.",
+    "The independent A45 parser deliberately leaves its own exit fields unknown and release_qualified false; this separate report binds original step success, exact commands, provenance and payloads.",
+    "ARM pluginval acquisition had two transfer attempts (API 403 then release-URL success); Intel had one transfer. These are download attempts, not validator retries."
+  ]
+}

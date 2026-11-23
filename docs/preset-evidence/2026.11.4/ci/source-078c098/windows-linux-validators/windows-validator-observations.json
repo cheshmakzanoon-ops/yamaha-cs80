@@ -1,0 +1,220 @@
+{
+  "schema": 1,
+  "status": "parsed_evidence_not_release_qualified",
+  "release_qualified": false,
+  "input_manifest": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a56/windows-validator-inputs.json",
+    "bytes": 270,
+    "sha256": "6bbcad742af1b18e19e45a339bbc0c6f712888badf87129e8fef0561066af119"
+  },
+  "parser": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a45/parse_native_evidence.py",
+    "bytes": 17824,
+    "sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58"
+  },
+  "caller_provenance_claims_unverified": {
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "run_id": 45246863788,
+    "attempt": 1
+  },
+  "native": [],
+  "validators": [
+    {
+      "target": "windows-x86_64",
+      "status": "observed_logs_green_unbound",
+      "required_lanes": 2,
+      "validation_invocations": 2,
+      "validation_retries": 0,
+      "version": {
+        "record": {
+          "path": "pluginval-download.json",
+          "bytes": 718,
+          "sha256": "af96370d962221940857e22bba53e6e8fa5e61a42df9cb558d49706fbaf5956c"
+        },
+        "download": {
+          "repository": "Tracktion/pluginval",
+          "version": "1.0.4",
+          "release_id": 188928656,
+          "asset_id": 210999198,
+          "asset_name": "pluginval_Windows.zip",
+          "expected_size": 2408590,
+          "expected_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab",
+          "attempts": [
+            {
+              "number": 1,
+              "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999198",
+              "reason": "downloaded",
+              "bytes": 2408590,
+              "final_host": "release-assets.githubusercontent.com",
+              "transfer_exit": 0
+            }
+          ],
+          "verified": true,
+          "actual_size": 2408590,
+          "actual_sha256": "c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab"
+        }
+      },
+      "version_text_expected": true,
+      "lanes": [
+        {
+          "lane": "headless",
+          "required_workflow_step": "Validate VST3 headless",
+          "gui_required": false,
+          "fixed_seed": null,
+          "console": {
+            "path": "pluginval-windows.log",
+            "bytes": 7381,
+            "sha256": "f188c9adc6346c9981cf04be9a51e221c58b00083e940d0a418aa912ef77f809",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0xdcb650"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-windows",
+            "bytes": 7167,
+            "sha256": "d380aad48ba3f7290ec6c869bd2431bfc4d28eef053fca8c969d397e477897bc",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0xdcb650"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        },
+        {
+          "lane": "headless-seed",
+          "required_workflow_step": "Validate state regression seed 0x5037a0c",
+          "gui_required": false,
+          "fixed_seed": "0x5037a0c",
+          "console": {
+            "path": "pluginval-windows-seed-regression.log",
+            "bytes": 7382,
+            "sha256": "cac2a78f1ad0e5fbe2da042a659d1df76d4f8c8600860b39d9611e9afbad3d45",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x5037a0c"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-windows-seed-regression",
+            "bytes": 7168,
+            "sha256": "baad3c35f7510101fa936d5f3c91a6bbfec5f28a3612b58f1fdc4464db557616",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x5037a0c"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "preserved_failed_attempts": [],
+          "validation_retries": 0,
+          "validation_invocations": 1,
+          "text_findings": [],
+          "original_process_exit": null,
+          "requires_original_step_metadata_and_exit_propagation": true
+        }
+      ],
+      "archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/a56/../release-078c098/input/windows-x86_64-pluginval.zip",
+        "bytes": 5082,
+        "sha256": "2d562aed67ff29bc4bfc14d0bafb2d67b3cba69fe02dd50e79605578de0ce239"
+      },
+      "qualification": false,
+      "scope": "Console/report summaries are one lane, not two invocations. Original job/step/source/attempt/payload binding remains mandatory. SUCCESS followed by a crash is not accepted by text alone."
+    }
+  ],
+  "external_gates": [
+    "Authentic artifact API byte count/digest/name/run/head SHA/expiry.",
+    "Producer upload and native test steps from the intended run attempt.",
+    "Original validator job/step outcomes and source-pinned exit propagation.",
+    "Installation payload binding to validated binaries; macOS AU before/after identity.",
+    "Review all preserved failed attempts; diagnostic reruns never replace original lanes."
+  ],
+  "native_totals": {
+    "registered": 0,
+    "passed": 0,
+    "failed": 0,
+    "formal_skipped": 0,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "nested_python_skips_total": 0,
+  "validator_totals": {
+    "required_lanes": 2,
+    "validation_invocations": 2,
+    "validation_retries": 0
+  },
+  "counting_scope": "CTest executions across supplied targets. Internal assertions and nested unittest skips are not added to CTest counts. Console/report copies count once.",
+  "all_requested_observations_green": true
+}

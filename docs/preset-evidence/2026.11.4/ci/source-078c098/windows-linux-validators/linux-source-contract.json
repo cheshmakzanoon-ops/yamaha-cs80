@@ -1,0 +1,266 @@
+{
+  "status": "source_contract_prepared_original_linux_evidence_pending",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "latest_observation_utc": "2026-11-23T20:34:12.646Z",
+  "native_producer_job": {
+    "id": 137945804596,
+    "run_id": 45246863788,
+    "workflow_name": "build",
+    "head_branch": "main",
+    "run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOVaLxy88AAAAgHjXvNA",
+    "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/jobs/137945804596",
+    "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/job/137945804596",
+    "status": "in_progress",
+    "conclusion": null,
+    "created_at": "2026-11-23T19:14:35Z",
+    "started_at": "2026-11-23T19:28:44Z",
+    "completed_at": null,
+    "name": "Linux / VST3 + Standalone",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-23T19:28:44Z",
+        "completed_at": "2026-11-23T19:28:45Z"
+      },
+      {
+        "name": "Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T19:28:45Z",
+        "completed_at": "2026-11-23T19:28:51Z"
+      },
+      {
+        "name": "Install build dependencies",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-11-23T19:28:51Z",
+        "completed_at": "2026-11-23T19:29:17Z"
+      },
+      {
+        "name": "Configure",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T19:29:17Z",
+        "completed_at": "2026-11-23T19:30:34Z"
+      },
+      {
+        "name": "Verify configured JUCE source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T19:30:34Z",
+        "completed_at": "2026-11-23T19:30:34Z"
+      },
+      {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T19:30:34Z",
+        "completed_at": "2026-11-23T19:42:31Z"
+      },
+      {
+        "name": "Test",
+        "status": "in_progress",
+        "conclusion": null,
+        "number": 7,
+        "started_at": "2026-11-23T19:42:31Z",
+        "completed_at": null
+      },
+      {
+        "name": "Capture curated preset auditions",
+        "status": "pending",
+        "conclusion": null,
+        "number": 8,
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "name": "Upload curated preset auditions",
+        "status": "pending",
+        "conclusion": null,
+        "number": 9,
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "name": "Upload Linux VST3",
+        "status": "pending",
+        "conclusion": null,
+        "number": 10,
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "name": "Render demo and screenshots",
+        "status": "pending",
+        "conclusion": null,
+        "number": 11,
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "name": "Upload render artifacts",
+        "status": "pending",
+        "conclusion": null,
+        "number": 12,
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "name": "Package Linux VST3 and Standalone",
+        "status": "pending",
+        "conclusion": null,
+        "number": 13,
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "name": "Upload Linux install bundle",
+        "status": "pending",
+        "conclusion": null,
+        "number": 14,
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "name": "Upload test and JUCE source evidence",
+        "status": "pending",
+        "conclusion": null,
+        "number": 15,
+        "started_at": null,
+        "completed_at": null
+      },
+      {
+        "name": "Post Run actions/checkout@v5",
+        "status": "pending",
+        "conclusion": null,
+        "number": 30,
+        "started_at": null,
+        "completed_at": null
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/check-runs/137945804596",
+    "labels": [
+      "ubuntu-24.04"
+    ],
+    "runner_id": 1000043643,
+    "runner_name": "GitHub Actions 1000043643",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "required_original_lanes": [
+    {
+      "lane": "headless",
+      "step": "Validate VST3 headless",
+      "console": "pluginval-headless.log",
+      "report": "pluginval-reports/cs80-headless",
+      "core_log": "pluginval-headless-core.log",
+      "gui_required": false,
+      "seed": "randomized"
+    },
+    {
+      "lane": "gui",
+      "step": "Validate VST3 GUI under Xvfb",
+      "console": "pluginval-gui.log",
+      "report": "pluginval-reports/cs80-gui",
+      "core_log": "pluginval-gui-core.log",
+      "gui_required": true,
+      "seed": "randomized"
+    },
+    {
+      "lane": "gui-seed",
+      "step": "Validate GUI state regression seed 0x2da72db",
+      "console": "pluginval-gui-seed-regression.log",
+      "report": "pluginval-reports/cs80-gui-seed-regression",
+      "core_log": "pluginval-gui-seed-regression-core.log",
+      "gui_required": true,
+      "seed": "0x2da72db"
+    }
+  ],
+  "all_required_strictness": 10,
+  "all_required_program_count": 523,
+  "required_pluginval_version": "1.0.4",
+  "retry_policy": {
+    "max_attempts_per_lane": 3,
+    "eligible_original_status": 139,
+    "must_have_started_test_phase_and_last_phase_completed": true,
+    "must_have_neither_success_nor_failed": true,
+    "preserve_each_failed_console_as_attemptN": true,
+    "final_original_raw_returncode": 0,
+    "final_original_termination_kind": "exit",
+    "success_followed_by_crash_is_failure_and_not_retry_eligible": true,
+    "diagnostic_reruns_cannot_substitute": true,
+    "status_139_does_not_alone_prove_SIGSEGV_or_crash_ownership": true
+  },
+  "download_retries_separate": "curl --retry 3 is a transfer policy; actual transfers must be read from original fetch log and kept separate from validator retries.",
+  "pending": [
+    "Original Linux producer artifacts and upload bindings",
+    "Original Linux validator consumer job and all three step outcomes",
+    "Authentic validator report archive API/bytes/upload binding",
+    "All three original core termination records and any failed-attempt logs",
+    "Full distributed VST3 tree equality against exact downloaded Linux validator input"
+  ],
+  "source_records": [
+    {
+      "repository_path": ".github/workflows/build.yml",
+      "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "current_file_exactly_matches_source": true
+    },
+    {
+      "repository_path": "scripts/run-pluginval-linux.sh",
+      "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 2542,
+      "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+      "current_file_exactly_matches_source": true
+    },
+    {
+      "repository_path": "scripts/run-pluginval-with-core.py",
+      "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 7044,
+      "sha256": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea",
+      "current_file_exactly_matches_source": true
+    },
+    {
+      "repository_path": "scripts/download-pluginval-windows.py",
+      "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 8605,
+      "sha256": "2a6260516d2802cce192e0736c1758c9033e75a314009a063ef5de80d38e3b4a",
+      "current_file_exactly_matches_source": true
+    },
+    {
+      "repository_path": "scripts/verify-ci-bundle.py",
+      "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 18296,
+      "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+      "current_file_exactly_matches_source": true
+    },
+    {
+      "repository_path": "scripts/package-ci-artifacts.py",
+      "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "current_file_exactly_matches_source": true
+    },
+    {
+      "repository_path": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py",
+      "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 38038,
+      "sha256": "7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd",
+      "current_file_exactly_matches_source": true
+    }
+  ]
+}

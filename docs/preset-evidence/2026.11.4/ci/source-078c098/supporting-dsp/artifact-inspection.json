@@ -1,0 +1,548 @@
+[
+  {
+    "kind": "synthetic",
+    "artifact_id": 14853109005,
+    "name": "cs80-synthetic-comparison-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "bytes": 198609,
+    "sha256": "4fba882c577dbf86e6987914712b15fb88aa9c4fb06b9d3632a8f901098223ff",
+    "created_at": "2026-11-23T19:17:32Z",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "producer_job_id": 137945816716,
+    "run_id": 45246863831,
+    "run_attempt": 1,
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "producer_upload_line": "2026-11-23T19:17:32.8527022Z Artifact cs80-synthetic-comparison-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14853109005",
+    "upload_step": {
+      "name": "Run actions/upload-artifact@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T19:17:31Z",
+      "completed_at": "2026-11-23T19:17:32Z"
+    },
+    "artifact_id_ordering_used_as_provenance": false,
+    "entry_inventory": [
+      {
+        "path": "envelope-candidate.csv",
+        "bytes": 92826,
+        "sha256": "4c17cbb27c835772f4c2f62b6d642c832e53eb06182bc2fde780d76df2dab24b"
+      },
+      {
+        "path": "envelope-reference.csv",
+        "bytes": 42423,
+        "sha256": "41b8f42d8c445c2da3a3955d19bf2b5751eba10f532f180a271ad2d9957d0adc"
+      },
+      {
+        "path": "filter-candidate.csv",
+        "bytes": 104968,
+        "sha256": "d80ea4f18ad4480d855f18db1163c621e16c63f98725620c4be737c137fd7923"
+      },
+      {
+        "path": "filter-reference.csv",
+        "bytes": 104535,
+        "sha256": "10cc8f3fde450cb8df8116252045aa442bebba9b080952c1a9424505636ebbcd"
+      },
+      {
+        "path": "manifest.json",
+        "bytes": 4367,
+        "sha256": "e4a73d26cd1051483aef34de66c01e2e2b96009160950552f660b5a9a9d58acc"
+      },
+      {
+        "path": "oscillator-candidate.csv",
+        "bytes": 104771,
+        "sha256": "ffa762c74ebc27893fa6e0cce2e653b69a3800a11bba538c7d60320b07356ab6"
+      },
+      {
+        "path": "oscillator-reference.csv",
+        "bytes": 102391,
+        "sha256": "a274e4cfa0127573d8d719cf76666b8024d154e6c79398ab0cc424045fd82b59"
+      },
+      {
+        "path": "output-candidate.csv",
+        "bytes": 105754,
+        "sha256": "566ad6a77224b52d5e885952dc194f0350b687d3219b4ff7eedebb162875d876"
+      },
+      {
+        "path": "output-reference.csv",
+        "bytes": 105338,
+        "sha256": "5a87936b1cacd09280f63a551cf2aa0c5cbad09c6cbfd8882c671ae3838bef41"
+      },
+      {
+        "path": "report.json",
+        "bytes": 5286,
+        "sha256": "050cb6317e16589c48d52fcb8d1cf1c1820b316d719e87cc3760f4172bfb2cc7"
+      }
+    ],
+    "checks": {
+      "archive_entries": 10,
+      "files": 10,
+      "safe_unique_regular_entries": true,
+      "report_passed": true,
+      "source_hashes_matched": true,
+      "trace_hashes_matched": 8,
+      "analog_evidence": false
+    }
+  },
+  {
+    "kind": "legacy",
+    "artifact_id": 14855770877,
+    "name": "cs80-legacy-compatibility-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "bytes": 29436,
+    "sha256": "a59ac27b9a0ca0ec3bb215a9b88560e3c99e8c1e588a2d060acb678ec6018e5d",
+    "created_at": "2026-11-23T19:28:57Z",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "producer_job_id": 137945817147,
+    "run_id": 45246863831,
+    "run_attempt": 1,
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "producer_upload_line": "2026-11-23T19:28:58.1330933Z Artifact cs80-legacy-compatibility-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14855770877",
+    "upload_step": {
+      "name": "Run actions/upload-artifact@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-23T19:28:56Z",
+      "completed_at": "2026-11-23T19:28:58Z"
+    },
+    "artifact_id_ordering_used_as_provenance": false,
+    "entry_inventory": [
+      {
+        "path": "SHA256SUMS",
+        "bytes": 548,
+        "sha256": "8fea9f312ac9c97ad168cce5fd0e6755e7f5a2e73692632a05967114c250223a"
+      },
+      {
+        "path": "baseline-corpus.txt",
+        "bytes": 277637,
+        "sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559"
+      },
+      {
+        "path": "compiler.txt",
+        "bytes": 246,
+        "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+      },
+      {
+        "path": "report.json",
+        "bytes": 392,
+        "sha256": "91ec1ef2157dab8f821c436844f16b96aca379cf7e53a8a9a765a0abc4b434d3"
+      }
+    ],
+    "checks": {
+      "archive_entries": 4,
+      "files": 4,
+      "safe_unique_regular_entries": true,
+      "report": {
+        "baseline": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "candidate": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+        "corpus_source": "d56911a7c5f6953cd244457226b126cc567a538b",
+        "corpus_sha256": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "corpus_parameters": 137,
+        "default_off_byte_identical": true,
+        "legacy_programs": 222,
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "analog_evidence": false
+      },
+      "recorded_comparison_digests": {
+        "artifacts/compatibility/baseline-corpus.txt": "da9bcebe267809fa8a7ccbb427cc48fb7efadf8601991c3b6a437378b1d3e559",
+        "artifacts/compatibility/baseline-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+        "artifacts/compatibility/baseline-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6",
+        "artifacts/compatibility/current-default.f32": "3c3924206e69a823b69eb26c91a1623134750d04af62e2fbbbdd6e99d0dbc2e6",
+        "artifacts/compatibility/current-tails.f32": "f0de5b9041524362750cff2810ae1d8fa18340fe3cd0531c45fe8b5d6cae0db6"
+      },
+      "recorded_digest_pairs_equal": true,
+      "raw_audio_binaries_distributed": false,
+      "byte_comparison_evidence": "Original successful producer cmp steps, with retained digest report; raw comparison bytes are not uploaded."
+    }
+  },
+  {
+    "kind": "source",
+    "artifact_id": 14856000575,
+    "name": "cs80-source-factory-compatibility-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "bytes": 985,
+    "sha256": "d4a9d78f9d9ac5114e2b9bb2f654c143654bb279772fa39aa92d1820e9b6e9eb",
+    "created_at": "2026-11-23T19:30:57Z",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "producer_job_id": 137945817476,
+    "run_id": 45246863831,
+    "run_attempt": 1,
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "producer_upload_line": "2026-11-23T19:30:57.3484616Z Artifact cs80-source-factory-compatibility-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14856000575",
+    "upload_step": {
+      "name": "Run actions/upload-artifact@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T19:30:55Z",
+      "completed_at": "2026-11-23T19:30:57Z"
+    },
+    "artifact_id_ordering_used_as_provenance": false,
+    "entry_inventory": [
+      {
+        "path": "SHA256SUMS",
+        "bytes": 486,
+        "sha256": "4311e27d9c9a85689ac61d689e6eb71c3ce8cea170becea7b1f22c0a9dc8dc61"
+      },
+      {
+        "path": "compiler.txt",
+        "bytes": 246,
+        "sha256": "88b7c4b67564a146863224148116065fee418539f0a408f3636a68f3bde51805"
+      },
+      {
+        "path": "report.json",
+        "bytes": 400,
+        "sha256": "8d18c51ca5d09dc90a3627f7215441a5cde52a7c7c12ee4fda53850a143d1673"
+      }
+    ],
+    "checks": {
+      "archive_entries": 3,
+      "files": 3,
+      "safe_unique_regular_entries": true,
+      "report": {
+        "circuit_baseline": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+        "audio_baseline": "00ceccfacb3cb9845436701da01c4387d53a361a",
+        "candidate": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+        "source_tones": 7,
+        "circuit_values": 16632,
+        "sample_rates": [
+          44100,
+          48000,
+          96000,
+          192000
+        ],
+        "v1_circuit_bytes_unchanged": true,
+        "v2_audio_and_numeric_state_bytes_unchanged": true,
+        "model_metadata_excluded": true,
+        "analog_evidence": false
+      },
+      "recorded_comparison_digests": {
+        "artifacts/source-factory-compatibility/audio-current.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+        "artifacts/source-factory-compatibility/audio-v2.bin": "08a381f4ac9de1709a9c9197a78baefb12ffac93cd79f76d4b1e92d4f329e195",
+        "artifacts/source-factory-compatibility/circuit-current.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb",
+        "artifacts/source-factory-compatibility/circuit-v1.bin": "77a312249f671afde87ee673aae6d9cf73f4c41e28bc092c1ceba6a50e0a3beb"
+      },
+      "recorded_digest_pairs_equal": true,
+      "raw_audio_binaries_distributed": false,
+      "byte_comparison_evidence": "Original successful producer cmp steps, with retained digest report; raw comparison bytes are not uploaded."
+    }
+  },
+  {
+    "kind": "candidate",
+    "artifact_id": 14856066121,
+    "name": "cs80-engine-candidate-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "bytes": 1437988,
+    "sha256": "da5ad87657fe494fd5a7562bdf853777fe1553d37875cf61e984ecf3263ec726",
+    "created_at": "2026-11-23T19:30:04Z",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "producer_job_id": 137945817176,
+    "run_id": 45246863831,
+    "run_attempt": 1,
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "producer_upload_line": "2026-11-23T19:30:04.9947452Z Artifact cs80-engine-candidate-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14856066121",
+    "upload_step": {
+      "name": "Run actions/upload-artifact@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-23T19:30:03Z",
+      "completed_at": "2026-11-23T19:30:05Z"
+    },
+    "artifact_id_ordering_used_as_provenance": false,
+    "entry_inventory": [
+      {
+        "path": "BINARY_SHA256SUMS",
+        "bytes": 98,
+        "sha256": "4b8b302606b4b2e3057ae527cc4e31e4cd3b6b181e949a47e15cf6aa57c22d1b"
+      },
+      {
+        "path": "SHA256SUMS",
+        "bytes": 568,
+        "sha256": "4b15f10087741cc23943315db2dbc6047d788ae12a7eca14039fc18ae741bf4e"
+      },
+      {
+        "path": "SOURCE_SHA256SUMS",
+        "bytes": 1397,
+        "sha256": "52596413911b85e4372a392b2811fe648a7fded0d1ed3e3a750548e760371251"
+      },
+      {
+        "path": "build-environment.txt",
+        "bytes": 1079,
+        "sha256": "1c4db1470a351ac9c6c3d4f1903edb3396cd51b2b2d604eb9bcdf22b4f728e74"
+      },
+      {
+        "path": "capture.json",
+        "bytes": 6516,
+        "sha256": "0217a5b2273e18e48e9d59657a4eaf008c50d62b67cf793ba8a964e67ba9a61f"
+      },
+      {
+        "path": "left.csv",
+        "bytes": 1904283,
+        "sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+      },
+      {
+        "path": "provenance.json",
+        "bytes": 98,
+        "sha256": "267e3a867408edb2bdee22ef4c900b8f5845969283a03ad134ae3349adc9a075"
+      },
+      {
+        "path": "right.csv",
+        "bytes": 1904283,
+        "sha256": "cdf60c66660ef65ccef6fae5b2132afb1b64f36a5558dd1fdf80fb688b10ca40"
+      }
+    ],
+    "checks": {
+      "archive_entries": 8,
+      "files": 8,
+      "safe_unique_regular_entries": true,
+      "manifest_checksums_matched": 7,
+      "source_hashes_matched": 15,
+      "analog_evidence": false
+    }
+  },
+  {
+    "kind": "live-adr",
+    "artifact_id": 14856840329,
+    "name": "cs80-engine-live-adr-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "bytes": 1454416,
+    "sha256": "2fe175f05d2aab2f5071a8a368d35a669e24e5c8bb6f399b4f67e9fa6870c4e0",
+    "created_at": "2026-11-23T19:30:06Z",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "producer_job_id": 137945817176,
+    "run_id": 45246863831,
+    "run_attempt": 1,
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "producer_upload_line": "2026-11-23T19:30:06.6087774Z Artifact cs80-engine-live-adr-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14856840329",
+    "upload_step": {
+      "name": "Upload live envelope candidate trace",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-23T19:30:05Z",
+      "completed_at": "2026-11-23T19:30:06Z"
+    },
+    "artifact_id_ordering_used_as_provenance": false,
+    "entry_inventory": [
+      {
+        "path": "BINARY_SHA256SUMS",
+        "bytes": 98,
+        "sha256": "4b8b302606b4b2e3057ae527cc4e31e4cd3b6b181e949a47e15cf6aa57c22d1b"
+      },
+      {
+        "path": "SHA256SUMS",
+        "bytes": 654,
+        "sha256": "8d0782ae34dd87914df7d8e3fa32ffb1efa1c8e692ff13646ff4c7fb08acd4f7"
+      },
+      {
+        "path": "SOURCE_SHA256SUMS",
+        "bytes": 1397,
+        "sha256": "52596413911b85e4372a392b2811fe648a7fded0d1ed3e3a750548e760371251"
+      },
+      {
+        "path": "build-environment.txt",
+        "bytes": 1079,
+        "sha256": "1c4db1470a351ac9c6c3d4f1903edb3396cd51b2b2d604eb9bcdf22b4f728e74"
+      },
+      {
+        "path": "capture.json",
+        "bytes": 11558,
+        "sha256": "f7a41a319f221ee6e67e1faae2c93006db923664a17eb2c65facc395971e16f2"
+      },
+      {
+        "path": "envelope-events.csv",
+        "bytes": 2404,
+        "sha256": "2c611a2b46afde8e35de7ca3d1b9fe5098f1765053260c38e22827e290aba42c"
+      },
+      {
+        "path": "left.csv",
+        "bytes": 1936761,
+        "sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+      },
+      {
+        "path": "provenance.json",
+        "bytes": 98,
+        "sha256": "267e3a867408edb2bdee22ef4c900b8f5845969283a03ad134ae3349adc9a075"
+      },
+      {
+        "path": "right.csv",
+        "bytes": 1936761,
+        "sha256": "d4cab38ab5bc0a0b919de9ef395737afd2413e3e8406a3b53fb62e48120252c6"
+      }
+    ],
+    "checks": {
+      "archive_entries": 9,
+      "files": 9,
+      "safe_unique_regular_entries": true,
+      "manifest_checksums_matched": 8,
+      "source_hashes_matched": 15,
+      "analog_evidence": false
+    }
+  },
+  {
+    "kind": "dsp",
+    "artifact_id": 14854758765,
+    "name": "cs80-dsp-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "bytes": 8505873,
+    "sha256": "07c0aebfa13a3cd0bed34c9b978e4456f9387b55bd09e75e811fb5510874fffa",
+    "created_at": "2026-11-23T19:30:08Z",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "producer_job_id": 137945817176,
+    "run_id": 45246863831,
+    "run_attempt": 1,
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "producer_upload_line": "2026-11-23T19:30:09.1606303Z Artifact cs80-dsp-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14854758765",
+    "upload_step": {
+      "name": "Upload source-traceable graphs and raw traces",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-23T19:30:06Z",
+      "completed_at": "2026-11-23T19:30:09Z"
+    },
+    "artifact_id_ordering_used_as_provenance": false,
+    "entry_inventory": [
+      {
+        "path": "decimator-impulse.csv",
+        "bytes": 9588,
+        "sha256": "fb3861f5a79241f3567f0111f73e5085dbbbf5b850f5f949b02490b59cc82326"
+      },
+      {
+        "path": "decimator-tones.csv",
+        "bytes": 228,
+        "sha256": "8f3265efbbbc1ad2cf040f8e8cd4a9df4493492442a7cbe27150f1b3cd89aa93"
+      },
+      {
+        "path": "decimator.json",
+        "bytes": 79,
+        "sha256": "c02d9e8f1852998523cb95a57fbd4ade5dbccef95ba06c273a3f5c2e26d3b6d0"
+      },
+      {
+        "path": "filter-envelope-192000.csv",
+        "bytes": 84979,
+        "sha256": "57c9d9b1ed66352326d07b31c3a3c21c33c7fc9811877a2d1ab1983bc0809fed"
+      },
+      {
+        "path": "filter-envelope-44100.csv",
+        "bytes": 84878,
+        "sha256": "b6790076bc33b5a3f0e9aa384f3477138f3c1103866b170a4685888b954e235b"
+      },
+      {
+        "path": "filter-envelope-48000.csv",
+        "bytes": 85088,
+        "sha256": "ed4827cd7eb9ae79191238a3a6b20d1b82fcc3aa9238ffd278e22108d4af8384"
+      },
+      {
+        "path": "filter-envelope-96000.csv",
+        "bytes": 85110,
+        "sha256": "c136936d09d4c1cc057c6a00083912de66818566783a19f301e6d063992b8234"
+      },
+      {
+        "path": "measurements.json",
+        "bytes": 6311,
+        "sha256": "9ff5581ee37831c59809770b05e8705f38eb2eb79934007fc4935cc18a7a9da1"
+      },
+      {
+        "path": "oscillator-151.csv",
+        "bytes": 5857683,
+        "sha256": "cdd5815b8d0ae7018ce63dfe680e0e842357fa28c494d3ed3e2555e3654c98b6"
+      },
+      {
+        "path": "oscillator-3001.csv",
+        "bytes": 5974106,
+        "sha256": "e315d2f9ff3bd79ce621cf372ee4ade95a6cdcdab19530a9435d67ded5e27d45"
+      },
+      {
+        "path": "oscillator-6001.csv",
+        "bytes": 6099446,
+        "sha256": "b70ac197820c6f4456198a3f818b308dadc676839021d6846b589aa169c9a5ff"
+      },
+      {
+        "path": "oscillator-601.csv",
+        "bytes": 5875938,
+        "sha256": "6689c8dbce85f3b89e51dc4adeb3afcd3421b41d55f208a0dcf705fdc563d961"
+      },
+      {
+        "path": "plots/decimator-response-latency.png",
+        "bytes": 362158,
+        "sha256": "fad782a2890cd903739e7c5d6df3c66751f3f2d06c6c42e7f324b1c2d269b1c9"
+      },
+      {
+        "path": "plots/decimator-response-latency.svg",
+        "bytes": 227851,
+        "sha256": "f72237beecb5c4557d02aab9ab45ea12e2b7a95a95239fdd996c3021cf0894e1"
+      },
+      {
+        "path": "plots/filter-envelope-rate-comparison.png",
+        "bytes": 88060,
+        "sha256": "9c602320dc037f414906841d4bd5334b7ed8e08cbb150e16eb8f51e48e4a4844"
+      },
+      {
+        "path": "plots/filter-envelope-rate-comparison.svg",
+        "bytes": 65047,
+        "sha256": "0c5b0d106c2af5cae89689cd5806d4829097644c10f9218987eac3454271a433"
+      },
+      {
+        "path": "plots/oscillator-alias-comparison.png",
+        "bytes": 83637,
+        "sha256": "674bd5cc6682fcfa9b1d7e36539a7bee2c813dae462c1e02e97f89333d6e9103"
+      },
+      {
+        "path": "plots/oscillator-alias-comparison.svg",
+        "bytes": 63618,
+        "sha256": "cd894a2c8733dbcce701ede34d177b1f1b3917104286ceff8c81871cda57b826"
+      },
+      {
+        "path": "plots/oscillator-waveform-spectrum.png",
+        "bytes": 230988,
+        "sha256": "797054832c4100a6bd841013c14ccc22ba232f8562fc5b0d3e1d9c45df92929d"
+      },
+      {
+        "path": "plots/oscillator-waveform-spectrum.svg",
+        "bytes": 605308,
+        "sha256": "b911af8020728bb8f3d2eca50f419f4a509269c48eae796dc58966cc1e29332b"
+      },
+      {
+        "path": "plots/ring-frequency-envelope.png",
+        "bytes": 163184,
+        "sha256": "2d4041a157d355c4e6073679b772250aee1fabf04857ebbc3021c63f51786b38"
+      },
+      {
+        "path": "plots/ring-frequency-envelope.svg",
+        "bytes": 90259,
+        "sha256": "7ae65c40e31daee392317d153ee83380429f5e3cc3e68dfeb8e75749fb7b7bff"
+      },
+      {
+        "path": "probe.json",
+        "bytes": 105,
+        "sha256": "bb39a04905115e1eef08fe88063688ec66700192c4e832058bf58b4c05a6e065"
+      },
+      {
+        "path": "ring-200.csv",
+        "bytes": 65547,
+        "sha256": "ff01eb07563e95064a784f60c1d924f03b4d833b04cbc9d804434e081a731130"
+      },
+      {
+        "path": "ring-40.csv",
+        "bytes": 62480,
+        "sha256": "d5bf59b8fd470289f0ce8b16773f483696a16c53b56e78aee82546b0edaab3f5"
+      },
+      {
+        "path": "ring-7.csv",
+        "bytes": 90202,
+        "sha256": "ec9c7eeaee13f14ae91081b4a7f065730770790b22973814e46e0ddd45e21ed0"
+      }
+    ],
+    "checks": {
+      "archive_entries": 26,
+      "files": 26,
+      "safe_unique_regular_entries": true,
+      "comparative_regression_passed": true,
+      "probe_failures": 0,
+      "source_hashes_matched": 5,
+      "analysis_working_tree_status": [],
+      "scope": "Software numerical reference, not a physical instrument comparison"
+    }
+  }
+]

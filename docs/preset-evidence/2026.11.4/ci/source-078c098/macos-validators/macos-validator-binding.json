@@ -1,0 +1,1551 @@
+{
+  "schema": 1,
+  "worker": "a55",
+  "verified_at_utc": "2026-11-23T20:30:18.018746+00:00",
+  "status": "eight_original_macos_validator_lanes_and_distributed_payloads_bound",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "release_qualified": false,
+  "macos_validator_scope_qualified": true,
+  "validator_totals": {
+    "required_lanes": 8,
+    "successful_lanes": 8,
+    "validation_invocations": 8,
+    "validation_retries": 0
+  },
+  "warning_lane_count": 6,
+  "external_vst3_validator_skip_lane_count": 2,
+  "parser_observations": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a55/validator-observations.json",
+    "bytes": 22674,
+    "sha256": "f08ac65f04b082a5a5495f7158bdc66cf901df85c3ce0cd7f121da32d14c142e"
+  },
+  "source_files": {
+    ".github/workflows/build.yml": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/build-source-078c098.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "git_blob": "70576cb10b78100b6aa98d67b37f00d0361c2a79"
+    },
+    "scripts/package-ci-artifacts.py": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/package-ci-artifacts-source-078c098.py",
+      "bytes": 29516,
+      "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+      "git_blob": "a53416ca00e3a2accd9a85fa41036383162674da"
+    },
+    "scripts/download-pluginval-macos.py": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a55/download-pluginval-macos-source-078c098.py",
+      "bytes": 8346,
+      "sha256": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290",
+      "git_blob": "d65dbb6de2f47abd682eae2fdab51a27363f5797"
+    }
+  },
+  "targets": [
+    {
+      "target": "macos-arm64",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863788,
+      "run_attempt": 1,
+      "producer_job_id": 137945805542,
+      "producer_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/job/137945805542",
+      "producer_job_conclusion": "success",
+      "run_snapshot_conclusion": null,
+      "job_api": {
+        "path": "/workspace/scratch/dde4ad85ed5b/a51/job.json",
+        "bytes": 5736,
+        "sha256": "42299b3e951fc8bf50fed714d920646d2732279f944e760513b584cb98ed55f5"
+      },
+      "run_api": {
+        "path": "/workspace/scratch/dde4ad85ed5b/a51/run.json",
+        "bytes": 15101,
+        "sha256": "19de274f1b6b75ca252fc3794201556b65f8735ba0d7f1c2691f2c1d5c4e7d80"
+      },
+      "original_job_log": {
+        "path": "/workspace/scratch/dde4ad85ed5b/a51/job.log",
+        "bytes": 231695,
+        "sha256": "ad969bf8844348f3f32f5464ef59c8af636b9a0feab28876f9ff7d840aff4e69"
+      },
+      "artifacts": [
+        {
+          "kind": "pluginval",
+          "artifact_api": {
+            "id": 14856188848,
+            "node_id": "MDg6QXJ0aWZhY3QxNDg1NjE4ODg0OA==",
+            "name": "cs80-pluginval-macos-15",
+            "size_in_bytes": 10377,
+            "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856188848",
+            "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856188848/zip",
+            "expired": false,
+            "digest": "sha256:a14b0fedcb8eaef2af315bb596ae9eb84dd77df906933b9fd1691f68b40ec302",
+            "created_at": "2026-11-23T19:49:01Z",
+            "updated_at": "2026-11-23T19:49:01Z",
+            "expires_at": "2027-02-21T19:14:35Z",
+            "workflow_run": {
+              "id": 45246863788,
+              "repository_id": 1436742091,
+              "head_repository_id": 1436742091,
+              "head_branch": "main",
+              "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+            }
+          },
+          "api_file": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-pluginval-api.json",
+            "bytes": 793,
+            "sha256": "4b785078601940b8f0e31e1ce83211612d05484b3d0cd30c3edaf283d3bdd9fc"
+          },
+          "archive": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-pluginval.zip",
+            "bytes": 10377,
+            "sha256": "a14b0fedcb8eaef2af315bb596ae9eb84dd77df906933b9fd1691f68b40ec302"
+          },
+          "upload_step": {
+            "name": "Upload pluginval reports",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-11-23T19:49:00Z",
+            "completed_at": "2026-11-23T19:49:01Z"
+          },
+          "cumulative_uploaded_bytes": [
+            10377
+          ],
+          "upload_witnesses": [
+            {
+              "line": 2321,
+              "timestamp": "2026-11-23T19:49:01.3229400Z",
+              "text": "SHA256 digest of uploaded artifact zip is a14b0fedcb8eaef2af315bb596ae9eb84dd77df906933b9fd1691f68b40ec302"
+            },
+            {
+              "line": 2323,
+              "timestamp": "2026-11-23T19:49:01.7129930Z",
+              "text": "Artifact cs80-pluginval-macos-15.zip successfully finalized. Artifact ID 14856188848"
+            },
+            {
+              "line": 2324,
+              "timestamp": "2026-11-23T19:49:01.7131730Z",
+              "text": "Artifact cs80-pluginval-macos-15 has been successfully uploaded! Final size is 10377 bytes. Artifact ID is 14856188848"
+            },
+            {
+              "line": 2325,
+              "timestamp": "2026-11-23T19:49:01.7143290Z",
+              "text": "Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/artifacts/14856188848"
+            }
+          ],
+          "canonical_unique_supported_zip_entries": true,
+          "source_run_attempt_upload_bound": true
+        },
+        {
+          "kind": "install",
+          "artifact_api": {
+            "id": 14855214289,
+            "node_id": "MDg6QXJ0aWZhY3QxNDg1NTIxNDI4OQ==",
+            "name": "cs80-macos-15-install-bundle",
+            "size_in_bytes": 14949170,
+            "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289",
+            "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289/zip",
+            "expired": false,
+            "digest": "sha256:a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8",
+            "created_at": "2026-11-23T19:49:00Z",
+            "updated_at": "2026-11-23T19:49:00Z",
+            "expires_at": "2027-02-21T19:14:35Z",
+            "workflow_run": {
+              "id": 45246863788,
+              "repository_id": 1436742091,
+              "head_repository_id": 1436742091,
+              "head_branch": "main",
+              "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+            }
+          },
+          "api_file": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-install-api.json",
+            "bytes": 801,
+            "sha256": "af591b2a88666981afe38f8123cddc66ac316b676764ea739d828bda48443871"
+          },
+          "archive": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-install.zip",
+            "bytes": 14949170,
+            "sha256": "a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8"
+          },
+          "upload_step": {
+            "name": "Upload native macOS install bundle",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-11-23T19:48:58Z",
+            "completed_at": "2026-11-23T19:49:00Z"
+          },
+          "cumulative_uploaded_bytes": [
+            8388608,
+            14949170
+          ],
+          "upload_witnesses": [
+            {
+              "line": 2288,
+              "timestamp": "2026-11-23T19:49:00.2768830Z",
+              "text": "SHA256 digest of uploaded artifact zip is a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8"
+            },
+            {
+              "line": 2290,
+              "timestamp": "2026-11-23T19:49:00.6243610Z",
+              "text": "Artifact cs80-macos-15-install-bundle.zip successfully finalized. Artifact ID 14855214289"
+            },
+            {
+              "line": 2291,
+              "timestamp": "2026-11-23T19:49:00.6259270Z",
+              "text": "Artifact cs80-macos-15-install-bundle has been successfully uploaded! Final size is 14949170 bytes. Artifact ID is 14855214289"
+            },
+            {
+              "line": 2292,
+              "timestamp": "2026-11-23T19:49:00.6269610Z",
+              "text": "Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/artifacts/14855214289"
+            }
+          ],
+          "canonical_unique_supported_zip_entries": true,
+          "source_run_attempt_upload_bound": true
+        },
+        {
+          "kind": "test-evidence",
+          "artifact_api": {
+            "id": 14855209144,
+            "node_id": "MDg6QXJ0aWZhY3QxNDg1NTIwOTE0NA==",
+            "name": "cs80-macos-15-test-evidence",
+            "size_in_bytes": 66236,
+            "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855209144",
+            "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855209144/zip",
+            "expired": false,
+            "digest": "sha256:2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895",
+            "created_at": "2026-11-23T19:49:02Z",
+            "updated_at": "2026-11-23T19:49:02Z",
+            "expires_at": "2027-02-21T19:14:35Z",
+            "workflow_run": {
+              "id": 45246863788,
+              "repository_id": 1436742091,
+              "head_repository_id": 1436742091,
+              "head_branch": "main",
+              "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+            }
+          },
+          "api_file": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-test-evidence-api.json",
+            "bytes": 797,
+            "sha256": "507fd19576605a0f3acd3150787a7265f9e844a8eedf076237d743281abfbae0"
+          },
+          "archive": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-test-evidence.zip",
+            "bytes": 66236,
+            "sha256": "2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895"
+          },
+          "upload_step": {
+            "name": "Upload test and JUCE source evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-11-23T19:49:01Z",
+            "completed_at": "2026-11-23T19:49:02Z"
+          },
+          "cumulative_uploaded_bytes": [
+            66236
+          ],
+          "upload_witnesses": [
+            {
+              "line": 2349,
+              "timestamp": "2026-11-23T19:49:02.4428780Z",
+              "text": "SHA256 digest of uploaded artifact zip is 2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895"
+            },
+            {
+              "line": 2351,
+              "timestamp": "2026-11-23T19:49:02.8270630Z",
+              "text": "Artifact cs80-macos-15-test-evidence.zip successfully finalized. Artifact ID 14855209144"
+            },
+            {
+              "line": 2352,
+              "timestamp": "2026-11-23T19:49:02.8272320Z",
+              "text": "Artifact cs80-macos-15-test-evidence has been successfully uploaded! Final size is 66236 bytes. Artifact ID is 14855209144"
+            },
+            {
+              "line": 2353,
+              "timestamp": "2026-11-23T19:49:02.8284050Z",
+              "text": "Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/artifacts/14855209144"
+            }
+          ],
+          "canonical_unique_supported_zip_entries": true,
+          "source_run_attempt_upload_bound": true
+        }
+      ],
+      "validator_download": {
+        "repository": "Tracktion/pluginval",
+        "version": "1.0.4",
+        "release_id": 188928656,
+        "asset_id": 210999197,
+        "asset_name": "pluginval_macOS.zip",
+        "expected_size": 9202795,
+        "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+        "attempts": [
+          {
+            "number": 1,
+            "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+            "reason": "api_forbidden",
+            "http_status": 403,
+            "transfer_exit": 12
+          },
+          {
+            "number": 2,
+            "source_url": "https://github.com/Tracktion/pluginval/releases/download/v1.0.4/pluginval_macOS.zip",
+            "reason": "downloaded",
+            "bytes": 9202795,
+            "final_host": "release-assets.githubusercontent.com",
+            "transfer_exit": 0
+          }
+        ],
+        "verified": true,
+        "actual_size": 9202795,
+        "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+      },
+      "fetch_step": {
+        "name": "Fetch pluginval 1.0.4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T19:45:37Z",
+        "completed_at": "2026-11-23T19:45:41Z"
+      },
+      "register_step": {
+        "name": "Register built AU",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-23T19:45:41Z",
+        "completed_at": "2026-11-23T19:45:44Z"
+      },
+      "package_step": {
+        "name": "Package native macOS VST3, AU and Standalone",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-23T19:48:56Z",
+        "completed_at": "2026-11-23T19:48:58Z"
+      },
+      "au_identity": {
+        "full_recursive_bundle_diff_before_and_after_passed": true,
+        "distributed_executable": {
+          "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+          "bytes": 14293088,
+          "sha256": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b"
+        },
+        "hash_evidence": [
+          {
+            "phase": "before",
+            "member": {
+              "path": "au-payload-before-validation.sha256",
+              "bytes": 378,
+              "sha256": "66edf612c4267cbfb09cfcb4b76f2a75f9e776c9b6a29d43fdcca14e433400e3"
+            },
+            "hash_lines": [
+              "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b  /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+              "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b  /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+            ],
+            "original_log_witnesses": [
+              {
+                "line": 1601,
+                "timestamp": "2026-11-23T19:45:42.3516750Z",
+                "text": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b  /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+              },
+              {
+                "line": 1602,
+                "timestamp": "2026-11-23T19:45:42.3999330Z",
+                "text": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b  /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+              }
+            ]
+          },
+          {
+            "phase": "after",
+            "member": {
+              "path": "au-payload-after-validation.sha256",
+              "bytes": 378,
+              "sha256": "66edf612c4267cbfb09cfcb4b76f2a75f9e776c9b6a29d43fdcca14e433400e3"
+            },
+            "hash_lines": [
+              "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b  /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+              "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b  /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+            ],
+            "original_log_witnesses": [
+              {
+                "line": 2256,
+                "timestamp": "2026-11-23T19:48:56.3632010Z",
+                "text": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b  /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+              },
+              {
+                "line": 2257,
+                "timestamp": "2026-11-23T19:48:56.4225020Z",
+                "text": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b  /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+              }
+            ]
+          }
+        ],
+        "meaning": "Successful unsuppressed diff -qr gates establish registered copy equals packaging source before/after validation; both executable hashes at both phases match freshly hashed distributed bytes."
+      },
+      "vst3_identity": {
+        "distributed_executable": {
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+          "bytes": 14570784,
+          "sha256": "d6b2e411a7f7de7aeb8af3f641a6368ff6d1439af28208810beda01a2cf683ac"
+        },
+        "source_packager": {
+          "path": "/workspace/scratch/dde4ad85ed5b/a55/package-ci-artifacts-source-078c098.py",
+          "bytes": 29516,
+          "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+          "git_blob": "a53416ca00e3a2accd9a85fa41036383162674da"
+        },
+        "original_package_inner_archive": {
+          "path": "cs80-reference-macos-arm64-078c0981ffa1.tar.gz",
+          "bytes": 14940420,
+          "sha256": "f7160ebb46ffb0b612b9f3038cbd8cc8ec66b1961214a191f8e5958363d5ee46"
+        },
+        "package_log_inner_digest_matches": true,
+        "meaning": "Validated exact build/CS80Reference_artefacts/Release/VST3 bundle is read from that same base by the source-pinned packager; ordered workflow has no intervening rebuild or VST3 mutation. Package self-test only uses a separate TemporaryDirectory."
+      },
+      "inner_tar_preflight": {
+        "entries": 40,
+        "canonical_unique_regular_files_or_directories": true,
+        "extracted": false
+      },
+      "lanes": [
+        {
+          "lane": "vst3",
+          "qualified_within_scope": true,
+          "seed": "0x368004e",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": false,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "step": {
+            "name": "Validate VST3 with pluginval",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-23T19:45:44Z",
+            "completed_at": "2026-11-23T19:45:48Z"
+          },
+          "console_matches_original_output": true,
+          "original_log_start_line": 1604,
+          "original_log_end_line": 1757,
+          "original_success": {
+            "line": 1757,
+            "timestamp": "2026-11-23T19:45:47.9588320Z",
+            "text": "SUCCESS"
+          },
+          "input_path": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3",
+          "distributed_executable": {
+            "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+            "bytes": 14570784,
+            "sha256": "d6b2e411a7f7de7aeb8af3f641a6368ff6d1439af28208810beda01a2cf683ac"
+          },
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [],
+          "explicit_skips": [
+            "INFO: Skipping vst3 validator as validator path hasn't been set"
+          ],
+          "console": {
+            "path": "pluginval-vst3.log",
+            "bytes": 7399,
+            "sha256": "4f2c49cd4c87d5f917160056274ed7f0bb70755511504a57ba33717d514cc9e5",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x368004e"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-vst3",
+            "bytes": 7272,
+            "sha256": "5849bd6906279524cc05798c547ff3cb2e8a7144247526034ab314ed7e1e1476",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x368004e"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          }
+        },
+        {
+          "lane": "au",
+          "qualified_within_scope": true,
+          "seed": "0x535ed06",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": false,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "step": {
+            "name": "Validate AU with pluginval",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-23T19:45:48Z",
+            "completed_at": "2026-11-23T19:46:18Z"
+          },
+          "console_matches_original_output": true,
+          "original_log_start_line": 1758,
+          "original_log_end_line": 1911,
+          "original_success": {
+            "line": 1911,
+            "timestamp": "2026-11-23T19:46:18.2144740Z",
+            "text": "SUCCESS"
+          },
+          "input_path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+          "distributed_executable": {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "bytes": 14293088,
+            "sha256": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b"
+          },
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "console": {
+            "path": "pluginval-au.log",
+            "bytes": 7308,
+            "sha256": "8014a6a9f41840d3289330a3cb7830043cae3d3b30885f355532e5606a3831b0",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x535ed06"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": false,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au",
+            "bytes": 7214,
+            "sha256": "e1ab2e1e4c89a495a0be7e14044b4ebda70a8b37a0be9d83108db0119441f236",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x535ed06"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": false,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          }
+        },
+        {
+          "lane": "au-gui",
+          "qualified_within_scope": true,
+          "seed": "0x5a3f346",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": true,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "step": {
+            "name": "Validate AU with pluginval GUI",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-23T19:46:18Z",
+            "completed_at": "2026-11-23T19:47:42Z"
+          },
+          "console_matches_original_output": true,
+          "original_log_start_line": 1912,
+          "original_log_end_line": 2076,
+          "original_success": {
+            "line": 2076,
+            "timestamp": "2026-11-23T19:47:42.0557430Z",
+            "text": "SUCCESS"
+          },
+          "input_path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+          "distributed_executable": {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "bytes": 14293088,
+            "sha256": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b"
+          },
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "console": {
+            "path": "pluginval-au-gui.log",
+            "bytes": 7990,
+            "sha256": "d632198d2c516d031b3a770f0f4aa437c03eb7507e0a36a816618165cad56cd6",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x5a3f346"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au-gui",
+            "bytes": 7896,
+            "sha256": "f4641190e45707e365de32110dd47a4bc3d3bb17aa79266172b9ae28bdb3f1eb",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x5a3f346"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          }
+        },
+        {
+          "lane": "au-gui-seed",
+          "qualified_within_scope": true,
+          "seed": "0x2b4eef5",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": true,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "step": {
+            "name": "Validate AU GUI fixed-seed regression",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-11-23T19:47:42Z",
+            "completed_at": "2026-11-23T19:48:56Z"
+          },
+          "console_matches_original_output": true,
+          "original_log_start_line": 2077,
+          "original_log_end_line": 2242,
+          "original_success": {
+            "line": 2242,
+            "timestamp": "2026-11-23T19:48:55.9005730Z",
+            "text": "SUCCESS"
+          },
+          "input_path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+          "distributed_executable": {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "bytes": 14293088,
+            "sha256": "25de9ef4917a9a2716277b0f95440897a6bb37667fe7052baf06ac959282358b"
+          },
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "console": {
+            "path": "pluginval-au-seed-regression.log",
+            "bytes": 7990,
+            "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x2b4eef5"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au-seed-regression",
+            "bytes": 7896,
+            "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x2b4eef5"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          }
+        }
+      ],
+      "validation_invocations": 4,
+      "validation_retries": 0,
+      "diagnostic_steps": [
+        {
+          "name": "AU registration diagnostics",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 16,
+          "started_at": "2026-11-23T19:49:00Z",
+          "completed_at": "2026-11-23T19:49:00Z"
+        },
+        {
+          "name": "Report pluginval failure",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 17,
+          "started_at": "2026-11-23T19:49:00Z",
+          "completed_at": "2026-11-23T19:49:00Z"
+        }
+      ],
+      "auval_scope": "auval -a is only a failure-only registration listing; it was skipped and is not independent AU validation."
+    },
+    {
+      "target": "macos-x86_64",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863788,
+      "run_attempt": 1,
+      "producer_job_id": 137945806008,
+      "producer_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/job/137945806008",
+      "producer_job_conclusion": "success",
+      "run_snapshot_conclusion": null,
+      "job_api": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-native-job-api.json",
+        "bytes": 5748,
+        "sha256": "76e647dfff34d3146130b7ad8ad28e7edafb4695cc760c3a3ef4f3f2b510e25a"
+      },
+      "run_api": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-native-run-api.json",
+        "bytes": 15101,
+        "sha256": "a00c9e74bb388cf60ef1e7e694b6f9afb4041e4e54c5f5c468043775fb30820b"
+      },
+      "original_job_log": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-native-job.log",
+        "bytes": 235054,
+        "sha256": "560f38251bc000d54e59e99aea3335e326ddbb864bc1908811fd33ef02db3c02"
+      },
+      "artifacts": [
+        {
+          "kind": "pluginval",
+          "artifact_api": {
+            "id": 14859338331,
+            "node_id": "MDg6QXJ0aWZhY3QxNDg1OTMzODMzMQ==",
+            "name": "cs80-pluginval-macos-15-intel",
+            "size_in_bytes": 10329,
+            "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14859338331",
+            "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14859338331/zip",
+            "expired": false,
+            "digest": "sha256:8affb980a4d12a67213228a19dbba242174d52f95c1b86c2c160767739f7b358",
+            "created_at": "2026-11-23T20:19:52Z",
+            "updated_at": "2026-11-23T20:19:52Z",
+            "expires_at": "2027-02-21T19:14:35Z",
+            "workflow_run": {
+              "id": 45246863788,
+              "repository_id": 1436742091,
+              "head_repository_id": 1436742091,
+              "head_branch": "main",
+              "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+            }
+          },
+          "api_file": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-pluginval-api.json",
+            "bytes": 799,
+            "sha256": "f353252f79b0bcc93b8fdd08b74931bb6ea0494c9b4330baf8735a21c1109b7d"
+          },
+          "archive": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-pluginval.zip",
+            "bytes": 10329,
+            "sha256": "8affb980a4d12a67213228a19dbba242174d52f95c1b86c2c160767739f7b358"
+          },
+          "upload_step": {
+            "name": "Upload pluginval reports",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-11-23T20:19:51Z",
+            "completed_at": "2026-11-23T20:19:52Z"
+          },
+          "cumulative_uploaded_bytes": [
+            10329
+          ],
+          "upload_witnesses": [
+            {
+              "line": 2363,
+              "timestamp": "2026-11-23T20:19:51.8569690Z",
+              "text": "SHA256 digest of uploaded artifact zip is 8affb980a4d12a67213228a19dbba242174d52f95c1b86c2c160767739f7b358"
+            },
+            {
+              "line": 2365,
+              "timestamp": "2026-11-23T20:19:52.2567580Z",
+              "text": "Artifact cs80-pluginval-macos-15-intel.zip successfully finalized. Artifact ID 14859338331"
+            },
+            {
+              "line": 2366,
+              "timestamp": "2026-11-23T20:19:52.2569250Z",
+              "text": "Artifact cs80-pluginval-macos-15-intel has been successfully uploaded! Final size is 10329 bytes. Artifact ID is 14859338331"
+            },
+            {
+              "line": 2367,
+              "timestamp": "2026-11-23T20:19:52.2579920Z",
+              "text": "Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/artifacts/14859338331"
+            }
+          ],
+          "canonical_unique_supported_zip_entries": true,
+          "source_run_attempt_upload_bound": true
+        },
+        {
+          "kind": "install",
+          "artifact_api": {
+            "id": 14858878730,
+            "node_id": "MDg6QXJ0aWZhY3QxNDg1ODg3ODczMA==",
+            "name": "cs80-macos-15-intel-install-bundle",
+            "size_in_bytes": 16228346,
+            "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730",
+            "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730/zip",
+            "expired": false,
+            "digest": "sha256:84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a",
+            "created_at": "2026-11-23T20:19:51Z",
+            "updated_at": "2026-11-23T20:19:51Z",
+            "expires_at": "2027-02-21T19:14:35Z",
+            "workflow_run": {
+              "id": 45246863788,
+              "repository_id": 1436742091,
+              "head_repository_id": 1436742091,
+              "head_branch": "main",
+              "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+            }
+          },
+          "api_file": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-install-api.json",
+            "bytes": 807,
+            "sha256": "e14f97aefed67c613d67d8c7ef5d2520561a2bca168aedb990687e80de7c6a84"
+          },
+          "archive": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-install.zip",
+            "bytes": 16228346,
+            "sha256": "84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a"
+          },
+          "upload_step": {
+            "name": "Upload native macOS install bundle",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-11-23T20:19:48Z",
+            "completed_at": "2026-11-23T20:19:51Z"
+          },
+          "cumulative_uploaded_bytes": [
+            8388608,
+            16228346
+          ],
+          "upload_witnesses": [
+            {
+              "line": 2330,
+              "timestamp": "2026-11-23T20:19:50.6510420Z",
+              "text": "SHA256 digest of uploaded artifact zip is 84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a"
+            },
+            {
+              "line": 2332,
+              "timestamp": "2026-11-23T20:19:51.1115420Z",
+              "text": "Artifact cs80-macos-15-intel-install-bundle.zip successfully finalized. Artifact ID 14858878730"
+            },
+            {
+              "line": 2333,
+              "timestamp": "2026-11-23T20:19:51.1117950Z",
+              "text": "Artifact cs80-macos-15-intel-install-bundle has been successfully uploaded! Final size is 16228346 bytes. Artifact ID is 14858878730"
+            },
+            {
+              "line": 2334,
+              "timestamp": "2026-11-23T20:19:51.1132750Z",
+              "text": "Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/artifacts/14858878730"
+            }
+          ],
+          "canonical_unique_supported_zip_entries": true,
+          "source_run_attempt_upload_bound": true
+        },
+        {
+          "kind": "test-evidence",
+          "artifact_api": {
+            "id": 14859865836,
+            "node_id": "MDg6QXJ0aWZhY3QxNDg1OTg2NTgzNg==",
+            "name": "cs80-macos-15-intel-test-evidence",
+            "size_in_bytes": 66284,
+            "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14859865836",
+            "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14859865836/zip",
+            "expired": false,
+            "digest": "sha256:16ab696d2fea6e758ec2f919e7849b473eabcf54b4f6f76011b33cf17b9a82b4",
+            "created_at": "2026-11-23T20:19:53Z",
+            "updated_at": "2026-11-23T20:19:53Z",
+            "expires_at": "2027-02-21T19:14:35Z",
+            "workflow_run": {
+              "id": 45246863788,
+              "repository_id": 1436742091,
+              "head_repository_id": 1436742091,
+              "head_branch": "main",
+              "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+            }
+          },
+          "api_file": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-test-evidence-api.json",
+            "bytes": 803,
+            "sha256": "c536acb090080315e524637de059517959782b8e86b45caf9844be5426fd175b"
+          },
+          "archive": {
+            "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-test-evidence.zip",
+            "bytes": 66284,
+            "sha256": "16ab696d2fea6e758ec2f919e7849b473eabcf54b4f6f76011b33cf17b9a82b4"
+          },
+          "upload_step": {
+            "name": "Upload test and JUCE source evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-11-23T20:19:52Z",
+            "completed_at": "2026-11-23T20:19:53Z"
+          },
+          "cumulative_uploaded_bytes": [
+            66284
+          ],
+          "upload_witnesses": [
+            {
+              "line": 2391,
+              "timestamp": "2026-11-23T20:19:53.0483440Z",
+              "text": "SHA256 digest of uploaded artifact zip is 16ab696d2fea6e758ec2f919e7849b473eabcf54b4f6f76011b33cf17b9a82b4"
+            },
+            {
+              "line": 2393,
+              "timestamp": "2026-11-23T20:19:53.4127080Z",
+              "text": "Artifact cs80-macos-15-intel-test-evidence.zip successfully finalized. Artifact ID 14859865836"
+            },
+            {
+              "line": 2394,
+              "timestamp": "2026-11-23T20:19:53.4129300Z",
+              "text": "Artifact cs80-macos-15-intel-test-evidence has been successfully uploaded! Final size is 66284 bytes. Artifact ID is 14859865836"
+            },
+            {
+              "line": 2395,
+              "timestamp": "2026-11-23T20:19:53.4139860Z",
+              "text": "Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/artifacts/14859865836"
+            }
+          ],
+          "canonical_unique_supported_zip_entries": true,
+          "source_run_attempt_upload_bound": true
+        }
+      ],
+      "validator_download": {
+        "repository": "Tracktion/pluginval",
+        "version": "1.0.4",
+        "release_id": 188928656,
+        "asset_id": 210999197,
+        "asset_name": "pluginval_macOS.zip",
+        "expected_size": 9202795,
+        "expected_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f",
+        "attempts": [
+          {
+            "number": 1,
+            "source_url": "https://api.github.com/repos/Tracktion/pluginval/releases/assets/210999197",
+            "reason": "downloaded",
+            "bytes": 9202795,
+            "final_host": "release-assets.githubusercontent.com",
+            "transfer_exit": 0
+          }
+        ],
+        "verified": true,
+        "actual_size": 9202795,
+        "actual_sha256": "3c4c533bda0c5059eea3ddaea752d757ee2025041f0f47e6bcb0e87f6082b29f"
+      },
+      "fetch_step": {
+        "name": "Fetch pluginval 1.0.4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T20:15:59Z",
+        "completed_at": "2026-11-23T20:16:01Z"
+      },
+      "register_step": {
+        "name": "Register built AU",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-23T20:16:01Z",
+        "completed_at": "2026-11-23T20:16:04Z"
+      },
+      "package_step": {
+        "name": "Package native macOS VST3, AU and Standalone",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-23T20:19:43Z",
+        "completed_at": "2026-11-23T20:19:48Z"
+      },
+      "au_identity": {
+        "full_recursive_bundle_diff_before_and_after_passed": true,
+        "distributed_executable": {
+          "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+          "bytes": 15233024,
+          "sha256": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876"
+        },
+        "hash_evidence": [
+          {
+            "phase": "before",
+            "member": {
+              "path": "au-payload-before-validation.sha256",
+              "bytes": 378,
+              "sha256": "d2bc1c3eff21d877c0d90cbae8e3b08a3371771421bca192ab451df723f226cd"
+            },
+            "hash_lines": [
+              "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876  /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+              "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876  /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+            ],
+            "original_log_witnesses": [
+              {
+                "line": 1643,
+                "timestamp": "2026-11-23T20:16:02.0191640Z",
+                "text": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876  /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+              },
+              {
+                "line": 1644,
+                "timestamp": "2026-11-23T20:16:02.0909500Z",
+                "text": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876  /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+              }
+            ]
+          },
+          {
+            "phase": "after",
+            "member": {
+              "path": "au-payload-after-validation.sha256",
+              "bytes": 378,
+              "sha256": "d2bc1c3eff21d877c0d90cbae8e3b08a3371771421bca192ab451df723f226cd"
+            },
+            "hash_lines": [
+              "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876  /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+              "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876  /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+            ],
+            "original_log_witnesses": [
+              {
+                "line": 2298,
+                "timestamp": "2026-11-23T20:19:43.3550070Z",
+                "text": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876  /Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+              },
+              {
+                "line": 2299,
+                "timestamp": "2026-11-23T20:19:43.4246990Z",
+                "text": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876  /Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference"
+              }
+            ]
+          }
+        ],
+        "meaning": "Successful unsuppressed diff -qr gates establish registered copy equals packaging source before/after validation; both executable hashes at both phases match freshly hashed distributed bytes."
+      },
+      "vst3_identity": {
+        "distributed_executable": {
+          "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+          "bytes": 15533376,
+          "sha256": "b5803183278b81745e476de113ec45b35932daf2a6a1db93563ec8adbf0c13bf"
+        },
+        "source_packager": {
+          "path": "/workspace/scratch/dde4ad85ed5b/a55/package-ci-artifacts-source-078c098.py",
+          "bytes": 29516,
+          "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+          "git_blob": "a53416ca00e3a2accd9a85fa41036383162674da"
+        },
+        "original_package_inner_archive": {
+          "path": "cs80-reference-macos-x86_64-078c0981ffa1.tar.gz",
+          "bytes": 16219587,
+          "sha256": "caaef4830fb24dcca5dfa95075a92fc3538971749061959c452f47ad7542bb82"
+        },
+        "package_log_inner_digest_matches": true,
+        "meaning": "Validated exact build/CS80Reference_artefacts/Release/VST3 bundle is read from that same base by the source-pinned packager; ordered workflow has no intervening rebuild or VST3 mutation. Package self-test only uses a separate TemporaryDirectory."
+      },
+      "inner_tar_preflight": {
+        "entries": 40,
+        "canonical_unique_regular_files_or_directories": true,
+        "extracted": false
+      },
+      "lanes": [
+        {
+          "lane": "vst3",
+          "qualified_within_scope": true,
+          "seed": "0x1d1bc71",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": false,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "step": {
+            "name": "Validate VST3 with pluginval",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-23T20:16:04Z",
+            "completed_at": "2026-11-23T20:16:10Z"
+          },
+          "console_matches_original_output": true,
+          "original_log_start_line": 1646,
+          "original_log_end_line": 1799,
+          "original_success": {
+            "line": 1799,
+            "timestamp": "2026-11-23T20:16:10.0854190Z",
+            "text": "SUCCESS"
+          },
+          "input_path": "/Users/runner/work/yamaha-cs80/yamaha-cs80/build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3",
+          "distributed_executable": {
+            "path": "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+            "bytes": 15533376,
+            "sha256": "b5803183278b81745e476de113ec45b35932daf2a6a1db93563ec8adbf0c13bf"
+          },
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [],
+          "explicit_skips": [
+            "INFO: Skipping vst3 validator as validator path hasn't been set"
+          ],
+          "console": {
+            "path": "pluginval-vst3.log",
+            "bytes": 7399,
+            "sha256": "09d8a3e308d9eb07e2393ca9ed1fac5c78aea0ec8e3e8ba89a5dd2c8b3e73f4a",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x1d1bc71"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-vst3",
+            "bytes": 7272,
+            "sha256": "3a72e14e9357490a78ee71b75d96cbf81a78bd6989e738aa3313db707bf64f13",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x1d1bc71"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [],
+              "editor_test_started": false,
+              "explicit_skips": [
+                "INFO: Skipping vst3 validator as validator path hasn't been set"
+              ],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          }
+        },
+        {
+          "lane": "au",
+          "qualified_within_scope": true,
+          "seed": "0x72f5473",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": false,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "step": {
+            "name": "Validate AU with pluginval",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-23T20:16:10Z",
+            "completed_at": "2026-11-23T20:16:50Z"
+          },
+          "console_matches_original_output": true,
+          "original_log_start_line": 1800,
+          "original_log_end_line": 1953,
+          "original_success": {
+            "line": 1953,
+            "timestamp": "2026-11-23T20:16:50.4539540Z",
+            "text": "SUCCESS"
+          },
+          "input_path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+          "distributed_executable": {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "bytes": 15233024,
+            "sha256": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876"
+          },
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "console": {
+            "path": "pluginval-au.log",
+            "bytes": 7308,
+            "sha256": "e155c7b2cf302277a9a7f4d7029bf6a58d3e4fafe336872097ada0947b7cd42c",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x72f5473"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": false,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au",
+            "bytes": 7214,
+            "sha256": "ce08b4db51e6e924dda2d2cc4c4073a22f070eaa4c80a17b492e5bf006c88075",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x72f5473"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": false,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          }
+        },
+        {
+          "lane": "au-gui",
+          "qualified_within_scope": true,
+          "seed": "0x454a186",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": true,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "step": {
+            "name": "Validate AU with pluginval GUI",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-23T20:16:50Z",
+            "completed_at": "2026-11-23T20:18:17Z"
+          },
+          "console_matches_original_output": true,
+          "original_log_start_line": 1954,
+          "original_log_end_line": 2118,
+          "original_success": {
+            "line": 2118,
+            "timestamp": "2026-11-23T20:18:16.9113730Z",
+            "text": "SUCCESS"
+          },
+          "input_path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+          "distributed_executable": {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "bytes": 15233024,
+            "sha256": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876"
+          },
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "console": {
+            "path": "pluginval-au-gui.log",
+            "bytes": 7990,
+            "sha256": "a7823969132631125d9f24f07a22b87de380469e76affe80a0357be9f2870553",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x454a186"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au-gui",
+            "bytes": 7896,
+            "sha256": "65e36fc9ff8818c1ef86f9a5d5a386526559aaaa6a6cb3905fa99b7579661eeb",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x454a186"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          }
+        },
+        {
+          "lane": "au-gui-seed",
+          "qualified_within_scope": true,
+          "seed": "0x2b4eef5",
+          "strictness": 10,
+          "programs": 523,
+          "gui_tests": true,
+          "original_process_exit": 0,
+          "exit_evidence": "Inferred from original successful step and exact source/log-matched Bash set -euo pipefail pipeline; direct validator, no retry or error suppression; grep also requires SUCCESS.",
+          "step": {
+            "name": "Validate AU GUI fixed-seed regression",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-11-23T20:18:17Z",
+            "completed_at": "2026-11-23T20:19:43Z"
+          },
+          "console_matches_original_output": true,
+          "original_log_start_line": 2119,
+          "original_log_end_line": 2284,
+          "original_success": {
+            "line": 2284,
+            "timestamp": "2026-11-23T20:19:42.6907840Z",
+            "text": "SUCCESS"
+          },
+          "input_path": "/Users/runner/Library/Audio/Plug-Ins/Components/CS-80 Reference.component",
+          "distributed_executable": {
+            "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+            "bytes": 15233024,
+            "sha256": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876"
+          },
+          "validation_invocations": 1,
+          "validation_retries": 0,
+          "warnings": [
+            "!!! WARNING: Current program is -1... Is this correct?"
+          ],
+          "explicit_skips": [],
+          "console": {
+            "path": "pluginval-au-seed-regression.log",
+            "bytes": 7990,
+            "sha256": "201af9200bc48b0d087dcb812cc26f48da32e4c86a0f0a96dda6f098351acc63",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x2b4eef5"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          },
+          "report": {
+            "path": "pluginval-reports/cs80-au-seed-regression",
+            "bytes": 7896,
+            "sha256": "78e114ebaa2a2e9f9ec20273023be597815dadbf9b705a82191facae0d193fde",
+            "summary": {
+              "strictness": [
+                10
+              ],
+              "seeds": [
+                "0x2b4eef5"
+              ],
+              "program_counts": [
+                523
+              ],
+              "success_lines": 1,
+              "final_nonempty_line": "SUCCESS",
+              "failure_markers": [],
+              "warnings": [
+                "!!! WARNING: Current program is -1... Is this correct?"
+              ],
+              "editor_test_started": true,
+              "explicit_skips": [],
+              "clean_text_success": true,
+              "validation_start_count": 1
+            }
+          }
+        }
+      ],
+      "validation_invocations": 4,
+      "validation_retries": 0,
+      "diagnostic_steps": [
+        {
+          "name": "AU registration diagnostics",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 16,
+          "started_at": "2026-11-23T20:19:51Z",
+          "completed_at": "2026-11-23T20:19:51Z"
+        },
+        {
+          "name": "Report pluginval failure",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 17,
+          "started_at": "2026-11-23T20:19:51Z",
+          "completed_at": "2026-11-23T20:19:51Z"
+        }
+      ],
+      "auval_scope": "auval -a is only a failure-only registration listing; it was skipped and is not independent AU validation."
+    }
+  ],
+  "limits": [
+    "Overall release qualification remains the parent responsibility; this scope is eight macOS pluginval lanes.",
+    "No new native execution, validator execution, diagnostic rerun, CI rerun, repository edit, or external mutation.",
+    "No acoustic-realism, release-signing/notarization, separate Steinberg validator, standalone auval validation, or DAW-coverage claim.",
+    "The independent A45 parser deliberately leaves its own exit fields unknown and release_qualified false; this separate report binds original step success, exact commands, provenance and payloads.",
+    "ARM pluginval acquisition had two transfer attempts (API 403 then release-URL success); Intel had one transfer. These are download attempts, not validator retries."
+  ]
+}

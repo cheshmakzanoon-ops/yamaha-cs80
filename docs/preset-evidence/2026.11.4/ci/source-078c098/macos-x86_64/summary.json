@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "worker": "a54",
+  "status": "intel_macos_install_and_native_evidence_bound",
+  "verified_at_utc": "2026-11-23T20:23:18.103921+00:00",
+  "release_qualified": false,
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "target": "macos-x86_64",
+  "producer_job_id": 137945806008,
+  "producer_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/job/137945806008",
+  "producer_job_conclusion": "success",
+  "binding_report": {
+    "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/verified/macos-x86_64-producer-binding.json",
+    "bytes": 18785,
+    "sha256": "a9627c56a70f966c6eabfebdeb287460409507174f42a9c739ac5b066af80d34"
+  },
+  "installation_report": {
+    "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/verified/macos-x86_64-install.json",
+    "bytes": 4151,
+    "sha256": "aa2f9c21471f0515be0deb58abfb0e490a654095693c4790b91465366810b4eb"
+  },
+  "native_report": {
+    "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/verified/macos-x86_64-native-observations.json",
+    "bytes": 86268,
+    "sha256": "0af1568ee5e839ef21ed2015710baf0e387ea96b640b8019da33ec6b7b77ecee"
+  },
+  "native_counts": {
+    "registered": 251,
+    "passed": 249,
+    "failed": 0,
+    "formal_skipped": 2,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "formal_skips": [
+    {
+      "name": "cs80_filter_batch_cap_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    },
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "status": "notrun",
+      "message": "SKIP_RETURN_CODE=77"
+    }
+  ],
+  "nested_python_skips_total": 5,
+  "distributed_au": {
+    "schema": 1,
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "run_id": 45246863788,
+    "run_attempt": 1,
+    "target": "macos-x86_64",
+    "producer_job_id": 137945806008,
+    "artifact": {
+      "id": 14858878730,
+      "node_id": "MDg6QXJ0aWZhY3QxNDg1ODg3ODczMA==",
+      "name": "cs80-macos-15-intel-install-bundle",
+      "size_in_bytes": 16228346,
+      "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730",
+      "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730/zip",
+      "expired": false,
+      "digest": "sha256:84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a",
+      "created_at": "2026-11-23T20:19:51Z",
+      "updated_at": "2026-11-23T20:19:51Z",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "workflow_run": {
+        "id": 45246863788,
+        "repository_id": 1436742091,
+        "head_repository_id": 1436742091,
+        "head_branch": "main",
+        "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+      }
+    },
+    "executable": {
+      "path": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "bytes": 15233024,
+      "sha256": "2d820e1147b5d6c0ec4372b1e9f107c7d8c19ab0935c850acf62937c0db61876",
+      "platform": "macos",
+      "architecture": "x86_64",
+      "role": "plugin",
+      "header_check": "PASS",
+      "header": {
+        "format": "Mach-O 64-bit",
+        "advertised_slice_verified": "x86_64",
+        "cpu_type": "0x1000007"
+      }
+    },
+    "installation_report": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/verified/macos-x86_64-install.json",
+      "bytes": 4151,
+      "sha256": "aa2f9c21471f0515be0deb58abfb0e490a654095693c4790b91465366810b4eb"
+    },
+    "scope": "SHA256 of actual AU executable bytes read from original distributed installation archive; validator-input identity remains A56 work."
+  },
+  "artifacts": [
+    {
+      "id": 14858878730,
+      "name": "cs80-macos-15-intel-install-bundle",
+      "api_path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-install-api.json",
+      "archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-install.zip",
+        "bytes": 16228346,
+        "sha256": "84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a"
+      },
+      "producer_attempt_and_upload_bound": true
+    },
+    {
+      "id": 14859865836,
+      "name": "cs80-macos-15-intel-test-evidence",
+      "api_path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-test-evidence-api.json",
+      "archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-test-evidence.zip",
+        "bytes": 66284,
+        "sha256": "16ab696d2fea6e758ec2f919e7849b473eabcf54b4f6f76011b33cf17b9a82b4"
+      },
+      "producer_attempt_and_upload_bound": true
+    },
+    {
+      "id": 14859338331,
+      "name": "cs80-pluginval-macos-15-intel",
+      "api_path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-pluginval-api.json",
+      "archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-x86_64-pluginval.zip",
+        "bytes": 10329,
+        "sha256": "8affb980a4d12a67213228a19dbba242174d52f95c1b86c2c160767739f7b358"
+      },
+      "producer_attempt_and_upload_bound": true
+    }
+  ],
+  "remaining_qualification": [
+    "A56 must qualify original Mac validator lanes and installation payload identity.",
+    "All native platform gates, all 13 validator lanes, and supporting evidence remain required for overall release qualification."
+  ],
+  "review_path": "/workspace/scratch/dde4ad85ed5b/a54-review.md",
+  "review_file": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a54-review.md",
+    "bytes": 10363,
+    "sha256": "3f64f8e3a1d77d2c2490d372999c359f1cfcc9808f58da1aa5478b18bcdf42d0"
+  },
+  "binding_helper": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a54_bind_evidence.py",
+    "sha256": "3296aea1efa395b8c3a39ebd67a9ed88636245e233036fe897dbfa3e62f69ef6"
+  },
+  "inspector_correction": "The scratch binder now validates all cumulative upload-progress records and their exact final byte count; it accepts the observed macOS CTest summary wording while retaining original step-success and zero-JUnit-failure requirements.",
+  "scope": "Single-platform installation byte/source/upload/attempt binding and native evidence. Mac validator lane/payload qualification remains A56 work; overall release qualification remains false."
+}
