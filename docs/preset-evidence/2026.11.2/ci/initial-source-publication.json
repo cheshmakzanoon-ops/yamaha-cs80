@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "source_commit": "b5fc4e7ade9b412de5f609605e86bebbfaae26c0",
+  "source_tree": "b3375081b2edf064521d454dc0bc4685ebbfd575",
+  "parent_commit": "7e49ead0f1a5377c68cd0b698774a8cd3a2bfc65",
+  "committed_at_utc": "2026-11-23T00:19:37Z",
+  "branch": "main",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/b5fc4e7ade9b412de5f609605e86bebbfaae26c0",
+  "build_run_id": 45088113937,
+  "build_run_attempt": 1,
+  "build_run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45088113937",
+  "publication": {
+    "method": "Git object API with expected-head fast-forward update",
+    "expected_previous_head": "7e49ead0f1a5377c68cd0b698774a8cd3a2bfc65",
+    "staged_files": 188,
+    "remote_tree_identical_to_local_staged_tree": true,
+    "force": false
+  },
+  "scope": "Initial source publication. The separate full UI smoke run later found two obsolete fixture expectations and a one-pixel A/B toolbar overlap at minimum zoom. Final downloadable binaries must use the corrected source and its new exact build run.",
+  "screenshot_run": {
+    "run_id": 45088113963,
+    "job_id": 137411243047,
+    "conclusion": "failure",
+    "failures": [
+      "explicit program zero selection differs from original-mode fresh startup",
+      "Advanced SUB labels the waveform choice and reflects its stored value",
+      "no two visible main-view controls overlap at 1120x700"
+    ]
+  }
+}

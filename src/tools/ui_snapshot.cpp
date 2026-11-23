@@ -2125,6 +2125,7 @@ int main(int argc, char** argv)
         };
         cs80::tests::testGoldenImages(checked, flush,
             juce::File::getCurrentWorkingDirectory().getChildFile(argv[2]));
+        cs80::tests::testMainViewLayout(checked, flush);
         std::printf("Panel golden tests: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }
@@ -3150,9 +3151,18 @@ int main(int argc, char** argv)
         restoreTree(missingValue);
         check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 0.0f,
               "mode child with missing value restores legacy");
-        migration.setCurrentProgram(0);
-        check(migration.getParamValue(cs80::P_subOriginalMode) == 0.0f,
-              "explicit program zero selection differs from original-mode fresh startup");
+        const auto& programZero = restoredOriginal.getFactoryPresets().front();
+        restoredOriginal.setCurrentProgram(0);
+        check(restoredOriginal.getCurrentProgram() == 0
+                  && restoredOriginal.getPresetName() == juce::String(programZero.name)
+                  && restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 1.0f
+                  && restoredOriginal.getParamValue(cs80::P_sourcePerformance) == 1.0f
+                  && restoredOriginal.getParamValue(cs80::P_parityMode) == 0.0f
+                  && restoredOriginal.getParamValue(cs80::P_subOriginalFunction)
+                      == programZero.values[cs80::P_subOriginalFunction]
+                  && std::abs(restoredOriginal.getParamValue(cs80::P_subOriginalSpeed)
+                      - programZero.values[cs80::P_subOriginalSpeed]) < 0.0001f,
+              "explicit program zero recall restores its authored original SUB and circuit policy");
     }
 
     processor.loadFactoryPreset(22);
@@ -3723,7 +3733,11 @@ int main(int argc, char** argv)
     }
     else check(false, "extended SUB waveform control exists");
     if (auto* storedMode = dynamic_cast<juce::Button*>(findControl(editor, "sub_original_mode")))
-        check(storedMode->getButtonText() == "ORIGINAL WAVEFORMS" && !storedMode->getToggleState(),
+        check(waitForGui([&] {
+                  return storedMode->getButtonText() == "WAVEFORM SET"
+                      && storedMode->getTitle() == "ORIGINAL WAVEFORMS (waveform set)"
+                      && processor.getParamValue(cs80::P_subOriginalMode) == 0.0f
+                      && !storedMode->getToggleState(); }),
               "Advanced SUB labels the waveform choice and reflects its stored value");
     else check(false, "Advanced SUB waveform selector exists");
     processor.setParamValue(cs80::P_parityMode, 0.0f);
@@ -3745,6 +3759,12 @@ int main(int argc, char** argv)
     check(waitForGui([&] { return hasSubControls(true)
         && subStatusIs("SUB: ORIGINAL FUNCTIONS"); }),
           "main SUB controls rebind original parameters and report original status through editor timer");
+    if (auto* storedMode = dynamic_cast<juce::Button*>(findControl(editor, "sub_original_mode")))
+        check(waitForGui([&] {
+                  return processor.getParamValue(cs80::P_subOriginalMode) == 1.0f
+                      && storedMode->getToggleState(); }),
+              "Advanced SUB follows original waveform automation as well as extended");
+    else check(false, "Advanced SUB waveform selector remains available after rebinding");
     const float oldWave = processor.getParamValue(cs80::P_subWave);
     processor.setParamValue(cs80::P_subOriginalFunction, 0.0f);
     if (auto* knob = findParameterControl(editor, cs80::P_subOriginalFunction))

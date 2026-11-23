@@ -1,0 +1,32 @@
+{
+  "source": "b5fc4e7ade9b412de5f609605e86bebbfaae26c0",
+  "run_id": 45088113937,
+  "attempt": 1,
+  "job_id": 137411243207,
+  "platform": "macos-arm64",
+  "job_conclusion": "failure",
+  "registered": 247,
+  "passed": 244,
+  "failed": [
+    "2026-11-23T00:41:32.6365080Z 226/247 Test #226: cs80_ui_smoke .................................***Failed   99.09 sec"
+  ],
+  "formal_skips": [
+    "2026-11-23T00:26:29.8877620Z  44/247 Test  #44: cs80_filter_batch_cap_tests ...................***Skipped   0.01 sec",
+    "2026-11-23T00:29:44.6241780Z  76/247 Test  #76: cs80_stereo_pra_exact_tests ...................***Skipped   0.00 sec"
+  ],
+  "failed_assertions": [
+    "2026-11-23T00:41:32.6579780Z FAIL: explicit program zero selection differs from original-mode fresh startup",
+    "2026-11-23T00:41:32.6580840Z FAIL: Advanced SUB labels the waveform choice and reflects its stored value",
+    "2026-11-23T00:41:32.6638240Z FAIL: no two visible main-view controls overlap at 1120x700"
+  ],
+  "ctest_seconds": 1025.74,
+  "ctest_exit": 8,
+  "ui_smoke_counts": [
+    "2026-11-23T00:41:32.6710170Z UI SMOKE TEST: 3 FAILURE(S)"
+  ],
+  "nonfatal_cross_platform_golden_reports": [
+    "2026-11-23T00:41:32.6636780Z golden main-1600x1000: changed 0.7652 % of pixels (limit 0.30 %), worst 8x8 block mean 64.52 (limit 8.0) [report only on this platform]",
+    "2026-11-23T00:41:32.6637450Z golden main-1120x700: changed 1.3683 % of pixels (limit 0.30 %), worst 8x8 block mean 52.28 (limit 8.0) [report only on this platform]"
+  ],
+  "scope": "Complete job log reviewed. Successful CTest output is suppressed, so nested Python subtest skips are not counted here. Validators and package steps were skipped because CTest failed."
+}

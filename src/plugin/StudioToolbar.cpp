@@ -451,7 +451,11 @@ void StudioToolbar::resized()
     const float sx = (float) getWidth() / kDesignW, sy = (float) getHeight() / kDesignH;
     auto place = [sx, sy](juce::Component& c, float x, float w)
     {
-        c.setBounds(juce::roundToInt(x * sx), juce::roundToInt(4.0f * sy), juce::roundToInt(w * sx), juce::roundToInt(36.0f * sy));
+        // Shared segment edges must round to the same pixel at fractional zoom.
+        // Rounding each width independently made A and B overlap at 70%.
+        const int left = juce::roundToInt(x * sx);
+        const int right = juce::roundToInt((x + w) * sx);
+        c.setBounds(left, juce::roundToInt(4.0f * sy), right - left, juce::roundToInt(36.0f * sy));
     };
     // Give program names room and keep all controls reachable at minimum zoom.
     place(*prev, 6.0f, 35.0f);
