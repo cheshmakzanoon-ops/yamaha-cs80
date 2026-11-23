@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/ci/verification-tools/verify-audition-zip.py",
+    "--archive",
+    "/workspace/scratch/dde4ad85ed5b/release-078c098/input/audition.zip",
+    "--source",
+    "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "--run-id",
+    "45246863788",
+    "--attempt",
+    "1",
+    "--expected-zip-sha256",
+    "ae8cd5c31e03f0db317852f49a9169ad7ff455e2f385e8a510e8da4569f500ad",
+    "--repo",
+    "/workspace/scratch/dde4ad85ed5b/yamaha-cs80",
+    "--out",
+    "/workspace/scratch/dde4ad85ed5b/a58/actual-001/frozen-helper-actual-audition.json"
+  ],
+  "exit_code": 0,
+  "helper_sha256": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62"
+}

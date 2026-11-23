@@ -1,26 +1,42 @@
 {
-  "schema": 1,
-  "status": "in_progress_not_release_qualified",
+  "schema": 2,
+  "status": "all_required_ci_artifact_and_review_gates_passed",
   "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
   "native_run_id": 45246863788,
   "attempt": 1,
-  "as_of_utc": "2026-11-23T20:48:33Z",
-  "completed_independent_scopes": [
-    "Windows, Apple Silicon and Intel Mac installation archives and original native CTest suites",
-    "Eight original Mac pluginval lanes and distributed AU/VST3 identity",
-    "Two original Windows pluginval lanes and complete validated/distributed VST3 identity",
-    "Original UI smoke and actual screenshot archive",
-    "Six supporting filter jobs with 91 unchanged input files",
-    "Five exact-source supporting DSP jobs and six actual supporting archives",
-    "ASan/UBSan core suite:199passed,0failed,1formal skip of200;no reported diagnostics"
-  ],
-  "remaining_scopes": [
-    "Original Linux native suite and installation archive",
-    "Three original Linux pluginval lanes and complete validated/distributed VST3 identity",
-    "Actual final audition archive and delivered-inventory comparison",
-    "Final completion of all60actual workers, independent review and download publication"
-  ],
-  "scope_note": "Individual accepted records below are partial scopes. A completed release-qualification.json is required for the new download publication.",
+  "closed_at_utc": "2026-11-23T23:14:20.582800+00:00",
   "actual_workers_spawned": 60,
-  "all_worker_scopes_completed": false
+  "completed_worker_scopes": 60,
+  "all_worker_scopes_completed": true,
+  "remaining_qualification_scopes": [],
+  "release_qualification": "release-qualification.json",
+  "accepted_final_reviews": [
+    {
+      "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-review.json",
+      "bytes": 33847,
+      "sha256": "5dddae1baac4303571ab8b501cbc10f013d56efb972efe608a88535f4eb24756"
+    },
+    {
+      "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a59-review.json",
+      "bytes": 14794,
+      "sha256": "d0b1a3f17b5a6a96f220e49f1b4309e3a2c7a8a65bc5be92aa3395e6b1b3ab4d"
+    },
+    {
+      "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a60-review.json",
+      "bytes": 21283,
+      "sha256": "cd904619ed3004e30b2df7b7a8703dd0cb6dd2206a22d29426108c3db62fdc44"
+    }
+  ],
+  "completed_independent_scopes": [
+    "All four original native CTest suites and actual installation archives",
+    "All 13 original pluginval 1.0.4 strictness-10 lanes, normal final exit 0 and no validation retries",
+    "Windows/Linux full VST3 tree equality and both Mac architectures AU/VST3 payload bindings",
+    "Actual 138-WAV audition archive and complete 523-by-200 inventory identity",
+    "Original UI/screenshot check with unchanged goldens",
+    "Six supporting filter jobs with 91 unchanged input files",
+    "Five exact-source supporting DSP jobs and six actual archives, including ASan/UBSan",
+    "Actual 60-worker ledger, all-five-download mapping and independent final release candidate review"
+  ],
+  "closure_scope": "Original raw parsers and worker reports retain their original limited scopes and timestamps. Root closes final delivery statuses separately, preserving every earlier snapshot.",
+  "publication_method": "Exact reviewed documentation/evidence tree, non-forced leased main update, followed by root remote-commit/tree/source verification."
 }

@@ -1,0 +1,16 @@
+{
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_workflow": ".github/workflows/build.yml",
+  "workflow_sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+  "working_copy_matches_source": true,
+  "native_test_command": "ctest --test-dir build --output-on-failure --no-tests=error --output-junit \"${{ github.workspace }}/build/ctest-results.xml\"",
+  "native_test_exit_propagation": "Direct ctest step; no pipeline, retry, continue-on-error, or exit masking in the source-pinned Linux job.",
+  "verifier": {
+    "path": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py",
+    "sha256": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a"
+  },
+  "native_parser": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a45/parse_native_evidence.py",
+    "sha256": "f44d978bcb6d0754165c8d3d55320ac63919f22b15bcb37a54506ec00db3cc58"
+  }
+}

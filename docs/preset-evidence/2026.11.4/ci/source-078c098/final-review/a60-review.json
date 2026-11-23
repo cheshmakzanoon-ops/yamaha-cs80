@@ -1,0 +1,611 @@
+{
+  "schema": 2,
+  "worker": "a60",
+  "requested_worker_count": 60,
+  "status": "accepted_complete_release_candidate_parent_publication_subsequent",
+  "accepted": true,
+  "complete_assigned_scope": true,
+  "final_release_review_complete": true,
+  "ci_and_artifact_qualification_accepted": true,
+  "publication_completed_or_remotely_verified_by_this_review": false,
+  "reviewed_at_utc": "2026-11-23T23:12:37.895530+00:00",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_tree": "d84661c6c465c53ff41361e8aba0cba5e4a53397",
+  "documentation_checkpoint": "df9a8d2994e96534eb7c4ee57c0a82ea1fb6916c",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "new_blocking_findings": [],
+  "open_documentation_nits": [],
+  "decision_scope": "The complete original CI/artifact evidence and concrete README/distribution/revision/team/ledger publication candidate are accepted. Root factual closure of actual A59/A60 delivery, report retention, final index generation, exact-tree publication and remote verification follow this delivery; they are not claimed already completed.",
+  "native_totals": {
+    "registered": 1318,
+    "passed": 1311,
+    "failed": 0,
+    "formal_skipped": 7,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "separate_nested_python_subtest_skips": 24,
+  "native_platforms": [
+    {
+      "target": "windows-x86_64",
+      "counts": {
+        "registered": 229,
+        "passed": 227,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "separate_nested_python_skips": 11,
+      "archive_id": 14856849959,
+      "archive_sha256": "118b9c3ff9988ae8474540c96492d2171c438a84ed6fe2fdadb62beedc1cd8e7"
+    },
+    {
+      "target": "macos-arm64",
+      "counts": {
+        "registered": 251,
+        "passed": 249,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "separate_nested_python_skips": 5,
+      "archive_id": 14855209144,
+      "archive_sha256": "2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895"
+    },
+    {
+      "target": "macos-x86_64",
+      "counts": {
+        "registered": 251,
+        "passed": 249,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "separate_nested_python_skips": 5,
+      "archive_id": 14859865836,
+      "archive_sha256": "16ab696d2fea6e758ec2f919e7849b473eabcf54b4f6f76011b33cf17b9a82b4"
+    },
+    {
+      "target": "linux-x86_64",
+      "counts": {
+        "registered": 587,
+        "passed": 586,
+        "failed": 0,
+        "formal_skipped": 1,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skip_names": [
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "separate_nested_python_skips": 3,
+      "archive_id": 14871037472,
+      "archive_sha256": "d90334c62f869abf52a438dc2e1babca68b4751e49aeb948975a17e0ebe5efe5"
+    }
+  ],
+  "validator_totals": {
+    "required_lanes": 13,
+    "validation_invocations": 13,
+    "validation_retries": 0,
+    "normal_original_exit_zero": 13,
+    "version": "1.0.4",
+    "strictness": 10
+  },
+  "required_original_lanes": [
+    {
+      "target": "windows-x86_64",
+      "lane": "headless",
+      "seed": "0xdcb650",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "windows-x86_64",
+      "lane": "headless-seed",
+      "seed": "0x5037a0c",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "macos-arm64",
+      "lane": "vst3",
+      "seed": "0x368004e",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "macos-arm64",
+      "lane": "au",
+      "seed": "0x535ed06",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-arm64",
+      "lane": "au-gui",
+      "seed": "0x5a3f346",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-arm64",
+      "lane": "au-gui-seed",
+      "seed": "0x2b4eef5",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-x86_64",
+      "lane": "vst3",
+      "seed": "0x1d1bc71",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "macos-x86_64",
+      "lane": "au",
+      "seed": "0x72f5473",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-x86_64",
+      "lane": "au-gui",
+      "seed": "0x454a186",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-x86_64",
+      "lane": "au-gui-seed",
+      "seed": "0x2b4eef5",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "linux-x86_64",
+      "lane": "headless",
+      "seed": "0x588d540",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "linux-x86_64",
+      "lane": "gui",
+      "seed": "0x38562f0",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "linux-x86_64",
+      "lane": "gui-seed",
+      "seed": "0x2da72db",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    }
+  ],
+  "linux_direct_original_process_outcomes": [
+    {
+      "lane_file": "pluginval-headless-core.log",
+      "pid": 2685,
+      "raw_returncode": 0,
+      "kind": "exit",
+      "exit_code": 0,
+      "sha256": "d1ba7a45033b93c42659defe32a5e934cfae287a3ad508d17cff18077f51b6c1"
+    },
+    {
+      "lane_file": "pluginval-gui-core.log",
+      "pid": 2716,
+      "raw_returncode": 0,
+      "kind": "exit",
+      "exit_code": 0,
+      "sha256": "eea36471129e1345b65c5638edec1595f17af244921462ab2de78d11ec8d2ff5"
+    },
+    {
+      "lane_file": "pluginval-gui-seed-regression-core.log",
+      "pid": 2759,
+      "raw_returncode": 0,
+      "kind": "exit",
+      "exit_code": 0,
+      "sha256": "2eee7fc3050c5ae011320b161d3d932a76037fd2353c40b1fec14d89d3dacc73"
+    }
+  ],
+  "validator_exit_scope": "Linux has direct raw child termination records. Windows and Mac normal exits are bound by original successful steps and exact source/log-matched unsuppressed child-status propagation. Console/report copies count once; optional SDK skip notices remain separate.",
+  "validator_warning_and_skip_totals": {
+    "AU_current_program_warning_lanes": 6,
+    "optional_external_VST3_validator_skip_notice_lanes": 7,
+    "runtime_validation_retries": 0,
+    "note": "Download fallback attempts and synthetic diagnostic-helper fixtures are not counted as validator invocations or original failures."
+  },
+  "actual_advertised_artifacts": [
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14856804857,
+      "artifact_name": "cs80-windows-install-bundle",
+      "bytes": 6361027,
+      "sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ]
+    },
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14855214289,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "bytes": 14949170,
+      "sha256": "a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289.zip",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ]
+    },
+    {
+      "target": "macos-x86_64",
+      "artifact_id": 14858878730,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "bytes": 16228346,
+      "sha256": "84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730.zip",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ]
+    },
+    {
+      "target": "linux-x86_64",
+      "artifact_id": 14870428441,
+      "artifact_name": "cs80-linux-install-bundle",
+      "bytes": 13322687,
+      "sha256": "611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441.zip",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ]
+    },
+    {
+      "target": "audition",
+      "artifact_id": 14870917591,
+      "artifact_name": "cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "bytes": 300067470,
+      "sha256": "ae8cd5c31e03f0db317852f49a9169ad7ff455e2f385e8a510e8da4569f500ad",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591.zip"
+    }
+  ],
+  "installation_and_payload_acceptance": {
+    "all_four_strict_installations_accepted": true,
+    "exact_api_producer_attempt_upload_binding": true,
+    "native_target_header_and_complete_inventory_checks": true,
+    "windows_linux_complete_selected_VST3_tree_equality": true,
+    "mac_AU_source_registered_full_bundle_before_after_and_distributed_executable_identity": true,
+    "mac_VST3_validated_path_and_ordered_packaging_binding": true,
+    "no_publisher_signature_or_notarization_qualification": true,
+    "public_route_independently_verified": false
+  },
+  "audition": {
+    "accepted": true,
+    "zip_entries": 173,
+    "regular_files": 173,
+    "directory_entries": 0,
+    "checksummed_files": 172,
+    "metrics_csv_files": 30,
+    "wav_files": 138,
+    "auditioned_programs": 74,
+    "audio_seconds": 870,
+    "stereo_frames": 41760000,
+    "scalar_audio_samples": 83520000,
+    "audio_payload_bytes": 334080000,
+    "expanded_archive_bytes": 334882144,
+    "sample_rate_hz": 48000,
+    "channels": 2,
+    "sample_format": "IEEE-754 binary32 float WAV",
+    "inventory_programs": 523,
+    "parameters_per_program": 200,
+    "compared_parameter_values": 104600,
+    "active_body_models": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "nonfinite_samples": 0,
+    "samples_over_full_scale": 0,
+    "max_peak_dbfs": -13.673645330265373,
+    "max_peak_path": "pressure-full/295-Pressure-Pad.wav",
+    "max_peak_amplitude": 0.2071656435728073,
+    "exactly_silent_wavs": [
+      "pressure-zero/444-Pressure-Lead.wav"
+    ],
+    "delivered_inventory_exact_json_bytes_match": true,
+    "delivered_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "frozen_verifier_sha256": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62",
+    "both_frozen_and_supplemental_verification_exits_zero": true,
+    "A60_checks": "Read the original accepted invocation, source/helper contract and all per-WAV records; independently compared every actual ZIP entry metadata record and actual delivered inventory bytes; recomputed report totals. Did not rerun audio or audio verifier. A58/A59 independently verified full original ZIP digest."
+  },
+  "supporting_acceptance": {
+    "DSP": {
+      "run": 45246863831,
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "attempt": 1,
+      "original_jobs_passed": 5,
+      "actual_archives": 6,
+      "sanitizers": {
+        "registered": 200,
+        "passed": 199,
+        "formal_skipped": 1,
+        "failed": 0,
+        "reported_diagnostics": 0,
+        "nested_python_skips": null
+      }
+    },
+    "filter": {
+      "run": 45244531626,
+      "actual_source": "bcc86aa39a33a0162254614e5502705f0113d701",
+      "attempt": 1,
+      "jobs_passed": 6,
+      "CTests_passed": 24,
+      "byte_identical_relevant_inputs_to_release_source": 91,
+      "actual_executed_source_preserved": true
+    },
+    "screenshots": {
+      "run": 45246863473,
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "attempt": 1,
+      "actual_archive_qualified": true,
+      "original_UI_smoke_passed": true,
+      "both_unchanged_goldens_actual_byte_identical": true,
+      "changed_pixels": 0,
+      "historical_failed_precursor_preserved": true
+    }
+  },
+  "source_and_catalogue": {
+    "tracked_production_test_script_workflow_resource_changes_after_tested_source": [],
+    "ordered_program_identities_preserved": 523,
+    "musical_programs_reprogrammed_in_prior_4_stage": 521,
+    "initialization_programs_preserved": 2,
+    "new_presets": 0,
+    "prior_core_ID_prefix": 198,
+    "current_core_parameters": 200,
+    "prior_host_automation_prefix": 304,
+    "current_host_parameters": 306,
+    "continuation_recipe_vector_changes": 0,
+    "configured_continuation_reach": {
+      "tine": 17,
+      "bowed": 51,
+      "disjoint_union": 68
+    },
+    "historical_all_521_matched_capture_source": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+    "no_human_listening_or_exact_acoustic_equivalence_claim": true
+  },
+  "independent_review_evidence": {
+    "unique_original_ZIPs_rehashed_by_A60_across_preliminary_and_final_review": 13,
+    "all_four_actual_JUnit_counts_independently_recounted": true,
+    "nested_skips_independently_recounted_from_original_LastTest_terminal_summaries": true,
+    "aggregate_referenced_file_bytes_hashes_verified": 23,
+    "retained_audition_mapping_files_verified": 22,
+    "retained_Linux_mapping_files_verified": 27,
+    "current_continuation_manifest_entries_verified": 196,
+    "local_document_links_checked": 184,
+    "reserved_final_review_paths_at_preclosure": [
+      "final-review/a59-review.md",
+      "final-review/a60-review.md"
+    ],
+    "preliminary_report_retained": true
+  },
+  "actual_worker_ledger": {
+    "actual_unique_continuation_rows": 60,
+    "first_58_delivered_scopes_verified_at_A57_snapshot": true,
+    "A59_final_delivery_now_observed": true,
+    "A60_final_delivery": "This report",
+    "final_review_of_concrete_team_and_ledger_candidate_passed": true,
+    "prior_stage_53_worklog_rows_counted": 0,
+    "historical_spawn_receipts_independently_reconstructed": false,
+    "A02_A03_A04_root_attested_conversational_evidence_explicit": true,
+    "A57_authored_snapshot_to_preserve": true,
+    "parent_closure": "Update current published ledger/team/counts to actual final delivered outcomes, retaining the unchanged A57 snapshot. Generate final manifests after copying final reports; do not create a future self-hash dependency."
+  },
+  "publication_candidate": {
+    "readme_five_artifact_IDs_match": true,
+    "current_distribution_five_artifact_IDs_match": true,
+    "actual_expiry_utc": "2027-02-21T19:14:35Z",
+    "actual_expiry_Halifax": "2027-02-21T15:14:35-04:00",
+    "reload_and_fresh_notes_instruction_present": true,
+    "source_time_bundled_guide_snapshot_distinction_present": true,
+    "acquisition_scope_and_signing_limits_present": true,
+    "historical_distribution_suffix": {
+      "bytes": 25173,
+      "sha256": "43a4c2827550c104a5570df9ac7381713854d8b906ed79928ccb3979ea1e720f",
+      "preserved": true
+    },
+    "current_candidate_file_snapshots": [
+      {
+        "path": "README.md",
+        "bytes": 17322,
+        "sha256": "f802c6afbc6b63c998f1ea74394bf65f6c1d422a03f4b0cef8fda9725f48726a"
+      },
+      {
+        "path": "docs/CI_DISTRIBUTION_STATUS.md",
+        "bytes": 33763,
+        "sha256": "4e39fd4b0d847f652dc2f3a4855e035ee6c7983b338456096cd619e06a689f78"
+      },
+      {
+        "path": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+        "bytes": 23894,
+        "sha256": "649b04032e40625fa53fc581da3a1d8817a09b80f63983f3fb4adc0494651eff"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+        "bytes": 62488,
+        "sha256": "541f23725249ab59cfa596e4238476e546dd3a8dc4d0ea076bb21e3ef02b945d"
+      }
+    ],
+    "A57_ledger_team_snapshots": [
+      {
+        "path": "docs/preset-evidence/2026.11.4/continuation/worker-ledger.json",
+        "bytes": 104996,
+        "sha256": "4d19dbfcd27df79b863e9f4e48b7a66925fccd708eaf71a83de35cab2c593944"
+      },
+      {
+        "path": "docs/TEAM_REVIEW_2026_11_4.md",
+        "bytes": 26119,
+        "sha256": "942f1a985ff0a3924ef5eb08a15c77dd22adb9649cf4335d62efd2060c4df862"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-review.json",
+        "bytes": 33847,
+        "sha256": "5dddae1baac4303571ab8b501cbc10f013d56efb972efe608a88535f4eb24756"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-review.md",
+        "bytes": 8580,
+        "sha256": "eef40f66f30f3602c954bc04c4fa4ee07c9b21014f3824256cda33056610fa58"
+      }
+    ],
+    "A59_final_authored_reports": [
+      {
+        "path": "a59/a59-review.md",
+        "bytes": 10084,
+        "sha256": "2298948ecfa9c18c7d64b4ab135f9834c7e7da60a7c64dd4f0010f04df13a81d"
+      },
+      {
+        "path": "a59/a59-review.json",
+        "bytes": 14794,
+        "sha256": "d0b1a3f17b5a6a96f220e49f1b4309e3a2c7a8a65bc5be92aa3395e6b1b3ab4d"
+      }
+    ]
+  },
+  "required_parent_closure_without_product_retest": [
+    "Retain the actual stable A59 and A60 reports and scoped observations at their reserved final-review paths; record actual delivered outcomes in current ledger/team/status without rewriting authored historical A57/A59/A60 snapshots.",
+    "Regenerate final scoped evidence manifests after factual status closure; require all published relative references and byte/hash entries to resolve. Omit self-hash cycles.",
+    "Publish the reviewed source-equivalent documentation/evidence tree to main using the authorized exact-tree mechanism, then verify the remote tree/source and four installer plus audition link mappings. Do not claim this subsequent publication occurred in this A60 report."
+  ],
+  "scope_limits": [
+    "No product build, native test, validator, audio render, verifier self-test or audio-verifier rerun by A60.",
+    "Writes limited to A60 scratch reports; no repository/source/workflow/Git mutation or external write.",
+    "Original CI success is not exhaustive DAW/interactive-installer certification or publisher signing/notarization.",
+    "Source/numerical checks and 74-program auditions do not establish perfect realism, all-presets human listening or calibrated acoustic/hardware identity."
+  ],
+  "evidence_records": [
+    {
+      "path": "a60/preliminary-observations.json",
+      "bytes": 12679,
+      "sha256": "350f148eedd48b61f469ae0a55b7c605b5ec1e6ba18951f8ab539ddc4a4c933b"
+    },
+    {
+      "path": "a60/final-evidence-observations.json",
+      "bytes": 14183,
+      "sha256": "03be33e0358e9a4f75cde69bcf29ffd3980ed2e9224da8f2496a4e1af0f0caaa"
+    },
+    {
+      "path": "a60/final-ledger-observations.json",
+      "bytes": 2185,
+      "sha256": "04dd8259b2f76a1f8afbe53d8482e54d0551c3e2110a4b7cd4b21c23a0e99ce4"
+    }
+  ]
+}

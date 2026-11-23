@@ -16,66 +16,61 @@ a DAW or a standalone app.
 
 ## Downloads
 
-Revision **2026.11.4** is committed and undergoing final cross-platform
-qualification. The links below remain the preceding verified release until
-the new native packages and all validators complete.
-[Qualification checkpoint](docs/preset-evidence/2026.11.4/ci/source-078c098/qualification-status.json)
-
-**2026.11.3 — all 521 existing musical presets revoiced.** The two initialization
-patches and all 523 names, categories and program addresses are preserved.
-No presets were added. These builds include the new instrument bodies and the
-individual articulation, expression, decay and level refinements.
-
-All four native build/test/package jobs and all **13 required strictness-10
-pluginval lanes passed**, with **1,303 native CTest executions passed,
-zero failed and 7 formally skipped** across 1,310 registered platform
-executions. The 24 nested Python subtest skips are counted separately.
-The validators completed with zero runtime validation retries. Actual installation and
-audition archives were downloaded and checked against their API identities,
-sizes, hashes and producing jobs.
+**2026.11.4 — all 521 existing musical presets have revised sound controls.**
+The library keeps all **523 names, categories and program addresses**, including
+the two initialization programs. No presets were added. This revision refines
+instrument-body filtering, attacks, releases, register balance and playing
+response; the continuation also corrects tine dynamics and bowed-body motion.
 
 | Platform | Included formats | Verified installation download |
 | --- | --- | --- |
-| Windows x64 | VST3, Standalone | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822019089.zip) |
-| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14820874764.zip) |
-| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14822214497.zip) |
-| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14837191097.zip) |
+| Windows x64 | VST3, Standalone | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730.zip) |
+| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441.zip) |
 
-Binary source:
-[`cbbee6a940985ad3c550768414960d2e1b1e802e`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/cbbee6a940985ad3c550768414960d2e1b1e802e) ·
-[Build 45176799427, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427) ·
-[Qualification, download hashes and exact artifact identities](docs/preset-evidence/2026.11.3/ci/source-cbbee6a/release-qualification.json)
+All six jobs passed in [build 45246863788, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788). Across the four
+native suites, **1,311 of 1,318 registered CTest executions passed, zero failed
+and seven were formally skipped**; 24 nested Python skips are recorded
+separately. All **13 required pluginval 1.0.4 lanes at strictness 10** completed
+with their original process exit 0, with 13 validation invocations and 0 runtime validation retries.
+The actual installation ZIPs passed API size/hash, source, inventory, native
+architecture and validated-payload checks.
+[Complete qualification, hashes and original evidence](docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json)
 
-**Hear the revised sounds:** [90 unnormalized WAV excerpts](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14836886459.zip)
-cover **71 existing programs and 594 seconds (9 minutes 54 seconds)** of 48 kHz
-stereo audio. They include all 24 later-bank keyboard programs, soft-strike and
-register comparisons, pressure examples, original addresses and all 19 active
-instrument-body models. The archive also contains all **523 preset vectors with
-198 parameters each**, metrics, provenance and checksums.
-[Actual audition verification](docs/preset-evidence/2026.11.3/ci/source-cbbee6a/audition/acceptance-summary.json)
+**Hear the revised sounds:** the verified [audition ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591.zip) contains
+**138 unnormalized 48 kHz stereo float WAVs from 74 existing programs**, totaling
+**14 minutes 30 seconds**. Every sample is finite and below full scale. All
+19 active body models appear, and its full **523-program × 200-parameter**
+inventory matches the reviewed factory data exactly. These are representative
+examples, not a listening assessment of all 523 programs.
+[Actual archive acceptance](docs/preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json) ·
+[Delivered inventory identity](docs/preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json)
 
 Unpack the outer ZIP, verify its included `SHA256SUMS`, and unpack the inner
-archive while keeping each plug-in/app bundle intact. The qualification record
-gives the outer ZIP hashes. Follow the
+archive while keeping plug-in/app bundles intact. Follow the
 [installation guide](docs/INSTALL_AND_QUICKSTART.md#install-only-the-formats-you-need).
 Choose the Mac build for your **host process architecture**. These are CI
 installation bundles without publisher release signing or Apple notarization;
-Linux requires compatible system libraries. The earliest recorded API expiry
-is **21 February 2027 at 08:42:09 AST (12:42:09 UTC)**. These retained Actions artifacts
-are not permanent release assets; the same run's Artifacts list is the fallback
-while they remain retained.
+Linux requires compatible system libraries. The earliest advertised-artifact
+expiry is **21 February 2027 at 15:14:35 AST (19:14:35 UTC)**. These retained Actions downloads are not permanent
+release assets. The [same run's Artifacts list](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788#artifacts) is the fallback
+while retained. Archives were acquired through the GitHub connector and hashed;
+an unauthenticated nightly.link route has not been independently verified.
 
-**Select the presets again from Library after installing.** Old sessions restore
-their stored settings, so simply opening a project does not replace its patch
-with the revised factory recipe.
+**After installing, use Library → FACTORY LIBRARY → LOAD / RELOAD, then play
+fresh notes.** Older projects restore stored settings. Clicking an already-loaded
+row with Audition enabled may retain those settings.
 
-Each manifest and `SOURCE.txt` identifies the exact binary source. Later
-screenshot or documentation commits on `main` do not change those bytes.
-The [revision report](docs/CIRCUIT_LIBRARY_2026_11_3.md) explains the sound changes,
+Binary source is [`078c098`](https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/078c0981ffa1b5472342e0fb5ab8702bc3bd2889);
+later documentation/evidence commits on `main` do not change those bytes. Each
+bundle's `SOURCE.txt` and manifest identify the full source. The bundled guides
+are source-time snapshots; the online qualification records completed results.
+The [revision report](docs/CIRCUIT_LIBRARY_2026_11_4.md) explains the sound changes,
 saved-state behavior and measured limits. The
-[60-agent review ledger](docs/TEAM_REVIEW_2026_11_3.md) records the actual spawned
-workers and their work. Earlier failures and builds retain their original
-outcomes in the [distribution history](docs/CI_DISTRIBUTION_STATUS.md).
+[60-worker review](docs/TEAM_REVIEW_2026_11_4.md) records actual assignments,
+outcomes and evidence. Earlier outcomes remain in the
+[distribution history](docs/CI_DISTRIBUTION_STATUS.md).
 
 ## Play your first sound
 

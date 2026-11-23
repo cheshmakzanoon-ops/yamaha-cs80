@@ -1,0 +1,43 @@
+{
+  "provenance": {
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "run_id": 45246863788,
+    "attempt": 1
+  },
+  "native": [
+    {
+      "target": "linux-x86_64",
+      "archive": "input/linux-x86_64-test-evidence.zip"
+    },
+    {
+      "target": "windows-x86_64",
+      "archive": "input/windows-x86_64-test-evidence.zip"
+    },
+    {
+      "target": "macos-arm64",
+      "archive": "input/macos-arm64-test-evidence.zip"
+    },
+    {
+      "target": "macos-x86_64",
+      "archive": "input/macos-x86_64-test-evidence.zip"
+    }
+  ],
+  "validators": [
+    {
+      "target": "linux-x86_64",
+      "archive": "input/linux-x86_64-pluginval.zip"
+    },
+    {
+      "target": "windows-x86_64",
+      "archive": "input/windows-x86_64-pluginval.zip"
+    },
+    {
+      "target": "macos-arm64",
+      "archive": "input/macos-arm64-pluginval.zip"
+    },
+    {
+      "target": "macos-x86_64",
+      "archive": "input/macos-x86_64-pluginval.zip"
+    }
+  ]
+}

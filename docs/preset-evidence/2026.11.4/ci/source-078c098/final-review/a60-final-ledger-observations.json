@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "status": "concrete_actual_60_ledger_team_candidate_reviewed",
+  "actual_unique_worker_rows": 60,
+  "completed_assigned_scopes_at_snapshot": 58,
+  "final_review_rows_at_snapshot": [
+    59,
+    60
+  ],
+  "excluded_prior_stage_rows": 53,
+  "excluded_prior_stage_contribution": 0,
+  "completed_primary_paths_missing": [],
+  "completed_primary_hash_differences": [],
+  "checked_local_document_links": 184,
+  "reserved_final_report_links": [
+    [
+      "docs/TEAM_REVIEW_2026_11_4.md",
+      "preset-evidence/2026.11.4/ci/source-078c098/final-review/a59-review.md"
+    ],
+    [
+      "docs/TEAM_REVIEW_2026_11_4.md",
+      "preset-evidence/2026.11.4/ci/source-078c098/final-review/a60-review.md"
+    ]
+  ],
+  "files": [
+    {
+      "path": "docs/preset-evidence/2026.11.4/continuation/worker-ledger.json",
+      "bytes": 104996,
+      "sha256": "4d19dbfcd27df79b863e9f4e48b7a66925fccd708eaf71a83de35cab2c593944"
+    },
+    {
+      "path": "docs/TEAM_REVIEW_2026_11_4.md",
+      "bytes": 26119,
+      "sha256": "942f1a985ff0a3924ef5eb08a15c77dd22adb9649cf4335d62efd2060c4df862"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-review.json",
+      "bytes": 33847,
+      "sha256": "5dddae1baac4303571ab8b501cbc10f013d56efb972efe608a88535f4eb24756"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-review.md",
+      "bytes": 8580,
+      "sha256": "eef40f66f30f3602c954bc04c4fa4ee07c9b21014f3824256cda33056610fa58"
+    }
+  ],
+  "closure_required": "Root records actual A59/A60 delivery after their reports exist, retains final reports, regenerates scoped indices and publishes exact source-equivalent documentation tree. A57 authored snapshot stays unchanged.",
+  "current_continuation_manifest": {
+    "path": "docs/preset-evidence/2026.11.4/continuation/evidence-files.json",
+    "entries": 196,
+    "all_paths_bytes_hashes_match": true,
+    "sha256": "e92679d488674a53c2d8fcd82addf1ac715abcf8a709475d2f827474469bc315",
+    "scope_note": "Current candidate only; root regenerates after factual A59/A60 status closure."
+  },
+  "reviewed_at_utc": "2026-11-23T23:09:30.306779+00:00"
+}

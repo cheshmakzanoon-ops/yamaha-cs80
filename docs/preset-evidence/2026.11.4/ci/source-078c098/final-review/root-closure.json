@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "status": "all_60_actual_deliveries_closed_after_final_acceptance",
+  "closed_at_utc": "2026-11-23T23:14:20.582800+00:00",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "checkpoint_commit": "df9a8d2994e96534eb7c4ee57c0a82ea1fb6916c",
+  "actual_workers": 60,
+  "completed_assigned_scopes": 60,
+  "new_workers_in_followup_turns": 0,
+  "completion_receipts": [
+    {
+      "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-review.json",
+      "bytes": 33847,
+      "sha256": "5dddae1baac4303571ab8b501cbc10f013d56efb972efe608a88535f4eb24756"
+    },
+    {
+      "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a59-review.json",
+      "bytes": 14794,
+      "sha256": "d0b1a3f17b5a6a96f220e49f1b4309e3a2c7a8a65bc5be92aa3395e6b1b3ab4d"
+    },
+    {
+      "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a60-review.json",
+      "bytes": 21283,
+      "sha256": "cd904619ed3004e30b2df7b7a8703dd0cb6dd2206a22d29426108c3db62fdc44"
+    }
+  ],
+  "original_a57_snapshot_retained_unchanged": {
+    "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-ledger-at-review.json",
+    "bytes": 104996,
+    "sha256": "4d19dbfcd27df79b863e9f4e48b7a66925fccd708eaf71a83de35cab2c593944"
+  },
+  "final_ledger": {
+    "repository_path": "docs/preset-evidence/2026.11.4/continuation/worker-ledger.json",
+    "bytes": 119261,
+    "sha256": "93d6bd5bc048bf050d7492bf9684bf2f13e7914e7ef3fa6b3596b0f1b35b05e3"
+  },
+  "final_team_report": {
+    "repository_path": "docs/TEAM_REVIEW_2026_11_4.md",
+    "bytes": 26532,
+    "sha256": "e169d107db7d06bb238dd8ae087cb9a77dc59c07aaf946f40cbe19dd2ac04a77"
+  },
+  "unchanged_reviewed_publication_files": [
+    {
+      "repository_path": "README.md",
+      "bytes": 17322,
+      "sha256": "f802c6afbc6b63c998f1ea74394bf65f6c1d422a03f4b0cef8fda9725f48726a"
+    },
+    {
+      "repository_path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 33763,
+      "sha256": "4e39fd4b0d847f652dc2f3a4855e035ee6c7983b338456096cd619e06a689f78"
+    },
+    {
+      "repository_path": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "bytes": 23894,
+      "sha256": "649b04032e40625fa53fc581da3a1d8817a09b80f63983f3fb4adc0494651eff"
+    }
+  ],
+  "aggregate": {
+    "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+    "bytes": 62488,
+    "sha256": "541f23725249ab59cfa596e4238476e546dd3a8dc4d0ea076bb21e3ef02b945d"
+  },
+  "source_preservation": {
+    "all_changed_paths_are_documentation_or_evidence": true,
+    "production_test_script_workflow_changes": []
+  },
+  "history_preservation": {
+    "after_old_heading_bytes": 25173,
+    "sha256": "43a4c2827550c104a5570df9ac7381713854d8b906ed79928ccb3979ea1e720f"
+  },
+  "local_packaging_notice_check": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python scripts/test-packaging-notices.py",
+    "exit_code": 0,
+    "tests_run": 7,
+    "failed": 0,
+    "seconds_reported": 1.115,
+    "evidence_basis": "Observed exec_command session77494 and final write_stdin tool result; stdout was not retained as a separate raw file.",
+    "scope": "Final documentation/packaging notice validation, separate from native CI totals."
+  },
+  "final_mutation_scope": "Only actual reviewer statuses, evidence retention, team wording and evidence indexes were closed after acceptance. The reviewed downloads, artifact qualification and binary source were not changed.",
+  "publication_boundary": "This record precedes the exact-tree branch update. Root verifies the resulting remote commit and reports its identity after publication.",
+  "local_document_links": {
+    "checked": 189,
+    "missing": [],
+    "scope": [
+      "README.md",
+      "docs/CI_DISTRIBUTION_STATUS.md",
+      "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "docs/TEAM_REVIEW_2026_11_4.md",
+      "docs/preset-evidence/2026.11.4/ci/source-078c098/README.md"
+    ],
+    "anchors": "Existence of local file targets; headings are not separately resolved by this checker."
+  }
+}

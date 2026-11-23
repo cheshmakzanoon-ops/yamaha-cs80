@@ -1,0 +1,426 @@
+{
+  "checks": {
+    "qualification_source": true,
+    "qualification_source_tree": true,
+    "qualification_run_id": true,
+    "qualification_run_attempt": true,
+    "qualified_artifact_scope": true,
+    "native_totals": true,
+    "nested_skips": true,
+    "validator_totals": true,
+    "platform_set": true,
+    "windows-x86_64_artifact_id": true,
+    "windows-x86_64_artifact_name": true,
+    "windows-x86_64_bytes": true,
+    "windows-x86_64_sha256": true,
+    "windows-x86_64_expires_at": true,
+    "windows-x86_64_public_url": true,
+    "windows-x86_64_formats": true,
+    "windows-x86_64_no_public_claim": true,
+    "windows-x86_64_native": true,
+    "windows-x86_64_source": true,
+    "windows-x86_64_lanes": true,
+    "macos-arm64_artifact_id": true,
+    "macos-arm64_artifact_name": true,
+    "macos-arm64_bytes": true,
+    "macos-arm64_sha256": true,
+    "macos-arm64_expires_at": true,
+    "macos-arm64_public_url": true,
+    "macos-arm64_formats": true,
+    "macos-arm64_no_public_claim": true,
+    "macos-arm64_native": true,
+    "macos-arm64_source": true,
+    "macos-arm64_lanes": true,
+    "macos-x86_64_artifact_id": true,
+    "macos-x86_64_artifact_name": true,
+    "macos-x86_64_bytes": true,
+    "macos-x86_64_sha256": true,
+    "macos-x86_64_expires_at": true,
+    "macos-x86_64_public_url": true,
+    "macos-x86_64_formats": true,
+    "macos-x86_64_no_public_claim": true,
+    "macos-x86_64_native": true,
+    "macos-x86_64_source": true,
+    "macos-x86_64_lanes": true,
+    "linux-x86_64_artifact_id": true,
+    "linux-x86_64_artifact_name": true,
+    "linux-x86_64_bytes": true,
+    "linux-x86_64_sha256": true,
+    "linux-x86_64_expires_at": true,
+    "linux-x86_64_public_url": true,
+    "linux-x86_64_formats": true,
+    "linux-x86_64_no_public_claim": true,
+    "linux-x86_64_native": true,
+    "linux-x86_64_source": true,
+    "linux-x86_64_lanes": true,
+    "reference_windows-x86_64.native_and_producer_review": true,
+    "reference_windows-x86_64.installation_inspection": true,
+    "reference_windows-x86_64.validator_review": true,
+    "reference_macos-arm64.native_and_producer_review": true,
+    "reference_macos-arm64.installation_inspection": true,
+    "reference_macos-arm64.validator_review": true,
+    "reference_macos-x86_64.native_and_producer_review": true,
+    "reference_macos-x86_64.installation_inspection": true,
+    "reference_macos-x86_64.validator_review": true,
+    "reference_linux-x86_64.native_and_producer_review": true,
+    "reference_linux-x86_64.installation_inspection": true,
+    "reference_linux-x86_64.validator_review": true,
+    "reference_run_api": true,
+    "reference_jobs_api": true,
+    "reference_artifacts_api": true,
+    "reference_raw_parser": true,
+    "reference_audition.acceptance": true,
+    "reference_audition.delivered_inventory": true,
+    "reference_audition.producer_binding": true,
+    "reference_audition.supplement": true,
+    "reference_supporting.dsp": true,
+    "reference_supporting.screenshots": true,
+    "reference_supporting.filters": true,
+    "audition_artifact_id": true,
+    "audition_artifact_name": true,
+    "audition_bytes": true,
+    "audition_sha256": true,
+    "audition_expires_at": true,
+    "audition_public_url": true,
+    "audition_observed": true,
+    "audition_counts": true,
+    "expiry": true,
+    "README Downloads_download_IDs": true,
+    "README Downloads_no_placeholders": true,
+    "README Downloads_expiry": true,
+    "README Downloads_reload": true,
+    "README Downloads_architecture": true,
+    "README Downloads_signing": true,
+    "README Downloads_source": true,
+    "Current distribution_download_IDs": true,
+    "Current distribution_no_placeholders": true,
+    "Current distribution_expiry": true,
+    "Current distribution_reload": true,
+    "Current distribution_architecture": true,
+    "Current distribution_signing": true,
+    "Current distribution_source": true,
+    "Revision qualification_download_IDs": true,
+    "Revision qualification_no_placeholders": true,
+    "history_suffix": true,
+    "history_suffix_size": true
+  },
+  "defects": [],
+  "reference_hash_checks": 23,
+  "local_links": [
+    {
+      "document": "README.md",
+      "url": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "url": "docs/preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "url": "docs/preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "url": "docs/INSTALL_AND_QUICKSTART.md#install-only-the-formats-you-need",
+      "exists": true,
+      "anchor_heading_exists": true
+    },
+    {
+      "document": "README.md",
+      "url": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "url": "docs/TEAM_REVIEW_2026_11_4.md",
+      "exists": false
+    },
+    {
+      "document": "README.md",
+      "url": "docs/CI_DISTRIBUTION_STATUS.md",
+      "exists": true
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "CIRCUIT_LIBRARY_2026_11_4.md",
+      "exists": true
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/supporting-ci.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "preset-evidence/2026.11.4/ci/source-078c098/screenshots/acceptance-summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "preset-evidence/2026.11.4/ci/source-078c098/filter/summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "TEAM_REVIEW_2026_11_4.md",
+      "exists": false
+    },
+    {
+      "document": "docs/CI_DISTRIBUTION_STATUS.md",
+      "url": "preset-evidence/2026.11.4/continuation/worker-ledger.json",
+      "exists": false
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../src/core/Engine.cpp",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../src/core/InstrumentBodyFilter.h",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/core/cs80_instrument_body_engine_tests.log",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../src/core/InstrumentBody.h",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../tests/InstrumentBodyTests.cpp",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/struck-body/body_tests.log",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/sustained-body/body-tests.log",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/sustained-body/cost-and-parity.log",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/reviews/40-level-gate-review.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../src/core/OriginalCircuitLibrary.inc",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/originals/behavior-summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/parameter-coverage.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../src/core/Params.h",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../src/plugin/PluginProcessor.cpp",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../tests/InstrumentBodyHostTests.h",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../README.md#downloads",
+      "exists": true,
+      "anchor_heading_exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "TEAM_REVIEW_2026_11_4.md",
+      "exists": false
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/continuation/a09/FINDINGS.md",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/continuation/a06/summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/continuation/a10/FINDINGS.md",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/continuation/a20/FINDINGS.md",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "PRESET_GUIDE.md",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../scripts/capture-factory-auditions.py",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "../scripts/test-capture-factory-auditions.py",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/reviews/34-piano-register-fix.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/reviews/37-piano-course-boundaries.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/final-affected/summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/reviews/47-final-sanitizers.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/core/summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/work-log.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/final-bank/audit-summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/audio-comparison.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/development/final-bank/matched-capture-provenance.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/continuation/local-affected/summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/continuation/local-bank/review-summary.json",
+      "exists": true
+    },
+    {
+      "document": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "url": "preset-evidence/2026.11.4/reviews/20-runtime-cost.json",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.4/ci/source-078c098/README.md",
+      "url": "release-qualification.json",
+      "exists": true
+    },
+    {
+      "document": "docs/preset-evidence/2026.11.4/ci/source-078c098/README.md",
+      "url": "qualification-status.json",
+      "exists": true
+    }
+  ],
+  "qualified_record_sha256": "541f23725249ab59cfa596e4238476e546dd3a8dc4d0ea076bb21e3ef02b945d",
+  "file_snapshots": [
+    {
+      "path": "README.md",
+      "bytes": 17322,
+      "sha256": "f802c6afbc6b63c998f1ea74394bf65f6c1d422a03f4b0cef8fda9725f48726a"
+    },
+    {
+      "path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 33763,
+      "sha256": "4e39fd4b0d847f652dc2f3a4855e035ee6c7983b338456096cd619e06a689f78"
+    },
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "bytes": 23894,
+      "sha256": "649b04032e40625fa53fc581da3a1d8817a09b80f63983f3fb4adc0494651eff"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+      "bytes": 62488,
+      "sha256": "541f23725249ab59cfa596e4238476e546dd3a8dc4d0ea076bb21e3ef02b945d"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/qualification-status.json",
+      "bytes": 1314,
+      "sha256": "1e62696f72f9731152fedcfa87ebb9d963d225dcaf5fe15becf0d10319c7f491"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/README.md",
+      "bytes": 1331,
+      "sha256": "db87562f6ffd7726f646c6a378dc83115a7e17f5654fc5a4f2c525a8cdbc27e5"
+    }
+  ]
+}

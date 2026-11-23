@@ -1,0 +1,1032 @@
+﻿2026-11-23T22:54:58.7463209Z Current runner version: '2.338.2'
+2026-11-23T22:54:58.7488888Z ##[group]Runner Image Provisioner
+2026-11-23T22:54:58.7489880Z Hosted Compute Agent
+2026-11-23T22:54:58.7490681Z Version: 20261111.635
+2026-11-23T22:54:58.7491380Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-23T22:54:58.7492091Z Build Date: 2026-11-11T01:49:01Z
+2026-11-23T22:54:58.7492767Z Worker ID: {2c5b38fa-74b4-4b97-9dfe-ce0032f64626}
+2026-11-23T22:54:58.7493450Z Region: us-east-1
+2026-11-23T22:54:58.7493979Z Cloud: AWS
+2026-11-23T22:54:58.7494529Z ##[endgroup]
+2026-11-23T22:54:58.7496062Z ##[group]Operating System
+2026-11-23T22:54:58.7496715Z Ubuntu
+2026-11-23T22:54:58.7497193Z 24.04.5
+2026-11-23T22:54:58.7497679Z LTS
+2026-11-23T22:54:58.7498196Z ##[endgroup]
+2026-11-23T22:54:58.7498704Z ##[group]Runner Image
+2026-11-23T22:54:58.7499280Z Image: ubuntu-24.04
+2026-11-23T22:54:58.7499830Z Version: 20261116.133.1
+2026-11-23T22:54:58.7501356Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.133/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-23T22:54:58.7503024Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.133
+2026-11-23T22:54:58.7503959Z ##[endgroup]
+2026-11-23T22:54:58.7505128Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T22:54:58.7507515Z Contents: read
+2026-11-23T22:54:58.7508081Z Metadata: read
+2026-11-23T22:54:58.7508667Z Packages: read
+2026-11-23T22:54:58.7509186Z ##[endgroup]
+2026-11-23T22:54:58.7511679Z Secret source: Actions
+2026-11-23T22:54:58.7512583Z Cache mode: write
+2026-11-23T22:54:58.7513282Z Prepare workflow directory
+2026-11-23T22:54:58.7894213Z Prepare all required actions
+2026-11-23T22:54:58.7947922Z Getting action download info
+2026-11-23T22:54:58.9514700Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-23T22:55:00.4102725Z Download action repository 'actions/download-artifact@v5' (SHA:634f93cb2916e3fdff6788551b99b062d0335ce0)
+2026-11-23T22:55:00.5688350Z Download action repository 'actions/upload-artifact@v5' (SHA:330a01c490aca151604b8cf639adc76d48f6c5d4)
+2026-11-23T22:55:00.8084745Z Complete job name: pluginval / Linux VST3 (strictness 10)
+2026-11-23T22:55:00.8694086Z ##[group]Run actions/checkout@v5
+2026-11-23T22:55:00.8694554Z with:
+2026-11-23T22:55:00.8694954Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T22:55:00.8696923Z   token: ***
+2026-11-23T22:55:00.8697187Z   ssh-strict: true
+2026-11-23T22:55:00.8697498Z   ssh-user: git
+2026-11-23T22:55:00.8697760Z   persist-credentials: true
+2026-11-23T22:55:00.8698066Z   clean: true
+2026-11-23T22:55:00.8698337Z   sparse-checkout-cone-mode: true
+2026-11-23T22:55:00.8698805Z   fetch-depth: 1
+2026-11-23T22:55:00.8699093Z   fetch-tags: false
+2026-11-23T22:55:00.8699359Z   show-progress: true
+2026-11-23T22:55:00.8699635Z   lfs: false
+2026-11-23T22:55:00.8699878Z   submodules: false
+2026-11-23T22:55:00.8700132Z   set-safe-directory: true
+2026-11-23T22:55:00.8700760Z   allow-unsafe-pr-checkout: false
+2026-11-23T22:55:00.8701268Z env:
+2026-11-23T22:55:00.8701560Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:55:00.8701826Z ##[endgroup]
+2026-11-23T22:55:03.2008638Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T22:55:03.2010852Z ##[group]Getting Git version info
+2026-11-23T22:55:03.2011354Z Working directory is '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T22:55:03.2012001Z [command]/usr/bin/git version
+2026-11-23T22:55:03.4223253Z git version 2.56.1
+2026-11-23T22:55:03.4239143Z ##[endgroup]
+2026-11-23T22:55:03.4250770Z Temporarily overriding HOME='/home/runner/work/_temp/93ad5124-3df4-46d0-a70f-ed62dc444b42' before making global git config changes
+2026-11-23T22:55:03.4251561Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T22:55:03.4254744Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T22:55:03.5045279Z Deleting the contents of '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T22:55:03.5049447Z ##[group]Initializing the repository
+2026-11-23T22:55:03.5053308Z [command]/usr/bin/git init /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T22:55:03.5568638Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-23T22:55:03.5569235Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-23T22:55:03.5569909Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-23T22:55:03.5570279Z hint: call:
+2026-11-23T22:55:03.5570655Z hint:
+2026-11-23T22:55:03.5570976Z hint: 	git config --global init.defaultBranch <name>
+2026-11-23T22:55:03.5571263Z hint:
+2026-11-23T22:55:03.5571574Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-23T22:55:03.5572075Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-23T22:55:03.5572482Z hint:
+2026-11-23T22:55:03.5572703Z hint: 	git branch -m <name>
+2026-11-23T22:55:03.5572975Z hint:
+2026-11-23T22:55:03.5573276Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-23T22:55:03.5585231Z Initialized empty Git repository in /home/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-23T22:55:03.5595820Z [command]/usr/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T22:55:03.5645412Z ##[endgroup]
+2026-11-23T22:55:03.5646065Z ##[group]Disabling automatic garbage collection
+2026-11-23T22:55:03.5648690Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-23T22:55:03.5674938Z ##[endgroup]
+2026-11-23T22:55:03.5675538Z ##[group]Setting up auth
+2026-11-23T22:55:03.5680152Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T22:55:03.5709519Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T22:55:03.7986839Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T22:55:03.8012539Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T22:55:03.8163208Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T22:55:03.8187764Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T22:55:03.8336291Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-23T22:55:03.8365579Z ##[endgroup]
+2026-11-23T22:55:03.8365997Z ##[group]Fetching the repository
+2026-11-23T22:55:03.8379099Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +078c0981ffa1b5472342e0fb5ab8702bc3bd2889:refs/remotes/origin/main
+2026-11-23T22:55:08.3314894Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T22:55:08.3315490Z  * [new ref]         078c0981ffa1b5472342e0fb5ab8702bc3bd2889 -> origin/main
+2026-11-23T22:55:08.3318377Z ##[endgroup]
+2026-11-23T22:55:08.3319340Z ##[group]Determining the checkout info
+2026-11-23T22:55:08.3326335Z ##[endgroup]
+2026-11-23T22:55:08.3327488Z [command]/usr/bin/git sparse-checkout disable
+2026-11-23T22:55:08.3411906Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-23T22:55:08.3427017Z ##[group]Checking out the ref
+2026-11-23T22:55:08.3430296Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-23T22:55:08.9902596Z Switched to a new branch 'main'
+2026-11-23T22:55:08.9909381Z branch 'main' set up to track 'origin/main'.
+2026-11-23T22:55:08.9932689Z ##[endgroup]
+2026-11-23T22:55:08.9972946Z [command]/usr/bin/git log -1 --format=%H
+2026-11-23T22:55:08.9994436Z 078c0981ffa1b5472342e0fb5ab8702bc3bd2889
+2026-11-23T22:55:09.0174690Z ##[group]Run actions/download-artifact@v5
+2026-11-23T22:55:09.0175172Z with:
+2026-11-23T22:55:09.0175458Z   name: cs80-linux-vst3
+2026-11-23T22:55:09.0175701Z   path: vst3
+2026-11-23T22:55:09.0175910Z   merge-multiple: false
+2026-11-23T22:55:09.0176192Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T22:55:09.0176488Z   run-id: 45246863788
+2026-11-23T22:55:09.0176723Z env:
+2026-11-23T22:55:09.0176992Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:55:09.0177224Z ##[endgroup]
+2026-11-23T22:55:09.1366971Z Downloading single artifact
+2026-11-23T22:55:09.1980695Z (node:2149) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T22:55:09.1981544Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T22:55:09.3303271Z Preparing to download the following artifacts:
+2026-11-23T22:55:09.3304103Z - cs80-linux-vst3 (ID: 14869179841, Size: 6937487, Expected Digest: sha256:6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e)
+2026-11-23T22:55:09.5411885Z Redirecting to blob download url: https://productionresultssa9.blob.core.windows.net/actions-results/f01aefd8-37eb-8a51-beab-c334bb21eff5/workflow-job-run-50e15fc0-6db1-5591-a3f7-e8051378007a/artifacts/c73fa92e22a2b569bad7ba7874d9fe4c69f41adee58fec8c93490cd26f2eed8a.zip
+2026-11-23T22:55:09.5413361Z Starting download of artifact to: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3
+2026-11-23T22:55:09.6654869Z (node:2149) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-23T22:55:09.8939075Z SHA256 digest of downloaded artifact is 6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e
+2026-11-23T22:55:09.8939775Z Artifact download completed successfully.
+2026-11-23T22:55:09.8940379Z Total of 1 artifact(s) downloaded
+2026-11-23T22:55:09.8944212Z Download artifact has finished successfully
+2026-11-23T22:55:09.9065489Z ##[group]Run sudo apt-get update
+2026-11-23T22:55:09.9065877Z [36;1msudo apt-get update[0m
+2026-11-23T22:55:09.9066232Z [36;1msudo apt-get install -y --no-install-recommends \[0m
+2026-11-23T22:55:09.9066634Z [36;1m  libasound2t64 libfontconfig1 libfreetype6 \[0m
+2026-11-23T22:55:09.9066985Z [36;1m  libx11-6 libxext6 libxrandr2 libxcursor1 libxinerama1 \[0m
+2026-11-23T22:55:09.9067356Z [36;1m  libxrender1 libxcomposite1 libxkbcommon0 libxcb1 libgl1 \[0m
+2026-11-23T22:55:09.9067753Z [36;1m  fonts-dejavu-core xauth xvfb unzip gdb[0m
+2026-11-23T22:55:10.0641911Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:55:10.0642279Z env:
+2026-11-23T22:55:10.0642584Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:55:10.0642891Z ##[endgroup]
+2026-11-23T22:55:10.2461967Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+2026-11-23T22:55:10.2816551Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-11-23T22:55:10.2874611Z Hit:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble InRelease
+2026-11-23T22:55:10.3024708Z Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-11-23T22:55:10.3358791Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [852 kB]
+2026-11-23T22:55:10.3671032Z Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-11-23T22:55:10.3823210Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [780 kB]
+2026-11-23T22:55:10.3952065Z Get:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-11-23T22:55:25.4268610Z Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1487 kB]
+2026-11-23T22:55:25.6893610Z Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [320 kB]
+2026-11-23T22:55:25.7354049Z Get:11 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1716 kB]
+2026-11-23T22:55:25.8942367Z Get:12 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [346 kB]
+2026-11-23T22:55:25.9425239Z Get:13 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1945 kB]
+2026-11-23T22:55:26.0686519Z Get:14 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [447 kB]
+2026-11-23T22:55:26.0991270Z Get:15 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1202 kB]
+2026-11-23T22:55:26.8023862Z Get:16 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/main Translation-en [239 kB]
+2026-11-23T22:55:26.8443699Z Get:17 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1232 kB]
+2026-11-23T22:55:32.5835583Z Get:18 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [249 kB]
+2026-11-23T22:55:32.6662547Z Get:19 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1799 kB]
+2026-11-23T22:55:32.7477657Z Get:20 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [417 kB]
+2026-11-23T22:55:44.6845795Z Fetched 13.4 MB in 23s (591 kB/s)
+2026-11-23T22:55:45.7546918Z Reading package lists...
+2026-11-23T22:55:45.7834750Z Reading package lists...
+2026-11-23T22:55:46.0307520Z Building dependency tree...
+2026-11-23T22:55:46.0313350Z Reading state information...
+2026-11-23T22:55:46.1909885Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-11-23T22:55:46.1910662Z libasound2t64 set to manually installed.
+2026-11-23T22:55:46.1911309Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-11-23T22:55:46.1911690Z libfontconfig1 set to manually installed.
+2026-11-23T22:55:46.1912163Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.2).
+2026-11-23T22:55:46.1912574Z libfreetype6 set to manually installed.
+2026-11-23T22:55:46.1912941Z libx11-6 is already the newest version (2:1.8.7-1ubuntu0.1).
+2026-11-23T22:55:46.1913953Z libx11-6 set to manually installed.
+2026-11-23T22:55:46.1914293Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-11-23T22:55:46.1914622Z libxext6 set to manually installed.
+2026-11-23T22:55:46.1914998Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-11-23T22:55:46.1915379Z libxrandr2 set to manually installed.
+2026-11-23T22:55:46.1915772Z libxcursor1 is already the newest version (1:1.2.1-1build1).
+2026-11-23T22:55:46.1916102Z libxcursor1 set to manually installed.
+2026-11-23T22:55:46.1916413Z libxinerama1 is already the newest version (2:1.1.4-3build1).
+2026-11-23T22:55:46.1916760Z libxinerama1 set to manually installed.
+2026-11-23T22:55:46.1917062Z libxrender1 is already the newest version (1:0.9.10-1.1build1).
+2026-11-23T22:55:46.1917400Z libxrender1 set to manually installed.
+2026-11-23T22:55:46.1917732Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-11-23T22:55:46.1918096Z libxcomposite1 set to manually installed.
+2026-11-23T22:55:46.1918416Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-11-23T22:55:46.1918724Z libxkbcommon0 set to manually installed.
+2026-11-23T22:55:46.1919047Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-11-23T22:55:46.1919394Z libxcb1 set to manually installed.
+2026-11-23T22:55:46.1919691Z libgl1 is already the newest version (1.7.0-1build1).
+2026-11-23T22:55:46.1919983Z libgl1 set to manually installed.
+2026-11-23T22:55:46.1920991Z fonts-dejavu-core is already the newest version (2.37-8).
+2026-11-23T22:55:46.1921404Z fonts-dejavu-core set to manually installed.
+2026-11-23T22:55:46.1921714Z xauth is already the newest version (1:1.1.2-1build1).
+2026-11-23T22:55:46.1922086Z xauth set to manually installed.
+2026-11-23T22:55:46.1922438Z xvfb is already the newest version (2:21.1.12-1ubuntu1.9).
+2026-11-23T22:55:46.1922798Z unzip is already the newest version (6.0-28ubuntu4.1).
+2026-11-23T22:55:46.1923151Z The following additional packages will be installed:
+2026-11-23T22:55:46.1923903Z   libbabeltrace1 libipt2 libsource-highlight-common libsource-highlight4t64
+2026-11-23T22:55:46.1924474Z Suggested packages:
+2026-11-23T22:55:46.1924704Z   gdb-doc gdbserver
+2026-11-23T22:55:46.1924943Z Recommended packages:
+2026-11-23T22:55:46.1925176Z   libc-dbg
+2026-11-23T22:55:46.2757611Z The following NEW packages will be installed:
+2026-11-23T22:55:46.2764769Z   gdb libbabeltrace1 libipt2 libsource-highlight-common
+2026-11-23T22:55:46.2769742Z   libsource-highlight4t64
+2026-11-23T22:55:46.2940811Z 0 upgraded, 5 newly installed, 0 to remove and 69 not upgraded.
+2026-11-23T22:55:46.2941460Z Need to get 4614 kB of archives.
+2026-11-23T22:55:46.2941865Z After this operation, 12.3 MB of additional disk space will be used.
+2026-11-23T22:55:46.2942339Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+2026-11-23T22:55:46.3576108Z Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libbabeltrace1 amd64 1.5.11-3build3 [164 kB]
+2026-11-23T22:55:46.4388619Z Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libipt2 amd64 2.0.6-1build1 [45.7 kB]
+2026-11-23T22:55:46.4788583Z Get:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libsource-highlight-common all 3.1.9-4.3build1 [64.2 kB]
+2026-11-23T22:55:46.5164550Z Get:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/main amd64 libsource-highlight4t64 amd64 3.1.9-4.3build1 [258 kB]
+2026-11-23T22:55:46.5738807Z Get:6 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 gdb amd64 15.1-1ubuntu1~24.04.1 [4083 kB]
+2026-11-23T22:55:47.6450124Z Fetched 4614 kB in 0s (12.2 MB/s)
+2026-11-23T22:55:47.7421247Z Selecting previously unselected package libbabeltrace1:amd64.
+2026-11-23T22:55:47.9098083Z (Reading database ... 
+2026-11-23T22:55:47.9098447Z (Reading database ... 5%
+2026-11-23T22:55:47.9098735Z (Reading database ... 10%
+2026-11-23T22:55:47.9099118Z (Reading database ... 15%
+2026-11-23T22:55:47.9099361Z (Reading database ... 20%
+2026-11-23T22:55:47.9099659Z (Reading database ... 25%
+2026-11-23T22:55:47.9100245Z (Reading database ... 30%
+2026-11-23T22:55:47.9100711Z (Reading database ... 35%
+2026-11-23T22:55:47.9100995Z (Reading database ... 40%
+2026-11-23T22:55:47.9101282Z (Reading database ... 45%
+2026-11-23T22:55:47.9101519Z (Reading database ... 50%
+2026-11-23T22:55:48.0133217Z (Reading database ... 55%
+2026-11-23T22:55:48.5618078Z (Reading database ... 60%
+2026-11-23T22:55:48.7694936Z (Reading database ... 65%
+2026-11-23T22:55:48.9086114Z (Reading database ... 70%
+2026-11-23T22:55:49.0293953Z (Reading database ... 75%
+2026-11-23T22:55:49.2242658Z (Reading database ... 80%
+2026-11-23T22:55:50.5838252Z (Reading database ... 85%
+2026-11-23T22:55:52.2151457Z (Reading database ... 90%
+2026-11-23T22:55:53.4055600Z (Reading database ... 95%
+2026-11-23T22:55:53.4056408Z (Reading database ... 100%
+2026-11-23T22:55:53.4057070Z (Reading database ... 216720 files and directories currently installed.)
+2026-11-23T22:55:53.4100311Z Preparing to unpack .../libbabeltrace1_1.5.11-3build3_amd64.deb ...
+2026-11-23T22:55:53.4132506Z Unpacking libbabeltrace1:amd64 (1.5.11-3build3) ...
+2026-11-23T22:55:53.4649447Z Selecting previously unselected package libipt2.
+2026-11-23T22:55:53.4752012Z Preparing to unpack .../libipt2_2.0.6-1build1_amd64.deb ...
+2026-11-23T22:55:53.4756660Z Unpacking libipt2 (2.0.6-1build1) ...
+2026-11-23T22:55:53.4928648Z Selecting previously unselected package libsource-highlight-common.
+2026-11-23T22:55:53.5030724Z Preparing to unpack .../libsource-highlight-common_3.1.9-4.3build1_all.deb ...
+2026-11-23T22:55:53.5035920Z Unpacking libsource-highlight-common (3.1.9-4.3build1) ...
+2026-11-23T22:55:53.5302915Z Selecting previously unselected package libsource-highlight4t64:amd64.
+2026-11-23T22:55:53.5406435Z Preparing to unpack .../libsource-highlight4t64_3.1.9-4.3build1_amd64.deb ...
+2026-11-23T22:55:53.5411112Z Unpacking libsource-highlight4t64:amd64 (3.1.9-4.3build1) ...
+2026-11-23T22:55:53.5595756Z Selecting previously unselected package gdb.
+2026-11-23T22:55:53.5698387Z Preparing to unpack .../gdb_15.1-1ubuntu1~24.04.1_amd64.deb ...
+2026-11-23T22:55:53.5702845Z Unpacking gdb (15.1-1ubuntu1~24.04.1) ...
+2026-11-23T22:55:53.7139764Z Setting up libsource-highlight-common (3.1.9-4.3build1) ...
+2026-11-23T22:55:53.7156645Z Setting up libipt2 (2.0.6-1build1) ...
+2026-11-23T22:55:53.7167303Z Setting up libbabeltrace1:amd64 (1.5.11-3build3) ...
+2026-11-23T22:55:53.7177737Z Setting up libsource-highlight4t64:amd64 (3.1.9-4.3build1) ...
+2026-11-23T22:55:53.7187688Z Setting up gdb (15.1-1ubuntu1~24.04.1) ...
+2026-11-23T22:55:53.7206146Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-11-23T22:55:53.7228418Z Not building database; man-db/auto-update is not 'true'.
+2026-11-23T22:55:53.7237565Z Processing triggers for libc-bin (2.39-0ubuntu8.12) ...
+2026-11-23T22:56:00.3449444Z 
+2026-11-23T22:56:00.3450834Z Running kernel seems to be up-to-date.
+2026-11-23T22:56:00.3451206Z 
+2026-11-23T22:56:00.3451376Z No services need to be restarted.
+2026-11-23T22:56:00.3451573Z 
+2026-11-23T22:56:00.3451959Z No containers need to be restarted.
+2026-11-23T22:56:00.3452249Z 
+2026-11-23T22:56:00.3452460Z No user sessions are running outdated binaries.
+2026-11-23T22:56:00.3452743Z 
+2026-11-23T22:56:00.3452946Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-23T22:56:01.2636734Z ##[group]Run set -euo pipefail
+2026-11-23T22:56:01.2637092Z [36;1mset -euo pipefail[0m
+2026-11-23T22:56:01.2637388Z [36;1mcurl -L --fail --retry 3 --retry-delay 2 \[0m
+2026-11-23T22:56:01.2637684Z [36;1m  -o pluginval.zip \[0m
+2026-11-23T22:56:01.2638149Z [36;1m  "https://github.com/Tracktion/pluginval/releases/download/v${PLUGINVAL_VERSION}/pluginval_Linux.zip"[0m
+2026-11-23T22:56:01.2638606Z [36;1munzip -q pluginval.zip -d pluginval[0m
+2026-11-23T22:56:01.2638916Z [36;1mtest -x pluginval/pluginval[0m
+2026-11-23T22:56:01.2639260Z [36;1m./pluginval/pluginval --version | tee pluginval-version.txt[0m
+2026-11-23T22:56:01.2667817Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:56:01.2668148Z env:
+2026-11-23T22:56:01.2668439Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:56:01.2668698Z ##[endgroup]
+2026-11-23T22:56:01.2747933Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-11-23T22:56:01.2748675Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-11-23T22:56:01.2748894Z 
+2026-11-23T22:56:01.3868075Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-11-23T22:56:01.3868737Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-11-23T22:56:01.4458409Z 
+2026-11-23T22:56:01.4459105Z 100 5773k  100 5773k    0     0  32.9M      0 --:--:-- --:--:-- --:--:-- 32.9M
+2026-11-23T22:56:01.5930653Z pluginval - 1.0.4
+2026-11-23T22:56:01.5966729Z ##[group]Run set -euo pipefail
+2026-11-23T22:56:01.5967153Z [36;1mset -euo pipefail[0m
+2026-11-23T22:56:01.5967488Z [36;1mpython3 -m py_compile scripts/run-pluginval-with-core.py[0m
+2026-11-23T22:56:01.5967830Z [36;1mfor expected in 0 7 139; do[0m
+2026-11-23T22:56:01.5968089Z [36;1m  set +e[0m
+2026-11-23T22:56:01.5968386Z [36;1m  python3 scripts/run-pluginval-with-core.py \[0m
+2026-11-23T22:56:01.5968763Z [36;1m    --core-log "$PWD/pluginval-core-fixture.log" \[0m
+2026-11-23T22:56:01.5969130Z [36;1m    --executable /bin/sh -- /bin/sh -c "exit $expected"[0m
+2026-11-23T22:56:01.5969477Z [36;1m  actual=$?[0m
+2026-11-23T22:56:01.5969695Z [36;1m  set -e[0m
+2026-11-23T22:56:01.5969931Z [36;1m  if [ "$actual" -ne "$expected" ]; then[0m
+2026-11-23T22:56:01.5970297Z [36;1m    echo "::error::Diagnostic helper changed exit $expected to $actual"[0m
+2026-11-23T22:56:01.5970849Z [36;1m    exit 1[0m
+2026-11-23T22:56:01.5971089Z [36;1m  fi[0m
+2026-11-23T22:56:01.5971364Z [36;1mdone[0m
+2026-11-23T22:56:01.5971696Z [36;1m# A diagnostic log open failure must not override the child result.[0m
+2026-11-23T22:56:01.5972038Z [36;1mset +e[0m
+2026-11-23T22:56:01.5972336Z [36;1mpython3 scripts/run-pluginval-with-core.py \[0m
+2026-11-23T22:56:01.5972646Z [36;1m  --core-log /dev/null/unwritable.log \[0m
+2026-11-23T22:56:01.5972953Z [36;1m  --executable /bin/sh -- /bin/sh -c 'exit 7'[0m
+2026-11-23T22:56:01.5973382Z [36;1mactual=$?[0m
+2026-11-23T22:56:01.5973626Z [36;1mset -e[0m
+2026-11-23T22:56:01.5973864Z [36;1mif [ "$actual" -ne 7 ]; then[0m
+2026-11-23T22:56:01.5974200Z [36;1m  echo "::error::Diagnostic log failure changed child exit to $actual"[0m
+2026-11-23T22:56:01.5974554Z [36;1m  exit 1[0m
+2026-11-23T22:56:01.5974791Z [36;1mfi[0m
+2026-11-23T22:56:01.5975078Z [36;1m# Do not synthesize a crash when the kernel routes cores externally:[0m
+2026-11-23T22:56:01.5975498Z [36;1m# Linux pipe collectors ignore RLIMIT_CORE, including a zero limit.[0m
+2026-11-23T22:56:01.5975897Z [36;1mpattern="$(cat /proc/sys/kernel/core_pattern)"[0m
+2026-11-23T22:56:01.5976193Z [36;1mif [[ "$pattern" != \|* ]]; then[0m
+2026-11-23T22:56:01.5976476Z [36;1m  set +e[0m
+2026-11-23T22:56:01.5976731Z [36;1m  python3 scripts/run-pluginval-with-core.py \[0m
+2026-11-23T22:56:01.5977112Z [36;1m    --core-log "$PWD/pluginval-core-fixture.log" \[0m
+2026-11-23T22:56:01.5977534Z [36;1m    --executable /bin/sh -- /bin/sh -c 'ulimit -c 0; kill -SEGV "$$"'[0m
+2026-11-23T22:56:01.5977858Z [36;1m  actual=$?[0m
+2026-11-23T22:56:01.5978104Z [36;1m  set -e[0m
+2026-11-23T22:56:01.5978350Z [36;1m  if [ "$actual" -ne 139 ]; then[0m
+2026-11-23T22:56:01.5978707Z [36;1m    echo "::error::Diagnostic helper changed SIGSEGV status to $actual"[0m
+2026-11-23T22:56:01.5979034Z [36;1m    exit 1[0m
+2026-11-23T22:56:01.5979302Z [36;1m  fi[0m
+2026-11-23T22:56:01.5979510Z [36;1melse[0m
+2026-11-23T22:56:01.5979881Z [36;1m  echo "Synthetic signal fixture unavailable with kernel pipe collector; exit139 fixture remains required."[0m
+2026-11-23T22:56:01.5980319Z [36;1mfi[0m
+2026-11-23T22:56:01.5981113Z [36;1m# A normally exited inferior has no live thread/register context.[0m
+2026-11-23T22:56:01.5981582Z [36;1m# Exercise the same guard as the failure-only diagnostic below.[0m
+2026-11-23T22:56:01.5981957Z [36;1mgdb -nx -nh --batch --return-child-result \[0m
+2026-11-23T22:56:01.5982329Z [36;1m  -iex "set auto-load off" \[0m
+2026-11-23T22:56:01.5982713Z [36;1m  -iex "set debuginfod enabled off" \[0m
+2026-11-23T22:56:01.5983027Z [36;1m  -iex "set print frame-arguments none" \[0m
+2026-11-23T22:56:01.5983334Z [36;1m  -ex "run" \[0m
+2026-11-23T22:56:01.5983793Z [36;1m  -ex "python if gdb.selected_inferior().pid: gdb.execute('thread apply all bt 40'); gdb.execute('info sharedlibrary')" \[0m
+2026-11-23T22:56:01.5984298Z [36;1m  --args /bin/true > pluginval-gdb-normal-exit.log 2>&1[0m
+2026-11-23T22:56:01.5984732Z [36;1mecho "Diagnostic exit propagation and normal-inferior guard checked."[0m
+2026-11-23T22:56:01.6011376Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:56:01.6011740Z env:
+2026-11-23T22:56:01.6011993Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:56:01.6012254Z ##[endgroup]
+2026-11-23T22:56:01.7517287Z Synthetic signal fixture unavailable with kernel pipe collector; exit139 fixture remains required.
+2026-11-23T22:56:02.1041134Z Diagnostic exit propagation and normal-inferior guard checked.
+2026-11-23T22:56:02.1067915Z ##[group]Run set -euo pipefail
+2026-11-23T22:56:02.1068249Z [36;1mset -euo pipefail[0m
+2026-11-23T22:56:02.1068526Z [36;1mmkdir -p pluginval-reports[0m
+2026-11-23T22:56:02.1068888Z [36;1m./scripts/run-pluginval-linux.sh pluginval-headless.log \[0m
+2026-11-23T22:56:02.1069335Z [36;1m  python3 "$PWD/scripts/run-pluginval-with-core.py" \[0m
+2026-11-23T22:56:02.1069692Z [36;1m  --core-log "$PWD/pluginval-headless-core.log" \[0m
+2026-11-23T22:56:02.1070038Z [36;1m  --executable "$PWD/pluginval/pluginval" -- \[0m
+2026-11-23T22:56:02.1070779Z [36;1m  "$PWD/pluginval/pluginval" \[0m
+2026-11-23T22:56:02.1071073Z [36;1m  --strictness-level 10 \[0m
+2026-11-23T22:56:02.1071350Z [36;1m  --validate-in-process \[0m
+2026-11-23T22:56:02.1071634Z [36;1m  --skip-gui-tests \[0m
+2026-11-23T22:56:02.1071931Z [36;1m  --timeout-ms 120000 \[0m
+2026-11-23T22:56:02.1072219Z [36;1m  --output-dir "$PWD/pluginval-reports" \[0m
+2026-11-23T22:56:02.1072620Z [36;1m  --output-filename cs80-headless \[0m
+2026-11-23T22:56:02.1073018Z [36;1m  "$PWD/vst3/CS-80 Reference.vst3"[0m
+2026-11-23T22:56:02.1097484Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:56:02.1097808Z env:
+2026-11-23T22:56:02.1098054Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:56:02.1098300Z ##[endgroup]
+2026-11-23T22:56:02.1498482Z Started validating: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3
+2026-11-23T22:56:02.1521620Z Random seed: 0x588d540
+2026-11-23T22:56:02.1522004Z Validation started
+2026-11-23T22:56:02.1522355Z Strictness level: 10
+2026-11-23T22:56:02.1522711Z -----------------------------------------------------------------
+2026-11-23T22:56:02.1523393Z Starting tests in: pluginval / Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3...
+2026-11-23T22:56:02.1523983Z Num plugins found: 1
+2026-11-23T22:56:02.1524200Z 
+2026-11-23T22:56:02.1524367Z Testing plugin: VST3-CS-80 Reference-3e83ebbf-8c22ac91
+2026-11-23T22:56:02.1524736Z Reference Instruments: CS-80 Reference v1.0.0
+2026-11-23T22:56:02.1525233Z Completed tests in pluginval / Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3
+2026-11-23T22:56:02.1525740Z -----------------------------------------------------------------
+2026-11-23T22:56:02.1526076Z Starting tests in: pluginval / Open plugin (cold)...
+2026-11-23T22:56:02.3489753Z Completed tests in pluginval / Open plugin (cold)
+2026-11-23T22:56:02.3490654Z -----------------------------------------------------------------
+2026-11-23T22:56:02.3491178Z Starting tests in: pluginval / Open plugin (warm)...
+2026-11-23T22:56:02.3790864Z Running tests 1 times
+2026-11-23T22:56:02.5293673Z Completed tests in pluginval / Open plugin (warm)
+2026-11-23T22:56:02.5294820Z -----------------------------------------------------------------
+2026-11-23T22:56:02.5295687Z Starting tests in: pluginval / Plugin info...
+2026-11-23T22:56:02.5296137Z 
+2026-11-23T22:56:02.5296566Z Plugin name: CS-80 Reference
+2026-11-23T22:56:02.5297688Z Alternative names: CS-80 Reference
+2026-11-23T22:56:02.5298352Z SupportsDoublePrecision: no
+2026-11-23T22:56:02.5299184Z Reported latency: 0
+2026-11-23T22:56:02.5299680Z Reported taillength: inf
+2026-11-23T22:56:02.5300932Z Completed tests in pluginval / Plugin info
+2026-11-23T22:56:02.5301986Z -----------------------------------------------------------------
+2026-11-23T22:56:02.5303018Z Starting tests in: pluginval / Plugin programs...
+2026-11-23T22:56:02.5303859Z Num programs: 523
+2026-11-23T22:56:02.5304543Z All program names checked
+2026-11-23T22:56:02.5304833Z 
+2026-11-23T22:56:02.5305061Z Changing program
+2026-11-23T22:56:02.5305836Z Completed tests in pluginval / Plugin programs
+2026-11-23T22:56:02.5306638Z -----------------------------------------------------------------
+2026-11-23T22:56:02.5307620Z Starting tests in: pluginval / Audio processing...
+2026-11-23T22:56:02.5388288Z Testing with sample rate [44100] and block size [64]
+2026-11-23T22:56:02.5486387Z Testing with sample rate [44100] and block size [128]
+2026-11-23T22:56:02.5633266Z Testing with sample rate [44100] and block size [256]
+2026-11-23T22:56:02.5787551Z Testing with sample rate [44100] and block size [512]
+2026-11-23T22:56:02.6012973Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T22:56:02.6480006Z Testing with sample rate [48000] and block size [64]
+2026-11-23T22:56:02.6601649Z Testing with sample rate [48000] and block size [128]
+2026-11-23T22:56:02.6716105Z Testing with sample rate [48000] and block size [256]
+2026-11-23T22:56:02.6876388Z Testing with sample rate [48000] and block size [512]
+2026-11-23T22:56:02.7143343Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T22:56:02.7530912Z Testing with sample rate [96000] and block size [64]
+2026-11-23T22:56:02.7661112Z Testing with sample rate [96000] and block size [128]
+2026-11-23T22:56:02.7798405Z Testing with sample rate [96000] and block size [256]
+2026-11-23T22:56:02.7954199Z Testing with sample rate [96000] and block size [512]
+2026-11-23T22:56:02.8183540Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T22:56:02.8619689Z Completed tests in pluginval / Audio processing
+2026-11-23T22:56:02.8621030Z -----------------------------------------------------------------
+2026-11-23T22:56:02.8622578Z Starting tests in: pluginval / Non-releasing audio processing...
+2026-11-23T22:56:02.8715817Z Testing with sample rate [44100] and block size [64]
+2026-11-23T22:56:02.8738608Z Testing with sample rate [44100] and block size [128]
+2026-11-23T22:56:02.8868079Z Testing with sample rate [44100] and block size [256]
+2026-11-23T22:56:02.9008196Z Testing with sample rate [44100] and block size [512]
+2026-11-23T22:56:02.9228525Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T22:56:02.9693391Z Testing with sample rate [48000] and block size [64]
+2026-11-23T22:56:02.9812590Z Testing with sample rate [48000] and block size [128]
+2026-11-23T22:56:02.9924871Z Testing with sample rate [48000] and block size [256]
+2026-11-23T22:56:03.0086308Z Testing with sample rate [48000] and block size [512]
+2026-11-23T22:56:03.0349094Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T22:56:03.0740306Z Testing with sample rate [96000] and block size [64]
+2026-11-23T22:56:03.0872485Z Testing with sample rate [96000] and block size [128]
+2026-11-23T22:56:03.1009217Z Testing with sample rate [96000] and block size [256]
+2026-11-23T22:56:03.1164643Z Testing with sample rate [96000] and block size [512]
+2026-11-23T22:56:03.1389629Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T22:56:03.1823455Z Completed tests in pluginval / Non-releasing audio processing
+2026-11-23T22:56:03.1823911Z -----------------------------------------------------------------
+2026-11-23T22:56:03.1824298Z Starting tests in: pluginval / Plugin state...
+2026-11-23T22:56:03.1861540Z Completed tests in pluginval / Plugin state
+2026-11-23T22:56:03.1861924Z -----------------------------------------------------------------
+2026-11-23T22:56:03.1862605Z Starting tests in: pluginval / Plugin state restoration...
+2026-11-23T22:56:03.5647315Z Completed tests in pluginval / Plugin state restoration
+2026-11-23T22:56:03.5648481Z -----------------------------------------------------------------
+2026-11-23T22:56:03.5649453Z Starting tests in: pluginval / Automation...
+2026-11-23T22:56:03.5744585Z Testing with sample rate [44100] and block size [64] and sub-block size [32]
+2026-11-23T22:56:03.5818359Z Testing with sample rate [44100] and block size [128] and sub-block size [32]
+2026-11-23T22:56:03.5889817Z Testing with sample rate [44100] and block size [256] and sub-block size [32]
+2026-11-23T22:56:03.5965737Z Testing with sample rate [44100] and block size [512] and sub-block size [32]
+2026-11-23T22:56:03.6093927Z Testing with sample rate [44100] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:03.6347193Z Testing with sample rate [48000] and block size [64] and sub-block size [32]
+2026-11-23T22:56:03.6438781Z Testing with sample rate [48000] and block size [128] and sub-block size [32]
+2026-11-23T22:56:03.6522459Z Testing with sample rate [48000] and block size [256] and sub-block size [32]
+2026-11-23T22:56:03.6624949Z Testing with sample rate [48000] and block size [512] and sub-block size [32]
+2026-11-23T22:56:03.6741757Z Testing with sample rate [48000] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:03.6980075Z Testing with sample rate [96000] and block size [64] and sub-block size [32]
+2026-11-23T22:56:03.7078682Z Testing with sample rate [96000] and block size [128] and sub-block size [32]
+2026-11-23T22:56:03.7173368Z Testing with sample rate [96000] and block size [256] and sub-block size [32]
+2026-11-23T22:56:03.7263567Z Testing with sample rate [96000] and block size [512] and sub-block size [32]
+2026-11-23T22:56:03.7371299Z Testing with sample rate [96000] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:03.7636042Z Completed tests in pluginval / Automation
+2026-11-23T22:56:03.7636814Z -----------------------------------------------------------------
+2026-11-23T22:56:03.7637754Z Starting tests in: pluginval / Automatable Parameters...
+2026-11-23T22:56:03.7721223Z Completed tests in pluginval / Automatable Parameters
+2026-11-23T22:56:03.7721840Z -----------------------------------------------------------------
+2026-11-23T22:56:03.7722274Z Starting tests in: pluginval / Parameters...
+2026-11-23T22:56:03.7806931Z Completed tests in pluginval / Parameters
+2026-11-23T22:56:03.7807497Z -----------------------------------------------------------------
+2026-11-23T22:56:03.7807862Z Starting tests in: pluginval / Parameter thread safety...
+2026-11-23T22:56:05.0795094Z Completed tests in pluginval / Parameter thread safety
+2026-11-23T22:56:05.0795890Z -----------------------------------------------------------------
+2026-11-23T22:56:05.0796229Z Starting tests in: pluginval / auval...
+2026-11-23T22:56:05.0796531Z Completed tests in pluginval / auval
+2026-11-23T22:56:05.0796909Z -----------------------------------------------------------------
+2026-11-23T22:56:05.0797269Z Starting tests in: pluginval / vst3 validator...
+2026-11-23T22:56:05.0797667Z INFO: Skipping vst3 validator as validator path hasn't been set
+2026-11-23T22:56:05.0798009Z Completed tests in pluginval / vst3 validator
+2026-11-23T22:56:05.0798365Z -----------------------------------------------------------------
+2026-11-23T22:56:05.0798697Z Starting tests in: pluginval / Basic bus...
+2026-11-23T22:56:05.0808683Z Completed tests in pluginval / Basic bus
+2026-11-23T22:56:05.0809151Z -----------------------------------------------------------------
+2026-11-23T22:56:05.0809671Z Starting tests in: pluginval / Listing available buses...
+2026-11-23T22:56:05.0824386Z Inputs:
+2026-11-23T22:56:05.0824706Z 	Named layouts: Mono
+2026-11-23T22:56:05.0825063Z 	Discrete layouts: Discrete #1
+2026-11-23T22:56:05.0836131Z Outputs:
+2026-11-23T22:56:05.0836766Z 	Named layouts: Mono, Stereo
+2026-11-23T22:56:05.0837285Z 	Discrete layouts: Discrete #1
+2026-11-23T22:56:05.0837840Z Main bus num input channels: 0
+2026-11-23T22:56:05.0838487Z Main bus num output channels: 2
+2026-11-23T22:56:05.0839048Z Completed tests in pluginval / Listing available buses
+2026-11-23T22:56:05.0839711Z -----------------------------------------------------------------
+2026-11-23T22:56:05.0840821Z Starting tests in: pluginval / Enabling all buses...
+2026-11-23T22:56:05.0841515Z Completed tests in pluginval / Enabling all buses
+2026-11-23T22:56:05.0842157Z -----------------------------------------------------------------
+2026-11-23T22:56:05.0842732Z Starting tests in: pluginval / Disabling non-main busses...
+2026-11-23T22:56:05.0843449Z Completed tests in pluginval / Disabling non-main busses
+2026-11-23T22:56:05.0844185Z -----------------------------------------------------------------
+2026-11-23T22:56:05.0844738Z Starting tests in: pluginval / Restoring default layout...
+2026-11-23T22:56:05.0845387Z Main bus num input channels: 0
+2026-11-23T22:56:05.0845894Z Main bus num output channels: 2
+2026-11-23T22:56:05.0926782Z Completed tests in pluginval / Restoring default layout
+2026-11-23T22:56:05.0927217Z -----------------------------------------------------------------
+2026-11-23T22:56:05.0927574Z Starting tests in: pluginval / Fuzz parameters...
+2026-11-23T22:56:05.2828543Z Completed tests in pluginval / Fuzz parameters
+2026-11-23T22:56:05.2828927Z SUCCESS
+2026-11-23T22:56:05.3709601Z ##[group]Run set -euo pipefail
+2026-11-23T22:56:05.3709954Z [36;1mset -euo pipefail[0m
+2026-11-23T22:56:05.3710266Z [36;1mxvfb-run -a -s "-screen 0 1920x1200x24" \[0m
+2026-11-23T22:56:05.3710790Z [36;1m  ./scripts/run-pluginval-linux.sh pluginval-gui.log \[0m
+2026-11-23T22:56:05.3711208Z [36;1m  python3 "$PWD/scripts/run-pluginval-with-core.py" \[0m
+2026-11-23T22:56:05.3711567Z [36;1m  --core-log "$PWD/pluginval-gui-core.log" \[0m
+2026-11-23T22:56:05.3711896Z [36;1m  --executable "$PWD/pluginval/pluginval" -- \[0m
+2026-11-23T22:56:05.3712235Z [36;1m  "$PWD/pluginval/pluginval" \[0m
+2026-11-23T22:56:05.3712536Z [36;1m  --strictness-level 10 \[0m
+2026-11-23T22:56:05.3712915Z [36;1m  --validate-in-process \[0m
+2026-11-23T22:56:05.3713192Z [36;1m  --timeout-ms 120000 \[0m
+2026-11-23T22:56:05.3713494Z [36;1m  --output-dir "$PWD/pluginval-reports" \[0m
+2026-11-23T22:56:05.3713822Z [36;1m  --output-filename cs80-gui \[0m
+2026-11-23T22:56:05.3714173Z [36;1m  "$PWD/vst3/CS-80 Reference.vst3"[0m
+2026-11-23T22:56:05.3739811Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:56:05.3740175Z env:
+2026-11-23T22:56:05.3740524Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:56:05.3740824Z ##[endgroup]
+2026-11-23T22:56:05.9416047Z Started validating: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3
+2026-11-23T22:56:05.9439836Z Random seed: 0x38562f0
+2026-11-23T22:56:05.9440178Z Validation started
+2026-11-23T22:56:05.9440624Z Strictness level: 10
+2026-11-23T22:56:05.9440959Z -----------------------------------------------------------------
+2026-11-23T22:56:05.9441537Z Starting tests in: pluginval / Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3...
+2026-11-23T22:56:05.9442073Z Num plugins found: 1
+2026-11-23T22:56:05.9442222Z 
+2026-11-23T22:56:05.9442349Z Testing plugin: VST3-CS-80 Reference-3e83ebbf-8c22ac91
+2026-11-23T22:56:05.9442749Z Reference Instruments: CS-80 Reference v1.0.0
+2026-11-23T22:56:05.9443226Z Completed tests in pluginval / Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3
+2026-11-23T22:56:05.9443706Z -----------------------------------------------------------------
+2026-11-23T22:56:05.9444063Z Starting tests in: pluginval / Open plugin (cold)...
+2026-11-23T22:56:06.1464001Z Completed tests in pluginval / Open plugin (cold)
+2026-11-23T22:56:06.1464722Z -----------------------------------------------------------------
+2026-11-23T22:56:06.1465093Z Starting tests in: pluginval / Open plugin (warm)...
+2026-11-23T22:56:06.1780029Z Running tests 1 times
+2026-11-23T22:56:06.3282916Z Completed tests in pluginval / Open plugin (warm)
+2026-11-23T22:56:06.3283782Z -----------------------------------------------------------------
+2026-11-23T22:56:06.3284205Z Starting tests in: pluginval / Plugin info...
+2026-11-23T22:56:06.3284365Z 
+2026-11-23T22:56:06.3284527Z Plugin name: CS-80 Reference
+2026-11-23T22:56:06.3284787Z Alternative names: CS-80 Reference
+2026-11-23T22:56:06.3285058Z SupportsDoublePrecision: no
+2026-11-23T22:56:06.3285376Z Reported latency: 0
+2026-11-23T22:56:06.3285609Z Reported taillength: inf
+2026-11-23T22:56:06.3285879Z Completed tests in pluginval / Plugin info
+2026-11-23T22:56:06.3286188Z -----------------------------------------------------------------
+2026-11-23T22:56:06.3286543Z Starting tests in: pluginval / Plugin programs...
+2026-11-23T22:56:06.3286855Z Num programs: 523
+2026-11-23T22:56:06.3287080Z All program names checked
+2026-11-23T22:56:06.3287238Z 
+2026-11-23T22:56:06.3287359Z Changing program
+2026-11-23T22:56:06.3287606Z Completed tests in pluginval / Plugin programs
+2026-11-23T22:56:06.3287926Z -----------------------------------------------------------------
+2026-11-23T22:56:06.3288259Z Starting tests in: pluginval / Editor...
+2026-11-23T22:56:08.1852623Z Completed tests in pluginval / Editor
+2026-11-23T22:56:08.1853129Z -----------------------------------------------------------------
+2026-11-23T22:56:08.1854069Z Starting tests in: pluginval / Open editor whilst processing...
+2026-11-23T22:56:08.2593844Z Completed tests in pluginval / Open editor whilst processing
+2026-11-23T22:56:08.2594277Z -----------------------------------------------------------------
+2026-11-23T22:56:08.2594762Z Starting tests in: pluginval / Audio processing...
+2026-11-23T22:56:08.5649448Z Testing with sample rate [44100] and block size [64]
+2026-11-23T22:56:08.5770966Z Testing with sample rate [44100] and block size [128]
+2026-11-23T22:56:08.5881303Z Testing with sample rate [44100] and block size [256]
+2026-11-23T22:56:08.6020822Z Testing with sample rate [44100] and block size [512]
+2026-11-23T22:56:08.6229863Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T22:56:08.6570280Z Testing with sample rate [48000] and block size [64]
+2026-11-23T22:56:08.6691385Z Testing with sample rate [48000] and block size [128]
+2026-11-23T22:56:08.6801246Z Testing with sample rate [48000] and block size [256]
+2026-11-23T22:56:08.6963197Z Testing with sample rate [48000] and block size [512]
+2026-11-23T22:56:08.7179255Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T22:56:08.7529475Z Testing with sample rate [96000] and block size [64]
+2026-11-23T22:56:08.7658226Z Testing with sample rate [96000] and block size [128]
+2026-11-23T22:56:08.7777643Z Testing with sample rate [96000] and block size [256]
+2026-11-23T22:56:08.7926233Z Testing with sample rate [96000] and block size [512]
+2026-11-23T22:56:08.8147856Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T22:56:08.8537686Z Completed tests in pluginval / Audio processing
+2026-11-23T22:56:08.8538322Z -----------------------------------------------------------------
+2026-11-23T22:56:08.8538789Z Starting tests in: pluginval / Non-releasing audio processing...
+2026-11-23T22:56:08.8631595Z Testing with sample rate [44100] and block size [64]
+2026-11-23T22:56:08.8653594Z Testing with sample rate [44100] and block size [128]
+2026-11-23T22:56:08.8761972Z Testing with sample rate [44100] and block size [256]
+2026-11-23T22:56:08.8903538Z Testing with sample rate [44100] and block size [512]
+2026-11-23T22:56:08.9115319Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T22:56:08.9463707Z Testing with sample rate [48000] and block size [64]
+2026-11-23T22:56:08.9581110Z Testing with sample rate [48000] and block size [128]
+2026-11-23T22:56:08.9694197Z Testing with sample rate [48000] and block size [256]
+2026-11-23T22:56:08.9857623Z Testing with sample rate [48000] and block size [512]
+2026-11-23T22:56:09.0072122Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T22:56:09.0425462Z Testing with sample rate [96000] and block size [64]
+2026-11-23T22:56:09.0556370Z Testing with sample rate [96000] and block size [128]
+2026-11-23T22:56:09.0676527Z Testing with sample rate [96000] and block size [256]
+2026-11-23T22:56:09.0823932Z Testing with sample rate [96000] and block size [512]
+2026-11-23T22:56:09.1042429Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T22:56:09.1434529Z Completed tests in pluginval / Non-releasing audio processing
+2026-11-23T22:56:09.1435107Z -----------------------------------------------------------------
+2026-11-23T22:56:09.1435820Z Starting tests in: pluginval / Plugin state...
+2026-11-23T22:56:09.1475559Z Completed tests in pluginval / Plugin state
+2026-11-23T22:56:09.1476117Z -----------------------------------------------------------------
+2026-11-23T22:56:09.1476748Z Starting tests in: pluginval / Plugin state restoration...
+2026-11-23T22:56:09.5555059Z Completed tests in pluginval / Plugin state restoration
+2026-11-23T22:56:09.5555540Z -----------------------------------------------------------------
+2026-11-23T22:56:09.5555950Z Starting tests in: pluginval / Automation...
+2026-11-23T22:56:09.5658779Z Testing with sample rate [44100] and block size [64] and sub-block size [32]
+2026-11-23T22:56:09.5734814Z Testing with sample rate [44100] and block size [128] and sub-block size [32]
+2026-11-23T22:56:09.5808716Z Testing with sample rate [44100] and block size [256] and sub-block size [32]
+2026-11-23T22:56:09.5886711Z Testing with sample rate [44100] and block size [512] and sub-block size [32]
+2026-11-23T22:56:09.5986485Z Testing with sample rate [44100] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:09.6209370Z Testing with sample rate [48000] and block size [64] and sub-block size [32]
+2026-11-23T22:56:09.6309094Z Testing with sample rate [48000] and block size [128] and sub-block size [32]
+2026-11-23T22:56:09.6389954Z Testing with sample rate [48000] and block size [256] and sub-block size [32]
+2026-11-23T22:56:09.6470647Z Testing with sample rate [48000] and block size [512] and sub-block size [32]
+2026-11-23T22:56:09.6613292Z Testing with sample rate [48000] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:09.6782806Z Testing with sample rate [96000] and block size [64] and sub-block size [32]
+2026-11-23T22:56:09.6877003Z Testing with sample rate [96000] and block size [128] and sub-block size [32]
+2026-11-23T22:56:09.6971884Z Testing with sample rate [96000] and block size [256] and sub-block size [32]
+2026-11-23T22:56:09.7078095Z Testing with sample rate [96000] and block size [512] and sub-block size [32]
+2026-11-23T22:56:09.7191058Z Testing with sample rate [96000] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:09.7403271Z Completed tests in pluginval / Automation
+2026-11-23T22:56:09.7404099Z -----------------------------------------------------------------
+2026-11-23T22:56:09.7404517Z Starting tests in: pluginval / Editor Automation...
+2026-11-23T22:56:19.9858249Z Completed tests in pluginval / Editor Automation
+2026-11-23T22:56:19.9858877Z -----------------------------------------------------------------
+2026-11-23T22:56:19.9859312Z Starting tests in: pluginval / Automatable Parameters...
+2026-11-23T22:56:19.9966883Z Completed tests in pluginval / Automatable Parameters
+2026-11-23T22:56:19.9967598Z -----------------------------------------------------------------
+2026-11-23T22:56:19.9968113Z Starting tests in: pluginval / Parameters...
+2026-11-23T22:56:20.0045138Z Completed tests in pluginval / Parameters
+2026-11-23T22:56:20.0045622Z -----------------------------------------------------------------
+2026-11-23T22:56:20.0046134Z Starting tests in: pluginval / Background thread state...
+2026-11-23T22:56:22.0678073Z Completed tests in pluginval / Background thread state
+2026-11-23T22:56:22.0678649Z -----------------------------------------------------------------
+2026-11-23T22:56:22.0679406Z Starting tests in: pluginval / Parameter thread safety...
+2026-11-23T22:56:23.2958344Z Completed tests in pluginval / Parameter thread safety
+2026-11-23T22:56:23.2959219Z -----------------------------------------------------------------
+2026-11-23T22:56:23.2959560Z Starting tests in: pluginval / auval...
+2026-11-23T22:56:23.2959860Z Completed tests in pluginval / auval
+2026-11-23T22:56:23.2960159Z -----------------------------------------------------------------
+2026-11-23T22:56:23.2960829Z Starting tests in: pluginval / vst3 validator...
+2026-11-23T22:56:23.2961207Z INFO: Skipping vst3 validator as validator path hasn't been set
+2026-11-23T22:56:23.2961543Z Completed tests in pluginval / vst3 validator
+2026-11-23T22:56:23.2961863Z -----------------------------------------------------------------
+2026-11-23T22:56:23.2962203Z Starting tests in: pluginval / Basic bus...
+2026-11-23T22:56:23.2962847Z Completed tests in pluginval / Basic bus
+2026-11-23T22:56:23.2963259Z -----------------------------------------------------------------
+2026-11-23T22:56:23.2963620Z Starting tests in: pluginval / Listing available buses...
+2026-11-23T22:56:23.2977988Z Inputs:
+2026-11-23T22:56:23.2978304Z 	Named layouts: Mono
+2026-11-23T22:56:23.2978591Z 	Discrete layouts: Discrete #1
+2026-11-23T22:56:23.2989567Z Outputs:
+2026-11-23T22:56:23.2989899Z 	Named layouts: Mono, Stereo
+2026-11-23T22:56:23.2990234Z 	Discrete layouts: Discrete #1
+2026-11-23T22:56:23.2990689Z Main bus num input channels: 0
+2026-11-23T22:56:23.2991283Z Main bus num output channels: 2
+2026-11-23T22:56:23.2991573Z Completed tests in pluginval / Listing available buses
+2026-11-23T22:56:23.2991911Z -----------------------------------------------------------------
+2026-11-23T22:56:23.2992246Z Starting tests in: pluginval / Enabling all buses...
+2026-11-23T22:56:23.2992570Z Completed tests in pluginval / Enabling all buses
+2026-11-23T22:56:23.2992927Z -----------------------------------------------------------------
+2026-11-23T22:56:23.2993270Z Starting tests in: pluginval / Disabling non-main busses...
+2026-11-23T22:56:23.2993621Z Completed tests in pluginval / Disabling non-main busses
+2026-11-23T22:56:23.2993986Z -----------------------------------------------------------------
+2026-11-23T22:56:23.2994413Z Starting tests in: pluginval / Restoring default layout...
+2026-11-23T22:56:23.2994735Z Main bus num input channels: 0
+2026-11-23T22:56:23.2994984Z Main bus num output channels: 2
+2026-11-23T22:56:23.3070866Z Completed tests in pluginval / Restoring default layout
+2026-11-23T22:56:23.3071338Z -----------------------------------------------------------------
+2026-11-23T22:56:23.3071662Z Starting tests in: pluginval / Fuzz parameters...
+2026-11-23T22:56:23.4929168Z Completed tests in pluginval / Fuzz parameters
+2026-11-23T22:56:23.4929879Z SUCCESS
+2026-11-23T22:56:23.5791368Z ##[group]Run set -euo pipefail
+2026-11-23T22:56:23.5791731Z [36;1mset -euo pipefail[0m
+2026-11-23T22:56:23.5792034Z [36;1mtimeout --signal=TERM --kill-after=10s 240s \[0m
+2026-11-23T22:56:23.5792351Z [36;1m  xvfb-run -a -s "-screen 0 1920x1200x24" \[0m
+2026-11-23T22:56:23.5792774Z [36;1m  ./scripts/run-pluginval-linux.sh pluginval-gui-seed-regression.log \[0m
+2026-11-23T22:56:23.5793195Z [36;1m  python3 "$PWD/scripts/run-pluginval-with-core.py" \[0m
+2026-11-23T22:56:23.5793599Z [36;1m  --core-log "$PWD/pluginval-gui-seed-regression-core.log" \[0m
+2026-11-23T22:56:23.5793977Z [36;1m  --executable "$PWD/pluginval/pluginval" -- \[0m
+2026-11-23T22:56:23.5794315Z [36;1m  "$PWD/pluginval/pluginval" \[0m
+2026-11-23T22:56:23.5794592Z [36;1m  --random-seed 0x2da72db \[0m
+2026-11-23T22:56:23.5794846Z [36;1m  --strictness-level 10 \[0m
+2026-11-23T22:56:23.5795171Z [36;1m  --validate-in-process \[0m
+2026-11-23T22:56:23.5795478Z [36;1m  --timeout-ms 120000 \[0m
+2026-11-23T22:56:23.5795858Z [36;1m  --output-dir "$PWD/pluginval-reports" \[0m
+2026-11-23T22:56:23.5796183Z [36;1m  --output-filename cs80-gui-seed-regression \[0m
+2026-11-23T22:56:23.5796503Z [36;1m  "$PWD/vst3/CS-80 Reference.vst3"[0m
+2026-11-23T22:56:23.5823498Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:56:23.5823839Z env:
+2026-11-23T22:56:23.5824073Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:56:23.5824375Z ##[endgroup]
+2026-11-23T22:56:23.6471732Z Started validating: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3
+2026-11-23T22:56:23.6495030Z Random seed: 0x2da72db
+2026-11-23T22:56:23.6495649Z Validation started
+2026-11-23T22:56:23.6496337Z Strictness level: 10
+2026-11-23T22:56:23.6496768Z -----------------------------------------------------------------
+2026-11-23T22:56:23.6497342Z Starting tests in: pluginval / Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3...
+2026-11-23T22:56:23.6497844Z Num plugins found: 1
+2026-11-23T22:56:23.6498014Z 
+2026-11-23T22:56:23.6498179Z Testing plugin: VST3-CS-80 Reference-3e83ebbf-8c22ac91
+2026-11-23T22:56:23.6498506Z Reference Instruments: CS-80 Reference v1.0.0
+2026-11-23T22:56:23.6499021Z Completed tests in pluginval / Scan for plugins located in: /home/runner/work/yamaha-cs80/yamaha-cs80/vst3/CS-80 Reference.vst3
+2026-11-23T22:56:23.6499504Z -----------------------------------------------------------------
+2026-11-23T22:56:23.6499845Z Starting tests in: pluginval / Open plugin (cold)...
+2026-11-23T22:56:23.8503417Z Completed tests in pluginval / Open plugin (cold)
+2026-11-23T22:56:23.8503960Z -----------------------------------------------------------------
+2026-11-23T22:56:23.8504571Z Starting tests in: pluginval / Open plugin (warm)...
+2026-11-23T22:56:23.8813572Z Running tests 1 times
+2026-11-23T22:56:24.0313736Z Completed tests in pluginval / Open plugin (warm)
+2026-11-23T22:56:24.0314131Z -----------------------------------------------------------------
+2026-11-23T22:56:24.0314684Z Starting tests in: pluginval / Plugin info...
+2026-11-23T22:56:24.0314858Z 
+2026-11-23T22:56:24.0314991Z Plugin name: CS-80 Reference
+2026-11-23T22:56:24.0315322Z Alternative names: CS-80 Reference
+2026-11-23T22:56:24.0315602Z SupportsDoublePrecision: no
+2026-11-23T22:56:24.0315913Z Reported latency: 0
+2026-11-23T22:56:24.0316182Z Reported taillength: inf
+2026-11-23T22:56:24.0316445Z Completed tests in pluginval / Plugin info
+2026-11-23T22:56:24.0317048Z -----------------------------------------------------------------
+2026-11-23T22:56:24.0317417Z Starting tests in: pluginval / Plugin programs...
+2026-11-23T22:56:24.0317692Z Num programs: 523
+2026-11-23T22:56:24.0317955Z All program names checked
+2026-11-23T22:56:24.0318114Z 
+2026-11-23T22:56:24.0318200Z Changing program
+2026-11-23T22:56:24.0318489Z Completed tests in pluginval / Plugin programs
+2026-11-23T22:56:24.0318809Z -----------------------------------------------------------------
+2026-11-23T22:56:24.0319104Z Starting tests in: pluginval / Editor...
+2026-11-23T22:56:24.1628513Z Completed tests in pluginval / Editor
+2026-11-23T22:56:24.1629498Z -----------------------------------------------------------------
+2026-11-23T22:56:24.1629915Z Starting tests in: pluginval / Open editor whilst processing...
+2026-11-23T22:56:24.3609735Z Completed tests in pluginval / Open editor whilst processing
+2026-11-23T22:56:24.3610180Z -----------------------------------------------------------------
+2026-11-23T22:56:24.3610856Z Starting tests in: pluginval / Audio processing...
+2026-11-23T22:56:24.4002245Z Testing with sample rate [44100] and block size [64]
+2026-11-23T22:56:24.4128266Z Testing with sample rate [44100] and block size [128]
+2026-11-23T22:56:24.4243993Z Testing with sample rate [44100] and block size [256]
+2026-11-23T22:56:24.4382465Z Testing with sample rate [44100] and block size [512]
+2026-11-23T22:56:24.4667968Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T22:56:24.5043753Z Testing with sample rate [48000] and block size [64]
+2026-11-23T22:56:24.5165789Z Testing with sample rate [48000] and block size [128]
+2026-11-23T22:56:24.5280157Z Testing with sample rate [48000] and block size [256]
+2026-11-23T22:56:24.5434374Z Testing with sample rate [48000] and block size [512]
+2026-11-23T22:56:24.5682554Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T22:56:24.6078917Z Testing with sample rate [96000] and block size [64]
+2026-11-23T22:56:24.6207597Z Testing with sample rate [96000] and block size [128]
+2026-11-23T22:56:24.6327127Z Testing with sample rate [96000] and block size [256]
+2026-11-23T22:56:24.6500061Z Testing with sample rate [96000] and block size [512]
+2026-11-23T22:56:24.6753841Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T22:56:24.7129991Z Completed tests in pluginval / Audio processing
+2026-11-23T22:56:24.7131860Z -----------------------------------------------------------------
+2026-11-23T22:56:24.7132997Z Starting tests in: pluginval / Non-releasing audio processing...
+2026-11-23T22:56:24.7227976Z Testing with sample rate [44100] and block size [64]
+2026-11-23T22:56:24.7256545Z Testing with sample rate [44100] and block size [128]
+2026-11-23T22:56:24.7363381Z Testing with sample rate [44100] and block size [256]
+2026-11-23T22:56:24.7501674Z Testing with sample rate [44100] and block size [512]
+2026-11-23T22:56:24.7785700Z Testing with sample rate [44100] and block size [1024]
+2026-11-23T22:56:24.8158496Z Testing with sample rate [48000] and block size [64]
+2026-11-23T22:56:24.8277783Z Testing with sample rate [48000] and block size [128]
+2026-11-23T22:56:24.8394081Z Testing with sample rate [48000] and block size [256]
+2026-11-23T22:56:24.8547350Z Testing with sample rate [48000] and block size [512]
+2026-11-23T22:56:24.8798052Z Testing with sample rate [48000] and block size [1024]
+2026-11-23T22:56:24.9196295Z Testing with sample rate [96000] and block size [64]
+2026-11-23T22:56:24.9325388Z Testing with sample rate [96000] and block size [128]
+2026-11-23T22:56:24.9454449Z Testing with sample rate [96000] and block size [256]
+2026-11-23T22:56:24.9631215Z Testing with sample rate [96000] and block size [512]
+2026-11-23T22:56:24.9895179Z Testing with sample rate [96000] and block size [1024]
+2026-11-23T22:56:25.0282729Z Completed tests in pluginval / Non-releasing audio processing
+2026-11-23T22:56:25.0283424Z -----------------------------------------------------------------
+2026-11-23T22:56:25.0284063Z Starting tests in: pluginval / Plugin state...
+2026-11-23T22:56:25.0318278Z Completed tests in pluginval / Plugin state
+2026-11-23T22:56:25.0318669Z -----------------------------------------------------------------
+2026-11-23T22:56:25.0319070Z Starting tests in: pluginval / Plugin state restoration...
+2026-11-23T22:56:25.4223930Z Completed tests in pluginval / Plugin state restoration
+2026-11-23T22:56:25.4224646Z -----------------------------------------------------------------
+2026-11-23T22:56:25.4225009Z Starting tests in: pluginval / Automation...
+2026-11-23T22:56:25.4327150Z Testing with sample rate [44100] and block size [64] and sub-block size [32]
+2026-11-23T22:56:25.4403823Z Testing with sample rate [44100] and block size [128] and sub-block size [32]
+2026-11-23T22:56:25.4476770Z Testing with sample rate [44100] and block size [256] and sub-block size [32]
+2026-11-23T22:56:25.4556894Z Testing with sample rate [44100] and block size [512] and sub-block size [32]
+2026-11-23T22:56:25.4667378Z Testing with sample rate [44100] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:25.4893381Z Testing with sample rate [48000] and block size [64] and sub-block size [32]
+2026-11-23T22:56:25.4978499Z Testing with sample rate [48000] and block size [128] and sub-block size [32]
+2026-11-23T22:56:25.5061548Z Testing with sample rate [48000] and block size [256] and sub-block size [32]
+2026-11-23T22:56:25.5149695Z Testing with sample rate [48000] and block size [512] and sub-block size [32]
+2026-11-23T22:56:25.5251092Z Testing with sample rate [48000] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:25.5408903Z Testing with sample rate [96000] and block size [64] and sub-block size [32]
+2026-11-23T22:56:25.5513170Z Testing with sample rate [96000] and block size [128] and sub-block size [32]
+2026-11-23T22:56:25.5611837Z Testing with sample rate [96000] and block size [256] and sub-block size [32]
+2026-11-23T22:56:25.5711124Z Testing with sample rate [96000] and block size [512] and sub-block size [32]
+2026-11-23T22:56:25.5817456Z Testing with sample rate [96000] and block size [1024] and sub-block size [32]
+2026-11-23T22:56:25.6024067Z Completed tests in pluginval / Automation
+2026-11-23T22:56:25.6024519Z -----------------------------------------------------------------
+2026-11-23T22:56:25.6024883Z Starting tests in: pluginval / Editor Automation...
+2026-11-23T22:56:35.8429190Z Completed tests in pluginval / Editor Automation
+2026-11-23T22:56:35.8429838Z -----------------------------------------------------------------
+2026-11-23T22:56:35.8430221Z Starting tests in: pluginval / Automatable Parameters...
+2026-11-23T22:56:35.8489707Z Completed tests in pluginval / Automatable Parameters
+2026-11-23T22:56:35.8490139Z -----------------------------------------------------------------
+2026-11-23T22:56:35.8490885Z Starting tests in: pluginval / Parameters...
+2026-11-23T22:56:35.8574337Z Completed tests in pluginval / Parameters
+2026-11-23T22:56:35.8574845Z -----------------------------------------------------------------
+2026-11-23T22:56:35.8575445Z Starting tests in: pluginval / Background thread state...
+2026-11-23T22:56:37.9892978Z Completed tests in pluginval / Background thread state
+2026-11-23T22:56:37.9893628Z -----------------------------------------------------------------
+2026-11-23T22:56:37.9894085Z Starting tests in: pluginval / Parameter thread safety...
+2026-11-23T22:56:39.1790201Z Completed tests in pluginval / Parameter thread safety
+2026-11-23T22:56:39.1790829Z -----------------------------------------------------------------
+2026-11-23T22:56:39.1791419Z Starting tests in: pluginval / auval...
+2026-11-23T22:56:39.1791753Z Completed tests in pluginval / auval
+2026-11-23T22:56:39.1792102Z -----------------------------------------------------------------
+2026-11-23T22:56:39.1792451Z Starting tests in: pluginval / vst3 validator...
+2026-11-23T22:56:39.1792789Z INFO: Skipping vst3 validator as validator path hasn't been set
+2026-11-23T22:56:39.1793179Z Completed tests in pluginval / vst3 validator
+2026-11-23T22:56:39.1793753Z -----------------------------------------------------------------
+2026-11-23T22:56:39.1794090Z Starting tests in: pluginval / Basic bus...
+2026-11-23T22:56:39.1796626Z Completed tests in pluginval / Basic bus
+2026-11-23T22:56:39.1797094Z -----------------------------------------------------------------
+2026-11-23T22:56:39.1797593Z Starting tests in: pluginval / Listing available buses...
+2026-11-23T22:56:39.1812033Z Inputs:
+2026-11-23T22:56:39.1812381Z 	Named layouts: Mono
+2026-11-23T22:56:39.1812744Z 	Discrete layouts: Discrete #1
+2026-11-23T22:56:39.1824861Z Outputs:
+2026-11-23T22:56:39.1825607Z 	Named layouts: Mono, Stereo
+2026-11-23T22:56:39.1825922Z 	Discrete layouts: Discrete #1
+2026-11-23T22:56:39.1826232Z Main bus num input channels: 0
+2026-11-23T22:56:39.1826527Z Main bus num output channels: 2
+2026-11-23T22:56:39.1826831Z Completed tests in pluginval / Listing available buses
+2026-11-23T22:56:39.1827196Z -----------------------------------------------------------------
+2026-11-23T22:56:39.1827594Z Starting tests in: pluginval / Enabling all buses...
+2026-11-23T22:56:39.1827936Z Completed tests in pluginval / Enabling all buses
+2026-11-23T22:56:39.1828270Z -----------------------------------------------------------------
+2026-11-23T22:56:39.1828656Z Starting tests in: pluginval / Disabling non-main busses...
+2026-11-23T22:56:39.1829002Z Completed tests in pluginval / Disabling non-main busses
+2026-11-23T22:56:39.1829315Z -----------------------------------------------------------------
+2026-11-23T22:56:39.1829681Z Starting tests in: pluginval / Restoring default layout...
+2026-11-23T22:56:39.1830033Z Main bus num input channels: 0
+2026-11-23T22:56:39.1830293Z Main bus num output channels: 2
+2026-11-23T22:56:39.1907255Z Completed tests in pluginval / Restoring default layout
+2026-11-23T22:56:39.1907813Z -----------------------------------------------------------------
+2026-11-23T22:56:39.1908239Z Starting tests in: pluginval / Fuzz parameters...
+2026-11-23T22:56:39.3868148Z Completed tests in pluginval / Fuzz parameters
+2026-11-23T22:56:39.3868553Z SUCCESS
+2026-11-23T22:56:39.4785545Z ##[group]Run for log in pluginval-headless-core.log pluginval-gui-core.log pluginval-gui-seed-regression-core.log; do
+2026-11-23T22:56:39.4786250Z [36;1mfor log in pluginval-headless-core.log pluginval-gui-core.log pluginval-gui-seed-regression-core.log; do[0m
+2026-11-23T22:56:39.4786761Z [36;1m  if [ -f "$log" ]; then cat "$log"; fi[0m
+2026-11-23T22:56:39.4787066Z [36;1mdone[0m
+2026-11-23T22:56:39.4812969Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:56:39.4813321Z env:
+2026-11-23T22:56:39.4813581Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:56:39.4813829Z ##[endgroup]
+2026-11-23T22:56:39.4859633Z === validator attempt: local core diagnostics ===
+2026-11-23T22:56:39.4860549Z Local core capture enabled: False; child soft limit: 0
+2026-11-23T22:56:39.4861113Z Local capture unavailable; child core soft limit zero; no system setting changed.
+2026-11-23T22:56:39.4861637Z Kernel pipe collectors ignore RLIMIT_CORE; existing collector behavior is unchanged.
+2026-11-23T22:56:39.4862168Z Original validator PID: 2685; exit: 0
+2026-11-23T22:56:39.4862654Z Original validator termination: PID=2685; raw returncode=0; kind=exit; exit_code=0
+2026-11-23T22:56:39.4863055Z No local ELF core was available for this attempt.
+2026-11-23T22:56:39.4866149Z === validator attempt: local core diagnostics ===
+2026-11-23T22:56:39.4866579Z Local core capture enabled: False; child soft limit: 0
+2026-11-23T22:56:39.4867091Z Local capture unavailable; child core soft limit zero; no system setting changed.
+2026-11-23T22:56:39.4867686Z Kernel pipe collectors ignore RLIMIT_CORE; existing collector behavior is unchanged.
+2026-11-23T22:56:39.4868051Z Original validator PID: 2716; exit: 0
+2026-11-23T22:56:39.4868403Z Original validator termination: PID=2716; raw returncode=0; kind=exit; exit_code=0
+2026-11-23T22:56:39.4868809Z No local ELF core was available for this attempt.
+2026-11-23T22:56:39.4872505Z === validator attempt: local core diagnostics ===
+2026-11-23T22:56:39.4873191Z Local core capture enabled: False; child soft limit: 0
+2026-11-23T22:56:39.4873667Z Local capture unavailable; child core soft limit zero; no system setting changed.
+2026-11-23T22:56:39.4874334Z Kernel pipe collectors ignore RLIMIT_CORE; existing collector behavior is unchanged.
+2026-11-23T22:56:39.4874860Z Original validator PID: 2759; exit: 0
+2026-11-23T22:56:39.4875219Z Original validator termination: PID=2759; raw returncode=0; kind=exit; exit_code=0
+2026-11-23T22:56:39.4875586Z No local ELF core was available for this attempt.
+2026-11-23T22:56:39.4904080Z ##[group]Run set -euo pipefail
+2026-11-23T22:56:39.4904379Z [36;1mset -euo pipefail[0m
+2026-11-23T22:56:39.4904815Z [36;1mlog="$(python3 scripts/pluginval-diagnostic-log.py "$GUI_OUTCOME" "$REGRESSION_OUTCOME" "$HEADLESS_OUTCOME")"[0m
+2026-11-23T22:56:39.4905332Z [36;1mecho "log=$log" >> "$GITHUB_OUTPUT"[0m
+2026-11-23T22:56:39.4926224Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:56:39.4926494Z env:
+2026-11-23T22:56:39.4926769Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:56:39.4927051Z   GUI_OUTCOME: success
+2026-11-23T22:56:39.4927278Z   REGRESSION_OUTCOME: success
+2026-11-23T22:56:39.4927554Z   HEADLESS_OUTCOME: success
+2026-11-23T22:56:39.4927806Z ##[endgroup]
+2026-11-23T22:56:39.5142760Z ##[group]Run set -euo pipefail
+2026-11-23T22:56:39.5143109Z [36;1mset -euo pipefail[0m
+2026-11-23T22:56:39.5143353Z [36;1msudo apt-get update[0m
+2026-11-23T22:56:39.5143727Z [36;1msudo apt-get install -y --no-install-recommends gcc libunwind-dev[0m
+2026-11-23T22:56:39.5144088Z [36;1mmkdir -p pluginval-trace-tools[0m
+2026-11-23T22:56:39.5144475Z [36;1mcc -std=c11 -O2 -Wall -Wextra -Werror -fPIC -shared -Wl,-z,now \[0m
+2026-11-23T22:56:39.5144843Z [36;1m  scripts/pluginval-fault-trace.c -lunwind \[0m
+2026-11-23T22:56:39.5145157Z [36;1m  -o pluginval-trace-tools/fault-trace.so[0m
+2026-11-23T22:56:39.5145554Z [36;1mcc -std=c11 -O0 -g -Wall -Wextra -Werror -rdynamic -pthread \[0m
+2026-11-23T22:56:39.5145916Z [36;1m  scripts/pluginval-fault-fixture.c \[0m
+2026-11-23T22:56:39.5146247Z [36;1m  -o pluginval-trace-tools/fault-fixture[0m
+2026-11-23T22:56:39.5146576Z [36;1mpython3 scripts/test-pluginval-fault-trace.py \[0m
+2026-11-23T22:56:39.5147160Z [36;1m  pluginval-trace-tools/fault-trace.so pluginval-trace-tools/fault-fixture[0m
+2026-11-23T22:56:39.5167892Z shell: /usr/bin/bash -e {0}
+2026-11-23T22:56:39.5168159Z env:
+2026-11-23T22:56:39.5168372Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:56:39.5168642Z ##[endgroup]
+2026-11-23T22:56:39.5647280Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+2026-11-23T22:56:39.6032773Z Hit:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease
+2026-11-23T22:56:39.6046512Z Hit:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble InRelease
+2026-11-23T22:56:39.6253255Z Hit:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates InRelease
+2026-11-23T22:56:40.3993832Z Hit:4 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-backports InRelease
+2026-11-23T22:56:40.4126267Z Hit:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-security InRelease
+2026-11-23T22:56:41.6063160Z Reading package lists...
+2026-11-23T22:56:41.6342047Z Reading package lists...
+2026-11-23T22:56:41.8692722Z Building dependency tree...
+2026-11-23T22:56:41.8697235Z Reading state information...
+2026-11-23T22:56:42.0253845Z gcc is already the newest version (4:13.2.0-7ubuntu1).
+2026-11-23T22:56:42.0254432Z Suggested packages:
+2026-11-23T22:56:42.0254682Z   liblzma-doc
+2026-11-23T22:56:42.0381012Z The following NEW packages will be installed:
+2026-11-23T22:56:42.0385665Z   liblzma-dev libunwind-dev
+2026-11-23T22:56:42.0535649Z 0 upgraded, 2 newly installed, 0 to remove and 69 not upgraded.
+2026-11-23T22:56:42.0536127Z Need to get 2082 kB of archives.
+2026-11-23T22:56:42.0536505Z After this operation, 6987 kB of additional disk space will be used.
+2026-11-23T22:56:42.0536883Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [152 B]
+2026-11-23T22:56:42.1082389Z Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 liblzma-dev amd64 5.6.1+really5.4.5-1ubuntu0.4 [176 kB]
+2026-11-23T22:56:43.3691966Z Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libunwind-dev amd64 1.6.2-3build1.1 [1906 kB]
+2026-11-23T22:57:18.3527549Z Fetched 2082 kB in 36s (57.7 kB/s)
+2026-11-23T22:57:18.3656783Z Selecting previously unselected package liblzma-dev:amd64.
+2026-11-23T22:57:18.3680582Z (Reading database ... 
+2026-11-23T22:57:18.3681213Z (Reading database ... 5%
+2026-11-23T22:57:18.3681818Z (Reading database ... 10%
+2026-11-23T22:57:18.3682251Z (Reading database ... 15%
+2026-11-23T22:57:18.3682812Z (Reading database ... 20%
+2026-11-23T22:57:18.3683143Z (Reading database ... 25%
+2026-11-23T22:57:18.3683383Z (Reading database ... 30%
+2026-11-23T22:57:18.3683659Z (Reading database ... 35%
+2026-11-23T22:57:18.3683917Z (Reading database ... 40%
+2026-11-23T22:57:18.3684139Z (Reading database ... 45%
+2026-11-23T22:57:18.3684393Z (Reading database ... 50%
+2026-11-23T22:57:18.3685673Z (Reading database ... 55%
+2026-11-23T22:57:18.3703102Z (Reading database ... 60%
+2026-11-23T22:57:18.3733828Z (Reading database ... 65%
+2026-11-23T22:57:18.3744561Z (Reading database ... 70%
+2026-11-23T22:57:18.3759151Z (Reading database ... 75%
+2026-11-23T22:57:18.3774951Z (Reading database ... 80%
+2026-11-23T22:57:18.3886870Z (Reading database ... 85%
+2026-11-23T22:57:18.4055771Z (Reading database ... 90%
+2026-11-23T22:57:18.4284908Z (Reading database ... 95%
+2026-11-23T22:57:18.4285352Z (Reading database ... 100%
+2026-11-23T22:57:18.4285893Z (Reading database ... 217066 files and directories currently installed.)
+2026-11-23T22:57:18.4324476Z Preparing to unpack .../liblzma-dev_5.6.1+really5.4.5-1ubuntu0.4_amd64.deb ...
+2026-11-23T22:57:18.4330718Z Unpacking liblzma-dev:amd64 (5.6.1+really5.4.5-1ubuntu0.4) ...
+2026-11-23T22:57:18.4879633Z Selecting previously unselected package libunwind-dev:amd64.
+2026-11-23T22:57:18.4981386Z Preparing to unpack .../libunwind-dev_1.6.2-3build1.1_amd64.deb ...
+2026-11-23T22:57:18.4984857Z Unpacking libunwind-dev:amd64 (1.6.2-3build1.1) ...
+2026-11-23T22:57:18.5864637Z Setting up liblzma-dev:amd64 (5.6.1+really5.4.5-1ubuntu0.4) ...
+2026-11-23T22:57:18.5875957Z Setting up libunwind-dev:amd64 (1.6.2-3build1.1) ...
+2026-11-23T22:57:18.5890850Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-11-23T22:57:18.5902830Z Not building database; man-db/auto-update is not 'true'.
+2026-11-23T22:57:18.9032311Z 
+2026-11-23T22:57:18.9033424Z Running kernel seems to be up-to-date.
+2026-11-23T22:57:18.9033961Z 
+2026-11-23T22:57:18.9034065Z No services need to be restarted.
+2026-11-23T22:57:18.9034247Z 
+2026-11-23T22:57:18.9034378Z No containers need to be restarted.
+2026-11-23T22:57:18.9034515Z 
+2026-11-23T22:57:18.9034739Z No user sessions are running outdated binaries.
+2026-11-23T22:57:18.9034947Z 
+2026-11-23T22:57:18.9035109Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-23T22:57:22.5714559Z Diagnostic fixtures checked: exits, instruction/worker faults, trace bound, closed fd, replacement, timeout, seed parsing.
+2026-11-23T22:57:22.5847351Z ##[group]Run actions/upload-artifact@v5
+2026-11-23T22:57:22.5847766Z with:
+2026-11-23T22:57:22.5848090Z   name: cs80-pluginval-reports
+2026-11-23T22:57:22.5850808Z   path: pluginval-reports
+pluginval-headless.log
+pluginval-headless-attempt*.log
+pluginval-gui.log
+pluginval-gui-attempt*.log
+pluginval-gui-seed-regression.log
+pluginval-gui-seed-regression-attempt*.log
+pluginval-gui-seed-regression-core.log
+pluginval-gui-gdb.log
+pluginval-gui-trace.log
+pluginval-fault-trace.log
+pluginval-trace-reports
+pluginval-headless-core.log
+pluginval-gui-core.log
+pluginval-core-fixture.log
+pluginval-gdb-normal-exit.log
+pluginval-diagnostic-reports
+pluginval-version.txt
+
+2026-11-23T22:57:22.5852981Z   if-no-files-found: warn
+2026-11-23T22:57:22.5853410Z   compression-level: 6
+2026-11-23T22:57:22.5853710Z   overwrite: false
+2026-11-23T22:57:22.5854038Z   include-hidden-files: false
+2026-11-23T22:57:22.5854378Z env:
+2026-11-23T22:57:22.5854928Z   PLUGINVAL_VERSION: 1.0.4
+2026-11-23T22:57:22.5855370Z ##[endgroup]
+2026-11-23T22:57:22.7108417Z (node:3223) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-23T22:57:22.7271661Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-23T22:57:22.7277932Z With the provided path, there will be 12 files uploaded
+2026-11-23T22:57:22.7278700Z Artifact name is valid!
+2026-11-23T22:57:22.7279053Z Root directory input is valid!
+2026-11-23T22:57:22.9128452Z Beginning upload of artifact content to blob storage
+2026-11-23T22:57:23.0208415Z (node:3223) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-23T22:57:23.0781511Z Uploaded bytes 8901
+2026-11-23T22:57:23.0974155Z Finished uploading artifact content to blob storage!
+2026-11-23T22:57:23.0974666Z SHA256 digest of uploaded artifact zip is 25ae00479c490f90d006bfa2ecec4a8153dde0ffe92efe49d13716b6e87deb1f
+2026-11-23T22:57:23.0975164Z Finalizing artifact upload
+2026-11-23T22:57:23.8974419Z Artifact cs80-pluginval-reports.zip successfully finalized. Artifact ID 14871685246
+2026-11-23T22:57:23.8975230Z Artifact cs80-pluginval-reports has been successfully uploaded! Final size is 8901 bytes. Artifact ID is 14871685246
+2026-11-23T22:57:23.8981187Z Artifact download URL: https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/artifacts/14871685246
+2026-11-23T22:57:23.9129050Z Post job cleanup.
+2026-11-23T22:57:23.9796827Z [command]/usr/bin/git version
+2026-11-23T22:57:23.9831306Z git version 2.56.1
+2026-11-23T22:57:23.9854083Z Temporarily overriding HOME='/home/runner/work/_temp/d966be51-7f17-4228-b825-68a15e01482f' before making global git config changes
+2026-11-23T22:57:23.9855041Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T22:57:23.9855918Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T22:57:23.9884481Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T22:57:23.9908346Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T22:57:24.0090919Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T22:57:24.0114883Z http.https://github.com/.extraheader
+2026-11-23T22:57:24.0122756Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-23T22:57:24.0147918Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T22:57:24.0316551Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T22:57:24.0340623Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T22:57:24.0623890Z Cleaning up orphan processes
+2026-11-23T22:57:24.0863616Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/download-artifact@v5, actions/upload-artifact@v5. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

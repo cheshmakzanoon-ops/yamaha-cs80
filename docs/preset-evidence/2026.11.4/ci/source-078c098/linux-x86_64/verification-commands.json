@@ -1,0 +1,29 @@
+[
+  {
+    "name": "install",
+    "command": "python3 /workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py --archive /workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-install.zip --artifact-api /workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-install-api.json --source 078c0981ffa1b5472342e0fb5ab8702bc3bd2889 --run-id 45246863788 --platform linux --architecture x86_64 --repo /workspace/scratch/dde4ad85ed5b/yamaha-cs80 --out /workspace/scratch/dde4ad85ed5b/release-078c098/verified/linux-x86_64-install.json",
+    "chunk_id": "9866ae",
+    "wall_time_seconds": 1.292848448,
+    "exit_code": 0,
+    "original_token_count": 901,
+    "output": "{\n  \"schema\": 1,\n  \"status\": \"artifact_bytes_verified\",\n  \"verified_at_utc\": \"2026-11-23T22:56:59.278936+00:00\",\n  \"repository\": \"cheshmakzanoon-ops/yamaha-cs80\",\n  \"source\": \"078c0981ffa1b5472342e0fb5ab8702bc3bd2889\",\n  \"preset_library_revision\": \"2026.11.4\",\n  \"run_id\": 45246863788,\n  \"target\": \"linux-x86_64\",\n  \"artifact\": {\n    \"id\": 14870428441,\n    \"name\": \"cs80-linux-install-bundle\",\n    \"size_in_bytes\": 13322687,\n    \"digest\": \"sha256:611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e\",\n    \"created_at\": \"2026-11-23T22:52:38Z\",\n    \"expires_at\": \"2027-02-21T19:14:35Z\",\n    \"workflow_run\": {\n      \"id\": 45246863788,\n      \"repository_id\": 1436742091,\n      \"head_repository_id\": 1436742091,\n      \"head_branch\": \"main\",\n      \"head_sha\": \"078c0981ffa1b5472342e0fb5ab8702bc3bd2889\"\n    }\n  },\n  \"outer_zip\": {\n    \"file\": \"linux-x86_64-install.zip\",\n    \"bytes\": 13322687,\n    \"sha256\": \"611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e\",\n    \"members\": [\n      \"SHA256SUMS\",\n      \"cs80-reference-linux-x86_64-078c0981ffa1.manifest.json\",\n      \"cs80-reference-linux-x86_64-078c0981ffa1.tar.gz\"\n    ]\n  },\n  \"inner_archive\": {\n    \"file\": \"cs80-reference-linux-x86_64-078c0981ffa1.tar.gz\",\n    \"bytes\": 13317366,\n    \"sha256\": \"ed8b2cf399b94813454002c7753be2b23002ecc653b906f82a59cd92dad0993f\"\n  },\n  \"manifest_sha256\": \"fa6c31240e4cd558d48c2572737ba41d3914d0fedb4a94b7eef8535b5f74e839\",\n  \"checksum_manifest_sha256\": \"1600e4d3bcb5f5ac6a6dee7886fbbb68256482841c5fb6f7649e3a20dea8d298\",\n  \"inventory_entries\": 20,\n  \"formats\": [\n    \"VST3\",\n    \"Standalone\"\n  ],\n  \"binary_headers\": [\n    {\n      \"path\": \"VST3/CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so\",\n      \"bytes\": 17482080,\n      \"sha256\": \"fdd84087d5b580b036ff88608a0faccdbe3c3e76b9dcac9d05808e20839617d0\",\n      \"platform\": \"linux\",\n      \"architecture\": \"x86_64\",\n      \"role\": \"plugin\",\n      \"header_check\": \"PASS\",\n      \"header\": {\n        \"format\": \"ELF64 little-endian\",\n        \"machine\": 62,\n        \"image_type\": 3\n      }\n    },\n    {\n      \"path\": \"Standalone/CS-80 Reference\",\n      \"bytes\": 16819576,\n      \"sha256\": \"94b125e0ca60b4e75a4061d1667a0268b04803e0823b938dfdf0fa8e430564cf\",\n      \"platform\": \"linux\",\n      \"architecture\": \"x86_64\",\n      \"role\": \"standalone\",\n      \"header_check\": \"PASS\",\n      \"header\": {\n        \"format\": \"ELF64 little-endian\",\n        \"machine\": 62,\n        \"image_type\": 3\n      }\n    }\n  ],\n  \"inner_checker\": {\n    \"result\": \"integrity and declared source consistency verified\",\n    \"commit\": \"078c0981ffa1b5472342e0fb5ab8702bc3bd2889\",\n    \"platform\": \"linux\",\n    \"architecture\": \"x86_64\",\n    \"files\": 20,\n    \"qualification\": \"Not authenticity, proof of binary source, signing, CI pass, or DAW qualification.\"\n  },\n  \"checker_sha256\": \"6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a\",\n  \"source_checker_sha256\": {\n    \"scripts/verify-ci-bundle.py\": \"65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa\",\n    \"scripts/package-ci-artifacts.py\": \"f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf\"\n  },\n  \"source_scripts_compared_to_commit\": true,\n  \"scope\": \"Outer bytes, complete inner inventory/checksums, declared source/revision/run, JUCE provenance, and native headers. No product executed.\",\n  \"remaining_qualification\": \"Producer/upload/attempt binding, complete native tests, 13 validator invocations and payload identity with validator inputs must be established separately.\",\n  \"signing_status\": \"not inspected; no release signing/notarization performed by this helper\"\n}\n"
+  },
+  {
+    "name": "native",
+    "command": "python3 /workspace/scratch/dde4ad85ed5b/a45/parse_native_evidence.py --inputs /workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-native-inputs.json --out /workspace/scratch/dde4ad85ed5b/release-078c098/verified/linux-x86_64-native-observations.json",
+    "chunk_id": "cffc80",
+    "wall_time_seconds": 0.002202386,
+    "exit_code": 0,
+    "original_token_count": 85,
+    "output": "{\"status\": \"parsed_evidence_not_release_qualified\", \"native_totals\": {\"registered\": 587, \"passed\": 586, \"failed\": 0, \"formal_skipped\": 1, \"disabled\": 0, \"unknown\": 0}, \"nested_python_skips_total\": 3, \"validator_totals\": {\"required_lanes\": 0, \"validation_invocations\": 0, \"validation_retries\": 0}, \"all_requested_observations_green\": true}\n"
+  },
+  {
+    "name": "producer",
+    "command": "python3 /workspace/scratch/dde4ad85ed5b/a53/bind_producer.py",
+    "chunk_id": "05d7b5",
+    "wall_time_seconds": 0.000044646,
+    "exit_code": 0,
+    "original_token_count": 34,
+    "output": "{\"status\": \"original_linux_producer_and_download_bytes_bound\", \"artifact_ids\": [14870428441, 14871037472, 14869179841, 14870917591]}\n"
+  }
+]

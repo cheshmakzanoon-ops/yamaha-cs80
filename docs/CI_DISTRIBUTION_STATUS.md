@@ -5,7 +5,119 @@ existing CI workflow already builds. The packaging step adds no paid dependency,
 signing credential, automatic installation, OS-security override or new audio
 code. Existing validator input artifacts remain separate and unchanged.
 
-## Current verified revision — 2026.11.3 instrument voicing
+## Current verified revision — 2026.11.4 instrument voicing
+
+**All six jobs passed in [build 45246863788, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788).**
+The installation bundles contain exact source `078c0981ffa1b5472342e0fb5ab8702bc3bd2889`, tree
+`d84661c6c465c53ff41361e8aba0cba5e4a53397`, and factory-library revision
+**2026.11.4**. All 521 existing musical programs have revised sound controls;
+both initialization programs and all 523 names, categories, tags, order and
+program addresses are preserved. No programs were added. The
+[revision report](CIRCUIT_LIBRARY_2026_11_4.md) separates the continuation's
+tine/bowed corrections from historical 59d489d matched-audio measurements.
+
+| Platform | Included formats | Native CTests passed / registered | Verified installation download |
+| --- | --- | ---: | --- |
+| Windows x64 | VST3, Standalone | 227 / 229 | [Windows ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip) |
+| macOS Apple Silicon (arm64) | VST3, AU, Standalone | 249 / 251 | [Apple Silicon ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289.zip) |
+| macOS Intel (x86-64) | VST3, AU, Standalone | 249 / 251 | [Intel Mac ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730.zip) |
+| Linux x86-64 (Ubuntu 24.04 build) | VST3, Standalone | 586 / 587 | [Linux ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441.zip) |
+
+Across the four native suites, **1,311 of 1,318 registered CTest executions
+passed, zero failed and seven were formally skipped**. The **24 nested Python
+subtest skips** are counted separately. All **13 required pluginval 1.0.4
+validation lanes at strictness 10** completed with original process exit 0:
+three Linux VST3 lanes, two Windows VST3 lanes and four VST3/AU lanes on each
+Mac architecture. There were **13 validation invocations and 0 runtime validation retries**. Fixed-seed regressions are
+included. These are platform executions, not unique test definitions; console
+and report copies of a validator invocation count once.
+[Consolidated qualification and original evidence](preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json)
+
+All four actual installation ZIPs matched authentic GitHub API sizes and
+SHA-256 digests. The source/run/revision, complete inventories, checksums, JUCE
+provenance and native executable headers passed inspection. Original successful
+producer/upload steps bind each artifact ID, size and digest to source 078c098,
+run 45246863788 and attempt 1. The complete distributed Windows and Linux VST3
+payloads equal the separate artifacts consumed by their original validators.
+Mac AU pre/post hashes and full-bundle checks match the distributed binaries;
+Mac VST3 tested paths are bound to the unchanged packaged build outputs.
+Original successful API steps and unsuppressed exit propagation supplement
+the raw parser, whose deliberately limited `release_qualified: false` output
+is retained unchanged. Actual seeds, warnings and skip notices remain in the
+validator evidence. Acquisition used the GitHub connector and does not establish
+an independently verified unauthenticated public download route.
+
+The verified [138-WAV audition ZIP](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591.zip) contains **870 actual seconds
+across 74 existing programs**, in unnormalized **48 kHz stereo float32**. All
+19 active body models are represented. The complete 173-entry archive, all
+172 member checksums, settings, samples and metrics passed inspection. Its
+41,760,000 stereo frames contain no nonfinite or over-full-scale samples. The
+complete **523-by-200** delivered inventory matches all ordered identities,
+parameter IDs and 104,600 binary32 values in the separately retained inventory;
+the JSON bytes also match. The zero-pressure Pressure Lead example is
+intentionally silent. No human listening approval or exact acoustic equivalence
+is inferred from these checks.
+[Actual audition acceptance](preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json) ·
+[Delivered inventory identity](preset-evidence/2026.11.4/ci/source-078c098/audition/delivered-inventory-identity.json)
+
+These are **CI installation bundles without publisher release signing or Apple
+notarization**. Mac tools may attach ad-hoc signatures. Choose the architecture
+used by the host process and preserve bundle contents. Windows pluginval is
+headless. Recorded tests do not certify every DAW or interactive installation
+workflow. The earliest expiry over all four advertised installers and the
+audition archive is **21 February 2027 at 15:14:35 AST (19:14:35 UTC)**. These are retained Actions artifacts, not
+permanent release assets. The [original run's Artifacts list](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788#artifacts)
+is the fallback while retained.
+
+The bundled guides describe the source snapshot written before dependent
+validators finished. Later repository documentation does not alter archived
+binaries, manifests or guides. Use **Library → FACTORY LIBRARY → LOAD / RELOAD**,
+then play fresh notes. Older projects restore saved settings; clicking an
+already-loaded row with Audition enabled may retain those settings.
+
+### Development corrections and supporting checks
+
+The exact-source supporting DSP workflow
+[45246863831, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863831)
+and all five jobs passed. Six actual supporting archives passed API/hash,
+source/run/attempt, original-upload and complete-entry inspection. The ASan/UBSan
+core-build suite recorded **199 passed, zero failed and one formal skip out of
+200 registered CTest entries**, with no reported sanitizer diagnostics. Nested
+Python skips are unknown in that sanitizer log. These supporting executions
+remain separate from native and pluginval counts. Source V1/audio V2
+compatibility uses the original successful byte-comparison step; synthetic
+reference fixtures are not hardware measurements.
+[Supporting DSP evidence](preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/supporting-ci.json)
+
+The exact-source
+[screenshot workflow 45246863473](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863473)
+passed UI smoke and the actual 73-file screenshot artifact was verified. Both
+golden-size images are byte-identical to the unchanged goldens, with **0.0000%
+changed pixels**. The earlier bcc86aa screenshot run had three genuine fixture
+assertion failures. Source 078c098 corrected float canonicalization expectations
+and pinned layout-fixture controls to historical values; audio code, factory
+values, goldens, masks, comparator and tolerances were unchanged.
+[Screenshot acceptance and historical failure](preset-evidence/2026.11.4/ci/source-078c098/screenshots/acceptance-summary.json)
+
+The six jobs and **24 CTest executions** in
+[filter run 45244531626](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626)
+passed at source bcc86aa. All **91 relevant input files** are byte-identical to
+078c098; the executed source is not relabeled. Clang ON/DEFAULT lanes intentionally
+use the scalar fallback, so these are not described as six AVX2 runs.
+[Filter source equivalence and results](preset-evidence/2026.11.4/ci/source-078c098/filter/summary.json)
+
+Earlier .4 native run 45237136125 at 59d489d remains failed, with its native
+jobs canceled and validators skipped. The superseded c4fe309, e32728b and
+bcc86aa native runs remain canceled. Their outcomes and earlier optional
+comparison failures are preserved in the continuation evidence; none becomes a
+successful release gate by a later rerun. The continuation uses **60 actual
+workers in batches**, with distinct assignments, retained outcomes and clearly
+labeled conversational evidence. The earlier development work-log is separate
+and contributes no workers to that count.
+[Completed team review](TEAM_REVIEW_2026_11_4.md) ·
+[Actual continuation ledger](preset-evidence/2026.11.4/continuation/worker-ledger.json)
+
+## Historical verified revision — 2026.11.3 instrument voicing
 
 **All six jobs passed in
 [build 45176799427, attempt 1](https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45176799427).**

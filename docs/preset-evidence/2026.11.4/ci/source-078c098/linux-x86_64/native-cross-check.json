@@ -1,0 +1,107 @@
+{
+  "independent_junit_counts": {
+    "registered": 587,
+    "passed": 586,
+    "failed": 0,
+    "formal_skipped": 1,
+    "disabled": 0
+  },
+  "junit_root_attributes": {
+    "name": "(empty)",
+    "tests": "587",
+    "failures": "0",
+    "disabled": "0",
+    "skipped": "1",
+    "hostname": "",
+    "time": "11148",
+    "timestamp": "2026-11-23T19:42:33"
+  },
+  "selected_native_cases": [
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "result": "formal_skipped",
+      "seconds": 0.000961429,
+      "junit_stdout_truncated": false,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "cs80_instrument_body_tests",
+      "result": "passed",
+      "seconds": 3.73104,
+      "junit_stdout_truncated": true,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "0d7a0f672c33b8ad3fff0d22c74af0f5df03439339c50b49be9f4cf1e5ac6d99"
+    },
+    {
+      "name": "cs80_tine_strike_dynamics_tests",
+      "result": "passed",
+      "seconds": 0.308473,
+      "junit_stdout_truncated": true,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "7d7653b1f46e9966283a41c1205256335ea916f885f8812d2bc559e2e032769f"
+    },
+    {
+      "name": "cs80_bowed_body_formant_tests",
+      "result": "passed",
+      "seconds": 2.60988,
+      "junit_stdout_truncated": true,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "8de64ab6ba39792d0f2ff6ce22678c2ae95b6e5b8ec676d5a7cd56ad50825e01"
+    },
+    {
+      "name": "cs80_instrument_body_engine_tests",
+      "result": "passed",
+      "seconds": 9.28865,
+      "junit_stdout_truncated": false,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "41f90fde9619d9c3bf70a34d88d85aed8729f33bfb639011442d3dab8536d22e"
+    },
+    {
+      "name": "cs80_library_audit_tests",
+      "result": "passed",
+      "seconds": 313.803,
+      "junit_stdout_truncated": false,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "2ed3ce8bbad1916ead667a135c2ceff102208f14ff7206b81a966e88d09aea2f"
+    },
+    {
+      "name": "cs80_panel_golden_tests",
+      "result": "passed",
+      "seconds": 1.81551,
+      "junit_stdout_truncated": false,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "87ef71c2656c93856d3a254df07035c4749126fa7f452e92ddae0fd1e38354f6"
+    },
+    {
+      "name": "cs80_ui_smoke",
+      "result": "passed",
+      "seconds": 91.1556,
+      "junit_stdout_truncated": true,
+      "lasttest_status": "Passed",
+      "lasttest_output_sha256": "1fb17f56ecbf22b583c7beca46ef616175e82f41718029ab84f92af3266d5c33"
+    }
+  ],
+  "checkout_proof": [
+    {
+      "line": 106,
+      "text": "2026-11-23T19:28:51.7593309Z [command]/usr/bin/git log -1 --format=%H"
+    },
+    {
+      "line": 107,
+      "text": "2026-11-23T19:28:51.7629239Z 078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+    }
+  ],
+  "original_ctest_summary": [
+    {
+      "line": 3436,
+      "text": "2026-11-23T22:48:21.4671839Z 100% tests passed, 0 tests failed out of 587"
+    },
+    {
+      "line": 3441,
+      "text": "2026-11-23T22:48:21.4673087Z Total Test time (real) = 11148.14 sec"
+    }
+  ],
+  "native_counts_reconcile": true,
+  "no_product_execution": true
+}

@@ -1,0 +1,368 @@
+{
+  "schema": 2,
+  "worker": "A59",
+  "status": "accepted_download_mapping_and_concrete_publication_candidate",
+  "accepted": true,
+  "complete_assigned_scope": true,
+  "new_blocking_findings": [],
+  "reviewed_at_utc": "2026-11-23T23:09:45.691200+00:00",
+  "scope": "All four actual installation/download mappings, actual audition mapping, expiry/reload/publication text, exact current document candidate and aggregate reference identities, historical preservation, and concrete actual-60 ledger/team candidate.",
+  "scope_limits": "This completes A59 review delivery. Root owns A60 final integration, copying final review records, factual status closure, final indexes, main publication and remote verification. No claim that those subsequent actions have already occurred.",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_tree": "d84661c6c465c53ff41361e8aba0cba5e4a53397",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "native_run_and_all_six_jobs_success": true,
+  "installation_mappings": [
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14856804857,
+      "artifact_name": "cs80-windows-install-bundle",
+      "outer_zip_bytes": 6361027,
+      "outer_zip_sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863788,
+      "revision": "2026.11.4",
+      "runner_os": "Windows-2022Server-10.0.20348-SP0",
+      "checks": {
+        "api_catalog_identity": true,
+        "api_report_id": true,
+        "actual_api_report_size": true,
+        "actual_api_report_digest": true,
+        "api_manifest_report_source": true,
+        "api_manifest_report_run": true,
+        "manifest_report_revision": true,
+        "manifest_report_target": true,
+        "formats_match": true,
+        "native_headers_match": true,
+        "api_unexpired": true
+      },
+      "api_path": "release-078c098/input/windows-x86_64-install-api.json",
+      "installation_report_path": "release-078c098/verified/windows-x86_64-install.json"
+    },
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14855214289,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "outer_zip_bytes": 14949170,
+      "outer_zip_sha256": "a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289.zip",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863788,
+      "revision": "2026.11.4",
+      "runner_os": "macOS-15.8.2-arm64-arm-64bit-Mach-O",
+      "checks": {
+        "api_catalog_identity": true,
+        "api_report_id": true,
+        "actual_api_report_size": true,
+        "actual_api_report_digest": true,
+        "api_manifest_report_source": true,
+        "api_manifest_report_run": true,
+        "manifest_report_revision": true,
+        "manifest_report_target": true,
+        "formats_match": true,
+        "native_headers_match": true,
+        "api_unexpired": true
+      },
+      "api_path": "release-078c098/input/macos-arm64-install-api.json",
+      "installation_report_path": "release-078c098/verified/macos-arm64-install.json"
+    },
+    {
+      "target": "macos-x86_64",
+      "artifact_id": 14858878730,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "outer_zip_bytes": 16228346,
+      "outer_zip_sha256": "84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730.zip",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863788,
+      "revision": "2026.11.4",
+      "runner_os": "macOS-15.7.9-x86_64-i386-64bit-Mach-O",
+      "checks": {
+        "api_catalog_identity": true,
+        "api_report_id": true,
+        "actual_api_report_size": true,
+        "actual_api_report_digest": true,
+        "api_manifest_report_source": true,
+        "api_manifest_report_run": true,
+        "manifest_report_revision": true,
+        "manifest_report_target": true,
+        "formats_match": true,
+        "native_headers_match": true,
+        "api_unexpired": true
+      },
+      "api_path": "release-078c098/input/macos-x86_64-install-api.json",
+      "installation_report_path": "release-078c098/verified/macos-x86_64-install.json"
+    },
+    {
+      "target": "linux-x86_64",
+      "artifact_id": 14870428441,
+      "artifact_name": "cs80-linux-install-bundle",
+      "outer_zip_bytes": 13322687,
+      "outer_zip_sha256": "611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441.zip",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "run_id": 45246863788,
+      "revision": "2026.11.4",
+      "runner_os": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+      "checks": {
+        "api_catalog_identity": true,
+        "api_report_id": true,
+        "actual_api_report_size": true,
+        "actual_api_report_digest": true,
+        "api_manifest_report_source": true,
+        "api_manifest_report_run": true,
+        "manifest_report_revision": true,
+        "manifest_report_target": true,
+        "formats_match": true,
+        "native_headers_match": true,
+        "api_unexpired": true
+      },
+      "api_path": "release-078c098/input/linux-x86_64-install-api.json",
+      "installation_report_path": "release-078c098/verified/linux-x86_64-install.json"
+    }
+  ],
+  "audition_mapping": {
+    "artifact_id": 14870917591,
+    "artifact_name": "cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "zip_bytes": 300067470,
+    "zip_sha256": "ae8cd5c31e03f0db317852f49a9169ad7ff455e2f385e8a510e8da4569f500ad",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591.zip",
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "run_id": 45246863788,
+    "run_attempt": 1,
+    "observed": {
+      "zip_entries": 173,
+      "regular_files": 173,
+      "directory_entries": 0,
+      "checksummed_files": 172,
+      "metrics_csv_files": 30,
+      "wav_files": 138,
+      "auditioned_programs": 74,
+      "audio_seconds": 870,
+      "stereo_frames": 41760000,
+      "scalar_audio_samples": 83520000,
+      "audio_payload_bytes": 334080000,
+      "expanded_archive_bytes": 334882144,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "sample_format": "IEEE-754 binary32 float WAV",
+      "inventory_programs": 523,
+      "parameters_per_program": 200,
+      "compared_parameter_values": 104600,
+      "active_body_models": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "nonfinite_samples": 0,
+      "samples_over_full_scale": 0,
+      "max_peak_dbfs": -13.673645330265373,
+      "max_peak_path": "pressure-full/295-Pressure-Pad.wav",
+      "max_peak_amplitude": 0.2071656435728073,
+      "exactly_silent_wavs": [
+        "pressure-zero/444-Pressure-Lead.wav"
+      ]
+    },
+    "checks": {
+      "api_catalog_identity": true,
+      "actual_api_acceptance_size": true,
+      "actual_api_acceptance_digest": true,
+      "api_acceptance_id": true,
+      "source_match": true,
+      "tree_match": true,
+      "run_attempt_match": true,
+      "accepted_actual_scope": true,
+      "member_counts_match": true,
+      "inventory_hash_matches_acceptance": true,
+      "all_values_accepted_identical": true,
+      "copied_acceptance_summary_identical": true,
+      "api_unexpired": true
+    },
+    "api_path": "release-078c098/input/audition-artifact-api.json",
+    "acceptance_path": "yamaha-cs80/docs/preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json"
+  },
+  "native_totals": {
+    "registered": 1318,
+    "passed": 1311,
+    "failed": 0,
+    "formal_skipped": 7,
+    "disabled": 0,
+    "unknown": 0,
+    "nested_python_skips": 24
+  },
+  "validator_totals": {
+    "lanes": 13,
+    "invocations": 13,
+    "retries": 0
+  },
+  "earliest_advertised_archive_expiry": {
+    "utc": "2027-02-21T19:14:35Z",
+    "halifax": "2027-02-21T15:14:35-04:00",
+    "display": "21 February 2027 at 15:14:35 AST (19:14:35 UTC)",
+    "scope": "All four advertised installation APIs and actual audition API; all five timestamps equal."
+  },
+  "public_route_independently_verified": false,
+  "download_acquisition": "GitHub connector; actual local ZIP bytes independently rehashed against saved authentic single-artifact APIs and final run catalog. No unauthenticated public-route check.",
+  "candidate_checks": {
+    "named_mapping_and_content_checks": 103,
+    "all_passed": true,
+    "aggregate_file_reference_size_hash_checks": 23,
+    "defects": [],
+    "installation_and_audition_ids_exact": true,
+    "no_placeholders_in_current_sections": true,
+    "native_counts_and_skip_categories_match": true,
+    "validator_lane_original_exits_and_invocation_counts_match": true,
+    "explicit_reload_and_fresh_notes_present": true,
+    "host_process_mac_architecture_present": true,
+    "signing_notarization_retention_limits_present": true,
+    "connector_scope_and_run_fallback_present": true,
+    "historical_59d_matched_audio_scope_preserved": true,
+    "current_and_historical_audio_claims_distinct": true
+  },
+  "reviewed_publication_file_snapshots": [
+    {
+      "path": "README.md",
+      "bytes": 17322,
+      "sha256": "f802c6afbc6b63c998f1ea74394bf65f6c1d422a03f4b0cef8fda9725f48726a"
+    },
+    {
+      "path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 33763,
+      "sha256": "4e39fd4b0d847f652dc2f3a4855e035ee6c7983b338456096cd619e06a689f78"
+    },
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "bytes": 23894,
+      "sha256": "649b04032e40625fa53fc581da3a1d8817a09b80f63983f3fb4adc0494651eff"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+      "bytes": 62488,
+      "sha256": "541f23725249ab59cfa596e4238476e546dd3a8dc4d0ea076bb21e3ef02b945d"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/qualification-status.json",
+      "bytes": 1314,
+      "sha256": "1e62696f72f9731152fedcfa87ebb9d963d225dcaf5fe15becf0d10319c7f491"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/README.md",
+      "bytes": 1331,
+      "sha256": "db87562f6ffd7726f646c6a378dc83115a7e17f5654fc5a4f2c525a8cdbc27e5"
+    }
+  ],
+  "history_preservation": {
+    "old_heading_changed_only_to_historical": true,
+    "all_historical_suffix_bytes": 25173,
+    "all_historical_suffix_sha256": "43a4c2827550c104a5570df9ac7381713854d8b906ed79928ccb3979ea1e720f",
+    "matches_frozen_preliminary_snapshot": true,
+    "scope": "Every byte after the .3 heading newline through EOF, including .3 development corrections and all older history."
+  },
+  "actual_worker_ledger_candidate": {
+    "actual_rows": 60,
+    "unique_numbers_1_through_60": true,
+    "unique_tasks": 60,
+    "delivered_scopes_at_A57_snapshot": 58,
+    "subsequent_actual_final_deliveries": [
+      59,
+      60
+    ],
+    "all_completed_prematurely_claimed": false,
+    "retained_candidates_exactly_match_A57_outputs": true,
+    "no_new_A57_blocking_findings": true,
+    "team_links_checked": 57,
+    "expected_missing_deliveries_at_snapshot": [
+      "final-review/a59-review.md",
+      "final-review/a60-review.md"
+    ],
+    "snapshots": [
+      {
+        "path": "docs/TEAM_REVIEW_2026_11_4.md",
+        "bytes": 26119,
+        "sha256": "942f1a985ff0a3924ef5eb08a15c77dd22adb9649cf4335d62efd2060c4df862"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/continuation/worker-ledger.json",
+        "bytes": 104996,
+        "sha256": "4d19dbfcd27df79b863e9f4e48b7a66925fccd708eaf71a83de35cab2c593944"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-review.md",
+        "bytes": 8580,
+        "sha256": "eef40f66f30f3602c954bc04c4fa4ee07c9b21014f3824256cda33056610fa58"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/final-review/a57-review.json",
+        "bytes": 33847,
+        "sha256": "5dddae1baac4303571ab8b501cbc10f013d56efb972efe608a88535f4eb24756"
+      }
+    ],
+    "root_closure": "Record this actual A59 delivery and the separately delivered A60 outcome, retain their final reports, and update final statuses/counts. A59 does not require its own closure before delivering this report."
+  },
+  "parent_subsequent_actions": [
+    "Copy the actual final A59/A60 report bytes to their already-declared final-review paths",
+    "Use actual delivered outcomes to update worker 59/60 statuses, team totals and qualification-status; retain A57 audit snapshot separately",
+    "Complete A60 independent final integration without changing verified binary-source/runtime artifacts",
+    "Generate final evidence indexes without self hashes, publish documentation/evidence to main, and verify the remote source and links"
+  ],
+  "supporting_evidence_scope": "Exact-source DSP five jobs/six artifacts accepted; sanitizer199/200 with one formal skip and no diagnostics, nested Python skips unknown. Screenshots retain078source and unchanged goldens; filters retain actualbcc86aasource with91identical inputs. These are separate from native counts.",
+  "evidence_files_to_retain": [
+    "a59-review.md",
+    "a59-review.json",
+    "a59-artifact-mapping.json",
+    "a59-candidate-checks.json",
+    "a59-ledger-reference-checks.json",
+    "a59-history-preservation.json"
+  ],
+  "preliminary_checkpoint_preserved": {
+    "md": "a59/checkpoint-three-platform/a59-review.md",
+    "json": "a59/checkpoint-three-platform/a59-review.json",
+    "note": "Historical preliminary three-platform checkpoint preserved before final replacement; not a current pending outcome."
+  },
+  "no_repository_writes": true,
+  "no_git_commands_or_mutations": true,
+  "no_external_writes": true,
+  "no_product_native_validator_or_audio_execution": true,
+  "publication_performed": false
+}

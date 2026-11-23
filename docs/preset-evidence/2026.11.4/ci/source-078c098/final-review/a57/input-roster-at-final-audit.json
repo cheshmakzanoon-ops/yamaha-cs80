@@ -1,0 +1,374 @@
+{
+  "scope": "Actual continuation workers spawned for this request. Initial development workers are recorded separately; pending prior plans are not counted here.",
+  "concurrency": "At most three worker agents alongside root; workers launched in batches.",
+  "requested_workers": 60,
+  "recorded_workers_so_far": 60,
+  "workers": [
+    {
+      "number": 1,
+      "task": "/root/a01_continuity_release",
+      "assignment": "Recovered prior release state, pending .4 source and publication gates",
+      "status": "completed"
+    },
+    {
+      "number": 2,
+      "task": "/root/a02_piano_audit",
+      "assignment": "Audited piano/electric-piano model behavior and identified tine normalization defect",
+      "status": "completed"
+    },
+    {
+      "number": 3,
+      "task": "/root/a03_library_audit",
+      "assignment": "Audited full library coverage, sustained decay scope and pitch-dependent formants",
+      "status": "completed"
+    },
+    {
+      "number": 4,
+      "task": "/root/a04_release_contract",
+      "assignment": "Corrected saved-session compatibility wording in release contract",
+      "status": "completed"
+    },
+    {
+      "number": 5,
+      "task": "/root/a05_strike_dynamics_probe",
+      "assignment": "Measured baseline full-preset velocity response",
+      "status": "completed"
+    },
+    {
+      "number": 6,
+      "task": "/root/a06_tine_dynamic_fix",
+      "assignment": "Implemented fixed-bound tine normalization and direct regression/parity proof",
+      "status": "completed"
+    },
+    {
+      "number": 7,
+      "task": "/root/a07_keys_recipe_review",
+      "assignment": "Reviewed all24 curated keyboard recipes",
+      "status": "completed"
+    },
+    {
+      "number": 8,
+      "task": "/root/a08_texture_design",
+      "assignment": "Reviewed nature-effect excitation; deferred unsupported noise cutoff rewrite",
+      "status": "completed"
+    },
+    {
+      "number": 9,
+      "task": "/root/a09_full_strike_verification",
+      "assignment": "Measured corrected full-preset velocity response and parity controls",
+      "status": "completed"
+    },
+    {
+      "number": 10,
+      "task": "/root/a10_formant_prototype",
+      "assignment": "Implemented and verified stationary bowed-body resonance response",
+      "status": "completed"
+    },
+    {
+      "number": 11,
+      "task": "/root/a11_winds_recipe_review",
+      "assignment": "Reviewed all14 curated wind recipes",
+      "status": "completed"
+    },
+    {
+      "number": 12,
+      "task": "/root/a12_strings_recipe_review",
+      "assignment": "Reviewed all28 curated string recipes and texture balance",
+      "status": "completed"
+    },
+    {
+      "number": 13,
+      "task": "/root/a13_brass_recipe_review",
+      "assignment": "Reviewed all32 curated brass recipes",
+      "status": "completed"
+    },
+    {
+      "number": 14,
+      "task": "/root/a14_organ_recipe_review",
+      "assignment": "Reviewed all14 organ recipes and measured velocity independence",
+      "status": "completed"
+    },
+    {
+      "number": 15,
+      "task": "/root/a15_plucked_recipe_review",
+      "assignment": "Reviewed all16 plucked recipes and model limits",
+      "status": "completed"
+    },
+    {
+      "number": 16,
+      "task": "/root/a16_bells_recipe_review",
+      "assignment": "Reviewed all22 bell/mallet recipes and model limits",
+      "status": "completed"
+    },
+    {
+      "number": 17,
+      "task": "/root/a17_pad_recipe_review",
+      "assignment": "Reviewed all30 pad recipes and pressure response",
+      "status": "completed"
+    },
+    {
+      "number": 18,
+      "task": "/root/a18_polysynth_review",
+      "assignment": "Reviewed all24 polysynth recipes and articulation",
+      "status": "completed"
+    },
+    {
+      "number": 19,
+      "task": "/root/a19_bass_recipe_review",
+      "assignment": "Reviewed all24 bass recipes and low-register behavior",
+      "status": "completed"
+    },
+    {
+      "number": 20,
+      "task": "/root/a20_full_engine_cost",
+      "assignment": "Measured full-Engine runtime cost of bowed correction",
+      "status": "completed"
+    },
+    {
+      "number": 21,
+      "task": "/root/a21_leads_recipe_review",
+      "assignment": "Reviewed all30 leads and intentional pressure behavior",
+      "status": "completed"
+    },
+    {
+      "number": 22,
+      "task": "/root/a22_fx_recipe_review",
+      "assignment": "Reviewed all24 FX recipes and identified Wind description mismatch",
+      "status": "completed"
+    },
+    {
+      "number": 23,
+      "task": "/root/a23_modern_recipe_review",
+      "assignment": "Reviewed all18 modern recipes and modulation/effect routes",
+      "status": "completed"
+    },
+    {
+      "number": 24,
+      "task": "/root/a24_original_bank_review",
+      "assignment": "Reviewed all222 original program mappings and finish styles",
+      "status": "completed"
+    },
+    {
+      "number": 25,
+      "task": "/root/a25_wind_description",
+      "assignment": "Corrected Wind description and inherited original description",
+      "status": "completed"
+    },
+    {
+      "number": 26,
+      "task": "/root/a26_host_state_review",
+      "assignment": "Checked state/lifecycle behavior with scoped sanitizer probe",
+      "status": "completed"
+    },
+    {
+      "number": 27,
+      "task": "/root/a27_factory_recall_review",
+      "assignment": "Identified explicit RELOAD requirement for older project recipes",
+      "status": "completed"
+    },
+    {
+      "number": 28,
+      "task": "/root/a28_audio_timebase_review",
+      "assignment": "Checked timebase/lifecycle parity; overlap with a26 disclosed",
+      "status": "completed"
+    },
+    {
+      "number": 29,
+      "task": "/root/a29_portability_source_review",
+      "assignment": "Reviewed native portability and fixed-storage assumptions",
+      "status": "completed"
+    },
+    {
+      "number": 30,
+      "task": "/root/a30_upgrade_instructions",
+      "assignment": "Updated bundled .4 guide and explicit reload instructions",
+      "status": "completed"
+    },
+    {
+      "number": 31,
+      "task": "/root/a31_bank_results_review",
+      "assignment": "Independently reviewed final local bank results and unchanged thresholds",
+      "status": "completed"
+    },
+    {
+      "number": 32,
+      "task": "/root/a32_inventory_coverage",
+      "assignment": "Audited full inventory identities, parameter coverage and configured models",
+      "status": "completed"
+    },
+    {
+      "number": 33,
+      "task": "/root/a33_audition_contract_review",
+      "assignment": "Reviewed exact138WAV/74program capture contract and scope",
+      "status": "completed"
+    },
+    {
+      "number": 34,
+      "task": "/root/a34_artifact_verifier_review",
+      "assignment": "Reviewed release verifiers and exercised existing self-tests",
+      "status": "completed"
+    },
+    {
+      "number": 35,
+      "task": "/root/a35_native_matrix_review",
+      "assignment": "Enumerated native package and13validator requirements",
+      "status": "completed"
+    },
+    {
+      "number": 36,
+      "task": "/root/a36_audio_evidence_interpretation",
+      "assignment": "Bound all521matched comparison to historical59d source",
+      "status": "completed"
+    },
+    {
+      "number": 37,
+      "task": "/root/a37_historical_evidence_labels",
+      "assignment": "Specified clear historical versus current evidence labels",
+      "status": "completed"
+    },
+    {
+      "number": 38,
+      "task": "/root/a38_acoustic_limits_review",
+      "assignment": "Reviewed family-specific remaining acoustic model limits",
+      "status": "completed"
+    },
+    {
+      "number": 39,
+      "task": "/root/a39_evidence_manifest_review",
+      "assignment": "Found incomplete file manifest and missing final runtime raw log",
+      "status": "completed"
+    },
+    {
+      "number": 40,
+      "task": "/root/a40_host_recall_failure",
+      "assignment": "Corrected exact canonical host float expectation after observed UI failure",
+      "status": "completed"
+    },
+    {
+      "number": 41,
+      "task": "/root/a41_golden_fixture_correction",
+      "assignment": "Pinned prior visible controls for unchanged panel layout goldens",
+      "status": "completed"
+    },
+    {
+      "number": 42,
+      "task": "/root/a42_ui_fixture_peer_review",
+      "assignment": "Independently reviewed both UI fixture corrections and screenshots",
+      "status": "completed"
+    },
+    {
+      "number": 43,
+      "task": "/root/a43_final_recipe_preservation",
+      "assignment": "Independently verified final-source recipe and automation preservation",
+      "status": "completed"
+    },
+    {
+      "number": 44,
+      "task": "/root/a44_release_instructions_review",
+      "assignment": "Reviewed four-platform packaging and installation instructions",
+      "status": "completed"
+    },
+    {
+      "number": 45,
+      "task": "/root/a45_ci_result_parser",
+      "assignment": "Prepared parser separating CTest outcomes, nested skips and validator evidence",
+      "status": "completed"
+    },
+    {
+      "number": 46,
+      "task": "/root/a46_filter_ci_binding",
+      "assignment": "Qualifies six supporting filter jobs and exact unchanged inputs",
+      "status": "completed"
+    },
+    {
+      "number": 47,
+      "task": "/root/a47_numeric_claims_crosscheck",
+      "assignment": "Independently crosschecks continuation affected-program and numeric claims",
+      "status": "completed"
+    },
+    {
+      "number": 48,
+      "task": "/root/a48_supporting_dsp_ci",
+      "assignment": "Qualifies original supporting DSP outcomes and actual evidence archives",
+      "status": "completed"
+    },
+    {
+      "number": 49,
+      "task": "/root/a49_release_draft_claims",
+      "assignment": "Reviews final release wording and numeric/source scope",
+      "status": "completed"
+    },
+    {
+      "number": 50,
+      "task": "/root/a50_final_screenshot_qualification",
+      "assignment": "Qualifies final UI smoke, unchanged goldens and actual screenshot archive",
+      "status": "completed"
+    },
+    {
+      "number": 51,
+      "task": "/root/a51_macos_arm_package",
+      "assignment": "Qualifies actual Apple Silicon installation archive and native test evidence",
+      "status": "completed"
+    },
+    {
+      "number": 52,
+      "task": "/root/a52_windows_package",
+      "assignment": "Qualified actual Windows installation and native test evidence",
+      "status": "completed"
+    },
+    {
+      "number": 53,
+      "task": "/root/a53_linux_package",
+      "assignment": "Qualifies actual Linux installation and native test evidence",
+      "status": "completed",
+      "completed_evidence": "a53-summary.json",
+      "outcome": "Actual Linux installation and original587-entry native suite accepted;586 passed/0failed/1formal/3nested skips."
+    },
+    {
+      "number": 54,
+      "task": "/root/a54_macos_intel_package",
+      "assignment": "Qualifies actual Intel Mac installation and native test evidence",
+      "status": "completed"
+    },
+    {
+      "number": 55,
+      "task": "/root/a55_macos_validator_review",
+      "assignment": "Qualifies both Mac architectures original eight validator lanes and AU pre/post/distributed identities",
+      "status": "completed"
+    },
+    {
+      "number": 56,
+      "task": "/root/a56_windows_linux_validator_review",
+      "assignment": "Qualifies Windows and Linux original five validator lanes and distributed VST3 payload identity",
+      "status": "completed",
+      "completed_evidence": "a56-review.json",
+      "outcome": "All5 assigned original Windows/Linux lanes,5 invocations/0retries, both full VST3 payloads bound."
+    },
+    {
+      "number": 57,
+      "task": "/root/a57_ledger_evidence_audit",
+      "assignment": "Audits actual continuation worker ledger, retained evidence integrity and claim scope",
+      "status": "current_audit_completed_final_ledger_pending"
+    },
+    {
+      "number": 58,
+      "task": "/root/a58_final_audition_verification",
+      "assignment": "Verifies actual final audition artifact, complete archive entries, audio samples and delivered preset inventory",
+      "status": "completed",
+      "completed_evidence": "a58-review.json",
+      "outcome": "Actual audition artifact accepted:138 WAVs/74 programs/870seconds; complete523-by-200 inventory identical; all checksums/samples/producer binding passed."
+    },
+    {
+      "number": 59,
+      "task": "/root/a59_download_publication_review",
+      "assignment": "Reviews actual platform download identities, publication wording and final links",
+      "status": "mapping_checkpoint_completed_final_publication_pending"
+    },
+    {
+      "number": 60,
+      "task": "/root/a60_independent_release_review",
+      "assignment": "Independently reviews full release qualification and final publication candidate",
+      "status": "preliminary_review_completed_final_acceptance_pending"
+    }
+  ]
+}

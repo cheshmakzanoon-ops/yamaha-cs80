@@ -162,6 +162,27 @@ Studio and standalone interfaces still lack dedicated body-control widgets.
 
 ## Listening and qualification
 
+### Qualified native downloads — source 078c098
+
+The [current installation downloads](../README.md#downloads) are qualified from
+the original six-job native workflow at source `078c0981ffa1b5472342e0fb5ab8702bc3bd2889`, attempt 1.
+Across all four platforms, **1,311 of 1,318 registered CTest executions passed,
+zero failed and seven were formally skipped**; 24 nested Python skips are
+recorded separately. All **13 required strictness-10 pluginval lanes** completed
+with original exit 0, with 13 validation invocations and 0 runtime validation retries. The actual installation bytes,
+native architectures, source identities and validator payloads were checked.
+
+The delivered [audition archive](https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591.zip) passed complete-entry,
+checksum, float-audio, metric and inventory verification: **138 WAVs, 74 existing
+programs, 870 seconds**, all 19 active body models, and an exact **523 × 200**
+factory inventory. This is representative captured output, not a human listening
+assessment or a proof of exact real-instrument matching. The historical matched
+all-library comparison below retains its original 59d489d source scope.
+
+[Full native/artifact qualification](preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json) ·
+[Actual audition acceptance](preset-evidence/2026.11.4/ci/source-078c098/audition/acceptance-summary.json) ·
+[60-worker continuation review](TEAM_REVIEW_2026_11_4.md)
+
 ### Continuation: strike dynamics and bowed-body motion
 
 The continuation after `59d489d` corrects two additional signal-model defects
@@ -226,7 +247,7 @@ DAW CPU percentage. The correction is not described as free of CPU cost.
 These continuation measurements are development evidence. The current README
 download record identifies the separately qualified native source and files.
 
-The audition script produces **138 unnormalized stereo float WAVs** of **74
+The verified native audition archive contains **138 unnormalized stereo float WAVs** of **74
 existing programs**, totaling **870 seconds**, together with the complete
 523-program, 200-parameter inventory. It includes soft/firm piano examples at
 MIDI 36, 60 and 84, sustained-effort comparisons with matched C4 foundations,

@@ -1,0 +1,62 @@
+{
+  "as_of_utc": "2026-11-23T23:07:12.376064+00:00",
+  "checkpoint_commit": "df9a8d2994e96534eb7c4ee57c0a82ea1fb6916c",
+  "committed_checkpoint": {
+    "entries": 195,
+    "unique_paths": 195,
+    "duplicates": [],
+    "issues": [],
+    "manifest_sha256": "44b43f175138f5f8e8928f4b7c3ec9c99f182768924be1193e104dd76cc191fe",
+    "new_files_added_after_checkpoint": []
+  },
+  "working_tree": {
+    "entries": 195,
+    "unique_paths": 195,
+    "duplicates": [],
+    "issues": [],
+    "manifest": {
+      "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/evidence-files.json",
+      "bytes": 28708,
+      "sha256": "44b43f175138f5f8e8928f4b7c3ec9c99f182768924be1193e104dd76cc191fe",
+      "repository_path": "docs/preset-evidence/2026.11.4/continuation/evidence-files.json",
+      "tracked_at_checkpoint": true
+    },
+    "unindexed_files": []
+  },
+  "scope": "Only files below continuation/. Sibling ci/source-078c098 evidence is outside this manifest; the manifest excludes itself.",
+  "earlier_192_entry_checkpoint": {
+    "entries": 192,
+    "unique_paths": 192,
+    "duplicates": [],
+    "issues": [],
+    "commit": "6426abaa2578a72d9c4df489828037fc9db8eece",
+    "manifest_sha256": "87a67fdc6e36f13bfa4eadafad4ba2a8149f153803372916db72321fdb678a66"
+  },
+  "prepublication_snapshot_only": true,
+  "final_index_policy": "This records prepublication manifest bytes at the named checkpoint. Root will build final indexes after copying reports. No final manifest hash or report-self hash is asserted.",
+  "final_inventory_retention": [
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/final-inventory/inventory.json",
+      "bytes": 704822,
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "repository_path": "docs/preset-evidence/2026.11.4/continuation/final-inventory/inventory.json",
+      "tracked_at_checkpoint": true,
+      "identical_to_original_scratch_bytes": true
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/final-inventory/parameter-coverage.json",
+      "bytes": 441511,
+      "sha256": "43b693d7990b0e8857867de3b29ed69b02fbc5cec83285f63977b6257825dad9",
+      "repository_path": "docs/preset-evidence/2026.11.4/continuation/final-inventory/parameter-coverage.json",
+      "tracked_at_checkpoint": true,
+      "identical_to_original_scratch_bytes": true
+    }
+  ],
+  "final_inventory_provenance": {
+    "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/final-inventory/provenance.json",
+    "bytes": 1253,
+    "sha256": "555f5a52e58972c67fe60ad7461d00311cccdd5b6a040e5681c12d3c49b308d3",
+    "repository_path": "docs/preset-evidence/2026.11.4/continuation/final-inventory/provenance.json",
+    "tracked_at_checkpoint": true
+  }
+}

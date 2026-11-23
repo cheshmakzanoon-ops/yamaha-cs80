@@ -1,0 +1,642 @@
+{
+  "schema": 1,
+  "status": "original_linux_producer_and_download_bytes_bound",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "native_job_id": 137945804596,
+  "native_job_conclusion": "success",
+  "run_conclusion_at_snapshot": null,
+  "required_steps": [
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-23T19:28:45Z",
+      "completed_at": "2026-11-23T19:28:51Z"
+    },
+    {
+      "name": "Install build dependencies",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-23T19:28:51Z",
+      "completed_at": "2026-11-23T19:29:17Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-23T19:29:17Z",
+      "completed_at": "2026-11-23T19:30:34Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-23T19:30:34Z",
+      "completed_at": "2026-11-23T19:30:34Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T19:30:34Z",
+      "completed_at": "2026-11-23T19:42:31Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-23T19:42:31Z",
+      "completed_at": "2026-11-23T22:48:21Z"
+    },
+    {
+      "name": "Capture curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-23T22:48:21Z",
+      "completed_at": "2026-11-23T22:50:42Z"
+    },
+    {
+      "name": "Upload curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-23T22:50:42Z",
+      "completed_at": "2026-11-23T22:50:54Z"
+    },
+    {
+      "name": "Upload Linux VST3",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-23T22:50:54Z",
+      "completed_at": "2026-11-23T22:50:55Z"
+    },
+    {
+      "name": "Render demo and screenshots",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2026-11-23T22:50:55Z",
+      "completed_at": "2026-11-23T22:52:29Z"
+    },
+    {
+      "name": "Upload render artifacts",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12,
+      "started_at": "2026-11-23T22:52:29Z",
+      "completed_at": "2026-11-23T22:52:32Z"
+    },
+    {
+      "name": "Package Linux VST3 and Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-11-23T22:52:32Z",
+      "completed_at": "2026-11-23T22:52:37Z"
+    },
+    {
+      "name": "Upload Linux install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-11-23T22:52:37Z",
+      "completed_at": "2026-11-23T22:52:38Z"
+    },
+    {
+      "name": "Upload test and JUCE source evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-11-23T22:52:38Z",
+      "completed_at": "2026-11-23T22:52:39Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "api": {
+        "id": 14870428441,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg3MDQyODQ0MQ==",
+        "name": "cs80-linux-install-bundle",
+        "size_in_bytes": 13322687,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870428441/zip",
+        "expired": false,
+        "digest": "sha256:611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e",
+        "created_at": "2026-11-23T22:52:38Z",
+        "updated_at": "2026-11-23T22:52:38Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "download": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-install.zip",
+        "bytes": 13322687,
+        "sha256": "611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e"
+      },
+      "api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-install-api.json",
+        "bytes": 798,
+        "sha256": "7be00ed1c6cc5a292f2ba3e5c33adaa2003779c8a478d3e413a801c75a16c336"
+      },
+      "upload_step": {
+        "name": "Upload Linux install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-11-23T22:52:37Z",
+        "completed_at": "2026-11-23T22:52:38Z"
+      },
+      "upload_finalization_lines": [
+        {
+          "line": 4006,
+          "text": "2026-11-23T22:52:38.7359038Z Artifact cs80-linux-install-bundle.zip successfully finalized. Artifact ID 14870428441"
+        }
+      ],
+      "upload_summary_lines": [
+        {
+          "line": 4007,
+          "text": "2026-11-23T22:52:38.7360736Z Artifact cs80-linux-install-bundle has been successfully uploaded! Final size is 13322687 bytes. Artifact ID is 14870428441"
+        }
+      ],
+      "upload_digest_lines": [
+        {
+          "line": 4004,
+          "text": "2026-11-23T22:52:38.4154501Z SHA256 digest of uploaded artifact zip is 611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e",
+          "sha256": "611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e"
+        }
+      ],
+      "cumulative_upload_progress": [
+        {
+          "line": 4001,
+          "text": "2026-11-23T22:52:38.2965530Z Uploaded bytes 8388608",
+          "bytes": 8388608
+        },
+        {
+          "line": 4002,
+          "text": "2026-11-23T22:52:38.3982827Z Uploaded bytes 13322687",
+          "bytes": 13322687
+        }
+      ],
+      "final_uploaded_byte_count_matches_api": true,
+      "producer_created_at_within_upload_step": true,
+      "download_qualification_scope": "Actual archive bytes"
+    },
+    {
+      "api": {
+        "id": 14871037472,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg3MTAzNzQ3Mg==",
+        "name": "cs80-linux-test-evidence",
+        "size_in_bytes": 142351,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14871037472",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14871037472/zip",
+        "expired": false,
+        "digest": "sha256:d90334c62f869abf52a438dc2e1babca68b4751e49aeb948975a17e0ebe5efe5",
+        "created_at": "2026-11-23T22:52:39Z",
+        "updated_at": "2026-11-23T22:52:39Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "download": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-test-evidence.zip",
+        "bytes": 142351,
+        "sha256": "d90334c62f869abf52a438dc2e1babca68b4751e49aeb948975a17e0ebe5efe5"
+      },
+      "api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-test-evidence-api.json",
+        "bytes": 795,
+        "sha256": "ed116246d69672e82f396be588ef5470dbfc0bc1ce428664f226b02c58446260"
+      },
+      "upload_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-23T22:52:38Z",
+        "completed_at": "2026-11-23T22:52:39Z"
+      },
+      "upload_finalization_lines": [
+        {
+          "line": 4034,
+          "text": "2026-11-23T22:52:39.6625280Z Artifact cs80-linux-test-evidence.zip successfully finalized. Artifact ID 14871037472"
+        }
+      ],
+      "upload_summary_lines": [
+        {
+          "line": 4035,
+          "text": "2026-11-23T22:52:39.6626184Z Artifact cs80-linux-test-evidence has been successfully uploaded! Final size is 142351 bytes. Artifact ID is 14871037472"
+        }
+      ],
+      "upload_digest_lines": [
+        {
+          "line": 4032,
+          "text": "2026-11-23T22:52:39.2555901Z SHA256 digest of uploaded artifact zip is d90334c62f869abf52a438dc2e1babca68b4751e49aeb948975a17e0ebe5efe5",
+          "sha256": "d90334c62f869abf52a438dc2e1babca68b4751e49aeb948975a17e0ebe5efe5"
+        }
+      ],
+      "cumulative_upload_progress": [
+        {
+          "line": 4030,
+          "text": "2026-11-23T22:52:39.2272333Z Uploaded bytes 142351",
+          "bytes": 142351
+        }
+      ],
+      "final_uploaded_byte_count_matches_api": true,
+      "producer_created_at_within_upload_step": true,
+      "download_qualification_scope": "Actual archive bytes"
+    },
+    {
+      "api": {
+        "id": 14869179841,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg2OTE3OTg0MQ==",
+        "name": "cs80-linux-vst3",
+        "size_in_bytes": 6937487,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14869179841",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14869179841/zip",
+        "expired": false,
+        "digest": "sha256:6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e",
+        "created_at": "2026-11-23T22:50:55Z",
+        "updated_at": "2026-11-23T22:50:55Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "download": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-vst3-validator-input.zip",
+        "bytes": 6937487,
+        "sha256": "6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e"
+      },
+      "api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-vst3-validator-input-api.json",
+        "bytes": 787,
+        "sha256": "ad552f8216f3f5264d737a0b501545bcaf6d635e70a85ff7da0dc305357a06e2"
+      },
+      "upload_step": {
+        "name": "Upload Linux VST3",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-11-23T22:50:54Z",
+        "completed_at": "2026-11-23T22:50:55Z"
+      },
+      "upload_finalization_lines": [
+        {
+          "line": 3665,
+          "text": "2026-11-23T22:50:55.6223032Z Artifact cs80-linux-vst3.zip successfully finalized. Artifact ID 14869179841"
+        }
+      ],
+      "upload_summary_lines": [
+        {
+          "line": 3666,
+          "text": "2026-11-23T22:50:55.6223850Z Artifact cs80-linux-vst3 has been successfully uploaded! Final size is 6937487 bytes. Artifact ID is 14869179841"
+        }
+      ],
+      "upload_digest_lines": [
+        {
+          "line": 3663,
+          "text": "2026-11-23T22:50:55.2684575Z SHA256 digest of uploaded artifact zip is 6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e",
+          "sha256": "6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e"
+        }
+      ],
+      "cumulative_upload_progress": [
+        {
+          "line": 3661,
+          "text": "2026-11-23T22:50:55.2505479Z Uploaded bytes 6937487",
+          "bytes": 6937487
+        }
+      ],
+      "final_uploaded_byte_count_matches_api": true,
+      "producer_created_at_within_upload_step": true,
+      "download_qualification_scope": "Actual archive bytes"
+    },
+    {
+      "api": {
+        "id": 14870917591,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg3MDkxNzU5MQ==",
+        "name": "cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+        "size_in_bytes": 300067470,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14870917591/zip",
+        "expired": false,
+        "digest": "sha256:ae8cd5c31e03f0db317852f49a9169ad7ff455e2f385e8a510e8da4569f500ad",
+        "created_at": "2026-11-23T22:50:53Z",
+        "updated_at": "2026-11-23T22:50:53Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "download": null,
+      "api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/linux-x86_64-audition-api.json",
+        "bytes": 843,
+        "sha256": "3beca7fc9079131493ab222c258242edcd63bb19856fdce98a6f1e279709502f"
+      },
+      "upload_step": {
+        "name": "Upload curated preset auditions",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-23T22:50:42Z",
+        "completed_at": "2026-11-23T22:50:54Z"
+      },
+      "upload_finalization_lines": [
+        {
+          "line": 3642,
+          "text": "2026-11-23T22:50:53.9996328Z Artifact cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14870917591"
+        }
+      ],
+      "upload_summary_lines": [
+        {
+          "line": 3643,
+          "text": "2026-11-23T22:50:53.9998227Z Artifact cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889 has been successfully uploaded! Final size is 300067470 bytes. Artifact ID is 14870917591"
+        }
+      ],
+      "upload_digest_lines": [
+        {
+          "line": 3640,
+          "text": "2026-11-23T22:50:53.6556764Z SHA256 digest of uploaded artifact zip is ae8cd5c31e03f0db317852f49a9169ad7ff455e2f385e8a510e8da4569f500ad",
+          "sha256": "ae8cd5c31e03f0db317852f49a9169ad7ff455e2f385e8a510e8da4569f500ad"
+        }
+      ],
+      "cumulative_upload_progress": [
+        {
+          "line": 3603,
+          "text": "2026-11-23T22:50:43.3366099Z Uploaded bytes 8388608",
+          "bytes": 8388608
+        },
+        {
+          "line": 3604,
+          "text": "2026-11-23T22:50:43.5639555Z Uploaded bytes 16777216",
+          "bytes": 16777216
+        },
+        {
+          "line": 3605,
+          "text": "2026-11-23T22:50:43.8583574Z Uploaded bytes 25165824",
+          "bytes": 25165824
+        },
+        {
+          "line": 3606,
+          "text": "2026-11-23T22:50:44.0867214Z Uploaded bytes 33554432",
+          "bytes": 33554432
+        },
+        {
+          "line": 3607,
+          "text": "2026-11-23T22:50:44.4233602Z Uploaded bytes 41943040",
+          "bytes": 41943040
+        },
+        {
+          "line": 3608,
+          "text": "2026-11-23T22:50:44.6445233Z Uploaded bytes 50331648",
+          "bytes": 50331648
+        },
+        {
+          "line": 3609,
+          "text": "2026-11-23T22:50:44.9879829Z Uploaded bytes 58720256",
+          "bytes": 58720256
+        },
+        {
+          "line": 3610,
+          "text": "2026-11-23T22:50:45.2822130Z Uploaded bytes 67108864",
+          "bytes": 67108864
+        },
+        {
+          "line": 3611,
+          "text": "2026-11-23T22:50:45.5709355Z Uploaded bytes 75497472",
+          "bytes": 75497472
+        },
+        {
+          "line": 3612,
+          "text": "2026-11-23T22:50:45.8131806Z Uploaded bytes 83886080",
+          "bytes": 83886080
+        },
+        {
+          "line": 3613,
+          "text": "2026-11-23T22:50:46.1263687Z Uploaded bytes 92274688",
+          "bytes": 92274688
+        },
+        {
+          "line": 3614,
+          "text": "2026-11-23T22:50:46.4328245Z Uploaded bytes 100663296",
+          "bytes": 100663296
+        },
+        {
+          "line": 3615,
+          "text": "2026-11-23T22:50:46.7394643Z Uploaded bytes 109051904",
+          "bytes": 109051904
+        },
+        {
+          "line": 3616,
+          "text": "2026-11-23T22:50:47.1156778Z Uploaded bytes 117440512",
+          "bytes": 117440512
+        },
+        {
+          "line": 3617,
+          "text": "2026-11-23T22:50:47.4426640Z Uploaded bytes 125829120",
+          "bytes": 125829120
+        },
+        {
+          "line": 3618,
+          "text": "2026-11-23T22:50:47.7669828Z Uploaded bytes 134217728",
+          "bytes": 134217728
+        },
+        {
+          "line": 3619,
+          "text": "2026-11-23T22:50:48.0737849Z Uploaded bytes 142606336",
+          "bytes": 142606336
+        },
+        {
+          "line": 3620,
+          "text": "2026-11-23T22:50:48.3903255Z Uploaded bytes 150994944",
+          "bytes": 150994944
+        },
+        {
+          "line": 3621,
+          "text": "2026-11-23T22:50:48.7419233Z Uploaded bytes 159383552",
+          "bytes": 159383552
+        },
+        {
+          "line": 3622,
+          "text": "2026-11-23T22:50:49.0139512Z Uploaded bytes 167772160",
+          "bytes": 167772160
+        },
+        {
+          "line": 3623,
+          "text": "2026-11-23T22:50:49.3759716Z Uploaded bytes 176160768",
+          "bytes": 176160768
+        },
+        {
+          "line": 3624,
+          "text": "2026-11-23T22:50:49.7335323Z Uploaded bytes 184549376",
+          "bytes": 184549376
+        },
+        {
+          "line": 3625,
+          "text": "2026-11-23T22:50:49.9520113Z Uploaded bytes 192937984",
+          "bytes": 192937984
+        },
+        {
+          "line": 3626,
+          "text": "2026-11-23T22:50:50.2965090Z Uploaded bytes 201326592",
+          "bytes": 201326592
+        },
+        {
+          "line": 3627,
+          "text": "2026-11-23T22:50:50.5577771Z Uploaded bytes 209715200",
+          "bytes": 209715200
+        },
+        {
+          "line": 3628,
+          "text": "2026-11-23T22:50:50.8840802Z Uploaded bytes 218103808",
+          "bytes": 218103808
+        },
+        {
+          "line": 3629,
+          "text": "2026-11-23T22:50:51.1612349Z Uploaded bytes 226492416",
+          "bytes": 226492416
+        },
+        {
+          "line": 3630,
+          "text": "2026-11-23T22:50:51.4438937Z Uploaded bytes 234881024",
+          "bytes": 234881024
+        },
+        {
+          "line": 3631,
+          "text": "2026-11-23T22:50:51.8103313Z Uploaded bytes 243269632",
+          "bytes": 243269632
+        },
+        {
+          "line": 3632,
+          "text": "2026-11-23T22:50:52.0447987Z Uploaded bytes 251658240",
+          "bytes": 251658240
+        },
+        {
+          "line": 3633,
+          "text": "2026-11-23T22:50:52.2999798Z Uploaded bytes 260046848",
+          "bytes": 260046848
+        },
+        {
+          "line": 3634,
+          "text": "2026-11-23T22:50:52.5668760Z Uploaded bytes 268435456",
+          "bytes": 268435456
+        },
+        {
+          "line": 3635,
+          "text": "2026-11-23T22:50:52.8708922Z Uploaded bytes 276824064",
+          "bytes": 276824064
+        },
+        {
+          "line": 3636,
+          "text": "2026-11-23T22:50:53.2049891Z Uploaded bytes 285212672",
+          "bytes": 285212672
+        },
+        {
+          "line": 3637,
+          "text": "2026-11-23T22:50:53.4116925Z Uploaded bytes 293601280",
+          "bytes": 293601280
+        },
+        {
+          "line": 3638,
+          "text": "2026-11-23T22:50:53.6352400Z Uploaded bytes 300067470",
+          "bytes": 300067470
+        }
+      ],
+      "final_uploaded_byte_count_matches_api": true,
+      "producer_created_at_within_upload_step": true,
+      "download_qualification_scope": "API and original upload only; audition ZIP qualification belongs to A58"
+    }
+  ],
+  "ctest_summary_lines": [
+    {
+      "line": 3436,
+      "text": "2026-11-23T22:48:21.4671839Z 100% tests passed, 0 tests failed out of 587"
+    },
+    {
+      "line": 3441,
+      "text": "2026-11-23T22:48:21.4673087Z Total Test time (real) = 11148.14 sec"
+    }
+  ],
+  "source_checkout_lines": [
+    {
+      "line": 93,
+      "text": "2026-11-23T19:28:45.9973790Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +078c0981ffa1b5472342e0fb5ab8702bc3bd2889:refs/remotes/origin/main"
+    },
+    {
+      "line": 95,
+      "text": "2026-11-23T19:28:50.8554853Z  * [new ref]         078c0981ffa1b5472342e0fb5ab8702bc3bd2889 -> origin/main"
+    },
+    {
+      "line": 107,
+      "text": "2026-11-23T19:28:51.7629239Z 078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+    },
+    {
+      "line": 3589,
+      "text": "2026-11-23T22:50:42.2926461Z   name: cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+    },
+    {
+      "line": 3642,
+      "text": "2026-11-23T22:50:53.9996328Z Artifact cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889.zip successfully finalized. Artifact ID 14870917591"
+    },
+    {
+      "line": 3643,
+      "text": "2026-11-23T22:50:53.9998227Z Artifact cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889 has been successfully uploaded! Final size is 300067470 bytes. Artifact ID is 14870917591"
+    }
+  ],
+  "original_job_log": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a53/job.log",
+    "bytes": 457776,
+    "sha256": "a9251e66b8effa0936f9dbeb01f228ee604330117d53992a34e8c1de4bba13a6"
+  },
+  "run_api": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a53/run.json",
+    "bytes": 13767,
+    "sha256": "73fd12c5fff137a30aba197f47f2dce652ddc619717fd5de2ecef4e4997b45f2"
+  },
+  "job_api": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a53/job.json",
+    "bytes": 4806,
+    "sha256": "485f5f1a3632092d9d6ca455ce05b3cb35e9e32abd2db0686d444e47d93569bd"
+  },
+  "binding_script": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a53/bind_producer.py",
+    "bytes": 7167,
+    "sha256": "a165b8508a60b78bf6c6b53f44ba58d1961e248441792f198173afbff9b766f4"
+  },
+  "authentic_artifact_catalog": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a53/artifacts.json",
+    "bytes": 10793,
+    "sha256": "696c961095dda0e157675f3e77d7bbe4a659512784cf50bef79b36e560ca936c"
+  },
+  "artifact_api_record_origin": "Unmodified single artifact objects from the authentic run artifact collection.",
+  "scope": "Linux installation and original CTest producer only. Validator lanes/payload identity and audition audio are reviewed separately.",
+  "release_qualified": false
+}

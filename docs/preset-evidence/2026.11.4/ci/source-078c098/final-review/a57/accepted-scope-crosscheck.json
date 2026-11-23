@@ -1,0 +1,153 @@
+{
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "native_platforms": [
+    {
+      "platform": "Windows x86_64",
+      "registered": 229,
+      "passed": 227,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0,
+      "unknown": 0,
+      "nested_python_skips": 11,
+      "author": "A52"
+    },
+    {
+      "platform": "macOS arm64",
+      "registered": 251,
+      "passed": 249,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0,
+      "unknown": 0,
+      "nested_python_skips": 5,
+      "author": "A51"
+    },
+    {
+      "platform": "macOS x86_64",
+      "registered": 251,
+      "passed": 249,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0,
+      "unknown": 0,
+      "nested_python_skips": 5,
+      "author": "A54"
+    },
+    {
+      "platform": "Linux x86_64",
+      "registered": 587,
+      "passed": 586,
+      "failed": 0,
+      "formal_skipped": 1,
+      "disabled": 0,
+      "unknown": 0,
+      "nested_python_skips": 3,
+      "author": "A53"
+    }
+  ],
+  "native_totals": {
+    "registered": 1318,
+    "passed": 1311,
+    "failed": 0,
+    "formal_skipped": 7,
+    "disabled": 0,
+    "unknown": 0,
+    "nested_python_skips": 24
+  },
+  "validators": {
+    "required_lanes": 13,
+    "qualified_lanes": 13,
+    "invocations": 13,
+    "validation_retries": 0,
+    "windows_linux_complete_payload_bindings": 2,
+    "scope": "Arithmetic crosscheck of authored, source-bound A55/A56 results; no new validator execution or requalification."
+  },
+  "audition": {
+    "artifact_id": 14870917591,
+    "author_report": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a58-review.json",
+      "bytes": 7166,
+      "sha256": "4ee02fadd2624f1493cc5f77872bc57e3c2683209e33a5dbd607918f649591b4"
+    },
+    "observed": {
+      "zip_entries": 173,
+      "regular_files": 173,
+      "directory_entries": 0,
+      "checksummed_files": 172,
+      "metrics_csv_files": 30,
+      "wav_files": 138,
+      "auditioned_programs": 74,
+      "audio_seconds": 870,
+      "stereo_frames": 41760000,
+      "scalar_audio_samples": 83520000,
+      "audio_payload_bytes": 334080000,
+      "expanded_archive_bytes": 334882144,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "sample_format": "IEEE-754 binary32 float WAV",
+      "inventory_programs": 523,
+      "parameters_per_program": 200,
+      "compared_parameter_values": 104600,
+      "active_body_models": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "nonfinite_samples": 0,
+      "samples_over_full_scale": 0,
+      "max_peak_dbfs": -13.673645330265373,
+      "max_peak_path": "pressure-full/295-Pressure-Pad.wav",
+      "max_peak_amplitude": 0.2071656435728073,
+      "exactly_silent_wavs": [
+        "pressure-zero/444-Pressure-Lead.wav"
+      ]
+    },
+    "inventory_comparison": {
+      "programs_compared": 523,
+      "parameters_per_program": 200,
+      "values_compared": 104600,
+      "identity_fields": [
+        "index",
+        "host_index",
+        "name",
+        "category",
+        "description",
+        "tags"
+      ],
+      "parameter_ids_identical": true,
+      "all_identities_and_tags_identical": true,
+      "all_vectors_identical_at_binary32": true,
+      "ordered_binary32_vectors_sha256": "1343270d888e4efa21eed9e3613c195feae58e322010b4ace4d02fd4a5ab9ec8",
+      "ordered_identities_sha256": "67095c69664eaf52a4c81a1eeeea699eb9df14b232a00020a82e9ccd160fb730",
+      "delivered_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "retained_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "json_bytes_identical": true
+    },
+    "scope": "Actual archive accepted by A58. Only 74 programs have selected WAV captures; 523 identities and 104600 values are inventoried. No human listening claim."
+  },
+  "separate_supporting_sanitizer_scope": "A48 reports 199 passed / 200 registered, one formal skip. These are not native installation totals; suppressed successful stdout leaves nested Python skip count unknown.",
+  "release_qualified_by_this_audit": false,
+  "final_publication_reviews_pending": [
+    59,
+    60
+  ]
+}

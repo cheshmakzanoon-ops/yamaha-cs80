@@ -1,0 +1,41 @@
+{
+  "provenance_schema": 3,
+  "provenance_fields": [
+    "audio_seconds",
+    "capture_binary_sha256",
+    "capture_commands",
+    "capture_status",
+    "expected_audio_seconds",
+    "expected_wav_count",
+    "inventory_command",
+    "library_revision",
+    "platform",
+    "repository",
+    "run_attempt",
+    "run_id",
+    "schema",
+    "selected_program_count",
+    "selections",
+    "source_commit",
+    "source_tree",
+    "tracked_source_clean_after_capture",
+    "tracked_source_clean_before_capture",
+    "wav_count"
+  ],
+  "inventory_schema": 1,
+  "inventory_fields": [
+    "library_revision",
+    "parameter_ids",
+    "programs",
+    "schema"
+  ],
+  "first_program_fields": [
+    "category",
+    "description",
+    "host_index",
+    "index",
+    "name",
+    "tags",
+    "values"
+  ]
+}

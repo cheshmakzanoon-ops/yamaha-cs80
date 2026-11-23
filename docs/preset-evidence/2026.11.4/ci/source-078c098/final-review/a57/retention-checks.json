@@ -1,0 +1,35 @@
+{
+  "a53": {
+    "manifest": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a53/retention-manifest.json",
+      "bytes": 6731,
+      "sha256": "a0eef2c05d1ac1b2e161e0bf4e0f0efaacb76853e9df9e8db384e1e5e0d82011"
+    },
+    "entries": 31,
+    "issues": [],
+    "scope": "Exact completed Linux package/native evidence and shared transport files. Large ZIPs are original acquired artifacts; parent chooses final Git/release retention. No temporary download URLs are stored."
+  },
+  "a58": {
+    "manifest": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a58/retention-manifest.json",
+      "bytes": 4468,
+      "sha256": "a75aeb6f31e74958ce3cbf57194bf378e49d784ec2461817f88157fdc245b470"
+    },
+    "entries": 22,
+    "issues": [],
+    "scope": "accepted_actual_audition_scope"
+  },
+  "supporting_dsp": {
+    "manifest": {
+      "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/retained-files.json",
+      "bytes": 2149,
+      "sha256": "0a7459dd8f8c70f958536588a95eaaed4dd4bfe55ae5475d71edc9d9d91e5de9",
+      "repository_path": "docs/preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/retained-files.json",
+      "tracked_at_checkpoint": true
+    },
+    "entries": 13,
+    "issues": [],
+    "scope": "Small reproducible supporting-DSP evidence; downloaded ZIP bytes intentionally remain separate and are identified by authentic API receipts and hashes."
+  },
+  "scope": "Validate exact manifest-listed bytes. These manifests have their own explicit coverage; they are not inferred complete indexes of all sibling evidence."
+}

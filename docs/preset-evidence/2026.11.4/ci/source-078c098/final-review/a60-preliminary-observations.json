@@ -1,0 +1,392 @@
+{
+  "schema": 1,
+  "status": "preliminary_completed_scope_review_not_release_qualification",
+  "reviewed_at_utc": "2026-11-23T20:59:31.849931+00:00",
+  "worker": "a60",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_tree": "d84661c6c465c53ff41361e8aba0cba5e4a53397",
+  "observed_head": "6426abaa2578a72d9c4df489828037fc9db8eece",
+  "read_only_evidence_review": true,
+  "product_tests_or_validators_run": false,
+  "original_evidence_recounts": [
+    {
+      "target": "macos-arm64",
+      "job_id": 137945805542,
+      "job_conclusion": "success",
+      "original_test_step": {
+        "name": "Test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T19:24:36Z",
+        "completed_at": "2026-11-23T19:45:37Z"
+      },
+      "counts_independently_recounted_from_actual_junit": {
+        "registered": 251,
+        "passed": 249,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skips": [
+        {
+          "name": "cs80_filter_batch_cap_tests",
+          "message": "SKIP_RETURN_CODE=77"
+        },
+        {
+          "name": "cs80_stereo_pra_exact_tests",
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      ],
+      "nested_python_skips_independently_recounted_from_terminal_summaries": 5,
+      "artifacts_independently_rehashed": [
+        {
+          "kind": "install",
+          "path": "release-078c098/input/macos-arm64-install.zip",
+          "id": 14855214289,
+          "name": "cs80-macos-15-install-bundle",
+          "bytes": 14949170,
+          "sha256": "a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        },
+        {
+          "kind": "test-evidence",
+          "path": "release-078c098/input/macos-arm64-test-evidence.zip",
+          "id": 14855209144,
+          "name": "cs80-macos-15-test-evidence",
+          "bytes": 66236,
+          "sha256": "2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        },
+        {
+          "kind": "pluginval",
+          "path": "release-078c098/input/macos-arm64-pluginval.zip",
+          "id": 14856188848,
+          "name": "cs80-pluginval-macos-15",
+          "bytes": 10377,
+          "sha256": "a14b0fedcb8eaef2af315bb596ae9eb84dd77df906933b9fd1691f68b40ec302",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        }
+      ],
+      "install_report_status": "artifact_bytes_verified",
+      "binary_roles_architectures": [
+        [
+          "plugin",
+          "macos",
+          "arm64"
+        ],
+        [
+          "plugin",
+          "macos",
+          "arm64"
+        ],
+        [
+          "standalone",
+          "macos",
+          "arm64"
+        ]
+      ]
+    },
+    {
+      "target": "windows-x86_64",
+      "job_id": 137945805240,
+      "job_conclusion": "success",
+      "original_test_step": {
+        "name": "Test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T19:34:17Z",
+        "completed_at": "2026-11-23T19:54:11Z"
+      },
+      "counts_independently_recounted_from_actual_junit": {
+        "registered": 229,
+        "passed": 227,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skips": [
+        {
+          "name": "cs80_filter_batch_cap_tests",
+          "message": "SKIP_RETURN_CODE=77"
+        },
+        {
+          "name": "cs80_stereo_pra_exact_tests",
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      ],
+      "nested_python_skips_independently_recounted_from_terminal_summaries": 11,
+      "artifacts_independently_rehashed": [
+        {
+          "kind": "install",
+          "path": "release-078c098/input/windows-x86_64-install.zip",
+          "id": 14856804857,
+          "name": "cs80-windows-install-bundle",
+          "bytes": 6361027,
+          "sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        },
+        {
+          "kind": "test-evidence",
+          "path": "release-078c098/input/windows-x86_64-test-evidence.zip",
+          "id": 14856849959,
+          "name": "cs80-windows-test-evidence",
+          "bytes": 63288,
+          "sha256": "118b9c3ff9988ae8474540c96492d2171c438a84ed6fe2fdadb62beedc1cd8e7",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        },
+        {
+          "kind": "pluginval",
+          "path": "release-078c098/input/windows-x86_64-pluginval.zip",
+          "id": 14857949768,
+          "name": "cs80-pluginval-windows",
+          "bytes": 5082,
+          "sha256": "2d562aed67ff29bc4bfc14d0bafb2d67b3cba69fe02dd50e79605578de0ce239",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        }
+      ],
+      "install_report_status": "artifact_bytes_verified",
+      "binary_roles_architectures": [
+        [
+          "plugin",
+          "windows",
+          "x86_64"
+        ],
+        [
+          "standalone",
+          "windows",
+          "x86_64"
+        ]
+      ]
+    },
+    {
+      "target": "macos-x86_64",
+      "job_id": 137945806008,
+      "job_conclusion": "success",
+      "original_test_step": {
+        "name": "Test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T19:43:01Z",
+        "completed_at": "2026-11-23T20:15:59Z"
+      },
+      "counts_independently_recounted_from_actual_junit": {
+        "registered": 251,
+        "passed": 249,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skips": [
+        {
+          "name": "cs80_filter_batch_cap_tests",
+          "message": "SKIP_RETURN_CODE=77"
+        },
+        {
+          "name": "cs80_stereo_pra_exact_tests",
+          "message": "SKIP_RETURN_CODE=77"
+        }
+      ],
+      "nested_python_skips_independently_recounted_from_terminal_summaries": 5,
+      "artifacts_independently_rehashed": [
+        {
+          "kind": "install",
+          "path": "release-078c098/input/macos-x86_64-install.zip",
+          "id": 14858878730,
+          "name": "cs80-macos-15-intel-install-bundle",
+          "bytes": 16228346,
+          "sha256": "84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        },
+        {
+          "kind": "test-evidence",
+          "path": "release-078c098/input/macos-x86_64-test-evidence.zip",
+          "id": 14859865836,
+          "name": "cs80-macos-15-intel-test-evidence",
+          "bytes": 66284,
+          "sha256": "16ab696d2fea6e758ec2f919e7849b473eabcf54b4f6f76011b33cf17b9a82b4",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        },
+        {
+          "kind": "pluginval",
+          "path": "release-078c098/input/macos-x86_64-pluginval.zip",
+          "id": 14859338331,
+          "name": "cs80-pluginval-macos-15-intel",
+          "bytes": 10329,
+          "sha256": "8affb980a4d12a67213228a19dbba242174d52f95c1b86c2c160767739f7b358",
+          "api_identity_matches": true,
+          "expires_at": "2027-02-21T19:14:35Z"
+        }
+      ],
+      "install_report_status": "artifact_bytes_verified",
+      "binary_roles_architectures": [
+        [
+          "plugin",
+          "macos",
+          "x86_64"
+        ],
+        [
+          "plugin",
+          "macos",
+          "x86_64"
+        ],
+        [
+          "standalone",
+          "macos",
+          "x86_64"
+        ]
+      ]
+    }
+  ],
+  "completed_native_subtotal": {
+    "registered": 731,
+    "passed": 725,
+    "failed": 0,
+    "formal_skipped": 6,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "completed_native_nested_python_skips": 21,
+  "source_equivalence": {
+    "committed_paths_changed_after_source": 239,
+    "committed_non_document_paths_changed": [],
+    "tracked_working_tree_non_document_paths_changed": [],
+    "source_checks": [
+      {
+        "path": "src/core/InstrumentBody.h",
+        "bytes": 44453,
+        "sha256": "d33f34f5cff6341abc9bc2c85056ce381b492d141a0fad856e0c7cbd4f06422e",
+        "matches_tested_source": true
+      },
+      {
+        "path": "src/plugin/PluginProcessor.cpp",
+        "bytes": 94219,
+        "sha256": "cc79c978d5488b7f1f29d29c8966665a6bbd3ada31aa8050064bd3f44f31e401",
+        "matches_tested_source": true
+      },
+      {
+        "path": "src/core/Params.h",
+        "bytes": 24749,
+        "sha256": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+        "matches_tested_source": true
+      },
+      {
+        "path": ".github/workflows/build.yml",
+        "bytes": 34071,
+        "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+        "matches_tested_source": true
+      },
+      {
+        "path": "scripts/package-ci-artifacts.py",
+        "bytes": 29516,
+        "sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+        "matches_tested_source": true
+      },
+      {
+        "path": "scripts/verify-ci-bundle.py",
+        "bytes": 18296,
+        "sha256": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+        "matches_tested_source": true
+      },
+      {
+        "path": "scripts/run-pluginval-linux.sh",
+        "bytes": 2542,
+        "sha256": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+        "matches_tested_source": true
+      },
+      {
+        "path": "scripts/run-pluginval-with-core.py",
+        "bytes": 7044,
+        "sha256": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea",
+        "matches_tested_source": true
+      },
+      {
+        "path": "scripts/capture-factory-auditions.py",
+        "bytes": 17465,
+        "sha256": "99150f4e685db3d3f0dde95ef2bc003a0b26d36499a76c957464af13ed80d9c7",
+        "matches_tested_source": true
+      },
+      {
+        "path": "src/tools/preset_capture.cpp",
+        "bytes": 19481,
+        "sha256": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+        "matches_tested_source": true
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py",
+        "bytes": 19060,
+        "sha256": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+        "matches_tested_source": true
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py",
+        "bytes": 38038,
+        "sha256": "7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd",
+        "matches_tested_source": true
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-audition-zip.py",
+        "bytes": 12629,
+        "sha256": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62",
+        "matches_tested_source": true
+      }
+    ]
+  },
+  "ledger_observation": {
+    "actual_rows_root_attested": 60,
+    "unique_sequential_task_paths": true,
+    "completed_status_rows": 54,
+    "remaining_status_rows": [
+      {
+        "number": 53,
+        "task": "/root/a53_linux_package",
+        "status": "in_progress"
+      },
+      {
+        "number": 56,
+        "task": "/root/a56_windows_linux_validator_review",
+        "status": "windows_completed_linux_pending"
+      },
+      {
+        "number": 57,
+        "task": "/root/a57_ledger_evidence_audit",
+        "status": "current_audit_completed_final_ledger_pending"
+      },
+      {
+        "number": 58,
+        "task": "/root/a58_final_audition_verification",
+        "status": "source_preparation_completed_actual_audition_pending"
+      },
+      {
+        "number": 59,
+        "task": "/root/a59_download_publication_review",
+        "status": "in_progress"
+      },
+      {
+        "number": 60,
+        "task": "/root/a60_independent_release_review",
+        "status": "in_progress"
+      }
+    ],
+    "note": "This roster is root-attested and corroborated by A57/report evidence; no independent historical spawn receipts are claimed."
+  },
+  "known_pending": [
+    "Linux native/package and three original pluginval lanes/payload identity",
+    "Actual final audition archive",
+    "Final 60-worker ledger/evidence indices and review/publication documents"
+  ],
+  "release_qualified": false
+}

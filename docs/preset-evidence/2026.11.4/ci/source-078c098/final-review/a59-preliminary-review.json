@@ -1,0 +1,365 @@
+{
+  "schema": 1,
+  "worker": "A59",
+  "status": "partial_mapping_review_complete_final_publication_pending",
+  "complete_assigned_scope": false,
+  "release_qualified": false,
+  "publication_approved": false,
+  "reviewed_at_utc": "2026-11-23T20:59:22.462735+00:00",
+  "scope": "Source/architecture/formats to installation artifact and URL mapping; expiry, reload and publication wording; final exact candidate review remains pending.",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_tree": "d84661c6c465c53ff41361e8aba0cba5e4a53397",
+  "main_checkpoint_from_plan": "6426abaa2578a72d9c4df489828037fc9db8eece",
+  "native_run_id": 45246863788,
+  "run_attempt": 1,
+  "known_installation_records": [
+    {
+      "target": "windows-x86_64",
+      "artifact_id": 14856804857,
+      "artifact_name": "cs80-windows-install-bundle",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "architecture": "x86_64",
+      "platform": "windows",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "revision": "2026.11.4",
+      "run_id": 45246863788,
+      "outer_zip_bytes": 6361027,
+      "outer_zip_sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857.zip",
+      "public_route_independently_verified": false,
+      "api_path": "release-078c098/input/windows-x86_64-install-api.json",
+      "archive_path": "release-078c098/input/windows-x86_64-install.zip",
+      "installation_report_path": "release-078c098/verified/windows-x86_64-install.json",
+      "source_txt": "Source commit: 078c0981ffa1b5472342e0fb5ab8702bc3bd2889\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/078c0981ffa1b5472342e0fb5ab8702bc3bd2889\nPreset library revision: 2026.11.4\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/078c0981ffa1b5472342e0fb5ab8702bc3bd2889/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+      "checks": {
+        "plan_api_report_id_equal": true,
+        "plan_api_zip_report_size_equal": true,
+        "plan_api_zip_report_digest_equal": true,
+        "source_equal": true,
+        "run_equal": true,
+        "revision_equal": true,
+        "target_equal": true,
+        "formats_equal": true,
+        "native_headers_match_target": true,
+        "nightly_link_pattern_exact": true,
+        "recorded_not_expired": true,
+        "source_txt_contains_source_and_revision": true
+      }
+    },
+    {
+      "target": "macos-arm64",
+      "artifact_id": 14855214289,
+      "artifact_name": "cs80-macos-15-install-bundle",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "architecture": "arm64",
+      "platform": "macos",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "revision": "2026.11.4",
+      "run_id": 45246863788,
+      "outer_zip_bytes": 14949170,
+      "outer_zip_sha256": "a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289.zip",
+      "public_route_independently_verified": false,
+      "api_path": "release-078c098/input/macos-arm64-install-api.json",
+      "archive_path": "release-078c098/input/macos-arm64-install.zip",
+      "installation_report_path": "release-078c098/verified/macos-arm64-install.json",
+      "source_txt": "Source commit: 078c0981ffa1b5472342e0fb5ab8702bc3bd2889\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/078c0981ffa1b5472342e0fb5ab8702bc3bd2889\nPreset library revision: 2026.11.4\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/078c0981ffa1b5472342e0fb5ab8702bc3bd2889/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+      "checks": {
+        "plan_api_report_id_equal": true,
+        "plan_api_zip_report_size_equal": true,
+        "plan_api_zip_report_digest_equal": true,
+        "source_equal": true,
+        "run_equal": true,
+        "revision_equal": true,
+        "target_equal": true,
+        "formats_equal": true,
+        "native_headers_match_target": true,
+        "nightly_link_pattern_exact": true,
+        "recorded_not_expired": true,
+        "source_txt_contains_source_and_revision": true
+      }
+    },
+    {
+      "target": "macos-x86_64",
+      "artifact_id": 14858878730,
+      "artifact_name": "cs80-macos-15-intel-install-bundle",
+      "formats": [
+        "VST3",
+        "Standalone",
+        "AU"
+      ],
+      "architecture": "x86_64",
+      "platform": "macos",
+      "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+      "revision": "2026.11.4",
+      "run_id": 45246863788,
+      "outer_zip_bytes": 16228346,
+      "outer_zip_sha256": "84e0b4f7bd7ea480ccee2bca0eb116b93250df37bd44aa1101d9abf9bd032d0a",
+      "expires_at": "2027-02-21T19:14:35Z",
+      "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14858878730.zip",
+      "public_route_independently_verified": false,
+      "api_path": "release-078c098/input/macos-x86_64-install-api.json",
+      "archive_path": "release-078c098/input/macos-x86_64-install.zip",
+      "installation_report_path": "release-078c098/verified/macos-x86_64-install.json",
+      "source_txt": "Source commit: 078c0981ffa1b5472342e0fb5ab8702bc3bd2889\nhttps://github.com/cheshmakzanoon-ops/yamaha-cs80/tree/078c0981ffa1b5472342e0fb5ab8702bc3bd2889\nPreset library revision: 2026.11.4\nOnline preset guide: https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/078c0981ffa1b5472342e0fb5ab8702bc3bd2889/docs/PRESET_GUIDE.md\nUse the full source at this commit; this archive is not a source distribution.\n",
+      "checks": {
+        "plan_api_report_id_equal": true,
+        "plan_api_zip_report_size_equal": true,
+        "plan_api_zip_report_digest_equal": true,
+        "source_equal": true,
+        "run_equal": true,
+        "revision_equal": true,
+        "target_equal": true,
+        "formats_equal": true,
+        "native_headers_match_target": true,
+        "nightly_link_pattern_exact": true,
+        "recorded_not_expired": true,
+        "source_txt_contains_source_and_revision": true
+      }
+    }
+  ],
+  "linux": {
+    "artifact_id": null,
+    "public_url": null,
+    "status": "actual_installation_and_native_validator_evidence_pending"
+  },
+  "audition": {
+    "artifact_id": null,
+    "public_url": null,
+    "status": "actual_archive_acceptance_pending",
+    "source_expectations_only": {
+      "wav_count": 138,
+      "program_count": 74,
+      "seconds": 870,
+      "inventory_programs": 523,
+      "parameter_count": 200
+    },
+    "scope_owner": "A58"
+  },
+  "earliest_known_installation_expiry": {
+    "utc": "2027-02-21T19:14:35Z",
+    "halifax": "2027-02-21T15:14:35-04:00",
+    "display": "21 February 2027 at 15:14:35 AST (19:14:35 UTC)",
+    "scope": "Three currently available installation API records only; recompute with Linux and audition before publication."
+  },
+  "native_partial_counts": {
+    "platforms": 3,
+    "registered": 731,
+    "passed": 725,
+    "failed": 0,
+    "formal_skipped": 6,
+    "nested_python_skips": 21,
+    "scope": "Not a release total. Linux absent."
+  },
+  "validator_partial_counts": {
+    "required_total": 13,
+    "qualified_original_lanes": 10,
+    "pending_linux_lanes": 3,
+    "scope": "A55 eight Mac and A56 two Windows original lanes; no claim that all 13 are complete."
+  },
+  "supporting_status": "All five exact-source DSP jobs accepted in A48; sanitizers 199 passed / 200 registered, one formal skip and zero failures; sanitizer nested Python skips unknown.",
+  "qualification_checkpoint": {
+    "schema": 1,
+    "status": "in_progress_not_release_qualified",
+    "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "native_run_id": 45246863788,
+    "attempt": 1,
+    "as_of_utc": "2026-11-23T20:48:33Z",
+    "completed_independent_scopes": [
+      "Windows, Apple Silicon and Intel Mac installation archives and original native CTest suites",
+      "Eight original Mac pluginval lanes and distributed AU/VST3 identity",
+      "Two original Windows pluginval lanes and complete validated/distributed VST3 identity",
+      "Original UI smoke and actual screenshot archive",
+      "Six supporting filter jobs with 91 unchanged input files",
+      "Five exact-source supporting DSP jobs and six actual supporting archives",
+      "ASan/UBSan core suite:199passed,0failed,1formal skip of200;no reported diagnostics"
+    ],
+    "remaining_scopes": [
+      "Original Linux native suite and installation archive",
+      "Three original Linux pluginval lanes and complete validated/distributed VST3 identity",
+      "Actual final audition archive and delivered-inventory comparison",
+      "Final completion of all60actual workers, independent review and download publication"
+    ],
+    "scope_note": "Individual accepted records below are partial scopes. A completed release-qualification.json is required for the new download publication.",
+    "actual_workers_spawned": 60,
+    "all_worker_scopes_completed": false
+  },
+  "worker_roster_snapshot": {
+    "actual_rows": 60,
+    "numbers_exact_1_to_60": true,
+    "unique_task_paths": 60,
+    "status_counts": {
+      "completed": 54,
+      "in_progress": 3,
+      "windows_completed_linux_pending": 1,
+      "current_audit_completed_final_ledger_pending": 1,
+      "source_preparation_completed_actual_audition_pending": 1
+    },
+    "all_completed": false,
+    "note": "A57 historical 58-worker snapshot remains historical; final completed-ledger review still required."
+  },
+  "historical_preservation": {
+    "source_file": "yamaha-cs80/docs/CI_DISTRIBUTION_STATUS.md",
+    "reviewed_file_sha256": "fed54626ee3bcc208e24483323ae8f27dc8132b874151d931aa257bf10b25f57",
+    "old_heading": "## Current verified revision \u2014 2026.11.3 instrument voicing",
+    "new_heading": "## Historical verified revision \u2014 2026.11.3 instrument voicing",
+    "old_section_body_bytes": 7204,
+    "old_section_body_sha256": "5002fcd0648888d66c35ec9e347abe58aa7bcbca585f3e2808b8c6173bd02a27",
+    "all_text_after_old_heading_bytes": 25173,
+    "all_text_after_old_heading_sha256": "43a4c2827550c104a5570df9ac7381713854d8b906ed79928ccb3979ea1e720f",
+    "instruction": "After inserting the new current .4 section, change only Current to Historical in the old .3 heading; preserve every byte after that heading through EOF."
+  },
+  "publication_requirements": [
+    "Actual accepted Linux installation ID/API/source/architecture/formats/producer and native counts",
+    "Three original Linux validator exits and complete validated/distributed VST3 identity",
+    "Actual audition API/ZIP, A58 acceptance and delivered-inventory identity",
+    "Final release-qualification.json and synchronized qualification-status/CI README",
+    "All 60 actual worker outcomes and A57 final ledger audit",
+    "Review exact final README Downloads, distribution current section, revision report and all relative evidence links; no placeholders",
+    "Preserve all previous .3 distribution body and all older history; change .3 heading only to Historical",
+    "Atomic parent publication and remote link/source verification"
+  ],
+  "publication_wording_findings": [
+    {
+      "severity": "blocker",
+      "finding": "No complete four-platform or actual audition mapping exists yet; current preceding .3 downloads must remain until all gates pass."
+    },
+    {
+      "severity": "requirement",
+      "finding": "Native .3 counts, .3 artifact IDs and .3 audition counts must not be copied into the .4 current section."
+    },
+    {
+      "severity": "requirement",
+      "finding": "Use full source 078c098 and attempt 1; later documentation main commits do not identify different binary bytes."
+    },
+    {
+      "severity": "requirement",
+      "finding": "Preserve explicit host-process Mac architecture, CI signing/notarization limits, retention expiry and GitHub run fallback."
+    },
+    {
+      "severity": "requirement",
+      "finding": "Explicitly instruct Library \u2192 FACTORY LIBRARY \u2192 LOAD / RELOAD, then fresh notes; old sessions retain stored settings and clicking an already-loaded row may not reload."
+    },
+    {
+      "severity": "requirement",
+      "finding": "Acquisition through the GitHub connector and hashing does not verify unauthenticated nightly.link delivery."
+    },
+    {
+      "severity": "confirmed",
+      "finding": "The revision report correctly isolates historical all-521 matched-audio evidence at 59d489d from current control-coverage/inventory claims."
+    },
+    {
+      "severity": "resolved_during_review",
+      "finding": "The CI README and qualification-status were refreshed by parent to three native installations, ten validator lanes, supporting DSP/sanitizers and 60 spawned workers, while overall qualification remains false."
+    },
+    {
+      "severity": "note",
+      "finding": "The publication plan status/remaining-requirements and continuation task worker counters are earlier snapshots; synchronize final state from evidence, not stale pending labels."
+    }
+  ],
+  "drafts": [
+    "a59/README-Downloads.pending.md",
+    "a59/distribution-current.pending.md"
+  ],
+  "input_snapshots": [
+    {
+      "path": "release-publication-plan.json",
+      "bytes": 3111,
+      "sha256": "0ca3f5302e9a1c6ef5f44e16cddba19329c21bf75c98d8415933935112523c64"
+    },
+    {
+      "path": "continuation-task-state.json",
+      "bytes": 5962,
+      "sha256": "857e1f5257db138312d7baea80d515a3c9c0c4c72f0291ba16dc0ea7d2f3d145"
+    },
+    {
+      "path": "a52-review.json",
+      "bytes": 20142,
+      "sha256": "0a9a4ce90f2413932175fdfe11d3eee0c2d39fdba1ef26260804df7366e4cc3a"
+    },
+    {
+      "path": "a54-review.json",
+      "bytes": 6297,
+      "sha256": "107437cc6a4ea874e4208bb42a9806923af59307e02dfc051984507471c37892"
+    },
+    {
+      "path": "a55-review.json",
+      "bytes": 15934,
+      "sha256": "710ccdcc1b063faa12c476ff2619e75b66d1ed5e6b2d30676ddc412bc0c40399"
+    },
+    {
+      "path": "a56-review.json",
+      "bytes": 34095,
+      "sha256": "0baa80d42ec97a3238da6d4cacd9fd36a029faf50099d177150f4d76df945c28"
+    },
+    {
+      "path": "a57-review.json",
+      "bytes": 17858,
+      "sha256": "5daf36cf901ee7349d2c4bd1194a5895a5c1fc9be0a3eefd08f3fbf191db4dc5"
+    },
+    {
+      "path": "a58-review.json",
+      "bytes": 3236,
+      "sha256": "18f2e7e2f6995e8c877be0535e0116f5704a04875792e5e3055cf9de57d4d8d4"
+    },
+    {
+      "path": "continuation-worker-ledger-draft.json",
+      "bytes": 12302,
+      "sha256": "e767d663751d2a667ae6ebfed4319292e74bafc30309a1f7df0d3058b77991ce"
+    },
+    {
+      "path": "yamaha-cs80/README.md",
+      "bytes": 17210,
+      "sha256": "f057fe4416fe07155f9f3a720e45f343b71eb8de5867d0ce9aab053d1f65528a"
+    },
+    {
+      "path": "yamaha-cs80/docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 25589,
+      "sha256": "fed54626ee3bcc208e24483323ae8f27dc8132b874151d931aa257bf10b25f57"
+    },
+    {
+      "path": "yamaha-cs80/docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "bytes": 22393,
+      "sha256": "ab3473759ce64c4b80ed32eef9a0f30fa90e5a18b85482c902c72fc35cd28ceb"
+    },
+    {
+      "path": "yamaha-cs80/docs/INSTALL_AND_QUICKSTART.md",
+      "bytes": 16978,
+      "sha256": "fd361870e3b8d28e0ec1986495516cb56f4c72790c1341421525ce0624e1bcff"
+    },
+    {
+      "path": "yamaha-cs80/docs/preset-evidence/2026.11.4/ci/source-078c098/README.md",
+      "bytes": 930,
+      "sha256": "bf97bc1cc9eb128d262e36db3a75bd0201c60cae7011f233e2cb1cce21b1ce5c"
+    },
+    {
+      "path": "yamaha-cs80/docs/preset-evidence/2026.11.4/ci/source-078c098/qualification-status.json",
+      "bytes": 1381,
+      "sha256": "441be5c74b153e2edc36d35e2edc045c2196c4d07fbf7d49cba4f2b66cd89b00"
+    },
+    {
+      "path": "yamaha-cs80/docs/preset-evidence/2026.11.4/ci/source-078c098/supporting-dsp/supporting-ci.json",
+      "bytes": 78881,
+      "sha256": "e1b048b6db2be477b1f6f90c49b15f2856a57459369613aec517d7c48fabb132"
+    },
+    {
+      "path": "yamaha-cs80/docs/preset-evidence/2026.11.4/parameter-coverage.json",
+      "bytes": 441648,
+      "sha256": "bb054c8327aa9b4ec32fd90a3c1fd121d91f8bbd0fe53207cc0b3b407d818d1a"
+    }
+  ],
+  "no_repository_writes": true,
+  "no_git_commands_or_mutations": true,
+  "no_external_writes": true,
+  "no_product_or_test_executions": true,
+  "continuation": "Resume this same worker for the exact all-four-platform publication candidate. This checkpoint does not close A59."
+}

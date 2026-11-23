@@ -1,0 +1,54 @@
+{
+  "scope": "In-memory ZIP metadata boundary checks only; no native product or archive extraction",
+  "passed": true,
+  "cases": [
+    {
+      "case": "regular_file_and_empty_directory",
+      "expected_acceptance": true,
+      "observed_acceptance": true,
+      "rejection": null
+    },
+    {
+      "case": "symlink_type",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "rejection": "Symlink/special/conflicting ZIP type: provenance.json"
+    },
+    {
+      "case": "special_fifo_type",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "rejection": "Symlink/special/conflicting ZIP type: inventory.json"
+    },
+    {
+      "case": "directory_parent_traversal",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "rejection": "Noncanonical/escaping ZIP name: '../'"
+    },
+    {
+      "case": "duplicate_directory",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "rejection": "Duplicate canonical ZIP path: group/"
+    },
+    {
+      "case": "noncanonical_directory",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "rejection": "Noncanonical/escaping ZIP name: 'group//'"
+    },
+    {
+      "case": "file_directory_alias",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "rejection": "Duplicate canonical ZIP path: group/"
+    },
+    {
+      "case": "file_ancestor_collision",
+      "expected_acceptance": false,
+      "observed_acceptance": false,
+      "rejection": "File ancestor conflicts with another ZIP file"
+    }
+  ]
+}

@@ -1,78 +1,128 @@
-# A56 — Windows validator qualification; Linux pending
+# A56 — Original Windows/Linux validator and VST3 payload qualification
 
-## Explicitly partial checkpoint
+## Result and scope
 
-**Windows is verified within this assignment: both original pluginval lanes and the complete distributed-to-validated VST3 input binding pass. Linux remains pending.** This is **2 of 5 required original lanes** and **1 of 2 required payload bindings** for worker56. `a56-review.json` retains `release_qualified: false` and `complete_assigned_windows_linux_scope: false`.
+**Worker56's assigned scope is complete: all five original Windows/Linux pluginval lanes and both complete distributed-to-validator-input VST3 bindings are verified.** There were **five original validator invocations, zero validation retries, and zero validator warnings**. The machine-readable review sets `complete_assigned_windows_linux_scope: true` and retains **`release_qualified: false`** because broader release qualification is outside this worker's scope.
 
-- Source: `078c0981ffa1b5472342e0fb5ab8702bc3bd2889`.
-- Original native workflow: `45246863788`, attempt **1**, `.github/workflows/build.yml`, push event.
-- Windows producer: `137945805240`, **success**, completed `2026-11-23T19:54:22Z`.
-- Windows validator consumer: `137969986229`, **success**, completed `2026-11-23T20:17:21Z`.
-- Linux producer `137945804596` was still `in_progress` in the saved fresh jobs collection. No Linux validator consumer job or original validator artifact was available in that observation. No hang, failure, completion, or rerun is inferred.
+- Exact source: `078c0981ffa1b5472342e0fb5ab8702bc3bd2889`.
+- Original build run: **45246863788**, attempt **1**, `.github/workflows/build.yml`, push event. The final authentic run API reports **completed / success**.
+- Windows producer **137945805240**, consumer **137969986229**: both completed **success**.
+- Linux producer **137945804596**, consumer **138074711564**: both completed **success**. The Linux consumer finished at **2026-11-23T22:57:25Z**.
+- The accepted Windows findings were retained unchanged from the earlier checkpoint and were not rerun on resumption.
 
-This work read original evidence and ran evidence parsers only. It made no repository source/workflow edits, external mutations, CI reruns, plug-in executions, diagnostic validator reruns, or synthetic product evidence. Windows installation/native CTest qualification remains the separate A52 review; those counts were not recomputed here.
+The work read original uploaded evidence and ran read-only evidence parsers/binding helpers. It made no product/source/workflow edits, external mutations, CI reruns, plug-in executions, or diagnostic validator reruns. Native CTest case counts and installation qualification remain the separate A52 Windows and A53 Linux reviews. A58 owns the audition evidence.
 
-## Original Windows lanes
+## Five original validator lanes
 
-| Lane | Original successful step (UTC) | Actual seed | Strictness | Programs | Original invocations | Validation retries |
-|---|---|---|---:|---:|---:|---:|
-| Randomized headless | `Validate VST3 headless`, `20:17:07Z`–`20:17:12Z` | `0xdcb650` | 10 | 523 | 1 | 0 |
-| Fixed-seed headless | `Validate state regression seed 0x5037a0c`, `20:17:12Z`–`20:17:17Z` | `0x5037a0c` | 10 | 523 | 1 | 0 |
+All five lanes used **pluginval 1.0.4**, **strictness 10**, and reported **523 programs**. Each console has exactly one terminal `SUCCESS`, and each original workflow step succeeded.
 
-Each artifact console exactly matches its original timestamp-stripped job-output segment. Its report copy is identical after removing the console's one `Started validating:` path header and normalizing line endings. The console and report therefore count as **one invocation per lane**. Both have exactly one terminal `SUCCESS`, no validator failure markers, and no validator warnings. The consumer contains exactly two original validation starts and no validation retry logs.
+| Platform / original lane | Actual seed | Original successful step interval, UTC | Editor coverage | Original invocations | Validation retries |
+|---|---|---|---|---:|---:|
+| Windows randomized headless | `0xdcb650` | `20:17:07Z`–`20:17:12Z` | Headless; no Editor test started | 1 | 0 |
+| Windows fixed-seed headless | `0x5037a0c` | `20:17:12Z`–`20:17:17Z` | Headless; no Editor test started | 1 | 0 |
+| Linux randomized headless | `0x588d540` | `22:56:02Z`–`22:56:05Z` | Headless; no Editor or Editor Automation test | 1 | 0 |
+| Linux randomized GUI under Xvfb | `0x38562f0` | `22:56:05Z`–`22:56:23Z` | Editor and Editor Automation started and completed | 1 | 0 |
+| Linux fixed-seed GUI under Xvfb | `0x2da72db` | `22:56:23Z`–`22:56:39Z` | Editor and Editor Automation started and completed | 1 | 0 |
 
-**Original normal exit zero is bound through the successful original step and exact source exit propagation.** Both PowerShell commands immediately execute `if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }` after the native pluginval pipeline, then require the explicit success marker. There is no `continue-on-error`. A crash or other nonzero native exit after printing `SUCCESS` would fail the original step and cannot pass this binding. Windows does not separately print a raw numeric child termination record; the JSON states that evidence limit. The A45 parser's unknown process-exit fields remain unchanged; the independent binding is recorded separately.
+Dates for every interval are **2026-11-23**. The exact original step names and metadata are retained in JSON. The fixed-seed lanes supplement their randomized lanes; neither replaces an independent randomized result.
 
-The complete supplied consumer log was fetched again through `github_fetch_workflow_job_logs` for the completed original job and matched **all 46,107 bytes**, SHA-256 `53887c28ada6182438a1cff060e2a547576b51ce702d3e9e3a5b559131ee2baa`. Fresh run/jobs/artifact collection responses also exactly match the saved Windows job and artifact API records.
+Each artifact console exactly matches its original timestamp-stripped runtime segment. Each report copy is identical after removing the console's one `Started validating:` selected-path header and normalizing line endings. Console/report copies count as **one invocation per lane**. All five selected the exact platform artifact's `vst3/CS-80 Reference.vst3` bundle, using the Windows path separator in that consumer.
 
-### Version, download attempts, warnings, and coverage
+### Original process exit binding
 
-The original fetch step and artifact version file both report **pluginval 1.0.4**. The download evidence records official `Tracktion/pluginval` release **188928656**, Windows asset **210999198**, **2,408,590 bytes**, SHA-256 `c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab`. The source-pinned downloader constants match these values. There was **one successful transfer attempt, zero download retries**. Download attempts are not added to validation invocations or retries.
+**Windows:** both original PowerShell steps immediately check `if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }` after the native pipeline, then require the explicit `SUCCESS` marker. The exact source contains no `continue-on-error`. The successful original steps therefore bind exit zero without suppressing a nonzero native exit. Windows does **not** separately print a raw numeric child termination record; this evidence limit remains explicit in JSON. A crash or nonzero exit after printing `SUCCESS` would fail the original step and cannot pass this binding.
 
-Both Windows lanes are headless by contract; neither starts an Editor test. Each explicitly reports `INFO: Skipping vst3 validator as validator path hasn't been set`. These two notices remain recorded as coverage limits. They do not establish independent VST3 SDK validator coverage. Four Node/action deprecation warnings are retained separately from the empty pluginval-warning lists. The workflow's `Report pluginval failure` step was skipped because no failure occurred; that administrative step is not a validator-test skip.
+**Linux:** every original core log is byte-for-byte represented in the original consumer's core-display output. The raw termination and normalized status records agree, and the final original child exits are direct observations:
 
-## Authentic artifact and upload binding
+| Original Linux lane | Original child PID | Raw return code | Termination kind | Recorded exit code |
+|---|---:|---:|---|---:|
+| Headless | 2685 | 0 | `exit` | 0 |
+| GUI | 2716 | 0 | `exit` | 0 |
+| Fixed-seed GUI | 2759 | 0 | `exit` | 0 |
 
-The following actual downloaded ZIPs match the full API byte count and SHA-256. Each API record has the expected source/run/repository, `expired: false`, and expiry **`2027-02-21T19:14:35Z`**. Creation/update times fall inside the corresponding original successful upload step. The producing job/attempt and logged upload name, artifact ID, bytes, digest, and completion timestamp are bound in the JSON.
+The exact source workflow, `run-pluginval-linux.sh`, and `run-pluginval-with-core.py` preserve the original result. The wrapper captures both pipeline statuses; log-capture failure also fails the gate. Final acceptance requires original normal exit zero and explicit success. The Linux raw records independently rule out accepting `SUCCESS` followed by a crash.
 
-| Artifact | ID | ZIP bytes | SHA-256 | Logged upload completion UTC |
-|---|---:|---:|---|---|
-| `cs80-windows-install-bundle` | 14856804857 | 6361027 | `22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b` | `2026-11-23T19:54:18.3587697Z` |
-| `cs80-windows-vst3` | 14857530802 | 3186363 | `0d69558a9b2e67d45922cd078c0b82d3c1720f1562c8ed18c76b40bfc72e99f5` | `2026-11-23T19:54:13.7001358Z` |
-| `cs80-pluginval-windows` | 14857949768 | 5082 | `2d562aed67ff29bc4bfc14d0bafb2d67b3cba69fe02dd50e79605578de0ce239` | `2026-11-23T20:17:18.0806446Z` |
+### Retry and diagnostic accounting
 
-The successful original consumer download selects `cs80-windows-vst3`, artifact **14857530802**, and prints the matching **3,186,363-byte** expected identity and computed download digest. Both validation starts select only `vst3\CS-80 Reference.vst3`.
+The original Linux report ZIP has **no `attemptN` files**, and the original consumer has no retry warning or extra validation start. There are exactly three original Linux termination records, one per lane, all normal zero. No original status-139 validation failure occurred.
 
-`a56/windows-zip-inventories.json` records every member of all three outer ZIPs and the complete inner Windows installation ZIP. All entries have canonical unique names, supported unencrypted compression/object types, bounded sizes, no parent-file/path collisions, and no Windows case-folding collisions. Every member was read completely, its CRC checked by the ZIP reader, and its SHA-256 recorded. The pluginval report ZIP has exactly the expected six files; no retry or extra log member is silently ignored.
+The reviewed source allows at most three full attempts per Linux lane only for normalized original status **139**, after a started test phase whose last observed phase completed, with **neither `SUCCESS` nor `FAILED`** in the failed log. Each eligible failed console must be preserved before retry. This policy was not exercised in the observed run. Status 139 alone does not establish SIGSEGV, crash ownership, or completion of the entire suite.
 
-## Complete VST3 payload equality
+Both failure-only Linux validator diagnostic rerun steps—GDB and fault-thread trace—were **skipped** in the original job. The successful diagnostic exit-propagation and fault-thread-shim checks are supporting helper checks, not extra plug-in validation lanes. In particular, the synthetic `/bin/sh` exits recorded in `pluginval-core-fixture.log`, including 7 and 139, are **not original pluginval failures**. The normal GDB fixture log also is not counted as a validator invocation. All twelve original Linux report files are retained unchanged under `a56/linux-original-validator-files/`.
 
-The prescribed source-pinned `verify-validator-payload.py` exited **0**, status **`distributed_vst3_matches_validator_input`**. The helper itself, `.github/workflows/build.yml`, `verify-ci-bundle.py`, and `package-ci-artifacts.py` were compared byte-for-byte with the exact source commit. The helper SHA-256 is `7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd`.
+## Version, downloads, warnings, and explicit skips
 
-- Inner distributable: `cs80-reference-windows-x86_64-078c0981ffa1.zip`, **6,355,711 bytes**, SHA-256 `2fd754face192645e53a26f0568d26ff6ff14207a7c3579515b50d7de20030c2`.
-- Complete selected VST3 tree: **6 entries**, **2 files**, **7,349,879 file bytes**, **0 symlinks**. Omitted parent directory records are inferred consistently.
-- Canonical payload tree SHA-256: **`c6f50b1b11b79b1c61317235eba185c961220bdc9a078a459dd64f3698180196`**.
-- Native VST3 binary: **7,348,736 bytes**, SHA-256 `9ecd532fa1b59d33e32ada5010acd246b6b0e5905b1b7035d4d78a53350d3aa3`.
-- `Contents/Resources/moduleinfo.json`: **1,143 bytes**, SHA-256 `04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6`.
+**Windows version/download:** the original version output and report file both say `pluginval - 1.0.4`. The source-pinned downloader and verified download record agree on official release **188928656**, Windows asset **210999198**, **2,408,590 bytes**, SHA-256 `c08e61ce3b96db41636f8ec7e76f4c7e2c13ebdac7fa1b5a1f52b4f32ec715ab`. There was **one successful transfer attempt and zero download retries**.
 
-The raw validator-input container also has the exact top-level compiler sidecars `CS-80 Reference.exp` (**968 bytes**, a valid AMD64 COFF export object) and `CS-80 Reference.lib` (**2,266 bytes**, a valid COFF import archive). Their hashes and format checks are retained separately. Their exclusion is permitted only because the source uploads the whole VST3 output directory, while both authentic consumer invocations select its VST3 bundle subdirectory. No bundle member is excluded from equality. Archive ownership, timestamps, and normalized permissions are outside this payload comparison.
+**Linux version/download:** the exact source fetch uses the official `v${PLUGINVAL_VERSION}/pluginval_Linux.zip` URL with original environment value **1.0.4**, and the executed binary's original version output and uploaded file both say `pluginval - 1.0.4`. The original fetch contains **one curl command, one observed transfer attempt, and zero transfer retries**. The configured `curl --retry 3` is a maximum transfer policy; it is not three actual retries and is unrelated to validation retries. The Linux workflow does not retain or hash the downloaded pluginval ZIP, so this review makes **no retained release-asset SHA-256 claim for Linux**.
 
-## Linux continuation contract
+**Validator warnings:** none in any of the five original validator consoles. Windows retains four Node/action deprecation notices separately. Linux retains four Node deprecation notices and one GitHub Node-runtime warning separately. These are not pluginval warnings or failed tests.
 
-`a56/linux-source-contract.json` and the exact source snapshots under `a56/` prepare the remaining checks. The required original Linux lanes are randomized headless, randomized GUI under Xvfb, and GUI fixed seed **`0x2da72db`**, all pluginval **1.0.4**, strictness **10**, and **523 programs**. Original job/step outcomes, report/console equality, API/upload/download identities, selected path, final original child termination, and complete distributed payload equality still need the authentic final Linux inputs.
+**Explicit skips:** every lane prints exactly one `INFO: Skipping vst3 validator as validator path hasn't been set` notice. Thus this review preserves **five external-VST3-validator skip notices**, one per original invocation. It does not establish independent Steinberg VST3 SDK validator coverage. The three headless lanes do not provide editor-test coverage; the two Linux GUI lanes do. Skipped failure-report/diagnostic workflow steps are administrative outcomes, not additional validator-test skips.
 
-The source Linux wrapper permits at most **three full attempts** per lane only when the original normalized exit is **139**, a test phase was started and the last observed phase completed, and the failed log contains **neither `SUCCESS` nor `FAILED`**. Each failed console must be preserved as contiguous `attemptN` logs. The core helper records the original child PID and raw termination, preserving the child's result; final acceptance requires **raw return code 0, kind `exit`**. Status 139 alone does not establish SIGSEGV, crash ownership, or completion of the whole suite. A `SUCCESS` followed by a crash is a failure and is not eligible for this retry policy. Diagnostic reruns cannot replace any original lane. The curl download retry policy must be counted separately from actual validator retries.
+## Authentic artifact, producer, and consumer binding
 
-No original Linux lane, retry count, payload binding, or process outcome is asserted at this checkpoint. Worker56 should resume when the original Linux producer artifacts and validator consumer job finish.
+All six used outer ZIPs match the full authentic artifact API byte count and SHA-256. API source/run/repository, unexpired state, creation/update timestamps, original producer job and run attempt, successful upload step, and original logged name/ID/bytes/digest/upload timestamp are bound. All six expiry timestamps are **2027-02-21T19:14:35Z**.
 
-## Review records
+| Platform / artifact | Artifact ID | ZIP bytes | SHA-256 |
+|---|---:|---:|---|
+| Windows install bundle | 14856804857 | 6361027 | `22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b` |
+| Windows raw VST3 input | 14857530802 | 3186363 | `0d69558a9b2e67d45922cd078c0b82d3c1720f1562c8ed18c76b40bfc72e99f5` |
+| Windows pluginval reports | 14857949768 | 5082 | `2d562aed67ff29bc4bfc14d0bafb2d67b3cba69fe02dd50e79605578de0ce239` |
+| Linux install bundle | 14870428441 | 13322687 | `611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e` |
+| Linux raw VST3 input | 14869179841 | 6937487 | `6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e` |
+| Linux pluginval reports | 14871685246 | 8901 | `25ae00479c490f90d006bfa2ecec4a8153dde0ffe92efe49d13716b6e87deb1f` |
 
-- Main machine-readable checkpoint: `/workspace/scratch/dde4ad85ed5b/a56-review.json`.
-- Full payload result: `/workspace/scratch/dde4ad85ed5b/a56/windows-vst3-payload.json`.
-- Unmodified A45 observations: `/workspace/scratch/dde4ad85ed5b/a56/windows-validator-observations.json`.
-- Complete ZIP inventory: `/workspace/scratch/dde4ad85ed5b/a56/windows-zip-inventories.json`.
-- Fresh source/run/job/artifact binding records: `a56/fresh-native-run-api.json` and `a56/fresh-windows-api-bindings.json`.
-- Read-only reproducible binding script: `/workspace/scratch/dde4ad85ed5b/a56/qualify_windows_checkpoint.py`.
-- Linux contract: `/workspace/scratch/dde4ad85ed5b/a56/linux-source-contract.json`.
+The original consumer download logs bind the exact platform raw-VST3 artifact ID, expected size/digest, and computed downloaded ZIP digest. Both complete selected bundle comparisons use these very artifacts, not a rebuilt or substitute binary.
 
-This checkpoint does not qualify the overall release, acoustic equivalence, signing/notarization, independent VST3 SDK validation, or DAW hosting.
+The Linux original upload completion timestamps are **22:50:55.6223850Z** for raw VST3, **22:52:38.7360736Z** for the install bundle, and **22:57:23.8975230Z** for pluginval reports. Their cumulative uploaded byte totals also match the authentic APIs. Exact Windows upload timestamps remain in the accepted Windows object and historical checkpoint.
+
+The freshly fetched completed original consumer logs are preserved with byte identities:
+
+| Consumer | Log bytes | SHA-256 |
+|---|---:|---|
+| Windows job 137969986229 | 46107 | `53887c28ada6182438a1cff060e2a547576b51ce702d3e9e3a5b559131ee2baa` |
+| Linux job 138074711564 | 81561 | `21fcc603a56e45680d2c2ffd60877e6ce83d8a5212695fefe072faa3869bfbac` |
+
+Full ZIP inventories verify canonical unique member names, supported unencrypted compression and object types, bounded sizes, and non-directory-parent/path collisions. Windows scans also check case-folding collisions. Every member was read completely and its CRC and SHA-256 recorded. The Windows report ZIP contains exactly six expected files; the Linux report ZIP contains exactly twelve. No attempt or diagnostic file is silently ignored.
+
+## Complete tested-to-distributed VST3 equality
+
+The prescribed **source-pinned `verify-validator-payload.py` exited 0 for both platforms**, with status `distributed_vst3_matches_validator_input`. The helper, source workflow, and imported package/inner-verification scripts were matched byte-for-byte to source **078c0981ffa1b5472342e0fb5ab8702bc3bd2889**. The helper SHA-256 is `7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd`.
+
+| Selected bundle | Tree entries | Regular files | File bytes | Symlinks | Canonical payload tree SHA-256 |
+|---|---:|---:|---:|---:|---|
+| Windows x86_64 VST3 | 6 | 2 | 7349879 | 0 | `c6f50b1b11b79b1c61317235eba185c961220bdc9a078a459dd64f3698180196` |
+| Linux x86_64 VST3 | 6 | 2 | 17483175 | 0 | `ba1533590073d218e015a33334c416a1cb8b8274e2282c6f2540c3d02b11a491` |
+
+Every native binary, resource file, path, and directory relationship in the selected bundle matches. Parent directory records omitted by Actions are inferred consistently. Archive ownership, timestamps, and normalized permissions are not compared.
+
+| Platform payload file | Bytes | SHA-256 |
+|---|---:|---|
+| Windows native VST3 binary | 7348736 | `9ecd532fa1b59d33e32ada5010acd246b6b0e5905b1b7035d4d78a53350d3aa3` |
+| Windows `moduleinfo.json` | 1143 | `04cdb82881820c40fec098f17ffd857821b6f38ee4dbf5c0290e30f9247f9cd6` |
+| Linux native `.so` | 17482080 | `fdd84087d5b580b036ff88608a0faccdbe3c3e76b9dcac9d05808e20839617d0` |
+| Linux `moduleinfo.json` | 1095 | `01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4` |
+
+The inner Windows distributable is **6,355,711 bytes**, SHA-256 `2fd754face192645e53a26f0568d26ff6ff14207a7c3579515b50d7de20030c2`. The inner Linux `.tar.gz` is **13,317,366 bytes**, SHA-256 `ed8b2cf399b94813454002c7753be2b23002ecc653b906f82a59cd92dad0993f`.
+
+**Only the known Windows container exception applies:** the raw artifact includes top-level `CS-80 Reference.exp` and `CS-80 Reference.lib`, separately recorded and validated as an AMD64 COFF export object and COFF import archive. Their exclusion is bound to the exact source upload-directory contract and both authentic consumer selections of the bundle subdirectory. No member inside the Windows bundle is excluded. Linux has no excluded container sidecars or other payload exceptions.
+
+## Verification records and handoff
+
+The A45 parser independently observed **two Windows lanes / two invocations / zero retries** in the accepted checkpoint and **three Linux lanes / three invocations / zero retries** on resumption, exiting 0 in both cases. Its reports remain observations and retain their own `release_qualified: false` and unknown process-exit fields; the source/original-step/raw-child qualification is a separate binding in this review. Both prescribed full-payload helper commands and the final Linux binding command exited 0. None executed a product or validator.
+
+Authoritative final records under `/workspace/scratch/dde4ad85ed5b/`:
+
+- `a56-review.json` and `a56-review.md`: complete assigned scope and all five lanes.
+- `a56/linux-validator-binding.json`: detailed original Linux job, artifact, lane, raw termination, retry, version, download, warning, and payload bindings.
+- `a56/windows-vst3-payload.json` and `a56/linux-vst3-payload.json`: both complete bundle comparisons.
+- `a56/windows-validator-observations.json` and `a56/linux-validator-observations.json`: unmodified A45 observation outputs.
+- `a56/windows-zip-inventories.json` and `a56/linux-zip-inventories.json`: all inspected ZIP members and byte records.
+- `a56/linux-final-api-bindings.json`: final authentic run/job/artifact API snapshot.
+- `a56/linux-original-validator-files/`: all twelve exact original Linux report files, including all three raw core logs.
+- `a56/qualify_linux_final.py`: reproducible read-only Linux binding and accepted-Windows merge.
+
+The earlier partial review is preserved unchanged as `a56/windows-only-a56-review.json` and `.md`. The earlier `a56/linux-source-contract.json` remains a historical preparation snapshot; `linux-validator-binding.json` supersedes it for actual outcomes. No waiting or partial status from those historical records should be substituted for the authoritative final status.
+
+This review qualifies only the five assigned original Windows/Linux lanes and both complete VST3 payload bindings. It does not independently qualify the overall release, macOS lanes, acoustic equivalence, signing/notarization, independent VST3 SDK validation, or DAW hosting.

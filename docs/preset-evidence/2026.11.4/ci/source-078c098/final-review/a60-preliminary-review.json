@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "worker": "a60",
+  "requested_worker_count": 60,
+  "status": "preliminary_review_passed_completed_scopes_final_acceptance_pending",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_tree": "d84661c6c465c53ff41361e8aba0cba5e4a53397",
+  "observed_main_checkpoint": "6426abaa2578a72d9c4df489828037fc9db8eece",
+  "reviewed_at_utc": "2026-11-23T21:02:35.767006+00:00",
+  "preliminary_scope_complete": true,
+  "final_release_review_complete": false,
+  "release_qualified": false,
+  "new_blocking_findings": [],
+  "known_blocking_pending_scopes": [
+    "Original Linux native job, actual installation/native-test archives and successful Test/package/upload binding.",
+    "Three original Linux strictness-10 pluginval lanes with normal final child exits, retained prior failures/retries if any, and complete validated/distributed VST3 identity.",
+    "Actual final audition archive API/producer/attempt binding, all-entry safety/checksum/audio checks and delivered inventory equality.",
+    "Final authored outcomes for actual workers 53, 56, 57, 58, 59 and 60; completed 60-worker ledger and evidence retention.",
+    "Root-owned aggregate qualification, four-platform download publication and exact-source-equivalent final main push/remote verification."
+  ],
+  "documentation_nits": [
+    {
+      "id": "A60-N1",
+      "severity": "nonblocking_planning_staleness",
+      "file": "release-publication-plan.json",
+      "finding": "The draft status and remaining_requirements still include sanitizer completion, although the retained A48 original exact-source sanitizer evidence is complete. The CI qualification-status.json already states the correct completed outcome.",
+      "required_before_final_publication": "Refresh the planning status while assembling the final aggregate; no test rerun is warranted.",
+      "status": "resolved_by_parent_during_review",
+      "resolution": "Parent refreshed publication plan to draft_pending_original_linux_audition_and_final_reviews and removed completed sanitizer requirement. A60 directly read the corrected plan."
+    }
+  ],
+  "publication_clarifications_to_preserve": [
+    "The frozen install bundles contain a source-time historical DISTRIBUTION_STATUS.md. The new online record must distinguish that snapshot from final current qualification; do not modify packaged bytes to update the prose.",
+    "A52/A54 authored handoffs use earlier reviewer assignments; A55 actually qualified the eight Mac lanes and A56 the two Windows lanes. Preserve historical reports and use actual final ownership in the final ledger.",
+    "A57 snapshot of 58 actual workers remains historical. Root now records 60 real task paths but six end-stage scopes are not fully complete at this checkpoint. Exclude the complete earlier .4 work-log from continuation worker totals.",
+    "Do not label connector-acquired artifacts as an independently tested unauthenticated nightly.link route; describe CI bundles without publisher release signing or Apple notarization.",
+    "All-521 matched spectral/envelope measurements remain historical 59d489d evidence; continuation numerical fixes affect configured disjoint sets of 17 tine and 51 bowed programs, without new parameter-vector edits."
+  ],
+  "independent_evidence_checks": {
+    "file": "a60/preliminary-observations.json",
+    "sha256": "350f148eedd48b61f469ae0a55b7c605b5ec1e6ba18951f8ab539ddc4a4c933b",
+    "actual_archives_rehashed": 9,
+    "native_tests_independently_recounted": {
+      "registered": 731,
+      "passed": 725,
+      "failed": 0,
+      "formal_skipped": 6,
+      "disabled": 0,
+      "unknown": 0
+    },
+    "separate_nested_python_skips": 21,
+    "source_files_compared_to_tested_commit": 13,
+    "committed_non_document_changes": [],
+    "tracked_working_tree_non_document_changes": []
+  },
+  "cross_reviewed_completed_scopes": {
+    "native_and_installations": [
+      "A51: macos-arm64, 249 passed / 251 registered, 2 formal skips, 5 nested Python skips",
+      "A52: Windows x86_64, 227 passed / 229 registered, 2 formal skips, 11 nested Python skips",
+      "A54: macos-x86_64, 249 passed / 251 registered, 2 formal skips, 5 nested Python skips"
+    ],
+    "macos_validators": "A55: 8 original strictness-10 lanes, 523 programs each, 8 invocations, 0 retries; original successful steps bound to unsuppressed source pipelines; six AU warnings and two external VST3-validator notices retained; AU full-tree pre/post checks plus distributed executable identity, VST3 validated-path/source packaging binding.",
+    "windows_validators": "A56 partial: 2 original strictness-10 headless lanes, 523 programs each, 2 invocations, 0 retries; original successful steps bound to PowerShell native-exit propagation; complete selected VST3 tree equals distributed payload; two external VST3-validator notices retained.",
+    "supporting_dsp": "A48: exact-source 45246863831 attempt 1, all 5 original jobs passed; 6 actual archives; ASan/UBSan 199 passed / 200 registered with 1 formal skip, 0 failures and no reported sanitizer diagnostics; nested Python skips unknown in this run.",
+    "filters": "A46: source bcc86aa run 45244531626 attempt 1, all 6 original jobs and 24 CTest executions passed; all 91 relevant input files identical to 078c098. Executed source is not relabeled.",
+    "screenshots": "A50: exact-source 45246863473 attempt 1, original UI smoke passed and actual screenshot archive qualified; both source golden PNG hashes equal actual candidates with zero changed pixels; historical bcc86aa screenshot failure retained.",
+    "catalogue_and_automation": "A43/A57: all 523 ordered identities/addresses preserved, 521 musical programs reprogrammed in preceding .4 stage, two Init vectors preserved with neutral appended sizes; 198 prior core and 304 host parameter IDs remain exact prefixes; totals 200 core/306 host.",
+    "audition_contract": "A58 preparation only; supplemental checker addresses A34 all-entry/API/attempt/output-freshness gaps and compares every delivered inventory identity, parameter ID and binary32 value. Actual acceptance remains pending.",
+    "download_mapping": "A59 preliminary mapping audit independently agrees on all three actual installation IDs, sizes, hashes, source/run, architecture, formats and URL pattern. Linux/audition/final candidate still pending. It records existing distribution-history hashes for final preservation."
+  },
+  "reviewed_source_contracts": [
+    ".github/workflows/build.yml",
+    "scripts/run-pluginval-linux.sh",
+    "scripts/run-pluginval-with-core.py",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-audition-zip.py",
+    "a58/verify_audition_supplement.py",
+    "src/core/InstrumentBody.h continuation diff"
+  ],
+  "final_followup_acceptance_criteria": [
+    "Use final authentic original run/job/step conclusions and actual four-platform test reports; compute native pass/registered/formal-skip totals without borrowing .3 results or counting skip headlines as passes. Keep nested Python skips separate.",
+    "Require all 13 specified original pluginval lanes and normal final exits; retain warnings, internal skip notices, actual seeds, runtime invocation/retry history and original failed-attempt termination facts. Download retries and diagnostic runs are separate.",
+    "Require all four actual installation archives to agree with API size/digest/name/expiry/repository/source/run and original producer/attempt/upload; complete inner inventory/native architecture/JUCE/SOURCE.txt checks must remain in force.",
+    "Retain Mac AU before/after and distributed identity plus full-bundle source/register equality; Mac VST3 source/path/packaging binding; Windows/Linux complete selected VST3 tree equality and authentic consumer download binding.",
+    "Require actual audition acceptance from both the frozen verifier and supplemental API/all-entry/inventory checks. The expected 138 WAVs/74 programs/870 seconds/173 regular files/172 checksums remain expectations until observed; verify float32 stereo samples and every delivered 523-by-200 value.",
+    "Keep supporting DSP/filter/screenshot results scoped to their exact source and original runs, with no relabeled failed/canceled history or synthesized-reference acoustic claims.",
+    "Require exactly 60 actual continuation worker rows and completed required scopes, clear evidence provenance for root-attested conversational completions, retained final manifests and valid cited paths; do not include the earlier .4 planning roster.",
+    "Review final README/history/revision/team/aggregate documents and all four actual installer IDs plus audition URL, source/run/revision, actual expiry including AST conversion, explicit LOAD / RELOAD and fresh-note instruction, frozen historical distribution snapshot explanation, and honest signing/acoustic/access-route limits.",
+    "Recheck tracked production/test/script/workflow equivalence to tested 078c098 after final documentation assembly; final remote publication must match the reviewed local tree and preserve source identity."
+  ],
+  "not_yet_available_for_final_review": [
+    "A59 final all-gate publication report; preliminary report reviewed",
+    "all-gate release-qualification.json",
+    "completed final worker-ledger.json",
+    "docs/TEAM_REVIEW_2026_11_4.md",
+    "final four-platform README/download candidate"
+  ],
+  "scope_limits": [
+    "Read-only source and actual-evidence inspection; writes limited to A60 scratch reports.",
+    "No native test, validator, audio render, synthetic fixture or verifier self-test executed by A60.",
+    "No repository source/workflow/Git mutation, CI rerun, artifact creation or external write.",
+    "No independent claim of human listening, acoustic/hardware equivalence, all-presets audible improvement, signing/notarization or exhaustive DAW coverage."
+  ],
+  "open_documentation_nits": [],
+  "a59_preliminary_report": {
+    "path": "a59/a59-review.md",
+    "sha256": "2303817ced858b2bf615c0a9d3963510e4fefe35ee7791ce8fc3867ccf9c143e",
+    "reviewed": true,
+    "status": "partial_checkpoint"
+  },
+  "historical_distribution_suffix_for_final_check": {
+    "bytes": 25173,
+    "sha256": "43a4c2827550c104a5570df9ac7381713854d8b906ed79928ccb3979ea1e720f",
+    "scope": "All text after old .3 heading through EOF; use A59 retained exact preservation record."
+  }
+}

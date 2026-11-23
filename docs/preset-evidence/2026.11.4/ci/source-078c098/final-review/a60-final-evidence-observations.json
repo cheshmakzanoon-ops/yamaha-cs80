@@ -1,0 +1,495 @@
+{
+  "schema": 1,
+  "status": "actual_final_evidence_and_candidate_checks_passed",
+  "reviewed_at_utc": "2026-11-23T23:07:02.471052+00:00",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_tree": "d84661c6c465c53ff41361e8aba0cba5e4a53397",
+  "head": "df9a8d2994e96534eb7c4ee57c0a82ea1fb6916c",
+  "native_independent_actual_counts": [
+    {
+      "target": "windows-x86_64",
+      "counts": {
+        "registered": 229,
+        "passed": 227,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "separate_nested_python_skips": 11,
+      "archive_id": 14856849959,
+      "archive_sha256": "118b9c3ff9988ae8474540c96492d2171c438a84ed6fe2fdadb62beedc1cd8e7"
+    },
+    {
+      "target": "macos-arm64",
+      "counts": {
+        "registered": 251,
+        "passed": 249,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "separate_nested_python_skips": 5,
+      "archive_id": 14855209144,
+      "archive_sha256": "2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895"
+    },
+    {
+      "target": "macos-x86_64",
+      "counts": {
+        "registered": 251,
+        "passed": 249,
+        "failed": 0,
+        "formal_skipped": 2,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skip_names": [
+        "cs80_filter_batch_cap_tests",
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "separate_nested_python_skips": 5,
+      "archive_id": 14859865836,
+      "archive_sha256": "16ab696d2fea6e758ec2f919e7849b473eabcf54b4f6f76011b33cf17b9a82b4"
+    },
+    {
+      "target": "linux-x86_64",
+      "counts": {
+        "registered": 587,
+        "passed": 586,
+        "failed": 0,
+        "formal_skipped": 1,
+        "disabled": 0,
+        "unknown": 0
+      },
+      "formal_skip_names": [
+        "cs80_stereo_pra_exact_tests"
+      ],
+      "separate_nested_python_skips": 3,
+      "archive_id": 14871037472,
+      "archive_sha256": "d90334c62f869abf52a438dc2e1babca68b4751e49aeb948975a17e0ebe5efe5"
+    }
+  ],
+  "native_totals": {
+    "registered": 1318,
+    "passed": 1311,
+    "failed": 0,
+    "formal_skipped": 7,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "nested_python_skips": 24,
+  "new_linux_archives_independently_rehashed": [
+    {
+      "kind": "install",
+      "id": 14870428441,
+      "bytes": 13322687,
+      "sha256": "611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e",
+      "api_matches": true
+    },
+    {
+      "kind": "test-evidence",
+      "id": 14871037472,
+      "bytes": 142351,
+      "sha256": "d90334c62f869abf52a438dc2e1babca68b4751e49aeb948975a17e0ebe5efe5",
+      "api_matches": true
+    },
+    {
+      "kind": "vst3-validator-input",
+      "id": 14869179841,
+      "bytes": 6937487,
+      "sha256": "6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e",
+      "api_matches": true
+    },
+    {
+      "kind": "pluginval",
+      "id": 14871685246,
+      "bytes": 8901,
+      "sha256": "25ae00479c490f90d006bfa2ecec4a8153dde0ffe92efe49d13716b6e87deb1f",
+      "api_matches": true
+    }
+  ],
+  "original_run_success": true,
+  "original_successful_job_ids": [
+    137945804596,
+    137945805240,
+    137945805542,
+    137945806008,
+    137969986229,
+    138074711564
+  ],
+  "original_required_lanes": [
+    {
+      "target": "windows-x86_64",
+      "lane": "headless",
+      "seed": "0xdcb650",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "windows-x86_64",
+      "lane": "headless-seed",
+      "seed": "0x5037a0c",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "macos-arm64",
+      "lane": "vst3",
+      "seed": "0x368004e",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "macos-arm64",
+      "lane": "au",
+      "seed": "0x535ed06",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-arm64",
+      "lane": "au-gui",
+      "seed": "0x5a3f346",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-arm64",
+      "lane": "au-gui-seed",
+      "seed": "0x2b4eef5",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-x86_64",
+      "lane": "vst3",
+      "seed": "0x1d1bc71",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "macos-x86_64",
+      "lane": "au",
+      "seed": "0x72f5473",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-x86_64",
+      "lane": "au-gui",
+      "seed": "0x454a186",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "macos-x86_64",
+      "lane": "au-gui-seed",
+      "seed": "0x2b4eef5",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [
+        "!!! WARNING: Current program is -1... Is this correct?"
+      ],
+      "explicit_skips": []
+    },
+    {
+      "target": "linux-x86_64",
+      "lane": "headless",
+      "seed": "0x588d540",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "linux-x86_64",
+      "lane": "gui",
+      "seed": "0x38562f0",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    },
+    {
+      "target": "linux-x86_64",
+      "lane": "gui-seed",
+      "seed": "0x2da72db",
+      "normal_original_exit_zero": true,
+      "invocations": 1,
+      "retries": 0,
+      "warnings": [],
+      "explicit_skips": [
+        "INFO: Skipping vst3 validator as validator path hasn't been set"
+      ]
+    }
+  ],
+  "linux_original_raw_terminations": [
+    {
+      "lane_file": "pluginval-headless-core.log",
+      "pid": 2685,
+      "raw_returncode": 0,
+      "kind": "exit",
+      "exit_code": 0,
+      "sha256": "d1ba7a45033b93c42659defe32a5e934cfae287a3ad508d17cff18077f51b6c1"
+    },
+    {
+      "lane_file": "pluginval-gui-core.log",
+      "pid": 2716,
+      "raw_returncode": 0,
+      "kind": "exit",
+      "exit_code": 0,
+      "sha256": "eea36471129e1345b65c5638edec1595f17af244921462ab2de78d11ec8d2ff5"
+    },
+    {
+      "lane_file": "pluginval-gui-seed-regression-core.log",
+      "pid": 2759,
+      "raw_returncode": 0,
+      "kind": "exit",
+      "exit_code": 0,
+      "sha256": "2eee7fc3050c5ae011320b161d3d932a76037fd2353c40b1fec14d89d3dacc73"
+    }
+  ],
+  "matched_qualification_file_references": [
+    {
+      "path": "run-final-api.json",
+      "sha256": "7747e1a5827cb6e254d0cda720fe78eff33fcbb6609225d8c475095741e7ac52",
+      "bytes": 15104
+    },
+    {
+      "path": "jobs-final-api.json",
+      "sha256": "8673c9c5955ef269b28731533fa66b7c86ffa0487bfe8eca173b666d54715ced",
+      "bytes": 32536
+    },
+    {
+      "path": "artifacts-final-api.json",
+      "sha256": "4f0d092c240d8ea9ccc92ad28a1d2a30c70c1f73830fe329ea8f39a589f03e07",
+      "bytes": 14123
+    },
+    {
+      "path": "complete-native-validator-observations.json",
+      "sha256": "e6d84f17180ab4a4159379b4269f73c693c2694a631a4440867b003d1f0e9ee6",
+      "bytes": 483372
+    },
+    {
+      "path": "windows-x86_64/a52-review.json",
+      "sha256": "0a9a4ce90f2413932175fdfe11d3eee0c2d39fdba1ef26260804df7366e4cc3a",
+      "bytes": 20142
+    },
+    {
+      "path": "windows-x86_64-install.json",
+      "sha256": "f43fb6723ecb60e3af58b55d050ecfadf12a6d35ca6566996aa53b0614249539",
+      "bytes": 3620
+    },
+    {
+      "path": "windows-linux-validators/summary.json",
+      "sha256": "a01e7a421a24f78e200f88abe0ed5bd4a890dc4756c5e352a8920521bf080969",
+      "bytes": 71788
+    },
+    {
+      "path": "macos-arm64/summary.json",
+      "sha256": "2901e57ab75859ea1ec9ab1ca7834bb639d11f3488e229ec6732eaf7cb8a1493",
+      "bytes": 20346
+    },
+    {
+      "path": "macos-arm64-install.json",
+      "sha256": "1adaf6deb05e541b9f1f7595419933f71a27a472c7cd4ae0811435a4e71685a8",
+      "bytes": 4133
+    },
+    {
+      "path": "macos-validators/summary.json",
+      "sha256": "710ccdcc1b063faa12c476ff2619e75b66d1ed5e6b2d30676ddc412bc0c40399",
+      "bytes": 15934
+    },
+    {
+      "path": "macos-x86_64/summary.json",
+      "sha256": "107437cc6a4ea874e4208bb42a9806923af59307e02dfc051984507471c37892",
+      "bytes": 6297
+    },
+    {
+      "path": "macos-x86_64-install.json",
+      "sha256": "aa2f9c21471f0515be0deb58abfb0e490a654095693c4790b91465366810b4eb",
+      "bytes": 4151
+    },
+    {
+      "path": "macos-validators/summary.json",
+      "sha256": "710ccdcc1b063faa12c476ff2619e75b66d1ed5e6b2d30676ddc412bc0c40399",
+      "bytes": 15934
+    },
+    {
+      "path": "linux-x86_64/summary.json",
+      "sha256": "b46435211691c1bcf23234469448cbe30978d6caf96bf1680bfadaad4e6b7ff5",
+      "bytes": 33277
+    },
+    {
+      "path": "linux-x86_64-install.json",
+      "sha256": "341662ebf2912f470e7048cfe62168cbe50266187c270c900d140a80b2055446",
+      "bytes": 3603
+    },
+    {
+      "path": "windows-linux-validators/summary.json",
+      "sha256": "a01e7a421a24f78e200f88abe0ed5bd4a890dc4756c5e352a8920521bf080969",
+      "bytes": 71788
+    },
+    {
+      "path": "audition/acceptance-summary.json",
+      "sha256": "4ee02fadd2624f1493cc5f77872bc57e3c2683209e33a5dbd607918f649591b4",
+      "bytes": 7166
+    },
+    {
+      "path": "audition/delivered-inventory-identity.json",
+      "sha256": "d395a27c367d05e084a863850ea97d4066e224dba4fdf164c62eededd898c0f2",
+      "bytes": 770
+    },
+    {
+      "path": "audition/producer-api-binding.json",
+      "sha256": "8d99f340b845ed3025926121053c2554519cb57b2adc8908d8bea0d2b0e51b01",
+      "bytes": 2746
+    },
+    {
+      "path": "audition/verify_audition_supplement.py",
+      "sha256": "1dd142aa85bae7cbeddce32bde85e06b6e9a6a9aded7f30e759f2ee41d40aaf4",
+      "bytes": 24195
+    },
+    {
+      "path": "supporting-dsp/supporting-ci.json",
+      "sha256": "e1b048b6db2be477b1f6f90c49b15f2856a57459369613aec517d7c48fabb132",
+      "bytes": 78881
+    },
+    {
+      "path": "screenshots/acceptance-summary.json",
+      "sha256": "f156f1612c2c293ea4b1fbf8b1564f0e28a581e58fa9ccb2e73e6648cd1d36ea",
+      "bytes": 3478
+    },
+    {
+      "path": "filter/summary.json",
+      "sha256": "efa0eb2196ca8c49b01e74631463caa39502b4453b9f68458e70d33be8427442",
+      "bytes": 13321
+    }
+  ],
+  "retained_mapping_checks": [
+    {
+      "scope": "audition",
+      "matched_files": 22
+    },
+    {
+      "scope": "linux-x86_64",
+      "matched_files": 27
+    }
+  ],
+  "audition_review": {
+    "actual_entry_metadata_matches_all_173_records": true,
+    "actual_delivered_inventory_bytes_match_retained": true,
+    "report_wav_count": 138,
+    "report_selected_programs": 74,
+    "report_audio_seconds": 870.0,
+    "report_stereo_frames": 41760000,
+    "frozen_verifier_observed_exit": 0,
+    "audio_verifier_not_rerun": true,
+    "audition_outer_rehash_owner": "A58 and A59 final mapping review"
+  },
+  "readme_public_artifact_ids": [
+    "14856804857",
+    "14855214289",
+    "14858878730",
+    "14870428441",
+    "14870917591"
+  ],
+  "expiry_utc": "2027-02-21T19:14:35Z",
+  "expiry_halifax": "2027-02-21T15:14:35-04:00",
+  "historical_distribution_suffix": {
+    "bytes": 25173,
+    "sha256": "43a4c2827550c104a5570df9ac7381713854d8b906ed79928ccb3979ea1e720f",
+    "preserved": true
+  },
+  "tracked_source_drift_after_tested_commit": [],
+  "product_executions_performed": false,
+  "candidate_files_at_check": [
+    {
+      "path": "README.md",
+      "bytes": 17322,
+      "sha256": "f802c6afbc6b63c998f1ea74394bf65f6c1d422a03f4b0cef8fda9725f48726a"
+    },
+    {
+      "path": "docs/CI_DISTRIBUTION_STATUS.md",
+      "bytes": 33763,
+      "sha256": "4e39fd4b0d847f652dc2f3a4855e035ee6c7983b338456096cd619e06a689f78"
+    },
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "bytes": 23894,
+      "sha256": "649b04032e40625fa53fc581da3a1d8817a09b80f63983f3fb4adc0494651eff"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/source-078c098/release-qualification.json",
+      "bytes": 62488,
+      "sha256": "541f23725249ab59cfa596e4238476e546dd3a8dc4d0ea076bb21e3ef02b945d"
+    }
+  ],
+  "final_ledger_review": "final-ledger-observations.json",
+  "a59_final_review": {
+    "path": "a59/a59-review.json",
+    "bytes": 14794,
+    "sha256": "d0b1a3f17b5a6a96f220e49f1b4309e3a2c7a8a65bc5be92aa3395e6b1b3ab4d"
+  }
+}

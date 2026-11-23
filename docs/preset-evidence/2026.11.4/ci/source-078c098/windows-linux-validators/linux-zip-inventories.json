@@ -1,0 +1,199 @@
+[
+  {
+    "file": "release-078c098/input/linux-x86_64-install.zip",
+    "bytes": 13322687,
+    "sha256": "611de438dee91810aaf27b2ac57498b3abbaae9ebdda8fcc57342b0b883ede0e",
+    "members": [
+      {
+        "path": "SHA256SUMS",
+        "canonical_path": "SHA256SUMS",
+        "type": "file",
+        "bytes": 235,
+        "sha256": "1600e4d3bcb5f5ac6a6dee7886fbbb68256482841c5fb6f7649e3a20dea8d298",
+        "compression": 0,
+        "external_mode": "0o100644",
+        "crc32": "e90d2a57"
+      },
+      {
+        "path": "cs80-reference-linux-x86_64-078c0981ffa1.manifest.json",
+        "canonical_path": "cs80-reference-linux-x86_64-078c0981ffa1.manifest.json",
+        "type": "file",
+        "bytes": 4566,
+        "sha256": "fa6c31240e4cd558d48c2572737ba41d3914d0fedb4a94b7eef8535b5f74e839",
+        "compression": 0,
+        "external_mode": "0o100644",
+        "crc32": "ff6521f6"
+      },
+      {
+        "path": "cs80-reference-linux-x86_64-078c0981ffa1.tar.gz",
+        "canonical_path": "cs80-reference-linux-x86_64-078c0981ffa1.tar.gz",
+        "type": "file",
+        "bytes": 13317366,
+        "sha256": "ed8b2cf399b94813454002c7753be2b23002ecc653b906f82a59cd92dad0993f",
+        "compression": 0,
+        "external_mode": "0o100644",
+        "crc32": "0ba093c5"
+      }
+    ],
+    "canonical_unique_supported_entries": true,
+    "all_member_bytes_and_crc_read": true
+  },
+  {
+    "file": "release-078c098/input/linux-x86_64-vst3-validator-input.zip",
+    "bytes": 6937487,
+    "sha256": "6654e44ec8dc91e81ed4193c0ed1a3c0c111c7b66af891f474116d823496d44e",
+    "members": [
+      {
+        "path": "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "canonical_path": "CS-80 Reference.vst3/Contents/Resources/moduleinfo.json",
+        "type": "file",
+        "bytes": 1095,
+        "sha256": "01f8d197948fffeec78d876a71bccad19a5319b33f7f3069d098bb8fcad4a1f4",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "272cf662"
+      },
+      {
+        "path": "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "canonical_path": "CS-80 Reference.vst3/Contents/x86_64-linux/CS-80 Reference.so",
+        "type": "file",
+        "bytes": 17482080,
+        "sha256": "fdd84087d5b580b036ff88608a0faccdbe3c3e76b9dcac9d05808e20839617d0",
+        "compression": 8,
+        "external_mode": "0o100755",
+        "crc32": "c8b87b11"
+      }
+    ],
+    "canonical_unique_supported_entries": true,
+    "all_member_bytes_and_crc_read": true
+  },
+  {
+    "file": "release-078c098/input/linux-x86_64-pluginval.zip",
+    "bytes": 8901,
+    "sha256": "25ae00479c490f90d006bfa2ecec4a8153dde0ffe92efe49d13716b6e87deb1f",
+    "members": [
+      {
+        "path": "pluginval-core-fixture.log",
+        "canonical_path": "pluginval-core-fixture.log",
+        "type": "file",
+        "bytes": 1335,
+        "sha256": "0f2e7a4c6289ef73355af38a64ae8d4490adc4248064a4c12eb58685f7a5ac6f",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "be6e3f37"
+      },
+      {
+        "path": "pluginval-gui-seed-regression-core.log",
+        "canonical_path": "pluginval-gui-seed-regression-core.log",
+        "type": "file",
+        "bytes": 443,
+        "sha256": "2eee7fc3050c5ae011320b161d3d932a76037fd2353c40b1fec14d89d3dacc73",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "2f3d8a37"
+      },
+      {
+        "path": "pluginval-gui-core.log",
+        "canonical_path": "pluginval-gui-core.log",
+        "type": "file",
+        "bytes": 443,
+        "sha256": "eea36471129e1345b65c5638edec1595f17af244921462ab2de78d11ec8d2ff5",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "b8a52ffc"
+      },
+      {
+        "path": "pluginval-gdb-normal-exit.log",
+        "canonical_path": "pluginval-gdb-normal-exit.log",
+        "type": "file",
+        "bytes": 165,
+        "sha256": "3d2a696c82efcb5f6736e51e0809fd3c73d97f483e6e6368c9c1e501fa9fcd9f",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "172d5db4"
+      },
+      {
+        "path": "pluginval-gui-seed-regression.log",
+        "canonical_path": "pluginval-gui-seed-regression.log",
+        "type": "file",
+        "bytes": 7964,
+        "sha256": "e49f91612bbd921d506caf51e85de189cb00e970d7a892ffb0a4b01e51708298",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "b5dc0629"
+      },
+      {
+        "path": "pluginval-gui.log",
+        "canonical_path": "pluginval-gui.log",
+        "type": "file",
+        "bytes": 7964,
+        "sha256": "2b350ccf2cb28d018f18a537c334e8ebcdb24420e90f230197cb09cca3418517",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "f5f6260f"
+      },
+      {
+        "path": "pluginval-headless-core.log",
+        "canonical_path": "pluginval-headless-core.log",
+        "type": "file",
+        "bytes": 443,
+        "sha256": "d1ba7a45033b93c42659defe32a5e934cfae287a3ad508d17cff18077f51b6c1",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "d750164d"
+      },
+      {
+        "path": "pluginval-headless.log",
+        "canonical_path": "pluginval-headless.log",
+        "type": "file",
+        "bytes": 7282,
+        "sha256": "8110fd42e1457d08699f577a6edab8fca66de1cbb637a2ac316fd87d21c57580",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "7f24624c"
+      },
+      {
+        "path": "pluginval-reports/cs80-gui",
+        "canonical_path": "pluginval-reports/cs80-gui",
+        "type": "file",
+        "bytes": 7876,
+        "sha256": "c8f427448949cf4409da6f3c91aba7a6de480b9c1eed1d1dd8221fef2070e09b",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "52bad09a"
+      },
+      {
+        "path": "pluginval-reports/cs80-gui-seed-regression",
+        "canonical_path": "pluginval-reports/cs80-gui-seed-regression",
+        "type": "file",
+        "bytes": 7876,
+        "sha256": "280903665e6f0149c56b4292d92eb09adf16b88f3f47c4c221ed839231a660ad",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "1290f0bc"
+      },
+      {
+        "path": "pluginval-reports/cs80-headless",
+        "canonical_path": "pluginval-reports/cs80-headless",
+        "type": "file",
+        "bytes": 7194,
+        "sha256": "26bea728666378f78595e14472b8bf1245802cd17f591984afabbbe26b07837f",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "197ad575"
+      },
+      {
+        "path": "pluginval-version.txt",
+        "canonical_path": "pluginval-version.txt",
+        "type": "file",
+        "bytes": 18,
+        "sha256": "bebe24349489b87a47861fafe98f029b18e3bdfd913d623d729d47409693eb4f",
+        "compression": 8,
+        "external_mode": "0o100644",
+        "crc32": "74096f4e"
+      }
+    ],
+    "canonical_unique_supported_entries": true,
+    "all_member_bytes_and_crc_read": true
+  }
+]

@@ -1,0 +1,225 @@
+{
+  "as_of_utc": "2026-11-23T23:07:12.376064+00:00",
+  "inventory": {
+    "identities": 523,
+    "musical_programs": 521,
+    "init_programs": [
+      {
+        "name": "Init Patch",
+        "host_index": 43,
+        "old_198_values_bit_identical": true,
+        "appended_sizes": [
+          1,
+          1
+        ]
+      },
+      {
+        "name": "Init Circuit",
+        "host_index": 522,
+        "old_198_values_bit_identical": true,
+        "appended_sizes": [
+          1,
+          1
+        ]
+      }
+    ],
+    "ordered_identity_fields_unchanged": true,
+    "previous_core_ids": 198,
+    "current_core_ids": 200,
+    "musical_changed_existing_nonvolume_count_range": [
+      7,
+      52
+    ],
+    "duplicate_nonvolume_vectors": 0,
+    "inputs": [
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/baseline/inventory.json",
+        "bytes": 674344,
+        "sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+        "repository_path": "docs/preset-evidence/2026.11.4/baseline/inventory.json",
+        "tracked_at_checkpoint": true
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/final-inventory/inventory.json",
+        "bytes": 704822,
+        "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+        "repository_path": "docs/preset-evidence/2026.11.4/continuation/final-inventory/inventory.json",
+        "tracked_at_checkpoint": true
+      }
+    ]
+  },
+  "configured_effect_reach": {
+    "tine_programs": 17,
+    "tine_ranks": 28,
+    "bowed_programs": 51,
+    "bowed_ranks": 91,
+    "overlap": [],
+    "union": 68,
+    "qualification": "Configured positive body mix, not 68 listening tests or equal benefit at every playing condition."
+  },
+  "regressions": {
+    "tine_before": {
+      "checks": 486,
+      "failures": 162,
+      "file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a06/tine-dynamics-before.log",
+        "bytes": 14114,
+        "sha256": "6068a611b852f1ff56447e5011652a4b7da048eb403afb1dd0d2811521e1a2a4",
+        "repository_path": "docs/preset-evidence/2026.11.4/continuation/a06/tine-dynamics-before.log",
+        "tracked_at_checkpoint": true
+      }
+    },
+    "tine_after": {
+      "checks": 486,
+      "failures": 0,
+      "file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a06/tine-dynamics.log",
+        "bytes": 3501,
+        "sha256": "7d7653b1f46e9966283a41c1205256335ea916f885f8812d2bc559e2e032769f",
+        "repository_path": "docs/preset-evidence/2026.11.4/continuation/a06/tine-dynamics.log",
+        "tracked_at_checkpoint": true
+      }
+    },
+    "bowed_before": {
+      "checks": 492,
+      "failures": 174,
+      "file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a10/baseline-bowed-tests.log",
+        "bytes": 19276,
+        "sha256": "630da0fdc37a8958eab32e8bc0db2b2fe20ccbf0c6ab92e0e2a640166db8464d",
+        "repository_path": "docs/preset-evidence/2026.11.4/continuation/a10/baseline-bowed-tests.log",
+        "tracked_at_checkpoint": true
+      }
+    },
+    "bowed_after": {
+      "checks": 492,
+      "failures": 0,
+      "file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a10/bowed-tests.log",
+        "bytes": 4310,
+        "sha256": "8de64ab6ba39792d0f2ff6ce22678c2ae95b6e5b8ec676d5a7cd56ad50825e01",
+        "repository_path": "docs/preset-evidence/2026.11.4/continuation/a10/bowed-tests.log",
+        "tracked_at_checkpoint": true
+      }
+    }
+  },
+  "sample_comparisons": [
+    {
+      "worker": 6,
+      "samples": 10137600,
+      "comparison": "binary32 bit comparison",
+      "scope": "Full-strength tine and other 18 enabled models at specified velocities/rates/notes/colours; retained summary reports zero differences; no invented standalone stdout."
+    },
+    {
+      "worker": 10,
+      "samples": 36115200,
+      "comparison": "numeric float inequality and maximum absolute difference, not bitwise",
+      "scope": "Fixed-pitch bowed and other models under seven-semitone slides; retained final log reports zero unequal values."
+    },
+    {
+      "worker": 9,
+      "cases": 45,
+      "samples_per_case": 96000,
+      "samples": 4320000,
+      "comparison": "matching FNV1a64 audio hashes",
+      "mismatches": 0,
+      "scope": "45 selected complete-preset endpoint/control cases; 90-case candidate dynamics sweep covers five complete presets."
+    }
+  ],
+  "historical_full_library_audio": {
+    "source": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+    "source_manifest_entries": 24,
+    "all_source_hashes_match": true,
+    "musical_programs": 521,
+    "spectral_changed": 521,
+    "envelope_changed": 521,
+    "scope": "Historical 59d489d comparison including pressure-one exceptions; no final-078 all-library matched rerender or human listening claim."
+  },
+  "audition_scope": "Actual archive acceptance is bound below to A58; representative captures remain distinct from whole-catalogue inventory and human listening.",
+  "limits": [
+    "Source routing, signal metrics and selected regression coverage do not prove universal subjective improvement or exact acoustic equivalence.",
+    "Bowed-only stationary formants do not repair brass/wind/plucked glides.",
+    "Sustained-body partial-decay literals and source literals replaced by full body mix must not count as audible changes.",
+    "A26/A28 lifecycle probe overlap is disclosed; their counts are not independent native release gates.",
+    "Direct-body sample counts and full-preset stereo sample counts have distinct scopes and are not added as one score."
+  ],
+  "audition_actual": {
+    "artifact_id": 14870917591,
+    "author_report": {
+      "path": "/workspace/scratch/dde4ad85ed5b/a58-review.json",
+      "bytes": 7166,
+      "sha256": "4ee02fadd2624f1493cc5f77872bc57e3c2683209e33a5dbd607918f649591b4"
+    },
+    "observed": {
+      "zip_entries": 173,
+      "regular_files": 173,
+      "directory_entries": 0,
+      "checksummed_files": 172,
+      "metrics_csv_files": 30,
+      "wav_files": 138,
+      "auditioned_programs": 74,
+      "audio_seconds": 870,
+      "stereo_frames": 41760000,
+      "scalar_audio_samples": 83520000,
+      "audio_payload_bytes": 334080000,
+      "expanded_archive_bytes": 334882144,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "sample_format": "IEEE-754 binary32 float WAV",
+      "inventory_programs": 523,
+      "parameters_per_program": 200,
+      "compared_parameter_values": 104600,
+      "active_body_models": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "nonfinite_samples": 0,
+      "samples_over_full_scale": 0,
+      "max_peak_dbfs": -13.673645330265373,
+      "max_peak_path": "pressure-full/295-Pressure-Pad.wav",
+      "max_peak_amplitude": 0.2071656435728073,
+      "exactly_silent_wavs": [
+        "pressure-zero/444-Pressure-Lead.wav"
+      ]
+    },
+    "inventory_comparison": {
+      "programs_compared": 523,
+      "parameters_per_program": 200,
+      "values_compared": 104600,
+      "identity_fields": [
+        "index",
+        "host_index",
+        "name",
+        "category",
+        "description",
+        "tags"
+      ],
+      "parameter_ids_identical": true,
+      "all_identities_and_tags_identical": true,
+      "all_vectors_identical_at_binary32": true,
+      "ordered_binary32_vectors_sha256": "1343270d888e4efa21eed9e3613c195feae58e322010b4ace4d02fd4a5ab9ec8",
+      "ordered_identities_sha256": "67095c69664eaf52a4c81a1eeeea699eb9df14b232a00020a82e9ccd160fb730",
+      "delivered_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "retained_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "json_bytes_identical": true
+    },
+    "scope": "Actual archive accepted by A58. Only 74 programs have selected WAV captures; 523 identities and 104600 values are inventoried. No human listening claim."
+  }
+}

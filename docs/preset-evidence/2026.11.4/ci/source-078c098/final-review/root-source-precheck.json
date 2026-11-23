@@ -1,0 +1,19 @@
+{
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "checkpoint": "df9a8d2994e96534eb7c4ee57c0a82ea1fb6916c",
+  "tracked_changed_paths_after_source": 301,
+  "non_documentation_changes": [],
+  "removed_generated_bytecode_cache_files": [
+    "scripts/__pycache__/verify-ci-bundle.cpython-312.pyc",
+    "scripts/__pycache__/package-ci-artifacts.cpython-312.pyc"
+  ],
+  "original_packaging_notice_check": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python scripts/test-packaging-notices.py",
+    "exit_code": 0,
+    "tests_run": 7,
+    "failed": 0,
+    "seconds_reported": 1.115,
+    "evidence_basis": "Observed exec_command session77494 and final write_stdin tool result; stdout was not retained as a separate raw file.",
+    "scope": "Final documentation/packaging notice validation, separate from native CI totals."
+  }
+}

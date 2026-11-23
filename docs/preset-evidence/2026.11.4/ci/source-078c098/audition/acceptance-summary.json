@@ -1,0 +1,203 @@
+{
+  "schema": 1,
+  "worker": "A58",
+  "status": "accepted_actual_audition_scope",
+  "accepted": true,
+  "blockers_in_this_scope": [],
+  "source_commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "source_tree": "d84661c6c465c53ff41361e8aba0cba5e4a53397",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "producer_job_id": 137945804596,
+  "artifact": {
+    "artifact_id": 14870917591,
+    "artifact_name": "cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "zip_bytes": 300067470,
+    "zip_sha256": "ae8cd5c31e03f0db317852f49a9169ad7ff455e2f385e8a510e8da4569f500ad",
+    "expired": false,
+    "created_at": "2026-11-23T22:50:53Z",
+    "updated_at": "2026-11-23T22:50:53Z",
+    "expires_at": "2027-02-21T19:14:35Z"
+  },
+  "observed": {
+    "zip_entries": 173,
+    "regular_files": 173,
+    "directory_entries": 0,
+    "checksummed_files": 172,
+    "metrics_csv_files": 30,
+    "wav_files": 138,
+    "auditioned_programs": 74,
+    "audio_seconds": 870,
+    "stereo_frames": 41760000,
+    "scalar_audio_samples": 83520000,
+    "audio_payload_bytes": 334080000,
+    "expanded_archive_bytes": 334882144,
+    "sample_rate_hz": 48000,
+    "channels": 2,
+    "sample_format": "IEEE-754 binary32 float WAV",
+    "inventory_programs": 523,
+    "parameters_per_program": 200,
+    "compared_parameter_values": 104600,
+    "active_body_models": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "nonfinite_samples": 0,
+    "samples_over_full_scale": 0,
+    "max_peak_dbfs": -13.673645330265373,
+    "max_peak_path": "pressure-full/295-Pressure-Pad.wav",
+    "max_peak_amplitude": 0.2071656435728073,
+    "exactly_silent_wavs": [
+      "pressure-zero/444-Pressure-Lead.wav"
+    ]
+  },
+  "inventory_comparison": {
+    "programs_compared": 523,
+    "parameters_per_program": 200,
+    "values_compared": 104600,
+    "identity_fields": [
+      "index",
+      "host_index",
+      "name",
+      "category",
+      "description",
+      "tags"
+    ],
+    "parameter_ids_identical": true,
+    "all_identities_and_tags_identical": true,
+    "all_vectors_identical_at_binary32": true,
+    "ordered_binary32_vectors_sha256": "1343270d888e4efa21eed9e3613c195feae58e322010b4ace4d02fd4a5ab9ec8",
+    "ordered_identities_sha256": "67095c69664eaf52a4c81a1eeeea699eb9df14b232a00020a82e9ccd160fb730",
+    "delivered_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "retained_inventory_sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "json_bytes_identical": true
+  },
+  "source_provenance": {
+    "retained_inventory_export_source": "e32728b31d97fc356cac291cb98935fdcd38f803",
+    "export_to_release_product_source_paths_unchanged": true,
+    "historical_inventory_replaced": false,
+    "capture_binary_sha256": "af2aa823a467b7f4997ebc1faf2280820665e06b2e1d016b8d903100740c54bd",
+    "capture_script_sha256": "99150f4e685db3d3f0dde95ef2bc003a0b26d36499a76c957464af13ed80d9c7",
+    "frozen_helper_sha256": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62",
+    "supplement_sha256": "1dd142aa85bae7cbeddce32bde85e06b6e9a6a9aded7f30e759f2ee41d40aaf4"
+  },
+  "producer_binding": {
+    "job_conclusion": "success",
+    "required_successful_steps": [
+      {
+        "name": "Run actions/checkout@v5",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-23T19:28:45Z",
+        "completed_at": "2026-11-23T19:28:51Z"
+      },
+      {
+        "name": "Configure",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-23T19:29:17Z",
+        "completed_at": "2026-11-23T19:30:34Z"
+      },
+      {
+        "name": "Verify configured JUCE source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-11-23T19:30:34Z",
+        "completed_at": "2026-11-23T19:30:34Z"
+      },
+      {
+        "name": "Build",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-11-23T19:30:34Z",
+        "completed_at": "2026-11-23T19:42:31Z"
+      },
+      {
+        "name": "Test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-11-23T19:42:31Z",
+        "completed_at": "2026-11-23T22:48:21Z"
+      },
+      {
+        "name": "Capture curated preset auditions",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-23T22:48:21Z",
+        "completed_at": "2026-11-23T22:50:42Z"
+      },
+      {
+        "name": "Upload curated preset auditions",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-23T22:50:42Z",
+        "completed_at": "2026-11-23T22:50:54Z"
+      }
+    ],
+    "upload_progress_lines": 36,
+    "upload_progress_monotonic": true,
+    "upload_final_byte_count": 300067470,
+    "upload_api_and_zip_id_name_size_digest_run_match": true
+  },
+  "verification_exit_codes": {
+    "supplement": 0,
+    "frozen_helper": 0
+  },
+  "verified_at_utc": "2026-11-23T22:56:01.723738+00:00",
+  "evidence": {
+    "actual_acceptance": "a58/actual-001/acceptance.json",
+    "frozen_helper_per_wav_report": "a58/actual-001/frozen-helper-actual-audition.json",
+    "producer_binding": "a58/actual-001/producer-api-binding.json",
+    "all_zip_entries": "a58/actual-001/all-zip-entries.json",
+    "inventory_comparison": "a58/actual-001/delivered-retained-inventory-comparison.json",
+    "observed_json_shapes": "a58/actual-001/observed-json-shapes.json",
+    "commands_and_readme": "a58/actual-001/producer-commands-readme.json",
+    "source_contract": "a58/actual-001/source-contract.json",
+    "frozen_helper_invocation": "a58/actual-001/frozen-helper-invocation.json",
+    "supplement": "a58/verify_audition_supplement.py",
+    "retrieval_receipt": "a58/retrieval-receipt.json",
+    "artifact_api": "release-078c098/input/audition-artifact-api.json",
+    "producer_job_api": "release-078c098/input/audition-native-job-api.json",
+    "run_api": "release-078c098/input/audition-native-run-api.json",
+    "original_job_log": "release-078c098/input/audition-native-job.log"
+  },
+  "limits": [
+    "Representative single-note numerical/archive evidence; no human listening claim.",
+    "74 selected programs auditioned; 523 programs inventoried.",
+    "No acoustic equivalence, complete host qualification, or overall release authorization claim."
+  ],
+  "actions_not_performed": [
+    "No native product execution",
+    "No CI rerun",
+    "No source/workflow changes",
+    "No archive extraction",
+    "No human listening"
+  ],
+  "large_archive_path": "release-078c098/input/audition.zip",
+  "retention_note": "Retain small evidence records/scripts/API/log only. Do not copy or commit the large actual ZIP/WAV payload. Parent owns overall native-validator and publication gates."
+}

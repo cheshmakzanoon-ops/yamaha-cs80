@@ -1,0 +1,112 @@
+{
+  "artifact_id": 14870917591,
+  "artifact_name": "cs80-curated-preset-audition-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "zip_bytes": 300067470,
+  "zip_sha256": "ae8cd5c31e03f0db317852f49a9169ad7ff455e2f385e8a510e8da4569f500ad",
+  "expired": false,
+  "created_at": "2026-11-23T22:50:53Z",
+  "updated_at": "2026-11-23T22:50:53Z",
+  "expires_at": "2027-02-21T19:14:35Z",
+  "source_commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "producer_job_id": 137945804596,
+  "producer_job_conclusion": "success",
+  "required_successful_steps": [
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-23T19:28:45Z",
+      "completed_at": "2026-11-23T19:28:51Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-23T19:29:17Z",
+      "completed_at": "2026-11-23T19:30:34Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-23T19:30:34Z",
+      "completed_at": "2026-11-23T19:30:34Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T19:30:34Z",
+      "completed_at": "2026-11-23T19:42:31Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-23T19:42:31Z",
+      "completed_at": "2026-11-23T22:48:21Z"
+    },
+    {
+      "name": "Capture curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-23T22:48:21Z",
+      "completed_at": "2026-11-23T22:50:42Z"
+    },
+    {
+      "name": "Upload curated preset auditions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-23T22:50:42Z",
+      "completed_at": "2026-11-23T22:50:54Z"
+    }
+  ],
+  "cumulative_upload_byte_progress": [
+    8388608,
+    16777216,
+    25165824,
+    33554432,
+    41943040,
+    50331648,
+    58720256,
+    67108864,
+    75497472,
+    83886080,
+    92274688,
+    100663296,
+    109051904,
+    117440512,
+    125829120,
+    134217728,
+    142606336,
+    150994944,
+    159383552,
+    167772160,
+    176160768,
+    184549376,
+    192937984,
+    201326592,
+    209715200,
+    218103808,
+    226492416,
+    234881024,
+    243269632,
+    251658240,
+    260046848,
+    268435456,
+    276824064,
+    285212672,
+    293601280,
+    300067470
+  ],
+  "upload_log_matches_name_id_size_digest_run": true
+}

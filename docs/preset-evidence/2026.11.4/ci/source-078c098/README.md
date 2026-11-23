@@ -1,7 +1,23 @@
 # Source 078c098 qualification
 
-Qualification is in progress. Verified records here cover three installation/native-suite reviews, ten original validator lanes with their payload identities, the original UI/screenshot check, supporting filters, and the complete supporting DSP workflow including sanitizers. These are scoped results, not overall release acceptance.
+All required original CI and actual artifact checks have passed for source
+`078c0981ffa1b5472342e0fb5ab8702bc3bd2889`, native run **45246863788**, attempt **1**.
 
-The final release record must additionally bind the original Linux native suite and installation archive, its three validator lanes and tested/distributed VST3 identity, the actual audition archive, and the completed review/publication record. All 60 requested continuation workers have been spawned; the scopes dependent on Linux remain open.
+The [consolidated qualification](release-qualification.json) binds four native
+suites, four installation archives, all 13 original strictness-10 validator
+lanes, the tested/distributed payloads, and the actual audition archive.
+Supporting DSP, sanitizer, screenshot and source-equivalent filter evidence
+retain their own source and execution scope.
 
-See [qualification-status.json](qualification-status.json) for the dated checkpoint. The repository download table continues to identify the separately qualified preceding release until this qualification is complete.
+The native totals are **1,311 passed / 1,318 registered**, zero failures, seven
+formal CTest skips, and 24 separately counted nested Python skips. The 13
+validator lanes used 13 original invocations and zero validation retries.
+Actual audition checks cover 138 WAVs from 74 programs, 870 seconds and a complete
+523-by-200 factory inventory. They do not establish human listening or exact
+acoustic equivalence.
+
+Original parser and worker records preserve their deliberately limited scope
+and do not become overall release approvals by being copied here. The parent
+qualification supplies the additional original process, source and payload
+bindings. See [qualification-status.json](qualification-status.json) for final
+publication-review closure and the completed actual-worker record.
