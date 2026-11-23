@@ -1,0 +1,42 @@
+DECAY Piano strings        upper/fundamental change  -15.72 dB
+DECAY Tine electric piano  upper/fundamental change  -21.91 dB
+DECAY Reed electric piano  upper/fundamental change  -29.96 dB
+DECAY Nylon strings        upper/fundamental change  -19.00 dB
+DECAY Steel strings        upper/fundamental change  -14.30 dB
+DECAY Plucked bass         upper/fundamental change  -22.91 dB
+DECAY Vibraphone           upper/fundamental change  -16.72 dB
+DECAY Marimba              upper/fundamental change  -54.88 dB
+DECAY Celesta              upper/fundamental change  -16.33 dB
+PIANO fundamental 1046.752 Hz, sixth 6302.014 Hz, harmonic control 6279.014 Hz
+MALLET note 48 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MALLET note 48 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MALLET note 60 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MALLET note 60 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MALLET note 72 velocity 0.30: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+MALLET note 72 velocity 0.85: vibraphone -10.59 dB, marimba -34.76 dB upper/fundamental decay
+FAIL: Tine electric piano: treble fundamental damps faster than the bass body
+REGISTER DECAY Tine electric piano  low -0.345 dB high -0.621 dB
+FAIL: Reed electric piano: treble fundamental damps faster than the bass body
+REGISTER DECAY Reed electric piano  low -0.304 dB high -0.304 dB
+FAIL: Nylon strings: treble fundamental damps faster than the bass body
+REGISTER DECAY Nylon strings        low -0.547 dB high -0.547 dB
+FAIL: Steel strings: treble fundamental damps faster than the bass body
+REGISTER DECAY Steel strings        low -0.304 dB high -0.304 dB
+FAIL: Plucked bass: treble fundamental damps faster than the bass body
+REGISTER DECAY Plucked bass         low -0.426 dB high -0.426 dB
+FAIL: Vibraphone: treble fundamental damps faster than the bass body
+REGISTER DECAY Vibraphone           low -0.146 dB high -0.146 dB
+FAIL: Marimba: treble fundamental damps faster than the bass body
+REGISTER DECAY Marimba              low -1.216 dB high -1.216 dB
+FAIL: Celesta: treble fundamental damps faster than the bass body
+REGISTER DECAY Celesta              low -1.042 dB high -0.186 dB
+FAIL: Bass piano has significant pitched upper detail beyond harmonic 24
+FAIL: Bass piano high detail is a string mode, not just added contact hiss
+FAIL: Piano prompt decay settles into a slower coupled aftersound
+PIANO TWO-STAGE prompt -0.420 dB, aftersound -0.741 dB
+FAIL: Tine electric piano: pickup bark evolves with decaying excursion
+PICKUP CURVATURE Tine electric piano  +0.098 dB
+FAIL: Reed electric piano: pickup bark evolves with decaying excursion
+PICKUP CURVATURE Reed electric piano  -0.000 dB
+FAIL: String-body size changes resonance balance independently of brightness
+Instrument bodies: 1425 checks, 14 failures; 17315790 generated samples

@@ -1,0 +1,162 @@
+{
+  "worker": 41,
+  "task": "Restore the workflow regression contract after the reviewed macOS AU payload-binding correction",
+  "status": "completed; native execution and release qualification remain pending",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "finding": "The existing offline test froze registration plus three original validators. Signing the packaging AU source before copying it intentionally changes the registration block, so the prior digest fails even though all four validator bodies remain exactly unchanged.",
+  "changed_files": [
+    "scripts/test-pluginval-macos-download.py"
+  ],
+  "correction": [
+    "Independently pin all four validator bodies to their unchanged baseline bytes before checking the revised registration-and-original-validator block.",
+    "Update only the intentionally changed block digest to the reviewed AU source-signing/copy/comparison contract.",
+    "Require source signing before copy, complete bundle comparison before validation and before any packaging invocation, fail-fast packaging, both executable hash records, and retention of those records.",
+    "Preserve fixed regression seed, SUCCESS checks, original download/transfer failure constraints, and all existing Linux/Windows source guards."
+  ],
+  "source_hashes": {
+    "baseline_test_sha256": "7629af24883ba69c42c54ea1717a31459d04fee5a4246d8d10b4931254fc5101",
+    "test_sha256": "769b776c7c501e0c8670d0b4481a339487d6a498264d284eb6954aca8e6b7bb2",
+    "workflow_sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "original_registration_gate_sha256": "17f7fba2b466e8c3cd0686f35cbe93e42227583e73064f763670d150befd6b84",
+    "revised_registration_gate_sha256": "8b66229b5a9309754ca272b3d5a2878850b3b5c37253518d5a4c1d3442cf3e7e",
+    "all_four_validator_blocks_sha256": "cbc886a9c0c90a4988b0f012533620d2dfdc87bbb800180b53263925b9a66811"
+  },
+  "verification": {
+    "offline_test_command": "python3 scripts/test-pluginval-macos-download.py",
+    "offline_tests": 22,
+    "offline_exit": 0,
+    "offline_log": "......................\n----------------------------------------------------------------------\nRan 22 tests in 0.039s\n\nOK\n",
+    "source_contract_and_shell_fault_probe": {
+      "validator_bytes_equal_baseline": true,
+      "validator_sha256": "cbc886a9c0c90a4988b0f012533620d2dfdc87bbb800180b53263925b9a66811",
+      "valid_workflow_accepted": true,
+      "workflow_mutations": [
+        {
+          "name": "weaken Validate VST3 with pluginval",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "weaken Validate AU with pluginval",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "weaken Validate AU with pluginval GUI",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "weaken Validate AU GUI fixed-seed regression",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "change fixed regression seed",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "remove AU SUCCESS requirement",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "sign destination instead of source",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "omit initial comparison",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "omit final comparison",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "ignore final comparison failure",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "remove package fail-fast",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "run packager before final comparison",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "run production packaging before final comparison",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "omit pre-validation hash retention",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "omit post-validation hash retention",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "name": "omit final hash command",
+          "rejected": true,
+          "exception": "AssertionError"
+        }
+      ],
+      "shell_boundary_fixtures": [
+        {
+          "fixture": "none",
+          "exit": 0,
+          "packager_calls": [
+            "scripts/package-ci-artifacts.py --self-test",
+            "scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages"
+          ],
+          "hash_record_written": true
+        },
+        {
+          "fixture": "executable byte",
+          "exit": 1,
+          "packager_calls": [],
+          "hash_record_written": false
+        },
+        {
+          "fixture": "resource byte",
+          "exit": 1,
+          "packager_calls": [],
+          "hash_record_written": false
+        },
+        {
+          "fixture": "missing resource",
+          "exit": 1,
+          "packager_calls": [],
+          "hash_record_written": false
+        },
+        {
+          "fixture": "extra resource",
+          "exit": 1,
+          "packager_calls": [],
+          "hash_record_written": false
+        }
+      ],
+      "shell_boundary_scope": "Exact final packaging shell body with only AU source/destination paths redirected to inert fixture folders; Python packager replaced by a call-recording shell function. Does not execute codesign, a real AU, or the packager."
+    },
+    "whitespace_command": "git diff --check -- scripts/test-pluginval-macos-download.py",
+    "whitespace_exit": 0
+  },
+  "reproducible_probe_python": "from pathlib import Path\nimport hashlib, importlib.util, json, os, shutil, subprocess, tempfile, textwrap\nfrom unittest import mock\nrepo = Path('/workspace/scratch/a9592b052b11/cs80-work')\nscript = repo / 'scripts/test-pluginval-macos-download.py'\nspec = importlib.util.spec_from_file_location('contract_test', script)\nmodule = importlib.util.module_from_spec(spec)\nspec.loader.exec_module(module)\nworkflow = (repo / '.github/workflows/build.yml').read_text()\nbaseline = subprocess.check_output(['git','show','fa57967c7317828cf769cc7ca97f5857e566520f:.github/workflows/build.yml'],cwd=repo,text=True)\ndef macos(source): return source.split('  macos:',1)[1].split('  windows:',1)[0]\ndef validators(source): return macos(source).split('      - name: Validate VST3 with pluginval\\n',1)[1].split('      - name: Package native macOS',1)[0]\nassert validators(baseline) == validators(workflow)\ncase = module.DownloadTests('test_workflow_gate_unchanged_and_transfer_failure_stops_execution')\ncase.test_workflow_gate_unchanged_and_transfer_failure_stops_execution()\nmac = macos(workflow)\npackage_title = '      - name: Package native macOS VST3, AU and Standalone\\n'\npackage = mac.split(package_title,1)[1].split('      - name: Upload native macOS install bundle\\n',1)[0]\nregistration = mac.split('      - name: Register built AU\\n',1)[1].split('      - name: Validate VST3 with pluginval\\n',1)[0]\ncompare = '          diff -qr \"$AU_SOURCE\" \"$AU_DEST\"\\n'\nmutations = []\ndef add(name, before, after, within=None):\n    if within is None:\n        assert before in workflow\n        mutated = workflow.replace(before,after,1)\n    else:\n        assert before in within and workflow.count(within)==1\n        mutated = workflow.replace(within,within.replace(before,after,1),1)\n    assert mutated != workflow\n    try:\n        with mock.patch.object(Path,'read_text',return_value=mutated):\n            case.test_workflow_gate_unchanged_and_transfer_failure_stops_execution()\n    except (AssertionError,ValueError,IndexError) as error:\n        mutations.append({'name':name,'rejected':True,'exception':type(error).__name__})\n    else:\n        raise AssertionError('Mutation accepted: '+name)\nfor title in ['Validate VST3 with pluginval','Validate AU with pluginval','Validate AU with pluginval GUI','Validate AU GUI fixed-seed regression']:\n    block = mac.split('      - name: '+title+'\\n',1)[1].split('      - name:',1)[0]\n    add('weaken '+title, '--strictness-level 10', '--strictness-level 9', block)\nadd('change fixed regression seed','--random-seed 0x2b4eef5','--random-seed 0x2b4eef6',mac)\nadd('remove AU SUCCESS requirement',\"          grep -qx 'SUCCESS' pluginval-au.log\\n\",'',mac)\nadd('sign destination instead of source','codesign --force --sign - \"$AU_SOURCE\"','codesign --force --sign - \"$AU_DEST\"',registration)\nadd('omit initial comparison',compare,'',registration)\nadd('omit final comparison',compare,'',package)\nadd('ignore final comparison failure',compare,compare.rstrip()+' || true\\n',package)\nadd('remove package fail-fast', '          set -euo pipefail\\n','',package)\nadd('run packager before final comparison',compare,'          python scripts/package-ci-artifacts.py --self-test\\n'+compare,package)\nadd('run production packaging before final comparison',compare,'          python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages\\n'+compare,package)\nadd('omit pre-validation hash retention','            au-payload-before-validation.sha256\\n','')\nadd('omit post-validation hash retention','            au-payload-after-validation.sha256\\n','')\nadd('omit final hash command','            \"$AU_DEST/Contents/MacOS/CS-80 Reference\" | tee au-payload-after-validation.sha256\\n','            \"$AU_DEST/Contents/MacOS/CS-80 Reference\"\\n',package)\n# Exercise the actual final shell block with only AU path assignments redirected\n# to inert fixture folders and the Python packager replaced by an invocation spy.\nshell = textwrap.dedent(package.split('        run: |\\n',1)[1]).strip()+'\\n'\nshell = shell.replace('AU_SOURCE=\"$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component\"','AU_SOURCE=\"$AU_TEST_SOURCE\"')\nshell = shell.replace('AU_DEST=\"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\"','AU_DEST=\"$AU_TEST_DEST\"')\nassert '$HOME' not in shell and '$PWD' not in shell\nspy = 'python() { printf \"%s\\\\n\" \"$*\" >> \"$AU_TEST_MARKER\"; }\\n'\nshell_results=[]\nfor mutation in ['none','executable byte','resource byte','missing resource','extra resource']:\n    with tempfile.TemporaryDirectory(prefix='cs80-au-binding-') as work:\n        work=Path(work); source=work/'source.component';dest=work/'copy.component';marker=work/'packager-invocations.txt'\n        (source/'Contents/MacOS').mkdir(parents=True);(source/'Contents/Resources').mkdir()\n        (source/'Contents/MacOS/CS-80 Reference').write_bytes(b'inert executable fixture')\n        (source/'Contents/Resources/resource.txt').write_text('fixture resource')\n        shutil.copytree(source,dest)\n        if mutation=='executable byte':(dest/'Contents/MacOS/CS-80 Reference').write_bytes(b'changed executable fixture')\n        if mutation=='resource byte':(dest/'Contents/Resources/resource.txt').write_text('changed resource')\n        if mutation=='missing resource':(dest/'Contents/Resources/resource.txt').unlink()\n        if mutation=='extra resource':(dest/'Contents/Resources/extra.txt').write_text('extra')\n        run=subprocess.run(['bash','-c',spy+shell],cwd=work,env={**os.environ,'AU_TEST_SOURCE':str(source),'AU_TEST_DEST':str(dest),'AU_TEST_MARKER':str(marker)},capture_output=True,text=True)\n        calls=marker.read_text().splitlines() if marker.exists() else []\n        assert run.returncode == (0 if mutation=='none' else 1),(mutation,run.returncode,run.stderr)\n        assert len(calls)==(2 if mutation=='none' else 0),(mutation,calls)\n        shell_results.append({'fixture':mutation,'exit':run.returncode,'packager_calls':calls,'hash_record_written':(work/'au-payload-after-validation.sha256').exists()})\nresult={'validator_bytes_equal_baseline':True,'validator_sha256':hashlib.sha256(validators(workflow).encode()).hexdigest(),'valid_workflow_accepted':True,'workflow_mutations':mutations,'shell_boundary_fixtures':shell_results,'shell_boundary_scope':'Exact final packaging shell body with only AU source/destination paths redirected to inert fixture folders; Python packager replaced by a call-recording shell function. Does not execute codesign, a real AU, or the packager.'}\n(repo.parent/'a41/probe-results.json').write_text(json.dumps(result,indent=2)+'\\n')\nprint(json.dumps({'valid_workflow':True,'workflow_mutations_rejected':len(mutations),'shell_positive':1,'shell_negative_halts':4}))\n",
+  "qualification_boundary": [
+    "No workflow or DSP source was modified by worker41. The workflow correction remains owned by worker39.",
+    "All tests use offline transfer fixtures, workflow text and inert local bundle folders. No pluginval download, macOS codesign, AU host, actual packaging, or native build was performed.",
+    "Actual qualification still requires successful native comparison-bearing steps, original validator exits, and retained AU hashes matching the downloaded package."
+  ]
+}

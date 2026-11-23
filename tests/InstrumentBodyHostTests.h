@@ -14,19 +14,20 @@ namespace cs80::tests
 {
 namespace instrument_body_host_detail
 {
-using Values = std::array<float, 8>;
-inline constexpr Values a { 1.0f, 0.83f, 0.31f, 2.17f, 2.0f, 0.47f, 0.72f, 0.63f };
-inline constexpr Values b { 15.0f, 0.21f, 0.81f, 0.44f, 10.0f, 0.91f, 0.19f, 3.31f };
-inline constexpr Values defaults { 0.0f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 1.0f };
+using Values = std::array<float, 10>;
+inline constexpr Values a { 1.0f, 0.83f, 0.31f, 2.17f, 2.0f, 0.47f, 0.72f, 0.63f, 1.35f, 0.82f };
+inline constexpr Values b { 15.0f, 0.21f, 0.81f, 0.44f, 10.0f, 0.91f, 0.19f, 3.31f, 0.60f, 2.20f };
+inline constexpr Values defaults { 0.0f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f };
 inline constexpr const char* ids[] {
     "body1_model", "body1_mix", "body1_brightness", "body1_decay",
-    "body2_model", "body2_mix", "body2_brightness", "body2_decay"
+    "body2_model", "body2_mix", "body2_brightness", "body2_decay", "body1_size", "body2_size"
 };
 
 inline void hashId(std::uint64_t& hash, const juce::String& id)
 {
-    // FNV-1a over UTF-8 IDs, each followed by '\n'. Baselines below were
-    // calculated from the published 73dc17b8 layout, not this test's enums.
+    // FNV-1a over UTF-8 IDs, each followed by '\n'. The 190/296 prefixes
+    // come from published 73dc17b8; the complete 198/304 prefixes from
+    // published fa57967c (2026.11.3), independently of this test's enums.
     for (auto p = id.toRawUTF8(); *p != 0; ++p)
     {
         hash ^= static_cast<unsigned char>(*p);
@@ -38,22 +39,22 @@ inline void hashId(std::uint64_t& hash, const juce::String& id)
 
 inline void set(Cs80AudioProcessor& host, const Values& values)
 {
-    for (int i = 0; i < 8; ++i) host.setParamValue(P_body1Model + i, values[(size_t) i]);
+    for (size_t i = 0; i < values.size(); ++i) host.setParamValue(P_body1Model + (int) i, values[i]);
 }
 
 inline Values valuesOf(const ParamValues& values)
 {
     Values result {};
-    for (int i = 0; i < 8; ++i) result[(size_t) i] = values[P_body1Model + i];
+    for (size_t i = 0; i < result.size(); ++i) result[i] = values[P_body1Model + (int) i];
     return result;
 }
 
 inline bool matches(const Cs80AudioProcessor& host, const Values& expected)
 {
-    for (int i = 0; i < 8; ++i)
+    for (size_t i = 0; i < expected.size(); ++i)
     {
-        const float actual = host.getParamValue(P_body1Model + i);
-        if (!std::isfinite(actual) || std::abs(actual - expected[(size_t) i]) > 1.0e-5f)
+        const float actual = host.getParamValue(P_body1Model + (int) i);
+        if (!std::isfinite(actual) || std::abs(actual - expected[i]) > 1.0e-5f)
             return false;
     }
     return true;
@@ -85,17 +86,20 @@ template <typename Check>
 void testInstrumentBodyHost(Check&& check)
 {
     using namespace instrument_body_host_detail;
-    static_assert(P_body1Model == 190 && P_numParams == 198,
-                  "instrument bodies append eight core controls");
+    static_assert(P_body1Model == 190 && P_body1Size == 198 && P_numParams == 200,
+                  "resonant sizes append after the eight published core body controls");
     {
         auto host = std::make_unique<Cs80AudioProcessor>();
         const auto& parameters = host->getParameters();
-        check(parameters.size() == 304 && Cs80AudioProcessor::hostParameterCount == 304,
-              "instrument bodies append eight parameters after the 296 published host slots");
+        check(parameters.size() == 306 && Cs80AudioProcessor::hostParameterCount == 306,
+              "resonant sizes append after all 304 published host slots");
         std::uint64_t coreHash = UINT64_C(14695981039346656037);
         for (int index = 0; index < 190; ++index) hashId(coreHash, Cs80AudioProcessor::parameterId(index));
         check(coreHash == UINT64_C(0x3a8332a1fb546bd8),
               "all first 190 core IDs retain their published order and spelling");
+        for (int index = 190; index < 198; ++index) hashId(coreHash, Cs80AudioProcessor::parameterId(index));
+        check(coreHash == UINT64_C(0x8e37bad444e187c2),
+              "the complete preceding-release 198-core-ID prefix is unchanged");
         std::uint64_t hostHash = UINT64_C(14695981039346656037);
         bool oldHostIds = parameters.size() >= 296;
         for (int index = 0; oldHostIds && index < 296; ++index)
@@ -104,6 +108,13 @@ void testInstrumentBodyHost(Check&& check)
             else oldHostIds = false;
         check(oldHostIds && hostHash == UINT64_C(0x00acbd99c8c30a07),
               "all first 296 host indexes retain their published parameter IDs");
+        oldHostIds = oldHostIds && parameters.size() >= 304;
+        for (int index = 296; oldHostIds && index < 304; ++index)
+            if (auto* parameter = dynamic_cast<juce::HostedAudioProcessorParameter*>(parameters[index]))
+                hashId(hostHash, parameter->getParameterID());
+            else oldHostIds = false;
+        check(oldHostIds && hostHash == UINT64_C(0xb86982a235459491),
+              "the complete preceding-release 304-host-ID prefix is unchanged");
 
         constexpr float minimum[] { 0.0f, 0.0f, 0.0f, 0.25f };
         constexpr float maximum[] { 19.0f, 1.0f, 1.0f, 4.0f };
@@ -141,6 +152,22 @@ void testInstrumentBodyHost(Check&& check)
                           && range.interval == 0.0f,
                       "body mix, brightness and decay remain continuous host controls");
         }
+        for (int rank = 0; rank < 2; ++rank)
+        {
+            const int index = bodySizeParam(rank);
+            auto* parameter = host->getAPVTS().getParameter(ids[8 + rank]);
+            check(parameter != nullptr, "both resonant sizes expose stable host IDs");
+            if (parameter == nullptr) continue;
+            const auto& range = parameter->getNormalisableRange();
+            check(parameters.indexOf(parameter) == 304 + rank
+                      && host->hostParameterIndex(index) == 304 + rank
+                      && parameter->getVersionHint() == 17 && parameter->isAutomatable(),
+                  "size parameters append with AU version hint 17 without moving old body slots");
+            check(range.start == 0.5f && range.end == 2.5f && range.interval == 0.0f
+                      && parameter->convertFrom0to1(parameter->getDefaultValue()) == 1.0f
+                      && !Cs80AudioProcessor::isPhysicalSetupParameter(index),
+                  "resonant size has a neutral saved-state default and continuous bounded range");
+        }
     }
 
     juce::TemporaryFile fixture("-cs80-instrument-body-host");
@@ -154,17 +181,17 @@ void testInstrumentBodyHost(Check&& check)
         writer->getStateInformation(saved);
         set(*reader, b);
         reader->setStateInformation(saved.getData(), (int) saved.getSize());
-        check(matches(*reader, a), "session round trip replaces all eight live body controls");
+        check(matches(*reader, a), "session round trip replaces all ten live body controls");
         reader->prepareToPlay(48000.0, 64);
         process(*reader);
         check(engineMatches(*reader, a), "restored body controls reach the engine on the next audio block");
         const auto file = writer->saveUserPreset("Distinct instrument bodies", Cs80AudioProcessor::PresetOverwrite::yes);
-        check(file.wasSaved(), "user preset saves both instrument bodies");
+        check(file.wasSaved(), "user preset saves both instrument bodies and resonant sizes");
         if (file.wasSaved())
         {
             set(*reader, b);
             check(reader->loadUserPreset(file.file).wasOk() && matches(*reader, a),
-                  "user preset loading restores all eight body controls over different live values");
+                  "user preset loading restores all ten body controls over different live values");
         }
 
         // An old file must not inherit the receiving instance's audible body.
@@ -190,10 +217,38 @@ void testInstrumentBodyHost(Check&& check)
             }
         }
 
+        // The immediately preceding body-aware release lacks only size. Keep
+        // its eight authored body values and initialize geometry to neutral.
+        auto previousRelease = writer->getAPVTS().copyState();
+        previousRelease.setProperty(Cs80AudioProcessor::stateSchemaKey, 4, nullptr);
+        for (int rank = 0; rank < 2; ++rank)
+            previousRelease.removeChild(previousRelease.getChildWithProperty("id", ids[8 + rank]), nullptr);
+        Values previousExpected = a;
+        previousExpected[8] = previousExpected[9] = 1.0f;
+        set(*reader, b);
+        restore(*reader, previousRelease);
+        check(matches(*reader, previousExpected),
+              "previous body-aware sessions preserve eight sound controls and default missing geometry");
+        process(*reader);
+        check(engineMatches(*reader, previousExpected),
+              "previous body-aware session geometry defaults reach the audio thread");
+        const auto previousFile = directory.getChildFile("previous-body-aware.cs80xml");
+        const bool previousWrote = previousRelease.createXml()->writeTo(previousFile);
+        check(previousWrote, "previous body-aware user-preset fixture writes");
+        if (previousWrote)
+        {
+            set(*reader, b);
+            check(reader->loadUserPreset(previousFile).wasOk() && matches(*reader, previousExpected),
+                  "previous body-aware user presets retain eight controls and default both missing sizes");
+            process(*reader);
+            check(engineMatches(*reader, previousExpected),
+                  "previous body-aware user-preset size defaults replace the receiving audio values");
+        }
+
         auto malformed = writer->getAPVTS().copyState();
-        const Values outside { 3.7f, -0.25f, 1.25f, 0.01f, 77.0f, 1.5f, -0.5f, 8.0f };
-        const Values repaired { 4.0f, 0.0f, 1.0f, 0.25f, 19.0f, 1.0f, 0.0f, 4.0f };
-        for (int i = 0; i < 8; ++i)
+        const Values outside { 3.7f, -0.25f, 1.25f, 0.01f, 77.0f, 1.5f, -0.5f, 8.0f, -1.0f, 12.0f };
+        const Values repaired { 4.0f, 0.0f, 1.0f, 0.25f, 19.0f, 1.0f, 0.0f, 4.0f, 0.5f, 2.5f };
+        for (size_t i = 0; i < outside.size(); ++i)
             malformed.getChildWithProperty("id", ids[i]).setProperty("value", outside[(size_t) i], nullptr);
         restore(*reader, malformed);
         check(matches(*reader, repaired), "state admission rounds body choices and bounds every continuous body control");
@@ -207,7 +262,7 @@ void testInstrumentBodyHost(Check&& check)
         check(matches(*host, a), "first A/B toggle copies the complete instrument bodies");
         set(*host, b);
         host->abToggle();
-        check(matches(*host, a), "A/B recall restores body models and all six continuous controls in A");
+        check(matches(*host, a), "A/B recall restores body models and all eight continuous controls in A");
         host->abToggle();
         check(matches(*host, b), "A/B recall restores the distinct instrument bodies in B");
         juce::MemoryBlock saved;
@@ -220,6 +275,17 @@ void testInstrumentBodyHost(Check&& check)
         check(xml != nullptr, "A/B body session is readable XML");
         if (xml != nullptr)
         {
+            auto previous = juce::ValueTree::fromXml(*xml);
+            auto previousSlot = previous.getChildWithName("AB_COMPARE").getChildWithName("SLOT");
+            check(previousSlot.isValid(), "previous body-aware A/B fixture has an inactive slot");
+            for (int rank = 0; rank < 2; ++rank) previousSlot.removeProperty(ids[8 + rank], nullptr);
+            restore(*reopened, previous);
+            reopened->abToggle();
+            Values previousExpected = a;
+            previousExpected[8] = previousExpected[9] = 1.0f;
+            check(matches(*reopened, previousExpected),
+                  "previous inactive A/B slots preserve their eight body controls and default only sizes");
+
             auto old = juce::ValueTree::fromXml(*xml);
             auto slot = old.getChildWithName("AB_COMPARE").getChildWithName("SLOT");
             check(slot.isValid(), "body A/B fixture includes an inactive slot");
@@ -235,7 +301,7 @@ void testInstrumentBodyHost(Check&& check)
         set(*host, a);
         host->getUndoableState().syncNow();
         host->getUndoManager().clearUndoHistory();
-        for (int i = 0; i < 8; ++i)
+        for (size_t i = 0; i < a.size(); ++i)
         {
             auto* parameter = host->getAPVTS().getParameter(ids[i]);
             if (parameter == nullptr) { check(false, "body gesture parameter exists"); continue; }
@@ -263,7 +329,7 @@ void testInstrumentBodyHost(Check&& check)
             sawOff = sawOff || (expected[0] == 0.0f && expected[4] == 0.0f);
             set(*host, b);
             host->loadFactoryPreset(index);
-            const auto factoryLabel = "factory program " + juce::String(index) + " replaces all eight body controls, including off values";
+            const auto factoryLabel = "factory program " + juce::String(index) + " replaces all ten body controls, including neutral defaults";
             check(matches(*host, expected), factoryLabel.toRawUTF8());
             set(*host, a);
             const bool original = index < legacyProgramCount;
@@ -273,7 +339,7 @@ void testInstrumentBodyHost(Check&& check)
             midi.addEvent(juce::MidiMessage::controllerEvent(1, 32, inBank / 128), 1);
             midi.addEvent(juce::MidiMessage::programChange(1, inBank % 128), 2);
             process(*host, midi);
-            const auto midiLabel = "MIDI program " + juce::String(index) + " publishes all eight body values to the engine at recall";
+            const auto midiLabel = "MIDI program " + juce::String(index) + " publishes all ten body values to the engine at recall";
             check(host->getCurrentProgram() == index && matches(*host, expected) && engineMatches(*host, expected),
                   midiLabel.toRawUTF8());
         }
@@ -339,6 +405,61 @@ void testInstrumentBodyHost(Check&& check)
                           && engineMatches(*midiHost, valuesOf(programs[(size_t) target].values)),
                       "same-block Program Change and next note render the recalled body, including off and return transitions");
             }
+        }
+    }
+
+    // Geometry belongs to the accepted note, not to the current block. A
+    // control change must leave a held voice exact, yet affect the next note.
+    // The second assertion rejects an implementation that ignores size.
+    for (int rank = 0; rank < 2; ++rank)
+    {
+        auto changed = std::make_unique<Cs80AudioProcessor>();
+        auto unchanged = std::make_unique<Cs80AudioProcessor>();
+        ParamValues sound;
+        sound[P_sourcePerformance] = 1.0f;
+        sound[P_analogNoise] = sound[P_drift] = sound[P_voiceDispersion] = sound[P_chorusOn] = 0.0f;
+        sound[P_detune] = 0.0f;
+        sound[P_kasScanTiming] = 0.0f;
+        sound[P_mix] = static_cast<float>(rank);
+        sound[bodyParam(rank, 0)] = static_cast<float>(body::oboe);
+        sound[bodyParam(rank, 1)] = 1.0f;
+        sound[bodySizeParam(rank)] = 1.0f;
+        for (auto* host : { changed.get(), unchanged.get() })
+        {
+            host->applyParameterValues(sound);
+            host->prepareToPlay(48000.0, 256);
+            juce::MidiBuffer start;
+            start.addEvent(juce::MidiMessage::noteOn(1, 60, (juce::uint8) 100), 0);
+            process(*host, start);
+        }
+        changed->setParamValue(bodySizeParam(rank), 2.0f);
+        for (bool nextNote : { false, true })
+        {
+            double delta = 0.0, energy = 0.0;
+            bool finite = true;
+            juce::AudioBuffer<float> edited(2, 256), reference(2, 256);
+            for (int block = 0; block < 8; ++block)
+            {
+                juce::MidiBuffer events;
+                if (nextNote && block == 0)
+                    events.addEvent(juce::MidiMessage::noteOn(1, 65, (juce::uint8) 100), 0);
+                auto otherEvents = events;
+                edited.clear(); reference.clear();
+                changed->processBlock(edited, events);
+                unchanged->processBlock(reference, otherEvents);
+                for (int channel = 0; channel < 2; ++channel)
+                    for (int frame = 0; frame < 256; ++frame)
+                    {
+                        const double x = edited.getSample(channel, frame), y = reference.getSample(channel, frame);
+                        finite = finite && std::isfinite(x) && std::isfinite(y);
+                        delta += (x - y) * (x - y);
+                        energy += x * x + y * y;
+                    }
+            }
+            check(finite && energy > 1.0e-8, "size capture fixture renders finite audible bodies on both ranks");
+            check(nextNote ? delta > 1.0e-7 * energy : delta == 0.0,
+                  nextNote ? "each size control audibly affects its next accepted note"
+                           : "each live size edit leaves its already sounding body bit-identical");
         }
     }
 

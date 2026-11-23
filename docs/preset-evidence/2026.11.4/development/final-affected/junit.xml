@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="4"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="12"
+	timestamp="2026-11-23T10:57:36"
+	>
+	<testcase name="cs80_lfo_random_switching_tests" classname="cs80_lfo_random_switching_tests" time="0.202864" status="run">
+		<properties/>
+		<system-out>88200-start5-seed1821285621 frames=22050 wraps=4 switches=6 draws=12 max_error=5.96046447753906e-08 max_phase_error=2.22044604925031e-15 min_boundary_clearance=2.35023412031767e-07
+88200-start5-seed1000234273 frames=22050 wraps=4 switches=6 draws=12 max_error=1.19209289550781e-07 max_phase_error=2.22044604925031e-15 min_boundary_clearance=2.35023412031767e-07
+88200-start5-seed2714038285 frames=22050 wraps=4 switches=6 draws=12 max_error=5.96046447753906e-08 max_phase_error=2.22044604925031e-15 min_boundary_clearance=2.35023412031767e-07
+88200-start6-seed1821285621 frames=22050 wraps=4 switches=6 draws=13 max_error=5.96046447753906e-08 max_phase_error=2.22044604925031e-15 min_boundary_clearance=2.35023412031767e-07
+88200-start6-seed1000234273 frames=22050 wraps=4 switches=6 draws=13 max_error=5.96046447753906e-08 max_phase_error=2.22044604925031e-15 min_boundary_clearance=2.35023412031767e-07
+88200-start6-seed2714038285 frames=22050 wraps=4 switches=6 draws=13 max_error=8.94069671630859e-08 max_phase_error=2.2...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_lfo_random_variable_rate_tests" classname="cs80_lfo_random_variable_rate_tests" time="0.120857" status="run">
+		<properties/>
+		<system-out>88200-wave5-seed1821285621 frames=22050 wraps=4 max_error=0 min_boundary_clearance=2.35023412031767e-07
+88200-wave5-seed1000234273 frames=22050 wraps=4 max_error=0 min_boundary_clearance=2.35023412031767e-07
+88200-wave5-seed2714038285 frames=22050 wraps=4 max_error=0 min_boundary_clearance=2.35023412031767e-07
+88200-wave6-seed1821285621 frames=22050 wraps=4 max_error=5.96046447753906e-08 min_boundary_clearance=2.35023412031767e-07
+88200-wave6-seed1000234273 frames=22050 wraps=4 max_error=1.19209289550781e-07 min_boundary_clearance=2.35023412031767e-07
+88200-wave6-seed2714038285 frames=22050 wraps=4 max_error=1.19209289550781e-07 min_boundary_clearance=2.35023412031767e-07
+96000-wave5-seed1821285621 frames=24000 wraps=4 max_error=0 min_boundary_clearance=3.90285253524776e-06
+96000-wave5-seed1000234273 frames=24000 wraps=4 max_error=0 min_boundary_clearance=3.90285253524776e-06
+96000-wave5-seed2714038285 frames=24000 wraps=4 max_error=0 min_boundary_clearance=3.90285253524776e-06
+96000-wave6-seed1821285621 fram...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_instrument_body_tests" classname="cs80_instrument_body_tests" time="6.58953" status="run">
+		<properties/>
+		<system-out>DECAY Piano strings        upper/fundamental change  -14.61 dB
+DECAY Tine electric piano  upper/fundamental change  -18.00 dB
+DECAY Reed electric piano  upper/fundamental change  -37.34 dB
+DECAY Nylon strings        upper/fundamental change  -17.65 dB
+DECAY Steel strings        upper/fundamental change  -14.30 dB
+DECAY Plucked bass         upper/fundamental change  -21.55 dB
+DECAY Vibraphone           upper/fundamental change  -15.84 dB
+DECAY Marimba              upper/fundamental change  -48.70 dB
+DECAY Celesta              upper/fundamental change  -14.00 dB
+PIANO fundamental 1046.752 Hz, sixth 6302.514 Hz, harmonic control 6279.014 Hz
+MALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALL...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_instrument_body_engine_tests" classname="cs80_instrument_body_engine_tests" time="12.9043" status="run">
+		<properties/>
+		<system-out>BATCH comparison backend: runtime-dispatched exact batch
+REGISTER Piano strings relative waveform error 0
+REGISTER Bowed strings relative waveform error 0
+REGISTER Oboe relative waveform error 0
+REGISTER Bassoon relative waveform error 0
+KBC body LOW lever -1 relative waveform change 0.632465763
+KBC body LOW lever +1 relative waveform change 0.239494811
+KBC body HIGH lever -1 relative waveform change 0.976275609
+KBC body HIGH lever +1 relative waveform change 0.261275781
+BODY FILTER high-pass fundamental change -26.758 dB
+BODY FILTER high-pass resonance at cutoff change 9.069 dB
+BODY FILTER low-pass fourth-partial change -15.203 dB
+BODY FILTER resonance at cutoff change 9.069 dB
+TAIL rate 44100 maximum onset/pre derivative 0.78110, sample step 0.00159997 FS
+TAIL rate 48000 maximum onset/pre derivative 0.78255, sample step 0.00147320 FS
+TAIL rate 96000 maximum onset/pre derivative 1.32957, sample step 0.00073601 FS
+Instrument body Engine integration: 18156 checks, 0 failures
+</system-out>
+	</testcase>
+</testsuite>

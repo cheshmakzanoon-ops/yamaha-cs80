@@ -1,0 +1,80 @@
+{
+  "scope": "A15 pre-calibration development recipe snapshot. No recorded-instrument equivalence asserted; final combined bank/native qualification separate.",
+  "owned_programs": 42,
+  "new_presets": 0,
+  "identities_categories_tags_order_preserved": 523,
+  "existing_core_ids_preserved": 198,
+  "changed_existing_nonvolume_control_range": [
+    18,
+    52
+  ],
+  "data_audit": "passed: 301 curated +222 original; full range/distinctness/tag gates",
+  "rendered_programs": 42,
+  "render_condition": {
+    "rate": 48000,
+    "velocity": 0.8,
+    "pressure": 0,
+    "hold_seconds": 4,
+    "tail_seconds": 1,
+    "note": "category default"
+  },
+  "range_correction_provenance": "40 initial renders have identical parameter digests to final vectors; Laser Zap and Stereo Delay Pluck were re-rendered after their range corrections. All42 final retained metrics match final200-value digests.",
+  "peak_dbfs_range": [
+    -31.11147337,
+    -13.53738822
+  ],
+  "nonfinite_samples": 0,
+  "samples_over_full_scale": 0,
+  "arp_modes_rates_octaves_preserved": true,
+  "motion": [
+    {
+      "file": "512-LFO-Pan-Keys.wav",
+      "expected_hz": 1.0,
+      "measured_hz": 1.0,
+      "target_peak_to_peak": 0.3911641138664307,
+      "unit": "normalized left/right RMS balance",
+      "measurement": "20 ms RMS windows, 1.0-7.8 s, least-squares offset/trend plus sinusoid; frequency grid \u00b10.3 Hz in .005 Hz steps"
+    },
+    {
+      "file": "521-Tremolo-LFO-Organ.wav",
+      "expected_hz": 4.0,
+      "measured_hz": 4.0,
+      "target_peak_to_peak": 5.308830817588972,
+      "unit": "dB RMS",
+      "measurement": "20 ms RMS windows, 1.0-7.8 s, least-squares offset/trend plus sinusoid; frequency grid \u00b10.3 Hz in .005 Hz steps"
+    }
+  ],
+  "nature": [
+    {
+      "file": "484-Wind.wav",
+      "loudest_50ms_seconds": 1.975,
+      "held_8_to_9_5_seconds_vs_peak_db": -1.9473523070019496
+    },
+    {
+      "file": "485-Surf.wav",
+      "loudest_50ms_seconds": 1.875,
+      "held_8_to_9_5_seconds_vs_peak_db": -56.093961113142015
+    },
+    {
+      "file": "491-Thunder.wav",
+      "loudest_50ms_seconds": 0.225,
+      "held_8_to_9_5_seconds_vs_peak_db": -63.63928759328332
+    },
+    {
+      "file": "492-Rain.wav",
+      "loudest_50ms_seconds": 6.2250000000000005,
+      "held_8_to_9_5_seconds_vs_peak_db": -1.5069409352775294
+    }
+  ],
+  "source_sha256": {
+    "src/core/curated/Fx.inc": "309f99c0bdc81da77ca421c233a18c12576607ae4988196684ba5d5661c3ee10",
+    "src/core/curated/Modern.inc": "dd3d6006734867f7f7dd62c0b14534875567931151d85870cbd515f456f7b38e",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b"
+  },
+  "capture_final_sha256": "5a7235c877873485d1fdb59932fba9bb3d0aa2b6849b6b6f32c7b666a048826a",
+  "core_archive_without_recipes_sha256": "4b0cd784977b1c88dd10243e35e6871d5e79b2c07231b89d73214c6b3e420b1b"
+}

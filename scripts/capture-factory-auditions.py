@@ -27,6 +27,11 @@ PRESSURE_COMPARISONS = [
     'Aftertouch Vibrato Lead', 'Pressure Lead', 'Wah Lead',
     'Pressure Pad', 'Flute', 'Solo Violin', 'Pressure Keys',
 ]
+SUSTAINED_C4 = [
+    'Solo Violin', 'Flute', 'Clarinet', 'Oboe', 'English Horn',
+    'Covered Horn', 'Muted Trumpet',
+]
+SUSTAINED_BASS_C4 = ['Solo Cello', 'Bass Clarinet', 'Bassoon']
 
 
 def selections():
@@ -55,6 +60,29 @@ def selections():
     for note in (48, 60, 84):
         groups.append(dict(folder=f'tine-register-{note}', names=['Tine Piano'], velocity=.85,
                            pressure=0, hold=3, tail=1, note=note))
+    # Five held seconds expose the bass piano's prompt sound and aftersound.
+    # These matched requests differ from the shorter keyboard overview clips.
+    for note in (36, 60, 84):
+        for label, velocity in (('soft', .3), ('firm', .85)):
+            groups.append(dict(folder=f'piano-register-{note}-{label}',
+                               names=['Analog Piano', 'Stage Keys'], velocity=velocity,
+                               pressure=0, hold=5, tail=1, note=note))
+    for label, velocity in (('soft', .3), ('firm', .85)):
+        groups.append(dict(folder=f'sustained-effort-{label}-c4', names=list(SUSTAINED_C4),
+                           velocity=velocity, pressure=0, hold=6, tail=1, note=60))
+        # The main body is at 16 feet in these three existing presets. Key 72
+        # therefore matches the C4 foundation of the 8-foot programs above.
+        # Complete presets retain their own upper layers and other controls.
+        groups.append(dict(folder=f'sustained-bass-effort-{label}-c4',
+                           names=list(SUSTAINED_BASS_C4), velocity=velocity,
+                           pressure=0, hold=6, tail=1, note=72))
+    # Equal played keys examine corresponding clarinet fingering registers;
+    # Bass Clarinet's 16-foot foundation sounds one octave below Clarinet.
+    for note in (60, 64, 68, 72):
+        for label, velocity in (('soft', .3), ('firm', .85)):
+            groups.append(dict(folder=f'clarinet-register-{note}-{label}',
+                               names=['Clarinet', 'Bass Clarinet'], velocity=velocity,
+                               pressure=0, hold=3, tail=1, note=note))
     return groups
 
 
@@ -93,6 +121,26 @@ def roster_summary(groups):
     if not count:
         raise RuntimeError('Empty audition roster')
     return dict(wav_count=count, selected_program_count=len(names), audio_seconds=seconds)
+
+
+def validate_resolved_requests(groups, programs):
+    """Reject aliases between category defaults and explicit MIDI notes."""
+    by_name = {program['name']: program for program in programs}
+    requests = set()
+    for group in groups:
+        for name in group['names']:
+            category = by_name[name].get('category')
+            if not isinstance(category, str) or not category:
+                raise RuntimeError('Audition program has an invalid category')
+            # These are preset_capture.cpp's category defaults. The explicit
+            # note and the default key must identify the same render request.
+            default_note = (48 if category == 'Bass' else 67 if category in ('Winds', 'Leads')
+                            else 72 if category == 'Bells' else 60)
+            note = group.get('note', default_note)
+            request = (name, note, group['velocity'], group['pressure'], group['hold'], group['tail'])
+            if request in requests:
+                raise RuntimeError('Duplicate audition render request after resolving the default note')
+            requests.add(request)
 
 
 def verify_source(source: str, repo: Path | None = None):
@@ -134,6 +182,12 @@ def audition_readme(groups, summary, source, revision):
         'The instrument-bodies folder includes the revised slide-brass, tremulant, woodwind and plucked-string voices.',
         'Textures-and-effects includes evolving/breathing pads and the distinct thunder, rain, surf and wind layers.',
         'The Tine Piano register folders compare MIDI notes 48, 60 and 84.',
+        'Piano-register folders compare Analog Piano and Stage Keys at MIDI 36, 60 and 84, each at velocities 0.3 and 0.85.',
+        'Their five-second holds expose the bass attack and aftersound before a one-second key-release excerpt.',
+        'Sustained-effort folders compare all six expressive body families at velocities 0.3 and 0.85 with pressure zero.',
+        'The c4 folders share a C4 main-body foundation: the 8-foot presets use MIDI 60; Solo Cello, Bass Clarinet and Bassoon use MIDI 72 for their 16-foot bodies.',
+        'These complete presets retain their own upper layers, filters and envelopes; same-foundation comparisons do not isolate resonant size alone.',
+        'Clarinet-register folders compare played MIDI keys 60, 64, 68 and 72 at both velocities; Bass Clarinet sounds one octave below Clarinet at those equal keys.',
         '',
         'Tracked sources are checked against the recorded commit before and after capture; the executable hash must also stay unchanged.',
         'Provenance records the executable SHA256, source tree, exact commands and CI run identity when available.',
@@ -184,6 +238,7 @@ def capture_auditions(capture: Path, out: Path, source: str):
         names = {p['name'] for p in programs}
         if len(names) != 523 or not {n for g in groups for n in g['names']} <= names:
             raise RuntimeError('Audition roster contains missing or ambiguous names')
+        validate_resolved_requests(groups, programs)
         for group, command in zip(groups, commands):
             subprocess.run(command, check=True)
             directory = out / group['folder']

@@ -1,0 +1,63 @@
+{
+  "scope": "Same source recipes and DSP; only finish differs. No master normalization. Authored behavior, not reference-instrument likeness.",
+  "finish_comparisons": [
+    {
+      "name": "Stage Keys",
+      "dark_centroid_hz": 517.5521078246428,
+      "dark_upper_fraction": 0.12320749889382719,
+      "bright_centroid_hz": 522.5767990742336,
+      "bright_upper_fraction": 0.12521971450409647,
+      "centroid_ratio": 1.0097085707383366,
+      "upper_fraction_gain_db": 0.0703556777014983
+    },
+    {
+      "name": "Electric Piano I",
+      "dark_centroid_hz": 276.7249264588835,
+      "dark_upper_fraction": 0.0012017673251447732,
+      "bright_centroid_hz": 291.5615498672512,
+      "bright_upper_fraction": 0.0026403859347670752,
+      "centroid_ratio": 1.0536150595402622,
+      "upper_fraction_gain_db": 3.4184701881210207
+    },
+    {
+      "name": "Solo Violin",
+      "dark_centroid_hz": 498.05109035545644,
+      "dark_upper_fraction": 0.10578282123797214,
+      "bright_centroid_hz": 529.1032870076349,
+      "bright_upper_fraction": 0.12207790235942606,
+      "centroid_ratio": 1.0623474122504515,
+      "upper_fraction_gain_db": 0.6222191276545007
+    },
+    {
+      "name": "Covered Horn",
+      "dark_centroid_hz": 402.7025322192253,
+      "dark_upper_fraction": 0.04566643965393923,
+      "bright_centroid_hz": 476.46521921910045,
+      "bright_upper_fraction": 0.09460636399478344,
+      "centroid_ratio": 1.1831691660675225,
+      "upper_fraction_gain_db": 3.163231980513408
+    },
+    {
+      "name": "Warm Pad",
+      "dark_centroid_hz": 290.4513976711394,
+      "dark_upper_fraction": 0.009138417969932465,
+      "bright_centroid_hz": 339.89506378757346,
+      "bright_upper_fraction": 0.0414277344891553,
+      "centroid_ratio": 1.1702304293003134,
+      "upper_fraction_gain_db": 6.564201663940354
+    },
+    {
+      "name": "Picked Bass",
+      "dark_centroid_hz": 155.55693930585113,
+      "dark_upper_fraction": 0.00012521350891725263,
+      "bright_centroid_hz": 156.89532740716243,
+      "bright_upper_fraction": 0.0001742900265950706,
+      "centroid_ratio": 1.0086038469725853,
+      "upper_fraction_gain_db": 1.4362135001448824
+    }
+  ],
+  "struck_slow_attacks_unchanged": true,
+  "tone_studies": 22,
+  "named_rank_difference_db_min": 2.25507,
+  "named_rank_difference_db_max": 111.865
+}

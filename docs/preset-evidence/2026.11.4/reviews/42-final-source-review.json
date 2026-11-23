@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "worker": 42,
+  "task": "final_source_review",
+  "status": "no_new_blocker_found_in_scoped_static_review",
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "scope": "Read-only final production-source review after workers 34/37 piano onset corrections. No compilation, render, shared build, publication or native qualification was performed by this worker.",
+  "source_sha256": {
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "src/core/FactoryPresets.cpp": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5",
+    "src/core/FactoryPresets.h": "985bcbacc9b085230c323de9a483931390c9b52a7de170238ee76a68b63e1de1",
+    "src/core/CuratedLibrary.inc": "6717273d39dd5fa873ab8f7227cf71a64485ccea2fa281214a24d8657a7f6fe3",
+    "src/core/OriginalCircuitLibrary.inc": "654b15c08e1f6ae9e6f56f7a9c0beffa5c3bc34b65d60e644b4aa6741afd3c34",
+    "src/plugin/PluginProcessor.cpp": "cc79c978d5488b7f1f29d29c8966665a6bbd3ada31aa8050064bd3f44f31e401",
+    "src/plugin/PluginProcessor.h": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+    "src/plugin/PluginProcessorLibrary.cpp": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+    "src/plugin/PluginProcessorLibrary.h": "aa5dd1edd4c4ad7e9ae72ca197cd1d26920f037ed814cbb40e85dd6dd96f0d93",
+    "src/plugin/PresetFileValues.h": "a96291961553a0487ec3e7ccdf018f045320d9ef3f4eb97ebdf0bbd3aac15fed",
+    "tests/InstrumentBodyTests.cpp": "9bf8c1f037f000db6bb4756f854cabf3c11916af292aa31f5a61cf316bd5c9d2"
+  },
+  "findings": [],
+  "reviewed_contracts": [
+    {
+      "area": "Fixed storage and bounded mode construction",
+      "sources": [
+        "src/core/InstrumentBody.h",
+        "src/core/Engine.h"
+      ],
+      "observations": [
+        "InstrumentBody stores48 Modes in std::array; all modal loops stop at count, and addMode guards count against maximumModes before indexing.",
+        "The piano principal budget is clamped 24..42 before ceil, with exactly 6 possible coupled components; current maximum is42 + 6 = 48. Invalid note/velocity/size/decay inputs receive finite bounded values before coefficient construction.",
+        "The filter owns 2 fixed Stage objects. Added DSP paths contain no dynamic containers, allocation, lock acquisition or asynchronous work. Current and previousbody/filter states reside in each persistent rank."
+      ],
+      "qualification": "Source bounds and ownership review, not an allocation-profiler or deadline measurement."
+    },
+    {
+      "area": "Final piano onset random streams and register contours",
+      "sources": [
+        "src/core/InstrumentBody.h",
+        "tests/InstrumentBodyTests.cpp"
+      ],
+      "observations": [
+        "principalPhaseSeed captures the private body RNG before principal modes. Piano alone restores that seed and reserves 42 draws before constructing coupled components. A variable admitted principal count therefore cannot shift the coupled/contact stream.",
+        "Every coupled component consumes one detune draw even when detuneBlend is zero, followed by its phase draw. No note > 31 conditional RNG consumption remains.",
+        "Detuning uses a clamped cubic smoothstep over MIDI 30..32; course weight uses a clamped cubic smoothstep over 47..49, joining constant endpoint values with zero endpoint slope.",
+        "The extra draws occur only inside note-on mode construction. Audio-rate rotation, gain, envelope and texture loops are unchanged by workers 34/37.",
+        "The body seed comes from unsigned voice age/rank arithmetic, and the body owns its RNG state. The oscillator/shared noise audioRng is not consumed by these changes."
+      ],
+      "qualification": "Independently inspected source mechanism. Workers34/37 own the retained executed counterfactual and bit-preservation results; their counts are not recounted as new tests here."
+    },
+    {
+      "area": "Filter lifecycle and outgoing-voice continuity",
+      "sources": [
+        "src/core/Engine.cpp",
+        "src/core/InstrumentBodyFilter.h"
+      ],
+      "observations": [
+        "Internal-rate preparation prepares current/previous bodies and filters, clears handoff counters and computes a 3 ms internal-sample handoff length.",
+        "Engine reset and hard all-notes-off clear both body/filter states. New onset resets the incoming filter before noteOn.",
+        "An eligible audible reassignment copies the current body and its filter together, retaining frequency/colour/pressure. The outgoing filter uses tickFrozen rather than receiving the new note cutoff/resonance controls.",
+        "Filter reset clears integrator, coefficient-cache, countdown and switch-blend state. First live tick initializes coefficients and bypass blend consistently.",
+        "The fully idle voice branch continues before optional body/filter processing. The previously reviewed behavior of an enabled body at zero mix, or an idle rank while the other rank is active, remains unchanged in scope."
+      ],
+      "qualification": "Reviewed against worker 23 lifecycle conclusions; no repeat continuity render was performed."
+    },
+    {
+      "area": "Off/zero-mix and hardware-source isolation",
+      "sources": [
+        "src/core/Engine.cpp",
+        "src/core/FactoryPresets.cpp"
+      ],
+      "observations": [
+        "A disabled InstrumentBody bypasses its tick/filter call. Scalar and batched VCA paths still blend the body only when bodyMix>0; their original circuit multiply/add paths are retained when mix is zero.",
+        "buildSettings allows the body model/mix only for sourcePerformance with the corresponding PANEL source 13. Electrical hardware/source-table paths receive model 0 and mix 0.",
+        "Hardware tone selection resets the preceding 4 body fields for that rank and its newly appended size. The other rank is not implicitly reset.",
+        "Original-bank rank-II swaps include both body field groups and the corresponding size fields."
+      ],
+      "qualification": "Source-path review. This does not independently produce a new bit-identical audio certificate."
+    },
+    {
+      "area": "Control timing, rate domains and finite ranges",
+      "sources": [
+        "src/core/Engine.cpp",
+        "src/core/InstrumentBody.h",
+        "src/core/InstrumentBodyFilter.h"
+      ],
+      "observations": [
+        "Model, partial decay and size enter noteOn; size is not reread in tick. Body mix and intrinsic brightness remain live through RankSettings.",
+        "Body coefficients use the internal sample rate; modal amplitude guards use outputRate, bounded to the host rate and no greater than internalRate. Expanded high modes retain state while their output weight fades toward the host guard, allowing later downward bends.",
+        "The linear body filter receives the same effective cutoffHz, modulatedQ and bypass switches computed for the rank. The removed scalar LP/envelope/brilliance colour term is not also applied to body brightness.",
+        "Filter cutoff and Q are finite-clamped before tan/coefficient calculation; size is finite-clamped 0.5..2.5 before resonance/log/power calculations. The body frequency path rejects nonfinite/nonpositive input and clamps accepted control frequency.",
+        "The 16-sample coefficient update period and 1 ms bypass smoother are explicit bounded control work. These choices do not add a second nonlinear circuit-filter clock."
+      ],
+      "qualification": "Control ownership and finite-domain review; no new alias, modulation-bandwidth or realtime performance measurement."
+    },
+    {
+      "area": "Appended-parameter integration and count search",
+      "sources": [
+        "src/core/Params.h",
+        "src/plugin/PluginProcessor.cpp",
+        "src/plugin/PluginProcessor.h",
+        "src/plugin/PluginProcessorLibrary.cpp",
+        "src/plugin/PluginProcessorLibrary.h",
+        "src/plugin/PresetFileValues.h"
+      ],
+      "observations": [
+        "The two sizes append after the preceding 8 body controls; static assertions pin core indexes 198/199, with total 200. The old bodyParam four-field stride remains valid because sizes use a separate bodySizeParam helper.",
+        "Host layout appends the two parameters after existing groups with AU hint 17. hostParameterCount derives from P_numParams+2+4*26 and therefore becomes 306.",
+        "Raw-parameter caches, factory/MIDI recall, A/B writes and preset-file usage arrays iterate or size themselves from P_numParams. hostParameterIndex queries the actual JUCE parameter object index, avoiding an assumed core-to-host offset.",
+        "Search of src for literal 198/304 found only the intentional compatibility comment/static assertion and UI coordinates; no stale production array bound or host count was found. The archival compatibility_probe uses its explicitly pinned 137-field corpus with current-ID mapping and defaults, not a stale 198/304 runtime schema."
+      ],
+      "qualification": "Complements worker 38 full-prefix and state-default analysis. Native wrapper execution and all platform qualification still belong to the parent release process."
+    }
+  ],
+  "checks_performed": [
+    {
+      "command": "git diff fa57967 -- src/core/Engine.cpp src/core/Engine.h src/core/Params.h src/core/FactoryPresets.cpp src/plugin/PluginProcessor.cpp",
+      "result": "Reviewed complete production integration diff."
+    },
+    {
+      "command": "Read current InstrumentBody.h and InstrumentBodyFilter.h; inspect current Engine startVoice, buildSettings, processInternalSample scalar/batched branches and host cache/recall code.",
+      "result": "No additional actionable defect found in scope."
+    },
+    {
+      "command": "rg -n '\\b(198|304)\\b' src; rg for P_numParams, hostParameterCount, hostParameterIndex, body control references across src/plugin, src/core and src/tools",
+      "result": "No stale production bound/count found; matches classified above."
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "Passed at review time."
+    },
+    {
+      "command": "SHA-256 of 15 reviewed source/test files; assert final InstrumentBody hash matches worker 37 handoff",
+      "result": "Exact file hashes recorded above."
+    }
+  ],
+  "prior_reviews_used_as_context": [
+    "23-filter-continuity.json",
+    "31-model-sanitizers.json",
+    "34-piano-register-fix.json",
+    "37-piano-course-boundaries.json",
+    "38-evidence-compatibility.json"
+  ],
+  "limitations": [
+    "This is a manual/static source audit, not another execution of the existing model, engine, sanitizer or native suites.",
+    "Calibration master tables remain parent-owned and may change after this review. They are deliberately excluded from the reviewed source hashes and no final all-program level acceptance is claimed.",
+    "Host state and automation identity compatibility does not freeze old DSP audio. Stored body-enabled patches intentionally use the revised model and filter code.",
+    "No claim of acoustic equivalence, perceptual superiority, complete DAW certification, native artifact acceptance or realtime deadlines follows from this review."
+  ]
+}

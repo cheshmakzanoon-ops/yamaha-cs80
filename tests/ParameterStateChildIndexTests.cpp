@@ -270,7 +270,7 @@ int main()
 {
     const auto restores = restoreParameters();
     const auto saves = saveParameters(restores);
-    require(restores.size() == 304 && saves.size() == 304, "complete real host ID set");
+    require(restores.size() == 306 && saves.size() == 306, "complete real host ID set");
     require(saves[cs80::P_legacyNumParams].id == "hardware_source_1", "save host order");
     require(restores[cs80::P_numParams].id == "hardware_source_1", "restore ensure order");
     // Frozen from published commit 73dc17b8: detect an accidental rename or
@@ -292,14 +292,18 @@ int main()
     };
     require(idHash(restores, 190) == UINT64_C(0x3a8332a1fb546bd8), "all published core IDs retain their order");
     require(idHash(saves, 296) == UINT64_C(0x00acbd99c8c30a07), "all published host positions retain their IDs");
+    // Complete prefixes from the immediately preceding 2026.11.3 release,
+    // including its already-published instrument-body parameters.
+    require(idHash(restores, 198) == UINT64_C(0x8e37bad444e187c2), "preceding-release 198 core IDs remain stable");
+    require(idHash(saves, 304) == UINT64_C(0xb86982a235459491), "preceding-release 304 host positions remain stable");
     constexpr const char* bodyIds[] {
         "body1_model", "body1_mix", "body1_brightness", "body1_decay",
-        "body2_model", "body2_mix", "body2_brightness", "body2_decay"
+        "body2_model", "body2_mix", "body2_brightness", "body2_decay", "body1_size", "body2_size"
     };
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < 10; ++i)
         require(restores[(size_t) (190 + i)].id == bodyIds[i]
                     && saves[(size_t) (296 + i)].id == bodyIds[i],
-                "eight body controls append after the published core and host prefixes");
+                "body controls and appended geometry preserve the published core and host prefixes");
     ValueTree minimal("STATE"), metadata("STATE");
     int position = 0;
     for (const auto& p : saves)
@@ -403,7 +407,7 @@ int main()
         }
         compare(tree, restores, saves);
     }
-    std::printf("PASS: ParameterStateChildIndex %d differential fixtures, 304 real IDs, "
+    std::printf("PASS: ParameterStateChildIndex %d differential fixtures, 306 real IDs, "
                 "seed=0x8052026; binary/XML, callback/read traces and input immutability\n", fixtures);
     return 0;
 }

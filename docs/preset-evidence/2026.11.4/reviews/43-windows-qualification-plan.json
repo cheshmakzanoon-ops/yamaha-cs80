@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "worker": 43,
+  "task": "windows_release_qualification",
+  "status": "prepared_actual_run_and_archives_pending",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "preset_library_revision": "2026.11.4",
+  "target": "windows-x86_64",
+  "source_commit": null,
+  "source_tree": null,
+  "run_id": null,
+  "run_attempt": null,
+  "actual_new_source_results_counted": false,
+  "actual_artifacts_inspected": false,
+  "source_review": {
+    "workflow": ".github/workflows/build.yml",
+    "workflow_sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "native_job_key": "windows",
+    "native_job_name": "Windows / VST3 + Standalone",
+    "validator_job_key": "pluginval-windows",
+    "validator_job_name": "pluginval / Windows VST3 (strictness 10)",
+    "runner": "windows-2022",
+    "generator": "Visual Studio 17 2022",
+    "architecture": "x64",
+    "plugin_build_enabled": true,
+    "tests_enabled": true,
+    "configuration": "Release"
+  },
+  "required_native_steps": [
+    "Configure",
+    "Verify configured JUCE source",
+    "Build",
+    "Test",
+    "Upload Windows VST3",
+    "Package Windows VST3 and Standalone",
+    "Upload Windows install bundle",
+    "Upload test and JUCE source evidence"
+  ],
+  "configure_failure_contract": "The Configure step uses continue-on-error but retains LASTEXITCODE; require a successful actual Configure result, skipped Report CMake failure, and successful native job. The required failure-report step exits1 on configure failure.",
+  "required_validator_steps": [
+    "Download Windows VST3",
+    "Fetch pluginval 1.0.4",
+    "Validate VST3 headless",
+    "Validate state regression seed 0x5037a0c",
+    "Upload pluginval reports"
+  ],
+  "validator_contract": {
+    "version": "1.0.4",
+    "strictness": 10,
+    "lanes": [
+      {
+        "step": "Validate VST3 headless",
+        "seed": "runtime randomized; record actual",
+        "console": "pluginval-windows.log",
+        "report": "pluginval-reports/cs80-windows"
+      },
+      {
+        "step": "Validate state regression seed 0x5037a0c",
+        "seed": "0x5037a0c",
+        "console": "pluginval-windows-seed-regression.log",
+        "report": "pluginval-reports/cs80-windows-seed-regression"
+      }
+    ],
+    "target": "vst3\\CS-80 Reference.vst3",
+    "in_process": true,
+    "skip_gui_tests": true,
+    "timeout_ms": 120000,
+    "exit_requirements": [
+      "Successful original process LASTEXITCODE equals0",
+      "Exact SUCCESS line in each original console",
+      "Successful original workflow steps and validator job",
+      "Both independent lanes required; seeded pass never rescues randomized failure"
+    ],
+    "runtime_retries_allowed": 0,
+    "explicit_skips": "Preserve actual reported skips separately; skipping the optional Steinberg validator is not a pluginval pass of that separate validator."
+  },
+  "artifact_inventory": [
+    {
+      "name": "cs80-windows-install-bundle",
+      "producer_step": "Upload Windows install bundle",
+      "purpose": "actual distributed VST3 and Standalone archive"
+    },
+    {
+      "name": "cs80-windows-vst3",
+      "producer_step": "Upload Windows VST3",
+      "consumer_step": "Download Windows VST3",
+      "purpose": "exact selected bundle consumed by both pluginval commands"
+    },
+    {
+      "name": "cs80-windows-test-evidence",
+      "producer_step": "Upload test and JUCE source evidence",
+      "required_members": [
+        "ctest-results.xml",
+        "LastTest.log",
+        "ci-juce-provenance.txt"
+      ]
+    },
+    {
+      "name": "cs80-pluginval-windows",
+      "producer_step": "Upload pluginval reports",
+      "required_members": [
+        "pluginval-download.json",
+        "pluginval-version.txt",
+        "pluginval-windows.log",
+        "pluginval-windows-seed-regression.log",
+        "pluginval-reports/cs80-windows",
+        "pluginval-reports/cs80-windows-seed-regression"
+      ]
+    }
+  ],
+  "api_and_archive_binding": [
+    "Obtain final published source SHA/tree, workflow source bytes, build run ID/attempt and jobs from live GitHub APIs after parent supplies source/run.",
+    "Require successful current-source native and validator jobs; artifact presence and always-upload steps alone do not qualify a failed run.",
+    "Save individual artifact API objects and require exact ID, name, source/run, bytes, API SHA256 digest and nonexpired state against downloaded ZIPs.",
+    "Require successful producer/upload steps at the inspected run attempt; bind Windows validator download log to exact cs80-windows-vst3 ID, bytes and digest.",
+    "Use retained2026.11.4 installation and validator-payload tools with immutable source; compare entire selected VST3 bundle resources, link targets and binary bytes.",
+    "The top-level .exp/.lib compiler sidecar pair is allowed only under its bounded AMD64 structure and exact consumer-log contract; it is not ignored inside the selected VST3 bundle."
+  ],
+  "native_evidence_contract": {
+    "junit": "Derive registered/passed/failed/formally-skipped/disabled counts from actual JUnit; require nonempty suite and zero failures. List each formal skip and reason. Do not copy prior revision totals.",
+    "nested_python_subtest_skips": "Parse LastTest.log and count separately from formal CTest skips.",
+    "juce": {
+      "sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "version": "8.0.11",
+      "required": "Configured source, actual SHA/version, source_clean=true, verification=PASS and source/run identity must agree."
+    },
+    "relevant_tests": [
+      "cs80_instrument_body_tests",
+      "cs80_instrument_body_engine_tests",
+      "cs80_library_audit_tests",
+      "cs80_preset_voicing_tests",
+      "cs80_preset_character_tests",
+      "cs80_preset_precision_tests",
+      "cs80_parameter_state_index_tests",
+      "cs80_circuit_source_host_tests",
+      "cs80_modern_recall_host_tests",
+      "cs80_ui_smoke"
+    ],
+    "parameter_expectations": "Inspect current-source host regression outputs for200core/306host compatibility and missing-size defaults; no native wrapper pass inferred from local syntax checks."
+  },
+  "verification_tools": {
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py": "7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd"
+  },
+  "commands_for_actual_phase": [
+    "python3 docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py --archive WINDOWS_INSTALL_ZIP --artifact-api INSTALL_API_JSON --source SOURCE_SHA --run-id RUN_ID --platform windows --architecture x86_64 --out INSTALL_ACCEPTANCE_JSON",
+    "python3 docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py --install-archive WINDOWS_INSTALL_ZIP --install-api INSTALL_API_JSON --validator-archive WINDOWS_VST3_ZIP --validator-api VST3_API_JSON --consumer-log ORIGINAL_VALIDATOR_JOB_LOG --source SOURCE_SHA --run-id RUN_ID --platform windows --out PAYLOAD_ACCEPTANCE_JSON"
+  ],
+  "reviewed_evidence_references": [
+    "reviews/36-native-workflow-map.json",
+    "reviews/39-macos-au-binding.json",
+    "reviews/41-workflow-gate-regression.json"
+  ],
+  "historical_format_reference_only": [
+    "../2026.11.3/ci/source-cbbee6a/reports/windows-x86_64-native.json",
+    "../2026.11.3/ci/source-cbbee6a/reports/windows-x86_64-validators.json"
+  ],
+  "limitations": [
+    "This is a ready plan, not release qualification. No new run/API/artifact results were read or counted.",
+    "The report will be completed after parent supplies the final source/run and actual artifacts.",
+    "No production, workflow, shared build, commit or push changes were performed."
+  ]
+}

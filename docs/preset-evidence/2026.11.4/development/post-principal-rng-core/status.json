@@ -1,0 +1,11 @@
+{
+  "passed": 191,
+  "failed": 3,
+  "state": "development intermediate run",
+  "failures": {
+    "cs80_pluginval_macos_download_tests": "Expected immutable workflow block pin needs authorized AU binding update; worker41 owns regression update.",
+    "cs80_lfo_random_switching_tests": "Existing generated capture output violates fresh captures only precondition.",
+    "cs80_lfo_random_variable_rate_tests": "Existing generated capture output violates fresh captures only precondition."
+  },
+  "follow_up": "Preserve old generated LFO captures, rerun those fixtures in fresh output directories; independently validate worker41 workflow regression. Final piano course boundary header and both body suites require a new build."
+}

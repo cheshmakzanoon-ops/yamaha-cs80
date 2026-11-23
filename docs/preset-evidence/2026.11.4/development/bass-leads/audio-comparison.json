@@ -1,0 +1,1247 @@
+{
+  "interpretation": "Matched fixture change evidence only; not a quality score. Pressure Lead must be evaluated with pressure and is separately covered by existing tests.",
+  "programs": [
+    {
+      "name": "Analog Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-15.93266791",
+        "rms_dbfs": "-30.4541165",
+        "centroid_hz": "125.4639968"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-15.10553087",
+        "rms_dbfs": "-28.87174119",
+        "centroid_hz": "122.1152286"
+      },
+      "difference": {
+        "peak_dbfs": 0.8271370399999984,
+        "rms_dbfs": 1.5823753099999998,
+        "early_rms_dbfs": 1.04606991,
+        "body_rms_dbfs": 1.7054163299999985,
+        "tail_rms_dbfs": -1.0645828000000108,
+        "centroid_hz": -3.348768200000009
+      }
+    },
+    {
+      "name": "Resonance Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-14.80759594",
+        "rms_dbfs": "-30.21098403",
+        "centroid_hz": "121.8742825"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-13.76657403",
+        "rms_dbfs": "-28.1063087",
+        "centroid_hz": "114.1090855"
+      },
+      "difference": {
+        "peak_dbfs": 1.0410219100000013,
+        "rms_dbfs": 2.104675329999999,
+        "early_rms_dbfs": 1.6112791900000012,
+        "body_rms_dbfs": 2.2083404999999985,
+        "tail_rms_dbfs": -0.9797850999999866,
+        "centroid_hz": -7.765197000000001
+      }
+    },
+    {
+      "name": "Sine Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-22.95460055",
+        "rms_dbfs": "-27.6784778",
+        "centroid_hz": "65.48535994"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-23.16045857",
+        "rms_dbfs": "-27.78892319",
+        "centroid_hz": "65.48653009"
+      },
+      "difference": {
+        "peak_dbfs": -0.20585802000000086,
+        "rms_dbfs": -0.11044538999999887,
+        "early_rms_dbfs": -0.12475702000000055,
+        "body_rms_dbfs": -0.10635079000000047,
+        "tail_rms_dbfs": -3.6258717999999988,
+        "centroid_hz": 0.0011701500000071974
+      }
+    },
+    {
+      "name": "Sub Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-22.88570066",
+        "rms_dbfs": "-27.3296753",
+        "centroid_hz": "65.48653013"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-22.66929492",
+        "rms_dbfs": "-26.99323425",
+        "centroid_hz": "65.48653013"
+      },
+      "difference": {
+        "peak_dbfs": 0.21640574000000257,
+        "rms_dbfs": 0.33644105000000124,
+        "early_rms_dbfs": 0.31000999000000107,
+        "body_rms_dbfs": 0.3421587399999986,
+        "tail_rms_dbfs": -4.250030900000013,
+        "centroid_hz": 0.0
+      }
+    },
+    {
+      "name": "Pluck Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-29.33252299",
+        "rms_dbfs": "-48.16743193",
+        "centroid_hz": "92.57083553"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-26.60617683",
+        "rms_dbfs": "-44.46713986",
+        "centroid_hz": "86.96845984"
+      },
+      "difference": {
+        "peak_dbfs": 2.726346160000002,
+        "rms_dbfs": 3.700292069999996,
+        "early_rms_dbfs": 3.0042507399999963,
+        "body_rms_dbfs": 12.311536419999996,
+        "tail_rms_dbfs": 6.02153100000001,
+        "centroid_hz": -5.602375690000002
+      }
+    },
+    {
+      "name": "Fretless Glide",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-24.69958604",
+        "rms_dbfs": "-40.36591206",
+        "centroid_hz": "116.5542275"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-23.66030643",
+        "rms_dbfs": "-39.23691037",
+        "centroid_hz": "97.59478511"
+      },
+      "difference": {
+        "peak_dbfs": 1.0392796100000012,
+        "rms_dbfs": 1.1290016900000026,
+        "early_rms_dbfs": 0.7657509600000019,
+        "body_rms_dbfs": 2.2131682500000025,
+        "tail_rms_dbfs": 2.141157000000021,
+        "centroid_hz": -18.959442389999992
+      }
+    },
+    {
+      "name": "Funk Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-25.48133812",
+        "rms_dbfs": "-48.6007817",
+        "centroid_hz": "142.3747428"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-27.85181995",
+        "rms_dbfs": "-51.43378932",
+        "centroid_hz": "264.0704082"
+      },
+      "difference": {
+        "peak_dbfs": -2.3704818299999992,
+        "rms_dbfs": -2.8330076200000036,
+        "early_rms_dbfs": -3.3360083799999956,
+        "body_rms_dbfs": 10.587018400000005,
+        "tail_rms_dbfs": 0.0,
+        "centroid_hz": 121.69566539999997
+      }
+    },
+    {
+      "name": "Brass Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-17.78043591",
+        "rms_dbfs": "-30.03347153",
+        "centroid_hz": "107.0874318"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-17.26622956",
+        "rms_dbfs": "-28.93444987",
+        "centroid_hz": "107.7552906"
+      },
+      "difference": {
+        "peak_dbfs": 0.514206350000002,
+        "rms_dbfs": 1.0990216599999982,
+        "early_rms_dbfs": 0.7693720400000004,
+        "body_rms_dbfs": 1.1177393900000006,
+        "tail_rms_dbfs": -2.1408890000000014,
+        "centroid_hz": 0.6678587999999905
+      }
+    },
+    {
+      "name": "Octave Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-18.02510891",
+        "rms_dbfs": "-30.81702395",
+        "centroid_hz": "147.7914336"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-16.71497601",
+        "rms_dbfs": "-29.1127863",
+        "centroid_hz": "121.0874901"
+      },
+      "difference": {
+        "peak_dbfs": 1.3101328999999993,
+        "rms_dbfs": 1.7042376499999996,
+        "early_rms_dbfs": 1.3869222400000005,
+        "body_rms_dbfs": 1.6846366400000008,
+        "tail_rms_dbfs": -1.659476799999993,
+        "centroid_hz": -26.70394350000001
+      }
+    },
+    {
+      "name": "Pulse Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-16.56805669",
+        "rms_dbfs": "-27.48851856",
+        "centroid_hz": "126.0477252"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-15.48529247",
+        "rms_dbfs": "-25.61457832",
+        "centroid_hz": "125.887167"
+      },
+      "difference": {
+        "peak_dbfs": 1.0827642199999996,
+        "rms_dbfs": 1.8739402399999996,
+        "early_rms_dbfs": 1.5599056199999985,
+        "body_rms_dbfs": 1.9550155799999978,
+        "tail_rms_dbfs": -0.7327607,
+        "centroid_hz": -0.160558199999997
+      }
+    },
+    {
+      "name": "Round Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-28.23488729",
+        "rms_dbfs": "-35.25095392",
+        "centroid_hz": "75.03394537"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-27.22863457",
+        "rms_dbfs": "-34.50031428",
+        "centroid_hz": "78.31688979"
+      },
+      "difference": {
+        "peak_dbfs": 1.006252719999999,
+        "rms_dbfs": 0.7506396400000028,
+        "early_rms_dbfs": -0.21549344000000303,
+        "body_rms_dbfs": 1.043542930000001,
+        "tail_rms_dbfs": -2.2352063000000015,
+        "centroid_hz": 3.282944420000007
+      }
+    },
+    {
+      "name": "Velocity Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-16.53249657",
+        "rms_dbfs": "-31.15506388",
+        "centroid_hz": "122.9488677"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-16.40489155",
+        "rms_dbfs": "-30.25796964",
+        "centroid_hz": "123.126271"
+      },
+      "difference": {
+        "peak_dbfs": 0.12760502000000074,
+        "rms_dbfs": 0.8970942400000013,
+        "early_rms_dbfs": 0.29685010000000034,
+        "body_rms_dbfs": 1.0165179299999991,
+        "tail_rms_dbfs": -1.715354600000012,
+        "centroid_hz": 0.1774033000000088
+      }
+    },
+    {
+      "name": "Rubber Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-17.81747354",
+        "rms_dbfs": "-40.07815652",
+        "centroid_hz": "121.2220669"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-16.46657754",
+        "rms_dbfs": "-39.24467913",
+        "centroid_hz": "120.7350618"
+      },
+      "difference": {
+        "peak_dbfs": 1.3508960000000023,
+        "rms_dbfs": 0.8334773899999988,
+        "early_rms_dbfs": 1.0503396699999996,
+        "body_rms_dbfs": 2.067592200000007,
+        "tail_rms_dbfs": 0.0,
+        "centroid_hz": -0.48700510000000463
+      }
+    },
+    {
+      "name": "Dark Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-25.70001341",
+        "rms_dbfs": "-32.09959471",
+        "centroid_hz": "71.03961631"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-24.91352943",
+        "rms_dbfs": "-30.71699147",
+        "centroid_hz": "69.57078944"
+      },
+      "difference": {
+        "peak_dbfs": 0.7864839799999999,
+        "rms_dbfs": 1.3826032399999981,
+        "early_rms_dbfs": 0.7209180800000006,
+        "body_rms_dbfs": 1.5209835599999977,
+        "tail_rms_dbfs": -3.1409464999999983,
+        "centroid_hz": -1.468826870000001
+      }
+    },
+    {
+      "name": "Bright Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-16.24173178",
+        "rms_dbfs": "-30.34777863",
+        "centroid_hz": "138.0868623"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-14.99632164",
+        "rms_dbfs": "-28.46028941",
+        "centroid_hz": "134.8353356"
+      },
+      "difference": {
+        "peak_dbfs": 1.2454101399999988,
+        "rms_dbfs": 1.887489219999999,
+        "early_rms_dbfs": 1.4616386299999995,
+        "body_rms_dbfs": 1.941025660000001,
+        "tail_rms_dbfs": -0.9319039000000089,
+        "centroid_hz": -3.2515266999999994
+      }
+    },
+    {
+      "name": "Picked Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-26.73939002",
+        "rms_dbfs": "-41.78571608",
+        "centroid_hz": "88.79404599"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-25.29802039",
+        "rms_dbfs": "-41.25673192",
+        "centroid_hz": "87.08814661"
+      },
+      "difference": {
+        "peak_dbfs": 1.441369629999997,
+        "rms_dbfs": 0.5289841600000003,
+        "early_rms_dbfs": 0.3579975000000033,
+        "body_rms_dbfs": 0.5943256100000056,
+        "tail_rms_dbfs": 0.8917757000000108,
+        "centroid_hz": -1.7058993800000053
+      }
+    },
+    {
+      "name": "Upright Pluck",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-25.96958498",
+        "rms_dbfs": "-42.63000247",
+        "centroid_hz": "85.4762299"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-24.76631633",
+        "rms_dbfs": "-41.64326958",
+        "centroid_hz": "81.01366864"
+      },
+      "difference": {
+        "peak_dbfs": 1.2032686500000018,
+        "rms_dbfs": 0.986732889999999,
+        "early_rms_dbfs": 0.6108845699999996,
+        "body_rms_dbfs": 2.022135309999996,
+        "tail_rms_dbfs": 2.9741697999999985,
+        "centroid_hz": -4.462561260000001
+      }
+    },
+    {
+      "name": "Fifth Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-16.12896388",
+        "rms_dbfs": "-29.75156394",
+        "centroid_hz": "122.4485244"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-15.22596789",
+        "rms_dbfs": "-28.14091695",
+        "centroid_hz": "108.69761"
+      },
+      "difference": {
+        "peak_dbfs": 0.9029959900000009,
+        "rms_dbfs": 1.6106469899999993,
+        "early_rms_dbfs": 1.204806859999998,
+        "body_rms_dbfs": 1.6451626200000007,
+        "tail_rms_dbfs": -1.2850835000000131,
+        "centroid_hz": -13.7509144
+      }
+    },
+    {
+      "name": "Pedal Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-21.32138202",
+        "rms_dbfs": "-26.62699243",
+        "centroid_hz": "66.90713538"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-21.56271251",
+        "rms_dbfs": "-26.73964731",
+        "centroid_hz": "66.4806968"
+      },
+      "difference": {
+        "peak_dbfs": -0.2413304899999993,
+        "rms_dbfs": -0.11265487999999735,
+        "early_rms_dbfs": -0.16296389000000033,
+        "body_rms_dbfs": -0.10631895999999941,
+        "tail_rms_dbfs": -4.492795899999976,
+        "centroid_hz": -0.4264385799999957
+      }
+    },
+    {
+      "name": "Squelch Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-14.28005219",
+        "rms_dbfs": "-31.7126865",
+        "centroid_hz": "115.109118"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-13.35993632",
+        "rms_dbfs": "-29.25306848",
+        "centroid_hz": "107.3331375"
+      },
+      "difference": {
+        "peak_dbfs": 0.9201158700000001,
+        "rms_dbfs": 2.4596180200000006,
+        "early_rms_dbfs": 1.649590270000001,
+        "body_rms_dbfs": 2.6716549300000025,
+        "tail_rms_dbfs": 0.5339626999999894,
+        "centroid_hz": -7.775980499999989
+      }
+    },
+    {
+      "name": "Ring Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-16.56465717",
+        "rms_dbfs": "-30.05403011",
+        "centroid_hz": "101.2918513"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-15.18398757",
+        "rms_dbfs": "-28.01018997",
+        "centroid_hz": "101.6812005"
+      },
+      "difference": {
+        "peak_dbfs": 1.380669600000001,
+        "rms_dbfs": 2.0438401400000004,
+        "early_rms_dbfs": 1.512872090000002,
+        "body_rms_dbfs": 2.1014823599999986,
+        "tail_rms_dbfs": -0.94868412000001,
+        "centroid_hz": 0.38934919999999806
+      }
+    },
+    {
+      "name": "Sub Wobble Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-17.25433213",
+        "rms_dbfs": "-28.09473379",
+        "centroid_hz": "97.6890061"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-16.32311122",
+        "rms_dbfs": "-27.05950988",
+        "centroid_hz": "90.83478144"
+      },
+      "difference": {
+        "peak_dbfs": 0.9312209100000004,
+        "rms_dbfs": 1.0352239099999991,
+        "early_rms_dbfs": 0.7957280599999983,
+        "body_rms_dbfs": 1.073347700000003,
+        "tail_rms_dbfs": -1.8337188999999938,
+        "centroid_hz": -6.85422466
+      }
+    },
+    {
+      "name": "Pressure Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-22.32555169",
+        "rms_dbfs": "-33.40427317",
+        "centroid_hz": "100.955677"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-20.46347188",
+        "rms_dbfs": "-31.20820671",
+        "centroid_hz": "99.3599568"
+      },
+      "difference": {
+        "peak_dbfs": 1.862079810000001,
+        "rms_dbfs": 2.1960664600000044,
+        "early_rms_dbfs": 1.5552504099999993,
+        "body_rms_dbfs": 2.3789684100000024,
+        "tail_rms_dbfs": -3.0761658000000125,
+        "centroid_hz": -1.5957201999999882
+      }
+    },
+    {
+      "name": "Contour Bass",
+      "before": {
+        "note": "48",
+        "peak_dbfs": "-15.28170228",
+        "rms_dbfs": "-29.33948035",
+        "centroid_hz": "121.9799272"
+      },
+      "after": {
+        "note": "48",
+        "peak_dbfs": "-14.12576038",
+        "rms_dbfs": "-27.45943472",
+        "centroid_hz": "122.1041142"
+      },
+      "difference": {
+        "peak_dbfs": 1.1559419000000002,
+        "rms_dbfs": 1.880045629999998,
+        "early_rms_dbfs": 1.272764630000001,
+        "body_rms_dbfs": 2.008091350000001,
+        "tail_rms_dbfs": -0.8357131999999865,
+        "centroid_hz": 0.12418699999999205
+      }
+    },
+    {
+      "name": "Touch Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-16.74301564",
+        "rms_dbfs": "-27.99298705",
+        "centroid_hz": "702.5846784"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.5629553",
+        "rms_dbfs": "-26.86461027",
+        "centroid_hz": "689.2735788"
+      },
+      "difference": {
+        "peak_dbfs": 0.1800603400000007,
+        "rms_dbfs": 1.12837678,
+        "early_rms_dbfs": 0.7476493899999994,
+        "body_rms_dbfs": 2.0620400500000002,
+        "tail_rms_dbfs": -1.0617069000000043,
+        "centroid_hz": -13.311099600000034
+      }
+    },
+    {
+      "name": "Aftertouch Vibrato Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-17.0400186",
+        "rms_dbfs": "-27.66362292",
+        "centroid_hz": "640.4525384"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.71577409",
+        "rms_dbfs": "-26.61665284",
+        "centroid_hz": "624.4577484"
+      },
+      "difference": {
+        "peak_dbfs": 0.32424450999999976,
+        "rms_dbfs": 1.0469700800000012,
+        "early_rms_dbfs": 0.9682457500000012,
+        "body_rms_dbfs": -0.12004881999999739,
+        "tail_rms_dbfs": -0.3820221999999944,
+        "centroid_hz": -15.994789999999966
+      }
+    },
+    {
+      "name": "Ribbon Glide Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.07706983",
+        "rms_dbfs": "-28.45453919",
+        "centroid_hz": "508.0340192"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-17.40524",
+        "rms_dbfs": "-27.18851551",
+        "centroid_hz": "539.8238561"
+      },
+      "difference": {
+        "peak_dbfs": 0.6718298300000001,
+        "rms_dbfs": 1.26602368,
+        "early_rms_dbfs": 0.8942581599999997,
+        "body_rms_dbfs": 2.7006989600000004,
+        "tail_rms_dbfs": -0.9922832000000028,
+        "centroid_hz": 31.789836899999955
+      }
+    },
+    {
+      "name": "Noir Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-22.15336247",
+        "rms_dbfs": "-33.1767383",
+        "centroid_hz": "713.1734922"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-21.35580369",
+        "rms_dbfs": "-31.6280034",
+        "centroid_hz": "698.6857343"
+      },
+      "difference": {
+        "peak_dbfs": 0.7975587800000028,
+        "rms_dbfs": 1.548734899999996,
+        "early_rms_dbfs": 1.7666033799999994,
+        "body_rms_dbfs": 1.9530993500000022,
+        "tail_rms_dbfs": -1.0296207399999986,
+        "centroid_hz": -14.48775790000002
+      }
+    },
+    {
+      "name": "Neo-Noir Brass Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.97845993",
+        "rms_dbfs": "-32.48333768",
+        "centroid_hz": "736.1036396"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-19.49015516",
+        "rms_dbfs": "-31.21492461",
+        "centroid_hz": "646.1769877"
+      },
+      "difference": {
+        "peak_dbfs": -0.5116952300000008,
+        "rms_dbfs": 1.2684130699999976,
+        "early_rms_dbfs": 0.7630668600000021,
+        "body_rms_dbfs": 2.1691153499999984,
+        "tail_rms_dbfs": -0.3952880599999986,
+        "centroid_hz": -89.92665189999991
+      }
+    },
+    {
+      "name": "Glide Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-17.14508407",
+        "rms_dbfs": "-27.24346328",
+        "centroid_hz": "458.4019023"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.60636867",
+        "rms_dbfs": "-26.10180618",
+        "centroid_hz": "481.6077227"
+      },
+      "difference": {
+        "peak_dbfs": 0.538715400000001,
+        "rms_dbfs": 1.1416570999999998,
+        "early_rms_dbfs": 1.0299065800000022,
+        "body_rms_dbfs": 0.7989076799999992,
+        "tail_rms_dbfs": -0.38418980000000147,
+        "centroid_hz": 23.205820399999993
+      }
+    },
+    {
+      "name": "Sine Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-22.54400602",
+        "rms_dbfs": "-26.9171583",
+        "centroid_hz": "382.9649064"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-22.12903394",
+        "rms_dbfs": "-26.48951668",
+        "centroid_hz": "392.2218578"
+      },
+      "difference": {
+        "peak_dbfs": 0.41497208000000185,
+        "rms_dbfs": 0.4276416199999993,
+        "early_rms_dbfs": 0.39139415,
+        "body_rms_dbfs": 0.43273810999999895,
+        "tail_rms_dbfs": -1.2211136999999894,
+        "centroid_hz": 9.256951399999991
+      }
+    },
+    {
+      "name": "Whistle Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-22.95600108",
+        "rms_dbfs": "-27.56269329",
+        "centroid_hz": "743.3992001"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-22.50741683",
+        "rms_dbfs": "-26.94152306",
+        "centroid_hz": "759.0766536"
+      },
+      "difference": {
+        "peak_dbfs": 0.4485842499999997,
+        "rms_dbfs": 0.621170229999997,
+        "early_rms_dbfs": 0.41013737000000106,
+        "body_rms_dbfs": 0.6403687500000004,
+        "tail_rms_dbfs": -0.8955959000000036,
+        "centroid_hz": 15.677453499999956
+      }
+    },
+    {
+      "name": "Square Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-19.4813268",
+        "rms_dbfs": "-26.42512823",
+        "centroid_hz": "545.3988145"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-18.52549142",
+        "rms_dbfs": "-24.41544826",
+        "centroid_hz": "554.1088068"
+      },
+      "difference": {
+        "peak_dbfs": 0.9558353799999999,
+        "rms_dbfs": 2.009679969999997,
+        "early_rms_dbfs": 2.1551254299999982,
+        "body_rms_dbfs": 2.2585595000000005,
+        "tail_rms_dbfs": -1.2924906000000078,
+        "centroid_hz": 8.709992300000067
+      }
+    },
+    {
+      "name": "Narrow Pulse Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-16.4682908",
+        "rms_dbfs": "-27.42381853",
+        "centroid_hz": "880.5931251"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-15.03901231",
+        "rms_dbfs": "-24.88551028",
+        "centroid_hz": "850.596989"
+      },
+      "difference": {
+        "peak_dbfs": 1.429278489999998,
+        "rms_dbfs": 2.53830825,
+        "early_rms_dbfs": 2.384956459999998,
+        "body_rms_dbfs": 2.594165880000002,
+        "tail_rms_dbfs": -1.4038037999999915,
+        "centroid_hz": -29.996136099999944
+      }
+    },
+    {
+      "name": "Resonant Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-17.43122626",
+        "rms_dbfs": "-29.09437859",
+        "centroid_hz": "714.3224136"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-17.31023118",
+        "rms_dbfs": "-27.7208544",
+        "centroid_hz": "654.1668481"
+      },
+      "difference": {
+        "peak_dbfs": 0.12099508000000014,
+        "rms_dbfs": 1.3735241900000013,
+        "early_rms_dbfs": 0.9504312299999995,
+        "body_rms_dbfs": 1.5629685799999997,
+        "tail_rms_dbfs": -0.8235791000000035,
+        "centroid_hz": -60.155565499999966
+      }
+    },
+    {
+      "name": "Screaming Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-19.48151153",
+        "rms_dbfs": "-30.66079868",
+        "centroid_hz": "690.1068917"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-18.48392786",
+        "rms_dbfs": "-28.93779774",
+        "centroid_hz": "610.5303167"
+      },
+      "difference": {
+        "peak_dbfs": 0.9975836699999974,
+        "rms_dbfs": 1.7230009399999986,
+        "early_rms_dbfs": 1.4209972700000009,
+        "body_rms_dbfs": 2.108367229999999,
+        "tail_rms_dbfs": -1.4114526999999981,
+        "centroid_hz": -79.57657500000005
+      }
+    },
+    {
+      "name": "Fifth Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-17.73723333",
+        "rms_dbfs": "-30.21221857",
+        "centroid_hz": "817.4878891"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.62123404",
+        "rms_dbfs": "-27.93499046",
+        "centroid_hz": "743.128853"
+      },
+      "difference": {
+        "peak_dbfs": 1.1159992899999978,
+        "rms_dbfs": 2.2772281099999994,
+        "early_rms_dbfs": 1.8834915899999984,
+        "body_rms_dbfs": 2.3396003800000003,
+        "tail_rms_dbfs": 0.24125779999999963,
+        "centroid_hz": -74.35903609999991
+      }
+    },
+    {
+      "name": "Octave Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-17.18370042",
+        "rms_dbfs": "-29.39562234",
+        "centroid_hz": "800.7537072"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.13023462",
+        "rms_dbfs": "-27.56021829",
+        "centroid_hz": "758.6973822"
+      },
+      "difference": {
+        "peak_dbfs": 1.0534658000000015,
+        "rms_dbfs": 1.8354040499999975,
+        "early_rms_dbfs": 1.4651435999999975,
+        "body_rms_dbfs": 2.0230005899999988,
+        "tail_rms_dbfs": -1.2942924999999974,
+        "centroid_hz": -42.056325000000015
+      }
+    },
+    {
+      "name": "Soft Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.76621845",
+        "rms_dbfs": "-29.60577016",
+        "centroid_hz": "479.8624313"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-17.52834642",
+        "rms_dbfs": "-27.64881101",
+        "centroid_hz": "485.2699821"
+      },
+      "difference": {
+        "peak_dbfs": 1.237872030000002,
+        "rms_dbfs": 1.9569591499999994,
+        "early_rms_dbfs": 1.1544638999999997,
+        "body_rms_dbfs": 2.856923760000001,
+        "tail_rms_dbfs": 1.8731600000000128,
+        "centroid_hz": 5.407550799999967
+      }
+    },
+    {
+      "name": "Init Bend Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-16.90370284",
+        "rms_dbfs": "-28.50330668",
+        "centroid_hz": "745.5020874"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.51296144",
+        "rms_dbfs": "-26.91357948",
+        "centroid_hz": "716.4877677"
+      },
+      "difference": {
+        "peak_dbfs": 0.3907413999999996,
+        "rms_dbfs": 1.5897272000000022,
+        "early_rms_dbfs": 1.1886215200000017,
+        "body_rms_dbfs": 1.638762670000002,
+        "tail_rms_dbfs": -0.7086891999999949,
+        "centroid_hz": -29.0143197000001
+      }
+    },
+    {
+      "name": "Pressure Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-240",
+        "rms_dbfs": "-240",
+        "centroid_hz": "0"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-240",
+        "rms_dbfs": "-240",
+        "centroid_hz": "0"
+      },
+      "difference": {
+        "peak_dbfs": 0.0,
+        "rms_dbfs": 0.0,
+        "early_rms_dbfs": 0.0,
+        "body_rms_dbfs": 0.0,
+        "tail_rms_dbfs": 0.0,
+        "centroid_hz": 0.0
+      }
+    },
+    {
+      "name": "Velocity Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.1172861",
+        "rms_dbfs": "-29.39050957",
+        "centroid_hz": "712.1140238"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-18.58396469",
+        "rms_dbfs": "-28.53090216",
+        "centroid_hz": "656.9408825"
+      },
+      "difference": {
+        "peak_dbfs": -0.46667858999999723,
+        "rms_dbfs": 0.8596074099999989,
+        "early_rms_dbfs": 0.5843020500000016,
+        "body_rms_dbfs": 1.1112923599999966,
+        "tail_rms_dbfs": -1.8947462000000002,
+        "centroid_hz": -55.1731413
+      }
+    },
+    {
+      "name": "Detuned Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-17.80316476",
+        "rms_dbfs": "-31.39437567",
+        "centroid_hz": "695.6913179"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-17.47822003",
+        "rms_dbfs": "-29.69640014",
+        "centroid_hz": "697.9795029"
+      },
+      "difference": {
+        "peak_dbfs": 0.3249447300000021,
+        "rms_dbfs": 1.6979755299999972,
+        "early_rms_dbfs": 1.4863407899999999,
+        "body_rms_dbfs": 1.8190061899999996,
+        "tail_rms_dbfs": -1.381231800000009,
+        "centroid_hz": 2.2881850000001123
+      }
+    },
+    {
+      "name": "Sub Vibrato Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.12790716",
+        "rms_dbfs": "-28.51230716",
+        "centroid_hz": "567.8379174"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-17.24867568",
+        "rms_dbfs": "-26.74888601",
+        "centroid_hz": "578.4843928"
+      },
+      "difference": {
+        "peak_dbfs": 0.8792314799999978,
+        "rms_dbfs": 1.7634211499999992,
+        "early_rms_dbfs": 0.9065066900000005,
+        "body_rms_dbfs": 2.417111430000002,
+        "tail_rms_dbfs": 0.3373527999999908,
+        "centroid_hz": 10.646475399999986
+      }
+    },
+    {
+      "name": "Trill Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-19.27596522",
+        "rms_dbfs": "-26.32711773",
+        "centroid_hz": "631.2605722"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-18.54461096",
+        "rms_dbfs": "-24.3259119",
+        "centroid_hz": "597.2282443"
+      },
+      "difference": {
+        "peak_dbfs": 0.7313542599999998,
+        "rms_dbfs": 2.00120583,
+        "early_rms_dbfs": 1.6970790500000028,
+        "body_rms_dbfs": 2.123903509999998,
+        "tail_rms_dbfs": -1.4583826999999872,
+        "centroid_hz": -34.03232789999993
+      }
+    },
+    {
+      "name": "Glissando Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.33493328",
+        "rms_dbfs": "-28.69859025",
+        "centroid_hz": "609.9455743"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-17.44257316",
+        "rms_dbfs": "-26.77941402",
+        "centroid_hz": "584.8071668"
+      },
+      "difference": {
+        "peak_dbfs": 0.8923601200000029,
+        "rms_dbfs": 1.919176229999998,
+        "early_rms_dbfs": 1.7408858800000004,
+        "body_rms_dbfs": 1.9414818700000005,
+        "tail_rms_dbfs": -0.8016980000000018,
+        "centroid_hz": -25.13840749999997
+      }
+    },
+    {
+      "name": "Brass Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-19.22836868",
+        "rms_dbfs": "-29.77555758",
+        "centroid_hz": "578.4939282"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-18.38119585",
+        "rms_dbfs": "-28.12480548",
+        "centroid_hz": "718.2031454"
+      },
+      "difference": {
+        "peak_dbfs": 0.8471728299999981,
+        "rms_dbfs": 1.6507521000000018,
+        "early_rms_dbfs": 1.4367315900000008,
+        "body_rms_dbfs": 2.45512381,
+        "tail_rms_dbfs": -1.9563023000000044,
+        "centroid_hz": 139.7092172
+      }
+    },
+    {
+      "name": "Reed Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-17.45009131",
+        "rms_dbfs": "-26.12537905",
+        "centroid_hz": "628.8190878"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.72904624",
+        "rms_dbfs": "-24.01184399",
+        "centroid_hz": "571.1706835"
+      },
+      "difference": {
+        "peak_dbfs": 0.7210450700000024,
+        "rms_dbfs": 2.1135350600000002,
+        "early_rms_dbfs": 2.1568019300000003,
+        "body_rms_dbfs": 2.0318339499999993,
+        "tail_rms_dbfs": -1.722814299999996,
+        "centroid_hz": -57.64840430000004
+      }
+    },
+    {
+      "name": "Wah Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.97385897",
+        "rms_dbfs": "-29.41861915",
+        "centroid_hz": "756.8523963"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-18.5552786",
+        "rms_dbfs": "-28.02049603",
+        "centroid_hz": "672.7704608"
+      },
+      "difference": {
+        "peak_dbfs": 0.41858036999999726,
+        "rms_dbfs": 1.398123120000001,
+        "early_rms_dbfs": 1.19575313,
+        "body_rms_dbfs": 1.4007863500000006,
+        "tail_rms_dbfs": -0.8929262999999992,
+        "centroid_hz": -84.08193549999999
+      }
+    },
+    {
+      "name": "Ring Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.20728527",
+        "rms_dbfs": "-30.25662187",
+        "centroid_hz": "623.9206146"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.99312777",
+        "rms_dbfs": "-28.09336386",
+        "centroid_hz": "630.8945267"
+      },
+      "difference": {
+        "peak_dbfs": 1.214157499999999,
+        "rms_dbfs": 2.16325801,
+        "early_rms_dbfs": 2.0717082699999985,
+        "body_rms_dbfs": 2.1138827300000003,
+        "tail_rms_dbfs": -1.2733159200000017,
+        "centroid_hz": 6.973912100000007
+      }
+    },
+    {
+      "name": "Hollow Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-19.0810692",
+        "rms_dbfs": "-26.22803504",
+        "centroid_hz": "571.3624855"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-18.2850324",
+        "rms_dbfs": "-24.15363181",
+        "centroid_hz": "563.0513709"
+      },
+      "difference": {
+        "peak_dbfs": 0.7960368000000031,
+        "rms_dbfs": 2.0744032300000015,
+        "early_rms_dbfs": 2.0046358300000016,
+        "body_rms_dbfs": 1.8295661100000018,
+        "tail_rms_dbfs": -0.3519979999999947,
+        "centroid_hz": -8.311114599999996
+      }
+    },
+    {
+      "name": "Ether Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-26.0830921",
+        "rms_dbfs": "-30.40394382",
+        "centroid_hz": "326.9187563"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-25.36962481",
+        "rms_dbfs": "-29.70066892",
+        "centroid_hz": "384.7223457"
+      },
+      "difference": {
+        "peak_dbfs": 0.713467289999997,
+        "rms_dbfs": 0.7032749000000003,
+        "early_rms_dbfs": 0.5510927700000003,
+        "body_rms_dbfs": 0.7253985299999997,
+        "tail_rms_dbfs": -10.113402719999996,
+        "centroid_hz": 57.80358940000002
+      }
+    },
+    {
+      "name": "Solo Synth",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-16.70503898",
+        "rms_dbfs": "-27.91282214",
+        "centroid_hz": "869.7061315"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.29120865",
+        "rms_dbfs": "-26.42964393",
+        "centroid_hz": "801.5546752"
+      },
+      "difference": {
+        "peak_dbfs": 0.4138303299999997,
+        "rms_dbfs": 1.4831782099999984,
+        "early_rms_dbfs": 1.3681368899999988,
+        "body_rms_dbfs": 1.3371568600000003,
+        "tail_rms_dbfs": -1.4061450000000093,
+        "centroid_hz": -68.15145629999995
+      }
+    },
+    {
+      "name": "Contour Lead",
+      "before": {
+        "note": "67",
+        "peak_dbfs": "-18.02142258",
+        "rms_dbfs": "-29.24527564",
+        "centroid_hz": "714.9473551"
+      },
+      "after": {
+        "note": "67",
+        "peak_dbfs": "-16.98503151",
+        "rms_dbfs": "-27.22617779",
+        "centroid_hz": "739.2971004"
+      },
+      "difference": {
+        "peak_dbfs": 1.0363910700000005,
+        "rms_dbfs": 2.019097849999998,
+        "early_rms_dbfs": 1.3372688000000004,
+        "body_rms_dbfs": 3.150175319999999,
+        "tail_rms_dbfs": -2.1372980000000013,
+        "centroid_hz": 24.349745299999995
+      }
+    }
+  ]
+}

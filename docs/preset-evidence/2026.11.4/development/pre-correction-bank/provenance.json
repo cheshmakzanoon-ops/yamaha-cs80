@@ -1,0 +1,630 @@
+{
+  "state": "development source after two calibration passes per bank; native qualification pending",
+  "source_sha256": {
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "src/core/FactoryPresets.cpp": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5",
+    "src/core/FactoryPresets.h": "985bcbacc9b085230c323de9a483931390c9b52a7de170238ee76a68b63e1de1",
+    "src/core/CuratedLibrary.inc": "6717273d39dd5fa873ab8f7227cf71a64485ccea2fa281214a24d8657a7f6fe3",
+    "src/core/OriginalCircuitLibrary.inc": "d6cf0293de597d95727be7c50eb347d87f9670c6d5b8ab583989fbbe99481a9d",
+    "src/core/CuratedLibraryLevels.inc": "f77ea5567219a8fe59b9ae9e605b04dcf21e9d0c85c8c1c935ea752e3e034538",
+    "src/core/OriginalCircuitLevels.inc": "f077b50779572b7a0b2ea9c2c608b6c569e90b7f5fef52542c195319035a36e1",
+    "src/core/curated/Bass.inc": "f909426560fce93574dd3d5e146a4516e887932ef2beb3c7c1576152f971a9f1",
+    "src/core/curated/Bells.inc": "71400232be8ab0dcc46be436d3dca49ad5cac5a3d53122b8bc97b540237442b9",
+    "src/core/curated/Brass.inc": "43375cd3bc527088f43d8af8ea089381fb41dce6869b67f0acd105869477e225",
+    "src/core/curated/Fx.inc": "309f99c0bdc81da77ca421c233a18c12576607ae4988196684ba5d5661c3ee10",
+    "src/core/curated/Keys.inc": "58c1c82d8ded21eb1e1c35980de3730e5c5045d0d0dcc54760230d2f11b1780d",
+    "src/core/curated/Leads.inc": "f0e8fb2110d01ea73b8dc4ddeeb582f68bc5d547ce53ba20533c190771d9da80",
+    "src/core/curated/Modern.inc": "dd3d6006734867f7f7dd62c0b14534875567931151d85870cbd515f456f7b38e",
+    "src/core/curated/Organ.inc": "ad6410dc8c510ed4740207947bf12adee8e678ccd83012d2f76f31451c3bdb68",
+    "src/core/curated/Pads.inc": "a8ecebdf08174c314e94595273f2c279ddfda71bb0433dd481e7a50750362730",
+    "src/core/curated/Plucked.inc": "4bb4a23d1f09f1a3318ae59f592ccb9409d3de511276fded347948eef38fc7ac",
+    "src/core/curated/Polysynth.inc": "0bb56e1752400a4ba5d896b6e6ee801b7cf7913969ce4789143a905c42b4e356",
+    "src/core/curated/Strings.inc": "ddbb4dd91ecdad49bc3bf4db524f81d1e738f753173f19902b469d9b19a31c4d",
+    "src/core/curated/Winds.inc": "7b85813a0e6deabe06830bd54ab2689e1aada3c6015d47af186c45e01880b519"
+  },
+  "capture_sha256": "e0c5b2fc15dcb98a6179d569f9acfd6c15be525cbcf88d305739ae4c2f839ede",
+  "inventory_sha256": "d095b78bbade6c48d90b48bcc0d26008d99046c5521b0d1766023fbfd6869b81",
+  "calibration": {
+    "passes_per_bank": 2,
+    "target_window_rms_dbfs": -18,
+    "single_line_target_rms_dbfs": -22,
+    "phrase_peak_ceiling_dbfs": -3,
+    "stress_peak_ceiling_dbfs": -1.5,
+    "volume_range": [
+      0.05,
+      1.0
+    ],
+    "tables": [
+      {
+        "table": "src/core/CuratedLibraryLevels.inc",
+        "programs": 301,
+        "changed_master_trims": 68,
+        "changes": [
+          {
+            "name": "PWM Strings",
+            "before": 0.986,
+            "after": 0.946
+          },
+          {
+            "name": "Slow Pad",
+            "before": 1.0,
+            "after": 0.995
+          },
+          {
+            "name": "Choir Pad",
+            "before": 1.0,
+            "after": 0.902
+          },
+          {
+            "name": "Dark Choir",
+            "before": 1.0,
+            "after": 0.922
+          },
+          {
+            "name": "Sweep Pad",
+            "before": 1.0,
+            "after": 0.916
+          },
+          {
+            "name": "Breathing Pad",
+            "before": 1.0,
+            "after": 0.861
+          },
+          {
+            "name": "Glass Pad",
+            "before": 0.887,
+            "after": 0.805
+          },
+          {
+            "name": "Warm Pad",
+            "before": 0.86,
+            "after": 0.831
+          },
+          {
+            "name": "Wide Pad",
+            "before": 0.983,
+            "after": 0.783
+          },
+          {
+            "name": "Octave Pad",
+            "before": 1.0,
+            "after": 0.926
+          },
+          {
+            "name": "Fifth Pad",
+            "before": 1.0,
+            "after": 0.848
+          },
+          {
+            "name": "Evolving Pad",
+            "before": 0.94,
+            "after": 0.934
+          },
+          {
+            "name": "Noise Pad",
+            "before": 0.973,
+            "after": 0.894
+          },
+          {
+            "name": "Pressure Pad",
+            "before": 0.97,
+            "after": 1.0
+          },
+          {
+            "name": "Sine Pad",
+            "before": 0.733,
+            "after": 0.631
+          },
+          {
+            "name": "Hollow Pad",
+            "before": 0.692,
+            "after": 0.524
+          },
+          {
+            "name": "Resonant Pad",
+            "before": 0.957,
+            "after": 0.809
+          },
+          {
+            "name": "Pulse Pad",
+            "before": 0.758,
+            "after": 0.638
+          },
+          {
+            "name": "Tremolo Pad",
+            "before": 0.884,
+            "after": 0.815
+          },
+          {
+            "name": "Neo-Noir Pad",
+            "before": 0.985,
+            "after": 0.967
+          },
+          {
+            "name": "Rain Pad",
+            "before": 0.797,
+            "after": 0.612
+          },
+          {
+            "name": "Cathedral Pad",
+            "before": 0.859,
+            "after": 0.861
+          },
+          {
+            "name": "Shimmer Pad",
+            "before": 0.878,
+            "after": 0.728
+          },
+          {
+            "name": "Low Drone",
+            "before": 1.0,
+            "after": 0.957
+          },
+          {
+            "name": "Ether Pad",
+            "before": 0.67,
+            "after": 0.518
+          },
+          {
+            "name": "Velvet Pad",
+            "before": 1.0,
+            "after": 0.864
+          },
+          {
+            "name": "Bowed Glass",
+            "before": 0.817,
+            "after": 0.66
+          },
+          {
+            "name": "Night Pad",
+            "before": 0.906,
+            "after": 0.989
+          },
+          {
+            "name": "PWM Poly",
+            "before": 0.82,
+            "after": 0.711
+          },
+          {
+            "name": "Poly Sweep",
+            "before": 1.0,
+            "after": 0.943
+          },
+          {
+            "name": "Octave Poly",
+            "before": 1.0,
+            "after": 0.966
+          },
+          {
+            "name": "Fifth Poly",
+            "before": 1.0,
+            "after": 0.982
+          },
+          {
+            "name": "Dark Poly",
+            "before": 0.986,
+            "after": 0.887
+          },
+          {
+            "name": "Hollow Poly",
+            "before": 0.788,
+            "after": 0.626
+          },
+          {
+            "name": "Poly Swell",
+            "before": 1.0,
+            "after": 0.955
+          },
+          {
+            "name": "Square Poly",
+            "before": 0.876,
+            "after": 0.715
+          },
+          {
+            "name": "Sine Poly",
+            "before": 0.81,
+            "after": 0.609
+          },
+          {
+            "name": "Glide Poly",
+            "before": 0.85,
+            "after": 0.69
+          },
+          {
+            "name": "Tremolo Poly",
+            "before": 0.938,
+            "after": 0.887
+          },
+          {
+            "name": "Combo Organ",
+            "before": 0.858,
+            "after": 0.755
+          },
+          {
+            "name": "Sine Bass",
+            "before": 0.727,
+            "after": 0.759
+          },
+          {
+            "name": "Sub Bass",
+            "before": 0.572,
+            "after": 0.552
+          },
+          {
+            "name": "Pulse Bass",
+            "before": 1.0,
+            "after": 0.916
+          },
+          {
+            "name": "Pedal Bass",
+            "before": 0.755,
+            "after": 0.78
+          },
+          {
+            "name": "Squelch Bass",
+            "before": 1.0,
+            "after": 0.919
+          },
+          {
+            "name": "Sub Wobble Bass",
+            "before": 0.92,
+            "after": 0.844
+          },
+          {
+            "name": "Touch Lead",
+            "before": 1.0,
+            "after": 0.88
+          },
+          {
+            "name": "Aftertouch Vibrato Lead",
+            "before": 1.0,
+            "after": 0.949
+          },
+          {
+            "name": "Ribbon Glide Lead",
+            "before": 1.0,
+            "after": 0.92
+          },
+          {
+            "name": "Glide Lead",
+            "before": 1.0,
+            "after": 0.941
+          },
+          {
+            "name": "Sine Lead",
+            "before": 0.571,
+            "after": 0.528
+          },
+          {
+            "name": "Whistle Lead",
+            "before": 0.604,
+            "after": 0.545
+          },
+          {
+            "name": "Square Lead",
+            "before": 0.789,
+            "after": 0.621
+          },
+          {
+            "name": "Narrow Pulse Lead",
+            "before": 1.0,
+            "after": 0.862
+          },
+          {
+            "name": "Sub Vibrato Lead",
+            "before": 1.0,
+            "after": 0.97
+          },
+          {
+            "name": "Trill Lead",
+            "before": 0.774,
+            "after": 0.633
+          },
+          {
+            "name": "Glissando Lead",
+            "before": 1.0,
+            "after": 0.996
+          },
+          {
+            "name": "Reed Lead",
+            "before": 0.898,
+            "after": 0.667
+          },
+          {
+            "name": "Ring Lead",
+            "before": 1.0,
+            "after": 0.997
+          },
+          {
+            "name": "Hollow Lead",
+            "before": 0.9,
+            "after": 0.683
+          },
+          {
+            "name": "Ether Lead",
+            "before": 0.6,
+            "after": 0.537
+          },
+          {
+            "name": "Siren",
+            "before": 0.83,
+            "after": 0.729
+          },
+          {
+            "name": "Laser Zap",
+            "before": 1.0,
+            "after": 0.913
+          },
+          {
+            "name": "Glitch Sub",
+            "before": 1.0,
+            "after": 0.941
+          },
+          {
+            "name": "Plate Pad",
+            "before": 0.637,
+            "after": 0.563
+          },
+          {
+            "name": "Drive Lead",
+            "before": 0.888,
+            "after": 0.707
+          },
+          {
+            "name": "PWM LFO Strings",
+            "before": 1.0,
+            "after": 0.835
+          },
+          {
+            "name": "Space Lead",
+            "before": 1.0,
+            "after": 0.871
+          }
+        ]
+      },
+      {
+        "table": "src/core/OriginalCircuitLevels.inc",
+        "programs": 222,
+        "changed_master_trims": 46,
+        "changes": [
+          {
+            "name": "Tone II: String 4",
+            "before": 0.954,
+            "after": 0.92
+          },
+          {
+            "name": "1982 Pad",
+            "before": 0.999,
+            "after": 0.988
+          },
+          {
+            "name": "Sweep VCA",
+            "before": 0.898,
+            "after": 0.798
+          },
+          {
+            "name": "Blade Choir",
+            "before": 1.0,
+            "after": 0.979
+          },
+          {
+            "name": "Ribbon Lead",
+            "before": 1.0,
+            "after": 0.914
+          },
+          {
+            "name": "Metal Lead",
+            "before": 1.0,
+            "after": 0.977
+          },
+          {
+            "name": "Hollow Strings 41",
+            "before": 0.971,
+            "after": 0.947
+          },
+          {
+            "name": "Amber Pads 47",
+            "before": 0.874,
+            "after": 0.846
+          },
+          {
+            "name": "Velvet Pads 48",
+            "before": 1.0,
+            "after": 0.907
+          },
+          {
+            "name": "Distant Pads 49",
+            "before": 0.972,
+            "after": 1.0
+          },
+          {
+            "name": "Neon Pads 50",
+            "before": 0.878,
+            "after": 0.723
+          },
+          {
+            "name": "Hollow Pads 51",
+            "before": 0.685,
+            "after": 0.525
+          },
+          {
+            "name": "Golden Pads 52",
+            "before": 1.0,
+            "after": 0.887
+          },
+          {
+            "name": "Electric Pads 54",
+            "before": 0.766,
+            "after": 0.636
+          },
+          {
+            "name": "Bright Pads 57",
+            "before": 0.873,
+            "after": 0.786
+          },
+          {
+            "name": "Wide Pads 59",
+            "before": 0.977,
+            "after": 0.782
+          },
+          {
+            "name": "Soft Pads 60",
+            "before": 0.736,
+            "after": 0.632
+          },
+          {
+            "name": "Amber Pads 61",
+            "before": 0.995,
+            "after": 0.983
+          },
+          {
+            "name": "Distant Pads 63",
+            "before": 0.667,
+            "after": 0.517
+          },
+          {
+            "name": "Neon Pads 64",
+            "before": 1.0,
+            "after": 0.921
+          },
+          {
+            "name": "Hollow Pads 65",
+            "before": 0.945,
+            "after": 0.807
+          },
+          {
+            "name": "Golden Pads 66",
+            "before": 0.855,
+            "after": 0.857
+          },
+          {
+            "name": "Frozen Pads 67",
+            "before": 0.816,
+            "after": 0.661
+          },
+          {
+            "name": "Electric Pads 68",
+            "before": 0.917,
+            "after": 0.924
+          },
+          {
+            "name": "Slow Pads 70",
+            "before": 1.0,
+            "after": 0.882
+          },
+          {
+            "name": "Bright Pads 71",
+            "before": 0.996,
+            "after": 0.831
+          },
+          {
+            "name": "Dark Pads 72",
+            "before": 1.0,
+            "after": 0.974
+          },
+          {
+            "name": "Wide Pads 73",
+            "before": 0.967,
+            "after": 1.0
+          },
+          {
+            "name": "Soft Pads 74",
+            "before": 0.912,
+            "after": 0.828
+          },
+          {
+            "name": "Hollow Bass 79",
+            "before": 1.0,
+            "after": 0.915
+          },
+          {
+            "name": "Frozen Bass 81",
+            "before": 0.727,
+            "after": 0.759
+          },
+          {
+            "name": "Midnight Bass 83",
+            "before": 0.572,
+            "after": 0.552
+          },
+          {
+            "name": "Velvet Bass 90",
+            "before": 0.755,
+            "after": 0.78
+          },
+          {
+            "name": "Neon Bass 92",
+            "before": 1.0,
+            "after": 0.919
+          },
+          {
+            "name": "Hollow Leads 119",
+            "before": 0.893,
+            "after": 0.685
+          },
+          {
+            "name": "Golden Leads 120",
+            "before": 0.986,
+            "after": 0.874
+          },
+          {
+            "name": "Frozen Leads 121",
+            "before": 0.604,
+            "after": 0.545
+          },
+          {
+            "name": "Midnight Leads 123",
+            "before": 0.6,
+            "after": 0.537
+          },
+          {
+            "name": "Slow Leads 124",
+            "before": 1.0,
+            "after": 0.952
+          },
+          {
+            "name": "Bright Leads 125",
+            "before": 1.0,
+            "after": 0.852
+          },
+          {
+            "name": "Dark Leads 126",
+            "before": 0.937,
+            "after": 0.702
+          },
+          {
+            "name": "Soft Leads 128",
+            "before": 0.571,
+            "after": 0.528
+          },
+          {
+            "name": "Distant Leads 131",
+            "before": 1.0,
+            "after": 0.994
+          },
+          {
+            "name": "Hollow Leads 133",
+            "before": 0.783,
+            "after": 0.623
+          },
+          {
+            "name": "Electric FX 144",
+            "before": 1.0,
+            "after": 0.949
+          },
+          {
+            "name": "Velvet FX 152",
+            "before": 0.83,
+            "after": 0.729
+          }
+        ]
+      }
+    ],
+    "sample_rate": 44100,
+    "window_seconds": 0.05
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "worker": 53,
+  "task": "revision_documentation_review",
+  "created_at_utc": "2026-11-23T18:13:58.207774+00:00",
+  "status": "documentation corrections complete; native and archive qualification remain parent-owned",
+  "scope": [
+    "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+    "docs/PRESET_GUIDE.md"
+  ],
+  "production_files_changed": false,
+  "shared_build_modified": false,
+  "commits_or_refs_changed": false,
+  "files": {
+    "docs/CIRCUIT_LIBRARY_2026_11_4.md": {
+      "before_sha256": "33a79824d759b835761fab637c31dd046cf51f90cffb2a9ccfc6b33539d695a5",
+      "after_sha256": "9d838d45993a0f1685fec87f41f1f52cf489687d0c7381bcd3bcbba7092b76e3",
+      "change_lines": 43
+    },
+    "docs/PRESET_GUIDE.md": {
+      "before_sha256": "8a4de15514658e368127fa3a54da30df187c9ec6b7c9a6db22f72dfdd667edd2",
+      "after_sha256": "5107d1cc9d87177ec863546edef84b94079534e536a6988ab585ff915212621a",
+      "change_lines": 58
+    }
+  },
+  "changed_claims": [
+    {
+      "change": "Clarified that appended parameter and host positions are zero-based.",
+      "basis": "Params.h fixed indexes 198/199, host prefix 304, and AU hint 17 append; review 38 independently confirms original prefixes."
+    },
+    {
+      "change": "Recorded final affected-suite follow-ups separately from the initial 194-test run and linked exact affected-source results.",
+      "basis": "development/final-affected/summary.json: four core follow-up tests and one workflow follow-up; this is not described as a single new full-suite run."
+    },
+    {
+      "change": "Linked the final scoped body/filter ASan/UBSan probe while explicitly excluding local leak scanning and native wrappers.",
+      "basis": "review 47 exact final body hash e61da6a5 and unchanged filter hash 7b8b1cab, actual successful probe; documented ptrace leak-scanning limit retained."
+    },
+    {
+      "change": "Changed runtime ratio wording from current/baseline to development/baseline.",
+      "basis": "review 20 measurements predate final onset/level changes; parent historical-stage qualification retained."
+    },
+    {
+      "change": "Named Electric Leads 136 alongside Pressure Lead as pressure-only and linked the original-address source.",
+      "basis": "Both exact identities present in final inventory; comparison control set and independently verified baseline pressure-zero behavior in review 51; original variations inherit Pressure Lead."
+    },
+    {
+      "change": "Updated the keyboard instrument-body link to the current revision section.",
+      "basis": "Current struck-string/electric-piano implementation and 2026.11.4 report; historical introduction link remains in guide introduction."
+    },
+    {
+      "change": "Clarified struck-model Partial decay versus sustained model modes, and documented resonant size 0.5x to 2.5x with neutral 1x and next-note ownership.",
+      "basis": "InstrumentBody stringLoss/sustained selection and bodyResonance; Params.h declared range/default; Engine onset ownership; EvidenceRegister help."
+    },
+    {
+      "change": "Pointed current download qualification to main README explicitly.",
+      "basis": "Relative README links from a source-pinned guide would stay at that source snapshot and may show preceding qualified downloads. Exact repository main URL is stable and does not fabricate artifact IDs."
+    }
+  ],
+  "verification": {
+    "git_diff_check_exit": 0,
+    "local_link_occurrences_checked": 90,
+    "local_heading_anchor_occurrences_checked": 6,
+    "broken_local_links_or_anchors": 0,
+    "family_table_rows_verified_against_final_inventory": 15,
+    "inventory_programs": 523,
+    "inventory_parameters": 200,
+    "audition_roster_independently_imported": {
+      "wav_count": 138,
+      "selected_program_count": 74,
+      "audio_seconds": 870,
+      "groups": 30
+    },
+    "scope_of_verification": "Documentation/source/evidence consistency only. No new audio render, native test or archive inspection."
+  },
+  "preserved_boundaries": [
+    "All 521 existing musical programs, two unchanged Init programs, 523 total, and zero added/removed remain explicit.",
+    "2,077 direct-model checks and 41,062,350 generated samples remain attributed to the final direct suite; no new combined test total was invented.",
+    "Source-ID and automation compatibility does not freeze prior body-enabled audio.",
+    "Model, decay, and size are next-note controls; mix/brightness remain live.",
+    "Velocity-contrast tradeoff from review 40 remains explicit; historical runtime/A16 source stages remain labeled.",
+    "No acoustic exactness, perceptual superiority, native qualification, permanent availability, publisher signing or notarization claim was introduced."
+  ],
+  "source_sha256_at_review": {
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/plugin/EvidenceRegister.h": "59dd8308407d1d0302129d671324a0f03f46053e9ebf38190a9d76533ee4b269",
+    "src/plugin/PluginProcessor.cpp": "cc79c978d5488b7f1f29d29c8966665a6bbd3ada31aa8050064bd3f44f31e401",
+    "scripts/capture-factory-auditions.py": "99150f4e685db3d3f0dde95ef2bc003a0b26d36499a76c957464af13ed80d9c7",
+    "src/core/curated/Leads.inc": "f0e8fb2110d01ea73b8dc4ddeeb582f68bc5d547ce53ba20533c190771d9da80",
+    "src/core/OriginalCircuitLibrary.inc": "654b15c08e1f6ae9e6f56f7a9c0beffa5c3bc34b65d60e644b4aa6741afd3c34",
+    "docs/preset-evidence/2026.11.4/reviews/38-evidence-compatibility.json": "f22a14caf688c4812a1fd14a5d72ef8febfa4459532cbf5b4d555f542325e2b0",
+    "docs/preset-evidence/2026.11.4/reviews/40-level-gate-review.json": "dd5c9d6fb49e0b14976c998d30bd4ea6984ab69fbfd6c8cf96c499f792f86168",
+    "docs/preset-evidence/2026.11.4/reviews/42-final-source-review.json": "3fa2e64a9cdd4eaa41a22c80f26c371f59a9fa9030d6a04ea843be973ae6c94b",
+    "docs/preset-evidence/2026.11.4/reviews/47-final-sanitizers.json": "481039759e09e69c8539061318522e31294312216740f6570afbcdb4ecc9a45a",
+    "docs/preset-evidence/2026.11.4/reviews/51-audio-comparison-plan.json": "ad4d4046ad38aec15510da79e0d48887bed023588f358133cd7ead0a1b0b6e3d",
+    "docs/preset-evidence/2026.11.4/development/final-affected/summary.json": "4206f67df38c8e99f3a8edd106e0c02ee9580bc5b984e4415fed8ad33d7ec29b",
+    "docs/preset-evidence/2026.11.4/development/final-bank/inventory.json": "bff48651085358fcc3d1b07ee5f9138f629c84e7fa9e5ae067796395096a0280"
+  }
+}

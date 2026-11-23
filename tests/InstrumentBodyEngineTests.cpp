@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -101,6 +102,10 @@ void soundingRegister()
     for (int model : {body::piano, body::bowed, body::oboe, body::bassoon})
     {
         auto lower = fixture(model), upper = lower;
+        // This contract isolates excitation register. The panel filter's key
+        // tracking deliberately follows the played key, before VCO footage.
+        lower[chParam(0, CP_hpfOn)] = lower[chParam(0, CP_lpfOn)] = 0.0f;
+        upper[chParam(0, CP_hpfOn)] = upper[chParam(0, CP_lpfOn)] = 0.0f;
         lower[chParam(0, CP_feet)] = 1.0f; // 8-foot C3
         upper[chParam(0, CP_feet)] = 0.0f; // 16-foot C4, also sounding C3
         Engine a, b;
@@ -112,6 +117,8 @@ void soundingRegister()
     }
     // A4 reference participates in nominal body register, not only tick pitch.
     auto aParams = fixture(body::piano), bParams = aParams;
+    aParams[chParam(0, CP_hpfOn)] = aParams[chParam(0, CP_lpfOn)] = 0.0f;
+    bParams[chParam(0, CP_hpfOn)] = bParams[chParam(0, CP_lpfOn)] = 0.0f;
     aParams[P_masterTune] = static_cast<float>(12.0 * std::log2(450.0 / 440.0));
     bParams[P_tuningRef] = 450.0f;
     Engine a, b;
@@ -123,7 +130,7 @@ void soundingRegister()
 void keyboardBrilliance()
 {
     // At a full body mix the analog filter output is absent. Each KBC
-    // brilliance contour must therefore reach the body's spectral color,
+    // brilliance contour must therefore reach the body's effective filters,
     // independently of the shared keyboard LEVEL/VCA contour.
     for (bool high : {false, true})
     {
@@ -153,6 +160,124 @@ void keyboardBrilliance()
                         label.c_str(), position, error);
         }
     }
+}
+
+std::vector<float> renderBody(const ParamValues& p, int note = 60, int frames = 19200)
+{
+    // Keep large processor state off the Windows stack, including callers
+    // that compare several independently prepared captures.
+    auto engine = std::make_unique<Engine>();
+    prepare(*engine, p);
+    engine->noteOn(note, 0.8f);
+    return render(*engine, frames, 113);
+}
+
+double toneAmplitude(const std::vector<float>& audio, double frequency)
+{
+    const int first = 4800, frames = static_cast<int>(audio.size() / 2) - first;
+    double real = 0.0, imaginary = 0.0, weights = 0.0;
+    constexpr double pi = 3.14159265358979323846;
+    for (int i = 0; i < frames; ++i)
+    {
+        const double window = 0.5 - 0.5 * std::cos(2.0 * pi * i / (frames - 1));
+        const double angle = 2.0 * pi * frequency * (first + i) / 48000.0;
+        const double sample = audio[static_cast<std::size_t>(2 * (first + i))];
+        real += window * sample * std::cos(angle);
+        imaginary += window * sample * std::sin(angle);
+        weights += window;
+    }
+    return 2.0 * std::hypot(real, imaginary) / weights;
+}
+
+void bodyFilterRouting()
+{
+    constexpr double fundamental = 261.6255653005986;
+    auto open = fixture(body::organ);
+    open[P_volume] = 0.20f;
+    open[P_resonance] = 0.0f;
+    open[chParam(0, CP_vS)] = 1.0f;
+    open[chParam(0, CP_initLevel)] = open[chParam(0, CP_afterLevel)] = 0.0f;
+    open[chParam(0, CP_hpfRes)] = open[chParam(0, CP_lpfRes)] = 0.0f;
+    open[chParam(0, CP_hpfCutoff)] = 30.0f;
+    open[chParam(0, CP_lpfCutoff)] = 12000.0f;
+    open[chParam(0, CP_hpfOn)] = 1.0f;
+    open[chParam(0, CP_lpfOn)] = 0.0f;
+    const auto openAudio = renderBody(open);
+
+    auto high = open;
+    high[chParam(0, CP_hpfCutoff)] = 1200.0f;
+    const auto highAudio = renderBody(high);
+    const double highPassDb = 20.0 * std::log10(std::max(1.0e-12,
+        toneAmplitude(highAudio, fundamental) / toneAmplitude(openAudio, fundamental)));
+    check(highPassDb < -18.0, "full body mix respects high-pass fundamental rejection");
+    std::printf("BODY FILTER high-pass fundamental change %.3f dB\n", highPassDb);
+
+    auto hpOff = high;
+    hpOff[chParam(0, CP_hpfOn)] = 0.0f;
+    auto openOff = open;
+    openOff[chParam(0, CP_hpfOn)] = 0.0f;
+    check(renderBody(hpOff) == renderBody(openOff),
+          "disabled high-pass does not color the instrument body");
+
+    auto hpResonant = open;
+    auto hpDamped = open;
+    hpResonant[chParam(0, CP_hpfCutoff)] = hpDamped[chParam(0, CP_hpfCutoff)]
+        = static_cast<float>(fundamental);
+    hpResonant[chParam(0, CP_hpfRes)] = 0.90f;
+    const double highResonanceDb = 20.0 * std::log10(std::max(1.0e-12,
+        toneAmplitude(renderBody(hpResonant), fundamental)
+        / toneAmplitude(renderBody(hpDamped), fundamental)));
+    check(highResonanceDb > 4.0, "high-pass resonance shapes a full-body rank");
+    std::printf("BODY FILTER high-pass resonance at cutoff change %.3f dB\n", highResonanceDb);
+
+    auto low = openOff;
+    low[chParam(0, CP_lpfOn)] = 1.0f;
+    low[chParam(0, CP_lpfCutoff)] = 480.0f;
+    const auto lowAudio = renderBody(low);
+    const auto bypassAudio = renderBody(openOff);
+    const double upperChangeDb = 20.0 * std::log10(std::max(1.0e-12,
+        toneAmplitude(lowAudio, 4.0 * fundamental) / toneAmplitude(bypassAudio, 4.0 * fundamental)));
+    check(upperChangeDb < -12.0, "full body mix respects low-pass upper-partial rejection");
+    std::printf("BODY FILTER low-pass fourth-partial change %.3f dB\n", upperChangeDb);
+
+    auto lpOff = low;
+    lpOff[chParam(0, CP_lpfOn)] = 0.0f;
+    check(renderBody(lpOff) == bypassAudio, "disabled low-pass does not color the instrument body");
+
+    auto resonant = low;
+    low[chParam(0, CP_lpfCutoff)] = resonant[chParam(0, CP_lpfCutoff)] = static_cast<float>(2.0 * fundamental);
+    resonant[chParam(0, CP_lpfRes)] = 0.90f;
+    const double resonanceDb = 20.0 * std::log10(std::max(1.0e-12,
+        toneAmplitude(renderBody(resonant), 2.0 * fundamental)
+        / toneAmplitude(renderBody(low), 2.0 * fundamental)));
+    check(resonanceDb > 4.0, "low-pass resonance shapes a full-body rank");
+    std::printf("BODY FILTER resonance at cutoff change %.3f dB\n", resonanceDb);
+
+    // Exercise live bypass transitions and strongest authored controls through
+    // the same continuous state: every intermediate sample must remain bounded.
+    auto moving = fixture(body::bowed);
+    moving[P_volume] = 0.15f;
+    auto engine = std::make_unique<Engine>();
+    prepare(*engine, moving);
+    engine->noteOn(60, 0.8f);
+    (void) render(*engine, 2400);
+    bool finite = true;
+    double peak = 0.0;
+    for (int step = 0; step < 8; ++step)
+    {
+        moving[chParam(0, CP_hpfOn)] = step % 2 ? 0.0f : 1.0f;
+        moving[chParam(0, CP_lpfOn)] = step % 3 ? 1.0f : 0.0f;
+        moving[chParam(0, CP_hpfCutoff)] = step % 2 ? 30.0f : 6000.0f;
+        moving[chParam(0, CP_lpfCutoff)] = step % 2 ? 7000.0f : 90.0f;
+        moving[chParam(0, CP_hpfRes)] = moving[chParam(0, CP_lpfRes)] = 1.0f;
+        engine->setParams(moving);
+        for (float sample : render(*engine, 1024, 29))
+        {
+            finite = finite && std::isfinite(sample);
+            peak = std::max(peak, std::abs(static_cast<double>(sample)));
+        }
+    }
+    check(finite && peak < 1.0, "body filter live cutoffs/resonance/bypass remain finite and bounded");
 }
 void nextNoteSelection()
 {
@@ -225,6 +350,12 @@ void isolation()
     prepare(a, aParams); prepare(b, bParams);
     a.noteOn(60, 0.8f); b.noteOn(60, 0.8f);
     check(render(a, 2048) == render(b, 2048), "disabled bodies retain exact original circuit samples");
+
+    auto zeroMix = fixture(body::piano), noBody = zeroMix;
+    zeroMix[P_body1Mix] = noBody[P_body1Mix] = 0.0f;
+    noBody[P_body1Model] = 0.0f;
+    check(renderBody(zeroMix) == renderBody(noBody),
+          "enabled body at zero mix preserves exact no-body circuit samples");
 }
 void tailHandoff()
 {
@@ -276,7 +407,7 @@ int main()
 {
     try
     {
-        partitionAndBatch(); soundingRegister(); keyboardBrilliance(); nextNoteSelection(); isolation(); tailHandoff();
+        partitionAndBatch(); soundingRegister(); keyboardBrilliance(); bodyFilterRouting(); nextNoteSelection(); isolation(); tailHandoff();
         std::printf("Instrument body Engine integration: %d checks, %d failures\n", checks, failures);
         return failures == 0 ? 0 : 1;
     }

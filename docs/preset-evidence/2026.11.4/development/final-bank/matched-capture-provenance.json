@@ -1,0 +1,43 @@
+{
+  "state": "completed final-source matched metrics; native artifact qualification separate",
+  "fixture": {
+    "rate": 48000,
+    "note": "category default",
+    "velocity": 0.8,
+    "pressure": 0,
+    "hold": 3,
+    "tail": 1
+  },
+  "main_rows": 523,
+  "pressure_one_rows_per_revision": 2,
+  "pressure_request_order": [
+    "Electric Leads 136",
+    "Pressure Lead"
+  ],
+  "capture_implementation_unchanged_from_baseline": true,
+  "actual_frame_counts_present_in_csv": false,
+  "source_manifest": "provenance.json",
+  "inputs": {
+    "baseline_metrics": {
+      "path": "baseline/single-note-metrics.csv",
+      "sha256": "72e51e3433d9695c63b7b91d46f6b325d68ac5cae502e0b7c51fead363d215ab"
+    },
+    "final_metrics": {
+      "path": "development/final-bank/single-note-metrics.csv",
+      "sha256": "6d5f4186d8d946163f3845d105907074e94ab75c9a3d07bc003967af484fefff"
+    },
+    "baseline_pressure": {
+      "path": "baseline/pressure-one-metrics.csv",
+      "sha256": "13642117d6f84a9280f522b45362c53fbee3816b17c53bae5c5e8e7afb16d01e"
+    },
+    "final_pressure": {
+      "path": "development/final-bank/pressure-one-metrics.csv",
+      "sha256": "95a3781142f3d67e4b1a7d70ba89027a9919a374d28492041dd3ced1d58115f8"
+    }
+  },
+  "commands": [
+    "build-core/cs80_preset_capture --library all --all --out ../final-matched-2026-11-4 --hold 3 --tail 1",
+    "../baseline/cs80_preset_capture --library all --preset 'Electric Leads 136' --preset 'Pressure Lead' --pressure 1 --out ../baseline-pressure-ordered --hold 3 --tail 1",
+    "build-core/cs80_preset_capture --library all --preset 'Electric Leads 136' --preset 'Pressure Lead' --pressure 1 --out ../final-pressure-ordered --hold 3 --tail 1"
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "worker": 44,
+  "task": "macOS ARM64 release qualification",
+  "status": "ready_for_new_source_run; no native result or archive accepted",
+  "prepared_at_utc": "2026-11-23T18:01:12.008285+00:00",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "target": "macos-arm64",
+  "runner": "macos-15",
+  "job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+  "source": null,
+  "source_tree": null,
+  "run_id": null,
+  "run_attempt": null,
+  "workflow_sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+  "required_steps": [
+    "Record native platform",
+    "Configure",
+    "Verify configured JUCE source",
+    "Build",
+    "Test",
+    "Fetch pluginval 1.0.4",
+    "Register built AU",
+    "Validate VST3 with pluginval",
+    "Validate AU with pluginval",
+    "Validate AU with pluginval GUI",
+    "Validate AU GUI fixed-seed regression",
+    "Package native macOS VST3, AU and Standalone",
+    "Upload native macOS install bundle",
+    "Upload pluginval reports",
+    "Upload test and JUCE source evidence"
+  ],
+  "artifacts": {
+    "install": "cs80-macos-15-install-bundle",
+    "native_evidence": "cs80-macos-15-test-evidence",
+    "validator_evidence": "cs80-pluginval-macos-15"
+  },
+  "actual_run_binding": [
+    "Retrieve source commit and exact source tree; compare local inspected workflow/packager/helper bytes to that immutable source.",
+    "Require the selected run and job to match the intended source and attempt; reject cancelled, failed, incomplete or stale jobs.",
+    "Require every named producing, testing, comparison-bearing, packaging and upload step to succeed.",
+    "Fetch exact individual artifact API records: require expected name, run/head SHA, size, independent sha256 digest, non-expired status and producing upload step.",
+    "Retain original API records and job log with SHA256; materialize and inspect downloaded ZIP bytes, never merely infer success from their names."
+  ],
+  "native_checks": {
+    "platform": "Require actual Record native platform log to report arm64; do not infer architecture from the runner label alone.",
+    "configuration": [
+      "Release",
+      "CS80_BUILD_PLUGIN=ON",
+      "CS80_BUILD_TESTS=ON"
+    ],
+    "ctest": "Serial complete CTest with --no-tests=error and actual JUnit, cross-checked against LastTest.log and successful Test step.",
+    "counts": "Compute registered/passed/failed/formally-skipped/disabled from this run. Count nested Python skips separately; retain reasons. Do not reuse prior-revision totals.",
+    "relevant_tests": [
+      "cs80_instrument_body_tests",
+      "cs80_instrument_body_engine_tests",
+      "cs80_library_audit_tests",
+      "cs80_preset_voicing_tests",
+      "cs80_preset_character_tests",
+      "cs80_preset_precision_tests",
+      "cs80_parameter_state_index_tests",
+      "cs80_modern_recall_host_tests",
+      "cs80_ui_smoke",
+      "cs80_pluginval_macos_download_tests"
+    ],
+    "body_host_routing": "InstrumentBodyHostTests runs in modern-recall-host tests and the UI smoke executable.",
+    "juce": {
+      "sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "version": "8.0.11",
+      "required_fields": {
+        "verification": "PASS",
+        "source_clean": "true",
+        "workflow_commit": "exact new source SHA"
+      }
+    }
+  },
+  "validator_checks": {
+    "version": "1.0.4",
+    "required_lanes": 4,
+    "lanes": [
+      {
+        "step": "Validate VST3 with pluginval",
+        "required_outcome": "success from original process with pipefail and explicit SUCCESS",
+        "console": "pluginval-vst3.log",
+        "report": "pluginval-reports/cs80-vst3",
+        "strictness": 10,
+        "gui": false,
+        "fixed_seed": null,
+        "workflow_run_body_sha256": "cbca198b0ded673f32ce6846d86f97a46d7e006b134b59109e6b03bb4972a6bf",
+        "invocations_expected": 1,
+        "retry_wrapper": "none"
+      },
+      {
+        "step": "Validate AU with pluginval",
+        "required_outcome": "success from original process with pipefail and explicit SUCCESS",
+        "console": "pluginval-au.log",
+        "report": "pluginval-reports/cs80-au",
+        "strictness": 10,
+        "gui": false,
+        "fixed_seed": null,
+        "workflow_run_body_sha256": "d944daf0acd50995254c088efa5674ab0f6f6af5df4ecacc6b666448f6a57345",
+        "invocations_expected": 1,
+        "retry_wrapper": "none"
+      },
+      {
+        "step": "Validate AU with pluginval GUI",
+        "required_outcome": "success from original process with pipefail and explicit SUCCESS",
+        "console": "pluginval-au-gui.log",
+        "report": "pluginval-reports/cs80-au-gui",
+        "strictness": 10,
+        "gui": true,
+        "fixed_seed": null,
+        "workflow_run_body_sha256": "849ccab1931057d48d2d49a51b4e262d5d833d46d18434aadf9539569bfea8d2",
+        "invocations_expected": 1,
+        "retry_wrapper": "none"
+      },
+      {
+        "step": "Validate AU GUI fixed-seed regression",
+        "required_outcome": "success from original process with pipefail and explicit SUCCESS",
+        "console": "pluginval-au-seed-regression.log",
+        "report": "pluginval-reports/cs80-au-seed-regression",
+        "strictness": 10,
+        "gui": true,
+        "fixed_seed": "0x2b4eef5",
+        "workflow_run_body_sha256": "9f7cc862fe33c2f41c313e287ae48fe8c11d920e2b5f51d892e02c8e51844c30",
+        "invocations_expected": 1,
+        "retry_wrapper": "none"
+      }
+    ],
+    "raw_evidence": "Parse retained console and structured/plain report pairs; require strictness10,523programs, expected GUI scope and seed, clean explicit SUCCESS, no unresolved failure/abort; retain any explicit skip lines.",
+    "process_exit": "Successful original workflow step plus source-pinned pipefail and explicit SUCCESS check establishes exit success; a SUCCESS substring alone is insufficient.",
+    "retry_accounting": "No Mac runtime retry wrapper exists. Count every actual invocation and preserve any prior failed attempt rather than converting it to a clean first pass."
+  },
+  "install_check": {
+    "tool": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py",
+    "arguments": [
+      "--archive",
+      "<actual install ZIP>",
+      "--artifact-api",
+      "<individual API JSON>",
+      "--source",
+      "<exact new source SHA>",
+      "--run-id",
+      "<new run ID>",
+      "--platform",
+      "macos",
+      "--architecture",
+      "arm64",
+      "--out",
+      "<new immutable-source report directory>/macos-arm64-install.json"
+    ],
+    "scope": [
+      "Independent outer API size and digest",
+      "Complete inner tar inventory/checksums and all three Mach-O ARM64 products",
+      "Source/revision2026.11.4/run/JUCE provenance",
+      "Source-pinned packager and verifier modules",
+      "Licences, local installation guide and SOURCE.txt"
+    ],
+    "binary_paths": [
+      "VST3/CS-80 Reference.vst3/Contents/MacOS/CS-80 Reference",
+      "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+      "Standalone/CS-80 Reference.app/Contents/MacOS/CS-80 Reference"
+    ]
+  },
+  "au_payload_binding": {
+    "mandatory_steps": [
+      "Register built AU",
+      "Package native macOS VST3, AU and Standalone"
+    ],
+    "records": [
+      "au-payload-before-validation.sha256",
+      "au-payload-after-validation.sha256"
+    ],
+    "requirements": [
+      "Require each retained record to contain exactly source and registered-destination executable hashes for the expected paths.",
+      "All four hashes must agree: source before, registered copy before, source after, registered copy after.",
+      "Compare that common hash to the actual downloaded AU executable hash in the installation verifier report.",
+      "Both whole-bundle recursive comparisons must have passed under set -euo pipefail; require packaging after all four successful validator lanes.",
+      "Bind records to the same run/attempt/job through the validator evidence artifact API and successful Upload pluginval reports step."
+    ],
+    "boundary": "Recursive diff proves file/resource presence and contents; executable SHA equality additionally binds downloaded AU bytes. It does not establish extended attributes, publisher identity, notarization or arbitrary-host certification."
+  },
+  "report_outputs": [
+    "macos-arm64-native.json",
+    "macos-arm64-validators.json",
+    "macos-arm64-install.json",
+    "macos-arm64-au-payload.json",
+    "macos-arm64-platform.json"
+  ],
+  "source_sha256": {
+    ".github/workflows/build.yml": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/verify-ci-juce-source.cmake": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727",
+    "scripts/test-pluginval-macos-download.py": "769b776c7c501e0c8670d0b4481a339487d6a498264d284eb6954aca8e6b7bb2",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+    "docs/preset-evidence/2026.11.4/reviews/39-macos-au-binding.json": "17d410c00d0fffc6dfad696b44919716eae53494fd9079c334e8ff6aeb0a183a"
+  },
+  "preparation_checks": {
+    "workflow_yaml_parse": "passed",
+    "all_required_steps_present": 15,
+    "strictness_and_exit_contracts": 4,
+    "source_sign_copy_compare_order": "passed",
+    "prepackage_compare_order": "passed"
+  },
+  "not_claimed": [
+    "No new source commit has been supplied.",
+    "No new run, native tests, validator process, downloaded archive or AU identity has been accepted.",
+    "Prior2026.11.3 report files were inspected only for format and evidence structure, not reused as qualification.",
+    "No production code, workflow, build, commit or ref was changed."
+  ]
+}

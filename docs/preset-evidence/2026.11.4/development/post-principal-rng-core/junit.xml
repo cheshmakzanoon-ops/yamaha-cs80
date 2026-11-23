@@ -1,0 +1,1605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="194"
+	failures="3"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="237"
+	timestamp="2026-11-23T10:50:35"
+	>
+	<testcase name="cs80_engine_output_fir_packed_tests" classname="cs80_engine_output_fir_packed_tests" time="0.34058" status="run">
+		<properties/>
+		<system-out>Compared 389760 PCM words and sticky flags
+</system-out>
+	</testcase>
+	<testcase name="cs80_wsc_held_endpoint_tests" classname="cs80_wsc_held_endpoint_tests" time="0.0131747" status="run">
+		<properties/>
+		<system-out>WSC endpoint: 3072 ticks, 2372 borrowed, 700 scalar
+</system-out>
+	</testcase>
+	<testcase name="cs80_legacy_sub_lfo_oracle_tests" classname="cs80_legacy_sub_lfo_oracle_tests" time="1.92599" status="run">
+		<properties/>
+		<system-out>scenario rate=48000 wave=0 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=1 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=2 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=3 mode=original frames=512 eligible=1 wraps=0/0 draws=0/0
+scenario rate=48000 wave=4 mode=original frames=512 eligible=1 wraps=0/0 draws=1/1
+scenario rate=48000 wave=5 mode=original frames=512 eligible=1 wraps=0/0 draws=1024/1024
+scenario rate=44100 wave=0 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=0/0
+scenario rate=44100 wave=0 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=0/0
+scenario rate=44100 wave=1 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=0/0
+scenario rate=44100 wave=1 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=0/0
+scenario rate=44100 wave=2 mode=wrap frames=17640 eligible=1 wraps=11/11 draws=0/0
+scenario rate=44100 wave=2 mode=scheduled frames=19845 eligible=1 wraps=5/5 draws=0/0
+scenario rate...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_ig00156_batch_tests" classname="cs80_ig00156_batch_tests" time="0.0180641" status="run">
+		<properties/>
+		<system-out>Ig00156Batch: 1207674 checks, 0 failures, 15982 accelerated groups
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_batch_engine_tests" classname="cs80_filter_batch_engine_tests" time="10.1971" status="run">
+		<properties/>
+		<system-out>FilterBatchEngine: 4135998 checks, 285328 stereo frames, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_batch_scheduling_tests" classname="cs80_filter_batch_scheduling_tests" time="2.03785" status="run">
+		<properties/>
+		<system-out>FilterBatchScheduling: 869465 checks, 0 failures, 135454 timeline frames (four engine variants)
+</system-out>
+	</testcase>
+	<testcase name="cs80_ig00151_zero_ei_tests" classname="cs80_ig00151_zero_ei_tests" time="0.0358758" status="run">
+		<properties/>
+		<system-out>1200054 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_event_timeline_tests" classname="cs80_event_timeline_tests" time="0.00684656" status="run">
+		<properties/>
+		<system-out>offline event timeline: exact timestamps and sample-reference output passed
+</system-out>
+	</testcase>
+	<testcase name="cs80_pump_until_tests" classname="cs80_pump_until_tests" time="0.00467523" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_filter_batch_admission_tests" classname="cs80_filter_batch_admission_tests" time="18.6726" status="run">
+		<properties/>
+		<system-out>gcc strict admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+gcc associative-alone admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+gcc associative-effective admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc reciprocal admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc no-signed-zero admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc unsafe admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc fast admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc finite-only admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc ofast admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc fma admission: caller=0 kernel=0 accelerated=0 callback=0 failures=0
+gcc no-trapping-only admission: caller=1 kernel=1 accelerated=1 callback=1 failures=0
+</system-out>
+	</testcase>
+	<testcase name="cs80_package_binary_identity_tests" classname="cs80_package_binary_identity_tests" time="0.221976" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>...s.........
+----------------------------------------------------------------------
+Ran 13 tests in 0.070s
+
+OK (skipped=1)
+</system-out>
+	</testcase>
+	<testcase name="cs80_packaging_notice_tests" classname="cs80_packaging_notice_tests" time="1.40127" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>test_actual_ci_payload_and_archive_bytes (__main__.NoticeTests.test_actual_ci_payload_and_archive_bytes) ... ok
+test_bundled_guide_links_keep_local_documents_and_pin_source (__main__.NoticeTests.test_bundled_guide_links_keep_local_documents_and_pin_source) ... ok
+test_changed_source_revision_propagates_without_packager_update (__main__.NoticeTests.test_changed_source_revision_propagates_without_packager_update) ... ok
+test_missing_or_invalid_source_revision_is_rejected (__main__.NoticeTests.test_missing_or_invalid_source_revision_is_rejected) ... ok
+test_missing_preset_guide_is_rejected (__main__.NoticeTests.test_missing_preset_guide_is_rejected) ... ok
+test_native_installer_notice_source_mappings (__main__.NoticeTests.test_native_installer_notice_source_mappings) ... ok
+test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.243s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_factory_audition_artifact_tests" classname="cs80_factory_audition_artifact_tests" time="0.552234" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>..................
+----------------------------------------------------------------------
+Ran 18 tests in 0.363s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_ci_juce_provenance_tests" classname="cs80_ci_juce_provenance_tests" time="0.639725" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>test_every_release_job_checks_before_build_and_retains_evidence (__main__.ReleaseWorkflowTests.test_every_release_job_checks_before_build_and_retains_evidence) ... ok
+test_clean_exact_checkout_records_identity (__main__.SourceGateTests.test_clean_exact_checkout_records_identity) ... ok
+test_explicit_override (__main__.SourceGateTests.test_explicit_override) ... ok
+test_failed_recheck_replaces_previous_pass (__main__.SourceGateTests.test_failed_recheck_replaces_previous_pass) ... ok
+test_local_source_path (__main__.SourceGateTests.test_local_source_path) ... ok
+test_missing_configured_source (__main__.SourceGateTests.test_missing_configured_source) ... ok
+test_missing_git_metadata (__main__.SourceGateTests.test_missing_git_metadata) ... ok
+test_tracked_modification (__main__.SourceGateTests.test_tracked_modification) ... ok
+test_untracked_source (__main__.SourceGateTests.test_untracked_source) ... ok
+test_wrong_commit (__main__.SourceGateTests.test_wrong_commit) ... ok
+test_wrong_version (__main__.SourceGateTe...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_pluginval_windows_download_tests" classname="cs80_pluginval_windows_download_tests" time="0.2019" status="run">
+		<properties/>
+		<system-out>...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.015s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_pluginval_macos_download_tests" classname="cs80_pluginval_macos_download_tests" time="0.172999" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>.....................F
+======================================================================
+FAIL: test_workflow_gate_unchanged_and_transfer_failure_stops_execution (__main__.DownloadTests.test_workflow_gate_unchanged_and_transfer_failure_stops_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/a9592b052b11/cs80-work/scripts/test-pluginval-macos-download.py", line 313, in test_workflow_gate_unchanged_and_transfer_failure_stops_execution
+    self.assertEqual(hashlib.sha256(original_gate.encode()).hexdigest(),
+AssertionError: '8b66229b5a9309754ca272b3d5a2878850b3b5c37253518d5a4c1d3442cf3e7e' != '17f7fba2b466e8c3cd0686f35cbe93e42227583e73064f763670d150befd6b84'
+- 8b66229b5a9309754ca272b3d5a2878850b3b5c37253518d5a4c1d3442cf3e7e
++ 17f7fba2b466e8c3cd0686f35cbe93e42227583e73064f763670d150befd6b84
+
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.016s
+
+FAILED (failures=1)
+</system-out>
+	</testcase>
+	<testcase name="cs80_deb_runtime_dependency_tests" classname="cs80_deb_runtime_dependency_tests" time="9.11032" status="run">
+		<properties>
+			<property name="cmake_labels" value="packaging"/>
+		</properties>
+		<system-out>test_empty_scanner_output_fails_without_package (__main__.DependencyTests.test_empty_scanner_output_fails_without_package) ... ok
+test_external_plugin_directory_symlink_fails_without_package (__main__.DependencyTests.test_external_plugin_directory_symlink_fails_without_package) ... ok
+test_external_plugin_symlink_fails_without_package (__main__.DependencyTests.test_external_plugin_symlink_fails_without_package) ... ok
+test_foreign_machine_products_rejected (__main__.DependencyTests.test_foreign_machine_products_rejected) ... ok
+test_internal_relative_plugin_directory_symlink_is_delivered (__main__.DependencyTests.test_internal_relative_plugin_directory_symlink_is_delivered) ... ok
+test_internal_relative_plugin_symlink_is_delivered (__main__.DependencyTests.test_internal_relative_plugin_symlink_is_delivered) ... ok
+test_missing_dependency_metadata_fails_without_package (__main__.DependencyTests.test_missing_dependency_metadata_fails_without_package) ... ok
+test_missing_scanner_fails_without_package (__main__.D...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_ci_bundle_verification_tests" classname="cs80_ci_bundle_verification_tests" time="0.29038" status="run">
+		<properties/>
+		<system-out>............................
+----------------------------------------------------------------------
+Ran 28 tests in 0.136s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_windows_installer_preflight_tests" classname="cs80_windows_installer_preflight_tests" time="1.22346" status="run">
+		<properties/>
+		<system-out>...ss.......
+----------------------------------------------------------------------
+Ran 12 tests in 1.066s
+
+OK (skipped=2)
+</system-out>
+	</testcase>
+	<testcase name="cs80_parity_harness_tests" classname="cs80_parity_harness_tests" time="3.22226" status="run">
+		<properties/>
+		<system-out>......................
+----------------------------------------------------------------------
+Ran 22 tests in 3.108s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_ui_environment_tests" classname="cs80_ui_environment_tests" time="16.4637" status="run">
+		<properties/>
+		<system-out>.......
+----------------------------------------------------------------------
+Ran 7 tests in 16.333s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_trash_safety_tests" classname="cs80_preset_trash_safety_tests" time="0.996998" status="run">
+		<properties/>
+		<system-out>Preset trash safety: 23 checks, 0 failures; inert doubles only.
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_signature_math_tests" classname="cs80_preset_signature_math_tests" time="20.463" status="run">
+		<properties/>
+		<system-out>Extracted signature math: 2925 cases, 900900 finite checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_macos_installer_architecture_tests" classname="cs80_macos_installer_architecture_tests" time="4.28636" status="run">
+		<properties/>
+		<system-out>......
+----------------------------------------------------------------------
+Ran 6 tests in 4.151s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_continuous_voice_circuit_tests" classname="cs80_continuous_voice_circuit_tests" time="0.0263617" status="run">
+		<properties/>
+		<system-out>Continuous voice circuit: 151578 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_continuous_voice_circuit_audit_tests" classname="cs80_continuous_voice_circuit_audit_tests" time="0.538594" status="run">
+		<properties/>
+		<system-out>Continuous voice circuit audit: 33962 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_lfo_scope_preview_tests" classname="cs80_lfo_scope_preview_tests" time="0.00672242" status="run">
+		<properties/>
+		<system-out>LFO scope preview: 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_preview_math_tests" classname="cs80_preset_preview_math_tests" time="0.00536681" status="run">
+		<properties/>
+		<system-out>Preset preview math: 65543 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_output_meter_display_tests" classname="cs80_output_meter_display_tests" time="0.00212257" status="run">
+		<properties/>
+		<system-out>Output meter display: PASS
+</system-out>
+	</testcase>
+	<testcase name="cs80_voice_activity_tests" classname="cs80_voice_activity_tests" time="0.0056826" status="run">
+		<properties/>
+		<system-out>Voice activity: 131332 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_output_meter_tests" classname="cs80_output_meter_tests" time="0.00373935" status="run">
+		<properties/>
+		<system-out>Output meter: 20 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_output_meter_audit_tests" classname="cs80_output_meter_audit_tests" time="0.0163313" status="run">
+		<properties/>
+		<system-out>Independent output-meter audit: 22769 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_keyboard_pressure_audit_tests" classname="cs80_keyboard_pressure_audit_tests" time="0.00521233" status="run">
+		<properties/>
+		<system-out>Keyboard pressure independent audit: 235 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_captured_keyboard_events_tests" classname="cs80_captured_keyboard_events_tests" time="0.00477879" status="run">
+		<properties/>
+		<system-out>Captured keyboard events passed
+</system-out>
+	</testcase>
+	<testcase name="cs80_keyboard_event_queue_tests" classname="cs80_keyboard_event_queue_tests" time="0.00860876" status="run">
+		<properties/>
+		<system-out>Keyboard event queue tests passed
+</system-out>
+	</testcase>
+	<testcase name="cs80_keyboard_epoch_interleaving_tests" classname="cs80_keyboard_epoch_interleaving_tests" time="3.23591" status="run">
+		<properties/>
+		<system-out>Keyboard epoch interleave: note and pressure baselines passed; both stale-filter mutants detected
+</system-out>
+	</testcase>
+	<testcase name="cs80_parity_mode_tests" classname="cs80_parity_mode_tests" time="5.68393" status="run">
+		<properties/>
+		<system-out>Parity mode: 128 checks, 0 failures (feature isolation, not calibrated parity)
+</system-out>
+	</testcase>
+	<testcase name="cs80_source_performance_tests" classname="cs80_source_performance_tests" time="14.5476" status="run">
+		<properties/>
+		<system-out>Source performance: 496 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_source_performance_audit_tests" classname="cs80_source_performance_audit_tests" time="3.49954" status="run">
+		<properties/>
+		<system-out>Independent source-performance audit: 2711 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_envelope_precision_tests" classname="cs80_envelope_precision_tests" time="82.908" status="run">
+		<properties/>
+		<system-out>22732 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_default_history_tests" classname="cs80_filter_default_history_tests" time="0.0407798" status="run">
+		<properties/>
+		<system-out>default captures=768 idle=256 warped=512 samples=197376 failures=0
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_default_history_missing_tests" classname="cs80_filter_default_history_missing_tests" time="0.0135756" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_filter_default_history_truncated_tests" classname="cs80_filter_default_history_truncated_tests" time="0.0100247" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_filter_idle_fallback_tests" classname="cs80_filter_idle_fallback_tests" time="0.0296202" status="run">
+		<properties/>
+		<system-out>captures=768 idle=256 warped=512 failures=0
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_idle_fallback_missing_tests" classname="cs80_filter_idle_fallback_missing_tests" time="0.0119282" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_filter_idle_fallback_truncated_tests" classname="cs80_filter_idle_fallback_truncated_tests" time="0.0109807" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_filter_batch_cap_tests" classname="cs80_filter_batch_cap_tests" time="0.0672113" status="run">
+		<properties/>
+		<system-out>captures=512 tested_positions=2048 ineligible_positions=0 vector_success=17328 checks=648358 failures=0
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_batch_cap_missing_tests" classname="cs80_filter_batch_cap_missing_tests" time="0.00843569" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_filter_batch_cap_truncated_tests" classname="cs80_filter_batch_cap_truncated_tests" time="0.0115313" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_ig00156_cache_tests" classname="cs80_ig00156_cache_tests" time="0.135027" status="run">
+		<properties/>
+		<system-out>20364865 exact scalar comparisons across 385223 samples, 96654 exceptional both-NaN checks; 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_ig00156_filter_tests" classname="cs80_ig00156_filter_tests" time="0.683065" status="run">
+		<properties/>
+		<system-out>47 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_envelope_rc_model_tests" classname="cs80_envelope_rc_model_tests" time="0.292756" status="run">
+		<properties/>
+		<system-out>22741 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_live_envelope_level_tests" classname="cs80_live_envelope_level_tests" time="6.04962" status="run">
+		<properties/>
+		<system-out>221594 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_live_envelope_timing_tests" classname="cs80_live_envelope_timing_tests" time="2.65409" status="run">
+		<properties/>
+		<system-out>91672 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_active_tail_continuity_tests" classname="cs80_active_tail_continuity_tests" time="15.2658" status="run">
+		<properties/>
+		<system-out>Active-tail continuity: 49732 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_core_tests" classname="cs80_core_tests" time="16.0287" status="run">
+		<properties/>
+		<system-out>EXT reconstruction sr=44100 tone=21.533Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+EXT reconstruction sr=44100 tone=1001.294Hz gain=-0.000047dB image=-114.60dB delay=63.5host
+EXT reconstruction sr=44100 tone=20004.346Hz gain=0.000378dB image=-108.18dB delay=63.5host
+EXT reconstruction sr=48000 tone=23.438Hz gain=-0.000001dB image=-114.45dB delay=63.5host
+EXT reconstruction sr=48000 tone=996.094Hz gain=-0.000036dB image=-120.37dB delay=63.5host
+EXT reconstruction sr=48000 tone=20003.906Hz gain=0.000097dB image=-106.94dB delay=63.5host
+EXT reconstruction sr=96000 tone=23.438Hz gain=-0.000000dB image=-114.32dB delay=63.5host
+EXT reconstruction sr=96000 tone=1007.812Hz gain=-0.000035dB image=-121.11dB delay=63.5host
+EXT reconstruction sr=96000 tone=19992.188Hz gain=-0.000045dB image=-114.90dB delay=63.5host
+ALL 11548 CHECKS PASSED
+</system-out>
+	</testcase>
+	<testcase name="cs80_voice_release_tests" classname="cs80_voice_release_tests" time="1.66731" status="run">
+		<properties/>
+		<system-out>Voice release: 6206 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_sixteen_voice_release_tests" classname="cs80_sixteen_voice_release_tests" time="6.03986" status="run">
+		<properties/>
+		<system-out>Immediate sixteen-voice release: 1418 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_unison_glide_tests" classname="cs80_unison_glide_tests" time="6.918" status="run">
+		<properties/>
+		<system-out>Unison glide: 10046 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_unison_detune_latch_tests" classname="cs80_unison_detune_latch_tests" time="0.184818" status="run">
+		<properties/>
+		<system-out>PASS initial group has analytic ten-cent spread
+PASS changing amount does not retune held circuits
+PASS later accepted onset uses new forty-cent spread
+PASS old group retains ten-cent spread beside new group
+PASS zero amount does not collapse already latched spread
+PASS next accepted onset uses zero spread after prior release
+PASS audio remains finite
+CASE policy=legacy mode=2 circuits=2
+PASS initial group has analytic ten-cent spread
+PASS changing amount does not retune held circuits
+PASS later accepted onset uses new forty-cent spread
+PASS old group retains ten-cent spread beside new group
+PASS zero amount does not collapse already latched spread
+PASS next accepted onset uses zero spread after prior release
+PASS audio remains finite
+CASE policy=legacy mode=3 circuits=4
+PASS initial group has analytic ten-cent spread
+PASS changing amount does not retune held circuits
+PASS later accepted onset uses new forty-cent spread
+PASS zero amount does not collapse already latched spread
+PASS next accepted onset uses ze...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_pedal_release_tests" classname="cs80_pedal_release_tests" time="1.50881" status="run">
+		<properties/>
+		<system-out>Pedal release: 1065 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_high_resolution_velocity_tests" classname="cs80_high_resolution_velocity_tests" time="0.00411219" status="run">
+		<properties/>
+		<system-out>High-resolution velocity: 780656 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_controller_reset_tests" classname="cs80_controller_reset_tests" time="17.0117" status="run">
+		<properties/>
+		<system-out>Controller reset: 4555 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_experimental_oscillator_tests" classname="cs80_experimental_oscillator_tests" time="13.8251" status="run">
+		<properties/>
+		<system-out>Independent host-band complex residual worst -83.6268 dB; sampled off-harmonic probes -116.673 dB relative selected in-band power (sparse probes, not exhaustive alias energy)
+Actual255tap 2x chain ideal-hostband residual worst -83.0731 dB; total off-harmonic energy -92.3188 dBc
+1418466 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_source_factory_integration_tests" classname="cs80_source_factory_integration_tests" time="237.913" status="run">
+		<properties/>
+		<system-out>135819 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_source_factory_tone_tests" classname="cs80_source_factory_tone_tests" time="0.112419" status="run">
+		<properties/>
+		<system-out>378861 source factory nominal-model checks; 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_hardware_control_tests" classname="cs80_hardware_control_tests" time="0.00370402" status="run">
+		<properties/>
+		<system-out>Hardware control: 4702 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_ig00156_reference_tests" classname="cs80_ig00156_reference_tests" time="0.032798" status="run">
+		<properties/>
+		<system-out>Trapezoid errors: 6.18922533e-05 1.54761149e-05 3.86921946e-06
+Conditional IG00156 reference: 112 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_keyboard_contour_reference_tests" classname="cs80_keyboard_contour_reference_tests" time="0.00850722" status="run">
+		<properties/>
+		<system-out>160459 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_loaded_control_reference_tests" classname="cs80_loaded_control_reference_tests" time="0.00585442" status="run">
+		<properties/>
+		<system-out>8132 loaded-control checks passed (synthetic boundaries, no hardware validation)
+</system-out>
+	</testcase>
+	<testcase name="cs80_loaded_control_rank_tests" classname="cs80_loaded_control_rank_tests" time="0.00833922" status="run">
+		<properties/>
+		<system-out>14012 loaded-rank checks passed (synthetic boundaries only)
+</system-out>
+	</testcase>
+	<testcase name="cs80_loaded_control_transient_tests" classname="cs80_loaded_control_transient_tests" time="0.0211643" status="run">
+		<properties/>
+		<system-out>1882 loaded-control transient checks passed (conditional RC only)
+</system-out>
+	</testcase>
+	<testcase name="cs80_output_tap_integration_tests" classname="cs80_output_tap_integration_tests" time="2.35588" status="run">
+		<properties/>
+		<system-out>Polyphonic output fixture peak 0.116077885 (not a universal synth headroom bound)
+Output pipeline max sample error 0; capacitor voltage error 9.84889253e-16
+184745 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_output_tap_circuit_tests" classname="cs80_output_tap_circuit_tests" time="1.54598" status="run">
+		<properties/>
+		<system-out>max independent transient port error 1.5099e-14
+1000 independent active matrices, max reduced-relation residual 4.44089e-16
+domain max b=0.405405, alternating-input peak=1.26016e+06
+140 measured AC fixtures, max complex port error 2.56964e-12
+fixed physical-time linear/step/decay RMS errors 6.35771e-08 1.58943e-08 3.97357e-09 9.93391e-10
+switched physical-time linear/step/decay RMS errors 4.95449e-08 1.23862e-08 3.09656e-09 7.74139e-10
+fixed physical-time sine RMS errors 1.49334e-05 3.73269e-06 9.33133e-07 2.33281e-07
+switched physical-time sine RMS errors 1.42206e-05 3.55452e-06 8.88592e-07 2.22146e-07
+same-frequency 3 Hz complex errors 6.25948e-09 1.56486e-09 3.91212e-10 9.77852e-11
+same-frequency 1000 Hz complex errors 4.34672e-06 1.08645e-06 2.71598e-07 6.78985e-08
+same-frequency 12000 Hz complex errors 5.4425e-05 1.31726e-05 3.26755e-06 8.1531e-07
+6506434 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_output_taps_tests" classname="cs80_output_taps_tests" time="0.0086275" status="run">
+		<properties/>
+		<system-out>11016 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_level_control_tests" classname="cs80_level_control_tests" time="0.117143" status="run">
+		<properties/>
+		<system-out>54272 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_resonance_control_tests" classname="cs80_resonance_control_tests" time="0.0711154" status="run">
+		<properties/>
+		<system-out>28059 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_oe2_filters_tests" classname="cs80_oe2_filters_tests" time="0.00745109" status="run">
+		<properties/>
+		<system-out>10190 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_stereo_pra_exact_tests" classname="cs80_stereo_pra_exact_tests" time="0.0719402" status="run">
+		<properties/>
+		<system-out>style 0 tested 16384 packed 16384 fallback 0 mismatched 0 out 0 state 0 fp 0
+style 1 tested 16384 packed 16384 fallback 0 mismatched 0 out 0 state 0 fp 0
+style 2 tested 16384 packed 1792 fallback 14592 mismatched 0 out 0 state 0 fp 0
+style 3 tested 16384 packed 512 fallback 15872 mismatched 0 out 0 state 0 fp 0
+style 4 tested 16384 packed 16384 fallback 0 mismatched 0 out 0 state 0 fp 0
+style 5 tested 16384 packed 0 fallback 16384 mismatched 0 out 0 state 0 fp 0
+</system-out>
+	</testcase>
+	<testcase name="cs80_pra_wah_integration_tests" classname="cs80_pra_wah_integration_tests" time="2.13083" status="run">
+		<properties/>
+		<system-out>Polyphonic fixture peak 0.0576540641 (fixture bound, not universal analog headroom)
+Independent pipeline maximum output error 0; PRA capacitor voltage error 3.31982705e-15; output capacitor voltage error 4.33680869e-19
+226798 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_pra_wah_circuit_tests" classname="cs80_pra_wah_circuit_tests" time="1.13795" status="run">
+		<properties/>
+		<system-out>maximum measured complex AC error 2.28437e-10
+dynamic fixture peaks nominal=0.0480148 sensitivity=1.69783
+dynamic trajectory RMS errors 0.000100399 2.55198e-05 6.57044e-06 1.68458e-06
+8759744 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_pra_wah_tests" classname="cs80_pra_wah_tests" time="0.0427775" status="run">
+		<properties/>
+		<system-out>28686 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_bbd_chorus_tests" classname="cs80_bbd_chorus_tests" time="1.54262" status="run">
+		<properties/>
+		<system-out>74 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mn3001_packet_tests" classname="cs80_mn3001_packet_tests" time="0.0232284" status="run">
+		<properties/>
+		<system-out>97650 checks, 0 failures (normalized signal packets; not analog voltage)
+</system-out>
+	</testcase>
+	<testcase name="cs80_performance_control_tests" classname="cs80_performance_control_tests" time="10.9456" status="run">
+		<properties/>
+		<system-out>ALL 1805 PERFORMANCE CONTROL CHECKS PASSED
+</system-out>
+	</testcase>
+	<testcase name="cs80_validator_diagnostic_selection_tests" classname="cs80_validator_diagnostic_selection_tests" time="6.70975" status="run">
+		<properties/>
+		<system-out>.........
+----------------------------------------------------------------------
+Ran 9 tests in 6.454s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_validator_retry_tests" classname="cs80_validator_retry_tests" time="4.44078" status="run">
+		<properties/>
+		<system-out>Checked success
+Checked no_success
+Checked false_success
+Checked ordinary_failure
+Checked timeout
+Checked crash_success
+Checked crash_failed
+Checked crash_during_test
+Checked crash_no_phase
+Checked crash_orphan_completion
+Checked recover
+Checked retry_no_success
+Checked always_crash
+All 13 pluginval wrapper cases passed
+</system-out>
+	</testcase>
+	<testcase name="cs80_validator_exit_classification_tests" classname="cs80_validator_exit_classification_tests" time="0.569911" status="run">
+		<properties/>
+		<system-out>.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.349s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_ig00156_nodal_tests" classname="cs80_ig00156_nodal_tests" time="33.8398" status="run">
+		<properties/>
+		<system-out>equivalence: worst 1.9e-07 of output peak (limit 2e-06)
+small signal vs continuous truth at 88200 Hz:  fc 60 core 0.0000 band 0.0561  fc 250 core 0.0001 band 0.0588  fc 1000 core 0.0010 band 0.0699  fc 4000 core 0.0198 band 0.1129 (over)  fc 12000 core 0.0479 band 0.1403 (over)
+small signal vs continuous truth at 96000 Hz:  fc 60 core 0.0000 band 0.0580  fc 250 core 0.0001 band 0.0605  fc 1000 core 0.0009 band 0.0705  fc 4000 core 0.0167 band 0.1105 (over)  fc 12000 core 0.0403 band 0.1371 (over)
+small signal vs continuous truth at 192000 Hz:  fc 60 core 0.0000 band 0.0145  fc 250 core 0.0000 band 0.0152  fc 1000 core 0.0002 band 0.0177  fc 4000 core 0.0041 band 0.0280 (over)  fc 12000 core 0.0349 band 0.0349 (over)
+small signal vs continuous truth at 384000 Hz:  fc 60 core 0.0000 band 0.0035  fc 250 core 0.0000 band 0.0037  fc 1000 core 0.0001 band 0.0043  fc 4000 core 0.0010 band 0.0069  fc 12000 core 0.0086 band 0.0086
+pre-registered small-signal gate over the whole grid: NOT MET (top-octave bilinear warp ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_ig00156_top_octave_tests" classname="cs80_ig00156_top_octave_tests" time="1.83109" status="run">
+		<properties/>
+		<system-out>known deviation fs=88200 fc=4000 core=0.0198416974 band=0.112860136 direct-band=0.112918499 ceilings=0.03/0.119
+known deviation fs=88200 fc=12000 core=0.0479225082 band=0.140322783 direct-band=0.140402732 ceilings=0.0505/0.148
+known deviation fs=96000 fc=4000 core=0.0166882672 band=0.110509617 direct-band=0.110559583 ceilings=0.03/0.117
+known deviation fs=96000 fc=12000 core=0.0402999603 band=0.137092652 direct-band=0.137145792 ceilings=0.0425/0.145
+known deviation fs=192000 fc=4000 core=0.00411193031 band=0.0279702754 direct-band=0.0279434362 ceilings=0.03/0.0295
+known deviation fs=192000 fc=12000 core=0.0349480134 band=0.0349480134 direct-band=0.034919731 ceilings=0.0367/0.0367
+known deviation fs=384000 fc=4000 core=0.00102428073 band=0.00687750756 direct-band=0.00688653424 ceilings=0.03/0.02
+known deviation fs=384000 fc=12000 core=0.00863178126 band=0.00863178126 direct-band=0.00864151837 ceilings=0.03/0.02
+direct high-cutoff discrete-equivalence worst=1.14604308e-07, limit=5e-06
+common-band refinement bas...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_oscillator_promotion_tests" classname="cs80_oscillator_promotion_tests" time="8.11095" status="run">
+		<properties/>
+		<system-out>pins at 88200 Hz: pin7 3.4997 Vpp, sine 3.0000 Vpp
+pins at 96000 Hz: pin7 3.5000 Vpp, sine 3.0000 Vpp
+pins at 192000 Hz: pin7 3.4998 Vpp, sine 3.0000 Vpp
+sizeof(ReconstructedOscillator) = 5984 bytes, basis 16440 bytes shared
+third harmonic / fundamental: legacy 0.0353, circuit 0.0032
+alias 48 kHz circuit engine: worst saw -88.31 dB, worst pulse -88.84 dB (limit -70.0)
+34 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_ig00151_vca_tests" classname="cs80_ig00151_vca_tests" time="2.2558" status="run">
+		<properties/>
+		<system-out>LI step at 88200 Hz: 1-1/e after 0.5420 ms (declared 0.5419 ms)
+LI step at 96000 Hz: 1-1/e after 0.5419 ms (declared 0.5419 ms)
+LI step at 192000 Hz: 1-1/e after 0.5419 ms (declared 0.5419 ms)
+offset + feedthrough pedestal at full LI: -52.04 dB re a unit signal
+SUB VCA tremolo max/min: circuit 1.413 (d 0.25) 1.998 (d 0.5); legacy 1.461 2.196
+44 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_tolerance_drift_tests" classname="cs80_tolerance_drift_tests" time="13.4328" status="run">
+		<properties/>
+		<system-out>draw hp C1        mean -0.00060  sd 0.04333 (declared sigma 0.050, truncated 0.04398)  max 0.1000
+draw hp C2        mean +0.00009  sd 0.04494 (declared sigma 0.050, truncated 0.04398)  max 0.0997
+draw lp C1        mean -0.00089  sd 0.04322 (declared sigma 0.050, truncated 0.04398)  max 0.0999
+draw lp C2        mean -0.00044  sd 0.04399 (declared sigma 0.050, truncated 0.04398)  max 0.0999
+draw level Rf     mean -0.00014  sd 0.02197 (declared sigma 0.025, truncated 0.02199)  max 0.0500
+draw level Rin    mean -0.00008  sd 0.02215 (declared sigma 0.025, truncated 0.02199)  max 0.0500
+draw filter EG R  mean -0.00026  sd 0.02181 (declared sigma 0.025, truncated 0.02199)  max 0.0499
+draw filter EG C  mean +0.00099  sd 0.04426 (declared sigma 0.050, truncated 0.04398)  max 0.1000
+draw amp EG R     mean +0.00014  sd 0.02167 (declared sigma 0.025, truncated 0.02199)  max 0.0500
+draw amp EG C     mean -0.00058  sd 0.04403 (declared sigma 0.050, truncated 0.04398)  max 0.1000
+mapping laws: worst relative error 5.93e-08
+...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_fx_loudness_core_tests" classname="cs80_fx_loudness_core_tests" time="0.108131" status="run">
+		<properties/>
+		<system-out>rate=44100 scale=0.5 terminal_gain=1.9999999999973355 terminal_error=2.6645352591003757e-12
+rate=44100 scale=2.0 terminal_gain=0.50000000000133227 terminal_error=1.3322676295501878e-12
+rate=48000 scale=0.5 terminal_gain=1.9999999999973705 terminal_error=2.6294522115222208e-12
+rate=48000 scale=2.0 terminal_gain=0.50000000000131473 terminal_error=1.3147261057611104e-12
+rate=96000 scale=0.5 terminal_gain=1.9999999999971887 terminal_error=2.8113067429558214e-12
+rate=96000 scale=2.0 terminal_gain=0.50000000000140565 terminal_error=1.4056533714779107e-12
+checks=42 failures=0 rates=3 ordinary_signal_only=1
+</system-out>
+	</testcase>
+	<testcase name="cs80_fx_loudness_gate_tests" classname="cs80_fx_loudness_gate_tests" time="0.264387" status="run">
+		<properties/>
+		<system-out>PASS rate=44100 finite gain throughout fixed two-second history
+PASS rate=44100 gate genuinely opened
+PASS rate=44100 gate closed during silence and remained closed at least 250 ms
+PASS rate=44100 nontrivial gain deficit at closure
+PASS rate=44100 held target 2 with analytic 150 ms continuing slew
+PASS rate=44100 measurable gain movement after closure
+METRIC rate=44100 open_samples=25700 closure_frame=39331 closed_samples=48869 gain_before_closure=1.9794544231447635 max_slew_error=6.4392935428259079e-15 movement=0.020529755996661514
+PASS rate=48000 finite gain throughout fixed two-second history
+PASS rate=48000 gate genuinely opened
+PASS rate=48000 gate closed during silence and remained closed at least 250 ms
+PASS rate=48000 nontrivial gain deficit at closure
+PASS rate=48000 held target 2 with analytic 150 ms continuing slew
+PASS rate=48000 measurable gain movement after closure
+METRIC rate=48000 open_samples=27932 closure_frame=42779 closed_samples=53221 gain_before_closure=1.979337698950193 max_slew_error=...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_arp_rate_lifecycle_tests" classname="cs80_arp_rate_lifecycle_tests" time="0.255548" status="run">
+		<properties/>
+		<system-out>PASS decrease: fixed Legacy 2x internal clock
+PASS decrease: finite audio and at most one held generated note
+PASS decrease: complete held-note transition sequence and clock within two host frames
+PASS decrease: only overdue edit schedules the next note immediately
+PASS decrease: initial chord begins immediately at its lowest note
+EVENT decrease frame=0 note=60
+EVENT decrease frame=1740 note=-1
+EVENT decrease frame=6000 note=64
+EVENT decrease frame=9480 note=-1
+EVENT decrease frame=12000 note=67
+EVENT decrease frame=15481 note=-1
+EVENT decrease frame=18001 note=60
+EVENT decrease frame=21481 note=-1
+EVENT decrease frame=24001 note=64
+EVENT decrease frame=27481 note=-1
+METRIC decrease actual_events=10 expected_events=10 max_frame_error=0
+PASS early-increase: fixed Legacy 2x internal clock
+PASS early-increase: finite audio and at most one held generated note
+PASS early-increase: complete held-note transition sequence and clock within two host frames
+PASS early-increase: only overdue edit schedules the next note ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_arp_pedal_lifecycle_tests" classname="cs80_arp_pedal_lifecycle_tests" time="0.297038" status="run">
+		<properties/>
+		<system-out>PASS case=0 fixed Legacy internal rate
+PASS case=0 positive current generated-note witness
+PASS case=0 current-source release stops gate; other-source release preserves it
+PASS case=0 remaining source continues both octaves without released source
+PASS case=0 final source release stops pattern despite pedal down
+PASS case=0 pedal-up cannot revive released ARP sources
+PASS case=0 generated gates never become pedalHeld tails
+PASS case=0 finite audio and single generated held gate
+PASS case=1 fixed Legacy internal rate
+PASS case=1 positive current generated-note witness
+PASS case=1 current-source release stops gate; other-source release preserves it
+PASS case=1 remaining source continues both octaves without released source
+PASS case=1 final source release stops pattern despite pedal down
+PASS case=1 pedal-up cannot revive released ARP sources
+PASS case=1 generated gates never become pedalHeld tails
+PASS case=1 finite audio and single generated held gate
+PASS case=2 fixed Legacy internal rate
+PASS case=2 positiv...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_arp_repeat_lifecycle_tests" classname="cs80_arp_repeat_lifecycle_tests" time="0.109308" status="run">
+		<properties/>
+		<system-out>PASS Legacy fixed 2x clock
+PASS positive current source before repeat
+PASS repeat preserves current generated voice and velocity immediately
+PASS repeat preserves gate expiry and scheduled onset times versus untouched control
+PASS sequence restarts from retained played order without duplicate entry
+PASS future generated occurrences use replaced and untouched source velocities
+PASS single source release leaves current other source intact
+PASS one note-off removes repeated source with no duplicate obligation
+PASS final source release stops generated pattern
+PASS finite audio and at most one generated held voice
+EVENT frame=0 note=60 channel=1 velocity=0.25
+EVENT frame=1740 note=-1 channel=-1 velocity=0
+EVENT frame=3000 note=60 channel=1 velocity=0.75
+EVENT frame=4740 note=-1 channel=-1 velocity=0
+EVENT frame=6000 note=64 channel=1 velocity=0.5
+RESULT checks=10 failures=0
+</system-out>
+	</testcase>
+	<testcase name="cs80_quiet_fx_rack_tests" classname="cs80_quiet_fx_rack_tests" time="1.7529" status="run">
+		<properties/>
+		<system-out>Quiet FX rack: six complete dry/active/continuation histories matched canonical dispatch.
+</system-out>
+	</testcase>
+	<testcase name="cs80_fx_tape_lifecycle_tests" classname="cs80_fx_tape_lifecycle_tests" time="0.166228" status="run">
+		<properties/>
+		<system-out>PASS model=0 path=-1 uninterrupted old-history tail witness
+PASS model=0 path=0 transition output finite
+PASS model=0 path=0 bypass exactly dry
+PASS model=0 path=0 reactivation exactly matches fresh silence and new probe
+PASS model=0 path=0 fresh new-probe delayed tail witness
+METRIC model=0 path=0 old_tail_peak=0.043371982872486115 new_tail_peak=0.043371986597776413
+PASS model=0 path=1 transition output finite
+PASS model=0 path=1 bypass exactly dry
+PASS model=0 path=1 reactivation exactly matches fresh silence and new probe
+PASS model=0 path=1 fresh new-probe delayed tail witness
+METRIC model=0 path=1 old_tail_peak=0.043371982872486115 new_tail_peak=0.043371986597776413
+PASS model=0 path=2 transition output finite
+PASS model=0 path=2 reactivation exactly matches fresh silence and new probe
+PASS model=0 path=2 fresh new-probe delayed tail witness
+METRIC model=0 path=2 old_tail_peak=0.043371982872486115 new_tail_peak=0.043371986597776413
+PASS model=4 path=-1 uninterrupted old-history tail witness
+PASS model=4 ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_external_interpolator_tests" classname="cs80_external_interpolator_tests" time="4.62244" status="run">
+		<properties/>
+		<system-out>337 checks, 0 failures; 1331712 complete frames compared bit-for-bit
+</system-out>
+	</testcase>
+	<testcase name="cs80_oversampling_tests" classname="cs80_oversampling_tests" time="3.30067" status="run">
+		<properties/>
+		<system-out>decimator 2x: taps 255 passband -0.0004/+0.0004 dB stopband -87.1 dB latency 63
+decimator 4x: taps 511 passband -0.0004/+0.0003 dB stopband -87.6 dB latency 63
+decimator 8x: taps 1023 passband -0.0004/+0.0003 dB stopband -87.8 dB latency 63
+sine render Standard vs Eco: lag +0.0381 host samples, level ratio 1.00000
+sine render HQ vs Eco: lag +0.4139 host samples, level ratio 1.00004
+11731 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_smoothing_tests" classname="cs80_smoothing_tests" time="3.39428" status="run">
+		<properties/>
+		<system-out>tau  44100 Hz q0: cutoff 5.0113 ms, bend 5.0113 ms
+tau  48000 Hz q1: cutoff 5.0000 ms, bend 5.0000 ms
+tau  48000 Hz q2: cutoff 5.0000 ms, bend 5.0000 ms
+tau  96000 Hz q1: cutoff 5.0000 ms, bend 5.0000 ms
+legacy LEVEL step (unsmoothed by design): HF fraction -39.3 dB
+zipper LEVEL               48000 Hz q0: HF fraction   -68.3 dB
+zipper VOLUME              48000 Hz q0: HF fraction   -67.6 dB
+zipper SINE                48000 Hz q0: HF fraction   -67.6 dB
+zipper PAN                 48000 Hz q0: HF fraction   -67.5 dB
+zipper MIX                 48000 Hz q0: HF fraction   -67.9 dB
+zipper CC11 expression     48000 Hz q0: HF fraction   -67.7 dB
+zipper after-touch LEVEL   48000 Hz q0: HF fraction   -67.6 dB
+zipper LEVEL               48000 Hz q1: HF fraction   -68.3 dB
+zipper VOLUME              48000 Hz q1: HF fraction   -67.6 dB
+zipper SINE                48000 Hz q1: HF fraction   -67.6 dB
+zipper PAN                 48000 Hz q1: HF fraction   -67.5 dB
+zipper MIX                 48000 Hz q1: HF fraction   -67.9 dB
+z...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_pitch_bend_range_tests" classname="cs80_pitch_bend_range_tests" time="2.22785" status="run">
+		<properties/>
+		<system-out>legacy 48000 Hz q0 range 2.00: pitch error 7.83592935e-07, wheel error 0
+legacy 48000 Hz q0 range 12.00: pitch error 1.05328543e-06, wheel error 0
+legacy 48000 Hz q0 range 1.00: pitch error 1.23031927e-06, wheel error 0
+legacy 48000 Hz q0 range 48.00: pitch error 1.3477982e-06, wheel error 0
+legacy 48000 Hz q0 range 7.25: pitch error 2.26702877e-06, wheel error 0
+legacy 48000 Hz q0 range 7.25: pitch error 1.12079513e-06, wheel error 0
+legacy 48000 Hz q0 range 24.00: pitch error 0, wheel error 0
+legacy 48000 Hz q0 range 1.00: pitch error 0, wheel error 0
+circuit 44100 Hz q0 range 2.00: pitch error 4.56329616e-06, wheel error 5.13391063e-09
+circuit 44100 Hz q0 range 12.00: pitch error 4.32676155e-06, wheel error 1.48353788e-08
+circuit 44100 Hz q0 range 1.00: pitch error 4.02926284e-06, wheel error 2.93315279e-08
+circuit 44100 Hz q0 range 48.00: pitch error 4.86670763e-06, wheel error 2.95881795e-08
+circuit 44100 Hz q0 range 7.25: pitch error 5.07890533e-06, wheel error 2.97590459e-08
+circuit 44100 Hz q0 range 7...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_mpe_member_onset_tests" classname="cs80_mpe_member_onset_tests" time="4.32658" status="run">
+		<properties/>
+		<system-out>MPE member onset: 2501 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mpe_timbre_combination_tests" classname="cs80_mpe_timbre_combination_tests" time="1.27393" status="run">
+		<properties/>
+		<system-out>MPE timbre combination: 1142 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mpe_pressure_combination_tests" classname="cs80_mpe_pressure_combination_tests" time="0.617444" status="run">
+		<properties/>
+		<system-out>MPE pressure combination: 844 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mpe_released_target_tests" classname="cs80_mpe_released_target_tests" time="6.25113" status="run">
+		<properties/>
+		<system-out>MPE released targets: 7536 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mpe_master_smoothing_tests" classname="cs80_mpe_master_smoothing_tests" time="0.563601" status="run">
+		<properties/>
+		<system-out>master bend circuit 44100 Hz q0 -&gt; (0,12): max pitch error 0 / 5.48509758e-06 semitones
+master bend circuit 44100 Hz q0 -&gt; (-6,-12): max pitch error 4.06687279e-06 / 5.14402248e-06 semitones
+master bend circuit 44100 Hz q0 -&gt; (6,6): max pitch error 6.004343e-06 / 6.0842854e-06 semitones
+master bend circuit 48000 Hz q1 -&gt; (0,12): max pitch error 0 / 4.90366197e-06 semitones
+master bend circuit 48000 Hz q1 -&gt; (-6,-12): max pitch error 3.98718211e-06 / 4.83127449e-06 semitones
+master bend circuit 48000 Hz q1 -&gt; (6,6): max pitch error 6.05188971e-06 / 6.22960419e-06 semitones
+master bend circuit 48000 Hz q2 -&gt; (0,12): max pitch error 0 / 4.90366197e-06 semitones
+master bend circuit 48000 Hz q2 -&gt; (-6,-12): max pitch error 3.98718211e-06 / 4.83127449e-06 semitones
+master bend circuit 48000 Hz q2 -&gt; (6,6): max pitch error 6.05188971e-06 / 6.22960419e-06 semitones
+master bend circuit 96000 Hz q0 -&gt; (0,12): max pitch error 0 / 4.90366196e-06 semitones
+master bend circuit 96000 Hz q0 -&gt; (-6,-12): max pitch error 4.119...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_output_listening_tests" classname="cs80_output_listening_tests" time="1.23062" status="run">
+		<properties/>
+		<system-out>phones direct     32 ohm @ 88200: |H(1k)| 0.8889 (-1.02 dB), worst 0.0000 dB 0.000 deg
+phones direct     32 ohm @192000: |H(1k)| 0.8889 (-1.02 dB), worst 0.0000 dB 0.000 deg
+phones direct     32 ohm @384000: |H(1k)| 0.8889 (-1.02 dB), worst 0.0000 dB 0.000 deg
+phones capacitor  32 ohm @ 88200: |H(1k)| 0.8877 (-1.03 dB), worst 0.0000 dB 0.003 deg
+phones capacitor  32 ohm @192000: |H(1k)| 0.8877 (-1.03 dB), worst 0.0000 dB 0.001 deg
+phones capacitor  32 ohm @384000: |H(1k)| 0.8877 (-1.03 dB), worst 0.0000 dB 0.000 deg
+circuit   : GENERAL -0.537 dB, PHONES -0.802 dB relative to LEFT
+PURE CS-80: GENERAL -0.537 dB, PHONES -0.802 dB relative to LEFT
+40 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_noise_tests" classname="cs80_noise_tests" time="8.07312" status="run">
+		<properties/>
+		<system-out>noise  88200 Hz: panel PSD worst +0.47 dB @  126 Hz, rms 0.3748, kurtosis 3.010 | hiss PSD worst -0.23 dB @  800 Hz, rms 0.5523, kurtosis 3.007, L/R rho +0.0007
+noise  96000 Hz: panel PSD worst +0.43 dB @   63 Hz, rms 0.3755, kurtosis 3.004 | hiss PSD worst +0.20 dB @  159 Hz, rms 0.5761, kurtosis 3.003, L/R rho +0.0006
+noise 176400 Hz: panel PSD worst +0.31 dB @   79 Hz, rms 0.3756, kurtosis 3.006 | hiss PSD worst +0.46 dB @   63 Hz, rms 0.7786, kurtosis 3.003, L/R rho +0.0004
+noise 192000 Hz: panel PSD worst +0.26 dB @  318 Hz, rms 0.3751, kurtosis 2.999 | hiss PSD worst +0.40 dB @   63 Hz, rms 0.8123, kurtosis 3.003, L/R rho +0.0006
+noise 352800 Hz: panel PSD worst +0.55 dB @   63 Hz, rms 0.3752, kurtosis 2.996 | hiss PSD worst +0.57 dB @   63 Hz, rms 1.0995, kurtosis 3.003, L/R rho +0.0005
+noise 384000 Hz: panel PSD worst +0.24 dB @   63 Hz, rms 0.3748, kurtosis 3.000 | hiss PSD worst +0.34 dB @   63 Hz, rms 1.1468, kurtosis 3.003, L/R rho +0.0001
+white generator: mean +0.00151 sigma 0.99945 kurtosis 3.00...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_poly_pressure_routing_tests" classname="cs80_poly_pressure_routing_tests" time="1.5905" status="run">
+		<properties/>
+		<system-out>pressure routing: policy 0, MPE 0, curve 0
+pressure routing: policy 0, MPE 0, curve 1
+pressure routing: policy 0, MPE 1, curve 0
+pressure routing: policy 0, MPE 1, curve 1
+pressure routing: policy 1, MPE 0, curve 0
+pressure routing: policy 1, MPE 0, curve 1
+pressure routing: policy 1, MPE 1, curve 0
+pressure routing: policy 1, MPE 1, curve 1
+pressure routing: policy 2, MPE 0, curve 0
+pressure routing: policy 2, MPE 0, curve 1
+pressure routing: policy 2, MPE 1, curve 0
+pressure routing: policy 2, MPE 1, curve 1
+4504 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_host_automation_curve_tests" classname="cs80_host_automation_curve_tests" time="0.550022" status="run">
+		<properties/>
+		<system-out>endpoint publication checks=950, failures=0
+maximum normalized curve error=2.22045e-16
+</system-out>
+	</testcase>
+	<testcase name="cs80_free_running_voice_tests" classname="cs80_free_running_voice_tests" time="6.84633" status="run">
+		<properties/>
+		<system-out>free-running gate: worst wake residual -43.15 dB, worst idle phase 4.36e-05 cycles
+Free-running voices: 73918 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_kas_scanner_tests" classname="cs80_kas_scanner_tests" time="4.10193" status="run">
+		<properties/>
+		<system-out>held-K droop sensitivity (cents flat after 1 s / 5 s):
+  C=0.020 uF I=   1 pA:  MIDI24 1.39/6.94  MIDI36 0.69/3.47  MIDI60 0.17/0.87
+  C=0.020 uF I=  10 pA:  MIDI24 13.91/70.67  MIDI36 6.94/34.98  MIDI60 1.73/8.68
+  C=0.020 uF I=  50 pA:  MIDI24 70.67/386.31  MIDI36 34.98/182.40  MIDI60 8.68/43.83
+  C=0.033 uF I=   1 pA:  MIDI24 0.84/4.20  MIDI36 0.42/2.10  MIDI60 0.10/0.52
+  C=0.033 uF I=  10 pA:  MIDI24 8.41/42.49  MIDI36 4.20/21.11  MIDI60 1.05/5.25
+  C=0.033 uF I=  50 pA:  MIDI24 42.49/223.70  MIDI36 21.11/108.24  MIDI60 5.25/26.43
+  C=0.220 uF I=   1 pA:  MIDI24 0.13/0.63  MIDI36 0.06/0.31  MIDI60 0.02/0.08
+  C=0.220 uF I=  10 pA:  MIDI24 1.26/6.31  MIDI36 0.63/3.15  MIDI60 0.16/0.79
+  C=0.220 uF I=  50 pA:  MIDI24 6.31/31.77  MIDI36 3.15/15.81  MIDI60 0.79/3.94
+KAS scan / sample-hold: 435 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_scanner_ordering_tests" classname="cs80_scanner_ordering_tests" time="1.40611" status="run">
+		<properties/>
+		<system-out>Scanner ordering: 883 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_scanner_overflow_tests" classname="cs80_scanner_overflow_tests" time="1.55464" status="run">
+		<properties/>
+		<system-out>KAS queue overflow: 1221 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_keyboard_contour_key_map_tests" classname="cs80_keyboard_contour_key_map_tests" time="26.7034" status="run">
+		<properties/>
+		<system-out>contour gate: 1525 key/lever cases, worst 8.4e-07 V
+C2 anchor: declared map -2.7600 V, literal KAS6 code 100 -4.0179 V (target -2.76 +/- 0.14)
+contour O1 volts, LOW min | HIGH max, keys C1..C6:
+
+  -4.018|+0.000 -4.018|+0.000 -3.904|+0.000 -3.789|+0.000 -3.675|+0.000 -3.560|+0.000 -3.446|+0.000 -3.332|+0.000 -3.217|+0.000 -3.103|+0.000 -2.989|+0.000 -2.874|+0.000
+  -2.760|+0.000 -2.679|+0.000 -2.435|+0.000 -2.192|+0.000 -1.948|+0.000 -1.705|+0.000 -1.461|+0.000 -1.218|+0.000 -0.974|+0.000 -0.731|+0.000 -0.487|+0.000 -0.244|+0.000
+  +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000 +0.000|+0.000
+  +0.000|+0.000 +0.000|+0.000 +0.000|+0.244 +0.000|+0.487 +0.000|+0.731 +0.000|+0.974 +0.000|+1.218 +0.000|+1.461 +0.000|+1.705 +0.000|+1.948 +0.000|+2.192 +0.000|+2.435
+  +0.000|+2.679 +0.000|+2.760 +0.000|+2.874 +0.000|+2.989 +0.000|+3.103 +0.000|+3.217 +0.000|+3.332 +0.000|+3.446 +0.000|+3.560 +0.000|+3.675 +0.000|...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_touch_circuit_tests" classname="cs80_touch_circuit_tests" time="6.17063" status="run">
+		<properties/>
+		<system-out>touch gate: b 8.58e-13, C 0.000488, a 3.26e-07, pole 2.78e-13
+TRG5: full-scale 4.5222 V, one key at 0.8 -&gt; 3.5333 V, worst realtime error 4.33e-06 V
+Touch circuit: 77 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mpe_master_bend_routing_tests" classname="cs80_mpe_master_bend_routing_tests" time="5.04053" status="run">
+		<properties/>
+		<system-out>MPE master bend routing: 1168 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_tuning_midi_tests" classname="cs80_tuning_midi_tests" time="26.5318" status="run">
+		<properties/>
+		<system-out>MTS boundary matrix: 2774 malformed messages
+Scan routing dispatch oracle: 1152 comparisons, 675 projected-full states, 0 mismatches
+Tuning / MIDI / voice modes: 41629 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_tuning_frequency_domain_tests" classname="cs80_tuning_frequency_domain_tests" time="0.00751714" status="run">
+		<properties/>
+		<system-out>Nominal accepted pitch edges: -1730.99988 (6.16571324e-43 Hz), 1499.62366 (3.40281231e+38 Hz)
+Tuning frequency domain: 826 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_tuning_robustness_tests" classname="cs80_tuning_robustness_tests" time="0.00451607" status="run">
+		<properties/>
+		<system-out>Tuning robustness: 2823 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mts_esp_native_tests" classname="cs80_mts_esp_native_tests" time="0.00430033" status="run">
+		<properties/>
+		<system-out>Real MTS-ESP client: 32 lifecycles, 32 without a master
+</system-out>
+	</testcase>
+	<testcase name="cs80_mts_esp_integration_tests" classname="cs80_mts_esp_integration_tests" time="0.39647" status="run">
+		<properties/>
+		<system-out>MTS-ESP integration: 98 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mts_esp_channel_tests" classname="cs80_mts_esp_channel_tests" time="0.00699977" status="run">
+		<properties/>
+		<system-out>MTS-ESP channel adapter: 141469 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mts_esp_fallback_tests" classname="cs80_mts_esp_fallback_tests" time="0.00408336" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_mts_esp_windows_macro_tests" classname="cs80_mts_esp_windows_macro_tests" time="0.00404443" status="run">
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="cs80_ig00150_sub_tests" classname="cs80_ig00150_sub_tests" time="10.2329" status="run">
+		<properties/>
+		<system-out>IG00150: full touch = 2.7049 V on the 0-10 V SPEED scale, +1.7370 octaves
+SUB anchor source performance 44100: 199.999991 Hz rendered (reference 200.000000)
+SUB anchor isolation 44100: 199.999991 Hz rendered (reference 200.000000)
+SUB anchor source performance 96000: 199.999992 Hz rendered (reference 200.000000)
+SUB anchor isolation 96000: 199.999992 Hz rendered (reference 200.000000)
+SUB alias function 1 at 173.300000 Hz, 88200: naive -28.2 dB -&gt; band-limited -84.0 dB
+SUB alias function 2 at 173.300000 Hz, 88200: naive -28.2 dB -&gt; band-limited -84.0 dB
+SUB alias function 3 at 173.300000 Hz, 88200: naive -31.2 dB -&gt; band-limited -85.5 dB
+SUB alias function 1 at 173.300000 Hz, 96000: naive -29.0 dB -&gt; band-limited -85.8 dB
+SUB alias function 2 at 173.300000 Hz, 96000: naive -29.0 dB -&gt; band-limited -85.8 dB
+SUB alias function 3 at 173.300000 Hz, 96000: naive -31.9 dB -&gt; band-limited -87.1 dB
+327 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_ring_modulator_circuit_tests" classname="cs80_ring_modulator_circuit_tests" time="4.42409" status="run">
+		<properties/>
+		<system-out>Ring converter: 0.9814 oct/V, full depth +4.907 octaves
+Ring ADJ p19 anchors at 44100 Hz: 150.0122 ms (150 +/- 7.5), 4.99998 ms (5 +/- 0.25)
+Ring ADJ p19 anchors at 96000 Hz: 149.9457 ms (150 +/- 7.5), 5.00002 ms (5 +/- 0.25)
+Engine ring lines re upper sideband: signal -40.0 dB, carrier -38.5 dB, lower -0.00 dB
+203 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_oe2_stereo_chorus_tests" classname="cs80_oe2_stereo_chorus_tests" time="1.25163" status="run">
+		<properties/>
+		<system-out>OE2 wet 1000 Hz at 96000: -0.049 dB, +0.0129 rad versus truth
+OE2 wet 10000 Hz at 96000: +0.113 dB, +0.0983 rad versus truth
+OE2 wet noise 4.15e-05 / 4.13e-05 rms (truth 4.2e-05), L/R correlation -0.0014
+OE2 clock feedthrough at 1.536 MHz internal: 0.000102 (truth 0.000105)
+OE1 tremolo worst error L 0.004007 R 0.004164 (input amplitude 0.50)
+97 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_pra_optical_cell_tests" classname="cs80_pra_optical_cell_tests" time="8.10898" status="run">
+		<properties/>
+		<system-out>PRA optical 90% traverse: brighten 27.6 ms, darken 138.2 ms
+PRA 0.5 Hz sweep: ODE error 5.08e-05 Np, cycle-mean bias -0.148 Np, resonance 333-3413 Hz
+PRA 3.0 Hz sweep: ODE error 2.95e-04 Np, cycle-mean bias -0.726 Np, resonance 422-3328 Hz
+PRA 8.0 Hz sweep: ODE error 5.61e-04 Np, cycle-mean bias -1.206 Np, resonance 750-2948 Hz
+PRA 3 Hz sweep before (symmetric 12 ms): bias -0.000 Np, resonance 334-3328 Hz; after: bias -0.726 Np, resonance 422-3328 Hz
+35 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_lfo_random_switching_tests" classname="cs80_lfo_random_switching_tests" time="0.00378021" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>FAIL: fresh captures only
+</system-out>
+	</testcase>
+	<testcase name="cs80_lfo_random_variable_rate_tests" classname="cs80_lfo_random_variable_rate_tests" time="0.00392555" status="fail">
+		<failure message="Failed"/>
+		<properties/>
+		<system-out>FAIL: fresh captures only
+</system-out>
+	</testcase>
+	<testcase name="cs80_modern_lfo_tests" classname="cs80_modern_lfo_tests" time="1.81619" status="run">
+		<properties/>
+		<system-out>132 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mseg_tests" classname="cs80_mseg_tests" time="2.09607" status="run">
+		<properties/>
+		<system-out>875 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mseg_transport_rate_tests" classname="cs80_mseg_transport_rate_tests" time="0.155706" status="run">
+		<properties/>
+		<system-out>MSEG transport/rate tests: 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mono_mseg_routing_tests" classname="cs80_mono_mseg_routing_tests" time="0.776693" status="run">
+		<properties/>
+		<system-out>206 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_mseg_retrigger_rate_tests" classname="cs80_mseg_retrigger_rate_tests" time="0.975954" status="run">
+		<properties/>
+		<system-out>MSEG retrigger rate: 1442/1442 checks passed
+</system-out>
+	</testcase>
+	<testcase name="cs80_mseg_combined_interaction_tests" classname="cs80_mseg_combined_interaction_tests" time="0.0186403" status="run">
+		<properties/>
+		<system-out>Combined MSEG interactions: 2304/2304 checks passed
+</system-out>
+	</testcase>
+	<testcase name="cs80_mod_matrix_tests" classname="cs80_mod_matrix_tests" time="41.1879" status="run">
+		<properties/>
+		<system-out>5731 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_modern_fx_tests" classname="cs80_modern_fx_tests" time="228.997" status="run">
+		<properties/>
+		<system-out>drive alias ratio (dB): 1x -26.5  2x -47.1  4x -87.6  8x -112.0
+harmonic 1: truth -27.57 dB, realtime 4x -27.57 dB
+harmonic 2: truth -65.56 dB, realtime 4x -65.56 dB
+harmonic 3: truth -37.23 dB, realtime 4x -37.23 dB
+harmonic 4: truth -65.73 dB, realtime 4x -65.73 dB
+static loudness BBD ensemble a=0.1 b=0.1: -0.12 dB
+static loudness BBD ensemble a=0.1 b=0.5: -0.02 dB
+static loudness BBD ensemble a=0.1 b=0.9: -0.04 dB
+static loudness BBD ensemble a=0.5 b=0.1: -0.08 dB
+static loudness BBD ensemble a=0.5 b=0.5: -0.00 dB
+static loudness BBD ensemble a=0.5 b=0.9: -0.01 dB
+static loudness BBD ensemble a=0.9 b=0.1: -0.11 dB
+static loudness BBD ensemble a=0.9 b=0.5: -0.00 dB
+static loudness BBD ensemble a=0.9 b=0.9: -0.02 dB
+static loudness Spring reverb a=0.1 b=0.1: +0.01 dB
+static loudness Spring reverb a=0.1 b=0.5: -0.02 dB
+static loudness Spring reverb a=0.1 b=0.9: -0.01 dB
+static loudness Spring reverb a=0.5 b=0.1: +0.03 dB
+static loudness Spring reverb a=0.5 b=0.5: +0.00 dB
+static loudness Spring reverb a=0.5 b...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_delay_line_tests" classname="cs80_delay_line_tests" time="0.0476453" status="run">
+		<properties/>
+		<system-out>Delay line: 1141 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_plate_reverb_rate_tests" classname="cs80_plate_reverb_rate_tests" time="10.7548" status="run">
+		<properties/>
+		<system-out>plate brightness 0.0 rate 88200 band 0: 4.05916 / 4.06227 s
+plate brightness 0.0 rate 88200 band 1: 3.53308 / 3.53415 s
+plate brightness 0.0 rate 88200 band 2: 2.47184 / 2.48096 s
+plate brightness 0.0 rate 192000 band 0: 4.06165 / 4.06227 s
+plate brightness 0.0 rate 192000 band 1: 3.52432 / 3.53415 s
+plate brightness 0.0 rate 192000 band 2: 2.48349 / 2.48096 s
+plate brightness 0.0 rate 384000 band 0: 4.06067 / 4.06227 s
+plate brightness 0.0 rate 384000 band 1: 3.51786 / 3.53415 s
+plate brightness 0.0 rate 384000 band 2: 2.48329 / 2.48096 s
+plate brightness 0.5 rate 88200 band 0: 4.11857 / 4.11960 s
+plate brightness 0.5 rate 88200 band 1: 3.98925 / 3.99369 s
+plate brightness 0.5 rate 88200 band 2: 3.40238 / 3.39942 s
+plate brightness 0.5 rate 192000 band 0: 4.11902 / 4.11960 s
+plate brightness 0.5 rate 192000 band 1: 3.98859 / 3.99369 s
+plate brightness 0.5 rate 192000 band 2: 3.36948 / 3.39942 s
+plate brightness 0.5 rate 384000 band 0: 4.11833 / 4.11960 s
+plate brightness 0.5 rate 384000 band 1: 3.97936 / 3.9...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_tape_echo_time_tests" classname="cs80_tape_echo_time_tests" time="6.44794" status="run">
+		<properties/>
+		<system-out>replay fs=88200 channel=0 jump=0.5 ratio=4.4571458e-09
+replay fs=88200 channel=0 jump=1.3 ratio=4.42477263e-09
+replay fs=88200 channel=0 jump=3.7 ratio=4.45084683e-09
+replay fs=88200 channel=1 jump=0.5 ratio=4.43662405e-09
+replay fs=88200 channel=1 jump=1.3 ratio=4.46080257e-09
+replay fs=88200 channel=1 jump=3.7 ratio=4.42525209e-09
+replay fs=96000 channel=0 jump=0.5 ratio=4.47867032e-09
+replay fs=96000 channel=0 jump=1.3 ratio=4.4873657e-09
+replay fs=96000 channel=0 jump=3.7 ratio=4.44776019e-09
+replay fs=96000 channel=1 jump=0.5 ratio=4.47430133e-09
+replay fs=96000 channel=1 jump=1.3 ratio=4.45014748e-09
+replay fs=96000 channel=1 jump=3.7 ratio=4.45551964e-09
+replay fs=192000 channel=0 jump=0.5 ratio=5.58246043e-09
+replay fs=192000 channel=0 jump=1.3 ratio=5.67264746e-09
+replay fs=192000 channel=0 jump=3.7 ratio=5.58266983e-09
+replay fs=192000 channel=1 jump=0.5 ratio=5.63691106e-09
+replay fs=192000 channel=1 jump=1.3 ratio=5.73719293e-09
+replay fs=192000 channel=1 jump=3.7 ratio=5.57339986e-09
+replay fs=38...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_drive_control_cache_tests" classname="cs80_drive_control_cache_tests" time="0.359124" status="run">
+		<properties/>
+		<system-out>396 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_ensemble_rate_cache_tests" classname="cs80_ensemble_rate_cache_tests" time="20.2805" status="run">
+		<properties/>
+		<system-out>3160 checks, 0 failures, 14566394 compared stereo frames
+</system-out>
+	</testcase>
+	<testcase name="cs80_tape_echo_control_cache_tests" classname="cs80_tape_echo_control_cache_tests" time="8.12307" status="run">
+		<properties/>
+		<system-out>231 checks, 0 failures; 21845986 stereo frames compared by bit pattern
+</system-out>
+	</testcase>
+	<testcase name="cs80_instrument_body_tests" classname="cs80_instrument_body_tests" time="4.10905" status="run">
+		<properties/>
+		<system-out>DECAY Piano strings        upper/fundamental change  -14.61 dB
+DECAY Tine electric piano  upper/fundamental change  -18.00 dB
+DECAY Reed electric piano  upper/fundamental change  -37.34 dB
+DECAY Nylon strings        upper/fundamental change  -17.65 dB
+DECAY Steel strings        upper/fundamental change  -14.30 dB
+DECAY Plucked bass         upper/fundamental change  -21.55 dB
+DECAY Vibraphone           upper/fundamental change  -15.84 dB
+DECAY Marimba              upper/fundamental change  -48.70 dB
+DECAY Celesta              upper/fundamental change  -14.00 dB
+PIANO fundamental 1046.752 Hz, sixth 6302.514 Hz, harmonic control 6279.014 Hz
+MALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALL...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_instrument_body_engine_tests" classname="cs80_instrument_body_engine_tests" time="12.1897" status="run">
+		<properties/>
+		<system-out>BATCH comparison backend: runtime-dispatched exact batch
+REGISTER Piano strings relative waveform error 0
+REGISTER Bowed strings relative waveform error 0
+REGISTER Oboe relative waveform error 0
+REGISTER Bassoon relative waveform error 0
+KBC body LOW lever -1 relative waveform change 0.632465763
+KBC body LOW lever +1 relative waveform change 0.239494811
+KBC body HIGH lever -1 relative waveform change 0.976275609
+KBC body HIGH lever +1 relative waveform change 0.261275781
+BODY FILTER high-pass fundamental change -26.758 dB
+BODY FILTER high-pass resonance at cutoff change 9.069 dB
+BODY FILTER low-pass fourth-partial change -15.203 dB
+BODY FILTER resonance at cutoff change 9.069 dB
+TAIL rate 44100 maximum onset/pre derivative 0.78110, sample step 0.00159997 FS
+TAIL rate 48000 maximum onset/pre derivative 0.78255, sample step 0.00147320 FS
+TAIL rate 96000 maximum onset/pre derivative 1.32957, sample step 0.00073601 FS
+Instrument body Engine integration: 18156 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_capture_tests" classname="cs80_preset_capture_tests" time="2.29646" status="run">
+		<properties/>
+		<system-out>..........
+----------------------------------------------------------------------
+Ran 10 tests in 2.169s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_randomise_tests" classname="cs80_randomise_tests" time="42.8374" status="run">
+		<properties/>
+		<system-out>randomise rules passed: 400 seeds checked, 64 rendered
+</system-out>
+	</testcase>
+	<testcase name="cs80_source_factory_boundary_tests" classname="cs80_source_factory_boundary_tests" time="0.584341" status="run">
+		<properties/>
+		<system-out>worst reference-point error 1.78e-15 V, drive-range error 0.000274 V, Newton residual 3.83e-14 A, largest emitter sag 0.310 V
+BA/diode boundary refinement passed for 22 tones
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_panel_tests" classname="cs80_memory_panel_tests" time="0.426999" status="run">
+		<properties/>
+		<system-out>source-nominal 10k memory: 28 cases, worst compiled-vs-truth bus error 0.000296602719 V
+legacy 50k compiled-vs-truth bus error 0.000283 V, inactive source current 2.52e-09 A, Newton residual 6.54e-15 A
+memory/PANEL switch and loading model passed
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_panel_ports_tests" classname="cs80_memory_panel_ports_tests" time="15.2415" status="run">
+		<properties/>
+		<system-out>36 operating points, 20736 derivatives, worst absolute error 0.00600101867 ohms, failures 0
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_panel_port_map_tests" classname="cs80_memory_panel_port_map_tests" time="0.818574" status="run">
+		<properties/>
+		<system-out>Memory port map: 90 points, 51840 derivatives, 66171 checks, 0 failures
+worst matrix 1.43700163e-10 ohms; linear prediction 1.74305015e-14 V; coupling 19.5892279 ohms; asymmetry 19.5892279 ohms
+prepared bytes=1888; local evaluation 90.525 ns (shared machine, not whole-instrument qualification)
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_port_map_negative_controls" classname="cs80_memory_port_map_negative_controls" time="17.2151" status="run">
+		<properties/>
+		<system-out>baseline: Memory port map: 90 points, 51840 derivatives, 66171 checks, 0 failures
+no-shared-rails: Memory port map: 90 points, 51840 derivatives, 66171 checks, 44264 failures
+reciprocal-followers: Memory port map: 90 points, 51840 derivatives, 66171 checks, 5736 failures
+Memory port map baseline passed; omitted-rail and reciprocal-follower mutants detected
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_control_routing_tests" classname="cs80_memory_control_routing_tests" time="0.396494" status="run">
+		<properties/>
+		<system-out>Memory routing: 36 points, 216 frames, 48376 checks, 0 failures; semantic 414 realizable / 90 clipped
+worst comparison 7.99360578e-15; residual 2.71050543e-20 A; max feedback norm 3.28394118e-05; 640.407 ns/evaluation (shared machine, not instrument qualification)
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_receiver_truth_tests" classname="cs80_memory_receiver_truth_tests" time="1.42954" status="run">
+		<properties/>
+		<system-out>Memory receiver truth: 48 cases, 1396 checks, 0 failures; worst 1.77635684e-15 V, KCL 7.67951241e-15 A, fixed-point solves &lt;= 4
+Reachable memory counterexample: row8 error 0.00115896256 V at 4.54545455e-06 A, affine closure 2.43521972e-21 A
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_qualification_probe_self_tests" classname="cs80_memory_qualification_probe_self_tests" time="0.00387456" status="run">
+		<properties/>
+		<system-out>Comparison self-tests: finite baseline passed; 12 invalid readouts rejected
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_verified_diode_tests" classname="cs80_memory_verified_diode_tests" time="10.2565" status="run">
+		<properties/>
+		<system-out>Self checks: 56, failures: 0
+Exact rational log(2) constant proof passed (32 terms + analytic tail)
+Executable: /workspace/scratch/a9592b052b11/cs80-work/build-core/cs80_memory_verified_diode_tests
+Independent vectors: 7374 {'add': 825, 'sub': 825, 'mul': 826, 'div': 826, 'log': 1768, 'diode': 2304}
+Largest log interval width: 6.821210263296962e-13 ; diode width A: 9.964923469387759e-12
+Additional 1e-15 A availability probes: accepted 860 ; safely rejected 4
+Failures: 0
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_centered_log_rational" classname="cs80_memory_centered_log_rational" time="0.561633" status="run">
+		<properties/>
+		<system-out>Independent exact-rational log enclosure checks: 457 failures: 0
+Both excluded mantissa-neighbor bounds rejected
+Exact worst series-tail upper bound at |z|=1/5: 2.7962026666666665e-19
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_interval_extrema" classname="cs80_memory_interval_extrema" time="0.320309" status="run">
+		<properties/>
+		<system-out>Executable: /workspace/scratch/a9592b052b11/cs80-work/build-core/cs80_memory_verified_diode_tests
+Exact-Fraction extrema cases: 12228 accepted: 7243 required rejections: 4985 failures: 0
+Serialized SHA256: 539957645c95cfb50c0f4100d92a4564bd6dfc4840f2dba75e017a97bd0c14b5
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_sparse_update_tests" classname="cs80_memory_sparse_update_tests" time="16.8704" status="run">
+		<properties/>
+		<system-out>Prior affine counterexample 0.00115896256089 V; sparse bus error 7.53804130227e-10 V; certified full-node bound 3.16182125512e-09 V
+Sparse update: 2016 cases; 533518 checks, 0 failures; max cold/warm steps 28/6; max node error 1.56922851392e-09 V; max bound 6.01681084334e-09 V; max error/two-bound 0.997179581; allocations 0
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_sparse_negative_controls" classname="cs80_memory_sparse_negative_controls" time="15.5961" status="run">
+		<properties/>
+		<system-out>baseline: Sparse update: 4 cases; 1476 checks, 0 failures; max cold/warm steps 27/4; max node error 5.56141799279e-11 V; max bound 5.08701705654e-09 V; max error/two-bound 0.00904584914; allocations 0
+erase_full_node_residual: Sparse update: 4 cases; 1476 checks, 650 failures; max cold/warm steps 27/4; max node error 5.56141799279e-11 V; max bound 4.94065645841e-324 V; max error/two-bound inf; allocations 0
+omit_newton_receiver_feedback: Sparse update: 1 cases; 248 checks, 9 failures; max cold/warm steps 27/0; max node error 8.881784197e-16 V; max bound 1.06212737433e-09 V; max error/two-bound 4.1811295e-07; allocations 0
+Both sparse negative controls detected by named assertions.
+</system-out>
+	</testcase>
+	<testcase name="cs80_memory_routing_negative_controls" classname="cs80_memory_routing_negative_controls" time="20.2708" status="run">
+		<properties/>
+		<system-out>baseline: Memory routing: 36 points, 216 frames, 48376 checks, 0 failures; semantic 414 realizable / 90 clipped
+frozen-touch-feedback: Memory routing: 36 points, 72 frames, 26488 checks, 150 failures; semantic 414 realizable / 90 clipped
+duplicate-loads: Memory routing: 36 points, 216 frames, 48376 checks, 18390 failures; semantic 414 realizable / 90 clipped
+Memory receiver baseline passed; frozen-feedback and duplicate-loading mutants detected
+</system-out>
+	</testcase>
+	<testcase name="cs80_programmer_control_identity_tests" classname="cs80_programmer_control_identity_tests" time="0.0037915" status="run">
+		<properties/>
+		<system-out>26 physical row identities and exclusions: 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_fast_math_tests" classname="cs80_fast_math_tests" time="0.0550566" status="run">
+		<properties/>
+		<system-out>fast tan on (0, 1.45]: worst relative error 3.13e-11 (bound 1e-10)
+</system-out>
+	</testcase>
+	<testcase name="cs80_evidence_register_tests" classname="cs80_evidence_register_tests" time="0.00523784" status="run">
+		<properties/>
+		<system-out>1086 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_midi_learn_tests" classname="cs80_midi_learn_tests" time="0.125925" status="run">
+		<properties/>
+		<system-out>47 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_render_cli_tests" classname="cs80_render_cli_tests" time="0.52043" status="run">
+		<properties/>
+		<system-out>.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.359s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_callback_cpu_measurement_tests" classname="cs80_callback_cpu_measurement_tests" time="0.00269976" status="run">
+		<properties/>
+		<system-out>CallbackCpuMeasurement: 14 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_callback_cpu_benchmark_tests" classname="cs80_callback_cpu_benchmark_tests" time="20.0313" status="run">
+		<properties/>
+		<system-out>callback CPU schema, counts and unchanged deterministic fields passed: 19 rows 2 runs
+</system-out>
+	</testcase>
+	<testcase name="cs80_benchmark_preflight_tests" classname="cs80_benchmark_preflight_tests" time="0.18035" status="run">
+		<properties/>
+		<system-out>.
+----------------------------------------------------------------------
+Ran 1 test in 0.068s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_parity_capture_tests" classname="cs80_parity_capture_tests" time="3.58539" status="run">
+		<properties/>
+		<system-out>.............
+----------------------------------------------------------------------
+Ran 13 tests in 3.492s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_dsp_probe_tests" classname="cs80_dsp_probe_tests" time="0.881233" status="run">
+		<properties/>
+		<system-out>DSP probes: 0 failures; output "/workspace/scratch/a9592b052b11/cs80-work/build-core/dsp-probe"
+</system-out>
+	</testcase>
+	<testcase name="cs80_truth_render_tests" classname="cs80_truth_render_tests" time="1.9778" status="run">
+		<properties/>
+		<system-out>................
+----------------------------------------------------------------------
+Ran 16 tests in 1.804s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_ig00156_step_diagnostics_tests" classname="cs80_ig00156_step_diagnostics_tests" time="0.0069574" status="run">
+		<properties/>
+		<system-out>Step diagnostics: 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_truth_input_sha256_tests" classname="cs80_truth_input_sha256_tests" time="0.00989743" status="run">
+		<properties/>
+		<system-out>SHA256: 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_amplitude_production_comparison_tests" classname="cs80_amplitude_production_comparison_tests" time="2.45545" status="run">
+		<properties/>
+		<system-out>....................
+----------------------------------------------------------------------
+Ran 20 tests in 2.218s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_production_comparison_tests" classname="cs80_filter_production_comparison_tests" time="3.01471" status="run">
+		<properties/>
+		<system-out>........................
+----------------------------------------------------------------------
+Ran 24 tests in 2.813s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_vca_reference_tests" classname="cs80_vca_reference_tests" time="0.514163" status="run">
+		<properties/>
+		<system-out>............
+----------------------------------------------------------------------
+Ran 12 tests in 0.389s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_decimal_conversion_tests" classname="cs80_decimal_conversion_tests" time="0.0136599" status="run">
+		<properties/>
+		<system-out>Decimal conversion: 38353 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_decimal_conversion_locale_tests" classname="cs80_decimal_conversion_locale_tests" time="0.0177828" status="run">
+		<properties/>
+		<system-out>Decimal conversion: 38353 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_float_wav_tests" classname="cs80_float_wav_tests" time="0.351171" status="run">
+		<properties/>
+		<system-out>....
+----------------------------------------------------------------------
+Ran 4 tests in 0.230s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_reference_chain_tests" classname="cs80_reference_chain_tests" time="17.6328" status="run">
+		<properties/>
+		<system-out>.render_reference_chain: Stage timeout after 0.02 seconds
+............render_reference_chain: injected publication failure
+...
+----------------------------------------------------------------------
+Ran 16 tests in 17.455s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_reference_chain_clock_tests" classname="cs80_reference_chain_clock_tests" time="14.6431" status="run">
+		<properties/>
+		<system-out>.................
+----------------------------------------------------------------------
+Ran 17 tests in 14.454s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_amplitude_envelope_reference_tests" classname="cs80_amplitude_envelope_reference_tests" time="7.61101" status="run">
+		<properties/>
+		<system-out>..................
+----------------------------------------------------------------------
+Ran 18 tests in 7.334s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_event_aware_envelope_vca_tests" classname="cs80_event_aware_envelope_vca_tests" time="0.19035" status="run">
+		<properties/>
+		<system-out>............
+----------------------------------------------------------------------
+Ran 12 tests in 0.104s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_ring_time_reference_tests" classname="cs80_ring_time_reference_tests" time="0.202143" status="run">
+		<properties/>
+		<system-out>.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.101s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_event_aware_envelope_sine_tests" classname="cs80_event_aware_envelope_sine_tests" time="0.230514" status="run">
+		<properties/>
+		<system-out>.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.090s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_event_aware_ring_vca_tests" classname="cs80_event_aware_ring_vca_tests" time="0.227794" status="run">
+		<properties/>
+		<system-out>.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.133s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_event_aware_ring_vca_coincident_tests" classname="cs80_event_aware_ring_vca_coincident_tests" time="0.25176" status="run">
+		<properties/>
+		<system-out>......
+----------------------------------------------------------------------
+Ran 6 tests in 0.153s
+
+OK
+</system-out>
+	</testcase>
+	<testcase name="cs80_filter_envelope_reference_tests" classname="cs80_filter_envelope_reference_tests" time="9.6781" status="run">
+		<properties/>
+		<system-out>..................
+----------------------------------------------------------------------
+Ran 18 tests in 9.393s
+
+OK
+</system-out>
+	</testcase>
+</testsuite>

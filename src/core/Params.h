@@ -248,6 +248,10 @@ enum : int
     P_body2Mix,
     P_body2Brightness,
     P_body2Decay,
+    // Resonant geometry is independent of played pitch. Append after the
+    // published eight body controls so old automation slots stay unchanged.
+    P_body1Size,
+    P_body2Size,
     P_numParams
 };
 
@@ -271,6 +275,11 @@ inline constexpr int chParam(int channel, int index) noexcept
 inline constexpr int bodyParam(int channel, int offset) noexcept
 {
     return P_body1Model + (channel == 0 ? 0 : 4) + offset;
+}
+
+inline constexpr int bodySizeParam(int channel) noexcept
+{
+    return channel == 0 ? P_body1Size : P_body2Size;
 }
 
 struct ParamDef
@@ -485,8 +494,11 @@ inline constexpr ParamDef kExtensionDefs[] = {
     { "body2_mix", "BODY II MIX", 0.0f, 1.0f, 0.0f, 1.0f, "", "INSTRUMENT BODY" },
     { "body2_brightness", "BODY II BRIGHTNESS", 0.0f, 1.0f, 0.5f, 1.0f, "", "INSTRUMENT BODY" },
     { "body2_decay", "BODY II PARTIAL DECAY (NEXT NOTE)", 0.25f, 4.0f, 1.0f, 1.0f, "x", "INSTRUMENT BODY" },
+    { "body1_size", "BODY I RESONANT SIZE (NEXT NOTE)", 0.5f, 2.5f, 1.0f, 1.0f, "x", "INSTRUMENT BODY" },
+    { "body2_size", "BODY II RESONANT SIZE (NEXT NOTE)", 0.5f, 2.5f, 1.0f, 1.0f, "x", "INSTRUMENT BODY" },
 };
 static_assert(P_body1Model == 190, "all previously shipped core indexes must remain stable");
+static_assert(P_body1Size == 198 && P_body2Size == 199, "body size appends after published body indexes");
 static_assert(P_legacyNumParams == 122, "legacy core indexes must not change");
 static_assert(std::size(kExtensionDefs) == P_numParams - P_legacyNumParams);
 

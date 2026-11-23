@@ -1,0 +1,79 @@
+DECAY Piano strings        upper/fundamental change   -6.74 dB
+DECAY Tine electric piano  upper/fundamental change  -18.00 dB
+DECAY Reed electric piano  upper/fundamental change  -37.34 dB
+DECAY Nylon strings        upper/fundamental change  -17.65 dB
+DECAY Steel strings        upper/fundamental change  -14.30 dB
+DECAY Plucked bass         upper/fundamental change  -21.55 dB
+DECAY Vibraphone           upper/fundamental change  -15.84 dB
+DECAY Marimba              upper/fundamental change  -48.70 dB
+DECAY Celesta              upper/fundamental change  -14.00 dB
+FAIL: Clarinet upper register admits strong even harmonics
+PIANO fundamental 1046.752 Hz, sixth 6301.514 Hz, harmonic control 6279.014 Hz
+MALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALLET note 72 velocity 0.30: vibraphone -12.17 dB, marimba -41.20 dB upper/fundamental decay
+MALLET note 72 velocity 0.85: vibraphone -12.17 dB, marimba -41.20 dB upper/fundamental decay
+REGISTER DECAY Tine electric piano  low -1.762 dB high -4.085 dB
+REGISTER DECAY Reed electric piano  low -3.434 dB high -7.110 dB
+REGISTER DECAY Nylon strings        low -3.625 dB high -7.505 dB
+REGISTER DECAY Steel strings        low -1.526 dB high -3.160 dB
+REGISTER DECAY Plucked bass         low -2.290 dB high -4.740 dB
+REGISTER DECAY Vibraphone           low -0.901 dB high -1.613 dB
+REGISTER DECAY Marimba              low -5.906 dB high -14.141 dB
+REGISTER DECAY Celesta              low -2.919 dB high -3.719 dB
+PIANO TWO-STAGE prompt -5.921 dB, aftersound -4.900 dB
+PICKUP CURVATURE Tine electric piano  +0.885 dB
+PICKUP CURVATURE Reed electric piano  +1.678 dB
+FAIL: Bowed strings: initial effort changes upper spectrum at equal RMS
+FAIL: Bowed strings: upper partials develop after the initial fundamental
+SUSTAINED Bowed strings        equal-RMS effort +0.000 dB; onset growth -0.021 dB
+FAIL: Flute: initial effort changes upper spectrum at equal RMS
+FAIL: Flute: upper partials develop after the initial fundamental
+SUSTAINED Flute                equal-RMS effort +0.000 dB; onset growth -0.029 dB
+FAIL: Clarinet: initial effort changes upper spectrum at equal RMS
+FAIL: Clarinet: upper partials develop after the initial fundamental
+SUSTAINED Clarinet             equal-RMS effort +0.000 dB; onset growth -0.010 dB
+FAIL: Oboe: initial effort changes upper spectrum at equal RMS
+FAIL: Oboe: upper partials develop after the initial fundamental
+SUSTAINED Oboe                 equal-RMS effort +0.000 dB; onset growth -0.018 dB
+FAIL: Bassoon: initial effort changes upper spectrum at equal RMS
+FAIL: Bassoon: upper partials develop after the initial fundamental
+SUSTAINED Bassoon              equal-RMS effort +0.000 dB; onset growth -0.024 dB
+FAIL: Brass: initial effort changes upper spectrum at equal RMS
+FAIL: Brass: upper partials develop after the initial fundamental
+SUSTAINED Brass                equal-RMS effort +0.000 dB; onset growth -0.021 dB
+FAIL: Bowed strings: body size moves relative spectral weighting
+BODY SIZE Bowed strings        size 2.10 max partial-balance change 0.000 dB
+FAIL: Flute: body size moves relative spectral weighting
+BODY SIZE Flute                size 1.80 max partial-balance change 0.000 dB
+FAIL: Clarinet: body size moves relative spectral weighting
+BODY SIZE Clarinet             size 2.00 max partial-balance change 0.000 dB
+FAIL: Oboe: body size moves relative spectral weighting
+BODY SIZE Oboe                 size 1.35 max partial-balance change 0.000 dB
+FAIL: Bassoon: body size moves relative spectral weighting
+BODY SIZE Bassoon              size 1.80 max partial-balance change 0.000 dB
+FAIL: Brass: body size moves relative spectral weighting
+BODY SIZE Brass                size 1.80 max partial-balance change 0.000 dB
+FAIL: Clarinet transitions from odd-dominant chalumeau to mixed upper-register harmonics
+FAIL: Clarinet upper-register even harmonics rise substantially relative to odd harmonics
+CLARINET register even/odd -12.746 to -12.757 dB; max half-step 0.015 dB
+FAIL: Clarinet transitions from odd-dominant chalumeau to mixed upper-register harmonics
+FAIL: Clarinet upper-register even harmonics rise substantially relative to odd harmonics
+CLARINET register even/odd -12.748 to -12.749 dB; max half-step 0.004 dB
+FAIL: Bowed strings: pressure step is smoothed before the modal gain ramp
+LIVE PRESSURE Bowed strings        spectrum +1.514 dB; first-2ms/settled difference 1.3635
+FAIL: Flute: pressure step is smoothed before the modal gain ramp
+LIVE PRESSURE Flute                spectrum +1.750 dB; first-2ms/settled difference 1.2115
+FAIL: Clarinet: pressure step is smoothed before the modal gain ramp
+LIVE PRESSURE Clarinet             spectrum +1.333 dB; first-2ms/settled difference 1.2200
+FAIL: Oboe: pressure step is smoothed before the modal gain ramp
+LIVE PRESSURE Oboe                 spectrum +2.338 dB; first-2ms/settled difference 1.3747
+FAIL: Bassoon: pressure step is smoothed before the modal gain ramp
+LIVE PRESSURE Bassoon              spectrum +2.605 dB; first-2ms/settled difference 1.3389
+FAIL: Brass: pressure step is smoothed before the modal gain ramp
+LIVE PRESSURE Brass                spectrum +3.969 dB; first-2ms/settled difference 1.3657
+FAIL: Held breath timbre develops restrained ongoing spectral motion after onset
+TIMBRE MOTION brass 0.0067 dB held range, 0.0053 dB maximum 200ms step
+Instrument bodies: 1654 checks, 30 failures; 22889550 generated samples

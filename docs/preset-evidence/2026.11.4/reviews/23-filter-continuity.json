@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "worker": 23,
+  "task": "independent body-filter routing and continuity review",
+  "status": "passed; no production correction required",
+  "production_files_changed": [],
+  "source_sha256": {
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/Dsp.h": "fe9ef05db94b3d9cdf3fd43b4798ce8ecd2cd25c4983e1ce82bb37c28b69a84c",
+    "tests/InstrumentBodyEngineTests.cpp": "8be9e04872a7b8fbc50f238d81f4198591c1a8b2f91d5fa8aa1ec85b287059d6"
+  },
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "scope": "Static review of effective filtering, live controls, reset/prepare, outgoing snapshots, idle/reuse and size/color routing; a standalone filter lifecycle probe supplements the existing engine integration evidence.",
+  "findings": [],
+  "routing_review": [
+    "The body receives the same effective cutoffHp/cutoffLp and modulated hpQ/lpQ computed for its rank, including filter envelopes, keyboard contour, initial/after touch, macro/global brilliance and modulation routes.",
+    "Intrinsic body brightness is supplied directly as rs.bodyBrightness; the removed LP/envelope-derived scalar does not apply a second spectral change. Pressure has a separately authored effort response as well as its explicit panel-filter route.",
+    "Resonant size is passed to InstrumentBody.noteOn once and affects authored modal/formant weights. It is not applied to live tick frequency or to the body-filter cutoff.",
+    "The body filter has its own bounded linear response: Q is clamped to 0.5..4, cutoff to 8 Hz..0.45*internalRate. This is not identical to the nonlinear circuit filter topology or its complete resonance range.",
+    "Coefficients update every 16 internal samples; the cache depends on cutoff/Q and prepare resets the stage caches after a rate change. Switch targets update each sample and crossfade with a 1 ms time constant.",
+    "Off bodies bypass body processing. With an enabled body at zero mix, internal body/filter state can advance, but both scalar and batched VCA paths exclude the body blend entirely."
+  ],
+  "lifecycle_review": [
+    "prepare configures both current and previous body/filter states and recomputes the 3 ms internal-sample handoff length; hard reset and panic clear both filters and the handoff counter.",
+    "On reassignment, the outgoing filter is copied by value alongside its excitation, last pitch, color and pressure. tickFrozen retains its previous coefficients and switch targets. The incoming filter resets unconditionally.",
+    "A previous body is copied only when the voice was active and that rank has positive retained envelope value. A fully inactive voice or zero-valued rank clears the old snapshot.",
+    "When the complete voice is inactive, the idle circuit path continues before optional body/filter processing. Those filters are not ticked during the decimated silent circuit updates.",
+    "When one rank becomes silent while the other keeps its voice active, its enabled body/filter can continue ticking. Body ticking already had this lifetime before the filter revision; the new filter adds work in this case. No speculative lifetime optimization was made, and the separate runtime review measures full-engine cost."
+  ],
+  "existing_engine_evidence": {
+    "path": "docs/preset-evidence/2026.11.4/development/core/cs80_instrument_body_engine_tests.log",
+    "sha256": "f6b5de1f6fdfe0e206b1add5968d707e8e2f2ee900de444c396b5a1360155b49",
+    "checks": 18156,
+    "failures": 0,
+    "coverage": "Exact scalar/batched and partition agreement, full-body HP/LP/resonance and keyboard-contour routing, Off/zero-mix and source-policy isolation, next-note model selection, and released-voice handoffs at 44.1/48/96 kHz."
+  },
+  "additional_probe": {
+    "source_sha256": "27ba3d7f9e239db9117f82813db6c5eaa21e728fcac42a7ef4a4496ec712c8c5",
+    "executable_sha256": "907d539596fdb5cc4676055b60fce8f0696457ca13ee8b4a46f54d2c588f75ec",
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "compile_command": "c++ -std=c++17 -O2 -Isrc /workspace/scratch/a9592b052b11/a23/filter_lifecycle.cpp -o /workspace/scratch/a9592b052b11/a23/filter_lifecycle",
+    "rate_inputs": [
+      8000,
+      44100,
+      48000,
+      96000,
+      192000,
+      1536000,
+      "NaN",
+      "positive infinity"
+    ],
+    "rate_cases": 8,
+    "stress_samples": 400000,
+    "stress_input_peak_bound": 0.28,
+    "observed_output_peak": 0.637786984,
+    "checks": "Used-vs-fresh re-prepare equivalence; reset-vs-fresh equivalence; copied frozen-filter equivalence while the incoming filter is retuned; finite output under rapid endpoint/invalid cutoff and Q controls with bypass changes; exactly zero residue after reset.",
+    "mismatches_or_nonfinite_samples": 0,
+    "output": "rate 8000 prepare_mismatch 0 reset_mismatch 0 frozen_mismatch 0 nonfinite 0 reset_residue 0\nrate 44100 prepare_mismatch 0 reset_mismatch 0 frozen_mismatch 0 nonfinite 0 reset_residue 0\nrate 48000 prepare_mismatch 0 reset_mismatch 0 frozen_mismatch 0 nonfinite 0 reset_residue 0\nrate 96000 prepare_mismatch 0 reset_mismatch 0 frozen_mismatch 0 nonfinite 0 reset_residue 0\nrate 192000 prepare_mismatch 0 reset_mismatch 0 frozen_mismatch 0 nonfinite 0 reset_residue 0\nrate 1536000 prepare_mismatch 0 reset_mismatch 0 frozen_mismatch 0 nonfinite 0 reset_residue 0\nrate nan prepare_mismatch 0 reset_mismatch 0 frozen_mismatch 0 nonfinite 0 reset_residue 0\nrate inf prepare_mismatch 0 reset_mismatch 0 frozen_mismatch 0 nonfinite 0 reset_residue 0\nSUMMARY cases 8 stress_samples 400000 peak 0.637786984 failures 0\n",
+    "negative_control": "Removing HP and LP history clearing from reset in a scratch-only header caused 34,352 sample mismatches/residual failures and exit 1. Production header remained unchanged.",
+    "negative_control_output": "rate 8000 prepare_mismatch 1200 reset_mismatch 1200 frozen_mismatch 0 nonfinite 0 reset_residue 1385\nrate 44100 prepare_mismatch 1200 reset_mismatch 1200 frozen_mismatch 0 nonfinite 0 reset_residue 2048\nrate 48000 prepare_mismatch 820 reset_mismatch 1011 frozen_mismatch 0 nonfinite 0 reset_residue 2048\nrate 96000 prepare_mismatch 1200 reset_mismatch 1200 frozen_mismatch 0 nonfinite 0 reset_residue 2048\nrate 192000 prepare_mismatch 1200 reset_mismatch 1200 frozen_mismatch 0 nonfinite 0 reset_residue 2048\nrate 1536000 prepare_mismatch 1200 reset_mismatch 1200 frozen_mismatch 0 nonfinite 0 reset_residue 2048\nrate nan prepare_mismatch 1200 reset_mismatch 1200 frozen_mismatch 0 nonfinite 0 reset_residue 2048\nrate inf prepare_mismatch 1200 reset_mismatch 1200 frozen_mismatch 0 nonfinite 0 reset_residue 2048\nSUMMARY cases 8 stress_samples 400000 peak 0.637786984 failures 34352\n",
+    "source": "#include \"core/InstrumentBodyFilter.h\"\n#include <algorithm>\n#include <cmath>\n#include <cstdio>\n#include <limits>\n#include <cstdint>\nusing cs80::body::InstrumentBodyFilter;\nstatic double input(int i) { return .21 * std::sin(i * .137) + .07 * std::cos(i * .913); }\nint main() {\n int failures=0; double peak=0; long samples=0; int cases=0;\n const double rates[]={8000,44100,48000,96000,192000,1536000,\n     std::numeric_limits<double>::quiet_NaN(),std::numeric_limits<double>::infinity()};\n for(double rate:rates) {\n  ++cases; InstrumentBodyFilter used, fresh; used.prepare(48000); fresh.prepare(rate);\n  for(int i=0;i<523;++i) used.tick(float(input(i)),2100,1300,3.8f,4.0f,true,true);\n  used.prepare(rate);\n  int prepareMismatch=0;\n  for(int i=0;i<1200;++i) {\n   float x=float(input(i));\n   float a=used.tick(x,2100,1300,3.8f,4.0f,i%211<100,i%317<200);\n   float b=fresh.tick(x,2100,1300,3.8f,4.0f,i%211<100,i%317<200);\n   prepareMismatch += a != b;\n  }\n  used.reset(); InstrumentBodyFilter resetReference; resetReference.prepare(rate); int resetMismatch=0;\n  for(int i=0;i<1200;++i) {\n   float a=used.tick(float(input(i)),500,1300,2.0f,4.0f,true,true);\n   float b=resetReference.tick(float(input(i)),500,1300,2.0f,4.0f,true,true);\n   resetMismatch += a != b;\n  }\n  // Snapshot at an off-boundary control sample, including a partially faded switch.\n  used.tick(.1f,500,1300,2.0f,4.0f,false,true);\n  auto outgoing=used, reference=used;\n  int frozenMismatch=0;\n  for(int i=0;i<4000;++i) {\n   float x=float(input(i));\n   float a=outgoing.tickFrozen(x);\n   float b=reference.tick(x,500,1300,2.0f,4.0f,false,true);\n   frozenMismatch += a != b;\n   // Incoming filter receives unrelated live controls and must not alter snapshot.\n   used.tick(x,10000,70,.5f,.5f,true,false);\n  }\n  InstrumentBodyFilter stress; stress.prepare(rate); int nonfinite=0;\n  for(int i=0;i<50000;++i) {\n   const bool phase=(i/16)%2;\n   float hp=phase?1.0e9f:-100.f, lp=phase?-100.f:1.0e9f;\n   if(i%1024<16) hp=std::numeric_limits<float>::quiet_NaN();\n   const float q=i%2048<16?std::numeric_limits<float>::infinity():4.0f;\n   float y=stress.tick(float(input(i)),hp,lp,q,q,i%73<40,i%101<60);\n   nonfinite += !std::isfinite(y); peak=std::max(peak,std::abs(double(y))); ++samples;\n  }\n  stress.reset(); int resetResidue=0;\n  for(int i=0;i<2048;++i) resetResidue += stress.tick(0,800,1300,4,4,true,true)!=0;\n  failures += prepareMismatch+resetMismatch+frozenMismatch+nonfinite+resetResidue;\n  std::printf(\"rate %.0f prepare_mismatch %d reset_mismatch %d frozen_mismatch %d nonfinite %d reset_residue %d\\n\",rate,prepareMismatch,resetMismatch,frozenMismatch,nonfinite,resetResidue);\n }\n std::printf(\"SUMMARY cases %d stress_samples %ld peak %.9g failures %d\\n\",cases,samples,peak,failures);\n return failures?1:0;\n}\n"
+  },
+  "limitations": [
+    "The standalone filter probe does not qualify packaged hosts, real-time deadlines, arbitrary nonfinite audio inputs or perceptual quality.",
+    "The existing engine integration log is reused rather than presented as a newly executed full-engine suite.",
+    "The bound applies to the stated test signal and control schedule, not every possible musical input or automation trajectory."
+  ]
+}

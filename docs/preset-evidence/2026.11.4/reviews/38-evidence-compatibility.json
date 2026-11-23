@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "worker": 38,
+  "task": "evidence_and_compatibility_review",
+  "created_at_utc": "2026-11-23T17:55:01.911933+00:00",
+  "status": "source compatibility confirmed; documentation refresh identified; final native qualification pending",
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "production_files_changed": [],
+  "scope": "Independent read-only comparison of parameter identities/definitions, host construction, saved-state completion, initializer vectors, documentation links and retained development probes. No full build or native processor execution.",
+  "source_sha256_at_review": {
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "src/plugin/PluginProcessor.h": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+    "src/plugin/PluginProcessor.cpp": "cc79c978d5488b7f1f29d29c8966665a6bbd3ada31aa8050064bd3f44f31e401",
+    "src/plugin/PluginProcessorLibrary.cpp": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+    "tests/InstrumentBodyHostTests.h": "f9806de9f933f4590cb9f45897a6387a749e78e8e4b2ad64a11ef409d6ad489d",
+    "tests/ParameterStateChildIndexTests.cpp": "c3d003d413c32b7af1411ba639d5d2717e7ce0fde9e6ef4a0282747b9769a779",
+    "docs/CIRCUIT_LIBRARY_2026_11_4.md": "28fe45bd69e20855e7a33206f228f39cb985673ba66512812134cc74d5d8bcaf",
+    "docs/PRESET_GUIDE.md": "8a4de15514658e368127fa3a54da30df187c9ec6b7c9a6db22f72dfdd667edd2",
+    "docs/preset-evidence/2026.11.4/reviews/19-host-compatibility.json": "505353632109d07197aa2f5ae27d3bef1546bdbee2d80d4135e2910e00ce6918"
+  },
+  "compatibility_checks": {
+    "core_count_before": 198,
+    "core_count_after": 200,
+    "all_198_preceding_definitions_equal": true,
+    "core_prefix_hash": "8e37bad444e187c2",
+    "host_count_before": 304,
+    "host_count_after": 306,
+    "all_304_host_ids_equal": true,
+    "host_prefix_hash": "b86982a235459491",
+    "host_appended": [
+      [
+        "H",
+        "304",
+        "body1_size"
+      ],
+      [
+        "H",
+        "305",
+        "body2_size"
+      ]
+    ],
+    "processor_cpp_only_change_is_append_block": true,
+    "append_block": "    // Keep all 304 published host slots in place, including the eight original\n    // body controls. Size is a next-note sound control, appended with a newer\n    // AU ordering hint rather than inserted into either existing rank group.\n    for (int rank = 0; rank < 2; ++rank)\n        layout.add(make(cs80::bodySizeParam(rank), 17));\n\n",
+    "preset_identities_equal": true,
+    "program_count_before": 523,
+    "program_count_after": 523,
+    "initializers": [
+      {
+        "name": "Init Patch",
+        "index": 43,
+        "host_index": 43,
+        "old_values_equal_binary32": true,
+        "new_size_defaults": [
+          1,
+          1
+        ]
+      },
+      {
+        "name": "Init Circuit",
+        "index": 522,
+        "host_index": 522,
+        "old_values_equal_binary32": true,
+        "new_size_defaults": [
+          1,
+          1
+        ]
+      }
+    ],
+    "captured_inventory_sha256": "bff48651085358fcc3d1b07ee5f9138f629c84e7fa9e5ae067796395096a0280",
+    "capture_binary_sha256": "8d0b253a3b83935eddd07bf0513283b89d49d89ecd2cfd0aeceaff04c1352f63"
+  },
+  "host_evidence_boundary": {
+    "method": "Compiled both actual Params.h revisions in isolation and enumerated source-order host IDs. Independently established that deleting only the new append block makes the complete current PluginProcessor.cpp byte-identical to the baseline; hence the preceding layout construction and all version hints are unchanged.",
+    "native_apvts_instantiated": false,
+    "new_host_slots": [
+      304,
+      305
+    ],
+    "new_au_version_hint": 17,
+    "old_body_au_version_hint": 16,
+    "limits": "The standalone ID enumeration follows the unchanged layout order; it is not a native VST3/AU host enumeration. Worker19 syntax-checked the actual JUCE host-test template, and native CI must execute its assertions."
+  },
+  "saved_state_review": {
+    "session_and_user_preset": "normaliseRestoredState traverses all P_numParams, completing missing children from paramDef defaults before APVTS replacement. The two size defaults are exactly1. Existing eight body values retain their stored values; older absent body models/mixes defaultoff.",
+    "inactive_ab": "restoreABState traverses all P_numParams and supplies each declared default for absent properties; missing sizes cannot inherit the receiving live edits. Existing eight body values remain authoritative.",
+    "tests_reviewed": [
+      "preceding body-aware session missing only both sizes",
+      "preceding body-aware user preset missing only both sizes",
+      "preceding body-aware inactive A/B slot missing only both sizes",
+      "older no-body state defaults",
+      "malformed range admission",
+      "all ten fields in session/user/A-B/undo/factory/MIDI recall",
+      "rankI and rankII held-note identity and next-note size audibility"
+    ],
+    "worker19_reviewed": "reviews/19-host-compatibility.json",
+    "production_defect_found": false,
+    "qualification_boundary": "Static path review and prior clearly scoped development probes only. Actual processor tests remain mandatory in final native CI."
+  },
+  "documentation_link_audit": {
+    "files": [
+      {
+        "path": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+        "local_file_links": 20,
+        "missing": []
+      },
+      {
+        "path": "docs/PRESET_GUIDE.md",
+        "local_file_links": 65,
+        "missing": []
+      }
+    ],
+    "local_markdown_heading_anchors_checked": 7,
+    "missing_anchors": [],
+    "external_urls_checked": false,
+    "limits": "Local Markdown destinations and requested heading fragments were checked; external research-site availability and downloadable binaries were outside this review."
+  },
+  "retained_probe_audit": {
+    "runtime_cpp_sha256": "a8e8e151fd1e181aa91bb9324488c3e23acc604396dc3c7f1a3a09dc91bb3c13",
+    "runtime_python_sha256": "de5235b6a2bdcae56ca10e77f43ab63c5127085df4b9b998627defbcf7fbd8ee",
+    "runtime_hashes_match_record": true,
+    "original_finish_probe_sha256": "22bc03aad5458724ca2d19d58489588ec4bd4b56d802b8ea0f160032a8ce9620",
+    "original_finish_probe_matches_worker29_resolution": true,
+    "embedded_sources_present_in_reviews": [
+      "19",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "31",
+      "32",
+      "33",
+      "34",
+      "35"
+    ],
+    "missing_referenced_retained_harnesses_found": [],
+    "notes": "Worker29's earlier missing A16 source is retained at development/originals/finish-probe.cpp with the recorded hash. Other reviewed JSON probes retain their source inline or in explicitly named adjacent files. Scratch paths in commands describe development locations and are not asserted to be release artifacts. Worker35 tool basenames resolve to ci/verification-tools, as its scope states."
+  },
+  "findings": [
+    {
+      "id": "A38-DOC1",
+      "severity": "documentation_refresh",
+      "file": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "section": "Listening and qualification",
+      "observation": "The sentence says the direct-model suite contains1,654 passing checks. Worker34 has since expanded the executed direct-model suite to1,825, and worker37 is extending it again. The1,654 count remains valid for its earlier source snapshot but is stale as a present-tense current-suite count.",
+      "recommendation": "Either explicitly label1,654 as the earlier development run with its source record, or replace the current-suite number using the final executed log after37. Keep development and native counters separate.",
+      "release_impact": "Documentation accuracy; no production defect."
+    },
+    {
+      "id": "A38-DOC2",
+      "severity": "source_scope_clarity",
+      "file": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "section": "Development runtime cost and original-bank measurements",
+      "observation": "The runtime numbers and A16 audio measurements are correctly stored with earlier source identities; runtime body hash0270c537 predates the piano onset corrections. The prose links those records but should not be read as a fresh benchmark or full final-source audio qualification.",
+      "recommendation": "Retain the historical records unchanged and explicitly call these development-stage measurements before later piano onset/level corrections. Final bank and native results should have their own exact source identities. No broad runtime rerun is necessary solely to preserve a historical result.",
+      "release_impact": "Avoid overclaiming final-source qualification."
+    },
+    {
+      "id": "A38-DOC3",
+      "severity": "pending_release_refresh",
+      "file": "docs/preset-evidence/2026.11.4/parameter-coverage.json",
+      "section": "Complete structural coverage",
+      "observation": "The linked structural coverage and development/final-bank source manifest predate the ten-program correction and pending recalibration. Names/Init/prefix checks independently pass on the currently built corrected recipes, but the public coverage report must be refreshed from the final inventory.",
+      "recommendation": "Regenerate final inventory, parameter coverage and audio comparison after the final recipe/DSP/calibration build, then bind release evidence to the source actually packaged. Preserve pre-correction-bank as failed development evidence.",
+      "release_impact": "Required before claiming final inventory/source coverage."
+    }
+  ],
+  "other_claims_reviewed": {
+    "no_new_presets_and_init_preservation": "Confirmed523 ordered identities and both binary32 Init vectors with neutral appended sizes.",
+    "authoring_limits": "Both documents expressly describe authored synthesized interpretations and do not claim measured acoustic indistinguishability.",
+    "body_size": "Next-note behavior, neutral fallback, model-dependent resonance meaning and absence of dedicated custom body widgets are consistently described.",
+    "audition_roster": "138WAV/74program/870seconds/30folders and200parameter inventory are described as the configured producer; actual ZIP and native runs still need qualification.",
+    "saved_audio": "Both documents explain that preserved stored values do not freeze old DSP, and factory programs must be reselected to obtain revised recipes."
+  },
+  "reproduction": {
+    "probe_source": "#include \"Params.h\"\n#include <cstdio>\n#include <string>\nint main(){\n for(int i=0;i<cs80::P_numParams;++i){const auto &d=cs80::paramDef(i);std::printf(\"C\\t%d\\t%s\\t%a\\t%a\\t%a\\t%a\\n\",i,cs80::paramId(i).c_str(),d.min,d.max,d.def,d.skew);}\n int n=0;auto emit=[&](const std::string&id){std::printf(\"H\\t%d\\t%s\\n\",n++,id.c_str());};\n for(int i=0;i<cs80::P_legacyNumParams;++i)emit(cs80::paramId(i));\n for(int ch=0;ch<2;++ch)emit(\"hardware_source_\"+std::to_string(ch+1));\n for(int bank=0;bank<4;++bank)for(int local=0;local<cs80::CP_count;++local)\n  if(local!=cs80::CP_feet&&local!=cs80::CP_pan&&local!=cs80::CP_hpfOn&&local!=cs80::CP_lpfOn)emit(\"memory_\"+std::to_string(bank+1)+\"_\"+cs80::kChannelDefs[local].id);\n for(int i=cs80::P_legacyNumParams;i<cs80::P_numParams;++i)emit(cs80::paramId(i));\n}\n",
+    "commands": [
+      "git show fa57967c7317828cf769cc7ca97f5857e566520f:src/core/Params.h > <scratch>/before/Params.h",
+      "g++ -std=c++20 -O2 -I<scratch>/before <scratch>/params.cpp -o <scratch>/params-before",
+      "g++ -std=c++20 -O2 -Isrc/core <scratch>/params.cpp -o <scratch>/params-after",
+      "<scratch>/params-before > <scratch>/params-before.tsv",
+      "<scratch>/params-after > <scratch>/params-after.tsv",
+      "build-core/cs80_preset_capture --library all --inventory <scratch>/inventory.json"
+    ],
+    "comparison": "Compare all before C rows to the first198 current C rows, all before H rows to the first304 current H rows; FNV1a64 IDs with newline boundaries. Remove only the appended size-loop/comment block from current PluginProcessor.cpp and compare every remaining byte to gitshow baseline. Compare ordered identity fields plus struct.pack(<f) values for both Init programs.",
+    "probe_source_sha256": "7defa3c677e813e3acfec5dc7aa9eb3bb1d8f3086335bc7533dde6894b67eca8",
+    "before_probe_sha256": "96fbfd9f3f4c16aa5a0bd8819818a5b5434982042cefb45b83125de0b2e824a3",
+    "after_probe_sha256": "05824ab498f89f0d2bbafca85d9f349feaaf91aa38c72a9c6048a4738d79f619",
+    "baseline_params_sha256": "cef330a674f721396750d740f0acaa0545808ef0de37b203a976399bcb69f3ea"
+  },
+  "limits": [
+    "No native host, wrapper, pluginval, installer or audition ZIP executed or accepted by this review.",
+    "The reviewed capture binary contains corrected recipes from33 and the prior completed piano RNG fix; ongoing37 and level recalibration do not alter these identity contracts but require separate final audio evidence.",
+    "Historical source hashes are intentionally preserved; a mismatch against an evolving working tree is not itself a failed historical check."
+  ]
+}

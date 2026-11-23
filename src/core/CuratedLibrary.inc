@@ -131,6 +131,12 @@ struct Program
         });
     }
 
+    // Larger resonant geometry lowers body formants without transposing the note.
+    Program& bodySize(Rank r, float size)
+    {
+        return each(r, [&](int c) { p[bodySizeParam(c)] = size; });
+    }
+
     // Global controls.
     Program& g(int index, float v) { p[index] = v; return *this; }
     Program& mix(float v) { return g(P_mix, v); }

@@ -494,6 +494,12 @@ inline constexpr ControlHelp kControlHelp[] = {
     { "body2_decay", 0, "-", "EXT", Basis::modernExtension,
       "Scales rank II's independent partial decay for the next note; larger values let upper modes ring longer.",
       "The rank ADSR still controls overall duration and key damping. Sustained wind and organ modes do not decay while held." },
+    { "body1_size", 0, "-", "EXT", Basis::modernExtension,
+      "Sets rank I's resonant geometry for the next note. A larger body lowers its formants without transposing the key.",
+      "An authored software resonance scale, not a measured dimension. Neutral size is 1x; saved older sounds use that default." },
+    { "body2_size", 0, "-", "EXT", Basis::modernExtension,
+      "Sets rank II's resonant geometry for the next note. A larger body lowers its formants without transposing the key.",
+      "An authored software resonance scale, not a measured dimension. Neutral size is 1x; saved older sounds use that default." },
 };
 
 inline constexpr int kControlHelpSize = (int) (sizeof(kControlHelp) / sizeof(kControlHelp[0]));

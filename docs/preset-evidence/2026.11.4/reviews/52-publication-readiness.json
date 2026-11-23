@@ -1,0 +1,1804 @@
+{
+  "schema": 1,
+  "worker": 52,
+  "task": "publication_integrity_review",
+  "inspected_at_utc": "2026-11-23T18:10:19.520462+00:00",
+  "status": "file_set_review_passed_with_required_cache_exclusion; publication_and_release_qualification_pending",
+  "scope": "Read-only worktree, branch, revision and prospective publication-file audit. This is not an immutable index/tree review or native artifact qualification.",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "baseline": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "local": {
+    "branch": "main",
+    "head": "fa57967c7317828cf769cc7ca97f5857e566520f",
+    "origin_main": "fa57967c7317828cf769cc7ca97f5857e566520f",
+    "base_tree": "715212d1f2cb45b1aad3d7fd23416276b8b938d7",
+    "staged_paths": []
+  },
+  "live_remote_main_get": {
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/branches/main",
+    "name": "main",
+    "sha": "fa57967c7317828cf769cc7ca97f5857e566520f",
+    "tree": "715212d1f2cb45b1aad3d7fd23416276b8b938d7",
+    "protected": false,
+    "commit_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/commit/fa57967c7317828cf769cc7ca97f5857e566520f"
+  },
+  "file_set": {
+    "modified_tracked": 36,
+    "untracked": 142,
+    "generated_caches": 19,
+    "candidate_files": 159,
+    "candidate_bytes": 5935084,
+    "unexpected_new_paths": [],
+    "nontext_candidates": [],
+    "historical_changes": [],
+    "staged_entries": [],
+    "new_production_file_present": true,
+    "new_production_file_is_untracked": true,
+    "top_files": [
+      {
+        "path": "docs/preset-evidence/2026.11.4/development/pre-correction-bank/inventory.json",
+        "status": "??",
+        "bytes": 704860,
+        "sha256": "d095b78bbade6c48d90b48bcc0d26008d99046c5521b0d1766023fbfd6869b81",
+        "utf8": true,
+        "nul": false,
+        "generated_cache": false,
+        "mode": "0o644"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/development/final-bank/inventory.json",
+        "status": "??",
+        "bytes": 704802,
+        "sha256": "bff48651085358fcc3d1b07ee5f9138f629c84e7fa9e5ae067796395096a0280",
+        "utf8": true,
+        "nul": false,
+        "generated_cache": false,
+        "mode": "0o644"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/baseline/inventory.json",
+        "status": "??",
+        "bytes": 674344,
+        "sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+        "utf8": true,
+        "nul": false,
+        "generated_cache": false,
+        "mode": "0o644"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/parameter-coverage.json",
+        "status": "??",
+        "bytes": 441648,
+        "sha256": "bb054c8327aa9b4ec32fd90a3c1fd121d91f8bbd0fe53207cc0b3b407d818d1a",
+        "utf8": true,
+        "nul": false,
+        "generated_cache": false,
+        "mode": "0o600"
+      },
+      {
+        "path": "docs/preset-evidence/2026.11.4/reviews/32-alias-register.json",
+        "status": "??",
+        "bytes": 195908,
+        "sha256": "e016f0f2b9c218f33ad1160f4d6a4b79d8639fb85a5e4951925b0cb149ed3b96",
+        "utf8": true,
+        "nul": false,
+        "generated_cache": false,
+        "mode": "0o644"
+      },
+      {
+        "path": "src/core/Engine.cpp",
+        "status": " M",
+        "bytes": 167939,
+        "sha256": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+        "utf8": true,
+        "nul": false,
+        "generated_cache": false,
+        "mode": "0o644"
+      }
+    ],
+    "cache_paths": [
+      "scripts/__pycache__/capture-factory-auditions.cpython-312.pyc",
+      "scripts/__pycache__/check-windows-installer.cpython-312.pyc",
+      "scripts/__pycache__/compare-preset-audio.cpython-312.pyc",
+      "scripts/__pycache__/compare_amplitude_envelope_production.cpython-312.pyc",
+      "scripts/__pycache__/compare_filter_envelope_production.cpython-312.pyc",
+      "scripts/__pycache__/package-ci-artifacts.cpython-312.pyc",
+      "scripts/__pycache__/render_amplitude_envelope_reference.cpython-312.pyc",
+      "scripts/__pycache__/render_event_aware_envelope_sine_vca.cpython-312.pyc",
+      "scripts/__pycache__/render_event_aware_envelope_vca.cpython-312.pyc",
+      "scripts/__pycache__/render_event_aware_ring_vca.cpython-312.pyc",
+      "scripts/__pycache__/render_filter_envelope_reference.cpython-312.pyc",
+      "scripts/__pycache__/render_reference_chain.cpython-312.pyc",
+      "scripts/__pycache__/render_ring_reference.cpython-312.pyc",
+      "scripts/__pycache__/study_reference_chain_clock.cpython-312.pyc",
+      "scripts/__pycache__/test-pluginval-macos-download.cpython-312.pyc",
+      "scripts/__pycache__/verify-ci-bundle.cpython-312.pyc",
+      "tests/__pycache__/test_event_aware_ring_vca.cpython-312.pyc",
+      "tests/__pycache__/test_reference_chain.cpython-312.pyc",
+      "tests/__pycache__/test_truth_render.cpython-312.pyc"
+    ]
+  },
+  "checks": {
+    "invalid_json": [],
+    "high_confidence_secret_pattern_hits": [],
+    "historical_evidence_diff_empty": true,
+    "readme_unchanged": true,
+    "obsolete_publisher_unchanged": true,
+    "final_source_sha256": {
+      "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+      ".github/workflows/build.yml": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+      "src/core/FactoryPresets.h": "985bcbacc9b085230c323de9a483931390c9b52a7de170238ee76a68b63e1de1",
+      "src/core/CuratedLibraryLevels.inc": "f77ea5567219a8fe59b9ae9e605b04dcf21e9d0c85c8c1c935ea752e3e034538",
+      "src/core/OriginalCircuitLevels.inc": "f077b50779572b7a0b2ea9c2c608b6c569e90b7f5fef52542c195319035a36e1",
+      "scripts/test-pluginval-macos-download.py": "769b776c7c501e0c8670d0b4481a339487d6a498264d284eb6954aca8e6b7bb2"
+    },
+    "factory_revision": "2026.11.4"
+  },
+  "required_staging_actions": [
+    {
+      "action": "Exclude generated caches",
+      "paths": [
+        "scripts/__pycache__/capture-factory-auditions.cpython-312.pyc",
+        "scripts/__pycache__/check-windows-installer.cpython-312.pyc",
+        "scripts/__pycache__/compare-preset-audio.cpython-312.pyc",
+        "scripts/__pycache__/compare_amplitude_envelope_production.cpython-312.pyc",
+        "scripts/__pycache__/compare_filter_envelope_production.cpython-312.pyc",
+        "scripts/__pycache__/package-ci-artifacts.cpython-312.pyc",
+        "scripts/__pycache__/render_amplitude_envelope_reference.cpython-312.pyc",
+        "scripts/__pycache__/render_event_aware_envelope_sine_vca.cpython-312.pyc",
+        "scripts/__pycache__/render_event_aware_envelope_vca.cpython-312.pyc",
+        "scripts/__pycache__/render_event_aware_ring_vca.cpython-312.pyc",
+        "scripts/__pycache__/render_filter_envelope_reference.cpython-312.pyc",
+        "scripts/__pycache__/render_reference_chain.cpython-312.pyc",
+        "scripts/__pycache__/render_ring_reference.cpython-312.pyc",
+        "scripts/__pycache__/study_reference_chain_clock.cpython-312.pyc",
+        "scripts/__pycache__/test-pluginval-macos-download.cpython-312.pyc",
+        "scripts/__pycache__/verify-ci-bundle.cpython-312.pyc",
+        "tests/__pycache__/test_event_aware_ring_vca.cpython-312.pyc",
+        "tests/__pycache__/test_reference_chain.cpython-312.pyc",
+        "tests/__pycache__/test_truth_render.cpython-312.pyc"
+      ],
+      "reason": "These 19 untracked .pyc files are generated test/import output, not release source or review evidence."
+    },
+    {
+      "action": "Include untracked production header",
+      "path": "src/core/InstrumentBodyFilter.h",
+      "reason": "Engine.h includes this new fixed-storage body filter. A tracked-only staging command would omit a required production dependency."
+    },
+    {
+      "action": "Include both new comparison scripts and the intended new revision evidence",
+      "paths": [
+        "scripts/compare-preset-audio.py",
+        "scripts/compare-preset-refinement.py",
+        "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+        "docs/preset-evidence/2026.11.4/"
+      ],
+      "reason": "These are intentional untracked source/review artifacts; new files do not appear in ordinary git diff."
+    }
+  ],
+  "revision_boundary": {
+    "factory_header": "2026.11.4",
+    "packager_reads_canonical_factory_header": true,
+    "capture_inventory_uses_same_curatedLibraryRevision": true,
+    "guide_and_new_report": "2026.11.4 development/current source",
+    "readme": "Unchanged qualified 2026.11.3 download/source links; intentional until new native installation and audition archives are accepted.",
+    "historical_2026_11_through_2026_11_3_evidence": "No modified tracked paths",
+    "obsolete_2026_11_1_publisher": "Unchanged; not invoked"
+  },
+  "publication_protocol_to_verify_on_followup": [
+    "Finish final-source bank audit and refresh inventory, parameter coverage, matched-audio report and provenance before treating source as qualified locally.",
+    "Build the publication payload from immutable staged index blobs, preserving Git file modes; compare the GitHub created tree SHA with local git write-tree.",
+    "Use a fresh observed main head as the single parent and expected_sha lease; do not force-update or overwrite another main descendant.",
+    "Fetch the published commit and verify its tree/source hashes; align the local branch only after exact tree equality is established.",
+    "Preserve any correctly source-bound screenshot-only [skip ci] descendant rather than overwriting it.",
+    "Only replace download links after each actual current-source native artifact, source/run/attempt, validator payload and producing job is accepted."
+  ],
+  "limitations": [
+    "The worktree was still receiving final evidence updates, and the index was empty. The recorded file list/hashes are an inspection snapshot, not a future commit seal.",
+    "No stage, commit, push, reset, deletion, shared build, native run, artifact download or binary validation was performed.",
+    "The live remote GET confirms source identity and observed branch protection only; it does not prove a future write will succeed.",
+    "UTF-8/NUL and high-confidence credential-pattern checks cover only the prospective changed file set and are not a general secret-scanning certification.",
+    "Historical development evidence may intentionally carry earlier source hashes and failed outcomes. It must remain labeled by stage and must not qualify the new native builds."
+  ],
+  "candidate_file_snapshot": [
+    {
+      "path": ".github/workflows/build.yml",
+      "status": " M",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": ".github/workflows/dsp-measurements.yml",
+      "status": " M",
+      "bytes": 11756,
+      "sha256": "9ce4fe1a71530996851e3bad2961ca12778d3c6f4f113713d1c0a92cca930964",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/PRESET_GUIDE.md",
+      "status": " M",
+      "bytes": 26360,
+      "sha256": "8a4de15514658e368127fa3a54da30df187c9ec6b7c9a6db22f72dfdd667edd2",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "scripts/capture-factory-auditions.py",
+      "status": " M",
+      "bytes": 17465,
+      "sha256": "99150f4e685db3d3f0dde95ef2bc003a0b26d36499a76c957464af13ed80d9c7",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "scripts/test-capture-factory-auditions.py",
+      "status": " M",
+      "bytes": 24673,
+      "sha256": "ff526f51830fba1c1c755061a7e366c57b5647dd4a983b31d6aa447b15524605",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "scripts/test-pluginval-macos-download.py",
+      "status": " M",
+      "bytes": 21719,
+      "sha256": "769b776c7c501e0c8670d0b4481a339487d6a498264d284eb6954aca8e6b7bb2",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/CuratedLibrary.inc",
+      "status": " M",
+      "bytes": 10440,
+      "sha256": "6717273d39dd5fa873ab8f7227cf71a64485ccea2fa281214a24d8657a7f6fe3",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/CuratedLibraryLevels.inc",
+      "status": " M",
+      "bytes": 9880,
+      "sha256": "f77ea5567219a8fe59b9ae9e605b04dcf21e9d0c85c8c1c935ea752e3e034538",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/Engine.cpp",
+      "status": " M",
+      "bytes": 167939,
+      "sha256": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/Engine.h",
+      "status": " M",
+      "bytes": 40644,
+      "sha256": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/FactoryPresets.cpp",
+      "status": " M",
+      "bytes": 10765,
+      "sha256": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/FactoryPresets.h",
+      "status": " M",
+      "bytes": 2815,
+      "sha256": "985bcbacc9b085230c323de9a483931390c9b52a7de170238ee76a68b63e1de1",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/InstrumentBody.h",
+      "status": " M",
+      "bytes": 40433,
+      "sha256": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/OriginalCircuitLevels.inc",
+      "status": " M",
+      "bytes": 8222,
+      "sha256": "f077b50779572b7a0b2ea9c2c608b6c569e90b7f5fef52542c195319035a36e1",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/OriginalCircuitLibrary.inc",
+      "status": " M",
+      "bytes": 24094,
+      "sha256": "654b15c08e1f6ae9e6f56f7a9c0beffa5c3bc34b65d60e644b4aa6741afd3c34",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/Params.h",
+      "status": " M",
+      "bytes": 24749,
+      "sha256": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Bass.inc",
+      "status": " M",
+      "bytes": 21307,
+      "sha256": "f909426560fce93574dd3d5e146a4516e887932ef2beb3c7c1576152f971a9f1",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Bells.inc",
+      "status": " M",
+      "bytes": 22109,
+      "sha256": "8554ac2f34f80c22281aa24cbdb7c5929d844c28ad13f6404a8268e6ab7b6a08",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Brass.inc",
+      "status": " M",
+      "bytes": 29381,
+      "sha256": "0eaba12d523d9475451dcb488e6ad0d0e96093bd365e436ce1ed79dc4df82cac",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Fx.inc",
+      "status": " M",
+      "bytes": 22881,
+      "sha256": "309f99c0bdc81da77ca421c233a18c12576607ae4988196684ba5d5661c3ee10",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Keys.inc",
+      "status": " M",
+      "bytes": 26172,
+      "sha256": "58c1c82d8ded21eb1e1c35980de3730e5c5045d0d0dcc54760230d2f11b1780d",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Leads.inc",
+      "status": " M",
+      "bytes": 25257,
+      "sha256": "f0e8fb2110d01ea73b8dc4ddeeb582f68bc5d547ce53ba20533c190771d9da80",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Modern.inc",
+      "status": " M",
+      "bytes": 20464,
+      "sha256": "dd3d6006734867f7f7dd62c0b14534875567931151d85870cbd515f456f7b38e",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Organ.inc",
+      "status": " M",
+      "bytes": 11170,
+      "sha256": "ad6410dc8c510ed4740207947bf12adee8e678ccd83012d2f76f31451c3bdb68",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Pads.inc",
+      "status": " M",
+      "bytes": 26480,
+      "sha256": "a8ecebdf08174c314e94595273f2c279ddfda71bb0433dd481e7a50750362730",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Plucked.inc",
+      "status": " M",
+      "bytes": 18092,
+      "sha256": "4bb4a23d1f09f1a3318ae59f592ccb9409d3de511276fded347948eef38fc7ac",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Polysynth.inc",
+      "status": " M",
+      "bytes": 20623,
+      "sha256": "0bb56e1752400a4ba5d896b6e6ee801b7cf7913969ce4789143a905c42b4e356",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Strings.inc",
+      "status": " M",
+      "bytes": 35584,
+      "sha256": "cc69f383b02b8e5feb984fab3ca2b2188adb48de26b5dafec182064e66b37439",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/curated/Winds.inc",
+      "status": " M",
+      "bytes": 17791,
+      "sha256": "1c499ec66bc6dfe94e77865fd4b041ac5fc0ef4b33c61ab7389a6c18d5f83173",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/plugin/EvidenceRegister.h",
+      "status": " M",
+      "bytes": 38099,
+      "sha256": "59dd8308407d1d0302129d671324a0f03f46053e9ebf38190a9d76533ee4b269",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/plugin/PluginProcessor.cpp",
+      "status": " M",
+      "bytes": 94219,
+      "sha256": "cc79c978d5488b7f1f29d29c8966665a6bbd3ada31aa8050064bd3f44f31e401",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "tests/InstrumentBodyEngineTests.cpp",
+      "status": " M",
+      "bytes": 18837,
+      "sha256": "8be9e04872a7b8fbc50f238d81f4198591c1a8b2f91d5fa8aa1ec85b287059d6",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "tests/InstrumentBodyHostTests.h",
+      "status": " M",
+      "bytes": 27614,
+      "sha256": "f9806de9f933f4590cb9f45897a6387a749e78e8e4b2ad64a11ef409d6ad489d",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "tests/InstrumentBodyTests.cpp",
+      "status": " M",
+      "bytes": 40398,
+      "sha256": "9bf8c1f037f000db6bb4756f854cabf3c11916af292aa31f5a61cf316bd5c9d2",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "tests/ParameterStateChildIndexTests.cpp",
+      "status": " M",
+      "bytes": 17311,
+      "sha256": "c3d003d413c32b7af1411ba639d5d2717e7ce0fde9e6ef4a0282747b9769a779",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "tests/test_parity_capture.py",
+      "status": " M",
+      "bytes": 23917,
+      "sha256": "f0e878d69d1faf1f3965d733775a994b2ed1e11868f4a2e9c2691e10a21ca89e",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/CIRCUIT_LIBRARY_2026_11_4.md",
+      "status": "??",
+      "bytes": 13806,
+      "sha256": "33a79824d759b835761fab637c31dd046cf51f90cffb2a9ccfc6b33539d695a5",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/baseline/inventory.json",
+      "status": "??",
+      "bytes": 674344,
+      "sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/baseline/provenance.json",
+      "status": "??",
+      "bytes": 1784,
+      "sha256": "203f52361d010c554aa0958918c1035f6a6b3a33bc6cb6c3698e5639dc74a712",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/baseline/single-note-metrics.csv",
+      "status": "??",
+      "bytes": 118825,
+      "sha256": "72e51e3433d9695c63b7b91d46f6b325d68ac5cae502e0b7c51fead363d215ab",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/verification-tools/tool-provenance.json",
+      "status": "??",
+      "bytes": 1695,
+      "sha256": "1f4870be698985d66d295e23100b14754db2495398c84277f8eaf17872ddcb38",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-audition-zip.py",
+      "status": "??",
+      "bytes": 12629,
+      "sha256": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py",
+      "status": "??",
+      "bytes": 19060,
+      "sha256": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py",
+      "status": "??",
+      "bytes": 38038,
+      "sha256": "7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/audition-roster/roster.json",
+      "status": "??",
+      "bytes": 7370,
+      "sha256": "66a0aea3a288b8394a3f38ae97713e56b3e06902f3313ad8fa4483328ab78549",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/audition-roster/summary.json",
+      "status": "??",
+      "bytes": 12829,
+      "sha256": "1d030a2797f7594def105e503e80107ae66b67ad30f2f40baed8db5636328d96",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/audition-roster/tests.log",
+      "status": "??",
+      "bytes": 117,
+      "sha256": "b3d8dc6b1ee57e645854c0b32dd59954d417aadb4ae6272eb72a9992ca542bcf",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/bass-leads/audio-comparison.json",
+      "status": "??",
+      "bytes": 34932,
+      "sha256": "c2b0dfddd8f4cc8c97c0b5f75d5101c78934ac1c8a5c9c5d279d31bc082f06ec",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/bass-leads/metrics.csv",
+      "status": "??",
+      "bytes": 12347,
+      "sha256": "6e556d8d54a86c7ae67961bf42d62b48293d4460ff60762c14825a555dd5bd6f",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/bass-leads/parameter-changes.json",
+      "status": "??",
+      "bytes": 44241,
+      "sha256": "812e378021cf33dadecd9df50ad98819ef57d3b5d77144913af1f51815c7510d",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/bass-leads/summary.json",
+      "status": "??",
+      "bytes": 2596,
+      "sha256": "b6f2e6d041f005eed9870b23358b8c7c92d3ecc0498fdf18860eb442c5809d4c",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/brass-organ/audio-comparison.json",
+      "status": "??",
+      "bytes": 14753,
+      "sha256": "7c074c223c13190a8bc444855bae5777be1dd9802efccde9f5008e720b9a8fce",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/brass-organ/character-final.log",
+      "status": "??",
+      "bytes": 2357,
+      "sha256": "6db1457977c4f46549c5bfe0d48151529efc808d9d4a77ffe24680449d48bbb6",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/brass-organ/final-provenance.json",
+      "status": "??",
+      "bytes": 1750,
+      "sha256": "ff98f3311307e5b910aea802a2e72c6e8621f53dbd37473d50f4bf850288d639",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/brass-organ/parameter-changes.json",
+      "status": "??",
+      "bytes": 43795,
+      "sha256": "3b32337fb5d8d6f82210d3002e052b5de9d6bb66154393de2b1f94d11ab028c1",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/brass-organ/voicing-final.log",
+      "status": "??",
+      "bytes": 3714,
+      "sha256": "b9966be20fe1201dba95d029a378e00c778f87f66923a24c942fff854398f08d",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/core/build.log",
+      "status": "??",
+      "bytes": 13743,
+      "sha256": "3f7c1679e4835a95f8673189665c16e25020ec04a5f0cf0a217e77fec0517e75",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/core/cs80_instrument_body_engine_tests.log",
+      "status": "??",
+      "bytes": 989,
+      "sha256": "f6b5de1f6fdfe0e206b1add5968d707e8e2f2ee900de444c396b5a1360155b49",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/core/cs80_instrument_body_tests.log",
+      "status": "??",
+      "bytes": 1117,
+      "sha256": "8dd606f241ac14ecb04b027d95c84cd7d603dc977e3d62d5a2dfe6381e6fd475",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/core/ctest.log",
+      "status": "??",
+      "bytes": 26904,
+      "sha256": "c3d32e8994ef40ea513cbcf235e56194877aff0250cc2661760a2c8c0183735b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/core/junit.xml",
+      "status": "??",
+      "bytes": 85589,
+      "sha256": "a96e8269cf2a43bd3ed8c5e6fbfb73de247917e7f2f4cf3f75e2528da30f3a83",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/core/summary.json",
+      "status": "??",
+      "bytes": 1148,
+      "sha256": "ebc6353fec5b4f2c0ff332fc1cccdddcea03aa28a02b4ce5decd72af5de94bb6",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/final-affected/ctest.log",
+      "status": "??",
+      "bytes": 624,
+      "sha256": "31a3d992cbbc67ade68a29f64b0deb393610d16244d12e9c88cab30d99bd57fb",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/final-affected/junit.xml",
+      "status": "??",
+      "bytes": 5254,
+      "sha256": "1461a9a279b0a2d6ca1a63517c73cdce2a932b158a5109b7ba6df711e9af0033",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/final-affected/summary.json",
+      "status": "??",
+      "bytes": 1720,
+      "sha256": "4206f67df38c8e99f3a8edd106e0c02ee9580bc5b984e4415fed8ad33d7ec29b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/final-affected/workflow-ctest.log",
+      "status": "??",
+      "bytes": 256,
+      "sha256": "9423160e3bd127475631849da9f231162f6c8093e4edd50a6bfcc5903135ad29",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/final-affected/workflow-junit.xml",
+      "status": "??",
+      "bytes": 499,
+      "sha256": "5a88cef048e29af9679cc0a95ca39565ab6bf1a49f4aa2c40147b0ddded59edc",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/final-bank/calibration-history.json",
+      "status": "??",
+      "bytes": 1615,
+      "sha256": "2eedf5b0b7629f2e53f840febd111f0f4f78248e27614223b22852fcf6b2305f",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/final-bank/inventory.json",
+      "status": "??",
+      "bytes": 704802,
+      "sha256": "bff48651085358fcc3d1b07ee5f9138f629c84e7fa9e5ae067796395096a0280",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/final-bank/provenance.json",
+      "status": "??",
+      "bytes": 16658,
+      "sha256": "963056c64e3d6c77dfe5e663a1b0b8a86b02cb35e67ff2c1f488a7149620bfa8",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/fx-modern/data-audit-final.log",
+      "status": "??",
+      "bytes": 142,
+      "sha256": "445e1fb21a56bccf05315ae3b198ca20689ac05737f84d07949ebf5ca193468e",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/fx-modern/final42-metrics.csv",
+      "status": "??",
+      "bytes": 9495,
+      "sha256": "662803b50cdffdf164c3fcd637cdd9a2e8274b201668ab6b503e16db421db82a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/fx-modern/parameter-changes.json",
+      "status": "??",
+      "bytes": 38876,
+      "sha256": "1daf20b2000f033631b18d729732d20bc197c085de00939b5f25ed8d07c16b3a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/fx-modern/summary.json",
+      "status": "??",
+      "bytes": 3258,
+      "sha256": "a4160223328e1362eff2819dc497e3c04e4102fb495729df728894bb5607bbfe",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/keys/development-spectral-comparison.json",
+      "status": "??",
+      "bytes": 34527,
+      "sha256": "7ccc7d86d3a8df90458303cdfc00c153799ff5db48173e39f5d031560c41e8de",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/keys/final-source-hashes.txt",
+      "status": "??",
+      "bytes": 306,
+      "sha256": "f42dd9e7a099ec3fff62e5f9c45b3d5b44ef756ba3dca03ec52763d8edbb0125",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/keys/final-voicing.log",
+      "status": "??",
+      "bytes": 3784,
+      "sha256": "71f77b35555876147ce61240100728bbdbfbba97a669425c2b67946f54997191",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/keys/parameter-changes.json",
+      "status": "??",
+      "bytes": 20343,
+      "sha256": "d5c89a6259de53c02cef4a3fd4368c74b12d3df1d14893efab8de51eb1ff0871",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/keys/upper-rank-comparison.json",
+      "status": "??",
+      "bytes": 910,
+      "sha256": "cf53f4fe802623b9d1fd5d0747d57a9b8ca425c025f5c08cab22ad53954d0f50",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/originals/behavior-summary.json",
+      "status": "??",
+      "bytes": 2325,
+      "sha256": "dd2b62ab76334bd0980658e9d3f89af39a0b5b6f818811e3f11902b12bc5ef1f",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/originals/data-audit.log",
+      "status": "??",
+      "bytes": 142,
+      "sha256": "445e1fb21a56bccf05315ae3b198ca20689ac05737f84d07949ebf5ca193468e",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/originals/final-provenance.json",
+      "status": "??",
+      "bytes": 3099,
+      "sha256": "21f91362efa39b76ce8aadddd40ea8d6b7df054baf7f62c6a49a4b37f08e17ca",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/originals/finish-probe.cpp",
+      "status": "??",
+      "bytes": 2397,
+      "sha256": "22bc03aad5458724ca2d19d58489588ec4bd4b56d802b8ea0f160032a8ce9620",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/originals/identity-and-finish-coverage.json",
+      "status": "??",
+      "bytes": 70290,
+      "sha256": "98c722b52b3adf9b77791a409a2648d62331e63bcef371777f22ad26ad59b98d",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/originals/tone-levels.log",
+      "status": "??",
+      "bytes": 183,
+      "sha256": "13209c7eac040bde5d4f385c2b30986687c7c2e02f3f9502be160d821eb86200",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/originals/tone-rank-dominance.csv",
+      "status": "??",
+      "bytes": 1064,
+      "sha256": "7202767f751ff2a78eeaf29607cd08a74fa4e20643becc7778ec60e09b20cb49",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/originals/wide-stereo-summary.json",
+      "status": "??",
+      "bytes": 1728,
+      "sha256": "6f351cdf445e2e211c92c5aca8f7601ada58e8be5804ad33f995e5d65da20e69",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pads-poly/PresetCharacterTests.log",
+      "status": "??",
+      "bytes": 434,
+      "sha256": "2f06f6a5916d92e90840b7a83cd29d7ab853e1d7df7011e056496b218f8f9246",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pads-poly/PresetPrecisionTests.log",
+      "status": "??",
+      "bytes": 612,
+      "sha256": "2751ffd1e64b6d57224bac3ed28be4b167234bb973f95e7377fbbc1d6ac3b758",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pads-poly/PresetVoicingTests.log",
+      "status": "??",
+      "bytes": 321,
+      "sha256": "6d895a865e1d7712fa38a68fd7cdce75b89add1fba533427da91d4aafaf54604",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pads-poly/coverage-final.json",
+      "status": "??",
+      "bytes": 53748,
+      "sha256": "fcb82adc2721d41d74d2fc968705437a47aa8d46dc26daa6e020aa121783af09",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pads-poly/final-summary.json",
+      "status": "??",
+      "bytes": 1163,
+      "sha256": "a7bbd8ccb876ef6adbda9d250bac7c785f8770e11b805f5e445f1d0de2486dbc",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pads-poly/ranges-final.log",
+      "status": "??",
+      "bytes": 48,
+      "sha256": "a7dbcb1c9f9af65e0fee9da277e7df848f5d38b2df5929486d2e1d8a01fc1624",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pads-poly/render-summary.json",
+      "status": "??",
+      "bytes": 446,
+      "sha256": "6852d0939705cfc3daaaa54753b66b389a39633dd6d66718e800639d26f72b2a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/plucked-bells/metrics.csv",
+      "status": "??",
+      "bytes": 8762,
+      "sha256": "1a2f5331f41bec572851de3ed9bf081a440952b92ed7168315c1a4fe91d2af37",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/plucked-bells/parameter-changes.json",
+      "status": "??",
+      "bytes": 31528,
+      "sha256": "fc3ccae2ee0195d99cff3ea7c19d264fb2989f375cff0e5444edf74f8b183f1d",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/plucked-bells/summary.json",
+      "status": "??",
+      "bytes": 1611,
+      "sha256": "c3e94e8b0be76b6c6813679358b2844467c6377127d34eb20e77c19ac64a21e3",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/post-principal-rng-core/ctest.log",
+      "status": "??",
+      "bytes": 28194,
+      "sha256": "924cd7702d683990cd6830162273f01a9d4974bff08c547ef4009e9fe437f66b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/post-principal-rng-core/junit.xml",
+      "status": "??",
+      "bytes": 84400,
+      "sha256": "3b8ca1b5569275ae54536ca39cbb59a679479b4b9707e1650832709361277a7c",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/post-principal-rng-core/source-hashes.json",
+      "status": "??",
+      "bytes": 2309,
+      "sha256": "1ed6f6966e948872f07539ffac18463f98ecfeb9f3d501c13c72cf64faa51c1a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/post-principal-rng-core/status.json",
+      "status": "??",
+      "bytes": 728,
+      "sha256": "1ca3192caffa275198e79cc4279aec3ee877191068fd82f9636b6ecc7f217069",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pre-correction-bank/ctest.log",
+      "status": "??",
+      "bytes": 50906,
+      "sha256": "4df0629ae8b49c3874962e47e728733e99313f5443ce4a72d8b8c67d9d2591c1",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pre-correction-bank/inventory.json",
+      "status": "??",
+      "bytes": 704860,
+      "sha256": "d095b78bbade6c48d90b48bcc0d26008d99046c5521b0d1766023fbfd6869b81",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pre-correction-bank/junit.xml",
+      "status": "??",
+      "bytes": 59476,
+      "sha256": "3c5735814875ffa61a6df6070df91186f54513d787d61940c241438f7404ee0c",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pre-correction-bank/provenance.json",
+      "status": "??",
+      "bytes": 16625,
+      "sha256": "481d710213cb8b59973e6c2fa0b9702c1d980e3064ed7f0f73575f7e3484d443",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pre-correction-bank/single-note-metrics.csv",
+      "status": "??",
+      "bytes": 118681,
+      "sha256": "56c74a53d573eb5de3ab54d6085203fefb7f27e7cd9c86f7c17ac7398ac85e02",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/pre-correction-bank/status.json",
+      "status": "??",
+      "bytes": 414,
+      "sha256": "49a35db3b8d836651510303908d65d898c774fdcf7e1082d1d0ffa615982ce0f",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/struck-body/body_tests.log",
+      "status": "??",
+      "bytes": 1951,
+      "sha256": "77cf00add552eab227bf6eaced65838c02931e483d48d5a0f01596f00d3fb950",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/struck-body/body_tests_baseline.log",
+      "status": "??",
+      "bytes": 2958,
+      "sha256": "b677d95021c34a3bc6557cf7186dfc130a0ba6731b587d8c91bd45a302fac442",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/struck-body/cost-paired-cpu.log",
+      "status": "??",
+      "bytes": 802,
+      "sha256": "d6d8ed10f905b8022f8e80630a259f17e3ee213fbe26bd6f48fdd3008230d668",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/struck-body/cost_paired.cpp",
+      "status": "??",
+      "bytes": 1221,
+      "sha256": "756982dcdaf35d374bb6b5d44c4fbf95adb1c1e76858dd065bd0a863f07c09b7",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/sustained-body/body-tests-before.log",
+      "status": "??",
+      "bytes": 5733,
+      "sha256": "f37ada54adde782e064d9addf79cf22bbaad62c69c38e4e72d9c47317f3d5bf9",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/sustained-body/body-tests.log",
+      "status": "??",
+      "bytes": 3665,
+      "sha256": "1ccbe2eb9bf854da640e6c858edd38034686d2110d3961790531ff25bb1ec1f5",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/sustained-body/cost-and-parity.log",
+      "status": "??",
+      "bytes": 1959,
+      "sha256": "6ae19a2613be2b914a4119ee9f14d2f60afe76ff25e70e894b53a40daf7843a2",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/sustained-body/cost_and_parity.cpp",
+      "status": "??",
+      "bytes": 3140,
+      "sha256": "9582e740f5825343e2ce7b03f5387fb9adf63358eaeb011e377aa2040e676440",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/winds-strings/character.log",
+      "status": "??",
+      "bytes": 2494,
+      "sha256": "d037176b59a295fe3d5365895e64ca1d9e42c36157153b2216741aec0b44b4be",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/winds-strings/coverage.json",
+      "status": "??",
+      "bytes": 23938,
+      "sha256": "2f4d79eb4b8658831e44e03ca8d5fbf493bcb82f4af8f9fd90f75d9e879be289",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/winds-strings/final-onset-source-sha256.txt",
+      "status": "??",
+      "bytes": 582,
+      "sha256": "edcb4814bf44fcd3e67485cde0424bc69956f707307f64bbaac080dbdec1a19a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/winds-strings/final-onset.log",
+      "status": "??",
+      "bytes": 365,
+      "sha256": "edee825e6108be029292e310d5e4241ba6bb426e6b2945564fe74dcc1d5e1ee6",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/development/winds-strings/voicing.log",
+      "status": "??",
+      "bytes": 3854,
+      "sha256": "23115c871b3488d7e7e12275cd116d6a98946199fa043f4eb6e296671d02c5ed",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/parameter-coverage.json",
+      "status": "??",
+      "bytes": 441648,
+      "sha256": "bb054c8327aa9b4ec32fd90a3c1fd121d91f8bbd0fe53207cc0b3b407d818d1a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o600"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/19-host-compatibility.json",
+      "status": "??",
+      "bytes": 7771,
+      "sha256": "505353632109d07197aa2f5ae27d3bef1546bdbee2d80d4135e2910e00ce6918",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/20-runtime-cost.cpp",
+      "status": "??",
+      "bytes": 12204,
+      "sha256": "a8e8e151fd1e181aa91bb9324488c3e23acc604396dc3c7f1a3a09dc91bb3c13",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/20-runtime-cost.json",
+      "status": "??",
+      "bytes": 56726,
+      "sha256": "4961f70ef9814a7899ff18a816daf82d1fc9f0a542c4bd401849fff089ba1063",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/20-runtime-cost.py",
+      "status": "??",
+      "bytes": 5679,
+      "sha256": "de5235b6a2bdcae56ca10e77f43ab63c5127085df4b9b998627defbcf7fbd8ee",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/21-struck-spectra.json",
+      "status": "??",
+      "bytes": 53609,
+      "sha256": "e262e6b34d215338cad28dfb1728ff74c3662b1a88b580747a8a154e7eb79e1b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/22-wind-string.json",
+      "status": "??",
+      "bytes": 40888,
+      "sha256": "7030cd39b937790284b407cf34b0cd6619783624baf02294781fc5b2248dab30",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/23-filter-continuity.json",
+      "status": "??",
+      "bytes": 10318,
+      "sha256": "4aa8e870518bf234a5707d98ecfff7e3058b5d12e6cf8370c12171d90e9d86e1",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/24-brass-organ.json",
+      "status": "??",
+      "bytes": 57696,
+      "sha256": "7d63e730ec0f16648ad2f1efdd19abbb42aeb015d588e155360b820a83a6319c",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/25-plucked-bars.json",
+      "status": "??",
+      "bytes": 52597,
+      "sha256": "02880902dfefebd564dd2d8743ed9ab293165e257d75e81947149983b0715d88",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/26-pad-poly.json",
+      "status": "??",
+      "bytes": 54393,
+      "sha256": "69cb90e6f876a165fb3dc4f71d334cf3172e1e1a7bbe540d5799c910745cdfd4",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/27-bass-leads.json",
+      "status": "??",
+      "bytes": 23838,
+      "sha256": "68a97d50e22c43229b7ca739c5b0fddfe16a84c2c1ac99510341f1bd3bd77c97",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/28-fx-modern.json",
+      "status": "??",
+      "bytes": 22988,
+      "sha256": "0625db9dbf832e7cd110e2ac3ffc0aef6a034152abfaa7ccbfe926e69c90b2e0",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/29-original-bank.json",
+      "status": "??",
+      "bytes": 15023,
+      "sha256": "67b7efae2cf03f17536598ec30e3a0b88339b9a243dd4dd11acf32eb5ebf86d3",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/31-model-sanitizers.json",
+      "status": "??",
+      "bytes": 25092,
+      "sha256": "6b0ab00749632af7e4853e14e5df3c130c586f638f0815d0bcfc006252d7347d",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/32-alias-register.json",
+      "status": "??",
+      "bytes": 195908,
+      "sha256": "e016f0f2b9c218f33ad1160f4d6a4b79d8639fb85a5e4951925b0cb149ed3b96",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/33-level-correction.json",
+      "status": "??",
+      "bytes": 28381,
+      "sha256": "333f9e2a102fa1912f4b081e7cdd35f607b790c4b2ae5d7fbf77b552ab118c9b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/34-piano-register-fix.json",
+      "status": "??",
+      "bytes": 22369,
+      "sha256": "81adc9e9abc5a99aa6118bfdaa1fe7e0f71f552659053a6e2b71677ffbe1994b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/35-artifact-verifiers.json",
+      "status": "??",
+      "bytes": 14157,
+      "sha256": "1d75708889bf93d4798a6649479bfd460587b846fa6f3509b0f3b1decc0d730e",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/36-native-workflow-map.json",
+      "status": "??",
+      "bytes": 40214,
+      "sha256": "82cd08fd5c3e4d5d4e71c8b0f882d244fb62cf2aeedb915c526d00864033187c",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/37-piano-course-boundaries.json",
+      "status": "??",
+      "bytes": 71829,
+      "sha256": "59cd51e3bd6a277d0f0332d1309219a422da6b131e6e55bf5d7ea9b617c704a8",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/38-evidence-compatibility.json",
+      "status": "??",
+      "bytes": 13071,
+      "sha256": "f22a14caf688c4812a1fd14a5d72ef8febfa4459532cbf5b4d555f542325e2b0",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/39-macos-au-binding.json",
+      "status": "??",
+      "bytes": 8922,
+      "sha256": "17d410c00d0fffc6dfad696b44919716eae53494fd9079c334e8ff6aeb0a183a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/40-level-gate-review.json",
+      "status": "??",
+      "bytes": 51739,
+      "sha256": "dd5c9d6fb49e0b14976c998d30bd4ea6984ab69fbfd6c8cf96c499f792f86168",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/41-workflow-gate-regression.json",
+      "status": "??",
+      "bytes": 13557,
+      "sha256": "7207b2a905cddaa4518071d5f7776b3ace5758d67ae71202af797f24519fb454",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/42-final-source-review.json",
+      "status": "??",
+      "bytes": 11588,
+      "sha256": "3fa2e64a9cdd4eaa41a22c80f26c371f59a9fa9030d6a04ea843be973ae6c94b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/43-windows-qualification-plan.json",
+      "status": "??",
+      "bytes": 7808,
+      "sha256": "5649c1760820b5334145d899636ee4ee73103e8194fa992c91e7591f0b7c9c64",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/44-macos-arm-qualification-plan.json",
+      "status": "??",
+      "bytes": 9922,
+      "sha256": "5f501985b097b9b6f6ebd2b56c715657c5ac202b482e1c40222f7bee1091d5d3",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/45-macos-intel-qualification-plan.json",
+      "status": "??",
+      "bytes": 11144,
+      "sha256": "60c456f8c6f48efc3c87ebc45637dd713cf91e7d83b3fc18b16ef6aa6ff6ab89",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/46-linux-qualification-plan.json",
+      "status": "??",
+      "bytes": 12548,
+      "sha256": "e72df095a9b2b272e56aa772f7b8b29b3d8a57d711805ffc7672b30f08f8f7fb",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/47-final-sanitizers.json",
+      "status": "??",
+      "bytes": 21117,
+      "sha256": "481039759e09e69c8539061318522e31294312216740f6570afbcdb4ecc9a45a",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/48-supporting-ci-plan.json",
+      "status": "??",
+      "bytes": 57482,
+      "sha256": "42d447af058cfaa6960f6a0d779f3146defe3d7d32072f493a229924c1706d3c",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/49-audition-qualification-plan.json",
+      "status": "??",
+      "bytes": 18465,
+      "sha256": "905fe8c201a5ea4e08359a1cb243dca3c1fe0f2dabfd6197d756b9e9c758f16c",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/50-inventory-plan.json",
+      "status": "??",
+      "bytes": 9550,
+      "sha256": "424eb3f78274a62ab0d52b2ff21e858183e5e3e4e26cec722127893f3caac87b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/reviews/51-audio-comparison-plan.json",
+      "status": "??",
+      "bytes": 10117,
+      "sha256": "ad4d4046ad38aec15510da79e0d48887bed023588f358133cd7ead0a1b0b6e3d",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/preset-evidence/2026.11.4/work-log.json",
+      "status": "??",
+      "bytes": 6271,
+      "sha256": "5ed7a7b4ddfa488fa1b7fade32d301bc3fa052d8ad87fa9da520041ebeb4234b",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "scripts/compare-preset-audio.py",
+      "status": "??",
+      "bytes": 30111,
+      "sha256": "b86d58c28c517bfe0dc94196458b4115a4c1a2529f07d0031241e96e2a406e04",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "scripts/compare-preset-refinement.py",
+      "status": "??",
+      "bytes": 18268,
+      "sha256": "6c45309f09c9d85152c0c08fb4033bc15d1565418947e681d9a7d5c41bbf7cf4",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    },
+    {
+      "path": "src/core/InstrumentBodyFilter.h",
+      "status": "??",
+      "bytes": 3648,
+      "sha256": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+      "utf8": true,
+      "nul": false,
+      "generated_cache": false,
+      "mode": "0o644"
+    }
+  ],
+  "commands": [
+    "git status --porcelain=v1 --untracked-files=all",
+    "git diff --name-status fa57967c7317828cf769cc7ca97f5857e566520f",
+    "git branch --show-current; git rev-parse HEAD origin/main HEAD^{tree}",
+    "git diff --check",
+    "GET https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/branches/main",
+    "UTF-8, NUL, JSON parsing, exact source SHA-256, prospective path classification and high-confidence credential-pattern checks of changed/untracked non-cache files"
+  ]
+}

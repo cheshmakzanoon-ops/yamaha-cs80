@@ -1,0 +1,29 @@
+{
+  "scope": "Final piano-course source affected tests and resolution of intermediate run preconditions",
+  "core_followup_passed": 4,
+  "core_followup_failed": 0,
+  "workflow_followup_passed": 1,
+  "workflow_followup_failed": 0,
+  "source_sha256": {
+    "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "tests/InstrumentBodyTests.cpp": "9bf8c1f037f000db6bb4756f854cabf3c11916af292aa31f5a61cf316bd5c9d2",
+    "tests/InstrumentBodyEngineTests.cpp": "8be9e04872a7b8fbc50f238d81f4198591c1a8b2f91d5fa8aa1ec85b287059d6",
+    "scripts/test-pluginval-macos-download.py": "769b776c7c501e0c8670d0b4481a339487d6a498264d284eb6954aca8e6b7bb2",
+    ".github/workflows/build.yml": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f"
+  },
+  "tests": [
+    "cs80_instrument_body_tests",
+    "cs80_instrument_body_engine_tests",
+    "cs80_lfo_random_switching_tests",
+    "cs80_lfo_random_variable_rate_tests",
+    "cs80_pluginval_macos_download_tests"
+  ],
+  "notes": [
+    "LFO capture outputs from the first successful run were preserved outside build-core to satisfy the unchanged fresh-captures-only precondition.",
+    "Mac workflow pin updated for stronger exact AU payload binding; original four validator bodies remain independently pinned, with16 mutation negatives in review41.",
+    "Final bank calibration and native source qualification remain separate."
+  ]
+}

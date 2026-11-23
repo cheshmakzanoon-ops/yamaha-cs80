@@ -1,0 +1,1417 @@
+{
+  "schema": 1,
+  "worker": 25,
+  "task": "Independent full-preset plucked-string and tuned-bar behavior review",
+  "status": "completed; no production correction indicated",
+  "scope": "Development audio review; final native qualification and calibrated whole-bank acceptance are separate. No reference recordings or acoustic-equivalence claim.",
+  "production_files_changed": [],
+  "capture": {
+    "executable_sha256": "4d13655ad5d20790872c28ed8562a66216ea4602041d762a24d84f9884ebee1b",
+    "inventory_sha256": "a73da8e6a2714593d678d04ba17304d021bf5400ab9f5b6971ef07754407515c",
+    "library_revision": "2026.11.4",
+    "parameters_per_program": 200,
+    "all_parameter_digests_match_actual_vectors": true,
+    "isolated_rank_override": "Rank2 uses mix=1; digest recomputed after this explicit override.",
+    "commands": [
+      [
+        "/workspace/scratch/a9592b052b11/a25/capture",
+        "--library",
+        "all",
+        "--out",
+        "/workspace/scratch/a9592b052b11/a25/soft",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.3",
+        "--pressure",
+        "0",
+        "--hold",
+        "3",
+        "--tail",
+        "1",
+        "--preset",
+        "Nylon Pluck",
+        "--preset",
+        "Guitar II",
+        "--preset",
+        "Mandolin",
+        "--preset",
+        "Harp",
+        "--preset",
+        "Kalimba",
+        "--preset",
+        "Vibraphone",
+        "--preset",
+        "Marimba"
+      ],
+      [
+        "/workspace/scratch/a9592b052b11/a25/capture",
+        "--library",
+        "all",
+        "--out",
+        "/workspace/scratch/a9592b052b11/a25/firm",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0",
+        "--hold",
+        "3",
+        "--tail",
+        "1",
+        "--preset",
+        "Nylon Pluck",
+        "--preset",
+        "Guitar II",
+        "--preset",
+        "Mandolin",
+        "--preset",
+        "Harp",
+        "--preset",
+        "Kalimba",
+        "--preset",
+        "Vibraphone",
+        "--preset",
+        "Marimba"
+      ],
+      [
+        "/workspace/scratch/a9592b052b11/a25/capture",
+        "--library",
+        "all",
+        "--out",
+        "/workspace/scratch/a9592b052b11/a25/upper",
+        "--wav",
+        "--rate",
+        "48000",
+        "--note",
+        "60",
+        "--velocity",
+        "0.85",
+        "--pressure",
+        "0",
+        "--hold",
+        "3",
+        "--tail",
+        "1",
+        "--rank",
+        "2",
+        "--preset",
+        "Harp",
+        "--preset",
+        "Kalimba"
+      ]
+    ]
+  },
+  "observed_source_hashes_before": {
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/curated/Plucked.inc": "4bb4a23d1f09f1a3318ae59f592ccb9409d3de511276fded347948eef38fc7ac",
+    "src/core/curated/Bells.inc": "71400232be8ab0dcc46be436d3dca49ad5cac5a3d53122b8bc97b540237442b9",
+    "src/core/CuratedLibraryLevels.inc": "f77ea5567219a8fe59b9ae9e605b04dcf21e9d0c85c8c1c935ea752e3e034538"
+  },
+  "observed_source_hashes_after": {
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/curated/Plucked.inc": "4bb4a23d1f09f1a3318ae59f592ccb9409d3de511276fded347948eef38fc7ac",
+    "src/core/curated/Bells.inc": "71400232be8ab0dcc46be436d3dca49ad5cac5a3d53122b8bc97b540237442b9",
+    "src/core/CuratedLibraryLevels.inc": "f77ea5567219a8fe59b9ae9e605b04dcf21e9d0c85c8c1c935ea752e3e034538"
+  },
+  "source_files_unchanged_during_review": true,
+  "selected_current_level_table_matches_captured_vectors": {
+    "Guitar II": true,
+    "Kalimba": true,
+    "Marimba": true,
+    "Vibraphone": true,
+    "Harp": true,
+    "Mandolin": true,
+    "Nylon Pluck": true
+  },
+  "methods": {
+    "onset_peak_rms": "Maximum stereo RMS over50ms windows with10ms hops inside0..300ms.",
+    "onset_spectrum": "Mono Hann-window FFT at20..200ms; harmonic bands \u00b1max(12Hz,0.2% center) around the sounding primary. Upper means harmonics2..12 relative to harmonic1; amplitude normalization cancels.",
+    "held_decay": "Stereo RMS at2.2..2.8s relative to peak onset RMS; note held until3s.",
+    "pitch_scope": "All clips use played MIDI60. Kalimba main body sounds C5 due its4-foot registration; the other selected main bodies sound C4. These compare complete preset identities, not a controlled same-pitch resonator experiment.",
+    "floor": "RMS and dB displays floor at1e-12; late isolated strikes below this floor are reported as fully damped in that fixture, not precision physical decay measurements."
+  },
+  "summary": {
+    "clips": 16,
+    "seconds": 64,
+    "finite_samples": 6144000,
+    "max_peak_dbfs": -20.22646427482561,
+    "comparisons": [
+      {
+        "group": "soft",
+        "pair": [
+          "Guitar II",
+          "Nylon Pluck"
+        ],
+        "onset_upper_balance_difference_db": 5.6523431358491525,
+        "onset_centroid_difference_hz": 85.19529665695484
+      },
+      {
+        "group": "soft",
+        "pair": [
+          "Mandolin",
+          "Nylon Pluck"
+        ],
+        "onset_upper_balance_difference_db": 6.740790481277793,
+        "onset_centroid_difference_hz": 105.24433847449649
+      },
+      {
+        "group": "soft",
+        "pair": [
+          "Harp",
+          "Kalimba"
+        ],
+        "held_decay_retention_difference_db": 36.1156160740724
+      },
+      {
+        "group": "soft",
+        "pair": [
+          "Vibraphone",
+          "Marimba"
+        ],
+        "held_decay_retention_difference_db": 41.19137311931121
+      },
+      {
+        "group": "soft",
+        "pair": [
+          "Guitar II",
+          "Mandolin"
+        ],
+        "held_decay_retention_difference_db": 25.052687554200006
+      },
+      {
+        "group": "firm",
+        "pair": [
+          "Guitar II",
+          "Nylon Pluck"
+        ],
+        "onset_upper_balance_difference_db": 5.5501956574314715,
+        "onset_centroid_difference_hz": 92.11394438526094
+      },
+      {
+        "group": "firm",
+        "pair": [
+          "Mandolin",
+          "Nylon Pluck"
+        ],
+        "onset_upper_balance_difference_db": 6.689130106116487,
+        "onset_centroid_difference_hz": 113.44254277438358
+      },
+      {
+        "group": "firm",
+        "pair": [
+          "Harp",
+          "Kalimba"
+        ],
+        "held_decay_retention_difference_db": 36.36107913515175
+      },
+      {
+        "group": "firm",
+        "pair": [
+          "Vibraphone",
+          "Marimba"
+        ],
+        "held_decay_retention_difference_db": 41.11602781713293
+      },
+      {
+        "group": "firm",
+        "pair": [
+          "Guitar II",
+          "Mandolin"
+        ],
+        "held_decay_retention_difference_db": 25.200469316067128
+      }
+    ],
+    "isolated_upper_late_vs_onset_db": {
+      "Harp": -188.26094731930795,
+      "Kalimba": -204.20025943748686
+    },
+    "firm_soft_onset_db": {
+      "Nylon Pluck": 5.186587136083208,
+      "Guitar II": 4.990009808879336,
+      "Mandolin": 5.272792722025734,
+      "Harp": 5.098867526851727,
+      "Kalimba": 5.88513729440302,
+      "Vibraphone": 5.591659437864934,
+      "Marimba": 4.886471514842331
+    }
+  },
+  "transient_damping": {
+    "Harp": {
+      "middle_held_0_6_to_0_9_vs_onset_db": -39.83018548729082,
+      "late_held_2_2_to_2_8_rms": 1.2556590768803555e-11,
+      "late_display_floor": 1e-12
+    },
+    "Kalimba": {
+      "middle_held_0_6_to_0_9_vs_onset_db": -103.05448118983522,
+      "late_held_2_2_to_2_8_rms": 1.1647678111285848e-14,
+      "late_display_floor": 1e-12
+    }
+  },
+  "records": [
+    {
+      "group": "soft",
+      "name": "Nylon Pluck",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.3000000119,
+      "rank": 0,
+      "parameter_digest": "a7f674841fcb1160",
+      "wav_sha256": "1f6b626ad82ba32b095d36c3bad1443864f89393fea7681ae25a34ec162bd3b7",
+      "peak_dbfs": -28.937212515269238,
+      "onset_rms_dbfs": -33.78697370054341,
+      "held_2_2_to_2_8_vs_onset_db": -38.8001743354169,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -77.50767434170395,
+      "onset_spectrum": {
+        "centroid_hz": 290.5545882951955,
+        "upper_2_to_12_over_fundamental_db": -9.496605835316835,
+        "fourth_over_fundamental_db": -36.38468153636131,
+        "harmonic_energy_fraction": [
+          0.8990464601155002,
+          0.0921675932616398,
+          0.008301116215596467,
+          0.0002066873903012156,
+          7.645177607463528e-05,
+          0.00013357650834504162,
+          5.631498134177969e-05,
+          8.035195578324374e-06,
+          3.926875157502612e-08,
+          1.6967036390712443e-06,
+          1.530480564995402e-06,
+          4.981026669508919e-07
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 279.27003788058033,
+        "upper_2_to_12_over_fundamental_db": -11.62524979070475,
+        "fourth_over_fundamental_db": -43.62982575994732,
+        "harmonic_energy_fraction": [
+          0.9356444693436707,
+          0.061160909946281025,
+          0.0031406503090702803,
+          4.056283293490788e-05,
+          7.09193208521732e-06,
+          5.36430964973066e-06,
+          9.028227445434445e-07,
+          4.6975075711385e-08,
+          7.432437360382351e-11,
+          1.1332036307970582e-09,
+          2.9608456904198047e-10,
+          2.4875222052849442e-11
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 265.70583109329846,
+        "upper_2_to_12_over_fundamental_db": -18.000291667712798,
+        "fourth_over_fundamental_db": -66.8556642437101,
+        "harmonic_energy_fraction": [
+          0.9843993691689352,
+          0.015468679866220681,
+          0.00013174472227595627,
+          2.0305089231381368e-07,
+          3.047984455038157e-09,
+          1.4261359564958605e-10,
+          1.0756537128774978e-12,
+          2.0040725603434584e-15,
+          6.533634984130309e-17,
+          2.531519345262983e-17,
+          2.451608454299535e-17,
+          3.7209641131191066e-17
+        ]
+      }
+    },
+    {
+      "group": "soft",
+      "name": "Guitar II",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.3000000119,
+      "rank": 0,
+      "parameter_digest": "52e158bee8c578a3",
+      "wav_sha256": "94ff6b635e6bddd55feabf518e722ef429fa2efe47dce6433130d3c4233475c3",
+      "peak_dbfs": -30.176737224538805,
+      "onset_rms_dbfs": -36.498798810213515,
+      "held_2_2_to_2_8_vs_onset_db": -29.329184135783635,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -77.60808119739049,
+      "onset_spectrum": {
+        "centroid_hz": 375.74988495215035,
+        "upper_2_to_12_over_fundamental_db": -3.844262699467682,
+        "fourth_over_fundamental_db": -15.162927002592273,
+        "harmonic_energy_fraction": [
+          0.7078932935678661,
+          0.18969067326816133,
+          0.07365879243315052,
+          0.021561307713207,
+          0.005366205599843638,
+          0.0009277338208074062,
+          1.3056843077025803e-05,
+          0.0001363154263831452,
+          0.00028298443086575384,
+          0.0002528327431733268,
+          0.00014900582711819115,
+          6.779832634657634e-05
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 346.01042797820446,
+        "upper_2_to_12_over_fundamental_db": -5.039687337200409,
+        "fourth_over_fundamental_db": -18.12788978756679,
+        "harmonic_energy_fraction": [
+          0.7614110016388844,
+          0.1716559955099319,
+          0.052728106851202515,
+          0.011717370674946248,
+          0.0021796760626461593,
+          0.0002602734126525068,
+          2.800364665832772e-06,
+          6.897368438538815e-06,
+          1.939897493842372e-05,
+          1.3712576459701034e-05,
+          2.826519610318149e-06,
+          1.940045623500291e-06
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 302.26425944294164,
+        "upper_2_to_12_over_fundamental_db": -8.08737769227032,
+        "fourth_over_fundamental_db": -26.98283147620674,
+        "harmonic_energy_fraction": [
+          0.8655517189689584,
+          0.11555376011488636,
+          0.017050560839577615,
+          0.0017338434238500448,
+          9.480315629961928e-05,
+          4.191664834442976e-06,
+          3.041540724301871e-06,
+          2.54214066929607e-06,
+          1.8344171691935213e-06,
+          1.4744566203996443e-06,
+          1.2035596011201128e-06,
+          1.0257168091215705e-06
+        ]
+      }
+    },
+    {
+      "group": "soft",
+      "name": "Mandolin",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.3000000119,
+      "rank": 0,
+      "parameter_digest": "7f6f483be821f410",
+      "wav_sha256": "870bc00d28c5825f8d8e7f9781978c56d85e853dc6c9b7fc0f4c936273df78c8",
+      "peak_dbfs": -27.519043644634458,
+      "onset_rms_dbfs": -36.37595201310033,
+      "held_2_2_to_2_8_vs_onset_db": -54.38187168998364,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -101.72413489649904,
+      "onset_spectrum": {
+        "centroid_hz": 395.798926769692,
+        "upper_2_to_12_over_fundamental_db": -2.7558153540390413,
+        "fourth_over_fundamental_db": -13.827693170076651,
+        "harmonic_energy_fraction": [
+          0.6535204291326536,
+          0.22525205074073848,
+          0.08706794295145509,
+          0.02707009944626339,
+          0.005672738343103031,
+          0.0011595569946703614,
+          4.760149869921849e-05,
+          5.266692650057298e-05,
+          0.0001084729091665418,
+          3.0768683183919614e-05,
+          1.1436052937417804e-05,
+          6.236320628418309e-06
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 326.81701810264684,
+        "upper_2_to_12_over_fundamental_db": -8.13768331538825,
+        "fourth_over_fundamental_db": -15.984949135718455,
+        "harmonic_energy_fraction": [
+          0.8668939912290563,
+          0.04820783772509407,
+          0.06075830514067408,
+          0.021850988030405492,
+          0.00184175547806761,
+          0.00021492321696430002,
+          4.90345129827036e-05,
+          3.963956549520835e-05,
+          5.7102337592781356e-05,
+          3.364618075043538e-05,
+          1.986276497482718e-05,
+          3.291381794217889e-05
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 275.97098812848446,
+        "upper_2_to_12_over_fundamental_db": -13.362112770008936,
+        "fourth_over_fundamental_db": -32.724856151652496,
+        "harmonic_energy_fraction": [
+          0.9559230381774059,
+          0.03974522008542494,
+          0.0033220843382558538,
+          0.0005104313182100004,
+          0.0001379207413630771,
+          0.00011686860631819447,
+          5.829342907150925e-05,
+          4.944721313545945e-05,
+          5.2982726261513136e-05,
+          3.065097067001996e-05,
+          2.499371844726228e-05,
+          2.8068675436346186e-05
+        ]
+      }
+    },
+    {
+      "group": "soft",
+      "name": "Harp",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.3000000119,
+      "rank": 0,
+      "parameter_digest": "ef643e8e0735d1f",
+      "wav_sha256": "0b0a914367a6efd9c8eff2743c20e9e8ab3373be3cac65191755744d8a294610",
+      "peak_dbfs": -28.1231669173724,
+      "onset_rms_dbfs": -33.00693658258167,
+      "held_2_2_to_2_8_vs_onset_db": -22.84036829196355,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -17.019573105538228,
+      "onset_spectrum": {
+        "centroid_hz": 308.9741191101675,
+        "upper_2_to_12_over_fundamental_db": -7.120914961789371,
+        "fourth_over_fundamental_db": -26.14454635598858,
+        "harmonic_energy_fraction": [
+          0.8374874792611602,
+          0.14959667009870203,
+          0.009740719234351462,
+          0.0020348091754343557,
+          0.00014953207690275534,
+          0.0007546775796250487,
+          0.00016512999114109034,
+          4.1511135075091834e-05,
+          1.6265972497128107e-07,
+          8.780801235461532e-06,
+          1.04709329837332e-05,
+          1.0057053663776555e-05
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 292.2278006696645,
+        "upper_2_to_12_over_fundamental_db": -9.14892190155119,
+        "fourth_over_fundamental_db": -36.96807414801708,
+        "harmonic_energy_fraction": [
+          0.8915446660622414,
+          0.100465474357028,
+          0.007623017619601525,
+          0.00017919904516081427,
+          6.26888649954514e-05,
+          8.937761937555316e-05,
+          3.1313903483695664e-05,
+          3.5035841893379047e-06,
+          1.1880677864547385e-08,
+          4.360033317393235e-07,
+          2.531777208741504e-07,
+          5.788219390815137e-08
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 285.52977173792556,
+        "upper_2_to_12_over_fundamental_db": -10.131075530274018,
+        "fourth_over_fundamental_db": -44.86008328821349,
+        "harmonic_energy_fraction": [
+          0.9115546216136919,
+          0.08541882399599125,
+          0.0029916493797848493,
+          2.976969385464778e-05,
+          3.454414839303762e-06,
+          1.53961991823394e-06,
+          1.3781187511665583e-07,
+          3.4520702397724508e-09,
+          2.3946078272667346e-12,
+          1.423339529102786e-11,
+          1.3107684202968643e-12,
+          3.5690678849261146e-14
+        ]
+      }
+    },
+    {
+      "group": "soft",
+      "name": "Kalimba",
+      "note": 60,
+      "sounding_primary_hz": 523.2511306011972,
+      "velocity": 0.3000000119,
+      "rank": 0,
+      "parameter_digest": "6d21365d2fb8307a",
+      "wav_sha256": "cef6d78513e66a5398700e639dd6cea03733b1f53de0cf0d985aaad25d5329a9",
+      "peak_dbfs": -32.939583467642834,
+      "onset_rms_dbfs": -37.02652137633851,
+      "held_2_2_to_2_8_vs_onset_db": -58.95598436603595,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -109.1070496598456,
+      "onset_spectrum": {
+        "centroid_hz": 530.3759370284837,
+        "upper_2_to_12_over_fundamental_db": -21.735542646758393,
+        "fourth_over_fundamental_db": -103.56932787076596,
+        "harmonic_energy_fraction": [
+          0.9933389422800615,
+          0.00014377769748013784,
+          0.0062661673976284376,
+          4.366813804658301e-11,
+          0.0002396539370158801,
+          1.6563763895381683e-08,
+          1.1288825821250079e-05,
+          2.980785793122797e-11,
+          1.480509220944765e-07,
+          5.1490200649951e-09,
+          3.237781357790126e-14,
+          2.4778475396318787e-11
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 523.344359993583,
+        "upper_2_to_12_over_fundamental_db": -37.8324338293548,
+        "fourth_over_fundamental_db": -154.36815140356956,
+        "harmonic_energy_fraction": [
+          0.999835303229121,
+          1.5165186221970387e-06,
+          0.00016280191946575791,
+          3.6569020409308093e-16,
+          3.777154925752235e-07,
+          6.925321030009095e-17,
+          6.164893021235512e-10,
+          4.275889822141873e-17,
+          8.086749355903713e-13,
+          1.4073299321026877e-17,
+          8.024139167391806e-18,
+          1.242027731396662e-17
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 523.1634784435417,
+        "upper_2_to_12_over_fundamental_db": -74.89037566255756,
+        "fourth_over_fundamental_db": -152.42239735177176,
+        "harmonic_energy_fraction": [
+          0.9999999675688447,
+          3.427444396571103e-10,
+          3.208838708566334e-08,
+          5.72479910166922e-16,
+          2.2738281715489634e-14,
+          1.8115678928013647e-16,
+          3.800214238010178e-17,
+          3.86094110080393e-17,
+          2.4843650285765904e-17,
+          1.2116805836012575e-16,
+          1.422955420734699e-17,
+          2.8908573383182214e-17
+        ]
+      }
+    },
+    {
+      "group": "soft",
+      "name": "Vibraphone",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.3000000119,
+      "rank": 0,
+      "parameter_digest": "4d75c67a5b7ddc2a",
+      "wav_sha256": "51ae412a253fe22210ebdec0ce6068fa6925a78a6f9da4be998f6fb54c32b22c",
+      "peak_dbfs": -26.21644145245905,
+      "onset_rms_dbfs": -30.86853369519239,
+      "held_2_2_to_2_8_vs_onset_db": -26.52982770348808,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -11.890370073655077,
+      "onset_spectrum": {
+        "centroid_hz": 289.3762497172955,
+        "upper_2_to_12_over_fundamental_db": -14.376863943608598,
+        "fourth_over_fundamental_db": -14.37690379994583,
+        "harmonic_energy_fraction": [
+          0.964783712656832,
+          6.107556893976456e-08,
+          1.860445568368529e-08,
+          0.0352159641555977,
+          9.060804142080923e-10,
+          2.7707989941005172e-11,
+          9.268667742783228e-11,
+          2.0113122771255705e-07,
+          2.3234856469604843e-11,
+          1.3864263246545065e-10,
+          7.87996548890954e-11,
+          4.110916567559416e-08
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 262.3483879721303,
+        "upper_2_to_12_over_fundamental_db": -30.203503893510813,
+        "fourth_over_fundamental_db": -30.2039260291922,
+        "harmonic_energy_fraction": [
+          0.999046687264876,
+          6.886503108093372e-08,
+          2.0971601528165326e-08,
+          0.0009532200773121496,
+          1.0166921560930436e-09,
+          3.103529662120962e-11,
+          1.0449526645419581e-10,
+          1.0912301734577342e-09,
+          2.625824584004645e-11,
+          1.352921079182406e-11,
+          8.866438585391819e-11,
+          4.4927443604196855e-10
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 261.6654135949003,
+        "upper_2_to_12_over_fundamental_db": -41.07374186492285,
+        "fourth_over_fundamental_db": -41.080303242052345,
+        "harmonic_energy_fraction": [
+          0.9999219106337205,
+          8.905942487695697e-08,
+          2.710886320555034e-08,
+          7.797147693302469e-05,
+          1.315242245575277e-09,
+          4.0101562151899964e-11,
+          1.3510504501999194e-10,
+          1.4951674104686402e-11,
+          3.394714525258609e-11,
+          1.7140205955366928e-11,
+          1.1461350787309787e-10,
+          4.995697257541243e-11
+        ]
+      }
+    },
+    {
+      "group": "soft",
+      "name": "Marimba",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.3000000119,
+      "rank": 0,
+      "parameter_digest": "f5c1f34ba1952286",
+      "wav_sha256": "bbc8591b39cbc3541a5dee05954d874974fad3b58996aed4b42dfba8511d9cdd",
+      "peak_dbfs": -29.220518633260323,
+      "onset_rms_dbfs": -33.97118053443175,
+      "held_2_2_to_2_8_vs_onset_db": -67.72120082279929,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -99.96234811349454,
+      "onset_spectrum": {
+        "centroid_hz": 265.16242583288476,
+        "upper_2_to_12_over_fundamental_db": -23.48640177784652,
+        "fourth_over_fundamental_db": -23.521483586247935,
+        "harmonic_energy_fraction": [
+          0.9955391444190735,
+          4.627222419197488e-12,
+          1.0645262161849922e-12,
+          0.004424966452240339,
+          1.3001595511449484e-12,
+          3.084068987099733e-13,
+          1.4327172714983586e-13,
+          4.457714113006137e-10,
+          8.45278068500541e-14,
+          3.588049526421063e-05,
+          1.1009366723774728e-13,
+          8.180012319521621e-09
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 261.6132197510089,
+        "upper_2_to_12_over_fundamental_db": -47.20944163604298,
+        "fourth_over_fundamental_db": -47.20944373245267,
+        "harmonic_energy_fraction": [
+          0.9999809871343603,
+          1.1368203473242173e-13,
+          3.697741770893307e-15,
+          1.9012856461931954e-05,
+          2.1843389957771484e-16,
+          2.2755962954288504e-16,
+          4.0693705883235084e-17,
+          4.9168912826021924e-17,
+          2.7213651335584368e-17,
+          9.059830533856266e-12,
+          1.592518247860252e-17,
+          2.614819010182675e-17
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 261.6032670136791,
+        "upper_2_to_12_over_fundamental_db": -126.27663220980303,
+        "fourth_over_fundamental_db": -129.49404606778864,
+        "harmonic_energy_fraction": [
+          0.9999999999997644,
+          1.1959235649855722e-13,
+          3.1905984761196402e-15,
+          1.1235577331618555e-13,
+          1.389551151896588e-16,
+          1.692329276714152e-16,
+          6.915912891415394e-17,
+          5.190510446623227e-17,
+          3.831801689528984e-17,
+          2.5357292584618303e-17,
+          2.947936417601335e-17,
+          2.6489181874556006e-17
+        ]
+      }
+    },
+    {
+      "group": "firm",
+      "name": "Nylon Pluck",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.8500000238,
+      "rank": 0,
+      "parameter_digest": "a7f674841fcb1160",
+      "wav_sha256": "eeaafeb5a927e4c062dc98a205c32f68aa8d10608d2cf629bb7876764480e943",
+      "peak_dbfs": -23.701434745174726,
+      "onset_rms_dbfs": -28.600386564460205,
+      "held_2_2_to_2_8_vs_onset_db": -38.84644937532926,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -77.43707117823979,
+      "onset_spectrum": {
+        "centroid_hz": 294.0625388347639,
+        "upper_2_to_12_over_fundamental_db": -8.997167637591408,
+        "fourth_over_fundamental_db": -35.13316874353134,
+        "harmonic_energy_fraction": [
+          0.8881194443104802,
+          0.10115514377405038,
+          0.010027869985721546,
+          0.0002723670105883241,
+          0.00010893332303587379,
+          0.000203975155394006,
+          9.13942723653194e-05,
+          1.3733815737059207e-05,
+          6.974734078239234e-08,
+          3.1648744003218105e-06,
+          2.9357164317310853e-06,
+          9.680144544903042e-07
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 281.2852147361752,
+        "upper_2_to_12_over_fundamental_db": -11.14545427809383,
+        "fourth_over_fundamental_db": -42.375474886709824,
+        "harmonic_energy_fraction": [
+          0.9286633244218677,
+          0.06744979842762779,
+          0.0038131710155725395,
+          5.374162642381387e-05,
+          1.0163074909097704e-05,
+          8.2426667327893e-06,
+          1.4749545807732456e-06,
+          8.093194806978258e-08,
+          1.3397968646102906e-10,
+          2.124046952936272e-09,
+          5.728878373929497e-10,
+          4.942280432279497e-11
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 266.1629097352438,
+        "upper_2_to_12_over_fundamental_db": -17.538982223943258,
+        "fourth_over_fundamental_db": -65.60126347546115,
+        "harmonic_energy_fraction": [
+          0.9826813321333084,
+          0.017157515109392955,
+          0.00016087756777008875,
+          2.705741846092875e-07,
+          4.393215109961972e-09,
+          2.2035886658624113e-10,
+          1.76667114556323e-12,
+          3.2198431789608632e-15,
+          6.034929081774395e-17,
+          2.2448350764494768e-17,
+          1.8134810470235513e-17,
+          2.0418773574121094e-17
+        ]
+      }
+    },
+    {
+      "group": "firm",
+      "name": "Guitar II",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.8500000238,
+      "rank": 0,
+      "parameter_digest": "52e158bee8c578a3",
+      "wav_sha256": "f6e111b354ff3f6c8210ac6d29a2fa36d19618da878d1cdcd11890a30a745173",
+      "peak_dbfs": -25.05352891580744,
+      "onset_rms_dbfs": -31.50878900133418,
+      "held_2_2_to_2_8_vs_onset_db": -29.403241114078817,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -77.47006072771285,
+      "onset_spectrum": {
+        "centroid_hz": 386.17648322002486,
+        "upper_2_to_12_over_fundamental_db": -3.4469719801599363,
+        "fourth_over_fundamental_db": -14.43797864524704,
+        "harmonic_energy_fraction": [
+          0.6886240881837554,
+          0.19701311725375648,
+          0.08077658723162691,
+          0.024784738768884478,
+          0.006428629057600678,
+          0.0011392867554768683,
+          1.5884244636009196e-05,
+          0.00017655205589268462,
+          0.0003805330727148154,
+          0.00034704216078954475,
+          0.00021410730509482844,
+          9.943390977126812e-05
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 352.9367606155679,
+        "upper_2_to_12_over_fundamental_db": -4.673975028692289,
+        "fourth_over_fundamental_db": -17.405737520094796,
+        "harmonic_energy_fraction": [
+          0.7457784654247963,
+          0.17945160087211653,
+          0.058214123505623196,
+          0.013553020237304392,
+          0.0026174024494541185,
+          0.0003211444385969163,
+          3.2585928659906388e-06,
+          9.95447696653781e-06,
+          2.6025984767727916e-05,
+          1.8371367892985103e-05,
+          4.1339664062647936e-06,
+          2.4986832090237015e-06
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 305.25090027343583,
+        "upper_2_to_12_over_fundamental_db": -7.767089963548532,
+        "fourth_over_fundamental_db": -26.294049726005145,
+        "harmonic_energy_fraction": [
+          0.8567357322880763,
+          0.12210811136351177,
+          0.019013690008420802,
+          0.002011138166830118,
+          0.00011493788905560422,
+          4.7338912122374415e-06,
+          3.165244608112113e-06,
+          2.684634533862719e-06,
+          1.920288438935234e-06,
+          1.5458151496745617e-06,
+          1.261828037267412e-06,
+          1.0785821252828861e-06
+        ]
+      }
+    },
+    {
+      "group": "firm",
+      "name": "Mandolin",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.8500000238,
+      "rank": 0,
+      "parameter_digest": "7f6f483be821f410",
+      "wav_sha256": "45286271dfbacc028a9771bb10f08abab9c99ead8e5552ff23e90929f74cca1e",
+      "peak_dbfs": -22.0332697686586,
+      "onset_rms_dbfs": -31.103159291074597,
+      "held_2_2_to_2_8_vs_onset_db": -54.603710430145945,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -101.33454280186446,
+      "onset_spectrum": {
+        "centroid_hz": 407.5050816091475,
+        "upper_2_to_12_over_fundamental_db": -2.3080375314749215,
+        "fourth_over_fundamental_db": -13.085361767636458,
+        "harmonic_energy_fraction": [
+          0.6298201377797742,
+          0.23503855358142572,
+          0.09579524713410567,
+          0.03095140484143529,
+          0.006696826702389542,
+          0.0013928045671122524,
+          5.813605536053231e-05,
+          5.860182032154834e-05,
+          0.0001252635736501,
+          3.909310163049922e-05,
+          1.5985773913794988e-05,
+          7.945068880778759e-06
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 335.1727262992114,
+        "upper_2_to_12_over_fundamental_db": -7.689864428418321,
+        "fourth_over_fundamental_db": -15.148082141975319,
+        "harmonic_energy_fraction": [
+          0.8545393215950079,
+          0.04681371894026414,
+          0.06984990586946938,
+          0.026117032973427063,
+          0.0021764671436592226,
+          0.00024684660883258694,
+          5.269564915421436e-05,
+          4.408991334167472e-05,
+          6.435026741767076e-05,
+          3.704983966268054e-05,
+          2.128244293700442e-05,
+          3.723875682647348e-05
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 277.12281024086457,
+        "upper_2_to_12_over_fundamental_db": -13.036660715405846,
+        "fourth_over_fundamental_db": -32.33580568056125,
+        "harmonic_energy_fraction": [
+          0.9526554716258956,
+          0.042561342556594134,
+          0.0036928819378877326,
+          0.0005563592309592269,
+          0.00014823038730046547,
+          0.0001255981178683866,
+          6.079757348407624e-05,
+          5.255197788205543e-05,
+          5.745139244997316e-05,
+          3.242486278909055e-05,
+          2.639750095317073e-05,
+          3.0492835936076252e-05
+        ]
+      }
+    },
+    {
+      "group": "firm",
+      "name": "Harp",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.8500000238,
+      "rank": 0,
+      "parameter_digest": "ef643e8e0735d1f",
+      "wav_sha256": "e2595d6f572ac9f0ddd5631b9382def464f781a03cfbed0ec5ecaa8cdde91d8f",
+      "peak_dbfs": -22.85024827825998,
+      "onset_rms_dbfs": -27.908069055729946,
+      "held_2_2_to_2_8_vs_onset_db": -22.950391742390202,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -17.022864595483085,
+      "onset_spectrum": {
+        "centroid_hz": 315.3234833084692,
+        "upper_2_to_12_over_fundamental_db": -6.529544106843468,
+        "fourth_over_fundamental_db": -24.688743494855522,
+        "harmonic_energy_fraction": [
+          0.8180933925548519,
+          0.1664261440073099,
+          0.011102259691154118,
+          0.0027792558952977006,
+          0.0001921319964833007,
+          0.0010653193218907772,
+          0.00023225809694238467,
+          6.234613751335578e-05,
+          2.4448609779640035e-07,
+          1.3933134801112623e-05,
+          1.6508350949937722e-05,
+          1.6206326707798602e-05
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 294.9061234118026,
+        "upper_2_to_12_over_fundamental_db": -8.770959888669015,
+        "fourth_over_fundamental_db": -36.04438199500017,
+        "harmonic_energy_fraction": [
+          0.8828384161458075,
+          0.10787926735898092,
+          0.00880808281517145,
+          0.0002195042955178668,
+          8.16709243697709e-05,
+          0.0001220151641527979,
+          4.466907334227511e-05,
+          5.176492952706638e-06,
+          1.8115484082269884e-08,
+          6.807496333121729e-07,
+          4.051017760849937e-07,
+          9.376281122286686e-08
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 287.50230297083726,
+        "upper_2_to_12_over_fundamental_db": -9.764352497350998,
+        "fourth_over_fundamental_db": -43.91205360919145,
+        "harmonic_energy_fraction": [
+          0.9045059767037622,
+          0.09198662888746413,
+          0.0034638266958455515,
+          3.674566234304948e-05,
+          4.509671557451328e-06,
+          2.1102438882250208e-06,
+          1.969918866830373e-07,
+          5.115105236858421e-09,
+          3.651769339916548e-12,
+          2.2340293118772236e-11,
+          2.098362588529412e-12,
+          5.709441624448125e-14
+        ]
+      }
+    },
+    {
+      "group": "firm",
+      "name": "Kalimba",
+      "note": 60,
+      "sounding_primary_hz": 523.2511306011972,
+      "velocity": 0.8500000238,
+      "rank": 0,
+      "parameter_digest": "6d21365d2fb8307a",
+      "wav_sha256": "d6fd0d51647d9a65b9a2e91799b18d492d91b3adb8874f543da9cee44678bb45",
+      "peak_dbfs": -25.41941422907973,
+      "onset_rms_dbfs": -31.141384081935488,
+      "held_2_2_to_2_8_vs_onset_db": -59.31147087754195,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -105.7184957553977,
+      "onset_spectrum": {
+        "centroid_hz": 578.918703386639,
+        "upper_2_to_12_over_fundamental_db": -12.676885758510224,
+        "fourth_over_fundamental_db": -101.21415185962341,
+        "harmonic_energy_fraction": [
+          0.9487758180757107,
+          0.00029663280985795507,
+          0.04896542523862499,
+          7.173786065251396e-11,
+          0.0018727169726864175,
+          2.7471530145276466e-08,
+          8.82137753653491e-05,
+          4.950401797348719e-11,
+          1.156896683982714e-06,
+          8.596701147732393e-09,
+          1.8181689570091744e-13,
+          4.1415751857631426e-11
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 524.5742581051456,
+        "upper_2_to_12_over_fundamental_db": -28.723523491932266,
+        "fourth_over_fundamental_db": -153.68956375765652,
+        "harmonic_energy_fraction": [
+          0.9986601216836473,
+          6.423210125223323e-06,
+          0.001330363497026565,
+          4.2703289657617765e-16,
+          3.086564442871817e-06,
+          1.320770054825419e-16,
+          5.038131913387162e-09,
+          2.6257714707160776e-17,
+          6.625459331796526e-12,
+          6.442140275909053e-17,
+          1.6625898860324432e-17,
+          1.7707488202280452e-17
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 523.1637092234218,
+        "upper_2_to_12_over_fundamental_db": -65.78438695883736,
+        "fourth_over_fundamental_db": -155.52139337963828,
+        "harmonic_energy_fraction": [
+          0.999999736025978,
+          1.4541958424977985e-09,
+          2.625196513503377e-07,
+          2.8045329536368647e-16,
+          1.7418430854493128e-13,
+          1.459687795462237e-16,
+          2.7447654262363625e-17,
+          1.7637394233288003e-17,
+          1.2287988671617768e-17,
+          6.848021996115622e-17,
+          1.1939393267235275e-17,
+          2.3230726381735962e-17
+        ]
+      }
+    },
+    {
+      "group": "firm",
+      "name": "Vibraphone",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.8500000238,
+      "rank": 0,
+      "parameter_digest": "4d75c67a5b7ddc2a",
+      "wav_sha256": "3beafe18f6170ea6d0eb913157fdf6337a4c35b79780654465cbc2420450ab2f",
+      "peak_dbfs": -20.22646427482561,
+      "onset_rms_dbfs": -25.276874257327457,
+      "held_2_2_to_2_8_vs_onset_db": -26.713022085712666,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -11.891246828010736,
+      "onset_spectrum": {
+        "centroid_hz": 311.19428630447817,
+        "upper_2_to_12_over_fundamental_db": -11.73969204911221,
+        "fourth_over_fundamental_db": -11.739723268714158,
+        "harmonic_energy_fraction": [
+          0.9372130858483626,
+          6.899089468115868e-08,
+          2.1013861833908424e-08,
+          0.06278646280456673,
+          1.0240382489352365e-09,
+          3.13638950616946e-11,
+          1.0472148814673496e-10,
+          2.9824670821096503e-07,
+          2.6184607574787503e-11,
+          4.673503549059842e-10,
+          8.903702245688024e-11,
+          6.135291029236221e-08
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 263.88159545070897,
+        "upper_2_to_12_over_fundamental_db": -25.370412733810184,
+        "fourth_over_fundamental_db": -25.370574846766907,
+        "harmonic_energy_fraction": [
+          0.9971046606496182,
+          7.992587948442562e-08,
+          2.4339546409280628e-08,
+          0.0028952312754966384,
+          1.1796000661314813e-09,
+          3.602752586244079e-11,
+          1.2130109459910167e-10,
+          1.680549422321539e-09,
+          3.049217568071202e-11,
+          1.60543541430375e-11,
+          1.0288196503857037e-10,
+          6.425526604993536e-10
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 261.8082652496823,
+        "upper_2_to_12_over_fundamental_db": -35.847221514056564,
+        "fourth_over_fundamental_db": -35.849511487714565,
+        "harmonic_energy_fraction": [
+          0.9997398853172945,
+          1.0358424478991837e-07,
+          3.1532585202763414e-08,
+          0.00025997756404898,
+          1.5298272812584117e-09,
+          4.6649694277448985e-11,
+          1.5714771800033323e-10,
+          1.7387155087098067e-11,
+          3.947317774702484e-11,
+          1.9953074130545803e-11,
+          1.3327085885354677e-10,
+          5.8117493277374755e-11
+        ]
+      }
+    },
+    {
+      "group": "firm",
+      "name": "Marimba",
+      "note": 60,
+      "sounding_primary_hz": 261.6255653005986,
+      "velocity": 0.8500000238,
+      "rank": 0,
+      "parameter_digest": "f5c1f34ba1952286",
+      "wav_sha256": "5219f75c109730bfc9fb4a2d3f31e4716dc36a7510f16731bca4b539b8b110e7",
+      "peak_dbfs": -23.512634895862252,
+      "onset_rms_dbfs": -29.084709019589422,
+      "held_2_2_to_2_8_vs_onset_db": -67.8290499028456,
+      "release_3_5_to_3_9_vs_before_noteoff_db": -98.69577462865038,
+      "onset_spectrum": {
+        "centroid_hz": 273.33975368023107,
+        "upper_2_to_12_over_fundamental_db": -18.27115503249458,
+        "fourth_over_fundamental_db": -18.310609822461778,
+        "harmonic_energy_fraction": [
+          0.9853287987970261,
+          4.722489535242356e-12,
+          1.9299843120519887e-12,
+          0.01453851986216726,
+          2.348349332993022e-12,
+          4.962304508390719e-13,
+          2.283691905205306e-13,
+          8.976365238428582e-10,
+          1.519756688620623e-13,
+          0.0001326637021698326,
+          2.081106771252927e-13,
+          1.6730914785878335e-08
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 261.6479067905544,
+        "upper_2_to_12_over_fundamental_db": -41.99178672603093,
+        "fourth_over_fundamental_db": -41.991789057549134,
+        "harmonic_energy_fraction": [
+          0.9999367888234012,
+          1.1303378497170514e-13,
+          3.6047352862716055e-15,
+          6.321114266377122e-05,
+          4.412969885218118e-16,
+          1.6873892022245545e-16,
+          4.8779968828449154e-17,
+          9.100627506927488e-17,
+          1.806644760703405e-17,
+          3.381759522197469e-11,
+          2.0629628196179275e-17,
+          9.268606516723245e-18
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 261.60325040078953,
+        "upper_2_to_12_over_fundamental_db": -123.07799354018543,
+        "fourth_over_fundamental_db": -124.3272140581723,
+        "harmonic_energy_fraction": [
+          0.9999999999995077,
+          1.1911308444625605e-13,
+          3.198924248871238e-15,
+          3.692143687678239e-13,
+          1.6513150055989963e-16,
+          1.5992484304756757e-16,
+          1.361212581587412e-16,
+          1.0173914048289064e-16,
+          5.783824855039792e-17,
+          4.044929160733919e-17,
+          4.551255600599149e-17,
+          3.381835341613646e-17
+        ]
+      }
+    },
+    {
+      "group": "upper",
+      "name": "Harp",
+      "note": 60,
+      "sounding_primary_hz": 523.2511306011972,
+      "velocity": 0.8500000238,
+      "rank": 2,
+      "parameter_digest": "cd7fd6b9ed79702a",
+      "wav_sha256": "fb819cb7e184a39964782eb096e7140482bc7b967869f523aa91b4428e343741",
+      "peak_dbfs": -22.589437805133375,
+      "onset_rms_dbfs": -29.76161787241006,
+      "held_2_2_to_2_8_vs_onset_db": -188.26094731930795,
+      "release_3_5_to_3_9_vs_before_noteoff_db": 0.0,
+      "onset_spectrum": {
+        "centroid_hz": 583.2211173677837,
+        "upper_2_to_12_over_fundamental_db": -9.598045929374397,
+        "fourth_over_fundamental_db": -32.77143922122249,
+        "harmonic_energy_fraction": [
+          0.9011467550001092,
+          0.08599075922582891,
+          0.011858373267772076,
+          0.0004760489384353061,
+          3.155008736386223e-05,
+          0.0003059092723359224,
+          0.00015662276653211613,
+          8.055741109158104e-06,
+          3.38342934620718e-07,
+          1.986011927197122e-05,
+          1.1994579720836747e-06,
+          4.527780334776839e-06
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 541.6351535119292,
+        "upper_2_to_12_over_fundamental_db": -14.91871038235914,
+        "fourth_over_fundamental_db": -43.20117694031505,
+        "harmonic_energy_fraction": [
+          0.96878548544237,
+          0.02903605079634839,
+          0.0019294333022243538,
+          4.635642431621001e-05,
+          5.834482713987299e-05,
+          5.3040937909405076e-05,
+          1.666469164201649e-05,
+          3.4852798531895e-05,
+          1.991277567627493e-06,
+          2.348633588929008e-05,
+          2.1995376458954423e-08,
+          1.427117068463952e-05
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 0.5566046915867651,
+        "upper_2_to_12_over_fundamental_db": -17.57497028211699,
+        "fourth_over_fundamental_db": -35.577637154264615,
+        "harmonic_energy_fraction": [
+          0.9828217961893734,
+          0.015339685911501725,
+          0.0013248759526696754,
+          0.000272089049747083,
+          7.566146324347149e-05,
+          4.502251867198023e-05,
+          1.8932722377287844e-05,
+          1.8501689128057042e-05,
+          1.1534992991687774e-05,
+          2.2659912023584134e-05,
+          2.774786698866757e-05,
+          2.1491731283387864e-05
+        ]
+      }
+    },
+    {
+      "group": "upper",
+      "name": "Kalimba",
+      "note": 60,
+      "sounding_primary_hz": 1046.5022612023945,
+      "velocity": 0.8500000238,
+      "rank": 2,
+      "parameter_digest": "bf1fe6900b274db7",
+      "wav_sha256": "70b566d9440375113bfb54ac5c4b65065fd23c29b70617cfdcd3c4a0cbe8c462",
+      "peak_dbfs": -25.236442661635593,
+      "onset_rms_dbfs": -35.79974056251312,
+      "held_2_2_to_2_8_vs_onset_db": -204.20025943748686,
+      "release_3_5_to_3_9_vs_before_noteoff_db": 0.0,
+      "onset_spectrum": {
+        "centroid_hz": 1096.4869506777761,
+        "upper_2_to_12_over_fundamental_db": -33.43500049759334,
+        "fourth_over_fundamental_db": -62.833547688335756,
+        "harmonic_energy_fraction": [
+          0.9995467862500083,
+          7.54368191115643e-07,
+          0.0002892737259332899,
+          5.205331088607052e-07,
+          9.045775374546978e-05,
+          4.35375157333035e-07,
+          4.0100699101408354e-05,
+          3.720914782296603e-07,
+          2.008737448031644e-05,
+          3.1234196630886314e-07,
+          1.0645843327122184e-05,
+          2.536435022801825e-07
+        ]
+      },
+      "body_spectrum": {
+        "centroid_hz": 0.5288258807952341,
+        "upper_2_to_12_over_fundamental_db": -4.337323451954929,
+        "fourth_over_fundamental_db": -18.43640856412747,
+        "harmonic_energy_fraction": [
+          0.7308040144149686,
+          0.03324700501935241,
+          0.018463774308906493,
+          0.010475145593544432,
+          0.0266858065035002,
+          0.012977885184025989,
+          0.016096437272327402,
+          0.021585870743163104,
+          0.05194966122082603,
+          0.029700999618716584,
+          0.02434920263035548,
+          0.023664197490313302
+        ]
+      },
+      "held_spectrum": {
+        "centroid_hz": 0.5570228206685263,
+        "upper_2_to_12_over_fundamental_db": -15.157252084865327,
+        "fourth_over_fundamental_db": -29.090143987411423,
+        "harmonic_energy_fraction": [
+          0.9704043735760314,
+          0.015944042888090128,
+          0.0026325727405954735,
+          0.001196570651091128,
+          0.0008010776279227668,
+          0.0010911613361922977,
+          0.0007096395164705698,
+          0.0011272114608005812,
+          0.000991392729279972,
+          0.0011136275484525506,
+          0.0018603708110498302,
+          0.0021279591140232683
+        ]
+      }
+    }
+  ],
+  "related_evidence": [
+    "development/plucked-bells/summary.json",
+    "reviews/21-struck-spectra.json"
+  ],
+  "findings": [
+    "Guitar II and Mandolin retain brighter normalized onset harmonic balances than Nylon Pluck at both tested velocities.",
+    "Guitar II rings longer than the paired, more compact Mandolin program.",
+    "Harp retains markedly more held energy than the high-register short Kalimba preset; Vibraphone retains more than Marimba.",
+    "Isolated supporting ranks are independently damped and do not create a sustained extra fundamental in the tested three-second holds.",
+    "All14 complete-preset captures and2 isolated-rank captures are finite and below full scale."
+  ],
+  "limits": [
+    "One played key, two velocities and one deterministic render seed; this is not complete register or performance coverage.",
+    "Root was calibrating level tables; captured vectors/digests identify the actual fixtures independently of later master trims.",
+    "Energy/FFT differences support authored distinctions and articulation, not subjective preference or physical-instrument equivalence."
+  ],
+  "reproduction_python": "from pathlib import Path\nimport csv, hashlib, json, math, struct\nimport numpy as np\nROOT=Path('/workspace/scratch/a9592b052b11/a25')\ninv=json.loads((ROOT/'inventory.json').read_text());ids=inv['parameter_ids'];byname={p['name']:p for p in inv['programs']}\nfeet=[.5,1,1.5,2,3,4]\n\ndef digest(values):\n h=14695981039346656037\n for v in values:\n  for b in struct.pack('<f',v):h=((h^b)*1099511628211)&0xffffffffffffffff\n return h\n\ndef wav(path):\n b=path.read_bytes();assert b[:4]==b'RIFF' and b[8:12]==b'WAVE';pos=12;chunks={}\n while pos<len(b):\n  kind,n=struct.unpack_from('<4sI',b,pos);pos+=8;chunks[kind]=b[pos:pos+n];pos+=n+(n&1)\n fmt=struct.unpack_from('<HHIIHH',chunks[b'fmt ']);assert fmt==(3,2,48000,384000,8,32)\n x=np.frombuffer(chunks[b'data'],dtype='<f4').reshape(-1,2).astype(np.float64)\n assert x.shape==(192000,2) and np.isfinite(x).all() and np.max(np.abs(x))<1\n return x\n\ndef db(x):return 20*math.log10(max(float(x),1e-12))\ndef rms(x):return math.sqrt(float(np.mean(x*x)))\ndef segment(x,a,b):return x[round(a*48000):round(b*48000)]\ndef spectrum(x,a,b,f0):\n y=segment(x,a,b).mean(axis=1);w=np.hanning(len(y));power=np.abs(np.fft.rfft(y*w))**2;freq=np.fft.rfftfreq(len(y),1/48000)\n def band(center):return float(power[np.abs(freq-center)<=max(12,center*.002)].sum())\n harmonics=[band(f0*n) for n in range(1,13)]\n return {'centroid_hz':float(np.dot(freq,power)/max(power.sum(),1e-300)), 'upper_2_to_12_over_fundamental_db':10*math.log10(max(sum(harmonics[1:]),1e-300)/max(harmonics[0],1e-300)), 'fourth_over_fundamental_db':10*math.log10(max(harmonics[3],1e-300)/max(harmonics[0],1e-300)), 'harmonic_energy_fraction':[h/max(sum(harmonics),1e-300) for h in harmonics]}\n\nrecords=[]\nfor group in ['soft','firm','upper']:\n for row in csv.DictReader((ROOT/group/'metrics.csv').open()):\n  p=byname[row['name']];values=p['values'][:];rank=int(row['rank']);\n  if rank:values[ids.index('mix')]=float(rank-1)\n  assert int(row['parameter_digest'],16)==digest(values)\n  path=next((ROOT/group).glob(row['index']+'-*.wav'));x=wav(path)\n  f0=440*2**((int(row['note'])-69)/12)*feet[int(values[ids.index('ch2_feet' if rank==2 else 'ch1_feet')])]\n  peak_onset=max(rms(segment(x,a,a+.05)) for a in np.arange(0,.251,.01))\n  rec={'group':group,'name':row['name'],'note':int(row['note']),'sounding_primary_hz':f0,'velocity':float(row['velocity']),'rank':rank,'parameter_digest':row['parameter_digest'],'wav_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'peak_dbfs':db(np.max(np.abs(x))),'onset_rms_dbfs':db(peak_onset),'held_2_2_to_2_8_vs_onset_db':db(rms(segment(x,2.2,2.8)))-db(peak_onset),'release_3_5_to_3_9_vs_before_noteoff_db':db(rms(segment(x,3.5,3.9)))-db(rms(segment(x,2.8,3.0))),'onset_spectrum':spectrum(x,.02,.20,f0),'body_spectrum':spectrum(x,.4,1.0,f0),'held_spectrum':spectrum(x,2.2,2.8,f0)}\n  records.append(rec)\nget=lambda group,name:next(r for r in records if r['group']==group and r['name']==name)\ncomparisons=[]\nfor group in ['soft','firm']:\n nylon=get(group,'Nylon Pluck')\n for name in ['Guitar II','Mandolin']:\n  r=get(group,name);comparisons.append({'group':group,'pair':[name,'Nylon Pluck'],'onset_upper_balance_difference_db':r['onset_spectrum']['upper_2_to_12_over_fundamental_db']-nylon['onset_spectrum']['upper_2_to_12_over_fundamental_db'],'onset_centroid_difference_hz':r['onset_spectrum']['centroid_hz']-nylon['onset_spectrum']['centroid_hz']})\n for a,b in [('Harp','Kalimba'),('Vibraphone','Marimba'),('Guitar II','Mandolin')]:\n  comparisons.append({'group':group,'pair':[a,b],'held_decay_retention_difference_db':get(group,a)['held_2_2_to_2_8_vs_onset_db']-get(group,b)['held_2_2_to_2_8_vs_onset_db']})\nsummary={'clips':len(records),'seconds':len(records)*4,'finite_samples':len(records)*192000*2,'max_peak_dbfs':max(r['peak_dbfs'] for r in records),'comparisons':comparisons,'isolated_upper_late_vs_onset_db':{r['name']:r['held_2_2_to_2_8_vs_onset_db'] for r in records if r['group']=='upper'},'firm_soft_onset_db':{n:get('firm',n)['onset_rms_dbfs']-get('soft',n)['onset_rms_dbfs'] for n in ['Nylon Pluck','Guitar II','Mandolin','Harp','Kalimba','Vibraphone','Marimba']}}\n(ROOT/'measurements.json').write_text(json.dumps({'summary':summary,'records':records},indent=2)+'\\n');print(json.dumps(summary,indent=2))\n"
+}

@@ -1,0 +1,31 @@
+{
+  "state": "two final-source passes per bank and final rebuild complete; all four bank suites passed; native qualification pending",
+  "completed_passes_per_bank": 2,
+  "passes": [
+    {
+      "pass": 1,
+      "curated_exit": 0,
+      "original_exit": 0,
+      "measuring_executable_sha256": "9f3881263d5bb3553e5ec8facd0027c97afce0c8d1f03d8ee12e4e11dd45903d",
+      "resulting_source_sha256": {
+        "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+        "src/core/CuratedLibraryLevels.inc": "f77ea5567219a8fe59b9ae9e605b04dcf21e9d0c85c8c1c935ea752e3e034538",
+        "src/core/OriginalCircuitLevels.inc": "f077b50779572b7a0b2ea9c2c608b6c569e90b7f5fef52542c195319035a36e1"
+      },
+      "rebuilt_for_next_pass_executable_sha256": "9f3881263d5bb3553e5ec8facd0027c97afce0c8d1f03d8ee12e4e11dd45903d"
+    },
+    {
+      "pass": 2,
+      "curated_exit": 0,
+      "original_exit": 0,
+      "measuring_executable_sha256": "9f3881263d5bb3553e5ec8facd0027c97afce0c8d1f03d8ee12e4e11dd45903d",
+      "resulting_source_sha256": {
+        "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+        "src/core/CuratedLibraryLevels.inc": "f77ea5567219a8fe59b9ae9e605b04dcf21e9d0c85c8c1c935ea752e3e034538",
+        "src/core/OriginalCircuitLevels.inc": "f077b50779572b7a0b2ea9c2c608b6c569e90b7f5fef52542c195319035a36e1"
+      }
+    }
+  ],
+  "final_audit_executable_sha256": "9f3881263d5bb3553e5ec8facd0027c97afce0c8d1f03d8ee12e4e11dd45903d",
+  "final_capture_executable_sha256": "a9d481040d9ea7b798130379ad9552690bd4244e8870d8ded3364042f003b8c8"
+}

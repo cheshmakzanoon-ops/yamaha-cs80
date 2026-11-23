@@ -1,0 +1,1225 @@
+{
+  "worker": 40,
+  "task": "Independent review of unchanged level gates, calibration semantics, ten-program correction scope, and articulation tradeoffs",
+  "status": "No level-gate weakening or articulation blocker found; final-source recalibration, full-bank audit, and native qualification pending",
+  "reviewed_at_utc": "2026-11-23T17:59:22.174313+00:00",
+  "changes_made": "This report only; no production sources, test limits, level tables, build outputs, commits, or refs changed.",
+  "source_sha256": {
+    "tests/LibraryAuditTests.cpp": "41160b16166f47e960c5129792287e772bf39fa6f7b6bfcac54c7973a3080407",
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "src/core/SourceFactoryTones.h": "fc209693b74d22dcc05b4dc9882591c5f70992d1b32724cac7dbf423a4aeaf12",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/FactoryPresets.cpp": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5",
+    "src/core/FactoryPresets.h": "985bcbacc9b085230c323de9a483931390c9b52a7de170238ee76a68b63e1de1"
+  },
+  "audit_gate_identity": {
+    "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+    "path": "tests/LibraryAuditTests.cpp",
+    "sha256": "41160b16166f47e960c5129792287e772bf39fa6f7b6bfcac54c7973a3080407",
+    "byte_identical_to_baseline": true,
+    "git_diff_output_empty": true
+  },
+  "acceptance": {
+    "phrase_peak_dbfs_max_inclusive": -1.0,
+    "eight_voice_stress_peak_dbfs_max_exclusive": 0.0,
+    "window_rms_dbfs_inclusive": [
+      -30.0,
+      -12.0
+    ],
+    "additional_silence_floor_dbfs": -42.0,
+    "all_samples_finite_required": true,
+    "source_performance_render_policy_required": true,
+    "distinct_normalized_L1_min": 0.08
+  },
+  "measurement_contract": {
+    "sample_rate_hz": 44100,
+    "render_block_frames": 256,
+    "phrase_requested_seconds": 1.9,
+    "phrase_actual_frames": 83968,
+    "phrase_actual_seconds": 1.9040362811791383,
+    "phrase_velocity": 0.9,
+    "phrase_notes_by_category": {
+      "Bass": [
+        36,
+        43
+      ],
+      "Leads/Winds": [
+        67
+      ],
+      "Bells": [
+        72,
+        76,
+        79
+      ],
+      "all_other_categories": [
+        48,
+        55,
+        60,
+        64
+      ]
+    },
+    "pressure": "Held at0 before0.3 seconds, ramps to1 between0.3 and0.6 seconds at block boundaries; stops updating after note-off.",
+    "note_off_requested_seconds": 1.2,
+    "note_off_actual_frame": 52992,
+    "note_off_actual_seconds": 1.2016326530612245,
+    "rms": "Maximum among complete, nonoverlapping2205-frame (50ms) windows; energy is the mean of left and right squared samples. Final incomplete RMS window is not used; peaks and finiteness include all rendered samples.",
+    "stress_notes": [
+      36,
+      43,
+      48,
+      55,
+      60,
+      64,
+      67,
+      72
+    ],
+    "stress_velocity": 1.0,
+    "stress_pressure": 1.0,
+    "stress_requested_seconds": 1.0,
+    "stress_actual_frames": 44288,
+    "stress_actual_seconds": 1.0042630385487528,
+    "limits": "This deterministic short phrase plus fixed eight-note chord is an acceptance fixture, not proof for every performance, register, arbitrarily long evolving patch, or possible MIDI/control sequence."
+  },
+  "calibration": {
+    "target_rms_dbfs": -18.0,
+    "single_line_categories": [
+      "Leads",
+      "Winds",
+      "Bass",
+      "Sequences"
+    ],
+    "single_line_target_rms_dbfs": -22.0,
+    "phrase_peak_ceiling_dbfs": -3.0,
+    "stress_peak_ceiling_dbfs": -1.5,
+    "master_volume_bounds": [
+      0.05,
+      1.0
+    ],
+    "output_decimal_places": 3,
+    "algorithm": "Gain in dB is the minimum of RMS target deficit, phrase-peak headroom, and stress-peak headroom. Multiply existing master trim by10^(gainDb/20), clamp to0.05..1, and write measured trims only.",
+    "passes": 2,
+    "rebuild_requirement": "Rebuild the audit executable after pass1 so pass2 measures the newly compiled trim table, then rebuild final consumers after pass2. The second pass compensates for the mildly nonlinear output stage; success must still be established by the unchanged final audit.",
+    "saturation_limit": "A master trim already at1 cannot rescue an overly quiet recipe. This correction keeps that bound and raises appropriate internal rank levels; it does not substitute a calibration return code for the full acceptance audit.",
+    "final_source_status": "Parent has not completed final-source recalibration/audit at this review point."
+  },
+  "independent_parameter_scope": {
+    "pre_correction_inventory": "development/pre-correction-bank/inventory.json",
+    "pre_correction_inventory_sha256": "d095b78bbade6c48d90b48bcc0d26008d99046c5521b0d1766023fbfd6869b81",
+    "post_correction_dump_sha256": "bce0fc98986267f02433a5c278ee73413d960814e4eaaa0b709ea2d1a759a9cf",
+    "comparison": "Compare all values as IEEE754 binary32; report33 change list equals independently reconstructed list exactly. Verify every current changed recipe source SHA against report33.",
+    "programs": 523,
+    "controls_per_program": 200,
+    "changed_programs": 10,
+    "changed_values": 35,
+    "changed_master_volumes": 0,
+    "finite_range_values_checked": 104600,
+    "finite_range_failures": 0,
+    "changes": [
+      {
+        "name": "Neon Brass 18",
+        "changes": [
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.379999995,
+            "after": 0.7200000286102295
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.119999997,
+            "after": 0.4000000059604645
+          }
+        ]
+      },
+      {
+        "name": "Velvet Strings 38",
+        "changes": [
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.219999999,
+            "after": 0.2750000059604645
+          },
+          {
+            "parameter": "ch1_after_level",
+            "before": 0.649999976,
+            "after": 0.8125
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.159999996,
+            "after": 0.20000000298023224
+          },
+          {
+            "parameter": "ch2_after_level",
+            "before": 0.550000012,
+            "after": 0.6875
+          }
+        ]
+      },
+      {
+        "name": "Neon Strings 40",
+        "changes": [
+          {
+            "parameter": "ch1_v_d",
+            "before": 0.236599997,
+            "after": 0.273000031709671
+          },
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.219999999,
+            "after": 1.0
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.159999996,
+            "after": 0.8999999761581421
+          }
+        ]
+      },
+      {
+        "name": "Dark FX 148",
+        "changes": [
+          {
+            "parameter": "ch1_lpf_cutoff",
+            "before": 132.300003,
+            "after": 165.0
+          },
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.660000026,
+            "after": 1.0
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.419999987,
+            "after": 1.0
+          }
+        ]
+      },
+      {
+        "name": "Sforzando Brass",
+        "changes": [
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.379999995,
+            "after": 0.7200000286102295
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.119999997,
+            "after": 0.4000000059604645
+          }
+        ]
+      },
+      {
+        "name": "Swell Strings",
+        "changes": [
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.219999999,
+            "after": 0.2750000059604645
+          },
+          {
+            "parameter": "ch1_after_level",
+            "before": 0.649999976,
+            "after": 0.8125
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.159999996,
+            "after": 0.20000000298023224
+          },
+          {
+            "parameter": "ch2_after_level",
+            "before": 0.550000012,
+            "after": 0.6875
+          }
+        ]
+      },
+      {
+        "name": "Spiccato Strings",
+        "changes": [
+          {
+            "parameter": "ch1_v_d",
+            "before": 0.25999999,
+            "after": 0.30000001192092896
+          },
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.219999999,
+            "after": 1.0
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.159999996,
+            "after": 0.8999999761581421
+          }
+        ]
+      },
+      {
+        "name": "Clarinet",
+        "changes": [
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.310000002,
+            "after": 0.4339999854564667
+          },
+          {
+            "parameter": "ch1_init_level",
+            "before": 0.579999983,
+            "after": 0.8119999766349792
+          },
+          {
+            "parameter": "ch1_after_level",
+            "before": 0.360000014,
+            "after": 0.5040000081062317
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.25,
+            "after": 0.3499999940395355
+          },
+          {
+            "parameter": "ch2_init_level",
+            "before": 0.75,
+            "after": 1.0
+          },
+          {
+            "parameter": "ch2_after_level",
+            "before": 0.180000007,
+            "after": 0.25200000405311584
+          }
+        ]
+      },
+      {
+        "name": "Bass Clarinet",
+        "changes": [
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.280000001,
+            "after": 0.4339999854564667
+          },
+          {
+            "parameter": "ch1_init_level",
+            "before": 0.639999986,
+            "after": 0.9919999837875366
+          },
+          {
+            "parameter": "ch1_after_level",
+            "before": 0.300000012,
+            "after": 0.4650000035762787
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.239999995,
+            "after": 0.3720000088214874
+          },
+          {
+            "parameter": "ch2_init_level",
+            "before": 0.439999998,
+            "after": 0.6819999814033508
+          },
+          {
+            "parameter": "ch2_after_level",
+            "before": 0.219999999,
+            "after": 0.3409999907016754
+          }
+        ]
+      },
+      {
+        "name": "Metallic Keys",
+        "changes": [
+          {
+            "parameter": "ch1_v_level",
+            "before": 0.2667,
+            "after": 0.8199999928474426
+          },
+          {
+            "parameter": "ch2_v_level",
+            "before": 0.0975999981,
+            "after": 0.5299999713897705
+          }
+        ]
+      }
+    ],
+    "current_recipe_sources": [
+      {
+        "path": "src/core/curated/Brass.inc",
+        "current_sha256": "0eaba12d523d9475451dcb488e6ad0d0e96093bd365e436ce1ed79dc4df82cac",
+        "matches33": true
+      },
+      {
+        "path": "src/core/curated/Strings.inc",
+        "current_sha256": "cc69f383b02b8e5feb984fab3ca2b2188adb48de26b5dafec182064e66b37439",
+        "matches33": true
+      },
+      {
+        "path": "src/core/curated/Winds.inc",
+        "current_sha256": "1c499ec66bc6dfe94e77865fd4b041ac5fc0ef4b33c61ab7389a6c18d5f83173",
+        "matches33": true
+      },
+      {
+        "path": "src/core/curated/Bells.inc",
+        "current_sha256": "8554ac2f34f80c22281aa24cbdb7c5929d844c28ad13f6404a8268e6ab7b6a08",
+        "matches33": true
+      },
+      {
+        "path": "src/core/OriginalCircuitLibrary.inc",
+        "current_sha256": "654b15c08e1f6ae9e6f56f7a9c0beffa5c3bc34b65d60e644b4aa6741afd3c34",
+        "matches33": true
+      }
+    ]
+  },
+  "articulation_assessment": [
+    {
+      "program": "Swell Strings / Velvet Strings38",
+      "finding": "Base rank level and pressure-level depth both scale1.25 on both ranks. The main initial-level term remains0; spectral pressure and all attack/release controls remain unchanged. Measured pressure peak contrast is12.52921070 before versus12.52986412dB after, a0.00065342dB difference in this fixture.",
+      "blocker": false
+    },
+    {
+      "program": "Spiccato Strings / Neon Strings40",
+      "finding": "Both sustain controls remain0; main decay control moves0.26\u21920.30 seconds (15.38%), upper decay stays0.11, attacks/releases stay unchanged. In the firm single-note fixture,0.8\u20131.2s held RMS is79.06dB below the first150ms RMS after correction. The detached stroke remains short. Raising base level reduces soft/firm peak contrast from7.03 to3.82dB; the initial spectral touch and body effort settings are unchanged.",
+      "blocker": false
+    },
+    {
+      "program": "Clarinet / Bass Clarinet",
+      "finding": "Main body, size, sounding register, filters, spectral touch, vibrato and envelope controls are unchanged. Clarinet gain controls scale1.4 except rankII initial touch clips1.05 to the legal1.0 maximum; Bass Clarinet scales1.55 without clipping. Soft/firm peak contrasts remain4.02 and4.75dB (previously4.06 and4.82dB). Main-to-late-hold envelope relationships differ by less than0.001dB in the firm fixtures.",
+      "blocker": false
+    },
+    {
+      "program": "Dark FX148",
+      "finding": "Only this dark Thunder variation gets the main LP165Hz and both rank levels1; source Thunder remains unchanged at270Hz. The main cutoff remains38.89% below source Thunder, preserves the dark low-rumble role, and the existing short crack/long zero-sustain rumble envelopes remain unchanged. The held-body to attack ratio changes by0.204dB in the firm fixture.",
+      "blocker": false
+    },
+    {
+      "program": "Sforzando Brass / Metallic Keys",
+      "finding": "Envelope, spectral touch and body controls are unchanged. Firm late-hold/attack ratios move by0.039dB for Sforzando and\u22120.233dB for Metallic Keys. Base-level increases reduce raw soft/firm peak contrast5.24\u21923.70dB and5.36\u21923.24dB respectively; describe this as a level-balance tradeoff, not unchanged overall velocity dynamics.",
+      "blocker": false
+    }
+  ],
+  "isolated_probe": {
+    "purpose": "Check short-stroke decay, pressure response and soft/firm level contrast after the internal-level corrections; not a repeated whole-bank audit or perceptual realism score.",
+    "source": "#include \"core/Engine.h\"\n#include \"core/FactoryPresets.h\"\n#include <algorithm>\n#include <cmath>\n#include <iomanip>\n#include <iostream>\n#include <memory>\n#include <set>\n#include <vector>\nusing namespace cs80;\nvoid undoCorrection(FactoryPreset& p) {\nif (p.name == \"Neon Brass 18\") { p.values[86] = 0.379999995f; p.values[116] = 0.119999997f; }\nif (p.name == \"Velvet Strings 38\") { p.values[86] = 0.219999999f; p.values[90] = 0.649999976f; p.values[116] = 0.159999996f; p.values[120] = 0.550000012f; }\nif (p.name == \"Neon Strings 40\") { p.values[83] = 0.236599997f; p.values[86] = 0.219999999f; p.values[116] = 0.159999996f; }\nif (p.name == \"Dark FX 148\") { p.values[73] = 132.300003f; p.values[86] = 0.660000026f; p.values[116] = 0.419999987f; }\nif (p.name == \"Sforzando Brass\") { p.values[86] = 0.379999995f; p.values[116] = 0.119999997f; }\nif (p.name == \"Swell Strings\") { p.values[86] = 0.219999999f; p.values[90] = 0.649999976f; p.values[116] = 0.159999996f; p.values[120] = 0.550000012f; }\nif (p.name == \"Spiccato Strings\") { p.values[83] = 0.25999999f; p.values[86] = 0.219999999f; p.values[116] = 0.159999996f; }\nif (p.name == \"Clarinet\") { p.values[86] = 0.310000002f; p.values[88] = 0.579999983f; p.values[90] = 0.360000014f; p.values[116] = 0.25f; p.values[118] = 0.75f; p.values[120] = 0.180000007f; }\nif (p.name == \"Bass Clarinet\") { p.values[86] = 0.280000001f; p.values[88] = 0.639999986f; p.values[90] = 0.300000012f; p.values[116] = 0.239999995f; p.values[118] = 0.439999998f; p.values[120] = 0.219999999f; }\nif (p.name == \"Metallic Keys\") { p.values[86] = 0.2667f; p.values[116] = 0.0975999981f; }\n}\nint main() {\n    int rangeFailures=0; std::size_t checked=0;\n    for (const auto& p:programLibrary()) for (int i=0;i<P_numParams;++i) {\n      const auto& d=paramDef(i); const float x=p.values[i]; ++checked;\n      if (!std::isfinite(x)||x<d.min||x>d.max) ++rangeFailures;\n    }\n    std::cout << \"RANGE\\t\" << checked << \"\\t\" << rangeFailures << '\\n';\n    const std::set<std::string> selected={\"Swell Strings\",\"Spiccato Strings\",\"Clarinet\",\"Bass Clarinet\",\"Metallic Keys\",\"Dark FX 148\",\"Sforzando Brass\"};\n    constexpr int rate=48000, frames=105600;\n    for(const auto& original:programLibrary()) {\n      if(!selected.contains(original.name)) continue;\n      for(bool corrected:{false,true}) for(int condition=0;condition<2;++condition) {\n        auto p=original; if(!corrected) undoCorrection(p);\n        const bool swell=p.name==\"Swell Strings\";\n        const float velocity=swell?.8f:(condition==0?.3f:.85f);\n        const float pressure=swell?static_cast<float>(condition):0.f;\n        const int note=p.category==\"Winds\"?67:p.category==\"Bells\"?72:60;\n        auto e=std::make_unique<Engine>();e->prepare(rate);e->setParams(p.values);\n        e->noteOn(note,velocity,1);e->channelPressure(1,pressure);\n        std::vector<float> block(512);double peak=0,energy[4]={};int counts[4]={};bool finite=true,released=false;\n        for(int done=0;done<frames;done+=256) {\n          if(!released && done>=72000){e->noteOff(note,1);released=true;}\n          const int n=std::min(256,frames-done);e->render(block.data(),n);\n          for(int i=0;i<n;++i) {\n            const float l=block[2*i],r=block[2*i+1];finite=finite&&std::isfinite(l)&&std::isfinite(r);peak=std::max({peak,std::abs(double(l)),std::abs(double(r))});\n            const double t=double(done+i)/rate,x=.5*(double(l)*l+double(r)*r);\n            for(int w=0;w<4;++w){const double starts[]={.0,.30,.8,1.8},ends[]={.15,.60,1.20,2.2};if(t>=starts[w]&&t<ends[w]){energy[w]+=x;++counts[w];}}\n          }\n        }\n        std::cout<<std::setprecision(10)<<p.name<<'\\t'<<corrected<<'\\t'<<velocity<<'\\t'<<pressure<<'\\t'<<finite<<'\\t'<<20*std::log10(std::max(peak,1e-20));\n        for(int w=0;w<4;++w)std::cout<<'\\t'<<10*std::log10(std::max(energy[w]/counts[w],1e-40));std::cout<<'\\n';\n      }\n    }\n    return rangeFailures?1:0;\n}\n",
+    "source_sha256": "15fa1d95f21edf7836488dd1ee6962c8388ed7c0818800011c12f965bc6bc3e6",
+    "executable_sha256": "d38f17177403f4eb1462b3cfde62d8fee58841705ae9f74a78f9cd4e1d4e5396",
+    "build_command": "g++ -O2 -DNDEBUG -std=c++20 -I src /workspace/scratch/a9592b052b11/a40/articulation-probe.cpp /workspace/scratch/a9592b052b11/a33/libcs80_core.a -pthread -o /workspace/scratch/a9592b052b11/a40/articulation-probe",
+    "run_command": "/workspace/scratch/a9592b052b11/a40/articulation-probe > /workspace/scratch/a9592b052b11/a40/articulation.tsv",
+    "archive_sha256": "c6536d92413402546021f0ebb490f33d9ce85cbecf1b49d60629d8f5f90098b0",
+    "engine_object_sha256": "7ee38c73070d866552f4533e76324b77093575da889e11ba0d2897835c55f094",
+    "factory_object_sha256": "5a998c939e3b0bdabf0253f24f90754927afdf87758d81371ea75fe1ac1ba760",
+    "rendered_body_source_sha256": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "source_boundary": "Uses worker33 retained pre-piano-seam Engine archive and actual corrected recipe object, independently hash checked. Current interface/header layout is unchanged. None of the seven selected recipes uses the piano model. These measurements do not qualify the final e61da6a5 body source or its full library.",
+    "sample_rate_hz": 48000,
+    "conditions": 28,
+    "frames_per_condition": 105600,
+    "total_frames": 2956800,
+    "total_stereo_samples": 5913600,
+    "all_conditions_finite": true,
+    "maximum_peak_dbfs": -20.91135728,
+    "settings": "Seven programs \u00d7 before/after \u00d7 soft/firm velocity0.3/0.85; Swell instead uses fixedvelocity0.8 and pressure0/1. Hold1.5s then release to2.2s. Windnote67, Bells72, otherwise60. Independent freshly prepared Engine per condition.",
+    "rms_windows_seconds": {
+      "attack": [
+        0,
+        0.15
+      ],
+      "early_body": [
+        0.3,
+        0.6
+      ],
+      "late_hold": [
+        0.8,
+        1.2
+      ],
+      "release": [
+        1.8,
+        2.2
+      ]
+    },
+    "stdout": "RANGE\t104600\t0\nDark FX 148\t0\t0.3000000119\t0\t1\t-34.31978556\t-47.46871918\t-50.6558962\t-56.0642784\t-67.20400306\nDark FX 148\t0\t0.8500000238\t0\t1\t-30.26442631\t-43.33518631\t-46.61054759\t-52.01802958\t-63.16382804\nDark FX 148\t1\t0.3000000119\t0\t1\t-30.32080509\t-43.40840101\t-46.57822915\t-51.9821157\t-63.09200972\nDark FX 148\t1\t0.8500000238\t0\t1\t-27.12156351\t-40.33186362\t-43.40492196\t-48.81107536\t-59.91873773\nSforzando Brass\t0\t0.3000000119\t0\t1\t-33.74250016\t-48.79230723\t-55.27900955\t-55.33256586\t-102.4525537\nSforzando Brass\t0\t0.8500000238\t0\t1\t-28.50444231\t-43.37769123\t-49.92588616\t-49.97025605\t-102.2828689\nSforzando Brass\t1\t0.3000000119\t0\t1\t-29.83795968\t-44.81770767\t-51.4814031\t-51.53496743\t-102.3244229\nSforzando Brass\t1\t0.8500000238\t0\t1\t-26.13355385\t-41.00044886\t-47.50942063\t-47.55379354\t-102.0999967\nSwell Strings\t0\t0.8000000119\t0\t1\t-35.37562594\t-58.84395577\t-45.1059084\t-48.86152645\t-66.24776963\nSwell Strings\t0\t0.8000000119\t1\t1\t-22.84641524\t-49.1300221\t-33.43177459\t-36.90742239\t-65.61513518\nSwell Strings\t1\t0.8000000119\t0\t1\t-33.4412214\t-56.91141741\t-43.16826396\t-46.92373546\t-64.35266271\nSwell Strings\t1\t0.8000000119\t1\t1\t-20.91135728\t-47.1920893\t-31.49366671\t-34.96916157\t-63.71407396\nSpiccato Strings\t0\t0.3000000119\t0\t1\t-38.02832956\t-50.18212583\t-116.9041501\t-118.1199436\t-118.1186996\nSpiccato Strings\t0\t0.8500000238\t0\t1\t-31.00053913\t-44.66355485\t-114.5205328\t-118.1154296\t-118.1186997\nSpiccato Strings\t1\t0.3000000119\t0\t1\t-29.655995\t-41.32724804\t-102.9217123\t-118.109145\t-118.1186997\nSpiccato Strings\t1\t0.8500000238\t0\t1\t-25.8332911\t-39.04269119\t-100.9201322\t-118.0984286\t-118.1186998\nClarinet\t0\t0.3000000119\t0\t1\t-33.65491151\t-38.52132486\t-38.26995518\t-38.27709299\t-115.4171798\nClarinet\t0\t0.8500000238\t0\t1\t-29.59290795\t-34.92400417\t-34.70540684\t-34.71245343\t-110.8543872\nClarinet\t1\t0.3000000119\t0\t1\t-30.62029358\t-35.48643373\t-35.23506989\t-35.24220713\t-112.3844056\nClarinet\t1\t0.8500000238\t0\t1\t-26.60438747\t-31.93476579\t-31.71617664\t-31.72322117\t-107.868809\nBass Clarinet\t0\t0.3000000119\t0\t1\t-33.16147997\t-39.45056938\t-39.02134594\t-39.05851451\t-111.8338924\nBass Clarinet\t0\t0.8500000238\t0\t1\t-28.34112208\t-35.37767062\t-34.98142457\t-35.02438238\t-106.808468\nBass Clarinet\t1\t0.3000000119\t0\t1\t-29.19059048\t-35.48004678\t-35.05096915\t-35.08817579\t-107.859986\nBass Clarinet\t1\t0.8500000238\t0\t1\t-24.44217821\t-31.47886511\t-31.08276446\t-31.12575934\t-102.9074691\nMetallic Keys\t0\t0.3000000119\t0\t1\t-32.7862099\t-48.92735799\t-59.52676549\t-70.02646271\t-75.54505554\nMetallic Keys\t0\t0.8500000238\t0\t1\t-27.430019\t-43.53250409\t-54.14714066\t-65.18213407\t-75.51906876\nMetallic Keys\t1\t0.3000000119\t0\t1\t-27.3423421\t-43.37048063\t-54.05981918\t-65.45533502\t-75.52135489\nMetallic Keys\t1\t0.8500000238\t0\t1\t-24.09900895\t-40.15280069\t-50.79838302\t-62.03528235\t-75.47601644\n",
+    "results": {
+      "measurements": [
+        {
+          "name": "Dark FX 148",
+          "corrected": false,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -34.31978556,
+          "attack_rms_dbfs": -47.46871918,
+          "early_body_rms_dbfs": -50.6558962,
+          "late_hold_rms_dbfs": -56.0642784,
+          "release_rms_dbfs": -67.20400306
+        },
+        {
+          "name": "Dark FX 148",
+          "corrected": false,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -30.26442631,
+          "attack_rms_dbfs": -43.33518631,
+          "early_body_rms_dbfs": -46.61054759,
+          "late_hold_rms_dbfs": -52.01802958,
+          "release_rms_dbfs": -63.16382804
+        },
+        {
+          "name": "Dark FX 148",
+          "corrected": true,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -30.32080509,
+          "attack_rms_dbfs": -43.40840101,
+          "early_body_rms_dbfs": -46.57822915,
+          "late_hold_rms_dbfs": -51.9821157,
+          "release_rms_dbfs": -63.09200972
+        },
+        {
+          "name": "Dark FX 148",
+          "corrected": true,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -27.12156351,
+          "attack_rms_dbfs": -40.33186362,
+          "early_body_rms_dbfs": -43.40492196,
+          "late_hold_rms_dbfs": -48.81107536,
+          "release_rms_dbfs": -59.91873773
+        },
+        {
+          "name": "Sforzando Brass",
+          "corrected": false,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -33.74250016,
+          "attack_rms_dbfs": -48.79230723,
+          "early_body_rms_dbfs": -55.27900955,
+          "late_hold_rms_dbfs": -55.33256586,
+          "release_rms_dbfs": -102.4525537
+        },
+        {
+          "name": "Sforzando Brass",
+          "corrected": false,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -28.50444231,
+          "attack_rms_dbfs": -43.37769123,
+          "early_body_rms_dbfs": -49.92588616,
+          "late_hold_rms_dbfs": -49.97025605,
+          "release_rms_dbfs": -102.2828689
+        },
+        {
+          "name": "Sforzando Brass",
+          "corrected": true,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -29.83795968,
+          "attack_rms_dbfs": -44.81770767,
+          "early_body_rms_dbfs": -51.4814031,
+          "late_hold_rms_dbfs": -51.53496743,
+          "release_rms_dbfs": -102.3244229
+        },
+        {
+          "name": "Sforzando Brass",
+          "corrected": true,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -26.13355385,
+          "attack_rms_dbfs": -41.00044886,
+          "early_body_rms_dbfs": -47.50942063,
+          "late_hold_rms_dbfs": -47.55379354,
+          "release_rms_dbfs": -102.0999967
+        },
+        {
+          "name": "Swell Strings",
+          "corrected": false,
+          "velocity": 0.8000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -35.37562594,
+          "attack_rms_dbfs": -58.84395577,
+          "early_body_rms_dbfs": -45.1059084,
+          "late_hold_rms_dbfs": -48.86152645,
+          "release_rms_dbfs": -66.24776963
+        },
+        {
+          "name": "Swell Strings",
+          "corrected": false,
+          "velocity": 0.8000000119,
+          "pressure": 1.0,
+          "finite": true,
+          "peak_dbfs": -22.84641524,
+          "attack_rms_dbfs": -49.1300221,
+          "early_body_rms_dbfs": -33.43177459,
+          "late_hold_rms_dbfs": -36.90742239,
+          "release_rms_dbfs": -65.61513518
+        },
+        {
+          "name": "Swell Strings",
+          "corrected": true,
+          "velocity": 0.8000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -33.4412214,
+          "attack_rms_dbfs": -56.91141741,
+          "early_body_rms_dbfs": -43.16826396,
+          "late_hold_rms_dbfs": -46.92373546,
+          "release_rms_dbfs": -64.35266271
+        },
+        {
+          "name": "Swell Strings",
+          "corrected": true,
+          "velocity": 0.8000000119,
+          "pressure": 1.0,
+          "finite": true,
+          "peak_dbfs": -20.91135728,
+          "attack_rms_dbfs": -47.1920893,
+          "early_body_rms_dbfs": -31.49366671,
+          "late_hold_rms_dbfs": -34.96916157,
+          "release_rms_dbfs": -63.71407396
+        },
+        {
+          "name": "Spiccato Strings",
+          "corrected": false,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -38.02832956,
+          "attack_rms_dbfs": -50.18212583,
+          "early_body_rms_dbfs": -116.9041501,
+          "late_hold_rms_dbfs": -118.1199436,
+          "release_rms_dbfs": -118.1186996
+        },
+        {
+          "name": "Spiccato Strings",
+          "corrected": false,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -31.00053913,
+          "attack_rms_dbfs": -44.66355485,
+          "early_body_rms_dbfs": -114.5205328,
+          "late_hold_rms_dbfs": -118.1154296,
+          "release_rms_dbfs": -118.1186997
+        },
+        {
+          "name": "Spiccato Strings",
+          "corrected": true,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -29.655995,
+          "attack_rms_dbfs": -41.32724804,
+          "early_body_rms_dbfs": -102.9217123,
+          "late_hold_rms_dbfs": -118.109145,
+          "release_rms_dbfs": -118.1186997
+        },
+        {
+          "name": "Spiccato Strings",
+          "corrected": true,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -25.8332911,
+          "attack_rms_dbfs": -39.04269119,
+          "early_body_rms_dbfs": -100.9201322,
+          "late_hold_rms_dbfs": -118.0984286,
+          "release_rms_dbfs": -118.1186998
+        },
+        {
+          "name": "Clarinet",
+          "corrected": false,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -33.65491151,
+          "attack_rms_dbfs": -38.52132486,
+          "early_body_rms_dbfs": -38.26995518,
+          "late_hold_rms_dbfs": -38.27709299,
+          "release_rms_dbfs": -115.4171798
+        },
+        {
+          "name": "Clarinet",
+          "corrected": false,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -29.59290795,
+          "attack_rms_dbfs": -34.92400417,
+          "early_body_rms_dbfs": -34.70540684,
+          "late_hold_rms_dbfs": -34.71245343,
+          "release_rms_dbfs": -110.8543872
+        },
+        {
+          "name": "Clarinet",
+          "corrected": true,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -30.62029358,
+          "attack_rms_dbfs": -35.48643373,
+          "early_body_rms_dbfs": -35.23506989,
+          "late_hold_rms_dbfs": -35.24220713,
+          "release_rms_dbfs": -112.3844056
+        },
+        {
+          "name": "Clarinet",
+          "corrected": true,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -26.60438747,
+          "attack_rms_dbfs": -31.93476579,
+          "early_body_rms_dbfs": -31.71617664,
+          "late_hold_rms_dbfs": -31.72322117,
+          "release_rms_dbfs": -107.868809
+        },
+        {
+          "name": "Bass Clarinet",
+          "corrected": false,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -33.16147997,
+          "attack_rms_dbfs": -39.45056938,
+          "early_body_rms_dbfs": -39.02134594,
+          "late_hold_rms_dbfs": -39.05851451,
+          "release_rms_dbfs": -111.8338924
+        },
+        {
+          "name": "Bass Clarinet",
+          "corrected": false,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -28.34112208,
+          "attack_rms_dbfs": -35.37767062,
+          "early_body_rms_dbfs": -34.98142457,
+          "late_hold_rms_dbfs": -35.02438238,
+          "release_rms_dbfs": -106.808468
+        },
+        {
+          "name": "Bass Clarinet",
+          "corrected": true,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -29.19059048,
+          "attack_rms_dbfs": -35.48004678,
+          "early_body_rms_dbfs": -35.05096915,
+          "late_hold_rms_dbfs": -35.08817579,
+          "release_rms_dbfs": -107.859986
+        },
+        {
+          "name": "Bass Clarinet",
+          "corrected": true,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -24.44217821,
+          "attack_rms_dbfs": -31.47886511,
+          "early_body_rms_dbfs": -31.08276446,
+          "late_hold_rms_dbfs": -31.12575934,
+          "release_rms_dbfs": -102.9074691
+        },
+        {
+          "name": "Metallic Keys",
+          "corrected": false,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -32.7862099,
+          "attack_rms_dbfs": -48.92735799,
+          "early_body_rms_dbfs": -59.52676549,
+          "late_hold_rms_dbfs": -70.02646271,
+          "release_rms_dbfs": -75.54505554
+        },
+        {
+          "name": "Metallic Keys",
+          "corrected": false,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -27.430019,
+          "attack_rms_dbfs": -43.53250409,
+          "early_body_rms_dbfs": -54.14714066,
+          "late_hold_rms_dbfs": -65.18213407,
+          "release_rms_dbfs": -75.51906876
+        },
+        {
+          "name": "Metallic Keys",
+          "corrected": true,
+          "velocity": 0.3000000119,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -27.3423421,
+          "attack_rms_dbfs": -43.37048063,
+          "early_body_rms_dbfs": -54.05981918,
+          "late_hold_rms_dbfs": -65.45533502,
+          "release_rms_dbfs": -75.52135489
+        },
+        {
+          "name": "Metallic Keys",
+          "corrected": true,
+          "velocity": 0.8500000238,
+          "pressure": 0.0,
+          "finite": true,
+          "peak_dbfs": -24.09900895,
+          "attack_rms_dbfs": -40.15280069,
+          "early_body_rms_dbfs": -50.79838302,
+          "late_hold_rms_dbfs": -62.03528235,
+          "release_rms_dbfs": -75.47601644
+        }
+      ],
+      "comparisons": [
+        {
+          "name": "Dark FX 148",
+          "before": {
+            "soft_or_unpressed": {
+              "name": "Dark FX 148",
+              "corrected": false,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -34.31978556,
+              "attack_rms_dbfs": -47.46871918,
+              "early_body_rms_dbfs": -50.6558962,
+              "late_hold_rms_dbfs": -56.0642784,
+              "release_rms_dbfs": -67.20400306
+            },
+            "firm_or_pressed": {
+              "name": "Dark FX 148",
+              "corrected": false,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -30.26442631,
+              "attack_rms_dbfs": -43.33518631,
+              "early_body_rms_dbfs": -46.61054759,
+              "late_hold_rms_dbfs": -52.01802958,
+              "release_rms_dbfs": -63.16382804
+            },
+            "peak_response_db": 4.055359249999999,
+            "late_hold_response_db": 4.046248820000002,
+            "firm_late_minus_attack_db": -8.68284327
+          },
+          "after": {
+            "soft_or_unpressed": {
+              "name": "Dark FX 148",
+              "corrected": true,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -30.32080509,
+              "attack_rms_dbfs": -43.40840101,
+              "early_body_rms_dbfs": -46.57822915,
+              "late_hold_rms_dbfs": -51.9821157,
+              "release_rms_dbfs": -63.09200972
+            },
+            "firm_or_pressed": {
+              "name": "Dark FX 148",
+              "corrected": true,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -27.12156351,
+              "attack_rms_dbfs": -40.33186362,
+              "early_body_rms_dbfs": -43.40492196,
+              "late_hold_rms_dbfs": -48.81107536,
+              "release_rms_dbfs": -59.91873773
+            },
+            "peak_response_db": 3.199241579999999,
+            "late_hold_response_db": 3.1710403400000047,
+            "firm_late_minus_attack_db": -8.479211739999997
+          }
+        },
+        {
+          "name": "Sforzando Brass",
+          "before": {
+            "soft_or_unpressed": {
+              "name": "Sforzando Brass",
+              "corrected": false,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -33.74250016,
+              "attack_rms_dbfs": -48.79230723,
+              "early_body_rms_dbfs": -55.27900955,
+              "late_hold_rms_dbfs": -55.33256586,
+              "release_rms_dbfs": -102.4525537
+            },
+            "firm_or_pressed": {
+              "name": "Sforzando Brass",
+              "corrected": false,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -28.50444231,
+              "attack_rms_dbfs": -43.37769123,
+              "early_body_rms_dbfs": -49.92588616,
+              "late_hold_rms_dbfs": -49.97025605,
+              "release_rms_dbfs": -102.2828689
+            },
+            "peak_response_db": 5.238057849999997,
+            "late_hold_response_db": 5.362309809999999,
+            "firm_late_minus_attack_db": -6.59256482
+          },
+          "after": {
+            "soft_or_unpressed": {
+              "name": "Sforzando Brass",
+              "corrected": true,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -29.83795968,
+              "attack_rms_dbfs": -44.81770767,
+              "early_body_rms_dbfs": -51.4814031,
+              "late_hold_rms_dbfs": -51.53496743,
+              "release_rms_dbfs": -102.3244229
+            },
+            "firm_or_pressed": {
+              "name": "Sforzando Brass",
+              "corrected": true,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -26.13355385,
+              "attack_rms_dbfs": -41.00044886,
+              "early_body_rms_dbfs": -47.50942063,
+              "late_hold_rms_dbfs": -47.55379354,
+              "release_rms_dbfs": -102.0999967
+            },
+            "peak_response_db": 3.7044058300000025,
+            "late_hold_response_db": 3.981173890000001,
+            "firm_late_minus_attack_db": -6.553344680000002
+          }
+        },
+        {
+          "name": "Swell Strings",
+          "before": {
+            "soft_or_unpressed": {
+              "name": "Swell Strings",
+              "corrected": false,
+              "velocity": 0.8000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -35.37562594,
+              "attack_rms_dbfs": -58.84395577,
+              "early_body_rms_dbfs": -45.1059084,
+              "late_hold_rms_dbfs": -48.86152645,
+              "release_rms_dbfs": -66.24776963
+            },
+            "firm_or_pressed": {
+              "name": "Swell Strings",
+              "corrected": false,
+              "velocity": 0.8000000119,
+              "pressure": 1.0,
+              "finite": true,
+              "peak_dbfs": -22.84641524,
+              "attack_rms_dbfs": -49.1300221,
+              "early_body_rms_dbfs": -33.43177459,
+              "late_hold_rms_dbfs": -36.90742239,
+              "release_rms_dbfs": -65.61513518
+            },
+            "peak_response_db": 12.5292107,
+            "late_hold_response_db": 11.954104059999999,
+            "firm_late_minus_attack_db": 12.222599709999997
+          },
+          "after": {
+            "soft_or_unpressed": {
+              "name": "Swell Strings",
+              "corrected": true,
+              "velocity": 0.8000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -33.4412214,
+              "attack_rms_dbfs": -56.91141741,
+              "early_body_rms_dbfs": -43.16826396,
+              "late_hold_rms_dbfs": -46.92373546,
+              "release_rms_dbfs": -64.35266271
+            },
+            "firm_or_pressed": {
+              "name": "Swell Strings",
+              "corrected": true,
+              "velocity": 0.8000000119,
+              "pressure": 1.0,
+              "finite": true,
+              "peak_dbfs": -20.91135728,
+              "attack_rms_dbfs": -47.1920893,
+              "early_body_rms_dbfs": -31.49366671,
+              "late_hold_rms_dbfs": -34.96916157,
+              "release_rms_dbfs": -63.71407396
+            },
+            "peak_response_db": 12.529864120000003,
+            "late_hold_response_db": 11.954573890000006,
+            "firm_late_minus_attack_db": 12.222927730000002
+          }
+        },
+        {
+          "name": "Spiccato Strings",
+          "before": {
+            "soft_or_unpressed": {
+              "name": "Spiccato Strings",
+              "corrected": false,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -38.02832956,
+              "attack_rms_dbfs": -50.18212583,
+              "early_body_rms_dbfs": -116.9041501,
+              "late_hold_rms_dbfs": -118.1199436,
+              "release_rms_dbfs": -118.1186996
+            },
+            "firm_or_pressed": {
+              "name": "Spiccato Strings",
+              "corrected": false,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -31.00053913,
+              "attack_rms_dbfs": -44.66355485,
+              "early_body_rms_dbfs": -114.5205328,
+              "late_hold_rms_dbfs": -118.1154296,
+              "release_rms_dbfs": -118.1186997
+            },
+            "peak_response_db": 7.027790430000003,
+            "late_hold_response_db": 0.004514000000000351,
+            "firm_late_minus_attack_db": -73.45187475
+          },
+          "after": {
+            "soft_or_unpressed": {
+              "name": "Spiccato Strings",
+              "corrected": true,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -29.655995,
+              "attack_rms_dbfs": -41.32724804,
+              "early_body_rms_dbfs": -102.9217123,
+              "late_hold_rms_dbfs": -118.109145,
+              "release_rms_dbfs": -118.1186997
+            },
+            "firm_or_pressed": {
+              "name": "Spiccato Strings",
+              "corrected": true,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -25.8332911,
+              "attack_rms_dbfs": -39.04269119,
+              "early_body_rms_dbfs": -100.9201322,
+              "late_hold_rms_dbfs": -118.0984286,
+              "release_rms_dbfs": -118.1186998
+            },
+            "peak_response_db": 3.8227039000000005,
+            "late_hold_response_db": 0.010716399999992632,
+            "firm_late_minus_attack_db": -79.05573741
+          }
+        },
+        {
+          "name": "Clarinet",
+          "before": {
+            "soft_or_unpressed": {
+              "name": "Clarinet",
+              "corrected": false,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -33.65491151,
+              "attack_rms_dbfs": -38.52132486,
+              "early_body_rms_dbfs": -38.26995518,
+              "late_hold_rms_dbfs": -38.27709299,
+              "release_rms_dbfs": -115.4171798
+            },
+            "firm_or_pressed": {
+              "name": "Clarinet",
+              "corrected": false,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -29.59290795,
+              "attack_rms_dbfs": -34.92400417,
+              "early_body_rms_dbfs": -34.70540684,
+              "late_hold_rms_dbfs": -34.71245343,
+              "release_rms_dbfs": -110.8543872
+            },
+            "peak_response_db": 4.062003559999997,
+            "late_hold_response_db": 3.5646395600000034,
+            "firm_late_minus_attack_db": 0.21155074000000695
+          },
+          "after": {
+            "soft_or_unpressed": {
+              "name": "Clarinet",
+              "corrected": true,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -30.62029358,
+              "attack_rms_dbfs": -35.48643373,
+              "early_body_rms_dbfs": -35.23506989,
+              "late_hold_rms_dbfs": -35.24220713,
+              "release_rms_dbfs": -112.3844056
+            },
+            "firm_or_pressed": {
+              "name": "Clarinet",
+              "corrected": true,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -26.60438747,
+              "attack_rms_dbfs": -31.93476579,
+              "early_body_rms_dbfs": -31.71617664,
+              "late_hold_rms_dbfs": -31.72322117,
+              "release_rms_dbfs": -107.868809
+            },
+            "peak_response_db": 4.0159061099999995,
+            "late_hold_response_db": 3.5189859599999984,
+            "firm_late_minus_attack_db": 0.21154462000000152
+          }
+        },
+        {
+          "name": "Bass Clarinet",
+          "before": {
+            "soft_or_unpressed": {
+              "name": "Bass Clarinet",
+              "corrected": false,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -33.16147997,
+              "attack_rms_dbfs": -39.45056938,
+              "early_body_rms_dbfs": -39.02134594,
+              "late_hold_rms_dbfs": -39.05851451,
+              "release_rms_dbfs": -111.8338924
+            },
+            "firm_or_pressed": {
+              "name": "Bass Clarinet",
+              "corrected": false,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -28.34112208,
+              "attack_rms_dbfs": -35.37767062,
+              "early_body_rms_dbfs": -34.98142457,
+              "late_hold_rms_dbfs": -35.02438238,
+              "release_rms_dbfs": -106.808468
+            },
+            "peak_response_db": 4.82035789,
+            "late_hold_response_db": 4.034132130000003,
+            "firm_late_minus_attack_db": 0.3532882400000048
+          },
+          "after": {
+            "soft_or_unpressed": {
+              "name": "Bass Clarinet",
+              "corrected": true,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -29.19059048,
+              "attack_rms_dbfs": -35.48004678,
+              "early_body_rms_dbfs": -35.05096915,
+              "late_hold_rms_dbfs": -35.08817579,
+              "release_rms_dbfs": -107.859986
+            },
+            "firm_or_pressed": {
+              "name": "Bass Clarinet",
+              "corrected": true,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -24.44217821,
+              "attack_rms_dbfs": -31.47886511,
+              "early_body_rms_dbfs": -31.08276446,
+              "late_hold_rms_dbfs": -31.12575934,
+              "release_rms_dbfs": -102.9074691
+            },
+            "peak_response_db": 4.748412269999999,
+            "late_hold_response_db": 3.9624164500000028,
+            "firm_late_minus_attack_db": 0.35310577000000265
+          }
+        },
+        {
+          "name": "Metallic Keys",
+          "before": {
+            "soft_or_unpressed": {
+              "name": "Metallic Keys",
+              "corrected": false,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -32.7862099,
+              "attack_rms_dbfs": -48.92735799,
+              "early_body_rms_dbfs": -59.52676549,
+              "late_hold_rms_dbfs": -70.02646271,
+              "release_rms_dbfs": -75.54505554
+            },
+            "firm_or_pressed": {
+              "name": "Metallic Keys",
+              "corrected": false,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -27.430019,
+              "attack_rms_dbfs": -43.53250409,
+              "early_body_rms_dbfs": -54.14714066,
+              "late_hold_rms_dbfs": -65.18213407,
+              "release_rms_dbfs": -75.51906876
+            },
+            "peak_response_db": 5.356190900000001,
+            "late_hold_response_db": 4.8443286400000005,
+            "firm_late_minus_attack_db": -21.64962998
+          },
+          "after": {
+            "soft_or_unpressed": {
+              "name": "Metallic Keys",
+              "corrected": true,
+              "velocity": 0.3000000119,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -27.3423421,
+              "attack_rms_dbfs": -43.37048063,
+              "early_body_rms_dbfs": -54.05981918,
+              "late_hold_rms_dbfs": -65.45533502,
+              "release_rms_dbfs": -75.52135489
+            },
+            "firm_or_pressed": {
+              "name": "Metallic Keys",
+              "corrected": true,
+              "velocity": 0.8500000238,
+              "pressure": 0.0,
+              "finite": true,
+              "peak_dbfs": -24.09900895,
+              "attack_rms_dbfs": -40.15280069,
+              "early_body_rms_dbfs": -50.79838302,
+              "late_hold_rms_dbfs": -62.03528235,
+              "release_rms_dbfs": -75.47601644
+            },
+            "peak_response_db": 3.243333149999998,
+            "late_hold_response_db": 3.420052670000004,
+            "firm_late_minus_attack_db": -21.882481660000003
+          }
+        }
+      ]
+    }
+  },
+  "referenced_worker33_report": {
+    "path": "docs/preset-evidence/2026.11.4/reviews/33-level-correction.json",
+    "sha256": "333f9e2a102fa1912f4b081e7cdd35f607b790c4b2ae5d7fbf77b552ab118c9b"
+  },
+  "remaining_qualification": [
+    "Root final-source two-pass recalibration and rebuilt full-bank acceptance",
+    "Final matched inventories/captures and source provenance refresh",
+    "Actual native wrappers, validator outcomes and downloaded artifact bytes"
+  ],
+  "limits": [
+    "The independent level-source review and representative short render conditions do not demonstrate acoustic equivalence, human listening preference, or hyperrealism.",
+    "The corrected base-level settings preserve programmed spectral touch but change relative amplitude dynamics in some presets; the measured changes are disclosed above.",
+    "No native build, full final-source bank pass, or downloadable artifact acceptance is claimed here."
+  ]
+}

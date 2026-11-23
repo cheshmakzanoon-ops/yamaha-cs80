@@ -1,0 +1,185 @@
+{
+  "schema": 1,
+  "reviewer": "a29_original_bank_review",
+  "status": "passed_with_evidence_packaging_note",
+  "date": "2026-11-23",
+  "scope": "Independent original-bank source and finish semantics review; retained A16 render evidence is reused, not rerendered. Final level calibration and release qualification are separate parent tasks.",
+  "production_files_modified": [],
+  "source_provenance": {
+    "original_circuit_sha256": "d6cf0293de597d95727be7c50eb347d87f9670c6d5b8ab583989fbbe99481a9d",
+    "original_source_matches_a16_render_provenance": true,
+    "instrument_body_sha256_now": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "instrument_body_sha256_a16": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "factory_presets_sha256_now": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5"
+  },
+  "source_inheritance": {
+    "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+    "unchanged_source_and_assignment_sections": {
+      "tones": true,
+      "families": true,
+      "adjectives": true,
+      "sequence_rates": true,
+      "sequence_modes": true,
+      "sequence_octaves": true
+    },
+    "direct_assignments": 22,
+    "named_tone_assignments": 22,
+    "family_assignments": {
+      "Brass": 22,
+      "Strings": 24,
+      "Pads": 28,
+      "Bass": 22,
+      "Keys": 18,
+      "Leads": 22,
+      "FX": 20,
+      "Sequences": 22
+    },
+    "musical_original_count": 221,
+    "original_source_sha256": "d6cf0293de597d95727be7c50eb347d87f9670c6d5b8ab583989fbbe99481a9d"
+  },
+  "compiled_assertions": {
+    "finish_cases": 4200,
+    "protected_parameter_checks": 739200,
+    "range_checks": 840000,
+    "struck_slow_attack_checks": 376,
+    "tone_size_swap_checks": 44,
+    "role_protection_checks": 8792
+  },
+  "init_vectors": [
+    {
+      "name": "Init Patch",
+      "historical_198_controls_float32_exact": true,
+      "new_body_size_defaults": [
+        1,
+        1
+      ],
+      "current_200_vector_sha256": "f6a78222c8422f1e41c2a29df4b13deee936ee3fe1fd224ee10ba8a45c001e01",
+      "historical_198_vector_sha256": "c454067ba68e7cc83b7b8366644f2da97e5325ed8e8c504a38d1eddc298690de"
+    },
+    {
+      "name": "Init Circuit",
+      "historical_198_controls_float32_exact": true,
+      "new_body_size_defaults": [
+        1,
+        1
+      ],
+      "current_200_vector_sha256": "f6b387041b4378ba068f6d09d18915bbb5462e41af3ae93514a5a60278be385d",
+      "historical_198_vector_sha256": "98deaf985ee04c9083fe893ff4f6237461639d79c2db4a7268cd9135f2a51c43"
+    }
+  ],
+  "findings": [
+    "All 221 musical originals still resolve exact named curated recipes: 22 named-row studies, 21 direct musical programs and 178 family variations. Recipe lookup throws on missing names. Finish receives the source instrument category before Hardware Studies relabeling.",
+    "All 14 finishes were applied to all 300 non-Init curated recipes in a standalone C++ probe. Only the explicitly allowed filter, envelope, pan, drift, upper-keyboard brightness and active-body brightness/decay controls changed. Waveform, pulse/PWM, footage, velocity, aftertouch, MPE, arpeggiator, modulation-rate, body-model, body-mix and body-size controls remained identical.",
+    "Role assertions preserve percussive body and brief-accent attacks, cap brief-accent release growth, and constrain organ onsets. Slow finish preserves both attack controls on both ranks of all Keys/Bass/Sequences/Plucked/Bells sources.",
+    "All 22 named-row studies retain their intended source waveform/footage/expression controls; row II swaps both channels, all four body fields and both body-size controls. All 44 resulting body-size assignments match independently indexed source ranks.",
+    "Both Init vectors retain all 198 published controls bit-exact as float32 and append neutral body sizes of 1. Init Patch retains its historical golden transform, so its published vector remains intentionally different from Init Circuit.",
+    "Explicit program-level HP, chorus, ring, bass-footage, keyboard pitch and sequence-rate/mode/octave overrides are outside generic finish. The 22 sequence rate/mode/octave assignments and source/style ordering are unchanged from the reviewed baseline."
+  ],
+  "reused_a16_audio_evidence": {
+    "provenance_path": "docs/preset-evidence/2026.11.4/development/originals/final-provenance.json",
+    "provenance_sha256": "21f91362efa39b76ce8aadddd40ea8d6b7df054baf7f62c6a49a4b37f08e17ca",
+    "scope": "Development original-bank voicing; pre-final level calibration. No acoustic-equivalence claim.",
+    "behavior_summary": {
+      "scope": "Same source recipes and DSP; only finish differs. No master normalization. Authored behavior, not reference-instrument likeness.",
+      "finish_comparisons": [
+        {
+          "name": "Stage Keys",
+          "dark_centroid_hz": 517.5521078246428,
+          "dark_upper_fraction": 0.12320749889382719,
+          "bright_centroid_hz": 522.5767990742336,
+          "bright_upper_fraction": 0.12521971450409647,
+          "centroid_ratio": 1.0097085707383366,
+          "upper_fraction_gain_db": 0.0703556777014983
+        },
+        {
+          "name": "Electric Piano I",
+          "dark_centroid_hz": 276.7249264588835,
+          "dark_upper_fraction": 0.0012017673251447732,
+          "bright_centroid_hz": 291.5615498672512,
+          "bright_upper_fraction": 0.0026403859347670752,
+          "centroid_ratio": 1.0536150595402622,
+          "upper_fraction_gain_db": 3.4184701881210207
+        },
+        {
+          "name": "Solo Violin",
+          "dark_centroid_hz": 498.05109035545644,
+          "dark_upper_fraction": 0.10578282123797214,
+          "bright_centroid_hz": 529.1032870076349,
+          "bright_upper_fraction": 0.12207790235942606,
+          "centroid_ratio": 1.0623474122504515,
+          "upper_fraction_gain_db": 0.6222191276545007
+        },
+        {
+          "name": "Covered Horn",
+          "dark_centroid_hz": 402.7025322192253,
+          "dark_upper_fraction": 0.04566643965393923,
+          "bright_centroid_hz": 476.46521921910045,
+          "bright_upper_fraction": 0.09460636399478344,
+          "centroid_ratio": 1.1831691660675225,
+          "upper_fraction_gain_db": 3.163231980513408
+        },
+        {
+          "name": "Warm Pad",
+          "dark_centroid_hz": 290.4513976711394,
+          "dark_upper_fraction": 0.009138417969932465,
+          "bright_centroid_hz": 339.89506378757346,
+          "bright_upper_fraction": 0.0414277344891553,
+          "centroid_ratio": 1.1702304293003134,
+          "upper_fraction_gain_db": 6.564201663940354
+        },
+        {
+          "name": "Picked Bass",
+          "dark_centroid_hz": 155.55693930585113,
+          "dark_upper_fraction": 0.00012521350891725263,
+          "bright_centroid_hz": 156.89532740716243,
+          "bright_upper_fraction": 0.0001742900265950706,
+          "centroid_ratio": 1.0086038469725853,
+          "upper_fraction_gain_db": 1.4362135001448824
+        }
+      ],
+      "struck_slow_attacks_unchanged": true,
+      "tone_studies": 22,
+      "named_rank_difference_db_min": 2.25507,
+      "named_rank_difference_db_max": 111.865
+    },
+    "wide_stereo_cases": 10,
+    "wide_max_absolute_balance_db": 0.869885773973885,
+    "wide_max_mono_energy_loss_db": 0.21153165040687893,
+    "identity_coverage": {
+      "identities": 523,
+      "musical_originals_revised": 221,
+      "nonvolume_duplicates": 0
+    },
+    "verified_evidence_sha256": {
+      "behavior-summary.json": "dd2b62ab76334bd0980658e9d3f89af39a0b5b6f818811e3f11902b12bc5ef1f",
+      "identity-and-finish-coverage.json": "98c722b52b3adf9b77791a409a2648d62331e63bcef371777f22ad26ad59b98d",
+      "wide-stereo-summary.json": "6f351cdf445e2e211c92c5aca8f7601ada58e8be5804ad33f995e5d65da20e69",
+      "tone-rank-dominance.csv": "7202767f751ff2a78eeaf29607cd08a74fa4e20643becc7778ec60e09b20cb49",
+      "tone-levels.log": "13209c7eac040bde5d4f385c2b30986687c7c2e02f3f9502be160d821eb86200",
+      "data-audit.log": "445e1fb21a56bccf05315ae3b198ca20689ac05737f84d07949ebf5ca193468e"
+    },
+    "listed_but_absent_evidence_files": {
+      "finish-probe.cpp": "22bc03aad5458724ca2d19d58489588ec4bd4b56d802b8ea0f160032a8ce9620"
+    }
+  },
+  "limits": [
+    "These checks establish recipe inheritance, parameter semantics and compatibility. They do not establish measured acoustic-instrument equivalence, subjective realism or hardware-CS80 identity.",
+    "A16 audio measurements precede final level calibration. Their source hash matches the reviewed finish implementation; parent final-bank audit and calibrated renders remain the final release evidence.",
+    "Bright/dark contrast varies with source: A16 Stage Keys upper-band difference is only 0.07036 dB at its tested note, so broad claims of a large audible contrast on every source are unsupported.",
+    "A16 provenance lists finish-probe.cpp, which was absent from the retained directory when reviewed. All six retained result-file hashes match. The complete independent A29 probe is embedded below."
+  ],
+  "reproduction": {
+    "compiler": "c++ -std=c++20 -O2 -I src /path/to/probe.cpp -o /path/to/probe",
+    "probe_source_sha256": "016e805a185bc5c760876d8d5b1f43ab2b4e47fb9f7cb7cd8d0c1b2be80f92e5",
+    "probe_result_sha256": "e1814fc460283f66b191504cb03cb59a6720a0da9692cc48e5bd67b54a4d0fbc",
+    "probe_source": "#include \"core/FactoryPresets.cpp\"\n#include <cstdio>\n#include <iomanip>\n#include <iostream>\n#include <set>\n#include <stdexcept>\nusing namespace cs80;\nint main() {\n  std::set<int> allowed{P_drift,P_kbdBrillianceHigh};\n  for(int ch=0;ch<2;++ch) {\n    for(int id:{CP_lpfCutoff,CP_lpfRes,CP_vA,CP_fA,CP_vD,CP_fD,CP_vR,CP_fR,CP_pan})\n      allowed.insert(chParam(ch,id));\n    allowed.insert(bodyParam(ch,2));allowed.insert(bodyParam(ch,3));\n  }\n  int finishes=0,protectedChecks=0,rangeChecks=0,slowChecks=0,sizeChecks=0,roleChecks=0;\n  auto require=[](bool x,const std::string& why){if(!x)throw std::runtime_error(why);};\n  for(const auto& source:curatedLibrary()) {\n    if(source.category==\"Init\")continue;\n    for(int style=0;style<14;++style) {\n      auto p=source;original_circuit::finish(p,static_cast<original_circuit::Finish>(style));++finishes;\n      require(p.name==source.name && p.category==source.category && p.tags==source.tags,\"finish altered identity\");\n      for(int i=0;i<P_numParams;++i) {\n        const auto& def=paramDef(i);++rangeChecks;\n        require(std::isfinite(p.values[i]) && p.values[i]>=def.min && p.values[i]<=def.max,\"finish produced invalid range: \"+source.name+\" / \"+def.id);\n        if(!allowed.count(i)) {++protectedChecks;require(p.values[i]==source.values[i],\"finish altered protected control: \"+source.name+\" / \"+def.id);}\n      }\n      for(int ch=0;ch<2;++ch) {\n        const int model=static_cast<int>(source.values[bodyParam(ch,0)]);\n        const bool active=source.values[bodyParam(ch,1)]>0.0f;\n        const bool percussiveModel=active && ((model>=body::piano && model<=body::bass) || model>=body::bell);\n        const bool accent=source.values[chParam(ch,CP_vS)]<=0.10f && source.values[chParam(ch,CP_vD)]<0.65f*source.values[chParam(1-ch,CP_vD)];\n        if(percussiveModel || accent) for(int id:{CP_vA,CP_fA}) {\n          ++roleChecks;require(p.values[chParam(ch,id)]<=source.values[chParam(ch,id)]+1.0e-7f,\"finish stretched struck model/accent attack\");\n        }\n        if(accent) for(int id:{CP_vR,CP_fR}) {\n          ++roleChecks;require(p.values[chParam(ch,id)]<=source.values[chParam(ch,id)]*1.025f+1.0e-7f,\"finish stretched short accent release\");\n        }\n        if(source.category==\"Organ\") for(int id:{CP_vA,CP_fA}) {\n          ++roleChecks;require(p.values[chParam(ch,id)]<=source.values[chParam(ch,id)]*1.12f+1.0e-7f && p.values[chParam(ch,id)]>=source.values[chParam(ch,id)]*0.88f-1.0e-7f,\"finish replaced organ onset\");\n        }\n      }\n      if(style==static_cast<int>(original_circuit::Finish::slow) &&\n          (source.category==\"Keys\" || source.category==\"Bass\" || source.category==\"Sequences\" || source.category==\"Plucked\" || source.category==\"Bells\")) {\n        for(int ch=0;ch<2;++ch)for(int id:{CP_vA,CP_fA}){++slowChecks;require(p.values[chParam(ch,id)]==source.values[chParam(ch,id)],\"Slow stretched struck attack: \"+source.name);}\n      }\n    }\n  }\n  const char* tones[2][11]={\n    {\"Ensemble Strings\",\"Slow Strings\",\"Brass Swell I\",\"Flute\",\"Electric Piano I\",\"Clavichord I\",\"Harpsichord I\",\"Flute Organ 8+4\",\"Guitar I\",\"Funky Pluck I\",\"Funky Clavichord\"},\n    {\"Chamber Strings\",\"PWM Strings\",\"Brass Swell II\",\"Horn Section\",\"Analog Bass\",\"Clavichord II\",\"Harpsichord II\",\"Reed Organ\",\"Guitar II\",\"Funky Pluck II\",\"Funky Pluck I\"}\n  };\n  const auto& original=factoryPresets();\n  require(original.size()==222 && curatedLibrary().size()==301,\"bank count changed\");\n  for(int t=0;t<11;++t)for(int row=0;row<2;++row) {\n    auto expected=original_circuit::recipe(tones[row][t]);\n    original_circuit::finish(expected,row?original_circuit::Finish::amber:original_circuit::Finish::golden);\n    const auto& actual=original[2*t+row];\n    for(int ch=0;ch<2;++ch) {\n      const int from=row?1-ch:ch;\n      for(int id:{CP_saw,CP_pulse,CP_sine,CP_noise,CP_pw,CP_pwmDepth,CP_pwmSpeed,CP_feet,CP_initBrill,CP_initLevel,CP_afterBrill,CP_afterLevel})\n        require(actual.values[chParam(ch,id)]==expected.values[chParam(from,id)],\"tone waveform/footage/expression swap\");\n      for(int field=0;field<4;++field)require(actual.values[bodyParam(ch,field)]==expected.values[bodyParam(from,field)],\"tone body swap\");\n      ++sizeChecks;require(actual.values[bodySizeParam(ch)]==expected.values[bodySizeParam(from)],\"tone size swap\");\n    }\n  }\n  std::cout << \"{\\\"finish_cases\\\":\"<<finishes<<\",\\\"protected_parameter_checks\\\":\"<<protectedChecks<<\",\\\"range_checks\\\":\"<<rangeChecks<<\",\\\"struck_slow_attack_checks\\\":\"<<slowChecks<<\",\\\"tone_size_swap_checks\\\":\"<<sizeChecks<<\",\\\"role_protection_checks\\\":\"<<roleChecks<<\",\\\"init_vectors\\\":[\";\n  bool first=true;\n  for(const auto& p:programLibrary())if(p.category==\"Init\") {\n    if(!first)std::cout<<',';first=false;\n    std::cout<<\"{\\\"name\\\":\\\"\"<<p.name<<\"\\\",\\\"values\\\":[\";\n    for(int i=0;i<P_numParams;++i){if(i)std::cout<<',';std::cout<<std::setprecision(9)<<p.values[i];}\n    std::cout<<\"]}\";\n  }\n  std::cout<<\"]}\\n\";\n}\n",
+    "baseline_inventory_sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521"
+  },
+  "root_resolution": {
+    "finding": "Missing retained A16 probe source",
+    "status": "resolved",
+    "retained_path": "docs/preset-evidence/2026.11.4/development/originals/finish-probe.cpp",
+    "sha256": "22bc03aad5458724ca2d19d58489588ec4bd4b56d802b8ea0f160032a8ce9620",
+    "scope": "Copied the original scratch source; historical pre-calibration audio scope remains unchanged."
+  }
+}

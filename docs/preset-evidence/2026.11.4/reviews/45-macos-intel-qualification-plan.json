@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "worker": 45,
+  "task": "macOS Intel native and artifact qualification",
+  "status": "ready_plan_only; actual source, run and artifacts pending",
+  "qualified": false,
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "preset_library_revision": "2026.11.4",
+  "target": "macos-x86_64",
+  "runner": "macos-15-intel",
+  "job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+  "source_commit": null,
+  "source_tree": null,
+  "run_id": null,
+  "run_attempt": null,
+  "readiness_source_sha256": {
+    ".github/workflows/build.yml": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "scripts/test-pluginval-macos-download.py": "769b776c7c501e0c8670d0b4481a339487d6a498264d284eb6954aca8e6b7bb2",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/verify-ci-juce-source.cmake": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+    "docs/preset-evidence/2026.11.4/reviews/39-macos-au-binding.json": "17d410c00d0fffc6dfad696b44919716eae53494fd9079c334e8ff6aeb0a183a",
+    "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71"
+  },
+  "scope_boundary": [
+    "No new native build, validator, installer or artifact API result has been consumed.",
+    "The preceding 2026.11.3 platform report was used only as a report schema reference; none of its counts or outcomes are current evidence.",
+    "Intel qualification requires its own native job, artifacts, logs and binary architecture; no ARM outcome can substitute.",
+    "Source readiness does not establish publisher signing, notarization, universal DAW compatibility or acoustic equivalence."
+  ],
+  "required_steps": [
+    "Record native platform",
+    "Configure",
+    "Verify configured JUCE source",
+    "Build",
+    "Test",
+    "Fetch pluginval 1.0.4",
+    "Register built AU",
+    "Validate VST3 with pluginval",
+    "Validate AU with pluginval",
+    "Validate AU with pluginval GUI",
+    "Validate AU GUI fixed-seed regression",
+    "Package native macOS VST3, AU and Standalone",
+    "Upload native macOS install bundle",
+    "Upload pluginval reports",
+    "Upload test and JUCE source evidence"
+  ],
+  "run_binding": [
+    "Accept the exact new source commit and tree supplied by root after publication. Fetch and retain current run, current-attempt jobs, individual job and artifact API records.",
+    "Require repository, head_sha, run ID and attempt to match. Match the Intel job by its exact name and latest attempt; require completed success.",
+    "Resolve step numbers from the actual API by exact step names; require every required step successful. Failure-only diagnostics may be skipped. A green upload alone is insufficient.",
+    "Require all downloaded evidence artifacts to match independent API ID, name, byte count, SHA256 digest, source/run, nonexpiry and successful producing upload step. Bind uploads to Intel job logs and step timestamps."
+  ],
+  "native_checks": {
+    "platform_evidence": "Record native platform must show x86_64 and retain actual macOS/Xcode details. Configuration must enable plugins and tests in Release; CTest runs serial with --no-tests=error.",
+    "junit": "Parse actual ctest-results.xml; count individual registered cases, passed, failed, formal skipped and disabled. Require zero failures and no unaccounted cases. Record named skip reasons and separately count nested Python unittest skips from retained output. Do not substitute prior counts.",
+    "full_log": "Retain LastTest.log and the original native job log; use them when JUnit output truncation omits assertion counts or skip reasons.",
+    "juce": {
+      "version": "8.0.11",
+      "sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "record": "ci-juce-provenance.txt",
+      "rule": "Require successful source-verification step and actual configured dependency version/revision matching pinned source; do not infer from CMake arguments alone."
+    },
+    "relevant_cases": [
+      "cs80_instrument_body_tests",
+      "cs80_instrument_body_engine_tests",
+      "cs80_library_audit_tests",
+      "cs80_preset_voicing_tests",
+      "cs80_preset_character_tests",
+      "cs80_preset_precision_tests",
+      "cs80_circuit_source_host_tests",
+      "cs80_modern_recall_host_tests",
+      "cs80_pluginval_macos_download_tests",
+      "cs80_ui_smoke"
+    ],
+    "body_host_routing": "The appended-size/old-state InstrumentBodyHostTests execute in both cs80_modern_recall_host_tests and cs80_ui_smoke; confirm both native outcomes rather than assuming direct core-model tests cover JUCE recall."
+  },
+  "validator_lanes": [
+    {
+      "step_name": "Validate VST3 with pluginval",
+      "strictness": 10,
+      "version": "1.0.4",
+      "gui": false,
+      "fixed_seed": null,
+      "console": "pluginval-vst3.log",
+      "report": "pluginval-reports/cs80-vst3",
+      "original_command_sha256": "cbca198b0ded673f32ce6846d86f97a46d7e006b134b59109e6b03bb4972a6bf",
+      "exit_rule": "Actual original step succeeds under pipefail and its retained console/report terminate with clean SUCCESS; reject any FAILED/error outcome. No validator retry wrapper is present."
+    },
+    {
+      "step_name": "Validate AU with pluginval",
+      "strictness": 10,
+      "version": "1.0.4",
+      "gui": false,
+      "fixed_seed": null,
+      "console": "pluginval-au.log",
+      "report": "pluginval-reports/cs80-au",
+      "original_command_sha256": "d944daf0acd50995254c088efa5674ab0f6f6af5df4ecacc6b666448f6a57345",
+      "exit_rule": "Actual original step succeeds under pipefail and its retained console/report terminate with clean SUCCESS; reject any FAILED/error outcome. No validator retry wrapper is present."
+    },
+    {
+      "step_name": "Validate AU with pluginval GUI",
+      "strictness": 10,
+      "version": "1.0.4",
+      "gui": true,
+      "fixed_seed": null,
+      "console": "pluginval-au-gui.log",
+      "report": "pluginval-reports/cs80-au-gui",
+      "original_command_sha256": "849ccab1931057d48d2d49a51b4e262d5d833d46d18434aadf9539569bfea8d2",
+      "exit_rule": "Actual original step succeeds under pipefail and its retained console/report terminate with clean SUCCESS; reject any FAILED/error outcome. No validator retry wrapper is present."
+    },
+    {
+      "step_name": "Validate AU GUI fixed-seed regression",
+      "strictness": 10,
+      "version": "1.0.4",
+      "gui": true,
+      "fixed_seed": "0x2b4eef5",
+      "console": "pluginval-au-seed-regression.log",
+      "report": "pluginval-reports/cs80-au-seed-regression",
+      "original_command_sha256": "9f7cc862fe33c2f41c313e287ae48fe8c11d920e2b5f51d892e02c8e51844c30",
+      "exit_rule": "Actual original step succeeds under pipefail and its retained console/report terminate with clean SUCCESS; reject any FAILED/error outcome. No validator retry wrapper is present."
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "cs80-macos-15-intel-install-bundle",
+      "producer_step": "Upload native macOS install bundle",
+      "role": "actual VST3, AU and Standalone installation archive"
+    },
+    {
+      "name": "cs80-pluginval-macos-15-intel",
+      "producer_step": "Upload pluginval reports",
+      "required_members": [
+        "au-payload-before-validation.sha256",
+        "au-payload-after-validation.sha256",
+        "pluginval-download.json",
+        "pluginval-vst3.log",
+        "pluginval-au.log",
+        "pluginval-au-gui.log",
+        "pluginval-au-seed-regression.log",
+        "pluginval-reports/cs80-vst3",
+        "pluginval-reports/cs80-au",
+        "pluginval-reports/cs80-au-gui",
+        "pluginval-reports/cs80-au-seed-regression"
+      ]
+    },
+    {
+      "name": "cs80-macos-15-intel-test-evidence",
+      "producer_step": "Upload test and JUCE source evidence",
+      "required_members": [
+        "LastTest.log",
+        "ctest-results.xml",
+        "ci-juce-provenance.txt"
+      ]
+    }
+  ],
+  "installation_acceptance": {
+    "tool": "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py",
+    "command_template": [
+      "python3",
+      "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py",
+      "--archive",
+      "ACTUAL_INSTALL_ZIP",
+      "--artifact-api",
+      "ACTUAL_INDIVIDUAL_ARTIFACT_API_JSON",
+      "--source",
+      "PUBLISHED_SOURCE_SHA",
+      "--run-id",
+      "ACTUAL_RUN_ID",
+      "--platform",
+      "macos",
+      "--architecture",
+      "x86_64",
+      "--repo",
+      "REPO_CHECKOUT_CONTAINING_SOURCE",
+      "--out",
+      "ACTUAL_ACCEPTANCE_JSON"
+    ],
+    "checks": "Outer API bytes/digest/source/run/expiry; complete inner inventory, SOURCE.txt, revision2026.11.4, manifest, licenses, JUCE provenance and native Mach-O executable roles with advertised x86_64 slices. The checker source and production packager/checker must match the requested commit."
+  },
+  "au_payload_binding": {
+    "required_success_steps": [
+      "Register built AU",
+      "Package native macOS VST3, AU and Standalone"
+    ],
+    "records": [
+      "au-payload-before-validation.sha256",
+      "au-payload-after-validation.sha256"
+    ],
+    "source_suffix": "build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+    "registered_suffix": "Library/Audio/Plug-Ins/Components/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+    "installed_suffix": "AU/CS-80 Reference.component/Contents/MacOS/CS-80 Reference",
+    "rule": "Require exactly two well-formed SHA256/path entries per record, correct source and registered-copy roles, four equal hashes across both records, and equality to the actual AU executable bytes read from the accepted downloaded installation archive. Inspect the actual successful diff-bearing steps and logs; workflow source records sign-before-copy and full recursive comparisons before validation and before packaging. Reject a missing record or unequal hash even when pluginval is green.",
+    "boundary": "Recursive diff binds complete file/resource contents and presence on runner. The retained hash records separately bind the executable to downloaded bytes; this is existing ad-hoc signing only."
+  },
+  "output_plan": [
+    "Retain exact current-source API snapshots, artifact identities/digests, job log and actual extracted evidence with hashes.",
+    "Write separate Intel native, validators, install acceptance and AU payload-binding records under the new source CI directory chosen by root.",
+    "Create a platform summary only after every native, validator, archive and AU-byte condition passes; preserve any failed result and its source."
+  ],
+  "checks_performed_now": {
+    "workflow_parsed": true,
+    "intel_matrix_entry_present": true,
+    "four_original_lanes_present": true,
+    "strictness_and_exit_contracts_present": true,
+    "no_actual_artifacts_checked": true
+  }
+}

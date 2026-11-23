@@ -1,0 +1,612 @@
+{
+  "state": "roster and offline guards verified; full audio capture deferred to committed native build",
+  "roster": {
+    "wav_count": 138,
+    "selected_program_count": 74,
+    "audio_seconds": 870.0
+  },
+  "folder_count": 30,
+  "raw_audio_bytes": 334080000,
+  "selected_active_model_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "resolved_requests_unique": true,
+  "offline_test_count": 18,
+  "offline_tests_passed": true,
+  "candidate_inventory_sha256": "c4d64a9ff688305fcbd7c699fca1c72a7a9713591b2c61a3f72097dcbb9f7a1f",
+  "source_sha256": {
+    "scripts/capture-factory-auditions.py": "99150f4e685db3d3f0dde95ef2bc003a0b26d36499a76c957464af13ed80d9c7",
+    "scripts/test-capture-factory-auditions.py": "ff526f51830fba1c1c755061a7e366c57b5647dd4a983b31d6aa447b15524605"
+  },
+  "foundation_checks": [
+    {
+      "folder": "sustained-effort-soft-c4",
+      "name": "Solo Violin",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "name": "Flute",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "name": "Clarinet",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "name": "Oboe",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "name": "English Horn",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "name": "Covered Horn",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "name": "Muted Trumpet",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "name": "Solo Cello",
+      "played_midi_note": 72,
+      "rank_i_feet_index": 0,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "name": "Bass Clarinet",
+      "played_midi_note": 72,
+      "rank_i_feet_index": 0,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "name": "Bassoon",
+      "played_midi_note": 72,
+      "rank_i_feet_index": 0,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "name": "Solo Violin",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "name": "Flute",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "name": "Clarinet",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "name": "Oboe",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "name": "English Horn",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "name": "Covered Horn",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "name": "Muted Trumpet",
+      "played_midi_note": 60,
+      "rank_i_feet_index": 1,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "name": "Solo Cello",
+      "played_midi_note": 72,
+      "rank_i_feet_index": 0,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "name": "Bass Clarinet",
+      "played_midi_note": 72,
+      "rank_i_feet_index": 0,
+      "nominal_rank_i_midi_note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "name": "Bassoon",
+      "played_midi_note": 72,
+      "rank_i_feet_index": 0,
+      "nominal_rank_i_midi_note": 60
+    }
+  ],
+  "selections": [
+    {
+      "folder": "keyboards",
+      "names": [
+        "Electric Piano I",
+        "Electric Piano II",
+        "Tine Piano",
+        "Clavichord I",
+        "Clavichord II",
+        "Funky Clavichord",
+        "Harpsichord I",
+        "Harpsichord II",
+        "Lute Harpsichord",
+        "Toy Piano",
+        "Honky Keys",
+        "Vibes Keys",
+        "Celesta",
+        "Saw Pulse Piano",
+        "Soft Keys",
+        "Chorus Keys",
+        "Stage Keys",
+        "Velocity Keys",
+        "Dulcimer",
+        "Reed Piano",
+        "Glass Keys",
+        "Tremolo Keys",
+        "Contour Keys",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1
+    },
+    {
+      "folder": "soft-keyboards",
+      "names": [
+        "Electric Piano I",
+        "Electric Piano II",
+        "Tine Piano",
+        "Reed Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1
+    },
+    {
+      "folder": "families",
+      "names": [
+        "Brass Swell I",
+        "Sforzando Brass",
+        "Covered Horn",
+        "Solo Violin",
+        "Solo Cello",
+        "Marcato Strings",
+        "Recorder",
+        "Clarinet",
+        "Flute Organ 8+4",
+        "Tremolo Organ",
+        "Rubber Bass",
+        "Picked Bass",
+        "Nylon Pluck",
+        "Mandolin",
+        "Vibraphone",
+        "Marimba",
+        "Tremolo Brass",
+        "Tremolo Pad",
+        "Tremolo Poly",
+        "Touch Lead",
+        "Aftertouch Vibrato Lead",
+        "Glide Lead"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 7,
+      "tail": 2
+    },
+    {
+      "folder": "original-addresses",
+      "names": [
+        "Tone I: E. Piano",
+        "Tone II: Bass",
+        "Analog Piano",
+        "Bright Keys",
+        "Amber Keys 97",
+        "Slow Keys 106",
+        "Replicant Brass",
+        "Bass Stack"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1
+    },
+    {
+      "folder": "pressure-zero",
+      "names": [
+        "Aftertouch Vibrato Lead",
+        "Pressure Lead",
+        "Wah Lead",
+        "Pressure Pad",
+        "Flute",
+        "Solo Violin",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1
+    },
+    {
+      "folder": "pressure-full",
+      "names": [
+        "Aftertouch Vibrato Lead",
+        "Pressure Lead",
+        "Wah Lead",
+        "Pressure Pad",
+        "Flute",
+        "Solo Violin",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold": 5,
+      "tail": 1
+    },
+    {
+      "folder": "instrument-bodies",
+      "names": [
+        "Trombone Glide",
+        "Theatre Organ",
+        "Oboe",
+        "Bassoon",
+        "Guitar I",
+        "Guitar II",
+        "Kalimba"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 2
+    },
+    {
+      "folder": "textures-and-effects",
+      "names": [
+        "Evolving Pad",
+        "Breathing Pad",
+        "Thunder",
+        "Rain",
+        "Surf",
+        "Wind"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 7,
+      "tail": 2
+    },
+    {
+      "folder": "soft-kalimba",
+      "names": [
+        "Kalimba"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1
+    },
+    {
+      "folder": "tine-register-48",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 48
+    },
+    {
+      "folder": "tine-register-60",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "tine-register-84",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 84
+    },
+    {
+      "folder": "piano-register-36-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 36
+    },
+    {
+      "folder": "piano-register-36-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 36
+    },
+    {
+      "folder": "piano-register-60-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "piano-register-60-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "piano-register-84-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 84
+    },
+    {
+      "folder": "piano-register-84-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 84
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "names": [
+        "Solo Violin",
+        "Flute",
+        "Clarinet",
+        "Oboe",
+        "English Horn",
+        "Covered Horn",
+        "Muted Trumpet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "names": [
+        "Solo Cello",
+        "Bass Clarinet",
+        "Bassoon"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 72
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "names": [
+        "Solo Violin",
+        "Flute",
+        "Clarinet",
+        "Oboe",
+        "English Horn",
+        "Covered Horn",
+        "Muted Trumpet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "names": [
+        "Solo Cello",
+        "Bass Clarinet",
+        "Bassoon"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 72
+    },
+    {
+      "folder": "clarinet-register-60-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "clarinet-register-60-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60
+    },
+    {
+      "folder": "clarinet-register-64-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 64
+    },
+    {
+      "folder": "clarinet-register-64-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 64
+    },
+    {
+      "folder": "clarinet-register-68-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 68
+    },
+    {
+      "folder": "clarinet-register-68-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 68
+    },
+    {
+      "folder": "clarinet-register-72-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 72
+    },
+    {
+      "folder": "clarinet-register-72-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 72
+    }
+  ]
+}

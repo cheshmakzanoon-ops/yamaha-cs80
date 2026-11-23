@@ -1,0 +1,1052 @@
+{
+  "schema": 1,
+  "worker": 36,
+  "task": "native_workflow_map",
+  "created_at_utc": "2026-11-23T17:52:10.668013+00:00",
+  "status": "source_readiness_review_complete_native_qualification_pending",
+  "production_modified": false,
+  "workflow_modified": false,
+  "actual_artifacts_inspected": 0,
+  "baseline_head": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "source_scope": "Observed working-tree files, before the new source publication. The baseline HEAD is not the identity of these uncommitted changes. No prior revision CI result is counted for this candidate.",
+  "source_sha256": {
+    ".github/workflows/build.yml": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+    "CMakeLists.txt": "4726f5d1a5005069558f74a4c3a55da8106f7e63253ad1877c947e4deda3271c",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/verify-ci-juce-source.cmake": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727",
+    "scripts/run-pluginval-linux.sh": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+    "scripts/run-pluginval-with-core.py": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea",
+    "scripts/download-pluginval-windows.py": "2a6260516d2802cce192e0736c1758c9033e75a314009a063ef5de80d38e3b4a",
+    "scripts/download-pluginval-macos.py": "f0f2b4871b8cee6adb4e1169945a39eb816cbe0d861a71f3a2f940ea79ab0290",
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "src/plugin/PluginProcessor.h": "13cf93295111cd3ea042a9d0ac4835b92231c642c2d35e6bac288579a967f107",
+    "src/plugin/PluginProcessor.cpp": "cc79c978d5488b7f1f29d29c8966665a6bbd3ada31aa8050064bd3f44f31e401",
+    "tests/InstrumentBodyHostTests.h": "f9806de9f933f4590cb9f45897a6387a749e78e8e4b2ad64a11ef409d6ad489d",
+    "tests/ParameterStateChildIndexTests.cpp": "c3d003d413c32b7af1411ba639d5d2717e7ce0fde9e6ef4a0282747b9769a779",
+    "src/tools/ui_snapshot.cpp": "1426d00b5b92180df6ef1c1f8f4d959557653d8cd67d5a3c7059a90bd3006049"
+  },
+  "workflow": {
+    "name": "build",
+    "source_file": ".github/workflows/build.yml",
+    "sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+    "job_definitions": 5,
+    "expanded_native_jobs": 4,
+    "expanded_validator_only_jobs": 2,
+    "expanded_jobs_total": 6,
+    "required_validation_lanes": 13,
+    "native_ctest_execution_counts": null,
+    "counting_requirement": "Compute actual registered/passed/failed/formal-skipped/disabled counts from the final source run JUnit per platform. Nested Python skips remain separate. Do not reuse 2026.11.3 totals.",
+    "trigger": "push/pull_request except only the two circuit-inspection paths; workflow_dispatch supported",
+    "concurrency": "Main push/PR jobs cancel their prior same-platform/ref jobs. A cancellation is incomplete qualification. Manual runs use independent run-ID groups."
+  },
+  "platforms": [
+    {
+      "target": "linux-x86_64",
+      "native_job_key": "linux",
+      "native_job_name": "Linux / VST3 + Standalone",
+      "runner_label": "ubuntu-24.04",
+      "expected_binary_architecture": "x86_64",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "required_native_success_steps": [
+        "Configure",
+        "Verify configured JUCE source",
+        "Build",
+        "Test",
+        "Upload test and JUCE source evidence",
+        "Package Linux VST3 and Standalone",
+        "Upload Linux install bundle",
+        "Install build dependencies",
+        "Capture curated preset auditions",
+        "Upload curated preset auditions",
+        "Upload Linux VST3",
+        "Render demo and screenshots",
+        "Upload render artifacts"
+      ],
+      "install_artifact": "cs80-linux-install-bundle",
+      "test_evidence_artifact": "cs80-linux-test-evidence",
+      "test_evidence_members": [
+        "ctest-results.xml",
+        "LastTest.log",
+        "ci-juce-provenance.txt"
+      ],
+      "validator_job_key": "pluginval",
+      "validator_job_name": "pluginval / Linux VST3 (strictness 10)",
+      "validator_artifact": "cs80-pluginval-reports",
+      "validator_input_artifact": "cs80-linux-vst3",
+      "validator_lanes": [
+        {
+          "step": "Validate VST3 headless",
+          "log": "pluginval-headless.log",
+          "format": "VST3",
+          "gui": false,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "vst3/CS-80 Reference.vst3"
+        },
+        {
+          "step": "Validate VST3 GUI under Xvfb",
+          "log": "pluginval-gui.log",
+          "format": "VST3",
+          "gui": true,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "vst3/CS-80 Reference.vst3"
+        },
+        {
+          "step": "Validate GUI state regression seed 0x2da72db",
+          "log": "pluginval-gui-seed-regression.log",
+          "format": "VST3",
+          "gui": true,
+          "seed": "0x2da72db",
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "vst3/CS-80 Reference.vst3"
+        }
+      ],
+      "actual_native_outcome": null,
+      "actual_validator_outcome": null,
+      "audition_artifact": "cs80-curated-preset-audition-<source_sha>"
+    },
+    {
+      "target": "windows-x86_64",
+      "native_job_key": "windows",
+      "native_job_name": "Windows / VST3 + Standalone",
+      "runner_label": "windows-2022",
+      "expected_binary_architecture": "x86_64",
+      "formats": [
+        "VST3",
+        "Standalone"
+      ],
+      "required_native_success_steps": [
+        "Configure",
+        "Verify configured JUCE source",
+        "Build",
+        "Test",
+        "Upload test and JUCE source evidence",
+        "Package Windows VST3 and Standalone",
+        "Upload Windows install bundle",
+        "Upload Windows VST3"
+      ],
+      "install_artifact": "cs80-windows-install-bundle",
+      "test_evidence_artifact": "cs80-windows-test-evidence",
+      "test_evidence_members": [
+        "ctest-results.xml",
+        "LastTest.log",
+        "ci-juce-provenance.txt"
+      ],
+      "validator_job_key": "pluginval-windows",
+      "validator_job_name": "pluginval / Windows VST3 (strictness 10)",
+      "validator_artifact": "cs80-pluginval-windows",
+      "validator_input_artifact": "cs80-windows-vst3",
+      "validator_lanes": [
+        {
+          "step": "Validate VST3 headless",
+          "log": "pluginval-windows.log",
+          "format": "VST3",
+          "gui": false,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "vst3/CS-80 Reference.vst3"
+        },
+        {
+          "step": "Validate state regression seed 0x5037a0c",
+          "log": "pluginval-windows-seed-regression.log",
+          "format": "VST3",
+          "gui": false,
+          "seed": "0x5037a0c",
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "vst3/CS-80 Reference.vst3"
+        }
+      ],
+      "actual_native_outcome": null,
+      "actual_validator_outcome": null
+    },
+    {
+      "target": "macos-arm64",
+      "native_job_key": "macos",
+      "native_job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "runner_label": "macos-15",
+      "expected_binary_architecture": "arm64",
+      "formats": [
+        "VST3",
+        "AU",
+        "Standalone"
+      ],
+      "required_native_success_steps": [
+        "Configure",
+        "Verify configured JUCE source",
+        "Build",
+        "Test",
+        "Upload test and JUCE source evidence",
+        "Package native macOS VST3, AU and Standalone",
+        "Upload native macOS install bundle",
+        "Record native platform",
+        "Fetch pluginval 1.0.4",
+        "Register built AU",
+        "Validate VST3 with pluginval",
+        "Validate AU with pluginval",
+        "Validate AU with pluginval GUI",
+        "Validate AU GUI fixed-seed regression",
+        "Upload pluginval reports"
+      ],
+      "install_artifact": "cs80-macos-15-install-bundle",
+      "test_evidence_artifact": "cs80-macos-15-test-evidence",
+      "test_evidence_members": [
+        "ctest-results.xml",
+        "LastTest.log",
+        "ci-juce-provenance.txt"
+      ],
+      "validator_job_key": "macos",
+      "validator_job_name": "macOS / macos-15 / VST3 + AU + Standalone",
+      "validator_artifact": "cs80-pluginval-macos-15",
+      "validator_input_artifact": null,
+      "validator_lanes": [
+        {
+          "step": "Validate VST3 with pluginval",
+          "log": "pluginval-vst3.log",
+          "format": "VST3",
+          "gui": false,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3"
+        },
+        {
+          "step": "Validate AU with pluginval",
+          "log": "pluginval-au.log",
+          "format": "AU",
+          "gui": false,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+        },
+        {
+          "step": "Validate AU with pluginval GUI",
+          "log": "pluginval-au-gui.log",
+          "format": "AU",
+          "gui": true,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+        },
+        {
+          "step": "Validate AU GUI fixed-seed regression",
+          "log": "pluginval-au-seed-regression.log",
+          "format": "AU",
+          "gui": true,
+          "seed": "0x2b4eef5",
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+        }
+      ],
+      "actual_native_outcome": null,
+      "actual_validator_outcome": null
+    },
+    {
+      "target": "macos-x86_64",
+      "native_job_key": "macos",
+      "native_job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "runner_label": "macos-15-intel",
+      "expected_binary_architecture": "x86_64",
+      "formats": [
+        "VST3",
+        "AU",
+        "Standalone"
+      ],
+      "required_native_success_steps": [
+        "Configure",
+        "Verify configured JUCE source",
+        "Build",
+        "Test",
+        "Upload test and JUCE source evidence",
+        "Package native macOS VST3, AU and Standalone",
+        "Upload native macOS install bundle",
+        "Record native platform",
+        "Fetch pluginval 1.0.4",
+        "Register built AU",
+        "Validate VST3 with pluginval",
+        "Validate AU with pluginval",
+        "Validate AU with pluginval GUI",
+        "Validate AU GUI fixed-seed regression",
+        "Upload pluginval reports"
+      ],
+      "install_artifact": "cs80-macos-15-intel-install-bundle",
+      "test_evidence_artifact": "cs80-macos-15-intel-test-evidence",
+      "test_evidence_members": [
+        "ctest-results.xml",
+        "LastTest.log",
+        "ci-juce-provenance.txt"
+      ],
+      "validator_job_key": "macos",
+      "validator_job_name": "macOS / macos-15-intel / VST3 + AU + Standalone",
+      "validator_artifact": "cs80-pluginval-macos-15-intel",
+      "validator_input_artifact": null,
+      "validator_lanes": [
+        {
+          "step": "Validate VST3 with pluginval",
+          "log": "pluginval-vst3.log",
+          "format": "VST3",
+          "gui": false,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "build/CS80Reference_artefacts/Release/VST3/CS-80 Reference.vst3"
+        },
+        {
+          "step": "Validate AU with pluginval",
+          "log": "pluginval-au.log",
+          "format": "AU",
+          "gui": false,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+        },
+        {
+          "step": "Validate AU with pluginval GUI",
+          "log": "pluginval-au-gui.log",
+          "format": "AU",
+          "gui": true,
+          "seed": null,
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+        },
+        {
+          "step": "Validate AU GUI fixed-seed regression",
+          "log": "pluginval-au-seed-regression.log",
+          "format": "AU",
+          "gui": true,
+          "seed": "0x2b4eef5",
+          "version": "1.0.4",
+          "strictness": 10,
+          "in_process": true,
+          "per_test_timeout_ms": 120000,
+          "plugin_path": "$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+        }
+      ],
+      "actual_native_outcome": null,
+      "actual_validator_outcome": null
+    }
+  ],
+  "exit_and_retry_contracts": {
+    "windows_configure": "Configure records its original native exit despite a PowerShell Tee pipeline; continue-on-error is paired with a required Report CMake failure step exiting1. Later steps require configure success. A configure failure cannot qualify the job.",
+    "native_ctest": "All native CTest commands are serial, request --no-tests=error, retain output-on-failure and write JUnit. Formal skips must be explicitly counted and explained; diagnostics/uploads marked always can exist on failed jobs.",
+    "windows_validators": "Native exit code must be0 and log must contain an exact SUCCESS line. No runtime retry wrapper. Fixed-seed lane is independent and still runs after the randomized lane fails, unless cancelled; it never rescues that failure.",
+    "macos_validators": "set -euo pipefail preserves validator failure through tee; each log requires an exact SUCCESS line. No runtime validator retries. Each architecture has4 separate required lanes. Download retries are not validator runtime retries.",
+    "linux_validators": "Wrapper preserves command and tee outcomes and requires exit0 plus exact SUCCESS and no FAILED. Only139 with a started and last-completed test phase and no SUCCESS/FAILED is eligible for a fresh full retry, maximum3attempts. Failed attempts must be preserved. This is eligibility, not proof of crash ownership or suite completion. Seeded replay is an independent required lane.",
+    "linux_diagnostics": "Failure-only gdb/fault-thread replays are diagnostic and cannot replace the original required validation outcomes. Exit-propagation fixture and fault-thread shim selftests are additional required successful job steps.",
+    "uploads": "Evidence upload uses always(); artifact availability alone is not success. Bind each required producer/upload step and successful job conclusion to the exact final source/run/attempt."
+  },
+  "juce_contract": {
+    "version": "8.0.11",
+    "commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "configured_directory": "build/_deps/juce-src",
+    "requires_clean_own_git_checkout": true,
+    "source_override_allowed": false,
+    "report": "build/ci-juce-provenance.txt",
+    "report_requires": [
+      "verification=PASS",
+      "source_clean=true",
+      "actual_sha",
+      "actual_version",
+      "workflow_commit",
+      "workflow_run"
+    ],
+    "packager_rechecks": [
+      "tracked checkout clean against HEAD",
+      "HEAD equals GITHUB_SHA when set",
+      "JUCE PASS/clean/SHA/version",
+      "JUCE report workflow_commit equals HEAD",
+      "configured source is fetched build/_deps/juce-src"
+    ]
+  },
+  "parameter_and_memory_review": {
+    "core_parameters": 200,
+    "host_parameters": 306,
+    "unchanged_core_prefix_count": 198,
+    "unchanged_host_prefix_count": 304,
+    "new_core_positions": {
+      "body1_size": 198,
+      "body2_size": 199
+    },
+    "new_host_positions": {
+      "body1_size": 304,
+      "body2_size": 305
+    },
+    "new_AU_version_hint": 17,
+    "native_checks_to_observe": [
+      "cs80_parameter_state_index_tests",
+      "cs80_host_wrapper_platform_tests",
+      "cs80_main_vst3_only_automation_tests",
+      "cs80_ui_smoke",
+      "instrument body host identity/recall phase in CS80Snapshots"
+    ],
+    "parameter_assessment": "Source appends size parameters after published host layout, with newer AU hint; complete old-prefix hashes and306 count assertions are present. Native APVTS/state/VST3/AU execution must still pass on the new source.",
+    "engine_size_local_bytes": 478632,
+    "engine_size_prior_local_bytes": 386968,
+    "size_evidence": {
+      "path": "docs/preset-evidence/2026.11.4/reviews/20-runtime-cost.json",
+      "sha256": "4961f70ef9814a7899ff18a816daf82d1fc9f0a542c4bd401849fff089ba1063",
+      "scope": "Development compiler/ABI measurement reported by worker20, not a new measurement or proof of every native ABI layout."
+    },
+    "msvc_test_stack_reserve_bytes": 8388608,
+    "msvc_stack_scope": [
+      "CS80Snapshots",
+      "executable targets matching ^cs80_.*tests$ existing when the CMake target loop executes"
+    ],
+    "shipping_stack_override": false,
+    "factory_allocation": "createPluginFilter returns new Cs80AudioProcessor; its main Engine is a persistent member and the extension Engine is a unique_ptr allocation. The larger Engine does not become a factory automatic variable.",
+    "assessment": "No source-level stack-budget blocker identified. Native test execution is required to prove current fixture paths fit. The stale CMake comment says about270KB, while its actual8MiB linker setting remains explicit; no comment value is used as a limit."
+  },
+  "artifact_acceptance_requirements": [
+    "Bind final published source SHA/tree, runID/attempt and workflow hash from real API records; require all six expanded jobs and necessary steps to succeed.",
+    "Download each exact installation artifact and compare its outer size and SHA256 with the artifact API, including source/run identity and expiry.",
+    "Verify inner checksums, source/revision/run manifests, binary architecture and plugin/standalone roles, archive paths/modes and notices using the new2026.11.4 checker.",
+    "For Linux/Windows, compare distributed VST3 payload bytes/resources with the corresponding validator input artifact and bind the download/validation logs.",
+    "For macOS, preserve per-architecture build/platform logs and validators. AU registration copies the built component and ad-hoc resigns that copy; the source workflow alone does not prove every byte matches the distributed component.",
+    "Verify actual native JUnit and configured JUCE evidence, retaining failures, formal skips and any validator retries. No older-source count may qualify this candidate.",
+    "Bind Linux audition capture and upload success, then verify138WAV/74program/870second/30group actual payloads, complete523x200 inventory, frame counts, finite samples and checksums.",
+    "Only then update all four download URLs and audition URL to the accepted artifact IDs; later documentation/screenshot commits must not be mistaken for binary source."
+  ],
+  "limitations": [
+    "Read-only source review; no native builds, pluginval runs, actual installer ZIPs or installation/runtime outcomes were executed by this worker.",
+    "Binary architecture must be verified from actual payload headers; runner label alone is insufficient.",
+    "Ad-hoc AU registration signing is not publisher release signing or Apple notarization.",
+    "Packaged Standalone existence/header checks and processor/UI tests do not constitute a launch test of each extracted Standalone artifact on a user computer."
+  ],
+  "source_blockers": [],
+  "map_validation": {
+    "platforms": 4,
+    "expanded_jobs": 6,
+    "strictness10_lanes": 13,
+    "all_required_step_names_present": true,
+    "all_configure_steps_enable_plugin_and_tests": true,
+    "all_ctest_steps_serial_no_empty_suite_and_junit": true,
+    "all_JUCE_steps_pin_expected_source": true,
+    "method": "Parsed exact workflow with PyYAML and asserted map membership and source command contracts; no production code executed."
+  },
+  "workflow_step_map": {
+    "linux": [
+      {
+        "workflow_step_index": 1,
+        "name": "actions/checkout@v5",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/checkout@v5",
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 2,
+        "name": "Install build dependencies",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "b39019156aef342a37f44ed3e05fef486f4a0d95f2b13511bb6ffb07365b48e9",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 3,
+        "name": "Configure",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "30d3b5d60c92e2820d8f31132e3392211a7697b13a6de398f8bc662bddbefe71",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 4,
+        "name": "Verify configured JUCE source",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "36bebaad80aaf75c0e2bf850e0622388192715262b0dc6830506c3c9f35151d5",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 5,
+        "name": "Build",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "b066ccfba90d4d1282c156374ee042792d6f9ee13a83c890a14f7ebb0be74bc8",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 6,
+        "name": "Test",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "26cf171dbe8daf68ed53169f3a9adde9f31fda02a91a527caea0245fbeb04125",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 7,
+        "name": "Capture curated preset auditions",
+        "if": "implicit success()",
+        "id": "preset_audition",
+        "run_sha256": "f8d3644431e1705b7beff8822fbc1f49a53e3057753fca5814537a6ea2a8b699",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 8,
+        "name": "Upload curated preset auditions",
+        "if": "always() && (steps.preset_audition.outcome == 'success' || steps.preset_audition.outcome == 'failure')",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-curated-preset-audition-${{ github.sha }}"
+      },
+      {
+        "workflow_step_index": 9,
+        "name": "Upload Linux VST3",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-linux-vst3"
+      },
+      {
+        "workflow_step_index": 10,
+        "name": "Render demo and screenshots",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "51ff17e98fe41adf205f50706647b04ca616f7586883c0d85acefb9c26b60994",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 11,
+        "name": "Upload render artifacts",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-linux-artifacts"
+      },
+      {
+        "workflow_step_index": 12,
+        "name": "Package Linux VST3 and Standalone",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "082338bf2491689f1b1b3e78a3badeb0884d770840063a5f547e8f14317787fe",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 13,
+        "name": "Upload Linux install bundle",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-linux-install-bundle"
+      },
+      {
+        "workflow_step_index": 14,
+        "name": "Upload test and JUCE source evidence",
+        "if": "always()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-linux-test-evidence"
+      }
+    ],
+    "pluginval": [
+      {
+        "workflow_step_index": 1,
+        "name": "actions/checkout@v5",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/checkout@v5",
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 2,
+        "name": "Download Linux VST3",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/download-artifact@v5",
+        "artifact_name": "cs80-linux-vst3"
+      },
+      {
+        "workflow_step_index": 3,
+        "name": "Install pluginval runtime",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "b73f570ac9a26e66d9fc38427f5fe79db8f1e7ee2c4e43e093a56306906b8752",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 4,
+        "name": "Fetch pluginval ${{ env.PLUGINVAL_VERSION }}",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "aaad4613476ce5a966cf70c1603ea215b1a410a3c1f79d867f30d451e5aa9b91",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 5,
+        "name": "Verify diagnostic exit propagation",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "0f66f7b058ba5041268ad2f8dde1642f91f23b120f395f7f1901e20ca9f965b4",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 6,
+        "name": "Validate VST3 headless",
+        "if": "implicit success()",
+        "id": "validate_headless",
+        "run_sha256": "bf447c9b56d16d9cd38e3f065809db59eb68856312d35b7ace44c5a0c2b4a6a0",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 7,
+        "name": "Validate VST3 GUI under Xvfb",
+        "if": "implicit success()",
+        "id": "validate_gui",
+        "run_sha256": "638d88150571cf5222875c815612312d3037b67a5fc345fcbba5e7e43d636d12",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 8,
+        "name": "Validate GUI state regression seed 0x2da72db",
+        "if": "always() && !cancelled() && (steps.validate_gui.outcome == 'success' || steps.validate_gui.outcome == 'failure')",
+        "id": "validate_gui_seed",
+        "run_sha256": "f97c067c41774c2dcfa09d6eab0ed8576dc0ad8d31a78fdf2b8bb4a28db4ea7d",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 9,
+        "name": "Show first-attempt core diagnostics",
+        "if": "always()",
+        "id": null,
+        "run_sha256": "f0a8d6d6741ef03ea8f1d051f13663b0572bf6218602ff43dc75c9edb40e4ec4",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 10,
+        "name": "Select failed validator log for diagnostics",
+        "if": "always() && !cancelled()",
+        "id": "select_validator_diagnostic",
+        "run_sha256": "e8a1086609b2315fce88a8fe4f726b6e370a24409dbe1809720f62c7d245ab25",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 11,
+        "name": "Diagnose validator failure with gdb",
+        "if": "failure() && !cancelled() && steps.select_validator_diagnostic.outputs.log != ''",
+        "id": null,
+        "run_sha256": "1c6bd57c242f2bf89615704691eee2feb0b1b1e85c833f748bf3dca71a381183",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 12,
+        "name": "Build and test fault-thread diagnostic shim",
+        "if": "always() && !cancelled()",
+        "id": "build_trace",
+        "run_sha256": "cfed101844734fed76631d0c53a3b7a461c88a49bbb5bb7a77bce2148f30bdda",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 13,
+        "name": "Diagnose validator with fault-thread trace",
+        "if": "failure() && !cancelled() && steps.select_validator_diagnostic.outputs.log != '' && steps.build_trace.outcome == 'success'",
+        "id": null,
+        "run_sha256": "b2b4857899892be19958f8d972e853412bee7a66db469e82859ae929e8f0e257",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 14,
+        "name": "Report pluginval failure",
+        "if": "failure()",
+        "id": null,
+        "run_sha256": "cc53200179279e10d888a1609da12ad94ec663c03c9d9a5ebbb7940780d7898d",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 15,
+        "name": "Upload pluginval reports",
+        "if": "always()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-pluginval-reports"
+      }
+    ],
+    "macos": [
+      {
+        "workflow_step_index": 1,
+        "name": "actions/checkout@v5",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/checkout@v5",
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 2,
+        "name": "Record native platform",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "371168251e0525c72360ca3f64f8989eb4111d3ab3215b0878a52d6921894261",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 3,
+        "name": "Configure",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "30d3b5d60c92e2820d8f31132e3392211a7697b13a6de398f8bc662bddbefe71",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 4,
+        "name": "Verify configured JUCE source",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "36bebaad80aaf75c0e2bf850e0622388192715262b0dc6830506c3c9f35151d5",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 5,
+        "name": "Build",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "7c1f3b6c55fc1b701e2649786c83374f18b027355f908239db715378d8b8d435",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 6,
+        "name": "Test",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "26cf171dbe8daf68ed53169f3a9adde9f31fda02a91a527caea0245fbeb04125",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 7,
+        "name": "Fetch pluginval 1.0.4",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "61a75e987e0146034489f47d84c088bc717618a19d0d8d561ca6a45f8b82ec2b",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 8,
+        "name": "Register built AU",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "e12dd1fe5d2484ab05aea808dbbc24e276703462fa3a36198baef1ccd4c0f212",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 9,
+        "name": "Validate VST3 with pluginval",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "cbca198b0ded673f32ce6846d86f97a46d7e006b134b59109e6b03bb4972a6bf",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 10,
+        "name": "Validate AU with pluginval",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "d944daf0acd50995254c088efa5674ab0f6f6af5df4ecacc6b666448f6a57345",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 11,
+        "name": "Validate AU with pluginval GUI",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "849ccab1931057d48d2d49a51b4e262d5d833d46d18434aadf9539569bfea8d2",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 12,
+        "name": "Validate AU GUI fixed-seed regression",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "9f7cc862fe33c2f41c313e287ae48fe8c11d920e2b5f51d892e02c8e51844c30",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 13,
+        "name": "Package native macOS VST3, AU and Standalone",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "4a11eac16c7cae9d3ea6b5fd5bea07a82de4d1eb65039c5e646ed2909d5f3d8e",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 14,
+        "name": "Upload native macOS install bundle",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-${{ matrix.runner }}-install-bundle"
+      },
+      {
+        "workflow_step_index": 15,
+        "name": "AU registration diagnostics",
+        "if": "failure()",
+        "id": null,
+        "run_sha256": "eec4e08ba2a723facf262da652e6734294cf3818c87f4bf507cfbde4bf9a19f4",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 16,
+        "name": "Report pluginval failure",
+        "if": "failure()",
+        "id": null,
+        "run_sha256": "9a8268540a6d10461fe677cb7677d4363c9b5e4f1e8190635da66be166440811",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 17,
+        "name": "Upload pluginval reports",
+        "if": "always()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-pluginval-${{ matrix.runner }}"
+      },
+      {
+        "workflow_step_index": 18,
+        "name": "Upload test and JUCE source evidence",
+        "if": "always()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-${{ matrix.runner }}-test-evidence"
+      }
+    ],
+    "windows": [
+      {
+        "workflow_step_index": 1,
+        "name": "actions/checkout@v5",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/checkout@v5",
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 2,
+        "name": "Configure",
+        "if": "implicit success()",
+        "id": "configure",
+        "run_sha256": "bbffe0f3a844ae2e2f42560958cabe2bcf91306853692f0bc813daa482aeabb6",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 3,
+        "name": "Report CMake failure",
+        "if": "steps.configure.outcome == 'failure'",
+        "id": null,
+        "run_sha256": "861acc91b08b0ca602c3afed522dc1f5a75fa8f7d9337dfbd7ceb50bb2239ea6",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 4,
+        "name": "Verify configured JUCE source",
+        "if": "steps.configure.outcome == 'success'",
+        "id": null,
+        "run_sha256": "c282cd1007a12d3cb6882f2e40cc6cae06445b6ea36a3540da1d8af4e81b899e",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 5,
+        "name": "Build",
+        "if": "steps.configure.outcome == 'success'",
+        "id": null,
+        "run_sha256": "74c641e9741538f58705dc905822cf99b7717e8fe08d71d5504d4e351fbd309c",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 6,
+        "name": "Test",
+        "if": "steps.configure.outcome == 'success'",
+        "id": null,
+        "run_sha256": "e3ec8435f292eafed71dee27886b3dccdce84eb42df31c56b3a20cefe7bbd21e",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 7,
+        "name": "Upload Windows VST3",
+        "if": "steps.configure.outcome == 'success'",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-windows-vst3"
+      },
+      {
+        "workflow_step_index": 8,
+        "name": "Package Windows VST3 and Standalone",
+        "if": "steps.configure.outcome == 'success'",
+        "id": null,
+        "run_sha256": "44fd61f25a8c47d550db45a0982ff884899a8dc4eec76d5ce6462c1bfc678c11",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 9,
+        "name": "Upload Windows install bundle",
+        "if": "steps.configure.outcome == 'success'",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-windows-install-bundle"
+      },
+      {
+        "workflow_step_index": 10,
+        "name": "Upload test and JUCE source evidence",
+        "if": "always()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-windows-test-evidence"
+      }
+    ],
+    "pluginval-windows": [
+      {
+        "workflow_step_index": 1,
+        "name": "actions/checkout@v5",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/checkout@v5",
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 2,
+        "name": "Download Windows VST3",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/download-artifact@v5",
+        "artifact_name": "cs80-windows-vst3"
+      },
+      {
+        "workflow_step_index": 3,
+        "name": "Fetch pluginval ${{ env.PLUGINVAL_VERSION }}",
+        "if": "implicit success()",
+        "id": null,
+        "run_sha256": "2f294126ed9c241a5d1fb81ee8da2595973731fefa7fe89f18172d1e152cc220",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 4,
+        "name": "Validate VST3 headless",
+        "if": "implicit success()",
+        "id": "validate_windows",
+        "run_sha256": "912085310badc1f3a1ccae3789ad22ad122e34ad34bfa0d218a9f11f42a78baa",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 5,
+        "name": "Validate state regression seed 0x5037a0c",
+        "if": "always() && !cancelled() && (steps.validate_windows.outcome == 'success' || steps.validate_windows.outcome == 'failure')",
+        "id": null,
+        "run_sha256": "2a5a1f1f8a2383ee725a009d139e0e17a67d6f41376702d4e884fbd551797c6f",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 6,
+        "name": "Report pluginval failure",
+        "if": "failure()",
+        "id": null,
+        "run_sha256": "903d0b3fe8cbdf5fbdc925f7dc1cc44c6409e8de613f9f33f83d13f005856c23",
+        "uses": null,
+        "artifact_name": null
+      },
+      {
+        "workflow_step_index": 7,
+        "name": "Upload pluginval reports",
+        "if": "always()",
+        "id": null,
+        "run_sha256": null,
+        "uses": "actions/upload-artifact@v5",
+        "artifact_name": "cs80-pluginval-windows"
+      }
+    ]
+  }
+}

@@ -327,6 +327,8 @@ void Engine::configureInternalRate()
             r.vca.prepare(internalRate);
             r.instrumentBody.prepare(internalRate, hostRate);
             r.previousInstrumentBody.prepare(internalRate, hostRate);
+            r.instrumentBodyFilter.prepare(internalRate);
+            r.previousInstrumentBodyFilter.prepare(internalRate);
             r.bodyHandoffRemaining = 0;
             r.bodyHandoffLength = std::max(1, static_cast<int>(std::lround(0.003 * internalRate)));
             r.thermal.prepare(internalRate, vi * kNumRanks + ch);   // plan 2.5; warm-up restarts here
@@ -450,6 +452,8 @@ void Engine::reset()
             r.aenv.reset();
             r.instrumentBody.reset();
             r.previousInstrumentBody.reset();
+            r.instrumentBodyFilter.reset();
+            r.previousInstrumentBodyFilter.reset();
             r.bodyHandoffRemaining = 0;
             r.idle = {};
             r.idleRefs = {};
@@ -998,6 +1002,7 @@ void Engine::buildSettings()
         r.bodyMix = bodyAllowed ? params[bodyParam(ch, 1)] : 0.0f;
         r.bodyBrightness = params[bodyParam(ch, 2)];
         r.bodyDecay = params[bodyParam(ch, 3)];
+        r.bodySize = params[bodySizeParam(ch)];
         if (global.parityMode)
         {
             r.hpfOn = r.lpfOn = true;
@@ -1561,6 +1566,7 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
             && (r.instrumentBody.enabled() || rs.bodyModel != 0))
         {
             r.previousInstrumentBody = r.instrumentBody;
+            r.previousInstrumentBodyFilter = r.instrumentBodyFilter;
             r.previousBodyFrequency = r.bodyFrequency;
             r.previousBodyColour = r.bodyColour;
             r.previousBodyPressure = r.bodyPressure;
@@ -1569,11 +1575,13 @@ void Engine::startVoice(Voice& v, int note, float velocity, int midiChannel, boo
         else
         {
             r.previousInstrumentBody.reset();
+            r.previousInstrumentBodyFilter.reset();
             r.bodyHandoffRemaining = 0;
         }
+        r.instrumentBodyFilter.reset();
         r.instrumentBody.noteOn(rs.bodyModel, bodyNote, v.velocity,
                                 params[bodyParam(ch, 2)], rs.bodyDecay,
-                                static_cast<std::uint32_t>(v.age * 0x9e3779b9u + ch * 0x85ebca6bu));
+                                static_cast<std::uint32_t>(v.age * 0x9e3779b9u + ch * 0x85ebca6bu), rs.bodySize);
     }
 
     if (! ringKeyDown)
@@ -2047,6 +2055,8 @@ void Engine::allNotesOffMask(bool release, unsigned channelMask, bool allChannel
             {
                 rank.instrumentBody.reset();
                 rank.previousInstrumentBody.reset();
+                rank.instrumentBodyFilter.reset();
+                rank.previousInstrumentBodyFilter.reset();
                 rank.bodyHandoffRemaining = 0;
             }
         }
@@ -3271,19 +3281,20 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
             // remove an already sounding body before its next onset.
             if (r.instrumentBody.enabled())
             {
-                // Like the existing sine tap, the resonant body joins before
-                // the rank VCA. Spectral color follows the panel's brilliance,
-                // filter envelope and touch; the oscillator/filter path keeps
-                // its exact circuit arithmetic. Footage and every pitch route
-                // are already present in freq.
-                constexpr float bodyReferenceCv = 6.32192809489f; // log2(5000 / (125 * 0.5))
-                const float color = clampf(rs.bodyBrightness
-                    + 0.075f * (brillOct + envLp + contourLp + mod.lpCutoff)
-                    + 0.045f * (rs.lpfEffectiveCv - bodyReferenceCv), 0.0f, 1.0f);
+                // Intrinsic body colour is separate from the panel filters.
+                // Effective HP/LP controls now shape the complete excitation,
+                // so an upper strike cannot bypass its high-pass and restore
+                // a second fundamental. Do not count LP/env/brilliance again
+                // as an unrelated scalar colour change. Footage and all pitch
+                // routes are already present in freq; the original sine tap
+                // and the circuit oscillator/filter arithmetic stay unchanged.
+                const float color = rs.bodyBrightness;
                 r.bodyFrequency = freq;
                 r.bodyColour = color;
                 r.bodyPressure = clampf(touchPressure * rs.afterBrill, 0.0f, 1.0f);
-                bodySample = r.instrumentBody.tick(freq, color, r.bodyPressure);
+                bodySample = r.instrumentBodyFilter.tick(
+                    r.instrumentBody.tick(freq, color, r.bodyPressure),
+                    cutoffHp, cutoffLp, hpQ, lpQ, rs.hpfOn, rs.lpfOn);
                 bodyMix = rs.bodyMix;
             }
             if (r.bodyHandoffRemaining > 0)
@@ -3291,8 +3302,9 @@ void Engine::processInternalSample(float& outL, float& outR, float externalModul
                 const float position = static_cast<float>(r.bodyHandoffRemaining) / r.bodyHandoffLength;
                 const float outgoing = position * position * (3.0f - 2.0f * position);
                 const bool hasPrevious = r.previousInstrumentBody.enabled();
-                const float previous = hasPrevious ? r.previousInstrumentBody.tick(
-                    r.previousBodyFrequency, r.previousBodyColour, r.previousBodyPressure) : 0.0f;
+                const float previous = hasPrevious ? r.previousInstrumentBodyFilter.tickFrozen(
+                    r.previousInstrumentBody.tick(r.previousBodyFrequency,
+                        r.previousBodyColour, r.previousBodyPressure)) : 0.0f;
                 if (hasPrevious && r.instrumentBody.enabled())
                     bodySample += outgoing * (previous - bodySample);
                 else if (hasPrevious)

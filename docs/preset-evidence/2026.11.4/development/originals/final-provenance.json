@@ -1,0 +1,39 @@
+{
+  "scope": "Development original-bank voicing; pre-final level calibration. No acoustic-equivalence claim.",
+  "source_file": "src/core/OriginalCircuitLibrary.inc",
+  "source_sha256": "d6cf0293de597d95727be7c50eb347d87f9670c6d5b8ab583989fbbe99481a9d",
+  "instrument_body_sha256": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+  "capture_sha256": "fd467456f669f2ab935a2dec25cdbda0ede124f25f45db018cc1b550299b8261",
+  "inventory_sha256": "bdee2274854397391b6ed746172b7586374e39b98415bdbc5d44bcacc0de5f1f",
+  "compiler": "c++ -std=c++20 -O2",
+  "snapshot_source_hashes": {
+    "OriginalCircuitLibrary.inc": "d6cf0293de597d95727be7c50eb347d87f9670c6d5b8ab583989fbbe99481a9d",
+    "OriginalCircuitLevels.inc": "e81205c11c3d664945f3c6f7903289e6c531be23b3c098988bc715daddfeb2c7",
+    "CuratedLibraryLevels.inc": "d4740dee546df3900668f86fca4ca2b3d2e2e67df4eecb0def638a234597bad3",
+    "after-factory.cpp": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5",
+    "before-factory.cpp": "a103f5be0f0e3f3d0ec2b558ddb592a3cad79002adb01fce7eface617bde65b8",
+    "CuratedLibrary.inc": "6717273d39dd5fa873ab8f7227cf71a64485ccea2fa281214a24d8657a7f6fe3",
+    "curated/Polysynth.inc": "0bb56e1752400a4ba5d896b6e6ee801b7cf7913969ce4789143a905c42b4e356",
+    "curated/Brass.inc": "43375cd3bc527088f43d8af8ea089381fb41dce6869b67f0acd105869477e225",
+    "curated/Winds.inc": "7b85813a0e6deabe06830bd54ab2689e1aada3c6015d47af186c45e01880b519",
+    "curated/Fx.inc": "309f99c0bdc81da77ca421c233a18c12576607ae4988196684ba5d5661c3ee10",
+    "curated/Organ.inc": "ad6410dc8c510ed4740207947bf12adee8e678ccd83012d2f76f31451c3bdb68",
+    "curated/Pads.inc": "a8ecebdf08174c314e94595273f2c279ddfda71bb0433dd481e7a50750362730",
+    "curated/Leads.inc": "f0e8fb2110d01ea73b8dc4ddeeb582f68bc5d547ce53ba20533c190771d9da80",
+    "curated/Bass.inc": "f909426560fce93574dd3d5e146a4516e887932ef2beb3c7c1576152f971a9f1",
+    "curated/Modern.inc": "dd3d6006734867f7f7dd62c0b14534875567931151d85870cbd515f456f7b38e",
+    "curated/Keys.inc": "58c1c82d8ded21eb1e1c35980de3730e5c5045d0d0dcc54760230d2f11b1780d",
+    "curated/Strings.inc": "ddbb4dd91ecdad49bc3bf4db524f81d1e738f753173f19902b469d9b19a31c4d",
+    "curated/Plucked.inc": "4bb4a23d1f09f1a3318ae59f592ccb9409d3de511276fded347948eef38fc7ac",
+    "curated/Bells.inc": "71400232be8ab0dcc46be436d3dca49ad5cac5a3d53122b8bc97b540237442b9"
+  },
+  "evidence_files": {
+    "behavior-summary.json": "dd2b62ab76334bd0980658e9d3f89af39a0b5b6f818811e3f11902b12bc5ef1f",
+    "identity-and-finish-coverage.json": "98c722b52b3adf9b77791a409a2648d62331e63bcef371777f22ad26ad59b98d",
+    "wide-stereo-summary.json": "6f351cdf445e2e211c92c5aca8f7601ada58e8be5804ad33f995e5d65da20e69",
+    "tone-rank-dominance.csv": "7202767f751ff2a78eeaf29607cd08a74fa4e20643becc7778ec60e09b20cb49",
+    "tone-levels.log": "13209c7eac040bde5d4f385c2b30986687c7c2e02f3f9502be160d821eb86200",
+    "data-audit.log": "445e1fb21a56bccf05315ae3b198ca20689ac05737f84d07949ebf5ca193468e",
+    "finish-probe.cpp": "22bc03aad5458724ca2d19d58489588ec4bd4b56d802b8ea0f160032a8ce9620"
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "worker": 46,
+  "task": "linux_release_qualification",
+  "status": "prepared_actual_run_and_archives_pending",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "preset_library_revision": "2026.11.4",
+  "target": "linux-x86_64",
+  "source_commit": null,
+  "source_tree": null,
+  "run_id": null,
+  "run_attempt": null,
+  "actual_new_source_results_counted": false,
+  "actual_artifacts_inspected": false,
+  "source_review": {
+    "workflow": ".github/workflows/build.yml",
+    "workflow_sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "native_job_key": "linux",
+    "native_job_name": "Linux / VST3 + Standalone",
+    "validator_job_key": "pluginval",
+    "validator_job_name": "pluginval / Linux VST3 (strictness 10)",
+    "runner": "ubuntu-24.04",
+    "generator": "Ninja",
+    "configuration": "Release",
+    "plugin_build_enabled": true,
+    "tests_enabled": true,
+    "validator_needs": "linux",
+    "validator_job_timeout_minutes": 20
+  },
+  "required_native_steps": [
+    "Install build dependencies",
+    "Configure",
+    "Verify configured JUCE source",
+    "Build",
+    "Test",
+    "Capture curated preset auditions",
+    "Upload curated preset auditions",
+    "Upload Linux VST3",
+    "Render demo and screenshots",
+    "Upload render artifacts",
+    "Package Linux VST3 and Standalone",
+    "Upload Linux install bundle",
+    "Upload test and JUCE source evidence"
+  ],
+  "required_validator_steps": [
+    "Download Linux VST3",
+    "Install pluginval runtime",
+    "Fetch pluginval 1.0.4",
+    "Verify diagnostic exit propagation",
+    "Validate VST3 headless",
+    "Validate VST3 GUI under Xvfb",
+    "Validate GUI state regression seed 0x2da72db",
+    "Show first-attempt core diagnostics",
+    "Select failed validator log for diagnostics",
+    "Build and test fault-thread diagnostic shim",
+    "Upload pluginval reports"
+  ],
+  "validator_contract": {
+    "version": "1.0.4",
+    "strictness": 10,
+    "in_process": true,
+    "plugin_timeout_ms": 120000,
+    "target": "vst3/CS-80 Reference.vst3",
+    "lanes": [
+      {
+        "step": "Validate VST3 headless",
+        "id": "validate_headless",
+        "seed": "runtime randomized; record actual",
+        "gui": false,
+        "console": "pluginval-headless.log",
+        "command_sha256": "bf447c9b56d16d9cd38e3f065809db59eb68856312d35b7ace44c5a0c2b4a6a0",
+        "required_condition": "ordinary success dependency",
+        "outer_timeout_seconds": null
+      },
+      {
+        "step": "Validate VST3 GUI under Xvfb",
+        "id": "validate_gui",
+        "seed": "runtime randomized; record actual",
+        "gui": true,
+        "console": "pluginval-gui.log",
+        "command_sha256": "638d88150571cf5222875c815612312d3037b67a5fc345fcbba5e7e43d636d12",
+        "required_condition": "ordinary success dependency",
+        "outer_timeout_seconds": null
+      },
+      {
+        "step": "Validate GUI state regression seed 0x2da72db",
+        "id": "validate_gui_seed",
+        "seed": "0x2da72db",
+        "gui": true,
+        "console": "pluginval-gui-seed-regression.log",
+        "command_sha256": "f97c067c41774c2dcfa09d6eab0ed8576dc0ad8d31a78fdf2b8bb4a28db4ea7d",
+        "required_condition": "always() && !cancelled() && (steps.validate_gui.outcome == 'success' || steps.validate_gui.outcome == 'failure')",
+        "outer_timeout_seconds": 240
+      }
+    ],
+    "requirements": [
+      "Every original lane must finish with exit0 and an exact SUCCESS line, with no FAILED marker.",
+      "Require successful original validation steps and final native/validator job conclusions at the actual source and run attempt.",
+      "The fixed-seed GUI lane is independently required and cannot rescue a failed randomized GUI lane.",
+      "Record actual random seeds, explicit skips, invocations and retry counts. Never infer zero retries solely from a final SUCCESS."
+    ],
+    "retry_policy": {
+      "wrapper": "scripts/run-pluginval-linux.sh",
+      "maximum_full_attempts_per_lane": 3,
+      "maximum_retries_per_lane": 2,
+      "eligible_status": 139,
+      "all_required_conditions": [
+        "Complete log captured successfully.",
+        "No SUCCESS or FAILED substring anywhere in the failed attempt log.",
+        "At least one Starting tests in: line was seen.",
+        "The final started/completed test-phase marker is Completed tests in:.",
+        "A previous failed attempt log can be preserved before repeating the whole command."
+      ],
+      "success_after_retry": "A fresh full attempt must itself exit0 with exact SUCCESS and no FAILED; eligibility alone is never a pass.",
+      "must_retain": [
+        "Original validator job log with wrapper warning/exit messages",
+        "Every available -attempt1.log/-attempt2.log and final lane log",
+        "Corresponding report files and core diagnostics"
+      ],
+      "ownership_limit": "Exit139 and the phase text do not prove crash ownership or that the entire suite had completed.",
+      "hard_failures": [
+        "Non139 exit",
+        "Missing or incomplete log",
+        "Any FAILED marker",
+        "Exit0 without a clean exact SUCCESS",
+        "Exhausted3attempts",
+        "Failure to preserve failed-attempt log"
+      ]
+    },
+    "diagnostics_boundary": "gdb and fault-thread replays are separate diagnostic executions. Their success cannot replace a failed original lane; preserve and report their original process and log-capture exits separately."
+  },
+  "artifact_inventory": [
+    {
+      "name": "cs80-linux-install-bundle",
+      "producer_step": "Upload Linux install bundle",
+      "purpose": "distributed x86_64 VST3 and Standalone installation bytes"
+    },
+    {
+      "name": "cs80-linux-vst3",
+      "producer_step": "Upload Linux VST3",
+      "consumer_step": "Download Linux VST3",
+      "purpose": "exact complete VST3 bundle selected by all three validator commands"
+    },
+    {
+      "name": "cs80-linux-test-evidence",
+      "producer_step": "Upload test and JUCE source evidence",
+      "required_members": [
+        "ctest-results.xml",
+        "LastTest.log",
+        "ci-juce-provenance.txt"
+      ]
+    },
+    {
+      "name": "cs80-pluginval-reports",
+      "producer_step": "Upload pluginval reports",
+      "required_members": [
+        "pluginval-version.txt",
+        "pluginval-headless.log",
+        "pluginval-gui.log",
+        "pluginval-gui-seed-regression.log",
+        "pluginval-reports/*"
+      ],
+      "conditional_members": [
+        "pluginval-*-attempt*.log",
+        "pluginval-*-core.log",
+        "pluginval-diagnostic-reports/*",
+        "pluginval-trace-reports/*"
+      ],
+      "purpose": "original validator outcomes, retry evidence and separately identified diagnostics"
+    },
+    {
+      "name": "cs80-curated-preset-audition-SOURCE_SHA",
+      "producer_step": "Upload curated preset auditions",
+      "required_producer_step": "Capture curated preset auditions",
+      "purpose": "root will assign complete138WAV byte/float acceptance; successful upload alone does not prove successful capture"
+    },
+    {
+      "name": "cs80-linux-artifacts",
+      "producer_step": "Upload render artifacts",
+      "required_producer_step": "Render demo and screenshots",
+      "purpose": "native demo and UI smoke evidence"
+    }
+  ],
+  "native_evidence_contract": {
+    "junit": "Derive registered, passed, failed, formally-skipped and disabled counts from actual nonempty JUnit. Require zero failures, consistent totals and matching complete CTest conclusion; list every skip with reason. No preceding-revision totals are reused.",
+    "nested_python_subtest_skips": "Derive from actual LastTest.log and report separately from formal CTest skips.",
+    "juce": {
+      "sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+      "version": "8.0.11",
+      "requirements": [
+        "verification=PASS",
+        "source_clean=true",
+        "actual_sha and actual_version agree with pins",
+        "workflow_commit equals the supplied actual source SHA",
+        "configured source path/provenance agrees with native job and packaged evidence"
+      ]
+    },
+    "relevant_tests": [
+      "cs80_instrument_body_tests",
+      "cs80_instrument_body_engine_tests",
+      "cs80_library_audit_tests",
+      "cs80_preset_voicing_tests",
+      "cs80_preset_character_tests",
+      "cs80_preset_precision_tests",
+      "cs80_parameter_state_index_tests",
+      "cs80_circuit_source_host_tests",
+      "cs80_modern_recall_host_tests",
+      "cs80_ui_smoke",
+      "cs80_pluginval_macos_download_tests"
+    ],
+    "compatibility": "Verify actual current-source wrapper/host execution for200core/306host parameters, preceding-ID preservation and missing-size defaults. Local syntax/direct-model checks are not a substitute for native host results."
+  },
+  "api_and_archive_binding": [
+    "Parent supplies immutable final sourceSHA/tree and new build runID. Retrieve actual run/attempt, jobs, required step outcomes and artifact API objects through the identified repository account.",
+    "Require artifact name/ID, repository, source/run, expected producing/upload step and inspected run attempt; require nonexpired artifacts. Always-upload evidence from a failed job is not qualification.",
+    "Download actual ZIP bytes and compare size/SHA256 to each independent individual artifact API object, not a digest derived from the ZIP itself.",
+    "Bind the validator download log to the exact cs80-linux-vst3 artifact ID and its API size/digest and to the exact selected bundle path.",
+    "Run the new4 installation checker to inspect complete inventory/checksums, source/revision/run, configuredJUCE evidence and native ELF64 little-endian x86_64 role/header checks.",
+    "Run the complete VST3 payload checker against both installation and validator-input artifacts. Every resource, file, directory topology and symbolic-link target inside the selected bundle participates. Linux permits no Windows compiler-sidecar exception.",
+    "Require actual successful audition production and upload; delegate raw138WAV/74program/870second/30group acceptance to the root-assigned audition reviewer."
+  ],
+  "commands_for_actual_phase": [
+    "python3 docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py --archive LINUX_INSTALL_ZIP --artifact-api INSTALL_API_JSON --source SOURCE_SHA --run-id RUN_ID --platform linux --architecture x86_64 --out INSTALL_ACCEPTANCE_JSON",
+    "python3 docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py --install-archive LINUX_INSTALL_ZIP --install-api INSTALL_API_JSON --validator-archive LINUX_VST3_ZIP --validator-api VST3_API_JSON --source SOURCE_SHA --run-id RUN_ID --platform linux --out PAYLOAD_ACCEPTANCE_JSON"
+  ],
+  "source_sha256": {
+    ".github/workflows/build.yml": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "scripts/run-pluginval-linux.sh": "41aa495e5fe84cddfe37c2f415e65cff0db71e72c8d549b67c1bbf5e4c5af105",
+    "scripts/run-pluginval-with-core.py": "929292993b4a9cc1241185676bd0e6977e5e608cf894691b390178ff820a7eea",
+    "scripts/verify-ci-juce-source.cmake": "c8ab82d049c52db7eb0716fb88044b351ced76b738d12eff75d37b5f63bdc727",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf",
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py": "7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd"
+  },
+  "reviewed_evidence_references": [
+    "reviews/35-artifact-verifiers.json",
+    "reviews/36-native-workflow-map.json",
+    "reviews/39-macos-au-binding.json",
+    "reviews/41-workflow-gate-regression.json"
+  ],
+  "historical_format_reference_only": [
+    "../2026.11.3/ci/source-cbbee6a/reports/linux-x86_64-native.json"
+  ],
+  "limitations": [
+    "This plan is not release qualification. No new workflow run, API result or downloaded archive has been inspected.",
+    "NativeUbuntu24.04 x86_64 qualification does not establish compatibility with every Linux distribution or arbitrary DAW.",
+    "No publisher signing, acoustic equivalence or realtime deadline guarantee is inferred.",
+    "Only this report was written; production source, workflows, shared build, commits and refs were not changed."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "phase": "uncommitted development, no release source SHA asserted",
+  "source_sha256": {
+    "src/core/curated/Brass.inc": "43375cd3bc527088f43d8af8ea089381fb41dce6869b67f0acd105869477e225",
+    "src/core/curated/Organ.inc": "ad6410dc8c510ed4740207947bf12adee8e678ccd83012d2f76f31451c3bdb68",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b"
+  },
+  "factory_compilation": "g++ -std=gnu++20 -O0 -DNDEBUG -Isrc -c src/core/FactoryPresets.cpp -o FactoryPresets-final.o",
+  "dsp": "Release -O3 core snapshot supplied by root after A10; archived FactoryPresets.cpp.o removed before linking replacement; original build-core was not modified",
+  "snapshot_body_sha256": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+  "sha256": {
+    "FactoryPresets-final.o": "e7479308648351161e51ee77df779398b626a5c13b148f20f0697bc411496cc9",
+    "libcs80_core_snapshot.a": "4b0cd784977b1c88dd10243e35e6871d5e79b2c07231b89d73214c6b3e420b1b",
+    "capture-final": "5be718e5f1d29e7e44c2d8844cdeec8455c8dda91ee7bc1dcf8bc72d5c78aad5",
+    "voicing-final": "c9c57bf87e457d39d9c3e413f29b97823d82bde5eb84bad457b4191fcaa2a665",
+    "character-final": "32ed35eabc7f12ac81b495fa628f1660c30ccd400c42163930668d7850205163",
+    "final-inventory.json": "116879e9668c5ed99d7ce8b819e4cc34922927b8b09d3d60eb8543e155233225",
+    "voicing-final.log": "b9966be20fe1201dba95d029a378e00c778f87f66923a24c942fff854398f08d",
+    "character-final.log": "6db1457977c4f46549c5bfe0d48151529efc808d9d4a77ffe24680449d48bbb6",
+    "audio-comparison.json": "7c074c223c13190a8bc444855bae5777be1dd9802efccde9f5008e720b9a8fce",
+    "parameter-changes.json": "3b32337fb5d8d6f82210d3002e052b5de9d6bb66154393de2b1f94d11ab028c1"
+  }
+}

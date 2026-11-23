@@ -1,0 +1,17 @@
+{
+  "state": "development engine check; final bank and native host qualification separate",
+  "command": "ctest --test-dir build-core --output-on-failure -j 6 -E cs80_library_audit_tests|cs80_preset_voicing_tests|cs80_preset_character_tests|cs80_preset_precision_tests",
+  "passed": 194,
+  "failed": 0,
+  "seconds": 296.65,
+  "source_sha256": {
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "tests/InstrumentBodyTests.cpp": "caa9af4c41efa317bdbe696308c636450ec43b820697226a0b588640360ae4e4",
+    "tests/InstrumentBodyEngineTests.cpp": "8be9e04872a7b8fbc50f238d81f4198591c1a8b2f91d5fa8aa1ec85b287059d6"
+  },
+  "core_library_sha256": "e70e61cd1d4584cb0ea7148178d095d5e44dc90131ab0906ff924df2b71e536d"
+}

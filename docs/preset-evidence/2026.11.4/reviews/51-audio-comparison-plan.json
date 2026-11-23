@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "worker": 51,
+  "status": "ready_for_fresh_final_capture_followup; no candidate metric acceptance performed",
+  "scope": "Independent interpretation and final cross-check of the matched development metric comparison. Separate from complete delivered-WAV inspection and native qualification.",
+  "candidate_inputs_consumed": false,
+  "baseline_checked": {
+    "source": "fa57967c7317828cf769cc7ca97f5857e566520f",
+    "source_tree": "715212d1f2cb45b1aad3d7fd23416276b8b938d7",
+    "rows": 523,
+    "programs": 523,
+    "parameters": 198,
+    "ordered_csv_identity_and_binary32_digest_matches": 523,
+    "nonfinite_sample_flags": 0,
+    "over_full_scale_sample_flags": 0,
+    "controls": [
+      {
+        "index": "43",
+        "name": "Init Patch",
+        "category": "Init",
+        "note": "60",
+        "pressure": "0",
+        "peak_dbfs": "-20.27501112",
+        "rms_dbfs": "-31.12096446",
+        "parameter_digest": "3f0582379194335e"
+      },
+      {
+        "index": "179",
+        "name": "Electric Leads 136",
+        "category": "Leads",
+        "note": "67",
+        "pressure": "0",
+        "peak_dbfs": "-240",
+        "rms_dbfs": "-240",
+        "parameter_digest": "7f63d2a0431bc067"
+      },
+      {
+        "index": "444",
+        "name": "Pressure Lead",
+        "category": "Leads",
+        "note": "67",
+        "pressure": "0",
+        "peak_dbfs": "-240",
+        "rms_dbfs": "-240",
+        "parameter_digest": "c72dd1ef4fb824cd"
+      },
+      {
+        "index": "522",
+        "name": "Init Circuit",
+        "category": "Init",
+        "note": "60",
+        "pressure": "0",
+        "peak_dbfs": "-20.39156907",
+        "rms_dbfs": "-31.14931746",
+        "parameter_digest": "7a8a542bd92086ae"
+      }
+    ],
+    "sha256": {
+      "docs/preset-evidence/2026.11.4/baseline/single-note-metrics.csv": "72e51e3433d9695c63b7b91d46f6b325d68ac5cae502e0b7c51fead363d215ab",
+      "docs/preset-evidence/2026.11.4/baseline/inventory.json": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+      "docs/preset-evidence/2026.11.4/baseline/provenance.json": "203f52361d010c554aa0958918c1035f6a6b3a33bc6cb6c3698e5639dc74a712"
+    }
+  },
+  "reviewed_implementations": {
+    "scripts/compare-preset-audio.py": "b86d58c28c517bfe0dc94196458b4115a4c1a2529f07d0031241e96e2a406e04",
+    "src/tools/preset_capture.cpp": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+    "capture_source_exactly_equal_to_baseline": true
+  },
+  "required_fresh_inputs": [
+    "Final 523-row pressure=0 CSV, captured after both final calibration passes and the subsequent executable rebuild.",
+    "Final 523-program/200-parameter inventory and current source/executable/inventory provenance manifest.",
+    "Pinned preceding baseline CSV/inventory/provenance plus its retained capture executable.",
+    "Paired pressure=1 CSVs for Electric Leads 136 and Pressure Lead, each with the corresponding revision inventory digest.",
+    "Comparator report generated only after all inputs are complete, with hashes checked again after independent review."
+  ],
+  "matched_conditions": {
+    "sample_rate": 48000,
+    "velocity_binary32": 0.800000011920929,
+    "pressure_main_matrix": 0,
+    "pressure_separate_controls": 1,
+    "hold_seconds": 3,
+    "tail_seconds": 1,
+    "rank": 0,
+    "category_default_midi_note": {
+      "Bass": 48,
+      "Winds": 67,
+      "Leads": 67,
+      "Bells": 72,
+      "all_other_categories": 60
+    },
+    "performance": "One held incoming MIDI note with the preset’s own modulation, arpeggiator and effects retained; not a claim of one active synthesized voice.",
+    "expected_frames_per_render_from_conditions": 192000,
+    "expected_channel_samples_per_render_from_conditions": 384000,
+    "frame_count_boundary": "The metrics CSV has no observed frame/sample-count column. These counts are arithmetic expectations, not independent observations of WAV payload length."
+  },
+  "measurement_semantics": {
+    "peak_dbfs": "Largest absolute channel sample over the complete four-second capture, converted with a 1e-12 amplitude floor (-240 dBFS).",
+    "rms_dbfs": "RMS over both channels for the complete four-second capture, including the one-second release tail.",
+    "early_rms_dbfs": "Both-channel RMS over 0.0–0.2 seconds.",
+    "body_rms_dbfs": "Both-channel RMS over 2.5–3.0 seconds.",
+    "tail_rms_dbfs": "Both-channel RMS over 3.5–4.0 seconds.",
+    "peak_window_seconds": "Start time of the loudest nonoverlapping 50 ms held-note RMS window. It is not an independently measured attack latency.",
+    "centroid_and_band_powers": "4096-frame Hann FFT near the loudest held window. Sum left and right channel powers, exclude DC, fold interior negative-frequency power, retain Nyquist once, and normalize the three bands to total analyzed power.",
+    "frequency_bands_hz": {
+      "low": "<500",
+      "mid": "500 to <2000",
+      "high": ">=2000"
+    },
+    "tilt": "Held-note first-difference energy divided by held-note signal energy, with a numeric denominator floor. A broadband spectral proxy, not a named FFT-band ratio.",
+    "stereo_correlation": "Held-note L/R dot product divided by the product of held-channel RMS norms, with a numeric denominator floor; not mean-centered correlation and not a full stereo-image assessment.",
+    "relative_envelope": "Body-minus-early RMS, tail-minus-body RMS, peak-minus-whole-clip-RMS crest, and loudest-window time. Floor-clamped logarithmic differences become null.",
+    "library_audit_is_separate": "The 48 kHz single-held-note whole-clip RMS here is not the library audit’s 44.1 kHz category phrase loudest-50 ms RMS at different velocity/pressure and polyphony. A CSV RMS below -30 dBFS is not by itself a failed library-level gate."
+  },
+  "control_contracts": {
+    "init": {
+      "indices": [
+        43,
+        522
+      ],
+      "names": [
+        "Init Patch",
+        "Init Circuit"
+      ],
+      "required": "Every reported audio metric must remain exactly equal to its baseline CSV value, and the preceding198 binary32 parameter values must remain unchanged with neutral appended sizes. Equal aggregate metrics alone do not prove sample-identical waveforms."
+    },
+    "pressure": {
+      "indices": [
+        179,
+        444
+      ],
+      "names": [
+        "Electric Leads 136",
+        "Pressure Lead"
+      ],
+      "required": "Pressure=0 rows retain the expected floor-clamped zero-spectrum vectors. Separate pressure=1 rows must be non-silent, finite, within full scale and condition/digest matched."
+    },
+    "combined_musical_denominator": "519 ordinary musical rows plus the two pressure=1 rows equals521; exclude both Init rows and do not double-count the silent main-matrix rows.",
+    "digest_boundary": "The FNV-style digest includes every binary32 field, including the two appended sizes. Changed digests are not audio-change evidence, even for both unchanged Init programs."
+  },
+  "independent_final_crosschecks": [
+    "Rehash every supplied input and reviewed implementation; verify pinned baseline identity and final source/executable/inventory manifest; confirm the capture measurement source still equals the baseline.",
+    "Independently parse exactly523 ordered main rows and two pressure rows per revision, checking identities, category-note mapping, identical render conditions, binary32 inventory digests and recorded finite/full-scale flags.",
+    "Recompute per-row raw metric deltas, exact-difference fields, tolerance-based masks, relative envelope values, master-volume binary32 changes, and level/spectral/envelope/stereo group classifications without importing comparator comparison functions.",
+    "Recompute report totals, category counts, unchanged-vector and level-only lists, and the521-musical denominator with pressure substitutions.",
+    "Cross-check every saved before/after value and report extrema; identify largest numeric changes as measurements, not ranked improvements.",
+    "Require exact Init metric equality and the expected pressure controls; independently explain appended-field digest changes without labeling them audible.",
+    "Recheck input hashes after analysis and clearly preserve development capture provenance separately from delivered native binaries/WAV artifacts."
+  ],
+  "rounding_tolerances_not_audibility_thresholds": {
+    "db": 1e-06,
+    "centroid_hz": 1e-05,
+    "other_metrics": 1e-09
+  },
+  "interpretation_limits": [
+    "Numerical change is not evidence of acoustic similarity, perceptual audibility, musical preference or improvement. No reference recordings or listener scores are present.",
+    "Normalized spectra, relative envelopes and held stereo correlation reject ideal uniform linear gain changes above numeric floors, but nonlinear output behavior and interacting controls prevent causal attribution to a single voicing or DSP change.",
+    "Spectral windows may move between revisions because their loudest-window times differ; these summaries do not describe the entire attack, sustain or release spectrum.",
+    "Three-second holds and one-second tails do not fully assess very slow pads, extended effects, the keyboard range, touch curves, live pressure gestures, chords, maximum polyphony or native DAW behavior.",
+    "Equal aggregate metric vectors do not establish bit-identical audio. The accepted CSV flags are producer-reported; independent actual WAV-frame/sample inspection is performed separately by the audition archive qualification.",
+    "Main-matrix and pressure-control metrics qualify only their exact development fixtures. They cannot substitute for full-bank phrase/stress checks, complete138-WAV inspection or native plugin validation."
+  ],
+  "actions_taken": [
+    "Read comparator and unchanged producer source.",
+    "Independently verified pinned baseline row identities and all523 binary32 digests.",
+    "Prepared this plan; deliberately did not open the stale candidate CSV or candidate report."
+  ],
+  "pending": "Root will provide the fresh final CSVs, inventory/provenance and comparison report for actual follow-up."
+}

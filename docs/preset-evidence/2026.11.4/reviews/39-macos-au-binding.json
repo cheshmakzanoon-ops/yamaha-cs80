@@ -1,0 +1,87 @@
+{
+  "worker": 39,
+  "task": "macOS AU validation-to-package byte binding",
+  "status": "workflow correction complete; native execution pending",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "finding_source": "36-native-workflow-map.json",
+  "problem": "The previous registration step copied the built AU and then ad-hoc signed only the registered destination. Successful validation of that copy did not itself prove equality with the separate built AU later packaged.",
+  "correction": [
+    "Ad-hoc sign the built AU_SOURCE before copying it to the per-user Components directory.",
+    "Compare source and registered-copy contents recursively before validation, failing the step on any differing or missing file/resource.",
+    "Repeat the recursive comparison immediately before macOS packaging, after all four required validator steps have succeeded.",
+    "Record source and destination executable SHA-256 hashes before and after validation and retain both files in the macOS pluginval artifact."
+  ],
+  "changed_files": [
+    ".github/workflows/build.yml"
+  ],
+  "source_hashes": {
+    "before": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+    "after": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "packager_sha256": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "checks": {
+    "workflow_before_sha256": "8b851dfadbec0127da6e618971c72b55967282ddf229806419d2ffeb77c4e220",
+    "workflow_after_sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "unchanged_other_jobs": [
+      "linux",
+      "pluginval",
+      "windows",
+      "pluginval-windows"
+    ],
+    "unchanged_macos_validator_steps": [
+      "Validate VST3 with pluginval",
+      "Validate AU with pluginval",
+      "Validate AU with pluginval GUI",
+      "Validate AU GUI fixed-seed regression"
+    ],
+    "changed_macos_steps": [
+      "Register built AU",
+      "Package native macOS VST3, AU and Standalone",
+      "Upload pluginval reports"
+    ],
+    "bash_syntax_passed": [
+      "Register built AU",
+      "Package native macOS VST3, AU and Standalone"
+    ],
+    "yaml_parse": "passed",
+    "step_names_and_order": "unchanged",
+    "diff_whitespace": "passed",
+    "sign_copy_compare_order": "passed",
+    "prepackage_compare_order": "passed",
+    "sha256_artifact_retention": "passed",
+    "native_execution": "pending; this is source verification only"
+  },
+  "verification_methods": [
+    "Parse baseline and edited workflow using yaml.BaseLoader. Compare every non-macOS job exactly; compare macOS job fields outside steps exactly; preserve every step name/order and every validator step object.",
+    "Require exactly three modified macOS steps: Register built AU; Package native macOS VST3, AU and Standalone; Upload pluginval reports.",
+    "Extract both changed shell bodies to temporary .sh files and execute bash -n on each; both return zero.",
+    "Assert source signing precedes copy, which precedes comparison; assert destination is not separately re-signed.",
+    "Assert final comparison precedes packaging and both SHA-256 evidence files are retained by the existing report upload.",
+    "Run git diff --check -- .github/workflows/build.yml; exit zero.",
+    "Inspect scripts/package-ci-artifacts.py: it packages existing products and contains no signing command, so packaging does not introduce a second AU signature mutation."
+  ],
+  "changed_steps": {
+    "Register built AU": "set -euo pipefail\nAU_SOURCE=\"$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component\"\nAU_DEST=\"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\"\ntest -d \"$AU_SOURCE\"\ncodesign --force --sign - \"$AU_SOURCE\"\nmkdir -p \"$HOME/Library/Audio/Plug-Ins/Components\"\nrm -rf \"$AU_DEST\"\ncp -R \"$AU_SOURCE\" \"$AU_DEST\"\ndiff -qr \"$AU_SOURCE\" \"$AU_DEST\"\nshasum -a 256 \"$AU_SOURCE/Contents/MacOS/CS-80 Reference\" \\\n  \"$AU_DEST/Contents/MacOS/CS-80 Reference\" | tee au-payload-before-validation.sha256\nkillall -9 AudioComponentRegistrar || true\nsleep 2\nls -ld \"$AU_DEST\"\n",
+    "Package native macOS VST3, AU and Standalone": "set -euo pipefail\nAU_SOURCE=\"$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component\"\nAU_DEST=\"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\"\n# Fail if validation or registration changed the copied AU's bytes\n# or resources relative to the bundle that will be packaged.\ndiff -qr \"$AU_SOURCE\" \"$AU_DEST\"\nshasum -a 256 \"$AU_SOURCE/Contents/MacOS/CS-80 Reference\" \\\n  \"$AU_DEST/Contents/MacOS/CS-80 Reference\" | tee au-payload-after-validation.sha256\npython scripts/package-ci-artifacts.py --self-test\npython scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages\n",
+    "Upload pluginval reports": {
+      "name": "cs80-pluginval-${{ matrix.runner }}",
+      "path": "au-payload-before-validation.sha256\nau-payload-after-validation.sha256\npluginval-download.json\npluginval-reports\npluginval-vst3.log\npluginval-au.log\npluginval-au-gui.log\npluginval-au-seed-regression.log\n",
+      "if-no-files-found": "warn"
+    }
+  },
+  "diff": "diff --git a/.github/workflows/build.yml b/.github/workflows/build.yml\nindex 1f6e445..70576cb 100644\n--- a/.github/workflows/build.yml\n+++ b/.github/workflows/build.yml\n@@ -495,18 +495,21 @@ jobs:\n           ./pluginval/pluginval.app/Contents/MacOS/pluginval --version\n \n       # Audio Unit hosts discover AUs through AudioComponentRegistrar, not\n-      # through the build tree. Register the exact built bundle in the\n-      # per-user Components directory, then force the registrar to rescan.\n+      # through the build tree. Ad-hoc sign the packaging source first, then\n+      # register an identical copy and force the registrar to rescan.\n       - name: Register built AU\n         run: |\n           set -euo pipefail\n           AU_SOURCE=\"$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component\"\n           AU_DEST=\"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\"\n           test -d \"$AU_SOURCE\"\n+          codesign --force --sign - \"$AU_SOURCE\"\n           mkdir -p \"$HOME/Library/Audio/Plug-Ins/Components\"\n           rm -rf \"$AU_DEST\"\n           cp -R \"$AU_SOURCE\" \"$AU_DEST\"\n-          codesign --force --sign - \"$AU_DEST\"\n+          diff -qr \"$AU_SOURCE\" \"$AU_DEST\"\n+          shasum -a 256 \"$AU_SOURCE/Contents/MacOS/CS-80 Reference\" \\\n+            \"$AU_DEST/Contents/MacOS/CS-80 Reference\" | tee au-payload-before-validation.sha256\n           killall -9 AudioComponentRegistrar || true\n           sleep 2\n           ls -ld \"$AU_DEST\"\n@@ -569,6 +572,14 @@ jobs:\n \n       - name: Package native macOS VST3, AU and Standalone\n         run: |\n+          set -euo pipefail\n+          AU_SOURCE=\"$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component\"\n+          AU_DEST=\"$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component\"\n+          # Fail if validation or registration changed the copied AU's bytes\n+          # or resources relative to the bundle that will be packaged.\n+          diff -qr \"$AU_SOURCE\" \"$AU_DEST\"\n+          shasum -a 256 \"$AU_SOURCE/Contents/MacOS/CS-80 Reference\" \\\n+            \"$AU_DEST/Contents/MacOS/CS-80 Reference\" | tee au-payload-after-validation.sha256\n           python scripts/package-ci-artifacts.py --self-test\n           python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages\n \n@@ -604,6 +615,8 @@ jobs:\n         with:\n           name: cs80-pluginval-${{ matrix.runner }}\n           path: |\n+            au-payload-before-validation.sha256\n+            au-payload-after-validation.sha256\n             pluginval-download.json\n             pluginval-reports\n             pluginval-vst3.log\n",
+  "preserved_contracts": {
+    "native_targets": 4,
+    "expanded_jobs": 6,
+    "required_pluginval_lanes": 13,
+    "validation_commands": "All unchanged, including strictness, regression seeds, input paths and exit/success checks.",
+    "step_names": "All unchanged.",
+    "signing": "Existing ad-hoc signing only; no publisher certificate, release signing or notarization added."
+  },
+  "qualification_boundary": [
+    "This report verifies workflow source and shell syntax. No new macOS job, codesign invocation, AU host registration or downloaded package has been executed or qualified here.",
+    "Actual qualification must require both successful comparison-bearing steps and inspect the retained pre/post hashes against the downloaded AU executable.",
+    "Recursive diff checks file/resource contents and presence. This change makes no claim about filesystem permissions, extended attributes or publisher identity."
+  ]
+}

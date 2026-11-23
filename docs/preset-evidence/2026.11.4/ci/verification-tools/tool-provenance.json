@@ -1,0 +1,28 @@
+{
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "state": "prepared; verifier self-tests passed; new artifacts not yet inspected",
+  "tools": [
+    {
+      "file": "verify-install-artifact.py",
+      "copied_from": "docs/preset-evidence/2026.11.3/ci/verification-tools/verify-install-artifact.py",
+      "before_sha256": "ea347dfabbbd3a7b87dd21a616f870da92a115769b29f198f9e28bafbca2c062",
+      "sha256": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+      "change": "Expected revision 2026.11.4; all byte, API, manifest and architecture checks preserved."
+    },
+    {
+      "file": "verify-validator-payload.py",
+      "copied_from": "docs/preset-evidence/2026.11.3/ci/verification-tools/verify-validator-payload.py",
+      "before_sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330",
+      "sha256": "7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd",
+      "change": "Expected revision centralized at 2026.11.4; two coherent old-revision negative fixtures added. Existing byte, source, run, topology and Windows compiler-sidecar checks retained."
+    },
+    {
+      "file": "verify-audition-zip.py",
+      "copied_from": "docs/preset-evidence/2026.11.3/ci/verification-tools/verify-audition-zip.py",
+      "before_sha256": "32514c1dec151af41a873a426b67f2fe7b67fe5533de1e1a9c42851d74b814a9",
+      "sha256": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62",
+      "change": "Revision2026.11.4,138WAV/74program/870s/30folder roster,200parameters including final2sizeIDs; byte/float/source/manifest checks retained."
+    }
+  ],
+  "verifier_review": "../../reviews/35-artifact-verifiers.json"
+}

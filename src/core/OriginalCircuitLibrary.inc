@@ -33,79 +33,150 @@ void scaleChannel(ParamValues& p, int ch, int parameter, float factor)
 void finish(FactoryPreset& preset, Finish style)
 {
     auto& p = preset.values;
-    // Note-level vibrato is never introduced by a color adjective. Keyboard
-    // transients and bass fundamentals retain the recipe's pitch stability.
-    const bool struck = preset.category == "Keys" || preset.category == "Bass"
-                     || preset.category == "Sequences";
+    // The source category is still available here. A Tone II flute or clav
+    // study must receive its instrument's articulation before it is relabelled
+    // Hardware Studies and its ranks are exchanged.
+    if (preset.category == "Init")
+    {
+        // Preserve the published Init Patch vector exactly, including its
+        // historical golden scaling relative to the separate Init Circuit.
+        for (int ch = 0; ch < 2; ++ch)
+        {
+            scaleChannel(p, ch, CP_lpfCutoff, 1.10f);
+            scaleChannel(p, ch, CP_vD, 1.06f);
+            scaleChannel(p, ch, CP_fD, 1.06f);
+            scaleChannel(p, ch, CP_vR, 0.94f);
+            scaleChannel(p, ch, CP_fR, 0.94f);
+        }
+        preset.description += " A gently brighter body with a clean, controlled key release.";
+        return;
+    }
+    const bool keyboard = preset.category == "Keys";
+    const bool bassVoice = preset.category == "Bass";
+    const bool sequence = preset.category == "Sequences";
+    const bool organVoice = preset.category == "Organ";
+    const bool struckFamily = keyboard || bassVoice || sequence
+                           || preset.category == "Plucked" || preset.category == "Bells";
     float cutoff = 1.0f, attack = 1.0f, decay = 1.0f, release = 1.0f;
     const char* detail = "";
     switch (style)
     {
         case Finish::amber:
-            cutoff = 0.82f; decay = 1.08f;
-            detail = "A warmer filter balance and a slightly longer body decay."; break;
+            cutoff = 0.82f; decay = 1.10f;
+            detail = "A warm main body with a slightly longer decay; the separate attack stays concise."; break;
         case Finish::velvet:
-            cutoff = 0.69f; attack = struck ? 1.0f : 1.18f; release = 1.12f;
-            detail = "A covered upper register and a gently rounded release."; break;
+            cutoff = 0.69f; attack = 1.18f; release = 1.12f;
+            detail = "A covered upper register and rounded main release, preserving the shorter edge."; break;
         case Finish::distant:
-            cutoff = 0.64f; attack = struck ? 1.0f : 1.24f; release = 1.26f;
-            detail = "Restrained high harmonics with a longer, softer ending."; break;
+            cutoff = 0.64f; attack = 1.24f; release = 1.26f;
+            detail = "A subdued upper edge over a longer body ending; characteristic body detail remains present."; break;
         case Finish::neon:
-            cutoff = 1.23f; attack = 0.90f; decay = 0.92f;
-            detail = "A forward upper edge with a compact attack and decay."; break;
+            cutoff = 1.23f; attack = 0.90f; decay = 0.91f;
+            detail = "A forward attack color with a compact main decay and a separately controlled accent."; break;
         case Finish::hollow:
-            cutoff = 0.91f; decay = 1.12f;
-            p[P_resonance] = std::min(0.58f, p[P_resonance] + 0.045f);
-            detail = "A lightly emphasized filter resonance over a longer body."; break;
+            cutoff = 0.91f; decay = 1.13f;
+            detail = "A lightly focused filter band over a longer body, with restrained resonance on acoustic models."; break;
         case Finish::golden:
-            cutoff = 1.10f; decay = 1.06f; release = 0.94f;
-            detail = "A gently brighter body with a clean, controlled key release."; break;
+            cutoff = 1.10f; decay = 1.07f; release = 0.94f;
+            detail = "A gently open body, a defined attack and a clean key release."; break;
         case Finish::frozen:
-            cutoff = 0.94f; decay = 1.21f; release = 1.15f;
-            p[P_drift] *= 0.45f;
-            detail = "Steadier tuning and a longer ringing or held body."; break;
+            cutoff = 0.94f; decay = 1.22f; release = 1.15f;
+            p[P_drift] *= 0.38f;
+            detail = "Steadier tuning and a longer body decay, without stretching a separate short strike."; break;
         case Finish::electric:
-            cutoff = 1.16f; attack = 0.84f; decay = 0.89f;
-            detail = "A quicker, brighter edge with a deliberately short attack body."; break;
+            cutoff = 1.16f; attack = 0.84f; decay = 0.88f;
+            detail = "A quick, forward edge that settles into a more compact body."; break;
         case Finish::midnight:
-            cutoff = 0.57f; decay = 1.10f; release = 1.06f;
-            detail = "Darkened upper harmonics with a slightly longer body."; break;
+            cutoff = 0.57f; decay = 1.11f; release = 1.06f;
+            detail = "A dark upper contour with a slightly lingering body; the onset remains defined."; break;
         case Finish::slow:
-            cutoff = 0.88f; attack = struck ? 1.0f : 1.45f; decay = 1.32f; release = 1.16f;
-            detail = struck ? "A quick struck onset followed by a longer decay; no portamento or pad-like swell."
-                            : "A slower opening gesture and a longer decay and release."; break;
+            cutoff = 0.88f; attack = 1.45f; decay = 1.32f; release = 1.16f;
+            detail = struckFamily ? "A prompt struck onset and longer main decay; the short accent keeps its own timing."
+                                  : "A slower main entrance and longer ending, preserving the source's brief accents."; break;
         case Finish::bright:
-            cutoff = 1.38f; decay = 0.95f;
-            detail = "A more open harmonic spectrum with a slightly tighter decay."; break;
+            cutoff = 1.38f; decay = 0.94f;
+            detail = "A more open upper contour with a clear accent and slightly tighter main decay."; break;
         case Finish::dark:
-            cutoff = 0.49f; release = 0.91f;
-            detail = "A strongly covered harmonic spectrum with a tidy release."; break;
+            cutoff = 0.49f; release = 0.90f;
+            detail = "A covered upper contour with a tidy ending, retaining the instrument body's defining modes."; break;
         case Finish::wide:
-            cutoff = 1.04f; decay = 1.03f;
-            p[chParam(0, CP_pan)] = -0.28f;
-            p[chParam(1, CP_pan)] = 0.28f;
-            detail = "The two circuit ranks spread gently across stereo, retaining stable pitch."; break;
+            cutoff = 1.04f; decay = 1.04f;
+            detail = "Complementary ranks spread across stereo with a restrained, register-appropriate width and a centered composite image."; break;
         case Finish::soft:
-            cutoff = 0.74f; attack = struck ? 1.04f : 1.15f; decay = 1.05f;
-            detail = "A restrained upper edge with a subtly cushioned onset."; break;
+            cutoff = 0.74f; attack = 1.15f; decay = 1.06f;
+            detail = "A restrained upper contour and a cushioned main entrance; struck instruments retain their articulation."; break;
     }
+    const auto source = p;
+    bool anyBody = false;
     for (int ch = 0; ch < 2; ++ch)
     {
-        scaleChannel(p, ch, CP_lpfCutoff, cutoff);
-        scaleChannel(p, ch, CP_vA, attack);
-        scaleChannel(p, ch, CP_fA, attack);
-        scaleChannel(p, ch, CP_vD, decay);
-        scaleChannel(p, ch, CP_fD, decay);
-        scaleChannel(p, ch, CP_vR, release);
-        scaleChannel(p, ch, CP_fR, release);
-        if (p[bodyParam(ch, 0)] > 0.0f)
+        const int other = 1 - ch;
+        const int model = static_cast<int>(source[bodyParam(ch, 0)]);
+        const bool hasBody = model != body::off && source[bodyParam(ch, 1)] > 0.0f;
+        anyBody = anyBody || hasBody;
+        const bool struckBody = hasBody && ((model >= body::piano && model <= body::bass)
+                                           || model >= body::bell);
+        const bool shortAccent = source[chParam(ch, CP_vS)] <= 0.10f
+            && source[chParam(ch, CP_vD)] < 0.65f * source[chParam(other, CP_vD)];
+        const bool struck = struckFamily || struckBody || shortAccent;
+
+        // A real LP now filters the modal excitation. Split the adjective's
+        // color between a moderate LP move and a small intrinsic-color move;
+        // the old full LP plus large body-color move darkened it twice.
+        const float filterWeight = hasBody ? (shortAccent ? 0.74f : 0.60f) : 1.0f;
+        if (source[chParam(ch, CP_lpfOn)] > 0.5f)
+            scaleChannel(p, ch, CP_lpfCutoff, std::pow(cutoff, filterWeight));
+        if (style == Finish::hollow && source[chParam(ch, CP_lpfOn)] > 0.5f)
         {
-            // The named finish must color modal and sine-like bodies too,
-            // not just the parallel saw/pulse filter path.
-            p[bodyParam(ch, 2)] = std::clamp(p[bodyParam(ch, 2)]
-                + 0.24f * std::log2(cutoff), 0.0f, 1.0f);
-            p[bodyParam(ch, 3)] = std::clamp(p[bodyParam(ch, 3)] * decay, 0.25f, 4.0f);
+            const int index = chParam(ch, CP_lpfRes);
+            // Local resonance leaves the complementary rank's body intact.
+            p[index] = std::clamp(p[index] + (hasBody ? 0.018f : (ch == 1 ? 0.055f : 0.025f)),
+                                  kChannelDefs[CP_lpfRes].min, kChannelDefs[CP_lpfRes].max);
         }
+        float attackFactor = struck && attack > 1.0f ? 1.0f : attack;
+        if (organVoice) attackFactor = std::clamp(attackFactor, 0.88f, 1.12f);
+        if (hasBody && !struck) attackFactor = std::pow(attackFactor, 0.78f);
+        const float decayFactor = shortAccent ? std::pow(decay, 0.28f) : decay;
+        const float releaseFactor = shortAccent ? std::min(release, 1.025f)
+                                  : sequence ? std::min(release, 1.06f) : release;
+        scaleChannel(p, ch, CP_vA, attackFactor);
+        scaleChannel(p, ch, CP_fA, shortAccent ? std::min(attackFactor, 1.0f) : attackFactor);
+        scaleChannel(p, ch, CP_vD, decayFactor);
+        scaleChannel(p, ch, CP_fD, shortAccent ? std::pow(decay, 0.20f) : std::pow(decay, 0.75f));
+        scaleChannel(p, ch, CP_vR, releaseFactor);
+        scaleChannel(p, ch, CP_fR, std::min(releaseFactor, 1.12f));
+        if (hasBody)
+        {
+            p[bodyParam(ch, 2)] = std::clamp(p[bodyParam(ch, 2)]
+                + (struckBody ? 0.16f : shortAccent ? 0.08f : 0.11f) * std::log2(cutoff), 0.0f, 1.0f);
+            p[bodyParam(ch, 3)] = std::clamp(p[bodyParam(ch, 3)]
+                * std::pow(decay, shortAccent ? 0.20f : 0.68f), 0.25f, 4.0f);
+        }
+    }
+    // Keep a named darker/softer variation coherent in the upper keyboard
+    // rather than changing a single C4 cutoff. Do not add pitch movement or
+    // alter a source recipe's velocity, pressure, modulation rates or register.
+    p[P_kbdBrillianceHigh] = std::clamp(p[P_kbdBrillianceHigh]
+        + (anyBody ? 0.055f : 0.075f) * std::log2(cutoff), -1.0f, 1.0f);
+    if (style == Finish::wide)
+    {
+        const float mix = source[P_mix];
+        // Use narrower movement for the dominant foundation, not a universal
+        // equal pan that pulls an unequal pair of ranks toward one speaker.
+        const float width = bassVoice ? 0.30f : keyboard || sequence ? 0.42f : 0.64f;
+        const float left = std::max(0.01f, (1.0f - mix) * (source[chParam(0, CP_vLevel)]
+                                      + 0.6f * source[chParam(0, CP_initLevel)]));
+        const float right = std::max(0.01f, mix * (source[chParam(1, CP_vLevel)]
+                                      + 0.6f * source[chParam(1, CP_initLevel)]));
+        // Modal/circuit mixtures and the chorus return do not have equal
+        // electrical gain. These small family offsets were voiced against
+        // the complete stereo output, rather than assuming control values
+        // alone predict its balance.
+        const float center = preset.category == "Strings" || preset.category == "Brass" ? -0.24f
+                           : preset.category == "FX" ? -0.085f
+                           : preset.category == "Leads" ? 0.075f : 0.0f;
+        p[chParam(0, CP_pan)] = center - width * right * right / (left * left + right * right);
+        p[chParam(1, CP_pan)] = center + width * left * left / (left * left + right * right);
     }
     preset.description += " ";
     preset.description += detail;
@@ -115,10 +186,10 @@ FactoryPreset voiced(const char* name, const char* category, const char* source,
 {
     FactoryPreset p = recipe(source);
     p.name = name;
-    p.category = category;
     // This enum records an address range only. Both ranges use the same engine.
     p.library = ProgramLibrary::legacy;
     finish(p, style);
+    p.category = category;
     p.values[P_sourcePerformance] = 1.0f;
     p.values[P_parityMode] = 0.0f;
     p.values[P_subOriginalMode] = 1.0f;
@@ -149,12 +220,19 @@ std::vector<FactoryPreset> build()
                           + "; the named row carries the body and the other rank supports the same instrument. "
                             "An authored study, not a measured preset-board capture. " + p.description;
             p.values[P_mix] = std::clamp(p.values[P_mix], 0.16f, 0.42f);
+            // The bowed main rank is quieter than the partly circuit-driven
+            // upper rank at the same numeric level. Give the named String 1
+            // and String 3 row an audible foundation, not just a mix below .5.
+            if (row == 0 && t == 0) p.values[P_mix] = 0.20f;
+            if (row == 0 && t == 1) p.values[P_mix] = 0.18f;
+            if (row == 0 && t == 2) p.values[P_mix] = 0.32f;
             if (row == 1)
             {
                 for (int k = 0; k < CP_count; ++k)
                     std::swap(p.values[chParam(0, k)], p.values[chParam(1, k)]);
                 for (int k = 0; k < 4; ++k)
                     std::swap(p.values[bodyParam(0, k)], p.values[bodyParam(1, k)]);
+                std::swap(p.values[bodySizeParam(0)], p.values[bodySizeParam(1)]);
                 p.values[P_mix] = 1.0f - p.values[P_mix];
                 // The named card stays on concert pitch after the rank swap.
                 // DETUNE II is one-sided, so a negative compensation would
@@ -256,6 +334,15 @@ std::vector<FactoryPreset> build()
                 p.values[P_initBend] = 0.0f;
                 p.values[P_subVco] = 0.0f;
                 p.values[P_subAtVco] = 0.0f;
+            }
+            if (p.name == "Dark FX 148")
+            {
+                // The covered Thunder variation needs enough low rumble to
+                // follow its crack. Keep the main LP below Thunder's 270 Hz,
+                // but avoid losing the body through the generic dark finish.
+                p.values[chParam(0, CP_lpfCutoff)] = 165.0f;
+                p.values[chParam(0, CP_vLevel)] = 1.0f;
+                p.values[chParam(1, CP_vLevel)] = 1.0f;
             }
             if (p.category == "Sequences")
             {

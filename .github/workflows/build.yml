@@ -495,18 +495,21 @@ jobs:
           ./pluginval/pluginval.app/Contents/MacOS/pluginval --version
 
       # Audio Unit hosts discover AUs through AudioComponentRegistrar, not
-      # through the build tree. Register the exact built bundle in the
-      # per-user Components directory, then force the registrar to rescan.
+      # through the build tree. Ad-hoc sign the packaging source first, then
+      # register an identical copy and force the registrar to rescan.
       - name: Register built AU
         run: |
           set -euo pipefail
           AU_SOURCE="$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component"
           AU_DEST="$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
           test -d "$AU_SOURCE"
+          codesign --force --sign - "$AU_SOURCE"
           mkdir -p "$HOME/Library/Audio/Plug-Ins/Components"
           rm -rf "$AU_DEST"
           cp -R "$AU_SOURCE" "$AU_DEST"
-          codesign --force --sign - "$AU_DEST"
+          diff -qr "$AU_SOURCE" "$AU_DEST"
+          shasum -a 256 "$AU_SOURCE/Contents/MacOS/CS-80 Reference" \
+            "$AU_DEST/Contents/MacOS/CS-80 Reference" | tee au-payload-before-validation.sha256
           killall -9 AudioComponentRegistrar || true
           sleep 2
           ls -ld "$AU_DEST"
@@ -569,6 +572,14 @@ jobs:
 
       - name: Package native macOS VST3, AU and Standalone
         run: |
+          set -euo pipefail
+          AU_SOURCE="$PWD/build/CS80Reference_artefacts/Release/AU/CS-80 Reference.component"
+          AU_DEST="$HOME/Library/Audio/Plug-Ins/Components/CS-80 Reference.component"
+          # Fail if validation or registration changed the copied AU's bytes
+          # or resources relative to the bundle that will be packaged.
+          diff -qr "$AU_SOURCE" "$AU_DEST"
+          shasum -a 256 "$AU_SOURCE/Contents/MacOS/CS-80 Reference" \
+            "$AU_DEST/Contents/MacOS/CS-80 Reference" | tee au-payload-after-validation.sha256
           python scripts/package-ci-artifacts.py --self-test
           python scripts/package-ci-artifacts.py --platform macos --build-dir build --out-dir packages
 
@@ -604,6 +615,8 @@ jobs:
         with:
           name: cs80-pluginval-${{ matrix.runner }}
           path: |
+            au-payload-before-validation.sha256
+            au-payload-after-validation.sha256
             pluginval-download.json
             pluginval-reports
             pluginval-vst3.log

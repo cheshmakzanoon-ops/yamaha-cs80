@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "worker": 50,
+  "task": "delivered inventory verification",
+  "state": "ready_for_final_source_and_actual_artifact_followup",
+  "actual_candidate_qualified": false,
+  "scope": "Prove no added, removed, reordered or renamed programs; verify original IDs and Init values, changed existing controls, unique non-volume vectors, and exact final local versus delivered binary32 parameter identity. This is structural/provenance evidence, not perceptual equivalence.",
+  "baseline": {
+    "commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+    "tree": "715212d1f2cb45b1aad3d7fd23416276b8b938d7",
+    "revision": "2026.11.3",
+    "inventory_sha256": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+    "csv_sha256": "72e51e3433d9695c63b7b91d46f6b325d68ac5cae502e0b7c51fead363d215ab",
+    "schema": 1,
+    "program_count": 523,
+    "parameter_count": 198,
+    "init_programs": [
+      {
+        "index": 43,
+        "name": "Init Patch"
+      },
+      {
+        "index": 522,
+        "name": "Init Circuit"
+      }
+    ]
+  },
+  "source_review": {
+    "sha256": {
+      "scripts/compare-preset-refinement.py": "6c45309f09c9d85152c0c08fb4033bc15d1565418947e681d9a7d5c41bbf7cf4",
+      "scripts/compare-preset-audio.py": "b86d58c28c517bfe0dc94196458b4115a4c1a2529f07d0031241e96e2a406e04",
+      "src/tools/preset_capture.cpp": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+      "scripts/capture-factory-auditions.py": "99150f4e685db3d3f0dde95ef2bc003a0b26d36499a76c957464af13ed80d9c7",
+      "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-audition-zip.py": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62",
+      "docs/preset-evidence/2026.11.4/baseline/inventory.json": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+      "docs/preset-evidence/2026.11.4/baseline/single-note-metrics.csv": "72e51e3433d9695c63b7b91d46f6b325d68ac5cae502e0b7c51fead363d215ab",
+      "docs/preset-evidence/2026.11.4/baseline/provenance.json": "203f52361d010c554aa0958918c1035f6a6b3a33bc6cb6c3698e5639dc74a712"
+    },
+    "capture_source_byte_identical_to_baseline": true,
+    "capture_inventory_precision": "std::numeric_limits<float>::max_digits10; values round-trip to binary32",
+    "digest_contract": {
+      "algorithm": "FNV-1a 64-bit",
+      "offset_basis": 14695981039346656037,
+      "prime": 1099511628211,
+      "modulus_bits": 64,
+      "per_value_bytes": "IEEE-754 binary32, least-significant byte first",
+      "implementation_agreement": "C++ shifts the copied float bit pattern by eight bits; both Python checkers pack <f."
+    },
+    "comparator_boundaries": [
+      "CLI pins the exact canonical baseline bytes and both revision labels.",
+      "Structural comparator requires a changed prior non-master-volume control for each musical program; appended size alone, existing active body, or master-only change cannot qualify.",
+      "Structural float equality treats signed zero as the same numeric control value; the delivered/Init verification will additionally compare packed bytes, as the audio checker already does for Init.",
+      "The parameter comparator binds input bytes, not an executable, native wrapper, producing job or release artifact.",
+      "Only body controls and appended sizes receive explicit range validation in this comparator. Full declared-range admission remains the unchanged library audit plus equality to its qualified final vectors."
+    ]
+  },
+  "observed_readiness_checks": {
+    "baseline_csv_rows_independently_recomputed": 523,
+    "all_baseline_csv_parameter_digests_match_inventory": true,
+    "all_baseline_csv_ordered_indices_names_categories_match": true,
+    "new_final_inventory_or_artifact_consumed": false,
+    "repeated_existing_adversarial_selftests": false
+  },
+  "required_inputs_for_followup": [
+    "Published final source commit and tree SHA; exact source hashes for the final calibration/capture.",
+    "Final local 2026.11.4 523-program/200-parameter inventory and provenance, produced after both calibration passes and rebuild.",
+    "Actual downloaded audition ZIP and its independent GitHub artifact API record, run/attempt, producer and upload evidence.",
+    "Worker49 successful complete archive acceptance and exact extracted inventory.json bytes/member hash.",
+    "Final full-library local matched CSV if binding all523 local capture parameter digests; this is distinct from138 archived WAV renders of74 programs."
+  ],
+  "acceptance_sequence": [
+    {
+      "step": 1,
+      "check": "Accept actual artifact provenance first",
+      "requirements": [
+        "Artifact name contains the exact published source SHA; API source/run/ID/size/digest and expiry valid.",
+        "Original native producer and upload steps succeeded for the qualifying run attempt.",
+        "Worker49 accepts source-commit.txt, provenance.json, SHA256SUMS and the exact inventory member bytes; do not compare a re-created inventory."
+      ]
+    },
+    {
+      "step": 2,
+      "check": "Parse strictly and preserve precision",
+      "requirements": [
+        "Reject duplicate JSON keys, nonfinite constants/values, booleans as numbers, overflow on binary32 conversion, wrong schema/revision, missing/extra rows or fields relevant to identities.",
+        "Require exactly523 ordered index/host_index positions0..522 and200 unique parameter IDs.",
+        "Do not round decimal values or compare only printed short decimals."
+      ]
+    },
+    {
+      "step": 3,
+      "check": "Compare archived inventory against canonical baseline",
+      "requirements": [
+        "Run scripts/compare-preset-refinement.py using the pinned baseline and actual archived inventory.",
+        "Require ordered names/categories/tags/host indices unchanged for all523 programs.",
+        "Require original198 IDs as an exact prefix, followed only by body1_size and body2_size.",
+        "Require all521 musical programs to differ in a previously published non-master-volume control; size-only or gain-only changes do not count.",
+        "Require no duplicate non-volume engine-value vectors.",
+        "For both Init programs compare all198 prior packed <f values exactly and both appended sizes to packed1.0, in addition to structural comparator admission.",
+        "Descriptions may change from baseline as authored explanatory text; this does not permit name/category/tag/address changes."
+      ]
+    },
+    {
+      "step": 4,
+      "check": "Bind local final values to delivered values",
+      "requirements": [
+        "Require identical schema, revision and ordered IDs.",
+        "Require every ordered program field, including description and tags, to match the final local inventory.",
+        "Compare all104600 parameter values as packed little-endian binary32 bytes, including signed-zero bits; require zero mismatches.",
+        "Record both raw inventory SHA256 values. A raw-byte mismatch must be explained and investigated; never use formatting normalization to hide a field or value change.",
+        "Recompute all523 per-program digests independently. Bind any actual archived CSV row to its exact program digest and report the74-program rendered subset separately from full inventory coverage."
+      ]
+    },
+    {
+      "step": 5,
+      "check": "Publish reproducible actual report",
+      "requirements": [
+        "Record artifact/member/local/baseline hashes, source and run/attempt, tool hashes, comparison counts and exact failures, if any.",
+        "Record actual min/max changed-control counts and model/family coverage from the final values, never copy earlier development totals.",
+        "Keep no-new-presets, compatibility, rendered sound safety and perceptual claims separate; full native wrapper and MIDI routing tests belong to platform qualification."
+      ]
+    }
+  ],
+  "structural_comparison_argv_template": [
+    "python3",
+    "scripts/compare-preset-refinement.py",
+    "--before",
+    "docs/preset-evidence/2026.11.4/baseline/inventory.json",
+    "--after",
+    "<verified-extracted-artifact>/inventory.json",
+    "--out",
+    "<current-source-evidence>/inventory/parameter-coverage.json",
+    "--after-label",
+    "Actual verified audition inventory for <source-SHA>, run <run-ID>, attempt <attempt>"
+  ],
+  "independent_baseline_probe_source": "import csv, struct\nfrom pathlib import Path\nimport json\ninventory = json.loads(Path(\"docs/preset-evidence/2026.11.4/baseline/inventory.json\").read_text())\nrows = list(csv.DictReader(Path(\"docs/preset-evidence/2026.11.4/baseline/single-note-metrics.csv\").open()))\ndef digest(values):\n    h = 14695981039346656037\n    for value in values:\n        for byte in struct.pack(\"<f\", value):\n            h = ((h ^ byte) * 1099511628211) % (1 << 64)\n    return format(h, \"x\")\nassert len(rows) == len(inventory[\"programs\"]) == 523\nfor row, program in zip(rows, inventory[\"programs\"]):\n    assert int(row[\"index\"]) == program[\"index\"] == program[\"host_index\"]\n    assert (row[\"name\"], row[\"category\"]) == (program[\"name\"], program[\"category\"])\n    assert row[\"parameter_digest\"] == digest(program[\"values\"])\n",
+  "limitations": [
+    "No final candidate inventory, newly published source, native executable or actual release artifact has been accepted by worker50 yet.",
+    "Parameter differences alone do not prove audible routing, higher sound quality, acoustic identity or host compatibility.",
+    "No production, comparison-tool, workflow or shared build changes were made."
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "schema": 1,
+  "worker": 31,
+  "task": "independent InstrumentBody and InstrumentBodyFilter ASan/UBSan review",
+  "status": "passed focused ASan/UBSan probe; LeakSanitizer unavailable in this execution environment",
+  "created_utc": "2026-11-23T17:44:46.581620+00:00",
+  "production_files_changed": [],
+  "shared_build_modified": false,
+  "source_sha256": {
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319"
+  },
+  "scope": "Standalone compilation of the two current DSP headers; adversarial finite-output and lifecycle checks with ASan and UBSan instrumentation. Existing full direct-model and filter suites are not represented as newly rerun here.",
+  "findings": [],
+  "probe": {
+    "source_sha256": "76969f6c3625c0bb863622a2b2e8d3a03f53b664b270ddbc249b6c89d501d9e6",
+    "executable_sha256": "8f3b604c048e12977a44595d833f6db0e47c77596bc034f4a85a101700e89139",
+    "address_control_executable_sha256": "6b44f2245687636c53fbd5cab82225206781030c09c4a52d1f34b9632f347b69",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "working_directory": "/workspace/scratch/a9592b052b11/cs80-work",
+    "compile_command": "g++ -std=c++17 -O1 -g -fno-omit-frame-pointer -fno-optimize-sibling-calls -fsanitize=address,undefined -fno-sanitize-recover=all -Wall -Wextra -Wpedantic -Isrc /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp -o /workspace/scratch/a9592b052b11/a31/model_sanitizers",
+    "address_control_compile_command": "g++ -std=c++17 -O1 -g -fno-omit-frame-pointer -fno-optimize-sibling-calls -fsanitize=address -fno-sanitize-recover=all -Wall -Wextra -Wpedantic -Isrc /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp -o /workspace/scratch/a9592b052b11/a31/address_control",
+    "compile_exits": [
+      0,
+      0
+    ],
+    "environment_overrides": {
+      "ASAN_OPTIONS": "halt_on_error=1:abort_on_error=0:detect_leaks=0",
+      "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1"
+    },
+    "initial_environment_difference": {
+      "ASAN_OPTIONS": "halt_on_error=1:abort_on_error=0:detect_leaks=1"
+    },
+    "initial_runs": [
+      {
+        "label": "address-control",
+        "command": [
+          "/workspace/scratch/a9592b052b11/a31/model_sanitizers",
+          "--address-control"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 0.032951,
+        "log": "/workspace/scratch/a9592b052b11/a31/address-control.log"
+      },
+      {
+        "label": "undefined-control",
+        "command": [
+          "/workspace/scratch/a9592b052b11/a31/model_sanitizers",
+          "--undefined-control"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 0.030544,
+        "log": "/workspace/scratch/a9592b052b11/a31/undefined-control.log"
+      },
+      {
+        "label": "adversarial",
+        "command": [
+          "/workspace/scratch/a9592b052b11/a31/model_sanitizers"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 0.327037,
+        "log": "/workspace/scratch/a9592b052b11/a31/adversarial.log"
+      }
+    ],
+    "successful_run": {
+      "label": "adversarial-without-lsan",
+      "command": [
+        "/workspace/scratch/a9592b052b11/a31/model_sanitizers"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.333092,
+      "log": "/workspace/scratch/a9592b052b11/a31/adversarial-without-lsan.log"
+    },
+    "fault_controls": [
+      {
+        "label": "asan-only-control",
+        "command": [
+          "/workspace/scratch/a9592b052b11/a31/address_control",
+          "--address-control"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 0.016152,
+        "log": "/workspace/scratch/a9592b052b11/a31/asan-only-control.log"
+      },
+      {
+        "label": "ubsan-control-without-lsan",
+        "command": [
+          "/workspace/scratch/a9592b052b11/a31/model_sanitizers",
+          "--undefined-control"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 0.019432,
+        "log": "/workspace/scratch/a9592b052b11/a31/ubsan-control-without-lsan.log"
+      }
+    ],
+    "metrics": {
+      "matrix_cases": 2772,
+      "long_cases": 120,
+      "copy_cases": 120,
+      "model_choices": 20,
+      "out_of_range_model_choices": 2,
+      "matrix_rate_pairs": 14,
+      "note_tuples": 9,
+      "body_samples": 1253624,
+      "filter_samples": 1253624,
+      "prepare_calls": 1096,
+      "explicit_reset_calls": 3320,
+      "note_on_calls": 3012,
+      "checks": 4156568,
+      "failures": 0,
+      "body_peak": 0.712383568287,
+      "filter_peak": 1.71224689484
+    },
+    "coverage": [
+      "All 20 model choices plus INT_MIN and INT_MAX model IDs; clamped model-name lookup.",
+      "Fourteen internal/host rate pairs, including 8 kHz through 1.536 MHz, host greater than internal, below-minimum and negative/zero rates, DBL_MAX, NaN and positive/negative infinity.",
+      "Nine onset tuples covering MIDI 0 and 127, fractional and middle notes, velocity 0 and 1, brightness 0 and 1, decay .25 and 4, size .5 and 2.5, FLT_MAX and its negative, NaN and infinities. Seeds 0, UINT32_MAX and a fixed nonzero seed.",
+      "Tick frequencies from tiny positive values to FLT_MAX plus zero, negative, NaN and infinities; invalid-frequency silence is asserted. Brightness and pressure include legal endpoints, out-of-range finite values and nonfinite values.",
+      "Filter cutoff/Q endpoints, huge positive and negative values, NaN/infinities, rapid bypass changes and explicit reset/re-prepare.",
+      "120 valid-rate/model cases run for 4097 samples, crossing the 2048-sample mode normalization and coefficient-refresh boundaries.",
+      "120 outgoing body/filter value-copy cases remain exactly equal to independent references after the original objects are reset, prepared and assigned another note. Frozen-filter snapshots are exercised."
+    ],
+    "instrumentation_validation": {
+      "asan_control": "A separate ASan-only build of the same harness rejected a deliberately out-of-bounds heap read with AddressSanitizer: heap-buffer-overflow, exit 1. The combined build had already rejected the same deliberate fault via UBSan object-size/type checking, so it was not counted as independent ASan validation.",
+      "ubsan_control": "The combined ASan/UBSan binary rejected intentional signed integer overflow, exit 1.",
+      "normal_binary_imports": [
+        "__asan_handle_no_return",
+        "__asan_init",
+        "__asan_poison_stack_memory",
+        "__asan_register_globals",
+        "__asan_report_load1",
+        "__asan_report_load4",
+        "__asan_report_load8",
+        "__asan_report_load_n",
+        "__asan_report_store1",
+        "__asan_report_store4",
+        "__asan_report_store8",
+        "__asan_report_store_n",
+        "__asan_stack_free_7",
+        "__asan_stack_free_9",
+        "__asan_stack_malloc_0",
+        "__asan_stack_malloc_1",
+        "__asan_stack_malloc_2",
+        "__asan_stack_malloc_3",
+        "__asan_stack_malloc_4",
+        "__asan_stack_malloc_7",
+        "__asan_stack_malloc_9",
+        "__asan_unpoison_stack_memory",
+        "__asan_unregister_globals",
+        "__asan_version_mismatch_check_v8",
+        "__ubsan_handle_add_overflow_abort",
+        "__ubsan_handle_builtin_unreachable",
+        "__ubsan_handle_load_invalid_value_abort",
+        "__ubsan_handle_nonnull_arg_abort",
+        "__ubsan_handle_out_of_bounds_abort",
+        "__ubsan_handle_pointer_overflow_abort",
+        "__ubsan_handle_sub_overflow_abort",
+        "__ubsan_handle_type_mismatch_v1_abort"
+      ],
+      "leak_runtime": "The first normal run with detect_leaks=1 exited 1 with LeakSanitizer fatal error and a ptrace incompatibility hint. Subsequent runs disable only leak scanning. ASan address checks, UBSan checks and fatal-on-error remain enabled. No memory-leak pass is claimed."
+    },
+    "logs": {
+      "compile.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "text": ""
+      },
+      "address-control-compile.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "text": ""
+      },
+      "address-control.log": {
+        "sha256": "80732870d4a24919b4ab24385f03b7045ae60b576c342f6fd6b6525d00770fb6",
+        "text": "/workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:63:35: runtime error: load of address 0x502000000018 with insufficient space for an object of type 'volatile int'\n0x502000000018: note: pointer points here\n 02 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00\n              ^ \n    #0 0x5642cacac6b8 in addressControl /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:63\n    #1 0x5642cacace6f in main /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:75\n    #2 0x7f9187b53ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n    #3 0x7f9187b53d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n    #4 0x5642cacac3d0 in _start (/workspace/scratch/a9592b052b11/a31/model_sanitizers+0xe3d0) (BuildId: e8308b5648c321132d305e3aae706c03e37c6195)\n\n"
+      },
+      "undefined-control.log": {
+        "sha256": "e3e8440b09319150f37de5c5ed05f3381dc772a186772796636b37a5f37045e7",
+        "text": "/workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:69:20: runtime error: signed integer overflow: 1 + 2147483647 cannot be represented in type 'int'\n    #0 0x5597705ec543 in undefinedControl /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:69\n    #1 0x5597705ecf3e in main /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:77\n    #2 0x7fe74499eca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n    #3 0x7fe74499ed64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n    #4 0x5597705ec3d0 in _start (/workspace/scratch/a9592b052b11/a31/model_sanitizers+0xe3d0) (BuildId: e8308b5648c321132d305e3aae706c03e37c6195)\n\n"
+      },
+      "adversarial.log": {
+        "sha256": "7ebf4195faea420aa30a0bab096ca23e739ae58cdad7ca2be5b254053b8a448d",
+        "text": "==8==LeakSanitizer has encountered a fatal error.\n==8==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==8==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n"
+      },
+      "adversarial-without-lsan.log": {
+        "sha256": "f5be40ceec5fe8ee57ec48d78e74babc149d624a7fda065aa79cdd851f040242",
+        "text": "{\"matrix_cases\":2772,\"long_cases\":120,\"copy_cases\":120,\"model_choices\":20,\"out_of_range_model_choices\":2,\"matrix_rate_pairs\":14,\"note_tuples\":9,\"body_samples\":1253624,\"filter_samples\":1253624,\"prepare_calls\":1096,\"explicit_reset_calls\":3320,\"note_on_calls\":3012,\"checks\":4156568,\"failures\":0,\"body_peak\":0.712383568287,\"filter_peak\":1.71224689484}\n"
+      },
+      "asan-only-control.log": {
+        "sha256": "356b3ba60ebae677e0aad32a6eb3c3791e8720d93b27c998396b65062d24e812",
+        "text": "=================================================================\n==6==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x502000000018 at pc 0x556406af253c bp 0x7ffd2b700140 sp 0x7ffd2b700138\nREAD of size 4 at 0x502000000018 thread T0\n    #0 0x556406af253b in addressControl /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:63\n    #1 0x556406af2bba in main /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:75\n    #2 0x7fe9bb19dca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n    #3 0x7fe9bb19dd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n    #4 0x556406af2310 in _start (/workspace/scratch/a9592b052b11/a31/address_control+0x3310) (BuildId: 4d07ac8942ca7ef8e3543036238916a4b4ce4b18)\n\n0x502000000018 is located 0 bytes after 8-byte region [0x502000000010,0x502000000018)\nallocated by thread T0 here:\n    #0 0x7fe9bb7e28d8 in operator new[](unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:98\n    #1 0x556406af24a1 in addressControl /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:60\n    #2 0x556406af2bba in main /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:75\n    #3 0x7fe9bb19dca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:63 in addressControl\nShadow bytes around the buggy address:\n  0x501ffffffd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x501ffffffe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x501ffffffe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x501fffffff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x501fffffff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x502000000000: fa fa 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa\n  0x502000000080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x502000000100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x502000000180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x502000000200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x502000000280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==6==ABORTING\n"
+      },
+      "ubsan-control-without-lsan.log": {
+        "sha256": "070f47dd3539e426dd4ea2ddebaa25a6cad251d7c7c579647a7735515921cbca",
+        "text": "/workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:69:20: runtime error: signed integer overflow: 1 + 2147483647 cannot be represented in type 'int'\n    #0 0x55a9d48c6543 in undefinedControl /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:69\n    #1 0x55a9d48c6f3e in main /workspace/scratch/a9592b052b11/a31/model_sanitizers.cpp:77\n    #2 0x7f7548c18ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n    #3 0x7f7548c18d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: 5e5b51f4c39af9ac589408c1dc432ba390a273cc)\n    #4 0x55a9d48c63d0 in _start (/workspace/scratch/a9592b052b11/a31/model_sanitizers+0xe3d0) (BuildId: e8308b5648c321132d305e3aae706c03e37c6195)\n\n"
+      }
+    },
+    "source": "#include \"core/InstrumentBody.h\"\n#include \"core/InstrumentBodyFilter.h\"\n#include <algorithm>\n#include <array>\n#include <cmath>\n#include <cstdint>\n#include <cstdio>\n#include <cstring>\n#include <limits>\n#include <string>\n\nusing cs80::body::InstrumentBody;\nusing cs80::body::InstrumentBodyFilter;\nnamespace {\nconstexpr float nan = std::numeric_limits<float>::quiet_NaN();\nconstexpr float inf = std::numeric_limits<float>::infinity();\nconstexpr float maxf = std::numeric_limits<float>::max();\nconstexpr double nand = std::numeric_limits<double>::quiet_NaN();\nconstexpr double infd = std::numeric_limits<double>::infinity();\nconstexpr double maxd = std::numeric_limits<double>::max();\nstruct Rate { double internal, host; };\nconstexpr Rate rates[] = {\n    {-infd, -infd}, {-1, -1}, {0, 0}, {7999, 2000}, {8000, 8000},\n    {44100, 44100}, {96000, 48000}, {192000, 96000}, {1536000, 192000},\n    {maxd, maxd}, {nand, nand}, {infd, infd}, {8000, 48000}, {96000, nand}\n};\nstruct Note { float key, velocity, brightness, decay, size; };\nconstexpr Note notes[] = {\n    {0, 0, 0, .25f, .5f}, {127, 1, 1, 4, 2.5f},\n    {60, .2f, .65f, 1, 1}, {-maxf, -maxf, -maxf, -maxf, -maxf},\n    {maxf, maxf, maxf, maxf, maxf}, {nan, nan, nan, nan, nan},\n    {inf, inf, inf, inf, inf}, {-inf, -inf, -inf, -inf, -inf},\n    {60.5f, .99f, .1f, .3f, .51f}\n};\nconstexpr float frequencies[] = {8.1758f, 32.7032f, 261.6256f, 12543.854f,\n    1e-30f, maxf, -1, 0, nan, inf, -inf};\nconstexpr float controls[] = {0, 1, .5f, -maxf, maxf, nan, inf, -inf};\nconstexpr float cutoffs[] = {8, 200, 1000, 20000, -maxf, maxf, nan, inf, -inf};\nconstexpr float qs[] = {.5f, 4, 1, -maxf, maxf, nan, inf, -inf};\nstd::uint64_t bodySamples = 0, filterSamples = 0, checks = 0, failures = 0;\nstd::uint64_t resets = 0, noteOns = 0, prepares = 0;\ndouble bodyPeak = 0, filterPeak = 0;\nvoid check(bool value, const char* label) {\n    ++checks;\n    if (!value && failures++ < 12) std::fprintf(stderr, \"FAIL %s\\n\", label);\n}\nvoid bodySample(float x) {\n    ++bodySamples;\n    check(std::isfinite(x), \"body finite\");\n    check(std::abs(x) < 4.0f, \"body bounded\");\n    bodyPeak = std::max(bodyPeak, std::abs(double(x)));\n}\nvoid filterSample(float x) {\n    ++filterSamples;\n    check(std::isfinite(x), \"filter finite\");\n    filterPeak = std::max(filterPeak, std::abs(double(x)));\n}\n\n__attribute__((noinline)) int addressControl(int index) {\n    volatile int* memory = new int[2];\n    memory[0] = 1;\n    memory[1] = 2;\n    const int value = memory[index];\n    delete[] memory;\n    return value;\n}\n__attribute__((noinline)) int undefinedControl(int value) {\n    volatile int addition = 1;\n    return value + addition;\n}\n}\n\nint main(int argc, char** argv) {\n    if (argc > 1 && std::string(argv[1]) == \"--address-control\")\n        return addressControl(2);\n    if (argc > 1 && std::string(argv[1]) == \"--undefined-control\")\n        return undefinedControl(std::numeric_limits<int>::max());\n    // Default construction, before prepare(), has valid zero-state storage.\n    InstrumentBody body;\n    InstrumentBodyFilter filter;\n    check(body.tick(440, .5f, 0) == 0, \"default body silent\");\n    check(filter.tickFrozen(0) == 0, \"default frozen filter silent\");\n    int matrixCases = 0;\n    for (int modelIndex = 0; modelIndex < 22; ++modelIndex) {\n        const int model = modelIndex < 20 ? modelIndex : modelIndex == 20\n            ? std::numeric_limits<int>::min() : std::numeric_limits<int>::max();\n        check(cs80::body::name(model) != nullptr, \"clamped model name\");\n        for (const auto rate : rates) {\n            body.prepare(rate.internal, rate.host); filter.prepare(rate.internal);\n            prepares += 2;\n            for (std::size_t n = 0; n < std::size(notes); ++n) {\n                const auto note = notes[n]; ++matrixCases;\n                const auto seed = n % 3 == 0 ? 0u : n % 3 == 1 ? UINT32_MAX : 0x731ac91u;\n                // Repeated noteOn without an intervening explicit reset.\n                body.noteOn(model, note.key, note.velocity, note.brightness,\n                            note.decay, seed, note.size); ++noteOns;\n                for (std::size_t i = 0; i < 257; ++i) {\n                    const float frequency = frequencies[(i / 17 + n) % std::size(frequencies)];\n                    const float colour = controls[(i / 13 + n) % std::size(controls)];\n                    const float pressure = controls[(i / 11 + n + 3) % std::size(controls)];\n                    const float x = body.tick(frequency, colour, pressure);\n                    bodySample(x);\n                    if (!std::isfinite(frequency) || frequency <= 0)\n                        check(x == 0, \"invalid frequency silent\");\n                    filterSample(filter.tick(x + .1f * std::sin(float(i) * .37f),\n                        cutoffs[(i / 16 + n) % std::size(cutoffs)],\n                        cutoffs[(i / 19 + n + 2) % std::size(cutoffs)],\n                        qs[(i / 23 + n) % std::size(qs)],\n                        qs[(i / 29 + n + 3) % std::size(qs)],\n                        i % 31 < 15, i % 43 < 21));\n                }\n                // Interleave explicit resets with repeated-onset cases.\n                if (n % 2 == 0) {\n                    body.reset(); filter.reset(); resets += 2;\n                    for (int i = 0; i < 17; ++i) {\n                        const float x = body.tick(440, 1, 1);\n                        bodySample(x); check(x == 0, \"reset body silent\");\n                        const float y = filter.tick(0, 1000, 2000, 4, 4, true, true);\n                        filterSample(y); check(y == 0, \"reset filter silent\");\n                    }\n                }\n            }\n        }\n    }\n    // Long enough to execute the 2048-sample mode-renormalization boundary,\n    // coefficient refresh and sustained motion at every valid rate/model pair.\n    constexpr Rate longRates[] = {{8000,8000}, {44100,44100}, {96000,48000},\n        {192000,96000}, {384000,192000}, {1536000,192000}};\n    int longCases = 0, copyCases = 0;\n    for (int model = 0; model < 20; ++model) {\n        for (const auto rate : longRates) {\n            ++longCases;\n            body.prepare(rate.internal, rate.host); filter.prepare(rate.internal);\n            prepares += 2;\n            body.noteOn(model, 24, 1, 1, 4, UINT32_MAX, 2.5f); ++noteOns;\n            for (int i = 0; i < 4097; ++i) {\n                const float pitch = 32.7032f * std::exp2(.8f * std::sin(float(i) * .001f));\n                const float x = body.tick(pitch, .5f + .5f * std::sin(float(i) * .003f),\n                                          i % 2048 < 1024 ? 0.0f : 1.0f);\n                bodySample(x);\n                filterSample(filter.tick(x, 16, 2800, 4, 4, true, true));\n            }\n            // A value-copy outgoing voice must remain independent after the\n            // incoming object is reset, prepared and assigned another model.\n            auto bodyCopy = body, bodyReference = body;\n            auto filterCopy = filter, filterReference = filter;\n            body.reset(); filter.reset(); resets += 2;\n            body.prepare(8000,8000); filter.prepare(8000); prepares += 2;\n            body.noteOn((model + 7) % 20,127,0,0,.25f,0,.5f); ++noteOns;\n            ++copyCases;\n            for (int i = 0; i < 65; ++i) {\n                const float x = bodyCopy.tick(32.7032f, 1, 1);\n                const float reference = bodyReference.tick(32.7032f, 1, 1);\n                bodySample(x); bodySample(reference);\n                check(x == reference, \"body copy independent\");\n                const float y = filterCopy.tickFrozen(x);\n                const float yReference = filterReference.tickFrozen(reference);\n                filterSample(y); filterSample(yReference);\n                check(y == yReference, \"frozen filter copy independent\");\n                bodySample(body.tick(12543.854f, 0, 0));\n                filterSample(filter.tick(.1f, 1000, 1000, .5f, .5f, true, false));\n            }\n        }\n    }\n    std::printf(\"{\\\"matrix_cases\\\":%d,\\\"long_cases\\\":%d,\\\"copy_cases\\\":%d,\"\n                \"\\\"model_choices\\\":20,\\\"out_of_range_model_choices\\\":2,\\\"matrix_rate_pairs\\\":14,\"\n                \"\\\"note_tuples\\\":9,\\\"body_samples\\\":%llu,\\\"filter_samples\\\":%llu,\"\n                \"\\\"prepare_calls\\\":%llu,\\\"explicit_reset_calls\\\":%llu,\\\"note_on_calls\\\":%llu,\"\n                \"\\\"checks\\\":%llu,\\\"failures\\\":%llu,\\\"body_peak\\\":%.12g,\\\"filter_peak\\\":%.12g}\\n\",\n                matrixCases,longCases,copyCases,(unsigned long long)bodySamples,\n                (unsigned long long)filterSamples,(unsigned long long)prepares,\n                (unsigned long long)resets,(unsigned long long)noteOns,\n                (unsigned long long)checks,(unsigned long long)failures,bodyPeak,filterPeak);\n    return failures ? 1 : 0;\n}\n"
+  },
+  "limitations": [
+    "Leak scanning could not be qualified because LeakSanitizer cannot run under the observed ptrace environment; initial failure is retained, not counted as a pass.",
+    "This finite deterministic probe does not exhaust all control trajectories, sample histories, seeds or rates, and does not prove absence of every memory or undefined-behavior defect.",
+    "The scope is standalone Linux x86-64 DSP headers, not the full engine, JUCE host/plugin, native Windows/macOS packages, real-time scheduling, race detection or perceptual/acoustic accuracy.",
+    "Filter audio inputs are finite and bounded; arbitrary NaN/infinite input audio is outside this probe. Control inputs include nonfinite values.",
+    "Observed peak values describe these direct-model/filter test signals only and are not final preset level qualification."
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "source": "final development source after two calibration passes per bank",
+  "tests": [
+    {
+      "name": "cs80_library_audit_tests",
+      "time": "366.564",
+      "failed": false,
+      "skipped": false
+    },
+    {
+      "name": "cs80_preset_voicing_tests",
+      "time": "17.5964",
+      "failed": false,
+      "skipped": false
+    },
+    {
+      "name": "cs80_preset_character_tests",
+      "time": "6.8088",
+      "failed": false,
+      "skipped": false
+    },
+    {
+      "name": "cs80_preset_precision_tests",
+      "time": "49.3245",
+      "failed": false,
+      "skipped": false
+    }
+  ],
+  "audit_executable_sha256": "9f3881263d5bb3553e5ec8facd0027c97afce0c8d1f03d8ee12e4e11dd45903d",
+  "source_manifest": "provenance.json",
+  "native_qualification": "pending"
+}

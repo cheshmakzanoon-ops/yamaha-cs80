@@ -304,14 +304,17 @@ class DownloadTests(unittest.TestCase):
         macos = workflow.split("  macos:", 1)[1].split("  windows:", 1)[0]
         gate = macos.split("      - name: Register built AU", 1)[1].split(
             "      - name: Package native macOS", 1)[0]
-        # Keep the original registration and all three validator commands byte
-        # for byte. The additional failing-seed replay has its own exact body
-        # contract, so no original gate can be hidden in an excluded region.
+        # Registration now signs the packaging source before copying it and
+        # compares the two AU bundles. Pin that reviewed correction separately
+        # from the original four validator bodies, whose bytes remain unchanged.
+        validators = gate.split("      - name: Validate VST3 with pluginval\n", 1)[1]
+        self.assertEqual(hashlib.sha256(validators.encode()).hexdigest(),
+                         "cbc886a9c0c90a4988b0f012533620d2dfdc87bbb800180b53263925b9a66811")
         seed_step = "      - name: Validate AU GUI fixed-seed regression\n"
         self.assertEqual(gate.count(seed_step), 1)
         original_gate, seed_regression = gate.split(seed_step, 1)
         self.assertEqual(hashlib.sha256(original_gate.encode()).hexdigest(),
-                         "17f7fba2b466e8c3cd0686f35cbe93e42227583e73064f763670d150befd6b84")
+                         "8b66229b5a9309754ca272b3d5a2878850b3b5c37253518d5a4c1d3442cf3e7e")
         self.assertEqual(seed_regression,
                          "        run: |\n"
                          "          set -euo pipefail\n"
@@ -332,6 +335,27 @@ class DownloadTests(unittest.TestCase):
         upload = macos.split("      - name: Upload pluginval reports", 1)[1].split(
             "      - name: Upload test and JUCE source evidence", 1)[0]
         self.assertIn("            pluginval-au-seed-regression.log\n", upload)
+        registration = gate.split("      - name: Validate VST3 with pluginval\n", 1)[0]
+        sign_source = '          codesign --force --sign - "$AU_SOURCE"\n'
+        copy = '          cp -R "$AU_SOURCE" "$AU_DEST"\n'
+        compare = '          diff -qr "$AU_SOURCE" "$AU_DEST"\n'
+        self.assertLess(registration.index(sign_source), registration.index(copy))
+        self.assertLess(registration.index(copy), registration.index(compare))
+        self.assertNotIn('codesign --force --sign - "$AU_DEST"', registration)
+        packaging = macos.split(
+            "      - name: Package native macOS VST3, AU and Standalone\n", 1)[1].split(
+            "      - name: Upload native macOS install bundle\n", 1)[0]
+        self.assertIn("          set -euo pipefail\n", packaging)
+        self.assertEqual(packaging.count(compare), 1)
+        self.assertLess(packaging.index(compare),
+                        packaging.index("          python scripts/package-ci-artifacts.py"))
+        self.assertNotIn("|| true", packaging)
+        self.assertNotIn("continue-on-error", packaging)
+        for body, phase in ((registration, "before"), (packaging, "after")):
+            record = f"au-payload-{phase}-validation.sha256"
+            self.assertIn('          shasum -a 256 "$AU_SOURCE/Contents/MacOS/CS-80 Reference" \\\n'
+                          f'            "$AU_DEST/Contents/MacOS/CS-80 Reference" | tee {record}\n', body)
+            self.assertIn(f"            {record}\n", upload)
         fetch = macos.split("      - name: Fetch pluginval", 1)[1].split(
             "      # Audio Unit hosts", 1)[0]
         self.assertIn("timeout-minutes: 5", fetch)

@@ -1,18 +1,22 @@
 # Factory preset guide
 
-The **2026.11.3 factory library** contains **523 existing programs**. Its **521
+The **2026.11.4 factory library** contains **523 existing programs**. Its **521
 musical programs** have been reprogrammed; **Init Patch** and **Init Circuit**
 remain starting points. All names, categories and program addresses keep their
 existing order. No presets have been added or removed.
 
-The same circuit instrument now supports optional string, tine, reed, wind and
-bar excitations: **259 programs use these instrument bodies**, while the other
-264 entries retain circuit excitation. The bodies give partials their own
-spectra and decay rates; envelopes, touch, register and effects complete the
-individual sounds. These are authored synthesized interpretations, not samples
+The same circuit instrument supports optional string, tine, reed, wind and
+bar excitations alongside its circuit voices. Their partials develop through
+the attack, respond to playing effort and decay at different rates. The
+instrument bodies now follow the rank's high-pass and low-pass controls, and
+resonant size distinguishes related instruments without transposing the note.
+Envelopes, touch, register and effects complete the individual sounds.
+These are authored synthesized interpretations, not samples
 or a demonstrated exact match to an acoustic instrument or physical CS-80.
-The [2026.11.3 revision report](CIRCUIT_LIBRARY_2026_11_3.md) explains the sound
+The [2026.11.4 revision report](CIRCUIT_LIBRARY_2026_11_4.md) explains the sound
 changes, new controls and evidence. The
+[2026.11.3 instrument-voicing report](CIRCUIT_LIBRARY_2026_11_3.md) documents the
+introduction of these instrument bodies. The
 [2026.11.2 circuit library report](CIRCUIT_LIBRARY_2026_11_2.md) documents the earlier original-bank
 revoicing and retirement of old engine settings. The
 [2026.11.1 refinement report](PRESET_REFINEMENT_2026_11_1.md) and
@@ -41,10 +45,12 @@ For on-screen pressure, leave **KAS Scan Timing** off; if it is on, use MIDI
 aftertouch instead. This optional physical setup setting is retained when you
 change presets.
 
-**Pressure Lead is intentionally silent without pressure.** Hold a key and apply
-polyphonic or channel aftertouch, or drag down on the on-screen key. A harder
-strike alone will not produce its sound. Pressure brings up its level and
-brightness; easing off fades it again. [Lead voicings](../src/core/curated/Leads.inc)
+**Pressure Lead and Electric Leads 136 are intentionally silent without pressure.**
+Hold a key and apply polyphonic or channel aftertouch, or drag down on the
+on-screen key. A harder strike alone will not produce their sound. Pressure
+brings up their level and brightness; easing off fades them again.
+[Lead voicings](../src/core/curated/Leads.inc) ·
+[Original-address variations](../src/core/OriginalCircuitLibrary.inc)
 
 ## Find a family
 
@@ -121,7 +127,7 @@ Piano** use piano-string excitation with separately softening upper partials;
 All decay while the key is held. The bodies have physically motivated features,
 but they are not samples or complete measured acoustic-piano models.
 [Key source](../src/core/curated/Keys.inc) ·
-[Instrument-body scope](CIRCUIT_LIBRARY_2026_11_3.md#what-changes-in-the-sound)
+[Current instrument-body scope](CIRCUIT_LIBRARY_2026_11_4.md#struck-strings-electric-pianos-and-bars)
 
 **Analog Piano / Bright Keys / Slow Keys 106:** these original-address programs
 now draw on specific keyboard recipes. Try the same soft/firm comparison around
@@ -263,33 +269,45 @@ arpeggiator pace does not automatically retime those effects.
 ## Instrument-body controls
 
 In the host's parameter list, **Instrument body I** and **Instrument body II**
-each provide **Model**, **Mix**, **Brightness** and **Partial decay**. Model
-and partial decay are captured on the **next accepted note**; mix and brightness
-remain live. Selecting Off also takes effect on the next note, preserving an
-already-ringing body. Partial decay changes how the upper modes fade; the rank's
-normal amplitude envelope and key release still determine the complete note.
+each provide **Model**, **Mix**, **Brightness** and **Partial decay**. Two
+appended **Resonant size** parameters control the corresponding ranks. Model,
+partial decay and size are captured on the **next accepted note**; mix and
+brightness remain live. Selecting Off also takes effect on the next note,
+preserving an already-ringing body. On struck models, a larger Partial decay
+lets the modes ring longer; sustained bowed, wind, brass and organ modes do
+not decay while held. The rank's normal amplitude envelope and key release still determine
+the complete note.
+
+Resonant size ranges from **0.5× to 2.5×**, with **1×** as its neutral value.
+For models that use body resonances, increasing it lowers those resonances
+without transposing the played note. It represents an authored voicing factor,
+not a measured instrument dimension.
 [Control definitions](../src/core/Params.h) ·
 [Per-control help](../src/plugin/EvidenceRegister.h)
 
 At a high body mix, changing the rank's saw/pulse waveform may have little
 effect. The body blends with the filtered oscillator and sine signal **before
-the VCA**; it does not pass through the original high-pass/low-pass circuit
-stages. Brilliance and the low-pass contour also color its spectrum. Try body
-brightness and partial decay when shaping a ringing instrument, and use the
-rank envelope to change its overall articulation.
+the VCA**. A separate linear filter now applies the rank's effective high-pass
+and low-pass settings to the body, including filter envelopes, brilliance,
+keyboard contour, resonance and filter switches. The original nonlinear
+circuit stages continue to process the oscillator path. Body brightness sets
+the intrinsic spectrum; the panel filters shape it further. A high-pass on an
+upper strike can therefore remove its unwanted low fundamental, and a closed
+low-pass can darken the complete excitation. Use the rank envelope to change
+the complete note's articulation.
 [Signal routing](../src/core/Engine.cpp)
 
 These excitations are available on **PANEL sources**. Selecting a hardware tone
 or memory source suppresses them, preserving those separate source paths.
-Their eight saved controls are exposed in the DAW's parameter list and automation
+Their ten saved controls are exposed in the DAW's parameter list and automation
 editor. The custom Studio editor and standalone interface do not yet provide
 dedicated body-control widgets.
 The existing instrument remains one circuit engine, with no new Legacy/Pure
-selector. [Revision details](CIRCUIT_LIBRARY_2026_11_3.md#where-the-body-sits-in-a-rank)
+selector. [Revision details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playing-response)
 
 ## Recalling a revised sound
 
-**2026.11.3 identifies a sound-data revision**, separate from the
+**2026.11.4 identifies a sound-data revision**, separate from the
 application's version and saved-session format. Names, order and host program
 identities remain stable while the factory voicings change. A session or user
 preset restores its stored controls; reload the corresponding factory program
@@ -302,10 +320,14 @@ remains separate from factory selection.
 
 Old saved patches without body fields restore both models and mixes to their
 off defaults. **Reload the factory program to hear the new body and voicing**,
-then save your edited copy. The first 190 core IDs and 296 host automation
-positions are preserved; eight appended controls bring the totals to 198 and
-304. Session, user-preset and A/B recall include those new controls.
-[Compatibility details](CIRCUIT_LIBRARY_2026_11_3.md#saved-patches-program-addresses-and-automation)
+then save your edited copy. The immediately preceding release's **198 core IDs
+and 304 host automation positions are preserved**; two appended size controls
+bring the totals to **200 and 306**. A preceding body-aware patch restores its
+eight body controls and defaults both sizes to 1. Session, user-preset and A/B
+recall include all ten controls. Existing body-enabled saved sounds use the
+revised excitation and filtering code, so retaining their parameter values
+does not freeze their old audio. The circuit path with bodies off is preserved.
+[Compatibility details](CIRCUIT_LIBRARY_2026_11_4.md#saved-projects-and-program-identities)
 
 The original bank now has **revised circuit voicings**. Host indexes **0–221** retain its
 names and categories, while indexes **222–522** retain the later collection.
@@ -360,9 +382,10 @@ for earlier capture commands.
 
 The [build workflow](../.github/workflows/build.yml) uses the
 [audition script](../scripts/capture-factory-auditions.py) and retains the artifact
-name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.3 roster
-produces **90 WAVs covering 71 existing programs**, totaling **594 seconds
-(9 minutes 54 seconds)**, with the complete 523-program inventory, metrics,
+name `cs80-curated-preset-audition-<source SHA>`. The configured 2026.11.4 roster
+produces **138 WAVs covering 74 existing programs**, totaling **870 seconds
+(14 minutes 30 seconds)** in 30 folders, with the complete 523-program,
+200-parameter inventory, metrics,
 source commit/tree, executable hash, provenance and checksums:
 
 - All 24 keyboard programs at firm velocity 0.85, held for four seconds with
@@ -384,6 +407,22 @@ source commit/tree, executable hash, provenance and checksums:
   excerpt.
 - Tine Piano at MIDI 48, 60 and 84, held for three seconds with a one-second
   release excerpt.
+- Analog Piano and Stage Keys at MIDI 36, 60 and 84, each at velocities 0.3
+  and 0.85, held for five seconds with a one-second release excerpt: twelve files.
+- Solo Violin, Flute, Clarinet, Oboe, English Horn, Covered Horn and Muted
+  Trumpet at MIDI 60, plus Solo Cello, Bass Clarinet and Bassoon at MIDI 72
+  to compensate for their 16-foot main bodies. Each is rendered at velocities
+  0.3 and 0.85 with a six-second hold and one-second release excerpt: twenty
+  files with matched C4 foundations.
+- Clarinet and Bass Clarinet at played MIDI keys 60, 64, 68 and 72, each at
+  velocities 0.3 and 0.85 with a three-second hold and one-second release:
+  sixteen files. This grid compares equal played keys; Bass Clarinet's main
+  body sounds an octave lower.
+
+The matched-foundation examples compare complete presets, including their
+different articulation, filtering and support ranks. They do not isolate the
+size control by itself. Every rendered condition and exact parameter digest is
+included in the corresponding metrics file.
 
 The script preserves the factory levels and applies no normalization. All
 excerpts use zero pressure except the seven `pressure-full` examples.
@@ -397,4 +436,4 @@ The source SHA identifies the bank being heard; a short excerpt does not cover
 every chord, register or long release, nor does it establish acoustic equivalence
 or qualify a native plugin build. The roster alone does not mean that a completed
 archive is already available; check the exact source and qualification in the
-[download section](../README.md#downloads).
+[current download section](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads).

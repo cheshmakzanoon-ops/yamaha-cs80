@@ -1,0 +1,1444 @@
+{
+  "schema": 1,
+  "worker": 21,
+  "task": "Independent struck-body spectra review",
+  "result": "No release-blocking defect demonstrated in the tested conditions; no production edits recommended from these measurements alone.",
+  "production_files_changed": [],
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "reviewed_source": "src/core/InstrumentBody.h",
+  "reviewed_source_sha256": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+  "findings": [
+    "All six bodies retain nonzero velocity-dependent spectral differences after normalization; normalization does not erase playing-effort color.",
+    "At fixed brightness, upper/fundamental energy falls through the held note for every sampled model/register/velocity condition; spectra are not a static tone multiplied by one decay envelope.",
+    "Fundamentals remain centered in the fixed-pitch probe. Small piano and tine offsets are consistent with their explicitly authored nearby coupled modes; no unintended multi-cent pitch displacement was observed in these fixtures.",
+    "The 24-mode plucked-string ceiling is a remaining authored approximation. In a scratch-only 42-mode counterfactual, omitted energy produces small level-matched residuals in the tested low/middle/high registers. This does not establish inaudibility or acoustic equivalence."
+  ],
+  "model_summary": {
+    "piano": {
+      "notes": [
+        36,
+        48,
+        60
+      ],
+      "upper_decay_db_range": [
+        -8.569308313833496,
+        -3.5708403800062567
+      ],
+      "high_partial_hard_soft_db_range": [
+        3.3960765655085936,
+        6.133123565538387
+      ],
+      "maximum_absolute_fundamental_offset_cents": 0.5723014516876482
+    },
+    "tine": {
+      "notes": [
+        36,
+        48,
+        60
+      ],
+      "upper_decay_db_range": [
+        -12.825281769096463,
+        -8.188162773280553
+      ],
+      "high_partial_hard_soft_db_range": [
+        9.86078496798467,
+        9.860788899065739
+      ],
+      "maximum_absolute_fundamental_offset_cents": 0.05721361726675121
+    },
+    "reed": {
+      "notes": [
+        36,
+        48,
+        60
+      ],
+      "upper_decay_db_range": [
+        -18.218613278806426,
+        -12.171340158526139
+      ],
+      "high_partial_hard_soft_db_range": [
+        2.063964970250524,
+        3.232616720589931
+      ],
+      "maximum_absolute_fundamental_offset_cents": 3.6274749421167876e-05
+    },
+    "nylon": {
+      "notes": [
+        40,
+        52,
+        64
+      ],
+      "upper_decay_db_range": [
+        -8.150908944747101,
+        -5.102083001500038
+      ],
+      "high_partial_hard_soft_db_range": [
+        1.3311148059881077,
+        1.3370876489180077
+      ],
+      "maximum_absolute_fundamental_offset_cents": 2.289249790572938e-05
+    },
+    "steel": {
+      "notes": [
+        40,
+        52,
+        64
+      ],
+      "upper_decay_db_range": [
+        -5.244000796742977,
+        -3.2828525352698263
+      ],
+      "high_partial_hard_soft_db_range": [
+        1.289621752324237,
+        1.2946043332614394
+      ],
+      "maximum_absolute_fundamental_offset_cents": 2.527618316677838e-05
+    },
+    "bass": {
+      "notes": [
+        28,
+        40,
+        52
+      ],
+      "upper_decay_db_range": [
+        -8.00177460517073,
+        -5.268439843954667
+      ],
+      "high_partial_hard_soft_db_range": [
+        1.2220472634852655,
+        1.246789858148098
+      ],
+      "maximum_absolute_fundamental_offset_cents": 9.195474028862206e-05
+    }
+  },
+  "partial_budget_counterfactual_summary": {
+    "nylon": {
+      "maximum_level_matched_residual_db": -56.34676532369305,
+      "maximum_above_24th_energy_db": -65.79075763375445
+    },
+    "steel": {
+      "maximum_level_matched_residual_db": -45.313708247480946,
+      "maximum_above_24th_energy_db": -47.86773686868902
+    },
+    "bass": {
+      "maximum_level_matched_residual_db": -52.40895602104831,
+      "maximum_above_24th_energy_db": -61.697007586992136
+    }
+  },
+  "validation": {
+    "rendered_fixtures": 108,
+    "samples_per_fixture": 139200,
+    "total_finite_samples": 15033600,
+    "nonfinite_samples": 0,
+    "unchanged_counterfactual_control_fixtures": 18
+  },
+  "limitations": [
+    "Direct excitation only: panel filters, rank VCA, layered strike ranks, effects and playing controllers are excluded.",
+    "One seed, neutral resonant size, brightness 0.8, decay 1 and velocities 0.25/0.85; these data do not cover every user-editable setting.",
+    "The 42-mode variant is an algorithmic sensitivity control, not a recording or measured physical reference.",
+    "Pitch figures are Hann-window spectral peak estimates over 0.25\u20131.25 seconds, not a full musical intonation study.",
+    "No perceptual listening equivalence or recorded-instrument match is claimed.",
+    "The direct-body normalization bounds excitation level; the external rank VCA remains responsible for the complete preset amplitude response."
+  ],
+  "reproduction": {
+    "commands": [
+      "git show fa57967c7317828cf769cc7ca97f5857e566520f:src/core/InstrumentBody.h > baseline/InstrumentBody.h",
+      "Copy current src/core/InstrumentBody.h to current/InstrumentBody.h.",
+      "Create expanded/InstrumentBody.h by replacing the non-piano harmonic budget 24 with 42 only for nylon, steel and bass.",
+      "g++ -O2 -std=c++17 -I<VERSION> probe.cpp -o <VERSION>/probe",
+      "<VERSION>/probe <VERSION>/audio (baseline/current/expanded)",
+      "python analyze.py"
+    ],
+    "probe_cpp": "#include \"InstrumentBody.h\"\n#include <filesystem>\n#include <fstream>\n#include <vector>\n#include <string>\n#include <cmath>\n#include <cstdio>\n\nint main(int argc, char** argv)\n{\n    if (argc != 2) return 2;\n    std::filesystem::create_directories(argv[1]);\n    constexpr int rate = 96000;\n    for (int model : {cs80::body::piano, cs80::body::tine, cs80::body::reed,\n                      cs80::body::nylon, cs80::body::steel, cs80::body::bass})\n    {\n        const int low = model == cs80::body::nylon || model == cs80::body::steel ? 40\n                      : model == cs80::body::bass ? 28 : 36;\n        for (int note : {low, low + 12, low + 24})\n            for (int velocity : {25, 85})\n            {\n                cs80::body::InstrumentBody body;\n                body.prepare(rate, 48000.0);\n                body.noteOn(model, static_cast<float>(note), velocity / 100.0f, .8f, 1.0f, 12345);\n                const float freq = static_cast<float>(440.0 * std::exp2((note - 69) / 12.0));\n                std::vector<float> audio(static_cast<size_t>(1.45 * rate));\n                for (float& sample : audio)\n                {\n                    sample = body.tick(freq, .8f, 0.0f);\n                    if (!std::isfinite(sample)) return 3;\n                }\n                const std::string name = std::to_string(model) + \"_\" + std::to_string(note)\n                                       + \"_\" + std::to_string(velocity) + \".f32\";\n                std::ofstream out(std::filesystem::path(argv[1]) / name, std::ios::binary);\n                out.write(reinterpret_cast<const char*>(audio.data()),\n                          static_cast<std::streamsize>(audio.size() * sizeof(float)));\n                if (!out) return 4;\n            }\n    }\n    std::puts(\"36 direct-body fixtures rendered; all finite\");\n}\n",
+    "analysis_python": "from pathlib import Path\nimport hashlib, json, math\nimport numpy as np\n\nROOT = Path(__file__).parent\nRATE = 96000\nNAMES = {1:'piano', 2:'tine', 3:'reed', 6:'nylon', 7:'steel', 8:'bass'}\ndb = lambda x: float(10 * np.log10(max(float(x), 1e-30)))\n\ndef segment(x, a, b):\n    return x[round(a*RATE):round(b*RATE)].astype(np.float64)\n\ndef spectrum(x, a, b, padding=4):\n    y = segment(x, a, b)\n    n = 1 << int(math.ceil(math.log2(len(y)*padding)))\n    p = abs(np.fft.rfft(y*np.hanning(len(y)), n))**2\n    return np.fft.rfftfreq(n, 1/RATE), p\n\ndef band(f, p, a, b):\n    return float(p[(f >= a) & (f < b)].sum())\n\ndef ratio(x, hz, a, b, low=2.5, high=12.5):\n    f, p = spectrum(x,a,b)\n    return db(band(f,p,low*hz,high*hz)/band(f,p,.5*hz,1.5*hz))\n\ndef pitch(x, hz):\n    f, p = spectrum(x,.25,1.25,16)\n    allowed=np.where((f > hz*.99) & (f < hz*1.01))[0]\n    at=int(allowed[np.argmax(p[allowed])])\n    a,b,c=np.log(p[at-1:at+2])\n    sub=.5*(a-c)/(a-2*b+c)\n    return float(1200*np.log2((at+sub)*(f[1]-f[0])/hz))\n\nrecords=[]; stored={}; counter=[]\nfor version in ('baseline','current','expanded'):\n    for path in sorted((ROOT/version/'audio').glob('*.f32')):\n        model,note,velocity=map(int,path.stem.split('_'))\n        data=np.fromfile(path,dtype='<f4')\n        assert len(data)==139200 and np.isfinite(data).all()\n        hz=float(np.float32(440*2**((note-69)/12)))\n        stored[(version,model,note,velocity)]=data\n        if version=='expanded': continue\n        early=ratio(data,hz,.04,.20)\n        late=ratio(data,hz,.8,1.2)\n        records.append(dict(version=version,model=NAMES[model],note=note,velocity=velocity/100,\n                            upper_fundamental_early_db=early,\n                            upper_fundamental_late_db=late,upper_decay_db=late-early,\n                            fundamental_offset_cents=pitch(data,hz)))\n\nfor (version,model,note,velocity), x in stored.items():\n    if version!='current': continue\n    y=stored[('expanded',model,note,velocity)]\n    if model not in (6,7,8):\n        assert np.array_equal(x,y)\n        continue\n    hz=float(np.float32(440*2**((note-69)/12)))\n    for a,b in ((.005,.065),(.08,.20)):\n        xa,ya=segment(x,a,b),segment(y,a,b)\n        gain=float(np.dot(xa,ya)/np.dot(xa,xa))\n        residual=db(np.mean((ya-gain*xa)**2)/np.mean(ya**2))\n        f,p=spectrum(y,a,b)\n        tail=db(band(f,p,24.5*hz,43*hz)/band(f,p,.5*hz,43*hz))\n        counter.append(dict(model=NAMES[model],note=note,velocity=velocity/100,\n                            window_seconds=[a,b],level_matched_residual_db=residual,\n                            expanded_above_24th_relative_energy_db=tail))\n\nvelocity=[]\nfor model in NAMES.values():\n    for note in sorted({r['note'] for r in records if r['model']==model}):\n        row=dict(model=model,note=note)\n        for version in ('baseline','current'):\n            rr=[r for r in records if r['model']==model and r['note']==note and r['version']==version]\n            row[version+'_hard_soft_color_db']=next(r for r in rr if r['velocity']==.85)['upper_fundamental_early_db']-next(r for r in rr if r['velocity']==.25)['upper_fundamental_early_db']\n            model_id=next(k for k,v in NAMES.items() if v==model)\n            hz=float(np.float32(440*2**((note-69)/12)))\n            high=[ratio(stored[(version,model_id,note,v)],hz,.04,.20,8.5,43) for v in (25,85)]\n            row[version+'_high_partial_hard_soft_db']=high[1]-high[0]\n        velocity.append(row)\n\nresult=dict(schema=1,scope='Direct excitation bodies only; no panel filters, rank VCA, layers, effects or recorded reference.',\n            fixtures_per_version=36,versions=3,rate=RATE,seconds_per_fixture=1.45,\n            brightness=.8,decay=1,seed=12345,\n            expanded_control='Scratch-only 42-harmonic nylon/steel/bass counterfactual; not a physical reference or proposed production change.',\n            source_sha256={v:hashlib.sha256((ROOT/v/'InstrumentBody.h').read_bytes()).hexdigest() for v in ('baseline','current','expanded')},\n            stable_counterfactual_controls=18,velocity_comparisons=velocity,records=records,counterfactual=counter)\n(ROOT/'measurements.json').write_text(json.dumps(result,indent=2)+'\\n')\nfor model in NAMES.values():\n    rr=[r for r in records if r['model']==model and r['version']=='current']\n    vv=[r['current_hard_soft_color_db'] for r in velocity if r['model']==model]\n    print(model,'hard-soft',min(vv),max(vv),'upper-decay',min(r['upper_decay_db'] for r in rr),max(r['upper_decay_db'] for r in rr),'pitch_abs',max(abs(r['fundamental_offset_cents']) for r in rr))\nfor model in ('nylon','steel','bass'):\n    rr=[r for r in counter if r['model']==model]\n    print('ceiling',model,'largest_residual',max(r['level_matched_residual_db'] for r in rr),'largest_upper_energy',max(r['expanded_above_24th_relative_energy_db'] for r in rr))\n",
+    "raw_audio_retention": "Reproducible scratch fixtures; raw .f32 files are not part of the committed report.",
+    "environment": {
+      "python": "3.12.14",
+      "numpy": "2.3.5"
+    }
+  },
+  "measurements": {
+    "schema": 1,
+    "scope": "Direct excitation bodies only; no panel filters, rank VCA, layers, effects or recorded reference.",
+    "fixtures_per_version": 36,
+    "versions": 3,
+    "rate": 96000,
+    "seconds_per_fixture": 1.45,
+    "brightness": 0.8,
+    "decay": 1,
+    "seed": 12345,
+    "expanded_control": "Scratch-only 42-harmonic nylon/steel/bass counterfactual; not a physical reference or proposed production change.",
+    "source_sha256": {
+      "baseline": "d15605d641d7c292244466f5d7116183ae8b4794efe4a536bd345b8719c807c2",
+      "current": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+      "expanded": "c1e9090a2f192b07361e2c68c24a80c7496530773f92c8be834f4e5eb8b5a5da"
+    },
+    "stable_counterfactual_controls": 18,
+    "velocity_comparisons": [
+      {
+        "model": "piano",
+        "note": 36,
+        "baseline_hard_soft_color_db": 1.3922110159264505,
+        "baseline_high_partial_hard_soft_db": 6.103953335959808,
+        "current_hard_soft_color_db": 0.5899170708492526,
+        "current_high_partial_hard_soft_db": 3.3960765655085936
+      },
+      {
+        "model": "piano",
+        "note": 48,
+        "baseline_hard_soft_color_db": 1.3133749595335487,
+        "baseline_high_partial_hard_soft_db": 6.0653820962750515,
+        "current_hard_soft_color_db": 0.8072663733740628,
+        "current_high_partial_hard_soft_db": 4.279858861978319
+      },
+      {
+        "model": "piano",
+        "note": 60,
+        "baseline_hard_soft_color_db": 1.3540368952358381,
+        "baseline_high_partial_hard_soft_db": 5.824935876142412,
+        "current_hard_soft_color_db": 1.430900270326041,
+        "current_high_partial_hard_soft_db": 6.133123565538387
+      },
+      {
+        "model": "tine",
+        "note": 36,
+        "baseline_hard_soft_color_db": 9.860786607391336,
+        "baseline_high_partial_hard_soft_db": 9.860758978561861,
+        "current_hard_soft_color_db": 9.860786923306296,
+        "current_high_partial_hard_soft_db": 9.86078496798467
+      },
+      {
+        "model": "tine",
+        "note": 48,
+        "baseline_hard_soft_color_db": 9.860792244407374,
+        "baseline_high_partial_hard_soft_db": 9.860791083905703,
+        "current_hard_soft_color_db": 9.860792214859378,
+        "current_high_partial_hard_soft_db": 9.860788899065739
+      },
+      {
+        "model": "tine",
+        "note": 60,
+        "baseline_hard_soft_color_db": 9.86079218318874,
+        "baseline_high_partial_hard_soft_db": 9.860791601683609,
+        "current_hard_soft_color_db": 9.86079215411192,
+        "current_high_partial_hard_soft_db": 9.860785672497954
+      },
+      {
+        "model": "reed",
+        "note": 36,
+        "baseline_hard_soft_color_db": 0.9388416256170764,
+        "baseline_high_partial_hard_soft_db": 2.617976541034963,
+        "current_hard_soft_color_db": 0.975671417116887,
+        "current_high_partial_hard_soft_db": 2.732004489305936
+      },
+      {
+        "model": "reed",
+        "note": 48,
+        "baseline_hard_soft_color_db": 1.1305169665328467,
+        "baseline_high_partial_hard_soft_db": 3.1896027180911517,
+        "current_hard_soft_color_db": 1.1559914808439782,
+        "current_high_partial_hard_soft_db": 3.232616720589931
+      },
+      {
+        "model": "reed",
+        "note": 60,
+        "baseline_hard_soft_color_db": 1.511182623271221,
+        "baseline_high_partial_hard_soft_db": 2.0740550357323,
+        "current_hard_soft_color_db": 1.499798871195937,
+        "current_high_partial_hard_soft_db": 2.063964970250524
+      },
+      {
+        "model": "nylon",
+        "note": 40,
+        "baseline_hard_soft_color_db": 0.43700041572090953,
+        "baseline_high_partial_hard_soft_db": 1.324566034239794,
+        "current_hard_soft_color_db": 0.4416198006103862,
+        "current_high_partial_hard_soft_db": 1.3370003962610042
+      },
+      {
+        "model": "nylon",
+        "note": 52,
+        "baseline_hard_soft_color_db": 0.438784145371919,
+        "baseline_high_partial_hard_soft_db": 1.3300009831655188,
+        "current_hard_soft_color_db": 0.4409686333205549,
+        "current_high_partial_hard_soft_db": 1.3370876489180077
+      },
+      {
+        "model": "nylon",
+        "note": 64,
+        "baseline_hard_soft_color_db": 0.4395792275819552,
+        "baseline_high_partial_hard_soft_db": 1.3311681980668055,
+        "current_hard_soft_color_db": 0.4389270301755914,
+        "current_high_partial_hard_soft_db": 1.3311148059881077
+      },
+      {
+        "model": "steel",
+        "note": 40,
+        "baseline_hard_soft_color_db": 0.48032848305427134,
+        "baseline_high_partial_hard_soft_db": 1.2759630522573389,
+        "current_hard_soft_color_db": 0.4849489539120846,
+        "current_high_partial_hard_soft_db": 1.2904229160462712
+      },
+      {
+        "model": "steel",
+        "note": 52,
+        "baseline_hard_soft_color_db": 0.4886374493100796,
+        "baseline_high_partial_hard_soft_db": 1.285194084284349,
+        "current_hard_soft_color_db": 0.4912733739178208,
+        "current_high_partial_hard_soft_db": 1.2946043332614394
+      },
+      {
+        "model": "steel",
+        "note": 64,
+        "baseline_hard_soft_color_db": 0.4856015950692889,
+        "baseline_high_partial_hard_soft_db": 1.2876993020770975,
+        "current_hard_soft_color_db": 0.48561573313974904,
+        "current_high_partial_hard_soft_db": 1.289621752324237
+      },
+      {
+        "model": "bass",
+        "note": 28,
+        "baseline_hard_soft_color_db": 0.4424282277680476,
+        "baseline_high_partial_hard_soft_db": 1.2193426784461678,
+        "current_hard_soft_color_db": 0.4493752962059716,
+        "current_high_partial_hard_soft_db": 1.246789858148098
+      },
+      {
+        "model": "bass",
+        "note": 40,
+        "baseline_hard_soft_color_db": 0.44229067070761907,
+        "baseline_high_partial_hard_soft_db": 1.2086599824659672,
+        "current_hard_soft_color_db": 0.44806690458299947,
+        "current_high_partial_hard_soft_db": 1.2227138491658849
+      },
+      {
+        "model": "bass",
+        "note": 52,
+        "baseline_hard_soft_color_db": 0.442523840045439,
+        "baseline_high_partial_hard_soft_db": 1.2163395897179825,
+        "current_hard_soft_color_db": 0.44506586895322897,
+        "current_high_partial_hard_soft_db": 1.2220472634852655
+      }
+    ],
+    "records": [
+      {
+        "version": "baseline",
+        "model": "piano",
+        "note": 36,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -0.7463831625207495,
+        "upper_fundamental_late_db": -4.183286933186415,
+        "upper_decay_db": -3.4369037706656655,
+        "fundamental_offset_cents": 0.24839796480478096
+      },
+      {
+        "version": "baseline",
+        "model": "piano",
+        "note": 36,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": 0.6458278534057009,
+        "upper_fundamental_late_db": -2.9861753688930315,
+        "upper_decay_db": -3.6320032222987324,
+        "fundamental_offset_cents": 0.2483969228528686
+      },
+      {
+        "version": "baseline",
+        "model": "piano",
+        "note": 48,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -2.0266399824208414,
+        "upper_fundamental_late_db": -8.549161158414718,
+        "upper_decay_db": -6.522521175993877,
+        "fundamental_offset_cents": 0.3172332305537651
+      },
+      {
+        "version": "baseline",
+        "model": "piano",
+        "note": 48,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -0.7132650228872929,
+        "upper_fundamental_late_db": -7.464223594471447,
+        "upper_decay_db": -6.750958571584154,
+        "fundamental_offset_cents": 0.31723312538852827
+      },
+      {
+        "version": "baseline",
+        "model": "piano",
+        "note": 60,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -4.134192014960503,
+        "upper_fundamental_late_db": -13.430039279097105,
+        "upper_decay_db": -9.295847264136603,
+        "fundamental_offset_cents": 0.27352158537236426
+      },
+      {
+        "version": "baseline",
+        "model": "piano",
+        "note": 60,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -2.7801551197246646,
+        "upper_fundamental_late_db": -12.087513033182082,
+        "upper_decay_db": -9.307357913457418,
+        "fundamental_offset_cents": 0.27352158460520076
+      },
+      {
+        "version": "baseline",
+        "model": "tine",
+        "note": 36,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -20.21444406386994,
+        "upper_fundamental_late_db": -35.43154186208198,
+        "upper_decay_db": -15.217097798212038,
+        "fundamental_offset_cents": 0.05155720933652314
+      },
+      {
+        "version": "baseline",
+        "model": "tine",
+        "note": 36,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -10.353657456478604,
+        "upper_fundamental_late_db": -25.570750790729214,
+        "upper_decay_db": -15.21709333425061,
+        "fundamental_offset_cents": 0.05155669916811712
+      },
+      {
+        "version": "baseline",
+        "model": "tine",
+        "note": 48,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -20.21299982034145,
+        "upper_fundamental_late_db": -35.39329545501275,
+        "upper_decay_db": -15.180295634671296,
+        "fundamental_offset_cents": 0.04974281443762427
+      },
+      {
+        "version": "baseline",
+        "model": "tine",
+        "note": 48,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -10.352207575934077,
+        "upper_fundamental_late_db": -25.53250321846096,
+        "upper_decay_db": -15.180295642526882,
+        "fundamental_offset_cents": 0.04974277926462748
+      },
+      {
+        "version": "baseline",
+        "model": "tine",
+        "note": 60,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -20.209157870102864,
+        "upper_fundamental_late_db": -35.26175885385412,
+        "upper_decay_db": -15.052600983751255,
+        "fundamental_offset_cents": 0.042977626167711946
+      },
+      {
+        "version": "baseline",
+        "model": "tine",
+        "note": 60,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -10.348365686914123,
+        "upper_fundamental_late_db": -25.400966606212677,
+        "upper_decay_db": -15.052600919298554,
+        "fundamental_offset_cents": 0.0429776269557353
+      },
+      {
+        "version": "baseline",
+        "model": "reed",
+        "note": 36,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.359792996221017,
+        "upper_fundamental_late_db": -27.8948916768384,
+        "upper_decay_db": -13.535098680617384,
+        "fundamental_offset_cents": -3.548548175085076e-05
+      },
+      {
+        "version": "baseline",
+        "model": "reed",
+        "note": 36,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.420951370603941,
+        "upper_fundamental_late_db": -27.09608018038555,
+        "upper_decay_db": -13.675128809781608,
+        "fundamental_offset_cents": -3.574848300815621e-05
+      },
+      {
+        "version": "baseline",
+        "model": "reed",
+        "note": 48,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.265586783068034,
+        "upper_fundamental_late_db": -27.820927015513114,
+        "upper_decay_db": -13.55534023244508,
+        "fundamental_offset_cents": -1.4917279467652402e-05
+      },
+      {
+        "version": "baseline",
+        "model": "reed",
+        "note": 48,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.135069816535188,
+        "upper_fundamental_late_db": -26.876970697862276,
+        "upper_decay_db": -13.741900881327089,
+        "fundamental_offset_cents": -1.4947933376474461e-05
+      },
+      {
+        "version": "baseline",
+        "model": "reed",
+        "note": 60,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.053068994688477,
+        "upper_fundamental_late_db": -27.62410708888568,
+        "upper_decay_db": -13.571038094197203,
+        "fundamental_offset_cents": 7.801215107495727e-06
+      },
+      {
+        "version": "baseline",
+        "model": "reed",
+        "note": 60,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -12.541886371417256,
+        "upper_fundamental_late_db": -26.320947086273158,
+        "upper_decay_db": -13.779060714855902,
+        "fundamental_offset_cents": 7.800286370087925e-06
+      },
+      {
+        "version": "baseline",
+        "model": "nylon",
+        "note": 40,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.417031296060472,
+        "upper_fundamental_late_db": -22.538166683011145,
+        "upper_decay_db": -8.121135386950673,
+        "fundamental_offset_cents": 2.2975690634657258e-05
+      },
+      {
+        "version": "baseline",
+        "model": "nylon",
+        "note": 40,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.980030880339562,
+        "upper_fundamental_late_db": -22.12259092478262,
+        "upper_decay_db": -8.142560044443059,
+        "fundamental_offset_cents": 2.2948921393638773e-05
+      },
+      {
+        "version": "baseline",
+        "model": "nylon",
+        "note": 52,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -17.892096947485534,
+        "upper_fundamental_late_db": -26.044274646588743,
+        "upper_decay_db": -8.152177699103209,
+        "fundamental_offset_cents": 8.799500569875098e-06
+      },
+      {
+        "version": "baseline",
+        "model": "nylon",
+        "note": 52,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -17.453312802113615,
+        "upper_fundamental_late_db": -25.62819811701743,
+        "upper_decay_db": -8.174885314903815,
+        "fundamental_offset_cents": 8.80687472951232e-06
+      },
+      {
+        "version": "baseline",
+        "model": "nylon",
+        "note": 64,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -18.74297457756574,
+        "upper_fundamental_late_db": -26.888988963506186,
+        "upper_decay_db": -8.146014385940447,
+        "fundamental_offset_cents": -4.953035429498725e-06
+      },
+      {
+        "version": "baseline",
+        "model": "nylon",
+        "note": 64,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -18.303395349983784,
+        "upper_fundamental_late_db": -26.473269507782767,
+        "upper_decay_db": -8.169874157798983,
+        "fundamental_offset_cents": -4.953269728113884e-06
+      },
+      {
+        "version": "baseline",
+        "model": "steel",
+        "note": 40,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -4.05237942129807,
+        "upper_fundamental_late_db": -8.822584800404297,
+        "upper_decay_db": -4.770205379106226,
+        "fundamental_offset_cents": 2.473863488094878e-05
+      },
+      {
+        "version": "baseline",
+        "model": "steel",
+        "note": 40,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -3.572050938243799,
+        "upper_fundamental_late_db": -8.378494744859532,
+        "upper_decay_db": -4.806443806615733,
+        "fundamental_offset_cents": 2.477254417510326e-05
+      },
+      {
+        "version": "baseline",
+        "model": "steel",
+        "note": 52,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -7.299417408700771,
+        "upper_fundamental_late_db": -12.18256973540974,
+        "upper_decay_db": -4.883152326708968,
+        "fundamental_offset_cents": 9.08124474844597e-06
+      },
+      {
+        "version": "baseline",
+        "model": "steel",
+        "note": 52,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -6.8107799593906915,
+        "upper_fundamental_late_db": -11.732810401574586,
+        "upper_decay_db": -4.922030442183894,
+        "fundamental_offset_cents": 9.095552916918675e-06
+      },
+      {
+        "version": "baseline",
+        "model": "steel",
+        "note": 64,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -8.313319215709335,
+        "upper_fundamental_late_db": -13.135259715244894,
+        "upper_decay_db": -4.821940499535559,
+        "fundamental_offset_cents": -4.949525755411108e-06
+      },
+      {
+        "version": "baseline",
+        "model": "steel",
+        "note": 64,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -7.827717620640046,
+        "upper_fundamental_late_db": -12.689418928486596,
+        "upper_decay_db": -4.86170130784655,
+        "fundamental_offset_cents": -4.950002809687419e-06
+      },
+      {
+        "version": "baseline",
+        "model": "bass",
+        "note": 28,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -11.49551302360971,
+        "upper_fundamental_late_db": -21.40823451484437,
+        "upper_decay_db": -9.91272149123466,
+        "fundamental_offset_cents": -5.799316425795553e-05
+      },
+      {
+        "version": "baseline",
+        "model": "bass",
+        "note": 28,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -11.053084795841663,
+        "upper_fundamental_late_db": -20.98946900231134,
+        "upper_decay_db": -9.936384206469675,
+        "fundamental_offset_cents": -6.035344456591179e-05
+      },
+      {
+        "version": "baseline",
+        "model": "bass",
+        "note": 40,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -13.642803058407742,
+        "upper_fundamental_late_db": -23.521125283763244,
+        "upper_decay_db": -9.878322225355502,
+        "fundamental_offset_cents": 2.263866198074269e-05
+      },
+      {
+        "version": "baseline",
+        "model": "bass",
+        "note": 40,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.200512387700122,
+        "upper_fundamental_late_db": -23.10304302828321,
+        "upper_decay_db": -9.902530640583088,
+        "fundamental_offset_cents": 2.2605741392089642e-05
+      },
+      {
+        "version": "baseline",
+        "model": "bass",
+        "note": 52,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.76832821121157,
+        "upper_fundamental_late_db": -24.687126525191484,
+        "upper_decay_db": -9.918798313979915,
+        "fundamental_offset_cents": 8.788193883881724e-06
+      },
+      {
+        "version": "baseline",
+        "model": "bass",
+        "note": 52,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -14.32580437116613,
+        "upper_fundamental_late_db": -24.268214705680855,
+        "upper_decay_db": -9.942410334514724,
+        "fundamental_offset_cents": 8.79470350277854e-06
+      },
+      {
+        "version": "current",
+        "model": "piano",
+        "note": 36,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": 0.24869234798609396,
+        "upper_fundamental_late_db": -3.322148032020163,
+        "upper_decay_db": -3.5708403800062567,
+        "fundamental_offset_cents": 0.5723014516876482
+      },
+      {
+        "version": "current",
+        "model": "piano",
+        "note": 36,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": 0.8386094188353466,
+        "upper_fundamental_late_db": -2.811892310265966,
+        "upper_decay_db": -3.650501729101313,
+        "fundamental_offset_cents": 0.5723011027050157
+      },
+      {
+        "version": "current",
+        "model": "piano",
+        "note": 48,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -1.3481828539725713,
+        "upper_fundamental_late_db": -7.298517335025595,
+        "upper_decay_db": -5.950334481053024,
+        "fundamental_offset_cents": 0.5198807242628369
+      },
+      {
+        "version": "current",
+        "model": "piano",
+        "note": 48,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -0.5409164805985085,
+        "upper_fundamental_late_db": -6.686701115922568,
+        "upper_decay_db": -6.145784635324059,
+        "fundamental_offset_cents": 0.5198806855481133
+      },
+      {
+        "version": "current",
+        "model": "piano",
+        "note": 60,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -4.080444091267759,
+        "upper_fundamental_late_db": -12.649752405101253,
+        "upper_decay_db": -8.569308313833496,
+        "fundamental_offset_cents": 0.49252325802069225
+      },
+      {
+        "version": "current",
+        "model": "piano",
+        "note": 60,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -2.6495438209417177,
+        "upper_fundamental_late_db": -10.941994696705141,
+        "upper_decay_db": -8.292450875763423,
+        "fundamental_offset_cents": 0.49252325369729666
+      },
+      {
+        "version": "current",
+        "model": "tine",
+        "note": 36,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -19.204448216118173,
+        "upper_fundamental_late_db": -27.39261591821895,
+        "upper_decay_db": -8.188167702100777,
+        "fundamental_offset_cents": 0.05721361726675121
+      },
+      {
+        "version": "current",
+        "model": "tine",
+        "note": 36,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -9.343661292811877,
+        "upper_fundamental_late_db": -17.53182406609243,
+        "upper_decay_db": -8.188162773280553,
+        "fundamental_offset_cents": 0.05721280102118727
+      },
+      {
+        "version": "current",
+        "model": "tine",
+        "note": 48,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -19.53834456282344,
+        "upper_fundamental_late_db": -29.837366551802468,
+        "upper_decay_db": -10.299021988979028,
+        "fundamental_offset_cents": 0.05579558185265469
+      },
+      {
+        "version": "current",
+        "model": "tine",
+        "note": 48,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -9.677552347964061,
+        "upper_fundamental_late_db": -19.976574466126237,
+        "upper_decay_db": -10.299022118162176,
+        "fundamental_offset_cents": 0.055795542692412194
+      },
+      {
+        "version": "current",
+        "model": "tine",
+        "note": 60,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -19.96227021275078,
+        "upper_fundamental_late_db": -32.787551935314376,
+        "upper_decay_db": -12.825281722563595,
+        "fundamental_offset_cents": 0.04955527284999263
+      },
+      {
+        "version": "current",
+        "model": "tine",
+        "note": 60,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -10.101478058638861,
+        "upper_fundamental_late_db": -22.926759827735324,
+        "upper_decay_db": -12.825281769096463,
+        "fundamental_offset_cents": 0.049555273644932195
+      },
+      {
+        "version": "current",
+        "model": "reed",
+        "note": 36,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.087877874762388,
+        "upper_fundamental_late_db": -26.259218033288526,
+        "upper_decay_db": -12.171340158526139,
+        "fundamental_offset_cents": -3.5974559456589465e-05
+      },
+      {
+        "version": "current",
+        "model": "reed",
+        "note": 36,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.1122064576455,
+        "upper_fundamental_late_db": -25.45080678573132,
+        "upper_decay_db": -12.33860032808582,
+        "fundamental_offset_cents": -3.6274749421167876e-05
+      },
+      {
+        "version": "current",
+        "model": "reed",
+        "note": 48,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.533880135588841,
+        "upper_fundamental_late_db": -29.382049288333405,
+        "upper_decay_db": -14.848169152744564,
+        "fundamental_offset_cents": -1.4852011830406044e-05
+      },
+      {
+        "version": "current",
+        "model": "reed",
+        "note": 48,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.377888654744863,
+        "upper_fundamental_late_db": -28.436749888686062,
+        "upper_decay_db": -15.0588612339412,
+        "fundamental_offset_cents": -1.4879865880370015e-05
+      },
+      {
+        "version": "current",
+        "model": "reed",
+        "note": 60,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.996986879694523,
+        "upper_fundamental_late_db": -33.01004609439702,
+        "upper_decay_db": -18.013059214702494,
+        "fundamental_offset_cents": 7.74593293588232e-06
+      },
+      {
+        "version": "current",
+        "model": "reed",
+        "note": 60,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.497188008498586,
+        "upper_fundamental_late_db": -31.715801287305013,
+        "upper_decay_db": -18.218613278806426,
+        "fundamental_offset_cents": 7.744256518731843e-06
+      },
+      {
+        "version": "current",
+        "model": "nylon",
+        "note": 40,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -13.858444528675616,
+        "upper_fundamental_late_db": -18.960527530175654,
+        "upper_decay_db": -5.102083001500038,
+        "fundamental_offset_cents": 2.289249790572938e-05
+      },
+      {
+        "version": "current",
+        "model": "nylon",
+        "note": 40,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.41682472806523,
+        "upper_fundamental_late_db": -18.54241606298495,
+        "upper_decay_db": -5.125591334919722,
+        "fundamental_offset_cents": 2.2872422032095323e-05
+      },
+      {
+        "version": "current",
+        "model": "nylon",
+        "note": 52,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -17.533920424190555,
+        "upper_fundamental_late_db": -23.989076427142983,
+        "upper_decay_db": -6.455156002952428,
+        "fundamental_offset_cents": 8.746946180016316e-06
+      },
+      {
+        "version": "current",
+        "model": "nylon",
+        "note": 52,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -17.09295179087,
+        "upper_fundamental_late_db": -23.571696304365975,
+        "upper_decay_db": -6.478744513495975,
+        "fundamental_offset_cents": 8.754988446282021e-06
+      },
+      {
+        "version": "current",
+        "model": "nylon",
+        "note": 64,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -18.64282665584699,
+        "upper_fundamental_late_db": -26.77054801414878,
+        "upper_decay_db": -8.127721358301791,
+        "fundamental_offset_cents": -4.92192772345382e-06
+      },
+      {
+        "version": "current",
+        "model": "nylon",
+        "note": 64,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -18.203899625671397,
+        "upper_fundamental_late_db": -26.3548085704185,
+        "upper_decay_db": -8.150908944747101,
+        "fundamental_offset_cents": -4.922220068157389e-06
+      },
+      {
+        "version": "current",
+        "model": "steel",
+        "note": 40,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -3.7485027438468683,
+        "upper_fundamental_late_db": -7.031355279116695,
+        "upper_decay_db": -3.2828525352698263,
+        "fundamental_offset_cents": 2.522428381406173e-05
+      },
+      {
+        "version": "current",
+        "model": "steel",
+        "note": 40,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -3.2635537899347837,
+        "upper_fundamental_late_db": -6.577526189112781,
+        "upper_decay_db": -3.3139723991779975,
+        "fundamental_offset_cents": 2.527618316677838e-05
+      },
+      {
+        "version": "current",
+        "model": "steel",
+        "note": 52,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -7.12107599589422,
+        "upper_fundamental_late_db": -11.335805244709627,
+        "upper_decay_db": -4.214729248815408,
+        "fundamental_offset_cents": 9.06234248197955e-06
+      },
+      {
+        "version": "current",
+        "model": "steel",
+        "note": 52,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -6.629802621976399,
+        "upper_fundamental_late_db": -10.881212744456786,
+        "upper_decay_db": -4.251410122480387,
+        "fundamental_offset_cents": 9.07606826751707e-06
+      },
+      {
+        "version": "current",
+        "model": "steel",
+        "note": 64,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -8.305838672970768,
+        "upper_fundamental_late_db": -13.508515881676107,
+        "upper_decay_db": -5.202677208705339,
+        "fundamental_offset_cents": -4.948439601617619e-06
+      },
+      {
+        "version": "current",
+        "model": "steel",
+        "note": 64,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -7.8202229398310195,
+        "upper_fundamental_late_db": -13.064223736573997,
+        "upper_decay_db": -5.244000796742977,
+        "fundamental_offset_cents": -4.949074072272778e-06
+      },
+      {
+        "version": "current",
+        "model": "bass",
+        "note": 28,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -10.70145073304273,
+        "upper_fundamental_late_db": -15.969890576997397,
+        "upper_decay_db": -5.268439843954667,
+        "fundamental_offset_cents": -8.889255103363815e-05
+      },
+      {
+        "version": "current",
+        "model": "bass",
+        "note": 28,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -10.252075436836758,
+        "upper_fundamental_late_db": -15.54458291491346,
+        "upper_decay_db": -5.292507478076702,
+        "fundamental_offset_cents": -9.195474028862206e-05
+      },
+      {
+        "version": "current",
+        "model": "bass",
+        "note": 40,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -13.01169898911213,
+        "upper_fundamental_late_db": -19.321781234312333,
+        "upper_decay_db": -6.310082245200203,
+        "fundamental_offset_cents": 2.311448997773754e-05
+      },
+      {
+        "version": "current",
+        "model": "bass",
+        "note": 40,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -12.56363208452913,
+        "upper_fundamental_late_db": -18.899646223867194,
+        "upper_decay_db": -6.336014139338063,
+        "fundamental_offset_cents": 2.3096760549920274e-05
+      },
+      {
+        "version": "current",
+        "model": "bass",
+        "note": 52,
+        "velocity": 0.25,
+        "upper_fundamental_early_db": -14.387529300509499,
+        "upper_fundamental_late_db": -22.365325383745315,
+        "upper_decay_db": -7.977796083235816,
+        "fundamental_offset_cents": 8.776468574114882e-06
+      },
+      {
+        "version": "current",
+        "model": "bass",
+        "note": 52,
+        "velocity": 0.85,
+        "upper_fundamental_early_db": -13.94246343155627,
+        "upper_fundamental_late_db": -21.944238036727,
+        "upper_decay_db": -8.00177460517073,
+        "fundamental_offset_cents": 8.783570186226642e-06
+      }
+    ],
+    "counterfactual": [
+      {
+        "model": "nylon",
+        "note": 40,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -59.360174003259296,
+        "expanded_above_24th_relative_energy_db": -68.0847833743276
+      },
+      {
+        "model": "nylon",
+        "note": 40,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -86.61615597719559,
+        "expanded_above_24th_relative_energy_db": -90.67844442909734
+      },
+      {
+        "model": "nylon",
+        "note": 40,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -56.34676532369305,
+        "expanded_above_24th_relative_energy_db": -65.79075763375445
+      },
+      {
+        "model": "nylon",
+        "note": 40,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -84.38587463061062,
+        "expanded_above_24th_relative_energy_db": -88.46053063452088
+      },
+      {
+        "model": "nylon",
+        "note": 52,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -60.29012991409677,
+        "expanded_above_24th_relative_energy_db": -71.15155079858026
+      },
+      {
+        "model": "nylon",
+        "note": 52,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -94.2341314661279,
+        "expanded_above_24th_relative_energy_db": -99.50514308202858
+      },
+      {
+        "model": "nylon",
+        "note": 52,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -57.23329780821718,
+        "expanded_above_24th_relative_energy_db": -68.81347894962624
+      },
+      {
+        "model": "nylon",
+        "note": 52,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -91.99248333267674,
+        "expanded_above_24th_relative_energy_db": -97.27237316625184
+      },
+      {
+        "model": "nylon",
+        "note": 64,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -60.481307124123084,
+        "expanded_above_24th_relative_energy_db": -72.63263598181466
+      },
+      {
+        "model": "nylon",
+        "note": 64,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -100.45124491576799,
+        "expanded_above_24th_relative_energy_db": -107.89893295100983
+      },
+      {
+        "model": "nylon",
+        "note": 64,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -57.41151714052965,
+        "expanded_above_24th_relative_energy_db": -70.28691952831478
+      },
+      {
+        "model": "nylon",
+        "note": 64,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -98.21495808559865,
+        "expanded_above_24th_relative_energy_db": -105.66959486758874
+      },
+      {
+        "model": "steel",
+        "note": 40,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -47.90049235436985,
+        "expanded_above_24th_relative_energy_db": -50.08289079324026
+      },
+      {
+        "model": "steel",
+        "note": 40,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -61.74910828618362,
+        "expanded_above_24th_relative_energy_db": -63.54089370255706
+      },
+      {
+        "model": "steel",
+        "note": 40,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -45.313708247480946,
+        "expanded_above_24th_relative_energy_db": -47.86773686868902
+      },
+      {
+        "model": "steel",
+        "note": 40,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -59.59306624465603,
+        "expanded_above_24th_relative_energy_db": -61.39718028447423
+      },
+      {
+        "model": "steel",
+        "note": 52,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -49.0960113964434,
+        "expanded_above_24th_relative_energy_db": -51.85972906034921
+      },
+      {
+        "model": "steel",
+        "note": 52,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -66.40817658943969,
+        "expanded_above_24th_relative_energy_db": -68.70653219853114
+      },
+      {
+        "model": "steel",
+        "note": 52,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -46.45918746259619,
+        "expanded_above_24th_relative_energy_db": -49.60036753918441
+      },
+      {
+        "model": "steel",
+        "note": 52,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -64.20687205762545,
+        "expanded_above_24th_relative_energy_db": -66.51678067270369
+      },
+      {
+        "model": "steel",
+        "note": 64,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -49.41591207195479,
+        "expanded_above_24th_relative_energy_db": -52.393534700420716
+      },
+      {
+        "model": "steel",
+        "note": 64,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -69.82793309324812,
+        "expanded_above_24th_relative_energy_db": -73.44150380807517
+      },
+      {
+        "model": "steel",
+        "note": 64,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -46.75866881674253,
+        "expanded_above_24th_relative_energy_db": -50.129500375873405
+      },
+      {
+        "model": "steel",
+        "note": 64,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -67.62137395972684,
+        "expanded_above_24th_relative_energy_db": -71.2461656460111
+      },
+      {
+        "model": "bass",
+        "note": 28,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -55.00399689816014,
+        "expanded_above_24th_relative_energy_db": -64.0194763041056
+      },
+      {
+        "model": "bass",
+        "note": 28,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -84.76184533759115,
+        "expanded_above_24th_relative_energy_db": -88.23994043194695
+      },
+      {
+        "model": "bass",
+        "note": 28,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -52.40895602104831,
+        "expanded_above_24th_relative_energy_db": -61.697007586992136
+      },
+      {
+        "model": "bass",
+        "note": 28,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -82.54656730089951,
+        "expanded_above_24th_relative_energy_db": -86.02667741485826
+      },
+      {
+        "model": "bass",
+        "note": 40,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -56.22075774402039,
+        "expanded_above_24th_relative_energy_db": -67.78472158904005
+      },
+      {
+        "model": "bass",
+        "note": 40,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -90.52154764523388,
+        "expanded_above_24th_relative_energy_db": -96.03655527922947
+      },
+      {
+        "model": "bass",
+        "note": 40,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -53.63263850090569,
+        "expanded_above_24th_relative_energy_db": -65.45012429857971
+      },
+      {
+        "model": "bass",
+        "note": 40,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -88.2810082242775,
+        "expanded_above_24th_relative_energy_db": -93.81775330701907
+      },
+      {
+        "model": "bass",
+        "note": 52,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -56.629320410865475,
+        "expanded_above_24th_relative_energy_db": -69.94086180897118
+      },
+      {
+        "model": "bass",
+        "note": 52,
+        "velocity": 0.25,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -98.11274545826457,
+        "expanded_above_24th_relative_energy_db": -105.23267156573814
+      },
+      {
+        "model": "bass",
+        "note": 52,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.005,
+          0.065
+        ],
+        "level_matched_residual_db": -54.027749674991774,
+        "expanded_above_24th_relative_energy_db": -67.58372073001884
+      },
+      {
+        "model": "bass",
+        "note": 52,
+        "velocity": 0.85,
+        "window_seconds": [
+          0.08,
+          0.2
+        ],
+        "level_matched_residual_db": -95.875224200924,
+        "expanded_above_24th_relative_energy_db": -103.0078211156655
+      }
+    ]
+  }
+}

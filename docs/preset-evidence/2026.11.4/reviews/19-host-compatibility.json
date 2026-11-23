@@ -1,0 +1,113 @@
+{
+  "worker": 19,
+  "task": "host_compatibility",
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "status": "review complete; actual processor/native-wrapper execution remains pending CI",
+  "production_defects_found": [],
+  "test_gaps_corrected": [
+    "Freeze the complete immediately preceding 198-core and 304-host ID prefixes, while retaining the older 190/296 prefix checks.",
+    "Restore a schema-4 user preset containing the preceding eight body controls but neither size, and verify preserved values plus neutral size defaults on the audio thread.",
+    "Restore a preceding body-aware inactive A/B slot and verify that only its absent sizes default.",
+    "For each rank, verify actual processor audio stays bit-identical after a held-note size edit but changes on the next accepted note; the second condition prevents an ignored control from passing."
+  ],
+  "contracts": {
+    "core_ids": {
+      "published_prefix": 198,
+      "current_count": 200,
+      "prefix_fnv1a64": "8e37bad444e187c2",
+      "appended": [
+        "body1_size",
+        "body2_size"
+      ]
+    },
+    "host_ids": {
+      "published_prefix": 304,
+      "current_count": 306,
+      "prefix_fnv1a64": "b86982a235459491",
+      "new_indexes": [
+        304,
+        305
+      ]
+    },
+    "size_controls": {
+      "minimum": 0.5,
+      "maximum": 2.5,
+      "default": 1,
+      "au_version_hint": 17,
+      "continuous": true,
+      "automatable": true,
+      "sound_control": true,
+      "capture": "next accepted note"
+    },
+    "previous_body_controls": {
+      "core_indexes": [
+        190,
+        197
+      ],
+      "host_indexes": [
+        296,
+        303
+      ],
+      "au_version_hint": 16
+    },
+    "reviewed_paths": [
+      "session restore",
+      "user preset restore",
+      "A/B active and inactive recall",
+      "undo/redo",
+      "all factory and MIDI program recalls",
+      "same-block Program Change then Note On",
+      "hardware-source suppression",
+      "hardware-tone reset",
+      "original row-II rank swap"
+    ]
+  },
+  "checks": [
+    {
+      "name": "host template syntax",
+      "result": "passed",
+      "scope": "g++ -std=c++20 -fsyntax-only; complete testInstrumentBodyHost template instantiated against pinned JUCE headers; no processor execution",
+      "log": ""
+    },
+    {
+      "name": "detached JUCE state index",
+      "result": "passed",
+      "scope": "Current test source linked with existing JUCE core/events/data-structures objects. No processor, APVTS, MessageManager or GUI initialized.",
+      "log": "PASS: ParameterStateChildIndex 80 differential fixtures, 306 real IDs, seed=0x8052026; binary/XML, callback/read traces and input immutability\n"
+    },
+    {
+      "name": "core size, hardware clear and row-II swap",
+      "result": "passed",
+      "scope": "85 assertions against root-provided development libcs80_core.a; not final packaged-wrapper qualification.",
+      "log": "rank0 next0 delta 0 energy 0.438224369097 ratio 0\nrank0 next1 delta 0.0831592530616 energy 1.46230048552 ratio 0.0568687857832\nrank1 next0 delta 0 energy 0.435267677406 ratio 0\nrank1 next1 delta 0.0836506613976 energy 1.46613993309 ratio 0.0570550324082\nPASS 85 core compatibility assertions\n",
+      "probe_source": "#include \"core/Engine.h\"\n#include \"core/FactoryPresets.h\"\n#include <array>\n#include <cmath>\n#include <cstdio>\n#include <memory>\n#include <cstdlib>\nusing namespace cs80;\nint count=0;\nvoid check(bool x,const char* m){++count;if(!x){std::fprintf(stderr,\"FAIL %s\\n\",m);std::exit(1);}}\nint main(){\n for(int rank=0;rank<2;++rank){\n  auto changed=std::make_unique<Engine>(),fixed=std::make_unique<Engine>();\n  ParamValues p;p[P_sourcePerformance]=1;p[P_analogNoise]=p[P_drift]=p[P_voiceDispersion]=p[P_chorusOn]=0;p[P_detune]=p[P_kasScanTiming]=0;p[P_mix]=(float)rank;p[bodyParam(rank,0)]=(float)body::oboe;p[bodyParam(rank,1)]=1;p[bodySizeParam(rank)]=1;\n  std::array<float,512>a{},b{};\n  for(auto*e:{changed.get(),fixed.get()}){e->setParams(p);e->prepare(48000);e->noteOn(60,100.0f/127);e->render(a.data(),64);}\n  p[bodySizeParam(rank)]=2;changed->setParams(p);\n  for(bool next:{false,true}){double delta=0,energy=0;bool finite=true;\n   if(next){changed->noteOn(65,100.0f/127);fixed->noteOn(65,100.0f/127);}\n   for(int block=0;block<8;++block){changed->render(a.data(),256);fixed->render(b.data(),256);for(size_t i=0;i<a.size();++i){finite=finite&&std::isfinite(a[i])&&std::isfinite(b[i]);delta+=(a[i]-b[i])*(a[i]-b[i]);energy+=a[i]*a[i]+b[i]*b[i];}}\n   std::printf(\"rank%d next%d delta %.12g energy %.12g ratio %.12g\\n\",rank,next,delta,energy,delta/energy);\n   check(finite&&energy>1e-8,\"finite audible fixture\");check(next?delta>1e-7*energy:delta==0,\"next-note geometry capture\");\n  }\n }\n for(int ch=0;ch<2;++ch)for(int tone=0;tone<11;++tone){ParamValues p;p[bodySizeParam(ch)]=2.2f;p[bodySizeParam(1-ch)]=.6f;p[bodyParam(ch,0)]=(float)body::oboe;p[bodyParam(ch,1)]=1;applyHardwareTone(p,ch,tone);check(p[bodySizeParam(ch)]==1,\"tab clears selected size\");check(p[bodySizeParam(1-ch)]==.6f,\"tab preserves other size\");}\n constexpr const char* source[]={\"Chamber Strings\",\"PWM Strings\",\"Brass Swell II\",\"Horn Section\",\"Analog Bass\",\"Clavichord II\",\"Harpsichord II\",\"Reed Organ\",\"Guitar II\",\"Funky Pluck II\",\"Funky Pluck I\"};\n const auto&o=originalLibrary();const auto&c=curatedLibrary();for(int t=0;t<11;++t){const FactoryPreset*base=nullptr;for(const auto&v:c)if(v.name==source[t])base=&v;check(base!=nullptr,\"source found\");for(int rank=0;rank<2;++rank)check(o[2*t+1].values[bodySizeParam(rank)]==base->values[bodySizeParam(1-rank)],\"rowII swaps both captured sizes\");}\n std::printf(\"PASS %d core compatibility assertions\\n\",count);\n}\n",
+      "core_library_sha256": "8deaae687d8eec470f9857bfbaaffc9b9bed3e047d163628772368bd61e91517"
+    },
+    {
+      "name": "parity exporter parameter count",
+      "result": "reviewed",
+      "detail": "139+1+2+9+39+8+2 = 200; root already executed the parity capture contract in its passing core suite."
+    },
+    {
+      "name": "git diff --check (assigned tests)",
+      "result": "passed"
+    }
+  ],
+  "source_sha256_at_review": {
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/FactoryPresets.cpp": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5",
+    "src/core/OriginalCircuitLibrary.inc": "d6cf0293de597d95727be7c50eb347d87f9670c6d5b8ab583989fbbe99481a9d",
+    "src/plugin/PluginProcessor.cpp": "cc79c978d5488b7f1f29d29c8966665a6bbd3ada31aa8050064bd3f44f31e401",
+    "src/plugin/PluginProcessorLibrary.cpp": "d9e3f15e79de8ee608308b50303e9fe2fbca9ada16b9e4e9ff67179015f3ddf1",
+    "tests/InstrumentBodyHostTests.h": "f9806de9f933f4590cb9f45897a6387a749e78e8e4b2ad64a11ef409d6ad489d",
+    "tests/ParameterStateChildIndexTests.cpp": "c3d003d413c32b7af1411ba639d5d2717e7ce0fde9e6ef4a0282747b9769a779",
+    "tests/test_parity_capture.py": "f0e878d69d1faf1f3965d733775a994b2ed1e11868f4a2e9c2691e10a21ca89e"
+  },
+  "limitations": [
+    "This review does not claim native processor, VST3 or AU execution. The source header was syntax-checked; complete native CI must execute the newly added host cases.",
+    "The core-only probe used the supplied development archive, which may predate later preset-balance or level-table edits. Its scope is size capture, tone reset and rank-size assignment, not final preset audio."
+  ]
+}

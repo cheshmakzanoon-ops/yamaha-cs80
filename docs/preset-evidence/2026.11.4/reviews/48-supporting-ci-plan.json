@@ -1,0 +1,1430 @@
+{
+  "schema": 1,
+  "worker": 48,
+  "task": "supporting CI source qualification",
+  "status": "readiness_plan_only__actual_new_source_runs_pending",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "baseline_commit": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "candidate_source_commit": null,
+  "inspection_scope": "Current working source and trigger contracts; no actual new run, API, logs or artifact inspected. Calibration data may still change without changing these workflow contracts.",
+  "source_sha256": {
+    ".github/workflows/build.yml": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    ".github/workflows/dsp-measurements.yml": "9ce4fe1a71530996851e3bad2961ca12778d3c6f4f113713d1c0a92cca930964",
+    ".github/workflows/filter-batch.yml": "b50a8d9567b3cad086956ec1f99b6d218df8e126e8b781743a43adacfed8362d",
+    ".github/workflows/screenshots.yml": "9dc37c0d6bc4c38acbe6ae1bdea64e0276f0b200c27f4636a00af4efb7c62fb9",
+    ".github/workflows/upstream-validator-comparison.yml": "4fd4db9da3deae757c5f8bbe4af81b0dfa24db93563145db6819d6669c8834fa",
+    ".github/workflows/ci-evidence.yml": "dde142411bb4cf7a02d5d95f166100bdb81e9120f0b6bd2966a92f8d39b6a8cd",
+    "CMakeLists.txt": "4726f5d1a5005069558f74a4c3a55da8106f7e63253ad1877c947e4deda3271c",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/InstrumentBody.h": "e61da6a5cc9b428f8a9816c1de812cad0adb10b376be5e44e7ca3ae2844fbb71",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "src/tools/parity_capture.cpp": "6729af3f1f12a5972350495a22b4c2d75aafe6471bef3b72cb82ac693790d051",
+    "tests/test_parity_capture.py": "f0e878d69d1faf1f3965d733775a994b2ed1e11868f4a2e9c2691e10a21ca89e",
+    "scripts/analyze_dsp.py": "eadfcb62ccaaa31830bc1bff026deabf921b27db1bacc7a49c21a582bbf98b2d",
+    "scripts/parity_harness.py": "33b535872ff0d826908011a0b4fa99a909555f93ccd2bc3bac6edd8ad8a1d105",
+    "scripts/run-ui-smoke-linux.sh": "8798619955fc1a4d07dcbd5909a646d7a720859181fdc98faa0453e5d94a4851"
+  },
+  "changed_path_snapshot": [
+    ".github/workflows/build.yml",
+    ".github/workflows/dsp-measurements.yml",
+    "docs/PRESET_GUIDE.md",
+    "scripts/capture-factory-auditions.py",
+    "scripts/test-capture-factory-auditions.py",
+    "scripts/test-pluginval-macos-download.py",
+    "src/core/CuratedLibrary.inc",
+    "src/core/CuratedLibraryLevels.inc",
+    "src/core/Engine.cpp",
+    "src/core/Engine.h",
+    "src/core/FactoryPresets.cpp",
+    "src/core/FactoryPresets.h",
+    "src/core/InstrumentBody.h",
+    "src/core/InstrumentBodyFilter.h",
+    "src/core/OriginalCircuitLevels.inc",
+    "src/core/OriginalCircuitLibrary.inc",
+    "src/core/Params.h",
+    "src/core/curated/Bass.inc",
+    "src/core/curated/Bells.inc",
+    "src/core/curated/Brass.inc",
+    "src/core/curated/Fx.inc",
+    "src/core/curated/Keys.inc",
+    "src/core/curated/Leads.inc",
+    "src/core/curated/Modern.inc",
+    "src/core/curated/Organ.inc",
+    "src/core/curated/Pads.inc",
+    "src/core/curated/Plucked.inc",
+    "src/core/curated/Polysynth.inc",
+    "src/core/curated/Strings.inc",
+    "src/core/curated/Winds.inc",
+    "src/plugin/EvidenceRegister.h",
+    "src/plugin/PluginProcessor.cpp",
+    "tests/InstrumentBodyEngineTests.cpp",
+    "tests/InstrumentBodyHostTests.h",
+    "tests/InstrumentBodyTests.cpp",
+    "tests/ParameterStateChildIndexTests.cpp",
+    "tests/test_parity_capture.py"
+  ],
+  "automatic_main_push_supporting_workflows": {
+    "dsp-measurements.yml": {
+      "name": "DSP numerical measurements",
+      "sha256": "9ce4fe1a71530996851e3bad2961ca12778d3c6f4f113713d1c0a92cca930964",
+      "trigger": {
+        "paths": [
+          "src/core/**",
+          "src/reference/**",
+          "src/plugin/KeyboardEventQueue.h",
+          "tests/**",
+          "scripts/*pluginval*.sh",
+          "src/tools/dsp_probe.cpp",
+          "src/tools/parity_capture.cpp",
+          "src/tools/compatibility_probe.cpp",
+          "src/tools/source_factory_compatibility_probe.cpp",
+          "src/tools/source_factory_circuit_compatibility_probe.cpp",
+          "scripts/analyze_dsp.py",
+          "scripts/parity_harness.py",
+          "CMakeLists.txt",
+          ".github/workflows/dsp-measurements.yml"
+        ]
+      },
+      "matching_changed_paths": [
+        ".github/workflows/dsp-measurements.yml",
+        "src/core/CuratedLibrary.inc",
+        "src/core/CuratedLibraryLevels.inc",
+        "src/core/Engine.cpp",
+        "src/core/Engine.h",
+        "src/core/FactoryPresets.cpp",
+        "src/core/FactoryPresets.h",
+        "src/core/InstrumentBody.h",
+        "src/core/InstrumentBodyFilter.h",
+        "src/core/OriginalCircuitLevels.inc",
+        "src/core/OriginalCircuitLibrary.inc",
+        "src/core/Params.h",
+        "src/core/curated/Bass.inc",
+        "src/core/curated/Bells.inc",
+        "src/core/curated/Brass.inc",
+        "src/core/curated/Fx.inc",
+        "src/core/curated/Keys.inc",
+        "src/core/curated/Leads.inc",
+        "src/core/curated/Modern.inc",
+        "src/core/curated/Organ.inc",
+        "src/core/curated/Pads.inc",
+        "src/core/curated/Plucked.inc",
+        "src/core/curated/Polysynth.inc",
+        "src/core/curated/Strings.inc",
+        "src/core/curated/Winds.inc",
+        "tests/InstrumentBodyEngineTests.cpp",
+        "tests/InstrumentBodyHostTests.h",
+        "tests/InstrumentBodyTests.cpp",
+        "tests/ParameterStateChildIndexTests.cpp",
+        "tests/test_parity_capture.py"
+      ],
+      "jobs": [
+        {
+          "job_id": "measure",
+          "name_template": "measure",
+          "runner": "ubuntu-24.04",
+          "if": "success()",
+          "timeout_minutes": 15,
+          "strategy": null,
+          "required_named_success_steps": [
+            "Install pinned numerical plotting tools",
+            "Build standalone numerical probe",
+            "Measure and enforce regression bounds",
+            "Export actual-engine candidate with exact-source provenance",
+            "Upload live envelope candidate trace",
+            "Upload source-traceable graphs and raw traces"
+          ],
+          "defined_steps": [
+            {
+              "defined_step_index": 1,
+              "name": null,
+              "uses": "actions/checkout@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 2,
+              "name": null,
+              "uses": "actions/setup-python@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 3,
+              "name": "Install pinned numerical plotting tools",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "5f9fd75cc2cc26f42fad5bb37a834eac788005d60e59b10278cf9b71dd2e5659"
+            },
+            {
+              "defined_step_index": 4,
+              "name": "Build standalone numerical probe",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "ad8833cd3387c8eb2b4d9ffd006fd514ebb85e96ecc14aa56b9762213c0b5ef5"
+            },
+            {
+              "defined_step_index": 5,
+              "name": "Measure and enforce regression bounds",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "9228aed02f010f79e0ad5e226434e5bbd4e0c5597a08343561c876cfb7bc5a75"
+            },
+            {
+              "defined_step_index": 6,
+              "name": "Export actual-engine candidate with exact-source provenance",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "f2e7949cf2a58dc29275581518a4045c1e9d7a4ad0fdc0efaa596e644f1f96a5"
+            },
+            {
+              "defined_step_index": 7,
+              "name": null,
+              "uses": "actions/upload-artifact@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 8,
+              "name": "Upload live envelope candidate trace",
+              "uses": "actions/upload-artifact@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 9,
+              "name": "Upload source-traceable graphs and raw traces",
+              "uses": "actions/upload-artifact@v5",
+              "if": "success()",
+              "command_sha256": null
+            }
+          ],
+          "artifacts": [
+            {
+              "defined_step_index": 7,
+              "name": "cs80-engine-candidate-${{ github.sha }}",
+              "path": "artifacts/engine-candidate",
+              "if-no-files-found": "error"
+            },
+            {
+              "defined_step_index": 8,
+              "name": "cs80-engine-live-adr-${{ github.sha }}",
+              "path": "artifacts/engine-live-adr",
+              "if-no-files-found": "error"
+            },
+            {
+              "defined_step_index": 9,
+              "name": "cs80-dsp-${{ github.sha }}",
+              "path": "artifacts/dsp-probe",
+              "if-no-files-found": "error"
+            }
+          ]
+        },
+        {
+          "job_id": "legacy-compatibility",
+          "name_template": "Default-off raw audio versus shipped baseline",
+          "runner": "ubuntu-24.04",
+          "if": "success()",
+          "timeout_minutes": 15,
+          "strategy": null,
+          "required_named_success_steps": [
+            "Build both revisions with the same compiler",
+            "Require byte-identical default and noisy-reassignment traces"
+          ],
+          "defined_steps": [
+            {
+              "defined_step_index": 1,
+              "name": null,
+              "uses": "actions/checkout@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 2,
+              "name": "Build both revisions with the same compiler",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "e553062110252ec8e7fcc185f484c37bed358fbe903f3a99f59cd7462c1e9e22"
+            },
+            {
+              "defined_step_index": 3,
+              "name": "Require byte-identical default and noisy-reassignment traces",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "99ec15202b8617cec8b4e0b614a7188550eefa0f1616d242803fdb5cd6c8de3b"
+            },
+            {
+              "defined_step_index": 4,
+              "name": null,
+              "uses": "actions/upload-artifact@v5",
+              "if": "success()",
+              "command_sha256": null
+            }
+          ],
+          "artifacts": [
+            {
+              "defined_step_index": 4,
+              "name": "cs80-legacy-compatibility-${{ github.sha }}",
+              "path": "artifacts/compatibility/report.json\nartifacts/compatibility/SHA256SUMS\nartifacts/compatibility/compiler.txt\nartifacts/compatibility/baseline-corpus.txt\n",
+              "if-no-files-found": "error"
+            }
+          ]
+        },
+        {
+          "job_id": "source-factory-compatibility",
+          "name_template": "Source circuit V1 and audio V2 compatibility",
+          "runner": "ubuntu-24.04",
+          "if": "success()",
+          "timeout_minutes": 15,
+          "strategy": null,
+          "required_named_success_steps": [
+            "Build immutable circuit and audio checkpoints with one compiler",
+            "Require unchanged seven-tone V1 circuit numerics",
+            "Require unchanged source-audio V2 and numerical history"
+          ],
+          "defined_steps": [
+            {
+              "defined_step_index": 1,
+              "name": null,
+              "uses": "actions/checkout@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 2,
+              "name": "Build immutable circuit and audio checkpoints with one compiler",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "9e3a24aa1199ffd71b16b19d896eed42c440a9569ef89a5afe63dc23e4c3942f"
+            },
+            {
+              "defined_step_index": 3,
+              "name": "Require unchanged seven-tone V1 circuit numerics",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "1f0c419c4b4cd044a8c354a32327dacd9a37d4cbad43fce191d5744ada9c0f15"
+            },
+            {
+              "defined_step_index": 4,
+              "name": "Require unchanged source-audio V2 and numerical history",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "9f66d2cefc1a705d0b352cc52580f4c37e0677713139894449aff6c4306ddb3d"
+            },
+            {
+              "defined_step_index": 5,
+              "name": null,
+              "uses": "actions/upload-artifact@v5",
+              "if": "success()",
+              "command_sha256": null
+            }
+          ],
+          "artifacts": [
+            {
+              "defined_step_index": 5,
+              "name": "cs80-source-factory-compatibility-${{ github.sha }}",
+              "path": "artifacts/source-factory-compatibility/report.json\nartifacts/source-factory-compatibility/SHA256SUMS\nartifacts/source-factory-compatibility/compiler.txt\n",
+              "if-no-files-found": "error"
+            }
+          ]
+        },
+        {
+          "job_id": "parity-harness",
+          "name_template": "Synthetic reference comparison (not hardware evidence)",
+          "runner": "ubuntu-24.04",
+          "if": "success()",
+          "timeout_minutes": 5,
+          "strategy": null,
+          "required_named_success_steps": [
+            "Test comparison failures and provenance gates",
+            "Compare deterministic synthetic stand-in traces"
+          ],
+          "defined_steps": [
+            {
+              "defined_step_index": 1,
+              "name": null,
+              "uses": "actions/checkout@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 2,
+              "name": null,
+              "uses": "actions/setup-python@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 3,
+              "name": "Test comparison failures and provenance gates",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "49ad996640a277fec380cd66390511f26826da80fe8cc1057f0cfd670b96792d"
+            },
+            {
+              "defined_step_index": 4,
+              "name": "Compare deterministic synthetic stand-in traces",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "d063ba2989d6b26329002352129b7ed317b8fddb442da2ce59dac381167fd687"
+            },
+            {
+              "defined_step_index": 5,
+              "name": null,
+              "uses": "actions/upload-artifact@v5",
+              "if": "success()",
+              "command_sha256": null
+            }
+          ],
+          "artifacts": [
+            {
+              "defined_step_index": 5,
+              "name": "cs80-synthetic-comparison-${{ github.sha }}",
+              "path": "artifacts/parity-harness",
+              "if-no-files-found": "error"
+            }
+          ]
+        },
+        {
+          "job_id": "sanitizers",
+          "name_template": "sanitizers",
+          "runner": "ubuntu-24.04",
+          "if": "success()",
+          "timeout_minutes": 75,
+          "strategy": null,
+          "required_named_success_steps": [
+            "Configure ASan and UBSan core build",
+            "Build instrument and circuit tests",
+            "Run sanitizer and validator-fixture tests"
+          ],
+          "defined_steps": [
+            {
+              "defined_step_index": 1,
+              "name": null,
+              "uses": "actions/checkout@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 2,
+              "name": "Configure ASan and UBSan core build",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "38a953865581658e5d9654db367428f8dcf1dc871c80d5de50510d6f73ba69b0"
+            },
+            {
+              "defined_step_index": 3,
+              "name": "Build instrument and circuit tests",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "a3cf8f42edea005b2840dda3c5e79a8be88b79dc193b233efacc541963647422"
+            },
+            {
+              "defined_step_index": 4,
+              "name": "Run sanitizer and validator-fixture tests",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "7a56bf2d520f52af335869f1670810c72474ee452512f3ac773275fdf0cc644c"
+            }
+          ],
+          "artifacts": []
+        }
+      ]
+    },
+    "filter-batch.yml": {
+      "name": "Filter batch qualification",
+      "sha256": "b50a8d9567b3cad086956ec1f99b6d218df8e126e8b781743a43adacfed8362d",
+      "trigger": {
+        "paths": [
+          "src/core/**",
+          "src/experimental/ContinuousVoiceCircuit.h",
+          "tests/*Batch*",
+          "tests/test_filter_batch_admission.py",
+          "CMakeLists.txt",
+          ".github/workflows/filter-batch.yml"
+        ]
+      },
+      "matching_changed_paths": [
+        "src/core/CuratedLibrary.inc",
+        "src/core/CuratedLibraryLevels.inc",
+        "src/core/Engine.cpp",
+        "src/core/Engine.h",
+        "src/core/FactoryPresets.cpp",
+        "src/core/FactoryPresets.h",
+        "src/core/InstrumentBody.h",
+        "src/core/InstrumentBodyFilter.h",
+        "src/core/OriginalCircuitLevels.inc",
+        "src/core/OriginalCircuitLibrary.inc",
+        "src/core/Params.h",
+        "src/core/curated/Bass.inc",
+        "src/core/curated/Bells.inc",
+        "src/core/curated/Brass.inc",
+        "src/core/curated/Fx.inc",
+        "src/core/curated/Keys.inc",
+        "src/core/curated/Leads.inc",
+        "src/core/curated/Modern.inc",
+        "src/core/curated/Organ.inc",
+        "src/core/curated/Pads.inc",
+        "src/core/curated/Plucked.inc",
+        "src/core/curated/Polysynth.inc",
+        "src/core/curated/Strings.inc",
+        "src/core/curated/Winds.inc"
+      ],
+      "jobs": [
+        {
+          "job_id": "core",
+          "name_template": "${{ matrix.compiler }} / batch ${{ matrix.batch }}",
+          "runner": "ubuntu-24.04",
+          "if": "success()",
+          "timeout_minutes": 15,
+          "strategy": {
+            "fail-fast": "false",
+            "matrix": {
+              "compiler": [
+                "g++",
+                "clang++"
+              ],
+              "batch": [
+                "DEFAULT",
+                "ON",
+                "OFF"
+              ]
+            }
+          },
+          "required_named_success_steps": [
+            "Configure core only",
+            "Build focused qualification tests",
+            "Exactness and scheduling gates"
+          ],
+          "defined_steps": [
+            {
+              "defined_step_index": 1,
+              "name": null,
+              "uses": "actions/checkout@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 2,
+              "name": "Configure core only",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "ff23c76076274b19090ae9f55fece311a62a80bdf857f4cfc512f769f5ab179e"
+            },
+            {
+              "defined_step_index": 3,
+              "name": "Build focused qualification tests",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "a8b088db18eaab30836a4c84c6f2b469fb2e17f6d332fbb00c7262508c7fb4f7"
+            },
+            {
+              "defined_step_index": 4,
+              "name": "Exactness and scheduling gates",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "82367135da1a2a8f09abdc6b762b11b2f0b78e5725842031b82e58dfdf73602a"
+            }
+          ],
+          "artifacts": []
+        }
+      ]
+    },
+    "screenshots.yml": {
+      "name": "Hardware panel screenshots",
+      "sha256": "9dc37c0d6bc4c38acbe6ae1bdea64e0276f0b200c27f4636a00af4efb7c62fb9",
+      "trigger": {
+        "branches-ignore": [
+          "ui-preview"
+        ],
+        "paths": [
+          "src/plugin/**",
+          "src/core/**",
+          "src/tools/ui_snapshot.cpp",
+          "tests/*.h",
+          "scripts/run-ui-smoke-linux.sh",
+          "CMakeLists.txt",
+          ".github/workflows/screenshots.yml"
+        ]
+      },
+      "matching_changed_paths": [
+        "src/core/CuratedLibrary.inc",
+        "src/core/CuratedLibraryLevels.inc",
+        "src/core/Engine.cpp",
+        "src/core/Engine.h",
+        "src/core/FactoryPresets.cpp",
+        "src/core/FactoryPresets.h",
+        "src/core/InstrumentBody.h",
+        "src/core/InstrumentBodyFilter.h",
+        "src/core/OriginalCircuitLevels.inc",
+        "src/core/OriginalCircuitLibrary.inc",
+        "src/core/Params.h",
+        "src/core/curated/Bass.inc",
+        "src/core/curated/Bells.inc",
+        "src/core/curated/Brass.inc",
+        "src/core/curated/Fx.inc",
+        "src/core/curated/Keys.inc",
+        "src/core/curated/Leads.inc",
+        "src/core/curated/Modern.inc",
+        "src/core/curated/Organ.inc",
+        "src/core/curated/Pads.inc",
+        "src/core/curated/Plucked.inc",
+        "src/core/curated/Polysynth.inc",
+        "src/core/curated/Strings.inc",
+        "src/core/curated/Winds.inc",
+        "src/plugin/EvidenceRegister.h",
+        "src/plugin/PluginProcessor.cpp",
+        "tests/InstrumentBodyHostTests.h"
+      ],
+      "jobs": [
+        {
+          "job_id": "screenshots",
+          "name_template": "screenshots",
+          "runner": "ubuntu-24.04",
+          "if": "success()",
+          "timeout_minutes": 25,
+          "strategy": null,
+          "required_named_success_steps": [
+            "Install official Ubuntu build dependencies",
+            "Configure exact source",
+            "Build screenshot renderer and core tests",
+            "Verify core",
+            "Capture actual editor at every supported size and page",
+            "Refresh repository screenshots from this exact source"
+          ],
+          "defined_steps": [
+            {
+              "defined_step_index": 1,
+              "name": null,
+              "uses": "actions/checkout@v5",
+              "if": "success()",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 2,
+              "name": "Install official Ubuntu build dependencies",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "0033189413378e6f51b5a9f80c1e57beef21664cfc449f43e09d6f6546c0b3fd"
+            },
+            {
+              "defined_step_index": 3,
+              "name": "Configure exact source",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "faf14823f82403f5b9dfb762c166f5f5342fe127d1c5d60c7d7020bd3b71e39f"
+            },
+            {
+              "defined_step_index": 4,
+              "name": "Build screenshot renderer and core tests",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "ec43ae16f75f5c065cde3ef3c0c8ed646c0c08d79a9534592a140b35df612233"
+            },
+            {
+              "defined_step_index": 5,
+              "name": "Verify core",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "9004d50043ee6ea72dd93bc3fc545f12cbb2aa6bc2d081f1cc3c6f46bf061bcf"
+            },
+            {
+              "defined_step_index": 6,
+              "name": "Capture actual editor at every supported size and page",
+              "uses": null,
+              "if": "success()",
+              "command_sha256": "b53c089d326c466b4edb84599bf0330c6559ea1a351dc72c0ecd1529cb5c329f"
+            },
+            {
+              "defined_step_index": 7,
+              "name": "Publish screenshot evidence",
+              "uses": "actions/upload-artifact@v5",
+              "if": "always() && (steps.capture_panel.outcome == 'success' || steps.capture_panel.outcome == 'failure')",
+              "command_sha256": null
+            },
+            {
+              "defined_step_index": 8,
+              "name": "Publish preview PNGs to the ui-preview branch (non-main only)",
+              "uses": null,
+              "if": "github.ref != 'refs/heads/main'",
+              "command_sha256": "97c59a0fe589705eb44be71467b8172c4a7323ea77ef284ebde9a64a7bc14188"
+            },
+            {
+              "defined_step_index": 9,
+              "name": "Refresh repository screenshots from this exact source",
+              "uses": null,
+              "if": "github.ref == 'refs/heads/main'",
+              "command_sha256": "23793412121d7b6f458b3c0617a7ff708ccce9915a88e567751c12fa16730c1b"
+            }
+          ],
+          "artifacts": [
+            {
+              "defined_step_index": 7,
+              "name": "cs80-panel-${{ github.sha }}",
+              "path": "artifacts/ui",
+              "if-no-files-found": "error"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "expected_expanded_job_counts": {
+    "DSP numerical measurements": 5,
+    "Filter batch qualification": 6,
+    "Hardware panel screenshots": 1,
+    "Upstream validator comparison_after_build": 3
+  },
+  "downstream_prerelease_comparison": {
+    "workflow": ".github/workflows/upstream-validator-comparison.yml",
+    "name": "Upstream validator comparison",
+    "sha256": "4fd4db9da3deae757c5f8bbe4af81b0dfa24db93563145db6819d6669c8834fa",
+    "trigger": {
+      "workflow_run": {
+        "workflows": [
+          "build"
+        ],
+        "branches": [
+          "main"
+        ],
+        "types": [
+          "completed"
+        ]
+      }
+    },
+    "jobs": [
+      {
+        "job_id": "compare",
+        "name_template": "Official beta3 / ${{ matrix.lane }} / ${{ matrix.seed }}",
+        "runner": "ubuntu-24.04",
+        "if": "github.repository == 'cheshmakzanoon-ops/yamaha-cs80' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.status == 'completed' && github.event.workflow_run.conclusion != 'cancelled'",
+        "timeout_minutes": 20,
+        "strategy": {
+          "fail-fast": "false",
+          "matrix": {
+            "include": [
+              {
+                "lane": "headless-subset",
+                "seed": "0x4f31605",
+                "skip_gui": "true"
+              },
+              {
+                "lane": "gui-inclusive",
+                "seed": "0x63421ca",
+                "skip_gui": "false"
+              },
+              {
+                "lane": "gui-current-regression",
+                "seed": "0x3ca4063",
+                "skip_gui": "false"
+              }
+            ]
+          }
+        },
+        "required_named_success_steps": [
+          "Verify exact originating build and artifact",
+          "Download only the verified build artifact",
+          "Install ordinary validator runtime dependencies",
+          "Verify official archive before extracting or executing",
+          "Run one ordinary validation and preserve its result"
+        ],
+        "defined_steps": [
+          {
+            "defined_step_index": 1,
+            "name": "Verify exact originating build and artifact",
+            "uses": "actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b",
+            "if": "success()",
+            "command_sha256": null
+          },
+          {
+            "defined_step_index": 2,
+            "name": "Download only the verified build artifact",
+            "uses": "actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0",
+            "if": "success()",
+            "command_sha256": null
+          },
+          {
+            "defined_step_index": 3,
+            "name": "Install ordinary validator runtime dependencies",
+            "uses": null,
+            "if": "success()",
+            "command_sha256": "850124272bceed0ee85dfba7114264e81eb28310ee3adee43d5a7144f691e2fd"
+          },
+          {
+            "defined_step_index": 4,
+            "name": "Verify official archive before extracting or executing",
+            "uses": null,
+            "if": "success()",
+            "command_sha256": "3f251e939ec2ff24f0be6e5ffc9db5447a2edb7ff92d61e7b4a305ff79f9645c"
+          },
+          {
+            "defined_step_index": 5,
+            "name": "Run one ordinary validation and preserve its result",
+            "uses": null,
+            "if": "success()",
+            "command_sha256": "5d2d7bbee5fe027e816ee1d239a5367d974bd72efe5346f75220aa7dfb6babe3"
+          },
+          {
+            "defined_step_index": 6,
+            "name": "Summarize without changing either gate's result",
+            "uses": null,
+            "if": "always()",
+            "command_sha256": "35270d1951e5a132f72341ce09276b0c65addb95d09650261187ce796a053ab8"
+          },
+          {
+            "defined_step_index": 7,
+            "name": "Preserve comparison provenance and all available reports",
+            "uses": "actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4",
+            "if": "always()",
+            "command_sha256": null
+          }
+        ],
+        "artifacts": [
+          {
+            "defined_step_index": 7,
+            "name": "upstream-beta3-${{ matrix.lane }}-source-${{ github.event.workflow_run.id }}-attempt-${{ github.run_attempt }}",
+            "path": "reports/",
+            "if-no-files-found": "warn",
+            "retention-days": "30"
+          }
+        ]
+      }
+    ],
+    "validator": {
+      "VALIDATOR_TAG": "v2.0.0-beta3",
+      "VALIDATOR_COMMIT": "37d6a37bc752606c524f7f3febffc73e0945a740",
+      "VALIDATOR_ASSET": "pluginval_Linux.zip",
+      "VALIDATOR_SHA256": "2e23d311c8c2664457b11be8f6cf4ed29cfdc08765c71c43934a1ed3360f118f",
+      "VALIDATOR_JUCE_TAG": "9.0.3",
+      "VALIDATOR_JUCE_COMMIT": "be29c81492b6151c8ea8d14c840e1311963b3a83",
+      "COMPARISON_WORKFLOW_SHA": "${{ github.workflow_sha }}",
+      "COMPARISON_LANE": "${{ matrix.lane }}",
+      "COMPARISON_SEED": "${{ matrix.seed }}",
+      "SKIP_GUI": "${{ matrix.skip_gui }}",
+      "JUCE_FONT_PATH": "/usr/share/fonts/truetype/dejavu"
+    },
+    "scope": "Separate official beta3 comparison. Report all three outcomes independently; none substitutes for any of the13 stable1.0.4 required validator lanes. Source-only classification does not predeclare its future result.",
+    "source_binding": "Bind reports/provenance.json source_sha, source_run_id, source_run_attempt, and source_artifact ID/size/digest to the actual new native build. workflow_run jobs can execute a default-branch workflow revision different from the binary source; do not assume the comparison run head_sha equals the binary source. Verify comparison_workflow_sha and its workflow bytes independently.",
+    "acceptance": "Require original process/timeout exit0, logging exit0, explicit SUCCESS, nonempty complete results.json with each test passed and zero failed/errors, expected seed/strictness/rate/block settings, no retries, successful producer and artifact upload. Preserve every failed original outcome."
+  },
+  "status_relay": {
+    "workflow": ".github/workflows/ci-evidence.yml",
+    "name": "Publish CI evidence",
+    "sha256": "dde142411bb4cf7a02d5d95f166100bdb81e9120f0b6bd2966a92f8d39b6a8cd",
+    "trigger": {
+      "workflow_run": {
+        "workflows": [
+          "build",
+          "Hardware panel screenshots",
+          "DSP numerical measurements",
+          "Circuit source inspection"
+        ],
+        "types": [
+          "requested",
+          "in_progress",
+          "completed"
+        ]
+      }
+    },
+    "scope": "Mirrors GitHub outcomes into ci/<run-name> statuses; does not run test code and is not independent validation. Bind relayed status target to the exact originating run/source. A stale or failed relay cannot overwrite the actual producing run evidence."
+  },
+  "excluded_or_gated_workflows": [
+    {
+      "path": ".github/workflows/arm-gui-diagnostic.yml",
+      "name": "Frozen ARM GUI assertion diagnostic",
+      "sha256": "85b782ce610f2bba0387883ff41eed120f1b34f800f9ab4ece86e9c401298dc4",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/arm-gui-diagnostic/**",
+            ".github/workflows/arm-gui-diagnostic.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "diagnostic": "github.ref == 'refs/heads/main' && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/circuit-inspection.yml",
+      "name": "Circuit source inspection",
+      "sha256": "405d5a35be5d0ac52b9631b18c5e83ee48bd613609e7232d2a691a4358bc0dc8",
+      "on": {
+        "push": {
+          "paths": [
+            ".github/workflows/circuit-inspection.yml",
+            "scripts/inspect_circuit_sources.py"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "inspect": null
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/draft1x-cpu-study.yml",
+      "name": "Draft1x CPU first research attempt",
+      "sha256": "e852fbbb1aa4f3721b9e3196cd280670ebcb2fd401b2e7a39b5804a8f64e138b",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/draft1x-cpu-study.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "study": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/mac-thread-clock-qualification.yml",
+      "name": "macOS ARM thread clock qualification diagnostic",
+      "sha256": "7dcaf044a5c2c4dc81fbd66974d77bbce1996e1f34820377020cdeecd9849f5a",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/mac-thread-clock-qualification/**",
+            ".github/workflows/mac-thread-clock-qualification.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "qualification": "github.ref == 'refs/heads/main' && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/memo-cost-research.yml",
+      "name": "Fixed qualified memo research (no promotion)",
+      "sha256": "c29ffb908e83b735e9fe2052032cc7c18e286f5b3c7d2179456ee826ec189178",
+      "on": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/memo-cost-research/request.json"
+          ]
+        }
+      },
+      "jobs_if": {
+        "measure": "github.ref == 'refs/heads/main' && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/memo-libm-inspection.yml",
+      "name": "Memo libm inspection only (no timing)",
+      "sha256": "d2efb69b9eead6dd7de74b1338e4b0c1f87f0643f62a7558d8d1c44dfda40ff5",
+      "on": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/memo-libm-inspection/request.json"
+          ]
+        }
+      },
+      "jobs_if": {
+        "inspect": "github.ref == 'refs/heads/main' && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/packed-coefficient-cpu-study.yml",
+      "name": "Packed coefficient CPU first research attempt",
+      "sha256": "1efb71e8a6e291ffc946792ce9a969d076e1d0d0d5e2028d79dd07f40b5bbef2",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/packed-coefficient-cpu-study.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "study": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/packed-filter-plugin-preflight-once.yml",
+      "name": "One-shot packed filter plugin configuration preflight",
+      "sha256": "4ffa7de585892b40c1234efaac34c21e69cca90aaab4587f2d230c5f1d3d5a6b",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            ".github/workflows/packed-filter-plugin-preflight-once.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "configure": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1 && github.ref == 'refs/heads/main' && github.event.before == '31cbfaf7e68ba7efc9360711786205aed421d180'"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/packed-filter-plugin-preflight.yml",
+      "name": "Packed filter plugin configuration preflight",
+      "sha256": "2a63110197bacb1ef58c36c7d2955d9d38372a363a4fb7bbf29de8d5ca58449f",
+      "on": {
+        "workflow_dispatch": {
+          "inputs": {
+            "expected_sha": {
+              "description": "Exact reviewed main commit to configure (40-character SHA)",
+              "required": "true",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "configure": "github.event.repository.private == false && github.run_attempt == 1 && github.ref == 'refs/heads/main'"
+      },
+      "matching_changed_paths": [],
+      "reason": "Manual only; not triggered by this main push."
+    },
+    {
+      "path": ".github/workflows/packed-pan-research.yml",
+      "name": "One-shot packed-pan CPU study",
+      "sha256": "9355e01bf64307ce9a7cefca010fe824990811288ea602cc2293d45bf99f34c4",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/packed-pan-research/**",
+            ".github/workflows/packed-pan-research.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "study": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/pitch-research.yml",
+      "name": "Frozen pitch CPU research (no DSP promotion)",
+      "sha256": "9190b11416b58fad2894921418b0e3bc17122fdf85cc411a9b91cbee2f3cb0e1",
+      "on": {
+        "workflow_dispatch": "",
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/pitch-research/request.json"
+          ]
+        }
+      },
+      "jobs_if": {
+        "research": "github.ref == 'refs/heads/main' && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/production-pic-pgo-preflight.yml",
+      "name": "Production PIC PGO configuration preflight",
+      "sha256": "8b9e4469eb7a5c750d8628d6467118cd963503bb010b1d36451ad266deb23e56",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/production-pic-pgo-research/preflight.py",
+            "tools/production-pic-pgo-research/test_preflight.py",
+            ".github/workflows/production-pic-pgo-preflight.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "configure": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/production-pic-pgo-study-v2.yml",
+      "name": "Corrected v2 production PIC PGO qualification",
+      "sha256": "08e0b2a2ca836fc27bd55776dddc5142c4e43009137bdccfcab20c763ba77a61",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/production-pic-pgo-research/run_v2.py",
+            "tools/production-pic-pgo-research/PROTOCOL-v2.md",
+            ".github/workflows/production-pic-pgo-study-v2.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "qualify": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/production-pic-pgo-study-v3.yml",
+      "name": "Corrected v3 production PIC PGO qualification",
+      "sha256": "c52b24ab7239196029fa2f6ea59d7847fcb25862c145e32fe80928dd70db2571",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/production-pic-pgo-research/run_v3.py",
+            "tools/production-pic-pgo-research/PROTOCOL-v3.md",
+            ".github/workflows/production-pic-pgo-study-v3.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "qualify": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/production-pic-pgo-study.yml",
+      "name": "One-shot production PIC PGO qualification",
+      "sha256": "ee5e6fafb5ba6cd7f8d6ea36a05382f8a012e75e16c2d3b5a9e3bff1ae6921a3",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/production-pic-pgo-research/run.py",
+            "tools/production-pic-pgo-research/production.py",
+            "tools/production-pic-pgo-research/frozen-compiler.json",
+            "tools/production-pic-pgo-research/PROTOCOL.md",
+            ".github/workflows/production-pic-pgo-study.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "qualify": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/publish-preset-refinement.yml",
+      "name": "Publish preset refinement 2026.11.1",
+      "sha256": "617aac1ad5ca64797057b1aca5c311b396e0d31b92157873bed630c278308213",
+      "on": {
+        "workflow_run": {
+          "workflows": [
+            "build"
+          ],
+          "branches": [
+            "main"
+          ],
+          "types": [
+            "completed"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "publish": "github.repository == 'cheshmakzanoon-ops/yamaha-cs80' && (github.event_name == 'workflow_dispatch' ||\n (github.event.workflow_run.id == 45044040694 &&\n  github.event.workflow_run.head_sha == '6d3cc220edef5a4a2c7cd968ea8a786c7c83198c' &&\n  github.event.workflow_run.conclusion == 'success' &&\n  github.event.workflow_run.head_repository.full_name == github.repository))"
+      },
+      "matching_changed_paths": [],
+      "reason": "A workflow_run may be created, but its publish job is pinned to historical run45044040694/source6d3cc220 and must be skipped for this new build. Do not manually dispatch the obsolete publisher."
+    },
+    {
+      "path": ".github/workflows/qualify-linux-deb.yml",
+      "name": "Qualify existing Linux Debian package",
+      "sha256": "1e474b2b5d55244d89411a6eed5234d1d88e59246d74d667050d630f3d851ae7",
+      "on": {
+        "pull_request": {
+          "branches": [
+            "main"
+          ],
+          "types": [
+            "opened",
+            "synchronize",
+            "reopened"
+          ],
+          "paths": [
+            ".github/workflows/qualify-linux-deb.yml",
+            "scripts/qualify-linux-deb.py",
+            "scripts/test-qualify-linux-deb.py"
+          ]
+        },
+        "workflow_dispatch": {
+          "inputs": {
+            "source_run_id": {
+              "description": "Successful first-attempt same-repo push build run ID",
+              "required": "true",
+              "type": "string",
+              "default": "42351562098"
+            },
+            "source_sha": {
+              "description": "Full lowercase commit SHA of that source build",
+              "required": "true",
+              "type": "string",
+              "default": "635ad6e8f24978040b02a4a10e646d7e3c592ce4"
+            }
+          }
+        }
+      },
+      "jobs_if": {
+        "qualify-linux-deb": "github.repository == 'cheshmakzanoon-ops/yamaha-cs80' && github.repository_id == '1436742091' && (github.event_name == 'workflow_dispatch' ||\n (github.event_name == 'pull_request' &&\n  github.event.pull_request.base.ref == 'main' &&\n  github.event.pull_request.base.repo.full_name == github.repository &&\n  github.event.pull_request.base.repo.id == 1436742091 &&\n  github.event.pull_request.head.repo.full_name == github.repository &&\n  github.event.pull_request.head.repo.id == 1436742091 &&\n  github.event.pull_request.head.repo.fork == false))"
+      },
+      "matching_changed_paths": [],
+      "reason": "PR/path or manual trigger only; no new Debian ABI qualification requested or triggered by main push."
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "name": "release packages",
+      "sha256": "de7aae50b14d55519d75b1ec57cf173be1e94758fe5f48e8d4509b1037ee178f",
+      "on": {
+        "workflow_dispatch": "",
+        "push": {
+          "tags": [
+            "v*"
+          ]
+        }
+      },
+      "jobs_if": {
+        "macos-universal": null,
+        "windows-installer": null,
+        "linux-packages": null
+      },
+      "matching_changed_paths": [],
+      "reason": "Tag v* or manual trigger only; this task publishes CI installation bundles from main, not this signing/notarization installer workflow."
+    },
+    {
+      "path": ".github/workflows/shared-q-hoist-research.yml",
+      "name": "One-shot shared-Q CPU study",
+      "sha256": "dee68ae2cc29188256c33d97aa3a8300837e46c1ed457592827dda6060c6b777",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/shared-q-hoist-research/**",
+            ".github/workflows/shared-q-hoist-research.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "study": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/strict-pgo-research.yml",
+      "name": "One-shot strict Engine PGO study",
+      "sha256": "00f049773acc24bb924d4cd6dd8aeb0ce3f0921a16e6350fba641a569c540776",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/strict-pgo-research/**",
+            ".github/workflows/strict-pgo-research.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "study": "github.event.repository.private == false && github.run_number == 1 && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/validator-6c560f1-diagnostic.yml",
+      "name": "Linux validator artifact diagnostic (6c560f1)",
+      "sha256": "37830464acbb235fb6b07e3b01ebc361a3662f8c6610c9dc0315988f1686d22c",
+      "on": {
+        "workflow_dispatch": "",
+        "push": {
+          "paths": [
+            ".github/workflows/validator-6c560f1-diagnostic.yml"
+          ]
+        }
+      },
+      "jobs_if": {
+        "diagnose": null
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/vst3-concurrency-research.yml",
+      "name": "Frozen VST3 concurrency diagnostic",
+      "sha256": "47f693252b3f0e4394964be8cf721f7a715a119b81114c845573b956998acb7f",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/vst3-concurrency-research/**",
+            ".github/workflows/vst3-concurrency-research.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "diagnostic": "github.ref == 'refs/heads/main' && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    },
+    {
+      "path": ".github/workflows/vst3-ctest-research.yml",
+      "name": "Frozen full-suite CTest scheduling diagnostic",
+      "sha256": "4df492e33c5e8b531fad5c70cbbb91276d8d871d074e5ec924b211458e10ce27",
+      "on": {
+        "push": {
+          "branches": [
+            "main"
+          ],
+          "paths": [
+            "tools/vst3-ctest-research/**",
+            ".github/workflows/vst3-ctest-research.yml"
+          ]
+        },
+        "workflow_dispatch": ""
+      },
+      "jobs_if": {
+        "diagnostic": "github.ref == 'refs/heads/main' && github.run_attempt == 1"
+      },
+      "matching_changed_paths": [],
+      "reason": "Changed files do not match its push path filter; frozen research/diagnostic or separate source-inspection scope."
+    }
+  ],
+  "qualification_invariants": [
+    "Discover actual runs by exact source SHA, repository and trusted workflow path, then require correct event/main branch and successful final run/attempt. Paginate API lists and retain unfiltered records so absence/truncation cannot look like completion.",
+    "For every mandatory job require successful original test/measure/compatibility/producer steps; artifact existence and an always-upload step alone never qualify a failed producer.",
+    "Use the final source workflow bytes for each job map. If source or workflow changes, refresh this plan rather than carrying old hashes or outcomes forward.",
+    "Preserve actual failures, cancellations and attempts; do not silently treat a rerun or newer source as evidence for an older source.",
+    "Counts from supporting workflows remain separate from native CTest totals, direct-model assertion counts and the13 stable validator lanes.",
+    "No numerical, synthetic or byte-compatibility fixture establishes hardware/acoustic equivalence."
+  ],
+  "dsp_provenance": {
+    "new_filter_header_in_both_capture_manifests": true,
+    "filter_path": "src/core/InstrumentBodyFilter.h",
+    "filter_sha256": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "actual_archive_checks": [
+      "Require source/run/analog_evidence:false in provenance.json.",
+      "Inspect actual SOURCE_SHA256SUMS against git-show source bytes for every listed file, including the new filter, Engine, body and200-parameter definitions.",
+      "Verify BINARY_SHA256SUMS and all archive SHA256SUMS, raw CSVs, capture fixture identity and recorded build environment.",
+      "Require measured numerical regression bounds and parity-capture producer tests to pass."
+    ],
+    "compatibility_baselines": {
+      "legacy": "d56911a7c5f6953cd244457226b126cc567a538b",
+      "source_circuit_v1": "22d6a32c48c85f9b813506edcd856f73f4293c2d",
+      "source_audio_v2": "00ceccfacb3cb9845436701da01c4387d53a361a"
+    },
+    "compatibility_boundary": "These immutable baselines deliberately test old default-off corpus and seven-tone source circuit/audio compatibility. They are not the newly reprogrammed factory bank and must not be described as all new presets sounding unchanged.",
+    "sanitizer_contract": {
+      "job": "sanitizers",
+      "timeout_minutes": 75,
+      "flags": "-fsanitize=address,undefined -fno-omit-frame-pointer",
+      "ASAN_OPTIONS": "detect_leaks=1:halt_on_error=1",
+      "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1",
+      "ctest_parallel": 2,
+      "note": "Actual CI enables leak scanning; the local ptrace-limited direct-header sanitizer report is separate and cannot substitute for this full job.",
+      "result_accounting": "Require a nonempty current-source complete CTest inventory; record registered/passed/failed/formal-skipped counts and individual skips from original logs. Report nested Python skips separately. An exit-zero empty or truncated log is insufficient."
+    }
+  },
+  "filter_batch_contract": {
+    "compilers": [
+      "g++",
+      "clang++"
+    ],
+    "settings": [
+      "DEFAULT",
+      "ON",
+      "OFF"
+    ],
+    "expanded_jobs": 6,
+    "default_expected": "ON",
+    "tests": [
+      "cs80_ig00156_batch_tests",
+      "cs80_filter_batch_engine_tests",
+      "cs80_filter_batch_scheduling_tests",
+      "cs80_filter_batch_admission_tests"
+    ],
+    "artifact_policy": "No dedicated upload in this workflow. Retain actual job API/logs and original CTest outcomes for all six matrix jobs."
+  },
+  "screenshot_contract": {
+    "artifact": "cs80-panel-${SOURCE_SHA}",
+    "required": "Core check plus actual-editor --self-test must succeed; inspect screenshot provenance/source/run and PNG checksums. Failed capture artifacts remain failed evidence.",
+    "possible_main_write": "Refresh repository screenshots compares origin/main with the triggering GITHUB_SHA. It may commit only docs/screenshots with message docs: refresh verified panel screenshots [skip ci] when source is still the head.",
+    "descendant_acceptance": [
+      "Fetch and preserve the bot commit; verify its parent is the exact binary source and every changed path is under docs/screenshots.",
+      "Verify checked-in provenance names the triggering source/run and SHA256SUMS agree with PNGs.",
+      "If main moved first, an artifacts-only outcome is allowed; do not force or rewrite the branch.",
+      "A docs-only screenshot descendant does not change the accepted binary source. Final documentation publication must preserve that ancestry."
+    ]
+  },
+  "actual_followup_inputs": [
+    "Exact published source SHA and tree",
+    "Native build run ID/attempt",
+    "Actual current-source supporting run list",
+    "Downloaded artifact API objects/ZIP bytes or verified materialization references"
+  ],
+  "validation_performed": {
+    "workflow_yaml_files_parsed": 29,
+    "mandatory_main_push_supporting_workflows": 3,
+    "direct_expanded_jobs": 12,
+    "downstream_comparison_jobs": 3,
+    "unexpected_nonassigned_push_path_matches": 0,
+    "new_filter_manifest_presence_asserted": true,
+    "network_or_api_calls": 0,
+    "shared_builds": 0,
+    "production_edits": 0
+  },
+  "limitations": [
+    "Readiness plan only: all current-source execution, archive and screenshot publication facts remain pending.",
+    "Changed-path snapshot contains current tracked edits plus the known new filter header; re-evaluate if parent adds changes to excluded workflow/request paths.",
+    "No historical2026.11.3 counts/outcomes are copied into current qualification."
+  ]
+}

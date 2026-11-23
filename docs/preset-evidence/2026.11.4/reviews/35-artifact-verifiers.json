@@ -1,0 +1,224 @@
+{
+  "schema": 1,
+  "worker": 35,
+  "task": "artifact_verifier_review",
+  "status": "verifier_checks_passed_artifacts_pending",
+  "scope": "Review the new 2026.11.4 acceptance scripts, preserving strict archive, source, run and payload gates. No new native artifact was downloaded or qualified by this worker.",
+  "findings": [
+    {
+      "severity": "release_tool_defect",
+      "found_by": "root",
+      "file": "ci/verification-tools/verify-validator-payload.py",
+      "problem": "The copied payload verifier and its positive fixtures still expected library revision 2026.11.3, so the fresh 2026.11.4 package would be rejected.",
+      "correction": "Use a single REVISION='2026.11.4' constant for current fixtures and acceptance. Add Linux and Windows previous-revision fixtures with coherent checksums and API digests, which must fail the revision contract."
+    }
+  ],
+  "comparison_to_previous_tools": {
+    "install_artifact": "Only expected revision changed from 2026.11.3 to 2026.11.4.",
+    "validator_payload": "Expected revision centralized and updated; previous-revision rejections added. All earlier 22 rejection cases and three positive fixtures pass. Complete bundle identity, topology, symbolic link and exact Windows compiler-sidecar constraints remain.",
+    "audition_zip": "Expected revision, count/duration/folder constants, and appended parameter assertions changed. Source-bound producer roster loading, complete member checksums, source/run/attempt identity, inventory-to-metric digests and actual WAV measurements retained.",
+    "weakening_found": false
+  },
+  "commands": [
+    {
+      "command": "python3 docs/preset-evidence/2026.11.4/ci/verification-tools/verify-install-artifact.py --self-test",
+      "exit_code": 0,
+      "result": {
+        "positive_target_fixtures": 4,
+        "rejected_mutations": 8,
+        "scope": "Four platform targets; each bad API digest and internally consistent wrong-CPU payload rejected. Inert header-only fixtures, not real products."
+      }
+    },
+    {
+      "command": "python3 docs/preset-evidence/2026.11.4/ci/verification-tools/verify-validator-payload.py --self-test",
+      "exit_code": 0,
+      "result": {
+        "status": "synthetic_fixture_checks_passed",
+        "positive_platform_fixtures": 3,
+        "rejected_mutations": [
+          {
+            "platform": "linux",
+            "mutation": "previous-library-revision"
+          },
+          {
+            "platform": "linux",
+            "mutation": "changed-binary"
+          },
+          {
+            "platform": "linux",
+            "mutation": "missing-resource"
+          },
+          {
+            "platform": "linux",
+            "mutation": "extra-resource"
+          },
+          {
+            "platform": "linux",
+            "mutation": "unsafe-path"
+          },
+          {
+            "platform": "linux",
+            "mutation": "changed-link"
+          },
+          {
+            "platform": "linux",
+            "mutation": "windows-sidecars-on-linux"
+          },
+          {
+            "platform": "windows",
+            "mutation": "previous-library-revision"
+          },
+          {
+            "platform": "windows",
+            "mutation": "changed-binary"
+          },
+          {
+            "platform": "windows",
+            "mutation": "missing-resource"
+          },
+          {
+            "platform": "windows",
+            "mutation": "extra-resource"
+          },
+          {
+            "platform": "windows",
+            "mutation": "unsafe-path"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "changed-binary"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "missing-resource"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "extra-resource"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "inside-bundle-sidecar"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "unknown-sidecar"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "other-export-basename"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "bad-exp-format"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "bad-lib-format"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "missing-sidecar"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "wrong-consumer-artifact"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "wrong-consumer-target"
+          },
+          {
+            "platform": "windows",
+            "with_compiler_sidecars": true,
+            "mutation": "missing-consumer-log"
+          }
+        ],
+        "scope": "Inert Windows/Linux header fixtures with resources and a Linux symbolic link, plus the Windows compiler-sidecar container boundary with source workflow and fixture consumer log. Mutated validator ZIPs receive correct updated API digests; strict bundle equality and sidecar exclusions are tested independently of download integrity."
+      }
+    },
+    {
+      "command": "python3 /workspace/scratch/a9592b052b11/a35/review-probe.py",
+      "exit_code": 0,
+      "result": {
+        "stale_revision_checker_mutation_detected": "Accepted the previous library revision",
+        "source_roster": {
+          "wav_count": 138,
+          "selected_program_count": 74,
+          "audio_seconds": 870,
+          "group_count": 30
+        },
+        "inventory_parameter_count": 200,
+        "inventory_program_count": 523,
+        "parameter_prefix_preserved": true,
+        "wav_fixture_positive": {
+          "frames": 2,
+          "seconds": 0.000041666666666666665,
+          "peak": 0.5,
+          "peak_dbfs": -6.020599913279624,
+          "rms_dbfs": -11.072099696478684,
+          "nonfinite_samples": 0,
+          "samples_over_full_scale": 0
+        },
+        "wav_fixture_rejections": {
+          "nonfinite_sample": "Nonfinite float WAV sample",
+          "over_full_scale": "Float WAV sample exceeds full scale",
+          "wrong_sample_rate": "Expected 48 kHz stereo 32-bit IEEE float",
+          "wrong_fact_count": "fact frame count differs from requested duration",
+          "wrong_actual_frame_count": "Actual audio frame count differs from requested duration",
+          "truncated_container": "RIFF size differs from actual bytes"
+        },
+        "scope": "Synthetic inert WAV and archive fixtures, source roster, and development inventory. No new downloadable artifact was available or qualified."
+      },
+      "probe_source": "#!/usr/bin/env python3\n\"\"\"Read-only verifier boundary/roster probe; no actual products qualified.\"\"\"\nimport importlib.util\nimport json\nfrom pathlib import Path\nimport struct\n\nREPO = Path('/workspace/scratch/a9592b052b11/cs80-work')\nTOOLS = REPO / 'docs/preset-evidence/2026.11.4/ci/verification-tools'\n\ndef load(name, path):\n    spec = importlib.util.spec_from_file_location(name, path)\n    module = importlib.util.module_from_spec(spec)\n    spec.loader.exec_module(module)\n    return module\n\npayload = load('a35_payload', TOOLS / 'verify-validator-payload.py')\npayload.REVISION = '2026.11.3'\ntry:\n    payload.self_test()\nexcept ValueError as error:\n    assert str(error) == 'Accepted the previous library revision', str(error)\n    stale_revision_mutation = str(error)\nelse:\n    raise AssertionError('Revision-drift mutation escaped the regression')\n\naudition = load('a35_audition', TOOLS / 'verify-audition-zip.py')\nproducer = load('a35_producer', REPO / 'scripts/capture-factory-auditions.py')\ngroups = producer.selections()\nsummary = producer.roster_summary(groups)\nassert summary == {'wav_count': 138, 'selected_program_count': 74, 'audio_seconds': 870}\nassert len(groups) == 30\ninventory = json.loads((REPO / 'docs/preset-evidence/2026.11.4/development/final-bank/inventory.json').read_text())\nbaseline = json.loads((REPO / 'docs/preset-evidence/2026.11.4/baseline/inventory.json').read_text())\nassert inventory['parameter_ids'] == baseline['parameter_ids'] + ['body1_size', 'body2_size']\nassert len(inventory['parameter_ids']) == 200\nassert len(inventory['programs']) == 523\nassert all(len(p['values']) == 200 for p in inventory['programs'])\nassert set(n for g in groups for n in g['names']) <= set(p['name'] for p in inventory['programs'])\n\ndef wav(samples=(0.0, 0.0, 0.25, -0.5), frames=2, rate=48000, fact=2):\n    chunks = []\n    for kind, value in ((b'fmt ', struct.pack('<HHIIHHH', 3, 2, rate, rate * 8, 8, 32, 0)),\n                        (b'fact', struct.pack('<I', fact)),\n                        (b'data', struct.pack('<' + 'f' * len(samples), *samples))):\n        chunks.append(struct.pack('<4sI', kind, len(value)) + value)\n    data = b'WAVE' + b''.join(chunks)\n    return b'RIFF' + struct.pack('<I', len(data)) + data\n\nvalid = audition.inspect_wav(wav(), 2)\nassert valid['frames'] == 2 and valid['peak'] == 0.5\nmutations = {\n    'nonfinite_sample': wav(samples=(0, float('nan'), 0.25, -0.5)),\n    'over_full_scale': wav(samples=(0, 0, 1.01, 0)),\n    'wrong_sample_rate': wav(rate=44100),\n    'wrong_fact_count': wav(fact=3),\n    'wrong_actual_frame_count': wav(samples=(0, 0, 0, 0, 0, 0)),\n    'truncated_container': wav()[:-1],\n}\nrejected = {}\nfor label, data in mutations.items():\n    try:\n        audition.inspect_wav(data, 2)\n    except ValueError as error:\n        rejected[label] = str(error)\n    else:\n        raise AssertionError('Accepted WAV mutation: ' + label)\n\nprint(json.dumps({\n    'stale_revision_checker_mutation_detected': stale_revision_mutation,\n    'source_roster': dict(summary, group_count=len(groups)),\n    'inventory_parameter_count': len(inventory['parameter_ids']),\n    'inventory_program_count': len(inventory['programs']),\n    'parameter_prefix_preserved': True,\n    'wav_fixture_positive': valid,\n    'wav_fixture_rejections': rejected,\n    'scope': 'Synthetic inert WAV and archive fixtures, source roster, and development inventory. No new downloadable artifact was available or qualified.'\n}, indent=2))\n",
+      "probe_sha256": "69d6a7848eb8f0fe0647008a5dac08e63b891cfddee551eeb6986f099fe25ce6"
+    }
+  ],
+  "reviewed_tools": [
+    {
+      "file": "verify-install-artifact.py",
+      "copied_from": "docs/preset-evidence/2026.11.3/ci/verification-tools/verify-install-artifact.py",
+      "before_sha256": "ea347dfabbbd3a7b87dd21a616f870da92a115769b29f198f9e28bafbca2c062",
+      "sha256": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+      "change": "Expected revision 2026.11.4; all byte, API, manifest and architecture checks preserved."
+    },
+    {
+      "file": "verify-validator-payload.py",
+      "copied_from": "docs/preset-evidence/2026.11.3/ci/verification-tools/verify-validator-payload.py",
+      "before_sha256": "b4eba4fb433492d3912a9a3ee2cca7a4c86c37d0b9d1aa3283734f4dcc5c0330",
+      "sha256": "7afd80e3a3aabd9b49d1573987f0a27408ea1a4e09a25b7543ffc6518a2a3dcd",
+      "change": "Expected revision centralized at 2026.11.4; two coherent old-revision negative fixtures added. Existing byte, source, run, topology and Windows compiler-sidecar checks retained."
+    },
+    {
+      "file": "verify-audition-zip.py",
+      "copied_from": "docs/preset-evidence/2026.11.3/ci/verification-tools/verify-audition-zip.py",
+      "before_sha256": "32514c1dec151af41a873a426b67f2fe7b67fe5533de1e1a9c42851d74b814a9",
+      "sha256": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62",
+      "change": "Revision2026.11.4,138WAV/74program/870s/30folder roster,200parameters including final2sizeIDs; byte/float/source/manifest checks retained."
+    }
+  ],
+  "development_inventory_sha256": "d095b78bbade6c48d90b48bcc0d26008d99046c5521b0d1766023fbfd6869b81",
+  "binding_review": {
+    "installation": "API ID/name/expiry/size/digest/source/run; exact source packaging/checker scripts; complete nested inventory/checksums; source text; JUCE revision and clean provenance; native architecture headers. Four target variants.",
+    "validator_payload": "Both artifact API identities; complete packaged and validator-input VST3 byte/topology maps; Windows .exp/.lib exceptions require exact known pair and native COFF formats plus source workflow and original consumer log binding.",
+    "auditions": "Exact git source tree and producer script supply roster; complete manifest/checksum/member inventory; source/run/attempt and tracked-clean flags; 523 programs/200 core IDs; 138 actual stereo IEEE-float WAVs covering 74 programs and 870 seconds in 30 groups; frame counts, finite/full-scale samples, level parity, and all 19 active models.",
+    "remaining_parent_checks": "Producer/upload steps, attempt identity, complete native test outcomes, validator successful exits, artifact API identity/expiry and source commit must still be checked against the real run. Audition CLI accepts expected ZIP digest, so parent must separately bind its API artifact ID/name/run/size."
+  },
+  "limitations": [
+    "Synthetic header and WAV fixtures are inert and do not demonstrate a native build or a host validation pass.",
+    "The full audition ZIP checker was reviewed but not run against a new full artifact because the source commit/build has not yet been published.",
+    "The development inventory is pinned as reviewed evidence; subsequent recipe correction requires final delivered-inventory comparison.",
+    "No numerical check is an acoustic-equivalence or perceptual quality claim."
+  ]
+}

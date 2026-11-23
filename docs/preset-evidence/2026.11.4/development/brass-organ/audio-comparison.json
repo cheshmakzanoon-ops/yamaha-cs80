@@ -1,0 +1,497 @@
+{
+  "evidence": "A11 development renders including shared DSP changes; spectra/behavior are not acoustic-similarity scores. Full release build qualification remains separate.",
+  "matched_fixtures": {
+    "rate": 48000,
+    "velocity": 0.8,
+    "pressure": 0,
+    "hold": 3,
+    "tail": 1,
+    "note": "category default"
+  },
+  "selected_programs": 46,
+  "unique_render_conditions": 72,
+  "all46_finite_no_full_scale_samples": true,
+  "organ_velocity_comparisons": [
+    {
+      "name": "Flute Organ 8+4",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Flute Organ 16+8",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Percussive Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Reed Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Church Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Chapel Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Theatre Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Tremolo Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Mellow Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Bright Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Pipe Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Combo Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Fifth Organ",
+      "soft_firm_wav_bit_identical": true
+    },
+    {
+      "name": "Organ Vibrato",
+      "soft_firm_wav_bit_identical": true
+    }
+  ],
+  "brass_dynamic_comparisons": [
+    {
+      "name": "Horn Section",
+      "firm_minus_soft_rms_db": 3.424989530000005,
+      "pressure_minus_zero_rms_db": 1.6916254499999965,
+      "soft_centroid_hz": 397.1984101,
+      "firm_centroid_hz": 497.6951081,
+      "pressure_centroid_hz": 526.0386376
+    },
+    {
+      "name": "Covered Horn",
+      "firm_minus_soft_rms_db": 3.273061900000002,
+      "pressure_minus_zero_rms_db": 3.2472159499999975,
+      "soft_centroid_hz": 393.03879,
+      "firm_centroid_hz": 514.8224187,
+      "pressure_centroid_hz": 447.7127409
+    },
+    {
+      "name": "Muted Trumpet",
+      "firm_minus_soft_rms_db": 4.1169072300000025,
+      "pressure_minus_zero_rms_db": 2.0585570900000008,
+      "soft_centroid_hz": 762.769721,
+      "firm_centroid_hz": 1045.943352,
+      "pressure_centroid_hz": 1094.334937
+    },
+    {
+      "name": "Trombone Glide",
+      "firm_minus_soft_rms_db": 3.4031947000000002,
+      "pressure_minus_zero_rms_db": 1.8467738400000044,
+      "soft_centroid_hz": 203.6204391,
+      "firm_centroid_hz": 271.5515749,
+      "pressure_centroid_hz": 285.9128873
+    },
+    {
+      "name": "Low Brass",
+      "firm_minus_soft_rms_db": 3.953159029999995,
+      "pressure_minus_zero_rms_db": 2.031099900000001,
+      "soft_centroid_hz": 218.0917652,
+      "firm_centroid_hz": 305.7593708,
+      "pressure_centroid_hz": 315.2687663
+    },
+    {
+      "name": "Tuba",
+      "firm_minus_soft_rms_db": 4.149785510000001,
+      "pressure_minus_zero_rms_db": 2.2384258700000004,
+      "soft_centroid_hz": 176.399684,
+      "firm_centroid_hz": 233.0527556,
+      "pressure_centroid_hz": 239.7628645
+    }
+  ],
+  "matched_before_after": [
+    {
+      "name": "Brass Swell I",
+      "peak_dbfs": -22.78967751,
+      "body_rms_dbfs": -34.38179073,
+      "body_rms_change_db": 1.5432891499999997,
+      "before_centroid_hz": 529.4556932,
+      "after_centroid_hz": 593.5363533
+    },
+    {
+      "name": "Brass Swell II",
+      "peak_dbfs": -24.600929,
+      "body_rms_dbfs": -37.57572893,
+      "body_rms_change_db": -4.200348419999997,
+      "before_centroid_hz": 373.6091203,
+      "after_centroid_hz": 513.0273303
+    },
+    {
+      "name": "Pressure Swell Brass",
+      "peak_dbfs": -42.57544029,
+      "body_rms_dbfs": -52.44059159,
+      "body_rms_change_db": -5.631138749999998,
+      "before_centroid_hz": 362.9731538,
+      "after_centroid_hz": 562.1621272
+    },
+    {
+      "name": "Resonant Swell Brass",
+      "peak_dbfs": -18.198989,
+      "body_rms_dbfs": -29.17070997,
+      "body_rms_change_db": -1.7403593700000002,
+      "before_centroid_hz": 407.7033053,
+      "after_centroid_hz": 410.879855
+    },
+    {
+      "name": "Noir Swell Brass",
+      "peak_dbfs": -16.76931226,
+      "body_rms_dbfs": -30.26226852,
+      "body_rms_change_db": -3.306266909999998,
+      "before_centroid_hz": 378.3250245,
+      "after_centroid_hz": 393.7743172
+    },
+    {
+      "name": "Sforzando Brass",
+      "peak_dbfs": -28.89013067,
+      "body_rms_dbfs": -50.3812269,
+      "body_rms_change_db": -3.1882106700000037,
+      "before_centroid_hz": 978.2925682,
+      "after_centroid_hz": 1346.706313
+    },
+    {
+      "name": "Brass Stab",
+      "peak_dbfs": -22.54262614,
+      "body_rms_dbfs": -102.5273307,
+      "body_rms_change_db": 0.0,
+      "before_centroid_hz": 1033.568847,
+      "after_centroid_hz": 1357.879532
+    },
+    {
+      "name": "Horn Section",
+      "peak_dbfs": -26.63716461,
+      "body_rms_dbfs": -36.8857126,
+      "body_rms_change_db": 1.5150026100000034,
+      "before_centroid_hz": 477.4481253,
+      "after_centroid_hz": 497.6951081
+    },
+    {
+      "name": "Covered Horn",
+      "peak_dbfs": -28.99748646,
+      "body_rms_dbfs": -36.49846651,
+      "body_rms_change_db": 3.6076599000000016,
+      "before_centroid_hz": 502.8304121,
+      "after_centroid_hz": 514.8224187
+    },
+    {
+      "name": "Muted Trumpet",
+      "peak_dbfs": -26.4791672,
+      "body_rms_dbfs": -39.7171569,
+      "body_rms_change_db": -1.2674679300000022,
+      "before_centroid_hz": 1015.746916,
+      "after_centroid_hz": 1045.943352
+    },
+    {
+      "name": "Trombone Glide",
+      "peak_dbfs": -25.99602608,
+      "body_rms_dbfs": -35.46025456,
+      "body_rms_change_db": 3.984527739999997,
+      "before_centroid_hz": 227.0958512,
+      "after_centroid_hz": 271.5515749
+    },
+    {
+      "name": "Fanfare Brass",
+      "peak_dbfs": -26.38144198,
+      "body_rms_dbfs": -41.18136998,
+      "body_rms_change_db": -3.5622993599999973,
+      "before_centroid_hz": 1079.028276,
+      "after_centroid_hz": 1240.165395
+    },
+    {
+      "name": "Brass Ensemble 16",
+      "peak_dbfs": -26.11830114,
+      "body_rms_dbfs": -37.97864007,
+      "body_rms_change_db": 0.31821154000000007,
+      "before_centroid_hz": 353.8865442,
+      "after_centroid_hz": 505.7159974
+    },
+    {
+      "name": "Low Brass",
+      "peak_dbfs": -26.81660606,
+      "body_rms_dbfs": -37.90407555,
+      "body_rms_change_db": 2.268941179999999,
+      "before_centroid_hz": 232.8499838,
+      "after_centroid_hz": 305.7593708
+    },
+    {
+      "name": "Velvet Brass",
+      "peak_dbfs": -22.23250581,
+      "body_rms_dbfs": -30.11486457,
+      "body_rms_change_db": 1.0167169399999985,
+      "before_centroid_hz": 291.5483092,
+      "after_centroid_hz": 330.1682706
+    },
+    {
+      "name": "Bright Brass Poly",
+      "peak_dbfs": -17.7952766,
+      "body_rms_dbfs": -28.19135903,
+      "body_rms_change_db": 1.5913767099999987,
+      "before_centroid_hz": 451.3384375,
+      "after_centroid_hz": 606.3492186
+    },
+    {
+      "name": "Brass Pad Swell",
+      "peak_dbfs": -20.78015238,
+      "body_rms_dbfs": -32.30063077,
+      "body_rms_change_db": -2.2267161999999985,
+      "before_centroid_hz": 407.8175325,
+      "after_centroid_hz": 491.9493309
+    },
+    {
+      "name": "Fifth Brass",
+      "peak_dbfs": -26.76506778,
+      "body_rms_dbfs": -38.32416487,
+      "body_rms_change_db": -3.75360388,
+      "before_centroid_hz": 604.2689622,
+      "after_centroid_hz": 993.6282741
+    },
+    {
+      "name": "Wah Brass",
+      "peak_dbfs": -18.97624514,
+      "body_rms_dbfs": -26.73137245,
+      "body_rms_change_db": 4.662483950000002,
+      "before_centroid_hz": 393.4496826,
+      "after_centroid_hz": 394.9094626
+    },
+    {
+      "name": "Synth Horns",
+      "peak_dbfs": -17.61204083,
+      "body_rms_dbfs": -27.83696969,
+      "body_rms_change_db": 2.7319457400000005,
+      "before_centroid_hz": 449.6736362,
+      "after_centroid_hz": 415.8201821
+    },
+    {
+      "name": "Brass Bite",
+      "peak_dbfs": -18.52190478,
+      "body_rms_dbfs": -27.77040866,
+      "body_rms_change_db": 1.597283449999999,
+      "before_centroid_hz": 391.7329723,
+      "after_centroid_hz": 535.9840162
+    },
+    {
+      "name": "Distant Brass",
+      "peak_dbfs": -25.4525169,
+      "body_rms_dbfs": -35.67962175,
+      "body_rms_change_db": -1.4776478700000055,
+      "before_centroid_hz": 303.2212359,
+      "after_centroid_hz": 367.7009128
+    },
+    {
+      "name": "Brass Crescendo",
+      "peak_dbfs": -24.83470811,
+      "body_rms_dbfs": -38.16805239,
+      "body_rms_change_db": -5.039280040000001,
+      "before_centroid_hz": 544.0984295,
+      "after_centroid_hz": 828.4213054
+    },
+    {
+      "name": "Cuivre Brass",
+      "peak_dbfs": -25.94360705,
+      "body_rms_dbfs": -39.59730527,
+      "body_rms_change_db": 1.9208145099999996,
+      "before_centroid_hz": 622.7492711,
+      "after_centroid_hz": 646.7356731
+    },
+    {
+      "name": "Tuba",
+      "peak_dbfs": -26.59936122,
+      "body_rms_dbfs": -34.39542927,
+      "body_rms_change_db": 4.599017490000001,
+      "before_centroid_hz": 184.8175105,
+      "after_centroid_hz": 233.0527556
+    },
+    {
+      "name": "Brass Octaves",
+      "peak_dbfs": -27.54738521,
+      "body_rms_dbfs": -39.52916448,
+      "body_rms_change_db": -3.6398815900000017,
+      "before_centroid_hz": 582.3127911,
+      "after_centroid_hz": 1254.263278
+    },
+    {
+      "name": "Swell And Fall",
+      "peak_dbfs": -22.30391194,
+      "body_rms_dbfs": -35.97000366,
+      "body_rms_change_db": -4.608083450000002,
+      "before_centroid_hz": 494.1116303,
+      "after_centroid_hz": 572.0798611
+    },
+    {
+      "name": "Reed Brass",
+      "peak_dbfs": -24.89656534,
+      "body_rms_dbfs": -39.63407661,
+      "body_rms_change_db": -4.903418110000004,
+      "before_centroid_hz": 724.2844049,
+      "after_centroid_hz": 1032.902363
+    },
+    {
+      "name": "Brass Glide Lead",
+      "peak_dbfs": -23.61365452,
+      "body_rms_dbfs": -36.37901926,
+      "body_rms_change_db": -4.5375306,
+      "before_centroid_hz": 447.0172366,
+      "after_centroid_hz": 737.5810209
+    },
+    {
+      "name": "Tremolo Brass",
+      "peak_dbfs": -21.52643349,
+      "body_rms_dbfs": -35.51805396,
+      "body_rms_change_db": -7.675410150000005,
+      "before_centroid_hz": 378.8936722,
+      "after_centroid_hz": 415.309552
+    },
+    {
+      "name": "Contour Brass",
+      "peak_dbfs": -27.59746786,
+      "body_rms_dbfs": -38.50849519,
+      "body_rms_change_db": -2.23388061,
+      "before_centroid_hz": 412.4164839,
+      "after_centroid_hz": 706.3984752
+    },
+    {
+      "name": "Ring Breath Brass",
+      "peak_dbfs": -23.44342865,
+      "body_rms_dbfs": -36.18284575,
+      "body_rms_change_db": -1.9938524399999977,
+      "before_centroid_hz": 356.24469,
+      "after_centroid_hz": 559.3986932
+    },
+    {
+      "name": "Flute Organ 8+4",
+      "peak_dbfs": -27.7310914,
+      "body_rms_dbfs": -35.88427472,
+      "body_rms_change_db": -1.22622638,
+      "before_centroid_hz": 421.6717077,
+      "after_centroid_hz": 418.5088949
+    },
+    {
+      "name": "Flute Organ 16+8",
+      "peak_dbfs": -28.32834405,
+      "body_rms_dbfs": -34.96314762,
+      "body_rms_change_db": -1.61827203,
+      "before_centroid_hz": 233.778656,
+      "after_centroid_hz": 241.1404808
+    },
+    {
+      "name": "Percussive Organ",
+      "peak_dbfs": -19.92482773,
+      "body_rms_dbfs": -26.10334279,
+      "body_rms_change_db": 0.291035260000001,
+      "before_centroid_hz": 296.6145338,
+      "after_centroid_hz": 291.4303135
+    },
+    {
+      "name": "Reed Organ",
+      "peak_dbfs": -23.32062022,
+      "body_rms_dbfs": -30.79439432,
+      "body_rms_change_db": 0.07619471000000289,
+      "before_centroid_hz": 346.9239549,
+      "after_centroid_hz": 388.8181517
+    },
+    {
+      "name": "Church Organ",
+      "peak_dbfs": -26.81259471,
+      "body_rms_dbfs": -35.48821352,
+      "body_rms_change_db": 0.1145432900000003,
+      "before_centroid_hz": 414.720978,
+      "after_centroid_hz": 330.4158017
+    },
+    {
+      "name": "Chapel Organ",
+      "peak_dbfs": -30.26857818,
+      "body_rms_dbfs": -36.95775732,
+      "body_rms_change_db": 0.024828320000004567,
+      "before_centroid_hz": 604.8817985,
+      "after_centroid_hz": 436.5055647
+    },
+    {
+      "name": "Theatre Organ",
+      "peak_dbfs": -28.24394241,
+      "body_rms_dbfs": -37.92690858,
+      "body_rms_change_db": -2.1251829700000044,
+      "before_centroid_hz": 520.8288071,
+      "after_centroid_hz": 572.3814416
+    },
+    {
+      "name": "Tremolo Organ",
+      "peak_dbfs": -27.01702352,
+      "body_rms_dbfs": -36.01869324,
+      "body_rms_change_db": -2.3925422999999952,
+      "before_centroid_hz": 294.0160335,
+      "after_centroid_hz": 328.2157828
+    },
+    {
+      "name": "Mellow Organ",
+      "peak_dbfs": -29.03133603,
+      "body_rms_dbfs": -34.32332627,
+      "body_rms_change_db": -0.08701535000000149,
+      "before_centroid_hz": 294.8027455,
+      "after_centroid_hz": 285.838403
+    },
+    {
+      "name": "Bright Organ",
+      "peak_dbfs": -26.85719375,
+      "body_rms_dbfs": -36.11274031,
+      "body_rms_change_db": 0.28988499999999817,
+      "before_centroid_hz": 835.4810882,
+      "after_centroid_hz": 717.698705
+    },
+    {
+      "name": "Pipe Organ",
+      "peak_dbfs": -28.11768563,
+      "body_rms_dbfs": -34.6161244,
+      "body_rms_change_db": -0.1895857899999953,
+      "before_centroid_hz": 297.3769295,
+      "after_centroid_hz": 283.1460392
+    },
+    {
+      "name": "Combo Organ",
+      "peak_dbfs": -16.82689221,
+      "body_rms_dbfs": -23.1453338,
+      "body_rms_change_db": 1.0734832800000014,
+      "before_centroid_hz": 457.0344903,
+      "after_centroid_hz": 428.9328928
+    },
+    {
+      "name": "Fifth Organ",
+      "peak_dbfs": -27.09825941,
+      "body_rms_dbfs": -34.59101814,
+      "body_rms_change_db": -1.2094911300000035,
+      "before_centroid_hz": 325.9087474,
+      "after_centroid_hz": 329.9103292
+    },
+    {
+      "name": "Organ Vibrato",
+      "peak_dbfs": -27.06562259,
+      "body_rms_dbfs": -34.87916345,
+      "body_rms_change_db": -1.4184173900000019,
+      "before_centroid_hz": 433.5652808,
+      "after_centroid_hz": 433.2769737
+    }
+  ],
+  "source_sha256": {
+    "src/core/curated/Brass.inc": "43375cd3bc527088f43d8af8ea089381fb41dce6869b67f0acd105869477e225",
+    "src/core/curated/Organ.inc": "ad6410dc8c510ed4740207947bf12adee8e678ccd83012d2f76f31451c3bdb68",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b"
+  }
+}

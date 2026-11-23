@@ -1,0 +1,43 @@
+{
+  "source": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "source_tree": "715212d1f2cb45b1aad3d7fd23416276b8b938d7",
+  "programs": 523,
+  "parameters": 198,
+  "metrics_rows": 523,
+  "fixture": {
+    "rate": 48000,
+    "note": "category default",
+    "velocity": 0.8,
+    "pressure": 0,
+    "hold": 3,
+    "tail": 1
+  },
+  "fresh_build_crosscheck": {
+    "presets": [
+      "Analog Piano",
+      "Flute",
+      "Electric Piano I"
+    ],
+    "every_metric_equal_to_prior_clean_build": true
+  },
+  "notes": [
+    "Three-second holds are a matched comparison fixture, not a slow-pad completeness gate.",
+    "Two zero-pressure fixtures (Pressure Lead and Electric Leads 136) intentionally require aftertouch.",
+    "Exact three-program crosscheck compared every capture CSV field between a fresh Release build and prior clean source build.",
+    "Baseline and candidate listening files are not loudness-normalized; numeric changes are not an acoustic similarity score."
+  ],
+  "sha256": {
+    "inventory.json": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+    "single-note-metrics.csv": "72e51e3433d9695c63b7b91d46f6b325d68ac5cae502e0b7c51fead363d215ab"
+  },
+  "development_binary_hashes_not_archived_here": {
+    "cs80_preset_capture": "2e5fe06c0acfb98bda93361a7af35f50534c4a29fc7aa30d034232bc39570374",
+    "libcs80_core.a": "23777082f4a16c13615e1e1a62e5a04980002ef63893b24888619e44d6edab44"
+  },
+  "rebuild": [
+    "git checkout fa57967c7317828cf769cc7ca97f5857e566520f",
+    "cmake -S . -B build-core -G Ninja -DCMAKE_BUILD_TYPE=Release -DCS80_BUILD_PLUGIN=OFF -DCS80_BUILD_TESTS=ON",
+    "cmake --build build-core --target cs80_preset_capture --parallel 3",
+    "build-core/cs80_preset_capture --library all --all --out baseline-mid --hold 3 --tail 1"
+  ]
+}

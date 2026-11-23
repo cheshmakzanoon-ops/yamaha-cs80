@@ -1,0 +1,151 @@
+{
+  "schema": "cs80-preset-refinement-review-v1",
+  "worker": 34,
+  "task": "Fix piano onset random-stream discontinuity at fractional principal-mode budget boundaries",
+  "status": "passed-local; full Engine/native qualification remains root responsibility",
+  "production_files_changed": [
+    "src/core/InstrumentBody.h"
+  ],
+  "test_files_changed": [
+    "tests/InstrumentBodyTests.cpp"
+  ],
+  "cause": "The fractional piano principal-mode budget uses ceil(). Adding a barely weighted principal mode advanced the shared RNG once more, changing all following coupled-course detunings/phases and contact noise at an otherwise tiny tuning change.",
+  "production_reachability": {
+    "source": "src/core/Engine.cpp",
+    "description": "Engine computes float bodyNote from the tuned target pitch, masterTune, rank-II detune, tuningRef and footage. Scala/MTS and fine tuning can cross these boundaries at note onset. Live pitch bend alone does not restart the body.",
+    "scope": "An onset voicing discontinuity, not an asserted running-note click."
+  },
+  "fix": {
+    "description": "Snapshot the strike-seeded RNG before principal phases; after those phases, restore that snapshot and reserve all42 principal random slots before creating coupled courses. Coupled phases/detuning and subsequent contact texture no longer depend on the number of admitted principal modes.",
+    "properties": [
+      "No new per-sample work, dynamic allocation, state member, parameter or model.",
+      "Principal-mode amplitudes, coverage fade, decay, onset and Nyquist guards are unchanged.",
+      "Private strike seeds still create distinct onsets.",
+      "Other models retain their original RNG sequence.",
+      "Piano notes already using all42 principal modes remain bit-identical in the preservation probe."
+    ],
+    "cost": "42 extra xorshift advances at piano note onset only, replacing a variable implicit starting point with a fixed schedule."
+  },
+  "regression": {
+    "fixture": "InstrumentBodyTests::pianoFractionalRegisterContinuity",
+    "host_rates_hz": [
+      44100,
+      48000,
+      96000
+    ],
+    "internal_rate_multiplier": 2,
+    "boundary_midi_notes": [
+      60,
+      56,
+      40,
+      37.33333333333333
+    ],
+    "epsilon_semitones": [
+      0.001,
+      0.0001
+    ],
+    "seeds": [
+      812,
+      317
+    ],
+    "duration_seconds": 0.6,
+    "measurement_window_seconds": [
+      0.02,
+      0.58
+    ],
+    "conditions": {
+      "velocity": 0.95,
+      "brightness": 1.0,
+      "body_decay": 1.0,
+      "body_size": 1.0,
+      "pressure": 0.0
+    },
+    "method": "Onset pitches straddle each boundary while tick playback frequency is held at the center. RMS-match paired audio and compute waveform residual. Require residual below -60dB for epsilon0.001 and -80dB for epsilon0.0001, and at least15dB convergence as epsilon shrinks. Separately require two different seeds to produce a nontrivial residual.",
+    "current": {
+      "full_test_checks": 1825,
+      "failures": 0,
+      "generated_samples": 30227790,
+      "worst_matched_residual_db": -75.242,
+      "exit_code": 0
+    },
+    "old_header_negative_control": {
+      "full_test_checks": 1825,
+      "failures": 72,
+      "generated_samples": 30227790,
+      "worst_matched_residual_db": -22.058,
+      "exit_code": 1,
+      "failure_scope": "All72 added waveform continuity/convergence assertions reject the old header; all other tests pass."
+    },
+    "measurement_precision": "Printed residual extrema rounded to0.001dB; complete logs preserved below."
+  },
+  "preservation_probe": {
+    "fixture": {
+      "models": "Off plus all19 active models",
+      "host_rates_hz": [
+        44100,
+        48000,
+        96000
+      ],
+      "internal_rate_multiplier": 2,
+      "midi_notes": [
+        24,
+        36,
+        60,
+        96
+      ],
+      "velocities": [
+        0.2,
+        0.95
+      ],
+      "seeds": [
+        812,
+        317
+      ],
+      "brightness": 0.7,
+      "decay": 1.3,
+      "size": 1.2,
+      "samples_per_body": 4097,
+      "modulation": "Pressure0 to0.8 at sample1024; one-semitone frequency rise at sample2048."
+    },
+    "results": {
+      "samples": 7866240,
+      "expected_unchanged_comparisons": 3834792,
+      "bit_mismatches": 0,
+      "changed_piano_comparisons": 98328,
+      "finite": true
+    },
+    "expectation": "Every non-piano model, including Off, and piano notes24/36 compare float bits exactly. Piano60/96 may change and must remain finite/bounded."
+  },
+  "source_sha256": {
+    "before_InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/InstrumentBody.h": "edb12fc7b8ec2977633da0fa386a1ec5db95832034e14377dcad9202cf30c823",
+    "tests/InstrumentBodyTests.cpp": "4cc5f3963c6d5d73de3b04be6e9b28b9b86fe44951d6e357048be1b0783d72d5"
+  },
+  "executable_sha256": {
+    "instrument-body-tests": "9b8f9c618a723c1d75e05452d838f5644ffd71f3aecf345f6c54a058a76cc0f5",
+    "before-tests": "88b0e3458672e0df5254ed03c27008efd03687f4ec74cc592e213cd71e22f08b",
+    "preservation-probe": "b8a4077cbcb64a71796d15453716b3f2e00411c1b4db4b39581ed866347573bf"
+  },
+  "reproduction": {
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "working_directory": "/workspace/scratch/a9592b052b11/cs80-work",
+    "commands": [
+      "g++ -std=c++17 -O2 -Wall -Wextra -pedantic -Isrc tests/InstrumentBodyTests.cpp -o ../a34/instrument-body-tests",
+      "../a34/instrument-body-tests > ../a34/current-tests.log",
+      "g++ -std=c++17 -O2 -Wall -Wextra -pedantic -I../a34/before tests/InstrumentBodyTests.cpp -o ../a34/before-tests",
+      "../a34/before-tests > ../a34/before-tests.log # expected exit1",
+      "g++ -std=c++17 -O2 -Wall -Wextra -pedantic ../a34/preservation-probe.cpp -o ../a34/preservation-probe",
+      "../a34/preservation-probe > ../a34/preservation-result.json"
+    ],
+    "old_header_reconstruction": "Extract reproduction.files[\"production.h\"] from32-alias-register.json to before/core/InstrumentBody.h. For the probe before-namespaced.h, replace namespace cs80::body with namespace cs80_before::body. Save the new production header beside the probe as after.h.",
+    "preservation_probe_source": "#include \"before-namespaced.h\"\n#include \"after.h\"\n#include <cstdio>\n#include <cstdint>\n#include <cstring>\n#include <cmath>\nstd::uint32_t bits(float v){std::uint32_t b;std::memcpy(&b,&v,sizeof b);return b;}\nint main(){\n    std::uint64_t unchanged=0, mismatches=0, pianoChanged=0, samples=0;\n    bool finite=true;\n    for(int model=0;model<=cs80::body::celesta;++model)\n      for(double rate:{44100.,48000.,96000.})\n       for(float note:{24.f,36.f,60.f,96.f})\n        for(float velocity:{.2f,.95f})\n         for(std::uint32_t seed:{812u,317u}){\n          cs80_before::body::InstrumentBody before;\n          cs80::body::InstrumentBody after;\n          before.prepare(2*rate,rate);after.prepare(2*rate,rate);\n          before.noteOn(model,note,velocity,.7f,1.3f,seed,1.2f);\n          after.noteOn(model,note,velocity,.7f,1.3f,seed,1.2f);\n          const float base=440.f*std::exp2((note-69.f)/12.f);\n          const bool preserve=model!=cs80::body::piano || note<=36;\n          for(int i=0;i<4097;++i){\n           const float frequency=i<2048?base:base*1.0594631f;\n           const float pressure=i<1024?0.f:.8f;\n           const float a=before.tick(frequency,.7f,pressure);\n           const float b=after.tick(frequency,.7f,pressure);\n           finite=finite&&std::isfinite(a)&&std::isfinite(b)&&std::abs(a)<4&&std::abs(b)<4;\n           if(preserve){++unchanged;if(bits(a)!=bits(b))++mismatches;}\n           else if(bits(a)!=bits(b))++pianoChanged;\n           samples+=2;\n          }\n         }\n    std::printf(\"{\\\"samples\\\":%llu,\\\"expected_unchanged_comparisons\\\":%llu,\\\"bit_mismatches\\\":%llu,\\\"changed_piano_comparisons\\\":%llu,\\\"finite\\\":%s}\\n\",(unsigned long long)samples,(unsigned long long)unchanged,(unsigned long long)mismatches,(unsigned long long)pianoChanged,finite?\"true\":\"false\");\n    return !finite||mismatches||!pianoChanged;\n}\n",
+    "production_patch": "--- InstrumentBody-before.h\n+++ src/core/InstrumentBody.h\n@@ -546,6 +546,7 @@\n         const double harmonicBudget = model == piano\n             ? std::clamp(24.0 + 0.75 * std::max(0.0, 60.0 - note), 24.0, 42.0) : 24.0;\n         const int harmonics = static_cast<int>(std::ceil(harmonicBudget));\n+        const std::uint32_t principalPhaseSeed = state;\n         for (int harmonic = 1; harmonic <= harmonics; ++harmonic)\n         {\n             const double h = static_cast<double>(harmonic);\n@@ -592,6 +593,12 @@\n         }\n         if (model == piano)\n         {\n+            // Reserve the complete principal-mode random sequence even when\n+            // the register needs fewer modes. Admitting a nearly silent new\n+            // partial must not reseed the audible coupled courses or the\n+            // contact texture. All streams still vary with the strike seed.\n+            state = principalPhaseSeed;\n+            for (int slot = 0; slot < 42; ++slot) (void) randomBipolar();\n             // Low bass single strings become coupled courses above the bass.\n             // The doublet keeps a slowly beating aftersound as the prompt\n             // high modes decay.  Each strike has a bounded private variation.\n",
+    "current_test_log": "DECAY Piano strings        upper/fundamental change  -14.61 dB\nDECAY Tine electric piano  upper/fundamental change  -18.00 dB\nDECAY Reed electric piano  upper/fundamental change  -37.34 dB\nDECAY Nylon strings        upper/fundamental change  -17.65 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -21.55 dB\nDECAY Vibraphone           upper/fundamental change  -15.84 dB\nDECAY Marimba              upper/fundamental change  -48.70 dB\nDECAY Celesta              upper/fundamental change  -14.00 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.514 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay\nMALLET note 72 velocity 0.30: vibraphone -12.17 dB, marimba -41.20 dB upper/fundamental decay\nMALLET note 72 velocity 0.85: vibraphone -12.17 dB, marimba -41.20 dB upper/fundamental decay\nREGISTER DECAY Tine electric piano  low -1.762 dB high -4.085 dB\nREGISTER DECAY Reed electric piano  low -3.434 dB high -7.110 dB\nREGISTER DECAY Nylon strings        low -3.625 dB high -7.505 dB\nREGISTER DECAY Steel strings        low -1.526 dB high -3.160 dB\nREGISTER DECAY Plucked bass         low -2.290 dB high -4.740 dB\nREGISTER DECAY Vibraphone           low -0.901 dB high -1.613 dB\nREGISTER DECAY Marimba              low -5.906 dB high -14.141 dB\nREGISTER DECAY Celesta              low -2.919 dB high -3.719 dB\nPIANO TWO-STAGE prompt -5.921 dB, aftersound -4.900 dB\nPICKUP CURVATURE Tine electric piano  +0.885 dB\nPICKUP CURVATURE Reed electric piano  +1.678 dB\nPIANO REGISTER CONTINUITY worst matched residual -75.242 dB\nSUSTAINED Bowed strings        equal-RMS effort +5.635 dB; onset growth +7.870 dB\nSUSTAINED Flute                equal-RMS effort +7.081 dB; onset growth +2.055 dB\nSUSTAINED Clarinet             equal-RMS effort +4.093 dB; onset growth +4.869 dB\nSUSTAINED Oboe                 equal-RMS effort +4.544 dB; onset growth +4.680 dB\nSUSTAINED Bassoon              equal-RMS effort +4.404 dB; onset growth +5.293 dB\nSUSTAINED Brass                equal-RMS effort +5.865 dB; onset growth +5.945 dB\nBODY SIZE Bowed strings        size 2.10 max partial-balance change 4.910 dB\nBODY SIZE Flute                size 1.80 max partial-balance change 0.373 dB\nBODY SIZE Clarinet             size 2.00 max partial-balance change 15.131 dB\nBODY SIZE Oboe                 size 1.35 max partial-balance change 3.157 dB\nBODY SIZE Bassoon              size 1.80 max partial-balance change 8.980 dB\nBODY SIZE Brass                size 1.80 max partial-balance change 3.871 dB\nCLARINET register even/odd -12.818 to 1.798 dB; max half-step 1.821 dB\nCLARINET register even/odd -12.819 to 1.800 dB; max half-step 1.818 dB\nLIVE PRESSURE Bowed strings        spectrum +0.588 dB; first-2ms/settled difference 0.1442\nLIVE PRESSURE Flute                spectrum +1.757 dB; first-2ms/settled difference 0.1263\nLIVE PRESSURE Clarinet             spectrum +0.523 dB; first-2ms/settled difference 0.1344\nLIVE PRESSURE Oboe                 spectrum +1.066 dB; first-2ms/settled difference 0.1455\nLIVE PRESSURE Bassoon              spectrum +1.298 dB; first-2ms/settled difference 0.1419\nLIVE PRESSURE Brass                spectrum +2.106 dB; first-2ms/settled difference 0.1449\nTIMBRE MOTION brass 0.1758 dB held range, 0.0888 dB maximum 200ms step\nInstrument bodies: 1825 checks, 0 failures; 30227790 generated samples\n",
+    "negative_control_log": "DECAY Piano strings        upper/fundamental change   -6.74 dB\nDECAY Tine electric piano  upper/fundamental change  -18.00 dB\nDECAY Reed electric piano  upper/fundamental change  -37.34 dB\nDECAY Nylon strings        upper/fundamental change  -17.65 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -21.55 dB\nDECAY Vibraphone           upper/fundamental change  -15.84 dB\nDECAY Marimba              upper/fundamental change  -48.70 dB\nDECAY Celesta              upper/fundamental change  -14.00 dB\nPIANO fundamental 1046.752 Hz, sixth 6301.514 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay\nMALLET note 72 velocity 0.30: vibraphone -12.17 dB, marimba -41.20 dB upper/fundamental decay\nMALLET note 72 velocity 0.85: vibraphone -12.17 dB, marimba -41.20 dB upper/fundamental decay\nREGISTER DECAY Tine electric piano  low -1.762 dB high -4.085 dB\nREGISTER DECAY Reed electric piano  low -3.434 dB high -7.110 dB\nREGISTER DECAY Nylon strings        low -3.625 dB high -7.505 dB\nREGISTER DECAY Steel strings        low -1.526 dB high -3.160 dB\nREGISTER DECAY Plucked bass         low -2.290 dB high -4.740 dB\nREGISTER DECAY Vibraphone           low -0.901 dB high -1.613 dB\nREGISTER DECAY Marimba              low -5.906 dB high -14.141 dB\nREGISTER DECAY Celesta              low -2.919 dB high -3.719 dB\nPIANO TWO-STAGE prompt -5.921 dB, aftersound -4.900 dB\nPICKUP CURVATURE Tine electric piano  +0.885 dB\nPICKUP CURVATURE Reed electric piano  +1.678 dB\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Tiny fractional piano tuning changes preserve onset voicing\nFAIL: Piano onset difference converges as the tuning interval shrinks\nPIANO REGISTER CONTINUITY worst matched residual -22.058 dB\nSUSTAINED Bowed strings        equal-RMS effort +5.635 dB; onset growth +7.870 dB\nSUSTAINED Flute                equal-RMS effort +7.081 dB; onset growth +2.055 dB\nSUSTAINED Clarinet             equal-RMS effort +4.093 dB; onset growth +4.869 dB\nSUSTAINED Oboe                 equal-RMS effort +4.544 dB; onset growth +4.680 dB\nSUSTAINED Bassoon              equal-RMS effort +4.404 dB; onset growth +5.293 dB\nSUSTAINED Brass                equal-RMS effort +5.865 dB; onset growth +5.945 dB\nBODY SIZE Bowed strings        size 2.10 max partial-balance change 4.910 dB\nBODY SIZE Flute                size 1.80 max partial-balance change 0.373 dB\nBODY SIZE Clarinet             size 2.00 max partial-balance change 15.131 dB\nBODY SIZE Oboe                 size 1.35 max partial-balance change 3.157 dB\nBODY SIZE Bassoon              size 1.80 max partial-balance change 8.980 dB\nBODY SIZE Brass                size 1.80 max partial-balance change 3.871 dB\nCLARINET register even/odd -12.818 to 1.798 dB; max half-step 1.821 dB\nCLARINET register even/odd -12.819 to 1.800 dB; max half-step 1.818 dB\nLIVE PRESSURE Bowed strings        spectrum +0.588 dB; first-2ms/settled difference 0.1442\nLIVE PRESSURE Flute                spectrum +1.757 dB; first-2ms/settled difference 0.1263\nLIVE PRESSURE Clarinet             spectrum +0.523 dB; first-2ms/settled difference 0.1344\nLIVE PRESSURE Oboe                 spectrum +1.066 dB; first-2ms/settled difference 0.1455\nLIVE PRESSURE Bassoon              spectrum +1.298 dB; first-2ms/settled difference 0.1419\nLIVE PRESSURE Brass                spectrum +2.106 dB; first-2ms/settled difference 0.1449\nTIMBRE MOTION brass 0.1758 dB held range, 0.0888 dB maximum 200ms step\nInstrument bodies: 1825 checks, 72 failures; 30227790 generated samples\n"
+  },
+  "limitations": [
+    "These tests demonstrate continuous onset behavior at selected register thresholds and numerical preservation; they do not establish perceptual identity to a recorded piano.",
+    "Existing authored course gain/detuning register choices are outside this narrowly targeted principal-budget fix.",
+    "Full preset re-leveling, Engine integration, host validation and release artifact checks are performed by the root workflow."
+  ]
+}

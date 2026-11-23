@@ -1,0 +1,24 @@
+{
+  "final_parameter_corrections_rendered": [
+    "Hollow Pad",
+    "Low Drone"
+  ],
+  "all_other52_owned_vectors_bitwise_values_unchanged": true,
+  "final_correction_samples_nonfinite": 0,
+  "final_correction_samples_over_full_scale": 0,
+  "final_correction_peaks_dbfs": {
+    "Hollow Pad": -17.46936688,
+    "Low Drone": -17.47142043
+  },
+  "focused_behavioral_contracts_passed": 102,
+  "focused_behavioral_failures": 0,
+  "tests_modified": "scratch main invocation selections only; repository tests and thresholds unchanged",
+  "qualification": "Development evidence. Root performs final bank calibration and native build qualification.",
+  "source_sha256": {
+    "src/core/curated/Pads.inc": "a8ecebdf08174c314e94595273f2c279ddfda71bb0433dd481e7a50750362730",
+    "src/core/curated/Polysynth.inc": "0bb56e1752400a4ba5d896b6e6ee801b7cf7913969ce4789143a905c42b4e356",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b"
+  },
+  "core_archive_sha256": "4b0cd784977b1c88dd10243e35e6871d5e79b2c07231b89d73214c6b3e420b1b",
+  "capture_final_sha256": "89720d667705d73ff91feaa4694a580f65a0ec8e41fb58637e44e06024a7a96a"
+}

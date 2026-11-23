@@ -37,6 +37,8 @@ ORIGINAL = ["Tone I: E. Piano", "Tone II: Bass", "Analog Piano", "Bright Keys",
             "Amber Keys 97", "Slow Keys 106", "Replicant Brass", "Bass Stack"]
 INSTRUMENTS = ["Trombone Glide", "Theatre Organ", "Oboe", "Bassoon", "Guitar I", "Guitar II", "Kalimba"]
 TEXTURES = ["Evolving Pad", "Breathing Pad", "Thunder", "Rain", "Surf", "Wind"]
+SUSTAINED = ["Solo Violin", "Flute", "Clarinet", "Oboe", "English Horn", "Covered Horn", "Muted Trumpet"]
+SUSTAINED_BASS = ["Solo Cello", "Bass Clarinet", "Bassoon"]
 SOURCE = "3" * 40
 SOURCE_STATE = dict(source_commit=SOURCE, source_tree="5" * 40, tracked_source_clean=True)
 # A tiny valid stereo IEEE-float WAV, used only as an unchanged-byte witness.
@@ -56,9 +58,10 @@ class CaptureChild:
         self.commands.append(command)
         option = lambda name: command[command.index(name) + 1]
         if "--inventory" in command:
-            names = list(dict.fromkeys(KEYBOARDS + FAMILIES + ORIGINAL + PRESSURE + INSTRUMENTS + TEXTURES))
+            names = list(dict.fromkeys(KEYBOARDS + FAMILIES + ORIGINAL + PRESSURE + INSTRUMENTS
+                                       + TEXTURES + SUSTAINED + SUSTAINED_BASS))
             names += [f"Unselected fixture {i}" for i in range(523 - len(names))]
-            programs = [{"host_index": i, "name": name} for i, name in enumerate(names)]
+            programs = [{"host_index": i, "name": name, "category": "Fixture"} for i, name in enumerate(names)]
             if self.fault == "short inventory":
                 programs.pop()
             elif self.fault == "unordered addresses":
@@ -67,8 +70,10 @@ class CaptureChild:
                 programs[1]["name"] = programs[0]["name"]
             elif self.fault == "missing selection":
                 programs[0]["name"] = "Unselected replacement"
+            elif self.fault == "invalid category":
+                programs[0]["category"] = ""
             Path(option("--inventory")).write_text(json.dumps(
-                {"programs": programs, "library_revision": "2026.11.3"}), encoding="utf-8")
+                {"programs": programs, "library_revision": "2026.11.4"}), encoding="utf-8")
             return subprocess.CompletedProcess(command, 0)
         if self.fault == "child failure":
             raise subprocess.CalledProcessError(2, command)
@@ -145,10 +150,10 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual((manifest["repository"], manifest["run_id"], manifest["run_attempt"]),
                          ("owner/repo", "42", "2"))
         self.assertEqual(manifest["capture_binary_sha256"], hashlib.sha256(self.capture.read_bytes()).hexdigest())
-        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (90, 90))
-        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (594, 594))
-        self.assertEqual(manifest["selected_program_count"], 71)
-        self.assertEqual(manifest["library_revision"], "2026.11.3")
+        self.assertEqual((manifest["wav_count"], manifest["expected_wav_count"]), (138, 138))
+        self.assertEqual((manifest["audio_seconds"], manifest["expected_audio_seconds"]), (870, 870))
+        self.assertEqual(manifest["selected_program_count"], 74)
+        self.assertEqual(manifest["library_revision"], "2026.11.4")
         self.assertEqual(manifest["inventory_command"], child.commands[0])
         self.assertEqual(manifest["capture_commands"], child.commands[1:])
         groups = manifest["selections"]
@@ -161,12 +166,14 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual(groups[6]["names"], INSTRUMENTS)
         self.assertEqual(groups[7]["names"], TEXTURES)
         self.assertEqual((groups[8]["names"], groups[8]["velocity"]), (["Kalimba"], .3))
-        self.assertEqual([(g["names"], g["note"]) for g in groups[9:]],
+        self.assertEqual([(g["names"], g["note"]) for g in groups[9:12]],
                          [(["Tine Piano"], 48), (["Tine Piano"], 60), (["Tine Piano"], 84)])
-        self.assertEqual(len({name for group in groups for name in group["names"]}), 71)
+        self.assertEqual(len(groups), 30)
+        self.assertEqual(len({name for group in groups for name in group["names"]}), 74)
         readme = (out / "README.txt").read_text()
-        self.assertIn("90 unnormalized circuit-synth auditions of 71 existing programs", readme)
-        self.assertIn("594 seconds total", readme)
+        self.assertIn("138 unnormalized circuit-synth auditions of 74 existing programs", readme)
+        self.assertIn("870 seconds total", readme)
+        self.assertIn("same-foundation comparisons do not isolate resonant size alone", readme)
         self.assertIn("Single-note examples do not establish acoustic similarity", readme)
         for group in groups:
             self.assertIn(f"- {group['folder']}: {len(group['names'])} WAVs", readme)
@@ -180,7 +187,7 @@ class AuditionTests(unittest.TestCase):
         self.assertEqual(checksums, files)
 
     def test_invalid_child_outputs_fail_without_completion_manifest_or_checksums(self):
-        faults = ["short inventory", "unordered addresses", "duplicate name", "missing selection",
+        faults = ["short inventory", "unordered addresses", "duplicate name", "missing selection", "invalid category",
                   "wrong preset", "wrong rate", "wrong velocity", "nonfinite setting",
                   "nonfinite audio", "clipped audio", "wrong register", "missing metrics",
                   "empty wav", "missing wav", "extra wav", "child failure"]
@@ -210,7 +217,7 @@ class AuditionTests(unittest.TestCase):
     def test_roster_has_matched_pressure_pairs_and_no_duplicate_render_requests(self):
         groups = helper.selections()
         self.assertEqual(helper.roster_summary(groups),
-                         dict(wav_count=90, selected_program_count=71, audio_seconds=594))
+                         dict(wav_count=138, selected_program_count=74, audio_seconds=870))
         by_folder = {group["folder"]: group for group in groups}
         quiet, pressed = by_folder["pressure-zero"], by_folder["pressure-full"]
         self.assertEqual({k: v for k, v in quiet.items() if k not in {"folder", "pressure"}},
@@ -222,6 +229,68 @@ class AuditionTests(unittest.TestCase):
         self.assertIn("Kalimba", firm["names"])
         self.assertEqual((soft["velocity"], firm["velocity"]), (.3, .85))
         self.assertEqual(soft.get("note"), firm.get("note"))
+
+    def test_register_and_effort_comparisons_have_matched_conditions(self):
+        groups = helper.selections()
+        by_folder = {group["folder"]: group for group in groups}
+        for note in (36, 60, 84):
+            soft = by_folder[f"piano-register-{note}-soft"]
+            firm = by_folder[f"piano-register-{note}-firm"]
+            self.assertEqual(soft["names"], ["Analog Piano", "Stage Keys"])
+            self.assertEqual((soft["note"], soft["hold"], soft["tail"]), (note, 5, 1))
+            self.assertEqual({k: v for k, v in soft.items() if k not in {"folder", "velocity"}},
+                             {k: v for k, v in firm.items() if k not in {"folder", "velocity"}})
+            self.assertEqual((soft["velocity"], firm["velocity"]), (.3, .85))
+        for prefix, names, key in (("sustained-effort", SUSTAINED, 60),
+                                   ("sustained-bass-effort", SUSTAINED_BASS, 72)):
+            soft = by_folder[f"{prefix}-soft-c4"]
+            firm = by_folder[f"{prefix}-firm-c4"]
+            self.assertEqual(soft["names"], names)
+            self.assertEqual((soft["note"], soft["pressure"], soft["hold"], soft["tail"]), (key, 0, 6, 1))
+            self.assertEqual({k: v for k, v in soft.items() if k not in {"folder", "velocity"}},
+                             {k: v for k, v in firm.items() if k not in {"folder", "velocity"}})
+            self.assertEqual((soft["velocity"], firm["velocity"]), (.3, .85))
+        for note in (60, 64, 68, 72):
+            for label, velocity in (("soft", .3), ("firm", .85)):
+                group = by_folder[f"clarinet-register-{note}-{label}"]
+                self.assertEqual(group["names"], ["Clarinet", "Bass Clarinet"])
+                self.assertEqual((group["note"], group["velocity"], group["pressure"], group["hold"], group["tail"]),
+                                 (note, velocity, 0, 3, 1))
+        self.assertLess(helper.roster_summary(groups)["audio_seconds"] * 48000 * 8, 480_000_000)
+
+    def test_default_note_alias_is_rejected_before_rendering_audio(self):
+        groups = helper.selections()
+        duplicate = copy.deepcopy(groups[0])
+        duplicate.update(folder="explicit-keyboard-alias", note=60)
+        groups.append(duplicate)
+        # Before an inventory is available these spellings are different;
+        # resolving the actual category must close the alias, without a WAV.
+        helper.roster_summary(groups)
+        out = self.root / "default-note-alias"
+        child = CaptureChild()
+        with mock.patch.object(helper, "selections", return_value=groups):
+            with self.assertRaisesRegex(RuntimeError, "resolving the default note"):
+                self.run_capture(out, child)
+        self.assertEqual(len(child.commands), 1)
+        self.assertIn("--inventory", child.commands[0])
+        self.assertFalse(list(out.rglob("*.wav")))
+        self.assertEqual(json.loads((out / "provenance.json").read_text())["capture_status"], "failed")
+        self.assertFalse((out / "SHA256SUMS").exists())
+
+    def test_default_note_aliases_follow_all_category_registers(self):
+        for category, note in (("Bass", 48), ("Winds", 67), ("Leads", 67), ("Bells", 72), ("Keys", 60)):
+            with self.subTest(category=category):
+                group = dict(folder="category-default", names=["Example"],
+                             velocity=.85, pressure=0, hold=4, tail=1)
+                explicit = dict(group, folder="explicit-register", note=note)
+                with self.assertRaisesRegex(RuntimeError, "resolving the default note"):
+                    helper.validate_resolved_requests([group, explicit],
+                                                      [dict(name="Example", category=category)])
+                # Different played keys remain different requests, regardless
+                # of any musical relationship between their sounding pitches.
+                explicit["note"] += 12
+                helper.validate_resolved_requests([group, explicit],
+                                                  [dict(name="Example", category=category)])
 
     def test_invalid_roster_is_rejected_before_creating_output(self):
         valid = helper.selections()

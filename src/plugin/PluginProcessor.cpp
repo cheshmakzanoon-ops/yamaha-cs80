@@ -435,6 +435,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout Cs80AudioProcessor::createPa
         layout.add(std::move(instrument));
     }
 
+    // Keep all 304 published host slots in place, including the eight original
+    // body controls. Size is a next-note sound control, appended with a newer
+    // AU ordering hint rather than inserted into either existing rank group.
+    for (int rank = 0; rank < 2; ++rank)
+        layout.add(make(cs80::bodySizeParam(rank), 17));
+
     return layout;
 }
 

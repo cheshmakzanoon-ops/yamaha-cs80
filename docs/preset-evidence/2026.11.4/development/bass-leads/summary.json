@@ -1,0 +1,58 @@
+{
+  "scope": "54 existing Bass/Lead recipes. Development measurement, not perceptual equivalence or native qualification. Other families were still being edited during this snapshot.",
+  "owned_programs": 54,
+  "unchanged_identity_count": 523,
+  "stable_old_parameter_ids": 198,
+  "old_nonvolume_change_count_min": 7,
+  "old_nonvolume_change_count_max": 44,
+  "owned_parameter_values_in_range": 10800,
+  "single_note_captures": 54,
+  "finite_captures": 54,
+  "overload_captures": 0,
+  "audible_zero_pressure_captures": 53,
+  "intentional_zero_pressure_silence": [
+    "Pressure Lead"
+  ],
+  "audible_peak_dbfs_range": [
+    -27.85181995,
+    -13.35993632
+  ],
+  "existing_checks": {
+    "voicing": {
+      "passed": 281,
+      "failed": 0
+    },
+    "character": {
+      "passed": 128,
+      "failed": 0
+    },
+    "precision": {
+      "passed": 285,
+      "failed": 0
+    }
+  },
+  "source_sha256": {
+    "src/core/curated/Bass.inc": "f909426560fce93574dd3d5e146a4516e887932ef2beb3c7c1576152f971a9f1",
+    "src/core/curated/Leads.inc": "f0e8fb2110d01ea73b8dc4ddeeb582f68bc5d547ce53ba20533c190771d9da80",
+    "src/core/InstrumentBody.h": "0270c5371cedf58affee419a079c1c97cd5747d4e7eaf35cd9ddb5f9c447f71b",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "tests/PresetVoicingTests.cpp": "e4fbaebe02a17d8f8c1058086afdc6fb068139c5e34abe2627a52ccaaeea75bd",
+    "tests/PresetCharacterTests.cpp": "12b7553ff5acbb1377a1bebf68be5b02baaf798117b12d6c331ed0b655cbbad1",
+    "tests/PresetPrecisionTests.cpp": "b365146dddc805505eb8138f6ee3490a142e6c3fb6ce7d7e1ff7b4530a39afd6"
+  },
+  "executed_binary_sha256": {
+    "capture": "d5e1bf68da6face2c2f0cef61f4a515d44f8475dfcb87bd9c70dbb137a491f00",
+    "voicing": "afafd1609de13177f67492d3bae60d8c2ab8f0b2d8f63d0e459316ddf5873075",
+    "character": "7f563739ad9253ebd562e51d1158605314b45e1c470e1596095bafb2f279501a",
+    "precision": "9a874eed3e4948c5979ccd85f08a8efd7a4e3b9b68a7415b7c558c8bf3d4f7d9",
+    "FactoryPresets.o": "0c07fd064836e69b9f7315018c345580a2952ceb038a94cb1ae97382de47abf3",
+    "libcs80_core.a": "4b0cd784977b1c88dd10243e35e6871d5e79b2c07231b89d73214c6b3e420b1b"
+  },
+  "remaining_unowned_snapshot_range_failures": [
+    "Electric FX 144 ch1_pw0.47",
+    "Laser Zap ch1_pw0.47",
+    "Stereo Delay Pluck body2_decay0.24"
+  ],
+  "range_failures_resolution": "Parent reports A15 corrected these after this snapshot. No owned range errors. Final unified audit must verify final source."
+}

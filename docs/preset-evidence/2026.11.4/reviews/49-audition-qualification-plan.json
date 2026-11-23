@@ -1,0 +1,634 @@
+{
+  "schema": 1,
+  "worker": 49,
+  "task": "audition_archive_qualification",
+  "status": "ready_for_actual_source_run_and_archive",
+  "actual_audio_inspected": false,
+  "actual_artifact_accepted": false,
+  "scope": "Source-bound acceptance plan for the forthcoming 2026.11.4 native Linux audition artifact. No prior artifact, development inventory or synthetic test qualifies the upcoming archive.",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "expected_revision": "2026.11.4",
+  "source_sha256": {
+    "scripts/capture-factory-auditions.py": "99150f4e685db3d3f0dde95ef2bc003a0b26d36499a76c957464af13ed80d9c7",
+    "scripts/test-capture-factory-auditions.py": "ff526f51830fba1c1c755061a7e366c57b5647dd4a983b31d6aa447b15524605",
+    "src/tools/preset_capture.cpp": "706e48efe50c785465426fbd2f1613d92a0b4178d1e29e9837cfde3b3ce32883",
+    ".github/workflows/build.yml": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f",
+    "docs/preset-evidence/2026.11.4/ci/verification-tools/verify-audition-zip.py": "75be3d29b566c9a88f9d301853ae8c60585aa604b3fc450ba23de1a6eaeebf62",
+    "docs/preset-evidence/2026.11.4/reviews/35-artifact-verifiers.json": "1d75708889bf93d4798a6649479bfd460587b846fa6f3509b0f3b1decc0d730e"
+  },
+  "source_only_checks": {
+    "producer_roster_evaluated_without_rendering": true,
+    "summary": {
+      "wav_count": 138,
+      "selected_program_count": 74,
+      "audio_seconds": 870.0,
+      "group_count": 30
+    },
+    "workflow_upload_can_preserve_failed_capture": true,
+    "consequence": "An artifact merely existing or uploading successfully is insufficient: require a successful capture step, complete provenance, the matching upload step, and the final successful Linux producing job."
+  },
+  "artifact_identity_requirements": {
+    "name": "cs80-curated-preset-audition-<FULL_SOURCE_SHA>",
+    "source": "Exact reviewed and published 40-character source commit and its Git tree; do not substitute a later documentation or screenshot commit.",
+    "api": [
+      "artifact.id is a positive exact selected ID",
+      "artifact.name matches the source-specific name",
+      "artifact.expired is false",
+      "artifact.size_in_bytes equals the downloaded outer ZIP size",
+      "artifact.digest is independently obtained sha256:<64 hex> and equals downloaded ZIP SHA256",
+      "artifact.workflow_run.id equals the qualifying build run",
+      "artifact.workflow_run.head_sha equals the exact source"
+    ],
+    "attempt": "Bind actual artifact provenance.run_attempt to the qualifying run attempt and capture/upload job timestamps. Preserve the individual API object and successful job/step records.",
+    "required_job": "Linux / VST3 + Standalone",
+    "required_steps": [
+      "Configure",
+      "Verify configured JUCE source",
+      "Build",
+      "Test",
+      "Capture curated preset auditions",
+      "Upload curated preset auditions"
+    ],
+    "producer_command": "python3 scripts/capture-factory-auditions.py --capture build/cs80_preset_capture --out preset-audition",
+    "result_boundary": "Raw archive acceptance may be performed once the upload is available; release acceptance additionally requires the producing job and independent native/platform qualification to complete successfully."
+  },
+  "archive_requirements": {
+    "metadata_files": [
+      "SHA256SUMS",
+      "README.txt",
+      "source-commit.txt",
+      "provenance.json",
+      "inventory.json"
+    ],
+    "expected_regular_files": 173,
+    "expected_checksum_entries": 172,
+    "member_controls": [
+      "Unique safe relative names without parent traversal or backslashes",
+      "One common audition root and one provenance manifest",
+      "No unexpected or missing regular files",
+      "Fewer than 500 regular members; each below16MiB; total expanded bytes below512MiB",
+      "Every member except SHA256SUMS appears once in SHA256SUMS and matches its SHA256"
+    ],
+    "source_manifest": [
+      "Schema3 and capture_status=complete",
+      "source_commit/source_tree match Git source",
+      "repository/run_id/run_attempt match independently selected producer",
+      "Both tracked-source-clean flags are true",
+      "Well-formed capture binary SHA256 retained; producer checks executable identity before and after capture",
+      "Manifest selections and counts exactly match the producer script loaded from the source commit",
+      "source-commit.txt agrees with the manifest and requested source"
+    ]
+  },
+  "inventory_requirements": {
+    "schema": 1,
+    "revision": "2026.11.4",
+    "programs": 523,
+    "unique_parameter_ids": 200,
+    "existing_parameter_prefix": "Compare all198 preceding IDs and values against the approved final inventory/baseline coverage contract; the verifier additionally pins the preceding8 body-control IDs at190:198.",
+    "appended_ids": [
+      "body1_size",
+      "body2_size"
+    ],
+    "address_order": "index and host_index both exactly0..522;523 unique names; every vector has200 finite values.",
+    "complete_digest_check": "Compute the little-endian binary32 FNV-1a digest for all523 delivered vectors. Compare every delivered ordered identity, category, tags and binary32 value against the root-approved final-source inventory. Each of the138 metrics rows must match its program vector digest; digest differences alone are not audio-quality proof.",
+    "init_and_count": "Preserve both Init vectors and all523 addresses; no new presets."
+  },
+  "actual_audio_requirements": {
+    "wav_count": 138,
+    "selected_program_count": 74,
+    "group_count": 30,
+    "sample_rate": 48000,
+    "channels": 2,
+    "encoding": "RIFF/WAVE IEEE float32 little-endian; exactly fmt/fact/data chunks with bounded declared and actual sizes",
+    "expected_total_frames": 41760000,
+    "expected_total_channel_samples": 83520000,
+    "expected_audio_seconds": 870,
+    "expected_raw_sample_bytes": 334080000,
+    "all_samples": "Read every actual float sample; require finite values and absolute amplitude<=1.0. Report measured peak/RMS per file and aggregate maxima. Do not infer sample counts merely from CSV settings.",
+    "frames": "Check both fact count and data chunk bytes against round(hold*48000)+round(tail*48000) for every file.",
+    "metric_parity": "Actual peak and RMS dBFS must match metrics.csv within1e-5dB; row source-program identity, category, note, rate, velocity, pressure, hold, tail, rank0, nonfinite0 and over-full-scale0 must match the source roster.",
+    "body_coverage": "All19 active body model IDs must occur with positive effective rank/body blend in the selected programs.",
+    "intentional_silence": "Pressure Lead in pressure-zero is intentionally silent; retain the pressure-full counterpart. Do not normalize or force nonzero output.",
+    "limitations": [
+      "These are single-note excerpts, not chord/stress or native-host validation.",
+      "No normalization or additional clipping is applied by the producer.",
+      "Some long releases continue past the requested excerpt.",
+      "Complete-preset comparisons preserve their own filters, layers and envelopes; matched C4 foundations do not isolate resonant size.",
+      "Bass Clarinet sounds one octave below Clarinet in equal-key clarinet register groups.",
+      "Numerical safety and spectral differences are not acoustic-equivalence or perceptual-quality proof."
+    ]
+  },
+  "groups": [
+    {
+      "folder": "keyboards",
+      "names": [
+        "Electric Piano I",
+        "Electric Piano II",
+        "Tine Piano",
+        "Clavichord I",
+        "Clavichord II",
+        "Funky Clavichord",
+        "Harpsichord I",
+        "Harpsichord II",
+        "Lute Harpsichord",
+        "Toy Piano",
+        "Honky Keys",
+        "Vibes Keys",
+        "Celesta",
+        "Saw Pulse Piano",
+        "Soft Keys",
+        "Chorus Keys",
+        "Stage Keys",
+        "Velocity Keys",
+        "Dulcimer",
+        "Reed Piano",
+        "Glass Keys",
+        "Tremolo Keys",
+        "Contour Keys",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1,
+      "wav_count": 24,
+      "audio_seconds": 120
+    },
+    {
+      "folder": "soft-keyboards",
+      "names": [
+        "Electric Piano I",
+        "Electric Piano II",
+        "Tine Piano",
+        "Reed Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1,
+      "wav_count": 5,
+      "audio_seconds": 25
+    },
+    {
+      "folder": "families",
+      "names": [
+        "Brass Swell I",
+        "Sforzando Brass",
+        "Covered Horn",
+        "Solo Violin",
+        "Solo Cello",
+        "Marcato Strings",
+        "Recorder",
+        "Clarinet",
+        "Flute Organ 8+4",
+        "Tremolo Organ",
+        "Rubber Bass",
+        "Picked Bass",
+        "Nylon Pluck",
+        "Mandolin",
+        "Vibraphone",
+        "Marimba",
+        "Tremolo Brass",
+        "Tremolo Pad",
+        "Tremolo Poly",
+        "Touch Lead",
+        "Aftertouch Vibrato Lead",
+        "Glide Lead"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 7,
+      "tail": 2,
+      "wav_count": 22,
+      "audio_seconds": 198
+    },
+    {
+      "folder": "original-addresses",
+      "names": [
+        "Tone I: E. Piano",
+        "Tone II: Bass",
+        "Analog Piano",
+        "Bright Keys",
+        "Amber Keys 97",
+        "Slow Keys 106",
+        "Replicant Brass",
+        "Bass Stack"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1,
+      "wav_count": 8,
+      "audio_seconds": 40
+    },
+    {
+      "folder": "pressure-zero",
+      "names": [
+        "Aftertouch Vibrato Lead",
+        "Pressure Lead",
+        "Wah Lead",
+        "Pressure Pad",
+        "Flute",
+        "Solo Violin",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "wav_count": 7,
+      "audio_seconds": 42
+    },
+    {
+      "folder": "pressure-full",
+      "names": [
+        "Aftertouch Vibrato Lead",
+        "Pressure Lead",
+        "Wah Lead",
+        "Pressure Pad",
+        "Flute",
+        "Solo Violin",
+        "Pressure Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 1,
+      "hold": 5,
+      "tail": 1,
+      "wav_count": 7,
+      "audio_seconds": 42
+    },
+    {
+      "folder": "instrument-bodies",
+      "names": [
+        "Trombone Glide",
+        "Theatre Organ",
+        "Oboe",
+        "Bassoon",
+        "Guitar I",
+        "Guitar II",
+        "Kalimba"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 2,
+      "wav_count": 7,
+      "audio_seconds": 56
+    },
+    {
+      "folder": "textures-and-effects",
+      "names": [
+        "Evolving Pad",
+        "Breathing Pad",
+        "Thunder",
+        "Rain",
+        "Surf",
+        "Wind"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 7,
+      "tail": 2,
+      "wav_count": 6,
+      "audio_seconds": 54
+    },
+    {
+      "folder": "soft-kalimba",
+      "names": [
+        "Kalimba"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 4,
+      "tail": 1,
+      "wav_count": 1,
+      "audio_seconds": 5
+    },
+    {
+      "folder": "tine-register-48",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 48,
+      "wav_count": 1,
+      "audio_seconds": 4
+    },
+    {
+      "folder": "tine-register-60",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60,
+      "wav_count": 1,
+      "audio_seconds": 4
+    },
+    {
+      "folder": "tine-register-84",
+      "names": [
+        "Tine Piano"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 84,
+      "wav_count": 1,
+      "audio_seconds": 4
+    },
+    {
+      "folder": "piano-register-36-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 36,
+      "wav_count": 2,
+      "audio_seconds": 12
+    },
+    {
+      "folder": "piano-register-36-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 36,
+      "wav_count": 2,
+      "audio_seconds": 12
+    },
+    {
+      "folder": "piano-register-60-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 60,
+      "wav_count": 2,
+      "audio_seconds": 12
+    },
+    {
+      "folder": "piano-register-60-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 60,
+      "wav_count": 2,
+      "audio_seconds": 12
+    },
+    {
+      "folder": "piano-register-84-soft",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 84,
+      "wav_count": 2,
+      "audio_seconds": 12
+    },
+    {
+      "folder": "piano-register-84-firm",
+      "names": [
+        "Analog Piano",
+        "Stage Keys"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 5,
+      "tail": 1,
+      "note": 84,
+      "wav_count": 2,
+      "audio_seconds": 12
+    },
+    {
+      "folder": "sustained-effort-soft-c4",
+      "names": [
+        "Solo Violin",
+        "Flute",
+        "Clarinet",
+        "Oboe",
+        "English Horn",
+        "Covered Horn",
+        "Muted Trumpet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 60,
+      "wav_count": 7,
+      "audio_seconds": 49
+    },
+    {
+      "folder": "sustained-bass-effort-soft-c4",
+      "names": [
+        "Solo Cello",
+        "Bass Clarinet",
+        "Bassoon"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 72,
+      "wav_count": 3,
+      "audio_seconds": 21
+    },
+    {
+      "folder": "sustained-effort-firm-c4",
+      "names": [
+        "Solo Violin",
+        "Flute",
+        "Clarinet",
+        "Oboe",
+        "English Horn",
+        "Covered Horn",
+        "Muted Trumpet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 60,
+      "wav_count": 7,
+      "audio_seconds": 49
+    },
+    {
+      "folder": "sustained-bass-effort-firm-c4",
+      "names": [
+        "Solo Cello",
+        "Bass Clarinet",
+        "Bassoon"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 6,
+      "tail": 1,
+      "note": 72,
+      "wav_count": 3,
+      "audio_seconds": 21
+    },
+    {
+      "folder": "clarinet-register-60-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60,
+      "wav_count": 2,
+      "audio_seconds": 8
+    },
+    {
+      "folder": "clarinet-register-60-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 60,
+      "wav_count": 2,
+      "audio_seconds": 8
+    },
+    {
+      "folder": "clarinet-register-64-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 64,
+      "wav_count": 2,
+      "audio_seconds": 8
+    },
+    {
+      "folder": "clarinet-register-64-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 64,
+      "wav_count": 2,
+      "audio_seconds": 8
+    },
+    {
+      "folder": "clarinet-register-68-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 68,
+      "wav_count": 2,
+      "audio_seconds": 8
+    },
+    {
+      "folder": "clarinet-register-68-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 68,
+      "wav_count": 2,
+      "audio_seconds": 8
+    },
+    {
+      "folder": "clarinet-register-72-soft",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.3,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 72,
+      "wav_count": 2,
+      "audio_seconds": 8
+    },
+    {
+      "folder": "clarinet-register-72-firm",
+      "names": [
+        "Clarinet",
+        "Bass Clarinet"
+      ],
+      "velocity": 0.85,
+      "pressure": 0,
+      "hold": 3,
+      "tail": 1,
+      "note": 72,
+      "wav_count": 2,
+      "audio_seconds": 8
+    }
+  ],
+  "actual_phase_command_template": "python3 docs/preset-evidence/2026.11.4/ci/verification-tools/verify-audition-zip.py --archive <DOWNLOADED_ZIP> --source <FULL_SOURCE_SHA> --run-id <ACTUAL_RUN_ID> --attempt <ACTUAL_ATTEMPT> --expected-zip-sha256 <INDEPENDENT_API_DIGEST_WITHOUT_PREFIX> --repo /workspace/scratch/a9592b052b11/cs80-work --out <SOURCE_BOUND_EVIDENCE_DIRECTORY>/audition/acceptance-summary.json",
+  "additional_actual_phase_records": [
+    "Individual artifact API object and hash",
+    "Source/run/attempt/job/step binding record",
+    "Complete archive verifier output and stderr/exit result",
+    "Delivered inventory and all523 vector digest/identity comparison",
+    "Actual metadata/source file SHA256 manifest",
+    "Final plain-language report distinguishing archive acceptance from platform/native validation"
+  ],
+  "pending_inputs_from_root": [
+    "Published full source SHA and source tree",
+    "Qualifying native build run ID and attempt",
+    "Downloaded audition ZIP and independent exact API object",
+    "Producing Linux job/step API records or access to fetch them",
+    "Approved final-source inventory for complete523-vector comparison"
+  ],
+  "actions_not_performed": [
+    "No full or partial audition renders",
+    "No artifact download or actual audio acceptance",
+    "No production, producer, workflow, build or calibration edits",
+    "No commit or push"
+  ]
+}
