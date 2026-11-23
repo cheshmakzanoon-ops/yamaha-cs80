@@ -2669,9 +2669,9 @@ if (CS80_BUILD_PLUGIN)
     endif()
 endif()
 
-# Core test executables keep several Engine fixtures (about 270 KB each since
-# the free-running idle snapshots and the circuit-engine voice) on the stack in
-# one function. Give them the ordinary 8 MiB Unix test-process budget instead of
+# Core test executables keep several Engine fixtures (about 480 KiB each in
+# the measured Linux build, including retained instrument bodies) on the stack
+# in one function. Give them the ordinary 8 MiB Unix test-process budget instead of
 # MSVC's 1 MiB executable default, as CS80Snapshots already has. Not applied to
 # the shipping plugin or Standalone targets.
 if (MSVC AND CS80_BUILD_TESTS)

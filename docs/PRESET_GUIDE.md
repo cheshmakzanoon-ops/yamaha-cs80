@@ -28,6 +28,9 @@ A fresh instance opens **Brass Swell I**. Hold a three-note chord around MIDI
 48–67, wait for the brighter layer to arrive, then gradually add pressure.
 Release the pressure before releasing the keys to hear the chord settle back.
 Open **Library** to choose the following programs.
+When reopening an older project, explicitly **RELOAD** the factory entry to
+apply its revised settings; the displayed name alone does not confirm that
+they are loaded. See [Recalling a revised sound](#recalling-a-revised-sound).
 
 Try each sound in three ways: strike softly and firmly; hold long enough to hear
 what remains after the attack; then release and listen to its damping or tail.
@@ -317,8 +320,21 @@ selector. [Revision details](CIRCUIT_LIBRARY_2026_11_4.md#signal-path-and-playin
 **2026.11.4 identifies a sound-data revision**, separate from the
 application's version and saved-session format. Names, order and host program
 identities remain stable while the factory voicings change. A session or user
-preset restores its stored controls; reload the corresponding factory program
-from **Library** to hear the revised recipe. Save a user copy to retain edits.
+preset restores its stored controls, so an older project can show a factory
+name while still using its earlier recipe. Save a user copy to retain edits.
+
+To apply the current recipe, open **Library → FACTORY LIBRARY**, choose the
+factory entry and explicitly press **LOAD / RELOAD**. Enter or double-click
+also loads it. Play fresh notes afterward: body model, decay and size take
+effect at note onset. Save the project if you want it to retain the new recipe.
+
+With **Audition** enabled, clicking a row already marked loaded can leave the
+current settings in place. Use **RELOAD** even if the desired factory name is
+already displayed. A saved user patch with the same name remains a separate
+entry. **REVERT** restores the sound that was active when Library opened;
+it can restore the older recipe and does not mean “load the latest factory
+settings.”
+
 A delivered factory selection by program number loads the current voicing at
 that address. VST3 changes sent only through the Program processing queue remain
 subject to a [documented controller dependency](PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification).

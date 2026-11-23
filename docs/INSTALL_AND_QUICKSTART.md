@@ -4,7 +4,7 @@ These are development artifacts, not a signed/notarized public release or a
 promise of compatibility with every DAW. Read `DISTRIBUTION_STATUS.md` in the
 package. No calibrated hardware-match claim is made.
 
-This guide covers factory library revision **2026.11.3**: revoiced existing
+This guide covers factory library revision **2026.11.4**: revoiced existing
 programs and optional instrument bodies within one circuit instrument, the
 unified **523-program library**, **Studio**, **PANIC** and the **SAMPLE PEAK**
 readout. Engine and isolation selectors remain removed. Older artifacts
@@ -55,7 +55,7 @@ and emulation layers are not qualified by these runner builds.
 architecture, JUCE provenance and payload hashes. Checksums detect corruption;
 they are not a publisher signature. `SOURCE.txt` identifies the corresponding
 repository commit and preset library revision. For these revised sounds,
-confirm that both identify **2026.11.3** and that their full source commit matches
+confirm that both identify **2026.11.4** and that their full source commit matches
 the exact source SHA listed for the selected verified download and its completed
 workflow qualification. The sound-library revision is separate from
 the application's version string.
@@ -246,12 +246,18 @@ continue processing idle instances.
 
 - Back up sessions and user presets before changing builds. With the host closed,
   replace only this instrument's complete bundle/file; rescan afterward.
-- To hear the revised factory sounds, open **LIBRARY** and select the desired
-  program again. Sessions and user presets restore their saved controls, with
-  obsolete engine settings migrated as described above; A/B and Revert use their
-  stored snapshots within the same circuit engine. Keep the older binary and a
-  reference bounce when an old project's exact sound must be retained. A
-  delivered factory selection by program number loads the current voicing at
+- To hear the revised factory sounds, open **LIBRARY → FACTORY LIBRARY**, choose
+  the desired factory entry, then explicitly press **LOAD / RELOAD**. Enter or
+  double-click also loads it. Play fresh notes afterward, and save the project
+  if you want it to retain that recipe. An older project can show the same
+  factory name while restoring its older settings; clicking an already-loaded
+  row with **Audition** enabled may leave those settings in place.
+- Sessions, user presets and A/B states retain their saved controls, with
+  obsolete engine settings migrated as described above. **REVERT** restores
+  the sound present when Library opened, which can be the older recipe; it does
+  not load the latest factory settings. Keep the older binary and a reference
+  bounce when an old project's exact sound must be retained. A delivered
+  factory selection by program number loads the current voicing at
   that address. VST3 host changes sent only through the Program processing queue
   retain a [documented controller dependency](PRESET_REFINEMENT_2026_11_1.md#native-recall-and-host-program-qualification);
   **Library** selection does not use that limited route. See the bundled
