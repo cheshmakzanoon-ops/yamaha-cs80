@@ -159,6 +159,62 @@ Studio and standalone interfaces still lack dedicated body-control widgets.
 
 ## Listening and qualification
 
+### Continuation: strike dynamics and bowed-body motion
+
+The continuation after `59d489d` corrects two additional signal-model defects
+without adding programs, changing any factory parameter vector, extending the
+model choices or moving host automation positions.
+
+The tine model formerly normalized each strike against its own spectral sum.
+As firm strikes acquired stronger upper harmonics, that division reduced the
+fundamental. It now uses a fixed full-strike headroom bound. The full-strength
+signal is unchanged, while softer strikes no longer receive unintended extra
+gain. This affects 17 existing programs, including the electric-piano family
+and the supporting tine ranks in Kalimba, Music Box and LFO Pan Keys.
+
+In matched complete-preset measurements at MIDI 36, 60 and 84, the 300–800 ms
+body RMS span from velocity 0.15 to 1 increased as follows:
+
+| Existing program | Before correction | After correction |
+|---|---:|---:|
+| Electric Piano I | 8.22–9.07 dB | 12.23–13.01 dB |
+| Electric Piano II | 8.28–9.97 dB | 12.30–13.86 dB |
+| Tine Piano | 5.97–6.52 dB | 9.97–10.41 dB |
+
+All 90 velocity/register captures retain monotonic peak and RMS response.
+Forty-five full-preset comparisons preserve identical float-audio hashes for
+hard-strike endpoints and unchanged acoustic-piano/reed controls. The new
+direct regression passes 486 checks and fails 162 against the earlier model.
+No factory master-level compensation was applied.
+
+The bowed body now keeps its authored resonance frequencies stationary when
+the string pitch moves. Vibrato, ribbon bends and slides move harmonics through
+that response, rather than transposing the body along with the string. The
+existing gain ramps preserve continuity, and a common scale retains the
+previous absolute-mode-sum headroom bound. This affects the 51 existing
+programs with active bowed ranks. Wind and brass bodies keep their prior
+behavior; this correction is specific to bowed strings.
+
+The new bowed regression passes 492 checks and fails 174 against the preceding
+model. In its focused octave-slide comparisons, the maximum harmonic-ratio
+error against a directly played target changes from 4.10–6.19 dB to
+0.003–0.025 dB. This measures the correction to the authored body response,
+not similarity to a recorded violin. A separate 36,115,200-sample comparison
+finds no changed samples for fixed-pitch bowed excitation or the other models
+during seven-semitone slides. Fixed Engine storage grows by 12,800 bytes on
+the measured Linux build; no allocation or work is added to the per-sample
+modal-rotation loop. Control-boundary work increases for moving bowed notes.
+
+[Full-preset dynamics and affected programs](preset-evidence/2026.11.4/continuation/a09/FINDINGS.md) ·
+[Tine regression and parity](preset-evidence/2026.11.4/continuation/a06/summary.json) ·
+[Bowed response, parity and scoped runtime measurements](preset-evidence/2026.11.4/continuation/a10/FINDINGS.md)
+
+The bowed correction follows the qualitative body-filtering relationship in
+[UNSW's violin articulation research](https://www.phys.unsw.edu.au/jw/violinarticulation.html).
+The model's formant positions and widths remain authored approximations.
+These continuation measurements are development evidence. The current README
+download record identifies the separately qualified native source and files.
+
 The audition script produces **138 unnormalized stereo float WAVs** of **74
 existing programs**, totaling **870 seconds**, together with the complete
 523-program, 200-parameter inventory. It includes soft/firm piano examples at

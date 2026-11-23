@@ -1,0 +1,47 @@
+{
+  "baseline_commit": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+  "candidate_description": "Uncommitted final tine strike-independent normalization correction on baseline; exact source hashes below",
+  "scope": "Full factory preset velocity sweep with unchanged preset vectors. Fresh Engine per case; 48kHz stereo float;128-frame blocks;1second hold;zero pressure.",
+  "velocities": [
+    0.15,
+    0.3,
+    0.5,
+    0.7,
+    0.9,
+    1.0
+  ],
+  "notes": [
+    36,
+    60,
+    84
+  ],
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "probe_compile_flags": "-std=c++20 -O3 -DNDEBUG -I yamaha-cs80/src <probe.cpp> <static_core.a> -lpthread",
+  "source_sha256": {
+    "src/core/InstrumentBody.h": "19f9fb23b61ab98fa843c0cf126cb6342ef33e3c62a089fc4c63ae451f470852",
+    "src/core/InstrumentBodyFilter.h": "7b8b1cabcfdc5142f193dc483169469de2faed542f480735b1cfa9d289c69319",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/Engine.h": "5a63047fce7c6e805e7d0d84e09b3b838c5cbdffe331919730bfb488e956ac7e",
+    "src/core/FactoryPresets.cpp": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5",
+    "src/core/OriginalCircuitLibrary.inc": "654b15c08e1f6ae9e6f56f7a9c0beffa5c3bc34b65d60e644b4aa6741afd3c34",
+    "src/core/curated/Keys.inc": "58c1c82d8ded21eb1e1c35980de3730e5c5045d0d0dcc54760230d2f11b1780d",
+    "src/core/CuratedLibraryLevels.inc": "f77ea5567219a8fe59b9ae9e605b04dcf21e9d0c85c8c1c935ea752e3e034538",
+    "src/core/OriginalCircuitLevels.inc": "f077b50779572b7a0b2ea9c2c608b6c569e90b7f5fef52542c195319035a36e1"
+  },
+  "artifact_sha256": {
+    "a09/probe.cpp": "e6fc095e582cbb89b23a1fe44c0e5327f70e9f2a5fbb73b85496294bcfa0b39e",
+    "a09/probe": "cac034c0ec9ca791af6d1cdd3068bc4ca81a402463423f8dfe38fce8383136cf",
+    "a09/baseline-probe": "9e17e7faa497e16690e74622e11665d877c41208ed01dd67269bdb8c28a63366",
+    "a09/candidate_core.a": "ebffc9e86630f5c7c29bceafaef2c74a896b968609c9b65988fba6332ae3cb2f",
+    "a09/candidate_InstrumentBody.h": "19f9fb23b61ab98fa843c0cf126cb6342ef33e3c62a089fc4c63ae451f470852",
+    "a05/baseline_core.a": "aeecba66f7602add88a72e7c35a8574b2ef16f2f4b8f995366051c36946e4516",
+    "a05/metrics.csv": "8b37f9cba9d2567d60c73d2f94ccf13768253c9f21e5ecbc04747292f4c68cc6",
+    "evidence/baseline/inventory.json": "bff48651085358fcc3d1b07ee5f9138f629c84e7fa9e5ae067796395096a0280",
+    "a09/metrics.csv": "266293f686502e12e39e35c2695713fce3ac2c2c877dbc2ee4a0046515b579f8",
+    "a09/baseline-parity-metrics.csv": "3e612d700a1326f1a1552d9ce0682c7722964ffda3e2201dd1834c93b194f716",
+    "a09/summary.json": "fcc03f3871dc5db5f4ee685d7869afa9bd55c8fd250b6d570bfc2e1f6739a0bb",
+    "a09/affected-programs.json": "85f6aeef0637977d88b68ca9a9b4ea3583eea34192cc9f6ae47def7e3cb99143",
+    "a09/compare.py": "ead20eab96f35b200a6a9b82c6fa0d159a1c9e3291f2494811d4d230f10cb490",
+    "a09/FINDINGS.md": "6ee57d24db7ec57f24e78b5a62defe4722c69886215875cb9f7bd7c83dddfc97"
+  }
+}

@@ -99,14 +99,25 @@ platform it supports, with the release candidate installed from its installer.
 | Check | Pass criterion |
 | --- | --- |
 | Scan and load | Appears under its own name; loads with no host warning. |
-| Fresh instance | Starts on the circuit engine; the editor opens at 1600×1000 and resizes down to 1120×700. |
-| Old session | A project saved with a pre-plan build reopens on Legacy and sounds identical. |
+| Fresh instance | Starts on the single Circuit engine; the editor opens at 1600×1000 and resizes down to 1120×700. |
+| Old session | Restores saved musical controls and stable parameter identities, with engine fields normalized to Circuit (`source_performance=1`, `parity_mode=0`). Retired Legacy/Pure processing is not restored; identical historical audio is not a pass criterion. |
+| Instrument-body state | Pre-body sessions restore both bodies off. Earlier body-aware sessions preserve their eight body controls and default missing resonant sizes to 1. Current sessions, user presets and A/B slots restore all ten body controls without inheriting values from the receiving instance. |
+| Factory recall | Selecting a program in Library loads its current recipe at the existing name/address. Opening a saved session preserves its stored patch instead of silently substituting the revised factory recipe. |
 | Automation | Record and play back cutoff, resonance and a tone-tab change; no zipper noise, no jumps. |
 | Program Change | Host program list and incoming Program Change select factory programs. |
 | Offline bounce | Bounce equals realtime apart from oversampling quality (HQ offline); latency is compensated. |
 | MPE / MIDI learn | MPE controller drives per-voice bend and pressure; a learned CC survives save and reload. |
 | Undo / A-B | Host undo and the plugin's own undo do not fight; A/B survives save and reload. |
 | Sleep and transport | Stop, loop and sample-rate changes (44.1 → 96 kHz) produce no clicks or stuck notes. |
+
+These session checks follow the [current Circuit contract](../PARITY_ISOLATION.md)
+and the [instrument-body compatibility contract](../CIRCUIT_LIBRARY_2026_11_4.md#saved-projects-and-program-identities).
+Legacy and Pure sessions intentionally change sound under the single-engine
+policy. Existing body-enabled patches also use the current excitation and
+filtering code, even when their parameter values are unchanged. Keep the earlier
+binary and a rendered reference when a project's previous sound must be retained;
+reselect a factory program from Library to audition its revised voicing. The
+host results below remain unrun until those installed binaries are actually tested.
 
 | Host | macOS | Windows | Linux | Result |
 | --- | --- | --- | --- | --- |

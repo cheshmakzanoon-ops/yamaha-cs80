@@ -1,0 +1,460 @@
+{
+  "source_commit": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+  "renders": 90,
+  "presets": 5,
+  "registers": 3,
+  "all_peak_and_rms_monotonic": true,
+  "per_preset_register": [
+    {
+      "name": "Analog Piano",
+      "midi_note": 36,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 8.178800000000003,
+        "min_adjacent_step_db": 0.5838000000000001,
+        "top_velocity_step_09_to_1_db": 0.5838000000000001,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 7.943299999999994,
+        "min_adjacent_step_db": 0.5730999999999966,
+        "top_velocity_step_09_to_1_db": 0.5730999999999966,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 7.889499999999998,
+        "min_adjacent_step_db": 0.5729000000000042,
+        "top_velocity_step_09_to_1_db": 0.5729000000000042,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 7.357599999999998,
+        "min_adjacent_step_db": 0.5671999999999997,
+        "top_velocity_step_09_to_1_db": 0.5671999999999997,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 0.8145499999999997
+    },
+    {
+      "name": "Analog Piano",
+      "midi_note": 60,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 8.994599999999998,
+        "min_adjacent_step_db": 0.6048000000000009,
+        "top_velocity_step_09_to_1_db": 0.6048000000000009,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 8.352800000000002,
+        "min_adjacent_step_db": 0.5845000000000056,
+        "top_velocity_step_09_to_1_db": 0.5845000000000056,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 8.063500000000005,
+        "min_adjacent_step_db": 0.5775000000000006,
+        "top_velocity_step_09_to_1_db": 0.5775000000000006,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 7.5013000000000005,
+        "min_adjacent_step_db": 0.5660999999999987,
+        "top_velocity_step_09_to_1_db": 0.5660999999999987,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 1.689016
+    },
+    {
+      "name": "Analog Piano",
+      "midi_note": 84,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 8.8689,
+        "min_adjacent_step_db": 0.5863999999999976,
+        "top_velocity_step_09_to_1_db": 0.5863999999999976,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 7.816899999999997,
+        "min_adjacent_step_db": 0.5574000000000012,
+        "top_velocity_step_09_to_1_db": 0.5574000000000012,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 8.160899999999998,
+        "min_adjacent_step_db": 0.5606000000000009,
+        "top_velocity_step_09_to_1_db": 0.5606000000000009,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 7.077300000000001,
+        "min_adjacent_step_db": 0.5448000000000022,
+        "top_velocity_step_09_to_1_db": 0.5448000000000022,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 1.093504
+    },
+    {
+      "name": "Electric Piano I",
+      "midi_note": 36,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 10.175600000000003,
+        "min_adjacent_step_db": 0.6160000000000032,
+        "top_velocity_step_09_to_1_db": 0.6160000000000032,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 9.1905,
+        "min_adjacent_step_db": 0.30870000000000175,
+        "top_velocity_step_09_to_1_db": 0.30870000000000175,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 9.002099999999999,
+        "min_adjacent_step_db": 0.2560000000000002,
+        "top_velocity_step_09_to_1_db": 0.2560000000000002,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 8.749500000000001,
+        "min_adjacent_step_db": 0.18359999999999843,
+        "top_velocity_step_09_to_1_db": 0.18359999999999843,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 13.15887
+    },
+    {
+      "name": "Electric Piano I",
+      "midi_note": 60,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 10.1739,
+        "min_adjacent_step_db": 0.6873000000000005,
+        "top_velocity_step_09_to_1_db": 0.6873000000000005,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 9.297899999999998,
+        "min_adjacent_step_db": 0.2926000000000002,
+        "top_velocity_step_09_to_1_db": 0.2926000000000002,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 9.0674,
+        "min_adjacent_step_db": 0.22710000000000008,
+        "top_velocity_step_09_to_1_db": 0.22710000000000008,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 8.913999999999998,
+        "min_adjacent_step_db": 0.18249999999999744,
+        "top_velocity_step_09_to_1_db": 0.18249999999999744,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 13.182700000000002
+    },
+    {
+      "name": "Electric Piano I",
+      "midi_note": 84,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 9.339900000000004,
+        "min_adjacent_step_db": 0.6118000000000023,
+        "top_velocity_step_09_to_1_db": 0.6118000000000023,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 8.472299999999997,
+        "min_adjacent_step_db": 0.2505999999999986,
+        "top_velocity_step_09_to_1_db": 0.2505999999999986,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 8.221700000000006,
+        "min_adjacent_step_db": 0.17940000000000111,
+        "top_velocity_step_09_to_1_db": 0.17940000000000111,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 8.133,
+        "min_adjacent_step_db": 0.153299999999998,
+        "top_velocity_step_09_to_1_db": 0.153299999999998,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 13.206299999999999
+    },
+    {
+      "name": "Electric Piano II",
+      "midi_note": 36,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 12.7958,
+        "min_adjacent_step_db": 0.9223999999999997,
+        "top_velocity_step_09_to_1_db": 0.9223999999999997,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 10.549900000000001,
+        "min_adjacent_step_db": 0.6411000000000016,
+        "top_velocity_step_09_to_1_db": 0.6411000000000016,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 9.972700000000003,
+        "min_adjacent_step_db": 0.5089000000000041,
+        "top_velocity_step_09_to_1_db": 0.5089000000000041,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 8.7484,
+        "min_adjacent_step_db": 0.18159999999999954,
+        "top_velocity_step_09_to_1_db": 0.18159999999999954,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 13.056439999999998
+    },
+    {
+      "name": "Electric Piano II",
+      "midi_note": 60,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 9.330900000000003,
+        "min_adjacent_step_db": 0.3266999999999989,
+        "top_velocity_step_09_to_1_db": 0.3266999999999989,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 9.154399999999999,
+        "min_adjacent_step_db": 0.2515999999999998,
+        "top_velocity_step_09_to_1_db": 0.2515999999999998,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 9.047800000000002,
+        "min_adjacent_step_db": 0.22070000000000078,
+        "top_velocity_step_09_to_1_db": 0.22070000000000078,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 8.915500000000002,
+        "min_adjacent_step_db": 0.1819999999999986,
+        "top_velocity_step_09_to_1_db": 0.1819999999999986,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 12.687799999999998
+    },
+    {
+      "name": "Electric Piano II",
+      "midi_note": 84,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 10.345299999999998,
+        "min_adjacent_step_db": 0.8025999999999982,
+        "top_velocity_step_09_to_1_db": 0.8025999999999982,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 8.680299999999999,
+        "min_adjacent_step_db": 0.3313999999999986,
+        "top_velocity_step_09_to_1_db": 0.3313999999999986,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 8.279999999999998,
+        "min_adjacent_step_db": 0.2216999999999949,
+        "top_velocity_step_09_to_1_db": 0.2216999999999949,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 8.021899999999999,
+        "min_adjacent_step_db": 0.1465999999999994,
+        "top_velocity_step_09_to_1_db": 0.1465999999999994,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 13.300860000000002
+    },
+    {
+      "name": "Tine Piano",
+      "midi_note": 36,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 10.2656,
+        "min_adjacent_step_db": 0.650500000000001,
+        "top_velocity_step_09_to_1_db": 0.650500000000001,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 7.626600000000003,
+        "min_adjacent_step_db": 0.3910000000000018,
+        "top_velocity_step_09_to_1_db": 0.3910000000000018,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 6.5244,
+        "min_adjacent_step_db": 0.18140000000000356,
+        "top_velocity_step_09_to_1_db": 0.18140000000000356,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 6.184200000000001,
+        "min_adjacent_step_db": 0.09269999999999712,
+        "top_velocity_step_09_to_1_db": 0.09269999999999712,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 10.906279999999999
+    },
+    {
+      "name": "Tine Piano",
+      "midi_note": 60,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 10.671300000000002,
+        "min_adjacent_step_db": 0.6858000000000004,
+        "top_velocity_step_09_to_1_db": 0.6858000000000004,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 7.679099999999998,
+        "min_adjacent_step_db": 0.38780000000000214,
+        "top_velocity_step_09_to_1_db": 0.38780000000000214,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 6.462400000000002,
+        "min_adjacent_step_db": 0.15140000000000242,
+        "top_velocity_step_09_to_1_db": 0.15140000000000242,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 6.225199999999997,
+        "min_adjacent_step_db": 0.08950000000000102,
+        "top_velocity_step_09_to_1_db": 0.08950000000000102,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 11.004059999999999
+    },
+    {
+      "name": "Tine Piano",
+      "midi_note": 84,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 9.319400000000002,
+        "min_adjacent_step_db": 0.564700000000002,
+        "top_velocity_step_09_to_1_db": 0.564700000000002,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 7.359899999999996,
+        "min_adjacent_step_db": 0.3766999999999996,
+        "top_velocity_step_09_to_1_db": 0.3766999999999996,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 5.972899999999996,
+        "min_adjacent_step_db": 0.10349999999999682,
+        "top_velocity_step_09_to_1_db": 0.10349999999999682,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 5.835900000000002,
+        "min_adjacent_step_db": 0.06850000000000023,
+        "top_velocity_step_09_to_1_db": 0.06850000000000023,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 10.55489
+    },
+    {
+      "name": "Reed Piano",
+      "midi_note": 36,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 8.670099999999998,
+        "min_adjacent_step_db": 0.6731999999999978,
+        "top_velocity_step_09_to_1_db": 0.6731999999999978,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 7.949200000000001,
+        "min_adjacent_step_db": 0.5978999999999992,
+        "top_velocity_step_09_to_1_db": 0.5978999999999992,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 7.889400000000002,
+        "min_adjacent_step_db": 0.5917999999999992,
+        "top_velocity_step_09_to_1_db": 0.5917999999999992,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 7.8016000000000005,
+        "min_adjacent_step_db": 0.5858999999999988,
+        "top_velocity_step_09_to_1_db": 0.5858999999999988,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 1.28852
+    },
+    {
+      "name": "Reed Piano",
+      "midi_note": 60,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 8.889599999999998,
+        "min_adjacent_step_db": 0.7066999999999979,
+        "top_velocity_step_09_to_1_db": 0.7066999999999979,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 8.010500000000004,
+        "min_adjacent_step_db": 0.6038999999999994,
+        "top_velocity_step_09_to_1_db": 0.6038999999999994,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 7.907400000000003,
+        "min_adjacent_step_db": 0.5925999999999974,
+        "top_velocity_step_09_to_1_db": 0.5925999999999974,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 7.823599999999999,
+        "min_adjacent_step_db": 0.5865000000000009,
+        "top_velocity_step_09_to_1_db": 0.5865000000000009,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 1.7232000000000003
+    },
+    {
+      "name": "Reed Piano",
+      "midi_note": 84,
+      "cases": 6,
+      "peak_dbfs": {
+        "soft_to_hard_db": 8.892200000000003,
+        "min_adjacent_step_db": 0.7185999999999986,
+        "top_velocity_step_09_to_1_db": 0.7185999999999986,
+        "monotonic": true
+      },
+      "rms_025_250_dbfs": {
+        "soft_to_hard_db": 8.766299999999998,
+        "min_adjacent_step_db": 0.6976000000000013,
+        "top_velocity_step_09_to_1_db": 0.6976000000000013,
+        "monotonic": true
+      },
+      "rms_300_800_dbfs": {
+        "soft_to_hard_db": 8.770299999999999,
+        "min_adjacent_step_db": 0.6975999999999942,
+        "top_velocity_step_09_to_1_db": 0.6975999999999942,
+        "monotonic": true
+      },
+      "fund_025_250_dbfs": {
+        "soft_to_hard_db": 8.756600000000002,
+        "min_adjacent_step_db": 0.6988000000000021,
+        "top_velocity_step_09_to_1_db": 0.6988000000000021,
+        "monotonic": true
+      },
+      "spectral_soft_to_hard_change_db": 0.1786999999999992
+    }
+  ],
+  "conclusion": "No complete-preset loudness reversal observed. Tine normalization compresses the upper velocity range: late RMS .9\u21921 gains only .10\u2013.26 dB for Tine Piano/Electric Piano I and .22\u2013.51 dB for Electric Piano II. Correcting velocity-dependent normalization would increase soft-hard dynamic contrast without changing hard-strike authored headroom, but softer/mid strikes will be quieter; keep exact hard endpoint and rerun existing library gates, do not increase master volume blindly. This is an expressive-dynamics correction, not acoustic similarity proof."
+}

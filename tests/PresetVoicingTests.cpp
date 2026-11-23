@@ -428,10 +428,10 @@ void struckVelocityLevel()
     // gentle and a firm key strike, across bass, middle and treble registers.
     // Keep their complete factory patches, including chorus and level trims.
     constexpr double minimumGainDb = 4.0;
-    struct Case { const char* name; float previousStaticLevel, previousInitialLevel; };
-    for (const auto& test : { Case { "Electric Piano I", 0.24f, 0.74f },
-                              Case { "Electric Piano II", 0.25f, 0.74f },
-                              Case { "Kalimba", 0.30f, 0.78f } })
+    struct Case { const char* name; float staticLevel; };
+    for (const auto& test : { Case { "Electric Piano I", 0.24f },
+                              Case { "Electric Piano II", 0.25f },
+                              Case { "Kalimba", 0.30f } })
     {
         const auto& voice = preset(test.name);
         for (const int note : { 48, 60, 84 })
@@ -450,16 +450,21 @@ void struckVelocityLevel()
                         test.name, note, gainDb, db(softOnset));
         }
 
-        // Recreate the diagnosed static-VCA-floor regression without removing
-        // the new excitation or its velocity-dependent spectrum. This proves
-        // that an apparently expressive change in color cannot pass the level
-        // criterion while the body remains compressed in amplitude.
+        // A fixed-level negative control keeps the excitation's changing
+        // spectrum but removes velocity gain from both rank VCAs. Reusing old
+        // partially responsive settings is no longer a negative control:
+        // corrected tine normalization restores their amplitude contrast too.
+        // The same 4 dB acceptance gate must reject colour without a useful
+        // level response; silence must not satisfy this diagnostic.
         auto compressed = voice.values;
-        compressed[chParam(0, CP_vLevel)] = test.previousStaticLevel;
-        compressed[chParam(0, CP_initLevel)] = test.previousInitialLevel;
+        compressed[chParam(0, CP_vLevel)] = test.staticLevel;
+        compressed[chParam(0, CP_initLevel)] = 0.0f;
+        compressed[chParam(1, CP_initLevel)] = 0.0f;
         const auto soft = render(compressed, voice.name + " compressed control", 60, 0.30f, 0.30);
         const auto hard = render(compressed, voice.name + " compressed control", 60, 0.85f, 0.30);
         const double gainDb = db(ratio(hard.rms(0.03, 0.23), soft.rms(0.03, 0.23)));
+        check(soft.rms(0.03, 0.23) > audibleRms && hard.rms(0.03, 0.23) > audibleRms,
+              voice.name + ": fixed-level negative control remains audible");
         check(gainDb < minimumGainDb,
               voice.name + ": the compressed-body negative control fails the amplitude-dynamics gate");
         std::printf("CONTROL   %-19s compressed hard/soft onset %+6.2f dB\n", test.name, gainDb);

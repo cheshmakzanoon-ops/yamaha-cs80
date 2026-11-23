@@ -1,0 +1,705 @@
+{
+  "scope": "Matched 90-case full-factory-preset sweep. Body model refinement only; preset parameter vectors unchanged. Exact full-strike and non-tine endpoint checks use identical float-audio FNV1a64 hashes; rounded-baseline metrics are labelled separately.",
+  "renders": 90,
+  "all_peak_and_rms_monotonic": true,
+  "all_nominal_fundamental_monotonic": true,
+  "exact_audio_parity": {
+    "compared_cases": 45,
+    "samples_per_case": 96000,
+    "identical_cases": 45,
+    "different_cases": [],
+    "note": "Same executable probe source, fresh Engine per capture, 48 kHz stereo float, 128-frame blocks, one-second hold. FNV1a64 checks byte identity, not cryptographic provenance; files additionally SHA256-bound."
+  },
+  "per_preset_register": [
+    {
+      "name": "Analog Piano",
+      "midi_note": 36,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 8.178800000000003,
+          "candidate_soft_to_hard_db": 8.17872097668862,
+          "span_change_db": -7.902331138254226e-05,
+          "baseline_top_step_db": 0.5838000000000001,
+          "candidate_top_step_db": 0.5837484960655424,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.2140558456461576e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 4.6882752926080684e-05
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.943299999999994,
+          "candidate_soft_to_hard_db": 7.943284678147698,
+          "span_change_db": -1.5321852295357985e-05,
+          "baseline_top_step_db": 0.5730999999999966,
+          "candidate_top_step_db": 0.5730944742820938,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.598760361711584e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -2.0665751321757853e-05
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 7.889499999999998,
+          "candidate_soft_to_hard_db": 7.889510143644372,
+          "span_change_db": 1.0143644374238647e-05,
+          "baseline_top_step_db": 0.5729000000000042,
+          "candidate_top_step_db": 0.5728985581784727,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 7.30140076399266e-06,
+          "soft_endpoint_delta_db_rounded_baseline": -2.842243610245987e-06
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.357599999999998,
+          "candidate_soft_to_hard_db": 7.357580803825229,
+          "span_change_db": -1.919617476886515e-05,
+          "baseline_top_step_db": 0.5671999999999997,
+          "candidate_top_step_db": 0.5671922965083525,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.5345599628346918e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 3.850575140518231e-06
+        }
+      }
+    },
+    {
+      "name": "Analog Piano",
+      "midi_note": 60,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 8.994599999999998,
+          "candidate_soft_to_hard_db": 8.99464657338051,
+          "span_change_db": 4.6573380512171525e-05,
+          "baseline_top_step_db": 0.6048000000000009,
+          "candidate_top_step_db": 0.6047599564673156,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 7.3046746287275255e-06,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9268705883444e-05
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.352800000000002,
+          "candidate_soft_to_hard_db": 8.352754370255106,
+          "span_change_db": -4.562974489630278e-05,
+          "baseline_top_step_db": 0.5845000000000056,
+          "candidate_top_step_db": 0.5844762433157769,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.096026342395362e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 3.466948147234916e-05
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 8.063500000000005,
+          "candidate_soft_to_hard_db": 8.063486703289414,
+          "span_change_db": -1.3296710591248484e-05,
+          "baseline_top_step_db": 0.5775000000000006,
+          "candidate_top_step_db": 0.5775179212276598,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -2.5542660921473725e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -1.2245950330225241e-05
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.5013000000000005,
+          "candidate_soft_to_hard_db": 7.501238754766668,
+          "span_change_db": -6.12452333328406e-05,
+          "baseline_top_step_db": 0.5660999999999987,
+          "candidate_top_step_db": 0.5660331749058543,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.4379879529922164e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 2.6865353802918435e-05
+        }
+      }
+    },
+    {
+      "name": "Analog Piano",
+      "midi_note": 84,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 8.8689,
+          "candidate_soft_to_hard_db": 8.868827208523747,
+          "span_change_db": -7.279147625283144e-05,
+          "baseline_top_step_db": 0.5863999999999976,
+          "candidate_top_step_db": 0.5863420266305788,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.9493743027918526e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 3.329773322491292e-05
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.816899999999997,
+          "candidate_soft_to_hard_db": 7.81685047376628,
+          "span_change_db": -4.95262337167901e-05,
+          "baseline_top_step_db": 0.5574000000000012,
+          "candidate_top_step_db": 0.5573715656567089,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.7399232334014414e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 3.212700138277569e-05
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 8.160899999999998,
+          "candidate_soft_to_hard_db": 8.160836301879158,
+          "span_change_db": -6.369812084017212e-05,
+          "baseline_top_step_db": 0.5606000000000009,
+          "candidate_top_step_db": 0.5605191368309903,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.6179530987112685e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 2.751858985305944e-05
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.077300000000001,
+          "candidate_soft_to_hard_db": 7.077269822432122,
+          "span_change_db": -3.0177567879263734e-05,
+          "baseline_top_step_db": 0.5448000000000022,
+          "candidate_top_step_db": 0.5448436877269742,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.0396610875318402e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 4.0574178754582135e-05
+        }
+      }
+    },
+    {
+      "name": "Electric Piano I",
+      "midi_note": 36,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 10.175600000000003,
+          "candidate_soft_to_hard_db": 14.083074609686701,
+          "span_change_db": 3.907474609686698,
+          "baseline_top_step_db": 0.6160000000000032,
+          "candidate_top_step_db": 1.2569879024611694,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 3.441607141496661e-07,
+          "soft_endpoint_delta_db_rounded_baseline": -3.907474265525984
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 9.1905,
+          "candidate_soft_to_hard_db": 13.08910177505042,
+          "span_change_db": 3.8986017750504196,
+          "baseline_top_step_db": 0.30870000000000175,
+          "candidate_top_step_db": 0.9474347400380623,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.4851807808469175e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.898616626858228
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 9.002099999999999,
+          "candidate_soft_to_hard_db": 12.902299308037911,
+          "span_change_db": 3.9001993080379123,
+          "baseline_top_step_db": 0.2560000000000002,
+          "candidate_top_step_db": 0.8951768553880939,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -4.220049810044202e-06,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9002035280877223
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.749500000000001,
+          "candidate_soft_to_hard_db": 12.648298117719907,
+          "span_change_db": 3.898798117719906,
+          "baseline_top_step_db": 0.18359999999999843,
+          "candidate_top_step_db": 0.8223488254346165,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -2.476862401579183e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.898822886343922
+        }
+      }
+    },
+    {
+      "name": "Electric Piano I",
+      "midi_note": 60,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 10.1739,
+          "candidate_soft_to_hard_db": 14.09501160654159,
+          "span_change_db": 3.92111160654159,
+          "baseline_top_step_db": 0.6873000000000005,
+          "candidate_top_step_db": 1.327612142634866,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 3.083122858882348e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9210807753130013
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 9.297899999999998,
+          "candidate_soft_to_hard_db": 13.243533200564858,
+          "span_change_db": 3.9456332005648598,
+          "baseline_top_step_db": 0.2926000000000002,
+          "candidate_top_step_db": 0.9375337545067133,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.2259879529352702e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9456209406853304
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 9.0674,
+          "candidate_soft_to_hard_db": 13.013857034046666,
+          "span_change_db": 3.9464570340466665,
+          "baseline_top_step_db": 0.22710000000000008,
+          "candidate_top_step_db": 0.872373979771055,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -4.5975400070119576e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9465030094467366
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.913999999999998,
+          "candidate_soft_to_hard_db": 12.859701888550859,
+          "span_change_db": 3.945701888550861,
+          "baseline_top_step_db": 0.18249999999999744,
+          "candidate_top_step_db": 0.8274325061991803,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -4.23361604937611e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9457442247113548
+        }
+      }
+    },
+    {
+      "name": "Electric Piano I",
+      "midi_note": 84,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 9.339900000000004,
+          "candidate_soft_to_hard_db": 13.317387380501728,
+          "span_change_db": 3.9774873805017243,
+          "baseline_top_step_db": 0.6118000000000023,
+          "candidate_top_step_db": 1.25973214718368,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 5.514839525488924e-06,
+          "soft_endpoint_delta_db_rounded_baseline": -3.977481865662199
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.472299999999997,
+          "candidate_soft_to_hard_db": 12.476866770727032,
+          "span_change_db": 4.004566770727035,
+          "baseline_top_step_db": 0.2505999999999986,
+          "candidate_top_step_db": 0.9033411748981379,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 3.693672200810738e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -4.004529834005027
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 8.221700000000006,
+          "candidate_soft_to_hard_db": 12.226941007510952,
+          "span_change_db": 4.005241007510946,
+          "baseline_top_step_db": 0.17940000000000111,
+          "candidate_top_step_db": 0.8324572222653259,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.9365730629772315e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -4.005260373241576
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.133,
+          "candidate_soft_to_hard_db": 12.13776492345967,
+          "span_change_db": 4.004764923459671,
+          "baseline_top_step_db": 0.153299999999998,
+          "candidate_top_step_db": 0.8060526585862107,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 3.894873469434401e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -4.004725974724977
+        }
+      }
+    },
+    {
+      "name": "Electric Piano II",
+      "midi_note": 36,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 12.7958,
+          "candidate_soft_to_hard_db": 16.723468404119817,
+          "span_change_db": 3.9276684041198173,
+          "baseline_top_step_db": 0.9223999999999997,
+          "candidate_top_step_db": 1.5793273341907117,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 3.399233142076241e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9276344117883966
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 10.549900000000001,
+          "candidate_soft_to_hard_db": 14.441479517322385,
+          "span_change_db": 3.891579517322384,
+          "baseline_top_step_db": 0.6411000000000016,
+          "candidate_top_step_db": 1.2788975988656475,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.527717609586034e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.89161479449848
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 9.972700000000003,
+          "candidate_soft_to_hard_db": 13.864850683870927,
+          "span_change_db": 3.8921506838709234,
+          "baseline_top_step_db": 0.5089000000000041,
+          "candidate_top_step_db": 1.1469370213672363,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 3.7732071596963124e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.8921129517993265
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.7484,
+          "candidate_soft_to_hard_db": 12.64180534222118,
+          "span_change_db": 3.893405342221179,
+          "baseline_top_step_db": 0.18159999999999954,
+          "candidate_top_step_db": 0.8195588439741428,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 2.1240826320934048e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.893384101394858
+        }
+      }
+    },
+    {
+      "name": "Electric Piano II",
+      "midi_note": 60,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 9.330900000000003,
+          "candidate_soft_to_hard_db": 13.218376280488364,
+          "span_change_db": 3.887476280488361,
+          "baseline_top_step_db": 0.3266999999999989,
+          "candidate_top_step_db": 0.9766348988875713,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.3710665857757931e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.887462569822503
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 9.154399999999999,
+          "candidate_soft_to_hard_db": 13.094980564765699,
+          "span_change_db": 3.9405805647656997,
+          "baseline_top_step_db": 0.2515999999999998,
+          "candidate_top_step_db": 0.8959101505400184,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 2.751894682617717e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9405530458188736
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 9.047800000000002,
+          "candidate_soft_to_hard_db": 12.988283157235198,
+          "span_change_db": 3.940483157235196,
+          "baseline_top_step_db": 0.22070000000000078,
+          "candidate_top_step_db": 0.8650713608936478,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -2.8714977307942036e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.940511872212504
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.915500000000002,
+          "candidate_soft_to_hard_db": 12.856274272948294,
+          "span_change_db": 3.9407742729482926,
+          "baseline_top_step_db": 0.1819999999999986,
+          "candidate_top_step_db": 0.8263038560981215,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -4.285935215619929e-06,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9407785588835083
+        }
+      }
+    },
+    {
+      "name": "Electric Piano II",
+      "midi_note": 84,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 10.345299999999998,
+          "candidate_soft_to_hard_db": 14.333227876440667,
+          "span_change_db": 3.9879278764406685,
+          "baseline_top_step_db": 0.8025999999999982,
+          "candidate_top_step_db": 1.468708024034509,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.704913911737549e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.987944925579786
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.680299999999999,
+          "candidate_soft_to_hard_db": 12.694458803011102,
+          "span_change_db": 4.014158803011103,
+          "baseline_top_step_db": 0.3313999999999986,
+          "candidate_top_step_db": 0.9864233627818493,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.4707110242540011e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -4.0141440959008605
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 8.279999999999998,
+          "candidate_soft_to_hard_db": 12.296230739094664,
+          "span_change_db": 4.0162307390946665,
+          "baseline_top_step_db": 0.2216999999999949,
+          "candidate_top_step_db": 0.8771782429727004,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -2.0366707516927818e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -4.0162511058021835
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.021899999999999,
+          "candidate_soft_to_hard_db": 12.035888380005794,
+          "span_change_db": 4.013988380005795,
+          "baseline_top_step_db": 0.1465999999999994,
+          "candidate_top_step_db": 0.8014458335435393,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -9.254997667795806e-06,
+          "soft_endpoint_delta_db_rounded_baseline": -4.013997635003463
+        }
+      }
+    },
+    {
+      "name": "Reed Piano",
+      "midi_note": 36,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 8.670099999999998,
+          "candidate_soft_to_hard_db": 8.670190617922021,
+          "span_change_db": 9.061792202302854e-05,
+          "baseline_top_step_db": 0.6731999999999978,
+          "candidate_top_step_db": 0.6732467743380219,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 4.7919576484645177e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -4.2698345538383364e-05
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.949200000000001,
+          "candidate_soft_to_hard_db": 7.949144177814247,
+          "span_change_db": -5.5822185753839904e-05,
+          "baseline_top_step_db": 0.5978999999999992,
+          "candidate_top_step_db": 0.5979070008598413,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.121045525844579e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 2.4611730495394113e-05
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 7.889400000000002,
+          "candidate_soft_to_hard_db": 7.889373495216638,
+          "span_change_db": -2.6504783363634488e-05,
+          "baseline_top_step_db": 0.5917999999999992,
+          "candidate_top_step_db": 0.5917783601432234,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -4.7800595666558365e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -2.1295812302923878e-05
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.8016000000000005,
+          "candidate_soft_to_hard_db": 7.801638532751575,
+          "span_change_db": 3.853275157439384e-05,
+          "baseline_top_step_db": 0.5858999999999988,
+          "candidate_top_step_db": 0.5859047833634179,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 2.4536271631347972e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -1.399647994304587e-05
+        }
+      }
+    },
+    {
+      "name": "Reed Piano",
+      "midi_note": 60,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 8.889599999999998,
+          "candidate_soft_to_hard_db": 8.889645054796585,
+          "span_change_db": 4.505479658689637e-05,
+          "baseline_top_step_db": 0.7066999999999979,
+          "candidate_top_step_db": 0.7067379976133985,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.630736733915228e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -2.8747429247744094e-05
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.010500000000004,
+          "candidate_soft_to_hard_db": 8.010468011311161,
+          "span_change_db": -3.198868884268791e-05,
+          "baseline_top_step_db": 0.6038999999999994,
+          "candidate_top_step_db": 0.6039085840008269,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -2.7580277961902766e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 4.408410880785141e-06
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 7.907400000000003,
+          "candidate_soft_to_hard_db": 7.907341302591902,
+          "span_change_db": -5.869740810027224e-05,
+          "baseline_top_step_db": 0.5925999999999974,
+          "candidate_top_step_db": 0.5925854524373122,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.425347489383057e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 2.444393320644167e-05
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.823599999999999,
+          "candidate_soft_to_hard_db": 7.823546012104632,
+          "span_change_db": -5.398789536670279e-05,
+          "baseline_top_step_db": 0.5865000000000009,
+          "candidate_top_step_db": 0.5865010155785946,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -3.846705088861313e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 1.5520844478089657e-05
+        }
+      }
+    },
+    {
+      "name": "Reed Piano",
+      "midi_note": 84,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 8.892200000000003,
+          "candidate_soft_to_hard_db": 8.89216579233322,
+          "span_change_db": -3.420766678274845e-05,
+          "baseline_top_step_db": 0.7185999999999986,
+          "candidate_top_step_db": 0.718649376300533,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.462024421172714e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 4.882791099447559e-05
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.766299999999998,
+          "candidate_soft_to_hard_db": 8.766298264711608,
+          "span_change_db": -1.7352883894261595e-06,
+          "baseline_top_step_db": 0.6976000000000013,
+          "candidate_top_step_db": 0.6976568104272154,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 7.476700684350135e-06,
+          "soft_endpoint_delta_db_rounded_baseline": 9.211989073776294e-06
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 8.770299999999999,
+          "candidate_soft_to_hard_db": 8.770299409707505,
+          "span_change_db": -5.90292493996003e-07,
+          "baseline_top_step_db": 0.6975999999999942,
+          "candidate_top_step_db": 0.6975511197753761,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.2799951022657297e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -1.2209658528661294e-05
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 8.756600000000002,
+          "candidate_soft_to_hard_db": 8.756503981551838,
+          "span_change_db": -9.60184481648696e-05,
+          "baseline_top_step_db": 0.6988000000000021,
+          "candidate_top_step_db": 0.6987977260916338,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -4.98825473691511e-05,
+          "soft_endpoint_delta_db_rounded_baseline": 4.61359007957185e-05
+        }
+      }
+    },
+    {
+      "name": "Tine Piano",
+      "midi_note": 36,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 10.2656,
+          "candidate_soft_to_hard_db": 13.395738050586203,
+          "span_change_db": 3.130138050586204,
+          "baseline_top_step_db": 0.650500000000001,
+          "candidate_top_step_db": 1.0668119942513954,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.0646266197511522e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.1301486968524017
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.626600000000003,
+          "candidate_soft_to_hard_db": 11.381919759826793,
+          "span_change_db": 3.75531975982679,
+          "baseline_top_step_db": 0.3910000000000018,
+          "candidate_top_step_db": 0.9220232846603622,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 4.535153419027438e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.7552744082925997
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 6.5244,
+          "candidate_soft_to_hard_db": 10.4138768441006,
+          "span_change_db": 3.8894768441005994,
+          "baseline_top_step_db": 0.18140000000000356,
+          "candidate_top_step_db": 0.8092690523096806,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 2.009370397360044e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.8894567503966258
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 6.184200000000001,
+          "candidate_soft_to_hard_db": 10.084451952298704,
+          "span_change_db": 3.900251952298703,
+          "baseline_top_step_db": 0.09269999999999712,
+          "candidate_top_step_db": 0.7318737517579805,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.9911241551540115e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9002718635402545
+        }
+      }
+    },
+    {
+      "name": "Tine Piano",
+      "midi_note": 60,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 10.671300000000002,
+          "candidate_soft_to_hard_db": 13.809988993141335,
+          "span_change_db": 3.138688993141333,
+          "baseline_top_step_db": 0.6858000000000004,
+          "candidate_top_step_db": 1.081266164262729,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -1.787053487944945e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.1387068636762123
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.679099999999998,
+          "candidate_soft_to_hard_db": 11.478264551956638,
+          "span_change_db": 3.7991645519566397,
+          "baseline_top_step_db": 0.38780000000000214,
+          "candidate_top_step_db": 0.9204413505389901,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.3410925451040612e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.7991511410311887
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 6.462400000000002,
+          "candidate_soft_to_hard_db": 10.399754190967343,
+          "span_change_db": 3.9373541909673406,
+          "baseline_top_step_db": 0.15140000000000242,
+          "candidate_top_step_db": 0.7870727010698673,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -2.9698413612777586e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9373838893809534
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 6.225199999999997,
+          "candidate_soft_to_hard_db": 10.171751194919615,
+          "span_change_db": 3.9465511949196177,
+          "baseline_top_step_db": 0.08950000000000102,
+          "candidate_top_step_db": 0.7348319544203719,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -2.8451400570617125e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9465796463201883
+        }
+      }
+    },
+    {
+      "name": "Tine Piano",
+      "midi_note": 84,
+      "measurements": {
+        "peak_dbfs": {
+          "baseline_soft_to_hard_db": 9.319400000000002,
+          "candidate_soft_to_hard_db": 12.342855838117305,
+          "span_change_db": 3.023455838117304,
+          "baseline_top_step_db": 0.564700000000002,
+          "candidate_top_step_db": 0.9579716638214215,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -8.584455393645385e-06,
+          "soft_endpoint_delta_db_rounded_baseline": -3.0234644225726974
+        },
+        "rms_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 7.359899999999996,
+          "candidate_soft_to_hard_db": 11.175223294341642,
+          "span_change_db": 3.8153232943416455,
+          "baseline_top_step_db": 0.3766999999999996,
+          "candidate_top_step_db": 0.9036894579674275,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.78569801789763e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.8153054373614665
+        },
+        "rms_300_800_dbfs": {
+          "baseline_soft_to_hard_db": 5.972899999999996,
+          "candidate_soft_to_hard_db": 9.967921063751639,
+          "span_change_db": 3.9950210637516435,
+          "baseline_top_step_db": 0.10349999999999682,
+          "candidate_top_step_db": 0.7490345304783119,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": 1.5200380850899364e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -3.9950058633707926
+        },
+        "fund_025_250_dbfs": {
+          "baseline_soft_to_hard_db": 5.835900000000002,
+          "candidate_soft_to_hard_db": 9.841126544793955,
+          "span_change_db": 4.005226544793953,
+          "baseline_top_step_db": 0.06850000000000023,
+          "candidate_top_step_db": 0.7215305531802549,
+          "candidate_monotonic": true,
+          "hard_endpoint_delta_db_rounded_baseline": -4.60688746635185e-05,
+          "soft_endpoint_delta_db_rounded_baseline": -4.005272613668616
+        }
+      }
+    }
+  ]
+}

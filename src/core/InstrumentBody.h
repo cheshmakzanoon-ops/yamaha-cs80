@@ -154,10 +154,11 @@ public:
         hitEnvelope = 1.0;
         configureExcitation();
 
+        double maximumSum = 0.0;
         if (model == bell || model == vibes || model == marimba || model == celesta)
             makeBarModes();
         else if (model == tine)
-            makeTineModes();
+            maximumSum = makeTineModes();
         else
             makeHarmonicModes(note);
 
@@ -166,16 +167,32 @@ public:
         // Bound the sum of absolute mode amplitudes at every colour setting.
         // This is an authored excitation level, not a hidden output limiter or
         // post-render normalization.  It does not grow as upper modes decay.
-        double maximumSum = 0.0;
-        for (int i = 0; i < count; ++i)
-            maximumSum += std::max(modes[static_cast<std::size_t>(i)].dark,
-                                   modes[static_cast<std::size_t>(i)].bright);
+        // Tine excitation supplies the full-strike bound: normalizing its
+        // quieter strikes separately would boost the fundamental as the
+        // upper partials recede, compressing the intended touch response.
+        if (model != tine)
+            for (int i = 0; i < count; ++i)
+                maximumSum += std::max(modes[static_cast<std::size_t>(i)].dark,
+                                       modes[static_cast<std::size_t>(i)].bright);
         const double scale = 0.72 / std::max(maximumSum, 1.0e-12);
         for (int i = 0; i < count; ++i)
         {
             auto& m = modes[static_cast<std::size_t>(i)];
             m.dark *= scale;
             m.bright *= scale;
+        }
+        if (model == bowed)
+        {
+            bowedResponseBound = 0.0;
+            bowedBoundGain = 1.0;
+            for (int i = 0; i < count; ++i)
+            {
+                const auto index = static_cast<std::size_t>(i);
+                const auto& m = modes[index];
+                bowedResponseInverse[index] = 1.0 / bowedFormant(keyHz * m.ratio);
+                bowedResponseGain[index] = 1.0;
+                bowedResponseBound += std::max(m.dark, m.bright);
+            }
         }
     }
 
@@ -247,6 +264,7 @@ private:
     static constexpr double twoPi = 2.0 * pi;
     static constexpr int maximumModes = 48;
     static constexpr int controlPeriod = 16;
+    static constexpr int harmonicModeCount = 24;
 
     struct Mode
     {
@@ -263,6 +281,10 @@ private:
     };
 
     std::array<Mode, maximumModes> modes {};
+    // Bowed excitation has 24 harmonic modes. Keep its response history out
+    // of every Mode so struck models do not pay 48 slots of extra storage.
+    std::array<double, harmonicModeCount> bowedResponseInverse {}, bowedResponseGain {};
+    double bowedResponseBound = 0.0, bowedBoundGain = 1.0;
     double sampleRate = 96000.0, outputRate = 48000.0;
     double keyHz = 261.625565, strike = 0.7, initialColour = 0.5, decayScale = 1.0;
     double bodySize = 1.0, contactVariation = 1.0, pluckOffset = 0.0;
@@ -387,6 +409,17 @@ private:
         m.pickupPower = pickupPower;
     }
 
+    double bowedFormant(double frequency) const noexcept
+    {
+        // The body stays the same size during vibrato or a slide. Moving
+        // string harmonics cross its response instead of transposing it.
+        // https://www.phys.unsw.edu.au/jw/violinarticulation.html
+        // These broad formants remain authored profiles, not a measured violin.
+        return 0.32 + 0.62 * bodyResonance(frequency, 460.0, 340.0)
+             + 0.48 * resonance(frequency * bowedMiddleScale, 1600.0, 700.0)
+             + 0.72 * resonance(frequency * bowedBridgeScale, 2900.0, 1000.0);
+    }
+
     double stringWeight(int harmonic, double colour) const noexcept
     {
         const double h = static_cast<double>(harmonic);
@@ -447,9 +480,7 @@ private:
                 // Low signature modes scale more strongly with body size
                 // than the broad upper bridge/body response. Multiplying the
                 // probe frequency scales both each center and its width.
-                const double formant = 0.32 + 0.62 * bodyResonance(frequency, 460.0, 340.0)
-                                           + 0.48 * resonance(frequency * bowedMiddleScale, 1600.0, 700.0)
-                                           + 0.72 * resonance(frequency * bowedBridgeScale, 2900.0, 1000.0);
+                const double formant = bowedFormant(frequency);
                 return formant * std::pow(h, -0.92 - 0.25 * (1.0 - strike))
                      * std::exp(-(h - 1.0) / (3.0 + 16.0 * colour + 8.0 * strike));
             }
@@ -544,7 +575,7 @@ private:
         // No modes are permanently culled by onset pitch: a subsequent large
         // downward ribbon bend can bring a formerly ultrasonic mode back.
         const double harmonicBudget = model == piano
-            ? std::clamp(24.0 + 0.75 * std::max(0.0, 60.0 - note), 24.0, 42.0) : 24.0;
+            ? std::clamp(24.0 + 0.75 * std::max(0.0, 60.0 - note), 24.0, 42.0) : harmonicModeCount;
         const int harmonics = static_cast<int>(std::ceil(harmonicBudget));
         const std::uint32_t principalPhaseSeed = state;
         for (int harmonic = 1; harmonic <= harmonics; ++harmonic)
@@ -625,22 +656,40 @@ private:
         }
     }
 
-    void makeTineModes() noexcept
+    double makeTineModes() noexcept
     {
         // Fundamental + pickup odd harmonics, with a brief inharmonic tine
         // bending component.  A reed model uses a separate dense even/odd law.
         const double edge = 0.20 + 0.80 * strike * strike;
         const double loss = registerLossScale(0.38);
         const double bellRegister = std::clamp(std::pow(keyHz / 261.625565, 0.18), 0.72, 1.35);
-        addMode(1.0, 1.0, 1.0, 0.18 * loss, 0.0, 0.0013);
-        addMode(2.0, 0.012, 0.025 * edge, 1.10 * loss, 0.0, 0.00065, 1);
-        addMode(3.0, 0.105 * edge, 0.62 * edge, 0.95 * loss, 0.0, 0.00045, 2);
-        addMode(5.0, 0.020 * edge, 0.17 * edge, 1.85 * loss, 0.0, 0.00035, 3);
-        addMode(7.0, 0.004 * edge, 0.055 * edge, 3.10 * loss, 0.0, 0.00030, 4);
-        addMode(9.0, 0.0, 0.009 * edge, 4.30 * loss, 0.0, 0.00025, 4);
-        addMode(6.267, 0.008 * edge * bellRegister, 0.062 * edge * bellRegister, 9.0 * loss, 0.0, 0.0003);
-        addMode(17.55, 0.0, 0.012 * edge * bellRegister, 19.0 * loss, 0.0, 0.0002);
-        addMode(1.00048, 0.07, 0.07, 0.11 * loss, 0.08, 0.0022);
+        // Keep actual and maximum excitation together, so adding or changing
+        // a mode updates its headroom bound as well. The maximum always uses
+        // edge = 1; its sum/order is identical to the former full-strike sum.
+        // No compensation depends on the current strike's spectral content.
+        struct Weight { double actual, maximum; };
+        const auto fixed = [](double value) { return Weight {value, value}; };
+        const auto excited = [edge](double value, double registerWeight = 1.0)
+        {
+            return Weight {value * edge * registerWeight, value * registerWeight};
+        };
+        double maximumSum = 0.0;
+        const auto add = [&](double ratio, Weight dark, Weight bright, double damping,
+                             double phase, double onset, unsigned int pickup = 0)
+        {
+            addMode(ratio, dark.actual, bright.actual, damping, phase, onset, pickup);
+            maximumSum += std::max(dark.maximum, bright.maximum);
+        };
+        add(1.0, fixed(1.0), fixed(1.0), 0.18 * loss, 0.0, 0.0013);
+        add(2.0, fixed(0.012), excited(0.025), 1.10 * loss, 0.0, 0.00065, 1);
+        add(3.0, excited(0.105), excited(0.62), 0.95 * loss, 0.0, 0.00045, 2);
+        add(5.0, excited(0.020), excited(0.17), 1.85 * loss, 0.0, 0.00035, 3);
+        add(7.0, excited(0.004), excited(0.055), 3.10 * loss, 0.0, 0.00030, 4);
+        add(9.0, fixed(0.0), excited(0.009), 4.30 * loss, 0.0, 0.00025, 4);
+        add(6.267, excited(0.008, bellRegister), excited(0.062, bellRegister), 9.0 * loss, 0.0, 0.0003);
+        add(17.55, fixed(0.0), excited(0.012, bellRegister), 19.0 * loss, 0.0, 0.0002);
+        add(1.00048, fixed(0.07), fixed(0.07), 0.11 * loss, 0.08, 0.0022);
+        return maximumSum;
     }
 
     void makeBarModes() noexcept
@@ -732,6 +781,34 @@ private:
         pickupMotion *= pickupLoss;
         if (pickupMotion < 1.0e-8) pickupMotion = 0.0;
         transientControls = pickupMotion > 0.0;
+        if (model == bowed && pitchChanged)
+        {
+            // tick() accepts float pitch. Returning to that exact onset pitch
+            // restores the original weights without a rounding-sized colour
+            // change. All fixed-pitch captures keep their prior samples.
+            if (frequency == static_cast<double>(static_cast<float>(keyHz)))
+            {
+                bowedResponseGain.fill(1.0);
+                bowedBoundGain = 1.0;
+            }
+            else
+            {
+                double bound = 0.0;
+                for (int i = 0; i < count; ++i)
+                {
+                    const auto index = static_cast<std::size_t>(i);
+                    const auto& m = modes[index];
+                    bowedResponseGain[index] = bowedFormant(frequency * m.ratio)
+                                             * bowedResponseInverse[index];
+                    bound += std::max(m.dark, m.bright) * bowedResponseGain[index];
+                }
+                // Keep the original absolute-mode-sum ceiling. A common gain
+                // preserves the corrected harmonic ratios; the existing gain
+                // ramp interpolates between bounded targets without a step.
+                bowedBoundGain = bound <= bowedResponseBound ? 1.0
+                    : bowedResponseBound / bound;
+            }
+        }
         const bool exactCoefficients = lastFrequency < 0.0 || (++coefficientRefresh & 127u) == 0u;
         for (int i = 0; i < count; ++i)
         {
@@ -773,8 +850,10 @@ private:
                 const double excursion = 0.28 + 0.72 * pickupMotion;
                 for (unsigned int power = 0; power < m.pickupPower; ++power)
                     pickup *= excursion;
-                const double target = (m.dark + colour * (m.bright - m.dark))
-                                    * antialias * (1.0 - m.onsetMissing) * pickup;
+                double target = (m.dark + colour * (m.bright - m.dark))
+                              * antialias * (1.0 - m.onsetMissing) * pickup;
+                if (model == bowed)
+                    target *= bowedResponseGain[static_cast<std::size_t>(i)] * bowedBoundGain;
                 m.gainStep = (target - m.gain) / controlPeriod;
             }
             else m.gainStep = 0.0;

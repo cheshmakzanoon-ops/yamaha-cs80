@@ -1,0 +1,553 @@
+{
+  "scope": "Bowed-only physical-frequency formant correction; no new presets or parameters",
+  "source_head": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+  "instrument_body_sha256": "d33f34f5cff6341abc9bc2c85056ce381b492d141a0fad856e0c7cbd4f06422e",
+  "test_sha256": "8d5056538f2a59a0164a05b1c3dfff539ecf100b9c96bb47bdc728e2a85e713a",
+  "new_test": {
+    "checks": 492,
+    "failures": 0,
+    "baseline_failures": 174
+  },
+  "existing_direct_model": {
+    "checks": 2077,
+    "failures": 0,
+    "generated_samples": 41062350
+  },
+  "parity": {
+    "samples": 36115200,
+    "different_samples": 0,
+    "maximum_difference": 0.0,
+    "scope": "Bowed fixed pitch; all other models with 7-semitone slides, three notes and three host rates"
+  },
+  "spectral_comparisons": [
+    {
+      "model": 9,
+      "start_note": 36,
+      "target_note": 48,
+      "size": 1.8,
+      "harmonic": 2,
+      "baseline_ratio_error_db": -0.464052,
+      "candidate_ratio_error_db": 0.000277,
+      "baseline_peak": 0.329935,
+      "candidate_peak": 0.329233
+    },
+    {
+      "model": 9,
+      "start_note": 36,
+      "target_note": 48,
+      "size": 1.8,
+      "harmonic": 3,
+      "baseline_ratio_error_db": 2.189448,
+      "candidate_ratio_error_db": 0.001535,
+      "baseline_peak": 0.329935,
+      "candidate_peak": 0.329233
+    },
+    {
+      "model": 9,
+      "start_note": 36,
+      "target_note": 48,
+      "size": 1.8,
+      "harmonic": 4,
+      "baseline_ratio_error_db": 4.096524,
+      "candidate_ratio_error_db": -0.002019,
+      "baseline_peak": 0.329935,
+      "candidate_peak": 0.329233
+    },
+    {
+      "model": 9,
+      "start_note": 36,
+      "target_note": 48,
+      "size": 1.8,
+      "harmonic": 5,
+      "baseline_ratio_error_db": 3.81406,
+      "candidate_ratio_error_db": 0.0057,
+      "baseline_peak": 0.329935,
+      "candidate_peak": 0.329233
+    },
+    {
+      "model": 9,
+      "start_note": 36,
+      "target_note": 48,
+      "size": 1.8,
+      "harmonic": 8,
+      "baseline_ratio_error_db": -0.38251,
+      "candidate_ratio_error_db": 0.001638,
+      "baseline_peak": 0.329935,
+      "candidate_peak": 0.329233
+    },
+    {
+      "model": 9,
+      "start_note": 36,
+      "target_note": 48,
+      "size": 1.8,
+      "harmonic": 12,
+      "baseline_ratio_error_db": 0.666216,
+      "candidate_ratio_error_db": 0.025124,
+      "baseline_peak": 0.329935,
+      "candidate_peak": 0.329233
+    },
+    {
+      "model": 9,
+      "start_note": 48,
+      "target_note": 36,
+      "size": 1.8,
+      "harmonic": 2,
+      "baseline_ratio_error_db": 0.464653,
+      "candidate_ratio_error_db": 0.00039,
+      "baseline_peak": 0.309506,
+      "candidate_peak": 0.314348
+    },
+    {
+      "model": 9,
+      "start_note": 48,
+      "target_note": 36,
+      "size": 1.8,
+      "harmonic": 3,
+      "baseline_ratio_error_db": -2.187864,
+      "candidate_ratio_error_db": 0.000144,
+      "baseline_peak": 0.309506,
+      "candidate_peak": 0.314348
+    },
+    {
+      "model": 9,
+      "start_note": 48,
+      "target_note": 36,
+      "size": 1.8,
+      "harmonic": 4,
+      "baseline_ratio_error_db": -4.098064,
+      "candidate_ratio_error_db": 0.000368,
+      "baseline_peak": 0.309506,
+      "candidate_peak": 0.314348
+    },
+    {
+      "model": 9,
+      "start_note": 48,
+      "target_note": 36,
+      "size": 1.8,
+      "harmonic": 5,
+      "baseline_ratio_error_db": -3.810109,
+      "candidate_ratio_error_db": -0.000859,
+      "baseline_peak": 0.309506,
+      "candidate_peak": 0.314348
+    },
+    {
+      "model": 9,
+      "start_note": 48,
+      "target_note": 36,
+      "size": 1.8,
+      "harmonic": 8,
+      "baseline_ratio_error_db": 0.382916,
+      "candidate_ratio_error_db": -0.00028,
+      "baseline_peak": 0.309506,
+      "candidate_peak": 0.314348
+    },
+    {
+      "model": 9,
+      "start_note": 48,
+      "target_note": 36,
+      "size": 1.8,
+      "harmonic": 12,
+      "baseline_ratio_error_db": -0.638658,
+      "candidate_ratio_error_db": 0.002855,
+      "baseline_peak": 0.309506,
+      "candidate_peak": 0.314348
+    },
+    {
+      "model": 9,
+      "start_note": 72,
+      "target_note": 84,
+      "size": 1.0,
+      "harmonic": 2,
+      "baseline_ratio_error_db": -3.40757,
+      "candidate_ratio_error_db": -0.000633,
+      "baseline_peak": 0.379976,
+      "candidate_peak": 0.37994
+    },
+    {
+      "model": 9,
+      "start_note": 72,
+      "target_note": 84,
+      "size": 1.0,
+      "harmonic": 3,
+      "baseline_ratio_error_db": -1.810758,
+      "candidate_ratio_error_db": -0.001197,
+      "baseline_peak": 0.379976,
+      "candidate_peak": 0.37994
+    },
+    {
+      "model": 9,
+      "start_note": 72,
+      "target_note": 84,
+      "size": 1.0,
+      "harmonic": 4,
+      "baseline_ratio_error_db": 2.913945,
+      "candidate_ratio_error_db": 0.003345,
+      "baseline_peak": 0.379976,
+      "candidate_peak": 0.37994
+    },
+    {
+      "model": 9,
+      "start_note": 72,
+      "target_note": 84,
+      "size": 1.0,
+      "harmonic": 5,
+      "baseline_ratio_error_db": 6.193136,
+      "candidate_ratio_error_db": 0.001074,
+      "baseline_peak": 0.379976,
+      "candidate_peak": 0.37994
+    },
+    {
+      "model": 9,
+      "start_note": 72,
+      "target_note": 84,
+      "size": 1.0,
+      "harmonic": 8,
+      "baseline_ratio_error_db": 3.144653,
+      "candidate_ratio_error_db": -0.000824,
+      "baseline_peak": 0.379976,
+      "candidate_peak": 0.37994
+    },
+    {
+      "model": 9,
+      "start_note": 72,
+      "target_note": 84,
+      "size": 1.0,
+      "harmonic": 12,
+      "baseline_ratio_error_db": -0.498127,
+      "candidate_ratio_error_db": 0.001795,
+      "baseline_peak": 0.379976,
+      "candidate_peak": 0.37994
+    }
+  ],
+  "cpu": {
+    "model_9_moving_0": {
+      "trials": [
+        {
+          "trial": 0,
+          "baseline_thread_cpu_s": 0.077049,
+          "candidate_thread_cpu_s": 0.077692,
+          "ratio": 1.0083
+        },
+        {
+          "trial": 1,
+          "baseline_thread_cpu_s": 0.082954,
+          "candidate_thread_cpu_s": 0.07568,
+          "ratio": 0.9123
+        },
+        {
+          "trial": 2,
+          "baseline_thread_cpu_s": 0.078088,
+          "candidate_thread_cpu_s": 0.077231,
+          "ratio": 0.989
+        },
+        {
+          "trial": 3,
+          "baseline_thread_cpu_s": 0.075104,
+          "candidate_thread_cpu_s": 0.077721,
+          "ratio": 1.0348
+        },
+        {
+          "trial": 4,
+          "baseline_thread_cpu_s": 0.07639,
+          "candidate_thread_cpu_s": 0.077257,
+          "ratio": 1.0113
+        },
+        {
+          "trial": 5,
+          "baseline_thread_cpu_s": 0.077792,
+          "candidate_thread_cpu_s": 0.079291,
+          "ratio": 1.0193
+        },
+        {
+          "trial": 6,
+          "baseline_thread_cpu_s": 0.076533,
+          "candidate_thread_cpu_s": 0.079474,
+          "ratio": 1.0384
+        },
+        {
+          "trial": 7,
+          "baseline_thread_cpu_s": 0.077473,
+          "candidate_thread_cpu_s": 0.079463,
+          "ratio": 1.0257
+        },
+        {
+          "trial": 8,
+          "baseline_thread_cpu_s": 0.076669,
+          "candidate_thread_cpu_s": 0.075689,
+          "ratio": 0.9872
+        },
+        {
+          "trial": 9,
+          "baseline_thread_cpu_s": 0.075879,
+          "candidate_thread_cpu_s": 0.076559,
+          "ratio": 1.009
+        },
+        {
+          "trial": 10,
+          "baseline_thread_cpu_s": 0.07563,
+          "candidate_thread_cpu_s": 0.078438,
+          "ratio": 1.0371
+        }
+      ],
+      "median_paired_ratio": 1.0113,
+      "median_baseline_thread_cpu_s": 0.076669,
+      "median_candidate_thread_cpu_s": 0.077692
+    },
+    "model_9_moving_1": {
+      "trials": [
+        {
+          "trial": 0,
+          "baseline_thread_cpu_s": 0.093659,
+          "candidate_thread_cpu_s": 0.105299,
+          "ratio": 1.1243
+        },
+        {
+          "trial": 1,
+          "baseline_thread_cpu_s": 0.085138,
+          "candidate_thread_cpu_s": 0.09871,
+          "ratio": 1.1594
+        },
+        {
+          "trial": 2,
+          "baseline_thread_cpu_s": 0.08391,
+          "candidate_thread_cpu_s": 0.091556,
+          "ratio": 1.0911
+        },
+        {
+          "trial": 3,
+          "baseline_thread_cpu_s": 0.080965,
+          "candidate_thread_cpu_s": 0.087421,
+          "ratio": 1.0797
+        },
+        {
+          "trial": 4,
+          "baseline_thread_cpu_s": 0.080003,
+          "candidate_thread_cpu_s": 0.093091,
+          "ratio": 1.1636
+        },
+        {
+          "trial": 5,
+          "baseline_thread_cpu_s": 0.083546,
+          "candidate_thread_cpu_s": 0.095287,
+          "ratio": 1.1405
+        },
+        {
+          "trial": 6,
+          "baseline_thread_cpu_s": 0.094021,
+          "candidate_thread_cpu_s": 0.090106,
+          "ratio": 0.9584
+        },
+        {
+          "trial": 7,
+          "baseline_thread_cpu_s": 0.078272,
+          "candidate_thread_cpu_s": 0.088063,
+          "ratio": 1.1251
+        },
+        {
+          "trial": 8,
+          "baseline_thread_cpu_s": 0.075768,
+          "candidate_thread_cpu_s": 0.092535,
+          "ratio": 1.2213
+        },
+        {
+          "trial": 9,
+          "baseline_thread_cpu_s": 0.08115,
+          "candidate_thread_cpu_s": 0.088065,
+          "ratio": 1.0852
+        },
+        {
+          "trial": 10,
+          "baseline_thread_cpu_s": 0.084359,
+          "candidate_thread_cpu_s": 0.089536,
+          "ratio": 1.0614
+        }
+      ],
+      "median_paired_ratio": 1.1243,
+      "median_baseline_thread_cpu_s": 0.083546,
+      "median_candidate_thread_cpu_s": 0.091556
+    },
+    "model_15_moving_0": {
+      "trials": [
+        {
+          "trial": 0,
+          "baseline_thread_cpu_s": 0.048286,
+          "candidate_thread_cpu_s": 0.047408,
+          "ratio": 0.9818
+        },
+        {
+          "trial": 1,
+          "baseline_thread_cpu_s": 0.046463,
+          "candidate_thread_cpu_s": 0.047997,
+          "ratio": 1.033
+        },
+        {
+          "trial": 2,
+          "baseline_thread_cpu_s": 0.049002,
+          "candidate_thread_cpu_s": 0.047261,
+          "ratio": 0.9645
+        },
+        {
+          "trial": 3,
+          "baseline_thread_cpu_s": 0.048827,
+          "candidate_thread_cpu_s": 0.048237,
+          "ratio": 0.9879
+        },
+        {
+          "trial": 4,
+          "baseline_thread_cpu_s": 0.047925,
+          "candidate_thread_cpu_s": 0.045497,
+          "ratio": 0.9493
+        },
+        {
+          "trial": 5,
+          "baseline_thread_cpu_s": 0.047014,
+          "candidate_thread_cpu_s": 0.047304,
+          "ratio": 1.0062
+        },
+        {
+          "trial": 6,
+          "baseline_thread_cpu_s": 0.049219,
+          "candidate_thread_cpu_s": 0.049454,
+          "ratio": 1.0048
+        },
+        {
+          "trial": 7,
+          "baseline_thread_cpu_s": 0.050151,
+          "candidate_thread_cpu_s": 0.05004,
+          "ratio": 0.9978
+        },
+        {
+          "trial": 8,
+          "baseline_thread_cpu_s": 0.0495,
+          "candidate_thread_cpu_s": 0.048666,
+          "ratio": 0.9832
+        },
+        {
+          "trial": 9,
+          "baseline_thread_cpu_s": 0.047317,
+          "candidate_thread_cpu_s": 0.048232,
+          "ratio": 1.0193
+        },
+        {
+          "trial": 10,
+          "baseline_thread_cpu_s": 0.048168,
+          "candidate_thread_cpu_s": 0.045496,
+          "ratio": 0.9445
+        }
+      ],
+      "median_paired_ratio": 0.9879,
+      "median_baseline_thread_cpu_s": 0.048286,
+      "median_candidate_thread_cpu_s": 0.047997
+    },
+    "model_15_moving_1": {
+      "trials": [
+        {
+          "trial": 0,
+          "baseline_thread_cpu_s": 0.056595,
+          "candidate_thread_cpu_s": 0.055525,
+          "ratio": 0.9811
+        },
+        {
+          "trial": 1,
+          "baseline_thread_cpu_s": 0.056427,
+          "candidate_thread_cpu_s": 0.055437,
+          "ratio": 0.9825
+        },
+        {
+          "trial": 2,
+          "baseline_thread_cpu_s": 0.056734,
+          "candidate_thread_cpu_s": 0.054616,
+          "ratio": 0.9627
+        },
+        {
+          "trial": 3,
+          "baseline_thread_cpu_s": 0.056843,
+          "candidate_thread_cpu_s": 0.055353,
+          "ratio": 0.9738
+        },
+        {
+          "trial": 4,
+          "baseline_thread_cpu_s": 0.055987,
+          "candidate_thread_cpu_s": 0.050904,
+          "ratio": 0.9092
+        },
+        {
+          "trial": 5,
+          "baseline_thread_cpu_s": 0.05669,
+          "candidate_thread_cpu_s": 0.053578,
+          "ratio": 0.9451
+        },
+        {
+          "trial": 6,
+          "baseline_thread_cpu_s": 0.055077,
+          "candidate_thread_cpu_s": 0.055502,
+          "ratio": 1.0077
+        },
+        {
+          "trial": 7,
+          "baseline_thread_cpu_s": 0.055456,
+          "candidate_thread_cpu_s": 0.056857,
+          "ratio": 1.0253
+        },
+        {
+          "trial": 8,
+          "baseline_thread_cpu_s": 0.055517,
+          "candidate_thread_cpu_s": 0.05772,
+          "ratio": 1.0397
+        },
+        {
+          "trial": 9,
+          "baseline_thread_cpu_s": 0.051382,
+          "candidate_thread_cpu_s": 0.056442,
+          "ratio": 1.0985
+        },
+        {
+          "trial": 10,
+          "baseline_thread_cpu_s": 0.054245,
+          "candidate_thread_cpu_s": 0.055693,
+          "ratio": 1.0267
+        }
+      ],
+      "median_paired_ratio": 0.9825,
+      "median_baseline_thread_cpu_s": 0.055987,
+      "median_candidate_thread_cpu_s": 0.055502
+    }
+  },
+  "cpu_scope": "Eight isolated instrument bodies, 96 kHz internal/48 kHz host, 1 s render, 5 Hz +/-40 cent vibrato, 11 interleaved pairs pinned to CPU7 using CLOCK_THREAD_CPUTIME_ID; shared-machine estimate, not full Engine/DAW",
+  "storage": {
+    "baseline_body_bytes": 5688,
+    "candidate_body_bytes": 6088,
+    "baseline_engine_bytes": 478632,
+    "candidate_engine_bytes": 491432
+  },
+  "reference": "https://www.phys.unsw.edu.au/jw/violinarticulation.html",
+  "files_sha256": {
+    "bowed-results.log": "fff96c8ae519c35006c58bcfd502696d1e543743ad1dcf810b976461597999b5",
+    "BowedOnlyBeforeOptimization.h": "edefdf5a80731b40ff73a305d187179f0e6f7bc6ef9f2f7d024745e80d5dfb39",
+    "PrototypeInstrumentBody.h": "d281d44da5f83e252c43485052a8aa6a89e899dfeeb1cc40b4b15f30619be100",
+    "BowedOnlyInstrumentBody.h": "0e496d00759960662a69936b23f7903442fa109d9dafc5f8949edfac8390b648",
+    "bowed-probe.cpp": "ab423a11ad537bab1aaf1d6ca1d550590d45b3085ce5a7545138ba5a007c860a",
+    "make_prototype.py": "f217e378cf1f0cc12137fbeef4276907c9aa9b11fb3f35c80ff6cd26c3f09f3b",
+    "BaselineEngine.h": "d88014d694cc980d9ed97308861bba812fc811a041ea781680be3c212b58ab45",
+    "baseline-bowed-test.cpp": "0a0ffe7bdf39a187df6e7efd45b42ec36c352146b30ad38fb08bed4500eaabd8",
+    "instrument-body-tests.log": "0d7a0f672c33b8ad3fff0d22c74af0f5df03439339c50b49be9f4cf1e5ac6d99",
+    "summarize.py": "176d951c3f3b332074d037269a32433f3d8255c78f5517d6cd42b99981bbc761",
+    "BaselineInstrumentBody.h": "19f9fb23b61ab98fa843c0cf126cb6342ef33e3c62a089fc4c63ae451f470852",
+    "results.log": "0b78c5bd8380e947031bc341112b18a83728258b37cb5fa679ce71eb0ff44575",
+    "sizes-after.cpp": "bee28ee410ad4bb01ea0a92e6ae493784b82c33a57180ebd55f33cb6a8b453dd",
+    "sizes-before.log": "a2159e32e5cceb2b55092b5d121b99f93dfcaa4637aef131b3f4776a6bb5d3bf",
+    "baseline-bowed-tests.log": "630da0fdc37a8958eab32e8bc0db2b2fe20ccbf0c6ab92e0e2a640166db8464d",
+    "bowed-tests.log": "8de64ab6ba39792d0f2ff6ce22678c2ae95b6e5b8ec676d5a7cd56ad50825e01",
+    "apply_bowed_fix.py": "613774ba79cc274c86ff1b174faf40b5e5234e787fc4c6aa2dd7c09df7485371",
+    "sizes-before.cpp": "0ee0834e1c2a058da447f5ff94899b35a07dbca59f24daa6366c80b0f7f081bb",
+    "probe.cpp": "5b11260a73dc5ffc351863a5c64f7836e2c50a5a02a10715a84e3567fb8297a1",
+    "final-bowed-results.log": "c8f82566d0f754d99c1ed7af299d2001217e59b4cfeb8188e16b0ab1079f5f0d",
+    "sizes-after.log": "866e2baa37df481a55835f2384bd5a90d5d3a750c2ceede4dfa556c740d16b1e"
+  },
+  "limitations": [
+    "Authored broad response curves, not measured violin calibration",
+    "Corrected harmonic ratios establish signal behavior, not perceptual indistinguishability",
+    "Wind/brass models intentionally excluded",
+    "Full Engine cost and native host/build qualification remain root follow-up"
+  ]
+}

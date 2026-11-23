@@ -1,0 +1,269 @@
+{
+  "base_commit": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+  "change": "Tine full-strike excitation bound replaces per-strike reciprocal spectrum normalization; all other models unchanged.",
+  "source_sha256": {
+    "src/core/InstrumentBody.h": "19f9fb23b61ab98fa843c0cf126cb6342ef33e3c62a089fc4c63ae451f470852",
+    "tests/TineStrikeDynamicsTests.cpp": "5dc057575601e7d1b9635553d56696c754b0dbf0b816ebf1512afb1a23c611ac"
+  },
+  "rendered_regression": {
+    "checks": 486,
+    "failures": 0,
+    "baseline_failures": 162,
+    "cases": [
+      {
+        "rate": 44100.0,
+        "note": 36.0,
+        "colour": 0.0,
+        "fundamental_delta_db": 1e-05,
+        "rms_delta_db": 0.023,
+        "third_ratio_delta_db": 12.687,
+        "peak": 0.35393
+      },
+      {
+        "rate": 44100.0,
+        "note": 36.0,
+        "colour": 0.65,
+        "fundamental_delta_db": 2e-05,
+        "rms_delta_db": 0.471,
+        "third_ratio_delta_db": 12.689,
+        "peak": 0.37698
+      },
+      {
+        "rate": 44100.0,
+        "note": 36.0,
+        "colour": 1.0,
+        "fundamental_delta_db": 2e-05,
+        "rms_delta_db": 0.898,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.44796
+      },
+      {
+        "rate": 44100.0,
+        "note": 60.0,
+        "colour": 0.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.024,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.3516
+      },
+      {
+        "rate": 44100.0,
+        "note": 60.0,
+        "colour": 0.65,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.407,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.37775
+      },
+      {
+        "rate": 44100.0,
+        "note": 60.0,
+        "colour": 1.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.774,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.45199
+      },
+      {
+        "rate": 44100.0,
+        "note": 84.0,
+        "colour": 0.0,
+        "fundamental_delta_db": 0.0,
+        "rms_delta_db": 0.018,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.34835
+      },
+      {
+        "rate": 44100.0,
+        "note": 84.0,
+        "colour": 0.65,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.308,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.3782
+      },
+      {
+        "rate": 44100.0,
+        "note": 84.0,
+        "colour": 1.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.59,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.44823
+      },
+      {
+        "rate": 48000.0,
+        "note": 36.0,
+        "colour": 0.0,
+        "fundamental_delta_db": 1e-05,
+        "rms_delta_db": 0.023,
+        "third_ratio_delta_db": 12.687,
+        "peak": 0.35395
+      },
+      {
+        "rate": 48000.0,
+        "note": 36.0,
+        "colour": 0.65,
+        "fundamental_delta_db": 2e-05,
+        "rms_delta_db": 0.471,
+        "third_ratio_delta_db": 12.689,
+        "peak": 0.37699
+      },
+      {
+        "rate": 48000.0,
+        "note": 36.0,
+        "colour": 1.0,
+        "fundamental_delta_db": 2e-05,
+        "rms_delta_db": 0.898,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.44798
+      },
+      {
+        "rate": 48000.0,
+        "note": 60.0,
+        "colour": 0.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.024,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.3516
+      },
+      {
+        "rate": 48000.0,
+        "note": 60.0,
+        "colour": 0.65,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.408,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.37777
+      },
+      {
+        "rate": 48000.0,
+        "note": 60.0,
+        "colour": 1.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.774,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.45197
+      },
+      {
+        "rate": 48000.0,
+        "note": 84.0,
+        "colour": 0.0,
+        "fundamental_delta_db": 0.0,
+        "rms_delta_db": 0.018,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.34832
+      },
+      {
+        "rate": 48000.0,
+        "note": 84.0,
+        "colour": 0.65,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.308,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.37931
+      },
+      {
+        "rate": 48000.0,
+        "note": 84.0,
+        "colour": 1.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.59,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.44986
+      },
+      {
+        "rate": 96000.0,
+        "note": 36.0,
+        "colour": 0.0,
+        "fundamental_delta_db": 1e-05,
+        "rms_delta_db": 0.023,
+        "third_ratio_delta_db": 12.687,
+        "peak": 0.35393
+      },
+      {
+        "rate": 96000.0,
+        "note": 36.0,
+        "colour": 0.65,
+        "fundamental_delta_db": 2e-05,
+        "rms_delta_db": 0.471,
+        "third_ratio_delta_db": 12.689,
+        "peak": 0.37698
+      },
+      {
+        "rate": 96000.0,
+        "note": 36.0,
+        "colour": 1.0,
+        "fundamental_delta_db": 2e-05,
+        "rms_delta_db": 0.898,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.44798
+      },
+      {
+        "rate": 96000.0,
+        "note": 60.0,
+        "colour": 0.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.024,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.35164
+      },
+      {
+        "rate": 96000.0,
+        "note": 60.0,
+        "colour": 0.65,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.408,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.37774
+      },
+      {
+        "rate": 96000.0,
+        "note": 60.0,
+        "colour": 1.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.774,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.45195
+      },
+      {
+        "rate": 96000.0,
+        "note": 84.0,
+        "colour": 0.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.018,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.34834
+      },
+      {
+        "rate": 96000.0,
+        "note": 84.0,
+        "colour": 0.65,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.308,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.37932
+      },
+      {
+        "rate": 96000.0,
+        "note": 84.0,
+        "colour": 1.0,
+        "fundamental_delta_db": -0.0,
+        "rms_delta_db": 0.59,
+        "third_ratio_delta_db": 12.69,
+        "peak": 0.4498
+      }
+    ]
+  },
+  "exact_parity": {
+    "samples_compared": 10137600,
+    "differing_samples": 0,
+    "scope": "Tine velocity 1; other 18 enabled models velocities .2/.8/1; rates44100/48000/96000, notes24/36/60/84/96, colours0/.65/1,4096 samples per case"
+  },
+  "existing_direct_model_suite": {
+    "checks": 2077,
+    "failures": 0,
+    "samples_generated": 41062350
+  },
+  "limits": "This verifies spectral dynamics and numerical compatibility, not acoustic instrument identity; full-preset level/host qualification is separate."
+}

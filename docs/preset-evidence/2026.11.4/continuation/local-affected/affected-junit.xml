@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="7"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="83"
+	timestamp="2026-11-23T11:45:57"
+	>
+	<testcase name="cs80_instrument_body_tests" classname="cs80_instrument_body_tests" time="4.57339" status="run">
+		<properties/>
+		<system-out>DECAY Piano strings        upper/fundamental change  -14.61 dB
+DECAY Tine electric piano  upper/fundamental change  -18.00 dB
+DECAY Reed electric piano  upper/fundamental change  -37.34 dB
+DECAY Nylon strings        upper/fundamental change  -17.65 dB
+DECAY Steel strings        upper/fundamental change  -14.30 dB
+DECAY Plucked bass         upper/fundamental change  -21.55 dB
+DECAY Vibraphone           upper/fundamental change  -15.84 dB
+DECAY Marimba              upper/fundamental change  -48.70 dB
+DECAY Celesta              upper/fundamental change  -14.00 dB
+PIANO fundamental 1046.752 Hz, sixth 6302.514 Hz, harmonic control 6279.014 Hz
+MALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay
+MALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay
+MALL...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_tine_strike_dynamics_tests" classname="cs80_tine_strike_dynamics_tests" time="0.369241" status="run">
+		<properties/>
+		<system-out>TINE rate=44100 note=36 colour=0.00 fundamental_delta=+0.00001 dB rms_delta=+0.023 dB third_ratio_delta=+12.687 dB peak=0.35393
+TINE rate=44100 note=36 colour=0.65 fundamental_delta=+0.00002 dB rms_delta=+0.471 dB third_ratio_delta=+12.689 dB peak=0.37698
+TINE rate=44100 note=36 colour=1.00 fundamental_delta=+0.00002 dB rms_delta=+0.898 dB third_ratio_delta=+12.690 dB peak=0.44796
+TINE rate=44100 note=60 colour=0.00 fundamental_delta=-0.00000 dB rms_delta=+0.024 dB third_ratio_delta=+12.690 dB peak=0.35160
+TINE rate=44100 note=60 colour=0.65 fundamental_delta=-0.00000 dB rms_delta=+0.407 dB third_ratio_delta=+12.690 dB peak=0.37775
+TINE rate=44100 note=60 colour=1.00 fundamental_delta=-0.00000 dB rms_delta=+0.774 dB third_ratio_delta=+12.690 dB peak=0.45199
+TINE rate=44100 note=84 colour=0.00 fundamental_delta=+0.00000 dB rms_delta=+0.018 dB third_ratio_delta=+12.690 dB peak=0.34835
+TINE rate=44100 note=84 colour=0.65 fundamental_delta=-0.00000 dB rms_delta=+0.308 dB third_ratio_delta=+12.690 dB peak=0.37820
+...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_bowed_body_formant_tests" classname="cs80_bowed_body_formant_tests" time="3.05499" status="run">
+		<properties/>
+		<system-out>BOWED rate=44100 size=0.75 from=36.00 to=48.00 maximum_ratio_error=0.001419 dB
+BOWED rate=44100 size=0.75 from=48.00 to=36.00 maximum_ratio_error=0.002027 dB
+BOWED rate=44100 size=0.75 from=60.00 to=72.00 maximum_ratio_error=0.006519 dB
+BOWED rate=44100 size=0.75 from=72.00 to=60.00 maximum_ratio_error=0.004980 dB
+BOWED rate=44100 size=0.75 from=60.00 to=60.35 maximum_ratio_error=0.004932 dB
+BOWED rate=44100 size=0.75 from=60.00 to=59.65 maximum_ratio_error=0.002414 dB
+BOWED rate=44100 size=1.00 from=36.00 to=48.00 maximum_ratio_error=0.001538 dB
+BOWED rate=44100 size=1.00 from=48.00 to=36.00 maximum_ratio_error=0.001832 dB
+BOWED rate=44100 size=1.00 from=60.00 to=72.00 maximum_ratio_error=0.007053 dB
+BOWED rate=44100 size=1.00 from=72.00 to=60.00 maximum_ratio_error=0.005259 dB
+BOWED rate=44100 size=1.00 from=60.00 to=60.35 maximum_ratio_error=0.005159 dB
+BOWED rate=44100 size=1.00 from=60.00 to=59.65 maximum_ratio_error=0.002653 dB
+BOWED rate=44100 size=1.80 from=36.00 to=48.00 maximum_ratio_error=0.001715 ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_instrument_body_engine_tests" classname="cs80_instrument_body_engine_tests" time="10.4132" status="run">
+		<properties/>
+		<system-out>BATCH comparison backend: runtime-dispatched exact batch
+REGISTER Piano strings relative waveform error 0
+REGISTER Bowed strings relative waveform error 0
+REGISTER Oboe relative waveform error 0
+REGISTER Bassoon relative waveform error 0
+KBC body LOW lever -1 relative waveform change 0.632465763
+KBC body LOW lever +1 relative waveform change 0.239494811
+KBC body HIGH lever -1 relative waveform change 0.976275609
+KBC body HIGH lever +1 relative waveform change 0.261275781
+BODY FILTER high-pass fundamental change -26.758 dB
+BODY FILTER high-pass resonance at cutoff change 9.069 dB
+BODY FILTER low-pass fourth-partial change -15.203 dB
+BODY FILTER resonance at cutoff change 9.069 dB
+TAIL rate 44100 maximum onset/pre derivative 0.78094, sample step 0.00138325 FS
+TAIL rate 48000 maximum onset/pre derivative 0.78255, sample step 0.00127391 FS
+TAIL rate 96000 maximum onset/pre derivative 1.33003, sample step 0.00063640 FS
+Instrument body Engine integration: 18156 checks, 0 failures
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_voicing_tests" classname="cs80_preset_voicing_tests" time="15.4305" status="run">
+		<properties/>
+		<system-out>MIX ONSET Pan Flute           transient/body   -18.0 dB; reconstruction error  -142.0 dB relative
+TRANSIENT Pan Flute           transient late/onset   -95.5 dB; body late/early   -0.1 dB; full late  -32.7 dBFS
+TRANSIENT Sine Bass           transient late/onset   -97.8 dB; body late/early   -0.0 dB; full late  -25.4 dBFS
+MIX ONSET Nylon Pluck         transient/body   -24.4 dB; reconstruction error  -142.4 dB relative
+PERCUSSION octave/other   51.3 dB; full octave/root onset  -13.6 dB; octave late/early  -25.5 dB; root late/early  -0.0 dB
+REGISTER  Piccolo             intended  -26.9 dBFS; strongest lower octave   -85.5 dB relative
+REGISTER  Ocarina             intended  -27.7 dBFS; strongest lower octave   -91.7 dB relative
+REGISTER  Whistle             intended  -22.3 dBFS; strongest lower octave  -104.2 dB relative
+VELOCITY  Velocity Keys       hard/soft attack  +12.0 dB; body  +11.4 dB; soft body  -54.1 dBFS
+VELOCITY  Velocity Lead       hard/soft attack  +11.4 dB; body  +11.6 dB; soft body  -37.0 dBFS
+STRI...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_character_tests" classname="cs80_preset_character_tests" time="5.91132" status="run">
+		<properties/>
+		<system-out>RECONSTRUCT Flute                0.000-0.750 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.000-0.750 s error  -143.6 dB relative
+RECONSTRUCT Flute                0.300-0.500 s error  -143.6 dB relative
+RECONSTRUCT Flute                0.500-0.700 s error  -143.7 dB relative
+RECONSTRUCT Breathy Flute        0.300-0.500 s error  -143.6 dB relative
+RECONSTRUCT Breathy Flute        0.500-0.700 s error  -143.7 dB relative
+BREATH      Flute  -25.4 dB, Breathy Flute  -17.8 dB air/body
+RECONSTRUCT Harp                 0.000-1.200 s error  -143.7 dB relative
+RECONSTRUCT Harp                 0.004-0.020 s error  -143.7 dB relative
+RECONSTRUCT Harp                 0.800-1.100 s error  -143.7 dB relative
+STRIKE      Harp                 onset/body  -13.5 dB, late/body   -57.7 dB
+RECONSTRUCT Kalimba              0.000-1.200 s error  -143.6 dB relative
+RECONSTRUCT Kalimba              0.004-0.020 s error  -143.3 dB relative
+RECONSTRUCT Kalimba              0.800-1.100 s error  -143.4 dB relative
+STRIKE    ...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="cs80_preset_precision_tests" classname="cs80_preset_precision_tests" time="43.5424" status="run">
+		<properties/>
+		<system-out>VIBRAPHONE note=48 velocity=0.30 H4/H1=-21.745 H2/H1=-65.800 oldH4/H1=-60.790 dB
+VIBRAPHONE note=48 velocity=0.85 H4/H1=-18.444 H2/H1=-65.145 oldH4/H1=-60.595 dB
+VIBRAPHONE note=60 velocity=0.30 H4/H1=-22.112 H2/H1=-71.818 oldH4/H1=-66.704 dB
+VIBRAPHONE note=60 velocity=0.85 H4/H1=-18.813 H2/H1=-71.162 oldH4/H1=-66.489 dB
+VIBRAPHONE note=72 velocity=0.30 H4/H1=-23.104 H2/H1=-77.793 oldH4/H1=-68.462 dB
+VIBRAPHONE note=72 velocity=0.85 H4/H1=-20.170 H2/H1=-77.234 oldH4/H1=-68.246 dB
+TREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4036 wetOnly=0.0115 dB peak-to-peak
+TREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3830 wetOnly=0.0217 dB peak-to-peak
+TREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4098 wetOnly=0.0185 dB peak-to-peak
+TREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.6328 wetOnly=0.0203 dB peak-to-peak
+TREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.6417 wetOnly=0.0192 dB peak-to-peak
+TREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.5665 wetOnly=0.1563 dB peak-to-peak
+TREM...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+</testsuite>
