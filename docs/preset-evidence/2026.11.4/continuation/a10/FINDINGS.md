@@ -21,3 +21,7 @@ Two 24-element arrays store the bowed response; no extra fields were added to ev
 Eleven pinned, interleaved thread-CPU pairs measured eight isolated bodies with 5 Hz +/-40-cent vibrato. Median paired candidate/baseline ratio was 1.1243 for moving bowed bodies and 1.0113 for fixed bowed bodies. Organ controls were 0.9879 fixed and 0.9825 moving. These are noisy shared-machine body-only estimates; full Engine/DAW cost requires separate qualification.
 
 Code, baseline/prototype snapshots, negative controls, measurements and SHA256 hashes are retained with `summary.json`. No commit or push was made by this agent.
+
+## Raw-log provenance
+
+The final optimized-body runtime medians above come from [final-bowed-results.log](final-bowed-results.log). The retained [bowed-results.log](bowed-results.log) is an earlier trial: its spectral and parity findings agree, but its CPU timings differ. The direct [corrected regression](bowed-tests.log) and [pre-correction negative control](baseline-bowed-tests.log) retain the observed 492-check pass and 174 failures respectively.

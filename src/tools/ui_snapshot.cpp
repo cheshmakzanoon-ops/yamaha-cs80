@@ -1837,7 +1837,17 @@ void testPerformanceControlsHost()
               && host.getParamValue(cs80::P_footMode) == 1.0f && host.getParamValue(cs80::P_outputLevel) == 0.0f,
           "factory preset recall leaves jack, pedal contact, EXP/WAH selector and output switch alone");
     const auto& recalled = host.getFactoryPresets()[5].values;
-    check(host.getParamValue(cs80::P_kbdLevelHigh) == recalled[cs80::P_kbdLevelHigh]
+    // Bipolar floats pass through the host's 0..1 representation on recall.
+    // Compare that exact canonical value, not the authored float: for example,
+    // 0.025f in [-1, 1] returns as 0.024999976f after the normalised round trip.
+    // This still rejects leaving the deliberately opposed live value in place.
+    const auto* contourParameter = host.getAPVTS().getParameter(cs80::paramId(cs80::P_kbdLevelHigh));
+    const float expectedContour = contourParameter != nullptr
+        ? contourParameter->convertFrom0to1(contourParameter->convertTo0to1(recalled[cs80::P_kbdLevelHigh]))
+        : 0.0f;
+    std::printf("Factory recall contour: authored=%.12g canonical=%.12g restored=%.12g\n",
+                recalled[cs80::P_kbdLevelHigh], expectedContour, host.getParamValue(cs80::P_kbdLevelHigh));
+    check(contourParameter != nullptr && host.getParamValue(cs80::P_kbdLevelHigh) == expectedContour
               && host.getParamValue(cs80::P_sustainAssign) == recalled[cs80::P_sustainAssign]
               && host.getParamValue(cs80::P_glideAssign) == recalled[cs80::P_glideAssign],
           "factory preset recall restores its authored contour levers and assigners with the patch");

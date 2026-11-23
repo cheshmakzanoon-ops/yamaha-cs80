@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "worker": "a40_host_recall_failure",
+  "reviewed_source": "bcc86aa39a33a0162254614e5502705f0113d701",
+  "production_changes": false,
+  "edited_file": "src/tools/ui_snapshot.cpp",
+  "program_index": 5,
+  "program_name": "Tone II: Brass 2",
+  "parameter": "kbd_level_high",
+  "authored_binary32_hex": "3ccccccd",
+  "host_canonical_binary32_hex": "3cccccc0",
+  "authored_value": 0.02500000037252903,
+  "canonical_value": 0.02499997615814209,
+  "absolute_error": 2.421438694000244e-08,
+  "old_exact_equality_passed": false,
+  "canonical_exact_equality_passed": true,
+  "opposed_live_0_5_rejected": true,
+  "discrete_assigner_checks_unchanged": true,
+  "probe_exit_code": 0,
+  "juce_commit": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "scope": "Real pinned JUCE NormalisableRange plus source-built current factory recipe, with AudioParameterFloat/APVTS conversion sequence reproduced. This is not a full native host/UI run.",
+  "hashes": {
+    "/workspace/scratch/dde4ad85ed5b/a40/recall-roundtrip.cpp": "06a7b5756ab0b7191437a07b3808d2eda804f491b0d3cdeb4d380244526c00a0",
+    "/workspace/scratch/dde4ad85ed5b/a40/recall-roundtrip.log": "1f6bae3b2c9c9d7b36188cc91370b5396e91f4e10e9bc56cfdcb485145626c8d",
+    "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/src/core/FactoryPresets.cpp": "db30f985d302003f148dcbb05f9dbae3532fa2a74c3665b293d9ef24af5d1aa5",
+    "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/src/core/OriginalCircuitLibrary.inc": "654b15c08e1f6ae9e6f56f7a9c0beffa5c3bc34b65d60e644b4aa6741afd3c34",
+    "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/src/core/Params.h": "53f41fdd36bc6744ce8576e0c8246b6543bb3bd5f3e8e3934c5467ee34475a4b",
+    "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/src/tools/ui_snapshot.cpp": "40192880b3e36bef924f75ea6dc8eff2ae24ecbc81f56857db156d92032b1e45",
+    "/workspace/scratch/3152723d2891/yamaha-cs80/build-plugin/_deps/juce-src/modules/juce_core/maths/juce_NormalisableRange.h": "dcd8ff586b564904fdac5a1f4b5b67d6778df490a35c31cf46222b6f756a6937"
+  }
+}

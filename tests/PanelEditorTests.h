@@ -578,13 +578,29 @@ void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
         {
             juce::TemporaryFile presetRoot("-cs80-golden");
             Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
-            // Display the first factory program with explicit visual-fixture
-            // settings. Preserve the chorus positions captured by these layout
-            // goldens independently of this release's factory revoicing.
-            // ProgramLibraryHostTests separately checks actual startup values.
+            // Keep the visible controls at the positions in the existing layout
+            // goldens, independently of factory revoicing. The values below
+            // retain the pre-2026.11.4 panel fixture (fa57967), including the
+            // earlier explicit chorus settings. No audio is rendered here;
+            // ProgramLibraryHostTests separately checks actual factory values.
             host.loadFactoryPreset(0);
+            host.setParamValue(cs80::P_mix, 0.42f);
             host.setParamValue(cs80::P_chorusSpeed, 0.28f);
             host.setParamValue(cs80::P_chorusDepth, 0.36f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_hpfCutoff), 80.0f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_hpfRes), 0.02f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_lpfCutoff), 3630.0f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_lpfRes), 0.09f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_fD), 1.48399985f);
+            host.setParamValue(cs80::chParam(0, cs80::CP_vD), 0.953999937f);
+            host.setParamValue(cs80::chParam(1, cs80::CP_lpfCutoff), 5720.0f);
+            host.setParamValue(cs80::chParam(1, cs80::CP_lpfRes), 0.06f);
+            host.setParamValue(cs80::chParam(1, cs80::CP_fD), 1.90799987f);
+            host.setParamValue(cs80::chParam(1, cs80::CP_vD), 1.27199996f);
+            host.setParamValue(cs80::P_kbdBrillianceLow, 0.0f);
+            host.setParamValue(cs80::P_kbdBrillianceHigh, 0.0f);
+            host.setParamValue(cs80::P_kbdLevelLow, 0.0f);
+            host.setParamValue(cs80::P_kbdLevelHigh, 0.0f);
             host.setParamValue(cs80::P_subOriginalMode, 1.0f);
             host.setParamValue(cs80::P_sourcePerformance, 1.0f);
             host.setPresetName(juce::String(host.getFactoryPresets()[0].name) + " / Original SUB");

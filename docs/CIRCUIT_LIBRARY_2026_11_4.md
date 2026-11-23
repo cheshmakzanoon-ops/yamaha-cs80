@@ -235,45 +235,55 @@ instrument-body model. Complete-preset comparisons do not isolate size alone.
 [Audition boundary tests](../scripts/test-capture-factory-auditions.py)
 
 Development evidence and release qualification are separate. The initial
-engine run passed **194/194 tests**. The final direct-model suite, expanded to
-cover fractional-note piano boundaries, passes **2,077 checks** and generates
-**41,062,350 samples**. The earlier engine-integration suite passed **18,156
-checks**. Subsequent factory calibration, affected-suite reruns and native
-artifact qualification are recorded with their own exact inputs and source
-identities. A development capture is never used as evidence that a downloadable
+engine run passed **194/194 tests**. Before the continuation, the direct-model
+suite expanded to cover fractional-note piano boundaries and passed
+**2,077 checks**, generating **41,062,350 samples**. The earlier
+engine-integration suite passed **18,156 checks**. Subsequent continuation
+reruns and native artifact qualification retain their own exact inputs and
+source identities. A development capture is never evidence that a downloadable
 installer contains those bytes.
 
-The final piano-course source also passed its affected model and integration
-reruns. Two LFO tests were rerun with fresh capture directories, and the Mac
-workflow contract test was updated for the stronger AU payload check. These
-follow-ups have separate source manifests and are counted separately.
-The final body/filter headers also passed the scoped ASan/UBSan probe; that
-local probe did not qualify leak scanning or native host wrappers.
+That pre-continuation piano-course source also passed its affected model and
+integration reruns. Two LFO tests were rerun with fresh capture directories,
+and the Mac workflow contract test was updated for the stronger AU payload
+check. Those follow-ups have separate source manifests and are counted
+separately. The body/filter headers at that historical stage also passed a
+scoped ASan/UBSan probe; it did not qualify leak scanning or native host
+wrappers. It is not a sanitizer result for the later tine and bowed-body
+corrections.
 
 [Piano principal-mode boundary regression](preset-evidence/2026.11.4/reviews/34-piano-register-fix.json) ·
 [Coupled-course boundary regression](preset-evidence/2026.11.4/reviews/37-piano-course-boundaries.json) ·
 [Affected-suite follow-ups](preset-evidence/2026.11.4/development/final-affected/summary.json) ·
-[Final header sanitizer probe](preset-evidence/2026.11.4/reviews/47-final-sanitizers.json)
+[Historical 59d489d header sanitizer probe](preset-evidence/2026.11.4/reviews/47-final-sanitizers.json)
 
 Use the [current download qualification](https://github.com/cheshmakzanoon-ops/yamaha-cs80/blob/main/README.md#downloads)
 to identify the accepted native source and archives. The configured audition
 roster and local development results do not themselves establish their availability.
 
 [Engine test record](preset-evidence/2026.11.4/development/core/summary.json) ·
-[Actual worker assignments](preset-evidence/2026.11.4/work-log.json)
+[Initial development worker assignments](preset-evidence/2026.11.4/work-log.json)
 
-### Final local bank and matched-audio checks
+### Historical bank and matched-audio checks — 59d489d
+
+The results in this subsection belong to the pre-continuation source
+`59d489d1a1f0065ae2a0f42a08c74edc43e94159`. They precede the tine-normalization
+and bowed-formant corrections described above. Their original manifests and
+results are retained unchanged; they are not a matched-audio comparison of
+the later continuation source.
 
 After two calibration passes per bank and a rebuild between passes, all four
 bank suites passed. The complete 523-program phrase audit measures a maximum
 phrase peak of **−4.6 dBFS**, loudest-50 ms RMS values of **−29.8 to −18.0 dBFS**,
 and a maximum eight-voice stress peak of **−1.5 dBFS**. The unchanged acceptance
 limits remain −30 to −12 dBFS for that RMS window, at most −1 dBFS for the
-phrase peak, and below 0 dBFS for the stress peak. Voicing, character and
+phrase peak, and below 0 dBFS for the stress peak. At that historical stage,
+voicing, character and
 precision checks passed **281/281**, **128/128** and **285/285** respectively.
 
-A separate matched 48 kHz capture compares all 523 programs with the preceding
-revision, using three-second holds and one-second tails. Substituting explicit
+A separate matched 48 kHz capture compares all 523 programs in that
+`59d489d` stage with revision 2026.11.3, using three-second holds and
+one-second tails. Substituting explicit
 pressure-one captures for the two pressure-only leads, all **521 musical
 programs** have changed normalized spectral and relative envelope measurements
 above CSV rounding tolerances. None is classified as a level-only change.
@@ -283,7 +293,7 @@ The four-second whole-clip RMS in this comparison is a different measure from
 the phrase audit's loudest-50 ms RMS, and short holds do not fully assess slow
 pads or long releases.
 
-[Final bank results](preset-evidence/2026.11.4/development/final-bank/audit-summary.json) ·
+[Historical 59d489d bank results](preset-evidence/2026.11.4/development/final-bank/audit-summary.json) ·
 [Complete matched comparison](preset-evidence/2026.11.4/audio-comparison.json) ·
 [Capture provenance](preset-evidence/2026.11.4/development/final-bank/matched-capture-provenance.json)
 

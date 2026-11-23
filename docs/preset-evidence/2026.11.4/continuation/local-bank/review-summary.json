@@ -1,0 +1,221 @@
+{
+  "review": "Agent 31: independent retained-evidence review; no tests rerun",
+  "references": {
+    "acceptance_baseline": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+    "tested_audio_source": "c4fe30987a5242305be60bd6cfddb144facd6643",
+    "reviewed_source": "e32728b31d97fc356cac291cb98935fdcd38f803"
+  },
+  "source_provenance": {
+    "tested_audio_source_assignment": "Provided by parent; JUnit itself does not embed a commit hash.",
+    "instrument_body_header_sha256": "d33f34f5cff6341abc9bc2c85056ce381b492d141a0fad856e0c7cbd4f06422e",
+    "tested_to_reviewed_production_source_diff": "diff --git a/src/core/curated/Fx.inc b/src/core/curated/Fx.inc\nindex 8106fdc1..485fb6be 100644\n--- a/src/core/curated/Fx.inc\n+++ b/src/core/curated/Fx.inc\n@@ -56,7 +56,7 @@ void buildFx(Builder& add)\n                .eg(I, 0.001f, 0.86f, 0.0f, 0.26f).eg(II, 0.001f, 0.051f, 0.0f, 0.025f).g(P_drift, 0.0f)\n                .contour(-0.08f, -0.22f, -0.03f, 0.07f));\n     add(\"Wind\", \"FX\", { \"noise\", \"sub-mod\", \"aftertouch\" },\n-        \"A broad low wind bed supports a separate airy gust that arrives later. Shallow SUB motion avoids a regular throbbing cycle; pressure brings forward the upper air and the unequal releases let it subside.\",\n+        \"An airy gust enters first as a broader low wind bed blooms underneath. Shallow SUB motion adds gentle movement; pressure brings forward the upper air, and its shorter release lets it subside ahead of the low bed.\",\n         effect()\n                .wave(I, false, false, 0.0f, 1.0f).wave(II, false, false, 0.0f, 0.85f).level(I, 1.0f, 0.72f).level(II, 0.95f, 0.50f)\n                .touch(I, 0.0f, 0.24f, 0.10f, 0.43f).touch(II, 0.0f, 0.16f, 0.18f, 0.59f).sub(subSine, 0.70f, 0.0f, 0.025f, 0.035f)\n",
+    "audio_equivalence_assessment": "Only src/core/curated/Fx.inc Wind description text differs under src; no numeric preset or DSP source changes."
+  },
+  "evidence": {
+    "bank-junit.xml": {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/bank-junit.xml",
+      "bytes": 590,
+      "sha256": "70d1b43758986fe80175919bea5c83a624c4d721649cd2961f910fad49416733"
+    },
+    "bank-tests.log": {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/bank-tests.log",
+      "bytes": 244,
+      "sha256": "8ba1a196480ae9cea60239bcb8f78ab075b6efa4d9ce503a39f5776171e3b635"
+    },
+    "affected-junit.xml": {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/affected-junit.xml",
+      "bytes": 9104,
+      "sha256": "9efaf69e6f04fbe2bc9536eb52d9ca2394972a3811d04f4fc703bd8d20a31c5f"
+    },
+    "affected-tests.log": {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/affected-tests.log",
+      "bytes": 961,
+      "sha256": "4b85dbfe20a42a3fca3817ddf4bf4e4d474866fd0dd47bc33604b907a6bac1bd"
+    }
+  },
+  "bank": {
+    "tests": 1,
+    "failures": 0,
+    "disabled": 0,
+    "skipped": 0,
+    "timestamp_raw": "2026-11-23T11:48:48",
+    "timestamp_timezone": "not specified by JUnit",
+    "testcases": [
+      {
+        "name": "cs80_library_audit_tests",
+        "duration_seconds": 340.341,
+        "status": "run",
+        "failure_elements": 0,
+        "error_elements": 0,
+        "skipped_elements": 0,
+        "stdout_truncated": false,
+        "observed_internal_checks": null,
+        "observed_internal_failures": null,
+        "stdout": "closest curated pair: Flute Organ 8+4 / Organ Vibrato (normalized L1 0.429)\nphrase peak max -4.6 dBFS, loudest-window RMS -29.8..-18.0 dBFS, stress peak max -1.5 dBFS\nlibrary audit passed: 301 curated + 222 original circuit programs"
+      }
+    ]
+  },
+  "affected": {
+    "tests": 7,
+    "failures": 0,
+    "disabled": 0,
+    "skipped": 0,
+    "timestamp_raw": "2026-11-23T11:45:57",
+    "timestamp_timezone": "not specified by JUnit",
+    "testcases": [
+      {
+        "name": "cs80_instrument_body_tests",
+        "duration_seconds": 4.57339,
+        "status": "run",
+        "failure_elements": 0,
+        "error_elements": 0,
+        "skipped_elements": 0,
+        "stdout_truncated": true,
+        "observed_internal_checks": null,
+        "observed_internal_failures": null,
+        "stdout": "DECAY Piano strings        upper/fundamental change  -14.61 dB\nDECAY Tine electric piano  upper/fundamental change  -18.00 dB\nDECAY Reed electric piano  upper/fundamental change  -37.34 dB\nDECAY Nylon strings        upper/fundamental change  -17.65 dB\nDECAY Steel strings        upper/fundamental change  -14.30 dB\nDECAY Plucked bass         upper/fundamental change  -21.55 dB\nDECAY Vibraphone           upper/fundamental change  -15.84 dB\nDECAY Marimba              upper/fundamental change  -48.70 dB\nDECAY Celesta              upper/fundamental change  -14.00 dB\nPIANO fundamental 1046.752 Hz, sixth 6302.514 Hz, harmonic control 6279.014 Hz\nMALLET note 48 velocity 0.30: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay\nMALLET note 48 velocity 0.85: vibraphone -8.26 dB, marimba -23.08 dB upper/fundamental decay\nMALLET note 60 velocity 0.30: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay\nMALLET note 60 velocity 0.85: vibraphone -10.03 dB, marimba -30.84 dB upper/fundamental decay\nMALL...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]"
+      },
+      {
+        "name": "cs80_tine_strike_dynamics_tests",
+        "duration_seconds": 0.369241,
+        "status": "run",
+        "failure_elements": 0,
+        "error_elements": 0,
+        "skipped_elements": 0,
+        "stdout_truncated": true,
+        "observed_internal_checks": null,
+        "observed_internal_failures": null,
+        "stdout": "TINE rate=44100 note=36 colour=0.00 fundamental_delta=+0.00001 dB rms_delta=+0.023 dB third_ratio_delta=+12.687 dB peak=0.35393\nTINE rate=44100 note=36 colour=0.65 fundamental_delta=+0.00002 dB rms_delta=+0.471 dB third_ratio_delta=+12.689 dB peak=0.37698\nTINE rate=44100 note=36 colour=1.00 fundamental_delta=+0.00002 dB rms_delta=+0.898 dB third_ratio_delta=+12.690 dB peak=0.44796\nTINE rate=44100 note=60 colour=0.00 fundamental_delta=-0.00000 dB rms_delta=+0.024 dB third_ratio_delta=+12.690 dB peak=0.35160\nTINE rate=44100 note=60 colour=0.65 fundamental_delta=-0.00000 dB rms_delta=+0.407 dB third_ratio_delta=+12.690 dB peak=0.37775\nTINE rate=44100 note=60 colour=1.00 fundamental_delta=-0.00000 dB rms_delta=+0.774 dB third_ratio_delta=+12.690 dB peak=0.45199\nTINE rate=44100 note=84 colour=0.00 fundamental_delta=+0.00000 dB rms_delta=+0.018 dB third_ratio_delta=+12.690 dB peak=0.34835\nTINE rate=44100 note=84 colour=0.65 fundamental_delta=-0.00000 dB rms_delta=+0.308 dB third_ratio_delta=+12.690 dB peak=0.37820\n...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]"
+      },
+      {
+        "name": "cs80_bowed_body_formant_tests",
+        "duration_seconds": 3.05499,
+        "status": "run",
+        "failure_elements": 0,
+        "error_elements": 0,
+        "skipped_elements": 0,
+        "stdout_truncated": true,
+        "observed_internal_checks": null,
+        "observed_internal_failures": null,
+        "stdout": "BOWED rate=44100 size=0.75 from=36.00 to=48.00 maximum_ratio_error=0.001419 dB\nBOWED rate=44100 size=0.75 from=48.00 to=36.00 maximum_ratio_error=0.002027 dB\nBOWED rate=44100 size=0.75 from=60.00 to=72.00 maximum_ratio_error=0.006519 dB\nBOWED rate=44100 size=0.75 from=72.00 to=60.00 maximum_ratio_error=0.004980 dB\nBOWED rate=44100 size=0.75 from=60.00 to=60.35 maximum_ratio_error=0.004932 dB\nBOWED rate=44100 size=0.75 from=60.00 to=59.65 maximum_ratio_error=0.002414 dB\nBOWED rate=44100 size=1.00 from=36.00 to=48.00 maximum_ratio_error=0.001538 dB\nBOWED rate=44100 size=1.00 from=48.00 to=36.00 maximum_ratio_error=0.001832 dB\nBOWED rate=44100 size=1.00 from=60.00 to=72.00 maximum_ratio_error=0.007053 dB\nBOWED rate=44100 size=1.00 from=72.00 to=60.00 maximum_ratio_error=0.005259 dB\nBOWED rate=44100 size=1.00 from=60.00 to=60.35 maximum_ratio_error=0.005159 dB\nBOWED rate=44100 size=1.00 from=60.00 to=59.65 maximum_ratio_error=0.002653 dB\nBOWED rate=44100 size=1.80 from=36.00 to=48.00 maximum_ratio_error=0.001715 ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]"
+      },
+      {
+        "name": "cs80_instrument_body_engine_tests",
+        "duration_seconds": 10.4132,
+        "status": "run",
+        "failure_elements": 0,
+        "error_elements": 0,
+        "skipped_elements": 0,
+        "stdout_truncated": false,
+        "observed_internal_checks": 18156,
+        "observed_internal_failures": 0,
+        "stdout": "BATCH comparison backend: runtime-dispatched exact batch\nREGISTER Piano strings relative waveform error 0\nREGISTER Bowed strings relative waveform error 0\nREGISTER Oboe relative waveform error 0\nREGISTER Bassoon relative waveform error 0\nKBC body LOW lever -1 relative waveform change 0.632465763\nKBC body LOW lever +1 relative waveform change 0.239494811\nKBC body HIGH lever -1 relative waveform change 0.976275609\nKBC body HIGH lever +1 relative waveform change 0.261275781\nBODY FILTER high-pass fundamental change -26.758 dB\nBODY FILTER high-pass resonance at cutoff change 9.069 dB\nBODY FILTER low-pass fourth-partial change -15.203 dB\nBODY FILTER resonance at cutoff change 9.069 dB\nTAIL rate 44100 maximum onset/pre derivative 0.78094, sample step 0.00138325 FS\nTAIL rate 48000 maximum onset/pre derivative 0.78255, sample step 0.00127391 FS\nTAIL rate 96000 maximum onset/pre derivative 1.33003, sample step 0.00063640 FS\nInstrument body Engine integration: 18156 checks, 0 failures"
+      },
+      {
+        "name": "cs80_preset_voicing_tests",
+        "duration_seconds": 15.4305,
+        "status": "run",
+        "failure_elements": 0,
+        "error_elements": 0,
+        "skipped_elements": 0,
+        "stdout_truncated": true,
+        "observed_internal_checks": null,
+        "observed_internal_failures": null,
+        "stdout": "MIX ONSET Pan Flute           transient/body   -18.0 dB; reconstruction error  -142.0 dB relative\nTRANSIENT Pan Flute           transient late/onset   -95.5 dB; body late/early   -0.1 dB; full late  -32.7 dBFS\nTRANSIENT Sine Bass           transient late/onset   -97.8 dB; body late/early   -0.0 dB; full late  -25.4 dBFS\nMIX ONSET Nylon Pluck         transient/body   -24.4 dB; reconstruction error  -142.4 dB relative\nPERCUSSION octave/other   51.3 dB; full octave/root onset  -13.6 dB; octave late/early  -25.5 dB; root late/early  -0.0 dB\nREGISTER  Piccolo             intended  -26.9 dBFS; strongest lower octave   -85.5 dB relative\nREGISTER  Ocarina             intended  -27.7 dBFS; strongest lower octave   -91.7 dB relative\nREGISTER  Whistle             intended  -22.3 dBFS; strongest lower octave  -104.2 dB relative\nVELOCITY  Velocity Keys       hard/soft attack  +12.0 dB; body  +11.4 dB; soft body  -54.1 dBFS\nVELOCITY  Velocity Lead       hard/soft attack  +11.4 dB; body  +11.6 dB; soft body  -37.0 dBFS\nSTRI...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]"
+      },
+      {
+        "name": "cs80_preset_character_tests",
+        "duration_seconds": 5.91132,
+        "status": "run",
+        "failure_elements": 0,
+        "error_elements": 0,
+        "skipped_elements": 0,
+        "stdout_truncated": true,
+        "observed_internal_checks": null,
+        "observed_internal_failures": null,
+        "stdout": "RECONSTRUCT Flute                0.000-0.750 s error  -143.6 dB relative\nRECONSTRUCT Breathy Flute        0.000-0.750 s error  -143.6 dB relative\nRECONSTRUCT Flute                0.300-0.500 s error  -143.6 dB relative\nRECONSTRUCT Flute                0.500-0.700 s error  -143.7 dB relative\nRECONSTRUCT Breathy Flute        0.300-0.500 s error  -143.6 dB relative\nRECONSTRUCT Breathy Flute        0.500-0.700 s error  -143.7 dB relative\nBREATH      Flute  -25.4 dB, Breathy Flute  -17.8 dB air/body\nRECONSTRUCT Harp                 0.000-1.200 s error  -143.7 dB relative\nRECONSTRUCT Harp                 0.004-0.020 s error  -143.7 dB relative\nRECONSTRUCT Harp                 0.800-1.100 s error  -143.7 dB relative\nSTRIKE      Harp                 onset/body  -13.5 dB, late/body   -57.7 dB\nRECONSTRUCT Kalimba              0.000-1.200 s error  -143.6 dB relative\nRECONSTRUCT Kalimba              0.004-0.020 s error  -143.3 dB relative\nRECONSTRUCT Kalimba              0.800-1.100 s error  -143.4 dB relative\nSTRIKE    ...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]"
+      },
+      {
+        "name": "cs80_preset_precision_tests",
+        "duration_seconds": 43.5424,
+        "status": "run",
+        "failure_elements": 0,
+        "error_elements": 0,
+        "skipped_elements": 0,
+        "stdout_truncated": true,
+        "observed_internal_checks": null,
+        "observed_internal_failures": null,
+        "stdout": "VIBRAPHONE note=48 velocity=0.30 H4/H1=-21.745 H2/H1=-65.800 oldH4/H1=-60.790 dB\nVIBRAPHONE note=48 velocity=0.85 H4/H1=-18.444 H2/H1=-65.145 oldH4/H1=-60.595 dB\nVIBRAPHONE note=60 velocity=0.30 H4/H1=-22.112 H2/H1=-71.818 oldH4/H1=-66.704 dB\nVIBRAPHONE note=60 velocity=0.85 H4/H1=-18.813 H2/H1=-71.162 oldH4/H1=-66.489 dB\nVIBRAPHONE note=72 velocity=0.30 H4/H1=-23.104 H2/H1=-77.793 oldH4/H1=-68.462 dB\nVIBRAPHONE note=72 velocity=0.85 H4/H1=-20.170 H2/H1=-77.234 oldH4/H1=-68.246 dB\nTREMOLO Tremolo Organ  note=48 frequency=3.2 pulse=2.4036 wetOnly=0.0115 dB peak-to-peak\nTREMOLO Tremolo Organ  note=60 frequency=3.2 pulse=2.3830 wetOnly=0.0217 dB peak-to-peak\nTREMOLO Tremolo Organ  note=72 frequency=3.2 pulse=2.4098 wetOnly=0.0185 dB peak-to-peak\nTREMOLO Theatre Organ  note=48 frequency=5.6 pulse=1.6328 wetOnly=0.0203 dB peak-to-peak\nTREMOLO Theatre Organ  note=60 frequency=5.6 pulse=1.6417 wetOnly=0.0192 dB peak-to-peak\nTREMOLO Theatre Organ  note=72 frequency=5.6 pulse=1.5665 wetOnly=0.1563 dB peak-to-peak\nTREM...\n[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]"
+      }
+    ]
+  },
+  "bank_metrics": {
+    "programs": 523,
+    "curated": 301,
+    "original_circuit": 222,
+    "sample_rate_hz": 44100,
+    "numeric_precision_note": "Values below are rounded aggregate stdout values; individual per-program measurements were not emitted.",
+    "phrase_peak_max_dbfs": -4.6,
+    "loudest_50ms_window_rms_min_dbfs": -29.8,
+    "loudest_50ms_window_rms_max_dbfs": -18.0,
+    "stress_peak_max_dbfs": -1.5,
+    "closest_curated_pair": [
+      "Flute Organ 8+4",
+      "Organ Vibrato"
+    ],
+    "closest_curated_normalized_l1": 0.429
+  },
+  "acceptance": {
+    "source_path": "tests/LibraryAuditTests.cpp",
+    "source_hashes": {
+      "acceptance_baseline": {
+        "git_blob": "04dd1abe2b1ede8271a26bdd858cccf53b0b7300",
+        "sha256": "41160b16166f47e960c5129792287e772bf39fa6f7b6bfcac54c7973a3080407"
+      },
+      "reviewed_source": {
+        "git_blob": "04dd1abe2b1ede8271a26bdd858cccf53b0b7300",
+        "sha256": "41160b16166f47e960c5129792287e772bf39fa6f7b6bfcac54c7973a3080407"
+      }
+    },
+    "baseline_to_reviewed_byte_identical": true,
+    "thresholds": {
+      "phrase_peak_max_dbfs": {
+        "operator": "<=",
+        "value": -1.0
+      },
+      "stress_peak_max_dbfs": {
+        "operator": "<",
+        "value": 0.0
+      },
+      "audibility_rms_floor_dbfs": {
+        "operator": ">=",
+        "value": -42.0
+      },
+      "loudest_window_rms_range_dbfs": {
+        "inclusive": true,
+        "minimum": -30.0,
+        "maximum": -12.0
+      },
+      "curated_pair_distance_minimum": {
+        "operator": ">=",
+        "value": 0.08
+      }
+    }
+  },
+  "voicing_negative_control": {
+    "source_diff": "diff --git a/tests/PresetVoicingTests.cpp b/tests/PresetVoicingTests.cpp\nindex 29b649cd..5e76b290 100644\n--- a/tests/PresetVoicingTests.cpp\n+++ b/tests/PresetVoicingTests.cpp\n@@ -428,10 +428,10 @@ void struckVelocityLevel()\n     // gentle and a firm key strike, across bass, middle and treble registers.\n     // Keep their complete factory patches, including chorus and level trims.\n     constexpr double minimumGainDb = 4.0;\n-    struct Case { const char* name; float previousStaticLevel, previousInitialLevel; };\n-    for (const auto& test : { Case { \"Electric Piano I\", 0.24f, 0.74f },\n-                              Case { \"Electric Piano II\", 0.25f, 0.74f },\n-                              Case { \"Kalimba\", 0.30f, 0.78f } })\n+    struct Case { const char* name; float staticLevel; };\n+    for (const auto& test : { Case { \"Electric Piano I\", 0.24f },\n+                              Case { \"Electric Piano II\", 0.25f },\n+                              Case { \"Kalimba\", 0.30f } })\n     {\n         const auto& voice = preset(test.name);\n         for (const int note : { 48, 60, 84 })\n@@ -450,16 +450,21 @@ void struckVelocityLevel()\n                         test.name, note, gainDb, db(softOnset));\n         }\n \n-        // Recreate the diagnosed static-VCA-floor regression without removing\n-        // the new excitation or its velocity-dependent spectrum. This proves\n-        // that an apparently expressive change in color cannot pass the level\n-        // criterion while the body remains compressed in amplitude.\n+        // A fixed-level negative control keeps the excitation's changing\n+        // spectrum but removes velocity gain from both rank VCAs. Reusing old\n+        // partially responsive settings is no longer a negative control:\n+        // corrected tine normalization restores their amplitude contrast too.\n+        // The same 4 dB acceptance gate must reject colour without a useful\n+        // level response; silence must not satisfy this diagnostic.\n         auto compressed = voice.values;\n-        compressed[chParam(0, CP_vLevel)] = test.previousStaticLevel;\n-        compressed[chParam(0, CP_initLevel)] = test.previousInitialLevel;\n+        compressed[chParam(0, CP_vLevel)] = test.staticLevel;\n+        compressed[chParam(0, CP_initLevel)] = 0.0f;\n+        compressed[chParam(1, CP_initLevel)] = 0.0f;\n         const auto soft = render(compressed, voice.name + \" compressed control\", 60, 0.30f, 0.30);\n         const auto hard = render(compressed, voice.name + \" compressed control\", 60, 0.85f, 0.30);\n         const double gainDb = db(ratio(hard.rms(0.03, 0.23), soft.rms(0.03, 0.23)));\n+        check(soft.rms(0.03, 0.23) > audibleRms && hard.rms(0.03, 0.23) > audibleRms,\n+              voice.name + \": fixed-level negative control remains audible\");\n         check(gainDb < minimumGainDb,\n               voice.name + \": the compressed-body negative control fails the amplitude-dynamics gate\");\n         std::printf(\"CONTROL   %-19s compressed hard/soft onset %+6.2f dB\\n\", test.name, gainDb);\n",
+    "gate_db": 4.0,
+    "gate_unchanged": true,
+    "fixture_change": "Remove velocity gain from both rank VCAs by setting CP_initLevel to zero; retain nonzero static level and check both renders remain audible.",
+    "additional_assertions_source_derived": 3,
+    "final_internal_assertion_count_observed": null,
+    "reported_expected_count": 284,
+    "expected_count_basis": "Prior count 281 supplied in task context plus three source-derived additional audibility checks; not a retained final stdout observation."
+  },
+  "scope_and_limits": [
+    "Eight CTest executable executions passed across two separate retained runs (1 bank + 7 affected); no reported failure, skip, or disabled tests.",
+    "Only engine integration retains its complete internal assertion summary: 18156 checks, 0 failures. Six other affected stdout blocks were truncated by CTest at 1024 bytes.",
+    "The final bank evidence contains aggregate extrema and count, not 523 individual metric rows.",
+    "These automated signal-level checks do not establish acoustic identity, human-perceived realism, native host compatibility, or release artifact provenance."
+  ]
+}
