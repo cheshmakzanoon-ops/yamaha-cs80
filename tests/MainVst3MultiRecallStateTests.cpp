@@ -1,4 +1,5 @@
-// Additive direct processor witness, frozen before a proposed recall-scope fix.
+// Direct processor witness retaining the original lanes, blocks and recall pairs.
+// Circuit factory recalls preserve attached host curves until wrapper scope exit.
 // Existing PresetSaveAccess friendship supplies read-only state observation.
 // This is not a native VST3 wrapper or AU/DAW qualification substitute.
 #include "plugin/PluginProcessor.h"
@@ -138,9 +139,10 @@ struct Queue
 enum class Mode { ordinary, vst3Empty, vst3Curves };
 struct Result
 {
-    State warm, insideScope, afterScope, nextBlock;
+    State warm, insideScope, afterScope, afterRepeatedEnd, nextBlock, afterFreshEdit;
     std::vector<float> audio;
-    std::array<int, frozenParameterCount> commitsInside {}, commitsAfter {};
+    std::array<int, frozenParameterCount> commitsInside {}, commitsAfter {},
+        commitsAfterRepeatedEnd {}, commitsNext {}, commitsAfterFreshEdit {};
 };
 Result run(int first, int second, Mode mode, int frames, int notes)
 {
@@ -183,8 +185,20 @@ Result run(int first, int second, Mode mode, int frames, int notes)
     }
     result.afterScope = inspect(host);
     for (size_t lane = 0; lane < queues.size(); ++lane) result.commitsAfter[lane] = queues[lane].commits;
+    // A repeated wrapper flush must not publish borrowed queues twice.
+    host.endHostAutomationBlock();
+    result.afterRepeatedEnd = inspect(host);
+    for (size_t lane = 0; lane < queues.size(); ++lane)
+        result.commitsAfterRepeatedEnd[lane] = queues[lane].commits;
     process(host, 64, {}, result.audio);
     result.nextBlock = inspect(host);
+    for (size_t lane = 0; lane < queues.size(); ++lane) result.commitsNext[lane] = queues[lane].commits;
+    // A new unqueued edit must supersede the completed curve's endpoint.
+    host.setParamValue(cs80::P_volume, 0.73f);
+    process(host, 64, {}, result.audio);
+    result.afterFreshEdit = inspect(host);
+    for (size_t lane = 0; lane < queues.size(); ++lane)
+        result.commitsAfterFreshEdit[lane] = queues[lane].commits;
     host.releaseResources();
     return result;
 }
@@ -213,7 +227,27 @@ int main(int argc, char** argv)
         reference->loadFactoryPreset(finalProgram);
         const auto expected = reference->currentValues();
         require(expected[cs80::P_sourcePerformance] == 1.0f && expected[cs80::P_voiceMode] == 0.0f,
-                "final independent program must be modern and eight-voice");
+                "final independent program must use Circuit and eight voices");
+        // The queue generator above remains unchanged. Independently enumerate
+        // its final normalized values, then use the reference processor's public
+        // parameter mapping; do not derive expectations from the rendered host
+        // or from HostAutomationCurve.
+        constexpr std::array<float, frozenParameterCount> normalizedEndpoints {{
+            0.18f, 0.20f, 0.22f, 0.24f, 0.26f, 0.28f,
+            0.30f, 0.32f, 0.34f, 0.36f, 0.38f, 0.40f,
+            0.42f, 0.44f, 0.46f, 0.48f, 0.50f, 0.52f }};
+        auto expectedEndpoint = expected;
+        for (size_t lane = 0; lane < normalizedEndpoints.size(); ++lane)
+        {
+            const int key = cs80::kSampleAccurateParameters[lane];
+            auto* parameter = reference->getAPVTS().getParameter(juce::String(cs80::paramId(key)));
+            require(parameter != nullptr, "independent endpoint parameter must exist");
+            expectedEndpoint[key] = parameter->convertFrom0to1(normalizedEndpoints[lane]);
+        }
+        require(error(expectedEndpoint, expected) > 0.0,
+                "the prescribed queue endpoints must distinguish preserved curves from cancelled curves");
+        auto expectedFreshEdit = expectedEndpoint;
+        expectedFreshEdit[cs80::P_volume] = 0.73f;
         for (const auto [first, second] : pairs)
         {
             const std::string label = "first=" + std::to_string(first) + " second=" + std::to_string(second);
@@ -221,8 +255,8 @@ int main(int argc, char** argv)
             check(actual.warm.extensionActive && actual.warm.primaryVoices > 0 && actual.warm.extensionVoices > 0,
                   label + " warmup reaches both active instruments");
             const auto& final = actual.insideScope;
-            const double primaryError = error(final.primary, expected);
-            const double extensionError = error(final.extension, expected);
+            const double primaryError = error(final.primary, expectedEndpoint);
+            const double extensionError = error(final.extension, expectedEndpoint);
             const double storedError = error(final.stored, expected);
             std::cout << "CURVED " << label << " primary_policy=" << static_cast<int>(final.primaryPolicy)
                       << " extension_policy=" << static_cast<int>(final.extensionPolicy)
@@ -233,27 +267,49 @@ int main(int argc, char** argv)
             check(final.program == finalProgram, label + " final MIDI program identity owns the result");
             check(final.primaryPolicy == cs80::RenderPolicy::sourcePerformance
                   && final.extensionPolicy == cs80::RenderPolicy::sourcePerformance,
-                  label + " both active engines receive the final modern policy");
-            check(primaryError <= limits["maximum_physical_parameter_error"], label + " primary physical frame equals final program");
-            check(extensionError <= limits["maximum_physical_parameter_error"], label + " extension physical frame equals final program");
-            check(storedError <= limits["maximum_stored_parameter_error"], label + " stored physical values equal final program");
-            check(final.activeCurves == 0 && !final.automationActive, label + " cancelled trajectories do not revive");
-            check(std::all_of(actual.commitsInside.begin(), actual.commitsInside.end(), [](int n) { return n == 1; }),
-                  label + " all queues commit once before program completion");
-            check(actual.commitsAfter == actual.commitsInside && sameState(actual.insideScope, actual.afterScope),
-                  label + " wrapper-scope exit neither recommits nor changes final state");
+                  label + " both active engines retain the final Circuit policy");
+            check(primaryError <= limits["maximum_physical_parameter_error"], label + " primary physical frame overlays prescribed endpoints on the final program");
+            check(extensionError <= limits["maximum_physical_parameter_error"], label + " extension physical frame overlays prescribed endpoints on the final program");
+            check(storedError <= limits["maximum_stored_parameter_error"], label + " stored physical values remain the final program until wrapper publication");
+            check(final.activeCurves == static_cast<int>(frozenParameterCount) && final.automationActive,
+                  label + " both recalls retain every trajectory through the complete process call");
+            check(std::all_of(actual.commitsInside.begin(), actual.commitsInside.end(), [](int n) { return n == 0; }),
+                  label + " no queue publishes before wrapper-scope exit");
+            auto expectedAfterScope = final;
+            expectedAfterScope.stored = expectedEndpoint;
+            expectedAfterScope.activeCurves = 0;
+            expectedAfterScope.automationActive = false;
+            check(std::all_of(actual.commitsAfter.begin(), actual.commitsAfter.end(), [](int n) { return n == 1; })
+                      && sameState(expectedAfterScope, actual.afterScope),
+                  label + " wrapper-scope exit publishes each endpoint once and changes only stored values and queue ownership");
+            check(actual.commitsAfterRepeatedEnd == actual.commitsAfter
+                      && sameState(actual.afterScope, actual.afterRepeatedEnd),
+                  label + " repeated wrapper flush neither recommits nor changes final state");
             check(final.extensionActive && actual.afterScope.extensionActive,
                   label + " existing extension lifetime survives the complete recalled block");
             check(!actual.nextBlock.extensionActive, label + " eight-voice recall retires extension at next ordinary block");
-            check(actual.nextBlock.stored.v == expected.v && actual.nextBlock.primary.v == expected.v,
-                  label + " following no-queue block cannot revive stale endpoints");
+            check(actual.nextBlock.stored.v == expectedEndpoint.v
+                      && actual.nextBlock.primary.v == expectedEndpoint.v
+                      && actual.nextBlock.extension.v == expectedEndpoint.v
+                      && actual.nextBlock.program == finalProgram
+                      && actual.nextBlock.activeCurves == 0 && !actual.nextBlock.automationActive
+                      && actual.commitsNext == actual.commitsAfter,
+                  label + " following no-queue block holds committed endpoints without reviving or republishing queues");
+            check(actual.afterFreshEdit.stored.v == expectedFreshEdit.v
+                      && actual.afterFreshEdit.primary.v == expectedFreshEdit.v
+                      && actual.afterFreshEdit.program == finalProgram
+                      && !actual.afterFreshEdit.extensionActive
+                      && actual.afterFreshEdit.activeCurves == 0 && !actual.afterFreshEdit.automationActive
+                      && actual.commitsAfterFreshEdit == actual.commitsAfter,
+                  label + " a later unqueued control edit supersedes the completed endpoint without replay");
 
             const auto ordinary = run(first, second, Mode::ordinary, frames, notes);
             const auto empty = run(first, second, Mode::vst3Empty, frames, notes);
             const bool sameAudio = ordinary.audio.size() == empty.audio.size()
                 && std::memcmp(ordinary.audio.data(), empty.audio.data(), ordinary.audio.size() * sizeof(float)) == 0;
             check(sameAudio && sameState(ordinary.warm, empty.warm)
-                  && sameState(ordinary.afterScope, empty.afterScope) && sameState(ordinary.nextBlock, empty.nextBlock),
+                  && sameState(ordinary.afterScope, empty.afterScope) && sameState(ordinary.nextBlock, empty.nextBlock)
+                  && sameState(ordinary.afterFreshEdit, empty.afterFreshEdit),
                   label + " tagged empty queues preserve ordinary main PCM and state exactly");
             std::cout << "NO_CURVE_CHARACTERIZATION " << label << " same_pcm=" << sameAudio
                       << " ordinary_extension_policy=" << static_cast<int>(ordinary.afterScope.extensionPolicy)

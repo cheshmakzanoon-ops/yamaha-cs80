@@ -1,0 +1,364 @@
+{
+  "status": "failed_attempt_progress_evidence_only",
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "run_attempt": 1,
+  "job_id": 137437185082,
+  "prior_source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+  "prior_run_id": 45091496524,
+  "prior_job_id": 137421860189,
+  "phases": [
+    {
+      "phase": "JUCE initialization",
+      "prior": {
+        "seconds": 0.000702,
+        "total_seconds": 0.000702
+      },
+      "current": {
+        "seconds": 0.00141,
+        "total_seconds": 0.00141
+      }
+    },
+    {
+      "phase": "host metadata",
+      "prior": {
+        "seconds": 5.996645,
+        "total_seconds": 5.997347
+      },
+      "current": {
+        "seconds": 14.696206,
+        "total_seconds": 14.697616
+      }
+    },
+    {
+      "phase": "output meter host",
+      "prior": {
+        "seconds": 12.320114,
+        "total_seconds": 18.317461
+      },
+      "current": {
+        "seconds": 29.265216,
+        "total_seconds": 43.962832
+      }
+    },
+    {
+      "phase": "source performance host",
+      "prior": {
+        "seconds": 0.437981,
+        "total_seconds": 18.755442
+      },
+      "current": {
+        "seconds": 0.847253,
+        "total_seconds": 44.810085
+      }
+    },
+    {
+      "phase": "ws3 keyboard/tuning host",
+      "prior": {
+        "seconds": 2.676762,
+        "total_seconds": 21.432204
+      },
+      "current": {
+        "seconds": 5.437859,
+        "total_seconds": 50.247944
+      }
+    },
+    {
+      "phase": "preset recall host",
+      "prior": {
+        "seconds": 0.510826,
+        "total_seconds": 21.94303
+      },
+      "current": {
+        "seconds": 0.839591,
+        "total_seconds": 51.087535
+      }
+    },
+    {
+      "phase": "preset file host",
+      "prior": {
+        "seconds": 0.560037,
+        "total_seconds": 22.503067
+      },
+      "current": {
+        "seconds": 1.30419,
+        "total_seconds": 52.391724
+      }
+    },
+    {
+      "phase": "session schema host",
+      "prior": {
+        "seconds": 2.683971,
+        "total_seconds": 25.187038
+      },
+      "current": {
+        "seconds": 7.228585,
+        "total_seconds": 59.620309
+      }
+    },
+    {
+      "phase": "session undo host",
+      "prior": {
+        "seconds": 0.551662,
+        "total_seconds": 25.738701
+      },
+      "current": {
+        "seconds": 1.231633,
+        "total_seconds": 60.851943
+      }
+    },
+    {
+      "phase": "engine I/O host",
+      "prior": {
+        "seconds": 7.9379,
+        "total_seconds": 33.6766
+      },
+      "current": {
+        "seconds": 16.804317,
+        "total_seconds": 77.65626
+      }
+    },
+    {
+      "phase": "editor initial size",
+      "prior": {
+        "seconds": 0.058311,
+        "total_seconds": 33.734912
+      },
+      "current": {
+        "seconds": 0.120964,
+        "total_seconds": 77.777224
+      }
+    },
+    {
+      "phase": "external input host",
+      "prior": {
+        "seconds": 1.700517,
+        "total_seconds": 35.435429
+      },
+      "current": {
+        "seconds": 3.651138,
+        "total_seconds": 81.428362
+      }
+    },
+    {
+      "phase": "circuit performance and retired policy host",
+      "prior": {
+        "seconds": 3.672521,
+        "total_seconds": 39.10795
+      },
+      "current": {
+        "seconds": 12.03574,
+        "total_seconds": 93.464102
+      }
+    },
+    {
+      "phase": "keyboard and expression host",
+      "prior": {
+        "seconds": 2.690214,
+        "total_seconds": 41.798165
+      },
+      "current": {
+        "seconds": 5.874384,
+        "total_seconds": 99.338486
+      }
+    },
+    {
+      "phase": "live envelope and factory source host",
+      "prior": {
+        "seconds": 4.260511,
+        "total_seconds": 46.058675
+      },
+      "current": {
+        "seconds": 8.605759,
+        "total_seconds": 107.944244
+      }
+    },
+    {
+      "phase": "editor, state and automation",
+      "prior": {
+        "seconds": 26.330957,
+        "total_seconds": 72.389633
+      },
+      "current": {
+        "seconds": 41.749452,
+        "total_seconds": 149.693697
+      }
+    },
+    {
+      "phase": "source performance captures",
+      "prior": {
+        "seconds": 6.598822,
+        "total_seconds": 78.988454
+      },
+      "current": {
+        "seconds": 21.12764,
+        "total_seconds": 170.821337
+      }
+    },
+    {
+      "phase": "preset save and panic",
+      "prior": {
+        "seconds": 9.105422,
+        "total_seconds": 88.093876
+      },
+      "current": {
+        "seconds": 30.108472,
+        "total_seconds": 200.929809
+      }
+    },
+    {
+      "phase": "program library, Program Change, A/B and randomise",
+      "prior": {
+        "seconds": 0.924251,
+        "total_seconds": 89.018128
+      },
+      "current": {
+        "seconds": 2.295215,
+        "total_seconds": 203.225024
+      }
+    },
+    {
+      "phase": "pressure ownership and UI readiness",
+      "prior": {
+        "seconds": 5.669496,
+        "total_seconds": 94.687624
+      },
+      "current": {
+        "seconds": 7.08697,
+        "total_seconds": 210.311994
+      }
+    },
+    {
+      "phase": "original panel editor (ws7)",
+      "prior": {
+        "seconds": 3.821479,
+        "total_seconds": 98.509102
+      },
+      "current": {
+        "seconds": 6.326174,
+        "total_seconds": 216.638169
+      }
+    },
+    {
+      "phase": "studio views",
+      "prior": {
+        "seconds": 17.043626,
+        "total_seconds": 115.552728
+      },
+      "current": null
+    },
+    {
+      "phase": "ring curve gestures",
+      "prior": {
+        "seconds": 1.750765,
+        "total_seconds": 117.303493
+      },
+      "current": null
+    },
+    {
+      "phase": "studio interaction",
+      "prior": {
+        "seconds": 0.552087,
+        "total_seconds": 117.855581
+      },
+      "current": null
+    },
+    {
+      "phase": "studio MIDI learn",
+      "prior": {
+        "seconds": 1.27411,
+        "total_seconds": 119.129691
+      },
+      "current": null
+    },
+    {
+      "phase": "studio undo and redo",
+      "prior": {
+        "seconds": 2.983893,
+        "total_seconds": 122.113583
+      },
+      "current": null
+    },
+    {
+      "phase": "studio learning tools",
+      "prior": {
+        "seconds": 6.482759,
+        "total_seconds": 128.596343
+      },
+      "current": null
+    },
+    {
+      "phase": "studio tab order, hit targets and contrast",
+      "prior": {
+        "seconds": 1.979733,
+        "total_seconds": 130.576076
+      },
+      "current": null
+    },
+    {
+      "phase": "modern modulation and FX layer",
+      "prior": {
+        "seconds": 0.726371,
+        "total_seconds": 131.302447
+      },
+      "current": null
+    },
+    {
+      "phase": "modern layer integer state ranges",
+      "prior": {
+        "seconds": 2.74969,
+        "total_seconds": 134.052136
+      },
+      "current": null
+    },
+    {
+      "phase": "modern layer page painting and interaction",
+      "prior": {
+        "seconds": 1.356123,
+        "total_seconds": 135.408259
+      },
+      "current": null
+    },
+    {
+      "phase": "integration wiring (pages, toolbar, library, undo)",
+      "prior": {
+        "seconds": 0.635271,
+        "total_seconds": 136.04353
+      },
+      "current": null
+    }
+  ],
+  "source_file_identity": {
+    "tests/LibraryAuditTests.cpp": {
+      "source_sha256": "dcb65e0bea123f872fe362da5c51140976702d9b5eb848b982d050ee4e73b542",
+      "prior_sha256": "dcb65e0bea123f872fe362da5c51140976702d9b5eb848b982d050ee4e73b542",
+      "identical": true
+    },
+    "tests/StudioUiTests.h": {
+      "source_sha256": "c8ad2c510036cb9f3682d0404cc11b5bb64c7f2326941f719e63648cc970b568",
+      "prior_sha256": "c8ad2c510036cb9f3682d0404cc11b5bb64c7f2326941f719e63648cc970b568",
+      "identical": true
+    },
+    "tests/UiSmokeTiming.h": {
+      "source_sha256": "5016b52a7a558f1f3a8cb359c5c0cba5b06778e25444f686bf0d7f23bac1f0c7",
+      "prior_sha256": "5016b52a7a558f1f3a8cb359c5c0cba5b06778e25444f686bf0d7f23bac1f0c7",
+      "identical": true
+    }
+  },
+  "current_ui_last_completed_phase": [
+    "original panel editor (ws7)",
+    {
+      "seconds": 6.326174,
+      "total_seconds": 216.638169
+    }
+  ],
+  "current_ui_last_phase_marker": "studio views",
+  "current_ui_last_output": "wrote /Users/runner/work/yamaha-cs80/yamaha-cs80/build/ui-smoke/studio-drawers-1120x700.png",
+  "current_audit_captured_output": "",
+  "limits": [
+    "Current audit emitted no captured JUnit or LastTest output. Its source uses printf without fflush/setvbuf; captured silence alone cannot localize where execution stopped.",
+    "Current UI logs document continued multi-phase progress, but do not timestamp individual screenshot lines or prove completion of the studio-views phase.",
+    "Last completed timed phase ended at216.638169s; CTest killed UI at240.115s. Do not reinterpret timeout as a pass.",
+    "Only static source comparison and captured logs; no fresh run, deadline adjustment, or live stack trace. Exclusive cause unestablished."
+  ]
+}

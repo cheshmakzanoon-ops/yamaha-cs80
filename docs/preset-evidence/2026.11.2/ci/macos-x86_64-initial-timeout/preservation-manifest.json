@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "created_at_utc": "2026-11-23T03:16:03.806837+00:00",
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "run_attempt": 1,
+  "job_id": 137437185082,
+  "status": "original_native_attempt_failed_preserved",
+  "scope": "Immutable initial Intel failure and scheduler-state evidence; no validator, package, retry or overall-run pass is claimed. JSON only; original ZIP and full logs remain outside the repository.",
+  "relative_directory": "docs/preset-evidence/2026.11.2/ci/macos-x86_64-initial-timeout",
+  "file_count_excluding_manifest": 10,
+  "files": [
+    {
+      "path": "14786735934-public-get.json",
+      "bytes": 813,
+      "sha256": "63ee252262f61f5e15deae4c4b1ec4f63a0666db643f90fef7c45aa3ebab3228"
+    },
+    {
+      "path": "8ffe-reference/14783137932-public-get.json",
+      "bytes": 815,
+      "sha256": "6743e0989d13d8a8dc9aebbd838f9dca3ed9f124168d46b7d0c44a2c9eb6f083"
+    },
+    {
+      "path": "8ffe-reference/native-api.json",
+      "bytes": 803,
+      "sha256": "438bb59837ab0eedd7b9fc93e98b65e99f5fd972d264e185785a240847a41a26"
+    },
+    {
+      "path": "artifact-content-metadata.json",
+      "bytes": 3159,
+      "sha256": "144511a9c3fa6b35c33dd61177d70aa507ac6034bb32f8d9ec47dee2d12dc680"
+    },
+    {
+      "path": "failure-progress.json",
+      "bytes": 8962,
+      "sha256": "67e6e6f9b9d293679bf7cd5c2688ef5ab54b8eca74813715a6faf4f52d9de989"
+    },
+    {
+      "path": "failure-summary.json",
+      "bytes": 35119,
+      "sha256": "9dde05cdacaf08cdefee3b46731276dde4bd7ac1cd6c9bd47e5413dfda947a67"
+    },
+    {
+      "path": "job-api.json",
+      "bytes": 5748,
+      "sha256": "2ab0a56c66f6e0edc1b4f4a96dbf5ba6351638297051cc7557f17351608555f0"
+    },
+    {
+      "path": "native-api.json",
+      "bytes": 803,
+      "sha256": "19be4518a27ef184928dd903e69ed731b15c3b2cc8a992762caa8f0aba092aaf"
+    },
+    {
+      "path": "scheduler-state-response.json",
+      "bytes": 765,
+      "sha256": "7dfcb6412462209f59ac4c0baa9e32a01e4579ec1af10968e4bf50cf306121fc"
+    },
+    {
+      "path": "scheduler-state-summary.json",
+      "bytes": 867,
+      "sha256": "f73355b687df18e91a0d67fbf1b17a07ab716a936692c262cf1863edf9110447"
+    }
+  ]
+}

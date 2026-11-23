@@ -1,0 +1,399 @@
+{
+  "schema": 1,
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "run_attempt": 1,
+  "job_id": 137437184988,
+  "target": "linux-x86_64",
+  "status": "platform_blocked",
+  "recorded_at_utc": "2026-11-23T04:24:53.810034+00:00",
+  "job_conclusion": "failure",
+  "ctest_exit": 8,
+  "counts": {
+    "registered": 583,
+    "passed": 578,
+    "failed": 4,
+    "formal_skipped": 1,
+    "disabled": 0,
+    "unknown": 0
+  },
+  "ctest_wall_seconds": 8049.85,
+  "junit_aggregate_seconds": 8049.0,
+  "failed_tests": [
+    {
+      "name": "cs80_sub_routing_display_tests",
+      "result": "failed",
+      "junit_status": "fail",
+      "seconds": 0.670788,
+      "last_test_block_sha256": "f25a7e38a544a36d1997b124d9c566f2ae96743259ae07a70359dad0c5c6a4ab",
+      "junit_output_sha256": "c9d9823e971b5754763210ed70de38b498acabbf7ed3eec6ce685dade10d30e6",
+      "failure_messages": [
+        "Failed"
+      ],
+      "test_summary": [
+        "SUB routing display: 71 checks, 30 failures"
+      ],
+      "assertion_failure_lines": 30,
+      "distinct_assertions": [
+        {
+          "line": "FAIL: engine-mode-only change invalidates the AT SPEED diagnostic",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL: Circuit Original half-depth displays x1.83 rather than the legacy x2.00",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL: valid engine-mode switch changes the AT SPEED numeric text",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL: actual maximum readout follows the effective mode",
+          "occurrences": 12
+        },
+        {
+          "line": "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "occurrences": 15
+        }
+      ]
+    },
+    {
+      "name": "cs80_midi_map_notification_tests",
+      "result": "failed",
+      "junit_status": "fail",
+      "seconds": 3.1819,
+      "last_test_block_sha256": "4cbcacf0f03049bc106ee4fa14dda4d9bc66a0fa7f4827d003922cbf1fb364ca",
+      "junit_output_sha256": "6bbdf6946da03eb3e4a8aa885ee5a7eaac1d0330a5f4d450d46a7a4648a372aa",
+      "failure_messages": [
+        "Failed"
+      ],
+      "test_summary": [
+        "74 checks, 2 failures"
+      ],
+      "assertion_failure_lines": 2,
+      "distinct_assertions": [
+        {
+          "line": "FAIL exact coalesced dirty count",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL PURE no new map",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "name": "cs80_audio_callback_allocation_tests",
+      "result": "failed",
+      "junit_status": "fail",
+      "seconds": 1.56097,
+      "last_test_block_sha256": "3f4230c6ff43d5416be9bdfcbad044a261d5195dd4236a08c3523821d529fc08",
+      "junit_output_sha256": "ba548f253d083bd26ea337bfdd874ec8a80928cdd0808423a8004da2945fd486",
+      "failure_messages": [
+        "Failed"
+      ],
+      "test_summary": [
+        "Audio callback allocation: 228 checks, 12 failures"
+      ],
+      "assertion_failure_lines": 12,
+      "distinct_assertions": [
+        {
+          "line": "FAIL policy transition actually occurred allocations=0 frees=0",
+          "occurrences": 12
+        }
+      ]
+    },
+    {
+      "name": "cs80_main_vst3_multirecall_state_tests",
+      "result": "failed",
+      "junit_status": "fail",
+      "seconds": 0.738618,
+      "last_test_block_sha256": "c9a57014ff320c4d2d0c417901f50dd2d75cceba596367061c372323d7541486",
+      "junit_output_sha256": "4c1ad923a81704c389801ce792d006e28b343ee7ddd11c038ce9112ab3ffbaf2",
+      "failure_messages": [
+        "Failed"
+      ],
+      "test_summary": [
+        "Main VST3 multi-recall state: 65 checks, 30 failures"
+      ],
+      "assertion_failure_lines": 30,
+      "distinct_assertions": [
+        {
+          "line": "FAIL first=0 second=1 primary physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=0 second=1 extension physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=0 second=1 cancelled trajectories do not revive",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=0 second=1 all queues commit once before program completion",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=0 second=1 wrapper-scope exit neither recommits nor changes final state",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=0 second=1 following no-queue block cannot revive stale endpoints",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=63 second=64 primary physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=63 second=64 extension physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=63 second=64 cancelled trajectories do not revive",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=63 second=64 all queues commit once before program completion",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=63 second=64 wrapper-scope exit neither recommits nor changes final state",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=63 second=64 following no-queue block cannot revive stale endpoints",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=64 primary physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=64 extension physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=64 cancelled trajectories do not revive",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=64 all queues commit once before program completion",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=64 wrapper-scope exit neither recommits nor changes final state",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=64 following no-queue block cannot revive stale endpoints",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=700 primary physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=700 extension physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=700 cancelled trajectories do not revive",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=700 all queues commit once before program completion",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=700 wrapper-scope exit neither recommits nor changes final state",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=64 second=700 following no-queue block cannot revive stale endpoints",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=700 second=1023 primary physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=700 second=1023 extension physical frame equals final program",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=700 second=1023 cancelled trajectories do not revive",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=700 second=1023 all queues commit once before program completion",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=700 second=1023 wrapper-scope exit neither recommits nor changes final state",
+          "occurrences": 1
+        },
+        {
+          "line": "FAIL first=700 second=1023 following no-queue block cannot revive stale endpoints",
+          "occurrences": 1
+        }
+      ]
+    }
+  ],
+  "formal_skips": [
+    {
+      "name": "cs80_stereo_pra_exact_tests",
+      "status": "notrun",
+      "messages": [
+        "SKIP_RETURN_CODE=77"
+      ]
+    }
+  ],
+  "nested_python_skips": {
+    "total": 3,
+    "suites": [
+      {
+        "ctest_test": "cs80_package_binary_identity_tests",
+        "python_tests_run": 13,
+        "python_skipped": 1,
+        "details": []
+      },
+      {
+        "ctest_test": "cs80_windows_installer_preflight_tests",
+        "python_tests_run": 12,
+        "python_skipped": 2,
+        "details": []
+      }
+    ],
+    "scope": "Distinct from formal CTest skips."
+  },
+  "skipped_native_steps": [
+    {
+      "name": "Capture curated preset auditions",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Upload curated preset auditions",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Upload Linux VST3",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Render demo and screenshots",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Upload render artifacts",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Package Linux VST3 and Standalone",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Upload Linux install bundle",
+      "conclusion": "skipped"
+    }
+  ],
+  "dependent_validator_job": {
+    "id": 137482544924,
+    "name": "pluginval / Linux VST3 (strictness 10)",
+    "run_id": 45096447502,
+    "run_attempt": 1,
+    "head_sha": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "status": "completed",
+    "conclusion": "skipped",
+    "started_at": "2026-11-23T04:16:21Z",
+    "completed_at": "2026-11-23T04:16:20Z"
+  },
+  "validator_invocations": 0,
+  "install_bundle_available": false,
+  "audition_capture_available": false,
+  "artifact_api": {
+    "id": 14789143862,
+    "name": "cs80-linux-test-evidence",
+    "size_in_bytes": 139755,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789143862",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789143862/zip",
+    "expired": false,
+    "created_at": "2026-11-23T04:16:18Z",
+    "expires_at": "2027-02-21T01:46:29Z",
+    "updated_at": "2026-11-23T04:16:18Z",
+    "digest": "sha256:3db5f007231e3cd845ec7869273d2a0ffc2ac4eb4601aa8d3bd21f8eeb2e2b9f",
+    "workflow_run": {
+      "id": 45096447502,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87"
+    }
+  },
+  "public_download": {
+    "status": "public_get_verified",
+    "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "run_id": 45096447502,
+    "artifact_id": 14789143862,
+    "artifact_name": "cs80-linux-test-evidence",
+    "public_url": "https://nightly.link/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14789143862.zip",
+    "started_at_utc": "2026-11-23T04:19:01.145978+00:00",
+    "completed_at_utc": "2026-11-23T04:19:12.067163+00:00",
+    "http_status": 200,
+    "authentication_sent": false,
+    "final_response_host": "productionresultssa31.blob.core.windows.net",
+    "content_length": 139755,
+    "bytes_received": 139755,
+    "sha256": "3db5f007231e3cd845ec7869273d2a0ffc2ac4eb4601aa8d3bd21f8eeb2e2b9f",
+    "api_size_and_digest_match": true,
+    "expires_at": "2027-02-21T01:46:29Z",
+    "elapsed_seconds": 10.921,
+    "earlier_attempts": []
+  },
+  "artifact_members": [
+    {
+      "path": "Testing/Temporary/LastTest.log",
+      "bytes": 1108693,
+      "sha256": "9c9c26184125e34ea840224908c386c816b875d40eb04e69765e640c9baf0d79"
+    },
+    {
+      "path": "ci-juce-provenance.txt",
+      "bytes": 609,
+      "sha256": "60193a07b84005bfa88f628a2522108607f20e602af2615b24baa5897020d5d7"
+    },
+    {
+      "path": "ctest-results.xml",
+      "bytes": 469038,
+      "sha256": "bfaba6f210b95b2264a46688fe383ecb665dce729c401b7a5bc424df45b6bfe6"
+    }
+  ],
+  "juce_provenance": {
+    "checked_at": "2026-11-23T01:53:50Z",
+    "expected_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "expected_version": "8.0.11",
+    "expected_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "workflow_commit": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+    "workflow_run": "45096447502",
+    "configured_source": "/home/runner/work/yamaha-cs80/yamaha-cs80/build/_deps/juce-src",
+    "source_override": "",
+    "project_source": "/home/runner/work/yamaha-cs80/yamaha-cs80",
+    "actual_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+    "origin": "https://github.com/juce-framework/JUCE.git",
+    "git_description": "8.0.11",
+    "source_clean": "true",
+    "actual_version": "8.0.11",
+    "verification": "PASS"
+  },
+  "roster": {
+    "path": "test-roster.json",
+    "bytes": 205057,
+    "sha256": "2175bd584924ac835f9e7703708811ef765f2f728d42d54cbecd2d79324717f0"
+  },
+  "job_log": {
+    "bytes": 414646,
+    "sha256": "55be393fe3c62f5e9ff0177678a4a0e55df98b4634c1c217e2ec76c5f031d8f6"
+  },
+  "failure_parser_sha256": "80ce7ac9e4d2c3ede8e6072ab2e96ae6d56b668466635a4a0844e3b9e92bac1e",
+  "scope": "Original source366 native failure preserved. Public artifact downloaded and checked against API and producer log. Later local repairs cannot change this result; no retry, package, audition or validator pass is inferred."
+}

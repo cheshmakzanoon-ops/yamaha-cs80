@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "run_id": 45096447502,
+  "requested_job_id": 137437185082,
+  "original_job_attempt": 1,
+  "request": "Targeted rerun of the original Intel job with unchanged gates",
+  "result_http_status": 403,
+  "response_message": "The workflow run containing this job is already running",
+  "retry_executed": false,
+  "classification": "GitHub scheduler/run-state rejection: existing workflow run still active",
+  "approval_denial": false,
+  "evidence_origin": "Exact structured tool response relayed by root from functions.store key cs80_intel_targeted_rerun_request. No request timestamp was supplied.",
+  "scope": "This is a scheduler result only. It neither changes the original failed native outcome nor creates attempt-2 proof. Prior successful Windows and Apple Silicon proofs remain attempt 1."
+}

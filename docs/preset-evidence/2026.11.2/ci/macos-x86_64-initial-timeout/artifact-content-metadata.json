@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "source_tree": "fc2a24d92c77ec8a344a5548579b39f9d74d6d63",
+  "run_id": 45096447502,
+  "run_attempt": 1,
+  "archives": [
+    {
+      "artifact_id": 14786735934,
+      "source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+      "run_id": 45096447502,
+      "job_id": 137437185082,
+      "run_attempt": 1,
+      "bytes": 62149,
+      "sha256": "9d4b05eb184736a5d8eab69498734a0d9ed8fbcb75326816b4c9ca79f8ca0f33",
+      "api_size_and_digest_match": true,
+      "members": [
+        {
+          "path": "Testing/Temporary/LastTest.log",
+          "bytes": 304032,
+          "sha256": "73c49c65cb2e764c85bfc370c2fe1a655586d1e8d5418978972f125a5fa558c2"
+        },
+        {
+          "path": "ctest-results.xml",
+          "bytes": 119730,
+          "sha256": "6e24e2cb0defa5bd6ec3eb5248bd39dd2fa5beaebb0dc92731fa5135acce3345"
+        },
+        {
+          "path": "ci-juce-provenance.txt",
+          "bytes": 612,
+          "sha256": "95398c15ae1bb6f28603a38a6fb257e8a55c08ef672d7278048cbe904cde3bcc"
+        }
+      ],
+      "scope": "Original current failure evidence"
+    },
+    {
+      "artifact_id": 14783137932,
+      "source": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+      "run_id": 45091496524,
+      "job_id": 137421860189,
+      "run_attempt": 1,
+      "bytes": 62586,
+      "sha256": "7da228cddddc035ebe715bd85d1ab500182e6bc138823e3ca79ecca943bd9066",
+      "api_size_and_digest_match": true,
+      "members": [
+        {
+          "path": "Testing/Temporary/LastTest.log",
+          "bytes": 313259,
+          "sha256": "739a6055b7e52648c9ab15806a65c800577640448a6f9b01811e1396d75b1d22"
+        },
+        {
+          "path": "ctest-results.xml",
+          "bytes": 105955,
+          "sha256": "31dc6851759bcc671b36c504e85f4a797ebd6269dc77c5ffe369f8f8929c8213"
+        },
+        {
+          "path": "ci-juce-provenance.txt",
+          "bytes": 612,
+          "sha256": "bbf630d68184fe190b749b4d067dc49098a5330f40e633448807c262959c7402"
+        }
+      ],
+      "scope": "Prior successful native test evidence used only for measured progress/timing comparison; not a current-source acceptance."
+    }
+  ],
+  "job_log": {
+    "bytes": 196908,
+    "sha256": "48d05727933c8db4929de54efd70d775a3a236f2f00d114c966120a51ef6a7d4",
+    "retained_in_scratch": "/dev/shm/cs80-circuit-011b6ba4a170/a51/366c/intel/job.log",
+    "copied_to_repository": false
+  },
+  "raw_scratch_failure_summary": {
+    "bytes": 35119,
+    "sha256": "9dde05cdacaf08cdefee3b46731276dde4bd7ac1cd6c9bd47e5413dfda947a67",
+    "copied_byte_for_byte": true
+  },
+  "retained_ui_lasttest_extracts": [
+    {
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/366c/intel/ui-smoke-current-LastTest.txt",
+      "bytes": 15249,
+      "sha256": "1646bb3076d8f5bbe39cc3cf6ee719b88ecbe4b0d598eeabfc63391efa27a2bc",
+      "copied_to_repository": false
+    },
+    {
+      "path": "/dev/shm/cs80-circuit-011b6ba4a170/a51/366c/intel/ui-smoke-prior8ffe-LastTest.txt",
+      "bytes": 24245,
+      "sha256": "427bbb130fc1f295b8c98ed979c1e434a64fe55ae7172c04545307646305071c",
+      "copied_to_repository": false
+    }
+  ]
+}

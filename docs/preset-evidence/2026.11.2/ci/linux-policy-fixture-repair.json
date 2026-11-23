@@ -1,0 +1,259 @@
+{
+  "schema": 1,
+  "status": "focused_local_fixed_policy_fixtures_passed",
+  "recorded_at_utc": "2026-11-23T04:30:17.060877+00:00",
+  "failed_native_source": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "failed_native_run": 45096447502,
+  "failed_native_job": 137437184988,
+  "failed_native_run_attempt": 1,
+  "original_native_status": "failure;4 CTest entries failed;preserved separately",
+  "product_sources_unchanged_from_failed_native_source": true,
+  "baseline_assertion_counts": {
+    "checks": 438,
+    "failed": 74
+  },
+  "corrected_assertion_counts": {
+    "checks": 551,
+    "failed": 0
+  },
+  "tests": [
+    {
+      "test": "cs80_sub_routing_display_tests",
+      "test_file": "tests/SubRoutingDisplayTests.cpp",
+      "previous_source_sha256": "9079d8a8a284f69b2ad1ba9925d930727e0a0f8dabae3a9bf29230f37f5baea5",
+      "corrected_source_sha256": "a3a19222cf076d038934e6b878bc08e5dc276d448dc06f994999ccf2434131f3",
+      "baseline": {
+        "name": "SubRoutingDisplayTests.cpp",
+        "exit": 1,
+        "seconds": 0.72,
+        "log": "/tmp/cs80-circuit-011b6ba4a170/linux-fixture-repair/baseline/SubRoutingDisplayTests.cpp.run.log",
+        "sha256": "c9d9823e971b5754763210ed70de38b498acabbf7ed3eec6ce685dade10d30e6",
+        "checks": 71,
+        "failures": 30,
+        "same_failure_messages_as_original_ci": true,
+        "failure_messages": [
+          "FAIL: engine-mode-only change invalidates the AT SPEED diagnostic",
+          "FAIL: Circuit Original half-depth displays x1.83 rather than the legacy x2.00",
+          "FAIL: valid engine-mode switch changes the AT SPEED numeric text",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual maximum readout follows the effective mode",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law",
+          "FAIL: actual readout uses the effective Original/circuit full-touch law"
+        ]
+      },
+      "corrected": {
+        "name": "SubRoutingDisplayTests.cpp",
+        "exit": 0,
+        "seconds": 1.03,
+        "log": "/tmp/cs80-circuit-011b6ba4a170/linux-fixture-repair/current/SubRoutingDisplayTests.cpp.run.log",
+        "sha256": "14908c94d66763dcbfd90601d03ac2e293c1ef2849648cd3f4af608d4ed01ae1",
+        "checks": 95,
+        "failures": 0,
+        "summary_lines": [
+          "SUB routing display: 95 checks, 0 failures"
+        ]
+      }
+    },
+    {
+      "test": "cs80_midi_map_notification_tests",
+      "test_file": "tests/MidiMapNotificationTests.cpp",
+      "previous_source_sha256": "023edea1b92077c829004cd8fcb4167eea4cfe6457ca00b94aa684880b61fed5",
+      "corrected_source_sha256": "e9ea07087e466391af01e6c1d95b1a2f13daf2a8e3069cc827e349371a15b792",
+      "baseline": {
+        "name": "MidiMapNotificationTests.cpp",
+        "exit": 1,
+        "seconds": 3.31,
+        "log": "/tmp/cs80-circuit-011b6ba4a170/linux-fixture-repair/baseline/MidiMapNotificationTests.cpp.run.log",
+        "sha256": "6bbdf6946da03eb3e4a8aa885ee5a7eaac1d0330a5f4d450d46a7a4648a372aa",
+        "checks": 74,
+        "failures": 2,
+        "same_failure_messages_as_original_ci": true,
+        "failure_messages": [
+          "FAIL exact coalesced dirty count",
+          "FAIL PURE no new map"
+        ]
+      },
+      "corrected": {
+        "name": "MidiMapNotificationTests.cpp",
+        "exit": 0,
+        "seconds": 3.66,
+        "log": "/tmp/cs80-circuit-011b6ba4a170/linux-fixture-repair/current/MidiMapNotificationTests.cpp.run.log",
+        "sha256": "27de6b3493794140322fe4cb99ea5255ae9d8b30721c08346cba8992c4d5324f",
+        "checks": 93,
+        "failures": 0,
+        "summary_lines": [
+          "93 checks, 0 failures"
+        ]
+      }
+    },
+    {
+      "test": "cs80_audio_callback_allocation_tests",
+      "test_file": "tests/AudioCallbackAllocationTests.cpp",
+      "previous_source_sha256": "13de7f5b839b3e97606ebf8b238413a5138d491cded40aa86ec87f119620b4d3",
+      "corrected_source_sha256": "cb805262601e7145ec9952a6b15b53cf17ba1de312ae240fa4a846483bf162a8",
+      "baseline": {
+        "name": "AudioCallbackAllocationTests.cpp",
+        "exit": 1,
+        "seconds": 2.0,
+        "log": "/tmp/cs80-circuit-011b6ba4a170/linux-fixture-repair/baseline/AudioCallbackAllocationTests.cpp.run.log",
+        "sha256": "ba548f253d083bd26ea337bfdd874ec8a80928cdd0808423a8004da2945fd486",
+        "checks": 228,
+        "failures": 12,
+        "same_failure_messages_as_original_ci": true,
+        "failure_messages": [
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0",
+          "FAIL policy transition actually occurred allocations=0 frees=0"
+        ]
+      },
+      "corrected": {
+        "name": "AudioCallbackAllocationTests.cpp",
+        "exit": 0,
+        "seconds": 2.0,
+        "log": "/tmp/cs80-circuit-011b6ba4a170/linux-fixture-repair/current/AudioCallbackAllocationTests.cpp.run.log",
+        "sha256": "bcaeb8bc8da7fea87dd80851d99ce085f6a8868612e53cb6a7d8883561f2f64f",
+        "checks": 288,
+        "failures": 0,
+        "summary_lines": [
+          "Audio callback allocation: 288 checks, 0 failures"
+        ]
+      }
+    },
+    {
+      "test": "cs80_main_vst3_multirecall_state_tests",
+      "test_file": "tests/MainVst3MultiRecallStateTests.cpp",
+      "previous_source_sha256": "1f77b569dbfc2190bd47e40fc22f23a2ec89b6b87649a1028d59fa39d74ada32",
+      "corrected_source_sha256": "56a9d7315e8d4daf5d47967da29c687f41622a2e326ed11dc186978bd9037f53",
+      "baseline": {
+        "name": "MainVst3MultiRecallStateTests.cpp",
+        "exit": 1,
+        "seconds": 1.07,
+        "log": "/tmp/cs80-circuit-011b6ba4a170/linux-fixture-repair/baseline/MainVst3MultiRecallStateTests.cpp.run.log",
+        "sha256": "4c1ad923a81704c389801ce792d006e28b343ee7ddd11c038ce9112ab3ffbaf2",
+        "checks": 65,
+        "failures": 30,
+        "same_failure_messages_as_original_ci": true,
+        "failure_messages": [
+          "FAIL first=0 second=1 primary physical frame equals final program",
+          "FAIL first=0 second=1 extension physical frame equals final program",
+          "FAIL first=0 second=1 cancelled trajectories do not revive",
+          "FAIL first=0 second=1 all queues commit once before program completion",
+          "FAIL first=0 second=1 wrapper-scope exit neither recommits nor changes final state",
+          "FAIL first=0 second=1 following no-queue block cannot revive stale endpoints",
+          "FAIL first=63 second=64 primary physical frame equals final program",
+          "FAIL first=63 second=64 extension physical frame equals final program",
+          "FAIL first=63 second=64 cancelled trajectories do not revive",
+          "FAIL first=63 second=64 all queues commit once before program completion",
+          "FAIL first=63 second=64 wrapper-scope exit neither recommits nor changes final state",
+          "FAIL first=63 second=64 following no-queue block cannot revive stale endpoints",
+          "FAIL first=64 second=64 primary physical frame equals final program",
+          "FAIL first=64 second=64 extension physical frame equals final program",
+          "FAIL first=64 second=64 cancelled trajectories do not revive",
+          "FAIL first=64 second=64 all queues commit once before program completion",
+          "FAIL first=64 second=64 wrapper-scope exit neither recommits nor changes final state",
+          "FAIL first=64 second=64 following no-queue block cannot revive stale endpoints",
+          "FAIL first=64 second=700 primary physical frame equals final program",
+          "FAIL first=64 second=700 extension physical frame equals final program",
+          "FAIL first=64 second=700 cancelled trajectories do not revive",
+          "FAIL first=64 second=700 all queues commit once before program completion",
+          "FAIL first=64 second=700 wrapper-scope exit neither recommits nor changes final state",
+          "FAIL first=64 second=700 following no-queue block cannot revive stale endpoints",
+          "FAIL first=700 second=1023 primary physical frame equals final program",
+          "FAIL first=700 second=1023 extension physical frame equals final program",
+          "FAIL first=700 second=1023 cancelled trajectories do not revive",
+          "FAIL first=700 second=1023 all queues commit once before program completion",
+          "FAIL first=700 second=1023 wrapper-scope exit neither recommits nor changes final state",
+          "FAIL first=700 second=1023 following no-queue block cannot revive stale endpoints"
+        ]
+      },
+      "corrected": {
+        "name": "MainVst3MultiRecallStateTests.cpp",
+        "exit": 0,
+        "seconds": 1.3,
+        "log": "/tmp/cs80-circuit-011b6ba4a170/linux-fixture-repair/current/MainVst3MultiRecallStateTests.cpp.run.log",
+        "sha256": "cd3a9285b2d3234b6ddd71e38188c738fa249fcc6d8e2743052fdac77fe784b5",
+        "checks": 75,
+        "failures": 0,
+        "summary_lines": [
+          "CURVED first=0 second=1 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18",
+          "NO_CURVE_CHARACTERIZATION first=0 second=1 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1",
+          "CURVED first=63 second=64 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18",
+          "NO_CURVE_CHARACTERIZATION first=63 second=64 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1",
+          "CURVED first=64 second=64 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18",
+          "NO_CURVE_CHARACTERIZATION first=64 second=64 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1",
+          "CURVED first=64 second=700 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18",
+          "NO_CURVE_CHARACTERIZATION first=64 second=700 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1",
+          "CURVED first=700 second=1023 primary_policy=1 extension_policy=1 primary_error=0 extension_error=0 stored_error=0 extension_active=1 primary_voices=8 extension_voices=8 active_curves=18",
+          "NO_CURVE_CHARACTERIZATION first=700 second=1023 same_pcm=1 ordinary_extension_policy=1 ordinary_extension_error=0 extension_active=1",
+          "Main VST3 multi-recall state: 75 checks, 0 failures"
+        ]
+      }
+    }
+  ],
+  "unchanged_exact_tolerance_contract": {
+    "path": "tests/parity/tolerances-v2/main-vst3-multirecall-state.json",
+    "sha256": "63d364d2f05166f945e9bd82c685e6d04bd3856b9b24e08932d43119588b8fd6",
+    "maximum_physical_parameter_error": 0,
+    "maximum_stored_parameter_error": 0
+  },
+  "intel_timeout_budgets": {
+    "platform_condition": "APPLE AND CMAKE_SYSTEM_PROCESSOR STREQUAL x86_64",
+    "library_audit_seconds": {
+      "before": 600,
+      "after": 1200
+    },
+    "ui_smoke_seconds": {
+      "before": 240,
+      "after": 480
+    },
+    "basis": "Preserved prior Intel audit417.108s/UI136.161s;failed366 Intel unchanged workloads broadly1.6\u20132.3x slower and UI kept making progress. Both new budgets finite; all tests/assertions/internal waits/validators remain required. Timed-out executions stay failures.",
+    "other_platform_budgets_unchanged": true
+  },
+  "build": {
+    "helper_sha256": "d3e5b8ae6899b57de9c93d0a8d1b18baf38331b995931e112a247426f2181398",
+    "baseline_result_sha256": "09058c76097dbf89785c4ed5b7656de07b19d6951be20bd6a3bcca2436604254",
+    "current_result_sha256": "361afd55a29a11873191a58a9c6e5a15c78d5b4cbebf6f331397370a9fc0639f",
+    "baseline_build_log_sha256": "67c9d5fad854055ee7b27bb48a7a6923a60b5e0a2825026f43a661b25a961b46",
+    "current_build_log_sha256": "de1c4be30b70e54366515de8cf03197c1149182bdaba78007d65337de05b4464",
+    "scope": "Direct processor/component fixtures built with the cached CS80Snapshots console configuration and unchanged JUCE/font objects, plus freshly compiled current core. No native wrapper, desktop-server bypass, full native CI or all-platform qualification implied."
+  },
+  "review": "Root reviewed all four changes; A51 authored SUB/MIDI, A55 authored allocation, A60 independently traced and drafted exact endpoint/once-only-publication expectations. Root compiled both old and new fixtures; every original failure assertion reproduced before correction.",
+  "limits": [
+    "Direct processor/component local harness;cached CS80Snapshots console configuration and unchanged JUCE/font/project objects with fresh current core.",
+    "No GUI server or AF_UNIX restriction bypass. No native VST3 wrapper or Mac runtime qualification implied.",
+    "Current code compilation/local checks do not replace the required fresh full native build and validators.",
+    "No preset or sound-engine source changed in this correction."
+  ]
+}

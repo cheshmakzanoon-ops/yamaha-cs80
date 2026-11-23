@@ -66,10 +66,12 @@ int main() {
     probe::armed=false;
     check(probe::calls==7 && probe::frees==6,"positive probe observes allocator and deallocator families");
     for(double rate : {44100.,48000.,96000.})
-    for(bool circuit : {false,true}) for(bool sixteen : {false,true}) {
+    // Both historical mode requests now select the same circuit instrument.
+    // Keep exercising those callers at every rate and voice capacity.
+    for(bool requestCircuit : {false,true}) for(bool sixteen : {false,true}) {
         juce::TemporaryFile fixture("-callback-allocation");
         auto host=std::make_unique<Cs80AudioProcessor>(fixture.getFile());
-        host->setEngineMode(circuit ? Cs80AudioProcessor::EngineMode::circuit : Cs80AudioProcessor::EngineMode::legacy);
+        host->setEngineMode(requestCircuit ? Cs80AudioProcessor::EngineMode::circuit : Cs80AudioProcessor::EngineMode::legacy);
         host->setParamValue(cs80::P_parityMode,0); host->setParamValue(cs80::P_voiceMode,sixteen ? 1.f : 0.f);
         host->setParamValue(cs80::P_tuningMode,2);
         host->prepareToPlay(rate,256);
@@ -103,11 +105,41 @@ int main() {
         check(origin.kind == cs80::PresetOrigin::Kind::factory && origin.file == juce::File(),
               "allocation-free MIDI override publishes factory rather than prior file origin");
         host->setParamValue(cs80::P_voiceMode,sixteen ? 0.f : 1.f); tick("voice mode transition");
-        const auto priorPolicy=host->getEngine().getRenderPolicy();
-        host->setEngineMode(host->getEffectiveEngineMode()==Cs80AudioProcessor::EngineMode::circuit
-                               ? Cs80AudioProcessor::EngineMode::legacy : Cs80AudioProcessor::EngineMode::circuit);
-        tick("engine policy transition");
-        check(host->getEngine().getRenderPolicy()!=priorPolicy,"policy transition actually occurred");
+        // Recall/voice-capacity changes may retire earlier notes. Start a known
+        // held set before obsolete writes so continuity cannot pass on silence.
+        host->requestPanicFromUI(); tick("retired policy fixture panic");
+        const int capacity=sixteen ? 8 : 16;
+        for(int note=0;note<capacity;++note)
+            midi.addEvent(juce::MidiMessage::noteOn(1+note%2,48+note,.8f),note);
+        tick("retired policy held-note fixture");
+        const auto priorActivity=host->getVoiceActivity();
+        std::array<cs80::Engine::VoiceInfo,16> held{};
+        for(int slot=0;slot<capacity;++slot)
+            held[(size_t)slot]=(slot<8 ? host->getEngine() : host->getExtensionEngine()).getVoiceInfo(slot%8);
+        check(priorActivity.capacity==capacity && priorActivity.count()==capacity,
+              "retired policy fixture fills the actual primary and extension capacity");
+        auto* sourcePolicy=host->getAPVTS().getParameter("source_performance");
+        auto* isolationPolicy=host->getAPVTS().getParameter("parity_mode");
+        check(sourcePolicy!=nullptr && isolationPolicy!=nullptr,"retired host parameter identities remain present");
+        host->setEngineMode(Cs80AudioProcessor::EngineMode::legacy);
+        host->setPure(true);
+        if(sourcePolicy) sourcePolicy->setValueNotifyingHost(0.0f);
+        if(isolationPolicy) isolationPolicy->setValueNotifyingHost(1.0f);
+        tick("obsolete policy writes callback");
+        check(host->getEngine().getRenderPolicy()==cs80::RenderPolicy::sourcePerformance
+                  && host->getExtensionEngine().getRenderPolicy()==cs80::RenderPolicy::sourcePerformance
+                  && host->getEffectiveEngineMode()==Cs80AudioProcessor::EngineMode::circuit
+                  && !host->isPure() && host->getParamValue(cs80::P_sourcePerformance)==1.0f
+                  && host->getParamValue(cs80::P_parityMode)==0.0f,
+              "obsolete writes retain the fixed circuit policy and canonical host values");
+        bool sameHeld=host->getVoiceActivity()==priorActivity;
+        for(int slot=0;slot<capacity;++slot) {
+            const auto before=held[(size_t)slot];
+            const auto after=(slot<8 ? host->getEngine() : host->getExtensionEngine()).getVoiceInfo(slot%8);
+            sameHeld=sameHeld && before.active && before.held && after.active && after.held
+                && before.note==after.note && before.channel==after.channel && before.velocity==after.velocity;
+        }
+        check(sameHeld,"obsolete writes preserve the same held notes in both instruments");
         host->setNonRealtime(true); tick("offline transition");
         host->setNonRealtime(false); tick("realtime transition");
         midi.addEvent(juce::MidiMessage::allSoundOff(1),0); tick("panic callback");

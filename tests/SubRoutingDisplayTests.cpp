@@ -2,7 +2,6 @@
 #include "plugin/StudioView.h"
 #include "plugin/ArtCommon.h"
 
-#include <cmath>
 #include <cstdint>
 #include <iostream>
 #include <vector>
@@ -75,7 +74,7 @@ int main(int argc, char** argv)
     juce::TemporaryFile fixture("-cs80-sub-routing-display");
     Cs80AudioProcessor host(fixture.getFile());
     host.setParamValue(cs80::P_parityMode, 0);
-    host.setParamValue(cs80::P_sourcePerformance, 0);
+    host.setParamValue(cs80::P_sourcePerformance, 1);
     host.setParamValue(cs80::P_subOriginalMode, 1);
     host.setParamValue(cs80::P_subAtSpeed, 0.5f);
     cs80::ui::StudioView studio(host);
@@ -94,55 +93,92 @@ int main(int argc, char** argv)
     widget->setCachedComponentImage(probe);
     tickTimers();
     const auto render = [&] { return widget->createComponentSnapshot(widget->getLocalBounds()); };
+    const auto parameterValues = [&]
+    {
+        std::vector<float> values;
+        for (auto* parameter : host.getParameters()) values.push_back(parameter->getValue());
+        return values;
+    };
     const juce::Rectangle<int> amountText(528, 24, 90, 22);
-    const auto legacyHalf = render();
-    const int before = probe->invalidations;
-    host.setParamValue(cs80::P_sourcePerformance, 1);
-    tickTimers();
-    check(probe->invalidations > before,
-          "engine-mode-only change invalidates the AT SPEED diagnostic");
-    const auto circuitHalf = render();
-    // Independent documented 200/60 anchor. At half amount and full touch the
-    // Original circuit rate factor is sqrt(10/3), shown rounded as x1.83.
-    const float linearEquivalent = static_cast<float>((std::sqrt(10.0 / 3.0) - 1.0) * 0.5);
-    host.setParamValue(cs80::P_sourcePerformance, 0);
-    host.setParamValue(cs80::P_subAtSpeed, linearEquivalent);
-    tickTimers();
-    const auto legacyEquivalent = render();
-    check(cropHash(circuitHalf, amountText) == cropHash(legacyEquivalent, amountText),
-          "Circuit Original half-depth displays x1.83 rather than the legacy x2.00");
-    check(cropHash(circuitHalf, amountText) != cropHash(legacyHalf, amountText),
-          "valid engine-mode switch changes the AT SPEED numeric text");
-
     const juce::Rectangle<int> maximumText(624, 24, 74, 22);
-    struct Case { float amount; const char* linear; const char* exponential; };
+    const auto circuitHalf = render();
+    check(cropHash(circuitHalf, amountText) == expectedText(
+              "x1.83", amountText, true, cs80::ui::amberBright),
+          "Circuit Original half-depth displays the independent x1.83 anchor");
+    check(cropHash(circuitHalf, maximumText) == expectedText(
+              "max x3.33", maximumText, false, cs80::ui::ivoryDim.withAlpha(0.92f), 0.0f),
+          "Circuit Original maximum displays the independent x3.33 anchor");
+
+    // Old host slots remain addressable, but neither requested value selects
+    // another engine, dims the routing display, or creates a repaint change.
+    const auto fixedValues = parameterValues();
+    for (const int index : {cs80::P_sourcePerformance, cs80::P_parityMode})
+        for (const float request : {0.0f, 1.0f})
+        {
+            const int before = probe->invalidations;
+            host.setParamValue(index, request);
+            tickTimers();
+            check(host.getParamValue(cs80::P_sourcePerformance) == 1.0f
+                      && host.getParamValue(cs80::P_parityMode) == 0.0f,
+                  "retired engine writes retain the fixed Circuit readback");
+            check(parameterValues() == fixedValues,
+                  "retired engine writes leave every host parameter unchanged");
+            check(probe->invalidations == before,
+                  "retired engine writes do not invalidate the unchanged routing diagnostic");
+            check(cropHash(render(), widget->getLocalBounds())
+                      == cropHash(circuitHalf, widget->getLocalBounds()),
+                  "retired engine writes neither alter nor dim the routing display");
+        }
+
+    // Original and Extended are still meaningful SUB waveform sets within the
+    // same Circuit engine. Their full-touch rate laws and repaint must differ.
+    const int beforeExtended = probe->invalidations;
+    host.setParamValue(cs80::P_subOriginalMode, 0);
+    tickTimers();
+    check(probe->invalidations > beforeExtended,
+          "switching to Extended SUB invalidates the changed AT SPEED diagnostic");
+    const auto extendedHalf = render();
+    check(cropHash(extendedHalf, amountText) == expectedText(
+              "x2.00", amountText, true, cs80::ui::amberBright),
+          "Circuit Extended half-depth displays the independent x2.00 anchor");
+    check(cropHash(extendedHalf, maximumText) == expectedText(
+              "max x3.00", maximumText, false, cs80::ui::ivoryDim.withAlpha(0.92f), 0.0f),
+          "Circuit Extended maximum displays the independent x3.00 anchor");
+    check(cropHash(circuitHalf, amountText) != cropHash(extendedHalf, amountText),
+          "the real SUB waveform-set switch changes the AT SPEED numeric text");
+
+    struct Case { float amount; const char* extended; const char* original; };
     // Independent powers of 10/3 rounded to two decimals; zero retains the
     // established 'no added modulation' display rather than changing UI policy.
     constexpr Case cases[] = {
         {0.0f, "0", "0"}, {0.25f, "x1.50", "x1.35"},
         {0.5f, "x2.00", "x1.83"}, {1.0f, "x3.00", "x3.33"}
     };
-    for (bool isolation : {false, true})
-        for (bool source : {false, true})
+    for (bool retiredIsolationRequest : {false, true})
+        for (bool retiredSourceRequest : {false, true})
+        {
+            host.setParamValue(cs80::P_parityMode, retiredIsolationRequest ? 1.0f : 0.0f);
+            host.setParamValue(cs80::P_sourcePerformance, retiredSourceRequest ? 1.0f : 0.0f);
+            check(host.getParamValue(cs80::P_parityMode) == 0.0f
+                      && host.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+                  "every retired request pair keeps the same Circuit routing policy");
             for (bool original : {false, true})
                 for (const auto& test : cases)
                 {
-                    host.setParamValue(cs80::P_parityMode, isolation ? 1.0f : 0.0f);
-                    host.setParamValue(cs80::P_sourcePerformance, source ? 1.0f : 0.0f);
                     host.setParamValue(cs80::P_subOriginalMode, original ? 1.0f : 0.0f);
                     host.setParamValue(cs80::P_subAtSpeed, test.amount);
                     const auto image = render();
-                    const bool exponential = isolation || (source && original);
-                    const bool lit = test.amount > 0 && !isolation;
+                    const bool lit = test.amount > 0;
                     check(cropHash(image, amountText) == expectedText(
-                              exponential ? test.exponential : test.linear, amountText, lit,
+                              original ? test.original : test.extended, amountText, lit,
                               lit ? cs80::ui::amberBright : cs80::ui::ivoryDim),
-                          "actual readout uses the effective Original/circuit full-touch law");
+                          "actual readout follows the chosen Original/Extended full-touch law");
                     check(cropHash(image, maximumText) == expectedText(
-                              exponential ? "max x3.33" : "max x3.00", maximumText, false,
+                              original ? "max x3.33" : "max x3.00", maximumText, false,
                               cs80::ui::ivoryDim.withAlpha(0.92f), 0.0f),
-                          "actual maximum readout follows the effective mode");
+                          "actual maximum readout follows the chosen SUB waveform set");
                 }
+        }
 
     host.setParamValue(cs80::P_parityMode, 0);
     host.setParamValue(cs80::P_sourcePerformance, 1);
@@ -154,26 +190,24 @@ int main(int argc, char** argv)
     tickTimers();
     check(probe->invalidations > beforeOriginal,
           "waveform-set-only change invalidates the AT SPEED diagnostic");
+    check(cropHash(render(), amountText) == cropHash(circuitHalf, amountText),
+          "switching back to Original restores the Circuit half-depth readout");
 
-    std::vector<float> values;
-    for (auto* parameter : host.getParameters()) values.push_back(parameter->getValue());
+    const auto values = parameterValues();
     (void)render();
     tickTimers();
-    bool unchanged = true;
-    for (int i = 0; i < host.getParameters().size(); ++i)
-        unchanged &= values[static_cast<std::size_t>(i)] == host.getParameters()[i]->getValue();
-    check(unchanged, "painting and polling this diagnostic never edits host parameter values");
+    check(parameterValues() == values, "painting and polling this diagnostic never edits host parameter values");
     if (argc > 1)
     {
         const juce::File output(argv[1]);
         check(output.createDirectory().wasOk(), "optional offline capture directory is available");
-        for (bool circuit : {false, true})
+        for (bool original : {false, true})
             for (const auto size : {juce::Point<int>(712, 100), juce::Point<int>(498, 70)})
             {
-                host.setParamValue(cs80::P_sourcePerformance, circuit ? 1.0f : 0.0f);
+                host.setParamValue(cs80::P_subOriginalMode, original ? 1.0f : 0.0f);
                 widget->setSize(size.x, size.y);
                 const auto image = render();
-                const auto file = output.getChildFile(juce::String(circuit ? "circuit" : "legacy")
+                const auto file = output.getChildFile(juce::String(original ? "circuit-original" : "circuit-extended")
                     + "-" + juce::String(size.x) + ".png");
                 auto stream = file.createOutputStream();
                 check(stream != nullptr && stream->setPosition(0) && stream->truncate().wasOk()

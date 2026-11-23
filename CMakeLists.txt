@@ -739,6 +739,11 @@ if (CS80_BUILD_TESTS)
     target_link_libraries(cs80_library_audit_tests PRIVATE cs80_core Threads::Threads)
     add_test(NAME cs80_library_audit_tests COMMAND cs80_library_audit_tests)
     set_tests_properties(cs80_library_audit_tests PROPERTIES TIMEOUT 600)
+    if (APPLE AND CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+        # The Intel runner's unchanged workloads varied by more than 2x in
+        # native CI. Keep the complete audit and a finite Intel-only budget.
+        set_tests_properties(cs80_library_audit_tests PROPERTIES TIMEOUT 1200)
+    endif()
     add_executable(cs80_preset_voicing_tests tests/PresetVoicingTests.cpp)
     target_link_libraries(cs80_preset_voicing_tests PRIVATE cs80_core)
     add_test(NAME cs80_preset_voicing_tests COMMAND cs80_preset_voicing_tests)
@@ -2606,6 +2611,11 @@ if (CS80_BUILD_PLUGIN)
                  COMMAND CS80Snapshots --out ${CMAKE_CURRENT_BINARY_DIR}/ui-smoke --self-test)
     endif()
     set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 240)
+    if (APPLE AND CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+        # Preserve every smoke assertion and its internal wait limits while
+        # allowing the observed Intel runner slowdown across the whole suite.
+        set_tests_properties(cs80_ui_smoke PROPERTIES TIMEOUT 480)
+    endif()
 
     # Phase 7 validator diagnosis: one module life cycle (JUCE start, instance and editor paint,
     # destruction, JUCE shutdown, then static destructors) must exit cleanly. CI runs it plainly;

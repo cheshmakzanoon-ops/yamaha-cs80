@@ -1,0 +1,113 @@
+{
+  "source_sha": "366c1454fbf3fa6898b9b79d78bde4322a6e3f87",
+  "comparison_source_sha": "8ffe1e46681cbc76679a9244bb2b35189ededbfa",
+  "juce_sha": "c352e2489000ffeb9e397051377d75eef2efe641",
+  "run_id": 45096447502,
+  "run_attempt": 1,
+  "job_id": 137437185082,
+  "conclusion": "The wantsLayerBackedView override has no caller in CS80Snapshots; the smoke test does not select its native renderer through this override. Current progress supports accumulated run slowdown but cannot identify the exact interrupted call or exclude an internal callback hang.",
+  "call_path_evidence": [
+    {
+      "path": "CMakeLists.txt",
+      "lines": "2430-2450,2605-2608",
+      "finding": "CS80Snapshots is a console app with project plugin sources plus ui_snapshot.cpp; links audio_utils, dsp, gui_extra, not audio_plugin_client. cs80_ui_smoke executes CS80Snapshots --out ... --self-test with 240-second timeout."
+    },
+    {
+      "path": "src/plugin/PluginEditor.cpp",
+      "lines": "2335-2347",
+      "finding": "The new macOS override returns false."
+    },
+    {
+      "repo": "JUCE",
+      "path": "modules/juce_audio_plugin_client/detail/juce_PluginUtilities.h",
+      "lines": "47-62",
+      "finding": "Only wantsLayerBackedView caller in pinned JUCE modules maps false to windowRequiresSynchronousCoreGraphicsRendering."
+    },
+    {
+      "repo": "JUCE",
+      "path": "modules/juce_audio_processors/processors/juce_AudioProcessorEditor.cpp",
+      "lines": "209-215",
+      "finding": "createNewPeer forwards supplied style flags to Component::createNewPeer; no override query."
+    },
+    {
+      "path": "src/tools/ui_snapshot.cpp",
+      "lines": "286-295",
+      "finding": "Native source capture fixture calls editor.addToDesktop(0) directly."
+    },
+    {
+      "path": "tests/UiReadinessTests.h",
+      "lines": "138-145",
+      "finding": "Native readiness fixture calls editor.addToDesktop(0) directly."
+    },
+    {
+      "repo": "JUCE",
+      "path": "modules/juce_gui_basics/native/juce_NSViewComponentPeer_mac.mm",
+      "lines": "223-228",
+      "finding": "Native peer enables layer backing and asynchronous drawing when supplied flags omit synchronous-rendering bit; snapshot direct calls still omit it."
+    },
+    {
+      "path": "tests/StudioUiTests.h",
+      "lines": "82-176,179-293",
+      "finding": "Both final Studio functions construct editors without addToDesktop or plugin wrapper attachment; snapshots paint directly to images."
+    },
+    {
+      "repo": "JUCE",
+      "path": "modules/juce_gui_basics/components/juce_Component.cpp",
+      "lines": "1841-1868",
+      "finding": "createComponentSnapshot builds an Image/Graphics and calls paintEntireComponent; does not consult wantsLayerBackedView."
+    },
+    {
+      "path": "CMakeLists.txt",
+      "lines": "738-741",
+      "finding": "Separate timed-out library audit links cs80_core and Threads only, with no editor/JUCE renderer."
+    }
+  ],
+  "actual_progress": {
+    "last_completed_phase": "original panel editor (ws7)",
+    "last_completed_total_seconds": 216.638169,
+    "timeout_seconds": 240.115,
+    "next_phase": "studio views",
+    "successful_studio_writes_after_last_timing": 24,
+    "last_write": "studio-drawers-1120x700.png",
+    "next_unobserved_work": "Remaining drawer teardown/450ms explicit dispatch; LFO scope test including 3 x 7 shapes, bounded 1-second repaint waits, snapshots/state comparisons, and two final image saves.",
+    "studio_lfo_completion_recorded": false,
+    "ring_curve_phase_recorded": false
+  },
+  "loop_review": {
+    "studio_views": "Finite size/tab/subpage loops; no open-ended retry.",
+    "lfo_scopes": "3 LFOs x 7 waves; each wave>0 repaint wait uses steady_clock deadline of 1 second. Hash loops bounded by image dimensions.",
+    "dispatch": "flushGui calls JUCE runDispatchLoopUntil(milliseconds); macOS implementation checks endTime between native run-loop/event dispatches. A native callback can itself take longer, so source bounds cannot prove no internal blocking."
+  },
+  "limitations": [
+    "CTest flush timestamps are buffered output replay; only embedded monotonic timing localizes phase elapsed time.",
+    "No stack/sample was captured at timeout. Exact killed instruction and exclusive root cause remain unknown.",
+    "Neither timeout is accepted as a pass. No code edits, timeout changes or reruns performed."
+  ],
+  "unchanged_source_checks": [
+    {
+      "path": "CMakeLists.txt",
+      "byte_identical_between_sources": true,
+      "sha256": "db16b86eb73a8149dd6bed4f6844d4e8d7aee81c43ba40041791d3fac4a162aa"
+    },
+    {
+      "path": "src/tools/ui_snapshot.cpp",
+      "byte_identical_between_sources": true,
+      "sha256": "9e537b29dd92e08b059cf3b11aec16551dc3d894662a2add6eb143ce21e4c765"
+    },
+    {
+      "path": "tests/StudioUiTests.h",
+      "byte_identical_between_sources": true,
+      "sha256": "c8ad2c510036cb9f3682d0404cc11b5bb64c7f2326941f719e63648cc970b568"
+    },
+    {
+      "path": "tests/UiSmokeTiming.h",
+      "byte_identical_between_sources": true,
+      "sha256": "5016b52a7a558f1f3a8cb359c5c0cba5b06778e25444f686bf0d7f23bac1f0c7"
+    },
+    {
+      "path": "tests/LibraryAuditTests.cpp",
+      "byte_identical_between_sources": true,
+      "sha256": "dcb65e0bea123f872fe362da5c51140976702d9b5eb848b982d050ee4e73b542"
+    }
+  ]
+}

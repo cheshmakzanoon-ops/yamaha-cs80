@@ -174,21 +174,55 @@ int main()
     flush();
     l.expect(1);
 
-    // Pure blocks learning but explicit forgetting remains a serialized user edit.
-    p.setParamValue(cs80::P_parityMode, 1);
-    flush();
+    // Retired engine requests are inert: existing mappings and serialized
+    // state remain intact, and the one Circuit instrument keeps MIDI learn.
+    const auto beforeRetiredWrites = save(p);
     action([&]
     {
-        m.armLearn(target);
+        p.setParamValue(cs80::P_parityMode, 1);
+        p.setParamValue(cs80::P_sourcePerformance, 0);
+    }, 0);
+    check(p.getParamValue(cs80::P_parityMode) == 0.0f
+              && p.getParamValue(cs80::P_sourcePerformance) == 1.0f,
+          "retired requests retain fixed Circuit policy");
+    check(save(p) == beforeRetiredWrites, "retired requests leave serialized state unchanged");
+    check(m.parameterFor(23) == target && m.parameterFor(24) == other,
+          "retired requests preserve existing learned mappings");
+
+    const auto processController = [&](int controller, int value)
+    {
         juce::AudioBuffer<float> b(2, 64);
         b.clear();
         juce::MidiBuffer midi;
-        midi.addEvent(juce::MidiMessage::controllerEvent(1, 25, 64), 0);
+        midi.addEvent(juce::MidiMessage::controllerEvent(1, controller, value), 0);
         std::thread audio([&] { p.processBlock(b, midi); });
         audio.join();
+    };
+    action([&]
+    {
+        m.armLearn(target);
+        processController(25, 64);
+    }, 1);
+    check(m.parameterFor(25) == target && m.parameterFor(23) == -1
+              && m.parameterFor(24) == other,
+          "Circuit MIDI learn moves the target mapping and preserves the other mapping");
+    action([&]
+    {
+        m.armLearn(target);
+        processController(25, 64);
     }, 0);
-    check(m.parameterFor(25) == -1, "PURE no new map");
+    // An already learned CC still controls the parameter; this is not another
+    // mapping edit and must not generate a non-parameter dirty notification.
+    action([&] { processController(25, 127); }, 0);
+    check(p.getParameters()[target]->getValue() == 1.0f,
+          "learned controller remains active after retired engine writes");
+    check(m.parameterFor(25) == target && m.parameterFor(24) == other,
+          "parameter-only controller changes preserve the learned map");
+    // Explicit forgetting remains one serialized user edit; repeating it is inert.
     action([&] { m.clearAll(); }, 1);
+    check(m.parameterFor(25) == -1 && m.parameterFor(24) == -1,
+          "explicit forgetting removes the Circuit MIDI mappings");
+    action([&] { m.clearAll(); }, 0);
 
     std::cout << checks << " checks, " << failures << " failures\n";
     return failures ? 1 : 0;
