@@ -1768,7 +1768,8 @@ void testPerformanceControlsHost()
     const char* ids[] = { "kbd_brilliance_low", "kbd_brilliance_high", "kbd_level_low", "kbd_level_high",
                           "footswitch_plugged", "footswitch_pressed", "sustain_assign", "glide_assign",
                           "foot_mode", "output_level" };
-    Cs80AudioProcessor host;
+    auto hostStorage = std::make_unique<Cs80AudioProcessor>();
+    auto& host = *hostStorage;
     for (int i = 0; i < 10; ++i)
     {
         auto* parameter = host.getAPVTS().getParameter(ids[i]);
@@ -1806,7 +1807,8 @@ void testPerformanceControlsHost()
     host.setParamValue(cs80::P_outputLevel, 0.0f);
     juce::MemoryBlock saved;
     host.getStateInformation(saved);
-    Cs80AudioProcessor restored;
+    auto restoredStorage = std::make_unique<Cs80AudioProcessor>();
+    auto& restored = *restoredStorage;
     restored.setStateInformation(saved.getData(), (int) saved.getSize());
     bool roundTrip = true;
     for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
@@ -1846,7 +1848,8 @@ void testPerformanceControlsHost()
     // so neither a no-op nor preserving factory-only wiring can pass this test.
     for (float liveParity : { 0.0f, 1.0f })
     {
-        Cs80AudioProcessor presetHost;
+        auto presetHostStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& presetHost = *presetHostStorage;
         const float storedParity = 1.0f - liveParity;
         const float storedControls[] = { -0.75f, 0.25f, -0.5f, 0.75f,
                                         storedParity, storedParity, storedParity, storedParity,
@@ -1916,7 +1919,16 @@ void testPerformanceControlsHost()
         return finite ? std::sqrt(square / (double) count) : -1.0;
     };
     {
-        Cs80AudioProcessor reference, trimmed, wah, pedalDown, pedalUp;
+        auto referenceStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& reference = *referenceStorage;
+        auto trimmedStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& trimmed = *trimmedStorage;
+        auto wahStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& wah = *wahStorage;
+        auto pedalDownStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& pedalDown = *pedalDownStorage;
+        auto pedalUpStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& pedalUp = *pedalUpStorage;
         for (auto* target : { &reference, &trimmed, &wah, &pedalDown, &pedalUp })
         {
             target->setParamValue(cs80::P_voiceDispersion, 0.0f);
@@ -1944,7 +1956,8 @@ void testPerformanceControlsHost()
         check(wahLevel > 1e-5 && std::abs(wahLevel - render(pedalDown, 0.1f)) > 1e-5,
               "host EXP-WAH changes the audible result");
         check(render(pedalUp, 0.25f) < base * 0.5, "on-screen pedal mailbox reaches expression/volume");
-        Cs80AudioProcessor automation;
+        auto automationStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& automation = *automationStorage;
         automation.setParamValue(cs80::P_kbdBrillianceHigh, 0.75f);
         automation.setParamValue(cs80::P_sustainAssign, 1.0f);
         automation.setParamValue(cs80::P_footswitchPlugged, 1.0f);
@@ -2057,6 +2070,8 @@ void testCircuitFootControllerHost()
 
 int main(int argc, char** argv)
 {
+    // Heap-owned processor fixtures keep the DSP arrays out of this shared
+    // entry-point frame, including command modes that return before self-test.
     // Never read or write the user's real editor preferences (display size) from the snapshot tool.
     const juce::TemporaryFile preferences(".settings");
     cs80::panel::EditorPreferences::setStorageFileForTesting(preferences.getFile());
@@ -2570,7 +2585,8 @@ int main(int argc, char** argv)
     testSourceFactoryHost();
 
     phases.begin("editor, state and automation");
-    Cs80AudioProcessor processor;
+    auto processorStorage = std::make_unique<Cs80AudioProcessor>();
+    auto& processor = *processorStorage;
     // Fresh instances run the circuit engine (plan 1.7): 63 decimator samples
     // plus its oscillator's 8 internal samples (ws1 merge).
     check(processor.getLatencySamples() == 63 + 8 / processor.getEngine().getOversamplingFactor(),
@@ -2943,7 +2959,8 @@ int main(int argc, char** argv)
               "AT VCF host automation reaches core without an editor");
         juce::MemoryBlock savedAt;
         processor.getStateInformation(savedAt);
-        Cs80AudioProcessor restoredAt;
+        auto restoredAtStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& restoredAt = *restoredAtStorage;
         restoredAt.setStateInformation(savedAt.getData(), (int)savedAt.getSize());
         check(std::abs(restoredAt.getParamValue(cs80::P_subAtVcf)-.65f)<.00001f,
               "AT VCF state round trip");
@@ -3014,7 +3031,8 @@ int main(int argc, char** argv)
     // can retain a fractional host value while APVTS already caches 0 or 1.
     for (bool withEditor : {false, true})
     {
-        Cs80AudioProcessor modeHost;
+        auto modeHostStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& modeHost = *modeHostStorage;
         std::unique_ptr<Cs80AudioProcessorEditor> modeEditor;
         if (withEditor)
         {
@@ -3078,7 +3096,8 @@ int main(int argc, char** argv)
     }
 
     {
-        Cs80AudioProcessor migration;
+        auto migrationStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& migration = *migrationStorage;
         check(migration.getParamValue(cs80::P_subOriginalMode) == 1.0f,
               "new processor starts in original SUB mode");
         // Every existing factory address now uses the original six-function
@@ -3106,7 +3125,8 @@ int main(int argc, char** argv)
               "original SUB host automation reaches core without an editor");
         juce::MemoryBlock originalState;
         migration.getStateInformation(originalState);
-        Cs80AudioProcessor restoredOriginal;
+        auto restoredOriginalStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& restoredOriginal = *restoredOriginalStorage;
         restoredOriginal.setStateInformation(originalState.getData(), (int) originalState.getSize());
         check(restoredOriginal.getParamValue(cs80::P_subOriginalMode) == 1.0f
                   && restoredOriginal.getParamValue(cs80::P_subOriginalFunction) == 2.0f
@@ -3179,7 +3199,8 @@ int main(int argc, char** argv)
     // Host state round-trip.
     juce::MemoryBlock state;
     processor.getStateInformation(state);
-    Cs80AudioProcessor restored;
+    auto restoredStorage = std::make_unique<Cs80AudioProcessor>();
+    auto& restored = *restoredStorage;
     restored.prepareToPlay(48000.0, 512);
     restored.setStateInformation(state.getData(), (int) state.getSize());
     check(restored.getPresetName() == "Replicant Brass", "state round-trip preset name");
@@ -3205,7 +3226,8 @@ int main(int argc, char** argv)
     // Channel-mode messages must not be swallowed by the generic CC branch.
     for (int controller : { 120, 123 })
     {
-        Cs80AudioProcessor panic;
+        auto panicStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& panic = *panicStorage;
         auto values = cs80::defaultValues();
         values[cs80::P_keyRelease] = 0.001f;
         for (int channel = 0; channel < 2; ++channel)
@@ -3267,7 +3289,8 @@ int main(int argc, char** argv)
     // Physical programmer memories are independent controls, not destructive
     // copies over the main-panel APVTS. Test actual effective audio settings.
     {
-        Cs80AudioProcessor memories;
+        auto memoriesStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& memories = *memoriesStorage;
         memories.prepareToPlay(48000.0, 64);
         const int cutoff = cs80::chParam(0, cs80::CP_lpfCutoff);
         memories.setParamValue(cutoff, 3400.0f);
@@ -3287,7 +3310,8 @@ int main(int argc, char** argv)
         check(std::abs(memories.getEngine().getParams()[cs80::chParam(0, cs80::CP_pan)] - 0.2f) < 0.001f, "memory leaves modern pan live");
         juce::MemoryBlock memoryState;
         memories.getStateInformation(memoryState);
-        Cs80AudioProcessor recalled;
+        auto recalledStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& recalled = *recalledStorage;
         recalled.setStateInformation(memoryState.getData(), (int) memoryState.getSize());
         check(recalled.getHardwareSource(0) == 11 && recalled.getHardwareSource(1) == 12, "hardware source selectors round trip");
         for (int bank = 0; bank < 4; ++bank)
@@ -3310,7 +3334,8 @@ int main(int argc, char** argv)
 
     // Host automation is authoritative, including when no editor exists.
     {
-        Cs80AudioProcessor automated;
+        auto automatedStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& automated = *automatedStorage;
         automated.prepareToPlay(48000.0, 64);
         auto setHost = [&](const juce::String& id, float value)
         {
@@ -3339,7 +3364,8 @@ int main(int argc, char** argv)
                   "host automation drives selected effective audio parameters");
         juce::MemoryBlock saved;
         automated.getStateInformation(saved);
-        Cs80AudioProcessor copy;
+        auto copyStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& copy = *copyStorage;
         copy.setStateInformation(saved.getData(), (int)saved.getSize());
         check(copy.getHardwareSource(0) == 11 && copy.getHardwareSource(1) == 12, "automated selectors round trip");
         for (int bank = 0; bank < 4; ++bank)
@@ -3407,7 +3433,8 @@ int main(int argc, char** argv)
     // overlaps a message-thread user-preset load. This is a functional stress
     // regression, not a transaction guarantee or a ThreadSanitizer result.
     {
-        Cs80AudioProcessor schemaHost;
+        auto schemaHostStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& schemaHost = *schemaHostStorage;
         auto makeSchemaState = [&](const char* type, const char* name, int index, float macro)
         {
             juce::ValueTree tree(type);
@@ -3477,7 +3504,8 @@ int main(int argc, char** argv)
     // being opened or closed. No processor callback may capture that editor.
     // This stress regression is not a substitute for ThreadSanitizer coverage.
     {
-        Cs80AudioProcessor concurrent;
+        auto concurrentStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& concurrent = *concurrentStorage;
         concurrent.prepareToPlay(48000.0, 64);
         auto makeState = [&](const juce::String& name, int index)
         {

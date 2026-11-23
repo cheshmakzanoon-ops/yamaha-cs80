@@ -12,6 +12,7 @@
 #include "plugin/PresetBrowser.h"
 
 #include <cmath>
+#include <memory>
 #include <string>
 
 namespace cs80::tests
@@ -19,6 +20,8 @@ namespace cs80::tests
 template <typename Check>
 void testProgramLibraryHost(Check&& check)
 {
+    // Keep each processor's fixed DSP storage off the test caller's stack;
+    // owners below preserve the original fixture scopes and destruction order.
     const auto& original = cs80::originalLibrary();
     const auto& curated = cs80::curatedLibrary();
     const int L = cs80::legacyProgramCount;
@@ -49,7 +52,8 @@ void testProgramLibraryHost(Check&& check)
 
     // --- One factory library: original addresses 0..221; curated follows.
     {
-        Cs80AudioProcessor host;
+        auto hostStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& host = *hostStorage;
         check(host.getCurrentProgram() == cs80::programIndexForCurated(0)
                   && host.getPresetName() == juce::String(curated[0].name)
                   && host.getPresetMetadata().origin.kind == cs80::PresetOrigin::Kind::factory
@@ -75,11 +79,13 @@ void testProgramLibraryHost(Check&& check)
 
     // --- Old sessions keep their original program index and name.
     {
-        Cs80AudioProcessor old;
+        auto oldStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& old = *oldStorage;
         old.loadFactoryPreset(117);
         juce::MemoryBlock saved;
         old.getStateInformation(saved);
-        Cs80AudioProcessor restored;
+        auto restoredStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& restored = *restoredStorage;
         restored.setStateInformation(saved.getData(), (int) saved.getSize());
         check(restored.getCurrentProgram() == 117 && restored.getPresetName() == juce::String(original[117].name)
                   && valuesMatch(restored, original[117].values),
@@ -96,7 +102,8 @@ void testProgramLibraryHost(Check&& check)
 
     // --- MIDI Program Change and bank select.
     {
-        Cs80AudioProcessor host;
+        auto hostStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& host = *hostStorage;
         host.prepareToPlay(48000.0, 256);
         juce::MidiBuffer midi;
         midi.addEvent(juce::MidiMessage::programChange(1, 3), 10);
@@ -176,7 +183,8 @@ void testProgramLibraryHost(Check&& check)
 
     // --- A/B compare.
     {
-        Cs80AudioProcessor host;
+        auto hostStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& host = *hostStorage;
         host.setCurrentProgram(L + 10);
         const float original = host.getParamValue(cs80::chParam(0, cs80::CP_lpfCutoff));
         host.setParamValue(cs80::P_footswitchPlugged, 1.0f);
@@ -201,7 +209,8 @@ void testProgramLibraryHost(Check&& check)
         // Session persistence of the inactive slot.
         juce::MemoryBlock saved;
         host.getStateInformation(saved);
-        Cs80AudioProcessor restored;
+        auto restoredStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& restored = *restoredStorage;
         restored.setStateInformation(saved.getData(), (int) saved.getSize());
         check(restored.getAbSlot() == 1 && restored.isAbSlotStored(0)
                   && std::abs(restored.getParamValue(cs80::chParam(0, cs80::CP_lpfCutoff)) - 2345.0f) < 0.5f,
@@ -213,7 +222,8 @@ void testProgramLibraryHost(Check&& check)
               "A/B slot is not duplicated into the live parameter state");
 
         // Copy A -> B.
-        Cs80AudioProcessor copy;
+        auto copyStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& copy = *copyStorage;
         copy.setCurrentProgram(L + 20);
         copy.abCopyCurrentTo(1);
         copy.setParamValue(cs80::P_detune, 31.0f);
@@ -221,7 +231,7 @@ void testProgramLibraryHost(Check&& check)
         check(copy.getAbSlot() == 1 && std::abs(copy.getParamValue(cs80::P_detune) - curated[20].values[cs80::P_detune]) < 1.0e-3f,
               "copy A->B stores the sound before the edit");
         juce::MemoryBlock fresh;
-        Cs80AudioProcessor().getStateInformation(fresh);
+        std::make_unique<Cs80AudioProcessor>()->getStateInformation(fresh);
         copy.setStateInformation(fresh.getData(), (int) fresh.getSize());
         check(copy.getAbSlot() == 0 && ! copy.isAbSlotStored(1), "a session without A/B data clears both slots");
     }
@@ -241,7 +251,8 @@ void testProgramLibraryHost(Check&& check)
         b.msegs[0].sync = false;
         b = cs80::modern::sanitizeConfig(b);
 
-        Cs80AudioProcessor host;
+        auto hostStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& host = *hostStorage;
         host.getModernLayer().setConfig(a);
         host.setParamValue(cs80::P_mod1Amount, 0.25f);
         host.abToggle();
@@ -279,7 +290,8 @@ void testProgramLibraryHost(Check&& check)
                 check(nested.isValid() && cs80::ModernLayerState::fromTree(nested) == other,
                       "inactive modern A/B configuration is serialized inside its slot");
             }
-            Cs80AudioProcessor restored;
+            auto restoredStorage = std::make_unique<Cs80AudioProcessor>();
+            auto& restored = *restoredStorage;
             restored.setStateInformation(saved.getData(), (int) saved.getSize());
             check(restored.getAbSlot() == active && restored.getModernLayer().getConfig() == current
                       && restored.getParamValue(cs80::P_mod1Amount) == (active == 0 ? 0.25f : 0.75f),
@@ -379,7 +391,8 @@ void testProgramLibraryHost(Check&& check)
     {
         juce::TemporaryFile folder;
         check(folder.getFile().createDirectory().wasOk(), "isolated preset folder");
-        Cs80AudioProcessor host(folder.getFile());
+        auto hostStorage = std::make_unique<Cs80AudioProcessor>(folder.getFile());
+        auto& host = *hostStorage;
         host.setCurrentProgram(0);
         {
             cs80::ui::PresetBrowser browser(host);
@@ -419,7 +432,10 @@ void testProgramLibraryHost(Check&& check)
 
     // --- Randomise within original ranges.
     {
-        Cs80AudioProcessor a, b;
+        auto aStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& a = *aStorage;
+        auto bStorage = std::make_unique<Cs80AudioProcessor>();
+        auto& b = *bStorage;
         a.setCurrentProgram(L + 30);
         b.setCurrentProgram(L + 30);
         a.setParamValue(cs80::P_footswitchPlugged, 1.0f);
