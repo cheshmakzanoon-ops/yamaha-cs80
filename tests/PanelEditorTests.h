@@ -578,11 +578,13 @@ void testGoldenImages(Check check, Flush flush, const juce::File& outDir)
         {
             juce::TemporaryFile presetRoot("-cs80-golden");
             Cs80AudioProcessor host(presetRoot.getFile().getChildFile("presets"));
-            // Display the first factory program with an explicit SUB setting.
-            // Intentional panel or factory-control changes require inspection of
-            // both captured sizes before updating these versioned golden images.
-            // ProgramLibraryHostTests separately checks startup sound identity.
+            // Display the first factory program with explicit visual-fixture
+            // settings. Preserve the chorus positions captured by these layout
+            // goldens independently of this release's factory revoicing.
+            // ProgramLibraryHostTests separately checks actual startup values.
             host.loadFactoryPreset(0);
+            host.setParamValue(cs80::P_chorusSpeed, 0.28f);
+            host.setParamValue(cs80::P_chorusDepth, 0.36f);
             host.setParamValue(cs80::P_subOriginalMode, 1.0f);
             host.setParamValue(cs80::P_sourcePerformance, 1.0f);
             host.setPresetName(juce::String(host.getFactoryPresets()[0].name) + " / Original SUB");

@@ -1795,7 +1795,8 @@ void testPerformanceControlsHost()
               "contour levers are bipolar with a centred default");
     }
 
-    // State round trip, and old sessions fall back to the neutral defaults.
+    // State round trip; missing fields receive neutral defaults without
+    // clearing other controls that are still present in the saved state.
     for (int i = 0; i < 4; ++i) host.setParamValue(cs80::P_kbdBrillianceLow + i, 0.25f * (float) (i - 1));
     host.setParamValue(cs80::P_footswitchPlugged, 1.0f);
     host.setParamValue(cs80::P_footswitchPressed, 1.0f);
@@ -1817,14 +1818,15 @@ void testPerformanceControlsHost()
     const auto oldText = oldState.createXml()->toString();
     restored.setStateInformation(oldText.toRawUTF8(), oldText.getNumBytesAsUTF8());
     bool neutral = true;
-    for (int i = cs80::P_kbdBrillianceLow; i < cs80::P_numParams; ++i)
-        // The circuit address is fixed at one, independent of missing older
-        // controls. The remaining appended controls retain neutral defaults.
-        neutral = neutral && (i == cs80::P_sourcePerformance
-                                  ? restored.getParamValue(i) == host.getParamValue(i)
-                                  : restored.getParamValue(i) == cs80::paramDef(i).def);
+    const int performanceEnd = cs80::P_kbdBrillianceLow + (int) std::size(ids);
+    for (int i = cs80::P_kbdBrillianceLow; i < performanceEnd; ++i)
+        neutral = neutral && restored.getParamValue(i) == cs80::paramDef(i).def;
     check(neutral && restored.getParamValue(cs80::P_outputLevel) == 1.0f,
-          "a session saved before these controls restores neutral values, not live ones");
+          "missing historical performance controls restore neutral values, not live ones");
+    bool retained = true;
+    for (int i = performanceEnd; i < cs80::P_numParams; ++i)
+        retained = retained && std::abs(restored.getParamValue(i) - host.getParamValue(i)) < 1e-5f;
+    check(retained, "state restore preserves retained appended controls, including instrument bodies");
 
     // Factory preset recall restores the sound, not the jack/pedal/selector/output wiring.
     host.setParamValue(cs80::P_kbdLevelHigh, 0.5f);
@@ -2622,7 +2624,8 @@ int main(int argc, char** argv)
                 || index == cs80::P_subOriginalMode || index == cs80::P_subOriginalFunction
                 || (index >= cs80::P_footswitchPlugged && index <= cs80::P_outputLevel)
                 || index == cs80::P_oversampling || index == cs80::P_outputJack
-                || index == cs80::P_driftModel;   // plan 2.5: a two-choice host parameter
+                || index == cs80::P_driftModel
+                || index == cs80::P_body1Model || index == cs80::P_body2Model;
             const float expected = index == cs80::P_sourcePerformance ? 1.0f
                 : index == cs80::P_parityMode ? 0.0f
                 : discrete ? hostParam->getNormalisableRange().snapToLegalValue(physical) : physical;
