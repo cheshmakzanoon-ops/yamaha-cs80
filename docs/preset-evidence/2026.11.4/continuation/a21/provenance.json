@@ -1,0 +1,48 @@
+{
+  "source_commit": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+  "capture_executable": "/workspace/scratch/dde4ad85ed5b/evidence/baseline/cs80_preset_capture",
+  "capture_sha256": "a9d481040d9ea7b798130379ad9552690bd4244e8870d8ded3364042f003b8c8",
+  "source_sha256": "f0e8fb2110d01ea73b8dc4ddeeb582f68bc5d547ce53ba20533c190771d9da80",
+  "cases": [
+    {
+      "case": "pressure-zero",
+      "preset": "Pressure Lead",
+      "velocity": 0.8,
+      "pressure": 0,
+      "files": [
+        "metrics.csv",
+        "capture.log"
+      ]
+    },
+    {
+      "case": "pressure-one",
+      "preset": "Pressure Lead",
+      "velocity": 0.8,
+      "pressure": 1,
+      "files": [
+        "metrics.csv",
+        "capture.log"
+      ]
+    },
+    {
+      "case": "velocity-soft",
+      "preset": "Velocity Lead",
+      "velocity": 0.2,
+      "pressure": 0,
+      "files": [
+        "metrics.csv",
+        "capture.log"
+      ]
+    },
+    {
+      "case": "velocity-hard",
+      "preset": "Velocity Lead",
+      "velocity": 1,
+      "pressure": 0,
+      "files": [
+        "metrics.csv",
+        "capture.log"
+      ]
+    }
+  ]
+}

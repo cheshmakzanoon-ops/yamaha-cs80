@@ -1,0 +1,35 @@
+{
+  "source_before": "bcc86aa39a33a0162254614e5502705f0113d701",
+  "source_after": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "screenshot_run_before": 45244531816,
+  "screenshot_job_before": 137937804364,
+  "observed_original_conclusion": "failure",
+  "failure_excerpts": [
+    "2026-11-23T19:09:24.5700291Z FAIL: factory preset recall restores its authored contour levers and assigners with the patch",
+    "2026-11-23T19:09:24.5787069Z golden main-1600x1000: changed 0.2710 % of pixels (limit 0.30 %), worst 8x8 block mean 175.52 (limit 8.0)",
+    "2026-11-23T19:09:24.5787725Z FAIL: main view matches its golden image within tolerance: main-1600x1000",
+    "2026-11-23T19:09:24.5788315Z golden main-1120x700: changed 0.3247 % of pixels (limit 0.30 %), worst 8x8 block mean 174.20 (limit 8.0)",
+    "2026-11-23T19:09:24.5788958Z FAIL: main view matches its golden image within tolerance: main-1120x700",
+    "2026-11-23T19:09:24.5863636Z UI SMOKE TEST: 3 FAILURE(S)"
+  ],
+  "raw_job_log_sha256": "8060cda791141721b7fed7262fd66ea850ac3d65e41e12c9b4c08ca7be9a19c6",
+  "raw_job_log_bytes": 112829,
+  "failed_artifact": {
+    "id": 14854610798,
+    "name": "cs80-panel-bcc86aa39a33a0162254614e5502705f0113d701",
+    "size_in_bytes": 62133924,
+    "sha256": "0dfa5cbdc20cae612df1cb1c5aa2891073b3f2ab0deb13f2ee4bf4f2d1af9ba9"
+  },
+  "corrections": {
+    "factory_recall": "Exact comparison against the authored value after JUCE host normalization, retaining discrete assigners and the opposed-live-value negative control. No tolerance added.",
+    "panel_layout": "Freeze15visible control values at their previous binary32 values; all golden image bytes and tolerances remain unchanged."
+  },
+  "unchanged_production_source": [
+    "src/core",
+    "src/plugin",
+    "src/reference",
+    "CMakeLists.txt",
+    "src/tools/preset_capture.cpp"
+  ],
+  "native_after_status": "See separately retained final native run; no outcome inferred from the correction."
+}

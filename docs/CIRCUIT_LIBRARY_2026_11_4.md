@@ -149,7 +149,10 @@ selection include the appended controls.
 
 Stored parameter values do not freeze old DSP. Existing body-enabled patches
 use the revised excitation and filtering code, so their audio can change.
-Reload a factory program from **Library** to hear its newly programmed recipe.
+Use **Library → FACTORY LIBRARY → LOAD / RELOAD**, then play fresh notes,
+to hear the newly programmed recipe. Clicking an already-loaded row with
+Audition enabled may retain its current settings. **REVERT** returns to the
+state from when the browser opened, which can still be an older recipe.
 The body controls are available through the host parameter list; the custom
 Studio and standalone interfaces still lack dedicated body-control widgets.
 
@@ -296,6 +299,29 @@ pads or long releases.
 [Historical 59d489d bank results](preset-evidence/2026.11.4/development/final-bank/audit-summary.json) ·
 [Complete matched comparison](preset-evidence/2026.11.4/audio-comparison.json) ·
 [Capture provenance](preset-evidence/2026.11.4/development/final-bank/matched-capture-provenance.json)
+
+### Continuation local checks — corrected body models
+
+The corrected body header has SHA-256
+`d33f34f5cff6341abc9bc2c85056ce381b492d141a0fad856e0c7cbd4f06422e`.
+Seven affected core/model/preset CTest executables passed, followed by a
+separate complete-library audit covering all 523 programs. The latter again
+measured a maximum phrase peak of **−4.6 dBFS**, loudest-50 ms RMS values of
+**−29.8 to −18.0 dBFS**, and a maximum eight-voice stress peak of **−1.5 dBFS**.
+The audit's acceptance source and thresholds are unchanged. Six affected
+suite stdout blocks were truncated by CTest, so their internal assertion
+totals are not inferred from these logs. These eight local executable runs
+are separate from the historical matched-audio comparison and the native
+release executions.
+
+The retained local audio source is `c4fe309`; subsequent `e32728b` changes
+only Wind's descriptive text under production source, and `bcc86aa` changes
+guides and a CMake comment. The UI fixture corrections in `078c098` change test expectations and the
+fixture’s control values without changing audio code, factory values,
+golden images or acceptance tolerances.
+
+[Continuation affected tests](preset-evidence/2026.11.4/continuation/local-affected/summary.json) ·
+[Continuation complete-bank results and source review](preset-evidence/2026.11.4/continuation/local-bank/review-summary.json)
 
 ### Development runtime cost
 

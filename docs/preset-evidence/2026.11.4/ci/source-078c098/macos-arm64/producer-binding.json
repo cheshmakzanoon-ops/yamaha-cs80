@@ -1,0 +1,185 @@
+{
+  "status": "original_arm64_producer_and_download_bytes_bound",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "native_job_id": 137945805542,
+  "native_job_conclusion": "success",
+  "run_conclusion_at_snapshot": null,
+  "required_steps": [
+    {
+      "name": "Run actions/checkout@v5",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-23T19:15:59Z",
+      "completed_at": "2026-11-23T19:16:08Z"
+    },
+    {
+      "name": "Record native platform",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-23T19:16:08Z",
+      "completed_at": "2026-11-23T19:16:09Z"
+    },
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-23T19:16:09Z",
+      "completed_at": "2026-11-23T19:17:29Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-23T19:17:29Z",
+      "completed_at": "2026-11-23T19:17:29Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T19:17:29Z",
+      "completed_at": "2026-11-23T19:24:36Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-23T19:24:36Z",
+      "completed_at": "2026-11-23T19:45:37Z"
+    },
+    {
+      "name": "Package native macOS VST3, AU and Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-11-23T19:48:56Z",
+      "completed_at": "2026-11-23T19:48:58Z"
+    },
+    {
+      "name": "Upload native macOS install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-11-23T19:48:58Z",
+      "completed_at": "2026-11-23T19:49:00Z"
+    },
+    {
+      "name": "Upload test and JUCE source evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-11-23T19:49:01Z",
+      "completed_at": "2026-11-23T19:49:02Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "api": {
+        "id": 14855214289,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg1NTIxNDI4OQ==",
+        "name": "cs80-macos-15-install-bundle",
+        "size_in_bytes": 14949170,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855214289/zip",
+        "expired": false,
+        "digest": "sha256:a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8",
+        "created_at": "2026-11-23T19:49:00Z",
+        "updated_at": "2026-11-23T19:49:00Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "download": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-install.zip",
+        "bytes": 14949170,
+        "sha256": "a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8"
+      },
+      "api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-install-api.json",
+        "bytes": 801,
+        "sha256": "af591b2a88666981afe38f8123cddc66ac316b676764ea739d828bda48443871"
+      },
+      "upload_step": {
+        "name": "Upload native macOS install bundle",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-11-23T19:48:58Z",
+        "completed_at": "2026-11-23T19:49:00Z"
+      },
+      "original_upload_digest": "a185194b05d68f74c08bdb98f084f826f86f251e842890fe6e07183284dddcc8",
+      "producer_created_at_within_upload_step": true
+    },
+    {
+      "api": {
+        "id": 14855209144,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg1NTIwOTE0NA==",
+        "name": "cs80-macos-15-test-evidence",
+        "size_in_bytes": 66236,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855209144",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14855209144/zip",
+        "expired": false,
+        "digest": "sha256:2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895",
+        "created_at": "2026-11-23T19:49:02Z",
+        "updated_at": "2026-11-23T19:49:02Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "download": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-test-evidence.zip",
+        "bytes": 66236,
+        "sha256": "2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895"
+      },
+      "api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/macos-arm64-test-evidence-api.json",
+        "bytes": 797,
+        "sha256": "507fd19576605a0f3acd3150787a7265f9e844a8eedf076237d743281abfbae0"
+      },
+      "upload_step": {
+        "name": "Upload test and JUCE source evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 19,
+        "started_at": "2026-11-23T19:49:01Z",
+        "completed_at": "2026-11-23T19:49:02Z"
+      },
+      "original_upload_digest": "2a353ffb9da02532d2dfd5ddf7c2da6115716aad5f3117cfeaf4ea017588e895",
+      "producer_created_at_within_upload_step": true
+    }
+  ],
+  "original_job_log": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a51/job.log",
+    "bytes": 231695,
+    "sha256": "ad969bf8844348f3f32f5464ef59c8af636b9a0feab28876f9ff7d840aff4e69"
+  },
+  "run_api": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a51/run.json",
+    "bytes": 15101,
+    "sha256": "19de274f1b6b75ca252fc3794201556b65f8735ba0d7f1c2691f2c1d5c4e7d80"
+  },
+  "job_api": {
+    "path": "/workspace/scratch/dde4ad85ed5b/a51/job.json",
+    "bytes": 5736,
+    "sha256": "42299b3e951fc8bf50fed714d920646d2732279f944e760513b584cb98ed55f5"
+  },
+  "scope": "Installation and native Test producer only. Validator lanes and AU before/after payload identity are qualified separately."
+}

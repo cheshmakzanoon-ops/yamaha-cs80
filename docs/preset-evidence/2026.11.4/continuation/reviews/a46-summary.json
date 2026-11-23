@@ -1,0 +1,444 @@
+{
+  "reviewer": "a46_filter_ci_binding",
+  "run_id": 45244531626,
+  "run_attempt": 1,
+  "run_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626",
+  "run_status": "completed",
+  "run_conclusion": "success",
+  "run_source": "bcc86aa39a33a0162254614e5502705f0113d701",
+  "release_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "event": "push",
+  "workflow": ".github/workflows/filter-batch.yml",
+  "source_equivalence_file": "source-equivalence.json",
+  "source_equivalence_inputs": 91,
+  "all_relevant_inputs_byte_identical": true,
+  "observed_executions": {
+    "jobs": 6,
+    "passed_ctests": 24,
+    "failed_ctests": 0,
+    "skipped_ctests": 0,
+    "unique_ctest_definitions": 4
+  },
+  "jobs": [
+    {
+      "job_id": 137937694490,
+      "name": "clang++ / batch DEFAULT",
+      "attempt": 1,
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626/job/137937694490",
+      "started_at": "2026-11-23T19:08:27Z",
+      "completed_at": "2026-11-23T19:09:39Z",
+      "configured_mode": "ON",
+      "compiler": [
+        "Clang 18.1.3"
+      ],
+      "gate_steps": [
+        {
+          "name": "Configure core only",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T19:08:39Z",
+          "completed_at": "2026-11-23T19:08:54Z"
+        },
+        {
+          "name": "Build focused qualification tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T19:08:54Z",
+          "completed_at": "2026-11-23T19:09:13Z"
+        },
+        {
+          "name": "Exactness and scheduling gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T19:09:13Z",
+          "completed_at": "2026-11-23T19:09:37Z"
+        }
+      ],
+      "observed_ctest_results": [
+        {
+          "name": "cs80_ig00156_batch_tests",
+          "status": "passed",
+          "seconds": 0.01
+        },
+        {
+          "name": "cs80_filter_batch_engine_tests",
+          "status": "passed",
+          "seconds": 5.91
+        },
+        {
+          "name": "cs80_filter_batch_scheduling_tests",
+          "status": "passed",
+          "seconds": 1.74
+        },
+        {
+          "name": "cs80_filter_batch_admission_tests",
+          "status": "passed",
+          "seconds": 15.2
+        }
+      ],
+      "ctest_summary": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "job-137937694490.log",
+      "log_bytes": 16030,
+      "log_sha256": "df0daafa579238e6627e3875b5199c0848be88c521f4eea91b5d4bc9dcc25203"
+    },
+    {
+      "job_id": 137937694796,
+      "name": "clang++ / batch OFF",
+      "attempt": 1,
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626/job/137937694796",
+      "started_at": "2026-11-23T19:14:49Z",
+      "completed_at": "2026-11-23T19:16:03Z",
+      "configured_mode": "OFF",
+      "compiler": [
+        "Clang 18.1.3"
+      ],
+      "gate_steps": [
+        {
+          "name": "Configure core only",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T19:15:04Z",
+          "completed_at": "2026-11-23T19:15:16Z"
+        },
+        {
+          "name": "Build focused qualification tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T19:15:16Z",
+          "completed_at": "2026-11-23T19:15:37Z"
+        },
+        {
+          "name": "Exactness and scheduling gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T19:15:37Z",
+          "completed_at": "2026-11-23T19:16:00Z"
+        }
+      ],
+      "observed_ctest_results": [
+        {
+          "name": "cs80_ig00156_batch_tests",
+          "status": "passed",
+          "seconds": 0.01
+        },
+        {
+          "name": "cs80_filter_batch_engine_tests",
+          "status": "passed",
+          "seconds": 5.99
+        },
+        {
+          "name": "cs80_filter_batch_scheduling_tests",
+          "status": "passed",
+          "seconds": 1.75
+        },
+        {
+          "name": "cs80_filter_batch_admission_tests",
+          "status": "passed",
+          "seconds": 14.87
+        }
+      ],
+      "ctest_summary": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "job-137937694796.log",
+      "log_bytes": 15899,
+      "log_sha256": "1a9bf97e9b570316d9d2f71bb6ce415509ecd473534e1a4da3bd9f6e676847ad"
+    },
+    {
+      "job_id": 137937694856,
+      "name": "clang++ / batch ON",
+      "attempt": 1,
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626/job/137937694856",
+      "started_at": "2026-11-23T19:15:49Z",
+      "completed_at": "2026-11-23T19:16:50Z",
+      "configured_mode": "ON",
+      "compiler": [
+        "Clang 18.1.3"
+      ],
+      "gate_steps": [
+        {
+          "name": "Configure core only",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T19:15:57Z",
+          "completed_at": "2026-11-23T19:16:01Z"
+        },
+        {
+          "name": "Build focused qualification tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T19:16:01Z",
+          "completed_at": "2026-11-23T19:16:16Z"
+        },
+        {
+          "name": "Exactness and scheduling gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T19:16:16Z",
+          "completed_at": "2026-11-23T19:16:48Z"
+        }
+      ],
+      "observed_ctest_results": [
+        {
+          "name": "cs80_ig00156_batch_tests",
+          "status": "passed",
+          "seconds": 0.02
+        },
+        {
+          "name": "cs80_filter_batch_engine_tests",
+          "status": "passed",
+          "seconds": 7.16
+        },
+        {
+          "name": "cs80_filter_batch_scheduling_tests",
+          "status": "passed",
+          "seconds": 2.25
+        },
+        {
+          "name": "cs80_filter_batch_admission_tests",
+          "status": "passed",
+          "seconds": 21.86
+        }
+      ],
+      "ctest_summary": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "job-137937694856.log",
+      "log_bytes": 16019,
+      "log_sha256": "4fbe0d157a9516a41f2fe8b544bac2d821476fa865e2635018a1c1377b20dcbd"
+    },
+    {
+      "job_id": 137937694947,
+      "name": "g++ / batch ON",
+      "attempt": 1,
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626/job/137937694947",
+      "started_at": "2026-11-23T19:24:55Z",
+      "completed_at": "2026-11-23T19:25:45Z",
+      "configured_mode": "ON",
+      "compiler": [
+        "GNU 13.3.0"
+      ],
+      "gate_steps": [
+        {
+          "name": "Configure core only",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T19:25:05Z",
+          "completed_at": "2026-11-23T19:25:06Z"
+        },
+        {
+          "name": "Build focused qualification tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T19:25:06Z",
+          "completed_at": "2026-11-23T19:25:25Z"
+        },
+        {
+          "name": "Exactness and scheduling gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T19:25:25Z",
+          "completed_at": "2026-11-23T19:25:43Z"
+        }
+      ],
+      "observed_ctest_results": [
+        {
+          "name": "cs80_ig00156_batch_tests",
+          "status": "passed",
+          "seconds": 0.02
+        },
+        {
+          "name": "cs80_filter_batch_engine_tests",
+          "status": "passed",
+          "seconds": 6.38
+        },
+        {
+          "name": "cs80_filter_batch_scheduling_tests",
+          "status": "passed",
+          "seconds": 1.9
+        },
+        {
+          "name": "cs80_filter_batch_admission_tests",
+          "status": "passed",
+          "seconds": 9.15
+        }
+      ],
+      "ctest_summary": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "job-137937694947.log",
+      "log_bytes": 15889,
+      "log_sha256": "a4707904e77edb1d5dc733bf988cc9fc2e37ea56779a659b5ff03166eb33c5bb"
+    },
+    {
+      "job_id": 137937694971,
+      "name": "g++ / batch OFF",
+      "attempt": 1,
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626/job/137937694971",
+      "started_at": "2026-11-23T19:17:10Z",
+      "completed_at": "2026-11-23T19:18:17Z",
+      "configured_mode": "OFF",
+      "compiler": [
+        "GNU 13.3.0"
+      ],
+      "gate_steps": [
+        {
+          "name": "Configure core only",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T19:17:24Z",
+          "completed_at": "2026-11-23T19:17:31Z"
+        },
+        {
+          "name": "Build focused qualification tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T19:17:31Z",
+          "completed_at": "2026-11-23T19:18:01Z"
+        },
+        {
+          "name": "Exactness and scheduling gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T19:18:01Z",
+          "completed_at": "2026-11-23T19:18:14Z"
+        }
+      ],
+      "observed_ctest_results": [
+        {
+          "name": "cs80_ig00156_batch_tests",
+          "status": "passed",
+          "seconds": 0.01
+        },
+        {
+          "name": "cs80_filter_batch_engine_tests",
+          "status": "passed",
+          "seconds": 4.67
+        },
+        {
+          "name": "cs80_filter_batch_scheduling_tests",
+          "status": "passed",
+          "seconds": 1.44
+        },
+        {
+          "name": "cs80_filter_batch_admission_tests",
+          "status": "passed",
+          "seconds": 6.77
+        }
+      ],
+      "ctest_summary": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "job-137937694971.log",
+      "log_bytes": 15892,
+      "log_sha256": "5aaa2fe614d4d2caa42c65535f9c8d4ff3ff63a7f8f1c7f38b7368439da1a70c"
+    },
+    {
+      "job_id": 137937695222,
+      "name": "g++ / batch DEFAULT",
+      "attempt": 1,
+      "conclusion": "success",
+      "html_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45244531626/job/137937695222",
+      "started_at": "2026-11-23T19:29:14Z",
+      "completed_at": "2026-11-23T19:29:52Z",
+      "configured_mode": "ON",
+      "compiler": [
+        "GNU 13.3.0"
+      ],
+      "gate_steps": [
+        {
+          "name": "Configure core only",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T19:29:22Z",
+          "completed_at": "2026-11-23T19:29:22Z"
+        },
+        {
+          "name": "Build focused qualification tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-23T19:29:22Z",
+          "completed_at": "2026-11-23T19:29:37Z"
+        },
+        {
+          "name": "Exactness and scheduling gates",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T19:29:37Z",
+          "completed_at": "2026-11-23T19:29:50Z"
+        }
+      ],
+      "observed_ctest_results": [
+        {
+          "name": "cs80_ig00156_batch_tests",
+          "status": "passed",
+          "seconds": 0.01
+        },
+        {
+          "name": "cs80_filter_batch_engine_tests",
+          "status": "passed",
+          "seconds": 4.82
+        },
+        {
+          "name": "cs80_filter_batch_scheduling_tests",
+          "status": "passed",
+          "seconds": 1.36
+        },
+        {
+          "name": "cs80_filter_batch_admission_tests",
+          "status": "passed",
+          "seconds": 7.15
+        }
+      ],
+      "ctest_summary": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "job-137937695222.log",
+      "log_bytes": 15901,
+      "log_sha256": "f5f7ce6e5dd59c9b2b80bd5ec45218b1fb023a46c5355d7518eebf68add3363e"
+    }
+  ],
+  "scope": [
+    "Supporting filter evidence remains an execution of bcc86aa, not of release commit078c0981.",
+    "Clang ON and DEFAULT explicitly remain scalar; matrix is not six AVX2 executions.",
+    "No earlier failure or cancellation is reclassified; this record covers original attempt1 only.",
+    "No native plugin, artifact byte identity or acoustic realism conclusion follows from these four core gates."
+  ]
+}

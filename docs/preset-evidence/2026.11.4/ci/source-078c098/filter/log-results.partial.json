@@ -1,0 +1,150 @@
+[
+  {
+    "job_id": 137937694490,
+    "log_path": "job-137937694490.log",
+    "log_bytes": 16030,
+    "log_sha256": "df0daafa579238e6627e3875b5199c0848be88c521f4eea91b5d4bc9dcc25203",
+    "source_seen": true,
+    "compiler": [
+      "Clang 18.1.3"
+    ],
+    "configured_mode": [
+      "ON"
+    ],
+    "observed_test_results": [
+      {
+        "name": "cs80_ig00156_batch_tests",
+        "status": "passed",
+        "seconds": 0.01
+      },
+      {
+        "name": "cs80_filter_batch_engine_tests",
+        "status": "passed",
+        "seconds": 5.91
+      },
+      {
+        "name": "cs80_filter_batch_scheduling_tests",
+        "status": "passed",
+        "seconds": 1.74
+      },
+      {
+        "name": "cs80_filter_batch_admission_tests",
+        "status": "passed",
+        "seconds": 15.2
+      }
+    ],
+    "four_expected_tests_pass": true,
+    "summary_zero_failed": true
+  },
+  {
+    "job_id": 137937694796,
+    "log_path": "job-137937694796.log",
+    "log_bytes": 15899,
+    "log_sha256": "1a9bf97e9b570316d9d2f71bb6ce415509ecd473534e1a4da3bd9f6e676847ad",
+    "source_seen": true,
+    "compiler": [
+      "Clang 18.1.3"
+    ],
+    "configured_mode": [
+      "OFF"
+    ],
+    "observed_test_results": [
+      {
+        "name": "cs80_ig00156_batch_tests",
+        "status": "passed",
+        "seconds": 0.01
+      },
+      {
+        "name": "cs80_filter_batch_engine_tests",
+        "status": "passed",
+        "seconds": 5.99
+      },
+      {
+        "name": "cs80_filter_batch_scheduling_tests",
+        "status": "passed",
+        "seconds": 1.75
+      },
+      {
+        "name": "cs80_filter_batch_admission_tests",
+        "status": "passed",
+        "seconds": 14.87
+      }
+    ],
+    "four_expected_tests_pass": true,
+    "summary_zero_failed": true
+  },
+  {
+    "job_id": 137937694856,
+    "log_path": "job-137937694856.log",
+    "log_bytes": 16019,
+    "log_sha256": "4fbe0d157a9516a41f2fe8b544bac2d821476fa865e2635018a1c1377b20dcbd",
+    "source_seen": true,
+    "compiler": [
+      "Clang 18.1.3"
+    ],
+    "configured_mode": [
+      "ON"
+    ],
+    "observed_test_results": [
+      {
+        "name": "cs80_ig00156_batch_tests",
+        "status": "passed",
+        "seconds": 0.02
+      },
+      {
+        "name": "cs80_filter_batch_engine_tests",
+        "status": "passed",
+        "seconds": 7.16
+      },
+      {
+        "name": "cs80_filter_batch_scheduling_tests",
+        "status": "passed",
+        "seconds": 2.25
+      },
+      {
+        "name": "cs80_filter_batch_admission_tests",
+        "status": "passed",
+        "seconds": 21.86
+      }
+    ],
+    "four_expected_tests_pass": true,
+    "summary_zero_failed": true
+  },
+  {
+    "job_id": 137937694971,
+    "log_path": "job-137937694971.log",
+    "log_bytes": 15892,
+    "log_sha256": "5aaa2fe614d4d2caa42c65535f9c8d4ff3ff63a7f8f1c7f38b7368439da1a70c",
+    "source_seen": true,
+    "compiler": [
+      "GNU 13.3.0"
+    ],
+    "configured_mode": [
+      "OFF"
+    ],
+    "observed_test_results": [
+      {
+        "name": "cs80_ig00156_batch_tests",
+        "status": "passed",
+        "seconds": 0.01
+      },
+      {
+        "name": "cs80_filter_batch_engine_tests",
+        "status": "passed",
+        "seconds": 4.67
+      },
+      {
+        "name": "cs80_filter_batch_scheduling_tests",
+        "status": "passed",
+        "seconds": 1.44
+      },
+      {
+        "name": "cs80_filter_batch_admission_tests",
+        "status": "passed",
+        "seconds": 6.77
+      }
+    ],
+    "four_expected_tests_pass": true,
+    "summary_zero_failed": true
+  }
+]

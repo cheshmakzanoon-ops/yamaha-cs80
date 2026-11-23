@@ -16,6 +16,11 @@ a DAW or a standalone app.
 
 ## Downloads
 
+Revision **2026.11.4** is committed and undergoing final cross-platform
+qualification. The links below remain the preceding verified release until
+the new native packages and all validators complete.
+[Qualification checkpoint](docs/preset-evidence/2026.11.4/ci/source-078c098/qualification-status.json)
+
 **2026.11.3 — all 521 existing musical presets revoiced.** The two initialization
 patches and all 523 names, categories and program addresses are preserved.
 No presets were added. These builds include the new instrument bodies and the
@@ -92,7 +97,7 @@ on-screen key to try pressure.
   not features of the original hardware. See the [circuit and session contract](docs/PARITY_ISOLATION.md)
   and [editor gallery](docs/screenshots/).
 
-## Instrument voicing revision — 2026.11.3
+## Instrument voicing revision — 2026.11.4
 
 All **521 existing musical factory programs** have revised sound controls. The
 two initialization patches and all **523 names, categories and program addresses**
@@ -103,11 +108,14 @@ An optional body for each synthesizer rank supplies independently evolving
 partials for struck strings, electric pianos, winds, bowed strings, brass,
 organs and bars. **259 existing programs use these bodies**, with 19 model
 choices; the remaining 264 entries, including the two initialization patches,
-retain circuit excitation. Synthetic pads, polysynths, leads, basses and
-effects also have individually revised articulation, expression and motion.
-The [revision report](docs/CIRCUIT_LIBRARY_2026_11_3.md) explains the sound changes,
+retain circuit excitation. Each body now follows its rank’s panel high-pass and low-pass controls. Piano
+partials evolve across the register; tine and reed pickup spectra evolve through
+the decay. Bowed resonances remain stationary during vibrato and slides.
+Synthetic pads, polysynths, leads, basses and effects also have individually
+revised articulation, expression and motion.
+The [revision report](docs/CIRCUIT_LIBRARY_2026_11_4.md) explains the sound changes,
 controls, measured behavior and limits. The
-[complete coverage record](docs/preset-evidence/2026.11.3/parameter-coverage.json)
+[complete coverage record](docs/preset-evidence/2026.11.4/parameter-coverage.json)
 checks every existing address.
 
 | Try | Revised character and playing suggestion |
@@ -121,9 +129,10 @@ checks every existing address.
 | Percussive Organ / Theatre Organ | Fading octave percussion or a gentle whole-registration tremulant, while the organ body keeps steady strike dynamics. |
 | Pads / Polysynth / Leads / FX | Individually programmed attack, bloom, sustain, release and controller roles; environmental effects retain distinct noise bands and envelopes. |
 
-The eight body controls are available in the DAW's parameter list and automation
-editor. Model and partial decay are captured on the next note; mix and
-brightness are live. The custom Studio editor and standalone interface do not
+The ten body controls are available in the DAW's parameter list and automation
+editor. Model, partial decay and resonant size are captured on the next note;
+mix and brightness are live. Partial decay applies to struck models; it has no
+effect on sustained bowed, wind, brass or organ bodies. The custom Studio editor and standalone interface do not
 yet have dedicated body-control widgets. Factory selection and saved-state
 recall load these settings normally.
 
@@ -138,12 +147,12 @@ explains registrations and playing techniques.
 **Older sessions using Legacy or Pure intentionally change sound.** Their saved
 controls and parameter identities are retained, but obsolete engine settings
 resolve to the circuit engine with normal MIDI and optional Studio features.
-There is no promise of identical old rendering. Reload a factory program from
-**Library** to hear its revised voicing; merely opening a saved session does not
+There is no promise of identical old rendering. Use **Library → FACTORY LIBRARY → LOAD / RELOAD**, then play fresh notes,
+to hear the revised voicing; merely opening a saved session does not
 replace its stored patch with the current factory recipe. Keep the older binary
 and a rendered reference when an existing project's exact sound must be retained.
 
-Instrument names describe synthesized interpretations. The new bodies are
+Instrument names describe synthesized interpretations. The instrument bodies are
 authored signal models with physically motivated spectra and losses; they are
 not sampled instruments or complete measured simulations of instrument
 mechanics. The software checks do not establish an indistinguishable acoustic

@@ -1,0 +1,100 @@
+{
+  "review": "a43 final source equivalence and program preservation",
+  "final_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "previous_candidate_source": "bcc86aa39a33a0162254614e5502705f0113d701",
+  "inventory_export_source": "e32728b31d97fc356cac291cb98935fdcd38f803",
+  "baseline_source": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "read_only": true,
+  "no_audio_rerender": true,
+  "source_diff": {
+    "total_changed_files": 22,
+    "docs_and_evidence_files": 20,
+    "test_fixture_paths": [
+      "src/tools/ui_snapshot.cpp",
+      "tests/PanelEditorTests.h"
+    ],
+    "production_audio_changed": false,
+    "source_objects": {
+      "src/core": {
+        "before_git_object": "8725aa905836f2f91dddf940b6d43facfc1c3852",
+        "after_git_object": "8725aa905836f2f91dddf940b6d43facfc1c3852"
+      },
+      "src/plugin": {
+        "before_git_object": "e53cf7892eb421976d66890783809de1b9554ddf",
+        "after_git_object": "e53cf7892eb421976d66890783809de1b9554ddf"
+      },
+      "src/reference": {
+        "before_git_object": "661f13dcd7fe0075fd9411fa481a421f23272eaf",
+        "after_git_object": "661f13dcd7fe0075fd9411fa481a421f23272eaf"
+      },
+      "CMakeLists.txt": {
+        "before_git_object": "22b19bd137ad37211482928d9b6943b2ad6c03c2",
+        "after_git_object": "22b19bd137ad37211482928d9b6943b2ad6c03c2"
+      },
+      "src/tools/preset_capture.cpp": {
+        "before_git_object": "f23ee3860f8ec7fac36369132086b2511d411ff6",
+        "after_git_object": "f23ee3860f8ec7fac36369132086b2511d411ff6"
+      }
+    }
+  },
+  "inventory": {
+    "sha256": {
+      "baseline_inventory": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+      "current_inventory": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+      "current_coverage": "43b693d7990b0e8857867de3b29ed69b02fbc5cec83285f63977b6257825dad9"
+    },
+    "source_binding": "The retained inventory was exported at e32728b; complete core/plugin/reference trees and preset capture source are identical through 078c098. Source labels in coverage are caller-supplied; final native producer qualification remains separate.",
+    "ordered_identities_preserved": 523,
+    "musical_programs_existing_nonvolume_changes": 521,
+    "changed_existing_nonvolume_count_range": [
+      7,
+      52
+    ],
+    "initializations": [
+      {
+        "name": "Init Patch",
+        "host_index": 43,
+        "old_values_exact": 198,
+        "sizes": [
+          1,
+          1
+        ]
+      },
+      {
+        "name": "Init Circuit",
+        "host_index": 522,
+        "old_values_exact": 198,
+        "sizes": [
+          1,
+          1
+        ]
+      }
+    ],
+    "duplicate_nonvolume_vectors": []
+  },
+  "parameter_layout": {
+    "old_core_prefix": 198,
+    "core_count": 200,
+    "core_prefix_fnv1a64": "8e37bad444e187c2",
+    "old_host_prefix": 304,
+    "host_count": 306,
+    "host_prefix_fnv1a64": "b86982a235459491",
+    "new_core_positions": [
+      198,
+      199
+    ],
+    "new_host_positions": [
+      304,
+      305
+    ],
+    "appended_ids": [
+      "body1_size",
+      "body2_size"
+    ],
+    "au_version_hint": 17,
+    "method": "JSON core-ID comparison and independent static reconstruction of unchanged host insertion groups; old PluginProcessor.cpp is byte-identical after removing exactly the two-size append block. Not a new runtime host test."
+  },
+  "program_address_source": "FactoryPresets.h differs from fa57967 only in the 2026.11.3 to 2026.11.4 revision string; all 523 ordered host indexes are unchanged. The only FactoryPresets.cpp change resets appended size when selecting a hardware tone; MIDI mapping functions are unchanged. The host processor is unchanged except the appended size layout.",
+  "historical_audio_scope": "The all 521 musical-program matched signal comparison belongs to 59d489d, before continuation tine/bowed corrections. Inventory/source equivalence is not an acoustic realism score or a new matched audio comparison.",
+  "native_qualification": "Not performed by this reviewer; requires actual 078c098 artifacts and passing native jobs."
+}

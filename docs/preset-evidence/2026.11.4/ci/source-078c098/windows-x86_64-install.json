@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "status": "artifact_bytes_verified",
+  "verified_at_utc": "2026-11-23T19:55:49.843841+00:00",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "preset_library_revision": "2026.11.4",
+  "run_id": 45246863788,
+  "target": "windows-x86_64",
+  "artifact": {
+    "id": 14856804857,
+    "name": "cs80-windows-install-bundle",
+    "size_in_bytes": 6361027,
+    "digest": "sha256:22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+    "created_at": "2026-11-23T19:54:18Z",
+    "expires_at": "2027-02-21T19:14:35Z",
+    "workflow_run": {
+      "id": 45246863788,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+    }
+  },
+  "outer_zip": {
+    "file": "windows-x86_64-install.zip",
+    "bytes": 6361027,
+    "sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+    "members": [
+      "SHA256SUMS",
+      "cs80-reference-windows-x86_64-078c0981ffa1.manifest.json",
+      "cs80-reference-windows-x86_64-078c0981ffa1.zip"
+    ]
+  },
+  "inner_archive": {
+    "file": "cs80-reference-windows-x86_64-078c0981ffa1.zip",
+    "bytes": 6355711,
+    "sha256": "2fd754face192645e53a26f0568d26ff6ff14207a7c3579515b50d7de20030c2"
+  },
+  "manifest_sha256": "4417b8683dd7ab8928389dba5ac2d7c0399de08fd38ac9096cdb0b1cff9a0bbf",
+  "checksum_manifest_sha256": "b894f8424a6f69c02126af6ba401ec28c75056a8bfa0e50faccacee3078da084",
+  "inventory_entries": 20,
+  "formats": [
+    "VST3",
+    "Standalone"
+  ],
+  "binary_headers": [
+    {
+      "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+      "bytes": 7348736,
+      "sha256": "9ecd532fa1b59d33e32ada5010acd246b6b0e5905b1b7035d4d78a53350d3aa3",
+      "platform": "windows",
+      "architecture": "x86_64",
+      "role": "plugin",
+      "header_check": "PASS",
+      "header": {
+        "format": "PE32+",
+        "machine": "0x8664",
+        "characteristics": "0x2022"
+      }
+    },
+    {
+      "path": "Standalone/CS-80 Reference.exe",
+      "bytes": 7549440,
+      "sha256": "a5a299c21ff27f5bd34e00852842c5f02d528efaf6d50f13081752af11b929fa",
+      "platform": "windows",
+      "architecture": "x86_64",
+      "role": "standalone",
+      "header_check": "PASS",
+      "header": {
+        "format": "PE32+",
+        "machine": "0x8664",
+        "characteristics": "0x22"
+      }
+    }
+  ],
+  "inner_checker": {
+    "result": "integrity and declared source consistency verified",
+    "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "platform": "windows",
+    "architecture": "x86_64",
+    "files": 20,
+    "qualification": "Not authenticity, proof of binary source, signing, CI pass, or DAW qualification."
+  },
+  "checker_sha256": "6921906b068ddbb0c5e337f3a09faf109dd7b36f4fb284b5bdf3d339c15fc20a",
+  "source_checker_sha256": {
+    "scripts/verify-ci-bundle.py": "65b02309dfd8ff3b3f05585df91e6eb48a6a116563327c63d24d0b516d0a63aa",
+    "scripts/package-ci-artifacts.py": "f2df2edfd4a55a759ad5c0bad72fa05a5f3880d323412e1211ede1d15bdaa8cf"
+  },
+  "source_scripts_compared_to_commit": true,
+  "scope": "Outer bytes, complete inner inventory/checksums, declared source/revision/run, JUCE provenance, and native headers. No product executed.",
+  "remaining_qualification": "Producer/upload/attempt binding, complete native tests, 13 validator invocations and payload identity with validator inputs must be established separately.",
+  "signing_status": "not inspected; no release signing/notarization performed by this helper"
+}

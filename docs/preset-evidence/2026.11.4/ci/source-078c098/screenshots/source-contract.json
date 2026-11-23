@@ -1,0 +1,42 @@
+{
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "base": "bcc86aa39a33a0162254614e5502705f0113d701",
+  "source_files": {
+    ".github/workflows/screenshots.yml": {
+      "bytes": 4285,
+      "sha256": "9dc37c0d6bc4c38acbe6ae1bdea64e0276f0b200c27f4636a00af4efb7c62fb9",
+      "identical_to_bcc86aa": true
+    },
+    "tests/PanelEditorTests.h": {
+      "bytes": 33978,
+      "sha256": "d3f635038c8acb867ec861504b1836914da41986cd2cf9a33fbca74c552e10dc",
+      "identical_to_bcc86aa": false
+    },
+    "src/tools/ui_snapshot.cpp": {
+      "bytes": 219805,
+      "sha256": "40192880b3e36bef924f75ea6dc8eff2ae24ecbc81f56857db156d92032b1e45",
+      "identical_to_bcc86aa": false
+    },
+    "tests/golden/main-1600x1000.png": {
+      "bytes": 1625024,
+      "sha256": "13b6dd07937dd15170e8855264a52b27149329934e7e4dd12efa5206d2c5cafc",
+      "identical_to_bcc86aa": true
+    },
+    "tests/golden/main-1120x700.png": {
+      "bytes": 917415,
+      "sha256": "a4133c5833fecca05c2cf6e1b3ca571a3dfb178405d3c37cc9bc2baf9656ce77",
+      "identical_to_bcc86aa": true
+    }
+  },
+  "original_thresholds": {
+    "pixel_channel_delta": 40,
+    "maximum_changed_fraction": 0.003,
+    "block_px": 8,
+    "maximum_block_mean": 8.0,
+    "linux_strict": true
+  },
+  "qualification_status": "waiting for original final-source CI execution; no pass asserted",
+  "entire_golden_comparison_function_unchanged": true,
+  "comparison_function_sha256": "2738e4d5971af6f152ee71f89e81bd31c9a82473901ccfed691e60d3f797df67",
+  "workflow_unchanged": true
+}

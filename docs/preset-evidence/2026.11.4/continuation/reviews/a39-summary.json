@@ -1,0 +1,153 @@
+{
+  "review": "a39 continuation evidence manifest and local final test provenance",
+  "target_source": "bcc86aa39a33a0162254614e5502705f0113d701",
+  "repository_edits": false,
+  "tests_rerun": false,
+  "manifest": {
+    "listed_files": 25,
+    "verified_byte_hash_entries": 25,
+    "mismatches": 0,
+    "duplicate_paths": 0,
+    "unlisted_existing_files": [
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a20/FINDINGS.md",
+        "bytes": 2416,
+        "sha256": "a90aef88edc3ea946ee807338722547703c0a1d2cb0cb65deafb15e59ffd8b3c"
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a20/probe.cpp",
+        "bytes": 3369,
+        "sha256": "013e71f618f39d6953629cbf1e4404cfd3cce414042a8ad4e4a5f28037b4ead9"
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a20/provenance.json",
+        "bytes": 1211,
+        "sha256": "5ebb7458a0f921bc1b09c571b8938e2587da99f686a48a54ea3970cbfac36351"
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a20/run.py",
+        "bytes": 3915,
+        "sha256": "2556bec239a3f80ddc3cc3edc672d00b71c9129ef35f194280161198d000df46"
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a20/summary.json",
+        "bytes": 7283,
+        "sha256": "f4b4cfd1f2093706d9460b84fa2a0a6984e5d1f828c63e5dea485f30e090f1e7"
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/a20/trials.csv",
+        "bytes": 13827,
+        "sha256": "3708d038942bb1613d16a30efacd1c78ce94e3da56df4c2227dd8c70b4321bc8"
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/local-affected/affected-junit.xml",
+        "bytes": 9104,
+        "sha256": "9efaf69e6f04fbe2bc9536eb52d9ca2394972a3811d04f4fc703bd8d20a31c5f"
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/local-affected/affected-tests.log",
+        "bytes": 961,
+        "sha256": "4b85dbfe20a42a3fca3817ddf4bf4e4d474866fd0dd47bc33604b907a6bac1bd"
+      },
+      {
+        "path": "/workspace/scratch/dde4ad85ed5b/yamaha-cs80/docs/preset-evidence/2026.11.4/continuation/local-affected/summary.json",
+        "bytes": 1022,
+        "sha256": "c8fbf3baee2a877fb7b97189d3f735ba0439d265e00259509d7a42e789f8240d"
+      }
+    ]
+  },
+  "final_scratch_files": [
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/affected-junit.xml",
+      "bytes": 9104,
+      "sha256": "9efaf69e6f04fbe2bc9536eb52d9ca2394972a3811d04f4fc703bd8d20a31c5f"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/affected-tests.log",
+      "bytes": 961,
+      "sha256": "4b85dbfe20a42a3fca3817ddf4bf4e4d474866fd0dd47bc33604b907a6bac1bd"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/bank-junit.xml",
+      "bytes": 590,
+      "sha256": "70d1b43758986fe80175919bea5c83a624c4d721649cd2961f910fad49416733"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/bank-tests.log",
+      "bytes": 244,
+      "sha256": "8ba1a196480ae9cea60239bcb8f78ab075b6efa4d9ce503a39f5776171e3b635"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/inventory.json",
+      "bytes": 704822,
+      "sha256": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/parameter-coverage.json",
+      "bytes": 441511,
+      "sha256": "43b693d7990b0e8857867de3b29ed69b02fbc5cec83285f63977b6257825dad9"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/screenshots-attempt1.log",
+      "bytes": 112829,
+      "sha256": "8060cda791141721b7fed7262fd66ea850ac3d65e41e12c9b4c08ca7be9a19c6"
+    }
+  ],
+  "recommended_small_additions": [
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/a10/final-bowed-results.log",
+      "bytes": 4765,
+      "sha256": "c8f82566d0f754d99c1ed7af299d2001217e59b4cfeb8188e16b0ab1079f5f0d"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/a10/bowed-tests.log",
+      "bytes": 4310,
+      "sha256": "8de64ab6ba39792d0f2ff6ce22678c2ae95b6e5b8ec676d5a7cd56ad50825e01"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/a10/baseline-bowed-tests.log",
+      "bytes": 19276,
+      "sha256": "630da0fdc37a8958eab32e8bc0db2b2fe20ccbf0c6ab92e0e2a640166db8464d"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/a10/sizes-before.log",
+      "bytes": 24,
+      "sha256": "a2159e32e5cceb2b55092b5d121b99f93dfcaa4637aef131b3f4776a6bb5d3bf"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/a10/sizes-after.log",
+      "bytes": 24,
+      "sha256": "866e2baa37df481a55835f2384bd5a90d5d3a750c2ceede4dfa556c740d16b1e"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/bank-tests.log",
+      "bytes": 244,
+      "sha256": "8ba1a196480ae9cea60239bcb8f78ab075b6efa4d9ce503a39f5776171e3b635"
+    },
+    {
+      "path": "/workspace/scratch/dde4ad85ed5b/evidence/final/bank-junit.xml",
+      "bytes": 590,
+      "sha256": "70d1b43758986fe80175919bea5c83a624c4d721649cd2961f910fad49416733"
+    }
+  ],
+  "local_results": {
+    "affected_ctest_executions": 7,
+    "bank_ctest_executions": 1,
+    "failed": 0,
+    "skipped": 0,
+    "affected_stdout_truncated_suites": 6,
+    "fully_observed_body_engine_checks": 18156,
+    "bank_programs": 523
+  },
+  "source_notes": [
+    "Local affected summary base_commit names historical checkout base. Recorded DSP/test hashes match bcc86aa; CMake hash matches c4fe309/e32728b, followed only by a comment change.",
+    "Final parameter coverage after.label is e32728b; bcc86aa changes guides and a CMake comment, preserving exported inventory.",
+    "a10 summary CPU trials match final-bowed-results.log; committed bowed-results.log contains earlier timings."
+  ],
+  "claim_limits": [
+    "Keep assertions separate from CTest execution counts.",
+    "Do not sum repeated model-suite checks as unique final gates.",
+    "Do not infer284 observed final voicing checks from truncated stdout.",
+    "No native or archive results reviewed."
+  ]
+}

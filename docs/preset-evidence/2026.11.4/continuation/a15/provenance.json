@@ -1,0 +1,33 @@
+{
+  "cases": 12,
+  "source_commit_before": "59d489d1a1f0065ae2a0f42a08c74edc43e94159",
+  "correction": "tine bound only; root build-core binary after a06",
+  "summary": [
+    {
+      "note": 36,
+      "rms_dynamic_span_before_db": 9.273063630000003,
+      "rms_dynamic_span_after_db": 13.090365130000002,
+      "hard_peak_delta_db": 0.0,
+      "hard_rms_delta_db": 0.0
+    },
+    {
+      "note": 60,
+      "rms_dynamic_span_before_db": 8.910709660000002,
+      "rms_dynamic_span_after_db": 12.773756390000003,
+      "hard_peak_delta_db": 0.0,
+      "hard_rms_delta_db": 0.0
+    },
+    {
+      "note": 84,
+      "rms_dynamic_span_before_db": 6.9632629600000016,
+      "rms_dynamic_span_after_db": 10.863942700000003,
+      "hard_peak_delta_db": 0.0,
+      "hard_rms_delta_db": 0.0
+    }
+  ],
+  "sha256": {
+    "evidence/baseline/cs80_preset_capture": "a9d481040d9ea7b798130379ad9552690bd4244e8870d8ded3364042f003b8c8",
+    "yamaha-cs80/build-core/cs80_preset_capture": "5172cf08a8be25a091210ae0d58781d77d691374e391828fabad7e805a168b97",
+    "a15/kalimba-metrics.json": "d2a5fa6c056ebdb2167307ce9aa2869db6eaa81fcbe8f12e46b3517382f12a8a"
+  }
+}

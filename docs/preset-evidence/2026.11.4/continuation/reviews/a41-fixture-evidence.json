@@ -1,0 +1,132 @@
+{
+  "source_before_test_edit": "bcc86aa39a33a0162254614e5502705f0113d701",
+  "reference_source": "fa57967c7317828cf769cc7ca97f5857e566520f",
+  "new_pinned_controls": [
+    {
+      "id": "mix",
+      "previous_binary32_hex": "3d0ad73e",
+      "old": 0.419999987,
+      "current": 0.200000003,
+      "fixture": 0.42
+    },
+    {
+      "id": "ch1_hpf_cutoff",
+      "previous_binary32_hex": "0000a042",
+      "old": 80,
+      "current": 50,
+      "fixture": 80
+    },
+    {
+      "id": "ch1_hpf_res",
+      "previous_binary32_hex": "0ad7a33c",
+      "old": 0.0199999996,
+      "current": 0,
+      "fixture": 0.02
+    },
+    {
+      "id": "ch1_lpf_cutoff",
+      "previous_binary32_hex": "00e06245",
+      "old": 3630,
+      "current": 6141.34668,
+      "fixture": 3630
+    },
+    {
+      "id": "ch1_lpf_res",
+      "previous_binary32_hex": "ec51b83d",
+      "old": 0.0900000036,
+      "current": 0.075000003,
+      "fixture": 0.09
+    },
+    {
+      "id": "ch1_f_d",
+      "previous_binary32_hex": "b5f3bd3f",
+      "old": 1.48399985,
+      "current": 1.472875,
+      "fixture": 1.48399985
+    },
+    {
+      "id": "ch1_v_d",
+      "previous_binary32_hex": "5739743f",
+      "old": 0.953999937,
+      "current": 0.963,
+      "fixture": 0.953999937
+    },
+    {
+      "id": "ch2_lpf_cutoff",
+      "previous_binary32_hex": "00c0b245",
+      "old": 5720,
+      "current": 8047.28223,
+      "fixture": 5720
+    },
+    {
+      "id": "ch2_lpf_res",
+      "previous_binary32_hex": "8fc2753d",
+      "old": 0.0599999987,
+      "current": 0.0500000007,
+      "fixture": 0.06
+    },
+    {
+      "id": "ch2_f_d",
+      "previous_binary32_hex": "5739f43f",
+      "old": 1.90799987,
+      "current": 1.89369643,
+      "fixture": 1.90799987
+    },
+    {
+      "id": "ch2_v_d",
+      "previous_binary32_hex": "e5d0a23f",
+      "old": 1.27199996,
+      "current": 1.28400016,
+      "fixture": 1.27199996
+    },
+    {
+      "id": "kbd_brilliance_low",
+      "previous_binary32_hex": "00000000",
+      "old": 0,
+      "current": 0.0799999982,
+      "fixture": 0
+    },
+    {
+      "id": "kbd_brilliance_high",
+      "previous_binary32_hex": "00000000",
+      "old": 0,
+      "current": -0.152437299,
+      "fixture": 0
+    },
+    {
+      "id": "kbd_level_low",
+      "previous_binary32_hex": "00000000",
+      "old": 0,
+      "current": 0.0199999996,
+      "fixture": 0
+    },
+    {
+      "id": "kbd_level_high",
+      "previous_binary32_hex": "00000000",
+      "old": 0,
+      "current": -0.0799999982,
+      "fixture": 0
+    }
+  ],
+  "existing_chorus_fixture": {
+    "chorus_speed": 0.28,
+    "chorus_depth": 0.36
+  },
+  "remaining_different_existing_parameters": [
+    "body1_mix",
+    "body1_brightness",
+    "body1_decay",
+    "body2_mix",
+    "body2_brightness",
+    "body2_decay"
+  ],
+  "new_body_sizes": {
+    "body1_size": 1.20000005,
+    "body2_size": 1
+  },
+  "golden_sha256_unchanged": {
+    "tests/golden/main-1600x1000.png": "13b6dd07937dd15170e8855264a52b27149329934e7e4dd12efa5206d2c5cafc",
+    "tests/golden/main-1120x700.png": "a4133c5833fecca05c2cf6e1b3ca571a3dfb178405d3c37cc9bc2baf9656ce77"
+  },
+  "verification_scope": "Exact binary32 control comparison and visual inspection of both failed-size differences. Rendering and native CI remain pending."
+}

@@ -1,0 +1,818 @@
+{
+  "review": "A47 independent arithmetic and source-scope audit; no render reruns",
+  "final_source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "coverage_definition": "Configured model selector 2=tine/9=bowed with body mix>0 in either rank; not listening/audibility proof.",
+  "coverage": {
+    "tine_programs": 17,
+    "tine_ranks": 28,
+    "bowed_programs": 51,
+    "bowed_ranks": 91,
+    "intersection": [],
+    "distinct_programs": 68,
+    "tine_original": 8,
+    "tine_curated": 9,
+    "bowed_original": 27,
+    "bowed_curated": 24
+  },
+  "tine_affected": [
+    {
+      "host_index": 8,
+      "name": "Tone I: E. Piano",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 39,
+      "name": "Bright Keys",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 140,
+      "name": "Amber Keys 97",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 147,
+      "name": "Electric Keys 104",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 148,
+      "name": "Midnight Keys 105",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 149,
+      "name": "Slow Keys 106",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 152,
+      "name": "Wide Keys 109",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 154,
+      "name": "Amber Keys 111",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 336,
+      "name": "Electric Piano I",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 337,
+      "name": "Electric Piano II",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 338,
+      "name": "Tine Piano",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 351,
+      "name": "Chorus Keys",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 357,
+      "name": "Tremolo Keys",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 358,
+      "name": "Contour Keys",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 400,
+      "name": "Kalimba",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 463,
+      "name": "Music Box",
+      "ranks": [
+        2
+      ]
+    },
+    {
+      "host_index": 512,
+      "name": "LFO Pan Keys",
+      "ranks": [
+        1,
+        2
+      ]
+    }
+  ],
+  "bowed_affected": [
+    {
+      "host_index": 0,
+      "name": "Tone I: String 1",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 1,
+      "name": "Tone II: String 2",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 2,
+      "name": "Tone I: String 3",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 26,
+      "name": "Cinema Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 27,
+      "name": "Glass Strings",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 28,
+      "name": "Distant Oceans",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 29,
+      "name": "Dry Ensemble",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 66,
+      "name": "Amber Strings 23",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 67,
+      "name": "Velvet Strings 24",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 68,
+      "name": "Distant Strings 25",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 69,
+      "name": "Neon Strings 26",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 71,
+      "name": "Golden Strings 28",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 72,
+      "name": "Frozen Strings 29",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 74,
+      "name": "Midnight Strings 31",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 75,
+      "name": "Slow Strings 32",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 76,
+      "name": "Bright Strings 33",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 77,
+      "name": "Dark Strings 34",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 78,
+      "name": "Wide Strings 35",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 79,
+      "name": "Soft Strings 36",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 80,
+      "name": "Amber Strings 37",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 81,
+      "name": "Velvet Strings 38",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 82,
+      "name": "Distant Strings 39",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 83,
+      "name": "Neon Strings 40",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 85,
+      "name": "Golden Strings 42",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 86,
+      "name": "Frozen Strings 43",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 88,
+      "name": "Midnight Strings 45",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 89,
+      "name": "Slow Strings 46",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 254,
+      "name": "Ensemble Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 255,
+      "name": "Slow Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 256,
+      "name": "Violins",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 257,
+      "name": "Cellos",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 258,
+      "name": "Octave Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 261,
+      "name": "Dark Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 262,
+      "name": "Tremolo Strings",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 263,
+      "name": "Solo Violin",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 264,
+      "name": "Solo Cello",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 266,
+      "name": "Swell Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 267,
+      "name": "Chamber Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 268,
+      "name": "Wide Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 269,
+      "name": "Crystal Strings",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 270,
+      "name": "Fifth Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 272,
+      "name": "Spiccato Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 273,
+      "name": "Bowed Swell Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 276,
+      "name": "Contour Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 277,
+      "name": "Ring Strings",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 278,
+      "name": "Velvet Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 279,
+      "name": "Tutti Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 280,
+      "name": "Marcato Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 281,
+      "name": "Air Strings",
+      "ranks": [
+        1
+      ]
+    },
+    {
+      "host_index": 506,
+      "name": "Phaser Strings",
+      "ranks": [
+        1,
+        2
+      ]
+    },
+    {
+      "host_index": 516,
+      "name": "Ensemble Plus",
+      "ranks": [
+        1,
+        2
+      ]
+    }
+  ],
+  "full_preset_dynamics": {
+    "candidate_captures": 90,
+    "programs": 5,
+    "registers": 3,
+    "velocities_per_register": 6,
+    "spans": {
+      "Electric Piano I": {
+        "registers": [
+          {
+            "note": 36,
+            "before_db": 9.002099999999999,
+            "after_db": 12.902299308037911,
+            "delta_db": 3.9001993080379123
+          },
+          {
+            "note": 60,
+            "before_db": 9.0674,
+            "after_db": 13.013857034046666,
+            "delta_db": 3.9464570340466665
+          },
+          {
+            "note": 84,
+            "before_db": 8.221700000000006,
+            "after_db": 12.226941007510952,
+            "delta_db": 4.005241007510946
+          }
+        ],
+        "before_range_db": [
+          8.221700000000006,
+          9.0674
+        ],
+        "after_range_db": [
+          12.226941007510952,
+          13.013857034046666
+        ]
+      },
+      "Electric Piano II": {
+        "registers": [
+          {
+            "note": 36,
+            "before_db": 9.972700000000003,
+            "after_db": 13.864850683870927,
+            "delta_db": 3.8921506838709234
+          },
+          {
+            "note": 60,
+            "before_db": 9.047800000000002,
+            "after_db": 12.988283157235198,
+            "delta_db": 3.940483157235196
+          },
+          {
+            "note": 84,
+            "before_db": 8.279999999999998,
+            "after_db": 12.296230739094664,
+            "delta_db": 4.0162307390946665
+          }
+        ],
+        "before_range_db": [
+          8.279999999999998,
+          9.972700000000003
+        ],
+        "after_range_db": [
+          12.296230739094664,
+          13.864850683870927
+        ]
+      },
+      "Tine Piano": {
+        "registers": [
+          {
+            "note": 36,
+            "before_db": 6.5244,
+            "after_db": 10.4138768441006,
+            "delta_db": 3.8894768441005994
+          },
+          {
+            "note": 60,
+            "before_db": 6.462400000000002,
+            "after_db": 10.399754190967343,
+            "delta_db": 3.9373541909673406
+          },
+          {
+            "note": 84,
+            "before_db": 5.972899999999996,
+            "after_db": 9.967921063751639,
+            "delta_db": 3.9950210637516435
+          }
+        ],
+        "before_range_db": [
+          5.972899999999996,
+          6.5244
+        ],
+        "after_range_db": [
+          9.967921063751639,
+          10.4138768441006
+        ]
+      }
+    },
+    "monotonic": {
+      "peak_dbfs": {
+        "groups": 15,
+        "nonmonotonic_groups": []
+      },
+      "rms_025_250_dbfs": {
+        "groups": 15,
+        "nonmonotonic_groups": []
+      },
+      "rms_300_800_dbfs": {
+        "groups": 15,
+        "nonmonotonic_groups": []
+      },
+      "fund_025_250_dbfs": {
+        "groups": 15,
+        "nonmonotonic_groups": []
+      }
+    },
+    "parity_cases": 45,
+    "parity_mismatches": [],
+    "parity_float_samples": 4320000
+  },
+  "direct_parity": {
+    "a06_computed_count": 10137600,
+    "a06_comparison": "binary32 bit comparison; 18 other enabled models at3velocities plus tine at1, 3rates*5notes*3colours*4096samples",
+    "a10_computed_count": 36115200,
+    "a10_comparison": "Numeric float != and max absolute difference, not bitwise; includes Off plus19models, 3notes, 3rates,1.6seconds at2x; bowed constantpitch, allothermodels+7semitone slide"
+  },
+  "bowed_spectral_errors": [
+    {
+      "from": 36,
+      "to": 48,
+      "size": 1.8,
+      "harmonic_count": 6,
+      "baseline_max_abs_ratio_error_db": 4.096524,
+      "candidate_max_abs_ratio_error_db": 0.025124
+    },
+    {
+      "from": 48,
+      "to": 36,
+      "size": 1.8,
+      "harmonic_count": 6,
+      "baseline_max_abs_ratio_error_db": 4.098064,
+      "candidate_max_abs_ratio_error_db": 0.002855
+    },
+    {
+      "from": 72,
+      "to": 84,
+      "size": 1.0,
+      "harmonic_count": 6,
+      "baseline_max_abs_ratio_error_db": 6.193136,
+      "candidate_max_abs_ratio_error_db": 0.003345
+    }
+  ],
+  "body_cpu": [
+    {
+      "model": 9,
+      "moving": false,
+      "pairs": 11,
+      "median_reported_pair_ratio": 1.0113,
+      "median_pair_ratio_from_rounded_times": 1.0113496530959551
+    },
+    {
+      "model": 9,
+      "moving": true,
+      "pairs": 11,
+      "median_reported_pair_ratio": 1.1243,
+      "median_pair_ratio_from_rounded_times": 1.1242806350697743
+    },
+    {
+      "model": 15,
+      "moving": false,
+      "pairs": 11,
+      "median_reported_pair_ratio": 0.9879,
+      "median_pair_ratio_from_rounded_times": 0.9879165215966575
+    },
+    {
+      "model": 15,
+      "moving": true,
+      "pairs": 11,
+      "median_reported_pair_ratio": 0.9825,
+      "median_pair_ratio_from_rounded_times": 0.9824552076133766
+    }
+  ],
+  "engine_cpu": [
+    {
+      "case": 0,
+      "preset": "Solo Violin",
+      "moving": false,
+      "pairs": 7,
+      "median": 0.9804315333996285,
+      "min": 0.6499431207863379,
+      "max": 1.1467291025812245
+    },
+    {
+      "case": 0,
+      "preset": "Solo Violin",
+      "moving": true,
+      "pairs": 7,
+      "median": 1.0983975343928618,
+      "min": 0.951565343021696,
+      "max": 1.1326849127247656
+    },
+    {
+      "case": 1,
+      "preset": "Solo Cello",
+      "moving": false,
+      "pairs": 7,
+      "median": 1.0441796299284838,
+      "min": 0.6988702505272192,
+      "max": 1.2480206783988657
+    },
+    {
+      "case": 1,
+      "preset": "Solo Cello",
+      "moving": true,
+      "pairs": 7,
+      "median": 0.9920456404783435,
+      "min": 0.7926412468791978,
+      "max": 1.7035675448898042
+    },
+    {
+      "case": 2,
+      "preset": "Ensemble Strings",
+      "moving": false,
+      "pairs": 7,
+      "median": 1.011861883587672,
+      "min": 0.6875805137483022,
+      "max": 1.2318867461626437
+    },
+    {
+      "case": 2,
+      "preset": "Ensemble Strings",
+      "moving": true,
+      "pairs": 7,
+      "median": 1.0226162055075443,
+      "min": 0.7932774914563963,
+      "max": 1.0949663088621526
+    },
+    {
+      "case": 3,
+      "preset": "Ensemble Strings",
+      "moving": false,
+      "pairs": 7,
+      "median": 1.0064075738974334,
+      "min": 0.8622073198114794,
+      "max": 1.3827648093121199
+    },
+    {
+      "case": 3,
+      "preset": "Ensemble Strings",
+      "moving": true,
+      "pairs": 7,
+      "median": 0.9875836595078855,
+      "min": 0.8911288353385168,
+      "max": 1.5573281757732296
+    }
+  ],
+  "engine_run_checks": {
+    "runs": 112,
+    "all_8_active_voices": true,
+    "all_numeric_results_finite": true,
+    "max_peak": 0.523883044719696,
+    "body_off_all_pairs_hash_identical": true
+  },
+  "input_sha256": {
+    "evidence/final/inventory.json": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "a05/metrics.csv": "8b37f9cba9d2567d60c73d2f94ccf13768253c9f21e5ecbc04747292f4c68cc6",
+    "a09/metrics.csv": "266293f686502e12e39e35c2695713fce3ac2c2c877dbc2ee4a0046515b579f8",
+    "a09/baseline-parity-metrics.csv": "3e612d700a1326f1a1552d9ce0682c7722964ffda3e2201dd1834c93b194f716",
+    "a10/final-bowed-results.log": "c8f82566d0f754d99c1ed7af299d2001217e59b4cfeb8188e16b0ab1079f5f0d",
+    "a20/trials.csv": "3708d038942bb1613d16a30efacd1c78ce94e3da56df4c2227dd8c70b4321bc8"
+  }
+}

@@ -1,0 +1,195 @@
+﻿2026-11-23T19:29:15.3648177Z Current runner version: '2.338.2'
+2026-11-23T19:29:15.3665278Z ##[group]Runner Image Provisioner
+2026-11-23T19:29:15.3665992Z Hosted Compute Agent
+2026-11-23T19:29:15.3666384Z Version: 20261111.635
+2026-11-23T19:29:15.3666846Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+2026-11-23T19:29:15.3667391Z Build Date: 2026-11-11T01:49:01Z
+2026-11-23T19:29:15.3667924Z Worker ID: {a390d84d-075c-4e84-9137-77ea681e8275}
+2026-11-23T19:29:15.3668437Z Region: centralus
+2026-11-23T19:29:15.3668808Z Cloud: Azure
+2026-11-23T19:29:15.3669198Z ##[endgroup]
+2026-11-23T19:29:15.3670439Z ##[group]Operating System
+2026-11-23T19:29:15.3670870Z Ubuntu
+2026-11-23T19:29:15.3671244Z 24.04.5
+2026-11-23T19:29:15.3671587Z LTS
+2026-11-23T19:29:15.3671944Z ##[endgroup]
+2026-11-23T19:29:15.3672337Z ##[group]Runner Image
+2026-11-23T19:29:15.3672769Z Image: ubuntu-24.04
+2026-11-23T19:29:15.3673159Z Version: 20261116.376.1
+2026-11-23T19:29:15.3674058Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261116.376/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-23T19:29:15.3675500Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261116.376
+2026-11-23T19:29:15.3676169Z ##[endgroup]
+2026-11-23T19:29:15.3677248Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T19:29:15.3679084Z Contents: read
+2026-11-23T19:29:15.3679505Z Metadata: read
+2026-11-23T19:29:15.3679882Z ##[endgroup]
+2026-11-23T19:29:15.3681401Z Secret source: Actions
+2026-11-23T19:29:15.3682093Z Cache mode: write
+2026-11-23T19:29:15.3682551Z Prepare workflow directory
+2026-11-23T19:29:15.3953011Z Prepare all required actions
+2026-11-23T19:29:15.3990154Z Getting action download info
+2026-11-23T19:29:15.6423162Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-11-23T19:29:15.8413562Z Complete job name: g++ / batch DEFAULT
+2026-11-23T19:29:15.9051825Z ##[group]Run actions/checkout@v5
+2026-11-23T19:29:15.9052494Z with:
+2026-11-23T19:29:15.9052888Z   repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T19:29:15.9056137Z   token: ***
+2026-11-23T19:29:15.9056510Z   ssh-strict: true
+2026-11-23T19:29:15.9056859Z   ssh-user: git
+2026-11-23T19:29:15.9057261Z   persist-credentials: true
+2026-11-23T19:29:15.9057663Z   clean: true
+2026-11-23T19:29:15.9058031Z   sparse-checkout-cone-mode: true
+2026-11-23T19:29:15.9058479Z   fetch-depth: 1
+2026-11-23T19:29:15.9058850Z   fetch-tags: false
+2026-11-23T19:29:15.9059245Z   show-progress: true
+2026-11-23T19:29:15.9059610Z   lfs: false
+2026-11-23T19:29:15.9059960Z   submodules: false
+2026-11-23T19:29:15.9060358Z   set-safe-directory: true
+2026-11-23T19:29:15.9060770Z   allow-unsafe-pr-checkout: false
+2026-11-23T19:29:15.9061345Z ##[endgroup]
+2026-11-23T19:29:16.1493770Z Syncing repository: cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T19:29:16.1495617Z ##[group]Getting Git version info
+2026-11-23T19:29:16.1496307Z Working directory is '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T19:29:16.1497212Z [command]/usr/bin/git version
+2026-11-23T19:29:16.1586056Z git version 2.56.1
+2026-11-23T19:29:16.1604680Z ##[endgroup]
+2026-11-23T19:29:16.1614147Z Temporarily overriding HOME='/home/runner/work/_temp/4c1e7389-e944-4d77-8b42-8e33a29f1b3a' before making global git config changes
+2026-11-23T19:29:16.1616014Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T19:29:16.1619425Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T19:29:16.1673301Z Deleting the contents of '/home/runner/work/yamaha-cs80/yamaha-cs80'
+2026-11-23T19:29:16.1678887Z ##[group]Initializing the repository
+2026-11-23T19:29:16.1685649Z [command]/usr/bin/git init /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T19:29:16.1790509Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-23T19:29:16.1791880Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-23T19:29:16.1792731Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-23T19:29:16.1793664Z hint: call:
+2026-11-23T19:29:16.1794012Z hint:
+2026-11-23T19:29:16.1794459Z hint: 	git config --global init.defaultBranch <name>
+2026-11-23T19:29:16.1795171Z hint:
+2026-11-23T19:29:16.1795852Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-23T19:29:16.1796788Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-23T19:29:16.1797581Z hint:
+2026-11-23T19:29:16.1798014Z hint: 	git branch -m <name>
+2026-11-23T19:29:16.1798516Z hint:
+2026-11-23T19:29:16.1799189Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-23T19:29:16.1800337Z Initialized empty Git repository in /home/runner/work/yamaha-cs80/yamaha-cs80/.git/
+2026-11-23T19:29:16.1807543Z [command]/usr/bin/git remote add origin https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T19:29:16.1851550Z ##[endgroup]
+2026-11-23T19:29:16.1852516Z ##[group]Disabling automatic garbage collection
+2026-11-23T19:29:16.1855877Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-23T19:29:16.1879229Z ##[endgroup]
+2026-11-23T19:29:16.1880125Z ##[group]Setting up auth
+2026-11-23T19:29:16.1884496Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T19:29:16.1909982Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T19:29:16.2213215Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T19:29:16.2239797Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T19:29:16.2393473Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T19:29:16.2417760Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T19:29:16.2564062Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-23T19:29:16.2595908Z ##[endgroup]
+2026-11-23T19:29:16.2596743Z ##[group]Fetching the repository
+2026-11-23T19:29:16.2606707Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +bcc86aa39a33a0162254614e5502705f0113d701:refs/remotes/origin/main
+2026-11-23T19:29:21.3695420Z From https://github.com/cheshmakzanoon-ops/yamaha-cs80
+2026-11-23T19:29:21.3696997Z  * [new ref]         bcc86aa39a33a0162254614e5502705f0113d701 -> origin/main
+2026-11-23T19:29:21.3728312Z ##[endgroup]
+2026-11-23T19:29:21.3729028Z ##[group]Determining the checkout info
+2026-11-23T19:29:21.3729816Z ##[endgroup]
+2026-11-23T19:29:21.3730284Z [command]/usr/bin/git sparse-checkout disable
+2026-11-23T19:29:21.3766467Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-23T19:29:21.3803086Z ##[group]Checking out the ref
+2026-11-23T19:29:21.3806325Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-23T19:29:22.0429687Z Switched to a new branch 'main'
+2026-11-23T19:29:22.0433270Z branch 'main' set up to track 'origin/main'.
+2026-11-23T19:29:22.0461367Z ##[endgroup]
+2026-11-23T19:29:22.0500582Z [command]/usr/bin/git log -1 --format=%H
+2026-11-23T19:29:22.0526082Z bcc86aa39a33a0162254614e5502705f0113d701
+2026-11-23T19:29:22.0761052Z ##[group]Run test ! -e build-filter-batch/CMakeCache.txt
+2026-11-23T19:29:22.0762514Z [36;1mtest ! -e build-filter-batch/CMakeCache.txt[0m
+2026-11-23T19:29:22.0763627Z [36;1mextra=()[0m
+2026-11-23T19:29:22.0764472Z [36;1mif [ "$BATCH_MODE" != DEFAULT ]; then[0m
+2026-11-23T19:29:22.0765974Z [36;1m  extra+=("-DCS80_ENABLE_AVX2_FILTER_BATCH=$BATCH_MODE")[0m
+2026-11-23T19:29:22.0767131Z [36;1mfi[0m
+2026-11-23T19:29:22.0767916Z [36;1mcmake -S . -B build-filter-batch \[0m
+2026-11-23T19:29:22.0769442Z [36;1m  -DCS80_BUILD_PLUGIN=OFF -DCMAKE_BUILD_TYPE=Release "${extra[@]}"[0m
+2026-11-23T19:29:22.0770798Z [36;1mexpected="$BATCH_MODE"[0m
+2026-11-23T19:29:22.0771870Z [36;1mif [ "$expected" = DEFAULT ]; then expected=ON; fi[0m
+2026-11-23T19:29:22.0773562Z [36;1mgrep -Fx "CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=$expected" build-filter-batch/CMakeCache.txt[0m
+2026-11-23T19:29:22.0789963Z shell: /usr/bin/bash -e {0}
+2026-11-23T19:29:22.0790900Z env:
+2026-11-23T19:29:22.0791631Z   CXX: g++
+2026-11-23T19:29:22.0792353Z   BATCH_MODE: DEFAULT
+2026-11-23T19:29:22.0793122Z ##[endgroup]
+2026-11-23T19:29:22.2604010Z -- The C compiler identification is GNU 13.3.0
+2026-11-23T19:29:22.3662653Z -- The CXX compiler identification is GNU 13.3.0
+2026-11-23T19:29:22.3881972Z -- Detecting C compiler ABI info
+2026-11-23T19:29:22.4831643Z -- Detecting C compiler ABI info - done
+2026-11-23T19:29:22.4938116Z -- Check for working C compiler: /usr/bin/cc - skipped
+2026-11-23T19:29:22.4942465Z -- Detecting C compile features
+2026-11-23T19:29:22.4947632Z -- Detecting C compile features - done
+2026-11-23T19:29:22.5084629Z -- Detecting CXX compiler ABI info
+2026-11-23T19:29:22.5539729Z -- Detecting CXX compiler ABI info - done
+2026-11-23T19:29:22.5651122Z -- Check for working CXX compiler: /usr/bin/g++ - skipped
+2026-11-23T19:29:22.5653635Z -- Detecting CXX compile features
+2026-11-23T19:29:22.5658237Z -- Detecting CXX compile features - done
+2026-11-23T19:29:22.6669810Z -- Found Python3: /usr/bin/python3.12 (found suitable version "3.12.3", minimum required is "3.10") found components: Interpreter
+2026-11-23T19:29:22.6767370Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+2026-11-23T19:29:22.7536996Z -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+2026-11-23T19:29:22.7543648Z -- Found Threads: TRUE
+2026-11-23T19:29:22.7650276Z -- Configuring done (0.7s)
+2026-11-23T19:29:22.8628359Z -- Generating done (0.1s)
+2026-11-23T19:29:22.8677103Z -- Build files have been written to: /home/runner/work/yamaha-cs80/yamaha-cs80/build-filter-batch
+2026-11-23T19:29:22.8766254Z CS80_ENABLE_AVX2_FILTER_BATCH:BOOL=ON
+2026-11-23T19:29:22.9183637Z ##[group]Run cmake --build build-filter-batch --parallel 2 --target cs80_ig00156_batch_tests cs80_filter_batch_engine_tests cs80_filter_batch_scheduling_tests
+2026-11-23T19:29:22.9184496Z [36;1mcmake --build build-filter-batch --parallel 2 --target cs80_ig00156_batch_tests cs80_filter_batch_engine_tests cs80_filter_batch_scheduling_tests[0m
+2026-11-23T19:29:22.9197578Z shell: /usr/bin/bash -e {0}
+2026-11-23T19:29:22.9197920Z ##[endgroup]
+2026-11-23T19:29:22.9975744Z [  0%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Engine.cpp.o
+2026-11-23T19:29:22.9979780Z [ 33%] Building CXX object CMakeFiles/cs80_core.dir/src/core/EngineWscHeld.cpp.o
+2026-11-23T19:29:23.0240044Z [ 33%] Building CXX object CMakeFiles/cs80_core.dir/src/core/FactoryPresets.cpp.o
+2026-11-23T19:29:30.3783837Z [ 33%] Building CXX object CMakeFiles/cs80_core.dir/src/core/Ig00156Batch.cpp.o
+2026-11-23T19:29:32.2949954Z [ 66%] Linking CXX static library libcs80_core.a
+2026-11-23T19:29:33.0256664Z [ 66%] Built target cs80_core
+2026-11-23T19:29:33.0309995Z [ 66%] Building CXX object CMakeFiles/cs80_ig00156_batch_tests.dir/tests/Ig00156BatchTests.cpp.o
+2026-11-23T19:29:34.4407127Z [100%] Linking CXX executable cs80_ig00156_batch_tests
+2026-11-23T19:29:34.4874653Z [100%] Built target cs80_ig00156_batch_tests
+2026-11-23T19:29:34.5107607Z [ 66%] Built target cs80_core
+2026-11-23T19:29:34.5154991Z [100%] Building CXX object CMakeFiles/cs80_filter_batch_engine_tests.dir/tests/FilterBatchEngineTests.cpp.o
+2026-11-23T19:29:35.8395584Z [100%] Linking CXX executable cs80_filter_batch_engine_tests
+2026-11-23T19:29:35.8878318Z [100%] Built target cs80_filter_batch_engine_tests
+2026-11-23T19:29:35.9091823Z [100%] Built target cs80_core
+2026-11-23T19:29:35.9139995Z [100%] Building CXX object CMakeFiles/cs80_filter_batch_scheduling_tests.dir/tests/FilterBatchSchedulingTests.cpp.o
+2026-11-23T19:29:36.9897120Z [100%] Linking CXX executable cs80_filter_batch_scheduling_tests
+2026-11-23T19:29:37.0372969Z [100%] Built target cs80_filter_batch_scheduling_tests
+2026-11-23T19:29:37.0432449Z ##[group]Run ctest --test-dir build-filter-batch --output-on-failure -R '^cs80_(ig00156_batch_tests|filter_batch_engine_tests|filter_batch_scheduling_tests|filter_batch_admission_tests)$'
+2026-11-23T19:29:37.0433430Z [36;1mctest --test-dir build-filter-batch --output-on-failure -R '^cs80_(ig00156_batch_tests|filter_batch_engine_tests|filter_batch_scheduling_tests|filter_batch_admission_tests)$'[0m
+2026-11-23T19:29:37.0445160Z shell: /usr/bin/bash -e {0}
+2026-11-23T19:29:37.0445559Z ##[endgroup]
+2026-11-23T19:29:37.4179260Z Internal ctest changing into directory: /home/runner/work/yamaha-cs80/yamaha-cs80/build-filter-batch
+2026-11-23T19:29:37.4996097Z Test project /home/runner/work/yamaha-cs80/yamaha-cs80/build-filter-batch
+2026-11-23T19:29:37.5510263Z     Start  4: cs80_ig00156_batch_tests
+2026-11-23T19:29:37.5666994Z 1/4 Test  #4: cs80_ig00156_batch_tests .............   Passed    0.01 sec
+2026-11-23T19:29:37.5735385Z     Start  5: cs80_filter_batch_engine_tests
+2026-11-23T19:29:42.3961128Z 2/4 Test  #5: cs80_filter_batch_engine_tests .......   Passed    4.82 sec
+2026-11-23T19:29:42.3962232Z     Start  6: cs80_filter_batch_scheduling_tests
+2026-11-23T19:29:43.7576975Z 3/4 Test  #6: cs80_filter_batch_scheduling_tests ...   Passed    1.36 sec
+2026-11-23T19:29:43.7577747Z     Start 10: cs80_filter_batch_admission_tests
+2026-11-23T19:29:50.9043377Z 4/4 Test #10: cs80_filter_batch_admission_tests ....   Passed    7.15 sec
+2026-11-23T19:29:50.9047524Z 
+2026-11-23T19:29:50.9047929Z 100% tests passed, 0 tests failed out of 4
+2026-11-23T19:29:50.9048181Z 
+2026-11-23T19:29:50.9048485Z Total Test time (real) =  13.41 sec
+2026-11-23T19:29:50.9561875Z Post job cleanup.
+2026-11-23T19:29:51.0291577Z [command]/usr/bin/git version
+2026-11-23T19:29:51.0331315Z git version 2.56.1
+2026-11-23T19:29:51.0364146Z Temporarily overriding HOME='/home/runner/work/_temp/0717cfeb-5b62-4065-b1a5-e3b0651a29ad' before making global git config changes
+2026-11-23T19:29:51.0365950Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T19:29:51.0370476Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/yamaha-cs80/yamaha-cs80
+2026-11-23T19:29:51.0407205Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T19:29:51.0439816Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T19:29:51.0642966Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T19:29:51.0668474Z http.https://github.com/.extraheader
+2026-11-23T19:29:51.0672320Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-23T19:29:51.0699942Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T19:29:51.0926525Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T19:29:51.0963547Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T19:29:51.1244810Z Cleaning up orphan processes

@@ -1,0 +1,32 @@
+{
+  "agent": 34,
+  "source": "bcc86aa39a33a0162254614e5502705f0113d701",
+  "production_changes": false,
+  "actual_artifacts_accepted": false,
+  "self_tests": [
+    {
+      "tool": "verify-install-artifact",
+      "exit_code": 0,
+      "json": "/workspace/scratch/dde4ad85ed5b/a34/verify-install-artifact-self-test.json",
+      "log": "/workspace/scratch/dde4ad85ed5b/a34/verify-install-artifact-self-test.log",
+      "positive_fixtures": 4,
+      "rejected_mutations": 8
+    },
+    {
+      "tool": "verify-validator-payload",
+      "exit_code": 0,
+      "json": "/workspace/scratch/dde4ad85ed5b/a34/verify-validator-payload-self-test.json",
+      "log": "/workspace/scratch/dde4ad85ed5b/a34/verify-validator-payload-self-test.log",
+      "positive_fixtures": 3,
+      "rejected_mutations": 24
+    }
+  ],
+  "required_parent_checks": [
+    "authentic audition artifact API ID/name/size/digest/expiry/run/head and attempt/upload binding",
+    "all native tests and thirteen original normal-zero-exit pluginval lanes",
+    "audition all-entry canonical path, duplicate, and regular-file/directory attribute preflight",
+    "Mac AU/VST3 validator-distribution identity evidence",
+    "fresh acceptance output names and successful current exits"
+  ],
+  "review": "/workspace/scratch/dde4ad85ed5b/a34-review.md"
+}

@@ -1,0 +1,60 @@
+{
+  "commit": "c4fe30987a5242305be60bd6cfddb144facd6643",
+  "scope": "Read-only review of all 18 Modern recipes and final 200-parameter inventory; calculated effect settings, not rendered acoustic-match evidence.",
+  "host_indexes": [
+    504,
+    521
+  ],
+  "delay_models": [
+    {
+      "name": "Delay Brass",
+      "slot": 1,
+      "time_ms": 375.30261755515835,
+      "tail_seconds": 1.5491933384829666,
+      "nominal_feedback_gain": 0.18759860569457504,
+      "mix": 0.189999998
+    },
+    {
+      "name": "Arp Bells",
+      "slot": 1,
+      "time_ms": 375.30261755515835,
+      "tail_seconds": 1.231084375924678,
+      "nominal_feedback_gain": 0.12174021076418609,
+      "mix": 0.144999996
+    },
+    {
+      "name": "Stereo Delay Pluck",
+      "slot": 1,
+      "time_ms": 250.01261620137345,
+      "tail_seconds": 1.0446946384857587,
+      "nominal_feedback_gain": 0.191447913948201,
+      "mix": 0.159999996
+    },
+    {
+      "name": "Ambient Bells",
+      "slot": 1,
+      "time_ms": 560.0144015476948,
+      "tail_seconds": 2.2231163942659973,
+      "nominal_feedback_gain": 0.17550303884764915,
+      "mix": 0.140000001
+    },
+    {
+      "name": "Space Lead",
+      "slot": 1,
+      "time_ms": 400.0309139666321,
+      "tail_seconds": 1.499152964160949,
+      "nominal_feedback_gain": 0.15830190072140218,
+      "mix": 0.189999998
+    }
+  ],
+  "file_sha256": {
+    "src/core/curated/Modern.inc": "dd3d6006734867f7f7dd62c0b14534875567931151d85870cbd515f456f7b38e",
+    "src/core/CuratedLibrary.inc": "6717273d39dd5fa873ab8f7227cf71a64485ccea2fa281214a24d8657a7f6fe3",
+    "src/core/Engine.cpp": "9712fce722056b254fa260c5f1bc0c92219086bff30a8bca681247398f5c1ce2",
+    "src/core/FxModels.h": "b2cd5a53030e76d3ff6378404168adcc5d873a9a2820da3bf6bf0f1df1625282",
+    "src/core/FxSlot.h": "458a60ae6ae594f87684a09594a5b0c5fb766f6c5ded4a0e505531328c6971fe",
+    "src/core/ModulationLfo.h": "6c30258a7a77ef64eb9fbf9ebe201f060193a47c34764d124d150a97427d6400",
+    "docs/PRESET_GUIDE.md": "5107d1cc9d87177ec863546edef84b94079534e536a6988ab585ff915212621a",
+    "docs/preset-evidence/2026.11.4/development/final-bank/inventory.json": "bff48651085358fcc3d1b07ee5f9138f629c84e7fa9e5ae067796395096a0280"
+  }
+}

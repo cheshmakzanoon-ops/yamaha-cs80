@@ -1,0 +1,516 @@
+{
+  "schema": 1,
+  "worker": "a52",
+  "status": "windows_install_and_native_evidence_bound",
+  "release_qualified": false,
+  "verified_at_utc": "2026-11-23T19:58:04.637558+00:00",
+  "repository": "cheshmakzanoon-ops/yamaha-cs80",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863788,
+  "run_attempt": 1,
+  "target": "windows-x86_64",
+  "producer_job_id": 137945805240,
+  "producer_job_url": "https://github.com/cheshmakzanoon-ops/yamaha-cs80/actions/runs/45246863788/job/137945805240",
+  "producer_job_conclusion": "success",
+  "source_binding": {
+    "run_api_identity_matches": true,
+    "job_api_identity_matches": true,
+    "job_log_contains_checkout_source": true,
+    "workflow_at_source": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-native-workflow.yml",
+      "bytes": 34071,
+      "sha256": "5362bf9a562332a7c1f669a014ef71fbf621a568078e9f6cee8316a2863ee36f"
+    },
+    "workflow_git_blob": "70576cb10b78100b6aa98d67b37f00d0361c2a79"
+  },
+  "original_successful_steps": [
+    {
+      "name": "Configure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-23T19:22:33Z",
+      "completed_at": "2026-11-23T19:24:23Z"
+    },
+    {
+      "name": "Verify configured JUCE source",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5,
+      "started_at": "2026-11-23T19:24:23Z",
+      "completed_at": "2026-11-23T19:24:24Z"
+    },
+    {
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T19:24:24Z",
+      "completed_at": "2026-11-23T19:34:17Z"
+    },
+    {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-23T19:34:17Z",
+      "completed_at": "2026-11-23T19:54:11Z"
+    },
+    {
+      "name": "Upload Windows VST3",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-23T19:54:11Z",
+      "completed_at": "2026-11-23T19:54:13Z"
+    },
+    {
+      "name": "Package Windows VST3 and Standalone",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-23T19:54:13Z",
+      "completed_at": "2026-11-23T19:54:16Z"
+    },
+    {
+      "name": "Upload Windows install bundle",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-23T19:54:16Z",
+      "completed_at": "2026-11-23T19:54:18Z"
+    },
+    {
+      "name": "Upload test and JUCE source evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2026-11-23T19:54:18Z",
+      "completed_at": "2026-11-23T19:54:19Z"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_api": {
+        "id": 14856804857,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg1NjgwNDg1Nw==",
+        "name": "cs80-windows-install-bundle",
+        "size_in_bytes": 6361027,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856804857/zip",
+        "expired": false,
+        "digest": "sha256:22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+        "created_at": "2026-11-23T19:54:18Z",
+        "updated_at": "2026-11-23T19:54:18Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "artifact_api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-install-api.json",
+        "bytes": 799,
+        "sha256": "a5efb058d5febe58ce5ee49e0292c5925d32afbd6c47ad20abbb361f9d2725d4"
+      },
+      "downloaded_archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-install.zip",
+        "bytes": 6361027,
+        "sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b"
+      },
+      "api_size_digest_match": true,
+      "producer": {
+        "job_id": 137945805240,
+        "run_id": 45246863788,
+        "run_attempt": 1,
+        "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+        "job_conclusion": "success",
+        "upload_step": {
+          "name": "Upload Windows install bundle",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-23T19:54:16Z",
+          "completed_at": "2026-11-23T19:54:18Z"
+        },
+        "upload_name": "cs80-windows-install-bundle",
+        "upload_artifact_id": 14856804857,
+        "upload_size_in_bytes": 6361027,
+        "upload_sha256": "22f5037782789b061dc48a658c5ab08400a85019e050c2a26c4f3042eccd6b4b",
+        "digest_log_timestamp": "2026-11-23T19:54:17.9314684Z",
+        "finalized_upload_log_timestamp": "2026-11-23T19:54:18.3587697Z",
+        "digest_log_line": 1429,
+        "finalized_upload_log_line": 1432,
+        "log_fields_match_artifact_api_and_download": true,
+        "upload_timestamps_within_step_seconds": true
+      }
+    },
+    {
+      "artifact_api": {
+        "id": 14856849959,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg1Njg0OTk1OQ==",
+        "name": "cs80-windows-test-evidence",
+        "size_in_bytes": 63288,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856849959",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856849959/zip",
+        "expired": false,
+        "digest": "sha256:118b9c3ff9988ae8474540c96492d2171c438a84ed6fe2fdadb62beedc1cd8e7",
+        "created_at": "2026-11-23T19:54:19Z",
+        "updated_at": "2026-11-23T19:54:19Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "artifact_api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-test-evidence-api.json",
+        "bytes": 796,
+        "sha256": "980fb9e584f18e45810cfaa50404ede2eab0d59d689359a135fc04d8aade603c"
+      },
+      "downloaded_archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-test-evidence.zip",
+        "bytes": 63288,
+        "sha256": "118b9c3ff9988ae8474540c96492d2171c438a84ed6fe2fdadb62beedc1cd8e7"
+      },
+      "api_size_digest_match": true,
+      "producer": {
+        "job_id": 137945805240,
+        "run_id": 45246863788,
+        "run_attempt": 1,
+        "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+        "job_conclusion": "success",
+        "upload_step": {
+          "name": "Upload test and JUCE source evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-23T19:54:18Z",
+          "completed_at": "2026-11-23T19:54:19Z"
+        },
+        "upload_name": "cs80-windows-test-evidence",
+        "upload_artifact_id": 14856849959,
+        "upload_size_in_bytes": 63288,
+        "upload_sha256": "118b9c3ff9988ae8474540c96492d2171c438a84ed6fe2fdadb62beedc1cd8e7",
+        "digest_log_timestamp": "2026-11-23T19:54:19.2025199Z",
+        "finalized_upload_log_timestamp": "2026-11-23T19:54:19.5722425Z",
+        "digest_log_line": 1457,
+        "finalized_upload_log_line": 1460,
+        "log_fields_match_artifact_api_and_download": true,
+        "upload_timestamps_within_step_seconds": true
+      }
+    },
+    {
+      "artifact_api": {
+        "id": 14857530802,
+        "node_id": "MDg6QXJ0aWZhY3QxNDg1NzUzMDgwMg==",
+        "name": "cs80-windows-vst3",
+        "size_in_bytes": 3186363,
+        "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14857530802",
+        "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14857530802/zip",
+        "expired": false,
+        "digest": "sha256:0d69558a9b2e67d45922cd078c0b82d3c1720f1562c8ed18c76b40bfc72e99f5",
+        "created_at": "2026-11-23T19:54:13Z",
+        "updated_at": "2026-11-23T19:54:13Z",
+        "expires_at": "2027-02-21T19:14:35Z",
+        "workflow_run": {
+          "id": 45246863788,
+          "repository_id": 1436742091,
+          "head_repository_id": 1436742091,
+          "head_branch": "main",
+          "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+        }
+      },
+      "artifact_api_file": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-vst3-validator-input-api.json",
+        "bytes": 789,
+        "sha256": "0979518820cf61df5c4c9371ee33c49e8857762708d71d389bafa2160459d6f5"
+      },
+      "downloaded_archive": {
+        "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-vst3-validator-input.zip",
+        "bytes": 3186363,
+        "sha256": "0d69558a9b2e67d45922cd078c0b82d3c1720f1562c8ed18c76b40bfc72e99f5"
+      },
+      "api_size_digest_match": true,
+      "producer": {
+        "job_id": 137945805240,
+        "run_id": 45246863788,
+        "run_attempt": 1,
+        "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+        "job_conclusion": "success",
+        "upload_step": {
+          "name": "Upload Windows VST3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-23T19:54:11Z",
+          "completed_at": "2026-11-23T19:54:13Z"
+        },
+        "upload_name": "cs80-windows-vst3",
+        "upload_artifact_id": 14857530802,
+        "upload_size_in_bytes": 3186363,
+        "upload_sha256": "0d69558a9b2e67d45922cd078c0b82d3c1720f1562c8ed18c76b40bfc72e99f5",
+        "digest_log_timestamp": "2026-11-23T19:54:13.2955961Z",
+        "finalized_upload_log_timestamp": "2026-11-23T19:54:13.7001358Z",
+        "digest_log_line": 1390,
+        "finalized_upload_log_line": 1393,
+        "log_fields_match_artifact_api_and_download": true,
+        "upload_timestamps_within_step_seconds": true
+      }
+    }
+  ],
+  "native": {
+    "status": "original_test_step_success_and_artifact_observations_green",
+    "test_step": {
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-23T19:34:17Z",
+      "completed_at": "2026-11-23T19:54:11Z"
+    },
+    "counts": {
+      "registered": 229,
+      "passed": 227,
+      "failed": 0,
+      "formal_skipped": 2,
+      "disabled": 0,
+      "unknown": 0
+    },
+    "formal_skips": [
+      {
+        "name": "cs80_filter_batch_cap_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      },
+      {
+        "name": "cs80_stereo_pra_exact_tests",
+        "status": "notrun",
+        "message": "SKIP_RETURN_CODE=77"
+      }
+    ],
+    "nested_python_skips": {
+      "total": 11,
+      "suites": [
+        {
+          "ctest_test": "cs80_packaging_notice_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 7,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 7 tests in 9.245s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [
+            "test_synthetic_deb_notice_bytes (__main__.NoticeTests.test_synthetic_deb_notice_bytes) ... skipped 'Native Linux amd64, Debian packaging tools and cc required'"
+          ],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_windows_installer_preflight_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 12,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 12 tests in 3.742s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_validator_diagnostic_selection_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 9,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 9 tests in 3.851s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_preset_capture_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 10,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 10 tests in 2.393s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_render_cli_tests",
+          "total": 3,
+          "summaries": [
+            {
+              "tests_run": 7,
+              "result": "OK",
+              "skipped": 3,
+              "summary": "Ran 7 tests in 0.191s\n\nOK (skipped=3)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_truth_render_tests",
+          "total": 2,
+          "summaries": [
+            {
+              "tests_run": 16,
+              "result": "OK",
+              "skipped": 2,
+              "summary": "Ran 16 tests in 1.859s\n\nOK (skipped=2)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_vca_reference_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 12,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 12 tests in 0.479s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        },
+        {
+          "ctest_test": "cs80_float_wav_tests",
+          "total": 1,
+          "summaries": [
+            {
+              "tests_run": 4,
+              "result": "OK",
+              "skipped": 1,
+              "summary": "Ran 4 tests in 0.297s\n\nOK (skipped=1)"
+            }
+          ],
+          "explicit_skip_lines": [],
+          "scope": "Unittest terminal summaries only; explicit lines are reasons, not additional counts."
+        }
+      ]
+    },
+    "ctest_seconds_junit": 1193.0,
+    "ctest_console_total_seconds": 1193.52,
+    "original_ctest_numeric_exit_not_separately_printed": true,
+    "exit_evidence": "The original native Test step is completed/success. Its source-pinned workflow executes CTest directly with no continue-on-error; no replacement test was run.",
+    "test_workflow_block": "        if: steps.configure.outcome == 'success'\n        run: >\n          ctest --test-dir build -C Release --output-on-failure --no-tests=error\n          --output-junit \"${{ github.workspace }}/build/ctest-results.xml\"\n",
+    "parser_report": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/verified/windows-x86_64-native-observations.json",
+      "bytes": 81062,
+      "sha256": "4f083e9ee014e9319217ee920bd8933611bd3fb283c2c415f20b0a8cae3c1649"
+    },
+    "parser_scope": "CTest executions and nested Python skips only, not internal assertions; parser original numeric exit remains null.",
+    "juce_provenance": {
+      "text": "checked_at=2026-11-23T19:24:23Z\nexpected_sha=c352e2489000ffeb9e397051377d75eef2efe641\nexpected_version=8.0.11\nexpected_source=D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src\nworkflow_commit=078c0981ffa1b5472342e0fb5ab8702bc3bd2889\nworkflow_run=45246863788\nconfigured_source=D:/a/yamaha-cs80/yamaha-cs80/build/_deps/juce-src\nsource_override=\nproject_source=D:/a/yamaha-cs80/yamaha-cs80\nactual_sha=c352e2489000ffeb9e397051377d75eef2efe641\norigin=https://github.com/juce-framework/JUCE.git\ngit_description=8.0.11\nsource_clean=true\nactual_version=8.0.11\nverification=PASS\n",
+      "path": "ci-juce-provenance.txt",
+      "bytes": 585,
+      "sha256": "d28a74b6716b2b95def862ab49a6aee184756ebb6a55f773d0330c1437ff04e7"
+    },
+    "juce_source_run_and_clean_verification_match": true
+  },
+  "installation": {
+    "status": "artifact_bytes_verified",
+    "report": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/verified/windows-x86_64-install.json",
+      "bytes": 3620,
+      "sha256": "f43fb6723ecb60e3af58b55d050ecfadf12a6d35ca6566996aa53b0614249539"
+    },
+    "inner_archive": {
+      "file": "cs80-reference-windows-x86_64-078c0981ffa1.zip",
+      "bytes": 6355711,
+      "sha256": "2fd754face192645e53a26f0568d26ff6ff14207a7c3579515b50d7de20030c2"
+    },
+    "inventory_entries": 20,
+    "formats": [
+      "VST3",
+      "Standalone"
+    ],
+    "binary_headers": [
+      {
+        "path": "VST3/CS-80 Reference.vst3/Contents/x86_64-win/CS-80 Reference.vst3",
+        "bytes": 7348736,
+        "sha256": "9ecd532fa1b59d33e32ada5010acd246b6b0e5905b1b7035d4d78a53350d3aa3",
+        "platform": "windows",
+        "architecture": "x86_64",
+        "role": "plugin",
+        "header_check": "PASS",
+        "header": {
+          "format": "PE32+",
+          "machine": "0x8664",
+          "characteristics": "0x2022"
+        }
+      },
+      {
+        "path": "Standalone/CS-80 Reference.exe",
+        "bytes": 7549440,
+        "sha256": "a5a299c21ff27f5bd34e00852842c5f02d528efaf6d50f13081752af11b929fa",
+        "platform": "windows",
+        "architecture": "x86_64",
+        "role": "standalone",
+        "header_check": "PASS",
+        "header": {
+          "format": "PE32+",
+          "machine": "0x8664",
+          "characteristics": "0x22"
+        }
+      }
+    ],
+    "source_scripts_compared_to_commit": true,
+    "signing_status": "not inspected; no release signing/notarization performed by this helper"
+  },
+  "input_records": {
+    "run_api": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-native-run-api.json",
+      "bytes": 15096,
+      "sha256": "747211c4c49b4ebcc58d656c98291d7393dc0a4488598051402dd1f9045415e0"
+    },
+    "job_api": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-native-job-api.json",
+      "bytes": 3895,
+      "sha256": "a8ac5f2d63664e498fa9a1e5d433b48659eb699106603406213c5ec6a266c6f2"
+    },
+    "producer_job_log": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-native-job.log",
+      "bytes": 137059,
+      "sha256": "2368bb87cd2677d5a03b3d0ec62854538845079ee723d87dccc716e264128925"
+    },
+    "native_parser_inputs": {
+      "path": "/workspace/scratch/dde4ad85ed5b/release-078c098/input/windows-x86_64-native-inputs.json",
+      "bytes": 319,
+      "sha256": "9bf60fd2dcb34457433bd5de43a88b101f9bfff9b3fb3c532e7afb14b30eee11"
+    }
+  },
+  "remaining_qualification": [
+    "Worker55 must bind the Windows pluginval consumer job original randomized and fixed-seed exits, downloaded reports, and distributed VST3 equality to this authentic VST3 validator-input artifact.",
+    "All original native platform gates and all 13 validator lanes plus supporting evidence remain mandatory before overall release qualification."
+  ],
+  "no_source_or_workflow_changes": true,
+  "no_external_mutations": true,
+  "no_ci_reruns": true,
+  "no_product_executed": true
+}

@@ -1,0 +1,104 @@
+{
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "run_id": 45246863473,
+  "run_attempt": 1,
+  "job_id": 137945802978,
+  "run_and_job_conclusion": "success",
+  "artifact": {
+    "id": 14856641950,
+    "name": "cs80-panel-078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "size_in_bytes": 62117315,
+    "url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856641950",
+    "archive_download_url": "https://api.github.com/repos/cheshmakzanoon-ops/yamaha-cs80/actions/artifacts/14856641950/zip",
+    "expired": false,
+    "created_at": "2026-11-23T19:37:41Z",
+    "expires_at": "2027-02-21T19:14:34Z",
+    "updated_at": "2026-11-23T19:37:41Z",
+    "digest": "sha256:310ce4aecec7f84130ea95c35443b62950a5f9d1a473ba47f5cb8800e68e36e1",
+    "workflow_run": {
+      "id": 45246863473,
+      "repository_id": 1436742091,
+      "head_repository_id": 1436742091,
+      "head_branch": "main",
+      "head_sha": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889"
+    }
+  },
+  "actual_zip": {
+    "bytes": 62117315,
+    "sha256": "310ce4aecec7f84130ea95c35443b62950a5f9d1a473ba47f5cb8800e68e36e1"
+  },
+  "producer_upload_bound": true,
+  "provenance": {
+    "commit": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+    "run": "45246863473",
+    "renderer": "JUCE software, actual plugin editor"
+  },
+  "file_count": 73,
+  "top_level_png_count": 66,
+  "all_archive_entries_reviewed": true,
+  "top_level_png_checksums_passed": true,
+  "ui_smoke": "UI SMOKE TEST PASSED",
+  "no_failed_assertions_in_full_smoke_log": true,
+  "golden_refresh_used": false,
+  "goldens": [
+    {
+      "size": [
+        1600,
+        1000
+      ],
+      "candidate_sha256": "13b6dd07937dd15170e8855264a52b27149329934e7e4dd12efa5206d2c5cafc",
+      "source_golden_sha256": "13b6dd07937dd15170e8855264a52b27149329934e7e4dd12efa5206d2c5cafc",
+      "all_pixels_equal": true,
+      "outside_mask_changed_fraction": 0.0,
+      "worst_8x8_block_mean": 0.0,
+      "masked_rectangle": [
+        1118,
+        0,
+        342,
+        48
+      ],
+      "unchanged_limits_passed": true
+    },
+    {
+      "size": [
+        1120,
+        700
+      ],
+      "candidate_sha256": "a4133c5833fecca05c2cf6e1b3ca571a3dfb178405d3c37cc9bc2baf9656ce77",
+      "source_golden_sha256": "a4133c5833fecca05c2cf6e1b3ca571a3dfb178405d3c37cc9bc2baf9656ce77",
+      "all_pixels_equal": true,
+      "outside_mask_changed_fraction": 0.0,
+      "worst_8x8_block_mean": 0.0,
+      "masked_rectangle": [
+        783,
+        0,
+        239,
+        34
+      ],
+      "unchanged_limits_passed": true
+    }
+  ],
+  "producer_log_sha256": "336bea0fb85be7e65cd3164004944b78eecc39c28123918c6fd395a1017db433",
+  "scope": "Actual artifact/source/UI qualification only. Not native plugin package validation or acoustic evidence.",
+  "visual_review": {
+    "reviewer": "a50_final_screenshot_qualification",
+    "inspected_actual_sizes": [
+      [
+        1600,
+        1000
+      ],
+      [
+        1120,
+        700
+      ]
+    ],
+    "compared_to_source_goldens": true,
+    "result": "Both complete panels match the unchanged source goldens. Control positions, labels, boundaries and keyboard layout show no visible displacement, clipping or missing elements. This is inspection of the two fixed layout fixtures, not every screenshot page."
+  },
+  "historical_failure_preserved": {
+    "source": "bcc86aa39a33a0162254614e5502705f0113d701",
+    "run_id": 45244531816,
+    "conclusion": "failure",
+    "assertions_failed": 3
+  }
+}

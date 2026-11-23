@@ -1,0 +1,15 @@
+{
+  "source_commit": "e32728b31d97fc356cac291cb98935fdcd38f803",
+  "header_sha256": "d33f34f5cff6341abc9bc2c85056ce381b492d141a0fad856e0c7cbd4f06422e",
+  "probe_sha256": "ce256365d91651def261e905716416141109eaaa74be504cd4466cd9a0154938",
+  "checks": 7173600,
+  "errors": 0,
+  "peak": 0.716935039,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "leak_scanning": false,
+  "scope": "Header-only numerical boundary probe; reset/copy portions overlap agent26 and should not be counted as an independent qualification gate.",
+  "paired_sample_positions": 6881280
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "status": "in_progress_not_release_qualified",
+  "source": "078c0981ffa1b5472342e0fb5ab8702bc3bd2889",
+  "native_run_id": 45246863788,
+  "attempt": 1,
+  "as_of_utc": "2026-11-23T20:05:12Z",
+  "completed_independent_scopes": [
+    "Windows installation archive and original native CTest suite",
+    "Apple Silicon installation archive and original native CTest suite",
+    "Original UI smoke and actual screenshot archive",
+    "Six supporting filter jobs with 91 unchanged input files"
+  ],
+  "remaining_scopes": [
+    "Linux and Intel Mac native suites and installation archives",
+    "All 13 validator lanes with original exits and validated-to-distributed identity",
+    "Actual final audition archive",
+    "Final sanitizer outcome",
+    "Final 60-worker ledger and publication review"
+  ],
+  "scope_note": "Individual accepted records below are partial scopes. A completed release-qualification.json is required for the new download publication."
+}

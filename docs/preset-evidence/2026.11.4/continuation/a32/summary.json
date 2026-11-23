@@ -1,0 +1,157 @@
+{
+  "review": "a32 independent inventory coverage",
+  "source_commit": "e32728b31d97fc356cac291cb98935fdcd38f803",
+  "source_tree": "d570aecf7e8dea5e42476f308497d84b1377c657",
+  "scope": "Independent JSON and IEEE-754 binary32 comparison, no rerender, no acoustic-match claim. The prior_c4_export is byte-identical to the previously checked c4 export; c4 itself changed DSP only.",
+  "input_sha256": {
+    "baseline": "6f070ed15a04259fd5a9d5f0eb06a6e9554f821871c3313e9a793a3b28a2b521",
+    "final": "0545f9a6ede82c72f4bbecc0e032cbc08f4de257b496f6b763b1911d607f9611",
+    "prior_c4_export": "bff48651085358fcc3d1b07ee5f9138f629c84e7fa9e5ae067796395096a0280",
+    "reported_coverage": "43b693d7990b0e8857867de3b29ed69b02fbc5cec83285f63977b6257825dad9"
+  },
+  "ordered_identities_and_tags_preserved": 523,
+  "old_parameter_prefix_exact": 198,
+  "current_core_parameters": 200,
+  "appended_ids": [
+    "body1_size",
+    "body2_size"
+  ],
+  "musical_existing_non_volume_controls_changed": 521,
+  "initialization_programs": [
+    {
+      "name": "Init Patch",
+      "host_index": 43,
+      "all_previous_values_exact": true,
+      "appended_sizes": [
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Init Circuit",
+      "host_index": 522,
+      "all_previous_values_exact": true,
+      "appended_sizes": [
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "duplicate_non_volume_vectors": [],
+  "configured_body_enabled_programs": 259,
+  "circuit_only_programs_including_init": 264,
+  "families": [
+    {
+      "category": "Bass",
+      "programs": 50,
+      "changed_musical_programs": 50
+    },
+    {
+      "category": "Bells",
+      "programs": 23,
+      "changed_musical_programs": 23
+    },
+    {
+      "category": "Brass",
+      "programs": 59,
+      "changed_musical_programs": 59
+    },
+    {
+      "category": "FX",
+      "programs": 46,
+      "changed_musical_programs": 46
+    },
+    {
+      "category": "Hardware Studies",
+      "programs": 22,
+      "changed_musical_programs": 22
+    },
+    {
+      "category": "Init",
+      "programs": 2,
+      "changed_musical_programs": 0
+    },
+    {
+      "category": "Keys",
+      "programs": 45,
+      "changed_musical_programs": 45
+    },
+    {
+      "category": "Leads",
+      "programs": 56,
+      "changed_musical_programs": 56
+    },
+    {
+      "category": "Organ",
+      "programs": 15,
+      "changed_musical_programs": 15
+    },
+    {
+      "category": "Pads",
+      "programs": 63,
+      "changed_musical_programs": 63
+    },
+    {
+      "category": "Plucked",
+      "programs": 17,
+      "changed_musical_programs": 17
+    },
+    {
+      "category": "Polysynth",
+      "programs": 25,
+      "changed_musical_programs": 25
+    },
+    {
+      "category": "Sequences",
+      "programs": 27,
+      "changed_musical_programs": 27
+    },
+    {
+      "category": "Strings",
+      "programs": 59,
+      "changed_musical_programs": 59
+    },
+    {
+      "category": "Winds",
+      "programs": 14,
+      "changed_musical_programs": 14
+    }
+  ],
+  "previous_c4_all_523_parameter_vectors_unchanged": true,
+  "previous_c4_field_changes": [
+    {
+      "name": "Velvet FX 138",
+      "host_index": 181,
+      "changed_fields": [
+        "description"
+      ]
+    },
+    {
+      "name": "Wind",
+      "host_index": 484,
+      "changed_fields": [
+        "description"
+      ]
+    }
+  ],
+  "previous_c4_description_changes": [
+    {
+      "name": "Velvet FX 138",
+      "host_index": 181,
+      "before": "A broad low wind bed supports a separate airy gust that arrives later. Shallow SUB motion avoids a regular throbbing cycle; pressure brings forward the upper air and the unequal releases let it subside. A covered upper register and rounded main release, preserving the shorter edge.",
+      "after": "An airy gust enters first as a broader low wind bed blooms underneath. Shallow SUB motion adds gentle movement; pressure brings forward the upper air, and its shorter release lets it subside ahead of the low bed. A covered upper register and rounded main release, preserving the shorter edge."
+    },
+    {
+      "name": "Wind",
+      "host_index": 484,
+      "before": "A broad low wind bed supports a separate airy gust that arrives later. Shallow SUB motion avoids a regular throbbing cycle; pressure brings forward the upper air and the unequal releases let it subside.",
+      "after": "An airy gust enters first as a broader low wind bed blooms underneath. Shallow SUB motion adds gentle movement; pressure brings forward the upper air, and its shorter release lets it subside ahead of the low bed."
+    }
+  ],
+  "reported_coverage_counts_match_independent_calculation": true,
+  "changed_existing_non_volume_count_range": [
+    7,
+    52
+  ],
+  "prior_c4_reference_verified_against_git_blob_and_a24_export": true
+}
